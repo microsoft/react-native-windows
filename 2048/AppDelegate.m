@@ -20,18 +20,18 @@
   //
   // To run on device, change `localhost` to the IP address of your computer, and make sure your computer and
   // iOS device are on the same Wi-Fi network.
-  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/Examples/UIExplorer/UIExplorerApp.includeRequire.runModule.bundle?dev=true"];
+  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/Examples/2048/Game2048.includeRequire.runModule.bundle?dev=true"];
 
   // OPTION 2
   // Load from pre-bundled file on disk. To re-generate the static bundle, run
   //
-  // $ curl http://localhost:8081/Examples/UIExplorer/UIExplorerApp.includeRequire.runModule.bundle -o main.jsbundle
+  // $ curl http://localhost:8081/Examples/2048/Game2048.includeRequire.runModule.bundle -o main.jsbundle
   //
   // and uncomment the next following line
   // jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
   rootView.scriptURL = jsCodeLocation;
-  rootView.moduleName = @"UIExplorerApp";
+  rootView.moduleName = @"Game2048";
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [[UIViewController alloc] init];
