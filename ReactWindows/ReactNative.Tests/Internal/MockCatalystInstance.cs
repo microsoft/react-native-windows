@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Bridge.Queue;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,7 +33,23 @@ namespace ReactNative.Tests
             _function = function;
         }
 
+        public bool IsDisposed
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public IEnumerable<INativeModule> NativeModules
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public ICatalystQueueConfiguration QueueConfiguration
         {
             get
             {
@@ -63,6 +80,11 @@ namespace ReactNative.Tests
         public void InvokeFunction(int moduleId, int methodId, JArray arguments, string tracingName)
         {
             _function(moduleId, methodId, arguments, tracingName);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

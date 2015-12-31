@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using ReactNative.Common;
@@ -12,11 +12,16 @@ using System.Threading.Tasks;
 
 namespace ReactNative.Bridge
 {
+    /// <summary>
+    /// A higher level API on top of the <see cref="IJavaScriptExecutor" /> and module registries. This provides an
+    /// environment allowing the invocation of JavaScript methods.
+    /// </summary>
     class CatalystInstance : ICatalystInstance, IDisposable
     {
         private readonly NativeModuleRegistry _registry;
         private readonly JavaScriptModuleRegistry _jsRegistry;
         private readonly IJavaScriptExecutor _jsExecutor;
+        private readonly JavaScriptBundleLoader _bundleLoader;
         private readonly JavaScriptModulesConfig _jsModulesConfig;
         private readonly Action<Exception> _nativeModuleCallExceptionHandler;
 
@@ -29,12 +34,14 @@ namespace ReactNative.Bridge
             IJavaScriptExecutor jsExecutor,
             NativeModuleRegistry registry,
             JavaScriptModulesConfig jsModulesConfig,
-            Action<Exception> nativeModuleCallsExceptionHandler)
+            JavaScriptBundleLoader bundleLoader,
+            Action<Exception> nativeModuleCallExceptionHandler)
         {
             _registry = registry;
             _jsExecutor = jsExecutor;
             _jsModulesConfig = jsModulesConfig;
-            _nativeModuleCallsExceptionHandler = nativeModuleCallsExceptionHandler;
+            _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
+            _bundleLoader = bundleLoader;
             _jsRegistry = new JavaScriptModuleRegistry(this, _jsModulesConfig);
 
             QueueConfiguration = CatalystQueueConfiguration.Create(
@@ -144,11 +151,16 @@ namespace ReactNative.Bridge
             // TODO: notify bridge idle listeners
         }
 
-        public Task InitializeBridgeAsync()
+        public async Task InitializeBridgeAsync()
         {
-            return QueueConfiguration.JSQueueThread.CallOnQueue(() =>
+            await _bundleLoader.InitializeAsync();
+
+            await QueueConfiguration.JSQueueThread.CallOnQueue(() =>
             {
                 QueueConfiguration.JSQueueThread.AssertIsOnThread();
+
+                _jsExecutor.Initialize();
+                _bundleLoader.LoadScript(_jsExecutor);
 
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor"))
                 {
@@ -187,7 +199,7 @@ namespace ReactNative.Bridge
 
         private void HandleException(Exception ex)
         {
-            _nativeModuleCallsExceptionHandler(ex);
+            _nativeModuleCallExceptionHandler(ex);
             QueueConfiguration.DispatcherQueueThread.RunOnQueue(Dispose);
         }
 
@@ -197,6 +209,7 @@ namespace ReactNative.Bridge
             private NativeModuleRegistry _registry;
             private JavaScriptModulesConfig _jsModulesConfig;
             private IJavaScriptExecutor _jsExecutor;
+            private JavaScriptBundleLoader _bundleLoader;
             private Action<Exception> _nativeModuleCallExceptionHandler;
 
             public CatalystQueueConfigurationSpec QueueConfigurationSpec
@@ -231,6 +244,14 @@ namespace ReactNative.Bridge
                 }
             }
 
+            public JavaScriptBundleLoader BundleLoader
+            {
+                set
+                {
+                    _bundleLoader = value;
+                }
+            }
+
             public Action<Exception> NativeModuleCallExceptionHandler
             {
                 set
@@ -245,13 +266,15 @@ namespace ReactNative.Bridge
                 AssertNotNull(_jsExecutor, nameof(IJavaScriptExecutor));
                 AssertNotNull(_registry, nameof(Registry));
                 AssertNotNull(_jsModulesConfig, nameof(JavaScriptModulesConfig));
+                AssertNotNull(_bundleLoader, nameof(BundleLoader));
                 AssertNotNull(_nativeModuleCallExceptionHandler, nameof(NativeModuleCallExceptionHandler));
-
+                 
                 return new CatalystInstance(
                     _catalystQueueConfigurationSpec,
                     _jsExecutor,
                     _registry,
                     _jsModulesConfig,
+                    _bundleLoader,
                     _nativeModuleCallExceptionHandler);
             }
 

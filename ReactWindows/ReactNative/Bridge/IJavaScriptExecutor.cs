@@ -9,6 +9,14 @@ namespace ReactNative.Bridge
     public interface IJavaScriptExecutor : IDisposable
     {
         /// <summary>
+        /// Initializes the JavaScript runtime.
+        /// </summary>
+        /// <remarks>
+        /// Must be called from the JavaScript thread.
+        /// </remarks>
+        void Initialize();
+
+        /// <summary>
         /// Call the JavaScript method from the given module.
         /// </summary>
         /// <param name="moduleName">The module name.</param>
@@ -23,5 +31,11 @@ namespace ReactNative.Bridge
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
         void SetGlobalVariable(string propertyName, JToken value);
+
+        /// <summary>
+        /// Runs the given script.
+        /// </summary>
+        /// <param name="script">The script.</param>
+        void RunScript(string script);
     }
 }
