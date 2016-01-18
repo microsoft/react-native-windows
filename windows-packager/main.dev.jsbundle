@@ -1188,13 +1188,23 @@ typeof global!=='undefined'?global:typeof self!=='undefined'?self:this);
 __d('react-xaml-wpf/index.ios.js',function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');var 
-AppRegistry=React.AppRegistry;var View=React.View;var Text=React.Text;
+AppRegistry=React.AppRegistry;var View=React.View;var requireNativeComponent=React.requireNativeComponent;var Text=React.Text;var TextInput=React.TextInput;
+var TextInput=requireNativeComponent('TextInput',null);
 
 var ReactRoot=React.createClass({displayName:'ReactRoot',
+
+getInitialState:function(){
+var text="You can see me!";
+return {value:text};},
+
+
 render:function(){
 return (
-React.createElement(View,{elevation:'1.0'},
-React.createElement(Text,null,'Hello React Native, I\'m running on Windows Phone')));}});
+React.createElement(View,null,
+React.createElement(Text,null,'Hello!'),
+this.state&&this.state.value?
+React.createElement(TextInput,{text:this.state.value}):
+undefined));}});
 
 
 
@@ -57328,4 +57338,4 @@ module.exports=findDOMNode;
 });
 ;require("InitializeJavaScriptAppEngine");
 ;require("react-xaml-wpf/index.ios.js");
-__SSTOKENSTRING = "@generated SignedSource<<4c8b8d4626a04f605e3785551393f2dd>>";
+__SSTOKENSTRING = "@generated SignedSource<<edbcbe0cbae87e28375ae8502a49b3cb>>";
