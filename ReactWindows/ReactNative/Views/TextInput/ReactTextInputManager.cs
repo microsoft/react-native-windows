@@ -24,7 +24,7 @@ namespace ReactNative.Views.TextInput
     {
         private static readonly int FOCUS_TEXT_INPUT = 1;
         private static readonly int BLUR_TEXT_INPUT = 2;
-        private static readonly string REACT_CLASS = "RCTTextField";
+        private static readonly string REACT_CLASS = "TextInput";
 
         private const string PROP_ROTATION_X = "rotationX";
         private const string PROP_PLACEHOLDER = "placeholder";
