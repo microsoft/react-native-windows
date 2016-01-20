@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
-using ImageControl = Windows.UI.Xaml.Controls.Image;
+
 
 namespace ReactNative.Views.Image
 {
     /// <summary>
     /// The view manager responsible for rendering native <see cref="ImageControl"/>.
     /// </summary>
-    public class ReactImageView : SimpleViewManager<ImageControl>
+    public class ReactImageView : SimpleViewManager<BorderedContentControl>
     {
-        private const string ReactClass = "Image";
+        private const string ReactClass = "RCTImageView";
 
         public override string Name
         {
@@ -30,17 +30,16 @@ namespace ReactNative.Views.Image
             {
                 return new Dictionary<string, object>
                     {
-                        { "otherSelectionChange", 42 },
-                        { "topSelectionChange", new Dictionary<string, object> { { "registrationName", 42 } } },
-                        { "topLoadingStart", new Dictionary<string, object> { { "foo", 42 } } },
-                        { "topLoadingError", 42 },
+                        { "topLoad", new Dictionary<string, object> { { "registrationName", "onLoad" } } },
+                        { "topLoadEnd", new Dictionary<string, object> { { "registrationName", "onLoadEnd" } } },
+                        { "topLoadStart", new Dictionary<string, object> { { "registrationName", "onLoadStart" } } },
                     };
             }
         }
 
-        protected override ImageControl CreateViewInstanceCore(ThemedReactContext reactContext)
+        protected override BorderedContentControl CreateViewInstanceCore(ThemedReactContext reactContext)
         {
-            throw new NotImplementedException();
+            return new BorderedContentControl(new ReactPanel());
         }
     }
 }
