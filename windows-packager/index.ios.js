@@ -1,8 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var {AppRegistry, View, requireNativeComponent, Text, TextInput } = React;
-var TextInput = requireNativeComponent('TextInput', null);
+var {AppRegistry, View, Text, TextInput } = React;
 
     var ReactRoot = React.createClass({
 		
@@ -16,7 +15,7 @@ var TextInput = requireNativeComponent('TextInput', null);
               <View>
 		         <Text>Hello!</Text>
 				{(this.state && this.state.value) 
-			     ? <TextInput text={this.state.value}></TextInput> 
+			     ? <TextInput value={this.state.value}></TextInput> 
 				 : undefined}
               </View>
         );
