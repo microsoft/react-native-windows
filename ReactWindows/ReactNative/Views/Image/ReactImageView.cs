@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
-
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Views.Image
 {
@@ -15,6 +16,7 @@ namespace ReactNative.Views.Image
     public class ReactImageView : SimpleViewManager<BorderedContentControl>
     {
         private const string ReactClass = "RCTImageView";
+        private const string PROP_SOURCE = "src";
 
         public override string Name
         {
@@ -39,7 +41,36 @@ namespace ReactNative.Views.Image
 
         protected override BorderedContentControl CreateViewInstanceCore(ThemedReactContext reactContext)
         {
-            return new BorderedContentControl(new ReactPanel());
+            return new BorderedContentControl();
+        }
+
+        /// <summary>
+        /// Sets the <see cref="BrushImage"/> source for the background of a <see cref="BorderedContentControl"/>.
+        /// </summary>
+        /// <param name="view">The text input box control.</param>
+        /// <param name="degrees">The text alignment.</param>
+        [ReactProperty(PROP_SOURCE)]
+        public void SetSource(BorderedContentControl view, string source)
+        {
+            var imageSrcURL = default(Uri);
+
+            if (source != null)
+            {
+                if(!Uri.TryCreate(source, UriKind.Absolute, out imageSrcURL))
+                {
+                    imageSrcURL = new Uri("ms-appx://" + source);
+                }
+
+                if (imageSrcURL != null)
+                {
+                    var backgroundImage = new ImageBrush()
+                    {
+                        ImageSource = new BitmapImage(imageSrcURL)
+                    };
+
+                    view.Background = backgroundImage;
+                }
+            }
         }
     }
 }
