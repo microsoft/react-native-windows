@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Automation.Provider;
 
 namespace ReactNative.Views.View
 {
-    public class ReactViewManager : ViewGroupManager
+    public class ReactViewManager : ViewParentManager
     {
         private const string ReactClass = ViewProperties.ViewClassName;
         private const int CommandSetPressed = 1;

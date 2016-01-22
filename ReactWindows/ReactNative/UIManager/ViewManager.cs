@@ -98,7 +98,7 @@ namespace ReactNative.UIManager
         {
             var view = CreateViewInstance(reactContext);
             AddEventEmitters(reactContext, view);
-            var interceptor = view as IReactInterceptingViewGroup;
+            var interceptor = view as IReactInterceptingViewParent;
             if (interceptor != null)
             {
                 interceptor.SetOnInterceptTouchEventListener(jsResponderHandler);

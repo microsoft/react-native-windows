@@ -262,8 +262,8 @@
     <Compile Include="UIManager\UIManagerModule.Constants.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
     <Compile Include="UIManager\ViewAtIndex.cs" />
-    <Compile Include="UIManager\ViewGroupManager.cs" />
-    <Compile Include="UIManager\PanelViewGroupManager.cs" />
+    <Compile Include="UIManager\ViewParentManager.cs" />
+    <Compile Include="UIManager\PanelViewParentManager.cs" />
     <Compile Include="UIManager\ViewManager.cs" />
     <Compile Include="UIManager\ViewManager.Generic.cs" />
     <Compile Include="UIManager\ViewManagerRegistry.cs" />
@@ -278,7 +278,7 @@
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
     <Compile Include="Views\Text\ReactVirtualTextViewManager.cs" />
-    <Compile Include="Touch\IReactInterceptingViewGroup.cs" />
+    <Compile Include="Touch\IReactInterceptingViewParent.cs" />
     <Compile Include="Views\TextInput\ReactTextChangedEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputBlurEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputFocusEvent.cs" />

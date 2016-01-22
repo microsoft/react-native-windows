@@ -5,7 +5,7 @@
     /// <see cref="Windows.UI.Xaml.Controls.Panel"/> subviews that can 
     /// be instantiated by <see cref="ReactNative.UIManager.NativeViewHierarchyManager"/>.
     /// </summary>
-    public interface IReactInterceptingViewGroup
+    public interface IReactInterceptingViewParent
     {
         /// <summary>
         /// A callback that <see cref="Windows.UI.Xaml.Controls.Panel"/> should
