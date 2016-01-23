@@ -28,7 +28,10 @@ namespace ReactNative.UIManager
         {
             DefaultStyleKey = typeof(BorderedContentControl);
             BorderBrush = s_defaultBorderBrush;
-            base.Content = content;
+            if (content != null)
+            {
+                base.Content = content;
+            }
         }
 
         private bool HasCustomBorder
