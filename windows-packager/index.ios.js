@@ -1,7 +1,17 @@
 'use strict';
 
-var React = require('react-native');
-var {AppRegistry, View, Text, TextInput } = React;
+const React = require('react-native');
+const styles={
+   views:{
+       flexDirection: 'column'
+   },
+   images: {
+       height:200,
+       width:250
+   }
+};
+
+var {AppRegistry, View, Text, TextInput, Image } = React;
 
     var ReactRoot = React.createClass({
 		
@@ -11,13 +21,20 @@ var {AppRegistry, View, Text, TextInput } = React;
 	},
 
     render: function() {
+        let imageURL = "http://facebook.github.io/react-native/img/opengraph.png?2";
+        
         return (
-              <View>
+            <View>
+              <View style={styles.views}>
 		         <Text>Hello!</Text>
 				{(this.state && this.state.value) 
 			     ? <TextInput value={this.state.value}></TextInput> 
 				 : undefined}
               </View>
+              <View style={styles.views}>
+                 <Image source={{uri: 'http://facebook.github.io/origami/public/images/blog-hero.jpg?r=1'}} style={styles.images}/>
+              </View>
+            </View>
         );
     }
  });

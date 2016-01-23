@@ -190,7 +190,7 @@ namespace ReactNative.Views.TextInput
         {
             view.TextChanged -= this.OnInterceptTextChangeEvent;
             view.GotFocus -= this.OnInterceptGotFocusEvent;
-            view.LostFocus -= this.OnInterceptLostFocusEvent;
+            //view.LostFocus -= this.OnInterceptLostFocusEvent;
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace ReactNative.Views.TextInput
         {
             view.TextChanged += this.OnInterceptTextChangeEvent;
             view.GotFocus += this.OnInterceptGotFocusEvent;
-            view.LostFocus += this.OnInterceptLostFocusEvent;
+            //view.LostFocus += this.OnInterceptLostFocusEvent;
         }
 
         protected override void UpdateExtraData(TextBox root, object extraData)
@@ -251,7 +251,7 @@ namespace ReactNative.Views.TextInput
        
         private EventDispatcher GetEventDispatcher(TextBox textBox)
         {
-            return textBox?.GetReactContext().CatalystInstance.GetNativeModule<UIManagerModule>().EventDispatcher;
+            return textBox?.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher;
         }
     }
 }

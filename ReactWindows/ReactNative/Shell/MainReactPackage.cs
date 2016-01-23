@@ -4,6 +4,7 @@ using ReactNative.Modules.Core;
 using ReactNative.Modules.Toast;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.Image;
 using ReactNative.Views.Scroll;
 using ReactNative.Views.Switch;
 using ReactNative.Views.Text;
@@ -48,8 +49,8 @@ namespace ReactNative.Shell
             {
                 //new ReactDrawerLayoutManager(),
                 //new ReactHorizontalScrollViewManager(),
-                //new ReactImageManager(),
-                //new ReactProgressBarViewManager(),
+                new ReactImageView(),
+                new ReactVirtualImageManager(),
                 new ReactRawTextManager(),
                 //new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
