@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
+using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 
