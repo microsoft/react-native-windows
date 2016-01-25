@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReactNative.Views.Image
 {
-    public class ReactVirtualImageManager : ReactImageView
+    public class ReactVirtualImageManager : ReactImageManager
     {
         private const string ReactClass = "RCTVirtualImage";
 

@@ -233,7 +233,7 @@
     <Compile Include="UIManager\Events\TouchEventTypeExtensions.cs" />
     <Compile Include="Views\Image\ReactImageLoadedEvent.cs" />
     <Compile Include="Views\Image\ReactImageLoadingEvent.cs" />
-    <Compile Include="Views\Image\ReactImageView.cs" />
+    <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Image\ReactVirtualImageManager.cs" />
     <Compile Include="Views\TextInput\TextBoxExtensions.cs" />
     <Compile Include="Views\Text\FontStyleHelpers.cs" />

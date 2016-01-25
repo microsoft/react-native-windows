@@ -16,7 +16,7 @@ namespace ReactNative.Views.Image
     /// The view manager responsible for rendering native <see cref="ImageControl"/>.
     /// TODO. Implememt tincolor property and fadeDuration animation support
     /// </summary>
-    public class ReactImageView : SimpleViewManager<BorderedContentControl>
+    public class ReactImageManager : SimpleViewManager<BorderedContentControl>
     {
         private const string ReactClass = "RCTImageView";
         private const string PROP_SOURCE = "source";
@@ -44,7 +44,7 @@ namespace ReactNative.Views.Image
 
         protected override BorderedContentControl CreateViewInstanceCore(ThemedReactContext reactContext)
         {
-            return new BorderedContentControl(null);
+            return new BorderedContentControl(new Border());
         }
 
         /// <summary>
@@ -55,7 +55,34 @@ namespace ReactNative.Views.Image
         public void OnInterceptImageLoadingEvent(FrameworkElement sender, object e)
         {
             var senderImage = (BorderedContentControl)sender;
+
+            var borderComponent = senderImage.Content as Border;
+            var imageBrush = default(ImageBrush);
+
+            if (borderComponent != null && TryParseBorderImage(borderComponent, out imageBrush))
+            {
+                var bitmapImage = imageBrush.ImageSource as BitmapImage;
+                bitmapImage.DecodePixelHeight = (int)sender.Height;
+                bitmapImage.DecodePixelWidth = (int)sender.Width;
+                imageBrush.Stretch = Stretch.Fill;
+            }
+
             GetEventDispatcher(senderImage).DispatchEvent(new ReactImageLoadingEvent(senderImage.GetTag()));
+        }
+
+        private bool TryParseBorderImage(Border border, out ImageBrush backgroundImage)
+        {
+            if (border !=null && border.Background != null && border.Background.GetType() == typeof(ImageBrush))
+            {
+                backgroundImage = border.Background as ImageBrush;
+
+                return true;
+            }
+            else
+            {
+                backgroundImage = null;
+                return false;
+            }
         }
 
         /// <summary>
@@ -103,14 +130,14 @@ namespace ReactNative.Views.Image
                     imageSrcURL = new Uri("ms-appx://" + source);
                 }
 
-                if (imageSrcURL != null)
+                if (imageSrcURL != null && view.Content.GetType() == typeof(Border))
                 {
                     var backgroundImage = new ImageBrush()
                     {
                         ImageSource = new BitmapImage(imageSrcURL)
                     };
 
-                    view.Background = backgroundImage;
+                    ((Border)view.Content).Background = backgroundImage;
                 }
             }
         }
