@@ -165,7 +165,15 @@ namespace ReactNative.Views.TextInput
         public void OnInterceptGotFocusEvent(object sender, RoutedEventArgs @event)
         {
             var senderTextInput = (TextBox)sender;
-            GetEventDispatcher(senderTextInput).DispatchEvent(new ReactTextInputFocusEvent(senderTextInput.GetTag()));
+            if(HasFocus(senderTextInput.FocusState))
+            {
+                GetEventDispatcher(senderTextInput).DispatchEvent(new ReactTextInputFocusEvent(senderTextInput.GetTag()));
+            }            
+        }
+
+        private static bool HasFocus(FocusState state)
+        {
+            return state == FocusState.Keyboard || state == FocusState.Programmatic;
         }
 
         /// <summary>
@@ -189,8 +197,11 @@ namespace ReactNative.Views.TextInput
         protected override void OnDropViewInstance(ThemedReactContext reactContext, TextBox view)
         {
             view.TextChanged -= this.OnInterceptTextChangeEvent;
+            //TODO: Need to figure out how to get this to work. Scared that there is no way to truly detect the focus event 
+            //of a TextBox. Spent 5 hours trying every variation imagineable.
             view.GotFocus -= this.OnInterceptGotFocusEvent;
-            //view.LostFocus -= this.OnInterceptLostFocusEvent;
+            
+            view.LostFocus -= this.OnInterceptLostFocusEvent;
         }
 
         /// <summary>
@@ -211,8 +222,8 @@ namespace ReactNative.Views.TextInput
         protected override void AddEventEmitters(ThemedReactContext reactContext, TextBox view)
         {
             view.TextChanged += this.OnInterceptTextChangeEvent;
-            view.GotFocus += this.OnInterceptGotFocusEvent;
-            //view.LostFocus += this.OnInterceptLostFocusEvent;
+            //view.GotFocus += this.OnInterceptGotFocusEvent;
+            view.LostFocus += this.OnInterceptLostFocusEvent;
         }
 
         protected override void UpdateExtraData(TextBox root, object extraData)

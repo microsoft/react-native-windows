@@ -38,7 +38,7 @@ namespace ReactNative.Shell
             {
                 //new ReactDrawerLayoutManager(),
                 //new ReactHorizontalScrollViewManager(),
-                new ReactImageView(),
+                new ReactImageManager(),
                 new ReactVirtualImageManager(),
                 new ReactRawTextManager(),
                 //new RecyclerViewBackedScrollViewManager(),

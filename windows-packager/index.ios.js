@@ -7,7 +7,10 @@ const styles={
    },
    images: {
        height:200,
-       width:250
+       width:250,
+       borderWidth: 5, 
+       borderColor: '#f099f0',
+       borderRadius: 10
    }
 };
 
