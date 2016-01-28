@@ -235,6 +235,7 @@
     <Compile Include="Views\Image\ReactImageLoadingEvent.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Image\ReactVirtualImageManager.cs" />
+    <Compile Include="Views\TextInput\ReactMultilineTextInputManager.cs" />
     <Compile Include="Views\TextInput\TextBoxExtensions.cs" />
     <Compile Include="Views\Text\FontStyleHelpers.cs" />
     <Compile Include="UIManager\ReactPointerEventsView.cs" />
