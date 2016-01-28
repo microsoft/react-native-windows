@@ -108,6 +108,16 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
+    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
+	<Compile Include="DevSupport\DevSupportManager.cs" />
+    <Compile Include="DevSupport\DisabledDevSupportManager.cs" />
+    <Compile Include="DevSupport\IStackFrame.cs" />
+    <Compile Include="DevSupport\RedBoxDialog.cs" />
+    <Compile Include="DevSupport\StackFrameExtensions.cs" />
+    <Compile Include="DevSupport\StackTraceHelper.cs" />
+	<Compile Include="DevSupport\IDevSupportManager.cs" />
+	<Compile Include="Modules\AppState\AppStateModule.cs" />
     <Compile Include="Bridge\ILifecycleEventListener.cs" />
     <Compile Include="Bridge\IPromise.cs" />
     <Compile Include="Bridge\CatalystInstance.cs" />
