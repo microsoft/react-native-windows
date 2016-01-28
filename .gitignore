@@ -45,5 +45,5 @@ node_modules
 .DS_Store
 
 #JS
-*.jsbundle
+**/*/*.jsbundle
 *.swp
