@@ -1,22 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
-using ReactNative.Views.View;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Media3D;
-using Windows.UI.Xaml.Shapes;
 
 namespace ReactNative.Views.TextInput
 {
@@ -29,6 +18,7 @@ namespace ReactNative.Views.TextInput
         private const string PROP_ROTATION_X = "rotationX";
         private const string PROP_PLACEHOLDER = "placeholder";
         private const string PROP_TEXT_ALIGN = "textAlign";
+        private const string PROP_VERITCAL_TEXT_ALIGN = "textAlignVertical";
         private const string PROP_MAX_LENGTH = "maxLength";
         private const string PROP_TEXT = "text";
         private const string PROP_IS_EDITABLE = "editable";
@@ -47,35 +37,47 @@ namespace ReactNative.Views.TextInput
             {
                 return new Dictionary<string, object>()
                 {
-                    { "topFocus", new Dictionary<string, object>()
                     {
-                        { "phasedRegistrationNames", new Dictionary<string, string>()
+                        "topFocus",
+                        new Dictionary<string, object>()
                         {
-                                                        { "bubbled" , "onFocus" },
-                                                        { "captured" , "onFocusCapture" }
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onFocus" },
+                                    { "captured" , "onFocusCapture" }
+                                }
+                            }
                         }
-                        }
-                    }
                     },
-                    { "topEndEditing", new Dictionary<string, object>()
                     {
-                        { "phasedRegistrationNames", new Dictionary<string, string>()
+                        "topEndEditing",
+                        new Dictionary<string, object>()
                         {
-                                                        { "bubbled" , "onEndEditing" },
-                                                        { "captured" , "onEndEditingCapture" }
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onEndEditing" },
+                                    { "captured" , "onEndEditingCapture" }
+                                }
+                            }
                         }
-                        }
-                    }
                     },
-                    { "topBlur", new Dictionary<string, object>()
                     {
-                        { "phasedRegistrationNames", new Dictionary<string, string>()
+                        "topBlur",
+                        new Dictionary<string, object>()
                         {
-                                                        { "bubbled" , "onBlur" },
-                                                        { "captured" , "onBlurCapture" }
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onBlur" },
+                                    { "captured" , "onBlurCapture" }
+                                }
+                            }
                         }
-                        }
-                    }
                     },
                 };
             }
@@ -112,6 +114,35 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the text alignment property on the <see cref="TextBox"/>.
+        /// </summary>
+        /// <param name="view">The text input box control.</param>
+        /// <param name="alignment">The text alignment.</param>
+        /// <remarks>
+        /// TODO: test this out.
+        /// </remarks>
+        [ReactProperty(PROP_VERITCAL_TEXT_ALIGN)]
+        public void SetTextVerticalAlign(TextBox view, string alignment)
+        {
+            var textAlignment = default(VerticalAlignment);
+            if (Enum.TryParse(alignment, out textAlignment))
+            {
+                view.VerticalContentAlignment = textAlignment;
+            }
+        }
+
+        /// <summary>
+        /// Sets the editablity property on the <see cref="TextBox"/>.
+        /// </summary>
+        /// <param name="view">The text input box control.</param>
+        /// <param name="editable">The text alignment.</param>
+        [ReactProperty(PROP_IS_EDITABLE)]
+        public void SetEditable(TextBox view, bool editable)
+        {
+            view.IsReadOnly = editable;
+        }
+
+        /// <summary>
         /// Sets the default text placeholder property on the <see cref="TextBox"/>.
         /// </summary>
         /// <param name="view">The text input box control.</param>
@@ -125,8 +156,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the foreground color property on the <see cref="TextBox"/>.
         /// </summary>
-        /// <param name="color"></param>
-        [ReactProperty(ViewProperties.Color)]
+        /// <param name="color">The masked color value.</param>
+        /// <remarks>
+        /// TODO: test and get working.
+        /// </remarks>
+        [ReactProperty(ViewProperties.Color, CustomType = "Color")]
         public void SetColor(TextBox view, uint? color)
         {
             if (color.HasValue)
@@ -158,17 +192,6 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// The <see cref="TextBox"/> event interceptor for focus gained events for the native control.
-        /// </summary>
-        /// <param name="sender">The source sender view.</param>
-        /// <param name="event">The received event args</param>
-        public void OnInterceptGotFocusEvent(object sender, RoutedEventArgs @event)
-        {
-            var senderTextInput = (TextBox)sender;
-            GetEventDispatcher(senderTextInput).DispatchEvent(new ReactTextInputFocusEvent(senderTextInput.GetTag()));
-        }
-
-        /// <summary>
         /// The <see cref="TextBox"/> event interceptor for text change events for the native control.
         /// </summary>
         /// <param name="sender">The source sender view.</param>
@@ -189,7 +212,7 @@ namespace ReactNative.Views.TextInput
         protected override void OnDropViewInstance(ThemedReactContext reactContext, TextBox view)
         {
             view.TextChanged -= this.OnInterceptTextChangeEvent;
-            view.GotFocus -= this.OnInterceptGotFocusEvent;
+            // TODO: Figure out how to get intercept focus to work this to work.
             view.LostFocus -= this.OnInterceptLostFocusEvent;
         }
 
@@ -211,8 +234,18 @@ namespace ReactNative.Views.TextInput
         protected override void AddEventEmitters(ThemedReactContext reactContext, TextBox view)
         {
             view.TextChanged += this.OnInterceptTextChangeEvent;
-            view.GotFocus += this.OnInterceptGotFocusEvent;
+            // TODO: Figure out how to get intercept focus to work this to work.
             view.LostFocus += this.OnInterceptLostFocusEvent;
+        }
+
+        /// <summary>
+        /// Sets the border width for a <see cref="TextBox"/>.
+        /// </summary>
+        /// <param name="text"></param>
+        [ReactProperty(ViewProperties.BorderWidth)]
+        public void SetBorderWidth(TextBox root, int border)
+        {
+            root.BorderThickness = new Thickness(border);
         }
 
         protected override void UpdateExtraData(TextBox root, object extraData)
@@ -251,7 +284,7 @@ namespace ReactNative.Views.TextInput
        
         private EventDispatcher GetEventDispatcher(TextBox textBox)
         {
-            return textBox?.GetReactContext().CatalystInstance.GetNativeModule<UIManagerModule>().EventDispatcher;
+            return textBox?.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher;
         }
     }
 }

@@ -1,21 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// Event emitted by <see cref="TextBox"/> native view when the control gains focus.
+    /// Event emitted by <see cref="Windows.UI.Xaml.Controls.TextBox"/> native 
+    /// view when the control gains focus.
     /// </summary>
     class ReactTextInputBlurEvent : Event
     {
-        public static readonly String EVENT_NAME = "topBlur";
-
-        public ReactTextInputBlurEvent(int viewId) : base(viewId, TimeSpan.FromTicks(Environment.TickCount))
+        public ReactTextInputBlurEvent(int viewId) 
+            : base(viewId, TimeSpan.FromTicks(Environment.TickCount))
         {
         }
 
@@ -26,28 +22,35 @@ namespace ReactNative.Views.TextInput
         {
             get
             {
-                return EVENT_NAME;
+                return "topBlur";
             }
         }
 
         /// <summary>
-        /// Push the event up to the event emitter.
+        /// Disabling event coalescing.
         /// </summary>
-        /// <param name="rctEventEmitter">The event emitter to dispatch the event to.</param>
-        public override void Dispatch(RCTEventEmitter eventEmitter)
-        {
-            eventEmitter.receiveEvent(this.ViewTag, this.EventName, this.GetEventJavascriptProperties);
-        }
-
-        private JObject GetEventJavascriptProperties
+        /// <remarks>
+        /// Return false if the event can never be coalesced.
+        /// </remarks>
+        public override bool CanCoalesce
         {
             get
             {
-                return new JObject()
-                {
-                    {"target", this.ViewTag }
-                };
+                return false;
             }
+        }
+        /// <summary>
+        /// Dispatch this event to JavaScript using the given event emitter.
+        /// </summary>
+        /// <param name="eventEmitter">The event emitter.</param>
+        public override void Dispatch(RCTEventEmitter eventEmitter)
+        {
+            var eventData = new JObject
+            {
+                { "target", ViewTag },
+            };
+
+            eventEmitter.receiveEvent(ViewTag, EventName, eventData);
         }
     }
 }

@@ -11,7 +11,8 @@ using Windows.UI.Xaml.Media;
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// This extension of <see cref="LayoutShadowNode"/> is responsible for measuring the layout for Native <see cref="TextBox"/>.
+    /// This extension of <see cref="LayoutShadowNode"/> is responsible for 
+    /// measuring the layout for Native <see cref="TextBox"/>.
     /// </summary>
     public class ReactTextInputShadowNode : LayoutShadowNode
     {
@@ -139,7 +140,21 @@ namespace ReactNative.Views.TextInput
             _textBoxStyle.Text = text;
             MarkUpdated();
         }
-        
+
+        /// <summary>
+        /// Sets the the backgrund border color for a <see cref="TextBox"/>.
+        /// </summary>
+        /// <param name="text"></param>
+        [ReactProperty(ViewProperties.BorderColor)]
+        public void SetBorderColor(uint? color)
+        {
+            if (color.HasValue)
+            {
+                _textBoxStyle.BorderColor = ColorHelpers.Parse(color.Value);
+                MarkUpdated();
+            }
+        }
+
         /// <summary>
         /// Marks the node as updated/dirty. This occurs on any property 
         /// changes affecting the measurement of the <see cref="TextBox"/>.
@@ -160,17 +175,24 @@ namespace ReactNative.Views.TextInput
                                  node.GetPaddingSpace(CSSSpacingType.Right), node.GetPaddingSpace(CSSSpacingType.Bottom));
         }
 
-        private static MeasureOutput MeasureText(CSSNode node, float width, float height)
+        protected virtual MeasureOutput MeasureText(CSSNode node, float width, float height)
         {
             var shadowNode = (ReactTextInputShadowNode)node;
-            var textBlock = new TextBox();
-            shadowNode._textBoxStyle.Padding = PaddingThickness(shadowNode);
-            textBlock.SetReactTextBoxProperties(shadowNode._textBoxStyle);
+            var textBox = new TextBox();
+ 
+            textBox.SetReactTextBoxProperties(shadowNode._textBoxStyle);
+            
+            if (!float.IsNaN(width))
+            {
+                textBox.MaxWidth = width;
+            }
 
-            var adjustedHeight = float.IsNaN(height) ? double.PositiveInfinity : height;
-            textBlock.Measure(new Size(width, adjustedHeight));
+            if (!float.IsNaN(height))
+            {
+                textBox.MaxHeight = height;
+            }
 
-            return new MeasureOutput((float)textBlock.DesiredSize.Width, (float)textBlock.DesiredSize.Height);
+            return new MeasureOutput((float)textBox.DesiredSize.Width, (float)textBox.DesiredSize.Height);
         }
     }
 }

@@ -103,26 +103,7 @@ namespace ReactNative.UIManager
 
             if (_customBorder != null)
             {
-                var thickness = _customBorder.BorderThickness;
-                switch (kind)
-                {
-                    case CSSSpacingType.Left:
-                        thickness.Left = width;
-                        break;
-                    case CSSSpacingType.Top:
-                        thickness.Top = width;
-                        break;
-                    case CSSSpacingType.Right:
-                        thickness.Right = width;
-                        break;
-                    case CSSSpacingType.Bottom:
-                        thickness.Bottom = width;
-                        break;
-                    case CSSSpacingType.All:
-                        thickness = new Thickness(width);
-                        break;
-                }
-                _customBorder.BorderThickness = thickness;
+                _customBorder.SetBorderWidth(kind, width);
             }
             else
             {
@@ -241,7 +222,7 @@ namespace ReactNative.UIManager
             {
                 return;
             }
-
+            
             var inner = Content;
             base.Content = null;
             _customBorder = new Border();
