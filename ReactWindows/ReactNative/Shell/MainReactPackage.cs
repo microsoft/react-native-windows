@@ -50,7 +50,7 @@ namespace ReactNative.Shell
                 //new ReactDrawerLayoutManager(),
                 //new ReactHorizontalScrollViewManager(),
                 new ReactImageManager(),
-                //new ReactVirtualImageManager(),
+                new ReactVirtualImageManager(),
                 new ReactRawTextManager(),
                 //new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
