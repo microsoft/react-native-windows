@@ -156,7 +156,10 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the foreground color property on the <see cref="TextBox"/>.
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">The masked color value.</param>
+        /// <remarks>
+        /// TODO: test and get working.
+        /// </remarks>
         [ReactProperty(ViewProperties.Color, CustomType = "Color")]
         public void SetColor(TextBox view, uint? color)
         {
