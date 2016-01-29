@@ -149,7 +149,7 @@ namespace ReactNative.Views.TextInput
         {
             if (color.HasValue)
             {
-                _textBoxStyle.BorderBackground = ColorHelpers.Parse(color.Value);
+                _textBoxStyle.BorderColor = ColorHelpers.Parse(color.Value);
                 MarkUpdated();
             }
         }
