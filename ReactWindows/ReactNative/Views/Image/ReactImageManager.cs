@@ -193,7 +193,7 @@ namespace ReactNative.Views.Image
 
         private static EventDispatcher GetEventDispatcher(FrameworkElement image)
         {
-            return image.GetReactContext().CatalystInstance.GetNativeModule<UIManagerModule>().EventDispatcher;
+            return image.GetReactContext().ReactInstance.GetNativeModule<UIManagerModule>().EventDispatcher;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace ReactNative.UIManager
         public void HandleCreateView(
             ReactShadowNode node, 
             ThemedReactContext themedContext, 
-            CatalystStylesDiffMap initialProperties)
+            ReactStylesDiffMap initialProperties)
         {
 #if !ENABLED
             _uiViewOperationQueue.EnqueueCreateView(
@@ -110,7 +110,7 @@ namespace ReactNative.UIManager
         /// <param name="node">The node.</param>
         /// <param name="className">The class name.</param>
         /// <param name="properties">The properties.</param>
-        public void HandleUpdateView(ReactShadowNode node, string className, CatalystStylesDiffMap properties)
+        public void HandleUpdateView(ReactShadowNode node, string className, ReactStylesDiffMap properties)
         {
 #if !ENABLED
             _uiViewOperationQueue.EnqueueUpdateProperties(node.ReactTag, className, properties);
@@ -426,7 +426,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void TransitionLayoutOnlyViewToNativeView(ReactShadowNode node, CatalystStylesDiffMap properties)
+        private void TransitionLayoutOnlyViewToNativeView(ReactShadowNode node, ReactStylesDiffMap properties)
         {
             var parent = node.Parent;
             if (parent == null)
@@ -473,7 +473,7 @@ namespace ReactNative.UIManager
             _tagsWithLayoutVisited.Clear();
         }
 
-        private bool IsLayoutOnlyAndCollapsible(CatalystStylesDiffMap properties)
+        private bool IsLayoutOnlyAndCollapsible(ReactStylesDiffMap properties)
         {
             if (properties == null)
             {

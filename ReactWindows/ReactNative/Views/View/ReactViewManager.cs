@@ -112,7 +112,7 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
-        /// Sets the elevation transformation effect of the <see cref="ReactPanel"/>. 
+        /// Sets the elevation transformation effect of the <see cref="ReactCanvas"/>. 
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="elevation">The 3D Z-Location index of the <see cref="ReactRootView"/>.</param>
@@ -124,7 +124,7 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
-        /// Sets the <see cref="ReactPanel"/> pointer events based on a event string key.
+        /// Sets the <see cref="ReactCanvas"/> pointer events based on a event string key.
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="pointerEventsStr">The event to propogate down to the view.</param>
@@ -140,7 +140,7 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
-        /// Sets the border thickness of the <see cref="ReactPanel"/>.
+        /// Sets the border thickness of the <see cref="ReactCanvas"/>.
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="index">The property index.</param>
@@ -158,7 +158,7 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
-        /// Set the border color of the <see cref="ReactPanel"/>.
+        /// Set the border color of the <see cref="ReactCanvas"/>.
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="index">The property index.</param>
@@ -186,17 +186,17 @@ namespace ReactNative.Views.View
         /// <returns>The view instance.</returns>
         protected override FrameworkElement CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new BorderedContentControl(new ReactPanel());
+            return new BorderedContentControl(new ReactCanvas());
         }
 
-        private ReactPanel GetPanel(FrameworkElement element)
+        private ReactCanvas GetPanel(FrameworkElement element)
         {
             return GetPanel((BorderedContentControl)element);
         }
 
-        private ReactPanel GetPanel(BorderedContentControl control)
+        private ReactCanvas GetPanel(BorderedContentControl control)
         {
-            return (ReactPanel)control.Content;
+            return (ReactCanvas)control.Content;
         }
     }
 }

@@ -104,7 +104,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="CreateJsBundle.cmd" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +111,7 @@
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\ILifecycleEventListener.cs" />
     <Compile Include="Bridge\IPromise.cs" />
-    <Compile Include="Bridge\CatalystInstance.cs" />
+    <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\IInvocationHandler.cs" />
@@ -132,14 +131,14 @@
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="Bridge\ICallback.cs" />
-    <Compile Include="Bridge\ICatalystInstance.cs" />
+    <Compile Include="Bridge\IReactInstance.cs" />
     <Compile Include="Bridge\INativeMethod.cs" />
     <Compile Include="Bridge\IOnBatchCompleteListener.cs" />
     <Compile Include="Bridge\NativeModuleBase.cs" />
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
-    <Compile Include="Bridge\Queue\CatalystQueueConfiguration.cs" />
-    <Compile Include="Bridge\Queue\CatalystQueueConfigurationSpec.cs" />
-    <Compile Include="Bridge\Queue\ICatalystQueueConfiguration.cs" />
+    <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
+    <Compile Include="Bridge\Queue\ReactQueueConfigurationSpec.cs" />
+    <Compile Include="Bridge\Queue\IReactQueueConfiguration.cs" />
     <Compile Include="Bridge\Queue\IMessageQueueThread.cs" />
     <Compile Include="Bridge\Queue\LimitedConcurrencyTaskScheduler.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThread.cs" />
@@ -172,7 +171,7 @@
     <Compile Include="UIManager\BorderExtensions.cs" />
     <Compile Include="UIManager\ColorHelpers.cs" />
     <Compile Include="UIManager\CSSNodeExtensions.cs" />
-    <Compile Include="UIManager\Events\IOnIntercepTextGotFocusEventListener.cs" />
+    <Compile Include="UIManager\Events\IOnInterceptTextGotFocusEventListener.cs" />
     <Compile Include="UIManager\Events\IOnInterceptTextInputEventListener.cs" />
     <Compile Include="LifecycleState.cs" />
     <Compile Include="IReactInstanceManager.cs" />
@@ -213,17 +212,15 @@
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
-    <Compile Include="UIManager\Animation\AnimationRegistry.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
-    <Compile Include="UIManager\CatalystStylesDiffMap.cs" />
-    <Compile Include="UIManager\CatalystStylesDiffMapExtensions.cs" />
+    <Compile Include="UIManager\ReactStylesDiffMap.cs" />
+    <Compile Include="UIManager\ReactStylesDiffMapExtensions.cs" />
     <Compile Include="UIManager\Events\Event.cs" />
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bridge\IReactBridge.cs" />
-    <Compile Include="ReactMethodAttribute.cs" />
-    <Compile Include="Reflection\MethodInfoHelpers.cs" />
+    <Compile Include="Bridge\ReactMethodAttribute.cs" />
     <Compile Include="Reflection\ReflectionHelpers.cs" />
     <Compile Include="Tracing\EventSourceManager.cs" />
     <Compile Include="Tracing\TraceDisposable.cs" />
@@ -237,7 +234,7 @@
     <Compile Include="Views\TextInput\ReactMultilineTextInputManager.cs" />
     <Compile Include="Views\TextInput\TextBoxExtensions.cs" />
     <Compile Include="Views\Text\FontStyleHelpers.cs" />
-    <Compile Include="UIManager\ReactPointerEventsView.cs" />
+    <Compile Include="UIManager\IReactPointerEventsView.cs" />
     <Compile Include="UIManager\RootViewHelper.cs" />
     <Compile Include="UIManager\RootViewManager.cs" />
     <Compile Include="UIManager\SimpleViewManager.cs" />
@@ -281,11 +278,11 @@
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
     <Compile Include="Views\Text\ReactVirtualTextViewManager.cs" />
-    <Compile Include="Touch\ICatalystInterceptingViewGroup.cs" />
+    <Compile Include="Touch\IReactInterceptingViewGroup.cs" />
     <Compile Include="Views\TextInput\ReactTextChangedEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputBlurEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputFocusEvent.cs" />
-    <Compile Include="Views\View\ReactPanel.cs" />
+    <Compile Include="Views\View\ReactCanvas.cs" />
     <Compile Include="Views\View\ReactViewManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
     <Compile Include="Modules\Toast\ToastHelper.cs" />
