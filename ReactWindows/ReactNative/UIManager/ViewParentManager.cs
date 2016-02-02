@@ -9,6 +9,11 @@ namespace ReactNative.UIManager
     /// </summary>
     public abstract class ViewParentManager : ViewManager
     {
+        /// <summary>
+        /// The <see cref="Type"/> instance that represents the type of shadow
+        /// node that this manager will return from
+        /// <see cref="CreateShadowNodeInstance"/>.
+        /// </summary>
         public sealed override Type ShadowNodeType
         {
             get

@@ -2,13 +2,23 @@
 
 namespace ReactNative.Touch
 {
+    /// <summary>
+    /// A listener for intercepting touch events.
+    /// </summary>
     public interface IOnInterceptTouchEventListener
     {
         /// <summary>
-        /// Called when a onInterceptTouch is invoked on a view parent
+        /// Called to evaluate touch interception occurs on a view parent.
         /// </summary>
-        /// <param name="event"> The motion event being dispatched down the hierarchy.</param>
-        /// <returns>Return true to steal motion event from the children and have the dispatched to this view, or return false to allow motion event to be delivered to children view</returns>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="event">
+        /// The motion event being dispatched down the hierarchy.
+        /// </param>
+        /// <returns>
+        /// <code>true</code> to steal the motion event from the children and 
+        /// dispatch to this view, or <code>false</code> to allow the motion 
+        /// event to be delivered to the child view.
+        /// </returns>
         bool OnInterceptTouchEvent(object sender, PointerRoutedEventArgs @event);
     }
 }

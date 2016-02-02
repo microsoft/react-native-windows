@@ -171,8 +171,6 @@
     <Compile Include="UIManager\BorderExtensions.cs" />
     <Compile Include="UIManager\ColorHelpers.cs" />
     <Compile Include="UIManager\CSSNodeExtensions.cs" />
-    <Compile Include="UIManager\Events\IOnInterceptTextGotFocusEventListener.cs" />
-    <Compile Include="UIManager\Events\IOnInterceptTextInputEventListener.cs" />
     <Compile Include="LifecycleState.cs" />
     <Compile Include="IReactInstanceManager.cs" />
     <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
@@ -228,6 +226,7 @@
     <Compile Include="UIManager\AppRegistry.cs" />
     <Compile Include="UIManager\Events\TouchEventType.cs" />
     <Compile Include="UIManager\Events\TouchEventTypeExtensions.cs" />
+    <Compile Include="UIManager\UIImplementationProvider.cs" />
     <Compile Include="Views\Image\ReactImageLoadEvent.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Image\ReactVirtualImageManager.cs" />
@@ -248,7 +247,6 @@
     <Compile Include="UIManager\PropertySetter.cs" />
     <Compile Include="UIManager\ReactPropertyBaseAttribute.cs" />
     <Compile Include="UIManager\ReactPropertyGroupAttribute.cs" />
-    <Compile Include="UIManager\ISizeChangedListener.cs" />
     <Compile Include="UIManager\SizeMonitoringCanvas.cs" />
     <Compile Include="UIManager\NativeViewHierarchyManager.cs" />
     <Compile Include="UIManager\ReactPropertyAttribute.cs" />
@@ -257,7 +255,6 @@
     <Compile Include="UIManager\ShadowNodeRegistry.cs" />
     <Compile Include="UIManager\ThemedReactContext.cs" />
     <Compile Include="UIManager\UIImplementation.cs" />
-    <Compile Include="UIManager\UIImplementationProvider.cs" />
     <Compile Include="UIManager\UIManagerModule.cs" />
     <Compile Include="UIManager\UIManagerModule.Constants.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
