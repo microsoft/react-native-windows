@@ -54,34 +54,5 @@ namespace ReactNative.Views.View
 
             _onInterceptTouchEventListener.OnInterceptTouchEvent(sender, ev);
         }
-
-        /// <summary>
-        /// Sets an elevation 3D transformation effect on the <see cref="ReactCanvas"/>.
-        /// </summary>
-        /// <param name="elevation">The positive negative elevation Z Index value of the view.</param>
-        public void SetElevationEffect(float elevation)
-        {
-            var transform = EnsureTransform();
-            transform.TranslateZ = elevation;
-            Transform3D = transform;
-        }
-
-        private CompositeTransform3D EnsureTransform()
-        {
-            var transform = Transform3D;
-            var compositeTransform = transform as CompositeTransform3D;
-            if (transform != null && compositeTransform == null)
-            {
-                throw new InvalidOperationException("Transform property is already set.");
-            }
-
-            if (transform == null)
-            {
-                compositeTransform = new CompositeTransform3D();
-                Transform3D = compositeTransform;
-            }
-
-            return compositeTransform;
-        }
     }
 }
