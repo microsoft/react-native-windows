@@ -135,6 +135,21 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
+        /// Set the border color of the <see cref="ReactCanvas"/>.
+        /// </summary>
+        /// <param name="view">The view panel.</param>
+        /// <param name="color">The color hex code.</param>
+        [ReactProperty("borderColor", CustomType = "Color")]
+        public void SetBorderColor(BorderedContentControl view, uint? color)
+        {
+            // TODO: what if color is null?
+            if (color.HasValue)
+            {
+                view.SetBorderColor(color.Value);
+            }
+        }
+
+        /// <summary>
         /// Sets the <see cref="ReactCanvas"/> pointer events based on a event string key.
         /// </summary>
         /// <param name="view">The view panel.</param>
@@ -166,28 +181,6 @@ namespace ReactNative.Views.View
         public void SetBorderWidth(BorderedContentControl view, int index, double width)
         {
             view.SetBorderWidth(ViewProperties.BorderSpacingTypes[index], width);
-        }
-
-        /// <summary>
-        /// Set the border color of the <see cref="ReactCanvas"/>.
-        /// </summary>
-        /// <param name="view">The view panel.</param>
-        /// <param name="index">The property index.</param>
-        /// <param name="color">The color hex code.</param>
-        [ReactPropertyGroup(
-            "borderColor",
-            "borderLeftColor",
-            "borderRightColor",
-            "borderTopColor",
-            "borderBottomColor",
-            CustomType = "Color")]
-        public void SetBorderColor(BorderedContentControl view, int index, uint? color)
-        {
-            // TODO: what if color is null?
-            if (color.HasValue)
-            {
-                view.SetBorderColor(ViewProperties.BorderSpacingTypes[index], color.Value);
-            }
         }
 
         /// <summary>

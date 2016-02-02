@@ -1,39 +1,25 @@
 ﻿using ReactNative.Touch;
 using ReactNative.UIManager;
-using System;
-using Windows.UI.Xaml;
+using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Media3D;
 
 namespace ReactNative.Views.View
 {
     /// <summary>
-    /// Backing for a React View. Has support for borders, but since borders 
-    /// aren't common, lazy initializes most of the storage needed for them. Also supports
-    /// 3D transformations such as elevation depth.  
+    /// Backing for a react view.
     /// </summary>
+    /// <remarks>
+    /// TODO: Implement clipping.
+    /// </remarks>
     public class ReactCanvas : Canvas, IReactInterceptingViewParent, IReactPointerEventsView
     {
         private IOnInterceptTouchEventListener _onInterceptTouchEventListener;
 
-        public ReactCanvas() : base()
-        {
-            this.SizeChanged += OnBoundsChanged;
-        }
-
-        public PointerEvents PointerEvents { get; set; } = PointerEvents.Auto;
-
         /// <summary>
-        /// Stubbed out so any class that implements <see cref="ReactViewManager"/> can 
-        /// override the OnBoundsChanged.
-        /// TODO: The default behavior for RCTView still needs to be done.
+        /// The pointer events supported by the view.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected virtual void OnBoundsChanged(object sender, SizeChangedEventArgs e)
-        {
-        }
+        public PointerEvents PointerEvents { get; internal set; } = PointerEvents.Auto;
 
         /// <summary>
         /// Sets the touch event listener for the react view.
@@ -42,7 +28,22 @@ namespace ReactNative.Views.View
         public void SetOnInterceptTouchEventListener(IOnInterceptTouchEventListener listener)
         {
             _onInterceptTouchEventListener = listener;
-            this.PointerPressed += OnInterceptTouchEvent;
+            PointerPressed += OnInterceptTouchEvent;
+        }
+
+        /// <summary>
+        /// Provides the behavior for the measure pass of the layout cycle.
+        /// </summary>
+        /// <param name="availableSize">The available size.</param>
+        /// <returns>The desired size.</returns>
+        /// <remarks>
+        /// Simple override that asserts that the desired size is explicit.
+        /// </remarks>
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            var resultSize = base.MeasureOverride(availableSize);
+            MeasureAssertions.AssertExplicitMeasurement(resultSize.Width, resultSize.Height);
+            return resultSize;
         }
 
         private void OnInterceptTouchEvent(object sender, PointerRoutedEventArgs ev)
