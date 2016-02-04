@@ -8,8 +8,9 @@ const styles={
    images: {
        height:200,
        width:250,
-       borderWidth: 5, 
-       borderColor: '#f099f0',
+       borderWidth: 5,
+       marginTop: 6,
+       borderColor: '#015d87',
        borderRadius: 10
    },
    textInput: {
@@ -37,7 +38,7 @@ var {AppRegistry, View, Text, TextInput, Image } = React;
 	},
 
     render: function() {
-        let imageURL = "http://facebook.github.io/react-native/img/opengraph.png?2";
+        let imageURL = "http://image.slidesharecdn.com/tel-aviv-meetup-150809210316-lva1-app6892/95/pieter-de-baets-an-introduction-to-react-native-1-638.jpg?cb=1439154582";
         
         return (
             <View>
@@ -52,7 +53,7 @@ var {AppRegistry, View, Text, TextInput, Image } = React;
 				 : undefined}
               </View>
               <View style={styles.views}>
-                 <Image source={{uri: 'http://facebook.github.io/origami/public/images/blog-hero.jpg?r=1'}} style={styles.images}/>
+                 <Image source={{uri: imageURL}} style={styles.images}/>
               </View>
             </View>
         );
