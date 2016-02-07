@@ -1,810 +1,414 @@
-package com.facebook.react.uimanager;
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
-import android.support.annotation.Nullable;
-import android.util.SparseArray;
+package com.facebook.react.modules.network;
 
-import com.facebook.infer.annotation.Assertions;
+import javax.annotation.Nullable;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
-import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.GuardedAsyncTask;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableMapKeySetIterator;
-import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.uimanager.events.Event;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.facebook.rebound.BaseSpringSystem;
-import com.facebook.rebound.Spring;
-import com.facebook.rebound.SpringConfig;
-import com.facebook.rebound.SpringLooper;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.stetho.okhttp.StethoInterceptor;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.atomic.AtomicLong;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
+
+import static java.lang.Math.min;
 
 /**
+ * Implements the XMLHttpRequest JavaScript interface.
  */
-public class AnimatedNodesManager {
+public final class NetworkingModule extends ReactContextBaseJavaModule {
 
-  private static final int DEFAULT_ANIMATED_NODE_CHILD_COUNT = 1;
+  private static final String CONTENT_ENCODING_HEADER_NAME = "content-encoding";
+  private static final String CONTENT_TYPE_HEADER_NAME = "content-type";
+  private static final String REQUEST_BODY_KEY_STRING = "string";
+  private static final String REQUEST_BODY_KEY_URI = "uri";
+  private static final String REQUEST_BODY_KEY_FORMDATA = "formData";
+  private static final String USER_AGENT_HEADER_NAME = "user-agent";
 
-  private static class AnimatedNode {
-    private @Nullable List<AnimatedNode> mChildren; /* lazy-initialized when child is added */
-    private int mActiveIncomingNodes = 0;
-    private boolean mEnqueued = false;
-    public int mTag = -1;
+  private static final int MIN_BUFFER_SIZE = 8 * 1024; // 8kb
+  private static final int MAX_BUFFER_SIZE = 512 * 1024; // 512kb
 
-    double mValue = Double.NaN;
+  private static final int CHUNK_TIMEOUT_NS = 100 * 1000000; // 100ms
 
-    public void addChild(AnimatedNode child) {
-      if (mChildren == null) {
-        mChildren = new ArrayList<>(DEFAULT_ANIMATED_NODE_CHILD_COUNT);
-      }
-      Assertions.assertNotNull(mChildren).add(child);
+  private final OkHttpClient mClient;
+  private final ForwardingCookieHandler mCookieHandler;
+  private final @Nullable String mDefaultUserAgent;
+  private boolean mShuttingDown;
+
+  /* package */ NetworkingModule(
+          ReactApplicationContext reactContext,
+          @Nullable String defaultUserAgent,
+          OkHttpClient client) {
+    super(reactContext);
+    mClient = client;
+    mClient.networkInterceptors().add(new StethoInterceptor());
+    mCookieHandler = new ForwardingCookieHandler(reactContext);
+    mShuttingDown = false;
+    mDefaultUserAgent = defaultUserAgent;
+  }
+
+  /**
+   * @param context the ReactContext of the application
+   */
+  public NetworkingModule(final ReactApplicationContext context) {
+    this(context, null, OkHttpClientProvider.getOkHttpClient());
+  }
+
+  /**
+   * @param context the ReactContext of the application
+   * @param defaultUserAgent the User-Agent header that will be set for all requests where the
+   * caller does not provide one explicitly
+   */
+  public NetworkingModule(ReactApplicationContext context, String defaultUserAgent) {
+    this(context, defaultUserAgent, OkHttpClientProvider.getOkHttpClient());
+  }
+
+  public NetworkingModule(ReactApplicationContext reactContext, OkHttpClient client) {
+    this(reactContext, null, client);
+  }
+
+  @Override
+  public void initialize() {
+    mClient.setCookieHandler(mCookieHandler);
+  }
+
+  @Override
+  public String getName() {
+    return "RCTNetworking";
+  }
+
+  @Override
+  public void onCatalystInstanceDestroy() {
+    mShuttingDown = true;
+    mClient.cancel(null);
+
+    mCookieHandler.destroy();
+    mClient.setCookieHandler(null);
+  }
+
+  @ReactMethod
+  public void sendRequest(
+          String method,
+          String url,
+          final int requestId,
+          ReadableArray headers,
+          ReadableMap data,
+          final boolean useIncrementalUpdates) {
+    Request.Builder requestBuilder = new Request.Builder().url(url);
+
+    if (requestId != 0) {
+      requestBuilder.tag(requestId);
     }
 
-    public void removeChild(AnimatedNode child) {
-      if (mChildren == null) {
+    Headers requestHeaders = extractHeaders(headers, data);
+    if (requestHeaders == null) {
+      onRequestError(requestId, "Unrecognized headers format");
+      return;
+    }
+    String contentType = requestHeaders.get(CONTENT_TYPE_HEADER_NAME);
+    String contentEncoding = requestHeaders.get(CONTENT_ENCODING_HEADER_NAME);
+    requestBuilder.headers(requestHeaders);
+
+    if (data == null) {
+      requestBuilder.method(method, RequestBodyUtil.getEmptyBody(method));
+    } else if (data.hasKey(REQUEST_BODY_KEY_STRING)) {
+      if (contentType == null) {
+        onRequestError(requestId, "Payload is set but no content-type header specified");
         return;
       }
-      mChildren.remove(child);
-    }
-
-    public void feedDataFromUpdatedParent(AnimatedNode parent) {
-    }
-
-    public void runAnimationStep(long frameTimeNanos) {
-    }
-
-    public void saveInPropMap(String key, SimpleMap propsMap) {
-      propsMap.putDouble(key, mValue);
-    }
-  }
-
-  private static class StyleAnimatedNode extends AnimatedNode {
-
-    private final AnimatedNodesManager mNodesManager;
-    private final Map<String, Integer> mPropMapping;
-
-    StyleAnimatedNode(ReadableMap config, AnimatedNodesManager nodesManager) {
-      ReadableMap style = config.getMap("style");
-      ReadableMapKeySetIterator iter = style.keySetIterator();
-      mPropMapping = new HashMap<>();
-      while (iter.hasNextKey()) {
-        String propKey = iter.nextKey();
-        int nodeIndex = style.getInt(propKey);
-        mPropMapping.put(propKey, nodeIndex);
-      }
-      mNodesManager = nodesManager;
-    }
-
-    @Override
-    public void saveInPropMap(String key, SimpleMap propsMap) {
-      /* ignore key, style names are flattened */
-      for (String propKey : mPropMapping.keySet()) {
-        // TODO: use entryset = optimize
-        int nodeIndex = mPropMapping.get(propKey);
-        AnimatedNode node = mNodesManager.mAnimatedNodes.get(nodeIndex);
-        if (node != null) {
-          node.saveInPropMap(propKey, propsMap);
-        } else {
-          throw new IllegalArgumentException("Mapped style node does not exists");
+      String body = data.getString(REQUEST_BODY_KEY_STRING);
+      MediaType contentMediaType = MediaType.parse(contentType);
+      if (RequestBodyUtil.isGzipEncoding(contentEncoding)) {
+        RequestBody requestBody = RequestBodyUtil.createGzip(contentMediaType, body);
+        if (requestBody == null) {
+          onRequestError(requestId, "Failed to gzip request body");
+          return;
         }
-      }
-    }
-  }
-
-  private static class ValueAnimatedNode extends AnimatedNode {
-
-    ValueAnimatedNode(ReadableMap config) {
-      mValue = config.getDouble("value");
-    }
-  }
-
-  private static class PropsAnimatedNode extends AnimatedNode {
-
-    private int mConnectedViewTag = -1;
-    private final AnimatedNodesManager mNodesManager;
-    private final Map<String, Integer> mPropMapping;
-
-    PropsAnimatedNode(ReadableMap config, AnimatedNodesManager nodesManager) {
-      ReadableMap props = config.getMap("props");
-      ReadableMapKeySetIterator iter = props.keySetIterator();
-      mPropMapping = new HashMap<>();
-      while (iter.hasNextKey()) {
-        String propKey = iter.nextKey();
-        int nodeIndex = props.getInt(propKey);
-        mPropMapping.put(propKey, nodeIndex);
-      }
-      mNodesManager = nodesManager;
-    }
-
-    public UpdateViewData createUpdateViewData() {
-      SimpleMap propsMap = new SimpleMap();
-      for (String propKey : mPropMapping.keySet()) {
-        // TODO: use entryset = optimize
-        int nodeIndex = mPropMapping.get(propKey);
-        AnimatedNode node = mNodesManager.mAnimatedNodes.get(nodeIndex);
-        if (node != null) {
-          node.saveInPropMap(propKey, propsMap);
-        } else {
-          throw new IllegalArgumentException("Mapped style node does not exists");
-        }
-      }
-      return new UpdateViewData(mConnectedViewTag, propsMap);
-    }
-  }
-
-  private static double[] fromDoubleArray(ReadableArray ary) {
-    double[] res = new double[ary.size()];
-    for (int i = 0; i < res.length; i++) {
-      res[i] = ary.getDouble(i);
-    }
-    return res;
-  }
-
-  private static class InterpolationAnimatedNode extends AnimatedNode {
-
-    private final double mInputRange[];
-    private final double mOutputRange[];
-
-    InterpolationAnimatedNode(ReadableMap config) {
-      mInputRange = fromDoubleArray(config.getArray("inputRange"));
-      mOutputRange = fromDoubleArray(config.getArray("outputRange"));
-    }
-
-    @Override
-    public void feedDataFromUpdatedParent(AnimatedNode parent) {
-      int rangeIndex = findRangeIndex(parent.mValue, mInputRange);
-      mValue = interpolate(
-              parent.mValue,
-              mInputRange[rangeIndex],
-              mInputRange[rangeIndex + 1],
-              mOutputRange[rangeIndex],
-              mOutputRange[rangeIndex + 1]);
-    }
-
-    private static double interpolate(
-            double value,
-            double inputMin,
-            double inputMax,
-            double outputMin,
-            double outputMax) {
-      return outputMin + (outputMax - outputMin) *
-              (value - inputMin) / (inputMax - inputMin);
-    }
-
-    private static int findRangeIndex(double value, double[] ranges) {
-      int index;
-      for (index = 1; index < ranges.length - 1; index++) {
-        if (ranges[index] >= value) {
-          break;
-        }
-      }
-      return index - 1;
-    }
-  }
-
-  private static class AdditionAnimatedNode extends AnimatedNode {
-
-    private final AnimatedNodesManager mNodesManager;
-    private final int[] mInputNodes;
-
-    AdditionAnimatedNode(ReadableMap config, AnimatedNodesManager nodesManager) {
-      mNodesManager = nodesManager;
-      ReadableArray inputNodes = config.getArray("input");
-      mInputNodes = new int[inputNodes.size()];
-      for (int i = 0; i < mInputNodes.length; i++) {
-        mInputNodes[i] = inputNodes.getInt(i);
-      }
-    }
-
-    @Override
-    public void runAnimationStep(long frameTimeNanos) {
-      mValue = 0;
-      for (int i = 0; i < mInputNodes.length; i++) {
-        mValue += mNodesManager.mAnimatedNodes.get(mInputNodes[i]).mValue;
-      }
-    }
-  }
-
-  private static class MultiplicationAnimatedNode extends AnimatedNode {
-    private final AnimatedNodesManager mNodesManager;
-    private final int[] mInputNodes;
-
-    MultiplicationAnimatedNode(ReadableMap config, AnimatedNodesManager nodesManager) {
-      mNodesManager = nodesManager;
-      ReadableArray inputNodes = config.getArray("input");
-      mInputNodes = new int[inputNodes.size()];
-      for (int i = 0; i < mInputNodes.length; i++) {
-        mInputNodes[i] = inputNodes.getInt(i);
-      }
-    }
-
-    @Override
-    public void runAnimationStep(long frameTimeNanos) {
-      mValue = 1;
-      for (int i = 0; i < mInputNodes.length; i++) {
-        mValue *= mNodesManager.mAnimatedNodes.get(mInputNodes[i]).mValue;
-      }
-    }
-  }
-
-  private static class TransformAnimatedNode extends AnimatedNode {
-
-    private final AnimatedNodesManager mNodesManager;
-    private final Map<String, Integer> mPropMapping;
-    private final Map<String, Object> mStaticProps;
-
-    TransformAnimatedNode(ReadableMap config, AnimatedNodesManager nodesManager) {
-      ReadableMap transforms = config.getMap("animated");
-      ReadableMapKeySetIterator iter = transforms.keySetIterator();
-      mPropMapping = new HashMap<>();
-      while (iter.hasNextKey()) {
-        String propKey = iter.nextKey();
-        int nodeIndex = transforms.getInt(propKey);
-        mPropMapping.put(propKey, nodeIndex);
-      }
-      ReadableMap statics = config.getMap("statics");
-      iter = statics.keySetIterator();
-      mStaticProps = new HashMap<>();
-      while (iter.hasNextKey()) {
-        String propKey = iter.nextKey();
-        ReadableType type = statics.getType(propKey);
-        switch (type) {
-          case Number:
-            mStaticProps.put(propKey, statics.getDouble(propKey));
-            break;
-          case Array:
-            mStaticProps.put(propKey, SimpleArray.copy(statics.getArray(propKey)));
-            break;
-        }
-      }
-      mNodesManager = nodesManager;
-    }
-
-    @Override
-    public void saveInPropMap(String key, SimpleMap propsMap) {
-      /* ignore key, style names are flattened */
-      SimpleMap transformMap = new SimpleMap();
-      for (String propKey : mPropMapping.keySet()) {
-        // TODO: use entryset = optimize
-        int nodeIndex = mPropMapping.get(propKey);
-        AnimatedNode node = mNodesManager.mAnimatedNodes.get(nodeIndex);
-        if (node != null) {
-          node.saveInPropMap(propKey, transformMap);
-        } else {
-          throw new IllegalArgumentException("Mapped style node does not exists");
-        }
-      }
-      for (String propKey : mStaticProps.keySet()) {
-        // TODO: use entryset = optimize
-        Object value = mStaticProps.get(propKey);
-        if (value instanceof Double) {
-          transformMap.putDouble(propKey, (Double) value);
-        } else if (value instanceof WritableArray) {
-          transformMap.putArray(propKey, (WritableArray) value);
-        }
-      }
-      propsMap.putMap("decomposedMatrix", transformMap);
-    }
-  }
-
-  private static abstract class AnimationDriver {
-    boolean mHasFinished = false;
-    ValueAnimatedNode mAnimatedValue;
-    Callback mEndCallback;
-    public abstract boolean runAnimationStep(long frameTimeNanos);
-  }
-
-  private static class MySpringLooper extends SpringLooper {
-    @Override
-    public void start() {
-    }
-
-    @Override
-    public void stop() {
-    }
-  }
-
-  private static class MySpringSystem extends BaseSpringSystem {
-    public MySpringSystem() {
-      super(new MySpringLooper());
-    }
-  }
-
-  private static class SpringAnimation extends AnimationDriver {
-
-    private final BaseSpringSystem mSpringSystem;
-    private final Spring mSpring;
-    private long mLastTime;
-    private boolean mSpringStarted;
-
-    SpringAnimation(ReadableMap config) {
-      boolean overshootClamping = config.getBoolean("overshootClamping");
-      double restDisplacementThreshold = config.getDouble("restDisplacementThreshold");
-      double restSpeedThreshold = config.getDouble("restSpeedThreshold");
-      double tension = config.getDouble("tension");
-      double friction = config.getDouble("friction");
-//      double initialVelocity = config.getDouble("initialVelocity");
-      double toValue = config.getDouble("toValue");
-
-      mSpringSystem = new MySpringSystem();
-      mSpring = mSpringSystem.createSpring()
-              .setSpringConfig(new SpringConfig(tension, friction))
-              .setEndValue(toValue)
-//              .setVelocity(initialVelocity)
-              .setOvershootClampingEnabled(overshootClamping)
-              .setRestDisplacementThreshold(restDisplacementThreshold)
-              .setRestSpeedThreshold(restSpeedThreshold);
-    }
-
-    @Override
-    public boolean runAnimationStep(long frameTimeNanos) {
-      long frameTimeMillis = frameTimeNanos / 1000000;
-      if (!mSpringStarted) {
-        mLastTime = frameTimeMillis;
-        mSpring.setCurrentValue(mAnimatedValue.mValue, false);
-        mSpringStarted = true;
-      }
-      long ts = frameTimeMillis - mLastTime;
-//      Log.e("CAT", "Value " + mAnimatedValue.mValue + ", " + ts + ", " + frameTimeMillis);
-      mSpringSystem.loop(frameTimeMillis - mLastTime);
-      mLastTime = frameTimeMillis;
-      mAnimatedValue.mValue = mSpring.getCurrentValue();
-      mHasFinished = mSpring.isAtRest();
-//      Log.e("CAT", "RUN SPRING " + ts + " cur " + mSpring.getCurrentValue() + ", " + mSpring.isAtRest() + ", " + mSpring.getEndValue());
-      return true;
-    }
-  }
-
-  private static class FrameBasedAnimation extends AnimationDriver {
-
-    private long mStartFrameTimeNanos = -1;
-    private final double[] mFrames;
-    private final double mToValue;
-    private double mFromValue;
-    private boolean mHasToValue;
-
-    FrameBasedAnimation(ReadableMap config) {
-      ReadableArray frames = config.getArray("frames");
-      int numberOfFrames = frames.size();
-      mFrames = new double[numberOfFrames];
-      for (int i = 0; i < numberOfFrames; i++) {
-        mFrames[i] = frames.getDouble(i);
-      }
-      if (config.hasKey("toValue")) {
-        mHasToValue = true;
-        mToValue = config.getDouble("toValue");
+        requestBuilder.method(method, requestBody);
       } else {
-        mHasToValue = false;
-        mToValue = Double.NaN;
+        requestBuilder.method(method, RequestBody.create(contentMediaType, body));
       }
-    }
-
-    public boolean runAnimationStep(long frameTimeNanos) {
-      if (mStartFrameTimeNanos < 0) {
-        // start!
-        mStartFrameTimeNanos = frameTimeNanos;
-        mFromValue = mAnimatedValue.mValue;
+    } else if (data.hasKey(REQUEST_BODY_KEY_URI)) {
+      if (contentType == null) {
+        onRequestError(requestId, "Payload is set but no content-type header specified");
+        return;
       }
-      long timeFromStartNanos = (frameTimeNanos - mStartFrameTimeNanos);
-      int frameIndex = (int) (timeFromStartNanos / 1000000L / 16L);
-      if (frameIndex < 0) {
-        // weird, next time nanos is smaller than start time
-        return false;
-      } else if (!mHasFinished) {
-        final double nextValue;
-        if (frameIndex >= mFrames.length - 1) {
-          // animation has ended!
-          mHasFinished = true;
-          if (mHasToValue) {
-            nextValue = mToValue;
-          } else {
-            nextValue = mFromValue + mFrames[mFrames.length - 1];
-          }
-        } else if (mHasToValue) {
-          nextValue = mFromValue + mFrames[frameIndex] * (mToValue - mFromValue);
-        } else {
-          nextValue = mFromValue + mFrames[frameIndex];
-        }
-        boolean updated = mAnimatedValue.mValue != nextValue;
-        mAnimatedValue.mValue = nextValue;
-        return updated;
+      String uri = data.getString(REQUEST_BODY_KEY_URI);
+      InputStream fileInputStream =
+              RequestBodyUtil.getFileInputStream(getReactApplicationContext(), uri);
+      if (fileInputStream == null) {
+        onRequestError(requestId, "Could not retrieve file for uri " + uri);
+        return;
       }
-      return false;
-    }
-  }
-
-  private static class UpdateViewData {
-    int mViewTag;
-    ReadableMap mProps;
-
-    public UpdateViewData(int tag, ReadableMap props) {
-      mViewTag = tag;
-      mProps = props;
-    }
-  }
-
-  private final SparseArray<AnimatedNode> mAnimatedNodes = new SparseArray<>();
-  private final ArrayList<AnimationDriver> mActiveAnimations = new ArrayList<>();
-  private final ArrayList<EventTracker> mActiveEventTrackers = new ArrayList<>();
-  private final ArrayList<UpdateViewData> mEnqueuedUpdates = new ArrayList<>();
-  private final ArrayList<AnimatedNode> mUpdatedNodes = new ArrayList<>();
-  private final AnimatedFrameCallback mAnimatedFrameCallback;
-
-  public AnimatedNodesManager(ReactContext reactContext) {
-    mAnimatedFrameCallback = new AnimatedFrameCallback(reactContext);
-  }
-
-  public void createAnimatedNode(int tag, ReadableMap config) {
-    if (mAnimatedNodes.get(tag) != null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + tag +
-              " already exists");
-    }
-    String type = config.getString("type");
-    final AnimatedNode node;
-    if ("style".equals(type)) {
-      node = new StyleAnimatedNode(config, this);
-    } else if ("value".equals(type)) {
-      node = new ValueAnimatedNode(config);
-      mUpdatedNodes.add(node);
-    } else if ("transform".equals(type)) {
-      node = new TransformAnimatedNode(config, this);
-    } else if ("interpolation".equals(type)) {
-      node = new InterpolationAnimatedNode(config);
-    } else if ("props".equals(type)) {
-      node = new PropsAnimatedNode(config, this);
-    } else if ("addition".equals(type)) {
-      node = new AdditionAnimatedNode(config, this);
-    } else if ("multiplication".equals(type)) {
-      node = new MultiplicationAnimatedNode(config, this);
+      requestBuilder.method(
+              method,
+              RequestBodyUtil.create(MediaType.parse(contentType), fileInputStream));
+    } else if (data.hasKey(REQUEST_BODY_KEY_FORMDATA)) {
+      if (contentType == null) {
+        contentType = "multipart/form-data";
+      }
+      ReadableArray parts = data.getArray(REQUEST_BODY_KEY_FORMDATA);
+      MultipartBuilder multipartBuilder = constructMultipartBody(parts, contentType, requestId);
+      if (multipartBuilder == null) {
+        return;
+      }
+      requestBuilder.method(method, multipartBuilder.build());
     } else {
-      throw new JSApplicationIllegalArgumentException("Unsupported node type: " + type);
+      // Nothing in data payload, at least nothing we could understand anyway.
+      // Ignore and treat it as if it were null.
+      requestBuilder.method(method, null);
     }
-    node.mTag = tag;
-    mAnimatedNodes.put(tag, node);
+
+    mClient.newCall(requestBuilder.build()).enqueue(
+            new Callback() {
+              @Override
+              public void onFailure(Request request, IOException e) {
+                if (mShuttingDown) {
+                  return;
+                }
+                onRequestError(requestId, e.getMessage());
+              }
+
+              @Override
+              public void onResponse(Response response) throws IOException {
+                if (mShuttingDown) {
+                  return;
+                }
+
+                // Before we touch the body send headers to JS
+                onResponseReceived(requestId, response);
+
+                ResponseBody responseBody = response.body();
+                try {
+                  if (useIncrementalUpdates) {
+                    readWithProgress(requestId, responseBody);
+                    onRequestSuccess(requestId);
+                  } else {
+                    onDataReceived(requestId, responseBody.string());
+                    onRequestSuccess(requestId);
+                  }
+                } catch (IOException e) {
+                  onRequestError(requestId, e.getMessage());
+                }
+              }
+            });
   }
 
-  public void dropAnimatedNode(int tag) {
-    mAnimatedNodes.remove(tag);
+  private void readWithProgress(int requestId, ResponseBody responseBody) throws IOException {
+    Reader reader = responseBody.charStream();
+    try {
+      StringBuilder sb = new StringBuilder(getBufferSize(responseBody));
+      char[] buffer = new char[MIN_BUFFER_SIZE];
+      int read;
+      long last = System.nanoTime();
+      while ((read = reader.read(buffer)) != -1) {
+        sb.append(buffer, 0, read);
+        long now = System.nanoTime();
+        if (shouldDispatch(now, last)) {
+          onDataReceived(requestId, sb.toString());
+          sb.setLength(0);
+          last = now;
+        }
+      }
+
+      if (sb.length() > 0) {
+        onDataReceived(requestId, sb.toString());
+      }
+    } finally {
+      reader.close();
+    }
   }
 
-  public void setAnimatedNodeValue(int tag, double value) {
-    AnimatedNode node = mAnimatedNodes.get(tag);
-    if (node == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + tag +
-              " does not exists");
-    }
-    node.mValue = value;
-    mUpdatedNodes.add(node);
+  private static boolean shouldDispatch(long now, long last) {
+    return last + CHUNK_TIMEOUT_NS < now;
   }
 
-  public void startAnimatingNode(
-          int animatedNodeTag,
-          ReadableMap animationConfig,
-          Callback endCallback) {
-    AnimatedNode node = mAnimatedNodes.get(animatedNodeTag);
-    if (node == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + animatedNodeTag +
-              " does not exists");
-    }
-    if (!(node instanceof ValueAnimatedNode)) {
-      throw new JSApplicationIllegalArgumentException("Animated node should be of type " +
-              ValueAnimatedNode.class.getName());
-    }
-    String type = animationConfig.getString("type");
-    final AnimationDriver animation;
-    if ("frames".equals(type)) {
-      animation = new FrameBasedAnimation(animationConfig);
-    } else if ("spring".equals(type)) {
-      animation = new SpringAnimation(animationConfig);
+  private static int getBufferSize(ResponseBody responseBody) throws IOException {
+    long length = responseBody.contentLength();
+    if (length == -1) {
+      return MIN_BUFFER_SIZE;
     } else {
-      throw new JSApplicationIllegalArgumentException("Unsupported animation type: " + type);
-    }
-    animation.mEndCallback = endCallback;
-    animation.mAnimatedValue = (ValueAnimatedNode) node;
-    mActiveAnimations.add(animation);
-  }
-
-  public void connectAnimatedNodes(int parentNodeTag, int childNodeTag) {
-    AnimatedNode parentNode = mAnimatedNodes.get(parentNodeTag);
-    if (parentNode == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + parentNodeTag +
-              " does not exists");
-    }
-    AnimatedNode childNode = mAnimatedNodes.get(childNodeTag);
-    if (childNode == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + childNodeTag +
-              " does not exists");
-    }
-    parentNode.addChild(childNode);
-  }
-
-  public void disconnectAnimatedNodes(int parentNodeTag, int childNodeTag) {
-    AnimatedNode parentNode = mAnimatedNodes.get(parentNodeTag);
-    if (parentNode == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + parentNodeTag +
-              " does not exists");
-    }
-    AnimatedNode childNode = mAnimatedNodes.get(childNodeTag);
-    if (childNode == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + childNodeTag +
-              " does not exists");
-    }
-    parentNode.removeChild(childNode);
-  }
-
-  public void connectAnimatedNodeToView(int animatedNodeTag, int viewTag) {
-    AnimatedNode node = mAnimatedNodes.get(animatedNodeTag);
-    if (node == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + animatedNodeTag +
-              " does not exists");
-    }
-    if (!(node instanceof PropsAnimatedNode)) {
-      throw new JSApplicationIllegalArgumentException("Animated node connected to view should be" +
-              "of type " + PropsAnimatedNode.class.getName());
-    }
-    PropsAnimatedNode propsAnimatedNode = (PropsAnimatedNode) node;
-    if (propsAnimatedNode.mConnectedViewTag != -1) {
-      throw new JSApplicationIllegalArgumentException("ANimated node " + animatedNodeTag + " is " +
-              "already attached to a view");
-    }
-    propsAnimatedNode.mConnectedViewTag = viewTag;
-  }
-
-  public void disconnectAnimatedNodeFromView(int animatedNodeTag, int viewTag) {
-    AnimatedNode node = mAnimatedNodes.get(animatedNodeTag);
-    if (node == null) {
-      throw new JSApplicationIllegalArgumentException("Animated node with tag " + animatedNodeTag +
-              " does not exists");
-    }
-    if (!(node instanceof PropsAnimatedNode)) {
-      throw new JSApplicationIllegalArgumentException("Animated node connected to view should be" +
-              "of type " + PropsAnimatedNode.class.getName());
-    }
-    PropsAnimatedNode propsAnimatedNode = (PropsAnimatedNode) node;
-    if (propsAnimatedNode.mConnectedViewTag == viewTag) {
-      propsAnimatedNode.mConnectedViewTag = -1;
+      return (int) min(length, MAX_BUFFER_SIZE);
     }
   }
 
-  private static class EventTracker {
+  private void onDataReceived(int requestId, String data) {
+    WritableArray args = Arguments.createArray();
+    args.pushInt(requestId);
+    args.pushString(data);
 
-    private final String mEventName;
-    private final int mEventTargetViewTag;
-    private final List<String> mPropsPath;
-    private final AnimatedNodesManager mNodesManager;
-    private final int mTargetAnimatedNode;
-
-    EventTracker(
-            AnimatedNodesManager nodesManager,
-            String eventName,
-            int eventTargetViewTag,
-            int animatedNodeTag,
-            List<String> propsPath) {
-      mNodesManager = nodesManager;
-      mEventName = eventName;
-      mEventTargetViewTag = eventTargetViewTag;
-      mPropsPath = propsPath;
-      mTargetAnimatedNode = animatedNodeTag;
-    }
-
-    private void doTheMapping(ReadableMap from) {
-      ReadableMap current = from;
-      for (int i = 0; i < mPropsPath.size() - 1; i++) {
-        String propName = mPropsPath.get(i);
-        current = current.getMap(propName);
-      }
-      double value = current.getDouble(mPropsPath.get(mPropsPath.size() - 1));
-      mNodesManager.setAnimatedNodeValue(mTargetAnimatedNode, value);
-    }
-
-    public void dispatchEvent(Event event) {
-      event.dispatch(new RCTEventEmitter() {
-        @Override
-        public void receiveEvent(int targetTag, String eventName, WritableMap event) {
-          if (event != null) {
-            doTheMapping(event);
-          }
-        }
-
-        @Override
-        public void receiveTouches(
-                String eventName,
-                WritableArray touches,
-                WritableArray changedIndices) {
-          if (touches != null) {
-            doTheMapping(touches.getMap(0));
-          }
-        }
-      });
-
-    }
+    getEventEmitter().emit("didReceiveNetworkData", args);
   }
 
-  public void connectEventToAnimatedNode(
-          String eventName,
-          int eventTargetViewTag,
-          int animatedNodeTag,
-          ReadableArray propsPath) {
-    // FROM MAIN THREAD!!!!!
-    List<String> props = new ArrayList<>(propsPath.size());
-    for (int i = 0, size = propsPath.size(); i < size; i++) {
-      props.add(propsPath.getString(i));
-    }
-    mActiveEventTrackers.add(
-            new EventTracker(this, eventName, eventTargetViewTag, animatedNodeTag, props));
+  private void onRequestError(int requestId, String error) {
+    WritableArray args = Arguments.createArray();
+    args.pushInt(requestId);
+    args.pushString(error);
+
+    getEventEmitter().emit("didCompleteNetworkResponse", args);
   }
 
-  public void dispatchEvent(Event event) {
-    // FROM UI THREAD!!!!
-    for (int i = 0; i < mActiveEventTrackers.size(); i++) {
-      EventTracker tracker = mActiveEventTrackers.get(i);
-      if (tracker.mEventTargetViewTag == event.getViewTag()
-              && tracker.mEventName.equals(event.getEventName())) {
-        tracker.dispatchEvent(event);
-      }
-    }
+  private void onRequestSuccess(int requestId) {
+    WritableArray args = Arguments.createArray();
+    args.pushInt(requestId);
+    args.pushNull();
+
+    getEventEmitter().emit("didCompleteNetworkResponse", args);
   }
 
-  public void runAnimationStep(long frameTimeNanos) {
-    /* prepare */
-    for (int i = 0; i < mAnimatedNodes.size(); i++) {
-      AnimatedNode node = mAnimatedNodes.valueAt(i);
-      node.mEnqueued = false;
-      node.mActiveIncomingNodes = 0;
-    }
+  private void onResponseReceived(int requestId, Response response) {
+    WritableMap headers = translateHeaders(response.headers());
 
-    Queue<AnimatedNode> nodesQueue = new ArrayDeque<>();
-    for (int i = 0; i < mUpdatedNodes.size(); i++) {
-      AnimatedNode node = mUpdatedNodes.get(i);
-      if (!node.mEnqueued) {
-        node.mEnqueued = true;
-        nodesQueue.add(node);
-      }
-    }
+    WritableArray args = Arguments.createArray();
+    args.pushInt(requestId);
+    args.pushInt(response.code());
+    args.pushMap(headers);
 
-    List<AnimationDriver> finishedAnimations = null; /* lazy allocate this */
-    for (int i = 0; i < mActiveAnimations.size(); i++) {
-      AnimationDriver animation = mActiveAnimations.get(i);
-      animation.runAnimationStep(frameTimeNanos);
-      AnimatedNode valueNode = animation.mAnimatedValue;
-      if (!valueNode.mEnqueued) {
-        valueNode.mEnqueued = true;
-        nodesQueue.add(valueNode);
-      }
-      if (animation.mHasFinished) {
-        if (finishedAnimations == null) {
-          finishedAnimations = new ArrayList<>();
-        }
-        finishedAnimations.add(animation);
-      }
-    }
+    getEventEmitter().emit("didReceiveNetworkResponse", args);
+  }
 
-    while (!nodesQueue.isEmpty()) {
-      AnimatedNode nextNode = nodesQueue.poll();
-      if (nextNode.mChildren != null) {
-        for (int i = 0; i < nextNode.mChildren.size(); i++) {
-          AnimatedNode child = nextNode.mChildren.get(i);
-          child.mActiveIncomingNodes++;
-          if (!child.mEnqueued) {
-            child.mEnqueued = true;
-            nodesQueue.add(child);
-          }
-        }
-      }
-    }
-
-    nodesQueue.clear();
-    for (int i = 0; i < mAnimatedNodes.size(); i++) {
-      AnimatedNode node = mAnimatedNodes.valueAt(i);
-      if (node.mEnqueued && node.mActiveIncomingNodes == 0) {
-        node.mEnqueued = true;
-        nodesQueue.add(node);
+  private static WritableMap translateHeaders(Headers headers) {
+    WritableMap responseHeaders = Arguments.createMap();
+    for (int i = 0; i < headers.size(); i++) {
+      String headerName = headers.name(i);
+      // multiple values for the same header
+      if (responseHeaders.hasKey(headerName)) {
+        responseHeaders.putString(
+                headerName,
+                responseHeaders.getString(headerName) + ", " + headers.value(i));
       } else {
-        node.mEnqueued = false;
+        responseHeaders.putString(headerName, headers.value(i));
       }
     }
-    /* run animations steps on animated nodes graph starting with active animations */
+    return responseHeaders;
+  }
 
-    ArrayList<PropsAnimatedNode> updatedPropNodes = new ArrayList<>();
-    while (!nodesQueue.isEmpty()) {
-      AnimatedNode nextNode = nodesQueue.poll();
-      nextNode.runAnimationStep(frameTimeNanos);
-      if (nextNode instanceof PropsAnimatedNode) {
-        updatedPropNodes.add((PropsAnimatedNode) nextNode);
+  @ReactMethod
+  public void abortRequest(final int requestId) {
+    // We have to use AsyncTask since this might trigger a NetworkOnMainThreadException, this is an
+    // open issue on OkHttp: https://github.com/square/okhttp/issues/869
+    new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
+      @Override
+      protected void doInBackgroundGuarded(Void... params) {
+        mClient.cancel(requestId);
       }
-      if (nextNode.mChildren != null) {
-        for (int i = 0; i < nextNode.mChildren.size(); i++) {
-          AnimatedNode child = nextNode.mChildren.get(i);
-          child.feedDataFromUpdatedParent(nextNode);
-          child.mActiveIncomingNodes--;
-          if (!child.mEnqueued && child.mActiveIncomingNodes == 0) {
-            child.mEnqueued = true;
-            nodesQueue.add(child);
-          }
+    }.execute();
+  }
+
+  @ReactMethod
+  public void clearCookies(com.facebook.react.bridge.Callback callback) {
+    mCookieHandler.clearCookies(callback);
+  }
+
+  private @Nullable MultipartBuilder constructMultipartBody(
+          ReadableArray body,
+          String contentType,
+          int requestId) {
+    MultipartBuilder multipartBuilder = new MultipartBuilder();
+    multipartBuilder.type(MediaType.parse(contentType));
+
+    for (int i = 0, size = body.size(); i < size; i++) {
+      ReadableMap bodyPart = body.getMap(i);
+
+      // Determine part's content type.
+      ReadableArray headersArray = bodyPart.getArray("headers");
+      Headers headers = extractHeaders(headersArray, null);
+      if (headers == null) {
+        onRequestError(requestId, "Missing or invalid header format for FormData part.");
+        return null;
+      }
+      MediaType partContentType = null;
+      String partContentTypeStr = headers.get(CONTENT_TYPE_HEADER_NAME);
+      if (partContentTypeStr != null) {
+        partContentType = MediaType.parse(partContentTypeStr);
+        // Remove the content-type header because MultipartBuilder gets it explicitly as an
+        // argument and doesn't expect it in the headers array.
+        headers = headers.newBuilder().removeAll(CONTENT_TYPE_HEADER_NAME).build();
+      }
+
+      if (bodyPart.hasKey(REQUEST_BODY_KEY_STRING)) {
+        String bodyValue = bodyPart.getString(REQUEST_BODY_KEY_STRING);
+        multipartBuilder.addPart(headers, RequestBody.create(partContentType, bodyValue));
+      } else if (bodyPart.hasKey(REQUEST_BODY_KEY_URI)) {
+        if (partContentType == null) {
+          onRequestError(requestId, "Binary FormData part needs a content-type header.");
+          return null;
         }
-      }
-    }
-
-    /* collect updates */
-    mEnqueuedUpdates.clear();
-    for (int i = 0; i < updatedPropNodes.size(); i++) {
-      PropsAnimatedNode propNode = updatedPropNodes.get(i);
-      UpdateViewData data = propNode.createUpdateViewData();
-      if (data.mViewTag > 0) {
-        mEnqueuedUpdates.add(propNode.createUpdateViewData());
-      }
-    }
-
-    /* cleanup finished animations */
-    if (finishedAnimations != null && !finishedAnimations.isEmpty()) {
-      for (int i = 0; i < finishedAnimations.size(); i++) {
-        // TODO: do in O(1);
-        AnimationDriver finishedAnimation = finishedAnimations.get(i);
-        mActiveAnimations.remove(finishedAnimation);
-        WritableMap endCallbackResponse = Arguments.createMap();
-        endCallbackResponse.putBoolean("finished", true);
-        finishedAnimation.mEndCallback.invoke(endCallbackResponse);
-      }
-    }
-  }
-
-  public void runUpdates(UIImplementation uiImplementation) {
-    // Assert on native thread
-    runAnimationStep(mLastFrameTimeNanos.get());
-    for (int i = 0; i < mEnqueuedUpdates.size(); i++) {
-      UpdateViewData data = mEnqueuedUpdates.get(i);
-//      Log.e("CAT", "Update View " + data.mViewTag + ", " + data.mProps);
-      uiImplementation.updateView(data.mViewTag, null, data.mProps);
-    }
-  }
-
-  public void resumeFrameCallback() {
-    ReactChoreographer.getInstance().postFrameCallback(
-            ReactChoreographer.CallbackType.ANIMATIONS,
-            mAnimatedFrameCallback);
-  }
-
-  public void pauseFrameCallback() {
-    ReactChoreographer.getInstance().removeFrameCallback(
-            ReactChoreographer.CallbackType.ANIMATIONS,
-            mAnimatedFrameCallback);
-  }
-
-  private AtomicLong mLastFrameTimeNanos = new AtomicLong(0);
-
-  private class AnimatedFrameCallback extends GuardedChoreographerFrameCallback {
-
-    private final ReactContext mReactContext;
-
-    protected AnimatedFrameCallback(ReactContext reactContext) {
-      super(reactContext);
-      mReactContext = reactContext;
-    }
-
-    @Override
-    protected void doFrameGuarded(final long frameTimeNanos) {
-      // It's too late for enqueueing UI updates for this frame
-      mLastFrameTimeNanos.set(frameTimeNanos);
-      // Enqueue runAnimationStep, this should ideally run on a separate thread
-      mReactContext.runOnNativeModulesQueueThread(new Runnable() {
-        @Override
-        public void run() {
-          mReactContext.getNativeModule(UIManagerModule.class).dispatchViewUpdatesIfNotInJSBatch();
+        String fileContentUriStr = bodyPart.getString(REQUEST_BODY_KEY_URI);
+        InputStream fileInputStream =
+                RequestBodyUtil.getFileInputStream(getReactApplicationContext(), fileContentUriStr);
+        if (fileInputStream == null) {
+          onRequestError(requestId, "Could not retrieve file for uri " + fileContentUriStr);
+          return null;
         }
-      });
-      ReactChoreographer.getInstance().postFrameCallback(
-              ReactChoreographer.CallbackType.ANIMATIONS,
-              this);
+        multipartBuilder.addPart(headers, RequestBodyUtil.create(partContentType, fileInputStream));
+      } else {
+        onRequestError(requestId, "Unrecognized FormData part.");
+      }
     }
+    return multipartBuilder;
+  }
+
+  /**
+   * Extracts the headers from the Array. If the format is invalid, this method will return null.
+   */
+  private @Nullable Headers extractHeaders(
+          @Nullable ReadableArray headersArray,
+          @Nullable ReadableMap requestData) {
+    if (headersArray == null) {
+      return null;
+    }
+    Headers.Builder headersBuilder = new Headers.Builder();
+    for (int headersIdx = 0, size = headersArray.size(); headersIdx < size; headersIdx++) {
+      ReadableArray header = headersArray.getArray(headersIdx);
+      if (header == null || header.size() != 2) {
+        return null;
+      }
+      String headerName = header.getString(0);
+      String headerValue = header.getString(1);
+      headersBuilder.add(headerName, headerValue);
+    }
+    if (headersBuilder.get(USER_AGENT_HEADER_NAME) == null && mDefaultUserAgent != null) {
+      headersBuilder.add(USER_AGENT_HEADER_NAME, mDefaultUserAgent);
+    }
+
+    // Sanitize content encoding header, supported only when request specify payload as string
+    boolean isGzipSupported = requestData != null && requestData.hasKey(REQUEST_BODY_KEY_STRING);
+    if (!isGzipSupported) {
+      headersBuilder.removeAll(CONTENT_ENCODING_HEADER_NAME);
+    }
+
+    return headersBuilder.build();
+  }
+
+  private DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter() {
+    return getReactApplicationContext()
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
   }
 }
