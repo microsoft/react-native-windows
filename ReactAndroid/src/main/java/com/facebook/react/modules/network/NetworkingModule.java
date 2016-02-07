@@ -62,9 +62,9 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
   private boolean mShuttingDown;
 
   /* package */ NetworkingModule(
-          ReactApplicationContext reactContext,
-          @Nullable String defaultUserAgent,
-          OkHttpClient client) {
+      ReactApplicationContext reactContext,
+      @Nullable String defaultUserAgent,
+      OkHttpClient client) {
     super(reactContext);
     mClient = client;
     mClient.networkInterceptors().add(new StethoInterceptor());
@@ -114,12 +114,12 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void sendRequest(
-          String method,
-          String url,
-          final int requestId,
-          ReadableArray headers,
-          ReadableMap data,
-          final boolean useIncrementalUpdates) {
+      String method,
+      String url,
+      final int requestId,
+      ReadableArray headers,
+      ReadableMap data,
+      final boolean useIncrementalUpdates) {
     Request.Builder requestBuilder = new Request.Builder().url(url);
 
     if (requestId != 0) {
@@ -161,14 +161,14 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
       }
       String uri = data.getString(REQUEST_BODY_KEY_URI);
       InputStream fileInputStream =
-              RequestBodyUtil.getFileInputStream(getReactApplicationContext(), uri);
+          RequestBodyUtil.getFileInputStream(getReactApplicationContext(), uri);
       if (fileInputStream == null) {
         onRequestError(requestId, "Could not retrieve file for uri " + uri);
         return;
       }
       requestBuilder.method(
-              method,
-              RequestBodyUtil.create(MediaType.parse(contentType), fileInputStream));
+          method,
+          RequestBodyUtil.create(MediaType.parse(contentType), fileInputStream));
     } else if (data.hasKey(REQUEST_BODY_KEY_FORMDATA)) {
       if (contentType == null) {
         contentType = "multipart/form-data";
@@ -186,38 +186,38 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
     }
 
     mClient.newCall(requestBuilder.build()).enqueue(
-            new Callback() {
-              @Override
-              public void onFailure(Request request, IOException e) {
-                if (mShuttingDown) {
-                  return;
-                }
-                onRequestError(requestId, e.getMessage());
+        new Callback() {
+          @Override
+          public void onFailure(Request request, IOException e) {
+            if (mShuttingDown) {
+              return;
+            }
+            onRequestError(requestId, e.getMessage());
+          }
+
+          @Override
+          public void onResponse(Response response) throws IOException {
+            if (mShuttingDown) {
+              return;
+            }
+
+            // Before we touch the body send headers to JS
+            onResponseReceived(requestId, response);
+
+            ResponseBody responseBody = response.body();
+            try {
+              if (useIncrementalUpdates) {
+                readWithProgress(requestId, responseBody);
+                onRequestSuccess(requestId);
+              } else {
+                onDataReceived(requestId, responseBody.string());
+                onRequestSuccess(requestId);
               }
-
-              @Override
-              public void onResponse(Response response) throws IOException {
-                if (mShuttingDown) {
-                  return;
-                }
-
-                // Before we touch the body send headers to JS
-                onResponseReceived(requestId, response);
-
-                ResponseBody responseBody = response.body();
-                try {
-                  if (useIncrementalUpdates) {
-                    readWithProgress(requestId, responseBody);
-                    onRequestSuccess(requestId);
-                  } else {
-                    onDataReceived(requestId, responseBody.string());
-                    onRequestSuccess(requestId);
-                  }
-                } catch (IOException e) {
-                  onRequestError(requestId, e.getMessage());
-                }
-              }
-            });
+            } catch (IOException e) {
+              onRequestError(requestId, e.getMessage());
+            }
+          }
+        });
   }
 
   private void readWithProgress(int requestId, ResponseBody responseBody) throws IOException {
@@ -300,8 +300,8 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
       // multiple values for the same header
       if (responseHeaders.hasKey(headerName)) {
         responseHeaders.putString(
-                headerName,
-                responseHeaders.getString(headerName) + ", " + headers.value(i));
+            headerName,
+            responseHeaders.getString(headerName) + ", " + headers.value(i));
       } else {
         responseHeaders.putString(headerName, headers.value(i));
       }
@@ -327,9 +327,9 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
   }
 
   private @Nullable MultipartBuilder constructMultipartBody(
-          ReadableArray body,
-          String contentType,
-          int requestId) {
+      ReadableArray body,
+      String contentType,
+      int requestId) {
     MultipartBuilder multipartBuilder = new MultipartBuilder();
     multipartBuilder.type(MediaType.parse(contentType));
 
@@ -362,7 +362,7 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
         }
         String fileContentUriStr = bodyPart.getString(REQUEST_BODY_KEY_URI);
         InputStream fileInputStream =
-                RequestBodyUtil.getFileInputStream(getReactApplicationContext(), fileContentUriStr);
+            RequestBodyUtil.getFileInputStream(getReactApplicationContext(), fileContentUriStr);
         if (fileInputStream == null) {
           onRequestError(requestId, "Could not retrieve file for uri " + fileContentUriStr);
           return null;
@@ -379,8 +379,8 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
    * Extracts the headers from the Array. If the format is invalid, this method will return null.
    */
   private @Nullable Headers extractHeaders(
-          @Nullable ReadableArray headersArray,
-          @Nullable ReadableMap requestData) {
+      @Nullable ReadableArray headersArray,
+      @Nullable ReadableMap requestData) {
     if (headersArray == null) {
       return null;
     }
@@ -409,6 +409,6 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
 
   private DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter() {
     return getReactApplicationContext()
-            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
+        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
   }
 }
