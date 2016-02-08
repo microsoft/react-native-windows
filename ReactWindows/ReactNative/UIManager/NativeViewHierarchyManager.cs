@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Animation;
 using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.Tracing;
-using ReactNative.UIManager.Animation;
+using ReactNative.UIManager.LayoutAnimation;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -54,6 +55,7 @@ namespace ReactNative.UIManager
         private readonly JavaScriptResponderHandler _jsResponderHandler;
         private readonly RootViewManager _rootViewManager;
         private readonly AnimationRegistry _animationRegistry;
+        private readonly LayoutAnimationManager _LayoutAnimator;
 
         /// <summary>
         /// Instantiates the <see cref="NativeViewHierarchyManager"/>.
@@ -62,6 +64,7 @@ namespace ReactNative.UIManager
         public NativeViewHierarchyManager(ViewManagerRegistry viewManagers)
         {
             _viewManagers = viewManagers;
+            _LayoutAnimator = new LayoutAnimationManager();
             _tagsToViews = new Dictionary<int, FrameworkElement>();
             _tagsToViewManagers = new Dictionary<int, ViewManager>();
             _rootTags = new Dictionary<int, bool>();
@@ -73,7 +76,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The animation registry.
         /// </summary>
-        public AnimationRegistry Animations
+        public AnimationRegistry AnimationRegistry
         {
             get
             {
@@ -88,6 +91,20 @@ namespace ReactNative.UIManager
         {
             private get;
             set;
+        }
+
+        /// <summary>
+        /// Begins the animation timeline(s) binded to the <see cref="AnimationManager"/>.
+        /// </summary>
+        /// <param name="reactTag">The ID of the native view to animate</param>
+        /// <param name="animation">The <see cref="AnimationManager"/> to use for animating a <see cref="FrameworkElement"/>.</param>
+        /// <param name="callback">The final callback function that's invoked once the animation is complete.</param>
+        public void BeginAnimation(int reactTag, AnimationManager animation, ICallback callback)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            var viewToAnimate = ResolveView(reactTag);
+            int animationId = animation.AnimationId;
+            
         }
 
         /// <summary>
@@ -133,7 +150,7 @@ namespace ReactNative.UIManager
                 .With("tag", tag))
             {
                 var viewToUpdate = ResolveView(tag);
-
+                
                 var parentViewManager = default(ViewManager);
                 var parentViewGroupManager = default(ViewGroupManager);
                 if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) || 
@@ -182,6 +199,22 @@ namespace ReactNative.UIManager
                     viewManager.UpdateProperties(view, initialProperties);
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets up the Layout Animation Manager.
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="success"></param>
+        /// <param name="error"></param>
+        internal void ConfigureLayoutAnimation(JObject config, ICallback success, ICallback error)
+        {
+            _LayoutAnimator.InitializeFromConfig(config);
+        }
+
+        public void ClearLayoutAnimation()
+        {
+            _LayoutAnimator.Reset();
         }
 
         /// <summary>
@@ -538,10 +571,18 @@ namespace ReactNative.UIManager
 
         private void UpdateLayout(FrameworkElement viewToUpdate, int x, int y, int width, int height)
         {
-            viewToUpdate.Width = width;
-            viewToUpdate.Height = height;
-            Canvas.SetLeft(viewToUpdate, x);
-            Canvas.SetTop(viewToUpdate, y);
+            if (_LayoutAnimator.ShouldAnimateLayout(viewToUpdate))
+            {
+                _LayoutAnimator.ApplyLayoutUpdate(viewToUpdate, x, y, width, height);
+            }
+            else
+            {
+                viewToUpdate.Width = width;
+                viewToUpdate.Height = height;
+                Canvas.SetLeft(viewToUpdate, x);
+                Canvas.SetTop(viewToUpdate, y);
+            }
+
         }
     }
 }
