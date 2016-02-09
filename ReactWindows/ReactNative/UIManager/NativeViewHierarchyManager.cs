@@ -191,7 +191,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void ClearLayoutAnimation()
         {
-            _layoutAnimator.Reset();
+            _layoutAnimator?.Reset();
         }
 
         /// <summary>

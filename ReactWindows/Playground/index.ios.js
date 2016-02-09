@@ -25,7 +25,7 @@ const styles={
     }
 };
 
-var {AppRegistry, View, Text, TextInput, Image, LayoutAnimation } = React;
+var {AppRegistry, View, Text, TextInput, Image, LayoutAnimation, Switch } = React;
 var animations = {
     layout: {
         spring: {
@@ -57,7 +57,7 @@ var animations = {
 var ReactRoot = React.createClass({
     componentDidMount() {
         // Animate creation
-        LayoutAnimation.configureNext(animations.layout.spring);
+        
     },
     getInitialState: function(){
         var text = "You can see me!";
@@ -65,7 +65,15 @@ var ReactRoot = React.createClass({
         
         return {value: text, 
             longText: longText,
-            w: 100, h: 100};
+            w: 100, h: 100,
+            switchState: true};
+    },
+
+    toggleChangeEventHandler: function(){
+        LayoutAnimation.configureNext(animations.layout.spring);
+        this.setState({switchState: !this.state.switchState,
+            w: this.state.w + 10,
+            y: this.state.y + 10});
     },
 
     render: function() {
@@ -74,19 +82,25 @@ var ReactRoot = React.createClass({
         return (
             <View>
               <View style={styles.views}>
-		         <Text>Hello World!</Text>
-{(this.state && this.state.value) 
-			     ? <TextInput value={this.state.value} style={styles.textInput}></TextInput> 
-				 : undefined}
+		         <Text>Hello Eric!</Text>
+                {(this.state && this.state.value) 
+			                     ? <TextInput value={this.state.value} style={styles.textInput}></TextInput> 
+				                 : undefined}
                 
-{(this.state && this.state.longText) 
- ? <TextInput value={this.state.longText} multiline={true} style={styles.longTextInput}></TextInput> 
- : undefined}
-</View>
-<View style={styles.views}>
-   <Image source={{uri: 'http://facebook.github.io/origami/public/images/blog-hero.jpg?r=1'}} style={styles.images}/>
-</View>
-</View>
+                {(this.state && this.state.longText) 
+                 ? <TextInput value={this.state.longText} multiline={true} style={styles.longTextInput}></TextInput> 
+                 : undefined}
+                </View>
+                <View style={styles.views}>
+                   <Image source={{uri: 'http://facebook.github.io/origami/public/images/blog-hero.jpg?r=1'}} style={styles.images}/>
+                </View>
+                <View style={[styles.box, {width: this.state.w, height: this.state.h, backgroundColor: 'red'}]} >
+                    <Switch
+                       onValueChange={(value) => this.toggleChangeEventHandler()}
+                       style={{marginBottom: 10}}
+                       value={this.state.switchState} />
+                </View>
+              </View>
         );
 }
 });

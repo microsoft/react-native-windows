@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Automation.Provider;
+using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.View
 {
@@ -111,6 +112,16 @@ namespace ReactNative.Views.View
             view.SetBorderRadius(radius);
         }
 
+        [ReactProperty(ViewProperties.BackgroundColor, CustomType = "Color")]
+        public void SetBackgroundColor(BorderedContentControl view, uint? color)
+        {
+            if (color.HasValue)
+            {
+                var panel = GetPanel(view);
+                panel.Background = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+            }
+        }
+
         /// <summary>
         /// Sets the elevation transformation effect of the <see cref="ReactPanel"/>. 
         /// </summary>
@@ -177,6 +188,28 @@ namespace ReactNative.Views.View
             {
                 view.SetBorderColor(ViewProperties.BorderSpacingTypes[index], color.Value);
             }
+        }
+
+        /// <summary>
+        /// Set the width of the <see cref="ReactPanel"/>.
+        /// </summary>
+        /// <param name="height">The width.</param>
+        [ReactProperty(ViewProperties.Width)]
+        public void SetWidth(BorderedContentControl view, float width)
+        {
+            var panel = GetPanel(view);
+            panel.Width = width;
+        }
+
+        /// <summary>
+        /// Set the width of the <see cref="ReactPanel"/>.
+        /// </summary>
+        /// <param name="height">The width.</param>
+        [ReactProperty(ViewProperties.Height)]
+        public void SetHeight(BorderedContentControl view, float height)
+        {
+            var panel = GetPanel(view);
+            panel.Height = height;
         }
 
         /// <summary>

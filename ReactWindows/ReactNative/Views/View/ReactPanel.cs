@@ -76,7 +76,7 @@ namespace ReactNative.Views.View
             this.Background = ParseColor(color);
         }
 
-        private static Brush ParseColor(string color)
+        public static Brush ParseColor(string color)
         {
             var r = Convert.ToByte(color.Substring(1, 2), 16);
             var g = Convert.ToByte(color.Substring(3, 2), 16);
