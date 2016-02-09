@@ -143,6 +143,19 @@ namespace ReactNative.UIManager
         public abstract void UpdateExtraData(FrameworkElement root, object extraData);
 
         /// <summary>
+        /// Implement this method to receive events/commands directly from
+        /// JavaScript through the <see cref="UIManager"/>.
+        /// </summary>
+        /// <param name="root">
+        /// The view instance that should receive the command.
+        /// </param>
+        /// <param name="commandId">Identifer for the command.</param>
+        /// <param name="args">Optional arguments for the command.</param>
+        public virtual void ReceiveCommand(FrameworkElement view, int commandId, JArray args)
+        {
+        }
+
+        /// <summary>
         /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
         /// </summary>
         /// <param name="reactContext">The react context.</param>
@@ -170,19 +183,6 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view.</param>
         protected virtual void OnAfterUpdateTransaction(FrameworkElement view)
-        {
-        }
-
-        /// <summary>
-        /// Implement this method to receive events/commands directly from
-        /// JavaScript through the <see cref="UIManager"/>.
-        /// </summary>
-        /// <param name="root">
-        /// The view instance that should receive the command.
-        /// </param>
-        /// <param name="commandId">Identifer for the command.</param>
-        /// <param name="args">Optional arguments for the command.</param>
-        public virtual void ReceiveCommand(FrameworkElement view, int commandId, JArray args)
         {
         }
     }
