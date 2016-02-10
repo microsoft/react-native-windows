@@ -40,6 +40,18 @@ namespace ReactNative.Bridge
             return new FileJavaScriptBundleLoader(fileName);
         }
 
+        /// <summary>
+        /// This loader will use the cached bundle from the
+        /// <see cref="DevSupport.IDevSupportManager"/>.
+        /// </summary>
+        /// <param name="sourceUrl">The source URL.</param>
+        /// <param name="cachedFileLocation">The cached bundle.</param>
+        /// <returns>The JavaScript bundle loader.</returns>
+        public static JavaScriptBundleLoader CreateCachedBundleFromNetworkLoader(string sourceUrl, string cachedFileLocation)
+        {
+            return new CachedJavaScriptBundleLoader(sourceUrl, cachedFileLocation);
+        }
+
         class FileJavaScriptBundleLoader : JavaScriptBundleLoader
         {
             private string _script;
@@ -83,6 +95,43 @@ namespace ReactNative.Bridge
                 }
 
                 bridge.RunScript(_script);
+            }
+        }
+
+        class CachedJavaScriptBundleLoader : JavaScriptBundleLoader
+        {
+            private readonly string _cachedFileLocation;
+            private string _script;
+
+            public CachedJavaScriptBundleLoader(string sourceUrl, string cachedFileLocation)
+            {
+                SourceUrl = sourceUrl;
+                _cachedFileLocation = cachedFileLocation;
+            }
+
+            public override string SourceUrl { get; }
+
+            public override async Task InitializeAsync()
+            {
+                try
+                {
+                    var storageFile = await StorageFile.GetFileFromPathAsync(_cachedFileLocation);
+                    using (var stream = await storageFile.OpenStreamForReadAsync())
+                    using (var reader = new StreamReader(stream))
+                    {
+                        _script = await reader.ReadToEndAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var exceptionMessage = String.Format("File read exception for asset {0}", SourceUrl);
+                    throw new InvalidOperationException(exceptionMessage, ex);
+                }
+            }
+
+            public override void LoadScript(IReactBridge executor)
+            {
+                executor.RunScript(_script);
             }
         }
     }

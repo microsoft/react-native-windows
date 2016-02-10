@@ -11,6 +11,14 @@ namespace ReactNative.DevSupport
             set;
         }
 
+        public string SourceUrl
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public string SourceMapUrl
         {
             get
@@ -19,7 +27,23 @@ namespace ReactNative.DevSupport
             }
         }
 
+        public string CachedJavaScriptBundleFile
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public void HandleException(Exception exception)
+        {
+        }
+
+        public void HandleReloadJavaScript()
+        {
+        }
+
+        public void ShowDevOptionsDialog()
         {
         }
 
