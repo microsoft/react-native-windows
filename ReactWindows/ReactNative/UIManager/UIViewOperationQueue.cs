@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Animation;
 using ReactNative.Bridge;
 using ReactNative.Tracing;
 using System;
@@ -20,7 +21,6 @@ namespace ReactNative.UIManager
         private readonly int[] _measureBuffer = new int[4];
 
         private readonly object _operationsLock = new object();
-
         private IList<Action> _operations = new List<Action>();
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
@@ -174,6 +174,19 @@ namespace ReactNative.UIManager
                 initialProperties));
         }
 
+        /// <summary>
+        /// Clears the animation layout updates.
+        /// </summary>
+        public void ClearAnimationLayout()
+        {
+            _nativeViewHierarchyManager.ClearLayoutAnimation();
+        }
+
+        public void EnqueueConfigureLayoutAnimation(JObject config, ICallback success, ICallback error)
+        {
+            EnqueueOperation(() => _nativeViewHierarchyManager.ConfigureLayoutAnimation(config, success, error));
+        }
+        
         /// <summary>
         /// Enqueues an operation to update the properties of a view.
         /// </summary>
@@ -335,8 +348,15 @@ namespace ReactNative.UIManager
                     {
                         operation();
                     }
+
+                    OnOperationGroupExecuted();
                 }
             }
+        }
+
+        internal void OnOperationGroupExecuted()
+        {
+            _nativeViewHierarchyManager.ClearLayoutAnimation();
         }
 
         private void EnqueueOperation(Action action)

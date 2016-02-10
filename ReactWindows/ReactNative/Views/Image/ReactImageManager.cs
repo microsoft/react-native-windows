@@ -1,11 +1,17 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
+using ReactNative.UIManager.LayoutAnimation;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.UI.Xaml;
+using Windows.UI;
 
 namespace ReactNative.Views.Image
 {
@@ -18,6 +24,11 @@ namespace ReactNative.Views.Image
         private const string ReactClass = "RCTImageView";
         private const string PROP_SOURCE = "source";
         private const string PROP_URI = "uri";
+
+        //Defaulting to 3000 MS for testing purpose until Image.windows.js is modified.
+        private int _fadeDurationMS = 3000;
+        private Uri _imageSource;
+        private uint? _tintColor;
 
         /// <summary>
         /// The view manager name.
@@ -53,24 +64,13 @@ namespace ReactNative.Views.Image
         [ReactProperty(PROP_SOURCE)]
         public void SetSource(Border view, Dictionary<string, string> sourceMap)
         {
-            var imageSrcURL = default(Uri);
             var source = default(string);
 
             if (sourceMap != null && sourceMap.TryGetValue(PROP_URI, out source))
             {
-                if (!Uri.TryCreate(source, UriKind.Absolute, out imageSrcURL))
+                if (!Uri.TryCreate(source, UriKind.Absolute, out _imageSource))
                 {
-                    imageSrcURL = new Uri("ms-appx://" + source);
-                }
-
-                if (imageSrcURL != null)
-                {
-                    var backgroundImage = new ImageBrush()
-                    {
-                        ImageSource = new BitmapImage(imageSrcURL)
-                    };
-
-                    view.Background = backgroundImage;
+                    _imageSource = new Uri("ms-appx://" + source);
                 }
             }
         }
@@ -89,8 +89,7 @@ namespace ReactNative.Views.Image
         /// <summary>
         /// Set the border color of the <see cref="ReactPanel"/>.
         /// </summary>
-        /// <param name="view">The view panel.</param>
-        /// <param name="index">The property index.</param>
+        /// <param name="view">The border panel.</param>
         /// <param name="color">The color hex code.</param>
         [ReactProperty("borderColor", CustomType = "Color")]
         public void SetBorderColor(Border view, uint? color)
@@ -100,6 +99,54 @@ namespace ReactNative.Views.Image
             {
                 var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
                 view.BorderBrush = brush;
+            }
+        }
+
+        /// <summary>
+        /// Set the alpha tint color of the <see cref="Border"/> background.
+        /// </summary>
+        /// <param name="view">The border panel.</param>
+        /// <param name="color">The color hex code.</param>
+        [ReactProperty("tintColor", CustomType = "Color")]
+        public void SetTintColor(Border view, uint? color) {
+            var backgroundType = view.Background?.GetType();
+
+            if (color.HasValue)
+            {
+                _tintColor = color.Value;
+            }
+        }
+
+        /// <summary>
+        /// Sets the background image effect of the border depending on any tinting requirements.
+        /// </summary>
+        /// <param name="view">The native <see cref="Border"/> that requires any background effects.</param>
+        protected override void OnAfterUpdateTransaction(Border view)
+        {
+            var element = view.Background as ImageBrush;
+            if (_tintColor.HasValue && _imageSource != null)
+            {
+                view.CreateColorBlendedImageSource(_imageSource, ColorHelpers.Parse(_tintColor.Value));
+            }
+            else if(_imageSource != null)
+            {
+                view.CreateBackgroundBitmapImage(_imageSource);
+            }
+        }
+        
+        /// <summary>
+        /// Set the fade in animation effect duration of the <see cref="Border"/>.
+        /// </summary>
+        /// <param name="view">The view panel.</param>
+        /// <param name="index">The property index.</param>
+        /// <param name="color">The color hex code.</param>
+            //Fadeduration is only supported on android, and commenting out until we can modify the Image Def in Libraries/Image/Image.windows.js 
+            //[ReactProperty("fadeDuration")]
+        public void SetFadeDurationMS(Border view, int? fadeDurationMS)
+        {
+            if (fadeDurationMS.HasValue)
+            {
+                _fadeDurationMS = fadeDurationMS.Value;
             }
         }
 
@@ -164,7 +211,7 @@ namespace ReactNative.Views.Image
         {
             var border = (Border)sender;
             var imageBrush = GetImageBrush(border);
-            if (imageBrush != null)
+            if (imageBrush != null && imageBrush.ImageSource.GetType() == typeof(BitmapImage))
             {
                 var bitmapImage = imageBrush.ImageSource as BitmapImage;
                 bitmapImage.DecodePixelHeight = (int)sender.Height;
@@ -183,6 +230,14 @@ namespace ReactNative.Views.Image
         protected void OnInterceptImageLoadedEvent(object sender, RoutedEventArgs e)
         {
             var senderImage = (Border)sender;
+            if (_fadeDurationMS > 0)
+            {
+                var fadeStoryBoard = new Storyboard() { };
+                var easingFunction = new BackEase() { EasingMode = EasingMode.EaseIn, Amplitude = .5 };
+                fadeStoryBoard.SetOpacityTimeline(easingFunction, senderImage, 0, 1, _fadeDurationMS);
+                fadeStoryBoard.Begin();
+            }
+
             GetEventDispatcher(senderImage).DispatchEvent(new ReactImageLoadEvent(senderImage.GetTag(), ReactImageLoadEvent.OnLoadEnd));
         }
 

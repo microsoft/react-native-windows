@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Animation;
 using ReactNative.Bridge;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
@@ -154,6 +155,17 @@ namespace ReactNative.UIManager
             }
 
             HandleCreateView(cssNode, rootViewTag, styles);
+        }
+
+        /// <summary>
+        /// Invoked by React to create a new node with a given tag, class name and properties.
+        /// </summary>
+        /// <param name="config">the animation configuration properties.</param>
+        /// <param name="success">Success callback JS function.</param>
+        /// <param name="error">Callback function called on exceptions.</param>
+        public void ConfigureNextLayoutAnimation(JObject config, ICallback success, ICallback error)
+        {
+            _operationsQueue.EnqueueConfigureLayoutAnimation(config, success, error);
         }
 
         /// <summary>

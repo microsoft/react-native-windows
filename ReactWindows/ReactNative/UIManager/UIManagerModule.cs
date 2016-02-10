@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Animation;
 using ReactNative.Bridge;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
-using ReactNative.Views;
 using System;
 using System.Collections.Generic;
-using Windows.UI.Xaml;
 
 namespace ReactNative.UIManager
 {
@@ -351,9 +350,9 @@ namespace ReactNative.UIManager
         /// Callback used if there was an error processing the animation.
         /// </param>
         [ReactMethod]
-        public void configureNextLayoutAnimation(Dictionary<string, object> config, ICallback success, ICallback error)
+        public void configureNextLayoutAnimation(JObject config, ICallback success, ICallback error)
         {
-            throw new NotImplementedException();
+            _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
         #endregion

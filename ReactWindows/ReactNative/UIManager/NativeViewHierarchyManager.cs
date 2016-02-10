@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Animation;
 using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.Tracing;
-using ReactNative.UIManager.Animation;
+using ReactNative.UIManager.LayoutAnimation;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -54,6 +55,7 @@ namespace ReactNative.UIManager
         private readonly JavaScriptResponderHandler _jsResponderHandler;
         private readonly RootViewManager _rootViewManager;
         private readonly AnimationRegistry _animationRegistry;
+        private readonly LayoutAnimationManager _layoutAnimator;
 
         /// <summary>
         /// Instantiates the <see cref="NativeViewHierarchyManager"/>.
@@ -62,23 +64,12 @@ namespace ReactNative.UIManager
         public NativeViewHierarchyManager(ViewManagerRegistry viewManagers)
         {
             _viewManagers = viewManagers;
+            _layoutAnimator = new LayoutAnimationManager();
             _tagsToViews = new Dictionary<int, FrameworkElement>();
             _tagsToViewManagers = new Dictionary<int, ViewManager>();
             _rootTags = new Dictionary<int, bool>();
             _jsResponderHandler = new JavaScriptResponderHandler();
             _rootViewManager = new RootViewManager();
-            _animationRegistry = new AnimationRegistry();
-        }
-
-        /// <summary>
-        /// The animation registry.
-        /// </summary>
-        public AnimationRegistry Animations
-        {
-            get
-            {
-                return _animationRegistry;
-            }
         }
 
         /// <summary>
@@ -89,7 +80,7 @@ namespace ReactNative.UIManager
             private get;
             set;
         }
-
+        
         /// <summary>
         /// Updates the properties of the view with the given tag.
         /// </summary>
@@ -133,7 +124,7 @@ namespace ReactNative.UIManager
                 .With("tag", tag))
             {
                 var viewToUpdate = ResolveView(tag);
-
+                
                 var parentViewManager = default(ViewManager);
                 var parentViewGroupManager = default(ViewGroupManager);
                 if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) || 
@@ -182,6 +173,25 @@ namespace ReactNative.UIManager
                     viewManager.UpdateProperties(view, initialProperties);
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets up the Layout Animation Manager.
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="success"></param>
+        /// <param name="error"></param>
+        public void ConfigureLayoutAnimation(JObject config, ICallback success, ICallback error)
+        {
+            _layoutAnimator.InitializeFromConfig(config);
+        }
+
+        /// <summary>
+        /// Clears out the <see cref="LayoutAnimationManager"/>.
+        /// </summary>
+        public void ClearLayoutAnimation()
+        {
+            _layoutAnimator.Reset();
         }
 
         /// <summary>
@@ -537,10 +547,17 @@ namespace ReactNative.UIManager
 
         private void UpdateLayout(FrameworkElement viewToUpdate, int x, int y, int width, int height)
         {
-            viewToUpdate.Width = width;
-            viewToUpdate.Height = height;
-            Canvas.SetLeft(viewToUpdate, x);
-            Canvas.SetTop(viewToUpdate, y);
+            if (_layoutAnimator.ShouldAnimateLayout(viewToUpdate))
+            {
+                _layoutAnimator.ApplyLayoutUpdate(viewToUpdate, x, y, width, height);
+            }
+            else
+            {
+                viewToUpdate.Width = width;
+                viewToUpdate.Height = height;
+                Canvas.SetLeft(viewToUpdate, x);
+                Canvas.SetTop(viewToUpdate, y);
+            }
         }
     }
 }
