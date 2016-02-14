@@ -122,8 +122,7 @@ namespace ReactNative.Views.View
         {
             if (color.HasValue)
             {
-                var panel = GetPanel(view);
-                panel.Background = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.SetBackgroundColor(color.Value);
             }
         }
 
@@ -137,22 +136,6 @@ namespace ReactNative.Views.View
         {
             var panel = GetPanel(view);
             panel.SetElevationEffect(elevation);
-        }
-
-        /// <summary>
-        /// Sets the <see cref="ReactPanel"/> pointer events based on a event string key.
-        /// </summary>
-        /// <param name="view">The view panel.</param>
-        /// <param name="pointerEventsStr">The event to propogate down to the view.</param>
-        [ReactProperty("pointerEvents")]
-        public void SetPointerEvents(BorderedContentControl view, string pointerEventsStr)
-        {
-            var panel = GetPanel(view);
-            var pointerEvent = default(PointerEvents);
-            if (Enum.TryParse(pointerEventsStr, out pointerEvent))
-            {
-                panel.PointerEvents = pointerEvent;
-            }
         }
 
         /// <summary>

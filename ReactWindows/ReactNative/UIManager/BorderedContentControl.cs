@@ -154,6 +154,16 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets the background color.
+        /// </summary>
+        /// <param name="value">The masked color value.</param>
+        public void SetBackgroundColor(uint value)
+        {
+            EnsureBorder();
+            _customBorder.Background = new SolidColorBrush(ColorHelpers.Parse(value));
+        }
+
+        /// <summary>
         /// Sets the border color.
         /// </summary>
         /// <param name="kind">The width specification.</param>
