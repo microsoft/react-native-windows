@@ -1,26 +1,41 @@
-﻿
+﻿using ReactNative.Bridge;
+
 namespace ReactNative.UIManager
 {
-    using ReactNative.Bridge;
-
+    /// <summary>
+    /// A wrapper <see cref="ReactContext"/> that delegates lifecycle events to
+    /// the original instance of <see cref="ReactContext"/>.
+    /// </summary>
     public class ThemedReactContext : ReactContext
     {
-        private readonly ReactContext mReactContext;
+        private readonly ReactContext _reactContext;
 
-        public ThemedReactContext(ReactContext reactApplicationContext) {
-             InitializeWithInstance(reactApplicationContext.CatalystInstance);
-             mReactContext = reactApplicationContext;
-        }
-
-        public void addLifecycleEventListener(ILifecycleEventListener listener)
+        /// <summary>
+        /// Instantiates the <see cref="ThemedReactContext"/>.
+        /// </summary>
+        /// <param name="reactContext">The inner context.</param>
+        public ThemedReactContext(ReactContext reactContext)
         {
-            mReactContext.AddLifecycleEventListener(listener);
+             InitializeWithInstance(reactContext.ReactInstance);
+             _reactContext = reactContext;
         }
 
-        public void removeLifecycleEventListener(ILifecycleEventListener listener)
+        /// <summary>
+        /// Adds a lifecycle event listener to the context.
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public override void AddLifecycleEventListener(ILifecycleEventListener listener)
         {
-            mReactContext.RemoveLifecycleEventListener(listener);
+            _reactContext.AddLifecycleEventListener(listener);
         }
 
+        /// <summary>
+        /// Removes a lifecycle event listener from the context.
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public override void RemoveLifecycleEventListener(ILifecycleEventListener listener)
+        {
+            _reactContext.RemoveLifecycleEventListener(listener);
+        }
     }
 }

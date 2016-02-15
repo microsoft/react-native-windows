@@ -26,6 +26,7 @@ namespace ReactNative.UIManager
         private const string PROP_DECOMPOSED_MATRIX_TRANSLATE_X = "translateX";
         private const string PROP_DECOMPOSED_MATRIX_TRANSLATE_Y = "translateY";
         private const string PROP_OPACITY = "opacity";
+        private const string PROP_ELEVATION = "elevation";
 
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
@@ -55,6 +56,18 @@ namespace ReactNative.UIManager
         public void SetOpacity(TFrameworkElement view, double opacity)
         {
             view.Opacity = opacity;
+        }
+
+        /// <summary>
+        /// Sets the elevation of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The framework element instance.</param>
+        /// <param name="elevation">The elevation value.</param>
+        [ReactProperty(PROP_ELEVATION)]
+        public void SetElevation(TFrameworkElement view, double elevation)
+        {
+            var transform = EnsureTransform(view);
+            transform.TranslateZ = elevation;
         }
 
         /// <summary>
@@ -119,13 +132,12 @@ namespace ReactNative.UIManager
 
         private void SetTransformMatrix(TFrameworkElement view, JObject matrix)
         {
-            // TODO: eliminate closure in action.
-            LookupAndDo<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_X, value => SetTranslationX(view, value));
-            LookupAndDo<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_Y, value => SetTranslationY(view, value));
-            LookupAndDo<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_X, value => SetRotationX(view, value));
-            LookupAndDo<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_Y, value => SetRotationY(view, value));
-            LookupAndDo<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_X, value => SetScaleX(view, value));
-            LookupAndDo<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_Y, value => SetScaleY(view, value));
+            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_X, view, SetTranslationX);
+            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_Y, view, SetTranslationY);
+            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_X, view, SetRotationX);
+            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_Y, view, SetRotationY);
+            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_X, view, SetScaleX);
+            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_Y, view, SetScaleY);
         }
         
         private void ResetTransformMatrix(TFrameworkElement view)
@@ -138,12 +150,12 @@ namespace ReactNative.UIManager
             SetScaleY(view, 1.0);
         }
 
-        private static void LookupAndDo<T>(JObject matrix, string name, Action<T> onFound)
+        private static void ApplyProperty<T>(JObject matrix, string name, TFrameworkElement view, Action<TFrameworkElement, T> apply)
         {
             var token = default(JToken);
             if (matrix.TryGetValue(name, out token))
             {
-                onFound(token.ToObject<T>());
+                apply(view, token.ToObject<T>());
             }
         }
 

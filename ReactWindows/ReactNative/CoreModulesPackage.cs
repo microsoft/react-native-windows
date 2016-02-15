@@ -13,11 +13,6 @@ namespace ReactNative
     /// It should be used for modules that require special integration with
     /// other framework parts (e.g., with the list of packages to load view
     /// managers from).
-    /// 
-    /// TODO:
-    /// 1. Add Core native modules
-    /// 2. Implement UIManagerModule
-    /// 3. Add remaining JavaScript modules
     /// </summary>
     class CoreModulesPackage : IReactPackage
     {
@@ -44,13 +39,17 @@ namespace ReactNative
                 uiManagerModule = new UIManagerModule(
                     reactContext, 
                     viewManagerList,
-                    _uiImplementationProvider.CreateUIImplementation(
+                    _uiImplementationProvider.Create(
                         reactContext, 
                         viewManagerList));
             }
 
             return new List<INativeModule>
             {
+                //new AnimationsDebugModule(
+                //    reactContext,
+                //    _reactInstanceManager.DevSupportManager.DevSettings),
+                //new SystemInfoModule(),
                 new DeviceEventManagerModule(reactContext, _hardwareBackButtonHandler),
                 new ExceptionsManagerModule(_reactInstanceManager.DevSupportManager),
                 new Timing(reactContext),
@@ -58,6 +57,7 @@ namespace ReactNative
                     _reactInstanceManager.SourceUrl,
                     _reactInstanceManager.DevSupportManager.SourceMapUrl),
                 uiManagerModule,
+                //new DebugComponentOwnershipModule(reactContext),
             };
         }
 
@@ -70,6 +70,8 @@ namespace ReactNative
                 typeof(RCTEventEmitter),
                 typeof(RCTNativeAppEventEmitter),
                 typeof(AppRegistry),
+                // TODO: some tracing module
+                //typeof(RCTDebugComponentOwnership),
             };
         }
 

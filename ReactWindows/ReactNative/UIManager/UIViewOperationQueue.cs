@@ -18,12 +18,14 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
+        private readonly object _operationsLock = new object();
         private readonly int[] _measureBuffer = new int[4];
 
-        private readonly object _operationsLock = new object();
-        private IList<Action> _operations = new List<Action>();
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
+
+        private IList<Action> _operations = new List<Action>();
+        private bool _isRunning;
 
         /// <summary>
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
@@ -165,7 +167,7 @@ namespace ReactNative.UIManager
             ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
-            CatalystStylesDiffMap initialProperties)
+            ReactStylesDiffMap initialProperties)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.CreateView(
                 themedContext,
@@ -199,7 +201,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="properties">The properties.</param>
-        public void EnqueueUpdateProperties(int tag, string className, CatalystStylesDiffMap properties)
+        public void EnqueueUpdateProperties(int tag, string className, ReactStylesDiffMap properties)
         {
             EnqueueOperation(() =>
                 _nativeViewHierarchyManager.UpdateProperties(tag, properties));
@@ -328,6 +330,35 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Called when the host receives the suspend event.
+        /// </summary>
+        public void OnSuspend()
+        {
+            lock (_operationsLock)
+            {
+                _isRunning = false;
+            }
+        }
+
+        /// <summary>
+        /// Called when the host receives the resume event.
+        /// </summary>
+        public void OnResume()
+        {
+            lock (_operationsLock)
+            {
+                _isRunning = true;
+            }
+        }
+
+        /// <summary>
+        /// Called when the host is shutting down.
+        /// </summary>
+        public void OnShutdown()
+        {
+        }
+
+        /// <summary>
         /// Dispatches the view updates.
         /// </summary>
         /// <param name="batchId">The batch identifier.</param>
@@ -336,10 +367,13 @@ namespace ReactNative.UIManager
             var operations = default(IList<Action>);
             lock (_operationsLock)
             {
-                operations = _operations.Count == 0 ? null : _operations;
-                if (operations != null)
+                if (_isRunning)
                 {
-                    _operations = new List<Action>();
+                    operations = _operations.Count == 0 ? null : _operations;
+                    if (operations != null)
+                    {
+                        _operations = new List<Action>();
+                    }
                 }
             }
 

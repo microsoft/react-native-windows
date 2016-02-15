@@ -68,7 +68,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="viewToUpdate">The view to update.</param>
         /// <param name="properties">The properties.</param>
-        public void UpdateProperties(FrameworkElement viewToUpdate, CatalystStylesDiffMap properties)
+        public void UpdateProperties(FrameworkElement viewToUpdate, ReactStylesDiffMap properties)
         {
             var propertySetters =
                 ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(GetType());
@@ -99,7 +99,7 @@ namespace ReactNative.UIManager
             var view = CreateViewInstance(reactContext);
             AddEventEmitters(reactContext, view);
 
-            // TODO: enable touch intercepting view groups
+            // TODO: enable touch intercepting view parents
 
             return view;
         }

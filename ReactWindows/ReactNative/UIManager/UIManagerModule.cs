@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace ReactNative.UIManager
 {
     /// <summary>
-    /// Native module to allow JS to create and update native Views.
+    /// Native module to allow JavaScript to create and update native views.
     /// </summary>
     /// <remarks>
     /// TODO: 
@@ -84,27 +84,29 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Registers a new root view. JS can use the returned tag with manageChildren to add/remove
-        /// children to this view.
+        /// Registers a new root view.
         /// </summary>
-        /// <param name="rootView"></param>
-        /// <returns></returns>
+        /// <param name="rootView">The root view instance.</param>
+        /// <returns>The root view tag.</returns>
+        /// <remarks>
+        /// JavaScript can use the returned tag with to add or remove children 
+        /// to this view through <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>.
+        /// </remarks>
         public int AddMeasuredRootView(SizeMonitoringCanvas rootView)
         {
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
-            // TODO: round?
-            var width = (int)Math.Floor(rootView.ActualWidth);
-            var height = (int)Math.Floor(rootView.ActualHeight);
+            var width = rootView.ActualWidth;
+            var height = rootView.ActualHeight;
 
             var context = new ThemedReactContext(Context);
             _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
 
             rootView.SetOnSizeChangedListener((sender, args) =>
             {
-                var newWidth = (int)Math.Floor(args.NewSize.Width); // TODO: round?
-                var newHeight = (int)Math.Floor(args.NewSize.Height); // TODO: round?
+                var newWidth = args.NewSize.Width;
+                var newHeight = args.NewSize.Height;
 
                 Context.RunOnDispatcherQueueThread(() =>
                 {
@@ -407,10 +409,10 @@ namespace ReactNative.UIManager
 
         #region NativeModuleBase
 
-        public override void OnCatalystInstanceDispose()
+        public override void OnReactInstanceDispose()
         {
-            base.OnCatalystInstanceDispose();
-            _eventDispatcher.OnCatalystInstanceDispose();
+            base.OnReactInstanceDispose();
+            _eventDispatcher.OnReactInstanceDispose();
         }
 
         #endregion

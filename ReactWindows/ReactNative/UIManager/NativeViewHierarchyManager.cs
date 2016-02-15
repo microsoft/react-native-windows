@@ -20,9 +20,9 @@ namespace ReactNative.UIManager
     /// corresponding instances of <see cref="ViewManager"/>. The 
     /// <see cref="UIManagerModule"/> communicates with this class by it's
     /// public interface methods:
-    /// - <see cref="UpdateProperties(int, string, CatalystStylesDiffMap)"/>
+    /// - <see cref="UpdateProperties(int, string, ReactStylesDiffMap)"/>
     /// - <see cref="UpdateLayout(int, int, int, int, int, int)"/>
-    /// - <see cref="CreateView(ThemedReactContext, int, string, CatalystStylesDiffMap)"/>
+    /// - <see cref="CreateView(ThemedReactContext, int, string, ReactStylesDiffMap)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
     /// executing all the scheduled operations at the end of the JavaScript batch.
     /// </summary>
@@ -43,9 +43,7 @@ namespace ReactNative.UIManager
     /// 
     /// TODO: 
     /// 1) AnimationRegistry
-    /// 2) UpdateLayout
-    /// 3) Measure
-    /// 4) ShowPopupMenu
+    /// 2) ShowPopupMenu
     /// </remarks>
     public class NativeViewHierarchyManager
     {
@@ -86,7 +84,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="properties">The properties.</param>
-        public void UpdateProperties(int tag, CatalystStylesDiffMap properties)
+        public void UpdateProperties(int tag, ReactStylesDiffMap properties)
         {
             DispatcherHelpers.AssertOnDispatcher();
             var viewManager = ResolveViewManager(tag);
@@ -126,18 +124,18 @@ namespace ReactNative.UIManager
                 var viewToUpdate = ResolveView(tag);
                 
                 var parentViewManager = default(ViewManager);
-                var parentViewGroupManager = default(ViewGroupManager);
+                var parentViewParentManager = default(ViewParentManager);
                 if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) || 
-                    (parentViewGroupManager = parentViewManager as ViewGroupManager) == null)
+                    (parentViewParentManager = parentViewManager as ViewParentManager) == null)
                 {
                     throw new InvalidOperationException(
                         string.Format(
                             CultureInfo.InvariantCulture,
-                            "Trying to use view with tag '{0}' as a parent, but its manager doesn't extend ViewGroupManager.",
+                            "Trying to use view with tag '{0}' as a parent, but its manager doesn't extend ViewParentManager.",
                             tag));
                 }
 
-                if (!parentViewGroupManager.NeedsCustomLayoutForChildren)
+                if (!parentViewParentManager.NeedsCustomLayoutForChildren)
                 {
                     UpdateLayout(viewToUpdate, x, y, width, height);
                 }
@@ -151,7 +149,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="initialProperties">The properties.</param>
-        public void CreateView(ThemedReactContext themedContext, int tag, string className, CatalystStylesDiffMap initialProperties)
+        public void CreateView(ThemedReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
@@ -213,10 +211,10 @@ namespace ReactNative.UIManager
                         tag));
             }
 
-            var viewGroupManager = (ViewGroupManager)viewManager;
+            var viewParentManager = (ViewParentManager)viewManager;
             var viewToManage = _tagsToViews[tag];
 
-            var lastIndexToRemove = viewGroupManager.GetChildCount(viewToManage);
+            var lastIndexToRemove = viewParentManager.GetChildCount(viewToManage);
             if (indicesToRemove != null)
             {
                 for (var i = indicesToRemove.Length - 1; i >= 0; --i)
@@ -232,7 +230,7 @@ namespace ReactNative.UIManager
                                 tag));
                     }
 
-                    if (indexToRemove >= viewGroupManager.GetChildCount(viewToManage))
+                    if (indexToRemove >= viewParentManager.GetChildCount(viewToManage))
                     {
                         throw new InvalidOperationException(
                             string.Format(
@@ -253,7 +251,7 @@ namespace ReactNative.UIManager
                                 tag));
                     }
 
-                    viewGroupManager.RemoveChildAt(viewToManage, indexToRemove);
+                    viewParentManager.RemoveChildAt(viewToManage, indexToRemove);
                     lastIndexToRemove = indexToRemove;
                 }
             }
@@ -273,7 +271,7 @@ namespace ReactNative.UIManager
                                 viewAtIndex.Tag));
                     }
 
-                    viewGroupManager.AddView(viewToManage, viewToAdd, viewAtIndex.Index);
+                    viewParentManager.AddView(viewToManage, viewToAdd, viewAtIndex.Index);
                 }
             }
 
@@ -314,12 +312,6 @@ namespace ReactNative.UIManager
             }
 
             var rootView = _tagsToViews[rootViewTag];
-            var sizeMonitoringPanel = rootView as SizeMonitoringCanvas;
-            if (sizeMonitoringPanel != null)
-            {
-                sizeMonitoringPanel.RemoveSizeChanged();
-            }
-
             DropView(rootView);
             _rootTags.Remove(rootViewTag);
         }
@@ -366,7 +358,7 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The themed context.</param>
         public void AddRootView(int tag, SizeMonitoringCanvas view, ThemedReactContext themedContext)
         {
-            AddRootViewGroup(tag, view, themedContext);
+            AddRootViewParent(tag, view, themedContext);
         }
 
         /// <summary>
@@ -516,7 +508,7 @@ namespace ReactNative.UIManager
             return viewManager;
         }
 
-        private void AddRootViewGroup(int tag, FrameworkElement view, ThemedReactContext themedContext)
+        private void AddRootViewParent(int tag, FrameworkElement view, ThemedReactContext themedContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
             _tagsToViews.Add(tag, view);
@@ -540,12 +532,12 @@ namespace ReactNative.UIManager
             var viewManager = default(ViewManager);
             if (_tagsToViewManagers.TryGetValue(tag, out viewManager))
             {
-                var viewGroupManager = viewManager as ViewGroupManager;
-                if (viewGroupManager != null)
+                var viewParentManager = viewManager as ViewParentManager;
+                if (viewParentManager != null)
                 {
-                    for (var i = viewGroupManager.GetChildCount(view) - 1; i >= 0; --i)
+                    for (var i = viewParentManager.GetChildCount(view) - 1; i >= 0; --i)
                     {
-                        var child = viewGroupManager.GetChildAt(view, i);
+                        var child = viewParentManager.GetChildAt(view, i);
                         var managedChild = default(FrameworkElement);
                         if (_tagsToViews.TryGetValue(child.GetTag(), out managedChild))
                         {
@@ -553,7 +545,7 @@ namespace ReactNative.UIManager
                         }
                     }
 
-                    viewGroupManager.RemoveAllChildren(view);
+                    viewParentManager.RemoveAllChildren(view);
                 }
             }
 

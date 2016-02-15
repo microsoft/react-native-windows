@@ -14,12 +14,10 @@ namespace ReactNative.UIManager
     /// An class that is used to receive React commands from JavaScript and 
     /// translate them into a shadow node hierarchy that is then mapped to a
     /// native view hierarchy.
-    /// 
-    /// TODO:
-    /// 1. View registration for root and children
-    /// 2. Shadow DOM item updates
-    /// 3. Animation support
     /// </summary>
+    /// <remarks>
+    /// TODO: Animation support
+    /// </remarks>
     public class UIImplementation
     {
         private readonly int[] _measureBuffer = new int[4];
@@ -74,15 +72,15 @@ namespace ReactNative.UIManager
         public void RegisterRootView(
             SizeMonitoringCanvas rootView,
             int tag,
-            int width,
-            int height,
+            double width,
+            double height,
             ThemedReactContext context)
         {
             var rootCssNode = CreateRootShadowNode();
             rootCssNode.ReactTag = tag;
             rootCssNode.ThemedContext = context;
-            rootCssNode.Width = width;
-            rootCssNode.Height = height;
+            rootCssNode.Width = (float)width;
+            rootCssNode.Height = (float)height;
             _shadowNodeRegistry.AddRootNode(rootCssNode);
 
             // Register it with the NativeViewHierarchyManager.
@@ -109,13 +107,13 @@ namespace ReactNative.UIManager
         /// <param name="eventDispatcher">The event dispatcher.</param>
         public void UpdateRootNodeSize(
             int rootViewTag,
-            int newWidth,
-            int newHeight,
+            double newWidth,
+            double newHeight,
             EventDispatcher eventDispatcher)
         {
             var rootCssNode = _shadowNodeRegistry.GetNode(rootViewTag);
-            rootCssNode.Width = newWidth;
-            rootCssNode.Height = newHeight;
+            rootCssNode.Width = (float)newWidth;
+            rootCssNode.Height = (float)newHeight;
 
             // If we're in the middle of a batch, the change will be
             // automatically dispatched at the end of the batch. The event
@@ -146,10 +144,10 @@ namespace ReactNative.UIManager
 
             _shadowNodeRegistry.AddNode(cssNode);
 
-            var styles = default(CatalystStylesDiffMap);
+            var styles = default(ReactStylesDiffMap);
             if (properties != null)
             {
-                styles = new CatalystStylesDiffMap(properties);
+                styles = new ReactStylesDiffMap(properties);
                 cssNode.UpdateProperties(styles);
             }
 
@@ -189,7 +187,7 @@ namespace ReactNative.UIManager
 
             if (properties != null)
             {
-                var styles = new CatalystStylesDiffMap(properties);
+                var styles = new ReactStylesDiffMap(properties);
                 cssNode.UpdateProperties(styles);
                 HandleUpdateView(cssNode, className, styles);
             }
@@ -552,6 +550,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnSuspend()
         {
+            _operationsQueue.OnSuspend();
         }
 
         /// <summary>
@@ -559,6 +558,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnResume()
         {
+            _operationsQueue.OnResume();
         }
 
         /// <summary>
@@ -566,9 +566,10 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnShutdown()
         {
+            _operationsQueue.OnShutdown();
         }
 
-        private void HandleCreateView(ReactShadowNode cssNode, int rootViewTag, CatalystStylesDiffMap styles)
+        private void HandleCreateView(ReactShadowNode cssNode, int rootViewTag, ReactStylesDiffMap styles)
         {
             if (!cssNode.IsVirtual)
             {
@@ -579,7 +580,7 @@ namespace ReactNative.UIManager
         private void HandleUpdateView(
             ReactShadowNode cssNode,
             string className,
-            CatalystStylesDiffMap styles)
+            ReactStylesDiffMap styles)
         {
             if (!cssNode.IsVirtual)
             {
@@ -737,17 +738,17 @@ namespace ReactNative.UIManager
                         node.ViewClass));
             }
 
-            var viewGroupManager = viewManager as ViewGroupManager;
-            if (viewGroupManager == null)
+            var viewParentManager = viewManager as ViewParentManager;
+            if (viewParentManager == null)
             {
                 throw new InvalidOperationException(
                     string.Format(
                         CultureInfo.InvariantCulture,
-                        "Trying to use view '{0}' as a parent but its manager is not a ViewGroupManager.",
+                        "Trying to use view '{0}' as a parent but its manager is not a ViewParentManager.",
                         node.ViewClass));
             }
 
-            if (viewGroupManager.NeedsCustomLayoutForChildren)
+            if (viewParentManager.NeedsCustomLayoutForChildren)
             {
                 throw new InvalidOperationException(
                     string.Format(
