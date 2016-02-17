@@ -7,14 +7,6 @@ namespace Playground
 {
     class AppReactPage : ReactPage
     {
-        public override string JavaScriptBundleFile
-        {
-            get
-            {
-                return "ms-appx:///main.jsbundle";
-            }
-        }
-
         public override string MainComponentName
         {
             get

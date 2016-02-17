@@ -1,31 +1,29 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace ReactNative.UIManager.LayoutAnimation
 {
     static class InterpolationTypeExtensions
     {
-        private static readonly EasingFunctionBase s_easeIn = new BackEase
+        private static readonly QuadraticEase s_easeIn = new QuadraticEase
         {
             EasingMode = EasingMode.EaseIn,
-            Amplitude = 0.5
         };
 
-        private static readonly EasingFunctionBase s_easeOut = new BackEase
+        private static readonly QuadraticEase s_easeOut = new QuadraticEase
         {
             EasingMode = EasingMode.EaseOut,
-            Amplitude = 0.5
         };
 
-        private static readonly EasingFunctionBase s_easeInOut = new BackEase
+        private static readonly QuadraticEase s_easeInOut = new QuadraticEase
         {
             EasingMode = EasingMode.EaseInOut,
-            Amplitude = 0.5
         };
 
-        private static readonly EasingFunctionBase s_spring = new ElasticEase { Oscillations = 3 };
+        private static readonly BounceEase s_spring = new BounceEase(); // TODO: implement proper spring
 
-        public static EasingFunctionBase EasingFunction(this InterpolationType interpolationType)
+        public static EasingFunctionBase GetEasingFunction(this InterpolationType interpolationType, JObject data)
         {
             var storyboard = new Storyboard();
 
@@ -38,10 +36,10 @@ namespace ReactNative.UIManager.LayoutAnimation
                 case InterpolationType.EaseInEaseOut:
                     return s_easeInOut;
                 case InterpolationType.Spring:
+                    // TODO: enable `springDamping`
                     return s_spring;
                 case InterpolationType.Linear:
                     return null;
-                case InterpolationType.None:
                 default:
                     throw new NotImplementedException();
             }
