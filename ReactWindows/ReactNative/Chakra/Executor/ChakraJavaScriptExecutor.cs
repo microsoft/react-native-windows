@@ -14,6 +14,9 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public class ChakraJavaScriptExecutor : IJavaScriptExecutor
     {
+        private static readonly JToken s_null = JValue.CreateNull();
+        private static readonly JToken s_undefined = JValue.CreateUndefined();
+
         private readonly JavaScriptRuntime _runtime;
         private readonly JavaScriptValue _globalObject;
 
@@ -250,6 +253,14 @@ namespace ReactNative.Chakra.Executor
 #else
         private JavaScriptValue ConvertJson(JToken token)
         {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return JavaScriptValue.Null;
+                case JTokenType.Undefined:
+                    return JavaScriptValue.Undefined;
+            }
+
             var jsonHelpers = _globalObject.GetProperty(JavaScriptPropertyId.FromString("JSON"));
             var parseFunction = jsonHelpers.GetProperty(JavaScriptPropertyId.FromString("parse"));
 
@@ -261,6 +272,14 @@ namespace ReactNative.Chakra.Executor
 
         private JToken ConvertJson(JavaScriptValue value)
         {
+            switch (value.ValueType)
+            {
+                case JavaScriptValueType.Undefined:
+                    return s_undefined;
+                case JavaScriptValueType.Null:
+                    return s_null;
+            }
+
             var jsonHelpers = _globalObject.GetProperty(JavaScriptPropertyId.FromString("JSON"));
             var stringifyFunction = jsonHelpers.GetProperty(JavaScriptPropertyId.FromString("stringify"));
 
