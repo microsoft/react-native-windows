@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using ReactNative.Common;
+using ReactNative.Tracing;
+using System;
 using System.Globalization;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.System.Threading;
 using Windows.UI.Core;
 
 namespace ReactNative.Bridge.Queue
@@ -16,9 +16,14 @@ namespace ReactNative.Bridge.Queue
     /// </summary>
     public abstract class MessageQueueThread : IMessageQueueThread, IDisposable
     {
+        private readonly string _name;
+
         private int _disposed;
 
-        private MessageQueueThread() { }
+        private MessageQueueThread(string name)
+        {
+            _name = name;
+        }
 
         /// <summary>
         /// Flags if the <see cref="MessageQueueThread"/> is disposed.
@@ -40,8 +45,6 @@ namespace ReactNative.Bridge.Queue
         /// </returns>
         public bool IsOnThread()
         {
-            AssertNotDisposed();
-
             return IsOnThreadCore();
         }
 
@@ -54,7 +57,11 @@ namespace ReactNative.Bridge.Queue
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
-            AssertNotDisposed();
+            if (IsDisposed)
+            {
+                Tracer.Write(ReactConstants.Tag, $"Dropping enqueued action on disposed '{_name}' thread.");
+                return;
+            }
 
             Enqueue(action);
         }
@@ -97,14 +104,6 @@ namespace ReactNative.Bridge.Queue
             }
         }
 
-        private void AssertNotDisposed()
-        {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("this");
-            }
-        }
-
         /// <summary>
         /// Factory to create the action queue.
         /// </summary>
@@ -125,7 +124,7 @@ namespace ReactNative.Bridge.Queue
                 case MessageQueueThreadKind.DispatcherThread:
                     return new DispatcherMessageQueueThread(spec.Name, handler);
                 case MessageQueueThreadKind.BackgroundSingleThread:
-                    return new SingleBackgroundMessageQueueThread(spec.Name, handler);
+                    return new AnyBackgroundMessageQueueThread(spec.Name, handler);
                 case MessageQueueThreadKind.BackgroundAnyThread:
                     return new AnyBackgroundMessageQueueThread(spec.Name, handler);
                 default:
@@ -140,15 +139,19 @@ namespace ReactNative.Bridge.Queue
 
         class DispatcherMessageQueueThread : MessageQueueThread
         {
-            private readonly string _name;
-            private readonly Subject<Action> _actionObservable;
+            private static readonly IObserver<Action> s_nop = Observer.Create<Action>(_ => { });
+
+            private readonly Subject<Action> _actionSubject;
             private readonly IDisposable _subscription;
 
+            private IObserver<Action> _actionObserver;
+
             public DispatcherMessageQueueThread(string name, Action<Exception> handler)
+                : base(name)
             {
-                _name = name;
-                _actionObservable = new Subject<Action>();
-                _subscription = _actionObservable
+                _actionSubject = new Subject<Action>();
+                _actionObserver = _actionSubject;
+                _subscription = _actionSubject
                     .ObserveOnDispatcher()
                     .Subscribe(action =>
                     {
@@ -165,7 +168,7 @@ namespace ReactNative.Bridge.Queue
 
             protected override void Enqueue(Action action)
             {
-                _actionObservable.OnNext(action);
+                _actionObserver.OnNext(action);
             }
 
             protected override bool IsOnThreadCore()
@@ -176,76 +179,9 @@ namespace ReactNative.Bridge.Queue
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
-                _actionObservable.Dispose();
+                Interlocked.Exchange(ref _actionObserver, s_nop);
+                _actionSubject.Dispose();
                 _subscription.Dispose();
-            }
-        }
-
-        class SingleBackgroundMessageQueueThread : MessageQueueThread
-        {
-            private static readonly Action s_canary = new Action(() => { });
-
-            private readonly string _name;
-            private readonly Action<Exception> _handler;
-            private readonly BlockingCollection<Action> _queue;
-            private readonly ThreadLocal<bool> _indicator;
-            private readonly ManualResetEvent _doneHandle;
-            private readonly IAsyncAction _asyncAction;
-
-            public SingleBackgroundMessageQueueThread(string name, Action<Exception> handler)
-            {
-                _name = name;
-                _handler = handler;
-                _queue = new BlockingCollection<Action>();
-                _indicator = new ThreadLocal<bool>();
-                _doneHandle = new ManualResetEvent(false);
-                _asyncAction = ThreadPool.RunAsync(_ =>
-                {
-                    _indicator.Value = true;
-                    Run();
-                    _doneHandle.Set();
-                }, 
-                WorkItemPriority.Normal);
-            }
-
-            protected override bool IsOnThreadCore()
-            {
-                return _indicator.Value;
-            }
-
-            protected override void Enqueue(Action action)
-            {
-                _queue.Add(action);
-            }
-
-            protected override void Dispose(bool disposing)
-            {
-                base.Dispose(disposing);
-
-                // Unblock the background thread.
-                Enqueue(s_canary);
-                _doneHandle.WaitOne();
-            }
-
-            private void Run()
-            {
-                while (true)
-                {
-                    var action = _queue.Take();
-                    if (IsDisposed)
-                    {
-                        break;
-                    }
-
-                    try
-                    {
-                        action();
-                    }
-                    catch (Exception ex)
-                    {
-                        _handler(ex);
-                    }
-                }
             }
         }
 
@@ -253,14 +189,13 @@ namespace ReactNative.Bridge.Queue
         {
             private readonly object _gate = new object();
 
-            private readonly string _name;
             private readonly Action<Exception> _handler;
             private readonly TaskScheduler _taskScheduler;
             private readonly TaskFactory _taskFactory;
 
             public AnyBackgroundMessageQueueThread(string name, Action<Exception> handler)
+                : base(name)
             {
-                _name = name;
                 _handler = handler;
                 _taskScheduler = new LimitedConcurrencyLevelTaskScheduler(1);
                 _taskFactory = new TaskFactory(_taskScheduler);
