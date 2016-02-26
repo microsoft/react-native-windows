@@ -120,6 +120,8 @@
     <Compile Include="Modules\Core\RCTDeviceEventEmitterTests.cs" />
     <Compile Include="Modules\Core\RCTNativeAppEventEmitterTests.cs" />
     <Compile Include="Modules\Core\TimingTests.cs" />
+    <Compile Include="Modules\Network\NetworkingModuleTests.cs" />
+    <Compile Include="Modules\Network\TaskCancellationManagerTests.cs" />
     <Compile Include="Modules\Toast\ToastNotificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactInstanceManagerTests.cs" />
@@ -180,6 +182,7 @@
       <Name>ReactNative</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
