@@ -112,40 +112,44 @@ namespace ReactNative.Tests.Modules.Core
         [TestMethod]
         public void Timing_Repeat()
         {
-            var ids = new List<int>();
-            var repeat = 10;
-            var interval = 200;
-            var countdown = new CountdownEvent(repeat);
-            var timing = CreateTimingModule(new MockInvocationHandler((name, args) =>
+            for (var i = 0; i < 100; ++i)
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
-                ids.AddRange((IList<int>)args[0]);
-                if (countdown.CurrentCount > 0)
+                var ids = new List<int>();
+                var repeat = 10;
+                var interval = 200;
+                var countdown = new CountdownEvent(repeat);
+                var timing = CreateTimingModule(new MockInvocationHandler((name, args) =>
                 {
-                    var t = ThreadPool.RunAsync(_ => countdown.Signal());
-                }
-            }));
+                    Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                    ids.AddRange((IList<int>)args[0]);
+                    if (countdown.CurrentCount > 0)
+                    {
+                        var t = ThreadPool.RunAsync(_ => countdown.Signal());
+                    }
+                }));
 
-            var id = 42;
-            var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            timing.createTimer(id, interval, now, true);
+                var id = 42;
+                var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                timing.createTimer(id, interval, now, true);
 
-            Assert.IsTrue(countdown.Wait(interval * repeat * 2));
+                var waited = countdown.Wait(interval * repeat * 2);
+                Assert.IsTrue(waited);
 
-            timing.deleteTimer(id);
+                timing.deleteTimer(id);
 
-            Assert.AreEqual(42, ids.Distinct().SingleOrDefault());
-            Assert.IsTrue(ids.Count >= repeat);
+                Assert.AreEqual(42, ids.Distinct().SingleOrDefault());
+                Assert.IsTrue(ids.Count >= repeat);
 
-            timing.OnDestroy();
+                timing.OnDestroy();
+            }
         }
 
         [TestMethod]
         public async Task Timing_ManOrBoy()
         {
             var r = new Random();
-            var batchCount = 30;
-            var maxDuration = 1000;
+            var batchCount = 15;
+            var maxDuration = 500;
             var maxBatch = 10000;
             var id = 0;
 
@@ -174,7 +178,7 @@ namespace ReactNative.Tests.Modules.Core
             }
 
             countdown.Signal();
-            Assert.IsTrue(countdown.Wait(Timeout.Infinite));
+            Assert.IsTrue(countdown.Wait(batchCount * maxDuration / 4 * 2));
 
             timing.OnDestroy();
         }
