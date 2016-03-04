@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reactive;
+using System.Reactive.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -36,7 +38,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="width">The new width for the view.</param>
         /// <param name="height">The new height for the view.</param>
         /// <returns>The storyboard.</returns>
-        protected override Storyboard CreateAnimationCore(FrameworkElement view, int x, int y, int width, int height)
+        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, int x, int y, int width, int height)
         {
             var fromValue = IsReverse ? 1.0 : 0.0;
             var toValue = IsReverse ? 0.0 : 1.0;
@@ -45,10 +47,13 @@ namespace ReactNative.UIManager.LayoutAnimation
             if (animatedProperty.HasValue)
             {
                 var storyboard = new Storyboard();
+                var @finally = default(Action);
                 switch (animatedProperty.Value)
                 {
                     case AnimatedPropertyType.Opacity:
+                        view.Opacity = fromValue;
                         storyboard.Children.Add(CreateOpacityAnimation(view, fromValue, toValue));
+                        @finally = () => view.Opacity = toValue;
                         break;
                     case AnimatedPropertyType.ScaleXY:
                         // TODO: implement this layout animation option
@@ -58,7 +63,7 @@ namespace ReactNative.UIManager.LayoutAnimation
                             "Missing animation for property: " + animatedProperty.Value);
                 }
 
-                return storyboard;
+                return new StoryboardObservable(storyboard, @finally);
             }
 
             throw new InvalidOperationException(
@@ -73,6 +78,7 @@ namespace ReactNative.UIManager.LayoutAnimation
                 To = to,
                 EasingFunction = Interpolator,
                 Duration = Duration,
+                BeginTime = Delay,
             };
 
             Storyboard.SetTarget(timeline, view);
