@@ -3,9 +3,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Diagnostics;
-#if DEBUG
-using Windows.System.Profile;
-#endif
 
 namespace ReactNative.Chakra.Executor
 {
@@ -144,14 +141,6 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptContext.Current = _runtime.CreateContext();
 
-#if DEBUG
-            // Start debugging.
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
-            {
-                JavaScriptContext.StartDebugging();
-            }
-#endif
-
             var consolePropertyId = default(JavaScriptPropertyId);
             Native.ThrowIfError(
                 Native.JsGetPropertyIdFromName("console", out consolePropertyId));
@@ -169,7 +158,6 @@ namespace ReactNative.Chakra.Executor
 
             Debug.WriteLine("Chakra initialization successful.");
         }
-
 
         #region JSON Marshaling
 
@@ -220,7 +208,7 @@ namespace ReactNative.Chakra.Executor
             obj.SetProperty(propertyId, function, true);
         }
 
-        private JavaScriptValue ConsoleLog(
+        private static JavaScriptValue ConsoleLog(
             JavaScriptValue callee,
             bool isConstructCall,
             JavaScriptValue[] arguments,
@@ -230,7 +218,7 @@ namespace ReactNative.Chakra.Executor
             return ConsoleCallback("Log", callee, isConstructCall, arguments, argumentCount, callbackData);
         }
 
-        private JavaScriptValue ConsoleWarn(
+        private static JavaScriptValue ConsoleWarn(
             JavaScriptValue callee,
             bool isConstructCall,
             JavaScriptValue[] arguments,
@@ -240,7 +228,7 @@ namespace ReactNative.Chakra.Executor
             return ConsoleCallback("Warn", callee, isConstructCall, arguments, argumentCount, callbackData);
         }
 
-        private JavaScriptValue ConsoleError(
+        private static JavaScriptValue ConsoleError(
             JavaScriptValue callee,
             bool isConstructCall,
             JavaScriptValue[] arguments,
@@ -250,7 +238,7 @@ namespace ReactNative.Chakra.Executor
             return ConsoleCallback("Error", callee, isConstructCall, arguments, argumentCount, callbackData);
         }
 
-        private JavaScriptValue ConsoleCallback(
+        private static JavaScriptValue ConsoleCallback(
             string kind,
             JavaScriptValue callee,
             bool isConstructCall,
@@ -279,7 +267,7 @@ namespace ReactNative.Chakra.Executor
             return JavaScriptValue.Undefined;
         }
 
-        private string Stringify(JavaScriptValue value)
+        private static string Stringify(JavaScriptValue value)
         {
             switch (value.ValueType)
             {
@@ -290,7 +278,6 @@ namespace ReactNative.Chakra.Executor
                 case JavaScriptValueType.Boolean:
                 case JavaScriptValueType.Object:
                 case JavaScriptValueType.Array:
-                    return ConvertJson(value).ToString(Formatting.None);
                 case JavaScriptValueType.Function:
                 case JavaScriptValueType.Error:
                     return value.ConvertToString().ToString();
