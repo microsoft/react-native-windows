@@ -3,6 +3,7 @@ using ReactNative.Collections;
 using ReactNative.Reflection;
 using System;
 using System.Reactive;
+using System.Reactive.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 

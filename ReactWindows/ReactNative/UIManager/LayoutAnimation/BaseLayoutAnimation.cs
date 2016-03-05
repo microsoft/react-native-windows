@@ -78,6 +78,7 @@ namespace ReactNative.UIManager.LayoutAnimation
                 To = to,
                 EasingFunction = Interpolator,
                 Duration = Duration,
+                BeginTime = Delay,
             };
 
             Storyboard.SetTarget(timeline, view);

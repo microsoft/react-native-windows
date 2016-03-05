@@ -21,8 +21,21 @@ namespace ReactNative.UIManager.LayoutAnimation
             _finally = @finally;
         }
 
+        public Action OnSubscribe
+        {
+            get;
+            set;
+        }
+
         public IDisposable Subscribe(IObserver<Unit> observer)
         {
+            var onSubscribe = OnSubscribe;
+
+            if (onSubscribe != null)
+            {
+                onSubscribe();
+            }
+
             _storyboard.Begin();
 
             return Observable.FromEventPattern<object>(

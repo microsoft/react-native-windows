@@ -152,9 +152,9 @@ namespace ReactNative.Chakra.Executor
             _consoleWarn = ConsoleWarn;
             _consoleError = ConsoleError;
 
-            DefineHostCallback(consoleObject, "log", _consoleLog, IntPtr.Zero);
-            DefineHostCallback(consoleObject, "warn", _consoleWarn, IntPtr.Zero);
-            DefineHostCallback(consoleObject, "error", _consoleError, IntPtr.Zero);
+            DefineHostCallback(consoleObject, "log", _consoleLog);
+            DefineHostCallback(consoleObject, "warn", _consoleWarn);
+            DefineHostCallback(consoleObject, "error", _consoleError);
 
             Debug.WriteLine("Chakra initialization successful.");
         }
@@ -200,15 +200,14 @@ namespace ReactNative.Chakra.Executor
         private static void DefineHostCallback(
             JavaScriptValue obj,
             string callbackName,
-            JavaScriptNativeFunction callback,
-            IntPtr callbackData)
+            JavaScriptNativeFunction callback)
         {
             var propertyId = JavaScriptPropertyId.FromString(callbackName);
-            var function = JavaScriptValue.CreateFunction(callback, callbackData);
+            var function = JavaScriptValue.CreateFunction(callback);
             obj.SetProperty(propertyId, function, true);
         }
 
-        private static JavaScriptValue ConsoleLog(
+        private JavaScriptValue ConsoleLog(
             JavaScriptValue callee,
             bool isConstructCall,
             JavaScriptValue[] arguments,
@@ -218,7 +217,7 @@ namespace ReactNative.Chakra.Executor
             return ConsoleCallback("Log", callee, isConstructCall, arguments, argumentCount, callbackData);
         }
 
-        private static JavaScriptValue ConsoleWarn(
+        private JavaScriptValue ConsoleWarn(
             JavaScriptValue callee,
             bool isConstructCall,
             JavaScriptValue[] arguments,
@@ -228,7 +227,7 @@ namespace ReactNative.Chakra.Executor
             return ConsoleCallback("Warn", callee, isConstructCall, arguments, argumentCount, callbackData);
         }
 
-        private static JavaScriptValue ConsoleError(
+        private JavaScriptValue ConsoleError(
             JavaScriptValue callee,
             bool isConstructCall,
             JavaScriptValue[] arguments,
@@ -238,7 +237,7 @@ namespace ReactNative.Chakra.Executor
             return ConsoleCallback("Error", callee, isConstructCall, arguments, argumentCount, callbackData);
         }
 
-        private static JavaScriptValue ConsoleCallback(
+        private JavaScriptValue ConsoleCallback(
             string kind,
             JavaScriptValue callee,
             bool isConstructCall,
@@ -267,7 +266,7 @@ namespace ReactNative.Chakra.Executor
             return JavaScriptValue.Undefined;
         }
 
-        private static string Stringify(JavaScriptValue value)
+        private string Stringify(JavaScriptValue value)
         {
             switch (value.ValueType)
             {
@@ -278,6 +277,7 @@ namespace ReactNative.Chakra.Executor
                 case JavaScriptValueType.Boolean:
                 case JavaScriptValueType.Object:
                 case JavaScriptValueType.Array:
+                    return ConvertJson(value).ToString(Formatting.None);
                 case JavaScriptValueType.Function:
                 case JavaScriptValueType.Error:
                     return value.ConvertToString().ToString();

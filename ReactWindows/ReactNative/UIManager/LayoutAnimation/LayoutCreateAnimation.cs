@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Reactive.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -27,12 +28,16 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// </returns>
         protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, int x, int y, int width, int height)
         {
-            Canvas.SetLeft(view, x);
-            Canvas.SetTop(view, y);
-            view.Width = width;
-            view.Height = height;
+            var createObservable = new LayoutCreateObservable(() =>
+            {
+                Canvas.SetLeft(view, x);
+                Canvas.SetTop(view, y);
+                view.Width = width;
+                view.Height = height;
+            });
 
-            return base.CreateAnimationCore(view, x, y, width, height);
+            return createObservable.Concat(
+                base.CreateAnimationCore(view, x, y, width, height));
         }
 
         /// <summary>
@@ -43,6 +48,22 @@ namespace ReactNative.UIManager.LayoutAnimation
             get
             {
                 return false;
+            }
+        }
+
+        class LayoutCreateObservable : IObservable<Unit>
+        {
+            private readonly Action _onSubscribe;
+
+            public LayoutCreateObservable(Action onSubscribe)
+            {
+                _onSubscribe = onSubscribe;
+            }
+
+            public IDisposable Subscribe(IObserver<Unit> observer)
+            {
+                _onSubscribe();
+                return Observable.Empty<Unit>().Subscribe(observer);
             }
         }
     }

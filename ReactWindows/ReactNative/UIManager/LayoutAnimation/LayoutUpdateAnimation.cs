@@ -2,7 +2,6 @@
 using System.Reactive;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace ReactNative.UIManager.LayoutAnimation
@@ -94,6 +93,7 @@ namespace ReactNative.UIManager.LayoutAnimation
                 To = to,
                 EasingFunction = Interpolator,
                 Duration = Duration,
+                BeginTime = Delay,
             };
 
             Storyboard.SetTarget(timeline, view);
