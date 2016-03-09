@@ -12,19 +12,7 @@ namespace ReactNative.DevSupport
                 stringBuilder
                     .AppendLine(frame.Method)
                     .Append("    ")
-                    .Append(frame.FileName)
-                    .Append(":")
-                    .Append(frame.Line);
-
-                var column = frame.Column;
-                if (column > 0)
-                {
-                    stringBuilder
-                        .Append(":")
-                        .Append(column);
-                }
-
-                stringBuilder.AppendLine();
+                    .AppendLine(frame.SourceInfo);
             }
 
             return stringBuilder.ToString(); 

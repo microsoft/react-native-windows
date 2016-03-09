@@ -114,9 +114,9 @@ namespace ReactNative.DevSupport
             if (IsEnabled)
             {
                 var javaScriptException = exception as JavaScriptException;
-                if (javaScriptException != null && javaScriptException.StackTrace != null)
+                if (javaScriptException != null && javaScriptException.JavaScriptStackTrace != null)
                 {
-                    var stackTrace = StackTraceHelper.ConvertChakraStackTrace(javaScriptException.StackTrace);
+                    var stackTrace = StackTraceHelper.ConvertChakraStackTrace(javaScriptException.JavaScriptStackTrace);
                     ShowNewError(exception.Message, stackTrace, NativeErrorCookie);
                 }
                 else
@@ -266,13 +266,13 @@ namespace ReactNative.DevSupport
             });
         }
 
-        private void ShowNewError(string title, IStackFrame[] stack, int errorCookie)
+        private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
             DispatcherHelpers.RunOnDispatcher(() =>
             {
                 if (_redBoxDialog == null)
                 {
-                    _redBoxDialog = new RedBoxDialog();
+                    _redBoxDialog = new RedBoxDialog(HandleReloadJavaScript);
                 }
 
                 if (_redBoxDialogOpen)
@@ -282,7 +282,7 @@ namespace ReactNative.DevSupport
 
                 _redBoxDialogOpen = true;
                 _redBoxDialog.ErrorCookie = errorCookie;
-                _redBoxDialog.Title = title;
+                _redBoxDialog.Message = message;
                 _redBoxDialog.StackTrace = stack;
                 _redBoxDialog.Closed += (_, __) =>
                 {
