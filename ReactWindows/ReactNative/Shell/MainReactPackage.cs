@@ -34,7 +34,7 @@ namespace ReactNative.Shell
                 new AppStateModule(reactContext),
                 //new AsyncStorageModule(reactContext),
                 //new CameraRollManager(reactContext),
-                new ClipboardModule(reactContext),
+                new ClipboardModule(),
                 //new DialogModule(reactContext),
                 //new LocationModule(reactContext),
                 //new NetworkingModule(reactContext),
