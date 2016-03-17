@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -90,6 +91,12 @@ namespace ReactNative
         {
             RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
             RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) =>
+            {
+                _reactInstanceManager.OnBackPressed();
+                args.Handled = true;
+            };
         }
 
         /// <summary>
@@ -103,9 +110,12 @@ namespace ReactNative
         /// <summary>
         /// Called when the application is resumed.
         /// </summary>
-        public void OnResume()
+        /// <param name="onBackPressed">
+        /// Default action to take when back pressed.
+        /// </param>
+        public void OnResume(Action onBackPressed)
         {
-            _reactInstanceManager.OnResume(OnBackPressed);
+            _reactInstanceManager.OnResume(onBackPressed);
         }
 
         /// <summary>
@@ -129,13 +139,6 @@ namespace ReactNative
             return new ReactRootView();
         }
         
-        /// <summary>
-        /// Action to take when the back button is pressed.
-        /// </summary>
-        protected virtual void OnBackPressed()
-        {
-        }
-
         /// <summary>
         /// Captures the key down events to 
         /// </summary>
