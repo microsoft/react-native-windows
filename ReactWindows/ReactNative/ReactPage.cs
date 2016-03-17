@@ -90,6 +90,15 @@ namespace ReactNative
         {
             RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
             RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
+<<<<<<< Updated upstream
+=======
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) =>
+            {
+                _reactInstanceManager.OnBackPressed();
+                args.Handled = true;
+            };
+>>>>>>> Stashed changes
         }
 
         /// <summary>
@@ -103,9 +112,12 @@ namespace ReactNative
         /// <summary>
         /// Called when the application is resumed.
         /// </summary>
-        public void OnResume()
+        /// <param name="onBackPressed">
+        /// Default action to take when back pressed.
+        /// </param>
+        public void OnResume(Action onBackPressed)
         {
-            _reactInstanceManager.OnResume(OnBackPressed);
+            _reactInstanceManager.OnResume(onBackPressed);
         }
 
         /// <summary>
@@ -129,13 +141,6 @@ namespace ReactNative
             return new ReactRootView();
         }
         
-        /// <summary>
-        /// Action to take when the back button is pressed.
-        /// </summary>
-        protected virtual void OnBackPressed()
-        {
-        }
-
         /// <summary>
         /// Captures the key down events to 
         /// </summary>
