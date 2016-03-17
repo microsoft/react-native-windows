@@ -98,6 +98,8 @@ const StatusBar = React.createClass({
         StatusBarManager.setHidden(hidden, animation);
       } else if (Platform.OS === 'android') {
         StatusBarManager.setHidden(hidden);
+      } else if (Platform.OS === 'windows') {
+        StatusBarManager.setHidden(hidden);
       }
     },
 
@@ -121,22 +123,36 @@ const StatusBar = React.createClass({
     },
 
     setBackgroundColor(color, animated?: boolean) {
-      if (Platform.OS !== 'android') {
+      if (Platform.OS === 'windows') {
+        animated = animated || false;
+        StatusBar._defaultProps.backgroundColor = color;
+        StatusBarManager.setColor(processColor(color));    
+      }
+      else if (Platform.OS !== 'android') {
         console.warn('`setBackgroundColor` is only available on Android');
         return;
       }
-      animated = animated || false;
-      StatusBar._defaultProps.backgroundColor = color;
-      StatusBarManager.setColor(processColor(color), animated);
+      else
+      {
+        animated = animated || false;
+        StatusBar._defaultProps.backgroundColor = color;
+        StatusBarManager.setColor(processColor(color), animated);
+      }
     },
 
     setTranslucent(translucent: boolean) {
-      if (Platform.OS !== 'android') {
+      if (Platform.OS === 'windows') {
+        StatusBar._defaultProps.translucent = translucent;
+        StatusBarManager.setTranslucent(translucent);
+      }
+      else if (Platform.OS !== 'android') {
         console.warn('`setTranslucent` is only available on Android');
         return;
       }
-      StatusBar._defaultProps.translucent = translucent;
-      StatusBarManager.setTranslucent(translucent);
+      else {     
+        StatusBar._defaultProps.translucent = translucent;
+        StatusBarManager.setTranslucent(translucent);
+      }
     },
   },
 
@@ -244,6 +260,16 @@ const StatusBar = React.createClass({
         );
       }
     } else if (Platform.OS === 'android') {
+      if (mergedProps.backgroundColor !== undefined) {
+        StatusBarManager.setColor(processColor(mergedProps.backgroundColor), this.props.animated);
+      }
+      if (mergedProps.hidden !== undefined) {
+        StatusBarManager.setHidden(mergedProps.hidden);
+      }
+      if (mergedProps.translucent !== undefined) {
+        StatusBarManager.setTranslucent(mergedProps.translucent);
+      }
+    } else if (Platform.OS === 'windows') {
       if (mergedProps.backgroundColor !== undefined) {
         StatusBarManager.setColor(processColor(mergedProps.backgroundColor), this.props.animated);
       }

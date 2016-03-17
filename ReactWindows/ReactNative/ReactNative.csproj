@@ -204,6 +204,7 @@
     <Compile Include="Modules\Network\HttpContentHelpers.cs" />
     <Compile Include="Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModule.cs" />
+    <Compile Include="Modules\StatusBar\StatusBarModule.cs" />
     <Compile Include="ReactContextInitializedEventArgs.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootView.cs" />
@@ -337,7 +338,6 @@
     <Compile Include="Views\TextInput\ReactTextChangedEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputBlurEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputFocusEvent.cs" />
-    <Compile Include="Views\View\ReactCanvas.cs" />
     <Compile Include="Views\View\ReactViewManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
     <Compile Include="Modules\Toast\ToastHelper.cs" />

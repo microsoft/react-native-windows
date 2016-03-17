@@ -2,6 +2,7 @@
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
+using ReactNative.Modules.StatusBar;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.Toast;
 using ReactNative.Modules.WebSocket;
@@ -40,6 +41,7 @@ namespace ReactNative.Shell
                 //new LocationModule(reactContext),
                 //new NetworkingModule(reactContext),
                 //new NetInfoModule(reactContext),
+                new StatusBarModule(),
                 new ToastModule(reactContext),
                 new WebSocketModule(reactContext),
             };
