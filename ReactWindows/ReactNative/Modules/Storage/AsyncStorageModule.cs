@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Storage;
-using System.Collections.Generic;
 
 namespace ReactNative.Modules.Storage
 {
@@ -40,6 +40,10 @@ namespace ReactNative.Modules.Storage
         {
             _dataContainer = ApplicationData.Current.LocalSettings.CreateContainer(Name + _data, ApplicationDataCreateDisposition.Always);
             _typeContainer = ApplicationData.Current.LocalSettings.CreateContainer(Name + _type, ApplicationDataCreateDisposition.Always);
+#if CLEAR_STORAGE
+            _dataContainer.Values.Clear();
+            _typeContainer.Values.Clear();
+#endif
         }
 
         /// <summary>
