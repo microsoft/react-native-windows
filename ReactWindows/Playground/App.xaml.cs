@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -41,13 +42,16 @@ namespace Playground
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             _reactPage.OnCreate();
-            _reactPage.OnResume();
+            _reactPage.OnResume(Exit);
 
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
+
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                AppViewBackButtonVisibility.Visible;
 #endif
 
             Frame rootFrame = Window.Current.Content as Frame;
@@ -106,7 +110,7 @@ namespace Playground
         /// <param name="e">Details about the resume request.</param>
         private void OnResuming(object sender, object e)
         {
-            _reactPage.OnResume();
+            _reactPage.OnResume(Exit);
         }
     }
 }
