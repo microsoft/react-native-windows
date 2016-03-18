@@ -40,7 +40,7 @@ namespace ReactNative.Shell
                 //new CameraRollManager(reactContext),
                 new ClipboardModule(),
                 //new DialogModule(reactContext),
-                //new LocationModule(reactContext),         
+                //new LocationModule(reactContext),
                 new NetworkingModule(reactContext),
                 new NetInfoModule(reactContext),
                 new StatusBarModule(),
