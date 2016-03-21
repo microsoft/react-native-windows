@@ -15,7 +15,6 @@ namespace ReactNative.Views.Image
     public class ReactImageManager : SimpleViewManager<Border>
     {
         private const string ReactClass = "RCTImageView";
-        private const string PROP_SOURCE = "source";
         private const string PROP_URI = "uri";
 
         private Uri _imageSource;
@@ -52,7 +51,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="sourceMap">The source map.</param>
-        [ReactProperty(PROP_SOURCE)]
+        [ReactProperty(src)]
         public void SetSource(Border view, Dictionary<string, string> sourceMap)
         {
             var source = default(string);
