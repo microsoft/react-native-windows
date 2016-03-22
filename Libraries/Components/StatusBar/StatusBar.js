@@ -123,30 +123,27 @@ const StatusBar = React.createClass({
     },
 
     setBackgroundColor(color, animated?: boolean) {
-      if (Platform.OS === 'windows') {
-        animated = animated || false;
-        StatusBar._defaultProps.backgroundColor = color;
-        StatusBarManager.setColor(processColor(color));    
-      }
-      else if (Platform.OS !== 'android') {
-        console.warn('`setBackgroundColor` is only available on Android');
+      if (Platform.OS === 'ios') {
+        console.warn('`setBackgroundColor` is not available on iOS');
         return;
       }
       else
       {
         animated = animated || false;
         StatusBar._defaultProps.backgroundColor = color;
-        StatusBarManager.setColor(processColor(color), animated);
+        
+        if (Platform.OS === 'windows') {
+            StatusBarManager.setColor(processColor(color));    
+        }
+        else {
+            StatusBarManager.setColor(processColor(color), animated);
+        }
       }
     },
 
     setTranslucent(translucent: boolean) {
-      if (Platform.OS === 'windows') {
-        StatusBar._defaultProps.translucent = translucent;
-        StatusBarManager.setTranslucent(translucent);
-      }
-      else if (Platform.OS !== 'android') {
-        console.warn('`setTranslucent` is only available on Android');
+      if (Platform.OS === 'ios') {
+        console.warn('`setTranslucent` is not available on iOS');
         return;
       }
       else {     
@@ -271,7 +268,7 @@ const StatusBar = React.createClass({
       }
     } else if (Platform.OS === 'windows') {
       if (mergedProps.backgroundColor !== undefined) {
-        StatusBarManager.setColor(processColor(mergedProps.backgroundColor), this.props.animated);
+        StatusBarManager.setColor(processColor(mergedProps.backgroundColor));
       }
       if (mergedProps.hidden !== undefined) {
         StatusBarManager.setHidden(mergedProps.hidden);

@@ -204,6 +204,10 @@
     <Compile Include="Modules\Network\HttpContentHelpers.cs" />
     <Compile Include="Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModule.cs" />
+    <Compile Include="Modules\StatusBar\DefaultStatusBar.cs" />
+    <Compile Include="Modules\StatusBar\DefaultTitleBar.cs" />
+    <Compile Include="Modules\StatusBar\IStatusBar.cs" />
+    <Compile Include="Modules\StatusBar\ITitleBar.cs" />
     <Compile Include="Modules\StatusBar\StatusBarModule.cs" />
     <Compile Include="ReactContextInitializedEventArgs.cs" />
     <Compile Include="ReactPage.cs" />
@@ -381,7 +385,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.10586.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
