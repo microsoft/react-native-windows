@@ -22,6 +22,7 @@ const {
   BackAndroid,
   Dimensions,
   NavigationExperimental,
+  SplitViewWindows,    
   StyleSheet,
   View,
 } = React;
@@ -33,6 +34,7 @@ const UIExplorerExampleList = require('./UIExplorerExampleListWindows');
 const UIExplorerList = require('./UIExplorerList');
 const UIExplorerNavigationReducer = require('./UIExplorerNavigationReducer');
 const UIExplorerStateTitleMap = require('./UIExplorerStateTitleMap');
+const UIExplorerHeaderWindows = require('./UIExplorerHeaderWindows');
 
 var DRAWER_WIDTH_LEFT = 56;
 
@@ -47,15 +49,48 @@ class UIExplorerApp extends React.Component {
         persistenceKey="UIExplorerStateNavState"
         ref={navRootRef => { this._navigationRootRef = navRootRef; }}
         reducer={UIExplorerNavigationReducer}
-        renderNavigation={this._renderNavigation.bind(this)}
+        renderNavigation={this._renderApp.bind(this)}
+      />
+    );
+  }
+  
+  _renderApp(navigationState, onNavigate) {
+    if (!navigationState) {
+      return null;
+    }
+    return (
+      <SplitViewWindows
+        panePosition={SplitViewWindows.positions.Left}
+        paneWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
+        keyboardDismissMode="on-drag"
+        onDrawerOpen={() => {
+          this._overrideBackPressForSplitView = true;
+        }}
+        onDrawerClose={() => {
+          this._overrideBackPressForSplitView = false;
+        }}
+        ref={(splitView) => { this.splitView = splitView; }}
+        renderPaneView={this._renderPaneContent.bind(this, onNavigate)}>
+        {this._renderNavigation(navigationState, onNavigate)}
+      </SplitViewWindows>
+    );
+  }
+  
+  _renderPaneContent(onNavigate) {
+    return (
+      <UIExplorerExampleList
+        list={UIExplorerList}
+        displayTitleRow={true}
+        disableSearch={true}
+        onNavigate={(action) => {
+          this.splitView && this.splitView.closePane();
+          onNavigate(action);
+        }}
       />
     );
   }
 
   _renderNavigation(navigationState, onNavigate) {
-    if (!navigationState) {
-      return null;
-    }
     if (navigationState.externalExample) {
       var Component = UIExplorerList.Modules[navigationState.externalExample];
       return (
@@ -75,6 +110,11 @@ class UIExplorerApp extends React.Component {
       const ExampleComponent = UIExplorerExampleList.makeRenderable(ExampleModule);
       return (
         <View style={styles.container}>
+          <UIExplorerHeaderWindows
+            onPress={() => this.splitView.openPane()} 
+            title={title}
+            style={styles.header}
+          />
           <ExampleComponent
             ref={(example) => { this._exampleRef = example; }}
           />
@@ -83,6 +123,11 @@ class UIExplorerApp extends React.Component {
     }
     return (
       <View style={styles.container}>
+        <UIExplorerHeaderWindows
+          onPress={() => this.splitView.openPane()} 
+          title={title}
+          style={styles.header}
+        />
         <UIExplorerExampleList
           list={UIExplorerList}
           {...stack.children[0]}
@@ -112,9 +157,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  toolbar: {
+  header: {
     backgroundColor: '#E9EAED',
-    height: 56,
   },
 });
 
