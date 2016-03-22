@@ -72,7 +72,6 @@ namespace ReactNative.Shell
             {
                 //new ReactHorizontalScrollViewManager(),
                 new ReactImageManager(),
-                new ReactVirtualImageManager(),
                 //new ReactProgressBarViewManager(),
                 new ReactPickerManager(),
                 new ReactRawTextManager(),
