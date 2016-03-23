@@ -20,7 +20,7 @@ namespace ReactNative.Modules.Storage
         {
             get
             {
-                return "AsyncStorageModule";
+                return "AsyncLocalStorage";
             }
         }
 
@@ -171,38 +171,45 @@ namespace ReactNative.Modules.Storage
 
             var error = default(JObject);
 
-            await Task.Run(() =>
+            try
             {
-                lock (_gate)
+                await Task.Run(() =>
                 {
-                    foreach (var pair in keyValueArray)
+                    lock (_gate)
                     {
-                        if (pair.Length != 2)
+                        foreach (var pair in keyValueArray)
                         {
-                            error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
-                            break;
-                        }
+                            if (pair.Length != 2)
+                            {
+                                error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
+                                break;
+                            }
 
-                        if (pair[0] == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
-                            break;
-                        }
+                            if (pair[0] == null)
+                            {
+                                error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                                break;
+                            }
 
-                        if (pair[1] == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
-                            break;
-                        }
+                            if (pair[1] == null)
+                            {
+                                error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
+                                break;
+                            }
 
-                        error = Merge(pair[0], pair[1]);
-                        if (error != null)
-                        {
-                            break;
+                            error = Merge(pair[0], pair[1]);
+                            if (error != null)
+                            {
+                                break;
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             if (error != null)
             {
