@@ -125,19 +125,16 @@ const StatusBar = React.createClass({
     setBackgroundColor(color, animated?: boolean) {
       if (Platform.OS === 'ios') {
         console.warn('`setBackgroundColor` is not available on iOS');
-        return;
       }
-      else
-      {
+      else if (Platform.OS === 'android') {
         animated = animated || false;
         StatusBar._defaultProps.backgroundColor = color;
-        
-        if (Platform.OS === 'windows') {
-            StatusBarManager.setColor(processColor(color));    
-        }
-        else {
-            StatusBarManager.setColor(processColor(color), animated);
-        }
+        StatusBarManager.setColor(processColor(color), animated);  
+      }
+      else if (Platform.OS === 'windows') {
+      {
+        StatusBar._defaultProps.backgroundColor = color;
+        StatusBarManager.setColor(processColor(color));    
       }
     },
 
@@ -146,10 +143,8 @@ const StatusBar = React.createClass({
         console.warn('`setTranslucent` is not available on iOS');
         return;
       }
-      else {     
-        StatusBar._defaultProps.translucent = translucent;
-        StatusBarManager.setTranslucent(translucent);
-      }
+      StatusBar._defaultProps.translucent = translucent;
+      StatusBarManager.setTranslucent(translucent);
     },
   },
 
