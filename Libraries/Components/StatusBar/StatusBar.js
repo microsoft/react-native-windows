@@ -98,6 +98,8 @@ const StatusBar = React.createClass({
         StatusBarManager.setHidden(hidden, animation);
       } else if (Platform.OS === 'android') {
         StatusBarManager.setHidden(hidden);
+      } else if (Platform.OS === 'windows') {
+        StatusBarManager.setHidden(hidden);
       }
     },
 
@@ -121,18 +123,21 @@ const StatusBar = React.createClass({
     },
 
     setBackgroundColor(color, animated?: boolean) {
-      if (Platform.OS !== 'android') {
-        console.warn('`setBackgroundColor` is only available on Android');
-        return;
+      if (Platform.OS === 'ios') {
+        console.warn('`setBackgroundColor` is not available on iOS');
+      } else if (Platform.OS === 'android') {
+        animated = animated || false;
+        StatusBar._defaultProps.backgroundColor = color;
+        StatusBarManager.setColor(processColor(color), animated);  
+      } else if (Platform.OS === 'windows') {
+        StatusBar._defaultProps.backgroundColor = color;
+        StatusBarManager.setColor(processColor(color));    
       }
-      animated = animated || false;
-      StatusBar._defaultProps.backgroundColor = color;
-      StatusBarManager.setColor(processColor(color), animated);
     },
 
     setTranslucent(translucent: boolean) {
-      if (Platform.OS !== 'android') {
-        console.warn('`setTranslucent` is only available on Android');
+      if (Platform.OS === 'ios') {
+        console.warn('`setTranslucent` is not available on iOS');
         return;
       }
       StatusBar._defaultProps.translucent = translucent;
@@ -246,6 +251,16 @@ const StatusBar = React.createClass({
     } else if (Platform.OS === 'android') {
       if (mergedProps.backgroundColor !== undefined) {
         StatusBarManager.setColor(processColor(mergedProps.backgroundColor), this.props.animated);
+      }
+      if (mergedProps.hidden !== undefined) {
+        StatusBarManager.setHidden(mergedProps.hidden);
+      }
+      if (mergedProps.translucent !== undefined) {
+        StatusBarManager.setTranslucent(mergedProps.translucent);
+      }
+    } else if (Platform.OS === 'windows') {
+      if (mergedProps.backgroundColor !== undefined) {
+        StatusBarManager.setColor(processColor(mergedProps.backgroundColor));
       }
       if (mergedProps.hidden !== undefined) {
         StatusBarManager.setHidden(mergedProps.hidden);
