@@ -111,6 +111,8 @@ namespace ReactNative.Bridge
                 }
 
                 bridge.RunScript(_script);
+
+                _script = null;
             }
         }
 

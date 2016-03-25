@@ -16,6 +16,17 @@ namespace ReactNative.Modules.Storage
 
         private readonly object _gate = new object();
 
+#if !CLEAR_STORAGE
+        public AsyncStorageModule()
+        {
+            var storageItem = ApplicationData.Current.LocalFolder.TryGetItemAsync(DirectoryName).AsTask().Result;
+            if (storageItem != null)
+            {
+                storageItem.DeleteAsync().AsTask().Wait();
+            }
+        }
+#endif
+
         public override string Name
         {
             get

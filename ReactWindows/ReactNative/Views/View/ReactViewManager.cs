@@ -170,7 +170,7 @@ namespace ReactNative.Views.View
             ViewProperties.BorderTopWidth,
             ViewProperties.BorderBottomWidth,
             DefaultDouble = double.NaN)]
-        public void SetBorderWidth(BorderedContentControl view, int index, double width)
+        public void SetBorderWidth(BorderedContentControl view, int index, double? width)
         {
             view.SetBorderWidth(ViewProperties.BorderSpacingTypes[index], width);
         }

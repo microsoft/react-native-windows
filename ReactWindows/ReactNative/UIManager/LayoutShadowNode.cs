@@ -155,9 +155,9 @@ namespace ReactNative.UIManager
             ViewProperties.MarginTop,
             ViewProperties.MarginBottom,
             DefaultFloat = Undefined)]
-        public void SetMargins(int index, float margin)
+        public void SetMargins(int index, float? margin)
         {
-            SetMargin(ViewProperties.PaddingMarginSpacingTypes[index], margin);
+            SetMargin(ViewProperties.PaddingMarginSpacingTypes[index], margin ?? CSSConstants.Undefined);
         }
 
         /// <summary>
@@ -174,9 +174,9 @@ namespace ReactNative.UIManager
             ViewProperties.PaddingTop,
             ViewProperties.PaddingBottom,
             DefaultFloat = Undefined)]
-        public void SetPaddings(int index, float padding)
+        public void SetPaddings(int index, float? padding)
         {
-            SetPadding(ViewProperties.PaddingMarginSpacingTypes[index], padding);
+            SetPadding(ViewProperties.PaddingMarginSpacingTypes[index], padding ?? CSSConstants.Undefined);
         }
 
         /// <summary>
@@ -191,9 +191,9 @@ namespace ReactNative.UIManager
             ViewProperties.BorderTopWidth,
             ViewProperties.BorderBottomWidth,
             DefaultFloat = Undefined)]
-        public void SetBorderWidth(int index, float borderWidth)
+        public void SetBorderWidth(int index, float? borderWidth)
         {
-            SetBorder(ViewProperties.BorderSpacingTypes[index], borderWidth);
+            SetBorder(ViewProperties.BorderSpacingTypes[index], borderWidth ?? CSSConstants.Undefined);
         }
 
         /// <summary>

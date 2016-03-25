@@ -51,7 +51,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="kind">The border kind.</param>
         /// <param name="width">The width.</param>
-        public void SetBorderWidth(CSSSpacingType kind, double width)
+        public void SetBorderWidth(CSSSpacingType kind, double? width)
         {
             var customBorder = EnsureBorder();
             customBorder.SetBorderWidth(kind, width);
@@ -85,10 +85,12 @@ namespace ReactNative.UIManager
         /// Sets the border radius.
         /// </summary>
         /// <param name="radius">The radius.</param>
-        public void SetBorderRadius(double radius)
+        public void SetBorderRadius(double? radius)
         {
-            var customBorder = EnsureBorder();    
-            customBorder.CornerRadius = new CornerRadius(radius);
+            var customBorder = EnsureBorder();
+            customBorder.CornerRadius = radius.HasValue
+                ? new CornerRadius(radius.Value)
+                : default(CornerRadius);
         }
 
         private Border EnsureBorder()

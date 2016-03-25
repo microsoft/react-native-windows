@@ -554,6 +554,12 @@ namespace ReactNative.UIManager
         {
             if (!IsVirtual)
             {
+                if (HasNewLayout)
+                {
+                    // This is bad...
+                    MarkLayoutSeen();
+                }
+
                 base.dirty();
             }
         }
