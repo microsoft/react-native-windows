@@ -4,6 +4,7 @@ using ReactNative.UIManager.Events;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Collections.Generic;
 
 namespace ReactNative.Views.Scroll
 {
@@ -20,6 +21,26 @@ namespace ReactNative.Views.Scroll
             get
             {
                 return "RCTScrollView";
+            }
+        }
+
+        /// <summary>
+        /// The exported custom direct event types.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        {
+            get
+            {
+                return new Dictionary<string, object>
+                {
+                    {
+                        ScrollEventType.Scroll.GetJavaScriptEventName(),
+                        new Dictionary<string, object>
+                        {
+                            { "registrationName", "onScroll" },
+                        }
+                    }
+                };
             }
         }
 
