@@ -2,9 +2,10 @@
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
-using ReactNative.Modules.StatusBar;
+using ReactNative.Modules.Launch;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
+using ReactNative.Modules.StatusBar;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.Toast;
 using ReactNative.Modules.WebSocket;
@@ -42,6 +43,7 @@ namespace ReactNative.Shell
                 //new CameraRollManager(reactContext),
                 new ClipboardModule(),
                 //new DialogModule(reactContext),
+                new LauncherModule(),
                 //new LocationModule(reactContext),
                 new NetworkingModule(reactContext),
                 new NetInfoModule(reactContext),
