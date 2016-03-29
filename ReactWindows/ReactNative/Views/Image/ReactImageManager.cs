@@ -11,7 +11,7 @@ namespace ReactNative.Views.Image
     /// <summary>
     /// The view manager responsible for rendering native images.
     /// </summary>
-    public class ReactImageManager : SimpleViewManager<Border>
+    public class ReactImageManager : BaseViewManager<Border, ReactImageShadowNode>
     {
         private readonly Dictionary<Border, ExceptionRoutedEventHandler> _imageFailedHandlers =
             new Dictionary<Border, ExceptionRoutedEventHandler>();
@@ -65,26 +65,6 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
-        /// Set the source URI of the image.
-        /// </summary>
-        /// <param name="view">The image view instance.</param>
-        /// <param name="source">The source URI.</param>
-        [ReactProperty("src")]
-        public void SetSource(Border view, string source)
-        {
-            var imageBrush = (ImageBrush)view.Background;
-            imageBrush.ImageSource = new BitmapImage(new Uri(source));
-
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        ReactImageLoadEvent.OnLoadStart));
-        }
-        
-        /// <summary>
         /// The border radius of the <see cref="ReactRootView"/>.
         /// </summary>
         /// <param name="view">The image view instance.</param>
@@ -124,6 +104,63 @@ namespace ReactNative.Views.Image
         public void SetBorderWidth(Border view, int index, double width)
         {
             view.SetBorderWidth(ViewProperties.BorderSpacingTypes[index], width);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="LayoutShadowNode"/> instance.
+        /// </summary>
+        /// <returns>The shadow node instance.</returns>
+        public sealed override ReactImageShadowNode CreateShadowNodeInstance()
+        {
+            return new ReactImageShadowNode();
+        }
+
+        /// <summary>
+        /// Implement this method to receive optional extra data enqueued from
+        /// the corresponding instance of <see cref="ReactShadowNode"/> in
+        /// <see cref="ReactShadowNode.OnCollectExtraUpdates"/>.
+        /// </summary>
+        /// <param name="view">The root view.</param>
+        /// <param name="extraData">The extra data.</param>
+        public override void UpdateExtraData(Border view, object extraData)
+        {
+            var update = default(Tuple<string, string>);
+            if ((update = extraData as Tuple<string, string>) != null)
+            {
+                var resizeMode = update.Item1;
+                var source = update.Item2;
+
+                var imageBrush = (ImageBrush)view.Background;
+
+                if (resizeMode != null)
+                {
+                    if (resizeMode.Equals("cover"))
+                    {
+                        imageBrush.Stretch = Stretch.UniformToFill;
+                    }
+                    else if (resizeMode.Equals("contain"))
+                    {
+                        imageBrush.Stretch = Stretch.Uniform;
+                    }
+                    else
+                    {
+                        imageBrush.Stretch = Stretch.Fill;
+                    }
+                }
+
+                if (source != null)
+                {
+                    imageBrush.ImageSource = new BitmapImage(new Uri(source));
+                }
+
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new ReactImageLoadEvent(
+                            view.GetTag(),
+                            ReactImageLoadEvent.OnLoadStart));
+            }
         }
 
         /// <summary>

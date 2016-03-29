@@ -351,6 +351,7 @@
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
     <Compile Include="Views\Text\ReactVirtualTextViewManager.cs" />
+    <Compile Include="Views\Image\ReactImageShadowNode.cs" />
     <Compile Include="Views\View\ReactViewManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
     <Compile Include="Modules\Toast\ToastHelper.cs" />
