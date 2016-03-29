@@ -1,4 +1,5 @@
-﻿using ReactNative;
+﻿using BV.LinearGradient;
+using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Playground
                 return new List<IReactPackage>
                 {
                     new MainReactPackage(),
+                    new LinearGradientPackage(),
                 };
             }
         }
