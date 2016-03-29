@@ -131,6 +131,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppReactPage.cs" />
+    <Compile Include="LinearGradientPackage\LinearGradientViewManager.cs" />
+    <Compile Include="LinearGradientPackage\LinearGradientPackage.cs" />
+    <Compile Include="LinearGradientPackage\LinearGradientContentControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
