@@ -1,0 +1,23 @@
+{
+  "name": "react-native-linear-gradient",
+  "version": "1.5.2",
+  "description": "A <LinearGradient> element for react-native",
+  "main": "index",
+  "author": {
+    "name": "Brent Vatne",
+    "email": "brentvatne@gmail.com",
+    "url": "https://github.com/brentvatne"
+  },
+  "contributors": [{
+    "name": "Nick Hudkins",
+    "email": "nick@nickhudkins.com",
+    "url": "https://github.com/nickhudkins"
+  }],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:brentvatne/react-native-linear-gradient.git"
+  },
+  "devDependencies": {
+    "jest-cli": "0.2.1"
+  }
+}
