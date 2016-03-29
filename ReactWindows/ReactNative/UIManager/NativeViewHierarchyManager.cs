@@ -369,8 +369,6 @@ namespace ReactNative.UIManager
                 throw new InvalidOperationException(
                     $"Could not find view with tag '{reactTag}'.");
             }
-
-            throw new NotImplementedException();
         }
 
         /// <summary>
