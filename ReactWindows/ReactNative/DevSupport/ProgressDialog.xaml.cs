@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Reactive.Disposables;
+using System.Threading;
 using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.DevSupport
@@ -11,7 +12,7 @@ namespace ReactNative.DevSupport
     /// </remarks>
     public sealed partial class ProgressDialog : ContentDialog
     {
-        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationDisposable _cancellationDisposable;
 
         /// <summary>
         /// Instantiates the <see cref="ProgressDialog"/>.
@@ -25,7 +26,7 @@ namespace ReactNative.DevSupport
             Heading = title;
             Message = message;
 
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationDisposable = new CancellationDisposable();
         }
 
         /// <summary>
@@ -45,13 +46,21 @@ namespace ReactNative.DevSupport
         {
             get
             {
-                return _cancellationTokenSource.Token;
+                return _cancellationDisposable.Token;
             }
+        }
+
+        /// <summary>
+        /// Cancel the progress dialog.
+        /// </summary>
+        public void Cancel()
+        {
+            _cancellationDisposable.Dispose();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            _cancellationTokenSource.Cancel();
+            Cancel();
         }
     }
 }

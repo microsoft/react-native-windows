@@ -37,6 +37,8 @@ namespace ReactNative.DevSupport
         private bool _redBoxDialogOpen;
         private DevOptionDialog _devOptionDialog;
 
+        private ProgressDialog _progressDialog;
+
         public DevSupportManager(
             IReactInstanceDevCommandsHandler reactInstanceCommandsHandler,
             string jsBundleFile,
@@ -137,21 +139,28 @@ namespace ReactNative.DevSupport
 
             HideRedboxDialog();
 
-            var progressDialog = new ProgressDialog("Please wait...", "Fetching JavaScript bundle.");
-            var dialogOperation = progressDialog.ShowAsync();
+            if (_progressDialog != null)
+            {
+                _progressDialog.Cancel();
+            }
 
-            if (_isUsingJsProxy)
+            _progressDialog = new ProgressDialog("Please wait...", "Fetching JavaScript bundle.");
+            var dialogOperation = _progressDialog.ShowAsync();
+            using (_progressDialog.Token.Register(dialogOperation.Cancel))
             {
-                await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, progressDialog.Token);
-            }
-            else if (_jsBundleFile == null)
-            {
-                await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, progressDialog.Token);
-            }
-            else
-            {
-                await ReloadJavaScriptFromFileAsync(progressDialog.Token);
-                dialogOperation.Cancel();
+                if (_isUsingJsProxy)
+                {
+                    await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, _progressDialog.Token);
+                }
+                else if (_jsBundleFile == null)
+                {
+                    await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, _progressDialog.Token);
+                }
+                else
+                {
+                    await ReloadJavaScriptFromFileAsync(_progressDialog.Token);
+                    dialogOperation.Cancel();
+                }
             }
         }
 

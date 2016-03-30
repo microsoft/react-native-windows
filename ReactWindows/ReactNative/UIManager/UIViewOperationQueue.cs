@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReactNative.Animation;
 using ReactNative.Bridge;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.UIManager
@@ -27,7 +25,6 @@ namespace ReactNative.UIManager
 
         private IList<Action> _operations = new List<Action>();
         private IList<Action> _batches = new List<Action>();
-        private bool _isRunning;
 
         /// <summary>
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
