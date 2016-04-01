@@ -27,7 +27,7 @@ var Platform = require('Platform');
 var SourceCode = require('NativeModules').SourceCode;
 var assetPathUtils = require('../../local-cli/bundle/assetPathUtils');
 
-var _serverURL, _offlinePath;
+var _serverURL, _offlinePath, _windowsPath;
 
 function getDevServerURL() {
   if (_serverURL === undefined) {
@@ -59,12 +59,26 @@ function getOfflinePath() {
   return _offlinePath;
 }
 
+function getOfflinePathWindows() {
+  if (_offlinePath === undefined) {
+    var scriptURL = SourceCode.scriptURL;
+    var match = scriptURL && scriptURL.match(/^^([a-z0-9+.-]+):\/\/(\/.*\/)/);
+    if (match) {
+      _offlinePath = match[1] + '://' + match[2];
+    } else {
+      _offlinePath = '';
+    }
+  }
+
+  return _offlinePath;
+}
+
 /**
  * Returns the path at which the asset can be found in the archive
  */
 function getPathInArchive(asset) {
-  var offlinePath = getOfflinePath();
   if (Platform.OS === 'android') {
+    var offlinePath = getOfflinePath();
     if (offlinePath) {
       // E.g. 'file:///sdcard/AwesomeModule/drawable-mdpi/icon.png'
       return 'file://' + offlinePath + getAssetPathInDrawableFolder(asset);
@@ -72,9 +86,12 @@ function getPathInArchive(asset) {
     // E.g. 'assets_awesomemodule_icon'
     // The Android resource system picks the correct scale.
     return assetPathUtils.getAndroidResourceIdentifier(asset);
+  } else if (Platform.OS === 'windows') {
+    var offlinePath = getOfflinePathWindows();
+    return offlinePath + getScaledAssetPath(asset);
   } else {
     // E.g. '/assets/AwesomeModule/icon@2x.png'
-    return offlinePath + getScaledAssetPath(asset);
+    return getOfflinePath() + getScaledAssetPath(asset);
   }
 }
 
