@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.Flip
 {
@@ -52,6 +53,14 @@ namespace ReactNative.Views.Flip
         public void SetAlwaysAnimate(FlipView view, bool? alwaysAnimate)
         {
             view.UseTouchAnimationsForAllNavigation = alwaysAnimate ?? true;
+        }
+
+        [ReactProperty("backgroundColor")]
+        public void SetBackgroundColor(FlipView view, uint? color)
+        {
+            view.Background = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
         }
 
         public override void AddView(FlipView parent, FrameworkElement child, int index)
