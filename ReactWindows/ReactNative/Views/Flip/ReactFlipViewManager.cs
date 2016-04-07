@@ -3,6 +3,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -93,11 +94,13 @@ namespace ReactNative.Views.Flip
             view.SelectionChanged -= OnSelectionChanged;
         }
 
-        public override void ReceiveCommand(FlipView view, int commandId, JArray args)
+        public override async void ReceiveCommand(FlipView view, int commandId, JArray args)
         {
             switch (commandId)
             {
                 case SetPage:
+                    // TODO: (#328) Fix issue with `setPage` on mount
+                    await Task.Yield();
                     view.SelectedIndex = args.First.Value<int>();
                     break;
             }
