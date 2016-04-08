@@ -93,15 +93,15 @@
         /// <remarks>
         ///     Requires an active script context.
         /// </remarks>
-        public static bool IsEnumeratingHeap
-        {
-            get
-            {
-                bool isEnumerating;
-                Native.ThrowIfError(Native.JsIsEnumeratingHeap(out isEnumerating));
-                return isEnumerating;
-            }
-        }
+        //public static bool IsEnumeratingHeap
+        //{
+        //    get
+        //    {
+        //        bool isEnumerating;
+        //        Native.ThrowIfError(Native.JsIsEnumeratingHeap(out isEnumerating));
+        //        return isEnumerating;
+        //    }
+        //}
 
         /// <summary>
         ///     Gets the runtime that the context belongs to.
@@ -371,10 +371,10 @@
         /// <param name="callback">The profiling callback to use.</param>
         /// <param name="eventMask">The profiling events to callback with.</param>
         /// <param name="context">A context to pass to the profiling callback.</param>
-        public static void StartProfiling(Native.IActiveScriptProfilerCallback callback, Native.ProfilerEventMask eventMask, int context)
-        {
-            Native.ThrowIfError(Native.JsStartProfiling(callback, eventMask, context));
-        }
+        //public static void StartProfiling(Native.IActiveScriptProfilerCallback callback, Native.ProfilerEventMask eventMask, int context)
+        //{
+        //    Native.ThrowIfError(Native.JsStartProfiling(callback, eventMask, context));
+        //}
 
         /// <summary>
         ///     Stops profiling in the current context.
@@ -390,10 +390,10 @@
         /// <param name="reason">
         ///     The reason for stopping profiling to pass to the profiler callback.
         /// </param>
-        public static void StopProfiling(int reason)
-        {
-            Native.ThrowIfError(Native.JsStopProfiling(reason));
-        }
+        //public static void StopProfiling(int reason)
+        //{
+        //    Native.ThrowIfError(Native.JsStopProfiling(reason));
+        //}
 
         /// <summary>
         ///     Enumerates the heap of the current context.
@@ -408,12 +408,12 @@
         ///     </para>
         /// </remarks>
         /// <returns>A heap enumerator.</returns>
-        public static Native.IActiveScriptProfilerHeapEnum EnumerateHeap()
-        {
-            Native.IActiveScriptProfilerHeapEnum enumerator;
-            Native.ThrowIfError(Native.JsEnumerateHeap(out enumerator));
-            return enumerator;
-        }
+        //public static Native.IActiveScriptProfilerHeapEnum EnumerateHeap()
+        //{
+        //    Native.IActiveScriptProfilerHeapEnum enumerator;
+        //    Native.ThrowIfError(Native.JsEnumerateHeap(out enumerator));
+        //    return enumerator;
+        //}
 
         /// <summary>
         ///     Adds a reference to a script context.
