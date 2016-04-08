@@ -206,6 +206,7 @@
     <Compile Include="Modules\Network\HttpContentHelpers.cs" />
     <Compile Include="Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModule.cs" />
+    <Compile Include="Modules\PushNotification\PushNotificationModule.cs" />
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
     <Compile Include="Modules\StatusBar\MobileStatusBar.cs" />
     <Compile Include="Modules\StatusBar\NopStatusBar.cs" />

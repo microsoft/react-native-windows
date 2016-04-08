@@ -6,6 +6,7 @@ using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Launch;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
+using ReactNative.Modules.PushNotification;
 using ReactNative.Modules.StatusBar;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.Toast;
@@ -49,6 +50,7 @@ namespace ReactNative.Shell
                 //new LocationModule(reactContext),
                 new NetworkingModule(reactContext),
                 new NetInfoModule(reactContext),
+                new PushNotificationModule(reactContext),
                 new StatusBarModule(),
                 new ToastModule(reactContext),
                 new WebSocketModule(reactContext),
