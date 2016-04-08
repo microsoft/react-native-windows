@@ -322,6 +322,8 @@ namespace ReactNative.Views.Scroll
                 scrollViewer.HorizontalOffset,
                 scrollViewer.VerticalOffset,
                 scrollViewer.ZoomFactor);
+
+            // TODO: (#327) Remove all this fake touch nonsense
             EmitFakeTouch(scrollViewer);
         }
 
@@ -467,19 +469,22 @@ namespace ReactNative.Views.Scroll
 
         class FakeTouchEvent : Event
         {
-            private static readonly JArray s_dummyTouches = new JArray
-            {
-                JToken.FromObject(new ReactPointer()),
-            };
-
             private static readonly JArray s_dummyIndices = new JArray { 0 };
 
             private readonly TouchEventType _touchEventType;
+            private readonly JArray _touches;
 
             public FakeTouchEvent(int viewTag, TouchEventType touchEventType)
                 : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
             {
                 _touchEventType = touchEventType;
+                _touches = new JArray
+                {
+                    JToken.FromObject(new FakePointer
+                    {
+                        Target = viewTag,
+                    }),
+                };
             }
 
             public override string EventName
@@ -492,22 +497,16 @@ namespace ReactNative.Views.Scroll
 
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
-                eventEmitter.receiveTouches(EventName, s_dummyTouches, s_dummyIndices);
+                eventEmitter.receiveTouches(EventName, _touches, s_dummyIndices);
             }
 
-            class ReactPointer
+            class FakePointer
             {
                 [JsonProperty(PropertyName = "target")]
                 public int Target { get; set; }
 
-                [JsonIgnore]
-                public uint PointerId { get; set; }
-
                 [JsonProperty(PropertyName = "identifier")]
                 public uint Identifier { get; set; }
-
-                [JsonIgnore]
-                public FrameworkElement ReactView { get; set; }
 
                 [JsonProperty(PropertyName = "timestamp")]
                 public ulong Timestamp { get; set; }
