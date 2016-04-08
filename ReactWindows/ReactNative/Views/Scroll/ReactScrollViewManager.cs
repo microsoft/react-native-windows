@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
@@ -321,6 +322,9 @@ namespace ReactNative.Views.Scroll
                 scrollViewer.HorizontalOffset,
                 scrollViewer.VerticalOffset,
                 scrollViewer.ZoomFactor);
+
+            // TODO: (#327) Remove all this fake touch nonsense
+            EmitFakeTouch(scrollViewer);
         }
 
         private void OnDirectManipulationStarted(object sender, object e)
@@ -403,6 +407,17 @@ namespace ReactNative.Views.Scroll
                             { "zoomScale", zoomFactor },
                         }));
         }
+        
+        private void EmitFakeTouch(ScrollViewer scrollViewer)
+        {
+            var reactTag = scrollViewer.GetTag();
+            var eventDispatcher = scrollViewer.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher;
+
+            eventDispatcher.DispatchEvent(new FakeTouchEvent(reactTag, TouchEventType.Start));
+            eventDispatcher.DispatchEvent(new FakeTouchEvent(reactTag, TouchEventType.End));
+        }
 
         private static FrameworkElement EnsureChild(ScrollViewer view)
         {
@@ -449,6 +464,64 @@ namespace ReactNative.Views.Scroll
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
                 eventEmitter.receiveEvent(ViewTag, EventName, _data);
+            }
+        }
+
+        class FakeTouchEvent : Event
+        {
+            private static readonly JArray s_dummyIndices = new JArray { 0 };
+
+            private readonly TouchEventType _touchEventType;
+            private readonly JArray _touches;
+
+            public FakeTouchEvent(int viewTag, TouchEventType touchEventType)
+                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            {
+                _touchEventType = touchEventType;
+                _touches = new JArray
+                {
+                    JToken.FromObject(new FakePointer
+                    {
+                        Target = viewTag,
+                    }),
+                };
+            }
+
+            public override string EventName
+            {
+                get
+                {
+                    return _touchEventType.GetJavaScriptEventName();
+                }
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                eventEmitter.receiveTouches(EventName, _touches, s_dummyIndices);
+            }
+
+            class FakePointer
+            {
+                [JsonProperty(PropertyName = "target")]
+                public int Target { get; set; }
+
+                [JsonProperty(PropertyName = "identifier")]
+                public uint Identifier { get; set; }
+
+                [JsonProperty(PropertyName = "timestamp")]
+                public ulong Timestamp { get; set; }
+
+                [JsonProperty(PropertyName = "locationX")]
+                public float LocationX { get; set; }
+
+                [JsonProperty(PropertyName = "locationY")]
+                public float LocationY { get; set; }
+
+                [JsonProperty(PropertyName = "pageX")]
+                public float PageX { get; set; }
+
+                [JsonProperty(PropertyName = "pageY")]
+                public float PageY { get; set; }
             }
         }
     }
