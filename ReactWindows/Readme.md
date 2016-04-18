@@ -12,6 +12,7 @@ This is the repository for React Native for UWP.  This directory contains the fo
 - [Windows 10 SDK](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk): Download the latests
 - [Node.js v5.10.1+](https://nodejs.org/)
 - [NPM v3+](https://www.npmjs.com/)
+- [Python 2.7](https://www.python.org/): Download the latest edition
 - Git Client - For example:
     - [GitHub Desktop for Windows](https://desktop.github.com/)
     - [Git for Windows](https://git-for-windows.github.io/)
@@ -32,11 +33,13 @@ cd react-native
 git checkout WindowsStore
 ```
 
-Next, install the NPM dependencies.  Note that this will not work using MSYS such as the Git Bash, so launch a regular command prompt if you do not have Git in your `PATH` environment variable.  This will cause a failure for installing `fsevents` which is not supported on Windows.  If you have Git installed in your `PATH` environment variable and use the command prompt, then it will work properly.
+Next, install the NPM dependencies.  Note that this will not work using MSYS such as the Git Bash, so launch a regular command prompt if you do not have Git in your `PATH` environment variable.  This will cause a failure for installing `fsevents` which is not supported on Windows.  If you have Git installed in your `PATH` environment variable and use the command prompt, then it will work properly.  If you are using the Git Bash, it may error on installing `fsevents`, so use the regular command prompt instead.
 
 ```bash
 npm install
 ```
+
+Note that `fsevents` will not install as it is not compatible with Windows.
 
 ## Setting Up the Build Environment
 
