@@ -14,7 +14,21 @@ namespace ReactNative.Tests.UIManager
         {
             AssertEx.Throws<ArgumentNullException>(
                 () => new ReactStylesDiffMap(null),
-                ex => Assert.AreEqual("properties", ex.ParamName));
+                ex => Assert.AreEqual("props", ex.ParamName));
+        }
+
+        [TestMethod]
+        public void ReactStylesDiffMap_ContainsKey()
+        {
+            var json = new JObject
+            {
+                { "foo", 42 },
+            };
+
+            var props = new ReactStylesDiffMap(json);
+            Assert.IsTrue(props.ContainsKey("foo"));
+            Assert.IsFalse(props.ContainsKey("FOO"));
+            Assert.IsFalse(props.ContainsKey("bar"));
         }
 
         [TestMethod]
@@ -26,11 +40,12 @@ namespace ReactNative.Tests.UIManager
                 { "bar", "qux" },
             };
 
-            var properties = new ReactStylesDiffMap(json);
-            Assert.AreEqual(2, properties.Keys.Count);
-            Assert.IsTrue(new[] { "bar", "foo" }.SequenceEqual(properties.Keys.OrderBy(k => k)));
-            Assert.IsInstanceOfType(properties.GetProperty("foo", typeof(short)), typeof(short));
-            Assert.AreEqual(42, properties.GetProperty("foo", typeof(int)));
+            var props = new ReactStylesDiffMap(json);
+            Assert.AreEqual(2, props.Keys.Count);
+            Assert.IsTrue(new[] { "bar", "foo" }.SequenceEqual(props.Keys.OrderBy(k => k)));
+            Assert.IsNotNull(props.GetProperty("foo"));
+            Assert.IsNull(props.GetProperty("FOO"));
+            Assert.AreEqual((short)42, props.GetProperty("foo").ToObject(typeof(short)));
         }
     }
 }

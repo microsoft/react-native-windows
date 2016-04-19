@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
+using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
@@ -81,12 +82,13 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="color">The masked color value.</param>
-        [ReactProperty(ViewProperties.BackgroundColor)]
-        public void SetBackgroundColor(ScrollViewer view, uint? color)
+        [ReactProp(
+            ViewProps.BackgroundColor,
+            CustomType = "Color", 
+            DefaultUInt32 = ColorHelpers.Transparent)]
+        public void SetBackgroundColor(ScrollViewer view, uint color)
         {
-            view.Background = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+            view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="enabled">The enabled value.</param>
-        [ReactProperty("scrollEnabled", DefaultBoolean = true)]
+        [ReactProp("scrollEnabled", DefaultBoolean = true)]
         public void SetEnabled(ScrollViewer view, bool enabled)
         {
             view.IsEnabled = enabled;
@@ -107,10 +109,10 @@ namespace ReactNative.Views.Scroll
         /// <param name="horizontal">
         /// The flag signaling whether horizontal scrolling is enabled.
         /// </param>
-        [ReactProperty("horizontal")]
-        public void SetHorizontal(ScrollViewer view, bool? horizontal)
+        [ReactProp("horizontal")]
+        public void SetHorizontal(ScrollViewer view, bool horizontal)
         {
-            view.HorizontalScrollMode = horizontal ?? false
+            view.HorizontalScrollMode = horizontal
                 ? ScrollMode.Auto
                 : ScrollMode.Disabled;
         }
@@ -122,13 +124,12 @@ namespace ReactNative.Views.Scroll
         /// <param name="showIndicator">
         /// The value to show the indicator or not.
         /// </param>
-        [ReactProperty("showsHorizontalScrollIndicator")]
-        public void SetShowsHorizontalScrollIndicator(ScrollViewer view, bool? showIndicator)
+        [ReactProp("showsHorizontalScrollIndicator")]
+        public void SetShowsHorizontalScrollIndicator(ScrollViewer view, bool showIndicator)
         {
-            view.HorizontalScrollBarVisibility =
-                showIndicator ?? false
-                    ? ScrollBarVisibility.Visible
-                    : ScrollBarVisibility.Hidden;
+            view.HorizontalScrollBarVisibility = showIndicator
+                ? ScrollBarVisibility.Visible
+                : ScrollBarVisibility.Hidden;
         }
 
         /// <summary>
@@ -138,13 +139,12 @@ namespace ReactNative.Views.Scroll
         /// <param name="showIndicator">
         /// The value to show the indicator or not.
         /// </param>
-        [ReactProperty("showsVerticalScrollIndicator")]
-        public void SetShowsVerticalScrollIndicator(ScrollViewer view, bool? showIndicator)
+        [ReactProp("showsVerticalScrollIndicator")]
+        public void SetShowsVerticalScrollIndicator(ScrollViewer view, bool showIndicator)
         {
-            view.VerticalScrollBarVisibility =
-                showIndicator ?? false
-                    ? ScrollBarVisibility.Visible
-                    : ScrollBarVisibility.Hidden;
+            view.VerticalScrollBarVisibility = showIndicator
+                ? ScrollBarVisibility.Visible
+                : ScrollBarVisibility.Hidden;
         }
 
         /// <summary>
@@ -152,13 +152,13 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="contentOffset">The content offset.</param>
-        [ReactProperty("contentOffset")]
+        [ReactProp("contentOffset")]
         public void SetContentOffset(ScrollViewer view, JObject contentOffset)
         {
             view.ViewChanging -= OnViewChanging;
             view.ChangeView(
                 contentOffset.Value<double?>("x"), 
-                contentOffset.Value<double>("y"), 
+                contentOffset.Value<double?>("y"), 
                 null,
                 true);
             view.ViewChanging += OnViewChanging;

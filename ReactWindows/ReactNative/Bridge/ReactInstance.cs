@@ -5,7 +5,6 @@ using ReactNative.Common;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -171,7 +170,7 @@ namespace ReactNative.Bridge
             });
         }
 
-        public async void Dispose()
+        public void Dispose()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -183,11 +182,11 @@ namespace ReactNative.Bridge
             IsDisposed = true;
             _registry.NotifyReactInstanceDispose();
 
-            await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+            QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
             {
                 using (_bridge) { }
                 return true;
-            });
+            }).Wait();
 
             QueueConfiguration.Dispose();
 

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ReactNative.UIManager.Annotations;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Reflection;
 using Windows.UI.Xaml;
 
@@ -24,33 +24,32 @@ namespace ReactNative.UIManager
                 typeof(decimal),
             };
 
-        private static readonly IDictionary<Type, Func<ReactPropertyBaseAttribute, object>> s_defaultValues =
-            new Dictionary<Type, Func<ReactPropertyBaseAttribute, object>>
+        private static readonly IDictionary<Type, Func<ReactPropBaseAttribute, object>> s_defaultValues =
+            new Dictionary<Type, Func<ReactPropBaseAttribute, object>>
             {
-                { typeof(sbyte), a => (sbyte)a.DefaultByte },
+                { typeof(sbyte), a => a.DefaultSByte },
                 { typeof(byte), a => a.DefaultByte },
-                { typeof(short), a => a.DefaultShort },
-                { typeof(ushort), a => (ushort)a.DefaultShort },
-                { typeof(int), a => a.DefaultInteger },
-                { typeof(uint), a => (uint)a.DefaultInteger },
-                { typeof(long), a => a.DefaultLong },
-                { typeof(ulong), a => (ulong)a.DefaultLong },
-                { typeof(float), a => a.DefaultFloat },
+                { typeof(short), a => a.DefaultInt16 },
+                { typeof(ushort), a => a.DefaultUInt16 },
+                { typeof(int), a => a.DefaultInt32 },
+                { typeof(uint), a => a.DefaultUInt32 },
+                { typeof(long), a => a.DefaultInt64 },
+                { typeof(ulong), a => a.DefaultUInt64 },
+                { typeof(float), a => a.DefaultSingle },
                 { typeof(double), a => a.DefaultDouble },
-                { typeof(decimal), a => a.DefaultDecimal },
                 { typeof(bool), a => a.DefaultBoolean },
             };
 
-        private readonly ReactPropertyBaseAttribute _attribute;
+        private readonly ReactPropBaseAttribute _attribute;
         private readonly string _propertyType;
 
-        protected PropertySetter(MethodInfo method, string name, ReactPropertyBaseAttribute attribute)
+        protected PropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
         {
             Method = method;
             Name = name;
             PropertyType = GetPropertyType(method);
 
-            _propertyType = attribute.CustomType == ReactPropertyBaseAttribute.UseDefaultType
+            _propertyType = attribute.CustomType == ReactPropBaseAttribute.UseDefaultType
                 ? GetPropertyType(PropertyType)
                 : attribute.CustomType;
 
@@ -71,32 +70,32 @@ namespace ReactNative.UIManager
             }
         }
 
-        public void UpdateShadowNodeProperty(ReactShadowNode shadowNode, ReactStylesDiffMap properties)
+        public void UpdateShadowNodeProperty(ReactShadowNode shadowNode, ReactStylesDiffMap props)
         {
             if (shadowNode == null)
                 throw new ArgumentNullException(nameof(shadowNode));
-            if (properties == null)
-                throw new ArgumentNullException(nameof(properties));
+            if (props == null)
+                throw new ArgumentNullException(nameof(props));
 
-            Invoke(shadowNode, GetShadowNodeArgs(properties));
+            Invoke(shadowNode, GetShadowNodeArgs(props));
         }
 
-        public void UpdateViewManagerProperty(IViewManager viewManager, FrameworkElement view, ReactStylesDiffMap properties)
+        public void UpdateViewManagerProperty(IViewManager viewManager, FrameworkElement view, ReactStylesDiffMap props)
         {
             if (viewManager == null)
                 throw new ArgumentNullException(nameof(viewManager));
-            if (properties == null)
-                throw new ArgumentNullException(nameof(properties));
+            if (props == null)
+                throw new ArgumentNullException(nameof(props));
 
-            Invoke(viewManager, GetViewManagerArgs(view, properties));
+            Invoke(viewManager, GetViewManagerArgs(view, props));
         }
 
-        protected virtual object[] GetShadowNodeArgs(ReactStylesDiffMap properties)
+        protected virtual object[] GetShadowNodeArgs(ReactStylesDiffMap props)
         {
             throw new NotSupportedException("ReactShadowNode properties cannot be changed with this setter.");
         }
 
-        protected virtual object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap properties)
+        protected virtual object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap props)
         {
             throw new NotSupportedException("ViewManager properties cannot be changed with this setter.");
         }
@@ -107,16 +106,16 @@ namespace ReactNative.UIManager
         {
         }
 
-        protected object ExtractProperty(ReactStylesDiffMap properties)
+        protected object ExtractProperty(ReactStylesDiffMap props)
         {
-            var result = properties.GetProperty(Name, PropertyType);
-            var defaultFunc = default(Func<ReactPropertyBaseAttribute, object>);
-            if (result == null && s_defaultValues.TryGetValue(PropertyType, out defaultFunc))
+            var defaultFunc = default(Func<ReactPropBaseAttribute, object>);
+            if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropertyType, out defaultFunc))
             {
-                result = defaultFunc(_attribute);
+                return defaultFunc(_attribute);
             }
 
-            return result;
+            return props.GetProperty(Name)?
+                .ToObject(PropertyType);
         }
 
         private void Invoke(object instance, object[] args)
@@ -171,18 +170,18 @@ namespace ReactNative.UIManager
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
 
-            var reactProperty = method.GetCustomAttribute<ReactPropertyAttribute>();
-            var reactPropertyGroup = default(ReactPropertyGroupAttribute);
-            if (reactProperty != null)
+            var reactProp = method.GetCustomAttribute<ReactPropAttribute>();
+            var reactPropGroup = default(ReactPropGroupAttribute);
+            if (reactProp != null)
             {
-                yield return new ShadowNodePropertySetter(method, reactProperty.Name, reactProperty);
+                yield return new ShadowNodePropertySetter(method, reactProp.Name, reactProp);
             }
-            else if ((reactPropertyGroup = method.GetCustomAttribute<ReactPropertyGroupAttribute>()) != null)
+            else if ((reactPropGroup = method.GetCustomAttribute<ReactPropGroupAttribute>()) != null)
             {
-                for (var i = 0; i < reactPropertyGroup.Names.Length; ++i)
+                for (var i = 0; i < reactPropGroup.Names.Length; ++i)
                 {
-                    var name = reactPropertyGroup.Names[i];
-                    yield return new ShadowNodeGroupPropertySetter(method, i, name, reactPropertyGroup);
+                    var name = reactPropGroup.Names[i];
+                    yield return new ShadowNodeGroupPropertySetter(method, i, name, reactPropGroup);
                 }
             }
         }
@@ -192,18 +191,18 @@ namespace ReactNative.UIManager
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
 
-            var reactProperty = method.GetCustomAttribute<ReactPropertyAttribute>();
-            var reactPropertyGroup = default(ReactPropertyGroupAttribute);
-            if (reactProperty != null)
+            var reactProp = method.GetCustomAttribute<ReactPropAttribute>();
+            var reactPropGroup = default(ReactPropGroupAttribute);
+            if (reactProp != null)
             {
-                yield return new ViewManagerPropertySetter(method, reactProperty.Name, reactProperty);
+                yield return new ViewManagerPropertySetter(method, reactProp.Name, reactProp);
             }
-            else if ((reactPropertyGroup = method.GetCustomAttribute<ReactPropertyGroupAttribute>()) != null)
+            else if ((reactPropGroup = method.GetCustomAttribute<ReactPropGroupAttribute>()) != null)
             {
-                for (var i = 0; i < reactPropertyGroup.Names.Length; ++i)
+                for (var i = 0; i < reactPropGroup.Names.Length; ++i)
                 {
-                    var name = reactPropertyGroup.Names[i];
-                    yield return new ViewManagerGroupPropertySetter(method, i, name, reactPropertyGroup);
+                    var name = reactPropGroup.Names[i];
+                    yield return new ViewManagerGroupPropertySetter(method, i, name, reactPropGroup);
                 }
             }
         }
@@ -212,7 +211,7 @@ namespace ReactNative.UIManager
         {
             private static readonly object[] s_args = new object[2];
 
-            public ViewManagerPropertySetter(MethodInfo method, string name, ReactPropertyBaseAttribute attribute)
+            public ViewManagerPropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
             }
@@ -235,10 +234,10 @@ namespace ReactNative.UIManager
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap properties)
+            protected override object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap props)
             {
                 s_args[0] = view;
-                s_args[1] = ExtractProperty(properties);
+                s_args[1] = ExtractProperty(props);
                 return s_args;
             }
 
@@ -254,7 +253,7 @@ namespace ReactNative.UIManager
 
             private readonly int _index;
 
-            public ViewManagerGroupPropertySetter(MethodInfo method, int index, string name, ReactPropertyBaseAttribute attribute)
+            public ViewManagerGroupPropertySetter(MethodInfo method, int index, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
                 _index = index;
@@ -285,11 +284,11 @@ namespace ReactNative.UIManager
                 return parameters[2].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap properties)
+            protected override object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap props)
             {
                 s_args[0] = view;
                 s_args[1] = _index;
-                s_args[2] = ExtractProperty(properties);
+                s_args[2] = ExtractProperty(props);
                 return s_args;
             }
 
@@ -303,7 +302,7 @@ namespace ReactNative.UIManager
         {
             private static readonly object[] s_args = new object[1];
 
-            public ShadowNodePropertySetter(MethodInfo method, string name, ReactPropertyBaseAttribute attribute)
+            public ShadowNodePropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
             }
@@ -320,9 +319,9 @@ namespace ReactNative.UIManager
                 return  parameters[0].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactStylesDiffMap properties)
+            protected override object[] GetShadowNodeArgs(ReactStylesDiffMap props)
             {
-                s_args[0] = properties.GetProperty(Name, PropertyType);
+                s_args[0] = ExtractProperty(props);
                 return s_args;
             }
 
@@ -338,7 +337,7 @@ namespace ReactNative.UIManager
 
             private readonly int _index;
 
-            public ShadowNodeGroupPropertySetter(MethodInfo method, int index, string name, ReactPropertyBaseAttribute attribute)
+            public ShadowNodeGroupPropertySetter(MethodInfo method, int index, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
                 _index = index;
@@ -362,10 +361,10 @@ namespace ReactNative.UIManager
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactStylesDiffMap properties)
+            protected override object[] GetShadowNodeArgs(ReactStylesDiffMap props)
             {
                 s_args[0] = _index;
-                s_args[1] = ExtractProperty(properties);
+                s_args[1] = ExtractProperty(props);
                 return s_args;
             }
 

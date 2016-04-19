@@ -56,5 +56,3 @@ Currently, the unit tests are written using MSTest, but the intention is to move
 ## Contributing
 
 For more information about contributing PRs and issues, see our [Contribution Guidelines](https://github.com/facebook/react-native/blob/master/CONTRIBUTING.md).
-
-

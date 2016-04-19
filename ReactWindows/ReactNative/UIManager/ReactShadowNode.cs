@@ -160,9 +160,7 @@ namespace ReactNative.UIManager
         {
             get
             {
-                return _nativeChildren != null
-                    ? _nativeChildren.Count
-                    : 0;
+                return _nativeChildren?.Count ?? 0;
             }
         }
 
@@ -338,16 +336,16 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Updates the properties of the node.
         /// </summary>
-        /// <param name="properties">The properties.</param>
-        public void UpdateProperties(ReactStylesDiffMap properties)
+        /// <param name="props">The properties.</param>
+        public void UpdateProperties(ReactStylesDiffMap props)
         {
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(GetType());
-            foreach (var key in properties.Keys)
+            foreach (var key in props.Keys)
             {
                 var setter = default(IPropertySetter);
                 if (setters.TryGetValue(key, out setter))
                 {
-                    setter.UpdateShadowNodeProperty(this, properties);
+                    setter.UpdateShadowNodeProperty(this, props);
                 }
             }
 

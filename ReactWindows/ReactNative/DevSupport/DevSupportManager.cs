@@ -144,7 +144,11 @@ namespace ReactNative.DevSupport
                 _progressDialog.Cancel();
             }
 
-            _progressDialog = new ProgressDialog("Please wait...", "Fetching JavaScript bundle.");
+            var message = !_isUsingJsProxy 
+                ? "Fetching JavaScript bundle." 
+                : "Connecting to remote debugger.";
+
+            _progressDialog = new ProgressDialog("Please wait...", message);
             var dialogOperation = _progressDialog.ShowAsync();
             using (_progressDialog.Token.Register(dialogOperation.Cancel))
             {

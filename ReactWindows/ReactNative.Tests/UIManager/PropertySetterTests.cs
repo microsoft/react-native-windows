@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
+using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,91 +186,174 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("myInt", setter.PropertyType);
         }
 
+        [TestMethod]
+        public void PropertySetter_DefaultValue()
+        {
+            var methods = new[]
+            {
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestBoolean(null, false)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestByte(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestSByte(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestInt16(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestUInt16(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestInt32(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestUInt32(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestInt64(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestUInt64(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestSingle(null, 0)),
+                (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestDouble(null, 0)),
+            };
+
+            var instance = new DefaultTest();
+            Assert.AreEqual(default(byte), instance.TestByteValue);
+            Assert.AreEqual(default(sbyte), instance.TestSByteValue);
+            Assert.AreEqual(default(short), instance.TestInt16Value);
+            Assert.AreEqual(default(ushort), instance.TestUInt16Value);
+            Assert.AreEqual(default(int), instance.TestInt32Value);
+            Assert.AreEqual(default(uint), instance.TestUInt32Value);
+            Assert.AreEqual(default(long), instance.TestInt64Value);
+            Assert.AreEqual(default(ulong), instance.TestUInt64Value);
+            Assert.AreEqual(default(float), instance.TestSingleValue);
+            Assert.AreEqual(default(double), instance.TestDoubleValue);
+            Assert.AreEqual(false, instance.TestBooleanValue);
+
+            var emptyMap = new ReactStylesDiffMap(new JObject());
+            foreach (var method in methods)
+            {
+                var setter = PropertySetter.CreateViewManagerSetters(method).Single();
+                setter.UpdateViewManagerProperty(instance, null, emptyMap);
+            }
+
+            Assert.AreEqual(byte.MaxValue, instance.TestByteValue);
+            Assert.AreEqual(sbyte.MaxValue, instance.TestSByteValue);
+            Assert.AreEqual(short.MaxValue, instance.TestInt16Value);
+            Assert.AreEqual(ushort.MaxValue, instance.TestUInt16Value);
+            Assert.AreEqual(int.MaxValue, instance.TestInt32Value);
+            Assert.AreEqual(uint.MaxValue, instance.TestUInt32Value);
+            Assert.AreEqual(long.MaxValue, instance.TestInt64Value);
+            Assert.AreEqual(ulong.MaxValue, instance.TestUInt64Value);
+            Assert.AreEqual(float.MaxValue, instance.TestSingleValue);
+            Assert.AreEqual(double.MaxValue, instance.TestDoubleValue);
+            Assert.AreEqual(true, instance.TestBooleanValue);
+        }
+
+        [TestMethod]
+        public void PropertySetter_DefaultValue_Null()
+        {
+            var method = (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestBoolean(null, false));
+            var instance = new DefaultTest();
+            Assert.AreEqual(false, instance.TestBooleanValue);
+            var emptyMap = new ReactStylesDiffMap(new JObject
+            {
+                { "TestBoolean", null },
+            });
+
+            var setter = PropertySetter.CreateViewManagerSetters(method).Single();
+            setter.UpdateViewManagerProperty(instance, null, emptyMap);
+            Assert.AreEqual(true, instance.TestBooleanValue);
+        }
+
+        [TestMethod]
+        public void PropertySetter_DefaultValue_Undefined()
+        {
+            var method = (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestBoolean(null, false));
+            var instance = new DefaultTest();
+            Assert.AreEqual(false, instance.TestBooleanValue);
+            var emptyMap = new ReactStylesDiffMap(new JObject
+            {
+                { "TestBoolean", JValue.CreateUndefined() },
+            });
+
+            var setter = PropertySetter.CreateViewManagerSetters(method).Single();
+            setter.UpdateViewManagerProperty(instance, null, emptyMap);
+            Assert.AreEqual(true, instance.TestBooleanValue);
+        }
+
         class Test : MockViewManager
         {
             #region ViewManager Test Methods
 
-            [ReactProperty("TestByte")]
+            [ReactProp("TestByte")]
             public void TestByte(FrameworkElement element, byte value)
             {
             }
 
-            [ReactProperty("TestSByte")]
+            [ReactProp("TestSByte")]
             public void TestSByte(FrameworkElement element, sbyte value)
             {
             }
 
-            [ReactProperty("TestInt16")]
+            [ReactProp("TestInt16")]
             public void TestInt16(FrameworkElement element, short value)
             {
             }
 
-            [ReactProperty("TestUInt16")]
+            [ReactProp("TestUInt16")]
             public void TestUInt16(FrameworkElement element, ushort value)
             {
             }
 
-            [ReactProperty("TestInt32")]
+            [ReactProp("TestInt32")]
             public void TestInt32(FrameworkElement element, int value)
             {
             }
 
-            [ReactProperty("TestUInt32")]
+            [ReactProp("TestUInt32")]
             public void TestUInt32(FrameworkElement element, uint value)
             {
             }
 
-            [ReactProperty("TestInt64")]
+            [ReactProp("TestInt64")]
             public void TestInt64(FrameworkElement element, long value)
             {
             }
 
-            [ReactProperty("TestUInt64")]
+            [ReactProp("TestUInt64")]
             public void TestUInt64(FrameworkElement element, ulong value)
             {
             }
 
-            [ReactProperty("TestSingle")]
+            [ReactProp("TestSingle")]
             public void TestSingle(FrameworkElement element, float value)
             {
             }
 
-            [ReactProperty("TestDouble")]
+            [ReactProp("TestDouble")]
             public void TestDouble(FrameworkElement element, double value)
             {
             }
 
-            [ReactProperty("TestDecimal")]
+            [ReactProp("TestDecimal")]
             public void TestDecimal(FrameworkElement element, decimal value)
             {
             }
 
-            [ReactProperty("TestBoolean")]
+            [ReactProp("TestBoolean")]
             public void TestBoolean(FrameworkElement element, bool value)
             {
             }
 
-            [ReactProperty("TestString")]
+            [ReactProp("TestString")]
             public void TestString(FrameworkElement element, string value)
             {
             }
 
-            [ReactProperty("TestArray")]
+            [ReactProp("TestArray")]
             public void TestArray(FrameworkElement element, int[] value)
             {
             }
 
-            [ReactProperty("TestNullable")]
+            [ReactProp("TestNullable")]
             public void TestNullable(FrameworkElement element, bool? value)
             {
             }
 
-            [ReactProperty("TestMap")]
+            [ReactProp("TestMap")]
             public void TestMap(FrameworkElement element, object value)
             {
             }
 
-            [ReactPropertyGroup("foo", "bar", "baz")]
+            [ReactPropGroup("foo", "bar", "baz")]
             public void TestGroup(FrameworkElement element, int index, string value)
             {
             }
@@ -281,17 +365,17 @@ namespace ReactNative.Tests.UIManager
         {
             #region ReactShadowNode Test Methods
 
-            [ReactProperty("TestArray")]
+            [ReactProp("TestArray")]
             public void TestArray(int[] value)
             {
             }
 
-            [ReactPropertyGroup("foo", "bar", "baz")]
+            [ReactPropGroup("foo", "bar", "baz")]
             public void TestGroup(int index, string value)
             {
             }
 
-            [ReactProperty("TestCustom", CustomType = "myInt")]
+            [ReactProp("TestCustom", CustomType = "myInt")]
             public void TestCustom(int value)
             {
             }
@@ -299,5 +383,103 @@ namespace ReactNative.Tests.UIManager
             #endregion
         }
 
+        class DefaultTest : MockViewManager
+        {
+            #region ViewManager Test Properties
+
+            public byte TestByteValue { get; set; }
+
+            public sbyte TestSByteValue { get; set; }
+
+            public short TestInt16Value { get; set; }
+
+            public ushort TestUInt16Value { get; set; }
+
+            public int TestInt32Value { get; set; }
+
+            public uint TestUInt32Value { get; set; }
+
+            public long TestInt64Value { get; set; }
+
+            public ulong TestUInt64Value { get; set; }
+
+            public float TestSingleValue { get; set; }
+
+            public double TestDoubleValue { get; set; }
+
+            public bool TestBooleanValue { get; set; }
+
+            #endregion 
+
+            #region ViewManager Test Methods
+
+            [ReactProp("TestByte", DefaultByte = byte.MaxValue)]
+            public void TestByte(FrameworkElement element, byte value)
+            {
+                TestByteValue = value;
+            }
+
+            [ReactProp("TestSByte", DefaultSByte = sbyte.MaxValue)]
+            public void TestSByte(FrameworkElement element, sbyte value)
+            {
+                TestSByteValue = value;
+            }
+
+            [ReactProp("TestInt16", DefaultInt16 = short.MaxValue)]
+            public void TestInt16(FrameworkElement element, short value)
+            {
+                TestInt16Value = value;
+            }
+
+            [ReactProp("TestUInt16", DefaultUInt16 = ushort.MaxValue)]
+            public void TestUInt16(FrameworkElement element, ushort value)
+            {
+                TestUInt16Value = value;
+            }
+
+            [ReactProp("TestInt32", DefaultInt32 = int.MaxValue)]
+            public void TestInt32(FrameworkElement element, int value)
+            {
+                TestInt32Value = value;
+            }
+
+            [ReactProp("TestUInt32", DefaultUInt32 = uint.MaxValue)]
+            public void TestUInt32(FrameworkElement element, uint value)
+            {
+                TestUInt32Value = value;
+            }
+
+            [ReactProp("TestInt64", DefaultInt64 = long.MaxValue)]
+            public void TestInt64(FrameworkElement element, long value)
+            {
+                TestInt64Value = value;
+            }
+
+            [ReactProp("TestUInt64", DefaultUInt64 = ulong.MaxValue)]
+            public void TestUInt64(FrameworkElement element, ulong value)
+            {
+                TestUInt64Value = value;
+            }
+
+            [ReactProp("TestSingle", DefaultSingle = float.MaxValue)]
+            public void TestSingle(FrameworkElement element, float value)
+            {
+                TestSingleValue = value;
+            }
+
+            [ReactProp("TestDouble", DefaultDouble = double.MaxValue)]
+            public void TestDouble(FrameworkElement element, double value)
+            {
+                TestDoubleValue = value;
+            }
+
+            [ReactProp("TestBoolean", DefaultBoolean = true)]
+            public void TestBoolean(FrameworkElement element, bool value)
+            {
+                TestBooleanValue = value;
+            }
+
+            #endregion
+        }
     }
 }

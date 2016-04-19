@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Newtonsoft.Json.Linq;
+using ReactNative.UIManager.Annotations;
 
 namespace ReactNative.Views.Split
 {
@@ -75,7 +76,7 @@ namespace ReactNative.Views.Split
             }
         }
 
-        [ReactProperty("panePosition", DefaultInteger = 0 /* SplitViewPanePlacement.Left */)]
+        [ReactProp("panePosition", DefaultInt32 = 0 /* SplitViewPanePlacement.Left */)]
         public void SetPanePosition(SplitView view, int panePosition)
         {
             var placement = (SplitViewPanePlacement)panePosition;
@@ -90,7 +91,7 @@ namespace ReactNative.Views.Split
             view.PanePlacement = placement;
         }
 
-        [ReactProperty("paneWidth", DefaultFloat = float.NaN)]
+        [ReactProp("paneWidth", DefaultSingle = float.NaN)]
         public void SetPaneWidth(SplitView view, float width)
         {
             if (!float.IsNaN(width))
@@ -99,7 +100,7 @@ namespace ReactNative.Views.Split
             }
             else
             {
-                // TODO: default pane width?
+                view.OpenPaneLength = 320 /* default value */;
             }
         }
 

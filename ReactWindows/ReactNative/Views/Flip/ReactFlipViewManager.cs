@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
+using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
@@ -50,13 +51,13 @@ namespace ReactNative.Views.Flip
             }
         }
 
-        [ReactProperty("alwaysAnimate")]
-        public void SetAlwaysAnimate(FlipView view, bool? alwaysAnimate)
+        [ReactProp("alwaysAnimate", DefaultBoolean = true)]
+        public void SetAlwaysAnimate(FlipView view, bool alwaysAnimate)
         {
-            view.UseTouchAnimationsForAllNavigation = alwaysAnimate ?? true;
+            view.UseTouchAnimationsForAllNavigation = alwaysAnimate;
         }
 
-        [ReactProperty("backgroundColor")]
+        [ReactProp("backgroundColor")]
         public void SetBackgroundColor(FlipView view, uint? color)
         {
             view.Background = color.HasValue

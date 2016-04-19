@@ -1,4 +1,5 @@
-﻿using Windows.UI;
+﻿using ReactNative.UIManager.Annotations;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -18,12 +19,10 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="radius">The border radius value.</param>
-        [ReactProperty("borderRadius")]
-        public void SetBorderRadius(Border view, double? radius)
+        [ReactProp("borderRadius")]
+        public void SetBorderRadius(Border view, double radius)
         {
-            view.CornerRadius = radius.HasValue
-                ? new CornerRadius(radius.Value)
-                : default(CornerRadius);
+            view.CornerRadius = new CornerRadius(radius);
         }
 
         /// <summary>
@@ -31,12 +30,13 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="color">The masked color value.</param>
-        [ReactProperty(ViewProperties.BackgroundColor)]
-        public void SetBackgroundColor(Border view, uint? color)
+        [ReactProp(
+            ViewProps.BackgroundColor,
+            CustomType = "Color",
+            DefaultUInt32 = ColorHelpers.Transparent)]
+        public void SetBackgroundColor(Border view, uint color)
         {
-            view.Background = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+            view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="color">The color hex code.</param>
-        [ReactProperty("borderColor", CustomType = "Color")]
+        [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(Border view, uint? color)
         {
             view.BorderBrush = color.HasValue
@@ -58,16 +58,15 @@ namespace ReactNative.UIManager
         /// <param name="view">The view panel.</param>
         /// <param name="index">The property index.</param>
         /// <param name="width">The border width in pixels.</param>
-        [ReactPropertyGroup(
-            ViewProperties.BorderWidth,
-            ViewProperties.BorderLeftWidth,
-            ViewProperties.BorderRightWidth,
-            ViewProperties.BorderTopWidth,
-            ViewProperties.BorderBottomWidth,
-            DefaultDouble = double.NaN)]
-        public void SetBorderWidth(Border view, int index, double? width)
+        [ReactPropGroup(
+            ViewProps.BorderWidth,
+            ViewProps.BorderLeftWidth,
+            ViewProps.BorderRightWidth,
+            ViewProps.BorderTopWidth,
+            ViewProps.BorderBottomWidth)]
+        public void SetBorderWidth(Border view, int index, double width)
         {
-            view.SetBorderWidth(ViewProperties.BorderSpacingTypes[index], width);
+            view.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
         }
 
         /// <summary>
@@ -75,7 +74,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="collapsible">The flag.</param>
-        [ReactProperty(ViewProperties.Collapsible)]
+        [ReactProp(ViewProps.Collapsible)]
         public void SetCollapsible(Border view, bool collapsible)
         {
             // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
