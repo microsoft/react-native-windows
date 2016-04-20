@@ -37,8 +37,6 @@ namespace ReactNative.DevSupport
         private bool _redBoxDialogOpen;
         private DevOptionDialog _devOptionDialog;
 
-        private ProgressDialog _progressDialog;
-
         public DevSupportManager(
             IReactInstanceDevCommandsHandler reactInstanceCommandsHandler,
             string jsBundleFile,
@@ -139,32 +137,25 @@ namespace ReactNative.DevSupport
 
             HideRedboxDialog();
 
-            if (_progressDialog != null)
-            {
-                _progressDialog.Cancel();
-            }
-
-            var message = !_isUsingJsProxy 
-                ? "Fetching JavaScript bundle." 
+            var message = !_isUsingJsProxy
+                ? "Fetching JavaScript bundle."
                 : "Connecting to remote debugger.";
 
-            _progressDialog = new ProgressDialog("Please wait...", message);
-            var dialogOperation = _progressDialog.ShowAsync();
-            using (_progressDialog.Token.Register(dialogOperation.Cancel))
+            var progressDialog = new ProgressDialog("Please wait...", message);
+            var dialogOperation = progressDialog.ShowAsync();
+
+            if (_isUsingJsProxy)
             {
-                if (_isUsingJsProxy)
-                {
-                    await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, _progressDialog.Token);
-                }
-                else if (_jsBundleFile == null)
-                {
-                    await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, _progressDialog.Token);
-                }
-                else
-                {
-                    await ReloadJavaScriptFromFileAsync(_progressDialog.Token);
-                    dialogOperation.Cancel();
-                }
+                await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, progressDialog.Token);
+            }
+            else if (_jsBundleFile == null)
+            {
+                await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, progressDialog.Token);
+            }
+            else
+            {
+                await ReloadJavaScriptFromFileAsync(progressDialog.Token);
+                dialogOperation.Cancel();
             }
         }
 
@@ -232,9 +223,9 @@ namespace ReactNative.DevSupport
                     new DevOptionHandler(
                         _devSettings.IsReloadOnJavaScriptChangeEnabled
                             ? "Disable Live Reload"
-                            : "Enable Live Reload", 
-                        () => 
-                            _devSettings.IsReloadOnJavaScriptChangeEnabled = 
+                            : "Enable Live Reload",
+                        () =>
+                            _devSettings.IsReloadOnJavaScriptChangeEnabled =
                                 !_devSettings.IsReloadOnJavaScriptChangeEnabled),
                 };
 
