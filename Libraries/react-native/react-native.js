@@ -18,6 +18,7 @@ var ReactNative = {
   get DatePickerIOS() { return require('DatePickerIOS'); },
   get DrawerLayoutAndroid() { return require('DrawerLayoutAndroid'); },
   get FlipViewWindows() { return require('FlipViewWindows'); },
+  get ProgressBarWindows() {return require('ProgressBarWindows');},
   get Image() { return require('Image'); },
   get ImageEditor() { return require('ImageEditor'); },
   get ImageStore() { return require('ImageStore'); },
