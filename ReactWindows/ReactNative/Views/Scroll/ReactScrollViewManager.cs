@@ -400,6 +400,7 @@ namespace ReactNative.Views.Scroll
                         new JObject
                         {
                             { "target", reactTag },
+                            { "responderIgnoreScroll", true },
                             { "contentOffset", contentOffset },
                             { "contentInset", contentInset },
                             { "contentSize", contentSize },
