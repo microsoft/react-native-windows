@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
+using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 
 namespace ReactNative.Views.Progressbar
@@ -29,10 +30,21 @@ namespace ReactNative.Views.Progressbar
 
         protected override ProgressBar CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new ProgressBar { IsIndeterminate = true };
+            return new ProgressBar();
+        }
+
+
+        [ReactProp("isIndeterminate", DefaultBoolean = false)]
+        public void SetIsIndeterminate(ProgressBar view, bool value)
+        {
+            view.IsIndeterminate = value;
+        }
+
+        [ReactProp("value", DefaultDouble = 0)]
+        public void SetValue(ProgressBar view, double value)
+        {
+            view.Value = value;
         }
         
-
-
     }
 }
