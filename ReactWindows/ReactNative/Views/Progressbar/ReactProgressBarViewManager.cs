@@ -1,11 +1,8 @@
-﻿using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Newtonsoft.Json.Linq;
+﻿using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using ReactNative.UIManager.Events;
+using ReactNative.Views.TextInput;
 
 namespace ReactNative.Views.Progressbar
 {
@@ -34,17 +31,29 @@ namespace ReactNative.Views.Progressbar
         }
 
 
-        [ReactProp("isIndeterminate", DefaultBoolean = false)]
-        public void SetIsIndeterminate(ProgressBar view, bool value)
+        [ReactProp("indeterminate", DefaultBoolean = false)]
+        public void SetIndeterminate(ProgressBar view, bool value)
         {
             view.IsIndeterminate = value;
         }
 
-        [ReactProp("value", DefaultDouble = 0)]
-        public void SetValue(ProgressBar view, double value)
+        [ReactProp("progress", DefaultDouble = 0)]
+        public void SetProgress(ProgressBar view, double value)
         {
-            view.Value = value;
+            view.Value = value * 100.0;//xaml progressbar is 0-100, but RN progressbar is 0-1.
         }
-        
+
+        /// <summary>
+        /// Sets the foreground for the node.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp(ViewProps.Color, CustomType = "Color")]
+        public void SetColor(ProgressBar view, uint? color)
+        {
+            view.Foreground = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
+        }
     }
 }

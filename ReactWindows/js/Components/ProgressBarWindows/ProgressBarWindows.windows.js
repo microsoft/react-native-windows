@@ -7,13 +7,13 @@
 'use strict';
 
 var React = require('React');
-var ReactElement = require('ReactElement');
 var ReactPropTypes = require('ReactPropTypes');
-var UIManager = require('UIManager');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var View = require('View');
+var ColorPropType = require('ColorPropType');
+
 var requireNativeComponent = require('requireNativeComponent');
 
-type Event = Object;
 
 
 var ProgressBarWindows = React.createClass({
@@ -22,28 +22,31 @@ var ProgressBarWindows = React.createClass({
     ...View.propTypes,
     
     /**
-      * Summary:
-      *     Initial value that indicates whether the progress bar reports generic
-      *     progress with a repeating pattern or reports progress based on the Value property.
-      */
-    isIndeterminate: ReactPropTypes.bool,
-
-    /**
-     * Summary: 
-     *      Initial setting of the range control, which may be coerced.
+     * If the progress bar will show indeterminate progress. 
+     * true: rolling dots
+     * false: filling rectangle that animates progress change.
      */
-     value: ReactPropTypes.number,
+    indeterminate: ReactPropTypes.bool,
+    /**
+     * The progress value (between 0 and 1).
+     */
+    progress: ReactPropTypes.number,
+    /**
+     * Color of the progress bar.
+     */
+    color: ColorPropType,
+    
+  },
+  
+  getDefaultProps: function() {
+    return {
+      indeterminate: true
+    };
   },
   
   
   render: function() {
-    return (
-      <NativeWindowsProgressBar
-        style={this.props.style}
-        isIndeterminate={this.props.isIndeterminate}
-        value={this.props.value}
-      />
-    );
+    return <NativeWindowsProgressBar {...this.props}/> ;
   },
 });
 

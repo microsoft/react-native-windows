@@ -17,8 +17,11 @@ namespace ReactNative.Views.Progressbar
 
         private static MeasureOutput MeasureProgressBar(CSSNode node, float width, float height)
         {
-            // TODO: figure out how to properly measure the progressbar.
-            return new MeasureOutput(width, 10);
+            if (double.IsNaN(height))
+            {
+                height = 4;//default height of xaml progressbar
+            }
+            return new MeasureOutput(width, height);
         }
     }
 }
