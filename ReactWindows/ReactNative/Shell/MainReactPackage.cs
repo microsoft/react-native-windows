@@ -22,6 +22,7 @@ using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
 using System;
 using System.Collections.Generic;
+using ReactNative.Views.Progressbar;
 
 namespace ReactNative.Shell
 {
@@ -71,14 +72,13 @@ namespace ReactNative.Shell
         /// </summary>
         /// <param name="reactContext">The react application context.</param>
         /// <returns>The list of view managers.</returns>
-        public IReadOnlyList<IViewManager> CreateViewManagers(
-            ReactContext reactContext)
+        public IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext)
         {
             return new List<IViewManager>
             {
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
-                //new ReactProgressBarViewManager(),
+                new ReactProgressBarViewManager(),
                 new ReactPickerManager(),
                 new ReactRawTextManager(),
                 //new RecyclerViewBackedScrollViewManager(),
