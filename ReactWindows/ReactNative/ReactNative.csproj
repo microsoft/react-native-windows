@@ -195,7 +195,6 @@
     <Compile Include="Modules\Core\JSTimersExecution.cs" />
     <Compile Include="Modules\Core\SourceCodeModule.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
-    <Compile Include="Modules\Image\ImageLoaderModule.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\IConnectionProfile.cs" />
@@ -291,8 +290,6 @@
     <Compile Include="UIManager\LayoutAnimation\LayoutAnimationController.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutUpdateAnimation.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
-    <Compile Include="Views\Progressbar\ReactProgressBarShadowNode.cs" />
-    <Compile Include="Views\Progressbar\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Split\Events\SplitViewClosedEvent.cs" />
     <Compile Include="UIManager\LayoutAnimation\InterpolationType.cs" />
     <Compile Include="UIManager\UIImplementationProvider.cs" />
