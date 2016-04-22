@@ -49,10 +49,6 @@ var ComponentExamples: Array<UIExplorerExample> = [
 
 const APIExamples = [
   {
-    key: 'VibrationExample',
-    module: require('./VibrationExample'),
-  },
-  {
     key: 'AlertExample',
     module: require('./AlertExample').AlertExample,
   },
@@ -84,6 +80,10 @@ const APIExamples = [
     key: 'PointerEventsExample',
     module: require('./PointerEventsExample'),
   },
+  {
+    key: 'VibrationExample',
+    module: require('./VibrationExample'),
+  },  
 ];
 
 const Modules = {};

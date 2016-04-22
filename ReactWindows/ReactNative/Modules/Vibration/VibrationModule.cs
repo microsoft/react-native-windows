@@ -1,5 +1,6 @@
-﻿using System;
-using ReactNative.Bridge;
+﻿using ReactNative.Bridge;
+using ReactNative.Common;
+using System;
 using Windows.Phone.Devices.Notification;
 
 namespace ReactNative.Modules.Vibration
@@ -11,19 +12,25 @@ namespace ReactNative.Modules.Vibration
     {
         private readonly bool _isMobile;
 
-        internal VibrationModule() : this(IsMobile())
+        /// <summary>
+        /// Creates a new instance of the Vibration Module.
+        /// </summary>
+        public VibrationModule() : this(IsMobile())
         {
         }
 
-        internal VibrationModule(bool isMobile)
+        /// <summary>
+        /// Creates a new instance of the Vibration Module with a flag of whether the platform is mobile.
+        /// </summary>
+        /// <param name="isMobile"></param>
+        public VibrationModule(bool isMobile)
         {
             _isMobile = isMobile;
         }
 
         private static bool IsMobile()
         {
-            var platformFamily = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-            return platformFamily == "Windows.Mobile";
+            return WindowsPlatformHelper.DeviceFamily == DeviceFamilyType.Mobile;
         }
 
         /// <summary>
@@ -38,7 +45,7 @@ namespace ReactNative.Modules.Vibration
         }
 
         /// <summary>
-        /// Vibrates the device for one second.
+        /// Vibrates the device for the specified milliseconds.
         /// </summary>
         /// <param name="duration">The duration in milliseconds to vibrate.</param>
         [ReactMethod]
