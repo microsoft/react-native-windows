@@ -15,7 +15,7 @@ namespace ReactNative.Touch
         private readonly FrameworkElement _view;
         private readonly List<ReactPointer> _pointers;
 
-        private uint _activePointers;
+        private uint _pointerIDs;
 
         public TouchHandler(FrameworkElement view)
         {
@@ -52,7 +52,7 @@ namespace ReactNative.Touch
                 var pointer = new ReactPointer();
                 pointer.Target = reactView.GetTag();
                 pointer.PointerId = e.Pointer.PointerId;
-                pointer.Identifier = ++_activePointers;
+                pointer.Identifier = ++_pointerIDs;
                 pointer.ReactView = reactView;
                 UpdatePointerForEvent(pointer, e);
 
@@ -97,8 +97,12 @@ namespace ReactNative.Touch
                 UpdatePointerForEvent(pointer, e);
                 DispatchTouchEvent(touchEventType, _pointers, pointerIndex);
 
-                --_activePointers;
                 _pointers.RemoveAt(pointerIndex);
+
+                if (_pointers.Count == 0)
+                {
+                    _pointerIDs = 0;
+                }
 
                 _view.ReleasePointerCapture(e.Pointer);
             }
