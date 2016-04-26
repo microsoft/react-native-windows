@@ -22,6 +22,7 @@ using ReactNative.Views.Switch;
 using ReactNative.Views.Text;
 using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
+using ReactNative.Views.Web;
 using System;
 using System.Collections.Generic;
 
@@ -95,7 +96,7 @@ namespace ReactNative.Shell
                 //new ReactTextInlineImageViewManager(),
                 new ReactVirtualTextViewManager(),
                 //new SwipeRefreshLayoutManager(),
-                //new ReactWebViewManager(),
+                new ReactWebViewManager(),
             };
         }
     }
