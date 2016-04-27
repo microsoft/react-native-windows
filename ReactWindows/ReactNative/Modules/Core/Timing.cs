@@ -110,7 +110,7 @@ namespace ReactNative.Modules.Core
             var scheduledTime = DateTimeOffset.FromUnixTimeMilliseconds((long)jsSchedulingTime);
             var initialTargetTime = (scheduledTime + period);
 
-            if (DateTimeOffset.Now > initialTargetTime && !repeat)
+            if (duration == 0 && !repeat)
             {
                 _jsTimersModule.callTimers(new[] { callbackId });
                 return;
