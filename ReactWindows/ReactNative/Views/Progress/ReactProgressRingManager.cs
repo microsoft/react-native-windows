@@ -1,0 +1,83 @@
+﻿using ReactNative.UIManager;
+using ReactNative.UIManager.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+
+namespace ReactNative.Views.Progress
+{
+    /// <summary>
+    /// Represents a native <see cref="ProgressRing"/> component.
+    /// </summary>
+    class ReactProgressRingManager : BaseViewManager<ProgressRing, ReactProgressRingShadowNode>
+    {
+        private const string ReactClass = "RCTProgressRing";
+
+        /// <summary>
+        /// The name of this view manager. This will be the name used to 
+        /// reference this view manager from JavaScript.
+        /// </summary>
+        public override string Name
+        {
+            get
+            {
+                return ReactClass;
+            }
+        }
+
+        /// <summary>
+        /// This method should return the <see cref="ReactProgressRingShadowNode"/>
+        /// which will be then used for measuring the position and size of the
+        /// view. 
+        /// </summary>
+        /// <returns>The shadow node instance.</returns>
+        public override ReactProgressRingShadowNode CreateShadowNodeInstance()
+        {
+            return new ReactProgressRingShadowNode();
+        }
+
+        /// <summary>
+        /// Implement this method to receive optional extra data enqueued from
+        /// the corresponding instance of <see cref="ReactShadowNode"/> in
+        /// <see cref="ReactShadowNode.OnCollectExtraUpdates"/>.
+        /// </summary>
+        /// <param name="root">The root view.</param>
+        /// <param name="extraData">The extra data.</param>
+        public override void UpdateExtraData(ProgressRing root, object extraData)
+        {
+        }
+
+        /// <summary>
+        /// Sets the font color for the node.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp(ViewProps.Color, CustomType = "Color")]
+        public void SetColor(ProgressRing view, uint? color)
+        {
+            view.Foreground = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
+        }
+
+        /// <summary>
+        /// Determines the visibility of a <see cref="ProgressRing"/> component.
+        /// </summary>
+        /// <param name="view">The native <see cref="ProgressRing"/>.</param>
+        /// <param name="value">The visibilty.</param>
+        [ReactProp("isActive", DefaultBoolean = false)]
+        public void SetIsActive(ProgressRing view, bool value)
+        {
+            view.IsActive = value;
+        }
+
+        protected override ProgressRing CreateViewInstance(ThemedReactContext reactContext)
+            {
+                return new ProgressRing();
+            }
+        }
+}

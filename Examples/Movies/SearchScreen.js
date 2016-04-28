@@ -22,8 +22,10 @@ var {
   ListView,
   Platform,
   ProgressBarAndroid,
+  ProgressRingWindows,
   StyleSheet,
   Text,
+  Image,
   View,
 } = ReactNative;
 var TimerMixin = require('react-timer-mixin');
@@ -33,7 +35,7 @@ var dismissKeyboard = require('dismissKeyboard');
 
 var MovieCell = require('./MovieCell');
 var MovieScreen = require('./MovieScreen');
-var SearchBar = require('SearchBar');
+var SearchBar = require('./SearchBar');
 
 /**
  * This is for demo purposes only, and rate limited.
@@ -229,8 +231,14 @@ var SearchScreen = React.createClass({
         component: MovieScreen,
         passProps: {movie},
       });
-    } else {
+    } else if(Platform.OS === 'android'){
       dismissKeyboard();
+      this.props.navigator.push({
+        title: movie.title,
+        name: 'movie',
+        movie: movie,
+      });
+    } else {
       this.props.navigator.push({
         title: movie.title,
         name: 'movie',
@@ -252,10 +260,16 @@ var SearchScreen = React.createClass({
     }
     if (Platform.OS === 'ios') {
       return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
-    } else {
+    }else if (Platform.OS === 'android') {
       return (
         <View  style={{alignItems: 'center'}}>
           <ProgressBarAndroid styleAttr="Large"/>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{alignItems: 'center'}}>
+          <ProgressRingWindows style={styles.spinner} />
         </View>
       );
     }
@@ -372,6 +386,11 @@ var styles = StyleSheet.create({
   rowSeparatorHide: {
     opacity: 0.0,
   },
+  spinner: {
+    width: 60,
+    height: 60,
+    color: '#236B8E',
+  }
 });
 
 module.exports = SearchScreen;

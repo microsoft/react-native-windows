@@ -28,6 +28,7 @@ if (__DEV__) {
 var ReactNative = {
   // Components
   get ActivityIndicatorIOS() { return require('ActivityIndicatorIOS'); },
+  get ProgressRingWindows() { return require('ProgressRingWindows'); },
   get ART() { return require('ReactNativeART'); },
   get DatePickerIOS() { return require('DatePickerIOS'); },
   get DrawerLayoutAndroid() { return require('DrawerLayoutAndroid'); },

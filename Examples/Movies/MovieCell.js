@@ -24,6 +24,8 @@ var {
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
+  Animated,
+  Easing,
   View
 } = ReactNative;
 
@@ -32,6 +34,19 @@ var getImageSource = require('./getImageSource');
 var getTextFromScore = require('./getTextFromScore');
 
 var MovieCell = React.createClass({
+  getInitialState(){
+      return {
+          fadeAnim: new Animated.Value(0), // init opacity 0
+          springAnim: new Animated.Value(0)
+      };
+  },
+  componentDidMount() {
+    Animated.timing(          // Uses easing functions
+       this.state.fadeAnim,    // The value to drive
+       {toValue: 1,
+        duration: 2000}            // Configuration
+     ).start();
+  },
   render: function() {
     var criticsScore = this.props.movie.ratings.critics_score;
     var TouchableElement = TouchableHighlight;
@@ -39,7 +54,7 @@ var MovieCell = React.createClass({
       TouchableElement = TouchableNativeFeedback;
     }
     return (
-      <View>
+      <Animated.View style={[{opacity: this.state.fadeAnim}]}>
         <TouchableElement
           onPress={this.props.onSelect}
           onShowUnderlay={this.props.onHighlight}
@@ -50,7 +65,7 @@ var MovieCell = React.createClass({
               * even if it isn't required */}
             <Image
               source={getImageSource(this.props.movie, 'det')}
-              style={styles.cellImage}
+              style={[styles.cellImage, ]}
             />
             <View style={styles.textContainer}>
               <Text style={styles.movieTitle} numberOfLines={2}>
@@ -66,7 +81,7 @@ var MovieCell = React.createClass({
             </View>
           </View>
         </TouchableElement>
-      </View>
+      </Animated.View>
     );
   }
 });
@@ -92,10 +107,9 @@ var styles = StyleSheet.create({
     padding: 5,
   },
   cellImage: {
-    backgroundColor: '#dddddd',
     height: 93,
     marginRight: 10,
-    width: 60,
+    width: 60
   },
   cellBorder: {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
