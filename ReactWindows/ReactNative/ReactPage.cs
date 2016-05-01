@@ -97,6 +97,9 @@ namespace ReactNative
                 _reactInstanceManager.OnBackPressed();
                 args.Handled = true;
             };
+
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
         }
 
         /// <summary>
@@ -124,6 +127,9 @@ namespace ReactNative
         public void OnDestroy()
         {
             _reactInstanceManager.OnDestroy();
+
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+            Window.Current.CoreWindow.KeyUp -= CoreWindow_KeyUp;
         }
 
         /// <summary>
@@ -139,55 +145,59 @@ namespace ReactNative
             return new ReactRootView();
         }
 
-        /// <summary>
-        /// Captures the key down events to 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnKeyDown(KeyRoutedEventArgs e)
-        {
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
-            {
-                if (e.Key == VirtualKey.Shift)
-                {
-                    _isShiftKeyDown = true;
-                }
-                else if (e.Key == VirtualKey.Control)
-                {
-                    _isControlKeyDown = true;   
-                }
-                else if (_isShiftKeyDown && e.Key == VirtualKey.F10)
-                {
-                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
-                    e.Handled = true;
-                }
-                else if (_isControlKeyDown && e.Key == VirtualKey.R)
-                {
-                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
-                    e.Handled = true;
-                }
-            }
-        }
 
         /// <summary>
         /// Captures the key up event to potentially launch the dev options menu.
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnKeyUp(KeyRoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
         {
             if (_reactInstanceManager.DevSupportManager.IsEnabled)
             {
-                if (e.Key == VirtualKey.Menu)
+                if (args.VirtualKey == VirtualKey.Menu)
                 {
                     _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
-                    e.Handled = true;
+                    args.Handled = true;
                 }
-                else if (e.Key == VirtualKey.Shift)
+                else if (args.VirtualKey == VirtualKey.Shift)
                 {
                     _isShiftKeyDown = false;
                 }
-                else if (e.Key == VirtualKey.Control)
+                else if (args.VirtualKey == VirtualKey.Control)
                 {
                     _isControlKeyDown = false;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Captures the key down events to potentially launch the dev options menu or reload JavaScript.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (_reactInstanceManager.DevSupportManager.IsEnabled)
+            {
+                if (args.VirtualKey == VirtualKey.Shift)
+                {
+                    _isShiftKeyDown = true;
+                }
+                else if (args.VirtualKey == VirtualKey.Control)
+                {
+                    _isControlKeyDown = true;
+                }
+                else if (_isShiftKeyDown && args.VirtualKey == VirtualKey.F10)
+                {
+                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
+                    args.Handled = true;
+                }
+                else if (_isControlKeyDown && args.VirtualKey == VirtualKey.R)
+                {
+                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                    args.Handled = true;
                 }
             }
         }
