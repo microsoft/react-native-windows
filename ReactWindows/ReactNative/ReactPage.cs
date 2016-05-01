@@ -147,32 +147,6 @@ namespace ReactNative
 
 
         /// <summary>
-        /// Captures the key up event to potentially launch the dev options menu.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
-        {
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
-            {
-                if (args.VirtualKey == VirtualKey.Menu)
-                {
-                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
-                    args.Handled = true;
-                }
-                else if (args.VirtualKey == VirtualKey.Shift)
-                {
-                    _isShiftKeyDown = false;
-                }
-                else if (args.VirtualKey == VirtualKey.Control)
-                {
-                    _isControlKeyDown = false;
-                }
-            }
-        }
-
-
-        /// <summary>
         /// Captures the key down events to potentially launch the dev options menu or reload JavaScript.
         /// </summary>
         /// <param name="sender"></param>
@@ -198,6 +172,32 @@ namespace ReactNative
                 {
                     _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                     args.Handled = true;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Captures the key up event to potentially launch the dev options menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            if (_reactInstanceManager.DevSupportManager.IsEnabled)
+            {
+                if (args.VirtualKey == VirtualKey.Menu)
+                {
+                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
+                    args.Handled = true;
+                }
+                else if (args.VirtualKey == VirtualKey.Shift)
+                {
+                    _isShiftKeyDown = false;
+                }
+                else if (args.VirtualKey == VirtualKey.Control)
+                {
+                    _isControlKeyDown = false;
                 }
             }
         }
