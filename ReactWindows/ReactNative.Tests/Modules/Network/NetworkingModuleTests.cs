@@ -119,23 +119,24 @@ namespace ReactNative.Tests.Modules.Network
                 { "string", "Hello World" },
             };
 
-            var passed = true;
+            var passed = false;
             var waitHandle = new AutoResetEvent(false);
             var module = CreateNetworkingModule(new DefaultHttpClient(), new MockInvocationHandler((name, args) =>
             {
+                waitHandle.Set();
+
                 if (name != "emit" || args.Length != 2 || ((string)args[0]) != "didCompleteNetworkResponse")
                 {
                     return;
                 }
 
                 var array = args[1] as JArray;
-                if (array == null || array.Count != 2)
+                if (array == null || array.Count != 3)
                 {
                     return;
                 }
 
                 passed = true;
-                waitHandle.Set();
             }));
 
             module.sendRequest("post", new Uri("http://example.com"), 1, null, data, false, 1000);
