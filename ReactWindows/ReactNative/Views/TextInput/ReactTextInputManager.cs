@@ -212,6 +212,19 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the background color for the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
+        public void SetBackgroundColor(ReactTextBox view, uint? color)
+        {
+            view.Background = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
+        }
+
+        /// <summary>
         /// Sets the selection color for the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
