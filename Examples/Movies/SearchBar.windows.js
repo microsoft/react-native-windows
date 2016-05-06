@@ -88,7 +88,7 @@ var styles = StyleSheet.create({
     height: 30,
   },
   spinner: {
-    color: '#236B8E',
+    color: 'lime',
   },
   icon: {
     width: 24,

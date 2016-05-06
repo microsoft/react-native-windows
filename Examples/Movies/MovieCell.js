@@ -24,7 +24,6 @@ var {
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
-  Animated,
   Easing,
   View
 } = ReactNative;
@@ -34,19 +33,6 @@ var getImageSource = require('./getImageSource');
 var getTextFromScore = require('./getTextFromScore');
 
 var MovieCell = React.createClass({
-  getInitialState(){
-      return {
-          fadeAnim: new Animated.Value(0), // init opacity 0
-          springAnim: new Animated.Value(0)
-      };
-  },
-  componentDidMount() {
-    Animated.timing(          // Uses easing functions
-       this.state.fadeAnim,    // The value to drive
-       {toValue: 1,
-        duration: 2000}            // Configuration
-     ).start();
-  },
   render: function() {
     var criticsScore = this.props.movie.ratings.critics_score;
     var TouchableElement = TouchableHighlight;
@@ -54,7 +40,7 @@ var MovieCell = React.createClass({
       TouchableElement = TouchableNativeFeedback;
     }
     return (
-      <Animated.View style={[{opacity: this.state.fadeAnim}]}>
+      <View>
         <TouchableElement
           onPress={this.props.onSelect}
           onShowUnderlay={this.props.onHighlight}
@@ -81,20 +67,20 @@ var MovieCell = React.createClass({
             </View>
           </View>
         </TouchableElement>
-      </Animated.View>
+      </View>
     );
   }
 });
 
 var styles = StyleSheet.create({
   textContainer: {
-    flex: 1,
+    flex: 1
   },
   movieTitle: {
     flex: 1,
     fontSize: 16,
     fontWeight: '500',
-    marginBottom: 2,
+    marginBottom: 2
   },
   movieYear: {
     color: '#999999',

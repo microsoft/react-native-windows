@@ -31,6 +31,6 @@ var ProgressRingWindows = React.createClass({
   },
 });
 
-var NativeActivityIndicatorView = requireNativeComponent('RCTProgressRing', ProgressRingWindows);
+var NativeActivityIndicatorView = requireNativeComponent('WindowsProgressRing', ProgressRingWindows);
 
 module.exports = ProgressRingWindows;

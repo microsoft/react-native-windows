@@ -1,5 +1,5 @@
-﻿using ReactNative.UIManager;
-using Facebook.CSSLayout;
+﻿using Facebook.CSSLayout;
+using ReactNative.UIManager;
 using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.Views.Progress

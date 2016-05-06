@@ -42,13 +42,13 @@ namespace Playground
             _reactPage.OnResume(Exit);
 
 #if DEBUG
-           /* if (System.Diagnostics.Debugger.IsAttached)
+            if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                AppViewBackButtonVisibility.Visible;*/
+                AppViewBackButtonVisibility.Visible;
 #endif
 
             Frame rootFrame = Window.Current.Content as Frame;

@@ -1,10 +1,5 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -15,7 +10,7 @@ namespace ReactNative.Views.Progress
     /// </summary>
     class ReactProgressRingManager : BaseViewManager<ProgressRing, ReactProgressRingShadowNode>
     {
-        private const string ReactClass = "RCTProgressRing";
+        private const string ReactClass = "WindowsProgressRing";
 
         /// <summary>
         /// The name of this view manager. This will be the name used to 
@@ -68,16 +63,21 @@ namespace ReactNative.Views.Progress
         /// Determines the visibility of a <see cref="ProgressRing"/> component.
         /// </summary>
         /// <param name="view">The native <see cref="ProgressRing"/>.</param>
-        /// <param name="value">The visibilty.</param>
-        [ReactProp("isActive", DefaultBoolean = false)]
+        /// <param name="value">Whether the <see cref="ProgressRing"/> should be visible or hidden..</param>
+        [ReactProp("isActive")]
         public void SetIsActive(ProgressRing view, bool value)
         {
             view.IsActive = value;
         }
 
+        /// <summary>
+        /// Creates a new view instance of a native <see cref="ProgressRing"/> component.
+        /// </summary>
+        /// <param name="reactContext">The <see cref="ThemedReactContext"/> of the components view context.</param>
+        /// <returns></returns>
         protected override ProgressRing CreateViewInstance(ThemedReactContext reactContext)
-            {
-                return new ProgressRing();
-            }
+        {
+            return new ProgressRing();
         }
+    }
 }

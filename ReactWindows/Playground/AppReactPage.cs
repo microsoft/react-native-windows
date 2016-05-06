@@ -11,7 +11,7 @@ namespace Playground
         {
             get
             {
-                return "MoviesApp";
+                return "UIExplorerApp";
             }
         }
 
@@ -19,7 +19,7 @@ namespace Playground
         {
             get
             {
-                return "Examples/Movies/MoviesApp.windows";
+                return "Examples/UIExplorer/UIExplorerApp.windows";
             }
         }
 

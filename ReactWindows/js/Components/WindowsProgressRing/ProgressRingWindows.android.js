@@ -10,4 +10,13 @@
  */
 'use strict';
 
+var React = require('React');
+var View = require('View');
+
+var ProgressRingAndroid = React.createClass({
+  render(): ReactElement {
+    return <View {...this.props} />;
+  }
+});
+
 module.exports = require('UnimplementedView');
