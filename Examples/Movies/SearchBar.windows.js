@@ -21,8 +21,8 @@ var ReactNative = require('react-native');
 var {
   Image,
   Platform,
-  ProgressBarAndroid,
   TextInput,
+  ProgressRingWindows,
   StyleSheet,
   TouchableNativeFeedback,
   View,
@@ -35,37 +35,27 @@ var SearchBar = React.createClass({
     var loadingView;
     if (this.props.isLoading) {
       loadingView = (
-        <ProgressBarAndroid
-          styleAttr="Large"
-          style={styles.spinner}
-        />
+        <View style={styles.spinnerView}>
+         <ProgressRingWindows style={styles.spinner} />
+        </View>
       );
     } else {
-      loadingView = <View style={styles.spinner} />;
+      loadingView = <View style={styles.spinnerView} />;
     }
-    var background = IS_RIPPLE_EFFECT_SUPPORTED ?
-      TouchableNativeFeedback.SelectableBackgroundBorderless() :
-      TouchableNativeFeedback.SelectableBackground();
     return (
       <View style={styles.searchBar}>
-        <TouchableNativeFeedback
-            background={background}
-            onPress={() => this.refs.input && this.refs.input.focus()}>
-          <View>
+         <View>
             <Image
-              source={require('image!android_search_white')}
+              source={require('./android_search_white.png')}
               style={styles.icon}
             />
-          </View>
-        </TouchableNativeFeedback>
+        </View>
         <TextInput
           ref="input"
           autoCapitalize="none"
           autoCorrect={false}
-          autoFocus={true}
           onChange={this.props.onSearchChange}
           placeholder="Search a movie..."
-          placeholderTextColor="rgba(255, 255, 255, 0.5)"
           onFocus={this.props.onFocus}
           style={styles.searchBarInput}
         />
@@ -80,20 +70,25 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#a9a9a9',
-    height: 56,
+    height: 40,
   },
   searchBarInput: {
     flex: 1,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
+    fontSize: 15,
+    marginTop: 20,
+    color: '#ffffff',
     height: 50,
+    alignSelf: 'center',
+    borderWidth: 0,
     padding: 0,
-    backgroundColor: 'transparent'
+    backgroundColor: '#a9a9a9'
   },
-  spinner: {
+  spinnerView: {
     width: 30,
     height: 30,
+  },
+  spinner: {
+    color: 'lime',
   },
   icon: {
     width: 24,

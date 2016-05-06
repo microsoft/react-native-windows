@@ -26,6 +26,7 @@
 var ReactNative = Object.assign(Object.create(require('react')), {
   // Components
   ActivityIndicatorIOS: require('ActivityIndicatorIOS'),
+  ProgressRingWindows: require('ProgressRingWindows'),
   ART: require('ReactNativeART'),
   DatePickerIOS: require('DatePickerIOS'),
   DrawerLayoutAndroid: require('DrawerLayoutAndroid'),
