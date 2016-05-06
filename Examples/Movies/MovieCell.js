@@ -51,7 +51,7 @@ var MovieCell = React.createClass({
               * even if it isn't required */}
             <Image
               source={getImageSource(this.props.movie, 'det')}
-              style={[styles.cellImage, ]}
+              style={[styles.cellImage]}
             />
             <View style={styles.textContainer}>
               <Text style={styles.movieTitle} numberOfLines={2}>
