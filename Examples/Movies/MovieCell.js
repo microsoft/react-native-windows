@@ -24,6 +24,7 @@ var {
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
+  Easing,
   View
 } = ReactNative;
 
@@ -50,7 +51,7 @@ var MovieCell = React.createClass({
               * even if it isn't required */}
             <Image
               source={getImageSource(this.props.movie, 'det')}
-              style={styles.cellImage}
+              style={[styles.cellImage]}
             />
             <View style={styles.textContainer}>
               <Text style={styles.movieTitle} numberOfLines={2}>
@@ -73,13 +74,13 @@ var MovieCell = React.createClass({
 
 var styles = StyleSheet.create({
   textContainer: {
-    flex: 1,
+    flex: 1
   },
   movieTitle: {
     flex: 1,
     fontSize: 16,
     fontWeight: '500',
-    marginBottom: 2,
+    marginBottom: 2
   },
   movieYear: {
     color: '#999999',
@@ -92,10 +93,9 @@ var styles = StyleSheet.create({
     padding: 5,
   },
   cellImage: {
-    backgroundColor: '#dddddd',
     height: 93,
     marginRight: 10,
-    width: 60,
+    width: 60
   },
   cellBorder: {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
