@@ -28,8 +28,6 @@ var {
   View,
 } = ReactNative;
 
-var IS_RIPPLE_EFFECT_SUPPORTED = Platform.Version >= 21;
-
 var SearchBar = React.createClass({
   render: function() {
     var loadingView;

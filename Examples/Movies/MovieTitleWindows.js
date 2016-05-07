@@ -26,7 +26,7 @@ const {
   View,
 } = ReactNative;
 
-class ToolbarWindows extends React.Component {
+class MovieTitleWindows extends React.Component {
   constuctor(props: {
     title: ?string,
     onPress: Function,
@@ -78,4 +78,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = ToolbarWindows;
+module.exports = MovieTitleWindows;

@@ -28,7 +28,7 @@ var {
 
 var MovieScreen = require('./MovieScreen');
 var SearchScreen = require('./SearchScreen');
-var Toolbar = require('./ToolbarWindows');
+var TitleNavigationBar = require('./MovieTitleWindows');
 
 var _navigator;
 
@@ -41,7 +41,7 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
   } else if (route.name === 'movie') {
     return (
       <View style={{flex: 1}}>
-        <Toolbar
+        <TitleNavigationBar
           onPress={() => _navigator.pop()}
           title={route.movie.title}
           style={styles.toolbar}

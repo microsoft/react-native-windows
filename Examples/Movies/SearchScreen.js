@@ -231,7 +231,7 @@ var SearchScreen = React.createClass({
         component: MovieScreen,
         passProps: {movie},
       });
-    } else if(Platform.OS === 'android'){
+    } else if(Platform.OS === 'android') {
       dismissKeyboard();
       this.props.navigator.push({
         title: movie.title,
