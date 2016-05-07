@@ -6,6 +6,7 @@ using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -221,7 +222,7 @@ namespace ReactNative.Views.TextInput
         {
             view.Background = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+                : new SolidColorBrush(Colors.White);
         }
 
         /// <summary>
