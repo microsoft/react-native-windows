@@ -1,5 +1,6 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -56,14 +57,14 @@ namespace ReactNative.Views.Progress
         {
             view.Foreground = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+                : new SolidColorBrush(Colors.YellowGreen);
         }
 
         /// <summary>
         /// Determines the visibility of a <see cref="ProgressRing"/> component.
         /// </summary>
         /// <param name="view">The native <see cref="ProgressRing"/>.</param>
-        /// <param name="value">Whether the <see cref="ProgressRing"/> should be visible or hidden..</param>
+        /// <param name="value">Whether the <see cref="ProgressRing"/> should be visible or hidden.</param>
         [ReactProp("isActive")]
         public void SetIsActive(ProgressRing view, bool value)
         {
@@ -74,7 +75,7 @@ namespace ReactNative.Views.Progress
         /// Creates a new view instance of a native <see cref="ProgressRing"/> component.
         /// </summary>
         /// <param name="reactContext">The <see cref="ThemedReactContext"/> of the components view context.</param>
-        /// <returns></returns>
+        /// <returns>Returns a native <see cref="ProgressRing"/> component.</returns>
         protected override ProgressRing CreateViewInstance(ThemedReactContext reactContext)
         {
             return new ProgressRing();

@@ -23,20 +23,13 @@ namespace ReactNative.Views.Progress
         /// <param name="node">The css style of the rendered <see cref="ProgressRing"/>.</param>
         /// <param name="width">The parameterized native width of the control.</param>
         /// <param name="height">The parameterized native height of the control.</param>
-        /// <returns></returns>
+        /// <returns>The measurement <see cref="MeasureOutput"/> for the <see cref="ProgressRing"/> component.</returns>
         private static MeasureOutput MeasureActivityIndicator(CSSNode node, float width, float height)
         {
-            if (double.IsNaN(height))
-            {
-                height = 6;//default height of xaml progressbar
-            }
-            if (double.IsNaN(width))
-            {
-                width = 6;//default height of xaml progressbar
-            }
-
-
-            return new MeasureOutput(width, height);
+            var normalizedWidth = !CSSConstants.IsUndefined(width) ? width : 6;
+            var normalizedHeight = !CSSConstants.IsUndefined(height) ? height : 6;
+            
+            return new MeasureOutput(normalizedWidth, normalizedHeight);
         }
     }
 }
