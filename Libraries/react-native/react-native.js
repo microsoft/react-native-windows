@@ -43,6 +43,7 @@ var ReactNative = {
   get Picker() { return require('Picker'); },
   get PickerIOS() { return require('PickerIOS'); },
   get ProgressBarAndroid() { return require('ProgressBarAndroid'); },
+  get ProgressRingWindows() { return require('ProgressRingWindows'); },
   get ProgressViewIOS() { return require('ProgressViewIOS'); },
   get ProgressBarWindows() {return require('ProgressBarWindows');},
   get ScrollView() { return require('ScrollView'); },
