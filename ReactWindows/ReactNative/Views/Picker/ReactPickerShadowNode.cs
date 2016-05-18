@@ -17,7 +17,7 @@ namespace ReactNative.Views.Picker
             MeasureFunction = MeasurePicker;
         }
 
-        private static MeasureOutput MeasurePicker(CSSNode node, float width, float height)
+        private static MeasureOutput MeasurePicker(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             return new MeasureOutput(width, 40);
         }
