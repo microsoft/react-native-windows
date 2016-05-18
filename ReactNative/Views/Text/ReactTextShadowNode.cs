@@ -371,7 +371,7 @@ namespace ReactNative.Views.Text
             throw new InvalidOperationException("Property "  + property + " is supported only on the outermost text block.");
         }
 
-        private static MeasureOutput MeasureText(CSSNode node, float width, float height)
+        private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             // This is not a terribly efficient way of projecting the height of
             // the text elements. It requires that we have access to the
