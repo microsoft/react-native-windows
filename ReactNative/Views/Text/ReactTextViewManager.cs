@@ -40,7 +40,7 @@ namespace ReactNative.Views.Text
         /// <param name="extraData">The aggregated virtual node changes.</param>
         public override void UpdateExtraData(TextBlock root, object extraData)
         {
-            var textUpdate = (Tuple<Inline, TextAlignment, double, int, int>)extraData;
+            var textUpdate = (Tuple<Inline, TextAlignment, double, int, int, Thickness>)extraData;
             var inline = textUpdate.Item1;
 
             root.Inlines.Clear();
@@ -49,7 +49,8 @@ namespace ReactNative.Views.Text
             root.TextAlignment = textUpdate.Item2;
             root.LineHeight = textUpdate.Item3;
             root.MaxLines = textUpdate.Item4;
-            root.CharacterSpacing = textUpdate.Item5;     
+            root.CharacterSpacing = textUpdate.Item5; 
+            root.Padding = textUpdate.Item6;
         }
 
         /// <summary>
