@@ -117,7 +117,13 @@ namespace ReactNative.Modules.Network
                 }
                 else if ((uri = data.Value<string>("uri")) != null)
                 {
-                    throw new NotImplementedException("HTTP handling for file payloads not yet implemented.");
+                    if (headerData.ContentType == null)
+                    {
+                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
+                        return;
+                    }
+
+                    throw new NotImplementedException("URI upload is not supported");
                 }
                 else if ((formData = data.Value<JArray>("formData")) != null)
                 {
@@ -131,8 +137,6 @@ namespace ReactNative.Modules.Network
                     {
                         var fieldName = content.Value<string>("fieldName");
 
-                        var formDataHeaders = content.Value<JArray>("headers");
-
                         var stringContent = content.Value<string>("string");
                         if (stringContent != null)
                         {
@@ -141,8 +145,6 @@ namespace ReactNative.Modules.Network
                     }
 
                     request.Content = formDataContent;
-                    // TODO: Check for gzipped body content
-                    // TODO: Issue #383
                 }
             }
 
