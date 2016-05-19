@@ -126,6 +126,8 @@ namespace ReactNative
         public void OnDestroy()
         {
             _reactInstanceManager.OnDestroy();
+            
+            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
         }
 
         /// <summary>
