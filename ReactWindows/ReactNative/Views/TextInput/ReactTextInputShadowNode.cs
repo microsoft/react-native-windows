@@ -87,7 +87,7 @@ namespace ReactNative.Views.TextInput
             }
         }
 
-        private MeasureOutput MeasureText(CSSNode node, float width, float height)
+        private MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             _computedPadding = GetComputedPadding();
 
