@@ -161,7 +161,7 @@ namespace ReactNative
                     _isControlKeyDown = e.EventType == CoreAcceleratorKeyEventType.KeyDown;
                 }
                 else if ( (_isShiftKeyDown && e.VirtualKey == VirtualKey.F10) ||
-                           e.VirtualKey == VirtualKey.Menu)
+                          (e.EventType == CoreAcceleratorKeyEventType.KeyDown && e.VirtualKey == VirtualKey.Menu))
                 {
                     _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
                 }
