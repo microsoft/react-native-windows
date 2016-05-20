@@ -117,12 +117,34 @@ namespace ReactNative.Modules.Network
                 }
                 else if ((uri = data.Value<string>("uri")) != null)
                 {
-                    throw new NotImplementedException("HTTP handling for file payloads not yet implemented.");
+                    if (headerData.ContentType == null)
+                    {
+                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
+                        return;
+                    }
+
+                    throw new NotImplementedException("URI upload is not supported");
                 }
                 else if ((formData = data.Value<JArray>("formData")) != null)
                 {
-                    // TODO: (#388) Add support for form data.
-                    throw new NotImplementedException("HTTP handling for FormData not yet implemented.");
+                    if (headerData.ContentType == null)
+                    {
+                        headerData.ContentType = "multipart/form-data";
+                    }
+
+                    var formDataContent = new HttpMultipartFormDataContent();
+                    foreach (var content in formData)
+                    {
+                        var fieldName = content.Value<string>("fieldName");
+
+                        var stringContent = content.Value<string>("string");
+                        if (stringContent != null)
+                        {
+                            formDataContent.Add(new HttpStringContent(stringContent), fieldName);
+                        }
+                    }
+
+                    request.Content = formDataContent;
                 }
             }
 
