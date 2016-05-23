@@ -1,3 +1,7 @@
+#Node
+node_modules
+
+#React Native
 *AppPackages*
 *BundleArtifacts*
 *ReactAssets*

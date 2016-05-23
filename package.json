@@ -1,0 +1,25 @@
+{
+  "name": "react-native-windows",
+  "version": "0.2.4",
+  "description": "React Native platform extensions for the Universal Windows Platform.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ReactWindows/react-native-windows.git"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "main": "Libraries/react-native-windows/react-native-windows.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "Libraries",
+    "ReactWindows/ReactNative",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react-native": "*"
+  }
+}
