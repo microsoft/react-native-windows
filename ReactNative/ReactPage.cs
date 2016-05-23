@@ -97,8 +97,10 @@ namespace ReactNative
                 _reactInstanceManager.OnBackPressed();
                 args.Handled = true;
             };
-        }
 
+            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
+        }
+        
         /// <summary>
         /// Called before the application is suspended.
         /// </summary>
@@ -124,6 +126,8 @@ namespace ReactNative
         public void OnDestroy()
         {
             _reactInstanceManager.OnDestroy();
+            
+            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
         }
 
         /// <summary>
@@ -140,57 +144,34 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Captures the key down events to 
+        /// Captures the all key downs and Ups. 
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected override void OnKeyDown(KeyRoutedEventArgs e)
+        private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (_reactInstanceManager.DevSupportManager.IsEnabled)
             {
-                if (e.Key == VirtualKey.Shift)
+                if (e.VirtualKey == VirtualKey.Shift)
                 {
-                    _isShiftKeyDown = true;
+                    _isShiftKeyDown = e.EventType == CoreAcceleratorKeyEventType.KeyDown;
                 }
-                else if (e.Key == VirtualKey.Control)
+                else if (e.VirtualKey == VirtualKey.Control)
                 {
-                    _isControlKeyDown = true;   
+                    _isControlKeyDown = e.EventType == CoreAcceleratorKeyEventType.KeyDown;
                 }
-                else if (_isShiftKeyDown && e.Key == VirtualKey.F10)
+                else if ( (_isShiftKeyDown && e.VirtualKey == VirtualKey.F10) ||
+                          (e.EventType == CoreAcceleratorKeyEventType.KeyDown && e.VirtualKey == VirtualKey.Menu))
                 {
                     _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
-                    e.Handled = true;
                 }
-                else if (_isControlKeyDown && e.Key == VirtualKey.R)
+                else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && _isControlKeyDown && e.VirtualKey == VirtualKey.R)
                 {
                     _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
-                    e.Handled = true;
                 }
             }
         }
-
-        /// <summary>
-        /// Captures the key up event to potentially launch the dev options menu.
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnKeyUp(KeyRoutedEventArgs e)
-        {
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
-            {
-                if (e.Key == VirtualKey.Menu)
-                {
-                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
-                    e.Handled = true;
-                }
-                else if (e.Key == VirtualKey.Shift)
-                {
-                    _isShiftKeyDown = false;
-                }
-                else if (e.Key == VirtualKey.Control)
-                {
-                    _isControlKeyDown = false;
-                }
-            }
-        }
+        
 
         private IReactInstanceManager CreateReactInstanceManager()
         {
