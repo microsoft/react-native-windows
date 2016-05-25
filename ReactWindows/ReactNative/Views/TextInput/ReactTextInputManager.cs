@@ -440,7 +440,7 @@ namespace ReactNative.Views.TextInput
         /// additional cleanup by the <see cref="ReactTextInputManager"/>.
         /// subclass. Unregister all event handlers for the <see cref="ReactTextBox"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/>.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ReactTextBox view)
         {
@@ -466,7 +466,7 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Installing the textchanged event emitter on the <see cref="TextInput"/> Control.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
         {

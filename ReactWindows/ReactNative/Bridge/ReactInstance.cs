@@ -86,7 +86,7 @@ namespace ReactNative.Bridge
             DispatcherHelpers.AssertOnDispatcher();
             if (_initialized)
             {
-                throw new InvalidOperationException("This react instance has already been initialized.");
+                throw new InvalidOperationException("This React instance has already been initialized.");
             }
 
             _initialized = true;

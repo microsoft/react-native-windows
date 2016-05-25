@@ -23,7 +23,7 @@ namespace ReactNative.Views.View
         /// <summary>
         /// Creates a new view instance of type <see cref="Canvas"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected override Canvas CreateInnerElement(ThemedReactContext reactContext)
         {

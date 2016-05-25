@@ -13,7 +13,7 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// Instantiates the <see cref="DeviceEventManagerModule"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="onBackPressed">
         /// The action to take when back is pressed.
         /// </param>
@@ -55,7 +55,7 @@ namespace ReactNative.Modules.Core
         }
 
         /// <summary>
-        /// Invokes the default back handler for the host of this react 
+        /// Invokes the default back handler for the host of this React 
         /// instance. This should be invoked if JavaScript does not want to
         /// handle the back press itself.
         /// </summary>

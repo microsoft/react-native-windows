@@ -158,7 +158,7 @@ namespace ReactNative.Views.Image
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
         {
@@ -182,7 +182,7 @@ namespace ReactNative.Views.Image
         /// <summary>
         /// Creates the image view instance.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
@@ -195,7 +195,7 @@ namespace ReactNative.Views.Image
         /// <summary>
         /// Install custom event emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, Border view)
         {

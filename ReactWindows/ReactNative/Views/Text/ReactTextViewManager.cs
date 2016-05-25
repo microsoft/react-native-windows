@@ -56,7 +56,7 @@ namespace ReactNative.Views.Text
         /// <summary>
         /// Creates the view instance.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected override TextBlock CreateViewInstance(ThemedReactContext reactContext)
         {

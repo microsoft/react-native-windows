@@ -117,7 +117,7 @@ namespace ReactNative.UIManager
         /// additional cleanup by the <see cref="IViewManager"/>
         /// subclass.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         /// <remarks>
         /// Derived classes do not need to call this base method.
@@ -163,7 +163,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected abstract TFrameworkElement CreateViewInstance(ThemedReactContext reactContext);
 
@@ -171,7 +171,7 @@ namespace ReactNative.UIManager
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         /// <remarks>
         /// Consider overriding this method if your view needs to emit events

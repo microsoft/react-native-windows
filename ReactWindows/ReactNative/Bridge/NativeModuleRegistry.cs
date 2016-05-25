@@ -88,7 +88,7 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Invoke a method on a native module.
         /// </summary>
-        /// <param name="reactInstance">The react instance.</param>
+        /// <param name="reactInstance">The React instance.</param>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>

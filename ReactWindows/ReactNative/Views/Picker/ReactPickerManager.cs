@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -119,7 +119,7 @@ namespace ReactNative.Views.Picker
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactPickerManager"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ComboBox view)
         {
@@ -129,7 +129,7 @@ namespace ReactNative.Views.Picker
         /// <summary>
         /// Creates a new view instance of type <see cref="ComboBox"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected override ComboBox CreateViewInstance(ThemedReactContext reactContext)
         {
@@ -140,7 +140,7 @@ namespace ReactNative.Views.Picker
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ComboBox view)
         {

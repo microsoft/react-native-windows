@@ -12,7 +12,7 @@ namespace ReactNative.UIManager
             new ConditionalWeakTable<FrameworkElement, FrameworkElement>();
 
         /// <summary>
-        /// Returns the root view of a givenview in a react application.
+        /// Returns the root view of a givenview in a React application.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <returns>The root view instance.</returns>
