@@ -1,6 +1,6 @@
 /**
  * Sample React Native App
- * https://github.com/ReactWindows/react-native-windows
+ * https://github.com/facebook/react-native
  * @flow
  */
 
@@ -23,8 +23,8 @@ class <%= name %> extends Component {
           To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
-          Press Crtl+R to reload,{'\n'}
-          Shift+F10 or shake for dev menu
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
         </Text>
       </View>
     );
