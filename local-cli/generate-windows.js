@@ -12,16 +12,20 @@ var yeoman = require('yeoman-environment');
  */
 function generateWindows (projectDir, name) {
   var oldCwd = process.cwd();
+
+  if (!fs.existsSync(projectDir)) {
+    fs.mkdirSync(projectDir); 
+  }
   process.chdir(projectDir);
 
   var env = yeoman.createEnv();
   var generatorPath = path.join(__dirname, 'generator-windows');
-  env.register(generatorPath, 'react:app:windows');
-  var args = ['react:app:windows', name].concat(process.argv.slice(4));
+  env.register(generatorPath, 'react:app');
+  var args = ['react:app', name].concat(process.argv.slice(4));
   env.run(args, undefined, function () {
     process.chdir(oldCwd);
   });
 };
 
-generateWindows(path.join(__dirname), 'foo');
+generateWindows('C:\\github\\foo', 'foo');
 
