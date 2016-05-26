@@ -7,60 +7,76 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 * Windows 10 Mobile
 * [Xbox One (UWP)](https://msdn.microsoft.com/en-us/windows/uwp/xbox-apps/index)
 
+## Quick Links
+
+- [Getting Started](#getting-started)
+- [Getting Help](#getting-help)
+- [Documentation](#documentation)
+- [Examples](#examples)
+- [Extending React Native](#extending-react-native)
+- [Opening Issues](#opening-issues)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Introduction
+
+See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native.
+
 ## Getting Started
 
 - Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
-- Install [react-native-windows](https://www.npmjs.com/package/react-native-windows) from NPM.
-- Install the React Developer Tools for [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/) for better debugging [(read more)](http://facebook.github.io/react-native/docs/debugging.html).
+- Install [react-native-windows](https://www.npmjs.com/package/react-native-windows) from NPM (i.e., `npm i react-native-windows --save`).
+- **(Coming Soon)** Initialize Windows project with `react-native windows` command.
+- Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
-## Requirements
+### Requirements
 
-- [Visual Studio 2015](https://msdn.microsoft.com/en-us/library/dd831853.aspx): Community and all other editions supported
-- [Windows 10 SDK](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk): Download the latests
-- [Node.js v5.10.1+](https://nodejs.org/)
-- [NPM v3+](https://www.npmjs.com/)
-- [Python 2.7](https://www.python.org/): Download the latest edition
-- Git Client - For example:
-    - [GitHub Desktop for Windows](https://desktop.github.com/)
-    - [Git for Windows](https://git-for-windows.github.io/)
+In addition to the requirements from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html):
+- [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
+- [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
 
-## Supported Operating Systems
+If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln). After opening the solution in Visual Studio, right click the solution in the solution explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
 
-This setup has only been tested on the following:
-- Windows 10 November update
-- Windows 10 Mobile November update
-- Xbox One
+## Getting Help
 
-## Installation
+Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
 
-First, clone the repository to your local machine which should default to the `ReactWindows` branch:
-```bash
-git clone https://github.com/ReactWindows/react-native.git
-cd react-native
-```
+- Ask a question on [StackOverflow](http://stackoverflow.com/) and tag it with `react-native-windows`
+- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-windows
+- If it turns out that you may have found a bug, please [open an issue](#opening-issues)
 
-Next, install the NPM dependencies.  Note that this will not work using MSYS such as the Git Bash, so launch a regular command prompt if you do not have Git in your `PATH` environment variable.  This will cause a failure for installing `fsevents` which is not supported on Windows.  If you have Git installed in your `PATH` environment variable and use the command prompt, then it will work properly.  If you are using the Git Bash, it may error on installing `fsevents`, so use the regular command prompt instead.
+## Documentation
 
-```bash
-npm install
-```
+[React Native already has great documentation](http://facebook.github.io/react-native/docs), and we're working to ensure React Native for Windows is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
-Note that `fsevents` will not install as it is not compatible with Windows.
+## Examples
 
-## Setting Up the Build Environment
+- `git clone https://github.com/ReactWindows/react-native-windows.git`
+- `cd react-native-windows`
+- `npm install` (note that `fsevents` will not install as it is not compatible with Windows)
+- `git submodule init`
+- `git submodule update`
 
-- Open up `ReactNative.sln` in Visual Studio 2015.
-- If this is your first time using UWP, you will have to install the SDK. Right click on the solution file in the solution explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
-- Build the solution once all the packages are installed Build => Rebuild Solution. 
 
-## Running the Playground
+### Running the examples **(Coming Soon)**
 
-In order to run the Playground, you must start the React Native environment by launching the following at the command prompt:
-```
-node local-cli\cli.js start
-```
+- Run `react-native start` from the GitHub root. 
+- Open the [solution file](Examples/Examples.sln) in the Examples folder in Visual Studio.
+- Set the StartUp project to the example you want to run, press F5.
 
-Then you can Run and Deploy as above when you built the solution.  By default, the Playground will run the UIExplorer App which can be found in `Examples/UIExplorer/UIExplorerApp.windows`.  This allows you to test out each feature of React Native as they are added for UWP.
+## Extending React Native
+
+- Looking for a component? [JS.coach](https://js.coach/react-native)
+- Fellow developers write and publish React Native modules to npm and open source them on GitHub.
+- Many third party modules may be missing Windows support, so reach out to the project owners directly.
+- Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
+- Read the guides on Native Modules ([Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)**) and Native UI Components ([Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)**) if you are interested in extending native functionality.
+
+## Opening Issues
+
+If you encounter a bug with the React Native Windows plugin, we would like to hear about it. Search the [existing issues](https://github.com/ReactWindows/react-native-windows/issues) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of React Native, React Native Windows plugin, and device family (i.e., mobile, desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
+
+The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed in the [Getting Help](#getting-help) section. There are limited resources available for handling issues and by keeping the list of open issues lean we can respond in a timely manner.
 
 ## Running the Unit Tests
 
@@ -70,4 +86,10 @@ To run the unit tests, do the following:
 
 ## Contributing
 
-If you wish to contribute, we have [help wanted tags](https://github.com/ReactWindows/react-native/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) in our issue tracker which contains items that are open pull requests, first come, first serve.  In order to contribute, you must sign the [Microsoft CLA](https://cla.microsoft.com/) before we can accept your commits.
+For more information about contributing PRs and issues, see our [Contribution Guidelines](https://github.com/facebook/react-native/blob/master/CONTRIBUTING.md) **(Coming Soon)**.
+
+[Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) is a great starting point for PRs.
+
+## License
+
+The React Native Windows plugin is provided under the [MIT License](LICENSE).
