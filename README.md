@@ -35,7 +35,7 @@ In addition to the requirements from the [Getting Started guide](http://facebook
 - [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
 - [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
 
-If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln) in Visual Studio. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
+If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln) in the ReactWindows folder in Visual Studio. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
 
 ## Getting Help
 
@@ -60,7 +60,7 @@ Please use these community resources for getting help. We use the GitHub issues 
 
 ### Running the examples **(Coming Soon)**
 
-- Run `react-native start` from the GitHub root. 
+- `react-native start` 
 - Open the [solution file](Examples/Examples.sln) in the Examples folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
@@ -78,17 +78,13 @@ If you encounter a bug with the React Native Windows plugin, we would like to he
 
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed in the [Getting Help](#getting-help) section. There are limited resources available for handling issues and by keeping the list of open issues lean we can respond in a timely manner.
 
-## Running the Unit Tests
-
-To run the unit tests, do the following:
-
-- Open up the Test Explorer Tests->Windows->Test Explorer, then select Run All. 
-
 ## Contributing
 
 For more information about contributing PRs and issues, see our [Contribution Guidelines](https://github.com/facebook/react-native/blob/master/CONTRIBUTING.md) **(Coming Soon)**.
 
 [Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) is a great starting point for PRs.
+
+We're still working on our CI story. In the meantime, please be sure to run the unit tests in Visual Studio before submitting pull requests.
 
 ## License
 
