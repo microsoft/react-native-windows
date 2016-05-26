@@ -44,10 +44,6 @@ module.exports = yeoman.Base.extend({
       this.templatePath('_watchmanconfig'),
       this.destinationPath('.watchmanconfig')
     );
-    this.fs.copy(
-      this.templatePath('_buckconfig'),
-      this.destinationPath('.buckconfig')
-    );
   },
 
   writing: function () {
