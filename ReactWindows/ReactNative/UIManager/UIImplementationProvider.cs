@@ -12,7 +12,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates the <see cref="UIImplementation"/> instance.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
         /// <returns></returns>
         public UIImplementation Create(

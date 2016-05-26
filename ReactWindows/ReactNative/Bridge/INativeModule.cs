@@ -3,7 +3,7 @@
 namespace ReactNative.Bridge
 {
     /// <summary>
-    /// A native module whose API can be provided to JavaScript react
+    /// A native module whose API can be provided to JavaScript React
     /// instances. 
     /// </summary>
     /// <remarks>
@@ -43,7 +43,7 @@ namespace ReactNative.Bridge
 
         /// <summary>
         /// Called after the creation of a <see cref="IReactInstance"/>, in
-        /// order to initialize native modules that require the react or
+        /// order to initialize native modules that require the React or
         /// JavaScript modules.
         /// </summary>
         void Initialize();

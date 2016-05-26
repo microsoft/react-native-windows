@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace ReactNative.UIManager
 {
     /// <summary>
-    /// A simple container for react properties for views.
+    /// A simple container for React properties for views.
     /// </summary>
     public class ReactStylesDiffMap
     {

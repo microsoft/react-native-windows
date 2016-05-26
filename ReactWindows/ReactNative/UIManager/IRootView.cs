@@ -3,7 +3,7 @@
 namespace ReactNative.UIManager
 {
     /// <summary>
-    /// Interface for the root native view of a react native application.
+    /// Interface for the root native view of a React Native application.
     /// </summary>
     public interface IRootView
     {

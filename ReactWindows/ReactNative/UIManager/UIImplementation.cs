@@ -419,13 +419,13 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Find the touch target child native view in the supplied root view
-        /// hierarchy, given a react target location.
+        /// hierarchy, given a React target location.
         /// </summary>
         /// <param name="reactTag">The root tag to traverse.</param>
         /// <param name="targetX">The target X-coordinate.</param>
         /// <param name="targetY">The target Y-coordinate.</param>
         /// <param name="callback">
-        /// Callback invoked with the identified child view react ID and
+        /// Callback invoked with the identified child view React ID and
         /// measurement information. If no view was found, callback will be
         /// invoked with no data.
         /// </param>

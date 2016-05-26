@@ -29,7 +29,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="nativeViewHierarchyManager">
         /// The native view hierarchy manager.
         /// </param>
@@ -58,7 +58,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The root view tag.</param>
         /// <param name="rootView">The root view.</param>
-        /// <param name="themedRootContext">The react context.</param>
+        /// <param name="themedRootContext">The React context.</param>
         public void AddRootView(
             int tag,
             SizeMonitoringCanvas rootView,
@@ -140,8 +140,8 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="themedContext">The react context.</param>
-        /// <param name="viewReactTag">The view react tag.</param>
+        /// <param name="themedContext">The React context.</param>
+        /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial properties.</param>
         public void EnqueueCreateView(

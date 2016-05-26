@@ -26,7 +26,7 @@ namespace ReactNative
     ///
     /// The lifecycle of the instance of <see cref="IReactInstanceManager"/>
     /// should be bound to the application that owns the 
-    /// <see cref="ReactRootView"/> that is used to render the react 
+    /// <see cref="ReactRootView"/> that is used to render the React 
     /// application using this instance manager. It is required to pass
     /// lifecycle events to the instance manager (i.e., <see cref="OnSuspend"/>,
     /// <see cref="OnDestroy"/>, and <see cref="OnResume(Action)"/>).
@@ -148,7 +148,7 @@ namespace ReactNative
             if (_hasStartedCreatingInitialContext)
             {
                 throw new InvalidOperationException(
-                    "React context creation should only be called when creating the react " +
+                    "React context creation should only be called when creating the React " +
                     "application for the first time. When reloading JavaScript, e.g., from " +
                     "a new file, explicitly, use the re-create method.");
             }
@@ -158,7 +158,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Recreate the react application and context. This should be called
+        /// Recreate the React application and context. This should be called
         /// if configuration has changed or the developer has requested the
         /// applicatio
         /// </summary>
@@ -679,7 +679,7 @@ namespace ReactNative
             }
 
             /// <summary>
-            /// The mutable list of react packages.
+            /// The mutable list of React packages.
             /// </summary>
             public List<IReactPackage> Packages
             {
