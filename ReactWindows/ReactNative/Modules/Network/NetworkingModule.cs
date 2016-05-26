@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -123,7 +124,26 @@ namespace ReactNative.Modules.Network
                         return;
                     }
 
-                    throw new NotImplementedException("URI upload is not supported");
+                    var streamTask = 
+                        from storageFile in Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri(uri)).AsTask()
+                        from stream in storageFile.OpenReadAsync().AsTask()
+                        select new HttpStreamContent(stream);
+
+                    _tasks.Add(requestId, token =>
+                    {
+                        return streamTask.ContinueWith(t =>
+                        {
+                            request.Content = t.Result;
+                            return ProcessRequestAsync(
+                                requestId,
+                                useIncrementalUpdates,
+                                timeout,
+                                request,
+                                token);
+                        });
+                    });
+
+                    return;
                 }
                 else if ((formData = data.Value<JArray>("formData")) != null)
                 {
