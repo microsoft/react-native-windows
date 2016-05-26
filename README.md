@@ -35,7 +35,7 @@ In addition to the requirements from the [Getting Started guide](http://facebook
 - [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
 - [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
 
-If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln). After opening the solution in Visual Studio, right click the solution in the solution explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
+If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln) in Visual Studio. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
 
 ## Getting Help
 
@@ -47,7 +47,7 @@ Please use these community resources for getting help. We use the GitHub issues 
 
 ## Documentation
 
-[React Native already has great documentation](http://facebook.github.io/react-native/docs), and we're working to ensure React Native for Windows is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
+[React Native already has great documentation](http://facebook.github.io/react-native/docs), and we're working to ensure the React Native Windows plugin is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
 ## Examples
 
