@@ -1,10 +1,17 @@
-# React Native for the Universal Windows Platform (UWP)
+# React Native plugin for Universal Windows Platform (UWP)
 
-This is the repository for React Native for UWP.  This directory contains the following:
+[React Native](http://facebook.github.io/react-native) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](http://facebook.github.io/react). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
 
-- `ReactNative` - The implementation of React Native for UWP
-- `ReactNative.Tests` - The unit tests for React Native, currently using MSTest
-- `Playground` - A playground for testing React Native features
+This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for:
+* Windows 10
+* Windows 10 Mobile
+* [Xbox One (UWP)](https://msdn.microsoft.com/en-us/windows/uwp/xbox-apps/index)
+
+## Getting Started
+
+- Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
+- Install [react-native-windows](https://www.npmjs.com/package/react-native-windows) from NPM.
+- Install the React Developer Tools for [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/) for better debugging [(read more)](http://facebook.github.io/react-native/docs/debugging.html).
 
 ## Requirements
 
