@@ -14,11 +14,9 @@ var yeoman = require('yeoman-environment');
 function generateWindows (projectDir, name, ns) {
   var oldCwd = process.cwd();
 
-  var exists = fs.existsSync(projectDir);
-  exists && childProcess.execSync('rmdir '+ projectDir + ' /s /q');
-  !exists && fs.mkdirSync(projectDir);
-
-  process.chdir(projectDir);
+  if (!fs.existsSync(projectDir)) {
+    fs.mkdirSync(projectDir);
+  }
 
   var env = yeoman.createEnv();
   var generatorPath = path.join(__dirname, 'generator-windows');
