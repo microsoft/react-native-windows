@@ -42,7 +42,7 @@ If this is your first time using UWP, you may be able to install the SDK by open
 Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
 
 - Ask a question on [StackOverflow](http://stackoverflow.com/) and tag it with `react-native-windows`
-- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-windows
+- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-platforms
 - If it turns out that you may have found a bug, please [open an issue](#opening-issues)
 
 ## Documentation
@@ -71,7 +71,7 @@ git submodule update
 - Fellow developers write and publish React Native modules to npm and open source them on GitHub.
 - Many third party modules may be missing Windows support, so reach out to the project owners directly.
 - Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
-- Read the guides on Native Modules ([Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)**) and Native UI Components ([Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)**) if you are interested in extending native functionality.
+- Read the guides on [Native Modules for Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)** and [Native UI Components for Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)** if you are interested in extending native functionality.
 
 ## Opening Issues
 
