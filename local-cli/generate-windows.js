@@ -10,18 +10,21 @@ var yeoman = require('yeoman-environment');
  * @param  {String} projectDir root project directory (i.e. contains index.js)
  * @param  {String} name       name of the root JS module for this app
  */
-function generateWindows (projectDir, name) {
+function generateWindows (projectDir, name, ns) {
   var oldCwd = process.cwd();
-  process.chdir(projectDir);
+
+  if (!fs.existsSync(projectDir)) {
+    fs.mkdirSync(projectDir);
+  }
 
   var env = yeoman.createEnv();
   var generatorPath = path.join(__dirname, 'generator-windows');
-  env.register(generatorPath, 'react:app:windows');
-  var args = ['react:app:windows', name].concat(process.argv.slice(4));
-  env.run(args, undefined, function () {
+  env.register(generatorPath, 'react:windows');
+  var args = ['react:windows', name, ns].concat(process.argv.slice(4));
+  env.run(args, { ns: ns }, function () {
     process.chdir(oldCwd);
   });
 };
 
-generateWindows(path.join(__dirname), 'foo');
+module.exports = generateWindows;
 
