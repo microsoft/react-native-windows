@@ -116,3 +116,6 @@ packages/
 
 #JavaScript files
 *.jsbundle
+
+# RN Files
+windows/<%=name%>/ReactAssets

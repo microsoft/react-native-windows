@@ -36,9 +36,10 @@ module.exports = yeoman.Base.extend({
     );
     */
 
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('_gitignore'),
-      this.destinationPath('.gitignore')
+      this.destinationPath('.gitignore'),
+      { name: this.name }
     );
     this.fs.copy(
       this.templatePath('_watchmanconfig'),
