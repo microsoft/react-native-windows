@@ -43,14 +43,14 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Schedule rendering of the react component rendered by the 
+        /// Schedule rendering of the React component rendered by the 
         /// JavaScript application from the given JavaScript module 
         /// <paramref name="moduleName"/> using the provided
         /// <paramref name="reactInstanceManager"/> to attach to the JavaScript
         /// context of that manager.
         /// </summary>
         /// <param name="reactInstanceManager">
-        /// The react instance manager.
+        /// The React instance manager.
         /// </param>
         /// <param name="moduleName">
         /// The module name.
@@ -86,7 +86,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Hooks into the measurement event to potentially attach the react 
+        /// Hooks into the measurement event to potentially attach the React 
         /// root view.
         /// </summary>
         /// <param name="availableSize">The available size.</param>

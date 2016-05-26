@@ -23,7 +23,7 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// Instantiates the <see cref="Timing"/> module.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         public Timing(ReactContext reactContext)
             : base(reactContext)
         {

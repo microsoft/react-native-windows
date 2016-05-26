@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 namespace ReactNative.Modules.Core
 {
     /// <summary>
-    /// Main interface for providing additional capabilities to the react 
+    /// Main interface for providing additional capabilities to the React 
     /// framework through the following mechanisms:
     /// 
     /// 1) Registering new native modules.
@@ -28,13 +28,13 @@ namespace ReactNative.Modules.Core
         /// Creates the list of native modules to register with the react
         /// instance. 
         /// </summary>
-        /// <param name="reactContext">The react application context.</param>
+        /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of native modules.</returns>
         IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext);
 
         /// <summary>
         /// Creates the list of JavaScript modules to register with the 
-        /// react instance. 
+        /// React instance. 
         /// </summary>
         /// <returns>The list of JavaScript modules.</returns>
         /// <remarks>
@@ -49,7 +49,7 @@ namespace ReactNative.Modules.Core
         /// Creates the list of view managers that should be registered with
         /// the <see cref="UIManagerModule"/>.
         /// </summary>
-        /// <param name="reactContext">The react application context.</param>
+        /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of view managers.</returns>
         IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext);
     }

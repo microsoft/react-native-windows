@@ -4,7 +4,7 @@ namespace ReactNative.Bridge.Queue
 {
     /// <summary>
     /// Specifies which <see cref="IMessageQueueThread"/>s must be used to run
-    /// the various contexts of execution within react (dispatcher, native
+    /// the various contexts of execution within React (dispatcher, native
     /// modules, and JS). Some of these queue *may* be the same but should be
     /// coded against as if they are different.
     /// </summary>

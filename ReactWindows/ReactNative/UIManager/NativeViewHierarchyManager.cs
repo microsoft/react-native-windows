@@ -190,7 +190,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Manages the children of a react view.
+        /// Manages the children of a React view.
         /// </summary>
         /// <param name="tag">The tag of the view to manager.</param>
         /// <param name="indicesToRemove">Child indices to remove.</param>

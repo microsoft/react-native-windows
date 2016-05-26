@@ -57,7 +57,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Add a react shadow node.
+        /// Add a React shadow node.
         /// </summary>
         /// <param name="node">The node to add.</param>
         public void AddNode(ReactShadowNode node)
@@ -69,7 +69,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Remove a react shadow node.
+        /// Remove a React shadow node.
         /// </summary>
         /// <param name="tag">The tag of the node to remove.</param>
         public void RemoveNode(int tag)
@@ -85,10 +85,10 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Retrieve a react shadow node.
+        /// Retrieve a React shadow node.
         /// </summary>
         /// <param name="tag">The tag of the node to retrieve.</param>
-        /// <returns>The react shadow node.</returns>
+        /// <returns>The React shadow node.</returns>
         public ReactShadowNode GetNode(int tag)
         {
             var result = default(ReactShadowNode);

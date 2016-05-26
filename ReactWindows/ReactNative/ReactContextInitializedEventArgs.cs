@@ -12,14 +12,14 @@ namespace ReactNative
         /// <summary>
         /// Instantiates the <see cref="ReactContextInitializedEventArgs"/>.
         /// </summary>
-        /// <param name="context">The react context.</param>
+        /// <param name="context">The React context.</param>
         internal ReactContextInitializedEventArgs(ReactContext context)
         {
             Context = context;
         }
 
         /// <summary>
-        /// The react context.
+        /// The React context.
         /// </summary>
         public ReactContext Context { get; }
     }
