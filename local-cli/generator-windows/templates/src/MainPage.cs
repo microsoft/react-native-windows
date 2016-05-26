@@ -3,7 +3,7 @@ using ReactNative.Modules.Core;
 using ReactNative.Shell;
 using System.Collections.Generic;
 
-namespace MyApp
+namespace <%= ns %>
 {
     class MainPage : ReactPage
     {
@@ -11,7 +11,7 @@ namespace MyApp
         {
             get
             {
-                return "MyApp";
+                return "<%= name %>";
             }
         }
 

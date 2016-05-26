@@ -11,6 +11,12 @@ module.exports = yeoman.Base.extend({
     yeoman.Base.apply(this, arguments);
     this.argument('name', { type: String, required: true });
 
+    this.option('ns', {
+      desc: 'Namespace for the application (MyNamespace.MyApp)',
+      type: String,
+      defaults: this.name
+    });
+
     this.option('upgrade', {
       desc: 'Specify an upgrade',
       type: Boolean,
@@ -51,7 +57,7 @@ module.exports = yeoman.Base.extend({
     }
 
     // SomeApp/windows/SomeApp
-    var templateVars = {name: this.name};
+    var templateVars = { name: this.name, ns: this.options.ns };
 
     this.fs.copyTpl(
       this.templatePath('index.windows.js'),
@@ -59,12 +65,29 @@ module.exports = yeoman.Base.extend({
       templateVars
     );
 
-
+    this.fs.copyTpl(
+      this.templatePath(path.join('src', '**')),
+      this.destinationPath(path.join('windows', this.name))
+    , templateVars);
 
     this.fs.copyTpl(
-      this.templatePath(path.join('app', '**')),
-      this.destinationPath(path.join('windows', this.name)),
-      templateVars
+      this.templatePath(path.join('proj', 'MyApp.csproj')),
+      this.destinationPath(path.join('windows', this.name, this.name + '.csproj'))
+    , templateVars);
+
+    this.fs.copyTpl(
+      this.templatePath(path.join('proj', 'MyApp.sln')),
+      this.destinationPath(path.join('windows', this.name + '.sln'))
+    , templateVars);
+
+    this.fs.copy(
+      this.templatePath(path.join('assets', '**')),
+      this.destinationPath(path.join('windows', this.name, 'Assets'))
+    );
+
+    this.fs.copy(
+      this.templatePath(path.join('keys', 'MyApp_TemporaryKey.pfx')),
+      this.destinationPath(path.join('windows', this.name, this.name + '_TemporaryKey.pfx'))
     );
   },
 

@@ -14,8 +14,8 @@
   <mp:PhoneIdentity PhoneProductId="9a4ed261-952b-4772-85b3-5a0cd489b5b3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MyApp</DisplayName>
-    <PublisherDisplayName>ericroz</PublisherDisplayName>
+    <DisplayName><%= name %></DisplayName>
+    <PublisherDisplayName>React Native for UWP</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="MyApp.App">
+      EntryPoint="<%=ns%>.App">
       <uap:VisualElements
-        DisplayName="MyApp"
+        DisplayName="MyA<%= name %>pp"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="MyApp"
+        Description="<%= name %>"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
