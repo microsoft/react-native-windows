@@ -8,7 +8,7 @@ using System.Threading;
 namespace ReactNative.Bridge
 {
     /// <summary>
-    /// Abstract context wrapper for the react instance to manage
+    /// Abstract context wrapper for the React instance to manage
     /// lifecycle events.
     /// </summary>
     public class ReactContext : IDisposable
@@ -20,7 +20,7 @@ namespace ReactNative.Bridge
         private IReactInstance _reactInstance;
 
         /// <summary>
-        /// The react instance associated with the context.
+        /// The React instance associated with the context.
         /// </summary>
         public IReactInstance ReactInstance
         {
@@ -193,7 +193,7 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Checks if the current thread is on the react instance dispatcher
+        /// Checks if the current thread is on the React instance dispatcher
         /// queue thread.
         /// </summary>
         /// <returns>
@@ -207,7 +207,7 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Asserts that the current thread is on the react instance native
+        /// Asserts that the current thread is on the React instance native
         /// modules queue thread.
         /// </summary>
         public void AssertOnDispatcherQueueThread()
@@ -227,7 +227,7 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Checks if the current thread is on the react instance
+        /// Checks if the current thread is on the React instance
         /// JavaScript queue thread.
         /// </summary>
         /// <returns>
@@ -241,7 +241,7 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Asserts that the current thread is on the react instance
+        /// Asserts that the current thread is on the React instance
         /// JavaScript queue thread.
         /// </summary>
         public void AssertOnJavaScriptQueueThread()
@@ -261,7 +261,7 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Checks if the current thread is on the react instance native 
+        /// Checks if the current thread is on the React instance native 
         /// modules queue thread.
         /// </summary>
         /// <returns>
@@ -275,7 +275,7 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Asserts that the current thread is on the react instance native
+        /// Asserts that the current thread is on the React instance native
         /// modules queue thread.
         /// </summary>
         public void AssertOnNativeModulesQueueThread()
@@ -319,7 +319,7 @@ namespace ReactNative.Bridge
         /// Set and initialize the <see cref="IReactInstance"/> instance
         /// for this context.
         /// </summary>
-        /// <param name="instance">The react instance.</param>
+        /// <param name="instance">The React instance.</param>
         /// <remarks>
         /// This method should be called exactly once.
         /// </remarks>

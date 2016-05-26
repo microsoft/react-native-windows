@@ -8,7 +8,7 @@ namespace ReactNative.UIManager
         {
             if (IsUnspecified(width) || IsUnspecified(height))
             {
-                throw new InvalidOperationException("A react view must have an explicit width and height.");
+                throw new InvalidOperationException("A React view must have an explicit width and height.");
             }
         }
 

@@ -140,7 +140,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <see cref="Border"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected sealed override Border CreateViewInstance(ThemedReactContext reactContext)
         {
@@ -155,7 +155,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected abstract TFrameworkElement CreateInnerElement(ThemedReactContext reactContext);
 

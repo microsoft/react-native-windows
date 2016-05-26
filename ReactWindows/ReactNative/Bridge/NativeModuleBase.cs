@@ -8,7 +8,7 @@ using System.Reflection;
 namespace ReactNative.Bridge
 {
     /// <summary>
-    /// Base class for react native modules. Implementations can be linked
+    /// Base class for React Native modules. Implementations can be linked
     /// to lifecycle events, such as the creation and disposal of the
     /// <see cref="IReactInstance"/> by overriding the appropriate methods.
     /// 
@@ -117,7 +117,7 @@ namespace ReactNative.Bridge
 
         /// <summary>
         /// Called after the creation of a <see cref="IReactInstance"/>, in
-        /// order to initialize native modules that require the react or
+        /// order to initialize native modules that require the React or
         /// JavaScript modules.
         /// </summary>
         public virtual void Initialize()

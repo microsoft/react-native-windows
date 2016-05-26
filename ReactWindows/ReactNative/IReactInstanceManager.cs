@@ -9,7 +9,7 @@ namespace ReactNative
 {
     /// <summary>
     /// This interface manages instances of <see cref="IReactInstance" />. 
-    /// It exposes a way to configure react instances using 
+    /// It exposes a way to configure React instances using 
     /// <see cref="IReactPackage"/> and keeps track of the lifecycle of that
     /// instance. It also sets up a connection between the instance and the
     /// developer support functionality of the framework.
@@ -20,7 +20,7 @@ namespace ReactNative
     ///
     /// The lifecycle of the instance of <see cref="IReactInstanceManager"/>
     /// should be bound to the application that owns the 
-    /// <see cref="ReactRootView"/> that is used to render the react 
+    /// <see cref="ReactRootView"/> that is used to render the React 
     /// application using this instance manager. It is required to pass
     /// lifecycle events to the instance manager (i.e., <see cref="OnSuspend"/>,
     /// <see cref="OnDestroy"/>, and <see cref="OnResume(Action)"/>).
@@ -28,7 +28,7 @@ namespace ReactNative
     public interface IReactInstanceManager
     {
         /// <summary>
-        /// Event triggered when a react context has been initialized.
+        /// Event triggered when a React context has been initialized.
         /// </summary>
         event EventHandler<ReactContextInitializedEventArgs> ReactContextInitialized;
 
@@ -50,12 +50,12 @@ namespace ReactNative
         string SourceUrl { get; }
 
         /// <summary>
-        /// The current react context.
+        /// The current React context.
         /// </summary>
         ReactContext CurrentReactContext { get; }
 
         /// <summary>
-        /// Trigger the react context initialization asynchronously in a 
+        /// Trigger the React context initialization asynchronously in a 
         /// background task. This enables applications to pre-load the
         /// application JavaScript, and execute global core code before the
         /// <see cref="ReactRootView"/> is available and measure. This should
@@ -93,14 +93,14 @@ namespace ReactNative
         void OnDestroy();
 
         /// <summary>
-        /// Attach given <paramref name="rootView"/> to a react instance
+        /// Attach given <paramref name="rootView"/> to a React instance
         /// manager and start the JavaScript application using the JavaScript
         /// module provided by the <see cref="ReactRootView.JavaScriptModuleName"/>. If
-        /// the react context is currently being (re-)created, or if the react
+        /// the React context is currently being (re-)created, or if the react
         /// context has not been created yet, the JavaScript application
         /// associated with the provided root view will be started
         /// asynchronously. This view will then be tracked by this manager and
-        /// in case of react instance restart, it will be re-attached.
+        /// in case of React instance restart, it will be re-attached.
         /// </summary>
         /// <param name="rootView">The root view.</param>
         void AttachMeasuredRootView(ReactRootView rootView);

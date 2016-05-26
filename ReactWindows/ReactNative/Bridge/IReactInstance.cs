@@ -18,7 +18,7 @@ namespace ReactNative.Bridge
         IEnumerable<INativeModule> NativeModules { get; }
 
         /// <summary>
-        /// The react queue configuration.
+        /// The React queue configuration.
         /// </summary>
         IReactQueueConfiguration QueueConfiguration { get; }
 

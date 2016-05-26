@@ -89,7 +89,7 @@ namespace ReactNative
         /// Create a callback.
         /// </summary>
         /// <param name="callbackToken">The callback ID token.</param>
-        /// <param name="reactInstance">The react instance.</param>
+        /// <param name="reactInstance">The React instance.</param>
         /// <returns>The callback.</returns>
         protected static ICallback CreateCallback(JToken callbackToken, IReactInstance reactInstance)
         {
@@ -102,7 +102,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="resolveToken">The resolve callback ID token.</param>
         /// <param name="rejectToken">The reject callback ID token.</param>
-        /// <param name="reactInstance">The react instance.</param>
+        /// <param name="reactInstance">The React instance.</param>
         /// <returns>The promise.</returns>
         protected static IPromise CreatePromise(JToken resolveToken, JToken rejectToken, IReactInstance reactInstance)
         {

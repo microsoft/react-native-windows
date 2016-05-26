@@ -13,7 +13,6 @@ namespace ReactNative.UIManager
     /// <remarks>
     /// TODO: 
     /// 1) Add animation support to UIManagerModule
-    /// 2) Implement `findSubviewIn` ReactMethod
     /// </remarks>
     public partial class UIManagerModule : ReactContextNativeModuleBase, ILifecycleEventListener, IOnBatchCompleteListener
     {
@@ -303,12 +302,12 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Find the touch target child native view in the supplied root view
-        /// hierarchy, given a react target location.
+        /// hierarchy, given a React target location.
         /// </summary>
         /// <param name="reactTag">The root tag to traverse.</param>
         /// <param name="point">An array containing target coordinates.</param>
         /// <param name="callback">
-        /// Callback invoked with the identified child view react ID and
+        /// Callback invoked with the identified child view React tag and
         /// measurement information. If no view was found, callback will be
         /// invoked with no data.
         /// </param>

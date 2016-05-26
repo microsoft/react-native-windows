@@ -84,7 +84,7 @@ namespace ReactNative.Views.Switch
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactSwitchManager"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ToggleSwitch view)
         {
@@ -94,7 +94,7 @@ namespace ReactNative.Views.Switch
         /// <summary>
         /// Creates a new view instance of type <see cref="ToggleSwitch"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected override ToggleSwitch CreateViewInstance(ThemedReactContext reactContext)
         {
@@ -108,7 +108,7 @@ namespace ReactNative.Views.Switch
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ToggleSwitch view)
         {

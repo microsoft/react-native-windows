@@ -189,7 +189,7 @@ namespace ReactNative.Views.Web
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactWebViewManager"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, WebView view)
         {
@@ -200,7 +200,7 @@ namespace ReactNative.Views.Web
         /// <summary>
         /// Creates a new view instance of type <see cref="WebView"/>.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
         protected override WebView CreateViewInstance(ThemedReactContext reactContext)
         {
@@ -211,7 +211,7 @@ namespace ReactNative.Views.Web
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The react context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, WebView view)
         {
