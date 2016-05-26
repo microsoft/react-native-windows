@@ -53,7 +53,6 @@ module.exports = yeoman.Base.extend({
       return;
     }
 
-    // SomeApp/windows/SomeApp
     var templateVars = { name: this.name, ns: this.options.ns };
 
     this.fs.copyTpl(
@@ -93,11 +92,18 @@ module.exports = yeoman.Base.extend({
       return;
     }
 
-    var reactNativePackageJson = require('../../package.json');
-    var { peerDependencies } = reactNativePackageJson;
+    var reactNativeWindowsPackageJson = require('../../package.json');
+    var { peerDependencies } = reactNativeWindowsPackageJson;
     if (!peerDependencies) {
       return;
     }
+
+    var reactNativeVersion = peerDependencies['react-native'];
+    if (!reactNativeVersion) {
+      return;
+    }
+
+    this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true });
 
     var reactVersion = peerDependencies.react;
     if (!reactVersion) {

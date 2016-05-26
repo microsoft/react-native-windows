@@ -1,7 +1,6 @@
 'use strict';
 
 var fs = require('fs');
-var childProcess = require('child_process');
 var path = require('path');
 var yeoman = require('yeoman-environment');
 
