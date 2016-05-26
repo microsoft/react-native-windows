@@ -23,8 +23,8 @@ class <%= name %> extends Component {
           To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          Press Crtl+R to reload,{'\n'}
+          Shift+F10 or shake for dev menu
         </Text>
       </View>
     );
