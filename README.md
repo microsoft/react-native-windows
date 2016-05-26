@@ -51,16 +51,17 @@ Please use these community resources for getting help. We use the GitHub issues 
 
 ## Examples
 
-- `git clone https://github.com/ReactWindows/react-native-windows.git`
-- `cd react-native-windows`
-- `npm install` (note that `fsevents` will not install as it is not compatible with Windows)
-- `git submodule init`
-- `git submodule update`
-
+```
+git clone https://github.com/ReactWindows/react-native-windows.git
+cd react-native-windows
+npm install
+git submodule init
+git submodule update
+```
 
 ### Running the examples **(Coming Soon)**
 
-- `react-native start` 
+- Start the React Native packager by running `react-native start` 
 - Open the [solution file](Examples/Examples.sln) in the Examples folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
@@ -82,7 +83,7 @@ The GitHub issues are intended for bug reports and feature requests. For help an
 
 For more information about contributing PRs and issues, see our [Contribution Guidelines](https://github.com/ReactWindows/react-native-windows/blob/master/CONTRIBUTING.md) **(Coming Soon)**.
 
-[Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) is a great starting point for PRs.
+[Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
 We're still working on our CI story. In the meantime, please be sure to run the unit tests in Visual Studio before submitting pull requests.
 
