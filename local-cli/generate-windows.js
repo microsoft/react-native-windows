@@ -29,5 +29,5 @@ function generateWindows (projectDir, name, ns) {
   });
 };
 
-generateWindows('C:\\github\\foo', 'Foo', 'Bar');
+module.exports = generateWindows;
 
