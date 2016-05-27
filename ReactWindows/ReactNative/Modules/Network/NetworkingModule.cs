@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
-using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 
@@ -124,24 +124,13 @@ namespace ReactNative.Modules.Network
                         return;
                     }
 
-                    var streamTask = 
-                        from storageFile in Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri(uri)).AsTask()
-                        from stream in storageFile.OpenReadAsync().AsTask()
-                        select new HttpStreamContent(stream);
-
-                    _tasks.Add(requestId, token =>
-                    {
-                        return streamTask.ContinueWith(t =>
-                        {
-                            request.Content = t.Result;
-                            return ProcessRequestAsync(
-                                requestId,
-                                useIncrementalUpdates,
-                                timeout,
-                                request,
-                                token);
-                        });
-                    });
+                    _tasks.Add(requestId, token => ProcessRequestFromUriAsync(
+                        requestId,
+                        new Uri(uri),
+                        useIncrementalUpdates,
+                        timeout,
+                        request,
+                        token));
 
                     return;
                 }
@@ -192,6 +181,25 @@ namespace ReactNative.Modules.Network
         public override void OnReactInstanceDispose()
         {
             _shuttingDown = true;
+        }
+
+        private async Task ProcessRequestFromUriAsync(
+            int requestId,
+            Uri uri,
+            bool useIncrementalUpdates,
+            int timeout,
+            HttpRequestMessage request,
+            CancellationToken token)
+        {
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
+            var inputStream = await storageFile.OpenReadAsync();
+            request.Content = new HttpStreamContent(inputStream);
+            await ProcessRequestAsync(
+                requestId,
+                useIncrementalUpdates,
+                timeout,
+                request,
+                token);
         }
 
         private async Task ProcessRequestAsync(
