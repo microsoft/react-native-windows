@@ -71,7 +71,7 @@ git submodule update
 - Fellow developers write and publish React Native modules to npm and open source them on GitHub.
 - Many third party modules may be missing Windows support, so reach out to the project owners directly.
 - Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
-- Read the guides on [Native Modules for Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)** and [Native UI Components for Windows](http://github.com/ReactWindows/react-native-windows) **(Coming Soon)** if you are interested in extending native functionality.
+- Read the guides on [Native Modules for Windows](docs/NativeModulesWindows.md) **(Coming Soon)** and [Native UI Components for Windows](docs/NativeComponentsWindows.md) **(Coming Soon)** if you are interested in extending native functionality.
 
 ## Opening Issues
 
