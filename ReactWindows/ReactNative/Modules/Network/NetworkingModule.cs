@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 
@@ -123,7 +124,15 @@ namespace ReactNative.Modules.Network
                         return;
                     }
 
-                    throw new NotImplementedException("URI upload is not supported");
+                    _tasks.Add(requestId, token => ProcessRequestFromUriAsync(
+                        requestId,
+                        new Uri(uri),
+                        useIncrementalUpdates,
+                        timeout,
+                        request,
+                        token));
+
+                    return;
                 }
                 else if ((formData = data.Value<JArray>("formData")) != null)
                 {
@@ -172,6 +181,25 @@ namespace ReactNative.Modules.Network
         public override void OnReactInstanceDispose()
         {
             _shuttingDown = true;
+        }
+
+        private async Task ProcessRequestFromUriAsync(
+            int requestId,
+            Uri uri,
+            bool useIncrementalUpdates,
+            int timeout,
+            HttpRequestMessage request,
+            CancellationToken token)
+        {
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
+            var inputStream = await storageFile.OpenReadAsync();
+            request.Content = new HttpStreamContent(inputStream);
+            await ProcessRequestAsync(
+                requestId,
+                useIncrementalUpdates,
+                timeout,
+                request,
+                token);
         }
 
         private async Task ProcessRequestAsync(
