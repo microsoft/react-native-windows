@@ -25,8 +25,8 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ## Getting Started
 
 - Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
-- Install [react-native-windows](https://www.npmjs.com/package/react-native-windows) from NPM (i.e., `npm i react-native-windows --save`).
-- **(Coming Soon)** Initialize Windows project with `react-native windows` command.
+- Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
+- Initialize Windows project with `rnpm windows` command (with `rnpm` installed globally).
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
 ### Requirements
@@ -59,10 +59,10 @@ git submodule init
 git submodule update
 ```
 
-### Running the examples **(Coming Soon)**
+### Running the examples
 
 - Start the React Native packager by running `react-native start` 
-- Open the [solution file](Examples/Examples.sln) in the Examples folder in Visual Studio.
+- Open Examples.sln from the Examples submodule folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
 ## Extending React Native
