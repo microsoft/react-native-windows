@@ -6,7 +6,12 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   IgnorableNamespaces="uap mp">
 
-  <mp:PhoneIdentity PhoneProductId="9a4ed261-952b-4772-85b3-5a0cd489b5b3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <Identity
+    Name="<%= packageGuid %>"
+    Publisher="CN=publisher"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="<%= packageGuid %>" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName><%= name %></DisplayName>
