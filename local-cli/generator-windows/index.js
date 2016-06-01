@@ -3,8 +3,18 @@
 var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
-var yeoman = require('yeoman-generator');
 var utils = require('../generator-utils');
+var uuid = require('uuid');
+var yeoman = require('yeoman-generator');
+
+const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
+  return path.resolve(
+    process.cwd(),
+    'node_modules',
+    'react-native',
+    'package.json'
+  );
+}
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -16,44 +26,19 @@ module.exports = yeoman.Base.extend({
       type: String,
       defaults: this.name
     });
-
-    this.option('upgrade', {
-      desc: 'Specify an upgrade',
-      type: Boolean,
-      defaults: false
-    });
   },
 
   configuring: function() {
-    /* TODO: Fix
-    utils.copyAndReplace(
-      this.templatePath('../../../.flowconfig'),
-      this.destinationPath('.flowconfig'),
-      {
-        'Libraries\/react-native\/react-native-interface.js' : 'node_modules/react-native/Libraries/react-native/react-native-interface.js',
-        '^flow/$' : 'node_modules/react-native/flow\nflow/'
-      }
-    );
-    */
-
-    this.fs.copyTpl(
-      this.templatePath('_gitignore'),
-      this.destinationPath('.gitignore'),
-      { name: this.name }
-    );
     this.fs.copy(
-      this.templatePath('_watchmanconfig'),
-      this.destinationPath('.watchmanconfig')
+      this.templatePath('_gitignore'),
+      this.destinationPath(path.join('windows', '.gitignore'))
     );
   },
-
+  
   writing: function () {
-    if (this.options.upgrade) {
-      // never upgrade index.*.js files
-      return;
-    }
-
-    var templateVars = { name: this.name, ns: this.options.ns };
+    var projectGuid = uuid.v4();
+    var packageGuid = uuid.v4();
+    var templateVars = { name: this.name, ns: this.options.ns, projectGuid, packageGuid };
 
     this.fs.copyTpl(
       this.templatePath('index.windows.js'),
@@ -88,13 +73,13 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function() {
-    if (this.options.upgrade) {
+    var reactNativeWindowsPackageJson = require('../../package.json');
+    var peerDependencies = reactNativeWindowsPackageJson.peerDependencies;
+    if (!peerDependencies) {
       return;
     }
-
-    var reactNativeWindowsPackageJson = require('../../package.json');
-    var { peerDependencies } = reactNativeWindowsPackageJson;
-    if (!peerDependencies) {
+    
+    if (fs.existsSync(REACT_NATIVE_PACKAGE_JSON_PATH())) {
       return;
     }
 
@@ -102,7 +87,8 @@ module.exports = yeoman.Base.extend({
     if (!reactNativeVersion) {
       return;
     }
-
+    
+    console.log(`Installing react-native@${reactNativeVersion}...`);
     this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true });
 
     var reactVersion = peerDependencies.react;
@@ -110,16 +96,14 @@ module.exports = yeoman.Base.extend({
       return;
     }
 
+    console.log(`Installing react@${reactVersion}...`);
     this.npmInstall(`react@${reactVersion}`, { '--save': true });
   },
 
   end: function() {
     var projectPath = path.resolve(this.destinationRoot(), 'windows', this.name);
     this.log(chalk.white.bold('To run your app on UWP:'));
-    this.log(chalk.white('   cd ' + this.destinationRoot()));
-    this.log(chalk.white('   react-native run-windows'));
-    this.log(chalk.white('   - or -'));
     this.log(chalk.white('   Open ' + projectPath + '.sln in Visual Studio'));
     this.log(chalk.white('   Deploy the application and run on the specified destination'));
-    }
+  }
 });

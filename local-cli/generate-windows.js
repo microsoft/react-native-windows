@@ -9,6 +9,7 @@ var yeoman = require('yeoman-environment');
  *
  * @param  {String} projectDir root project directory (i.e. contains index.js)
  * @param  {String} name       name of the root JS module for this app
+ * @param  {String} ns         namespace for the project
  */
 function generateWindows (projectDir, name, ns) {
   var oldCwd = process.cwd();
@@ -27,4 +28,3 @@ function generateWindows (projectDir, name, ns) {
 };
 
 module.exports = generateWindows;
-

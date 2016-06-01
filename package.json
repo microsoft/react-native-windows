@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.2.4",
+  "version": "0.27.0-rc",
   "description": "React Native platform extensions for the Universal Windows Platform.",
   "license": "MIT",
   "repository": {
@@ -17,9 +17,17 @@
   "files": [
     "Libraries",
     "ReactWindows/ReactNative",
+    "local-cli",
     "README.md"
   ],
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "0.27.0-rc2",
+    "react": "15.1.0"
+  },
+  "dependencies": {
+    "react": "^15.1.0",
+    "uuid": "^2.0.1",
+    "yeoman-environment": "^1.2.7",
+    "yeoman-generator": "^0.20.3"
   }
 }

@@ -1,0 +1,26 @@
+{
+  "name": "rnpm-plugin-windows",
+  "version": "0.1.0-rc",
+  "description": "rnpm plugin that generates a Windows template project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rnpm",
+    "react-native",
+    "react-native-windows",
+    "rnpm windows"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ReactWindows/react-native-windows.git"
+  },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "semver": "^5.0.3"
+  }
+}
