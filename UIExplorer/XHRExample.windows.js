@@ -17,14 +17,15 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
+var ReactWindows = require('react-native-windows');
 var {
-  ProgressBarWindows,
   StyleSheet,
   Text,
   TextInput,
   TouchableHighlight,
   View,
 } = ReactNative;
+var {ProgressBarWindows} = ReactWindows;
 
 var XHRExampleHeaders = require('./XHRExampleHeaders');
 var XHRExampleCookies = require('./XHRExampleCookies');

@@ -16,6 +16,7 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
+var ReactWindows = require('react-native-windows');
 var {
   Image,
   StyleSheet,
@@ -23,8 +24,8 @@ var {
   TouchableWithoutFeedback,
   TouchableOpacity,
   View,
-  FlipViewWindows,
 } = ReactNative;
+var {FlipViewWindows} = ReactWindows;
 
 var PAGES = 5;
 var BGCOLOR = ['#fdc08e', '#fff6b9', '#99d1b7', '#dde5fe', '#f79273'];
