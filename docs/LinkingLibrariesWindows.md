@@ -11,7 +11,7 @@ Most React Native apps will need to take additional dependencies to expose nativ
 
 ## Manual Linking
 
-### Step 1 - Add Dependency Project to Solution
+### Step 1 - Add dependency project to solution
 
 If the dependency has native code, there should be a `.csproj` file inside it's folder.
 
@@ -20,9 +20,9 @@ If the dependency has native code, there should be a `.csproj` file inside it's 
 - Select Add -> Existing Project
 - Choose the `.csproj` of the dependency from the Explorer window.
 
-### Step 2 - Add a Reference from your App Project
+### Step 2 - Add a reference from the Universal Windows app project
 
-- Right-click the App project in the Solution Explorer
+- Right-click the Universal Windows App project in the Solution Explorer
 - Select Add -> Reference
 - Choose the project you just included in the solution
 
