@@ -20,11 +20,16 @@ If the dependency has native code, there should be a `.csproj` file inside it's 
 - Select Add -> Existing Project
 - Choose the `.csproj` of the dependency from the Explorer window.
 
+![Add Existing Project](img/AddExistingProject.png)
+
 ### Step 2 - Add a reference from the Universal Windows app project
 
 - Right-click the Universal Windows App project in the Solution Explorer
 - Select Add -> Reference
 - Choose the project you just included in the solution
+
+![Add Refererence](img/AddReference.png)
+![Add Refererence](img/AddReference2.png)
 
 ### Step 3 - Update MainPage.cs
 
@@ -32,6 +37,8 @@ If the dependency has native code, there should be an implementation of `IReactP
 
 - Open MainPage.cs
 - Add the `IReactPackage` implementation to the `Packages` list in MainPage.cs
+
+![Update MainPage](img/UpdateMainPage.png)
 
 ## Automatic Linking
 
