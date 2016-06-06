@@ -372,7 +372,7 @@ private void SendEvent(string eventName, JObject parameters)
 
 Listening to the activity's LifeCycle events such as `OnSuspend`, `OnResume` etc. may be important to your application. In order to listen to these events, the module must implement the `ILifecycleEventListener` interface. Then, you need to register a listener in the module's `Initialize` method.
 
-```chsarp
+```csharp
 public override void Initialize()
 {
     Context.AddLifecycleEventListener(this);
