@@ -310,7 +310,7 @@ Native modules can also fulfill a promise, which can simplify your code, especia
 
 ```csharp
 [ReactMethod]
-public async void openURL(string url, IPromise promise)
+public async void canOpenURL(string url, IPromise promise)
 {
     if (url == null)
     {
@@ -327,13 +327,27 @@ public async void openURL(string url, IPromise promise)
 
     try
     {
-        await Launcher.LaunchUriAsync(uri).AsTask().ConfigureAwait(false);
-        promise.Resolve(true);
+        var support = await Launcher.QueryUriSupportAsync(uri, LaunchQuerySupportType.Uri).AsTask().ConfigureAwait(false);
+        promise.Resolve(support == LaunchQuerySupportStatus.Available);
     }
     catch (Exception ex)
     {
         promise.Reject(new InvalidOperationException(
-            $"Could not open URL '{url}'.", ex));
+            $"Could not check if URL '{url}' can be opened.", ex));
     }
 }
+```
+The JavaScript counterpart of this method returns a Promise. This means you can use the `await` keyword within an async function to call it and wait for its result:
+
+```js
+async function canOpenUrl(url) {
+  try {
+    var canOpen = await Launcher.canOpenUrl(url);
+    console.log(canOpen);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+canOpenUrl('http://foo.bar');
 ```
