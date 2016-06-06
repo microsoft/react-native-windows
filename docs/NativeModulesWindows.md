@@ -43,7 +43,7 @@ using Windows.UI.Popups;
 
 namespace ReactNative.Modules.Dialog
 {
-    class DialogModule : ReactContextNativeModuleBase, ILifecycleEventListener
+    public class DialogModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private const string ActionButtonClicked = "buttonClicked";
         private const string ActionDismissed = "dismissed";
@@ -66,3 +66,274 @@ namespace ReactNative.Modules.Dialog
 ```
 
 The `ReactContextNativeModuleBase` abstract base class requires that a property with a getter called `Name` is implemented. The purpose of this method is to return the string name of the NativeModule which represents this class in JavaScript. So here we will call this `DialogManagerWindows` so that we can access it through `React.NativeModules.DialogManagerWindows` in JavaScript.
+
+```csharp
+public override string Name
+{
+    get
+    {
+        return "DialogManagerWindows";
+    }
+}
+```
+
+An optional property with a getter called `Constants` returns the constant values exposed to JavaScript. Its implementation is not required but is very useful to key pre-defined values that need to be communicated from JavaScript to .NET in sync.
+
+```csharp
+public override IReadOnlyDictionary<string, object> Constants
+{
+    get
+    {
+        return new Dictionary<string, object>
+        {
+            { ActionButtonClicked, ActionButtonClicked },
+            { ActionDismissed, ActionDismissed },
+            { KeyButtonPositive, KeyButtonPositiveValue },
+            { KeyButtonNegative, KeyButtonNegativeValue },
+        };
+    }
+}
+```
+
+To expose a method to JavaScript a .NET method must be annotated using the `[ReactMethod]` attribute. The return type of bridge methods is always `void`. React Native bridge is asynchronous, so the only way to pass a result to JavaScript is by using callbacks or emitting events (see below).
+
+```csharp
+[ReactMethod]
+public void showAlert(
+    JObject config,
+    ICallback errorCallback,
+    ICallback actionCallback)
+{
+    var message = config.Value<string>("message") ?? "";
+    var messageDialog = new MessageDialog(message)
+    {
+        Title = config.Value<string>("title"),
+    };
+
+    if (config.ContainsKey(KeyButtonPositive))
+    {
+        messageDialog.Commands.Add(new UICommand
+        {
+            Label = config.Value<string>(KeyButtonPositive),
+            Id = KeyButtonPositiveValue,
+            Invoked = target => OnInvoked(target, actionCallback),
+        });
+    }
+
+    if (config.ContainsKey(KeyButtonNegative))
+    {
+        messageDialog.Commands.Add(new UICommand
+        {
+            Label = config.Value<string>(KeyButtonNegative),
+            Id = KeyButtonNegativeValue,
+            Invoked = target => OnInvoked(target, actionCallback),
+        });
+    }
+
+    RunOnDispatcher(async () =>
+    {
+        if (_isInForeground)
+        {
+            await messageDialog.ShowAsync();
+        }
+        else
+        {
+            _pendingDialog = messageDialog;
+        }
+    });
+}
+```
+
+### Argument Types
+
+The following argument types are supported for methods annotated with the `[ReactMethod]` attribute and they directly map to their JavaScript equivalents.  Note that this project uses [Newtonsoft Json.NET](http://www.newtonsoft.com/json) to provide interoperability with JavaScript types.
+
+```
+Boolean -> Bool
+Integer -> Number
+Double -> Number
+Float -> Number
+String -> String
+ICallback -> function
+JValue -> Object
+JArray -> Array
+```
+
+### Register the Module
+
+The last step within .NET is to register the Module; this happens in the `CreateNativeModules` of your apps package. If a module is not registered it will not be available from JavaScript.
+
+```csharp
+public class MainReactPackage : IReactPackage
+{
+    public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
+    {
+        return new List<INativeModule>
+        {
+            new DialogModule(reactContext)
+        };
+    }
+
+    public IReadOnlyList<Type> CreateJavaScriptModulesConfig()
+    {
+        return new List<Type>(0);
+    }
+
+    public IReadOnlyList<IViewManager> CreateViewManagers(
+        ReactContext reactContext)
+    {
+        return new List<IViewManager>(0);
+    }
+}
+```
+
+The package needs to be provided in the `Packages` property getter of the `MainPage.cs` file. This file exists under the `windows` folder in your react-native application directory. The path to this file is: `windows/your-app-name/MainPage.cs`.
+
+```csharp
+public override List<IReactPackage> Packages
+{
+    get
+    {
+        return new List<IReactPackage>
+        {
+            new MainReactPackage(),
+            new AnExampleReactPackage()
+        };
+    }
+}
+```
+
+To make it simpler to access your new functionality from JavaScript, it is common to wrap the native module in a JavaScript module. This is not necessary but saves the consumers of your library the need to pull it off of `NativeModules` each time. This JavaScript file also becomes a good location for you to add any JavaScript side functionality.
+
+```js
+'use strict';
+/**
+ * This exposes the native DialogModuleWindows module as a JS module. This has a
+ * function 'showAlert' which takes the following parameters:
+ *
+ * 1. config message: An object with the title and message as strings
+ * 2. error callback: A callback with an error message if one occurred.
+ * 3. success callback: A callback with both the action and which button was pressed
+ */
+import { NativeModules } from 'react-native';
+module.exports = NativeModules.DialogModuleWindows;
+```
+
+Now, from your other JavaScript file you can call the method like this:
+
+```js
+import DialogManager from './DialogManagerWindows';
+
+DialogModule.showAlert(
+  { title: 'Sample alert', message: 'This is just a test' },
+  (errorMsg) => console.warn(`Error ocurred: ${errorMsg}`),
+  (action, buttonKey) => {
+    console.log(`Action key ${action}`);
+    console.log(`Button key ${buttonKey}`);
+  });
+```
+
+## Beyond the Basics ##
+
+### Callbacks ###
+
+Native modules also support a special kind of argument - a callback. In most cases it is used to provide the function call result to JavaScript.
+
+```csharp
+[ReactMethod]
+public void showAlert(
+    JObject config,
+    ICallback errorCallback,
+    ICallback actionCallback)
+{
+    var message = config.Value<string>("message") ?? "";
+    var messageDialog = new MessageDialog(message)
+    {
+        Title = config.Value<string>("title"),
+    };
+
+    if (config.ContainsKey(KeyButtonPositive))
+    {
+        messageDialog.Commands.Add(new UICommand
+        {
+            Label = config.Value<string>(KeyButtonPositive),
+            Id = KeyButtonPositiveValue,
+            Invoked = target => OnInvoked(target, actionCallback),
+        });
+    }
+
+    if (config.ContainsKey(KeyButtonNegative))
+    {
+        messageDialog.Commands.Add(new UICommand
+        {
+            Label = config.Value<string>(KeyButtonNegative),
+            Id = KeyButtonNegativeValue,
+            Invoked = target => OnInvoked(target, actionCallback),
+        });
+    }
+
+    RunOnDispatcher(async () =>
+    {
+        if (_isInForeground)
+        {
+            await messageDialog.ShowAsync();
+        }
+        else
+        {
+            _pendingDialog = messageDialog;
+        }
+    });
+}
+```
+
+This method would be accessed in JavaScript using:
+
+```js
+const DialogModule = require('NativeModules').DialogManagerWindows;
+
+DialogModule.showAlert(
+  { title: 'Sample alert', message: 'This is just a test' },
+  (errorMsg) => console.warn(`Error ocurred: ${errorMsg}`),
+  (action, buttonKey) => {
+    console.log(`Action key ${action}`);
+    console.log(`Button key ${buttonKey}`);
+  });
+```
+
+A native module is supposed to invoke its callback only once. It can, however, store the callback and invoke it later.
+
+It is very important to highlight that the callback is not invoked immediately after the native function completes - remember that bridge communication is asynchronous, and this too is tied to the run loop.
+
+### Promises
+
+Native modules can also fulfill a promise, which can simplify your code, especially when using ES2016's `async/await` syntax. When the last parameter of a bridged native method is a `IPromise`, its corresponding JS method will return a JS Promise object.
+
+```csharp
+[ReactMethod]
+public async void openURL(string url, IPromise promise)
+{
+    if (url == null)
+    {
+        promise.Reject(new ArgumentNullException(nameof(url)));
+        return;
+    }
+
+    var uri = default(Uri);
+    if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+    {
+        promise.Reject(new ArgumentException($"URL argument '{uri}' is not valid."));
+        return;
+    }
+
+    try
+    {
+        await Launcher.LaunchUriAsync(uri).AsTask().ConfigureAwait(false);
+        promise.Resolve(true);
+    }
+    catch (Exception ex)
+    {
+        promise.Reject(new InvalidOperationException(
+            $"Could not open URL '{url}'.", ex));
+    }
+}
+```
