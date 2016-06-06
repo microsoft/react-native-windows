@@ -351,3 +351,33 @@ async function canOpenUrl(url) {
 
 canOpenUrl('http://foo.bar');
 ```
+
+### Listening to LifeCycle events
+
+Listening to the activity's LifeCycle events such as `OnSuspend`, `OnResume` etc. may be important to your application. In order to listen to these events, the module must implement the `ILifecycleEventListener` interface. Then, you need to register a listener in the module's `Initialize` method.
+
+```chsarp
+public override void Initialize()
+{
+    Context.AddLifecycleEventListener(this);
+}
+```
+
+Now you can listen to the activity's LifeCycle events by implementing the following methods:
+
+```csharp
+public void OnSuspend()
+{
+    // Activity OnSuspend
+}
+
+public async void OnResume()
+{
+    // Activity OnResume
+}
+
+public void OnDestroy()
+{
+    // Activity OnDestroy
+}
+```
