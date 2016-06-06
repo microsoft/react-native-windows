@@ -33,12 +33,22 @@ const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
   );
 }
 
-function getInstallPackage(version, safe) {
+function getInstallPackage(version) {
   var packageToInstall = 'react-native-windows';
-  var validSemver = semver.valid(version);
-  if (validSemver) {
-    packageToInstall += '@' + validSemver;
-  } else if (safe) {
+
+  var validVersion = semver.valid(version);
+  var validRange = semver.validRange(version);
+  if ((validVersion && semver.ltr(validVersion, "0.26.*")) ||
+      (validRange && semver.gtr('0.27.0', validRange))) {
+    console.error(
+      'Please upgrade react-native to ^0.27 or specify a --windowsVersion that is >=0.27.0'
+    );
+    process.exit(1);
+  }
+  
+  if (validVersion) {
+    packageToInstall += '@' + validVersion;
+  } else if (validRange) {
     packageToInstall += '@' + version;
   } else if (version) {
     // for tar.gz or alternative paths
@@ -57,10 +67,9 @@ function getReactNativeVersion() {
 module.exports = function windows(config, args, options) {
   let name = args[0] ? args[0] : JSON.parse(fs.readFileSync('package.json', 'utf8')).name
   let ns = options['namespace'] ? options['namespace'] : name;
+  let version = options['windowsVersion'] ? options['windowsVersion'] : getReactNativeVersion();
   
-  let version = options['windowsVersion'] ? options['windowsVersion'] : null;
-  let rnwPackage = version ? getInstallPackage(version) : getInstallPackage(getReactNativeVersion(), true);
-  
+  let rnwPackage = getInstallPackage(version);
   console.log('Installing ' + rnwPackage + '...');
   childProcess.execSync('npm install --save ' + rnwPackage);
   console.log(rnwPackage + ' successfully installed.');
