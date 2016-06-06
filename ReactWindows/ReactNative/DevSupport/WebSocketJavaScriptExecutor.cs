@@ -101,7 +101,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public void RunScript(string script)
+        public void RunScript(string script, string sourceUrl)
         {
             var requestId = Interlocked.Increment(ref _requestId);
             var callback = new TaskCompletionSource<JToken>();
