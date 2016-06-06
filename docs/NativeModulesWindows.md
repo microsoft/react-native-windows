@@ -352,6 +352,22 @@ async function canOpenUrl(url) {
 canOpenUrl('http://foo.bar');
 ```
 
+### Threading
+
+Native modules should not have any assumptions about what thread they are being called on, as the current assignment is subject to change in the future. If a blocking call is required, the heavy work should be dispatched to an internally managed worker thread, and any callbacks distributed from there.
+
+### Sending Events to JavaScript
+
+Native modules can signal events to JavaScript without being invoked directly. The easiest way to do this is to use the `RCTDeviceEventEmitter` which can be obtained from the `Context` as in the code snippet below.
+
+```csharp
+private void SendEvent(string eventName, JObject parameters)
+{
+    Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+        .emit(eventName, parameters);
+}
+```
+
 ### Listening to LifeCycle events
 
 Listening to the activity's LifeCycle events such as `OnSuspend`, `OnResume` etc. may be important to your application. In order to listen to these events, the module must implement the `ILifecycleEventListener` interface. Then, you need to register a listener in the module's `Initialize` method.
