@@ -38,8 +38,8 @@ function getInstallPackage(version) {
 
   var validVersion = semver.valid(version);
   var validRange = semver.validRange(version);
-  if ((validVersion && semver.ltr(validVersion, "0.26.*")) ||
-      (validRange && semver.gtr('0.27.0', validRange))) {
+  if ((validVersion && !semver.gtr(validVersion, "0.26.*")) ||
+      (!validVersion && validRange && semver.gtr('0.27.0', validRange))) {
     console.error(
       'Please upgrade react-native to ^0.27 or specify a --windowsVersion that is >=0.27.0'
     );
