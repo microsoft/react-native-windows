@@ -16,6 +16,7 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 - [Documentation](#documentation)
 - [Examples](#examples)
 - [Extending React Native](#extending-react-native)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Opening Issues](#opening-issues)
 - [Contributing](#contributing)
 - [License](#license)
