@@ -7,7 +7,7 @@ permalink: docs/native-modules-windows.html
 next: native-components-windows
 ---
 
-Sometimes an app needs access to a platform API that React Native doesn't have a corresponding module for yet. Maybe you want to reuse some existing .NET code without having to reimplement it in JavaScript, or write some high performance, multi-threaded code such as for image processing, a database, or any number of advanced extensions.
+Sometimes an app needs access to a platform API that React Native doesn't have a corresponding module for yet. Maybe you want to reuse some existing .NET code without having to reimplement it in JavaScript, or write some high performance, multi-threaded code for image processing, a database, or any number of advanced extensions.
 
 React Native was designed such that it is possible for you to write real native code and have access to the full power of the platform. This is a more advanced feature and we don't expect it to be part of the usual development process, however it is essential that it exists. If React Native doesn't support a native feature that you need, you should be able to build it yourself.
 
@@ -95,7 +95,7 @@ public override IReadOnlyDictionary<string, object> Constants
 }
 ```
 
-To expose a method to JavaScript a .NET method must be annotated using the `[ReactMethod]` attribute. The return type of bridge methods is always `void`. React Native bridge is asynchronous, so the only way to pass a result to JavaScript is by using callbacks or emitting events (see below).
+To expose a method to JavaScript a .NET method must be annotated using the `[ReactMethod]` attribute. The return type of bridge methods is always `void`. The React Native bridge is asynchronous, so the only way to pass a result to JavaScript is by using callbacks or emitting events (see below).
 
 ```csharp
 [ReactMethod]
@@ -142,22 +142,16 @@ public void showAlert(
         }
     });
 }
+
+private void OnInvoked(IUICommand target, ICallback callback)
+{
+    callback.Invoke(ActionButtonClicked, target.Id);
+}
 ```
 
 ### Argument Types
 
-The following argument types are supported for methods annotated with the `[ReactMethod]` attribute and they directly map to their JavaScript equivalents.  Note that this project uses [Newtonsoft Json.NET](http://www.newtonsoft.com/json) to provide interoperability with JavaScript types.
-
-```
-Boolean -> Bool
-Integer -> Number
-Double -> Number
-Float -> Number
-String -> String
-ICallback -> function
-JValue -> Object
-JArray -> Array
-```
+This project uses [Newtonsoft Json.NET](http://www.newtonsoft.com/json) to provide interoperability with JavaScript types. The parameter types of a `[ReactMethod]` may be of any type that can be deserialized using Json.NET. Be aware that the use of composite types such as arrays, generics, and user-defined classes may not be supported out-of-the-box with [.NET Native](https://msdn.microsoft.com/en-us/library/dn584397.aspx) pre-compilation, and you may need add information to the [runtime directives (rd.xml)](https://msdn.microsoft.com/en-us/library/dn600639.aspx) file, or just manually deconstruct the JSON by using [`JArray`](http://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JArray.htm) or [`JObject`](http://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JObject.htm) as the parameter types.
 
 ### Register the Module
 
@@ -327,7 +321,9 @@ public async void canOpenURL(string url, IPromise promise)
 
     try
     {
-        var support = await Launcher.QueryUriSupportAsync(uri, LaunchQuerySupportType.Uri).AsTask().ConfigureAwait(false);
+        var support = await Launcher
+            .QueryUriSupportAsync(uri, LaunchQuerySupportType.Uri)
+            .AsTask().ConfigureAwait(false);
         promise.Resolve(support == LaunchQuerySupportStatus.Available);
     }
     catch (Exception ex)
@@ -409,9 +405,9 @@ componentWillMount: function() {
 ...
 ```
 
-### Listening to LifeCycle events
+### Listening to Life Cycle Events
 
-Listening to the activity's LifeCycle events such as `OnSuspend`, `OnResume` etc. may be important to your application. In order to listen to these events, the module must implement the `ILifecycleEventListener` interface. Then, you need to register a listener in the module's `Initialize` method.
+Listening to the application's life cycle events such as `OnSuspend`, `OnResume` etc. may be important to your application. In order to listen to these events, the module must implement the `ILifecycleEventListener` interface. Then, you need to register a listener in the module's `Initialize` method.
 
 ```csharp
 public override void Initialize()
@@ -420,21 +416,21 @@ public override void Initialize()
 }
 ```
 
-Now you can listen to the activity's LifeCycle events by implementing the following methods:
+Now you can listen to the application's life cycle events by implementing the following methods:
 
 ```csharp
 public void OnSuspend()
 {
-    // Activity OnSuspend
+    // Application Suspending
 }
 
 public async void OnResume()
 {
-    // Activity OnResume
+    // Application Resuming
 }
 
 public void OnDestroy()
 {
-    // Activity OnDestroy
+    // Application Terminating
 }
 ```
