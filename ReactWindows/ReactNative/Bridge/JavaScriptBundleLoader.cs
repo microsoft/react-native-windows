@@ -107,7 +107,7 @@ namespace ReactNative.Bridge
                     throw new InvalidOperationException("Bundle loader has not yet been initialized.");
                 }
 
-                bridge.RunScript(_script);
+                bridge.RunScript(_script, SourceUrl);
                 
                 _script = null;
             }
@@ -147,7 +147,7 @@ namespace ReactNative.Bridge
 
             public override void LoadScript(IReactBridge executor)
             {
-                executor.RunScript(_script);
+                executor.RunScript(_script, SourceUrl);
             }
         }
 
@@ -173,7 +173,7 @@ namespace ReactNative.Bridge
 
             public override void LoadScript(IReactBridge executor)
             {
-                executor.RunScript(_proxySourceUrl);
+                executor.RunScript(_proxySourceUrl, SourceUrl);
             }
         }
     }

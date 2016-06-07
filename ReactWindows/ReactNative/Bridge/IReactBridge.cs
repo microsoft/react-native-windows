@@ -35,6 +35,7 @@ namespace ReactNative.Bridge
         /// Evaluates JavaScript.
         /// </summary>
         /// <param name="script">The script.</param>
-        void RunScript(string script);
+        /// <param name="sourceUrl">The source URL.</param>
+        void RunScript(string script, string sourceUrl);
     }
 }
