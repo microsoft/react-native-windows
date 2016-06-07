@@ -1,41 +1,28 @@
 'use strict';
 
 const glob = require('glob');
-const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const parseCommandLine = require('./util/parseCommandLine');
-const Promise = require('promise');
+const child_process = require('child_process');
 
 /**
  * Starts the app on a connected Windows emulator or mobile device.
  */
-function runWindows(argv, config) {
-  return new Promise((resolve, reject) => {
-    runWindowsInternal(argv, config, resolve, reject);
-  });
-}
-
-function runWindowsInternal(argv, config, resolve, reject) {
-  const args = parseCommandLine([{
-    command: 'root',
-    type: 'string',
-    required: false
-  }], argv);
-
-  args.root = args.root || '';
-
-  const slnResults = getSolutionFile(args);
-  if (slnResults.length === 0) {
-    console.log(chalk.red('Visual Studio solution file not found. Maybe run rnpm windows first?'));
+function runWindows(args) {
+  const slnFiles = getSolutionFile();
+  if (slnFiles.length === 0) {
+    console.log(chalk.red('Visual Studio Solution file not found. Maybe run rnpm windows first?'));
     return;
   }
 
-  const slnFile = slnResults[0];
+  const slnFile = slnFile[0];
+
+  // Restore the NuGet packages
+  child_process.execSync('../.nuget/nuget.exe restore ' + slnFile + ' -NonInteractive');
 }
 
-function getSolutionFile(args) {
-  return glob.sync(path.join(args.root, 'windows/*.sln'));
+function getSolutionFile() {
+  return glob.sync(path.join(process.cwd(), 'windows/*.sln'));
 }
 
 module.exports = runWindows;
