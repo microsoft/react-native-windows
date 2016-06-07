@@ -2,6 +2,7 @@
 using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -44,19 +45,19 @@ namespace ReactNative.Tests
         {
             var scriptUris = new[]
             {
-                new Uri(@"ms-appx:///Resources/test.js"),
+                @"ms-appx:///Resources/test.js",
             };
 
-            var scripts = new string[scriptUris.Length];
+            var scripts = new KeyValuePair<string, string>[scriptUris.Length];
 
             for (var i = 0; i < scriptUris.Length; ++i)
             {
                 var uri = scriptUris[i];
-                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
+                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(uri));
                 using (var stream = await storageFile.OpenStreamForReadAsync())
                 using (var reader = new StreamReader(stream))
                 {
-                    scripts[i] = reader.ReadToEnd();
+                    scripts[i] = new KeyValuePair<string, string>(uri, reader.ReadToEnd());
                 }
             }
 
@@ -64,7 +65,7 @@ namespace ReactNative.Tests
             {
                 foreach (var script in scripts)
                 {
-                    executor.RunScript(script);
+                    executor.RunScript(script.Value, script.Key);
                 }
 
                 return true;

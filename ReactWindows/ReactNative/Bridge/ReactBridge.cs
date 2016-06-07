@@ -103,6 +103,8 @@ namespace ReactNative.Bridge
         {
             if (script == null)
                 throw new ArgumentNullException(nameof(script));
+            if (sourceUrl == null)
+                throw new ArgumentNullException(nameof(sourceUrl));
 
             _jsExecutor.RunScript(script, sourceUrl);
             var response = _jsExecutor.Call("__fbBatchedBridge", "flushedQueue", s_empty);
