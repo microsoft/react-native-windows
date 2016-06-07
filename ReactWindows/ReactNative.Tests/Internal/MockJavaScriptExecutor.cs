@@ -7,19 +7,19 @@ namespace ReactNative.Tests
     class MockJavaScriptExecutor : IJavaScriptExecutor
     {
         private readonly Func<string, string, JArray, JToken> _onCall;
-        private readonly Action<string> _runScript;
+        private readonly Action<string, string> _runScript;
         private readonly Action<string, JToken> _onSetGlobalVariable;
         private readonly Action _onDispose;
 
         public MockJavaScriptExecutor(
             Func<string, string, JArray, JToken> onCall)
-            : this(onCall, _ => { }, (_, __) => { }, () => { })
+            : this(onCall, (_, __) => { }, (_, __) => { }, () => { })
         {
         }
 
         public MockJavaScriptExecutor(
             Func<string, string, JArray, JToken> onCall,
-            Action<string> runScript,
+            Action<string, string> runScript,
             Action<string, JToken> onSetGlobalVariable,
             Action onDispose)
         {
@@ -36,9 +36,9 @@ namespace ReactNative.Tests
             return _onCall(moduleName, methodName, arguments);
         }
 
-        public void RunScript(string script)
+        public void RunScript(string script, string sourceUrl)
         {
-            _runScript(script);
+            _runScript(script, sourceUrl);
         }
 
         public void SetGlobalVariable(string propertyName, JToken value)

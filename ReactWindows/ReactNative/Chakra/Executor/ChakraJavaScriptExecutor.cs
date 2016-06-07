@@ -13,6 +13,8 @@ namespace ReactNative.Chakra.Executor
     {
         private readonly JavaScriptRuntime _runtime;
 
+        private JavaScriptSourceContext _context;
+
         private JavaScriptNativeFunction _consoleInfo;
         private JavaScriptNativeFunction _consoleLog;
         private JavaScriptNativeFunction _consoleWarn;
@@ -32,6 +34,7 @@ namespace ReactNative.Chakra.Executor
         public ChakraJavaScriptExecutor()
         {
             _runtime = JavaScriptRuntime.Create();
+            _context = JavaScriptSourceContext.FromIntPtr(IntPtr.Zero);
             InitializeChakra();
         }
 
@@ -76,11 +79,18 @@ namespace ReactNative.Chakra.Executor
 
             for (var i = 0; i < arguments.Count; ++i)
             {
-                callArguments[i + 1] = ConvertJson(arguments[i]);
+                var converted = ConvertJson(arguments[i]);
+                converted.AddRef();
+                callArguments[i + 1] = converted;
             }
 
             // Invoke the function
             var result = method.CallFunction(callArguments);
+
+            for (var i = 1; i < callArguments.Length; ++i)
+            {
+                callArguments[i].Release();
+            }
 
             // Convert the result
             return ConvertJson(result);
@@ -90,14 +100,18 @@ namespace ReactNative.Chakra.Executor
         /// Runs the given script.
         /// </summary>
         /// <param name="script">The script.</param>
-        public void RunScript(string script)
+        /// <param name="sourceUrl">The source URL.</param>
+        public void RunScript(string script, string sourceUrl)
         {
             if (script == null)
                 throw new ArgumentNullException(nameof(script));
+            if (sourceUrl == null)
+                throw new ArgumentNullException(nameof(sourceUrl));
 
             try
             {
-                JavaScriptContext.RunScript(script);
+                _context = JavaScriptSourceContext.Increment(_context);
+                JavaScriptContext.RunScript(script, _context, sourceUrl);
             }
             catch (JavaScriptScriptException ex)
             {

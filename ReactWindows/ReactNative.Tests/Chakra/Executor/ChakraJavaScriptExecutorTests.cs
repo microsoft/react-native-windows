@@ -26,8 +26,12 @@ namespace ReactNative.Tests.Chakra.Executor
                     ex => Assert.AreEqual("arguments", ex.ParamName));
 
                 AssertEx.Throws<ArgumentNullException>(
-                    () => executor.RunScript(null),
+                    () => executor.RunScript(null, "foo"),
                     ex => Assert.AreEqual("script", ex.ParamName));
+
+                AssertEx.Throws<ArgumentNullException>(
+                    () => executor.RunScript("", null),
+                    ex => Assert.AreEqual("sourceUrl", ex.ParamName));
 
                 AssertEx.Throws<ArgumentNullException>(
                     () => executor.SetGlobalVariable(null, new JArray()),

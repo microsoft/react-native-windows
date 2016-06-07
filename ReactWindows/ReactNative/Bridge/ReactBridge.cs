@@ -98,12 +98,15 @@ namespace ReactNative.Bridge
         /// Evaluates JavaScript.
         /// </summary>
         /// <param name="script">The script.</param>
-        public void RunScript(string script)
+        /// <param name="sourceUrl">The source URL.</param>
+        public void RunScript(string script, string sourceUrl)
         {
             if (script == null)
                 throw new ArgumentNullException(nameof(script));
+            if (sourceUrl == null)
+                throw new ArgumentNullException(nameof(sourceUrl));
 
-            _jsExecutor.RunScript(script);
+            _jsExecutor.RunScript(script, sourceUrl);
             var response = _jsExecutor.Call("__fbBatchedBridge", "flushedQueue", s_empty);
 
             ProcessResponse(response);
