@@ -19,6 +19,7 @@
   "engines": {
     "node": ">= 4.0.0"
   },
+  "engineStrict": true,
   "license": "MIT",
   "dependencies": {
     "semver": "^5.0.3"

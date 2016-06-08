@@ -10,6 +10,7 @@
   "engines": {
     "node": ">=4"
   },
+  "engineStrict": true,
   "main": "Libraries/react-native-windows/react-native-windows.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
