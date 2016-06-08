@@ -4,6 +4,8 @@ var path = require('path');
 var child_process = require('child_process');
 var chalk = require('chalk');
 
+var MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
+
 function checkWinSDK(targetPlatform) {
   // TODO: Check for WinSDK
 }
@@ -25,8 +27,16 @@ function checkMSBuildVersion(version) {
   } catch (e) {
     return null;
   }
-  
 }
+
+module.exports = findAvailableVersion = function () {
+  var versions = MSBUILD_VERSIONS.map(checkMSBuildVersion);
+  var msbuildTools = versions[0] || versions[1] || versions[2] || versions[3];
+  if (!msbuildTools) {
+    throw new Error('MSBuild tools not found');
+  }
+};
+
 
 function MSBuildTools(version, path) {
   this._version = version;
@@ -50,6 +60,13 @@ MSBuildTools.prototype.buildProject = function (slnFile, buildType, buildArch, c
       args.push('/p:' + key + '=' + config[key]);
     });
   }
+
+  // TODO: Check Win10SDK
+  var cmd = path.join(this._path, 'msbuild') + [slnFile].concat(args).join(' ');
+  var results = child_process.execSync(cmd).toString().split('\r\n');
+  results.forEach(function (result) {
+    console.log(result);
+  });
 };
 
 
