@@ -3,6 +3,7 @@
 var path = require('path');
 var child_process = require('child_process');
 var chalk = require('chalk');
+var shell = require('shelljs');
 
 var MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
 
@@ -37,6 +38,37 @@ module.exports = findAvailableVersion = function () {
   }
 };
 
+var VERSION_EXPRESSION = /^\d{1,8}(\.\d{1,8}){0,3}$/;
+
+function hasVersion(str) {
+  if (VERSION_EXPRESSION.test(str)) {
+    var parts = str.split('.');
+    return parts.length === 4;
+  }
+
+  return false;
+}
+
+module.exports = getAllAvailableUAPVersions = function () {
+  var programFilesFolder = process.env['ProgramFiles(x86)'] || process.env['ProgramFiles'];
+  // No Program Files folder found, so we won't be able to find UAP SDK
+  if (!programFilesFolder) { 
+    return []; 
+  }
+
+  var uapFolderPath = path.join(programFilesFolder, 'Windows Kits', '10', 'Platforms', 'UAP');
+  if (!shell.test('-e', uapFolderPath)) {
+    return []; // No UAP SDK exists on this machine
+  }
+
+  return shell.ls(uapFolderPath)
+    .filter(function(uapDir) {
+      return shell.test('-d', path.join(uapFolderPath, uapDir));
+    })
+    .filter(function(folder) {
+      return hasVersion(folder);
+    });
+};
 
 function MSBuildTools(version, path) {
   this._version = version;
