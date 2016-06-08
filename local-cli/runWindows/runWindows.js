@@ -1,21 +1,21 @@
 'use strict';
 
-const glob = require('glob');
-const path = require('path');
-const chalk = require('chalk');
-const child_process = require('child_process');
+var glob = require('glob');
+var path = require('path');
+var chalk = require('chalk');
+var child_process = require('child_process');
 
 /**
  * Starts the app on a connected Windows emulator or mobile device.
  */
 function runWindows(args) {
-  const slnFiles = getSolutionFile();
+  var slnFiles = getSolutionFile();
   if (slnFiles.length === 0) {
     console.log(chalk.red('Visual Studio Solution file not found. Maybe run rnpm windows first?'));
     return;
   }
 
-  const slnFile = slnFile[0];
+  var slnFile = slnFile[0];
 
   // Restore the NuGet packages
   child_process.execSync('../.nuget/nuget.exe restore ' + slnFile + ' -NonInteractive');
