@@ -13,6 +13,10 @@ var REQUIRED_VERSIONS = {
     windowssdk: '10.0',
     phonesdk: '10.0'
   }
+};
+
+function shortenVersion (version) {
+  return /^(\d+(?:\.\d+)?)/.exec(version.toString())[1];
 }
 
 function getMinimalRequiredVersionFor (requirement, windowsTargetVersion) {
@@ -45,6 +49,21 @@ function getInstalledWindowsSdks () {
 function checkWinSdk (windowsTargetVersion) {
   var installedSdks = getInstalledWindowsSdks();
   var requiredVersion = getMinimalRequiredVersionFor('windowssdk', windowsTargetVersion);
-  var hasSdkInstalled =
+  var hasSdkInstalled = installedSdks.some(function (installedSdk) {
+    return installedSdk.eq(requiredVersion);
+  });
+
+  if (hasSdkInstalled) { return shortenedVersion(requiredVersion); }
+
+  if (!hasSdkInstalled) {
+    var shortenedVersion = shortenVersion(requiredVersion)
+    var msg = 'Windows SDK not found. Ensure that you have installed ' +
+      'Windows ' + shortenedVersion + ' SDK along with Visual Studio or install ' +
+      'Windows ' + shortenedVersion + ' SDK separately from https://dev.windows.com/en-us/downloads';
+    throw new Error(msg);
+  }
 }
 
+module.exports.isWinSdkPresent = function (target) {
+  return checkWinSdk(target);
+}

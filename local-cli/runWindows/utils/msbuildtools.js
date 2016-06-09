@@ -5,12 +5,9 @@ var child_process = require('child_process');
 var chalk = require('chalk');
 var shell = require('shelljs');
 var Version = require('./version');
+var checkRequirements = require('./checkRequirements');
 
 var MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
-
-function checkWinSDK(targetPlatform) {
-  // TODO: Check for WinSDK
-}
 
 function checkMSBuildVersion(version) {
   var query = 'reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\' + version + ' /v MSBuildToolsPath';
@@ -31,7 +28,7 @@ function checkMSBuildVersion(version) {
   }
 }
 
-module.exports = function findAvailableVersion () {
+module.exports.findAvailableVersion = function () {
   var versions = MSBUILD_VERSIONS.map(checkMSBuildVersion);
   var msbuildTools = versions[0] || versions[1] || versions[2] || versions[3];
   if (!msbuildTools) {
@@ -39,7 +36,14 @@ module.exports = function findAvailableVersion () {
   }
 };
 
-module.exports = function getAllAvailableUAPVersions () {
+module.exports.findAllAvailableVersions = function () {
+  console.log(chalk.green('Searching for available MSBuild versions...'));
+  return MSBUILD_VERSIONS
+    .map(checkMSBuildVersion)
+    .filter(function (item) { return !!item; });
+};
+
+module.exports.getAllAvailableUAPVersions = function () {
   var results = [];
 
   var programFilesFolder = process.env['ProgramFiles(x86)'] || process.env['ProgramFiles'];
@@ -92,7 +96,13 @@ MSBuildTools.prototype.buildProject = function (slnFile, buildType, buildArch, c
     });
   }
 
-  // TODO: Check Win10SDK
+  try {
+    checkRequirements.isWinSdkPresent('10.0');
+  } catch (e) {
+    console.log(chalk.red(e.message));
+    return;
+  }
+
   var cmd = path.join(this._path, 'msbuild') + [slnFile].concat(args).join(' ');
   var results = child_process.execSync(cmd).toString().split('\r\n');
   results.forEach(function (result) {
