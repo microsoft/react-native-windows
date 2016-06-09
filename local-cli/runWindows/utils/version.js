@@ -19,7 +19,7 @@ Version.tryParse = function (str) {
       return parseInt(x, 10);
     });
 
-    return new Version(versionArray[0]. versionArray[1], versionArray[2], versionArray[3]);
+    return new Version(versionArray[0], versionArray[1], versionArray[2], versionArray[3]);
   }
   return null;
 };

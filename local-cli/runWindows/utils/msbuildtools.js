@@ -10,7 +10,7 @@ var checkRequirements = require('./checkRequirements');
 var MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
 
 function checkMSBuildVersion(version) {
-  var query = 'reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\' + version + ' /v MSBuildToolsPath';
+  var query = 'reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\' + version + ' /s /v MSBuildToolsPath';
   try {
     var output = child_process.execSync(query).toString();
     var toolsPath = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
@@ -34,6 +34,8 @@ module.exports.findAvailableVersion = function () {
   if (!msbuildTools) {
     throw new Error('MSBuild tools not found');
   }
+
+  return msbuildTools;
 };
 
 module.exports.findAllAvailableVersions = function () {

@@ -26,7 +26,7 @@ function getMinimalRequiredVersionFor (requirement, windowsTargetVersion) {
 function getInstalledWindowsSdks () {
   var installedSdks = [];
 
-  var execString = 'reg query HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows /s /s InstallationFolder /reg:32';
+  var execString = 'reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows" /s /v InstallationFolder /reg:32';
   var output;
   try {
     output = child_process.execSync(execString).toString();
@@ -53,7 +53,7 @@ function checkWinSdk (windowsTargetVersion) {
     return installedSdk.eq(requiredVersion);
   });
 
-  if (hasSdkInstalled) { return shortenedVersion(requiredVersion); }
+  if (hasSdkInstalled) { return shortenVersion(requiredVersion); }
 
   if (!hasSdkInstalled) {
     var shortenedVersion = shortenVersion(requiredVersion)
