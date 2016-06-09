@@ -5,32 +5,18 @@ var path = require('path');
 var shell = require('shelljs');
 var Version = require('./version');
 
+var REQUIRED_VERSIONS = {
+  '10.0': {
+    os: '6.3',
+    msbuild: '14.0',
+    visualstudio: '14.0',
+    windowssdk: '10.0',
+    phonesdk: '10.0'
+  }
+}
+
 function getMinimalRequiredVersionFor (requirement, windowsTargetVersion) {
-
-    if (windowsTargetVersion === '8' || windowsTargetVersion === '8.0') {
-        throw new CordovaError('windows8 platform is deprecated. To use windows-target-version=8.0 you may downgrade to cordova-windows@4.');
-    }
-
-    if (windowsPhoneTargetVersion === '8' || windowsPhoneTargetVersion === '8.0') {
-        throw new CordovaError('8.0 is not a valid version for windows-phone-target-version (use the wp8 Cordova platform instead)');
-    }
-    var windowsReqVersion = Version.tryParse(REQUIRED_VERSIONS[windowsTargetVersion][requirement]);
-    var phoneReqVersion = Version.tryParse(REQUIRED_VERSIONS[windowsPhoneTargetVersion][requirement]);
-
-    // If we're searching for Windows SDK, we're not
-    // interested in Phone's version and and vice versa.
-    if (requirement === 'windowssdk') return windowsReqVersion;
-    if (requirement === 'phonesdk') return phoneReqVersion;
-
-    // If both windowsReqVersion and phoneReqVersion is valid Versions, choose the max one
-    if (windowsReqVersion && phoneReqVersion) {
-        return windowsReqVersion.gt(phoneReqVersion) ?
-            windowsReqVersion :
-            phoneReqVersion;
-    }
-
-    // Otherwise return that one which is defined and valid
-    return windowsReqVersion || phoneReqVersion;
+  return Version.tryParse(REQUIRED_VERSIONS[windowsTargetVersion][requirement]);
 }
 
 function getInstalledWindowsSdks () {
