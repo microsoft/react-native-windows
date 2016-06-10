@@ -1,7 +1,10 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Modules.Image;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -12,14 +15,8 @@ namespace ReactNative.Views.Image
     /// <summary>
     /// The view manager responsible for rendering native images.
     /// </summary>
-    public class ReactImageManager : SimpleViewManager<Border>
+    public class ReactImageManager : BaseViewManager<Border, ReactImageShadowNode>
     {
-        private readonly Dictionary<Border, ExceptionRoutedEventHandler> _imageFailedHandlers =
-            new Dictionary<Border, ExceptionRoutedEventHandler>();
-
-        private readonly Dictionary<Border, RoutedEventHandler> _imageOpenedHandlers =
-            new Dictionary<Border, RoutedEventHandler>();
-
         /// <summary>
         /// The view manager name.
         /// </summary>
@@ -91,27 +88,7 @@ namespace ReactNative.Views.Image
                 }
             }
         }
-
-        /// <summary>
-        /// Set the source URI of the image.
-        /// </summary>
-        /// <param name="view">The image view instance.</param>
-        /// <param name="source">The source URI.</param>
-        [ReactProp("src")]
-        public void SetSource(Border view, string source)
-        {
-            var imageBrush = (ImageBrush)view.Background;
-            imageBrush.ImageSource = new BitmapImage(new Uri(source));
-
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        ReactImageLoadEvent.OnLoadStart));
-        }
-        
+   
         /// <summary>
         /// The border radius of the <see cref="ReactRootView"/>.
         /// </summary>
@@ -153,29 +130,67 @@ namespace ReactNative.Views.Image
         {
             view.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
         }
+    
+        /// <summary>
+        /// This method should return the <see cref="ReactImageShadowNode"/>
+        /// which will be then used for measuring the position and size of the
+        /// view. 
+        /// </summary>
+        /// <returns>The shadow node instance.</returns>
+        public override ReactImageShadowNode CreateShadowNodeInstance()
+        {
+            return new ReactImageShadowNode();
+        }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
-        /// additional cleanup.
+        /// Implement this method to receive optional extra data enqueued from
+        /// the corresponding instance of <see cref="ReactShadowNode"/> in
+        /// <see cref="ReactShadowNode.OnCollectExtraUpdates"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
+        /// <param name="extraData">The extra data.</param>
+        public override void UpdateExtraData(Border view, object extraData)
         {
-            var imageBrush = (ImageBrush)view.Background;
+            var source = ((Tuple<string, Color?, Color?>)extraData).Item1;
+            var tintColor = ((Tuple<string, Color?, Color?>)extraData).Item2;
+            var backgroundColor = ((Tuple<string, Color?, Color?>)extraData).Item3;
 
-            var imageFailedHandler = default(ExceptionRoutedEventHandler);
-            if (_imageFailedHandlers.TryGetValue(view, out imageFailedHandler))
-            {
-                _imageFailedHandlers.Remove(view);
-                imageBrush.ImageFailed -= imageFailedHandler;
+            var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
+            var eventDispatcher = view.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher;
+
+            eventDispatcher.DispatchEvent(
+                new ReactImageLoadEvent(view.GetTag(),
+                                        ReactImageLoadEvent.OnLoadStart));
+
+            var image = loader.QueryImage(source);
+
+            if (image != null)
+            {             
+                eventDispatcher.DispatchEvent(
+                    new ReactImageLoadEvent(view.GetTag(),
+                                            ReactImageLoadEvent.OnLoad));
+
+                if (tintColor != null || backgroundColor != null)
+                {
+                    SetColors(view, image, source, tintColor, backgroundColor);
+                }
+                else
+                {
+                    ((ImageBrush)view.Background).ImageSource = image;
+                    loader.FreeReference(source);
+                }
+
+                eventDispatcher.DispatchEvent(
+                    new ReactImageLoadEvent(view.GetTag(),
+                                            ReactImageLoadEvent.OnLoadEnd));
             }
-
-            var imageOpenedHandler = default(RoutedEventHandler);
-            if (_imageOpenedHandlers.TryGetValue(view, out imageOpenedHandler))
+            else
             {
-                _imageOpenedHandlers.Remove(view);
-                imageBrush.ImageOpened -= imageOpenedHandler;
+                loader.LoadImage(source, this, Tuple.Create(view, tintColor, backgroundColor));
+
+                eventDispatcher.DispatchEvent(
+                    new ReactImageLoadEvent(view.GetTag(),
+                                            ReactImageLoadEvent.OnLoad));
             }
         }
 
@@ -188,58 +203,125 @@ namespace ReactNative.Views.Image
         {
             return new Border
             {
-                Background = new ImageBrush(),
+                Background = new ImageBrush
+                {
+                    Stretch = Stretch.UniformToFill,
+                },
             };
         }
 
-        /// <summary>
-        /// Install custom event emitters on the given view.
-        /// </summary>
-        /// <param name="reactContext">The React context.</param>
-        /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, Border view)
+        internal void ImageLoaded(object data, bool loaded, string source)
         {
-            var imageBrush = (ImageBrush)view.Background;
+            var view = ((Tuple<Border, Color?, Color?>)data).Item1;
+            var tintColor = ((Tuple<Border, Color?, Color?>)data).Item2;
+            var backgroundColor = ((Tuple<Border, Color?, Color?>)data).Item3;
+            var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
 
-            var imageFailedHandler = new ExceptionRoutedEventHandler(
-                (sender, args) => OnImageFailed(view, args));
+            view.GetReactContext().GetNativeModule<UIManagerModule>().
+                EventDispatcher.DispatchEvent(
+                    new ReactImageLoadEvent(view.GetTag(),
+                                            ReactImageLoadEvent.OnLoadEnd));
 
-            imageBrush.ImageFailed += imageFailedHandler;
+            if (loaded)
+            {
+                var image = loader.GetImage(source);
 
-            var imageOpenedHandler = new RoutedEventHandler(
-                (sender, args) => OnImageOpened(view, args));
-
-            imageBrush.ImageOpened += imageOpenedHandler;
-
-            _imageFailedHandlers.Add(view, imageFailedHandler);
+                if (tintColor != null || backgroundColor != null)
+                {
+                    SetColors(view, image, source, tintColor, backgroundColor);
+                }
+                else
+                {
+                    ((ImageBrush)view.Background).ImageSource = image;
+                    loader.FreeReference(source);
+                }
+            }
         }
 
-        private void OnImageFailed(Border view, ExceptionRoutedEventArgs args)
+        internal void DataLoaded(object data, string source)
         {
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        ReactImageLoadEvent.OnLoadEnd));
+            var view = ((Tuple<Border, Color?, Color?>)data).Item1;
+            var tintColor = ((Tuple<Border, Color?, Color?>)data).Item2;
+            var backgroundColor = ((Tuple<Border, Color?, Color?>)data).Item3;
+            var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
+
+            var image = loader.GetImage(source);
+            var pixels = loader.GetPixelData(source);
+
+            SetPixels(view, image, tintColor, backgroundColor, pixels, source);
         }
 
-        private void OnImageOpened(Border view, RoutedEventArgs args)
+        private void SetColors(Border view, BitmapImage image, string source, Color? tintColor, Color? backgroundColor)
         {
-            var eventDispatcher = view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher;
+            var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
+            var pixelData = loader.GetPixelData(source);
 
-            eventDispatcher.DispatchEvent(
-                new ReactImageLoadEvent(
-                    view.GetTag(),
-                    ReactImageLoadEvent.OnLoad));
+            if (pixelData != null)
+            {
+                SetPixels(view, image, tintColor, backgroundColor, pixelData, source);
+            }
+            else
+            {
+                loader.LoadImagePixelData(source, this, Tuple.Create(view, tintColor, backgroundColor));
+            }
+        }
 
-            eventDispatcher.DispatchEvent(
-                new ReactImageLoadEvent(
-                    view.GetTag(),
-                    ReactImageLoadEvent.OnLoadEnd));
+        private async void SetPixels(
+            Border view, 
+            BitmapImage image, 
+            Color? tintColor, 
+            Color? backgroundColor, 
+            byte[] pixelData, 
+            string source)
+        {
+            var pixels = new byte[pixelData.Length];
+            pixelData.CopyTo(pixels, 0);
+
+            for (var i = 3; i < pixels.Length; i += 4) // 0 = B, 1 = G, 2 = R, 3 = A
+            {
+                if (tintColor != null)
+                {
+                    if (pixels[i] != 0)
+                    {
+                        pixels[i - 3] = (byte)tintColor?.B;
+                        pixels[i - 2] = (byte)tintColor?.G;
+                        pixels[i - 1] = (byte)tintColor?.R;
+                    }
+                }
+                if (backgroundColor != null)
+                {
+                    var frontAlpha = (double)pixels[i] / 255;
+                    var backAlpha = (double)backgroundColor?.A / 255;
+
+                    pixels[i - 3] = ColorValue(pixels[i - 3], frontAlpha, (double)backgroundColor?.B, backAlpha);
+                    pixels[i - 2] = ColorValue(pixels[i - 2], frontAlpha, (double)backgroundColor?.G, backAlpha);
+                    pixels[i - 1] = ColorValue(pixels[i - 1], frontAlpha, (double)backgroundColor?.R, backAlpha);
+                    pixels[i] = AlphaValue(pixels[i], (double)backgroundColor?.A);
+                }
+            }
+
+            var writableBitmap = new WriteableBitmap(image.PixelWidth, image.PixelHeight);
+
+            // Open a stream to copy the image contents to the WriteableBitmap's pixel buffer 
+            using (System.IO.Stream writeStream = writableBitmap.PixelBuffer.AsStream())
+            {
+                await writeStream.WriteAsync(pixels, 0, pixels.Length);
+            }
+
+            ((ImageBrush)view.Background).ImageSource = writableBitmap;
+
+            view.GetReactContext().GetNativeModule<ImageLoaderModule>().FreeReference(source);
+        }
+
+        private static byte ColorValue(double frontColor, double frontAlpha, double backColor, double backAlpha)
+        {
+            return (byte)((frontColor * frontAlpha + backColor * backAlpha * (1 - frontAlpha)) / 
+                                (frontAlpha + backAlpha * (1 - frontAlpha)));
+        }
+
+        private static byte AlphaValue(double frontAlpha, double backAlpha)
+        {
+            return (byte)(frontAlpha + backAlpha * (1 - (frontAlpha / 255)));
         }
     }
 }
