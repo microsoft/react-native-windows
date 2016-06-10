@@ -19,7 +19,7 @@ namespace Playground
         {
             get
             {
-                return "Playground/index.windows";
+                return "ReactWindows/Playground/index.windows";
             }
         }
 
