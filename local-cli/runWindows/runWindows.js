@@ -33,7 +33,7 @@ function runWindows(options) {
   }
 
   // Restore the NuGet packages
-  child_process.execSync('C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe restore ' + slnFile + ' -NonInteractive');
+  child_process.execSync('../.nuget/nuget.exe restore ' + slnFile + ' -NonInteractive');
 
   // Get build/deploy options
   var buildType = options.release ? 'release' : 'debug';
@@ -49,11 +49,3 @@ function getSolutionFile(options) {
 }
 
 module.exports = runWindows;
-
-var opts = {
-  root: 'C:\\github\\hack\\myapp\\',
-  debug: true,
-  buildArch: 'anycpu',
-};
-
-runWindows(opts);
