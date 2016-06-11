@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -442,7 +443,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/>.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ReactTextBox view)
+        public override void OnDropViewInstance(ReactContext reactContext, ReactTextBox view)
         {
             view.KeyDown -= OnKeyDown;
             view.LostFocus -= OnLostFocus;
@@ -450,12 +451,19 @@ namespace ReactNative.Views.TextInput
             view.TextChanged -= OnTextChanged;
         }
 
+        public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
+        {
+            Canvas.SetLeft(view, dimensions.X);
+            Canvas.SetTop(view, dimensions.Y);
+            view.Width = dimensions.Width;
+        }
+
         /// <summary>
         /// Returns the view instance for <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="reactContext"></param>
         /// <returns></returns>
-        protected override ReactTextBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override ReactTextBox CreateViewInstance(ReactContext reactContext)
         {
             return new ReactTextBox
             {
@@ -468,7 +476,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
+        protected override void AddEventEmitters(ReactContext reactContext, ReactTextBox view)
         {
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;

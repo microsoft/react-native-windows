@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
@@ -57,6 +58,14 @@ namespace ReactNative.Tests
             }
         }
 
+        public bool ShouldHandleLayout
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public virtual Type ShadowNodeType
         {
             get
@@ -70,27 +79,37 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual FrameworkElement CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        public virtual DependencyObject CreateView(ReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, FrameworkElement view)
+        public Dimensions GetDimensions(DependencyObject view)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ReceiveCommand(FrameworkElement view, int commandId, JArray args)
+        public virtual void OnDropViewInstance(ReactContext reactContext, DependencyObject view)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void UpdateExtraData(FrameworkElement root, object extraData)
+        public virtual void ReceiveCommand(DependencyObject view, int commandId, JArray args)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void UpdateProperties(FrameworkElement viewToUpdate, ReactStylesDiffMap props)
+        public void SetDimensions(DependencyObject view, Dimensions dimensions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void UpdateExtraData(DependencyObject root, object extraData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
             throw new NotImplementedException();
         }

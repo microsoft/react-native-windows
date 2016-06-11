@@ -1,4 +1,5 @@
 ﻿using Facebook.CSSLayout;
+using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace ReactNative.UIManager
     public class ReactShadowNode : CSSNode
     {
         private ReactShadowNode _rootNode;
-        private ThemedReactContext _themedContext;
+        private ReactContext _themedContext;
         private bool _nodeUpdated = true;
 
         private bool _isLayoutOnly;
@@ -126,7 +127,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The themed context of the node.
         /// </summary>
-        public ThemedReactContext ThemedContext
+        public ReactContext ThemedContext
         {
             get
             {

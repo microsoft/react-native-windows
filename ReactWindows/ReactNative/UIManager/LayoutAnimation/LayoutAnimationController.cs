@@ -70,7 +70,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// </returns>
         public bool ShouldAnimateLayout(FrameworkElement view)
         {
-            return _shouldAnimateLayout && view.Parent != null && !(view is ILayoutManager);
+            return _shouldAnimateLayout && view.Parent != null;
         }
 
         /// <summary>
@@ -78,11 +78,8 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// the given coordinates and dimensions.
         /// </summary>
         /// <param name="view">The native view to animate.</param>
-        /// <param name="x">The new X position to animate to.</param>
-        /// <param name="y">The new Y position to animate to.</param>
-        /// <param name="width">The new width that the <see cref="FrameworkElement"/> needs to transform to.</param>
-        /// <param name="height">The new height that the <see cref="FrameworkElement"/> needs to transform to.</param>
-        public void ApplyLayoutUpdate(FrameworkElement view, int x, int y, int width, int height)
+        /// <param name="dimensions">The new view dimensions to animate to.</param>
+        public void ApplyLayoutUpdate(FrameworkElement view, Dimensions dimensions)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -90,13 +87,13 @@ namespace ReactNative.UIManager.LayoutAnimation
                 ? _layoutCreateAnimation
                 : _layoutUpdateAnimation;
 
-            var animation = layoutAnimation.CreateAnimation(view, x, y, width, height);
+            var animation = layoutAnimation.CreateAnimation(view, dimensions);
             if (animation == null)
             {
-                Canvas.SetLeft(view, x);
-                Canvas.SetTop(view, y);
-                view.Width = width;
-                view.Height = height;
+                Canvas.SetLeft(view, dimensions.X);
+                Canvas.SetTop(view, dimensions.Y);
+                view.Width = dimensions.Width;
+                view.Height = dimensions.Height;
             }
             else
             {

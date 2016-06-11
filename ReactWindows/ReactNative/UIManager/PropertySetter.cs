@@ -80,7 +80,7 @@ namespace ReactNative.UIManager
             Invoke(shadowNode, GetShadowNodeArgs(props));
         }
 
-        public void UpdateViewManagerProperty(IViewManager viewManager, FrameworkElement view, ReactStylesDiffMap props)
+        public void UpdateViewManagerProperty(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
         {
             if (viewManager == null)
                 throw new ArgumentNullException(nameof(viewManager));
@@ -95,7 +95,7 @@ namespace ReactNative.UIManager
             throw new NotSupportedException("ReactShadowNode properties cannot be changed with this setter.");
         }
 
-        protected virtual object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap props)
+        protected virtual object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
         {
             throw new NotSupportedException("ViewManager properties cannot be changed with this setter.");
         }
@@ -218,6 +218,7 @@ namespace ReactNative.UIManager
 
             protected override Type GetPropertyType(MethodInfo method)
             {
+#if DEBUG
                 var parameters = method.GetParameters();
                 if (parameters.Length != 2)
                 {
@@ -225,16 +226,17 @@ namespace ReactNative.UIManager
                         $"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
-                if (!typeof(FrameworkElement).IsAssignableFrom(parameters[0].ParameterType))
+                if (!typeof(DependencyObject).IsAssignableFrom(parameters[0].ParameterType))
                 {
                     throw new InvalidOperationException(
-                        $"First parameter must be a framework element for property setter '{method.DeclaringType.Name}.{Name}'.");
+                        $"First parameter must be a dependency object for property setter '{method.DeclaringType.Name}.{Name}'.");
                 }
+#endif
 
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
             {
                 s_args[0] = view;
                 s_args[1] = ExtractProperty(props);
@@ -284,7 +286,7 @@ namespace ReactNative.UIManager
                 return parameters[2].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(FrameworkElement view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
             {
                 s_args[0] = view;
                 s_args[1] = _index;

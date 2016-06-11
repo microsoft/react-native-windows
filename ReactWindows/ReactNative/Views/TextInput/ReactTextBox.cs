@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.Views.TextInput
 {
-    class ReactTextBox : TextBox, ILayoutManager
+    class ReactTextBox : TextBox
     {
         private int _eventCount;
         private double _lastWidth;
@@ -39,13 +39,6 @@ namespace ReactNative.Views.TextInput
         public int IncrementEventCount()
         {
             return Interlocked.Increment(ref _eventCount);
-        }
-
-        public void UpdateLayout(int x, int y, int width, int height)
-        {
-            Canvas.SetLeft(this, x);
-            Canvas.SetTop(this, y);
-            Width = width;
         }
 
         protected override void OnGotFocus(RoutedEventArgs e)

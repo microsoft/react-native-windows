@@ -1,4 +1,5 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Bridge;
+using ReactNative.UIManager;
 using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.Views.View
@@ -25,7 +26,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override Canvas CreateInnerElement(ThemedReactContext reactContext)
+        protected override Canvas CreateInnerElement(ReactContext reactContext)
         {
             return new Canvas();
         }

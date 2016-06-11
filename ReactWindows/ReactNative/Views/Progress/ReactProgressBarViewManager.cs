@@ -1,4 +1,5 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Bridge;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -44,7 +45,7 @@ namespace ReactNative.Views.Progress
         {
         }
 
-        protected override ProgressBar CreateViewInstance(ThemedReactContext reactContext)
+        protected override ProgressBar CreateViewInstance(ReactContext reactContext)
         {
             return new ProgressBar();
         }

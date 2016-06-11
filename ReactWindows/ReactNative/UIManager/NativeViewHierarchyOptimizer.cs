@@ -1,5 +1,6 @@
 ﻿#define ENABLED
 
+using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,7 @@ namespace ReactNative.UIManager
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node, 
-            ThemedReactContext themedContext, 
+            ReactContext themedContext, 
             ReactStylesDiffMap initialProperties)
         {
 #if !ENABLED

@@ -2,7 +2,6 @@
 using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using ReactNative.Views.Text;
 using System;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -15,7 +14,7 @@ namespace ReactNative.Views.TextInput
     /// This extension of <see cref="LayoutShadowNode"/> is responsible for 
     /// measuring the layout for Native <see cref="TextBox"/>.
     /// </summary>
-    public class ReactTextInputShadowNode : ReactTextShadowNode
+    public class ReactTextInputShadowNode : ReactTextInputShadowNodeBase
     {
         private const int Unset = -1;
 

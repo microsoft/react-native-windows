@@ -62,24 +62,16 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// time and the new view position and size.
         /// </summary>
         /// <param name="view">The view to create the animation for.</param>
-        /// <param name="x">The new X-coordinate for the view.</param>
-        /// <param name="y">The new Y-coordinate for the view.</param>
-        /// <param name="width">The new width for the view.</param>
-        /// <param name="height">The new height for the view.</param>
+        /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
-        public IObservable<Unit> CreateAnimation(
-            FrameworkElement view,
-            int x,
-            int y,
-            int width,
-            int height)
+        public IObservable<Unit> CreateAnimation(FrameworkElement view, Dimensions dimensions)
         {
             if (!IsValid)
             {
                 return null;
             }
 
-            return CreateAnimationCore(view, x, y, width, height);
+            return CreateAnimationCore(view, dimensions);
         }
 
         /// <summary>
@@ -127,11 +119,8 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// time and the new view position and size.
         /// </summary>
         /// <param name="view">The view to create the animation for.</param>
-        /// <param name="x">The new X-coordinate for the view.</param>
-        /// <param name="y">The new Y-coordinate for the view.</param>
-        /// <param name="width">The new width for the view.</param>
-        /// <param name="height">The new height for the view.</param>
+        /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
-        protected abstract IObservable<Unit> CreateAnimationCore(FrameworkElement view, int x, int y, int width, int height);
+        protected abstract IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions);
     }
 }

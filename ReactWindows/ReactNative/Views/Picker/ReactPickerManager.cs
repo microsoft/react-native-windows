@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -121,7 +122,7 @@ namespace ReactNative.Views.Picker
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ComboBox view)
+        public override void OnDropViewInstance(ReactContext reactContext, ComboBox view)
         {
             view.SelectionChanged -= OnSelectionChanged;
         }
@@ -131,7 +132,7 @@ namespace ReactNative.Views.Picker
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ComboBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override ComboBox CreateViewInstance(ReactContext reactContext)
         {
             return new ComboBox();
         }
@@ -142,7 +143,7 @@ namespace ReactNative.Views.Picker
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ComboBox view)
+        protected override void AddEventEmitters(ReactContext reactContext, ComboBox view)
         {
             view.SelectionChanged += OnSelectionChanged;
         }

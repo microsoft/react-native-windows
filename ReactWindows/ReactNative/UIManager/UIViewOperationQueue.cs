@@ -18,7 +18,7 @@ namespace ReactNative.UIManager
     public class UIViewOperationQueue
     {
         private readonly object _gate = new object();
-        private readonly int[] _measureBuffer = new int[4];
+        private readonly double[] _measureBuffer = new double[4];
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
@@ -62,7 +62,7 @@ namespace ReactNative.UIManager
         public void AddRootView(
             int tag,
             SizeMonitoringCanvas rootView,
-            ThemedReactContext themedRootContext)
+            ReactContext themedRootContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
             _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
@@ -145,7 +145,7 @@ namespace ReactNative.UIManager
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial properties.</param>
         public void EnqueueCreateView(
-            ThemedReactContext themedContext,
+            ReactContext themedContext,
             int viewReactTag,
             string viewClassName,
             ReactStylesDiffMap initialProps)
@@ -200,10 +200,10 @@ namespace ReactNative.UIManager
         public void EnqueueUpdateLayout(
             int parentTag,
             int tag,
-            int x,
-            int y,
-            int width,
-            int height)
+            double x,
+            double y,
+            double width,
+            double height)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.UpdateLayout(
                 parentTag,

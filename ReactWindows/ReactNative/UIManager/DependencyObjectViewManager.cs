@@ -14,8 +14,8 @@ namespace ReactNative.UIManager
     /// <see cref="ReactShadowNode"/> subclasses used for calculating position
     /// and size for the corresponding native view.
     /// </summary>
-    public abstract class ViewManager<TFrameworkElement, TReactShadowNode> : IViewManager
-        where TFrameworkElement : FrameworkElement
+    public abstract class DependencyObjectViewManager<TDependencyObject, TReactShadowNode> : IViewManager
+        where TDependencyObject : DependencyObject
         where TReactShadowNode : ReactShadowNode
     {
         /// <summary>
@@ -78,7 +78,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="viewToUpdate">The view to update.</param>
         /// <param name="props">The properties.</param>
-        public void UpdateProperties(TFrameworkElement viewToUpdate, ReactStylesDiffMap props)
+        public void UpdateProperties(TDependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
             var propertySetters =
                 ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(GetType());
@@ -102,7 +102,7 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The context.</param>
         /// <param name="jsResponderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        public TFrameworkElement CreateView(
+        public TDependencyObject CreateView(
             ReactContext reactContext,
             JavaScriptResponderHandler jsResponderHandler)
         {
@@ -124,7 +124,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        public virtual void OnDropViewInstance(ReactContext reactContext, TFrameworkElement view)
+        public virtual void OnDropViewInstance(ReactContext reactContext, TDependencyObject view)
         {
         }
 
@@ -147,7 +147,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public abstract void UpdateExtraData(TFrameworkElement root, object extraData);
+        public abstract void UpdateExtraData(TDependencyObject root, object extraData);
 
         /// <summary>
         /// Implement this method to receive events/commands directly from
@@ -158,7 +158,7 @@ namespace ReactNative.UIManager
         /// </param>
         /// <param name="commandId">Identifer for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
-        public virtual void ReceiveCommand(TFrameworkElement view, int commandId, JArray args)
+        public virtual void ReceiveCommand(TDependencyObject view, int commandId, JArray args)
         {
         }
 
@@ -167,36 +167,21 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns>The view dimensions.</returns>
-        public Dimensions GetDimensions(TFrameworkElement view)
-        {
-            return new Dimensions
-            {
-                X = Canvas.GetLeft(view),
-                Y = Canvas.GetLeft(view),
-                Width = view.Width,
-                Height = view.Height,
-            };
-        }
+        public abstract Dimensions GetDimensions(TDependencyObject view);
 
         /// <summary>
         /// Sets the dimensions of the view.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="dimensions">The output buffer.</param>
-        public virtual void SetDimensions(TFrameworkElement view, Dimensions dimensions)
-        {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
-        }
+        public abstract void SetDimensions(TDependencyObject view, Dimensions dimensions);
 
         /// <summary>
-        /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
+        /// Creates a new view instance of type <typeparamref name="TDependencyObject"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TFrameworkElement CreateViewInstance(ReactContext reactContext);
+        protected abstract TDependencyObject CreateViewInstance(ReactContext reactContext);
 
         /// <summary>
         /// Subclasses can override this method to install custom event 
@@ -208,7 +193,7 @@ namespace ReactNative.UIManager
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
         /// </remarks>
-        protected virtual void AddEventEmitters(ReactContext reactContext, TFrameworkElement view)
+        protected virtual void AddEventEmitters(ReactContext reactContext, TDependencyObject view)
         {
         }
 
@@ -218,7 +203,7 @@ namespace ReactNative.UIManager
         /// for properties updated in the current transaction have been called).
         /// </summary>
         /// <param name="view">The view.</param>
-        protected virtual void OnAfterUpdateTransaction(TFrameworkElement view)
+        protected virtual void OnAfterUpdateTransaction(TDependencyObject view)
         {
         }
 
@@ -226,7 +211,7 @@ namespace ReactNative.UIManager
 
         void IViewManager.UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
-            UpdateProperties((TFrameworkElement)viewToUpdate, props);
+            UpdateProperties((TDependencyObject)viewToUpdate, props);
         }
 
         DependencyObject IViewManager.CreateView(ReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
@@ -236,7 +221,7 @@ namespace ReactNative.UIManager
 
         void IViewManager.OnDropViewInstance(ReactContext reactContext, DependencyObject view)
         {
-            OnDropViewInstance(reactContext, (TFrameworkElement)view);
+            OnDropViewInstance(reactContext, (TDependencyObject)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()
@@ -246,22 +231,22 @@ namespace ReactNative.UIManager
 
         void IViewManager.UpdateExtraData(DependencyObject root, object extraData)
         {
-            UpdateExtraData((TFrameworkElement)root, extraData);
+            UpdateExtraData((TDependencyObject)root, extraData);
         }
 
         void IViewManager.ReceiveCommand(DependencyObject view, int commandId, JArray args)
         {
-            ReceiveCommand((TFrameworkElement)view, commandId, args);
+            ReceiveCommand((TDependencyObject)view, commandId, args);
         }
 
         Dimensions IViewManager.GetDimensions(DependencyObject view)
         {
-            return GetDimensions((TFrameworkElement)view);
+            return GetDimensions((TDependencyObject)view);
         }
 
         void IViewManager.SetDimensions(DependencyObject view, Dimensions dimensions)
         {
-            SetDimensions((TFrameworkElement)view, dimensions);
+            SetDimensions((TDependencyObject)view, dimensions);
         }
 
         #endregion
