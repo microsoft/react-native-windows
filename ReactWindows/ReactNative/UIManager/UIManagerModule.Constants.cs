@@ -1,9 +1,5 @@
 ﻿using ReactNative.UIManager.Events;
 using System.Collections.Generic;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Map = System.Collections.Generic.Dictionary<string, object>;
 
 namespace ReactNative.UIManager
@@ -197,9 +193,6 @@ namespace ReactNative.UIManager
 
         private static Dictionary<string, object> GetConstants()
         {
-            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-            var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-
             return new Map
             {
                 {
@@ -224,25 +217,13 @@ namespace ReactNative.UIManager
                             new Map
                             {
                                 /* TODO: declare capitalization types */
-                            }   
+                            }
                         },
                     }
                 },
                 {
                     "Dimensions",
-                    new Map
-                    {
-                        {
-                            "window",
-                            new Dictionary<string, object>
-                            {
-                                { "width", bounds.Width },
-                                { "height", bounds.Height },
-                                { "scale", scale },
-                                /* TODO: density and DPI needed? */
-                            }
-                        },
-                    }
+                    GetDimensions()
                 },
                 {
                     "StyleConstants",
