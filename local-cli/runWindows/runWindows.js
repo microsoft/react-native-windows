@@ -4,6 +4,7 @@ var path = require('path');
 var child_process = require('child_process');
 var chalk = require('chalk');
 var glob = require('glob');
+var shell = require('shelljs');
 var MSBuildTools = require('./utils/msbuildtools');
 
 /**
@@ -12,7 +13,6 @@ var MSBuildTools = require('./utils/msbuildtools');
 function runWindows(options) {
   // Fix up options
   options.root = options.root || process.cwd();
-  options.arch === 'any cpu' && (options.arch = 'anycpu');
 
   var slnFiles = getSolutionFile(options);
   if (slnFiles.length === 0) {
@@ -32,8 +32,22 @@ function runWindows(options) {
     return;
   }
 
-  // Restore the NuGet packages
-  child_process.execSync('../.nuget/nuget.exe restore ' + slnFile + ' -NonInteractive');
+  try {
+    // Clean solution
+    shell.rm('-rf', glob.sync(path.join(options.root, 'windows/*/AppPackages'))[0]);
+  } catch (e) {
+    console.log(chalk.red('Failed to remove the AppPackages folder'));
+  }
+
+  try {
+    // Restore the NuGet packages
+    var nugetPath = options.nugetPath || '../.nuget/nuget.exe';
+    child_process.execSync(nugetPath + ' restore ' + slnFile + ' -NonInteractive');
+  } catch (e) {
+    console.log(chalk.red('Failed to restore the NuGet packages'));
+    return;
+  }
+
 
   // Get build/deploy options
   var buildType = options.release ? 'release' : 'debug';
@@ -42,10 +56,26 @@ function runWindows(options) {
 
   var msBuildTools = MSBuildTools.findAvailableVersion();
   msBuildTools.buildProject(slnFile, buildType, buildArch, null);
+
+  var appPackageFolder = getAppPackage(options);
+
 }
 
 function getSolutionFile(options) {
   return glob.sync(path.join(options.root, 'windows/*.sln'));
 }
 
+function getAppPackage(options) {
+  return glob.sync(path.join(options.root, 'windows/*/AppPackages/*'))[0];
+}
+
 module.exports = runWindows;
+
+/*
+runWindows({
+  root: 'C:\\github\\hack\\myapp',
+  debug: true,
+  arch: 'x86',
+  nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
+});
+*/

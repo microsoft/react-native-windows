@@ -105,7 +105,7 @@ MSBuildTools.prototype.buildProject = function (slnFile, buildType, buildArch, c
     return;
   }
 
-  var cmd = path.join(this._path, 'msbuild') + [slnFile].concat(args).join(' ');
+  var cmd = '"' + path.join(this._path, 'msbuild.exe') + '" ' + [slnFile].concat(args).join(' ');
   var results = child_process.execSync(cmd).toString().split('\r\n');
   results.forEach(function (result) {
     console.log(chalk.yellow(result));
