@@ -50,6 +50,5 @@ namespace ReactNative.Tests
         {
             _resolve(value);
         }
-
     }
 }
