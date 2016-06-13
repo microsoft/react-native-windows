@@ -436,7 +436,7 @@ namespace ReactNative.UIManager
         public void OnDestroy()
         {
             _uiImplementation.OnShutdown();
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
+            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
         }
 
         #endregion
