@@ -179,6 +179,7 @@ namespace ReactNative
                     {
                         { "code", code ?? DefaultError },
                         { "message", message },
+                        { "stack", e?.StackTrace },
                     });
                 }
             }
