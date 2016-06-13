@@ -20,15 +20,41 @@ namespace ReactNative.Bridge
         void Resolve(object value);
 
         /// <summary>
+        /// Report an error which wasn't caused by an exception.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        void Reject(string code, string message);
+
+        /// <summary>
+        /// Report an exception.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="e">The exception.</param>
+        void Reject(string code, Exception e);
+
+        /// <summary>
+        /// Report an exception with a custom error message.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="e">The exception.</param>
+        void Reject(string code, string message, Exception e);
+
+        /// <summary>
+        /// Report an error which wasn't caused by an exception.
+        /// </summary>
+        /// <param name="message">The error message.</param>
+        /// <remarks>
+        /// Using this method will pass the error code "EUNSPECIFIED".
+        /// </remarks>
+        [Obsolete("Prefer passing a module-specific error code to JavaScript.")]
+        void Reject(string message);
+
+        /// <summary>
         /// Reject the promise with the given exception.
         /// </summary>
         /// <param name="exception">The exception.</param>
         void Reject(Exception exception);
-
-        /// <summary>
-        /// Reject the promise with the given reason.
-        /// </summary>
-        /// <param name="reason">The reason.</param>
-        void Reject(string reason);
     }
 }
