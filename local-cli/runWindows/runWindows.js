@@ -1,9 +1,11 @@
 'use strict';
 
-var path = require('path');
 var child_process = require('child_process');
+var fs = require('fs');
+var path = require('path');
 var chalk = require('chalk');
 var glob = require('glob');
+var parse = require('xml-parser');
 var shell = require('shelljs');
 var MSBuildTools = require('./utils/msbuildtools');
 
@@ -33,8 +35,7 @@ function runWindows(options) {
   }
 
   try {
-    // Clean solution
-    shell.rm('-rf', glob.sync(path.join(options.root, 'windows/*/AppPackages'))[0]);
+    shell.rm('-rf', glob.sync(path.join(options.root, 'windows/*/AppPackages')));
   } catch (e) {
     console.log(chalk.red('Failed to remove the AppPackages folder'));
   }
@@ -48,7 +49,6 @@ function runWindows(options) {
     return;
   }
 
-
   // Get build/deploy options
   var buildType = options.release ? 'release' : 'debug';
   var buildArch = options.arch ? options.arch : 'anycpu';
@@ -57,8 +57,30 @@ function runWindows(options) {
   var msBuildTools = MSBuildTools.findAvailableVersion();
   msBuildTools.buildProject(slnFile, buildType, buildArch, null);
 
+  // Launch start
+  var rnStart = child_process.spawn('react-native start', { cwd: options.root });
+  rnStart.on('data', function (data) {
+    console.log(chalk.yellow(data.toString()));
+  });
+  rnStart.on('error', function (err) {
+    console.log(chalk.red(err.toString()));
+  });
+
   var appPackageFolder = getAppPackage(options);
 
+  var windowsStoreAppUtils = getWindowsStoreAppUtils();
+  var appxManifest = getAppxManifest(options);
+  var identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
+  var appName = identity.attributes.Name;
+  child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
+    windowsStoreAppUtils + '" ; Uninstall-App ' + appName);
+
+  var script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
+  child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
+    windowsStoreAppUtils + '" ; Install-App "' + script + '"');
+
+  child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
+    windowsStoreAppUtils + '" ; Start-Locally ' + appName);
 }
 
 function getSolutionFile(options) {
@@ -67,6 +89,17 @@ function getSolutionFile(options) {
 
 function getAppPackage(options) {
   return glob.sync(path.join(options.root, 'windows/*/AppPackages/*'))[0];
+}
+
+function getWindowsStoreAppUtils() {
+  var appStorePath = path.join(__dirname, 'utils/WIndowsStoreAppUtils.ps1');
+  child_process.execSync('powershell Unblock-File ' + appStorePath);
+  return appStorePath;
+}
+
+function getAppxManifest(options) {
+  var appxPath = glob.sync(path.join(options.root, 'windows/*/bin/*/*/AppxManifest.xml'))[0];
+  return parse(fs.readFileSync(appxPath, 'utf8'));
 }
 
 module.exports = runWindows;
@@ -79,3 +112,4 @@ runWindows({
   nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
 });
 */
+
