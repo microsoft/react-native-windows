@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using Windows.Graphics.Display;
+using Windows.UI.ViewManagement;
 
 namespace ReactNative.UIManager
 {
@@ -414,6 +417,7 @@ namespace ReactNative.UIManager
         public void OnSuspend()
         {
             _uiImplementation.OnSuspend();
+            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
         }
 
         /// <summary>
@@ -422,7 +426,9 @@ namespace ReactNative.UIManager
         public void OnResume()
         {
             _uiImplementation.OnResume();
+            ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
         }
+
 
         /// <summary>
         /// Called when the host is shutting down.
@@ -430,6 +436,7 @@ namespace ReactNative.UIManager
         public void OnDestroy()
         {
             _uiImplementation.OnShutdown();
+            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
         }
 
         #endregion
@@ -462,6 +469,36 @@ namespace ReactNative.UIManager
         public override void OnReactInstanceDispose()
         {
             _eventDispatcher.OnReactInstanceDispose();
+        }
+
+        #endregion
+
+        #region Dimensions
+
+        private void OnBoundsChanged(ApplicationView sender, object args)
+        {
+            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                .emit("didUpdateDimensions", GetDimensions());
+        }
+
+        private static IDictionary<string, object> GetDimensions()
+        {
+            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+            var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+
+            return new Dictionary<string, object>
+            {
+                {
+                    "window",
+                    new Dictionary<string, object>
+                    {
+                        { "width", bounds.Width },
+                        { "height", bounds.Height },
+                        { "scale", scale },
+                        /* TODO: density and DPI needed? */
+                    }
+                },
+            };
         }
 
         #endregion
