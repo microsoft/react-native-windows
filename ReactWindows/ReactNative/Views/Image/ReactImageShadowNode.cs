@@ -36,6 +36,7 @@ namespace ReactNative.Views.Image
             {
                 _imageTintColor = null;
             }
+
             MarkUpdated();
         }
 
@@ -54,6 +55,7 @@ namespace ReactNative.Views.Image
             {
                 _imageBackgroundColor = null;
             }
+
             MarkUpdated();
         }
 

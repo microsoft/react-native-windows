@@ -3,7 +3,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -176,8 +175,8 @@ namespace ReactNative.Views.Image
                 }
                 else
                 {
-                    ((ImageBrush)view.Background).ImageSource = image;
-                    loader.FreeReference(source);
+                    ((ImageBrush)view.Background).ImageSource = image.Image;
+                    image.Dispose();
                 }
 
                 eventDispatcher.DispatchEvent(
@@ -186,7 +185,7 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                loader.LoadImage(source, this, Tuple.Create(view, tintColor, backgroundColor));
+                loader.LoadImage(source, Tuple.Create(this, view, tintColor, backgroundColor));
 
                 eventDispatcher.DispatchEvent(
                     new ReactImageLoadEvent(view.GetTag(),
@@ -212,9 +211,10 @@ namespace ReactNative.Views.Image
 
         internal void ImageLoaded(object data, bool loaded, string source)
         {
-            var view = ((Tuple<Border, Color?, Color?>)data).Item1;
-            var tintColor = ((Tuple<Border, Color?, Color?>)data).Item2;
-            var backgroundColor = ((Tuple<Border, Color?, Color?>)data).Item3;
+            var view = ((Tuple<ReactImageManager, Border, Color?, Color?>)data).Item2;
+            var tintColor = ((Tuple<ReactImageManager, Border, Color?, Color?>)data).Item3;
+            var backgroundColor = ((Tuple<ReactImageManager, Border, Color?, Color?>)data).Item4;
+
             var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
 
             view.GetReactContext().GetNativeModule<UIManagerModule>().
@@ -232,96 +232,36 @@ namespace ReactNative.Views.Image
                 }
                 else
                 {
-                    ((ImageBrush)view.Background).ImageSource = image;
-                    loader.FreeReference(source);
+                    ((ImageBrush)view.Background).ImageSource = image.Image;
+                    image.Dispose();
                 }
             }
         }
 
         internal void DataLoaded(object data, string source)
         {
-            var view = ((Tuple<Border, Color?, Color?>)data).Item1;
-            var tintColor = ((Tuple<Border, Color?, Color?>)data).Item2;
-            var backgroundColor = ((Tuple<Border, Color?, Color?>)data).Item3;
+            var view = ((Tuple<ReactImageManager, Border, Color?, Color?>)data).Item2;
+            var tintColor = ((Tuple<ReactImageManager, Border, Color?, Color?>)data).Item3;
+            var backgroundColor = ((Tuple<ReactImageManager, Border, Color?, Color?>)data).Item4;
+
             var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
-
             var image = loader.GetImage(source);
-            var pixels = loader.GetPixelData(source);
 
-            SetPixels(view, image, tintColor, backgroundColor, pixels, source);
+            ImageHelpers.SetPixels(view, image, tintColor, backgroundColor);
         }
 
-        private void SetColors(Border view, BitmapImage image, string source, Color? tintColor, Color? backgroundColor)
+        private void SetColors(Border view, ImageReference image, string source, Color? tintColor, Color? backgroundColor)
         {
             var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
-            var pixelData = loader.GetPixelData(source);
 
-            if (pixelData != null)
+            if (image.PixelData != null)
             {
-                SetPixels(view, image, tintColor, backgroundColor, pixelData, source);
+                ImageHelpers.SetPixels(view, image, tintColor, backgroundColor);
             }
             else
             {
-                loader.LoadImagePixelData(source, this, Tuple.Create(view, tintColor, backgroundColor));
+                loader.LoadPixelDataAsync(source, Tuple.Create(this, view, tintColor, backgroundColor));
             }
-        }
-
-        private async void SetPixels(
-            Border view, 
-            BitmapImage image, 
-            Color? tintColor, 
-            Color? backgroundColor, 
-            byte[] pixelData, 
-            string source)
-        {
-            var pixels = new byte[pixelData.Length];
-            pixelData.CopyTo(pixels, 0);
-
-            for (var i = 3; i < pixels.Length; i += 4) // 0 = B, 1 = G, 2 = R, 3 = A
-            {
-                if (tintColor != null)
-                {
-                    if (pixels[i] != 0)
-                    {
-                        pixels[i - 3] = (byte)tintColor?.B;
-                        pixels[i - 2] = (byte)tintColor?.G;
-                        pixels[i - 1] = (byte)tintColor?.R;
-                    }
-                }
-                if (backgroundColor != null)
-                {
-                    var frontAlpha = (double)pixels[i] / 255;
-                    var backAlpha = (double)backgroundColor?.A / 255;
-
-                    pixels[i - 3] = ColorValue(pixels[i - 3], frontAlpha, (double)backgroundColor?.B, backAlpha);
-                    pixels[i - 2] = ColorValue(pixels[i - 2], frontAlpha, (double)backgroundColor?.G, backAlpha);
-                    pixels[i - 1] = ColorValue(pixels[i - 1], frontAlpha, (double)backgroundColor?.R, backAlpha);
-                    pixels[i] = AlphaValue(pixels[i], (double)backgroundColor?.A);
-                }
-            }
-
-            var writableBitmap = new WriteableBitmap(image.PixelWidth, image.PixelHeight);
-
-            // Open a stream to copy the image contents to the WriteableBitmap's pixel buffer 
-            using (System.IO.Stream writeStream = writableBitmap.PixelBuffer.AsStream())
-            {
-                await writeStream.WriteAsync(pixels, 0, pixels.Length);
-            }
-
-            ((ImageBrush)view.Background).ImageSource = writableBitmap;
-
-            view.GetReactContext().GetNativeModule<ImageLoaderModule>().FreeReference(source);
-        }
-
-        private static byte ColorValue(double frontColor, double frontAlpha, double backColor, double backAlpha)
-        {
-            return (byte)((frontColor * frontAlpha + backColor * backAlpha * (1 - frontAlpha)) / 
-                                (frontAlpha + backAlpha * (1 - frontAlpha)));
-        }
-
-        private static byte AlphaValue(double frontAlpha, double backAlpha)
-        {
-            return (byte)(frontAlpha + backAlpha * (1 - (frontAlpha / 255)));
-        }
+        }       
     }
 }
