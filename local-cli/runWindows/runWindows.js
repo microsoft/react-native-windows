@@ -15,16 +15,6 @@ var MSBuildTools = require('./utils/msbuildtools');
 function runWindows(options) {
   // Fix up options
   options.root = options.root || process.cwd();
-
-  var slnFiles = getSolutionFile(options);
-  if (slnFiles.length === 0) {
-    console.log(chalk.red('Visual Studio Solution file not found. Maybe run rnpm windows first?'));
-    return;
-  }
-
-  var slnFile = slnFiles[0];
-
-  // Validate args
   if (options.debug && options.release) {
     console.log(chalk.red('Only one of "debug"/"release" options should be specified'));
     return;
@@ -34,57 +24,105 @@ function runWindows(options) {
     return;
   }
 
+  var slnFile = getSolutionFile(options);
+  if (!slnFile) {
+    console.log(chalk.red('Visual Studio Solution file not found. Maybe run rnpm windows first?'));
+    return;
+  }
+
   try {
-    shell.rm('-rf', glob.sync(path.join(options.root, 'windows/*/AppPackages')));
+    cleanSolution(options);
   } catch (e) {
     console.log(chalk.red('Failed to remove the AppPackages folder'));
   }
 
   try {
-    // Restore the NuGet packages
-    var nugetPath = options.nugetPath || '../.nuget/nuget.exe';
-    child_process.execSync(nugetPath + ' restore ' + slnFile + ' -NonInteractive');
+    restoreNuGetPackages(options, slnFile);
   } catch (e) {
     console.log(chalk.red('Failed to restore the NuGet packages'));
     return;
   }
 
   // Get build/deploy options
-  var buildType = options.release ? 'DebugBundle' : 'Debug';
+  var buildType = options.release ? 'release' : 'Debug';
   var buildArch = options.arch ? options.arch : 'anycpu';
   var deployTarget = options.target ? options.target : (options.emulator ? 'emulator' : 'device');
 
+  try {
+    buildSolution(slnFile, buildType, buildArch);
+  } catch (e) {
+    console.log(chalk.red('Build failed with message ' + e + '. Check your build configuration.'));
+    return;
+  }
+
+  try {
+    startServerInNewWindow(options);
+  } catch (e) {
+    console.log(chalk.red('Failed to start the development server'));
+    return;
+  }
+
+  try {
+    deploySolution(options, deployTarget);
+  } catch (e) {
+    console.log(chalk.red('Failed to deploy the application'));
+    return;
+  }
+}
+
+function cleanSolution(options) {
+  shell.rm('-rf', glob.sync(path.join(options.root, 'windows/*/AppPackages')));
+}
+
+function buildSolution(slnFile, buildType, buildArch) {
+  console.log(chalk.green('Building the solution'));
   var msBuildTools = MSBuildTools.findAvailableVersion();
   msBuildTools.buildProject(slnFile, buildType, buildArch, null);
+}
 
-  // Launch start
-  var rnStart = child_process.spawn('node', ['./node_modules/react-native/local-cli/cli.js', 'start'], { cwd: options.root });
-  rnStart.on('data', function (data) {
-    console.log(chalk.yellow(data.toString()));
-  });
-  rnStart.on('error', function (err) {
-    console.log(chalk.red(err.toString()));
-  });
+function restoreNuGetPackages(options, slnFile) {
+  console.log(chalk.green('Restoring NuGet packages'));
+  var nugetPath = options.nugetPath || '../.nuget/nuget.exe';
+  var results = child_process.execSync(nugetPath + ' restore ' + slnFile + ' -NonInteractive').toString().split('\r\n');
+  results.forEach(function (result) { console.log(chalk.green(result)); });
+}
 
+function startServerInNewWindow(options) {
+  console.log(chalk.green('Starting the React-Native Server'));
+  var launchPackagerScript = path.resolve('node_modules/react-native/packager/launchPackager.bat');
+  var options = {
+    cwd: options.root,
+    detached: true,
+    stdio: 'ignore'
+  };
+
+  child_process.spawn('cmd.exe', ['/C', 'start', launchPackagerScript], options);
+}
+
+function deploySolution(options) {
   var appPackageFolder = getAppPackage(options);
 
   var windowsStoreAppUtils = getWindowsStoreAppUtils();
   var appxManifest = getAppxManifest(options);
   var identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
   var appName = identity.attributes.Name;
+
+  console.log(chalk.green('Removing old version of the app'));
   child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
     windowsStoreAppUtils + '" ; Uninstall-App ' + appName);
 
+  console.log(chalk.green('Installing new version of the app'));
   var script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
   child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
     windowsStoreAppUtils + '" ; Install-App "' + script + '"');
 
+  console.log(chalk.green('Starting the app'));
   child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
     windowsStoreAppUtils + '" ; Start-Locally ' + appName);
 }
 
 function getSolutionFile(options) {
-  return glob.sync(path.join(options.root, 'windows/*.sln'));
+  return glob.sync(path.join(options.root, 'windows/*.sln'))[0];
 }
 
 function getAppPackage(options) {
@@ -104,10 +142,12 @@ function getAppxManifest(options) {
 
 module.exports = runWindows;
 
+/*
+// Example of running the Windows Command
 runWindows({
   root: 'C:\\github\\hack\\myapp',
   debug: true,
   arch: 'x86',
   nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
 });
-
+*/
