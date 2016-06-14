@@ -50,7 +50,7 @@ function runWindows(options) {
   }
 
   // Get build/deploy options
-  var buildType = options.release ? 'release' : 'debug';
+  var buildType = options.release ? 'DebugBundle' : 'Debug';
   var buildArch = options.arch ? options.arch : 'anycpu';
   var deployTarget = options.target ? options.target : (options.emulator ? 'emulator' : 'device');
 
@@ -58,7 +58,7 @@ function runWindows(options) {
   msBuildTools.buildProject(slnFile, buildType, buildArch, null);
 
   // Launch start
-  var rnStart = child_process.spawn('react-native start', { cwd: options.root });
+  var rnStart = child_process.spawn('node', ['./node_modules/react-native/local-cli/cli.js', 'start'], { cwd: options.root });
   rnStart.on('data', function (data) {
     console.log(chalk.yellow(data.toString()));
   });
@@ -104,12 +104,10 @@ function getAppxManifest(options) {
 
 module.exports = runWindows;
 
-/*
 runWindows({
   root: 'C:\\github\\hack\\myapp',
   debug: true,
   arch: 'x86',
   nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
 });
-*/
 
