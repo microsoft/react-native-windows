@@ -28,7 +28,7 @@ namespace ReactNative.Tests.Modules.Clipboard
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); }, 
-                                          reject => { result = reject; waitHandle.Set(); });
+                                          (code, message, e) => { result = message; waitHandle.Set(); });
 
             module.setString(str);
             module.getString(promise);
@@ -45,7 +45,7 @@ namespace ReactNative.Tests.Modules.Clipboard
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
-                                          reject => { result = reject; waitHandle.Set(); });
+                                          (code, message, e) => { result = message; waitHandle.Set(); });
 
             module.setString(null);
             module.getString(promise);

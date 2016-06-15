@@ -5,28 +5,45 @@ namespace ReactNative.Tests
 {
     class MockPromise : IPromise
     {
+        private const string DefaultError = "EUNSPECIFIED";
+
         private readonly Action<object> _resolve;
-        private readonly Action<string> _reject;
+        private readonly Action<string, string, Exception> _reject;
         
         public MockPromise(Action<object> resolve)
-            : this(resolve, _ => { })
+            : this(resolve, (_, __, ___)=> { })
         {
         }
 
-        public MockPromise(Action<object> resolve, Action<string> reject)
+        public MockPromise(Action<object> resolve, Action<string, string, Exception> reject)
         {
             _resolve = resolve;
             _reject = reject;
         }
 
-        public void Reject(string reason)
+        public void Reject(string code, string message)
         {
-            _reject(reason);
+            Reject(code, message, default(Exception));
+        }
+
+        public void Reject(string message)
+        {
+            Reject(DefaultError, message, default(Exception));
+        }
+
+        public void Reject(string code, Exception e)
+        {
+            Reject(code, e.Message, e);
         }
 
         public void Reject(Exception exception)
         {
-            Reject(exception.Message);
+            Reject(DefaultError, exception.Message, exception);
+        }
+
+        public void Reject(string code, string message, Exception e)
+        {
+            _reject.Invoke(code, message, e);
         }
 
         public void Resolve(object value)
