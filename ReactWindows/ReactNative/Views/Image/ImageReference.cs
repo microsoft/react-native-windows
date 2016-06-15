@@ -20,6 +20,14 @@ namespace ReactNative.Views.Image
             _imageDictionary = dictionary;
         }
 
+        internal string Key
+        {
+            get
+            {
+                return _key;
+            }
+        }
+
         internal BitmapImage Image
         {
             get
@@ -52,7 +60,11 @@ namespace ReactNative.Views.Image
 
             if (_referenceCount == 0)
             {
-                _imageDictionary.Remove(_key);
+                lock (_imageDictionary)
+                {
+                    _imageDictionary.Remove(_key);
+                }
+
                 _image = null;
                 _pixelData = null;
             }
