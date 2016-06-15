@@ -2,6 +2,7 @@
 using ReactNative.Bridge;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
@@ -115,16 +116,8 @@ namespace ReactNative.Views.Image
         internal static string GenerateFileName(string uriString)
         {
             var key = GenerateKeyName(uriString);
-            return key
-                .Replace('/', '_')
-                .Replace(':', '_')
-                .Replace('?', '_')
-                .Replace('\\', '_')
-                .Replace('*', '_')
-                .Replace('<', '_')
-                .Replace('>', '_')
-                .Replace('|', '_')
-                .Replace('\"', '_');
+            var pattern = new Regex("[/:?\\*<>|\"]");
+            return pattern.Replace(key, "_");
         }
 
         internal static void ResolveSize(IPromise promise, BitmapImage image)
@@ -191,8 +184,8 @@ namespace ReactNative.Views.Image
                     await reader.LoadAsync((uint)stream.Size);
 
                     var buffer = reader.ReadBuffer((uint)stream.Size);
-                    var bytes = await output.WriteAsync(buffer);
-                    var flushed = await output.FlushAsync();
+                    await output.WriteAsync(buffer);
+                    await output.FlushAsync();
                 }
             }
             catch (Exception) { }
