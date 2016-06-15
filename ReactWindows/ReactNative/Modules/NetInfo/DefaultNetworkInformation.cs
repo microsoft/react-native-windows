@@ -19,7 +19,6 @@ namespace ReactNative.Modules.NetInfo
         public IConnectionProfile GetInternetConnectionProfile()
         {
             var profile = NetworkInformation.GetInternetConnectionProfile();
-            var connectivity = profile.GetNetworkConnectivityLevel();
             return profile != null
                 ? new ConnectionProfileImpl(profile)
                 : null;
