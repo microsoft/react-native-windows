@@ -14,6 +14,7 @@ var ReactWindows = {
   // Components
   get FlipViewWindows() { return require('FlipViewWindows'); },
   get ProgressBarWindows() {return require('ProgressBarWindows');},
+  get ProgressRingWindows() {return require('ProgressRingWindows');},
   get SplitViewWindows() { return require('SplitViewWindows'); },
 };
 
