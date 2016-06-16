@@ -11,16 +11,20 @@ var MSBuildTools = require('./utils/msbuildtools');
 
 /**
  * Starts the app on a connected Windows emulator or mobile device.
+ * Options are the following:
+ *    root: String - The root of the application
+ *    debug: Boolean - Specifies debug build
+ *    release: Boolean - Specifies release build
+ *    arch: String - The build architecture (x86, x64, ARM, Any CPU)
+ *    desktop: Boolean - Deploy to the desktop
+ *    emulator: Boolean - Deploy to the emulator
+ *    device: Boolean - Deploy to a device
  */
 function runWindows(options) {
   // Fix up options
   options.root = options.root || process.cwd();
   if (options.debug && options.release) {
     console.log(chalk.red('Only one of "debug"/"release" options should be specified'));
-    return;
-  }
-  if (options.device && options.emulator) {
-    console.log(chalk.red('Only one of "device"/"emulator"/"target" options should be specified'));
     return;
   }
 
@@ -44,9 +48,8 @@ function runWindows(options) {
   }
 
   // Get build/deploy options
-  var buildType = options.release ? 'release' : 'Debug';
+  var buildType = options.release ? 'Release' : 'Debug';
   var buildArch = options.arch ? options.arch : 'anycpu';
-  var deployTarget = options.target ? options.target : (options.emulator ? 'emulator' : 'device');
 
   try {
     buildSolution(slnFile, buildType, buildArch);
@@ -62,10 +65,22 @@ function runWindows(options) {
     return;
   }
 
-  try {
-    deploySolution(options, deployTarget);
-  } catch (e) {
-    console.log(chalk.red('Failed to deploy the application'));
+  if (options.desktop) {
+    try {
+      deployToDesktop(options);
+    } catch (e) {
+      console.log(chalk.red('Failed to deploy the application'));
+      return;
+    }
+  }
+
+  if (options.device) {
+    console.log(chalk.red('Deploying to device is not yet supported'));
+    return;
+  }
+
+  if (options.emulator) {
+    console.log(chalk.red('Deploying to an emulator is not yet supported'));
     return;
   }
 }
@@ -99,7 +114,7 @@ function startServerInNewWindow(options) {
   child_process.spawn('cmd.exe', ['/C', 'start', launchPackagerScript], options);
 }
 
-function deploySolution(options) {
+function deployToDesktop(options) {
   var appPackageFolder = getAppPackage(options);
 
   var windowsStoreAppUtils = getWindowsStoreAppUtils();
