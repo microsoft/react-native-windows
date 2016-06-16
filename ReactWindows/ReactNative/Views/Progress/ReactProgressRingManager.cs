@@ -33,7 +33,7 @@ namespace ReactNative.Views.Progress
         {
             view.Foreground = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(Colors.YellowGreen);
+                : new SolidColorBrush(Colors.Black);
         }
 
         /// <summary>
