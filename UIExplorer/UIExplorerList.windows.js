@@ -22,6 +22,10 @@ export type UIExplorerExample = {
 
 var ComponentExamples: Array<UIExplorerExample> = [
   {
+    key: 'ActivityIndicatorExample',
+    module: require('./ActivityIndicatorExample'),
+  },
+  {
     key: 'FlipViewWindowsExample',
     module: require('./FlipViewWindowsExample'),
   },
