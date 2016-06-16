@@ -83,6 +83,7 @@ namespace ReactNative.Shell
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
                 new ReactProgressBarViewManager(),
+                new ReactProgressRingViewManager(),
                 new ReactPickerManager(),
                 new ReactRawTextManager(),
                 //new RecyclerViewBackedScrollViewManager(),
