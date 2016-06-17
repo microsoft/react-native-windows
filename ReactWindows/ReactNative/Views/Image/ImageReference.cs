@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Views.Image
@@ -12,7 +13,7 @@ namespace ReactNative.Views.Image
         private string _key;
         private Dictionary<string, ImageReference> _imageDictionary;
 
-        internal ImageReference(BitmapImage image, int count, string key, Dictionary<string, ImageReference> dictionary)
+        public ImageReference(BitmapImage image, int count, string key, Dictionary<string, ImageReference> dictionary)
         {
             _image = image;
             _referenceCount = count;
@@ -20,7 +21,7 @@ namespace ReactNative.Views.Image
             _imageDictionary = dictionary;
         }
 
-        internal string Key
+        public string Key
         {
             get
             {
@@ -28,7 +29,7 @@ namespace ReactNative.Views.Image
             }
         }
 
-        internal BitmapImage Image
+        public BitmapImage Image
         {
             get
             {
@@ -36,7 +37,7 @@ namespace ReactNative.Views.Image
             }
         }
 
-        internal byte[] PixelData
+        public byte[] PixelData
         {
             get
             {
@@ -44,19 +45,19 @@ namespace ReactNative.Views.Image
             }
         }
 
-        internal void SetPixelData(byte[] data)
+        public void SetPixelData(byte[] data)
         {
             _pixelData = data;
         }
 
-        internal void Reserve()
+        public void Reserve()
         {
-            _referenceCount++;
+            Interlocked.Increment(ref _referenceCount);
         }
 
         public void Dispose()
         {
-            _referenceCount--;
+            Interlocked.Decrement(ref _referenceCount);
 
             if (_referenceCount == 0)
             {

@@ -23,12 +23,12 @@ namespace ReactNative.Views.Image
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
-        internal static async void RunOnDispatcher(DispatchedHandler action)
+        public static async void RunOnDispatcher(DispatchedHandler action)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action);
         }
 
-        internal static async void SetPixels(
+        public static async void SetPixels(
             Border view,
             ImageReference image,
             Color? tintColor,
@@ -74,7 +74,7 @@ namespace ReactNative.Views.Image
             image.Dispose();
         }
 
-        internal static async void ClearCache()
+        public static async void ClearCache()
         {
             var localFolder = await ApplicationData.Current.LocalFolder.TryGetItemAsync(IMAGE_FOLDER);
 
@@ -88,7 +88,7 @@ namespace ReactNative.Views.Image
             }
         }
 
-        internal static string GenerateKeyName(string uriString)
+        public static string GenerateKeyName(string uriString)
         {
             if (uriString == null)
             {
@@ -113,14 +113,14 @@ namespace ReactNative.Views.Image
             }
         }
 
-        internal static string GenerateFileName(string uriString)
+        public static string GenerateFileName(string uriString)
         {
             var key = GenerateKeyName(uriString);
             var pattern = new Regex("[/:?\\*<>|\"]");
             return pattern.Replace(key, "_");
         }
 
-        internal static void ResolveSize(IPromise promise, BitmapImage image)
+        public static void ResolveSize(IPromise promise, BitmapImage image)
         {
             var sizes = new JObject()
             {
@@ -131,13 +131,14 @@ namespace ReactNative.Views.Image
             promise.Resolve(sizes);
         }
 
-        internal static async Task<IRandomAccessStream> OpenAsync(string uriString)
+        public static async Task<IRandomAccessStream> OpenAsync(string uriString)
         {
             var localFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(
                 IMAGE_FOLDER,
                 CreationCollisionOption.OpenIfExists);
 
-            var file = await (localFolder as StorageFolder).TryGetItemAsync(ImageHelpers.GenerateFileName(uriString));
+            var fileName = ImageHelpers.GenerateFileName(uriString);
+            var file = await (localFolder as StorageFolder).TryGetItemAsync(fileName);
 
             if (file != null)
             {
@@ -147,23 +148,25 @@ namespace ReactNative.Views.Image
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    return await DownloadAsync(uriString);
+                    var uri = new Uri(uriString);
+                    return await DownloadAsync(uri);
                 }            
             }
             else
             {
-                ImageHelpers.SaveAsync(uriString);
-                return await DownloadAsync(uriString);
+                var uri = new Uri(uriString);
+                ImageHelpers.SaveAsync(uri, fileName);
+                return await DownloadAsync(uri);
             }    
         }
 
-        private static async Task<IRandomAccessStream> DownloadAsync(string uriString)
+        private static async Task<IRandomAccessStream> DownloadAsync(Uri uri)
         {
-            var randomAccessStreamReference = RandomAccessStreamReference.CreateFromUri(new Uri(uriString));
+            var randomAccessStreamReference = RandomAccessStreamReference.CreateFromUri(uri);
             return await randomAccessStreamReference.OpenReadAsync();
         }
 
-        private static async void SaveAsync(string uriString)
+        private static async void SaveAsync(Uri uri, string fileName)
         {
             try
             {
@@ -172,10 +175,10 @@ namespace ReactNative.Views.Image
                     CreationCollisionOption.OpenIfExists);
 
                 var file = localFolder.CreateFileAsync(
-                    ImageHelpers.GenerateFileName(uriString),
+                    fileName,
                     CreationCollisionOption.FailIfExists).AsTask().Result;
 
-                var stream = await DownloadAsync(uriString);          
+                var stream = await DownloadAsync(uri);          
 
                 using (var targetStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                 using (var reader = new DataReader(stream.GetInputStreamAt(0)))
