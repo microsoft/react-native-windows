@@ -1,6 +1,7 @@
 'use strict';
 
-var child_process = require('child_process');
+var execSync = require('child_process').execSync;
+var spawn = require('child_process').spawn;
 var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
@@ -8,6 +9,7 @@ var glob = require('glob');
 var parse = require('xml-parser');
 var shell = require('shelljs');
 var MSBuildTools = require('./utils/msbuildtools');
+var WinAppDeployTool = require('./utils/winappdeploytool');
 
 /**
  * Starts the app on a connected Windows emulator or mobile device.
@@ -19,6 +21,7 @@ var MSBuildTools = require('./utils/msbuildtools');
  *    desktop: Boolean - Deploy to the desktop
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
+ *    target: String - Device GUID to deploy to
  */
 function runWindows(options) {
   // Fix up options
@@ -74,14 +77,12 @@ function runWindows(options) {
     }
   }
 
-  if (options.device) {
-    console.log(chalk.red('Deploying to device is not yet supported'));
-    return;
-  }
-
-  if (options.emulator) {
-    console.log(chalk.red('Deploying to an emulator is not yet supported'));
-    return;
+  if (options.device || options.emulator || options.target) {
+    try {
+      deployToDevice(options);
+    } catch (e) {
+      console.log(chalk.red('Failed to deploy the application to the device or emulator'));
+    }
   }
 }
 
@@ -98,7 +99,7 @@ function buildSolution(slnFile, buildType, buildArch) {
 function restoreNuGetPackages(options, slnFile) {
   console.log(chalk.green('Restoring NuGet packages'));
   var nugetPath = options.nugetPath || '../.nuget/nuget.exe';
-  var results = child_process.execSync(nugetPath + ' restore ' + slnFile + ' -NonInteractive').toString().split('\r\n');
+  var results = execSync(nugetPath + ' restore ' + slnFile + ' -NonInteractive').toString().split('\r\n');
   results.forEach(function (result) { console.log(chalk.green(result)); });
 }
 
@@ -111,7 +112,54 @@ function startServerInNewWindow(options) {
     stdio: 'ignore'
   };
 
-  child_process.spawn('cmd.exe', ['/C', 'start', launchPackagerScript], options);
+  spawn('cmd.exe', ['/C', 'start', launchPackagerScript], options);
+}
+
+function deployToDevice(options) {
+  var appPackageFolder = getAppPackage(options);
+
+  var deployTarget = options.target ? options.target : (options.emulator ? 'emulator' : 'device');
+  var deployTool = new WinAppDeployTool();
+  var appxManifest = getAppxManifest(options);
+  var identity = appxManifest.root.children.filter(function (x) { return x.name === 'mp:PhoneIdentity'; })[0];
+  var appName = identity.attributes.PhoneProductId;
+
+  var device;
+  try {
+    device = deployTool.findDevice(deployTarget);
+  } catch (e) {
+    console.log(chalk.red(e.message));
+    return;
+  }
+
+  try {
+    console.log(chalk.green('Uninstalling app from ' + device.name))
+    deployTool.uninstallAppPackage(appName, device);
+  } catch (e) {
+    console.log(chalk.yellow('Failed to uninstall app from ' + device.name));
+  }
+
+  var appxFile = glob.sync(path.join(appPackageFolder, '*.appx'))[0];
+  console.log('appxFile', appxFile);
+  try {
+    console.log(chalk.green('Installing app to ' + device.name));
+    deployTool.installAppPackage(appxFile, device, true, false);
+  } catch (e) {
+    if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
+      try {
+        deployTool.installAppPackage(appxFile, device, true, true);
+      } catch (err) {
+        console.log(chalk.red('Unexpected error deploying app: ' + e.message));
+        return;
+      }
+    } else if (e.message.indexOf('Error code -2146233088')) {
+      console.log(chalk.red('No Windows Mobile device was detected.'));
+      return;
+    } else {
+      console.log(chalk.red('Unexpected error deploying app: ' + e.message));
+      return;
+    }
+  }
 }
 
 function deployToDesktop(options) {
@@ -123,16 +171,16 @@ function deployToDesktop(options) {
   var appName = identity.attributes.Name;
 
   console.log(chalk.green('Removing old version of the app'));
-  child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
+  execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
     windowsStoreAppUtils + '" ; Uninstall-App ' + appName);
 
   console.log(chalk.green('Installing new version of the app'));
   var script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
-  child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
+  execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
     windowsStoreAppUtils + '" ; Install-App "' + script + '"');
 
   console.log(chalk.green('Starting the app'));
-  child_process.execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
+  execSync('powershell -ExecutionPolicy RemoteSigned Import-Module "' +
     windowsStoreAppUtils + '" ; Start-Locally ' + appName);
 }
 
@@ -146,7 +194,7 @@ function getAppPackage(options) {
 
 function getWindowsStoreAppUtils() {
   var appStorePath = path.join(__dirname, 'utils/WIndowsStoreAppUtils.ps1');
-  child_process.execSync('powershell Unblock-File ' + appStorePath);
+  execSync('powershell Unblock-File ' + appStorePath);
   return appStorePath;
 }
 
@@ -157,12 +205,12 @@ function getAppxManifest(options) {
 
 module.exports = runWindows;
 
-/*
 // Example of running the Windows Command
 runWindows({
   root: 'C:\\github\\hack\\myapp',
   debug: true,
   arch: 'x86',
   nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
+  device: true,
 });
-*/
+
