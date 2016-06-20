@@ -85,7 +85,7 @@ WinAppDeployTool.prototype.enumerateDevices = function () {
 };
 
 WinAppDeployTool.prototype.uninstallAppPackage = function (packageInfo, targetDevice) {
-  execSync('"' + this.path + '" uninstall -package ' + packageInfo + ' -ip ' + targetDevice.__ip);
+  return execSync('"' + this.path + '" uninstall -package ' + packageInfo + ' -ip ' + targetDevice.__ip).toString();
 };
 
 WinAppDeployTool.prototype.installAppPackage = function (pathToAppxPackage, targetDevice, shouldLaunch, shouldUpdate, pin) {
@@ -106,8 +106,7 @@ WinAppDeployTool.prototype.installAppPackage = function (pathToAppxPackage, targ
     args.push('-pin', pin);
   }
 
-  execSync(args.join(' '));
-  console.log(chalk.green('Deployment completed successfully.'));
+  return execSync(args.join(' ')).toString();
 };
 
 module.exports = WinAppDeployTool;
