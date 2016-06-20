@@ -69,6 +69,13 @@ namespace ReactNative.UIManager
         public const string BorderTopWidth = "borderTopWidth";
         public const string BorderRightWidth = "borderRightWidth";
         public const string BorderBottomWidth = "borderBottomWidth";
+
+        public const string BorderRadius = "borderRadius";
+        public const string BorderTopLeftRadius = "borderTopLeftRadius";
+        public const string BorderTopRightRadius = "borderTopRightRadius";
+        public const string BorderBottomLeftRadius = "borderBottomLeftRadius";
+        public const string BorderBottomRightRadius = "borderBottomRightRadius";
+
 #pragma warning restore CS1591
 
         /// <summary>
