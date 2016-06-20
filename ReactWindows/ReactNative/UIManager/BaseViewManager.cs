@@ -61,7 +61,8 @@ namespace ReactNative.UIManager
             }
             else
             {
-                SetTransformMatrix(view, decomposedMatrix);
+                SetTransformCenterPoint(view);
+                SetTransformMatrix(view, decomposedMatrix);           
             }
         }
 
@@ -177,8 +178,24 @@ namespace ReactNative.UIManager
             SetTranslationY(view, 0.0);
             SetRotationX(view, 0.0);
             SetRotationY(view, 0.0);
+            SetRotationZ(view, 0.0);
             SetScaleX(view, 1.0);
             SetScaleY(view, 1.0);
+        }
+
+        private void SetTransformCenterPoint(TFrameworkElement view)
+        {
+            var transform = EnsureTransform(view);
+
+            if (!double.IsNaN(view.Width))
+            {
+                transform.CenterX = view.Width / 2;
+            }
+
+            if (!double.IsNaN(view.Height))
+            {
+                transform.CenterY = view.Height / 2;
+            }
         }
 
         private static void ApplyProperty<T>(JObject matrix, string name, TFrameworkElement view, Action<TFrameworkElement, T> apply)
