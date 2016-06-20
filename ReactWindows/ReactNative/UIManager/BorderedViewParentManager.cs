@@ -12,17 +12,53 @@ namespace ReactNative.UIManager
     public abstract class BorderedViewParentManager<TFrameworkElement> : ViewParentManager<Border>
         where TFrameworkElement : FrameworkElement
     {
+        private enum Radius
+        {
+            All,
+            TopLeft,
+            TopRight,
+            BottomLeft,
+            BottomRight,
+        }
+
         private static readonly Brush s_defaultBorderBrush = new SolidColorBrush(Colors.Black);
 
         /// <summary>
         /// Sets the border radius of the view.
         /// </summary>
         /// <param name="view">The view panel.</param>
+        /// <param name="index">The property index.</param>
         /// <param name="radius">The border radius value.</param>
-        [ReactProp("borderRadius")]
-        public void SetBorderRadius(Border view, double radius)
+        [ReactPropGroup(
+            ViewProps.BorderRadius,
+            ViewProps.BorderTopLeftRadius,
+            ViewProps.BorderTopRightRadius,
+            ViewProps.BorderBottomLeftRadius,
+            ViewProps.BorderBottomRightRadius)]
+        public void SetBorderRadius(Border view, int index, double radius)
         {
-            view.CornerRadius = new CornerRadius(radius);
+            var cornerRadius = view.CornerRadius == null ? new CornerRadius() : view.CornerRadius;
+
+            switch ((Radius)index)
+            {
+                case Radius.All:
+                    cornerRadius = new CornerRadius(radius);
+                    break;
+                case Radius.TopLeft:
+                    cornerRadius.TopLeft = radius;
+                    break;
+                case Radius.TopRight:
+                    cornerRadius.TopRight = radius;
+                    break;
+                case Radius.BottomLeft:
+                    cornerRadius.BottomLeft = radius;
+                    break;
+                case Radius.BottomRight:
+                    cornerRadius.BottomRight = radius;
+                    break;
+            }
+
+            view.CornerRadius = cornerRadius;
         }
 
         /// <summary>
