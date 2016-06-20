@@ -3,6 +3,7 @@
 var child_process = require('child_process');
 var execSync = child_process.execSync, spawn = child_process.spawn;
 var fs = require('fs');
+var http = require('http');
 var path = require('path');
 var chalk = require('chalk');
 var glob = require('glob');
@@ -14,7 +15,7 @@ function getAppPackage(options) {
 }
 
 function getWindowsStoreAppUtils() {
-  var appStorePath = path.join(__dirname, 'utils/WindowsStoreAppUtils.ps1');
+  var appStorePath = path.join(__dirname, 'WindowsStoreAppUtils.ps1');
   execSync('powershell Unblock-File ' + appStorePath);
   return appStorePath;
 }
@@ -95,15 +96,25 @@ function deployToDesktop(options) {
 }
 
 function startServerInNewWindow(options) {
+  http.get('http://localhost:8081/status', function (res) {
+    if (res === 200) {
+      console.log(chalk.green('React-Native Server already started'));
+    } else {
+      launchServer(options);
+    }
+  }).on('error', function () { launchServer(options); });
+}
+
+function launchServer(options) {
   console.log(chalk.green('Starting the React-Native Server'));
   var launchPackagerScript = path.resolve('node_modules/react-native/packager/launchPackager.bat');
-  var options = {
+  var opts = {
     cwd: options.root,
     detached: true,
     stdio: 'ignore'
   };
 
-  spawn('cmd.exe', ['/C', 'start', launchPackagerScript], options);
+  spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts);
 }
 
 module.exports = {

@@ -81,13 +81,11 @@ function runWindows(options) {
 
 module.exports = runWindows;
 
-/**
 // Example of running the Windows Command
 runWindows({
   root: 'C:\\github\\hack\\myapp',
   debug: true,
-  arch: 'ARM',
+  arch: 'x86',
   nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
-  device: true,
+  desktop: true,
 });
-*/
