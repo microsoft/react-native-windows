@@ -24,6 +24,7 @@ namespace ReactNative.UIManager
         private const string PROP_DECOMPOSED_MATRIX_SCALE_Y = "scaleY";
         private const string PROP_DECOMPOSED_MATRIX_TRANSLATE_X = "translateX";
         private const string PROP_DECOMPOSED_MATRIX_TRANSLATE_Y = "translateY";
+        private const string PROP_TRANSFORM = "transform";
         private const string PROP_OPACITY = "opacity";
 
         /// <summary>
@@ -41,6 +42,26 @@ namespace ReactNative.UIManager
             }
             else
             {
+                SetTransformMatrix(view, decomposedMatrix);
+            }
+        }
+
+        /// <summary>
+        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
+        /// properties, based on the <see cref="JObject"/> map.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="decomposedMatrix">The requested styling properties to set.</param>
+        [ReactProp(PROP_TRANSFORM)]
+        public void SetTransform(TFrameworkElement view, JObject decomposedMatrix)
+        {
+            if (decomposedMatrix == null)
+            {
+                ResetTransformMatrix(view);
+            }
+            else
+            {
+                SetTransformCenterPoint(view);
                 SetTransformMatrix(view, decomposedMatrix);
             }
         }
@@ -134,12 +155,19 @@ namespace ReactNative.UIManager
             transform.RotationY = rotation;
         }
 
+        private void SetRotationZ(TFrameworkElement view, double rotation)
+        {
+            var transform = EnsureTransform(view);
+            transform.RotationZ = -1.0 * rotation;
+        }
+
         private void SetTransformMatrix(TFrameworkElement view, JObject matrix)
         {
             ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_X, view, SetTranslationX);
             ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_Y, view, SetTranslationY);
             ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_X, view, SetRotationX);
             ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_Y, view, SetRotationY);
+            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE, view, SetRotationZ);
             ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_X, view, SetScaleX);
             ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_Y, view, SetScaleY);
         }
@@ -150,8 +178,24 @@ namespace ReactNative.UIManager
             SetTranslationY(view, 0.0);
             SetRotationX(view, 0.0);
             SetRotationY(view, 0.0);
+            SetRotationZ(view, 0.0);
             SetScaleX(view, 1.0);
             SetScaleY(view, 1.0);
+        }
+
+        private void SetTransformCenterPoint(TFrameworkElement view)
+        {
+            var transform = EnsureTransform(view);
+
+            if (!double.IsNaN(view.Width))
+            {
+                transform.CenterX = view.Width / 2;
+            }
+
+            if (!double.IsNaN(view.Height))
+            {
+                transform.CenterY = view.Height / 2;
+            }
         }
 
         private static void ApplyProperty<T>(JObject matrix, string name, TFrameworkElement view, Action<TFrameworkElement, T> apply)
