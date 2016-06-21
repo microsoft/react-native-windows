@@ -62,7 +62,7 @@ namespace ReactNative.UIManager
             else
             {
                 SetTransformCenterPoint(view);
-                SetTransformMatrix(view, decomposedMatrix);           
+                SetTransformMatrix(view, decomposedMatrix);
             }
         }
 
@@ -158,7 +158,7 @@ namespace ReactNative.UIManager
         private void SetRotationZ(TFrameworkElement view, double rotation)
         {
             var transform = EnsureTransform(view);
-            transform.RotationZ = rotation;
+            transform.RotationZ = -1.0 * rotation;
         }
 
         private void SetTransformMatrix(TFrameworkElement view, JObject matrix)
