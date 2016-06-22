@@ -175,12 +175,23 @@ namespace ReactNative.Views.Text
             }
         }
 
+        /// <summary>
+        /// Marks a node as updated.
+        /// </summary>
         protected override void MarkUpdated()
         {
-            base.MarkUpdated();
             dirty();
         }
 
+        /// <summary>
+        /// Called after a layout step at the end of a UI batch from
+        /// <see cref="UIManagerModule"/>. May be used to enqueue additional UI
+        /// operations for the native view. Will only be called on nodes marked
+        /// as updated.
+        /// </summary>
+        /// <param name="uiViewOperationQueue">
+        /// Interface for enqueueing UI operations.
+        /// </param>
         public override void OnCollectExtraUpdates(UIViewOperationQueue uiViewOperationQueue)
         {
             base.OnCollectExtraUpdates(uiViewOperationQueue);
@@ -211,7 +222,7 @@ namespace ReactNative.Views.Text
                 var block = new Paragraph();
                 foreach (var child in textNode.Children)
                 {
-                    block.Inlines.Add(ReactTextInlineShadowNodeVisitor.Apply(child));
+                    block.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
                 }
                 textBlock.Blocks.Add(block);
 
@@ -226,6 +237,10 @@ namespace ReactNative.Views.Text
             return task.Result;
         }
 
+        /// <summary>
+        /// Updates the properties of a <see cref="RichTextBlock"/> view.
+        /// </summary>
+        /// <param name="textBlock">The view.</param>
         public void UpdateTextBlock(RichTextBlock textBlock)
         {
             textBlock.CharacterSpacing = _letterSpacing;

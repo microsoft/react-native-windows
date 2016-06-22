@@ -9,7 +9,6 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.UIManager
@@ -392,13 +391,7 @@ namespace ReactNative.UIManager
                     $"Could not find view with tag '{reactTag}'.");
             }
 
-            var uiElement = view as UIElement;
-            if (uiElement == null)
-            {
-                throw new InvalidOperationException(
-                    $"Could not convert view of type '{view.GetType()}' to '{typeof(UIElement)}.");
-            }
-
+            var uiElement = view.As<UIElement>();
             var target = VisualTreeHelper.FindElementsInHostCoordinates(new Point(touchX, touchY), uiElement)
                 .OfType<FrameworkElement>()
                 .Where(e => e.HasTag())

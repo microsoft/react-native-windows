@@ -1,14 +1,10 @@
-﻿using ReactNative.Bridge;
-using ReactNative.Reflection;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Linq;
-using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
-using System;
 
 namespace ReactNative.Views.Text
 {
@@ -121,6 +117,11 @@ namespace ReactNative.Views.Text
             inlines.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Receive extra updates from the shadow node.
+        /// </summary>
+        /// <param name="root">The root view.</param>
+        /// <param name="extraData">The extra data.</param>
         public override void UpdateExtraData(RichTextBlock root, object extraData)
         {
             base.UpdateExtraData(root, extraData);
@@ -137,7 +138,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override RichTextBlock CreateViewInstance(ReactContext reactContext)
+        protected override RichTextBlock CreateViewInstance(ThemedReactContext reactContext)
         {
             var richTextBlock = new RichTextBlock
             {

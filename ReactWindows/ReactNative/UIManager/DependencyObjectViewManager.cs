@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Touch;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.UIManager
 {
@@ -124,7 +122,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        public virtual void OnDropViewInstance(ReactContext reactContext, TDependencyObject view)
+        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TDependencyObject view)
         {
         }
 

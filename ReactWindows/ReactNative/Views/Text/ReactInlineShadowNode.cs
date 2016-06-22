@@ -7,7 +7,7 @@ namespace ReactNative.Views.Text
     /// <summary>
     /// Shadow node base class for virtual text nodes.
     /// </summary>
-    public abstract class ReactTextInlineShadowNode : ReactShadowNode
+    public abstract class ReactInlineShadowNode : ReactShadowNode
     {
         /// <summary>
         /// Called after a layout step at the end of a UI batch from
@@ -37,6 +37,9 @@ namespace ReactNative.Views.Text
         /// <param name="inline">The instance.</param>
         public abstract void UpdateInline(Inline inline);
 
+        /// <summary>
+        /// Marks a node as updated.
+        /// </summary>
         protected override void MarkUpdated()
         {
             base.MarkUpdated();

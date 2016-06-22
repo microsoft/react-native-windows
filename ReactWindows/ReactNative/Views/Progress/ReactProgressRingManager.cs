@@ -1,5 +1,4 @@
-﻿using ReactNative.Bridge;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -73,7 +72,7 @@ namespace ReactNative.Views.Progress
         /// <summary>
         /// Creates a new view instance of a native <see cref="ProgressRing"/> component.
         /// </summary>
-        /// <param name="reactContext">The <see cref="ReactContext"/> of the components view context.</param>
+        /// <param name="reactContext">The <see cref="ThemedReactContext"/> of the components view context.</param>
         /// <returns>Returns a native <see cref="ProgressRing"/> component.</returns>
         protected override ProgressRing CreateViewInstance(ThemedReactContext reactContext)
         {

@@ -1,5 +1,4 @@
-﻿using ReactNative.Bridge;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;

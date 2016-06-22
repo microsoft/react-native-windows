@@ -63,6 +63,17 @@ namespace ReactNative.UIManager
             return elementData.Context;
         }
 
+        public static T As<T>(this DependencyObject view)
+            where T : DependencyObject
+        {
+            var convertedView = view as T;
+            if (convertedView == null)
+            {
+                throw new ArgumentOutOfRangeException($"Child of type '{view.GetType()}' is not assignable to '{typeof(T)}'.");
+            }
+            return convertedView;
+        }
+
         class DependencyObjectData
         {
             public ThemedReactContext Context { get; set; }

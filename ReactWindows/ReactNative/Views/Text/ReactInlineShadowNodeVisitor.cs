@@ -6,9 +6,9 @@ using Windows.UI.Xaml.Shapes;
 
 namespace ReactNative.Views.Text
 {
-    class ReactTextInlineShadowNodeVisitor : CSSNodeVisitor<Inline>
+    class ReactInlineShadowNodeVisitor : CSSNodeVisitor<Inline>
     {
-        private static readonly ReactTextInlineShadowNodeVisitor s_instance = new ReactTextInlineShadowNodeVisitor();
+        private static readonly ReactInlineShadowNodeVisitor s_instance = new ReactInlineShadowNodeVisitor();
 
         public static Inline Apply(CSSNode node)
         {
@@ -17,7 +17,7 @@ namespace ReactNative.Views.Text
 
         protected sealed override Inline Make(CSSNode node, IList<Inline> children)
         {
-            var textNode = node as ReactTextInlineShadowNode;
+            var textNode = node as ReactInlineShadowNode;
             if (textNode != null)
             {
                 return textNode.MakeInline(children);

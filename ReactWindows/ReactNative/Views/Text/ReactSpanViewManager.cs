@@ -1,5 +1,4 @@
-﻿using ReactNative.Bridge;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using Windows.UI.Xaml;
@@ -11,7 +10,7 @@ namespace ReactNative.Views.Text
     /// <summary>
     /// A virtual view manager for raw text nodes.
     /// </summary>
-    public class ReactVirtualTextViewManager : ReactTextInlineViewManager<Span, ReactVirtualTextShadowNode>, IViewParentManager
+    public class ReactSpanViewManager : ReactTextInlineViewManager<Span, ReactSpanShadowNode>, IViewParentManager
     {
         private const double DefaultFontSize = 15;
 
@@ -74,9 +73,9 @@ namespace ReactNative.Views.Text
         /// <see cref="ReactShadowNode"/>.
         /// </remarks>
         /// <returns>The shadow node instance.</returns>
-        public override ReactVirtualTextShadowNode CreateShadowNodeInstance()
+        public override ReactSpanShadowNode CreateShadowNodeInstance()
         {
-            return new ReactVirtualTextShadowNode();
+            return new ReactSpanShadowNode();
         }
 
         /// <summary>

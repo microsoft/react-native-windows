@@ -237,8 +237,6 @@ namespace ReactNative.DevSupport
                     _devOptionsDialog.Add(option.Name, option.OnSelect);
                 }
 
-                HideRedboxDialog();
-
                 var asyncInfo = _devOptionsDialog.ShowAsync();
 
                 foreach (var option in options)

@@ -1,5 +1,4 @@
-﻿using ReactNative.Bridge;
-using ReactNative.UIManager.Annotations;
+﻿using ReactNative.UIManager.Annotations;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -194,7 +193,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TFrameworkElement CreateInnerElement(ReactContext reactContext);
+        protected abstract TFrameworkElement CreateInnerElement(ThemedReactContext reactContext);
 
         /// <summary>
         /// Adds a child at the given index.

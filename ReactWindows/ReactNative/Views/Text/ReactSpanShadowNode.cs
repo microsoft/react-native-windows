@@ -8,7 +8,10 @@ using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.Text
 {
-    public class ReactVirtualTextShadowNode : ReactTextInlineShadowNode
+    /// <summary>
+    /// Shadow node for virtual text nodes.
+    /// </summary>
+    public class ReactSpanShadowNode : ReactInlineShadowNode
     {
         private double? _fontSize;
         private int _letterSpacing;
@@ -94,6 +97,11 @@ namespace ReactNative.Views.Text
             }
         }
 
+        /// <summary>
+        /// Create the <see cref="Span"/> instance for the measurement calculation.
+        /// </summary>
+        /// <param name="children">The children.</param>
+        /// <returns>The instance.</returns>
         public override Inline MakeInline(IList<Inline> children)
         {
             var span = new Span();
@@ -107,6 +115,10 @@ namespace ReactNative.Views.Text
             return span;
         }
 
+        /// <summary>
+        /// Update the properties on the inline instance.
+        /// </summary>
+        /// <param name="inline">The instance.</param>
         public override void UpdateInline(Inline inline)
         {
             if (_letterSpacing != inline.CharacterSpacing)

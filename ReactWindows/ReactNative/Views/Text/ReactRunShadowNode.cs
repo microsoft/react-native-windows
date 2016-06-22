@@ -8,7 +8,7 @@ namespace ReactNative.Views.Text
     /// <summary>
     /// The shadow node class for raw text.
     /// </summary>
-    public class ReactRawTextShadowNode : ReactTextInlineShadowNode
+    public class ReactRunShadowNode : ReactInlineShadowNode
     {
         private string _text;
 

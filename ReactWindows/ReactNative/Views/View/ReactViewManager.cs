@@ -26,7 +26,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override Canvas CreateInnerElement(ReactContext reactContext)
+        protected override Canvas CreateInnerElement(ThemedReactContext reactContext)
         {
             return new Canvas();
         }

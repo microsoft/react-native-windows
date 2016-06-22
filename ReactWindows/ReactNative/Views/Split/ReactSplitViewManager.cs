@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Split.Events;
@@ -114,21 +113,15 @@ namespace ReactNative.Views.Split
                     $"'{Name}' only supports two child, the content and the pane.");
             }
 
-            var uiElementChild = child as UIElement;
-            if (uiElementChild == null)
-            {
-                throw new ArgumentOutOfRangeException($"Child of type '{child.GetType()}' is not assignable to '{typeof(UIElement)}'.");
-            }
-
+            child.SetParent(parent);
+            var uiElementChild = child.As<UIElement>();
             if (index == 0)
             {
                 parent.Content = uiElementChild;
-                uiElementChild.SetParent(parent);
             }
             else
             {
                 parent.Pane = uiElementChild;
-                uiElementChild.SetParent(parent);
             }
         }
 
@@ -180,8 +173,17 @@ namespace ReactNative.Views.Split
 
         public override void RemoveAllChildren(SplitView parent)
         {
-            parent.Content = null;
-            parent.Pane = null;
+            if (parent.Content != null)
+            {
+                parent.Content.RemoveParent();
+                parent.Content = null;
+            }
+            
+            if (parent.Pane != null)
+            {
+                parent.Pane.RemoveParent();
+                parent.Pane = null;
+            }
         }
 
         public override void RemoveChildAt(SplitView parent, int index)
@@ -192,7 +194,7 @@ namespace ReactNative.Views.Split
                 content.RemoveParent();
                 parent.Content = null;
             }
-            else if (index == 0)
+            else if (index == 1)
             {
                 var pane = EnsurePane(parent);
                 pane.RemoveParent();

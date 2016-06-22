@@ -1,6 +1,4 @@
-﻿using ReactNative.Bridge;
-using ReactNative.UIManager;
-using ReactNative.UIManager.Annotations;
+﻿using ReactNative.UIManager;
 using System;
 using Windows.UI.Xaml.Documents;
 
@@ -9,8 +7,11 @@ namespace ReactNative.Views.Text
     /// <summary>
     /// View manager for raw text nodes, i.e., <see cref="Run"/> instances.
     /// </summary>
-    public class ReactRawTextManager : ReactTextInlineViewManager<Run, ReactRawTextShadowNode>
+    public class ReactRunManager : ReactTextInlineViewManager<Run, ReactRunShadowNode>
     {
+        /// <summary>
+        /// The name of this view manager.
+        /// </summary>
         public override string Name
         {
             get
@@ -29,9 +30,9 @@ namespace ReactNative.Views.Text
         /// <see cref="ReactShadowNode"/>.
         /// </remarks>
         /// <returns>The shadow node instance.</returns>
-        public override ReactRawTextShadowNode CreateShadowNodeInstance()
+        public override ReactRunShadowNode CreateShadowNodeInstance()
         {
-            return new ReactRawTextShadowNode();
+            return new ReactRunShadowNode();
         }
 
         /// <summary>
@@ -60,6 +61,11 @@ namespace ReactNative.Views.Text
         {
         }
 
+        /// <summary>
+        /// Creates a new view instance of type <see cref="Run"/>.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <returns>The view instance.</returns>
         protected override Run CreateViewInstance(ThemedReactContext reactContext)
         {
             return new Run();
