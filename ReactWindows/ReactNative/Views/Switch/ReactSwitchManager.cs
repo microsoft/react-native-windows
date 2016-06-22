@@ -87,7 +87,7 @@ namespace ReactNative.Views.Switch
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ReactContext reactContext, ToggleSwitch view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, ToggleSwitch view)
         {
             view.Toggled -= OnToggled;
         }
@@ -97,7 +97,7 @@ namespace ReactNative.Views.Switch
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ToggleSwitch CreateViewInstance(ReactContext reactContext)
+        protected override ToggleSwitch CreateViewInstance(ThemedReactContext reactContext)
         {
             var view = new ToggleSwitch();
             view.OnContent = null;
@@ -111,7 +111,7 @@ namespace ReactNative.Views.Switch
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ReactContext reactContext, ToggleSwitch view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, ToggleSwitch view)
         {
             view.Toggled += OnToggled;
         }

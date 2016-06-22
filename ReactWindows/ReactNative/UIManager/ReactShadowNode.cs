@@ -127,7 +127,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The themed context of the node.
         /// </summary>
-        public ReactContext ThemedContext
+        public ThemedReactContext ThemedContext
         {
             get
             {

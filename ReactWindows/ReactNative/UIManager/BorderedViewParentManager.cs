@@ -179,7 +179,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected sealed override Border CreateViewInstance(ReactContext reactContext)
+        protected sealed override Border CreateViewInstance(ThemedReactContext reactContext)
         {
             var inner = CreateInnerElement(reactContext);
             return new Border

@@ -74,7 +74,7 @@ namespace ReactNative.UIManager
             int tag,
             double width,
             double height,
-            ReactContext context)
+            ThemedReactContext context)
         {
             var rootCssNode = CreateRootShadowNode();
             rootCssNode.ReactTag = tag;

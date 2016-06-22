@@ -62,7 +62,7 @@ namespace ReactNative.UIManager
         public void AddRootView(
             int tag,
             SizeMonitoringCanvas rootView,
-            ReactContext themedRootContext)
+            ThemedReactContext themedRootContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
             _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
@@ -145,7 +145,7 @@ namespace ReactNative.UIManager
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial properties.</param>
         public void EnqueueCreateView(
-            ReactContext themedContext,
+            ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
             ReactStylesDiffMap initialProps)
@@ -200,10 +200,10 @@ namespace ReactNative.UIManager
         public void EnqueueUpdateLayout(
             int parentTag,
             int tag,
-            double x,
-            double y,
-            double width,
-            double height)
+            int x,
+            int y,
+            int width,
+            int height)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.UpdateLayout(
                 parentTag,

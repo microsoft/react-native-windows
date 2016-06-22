@@ -1,6 +1,4 @@
-﻿using ReactNative.Bridge;
-
-namespace ReactNative.UIManager
+﻿namespace ReactNative.UIManager
 {
     /// <summary>
     /// View manager for React root view components.
@@ -24,7 +22,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ReactContext reactContext, SizeMonitoringCanvas view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, SizeMonitoringCanvas view)
         {
             view.RemoveSizeChanged();
         }
@@ -34,7 +32,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override SizeMonitoringCanvas CreateViewInstance(ReactContext reactContext)
+        protected override SizeMonitoringCanvas CreateViewInstance(ThemedReactContext reactContext)
         {
             return new SizeMonitoringCanvas();
         }

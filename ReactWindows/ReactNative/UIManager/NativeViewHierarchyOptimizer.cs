@@ -77,8 +77,8 @@ namespace ReactNative.UIManager
         /// The initial properties for the view.
         /// </param>
         public void HandleCreateView(
-            ReactShadowNode node, 
-            ReactContext themedContext, 
+            ReactShadowNode node,
+            ThemedReactContext themedContext, 
             ReactStylesDiffMap initialProperties)
         {
 #if !ENABLED

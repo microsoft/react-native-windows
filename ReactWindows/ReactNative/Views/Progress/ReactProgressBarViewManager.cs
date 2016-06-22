@@ -45,7 +45,7 @@ namespace ReactNative.Views.Progress
         {
         }
 
-        protected override ProgressBar CreateViewInstance(ReactContext reactContext)
+        protected override ProgressBar CreateViewInstance(ThemedReactContext reactContext)
         {
             return new ProgressBar();
         }

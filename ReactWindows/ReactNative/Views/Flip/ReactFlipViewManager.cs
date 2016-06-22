@@ -91,7 +91,7 @@ namespace ReactNative.Views.Flip
             parent.Items.RemoveAt(index);
         }
 
-        public override void OnDropViewInstance(ReactContext reactContext, FlipView view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, FlipView view)
         {
             view.SelectionChanged -= OnSelectionChanged;
         }
@@ -108,12 +108,12 @@ namespace ReactNative.Views.Flip
             }
         }
 
-        protected override FlipView CreateViewInstance(ReactContext reactContext)
+        protected override FlipView CreateViewInstance(ThemedReactContext reactContext)
         {
             return new FlipView();
         }
 
-        protected override void AddEventEmitters(ReactContext reactContext, FlipView view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, FlipView view)
         {
             view.SelectionChanged += OnSelectionChanged;
         }

@@ -12,22 +12,22 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The X-coordinate.
         /// </summary>
-        public double X;
+        public int X;
 
         /// <summary>
         /// The Y-coordinate.
         /// </summary>
-        public double Y;
+        public int Y;
 
         /// <summary>
         /// The width.
         /// </summary>
-        public double Width;
+        public int Width;
 
         /// <summary>
         /// The height.
         /// </summary>
-        public double Height;
+        public int Height;
 
         /// <summary>
         /// Checks if two <see cref="Dimensions"/> instances are equal.

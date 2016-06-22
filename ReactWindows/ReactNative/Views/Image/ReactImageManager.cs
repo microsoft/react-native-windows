@@ -161,7 +161,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ReactContext reactContext, Border view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
         {
             var imageBrush = (ImageBrush)view.Background;
 
@@ -185,7 +185,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The image view instance.</returns>
-        protected override Border CreateViewInstance(ReactContext reactContext)
+        protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
             return new Border
             {
@@ -198,7 +198,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ReactContext reactContext, Border view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, Border view)
         {
             var imageBrush = (ImageBrush)view.Background;
 

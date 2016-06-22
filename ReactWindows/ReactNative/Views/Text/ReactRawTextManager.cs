@@ -60,7 +60,7 @@ namespace ReactNative.Views.Text
         {
         }
 
-        protected override Run CreateViewInstance(ReactContext reactContext)
+        protected override Run CreateViewInstance(ThemedReactContext reactContext)
         {
             return new Run();
         }

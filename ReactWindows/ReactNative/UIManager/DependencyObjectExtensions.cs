@@ -41,7 +41,7 @@ namespace ReactNative.UIManager
             return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
         }
 
-        public static void SetReactContext(this DependencyObject view, ReactContext context)
+        public static void SetReactContext(this DependencyObject view, ThemedReactContext context)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -49,7 +49,7 @@ namespace ReactNative.UIManager
             s_properties.GetOrCreateValue(view).Context = context;
         }
 
-        public static ReactContext GetReactContext(this DependencyObject view)
+        public static ThemedReactContext GetReactContext(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -65,7 +65,7 @@ namespace ReactNative.UIManager
 
         class DependencyObjectData
         {
-            public ReactContext Context { get; set; }
+            public ThemedReactContext Context { get; set; }
 
             public int? Tag { get; set; }
         }

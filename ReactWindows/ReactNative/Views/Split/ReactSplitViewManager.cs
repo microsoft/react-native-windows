@@ -153,7 +153,7 @@ namespace ReactNative.Views.Split
             return count;
         }
 
-        public override void OnDropViewInstance(ReactContext reactContext, SplitView view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, SplitView view)
         {
             view.PaneClosed -= OnPaneClosed;
         }
@@ -210,12 +210,12 @@ namespace ReactNative.Views.Split
         {
         }
 
-        protected override void AddEventEmitters(ReactContext reactContext, SplitView view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, SplitView view)
         {
             view.PaneClosed += OnPaneClosed;
         }
 
-        protected override SplitView CreateViewInstance(ReactContext reactContext)
+        protected override SplitView CreateViewInstance(ThemedReactContext reactContext)
         {
             return new SplitView
             {

@@ -75,7 +75,7 @@ namespace ReactNative.Views.Progress
         /// </summary>
         /// <param name="reactContext">The <see cref="ReactContext"/> of the components view context.</param>
         /// <returns>Returns a native <see cref="ProgressRing"/> component.</returns>
-        protected override ProgressRing CreateViewInstance(ReactContext reactContext)
+        protected override ProgressRing CreateViewInstance(ThemedReactContext reactContext)
         {
             return new ProgressRing();
         }

@@ -47,7 +47,7 @@ namespace ReactNative.UIManager
     /// </remarks>
     public class NativeViewHierarchyManager
     {
-        private readonly double[] _layoutBuffer = new double[4];
+        private readonly int[] _layoutBuffer = new int[4];
 
         private readonly IDictionary<int, IViewManager> _tagsToViewManagers;
         private readonly IDictionary<int, DependencyObject> _tagsToViews;
@@ -116,7 +116,7 @@ namespace ReactNative.UIManager
         /// <param name="y">The top coordinate.</param>
         /// <param name="width">The layout width.</param>
         /// <param name="height">The layout height.</param>
-        public void UpdateLayout(int parentTag, int tag, double x, double y, double width, double height)
+        public void UpdateLayout(int parentTag, int tag, int x, int y, int width, int height)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")
@@ -155,7 +155,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="initialProperties">The properties.</param>
-        public void CreateView(ReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
+        public void CreateView(ThemedReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
@@ -373,7 +373,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag.</param>
         /// <param name="view">The root view.</param>
         /// <param name="themedContext">The themed context.</param>
-        public void AddRootView(int tag, SizeMonitoringCanvas view, ReactContext themedContext)
+        public void AddRootView(int tag, SizeMonitoringCanvas view, ThemedReactContext themedContext)
         {
             AddRootViewParent(tag, view, themedContext);
         }
@@ -528,7 +528,7 @@ namespace ReactNative.UIManager
             return viewManager;
         }
 
-        private void AddRootViewParent(int tag, FrameworkElement view, ReactContext themedContext)
+        private void AddRootViewParent(int tag, FrameworkElement view, ThemedReactContext themedContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
             _tagsToViews.Add(tag, view);

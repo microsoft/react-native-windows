@@ -71,7 +71,7 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The context.</param>
         /// <param name="jsResponderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        DependencyObject CreateView(ReactContext reactContext, JavaScriptResponderHandler jsResponderHandler);
+        DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler);
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
@@ -83,7 +83,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        void OnDropViewInstance(ReactContext reactContext, DependencyObject view);
+        void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view);
 
         /// <summary>
         /// This method should return the subclass of <see cref="ReactShadowNode"/>

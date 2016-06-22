@@ -103,7 +103,7 @@ namespace ReactNative.UIManager
         /// <param name="jsResponderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
         public TFrameworkElement CreateView(
-            ReactContext reactContext,
+            ThemedReactContext reactContext,
             JavaScriptResponderHandler jsResponderHandler)
         {
             var view = CreateViewInstance(reactContext);
@@ -124,7 +124,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        public virtual void OnDropViewInstance(ReactContext reactContext, TFrameworkElement view)
+        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
         {
         }
 
@@ -171,10 +171,10 @@ namespace ReactNative.UIManager
         {
             return new Dimensions
             {
-                X = Canvas.GetLeft(view),
-                Y = Canvas.GetLeft(view),
-                Width = view.Width,
-                Height = view.Height,
+                X = (int)Math.Round(Canvas.GetLeft(view)),
+                Y = (int)Math.Round(Canvas.GetLeft(view)),
+                Width = (int)Math.Round(view.Width),
+                Height = (int)Math.Round(view.Height),
             };
         }
 
@@ -196,7 +196,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TFrameworkElement CreateViewInstance(ReactContext reactContext);
+        protected abstract TFrameworkElement CreateViewInstance(ThemedReactContext reactContext);
 
         /// <summary>
         /// Subclasses can override this method to install custom event 
@@ -208,7 +208,7 @@ namespace ReactNative.UIManager
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
         /// </remarks>
-        protected virtual void AddEventEmitters(ReactContext reactContext, TFrameworkElement view)
+        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
         {
         }
 
@@ -229,12 +229,12 @@ namespace ReactNative.UIManager
             UpdateProperties((TFrameworkElement)viewToUpdate, props);
         }
 
-        DependencyObject IViewManager.CreateView(ReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        DependencyObject IViewManager.CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
         {
             return CreateView(reactContext, jsResponderHandler);
         }
 
-        void IViewManager.OnDropViewInstance(ReactContext reactContext, DependencyObject view)
+        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
         {
             OnDropViewInstance(reactContext, (TFrameworkElement)view);
         }
