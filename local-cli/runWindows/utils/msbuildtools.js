@@ -15,6 +15,12 @@ class MSBuildTools {
     this.path = localPath;
   }
 
+  cleanProject(slnFile) {
+    const cmd = `"${path.join(this.path, 'msbuild.exe')}" "${slnFile}" t/:Clean`;
+    const results = child_process.execSync(cmd).toString().split('\r\n');
+    results.forEach(result => console.log(chalk.white(result)));
+  }
+
   buildProject(slnFile, buildType, buildArch, config) {
     console.log(chalk.green(`Building Solution: ${slnFile}`));
     console.log(chalk.green(`Build configuration: ${buildType}`));

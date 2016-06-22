@@ -43,15 +43,9 @@ function deployToDevice(options) {
   const identity = appxManifest.root.children.filter(function (x) { return x.name === 'mp:PhoneIdentity'; })[0];
   const appName = identity.attributes.PhoneProductId;
 
-  let device;
-  try {
-    device = deployTool.findDevice(deployTarget);
-  } catch (e) {
-    console.log(chalk.red(e.message));
-    return;
-  }
-
   return new Promise(resolve => {
+    const device = deployTool.findDevice(deployTarget);
+
     try {
       deployTool.uninstallAppPackage(appName, device);
     } catch (e) {

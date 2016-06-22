@@ -26,31 +26,26 @@ function runWindows(options) {
 
   const slnFile = build.getSolutionFile(options);
   if (!slnFile) {
-    console.log(chalk.red('Visual Studio Solution file not found. Maybe run rnpm windows first?'));
+    console.error(chalk.red('Visual Studio Solution file not found. Maybe run "rnpm windows" first?'));
     return;
-  }
-
-  try {
-    build.cleanSolution(options);
-  } catch (e) {
-    console.log(chalk.red('Failed to remove the AppPackages folder'));
   }
 
   try {
     build.restoreNuGetPackages(options, slnFile);
   } catch (e) {
-    console.log(chalk.red('Failed to restore the NuGet packages'));
+    console.error(chalk.red('Failed to restore the NuGet packages'));
     return;
   }
 
   // Get build/deploy options
   const buildType = options.release ? 'Release' : 'Debug';
-  const buildArch = options.arch ? options.arch : 'anycpu';
+  const buildArch = options.arch ? options.arch : 'x86';
 
   try {
+    build.cleanSolution(options);
     build.buildSolution(slnFile, buildType, buildArch);
   } catch (e) {
-    console.log(chalk.red('Build failed with message ' + e + '. Check your build configuration.'));
+    console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
   }
 
@@ -64,16 +59,18 @@ function runWindows(options) {
         return deploy.deployToDevice(options);
       }
     })
-    .catch(e => console.log(chalk.red(`Failed to deploy: ${e.message}`)));
+    .catch(e => console.error(chalk.red(`Failed to deploy: ${e.message}`)));
 }
 
 module.exports = runWindows;
 
+/*
 // Example of running the Windows Command
 runWindows({
   root: 'C:\\github\\hack\\myapp',
   debug: true,
-  arch: 'ARM',
+  arch: 'x86',
   nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
-  device: true
+  desktop: true
 });
+*/
