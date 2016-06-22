@@ -232,7 +232,6 @@ namespace ReactNative.UIManager
                         $"First parameter must be a dependency object for property setter '{method.DeclaringType.Name}.{Name}'.");
                 }
 #endif
-
                 return parameters[1].ParameterType;
             }
 

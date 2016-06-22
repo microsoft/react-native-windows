@@ -18,7 +18,7 @@ namespace ReactNative.UIManager
     public class UIViewOperationQueue
     {
         private readonly object _gate = new object();
-        private readonly double[] _measureBuffer = new double[4];
+        private readonly int[] _measureBuffer = new int[4];
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;

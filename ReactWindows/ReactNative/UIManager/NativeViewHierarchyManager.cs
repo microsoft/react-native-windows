@@ -21,8 +21,8 @@ namespace ReactNative.UIManager
     /// <see cref="UIManagerModule"/> communicates with this class by it's
     /// public interface methods:
     /// - <see cref="UpdateProperties(int, ReactStylesDiffMap)"/>
-    /// - <see cref="UpdateLayout(int, int, double, double, double, double)"/>
-    /// - <see cref="CreateView(ReactContext, int, string, ReactStylesDiffMap)"/>
+    /// - <see cref="UpdateLayout(int, int, int, int, int, int)"/>
+    /// - <see cref="CreateView(ThemedReactContext, int, string, ReactStylesDiffMap)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
     /// executing all the scheduled operations at the end of the JavaScript batch.
     /// </summary>
@@ -33,13 +33,13 @@ namespace ReactNative.UIManager
     /// The <see cref="ReactContext"/> instance that is passed to views that
     /// this manager creates differs from the one that we pass to the
     /// constructor. Instead we wrap the provided instance of 
-    /// <see cref="ReactContext"/> in an instance of <see cref="ReactContext"/>
+    /// <see cref="ReactContext"/> in an instance of <see cref="ThemedReactContext"/>
     /// that additionally provides a correct theme based on the root view for
     /// a view tree that we attach newly created views to. Therefore this view
-    /// manager will create a copy of <see cref="ReactContext"/> that
+    /// manager will create a copy of <see cref="ThemedReactContext"/> that
     /// wraps the instance of <see cref="ReactContext"/> for each root view
     /// added to the manager (see
-    /// <see cref="AddRootView(int, SizeMonitoringCanvas, ReactContext)"/>).
+    /// <see cref="AddRootView(int, SizeMonitoringCanvas, ThemedReactContext)"/>).
     /// 
     /// TODO: 
     /// 1) AnimationRegistry
@@ -47,8 +47,6 @@ namespace ReactNative.UIManager
     /// </remarks>
     public class NativeViewHierarchyManager
     {
-        private readonly int[] _layoutBuffer = new int[4];
-
         private readonly IDictionary<int, IViewManager> _tagsToViewManagers;
         private readonly IDictionary<int, DependencyObject> _tagsToViews;
         private readonly IDictionary<int, bool> _rootTags;
@@ -326,7 +324,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="outputBuffer">The output buffer.</param>
-        public void Measure(int tag, double[] outputBuffer)
+        public void Measure(int tag, int[] outputBuffer)
         {
             DispatcherHelpers.AssertOnDispatcher();
             var view = default(DependencyObject);
@@ -361,8 +359,8 @@ namespace ReactNative.UIManager
             var positionInRoot = rootTransform.TransformPoint(new Point(0, 0));
 
             var dimensions = viewManager.GetDimensions(uiElement);
-            outputBuffer[0] = positionInRoot.X;
-            outputBuffer[1] = positionInRoot.Y;
+            outputBuffer[0] = (int)Math.Round(positionInRoot.X);
+            outputBuffer[1] = (int)Math.Round(positionInRoot.Y);
             outputBuffer[2] = dimensions.Width;
             outputBuffer[3] = dimensions.Height;
         }
