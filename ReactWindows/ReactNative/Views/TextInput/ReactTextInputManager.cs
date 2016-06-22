@@ -425,7 +425,6 @@ namespace ReactNative.Views.TextInput
                 var textLength = text?.Length ?? 0;
                 var maxLength = textLength - selectionLength;
 
-                var currText = view.Text;
                 view.Text = text ?? "";
                 view.SelectionStart = Math.Min(selectionStart, textLength);
                 view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
