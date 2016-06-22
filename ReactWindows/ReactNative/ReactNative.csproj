@@ -313,7 +313,6 @@
     <Compile Include="Views\TextInput\ReactTextInputEndEditingEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputFocusEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputSelectionEvent.cs" />
-    <Compile Include="Views\TextInput\ReactTextInputShadowNodeBase.cs" />
     <Compile Include="Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
     <Compile Include="Views\Text\FontStyleHelpers.cs" />
     <Compile Include="UIManager\RootViewHelper.cs" />

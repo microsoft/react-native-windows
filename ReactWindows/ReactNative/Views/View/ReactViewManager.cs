@@ -1,5 +1,4 @@
-﻿using ReactNative.Bridge;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.Views.View
