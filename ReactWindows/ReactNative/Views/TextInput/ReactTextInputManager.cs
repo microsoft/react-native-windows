@@ -405,33 +405,38 @@ namespace ReactNative.Views.TextInput
             }
             else if ((textUpdate = extraData as Tuple<int, string>) != null)
             {
-                if (textUpdate.Item1 < view.CurrentEventCount)
+                var javaScriptCount = textUpdate.Item1;
+                if (javaScriptCount < view.CurrentEventCount)
                 {
                     return;
                 }
 
-                var text = textUpdate.Item2;
-
+                view.TextChanging -= OnTextChanging;
                 view.TextChanged -= OnTextChanged;
+
                 if (_onSelectionChange)
                 {
                     view.SelectionChanged -= OnSelectionChanged;
                 }
 
+                var text = textUpdate.Item2;
                 var selectionStart = view.SelectionStart;
                 var selectionLength = view.SelectionLength;
                 var textLength = text?.Length ?? 0;
                 var maxLength = textLength - selectionLength;
 
+                var currText = view.Text;
                 view.Text = text ?? "";
                 view.SelectionStart = Math.Min(selectionStart, textLength);
                 view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
 
-                view.TextChanged += OnTextChanged;
                 if (_onSelectionChange)
                 {
                     view.SelectionChanged += OnSelectionChanged;
                 }
+
+                view.TextChanged += OnTextChanged;
+                view.TextChanging += OnTextChanging;
             }
         }
 
@@ -448,6 +453,7 @@ namespace ReactNative.Views.TextInput
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
             view.TextChanged -= OnTextChanged;
+            view.TextChanging -= OnTextChanging;
         }
 
         /// <summary>
@@ -470,10 +476,17 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
         {
+            view.TextChanging += OnTextChanging;
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
+        }
+
+        private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            var textBox = (ReactTextBox)sender;
+            textBox.IncrementEventCount();
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -488,7 +501,7 @@ namespace ReactNative.Views.TextInput
                         textBox.Text,
                         textBox.ActualWidth,
                         textBox.ActualHeight,
-                        textBox.IncrementEventCount()));
+                        textBox.CurrentEventCount));
         }
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
