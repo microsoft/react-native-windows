@@ -1,5 +1,6 @@
 'use strict';
 
+const EOL = require('os').EOL;
 const path = require('path');
 const child_process = require('child_process');
 const chalk = require('chalk');
@@ -17,7 +18,7 @@ class MSBuildTools {
 
   cleanProject(slnFile) {
     const cmd = `"${path.join(this.path, 'msbuild.exe')}" "${slnFile}" t/:Clean`;
-    const results = child_process.execSync(cmd).toString().split('\r\n');
+    const results = child_process.execSync(cmd).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
 
@@ -47,7 +48,7 @@ class MSBuildTools {
     }
 
     const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + [slnFile].concat(args).join(' ');
-    const results = child_process.execSync(cmd).toString().split('\r\n');
+    const results = child_process.execSync(cmd).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
 }

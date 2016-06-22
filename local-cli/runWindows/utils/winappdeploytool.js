@@ -67,7 +67,7 @@ class WinAppDeployTool {
     // The expansion is: IP address, spaces, GUID, spaces, text name
     const LINE_TEST = /^([\d\.]+?)\s+([\da-fA-F\-]+?)\s+(.+)$/m;
 
-    const result = execSync('"' + this.path + '" devices').toString();
+    const result = execSync(`"${this.path}" devices`).toString();
     const lines = result.split('\r\n');
     const matchedLines = lines.filter(line => LINE_TEST.test(line));
 
