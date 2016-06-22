@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const exec = require('./promisify').exec;
 const execSync = require('child_process').execSync;
 
 function sortDevices (l, r) { return l.toString().length > r.toString().length; }
@@ -33,6 +32,11 @@ class WinAppDeployTool {
 
   findDevice(target) {
     const devices = this.enumerateDevices();
+
+    if (devices.length === 0) {
+      throw new Error('No devices found');
+    }
+
     if (target === 'emulator') {
       const sortedList = devices.sort(sortDevices);
       for (const i = 0; i < sortedList.length; i++) {
@@ -51,9 +55,9 @@ class WinAppDeployTool {
 
     if (candidateList.length > 0) {
       return candidateList[0];
+    } else {
+      throw new Error('No devices found');
     }
-
-    throw new Error('No devices found');
   }
 
   enumerateDevices() {
@@ -85,13 +89,14 @@ class WinAppDeployTool {
   }
 
   installAppPackage(pathToAppxPackage, targetDevice, shouldLaunch, shouldUpdate, pin) {
+    console.log(chalk.green(`Installing app to ${targetDevice.name}`));
+
     if (shouldLaunch) {
-      console.log(chalk.yellow(`Cannot launch app with current version of Windows 10 SDK tools.  You
-        will have to launch the app after installation is completed.`));
+      console.log(chalk.yellow('Cannot launch app with current version of Windows 10 SDK tools.  You will have to launch the app after installation is completed.'));
     }
 
     const args = [
-      `"${this.path}""`,
+      `"${this.path}"`,
       shouldUpdate ? 'update' : 'install',
       '-file',
       pathToAppxPackage, '-ip',
@@ -102,11 +107,12 @@ class WinAppDeployTool {
       args.push('-pin', pin);
     }
 
-    return exec(args.join(' '));
+    return execSync(args.join(' ')).toString();
   }
 
   uninstallAppPackage(packageInfo, targetDevice) {
-    return exec(`"${this.path}" uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`);
+    console.log(chalk.green(`Uninstalling app from ${targetDevice.name}`))
+    return execSync(`"${this.path}" uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`).toString();
   }
 }
 

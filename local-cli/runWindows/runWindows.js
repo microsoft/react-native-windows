@@ -1,8 +1,8 @@
 'use strict';
 
-var chalk = require('chalk');
-var build = require('./utils/build');
-var deploy = require('./utils/deploy');
+const chalk = require('chalk');
+const build = require('./utils/build');
+const deploy = require('./utils/deploy');
 
 /**
  * Starts the app on a connected Windows emulator or mobile device.
@@ -24,7 +24,7 @@ function runWindows(options) {
     return;
   }
 
-  var slnFile = build.getSolutionFile(options);
+  const slnFile = build.getSolutionFile(options);
   if (!slnFile) {
     console.log(chalk.red('Visual Studio Solution file not found. Maybe run rnpm windows first?'));
     return;
@@ -44,8 +44,8 @@ function runWindows(options) {
   }
 
   // Get build/deploy options
-  var buildType = options.release ? 'Release' : 'Debug';
-  var buildArch = options.arch ? options.arch : 'anycpu';
+  const buildType = options.release ? 'Release' : 'Debug';
+  const buildArch = options.arch ? options.arch : 'anycpu';
 
   try {
     build.buildSolution(slnFile, buildType, buildArch);
@@ -54,29 +54,17 @@ function runWindows(options) {
     return;
   }
 
-  try {
-    deploy.startServerInNewWindow(options);
-  } catch (e) {
-    console.log(chalk.red('Failed to start the development server'));
-    return;
-  }
+  return deploy.startServerInNewWindow(options)
+    .then(() => {
+      if (options.desktop) {
+        return deploy.deployToDesktop(options);
+      }
 
-  if (options.desktop) {
-    try {
-      deploy.deployToDesktop(options);
-    } catch (e) {
-      console.log(chalk.red('Failed to deploy the application'));
-      return;
-    }
-  }
-
-  if (options.device || options.emulator || options.target) {
-    try {
-      deploy.deployToDevice(options);
-    } catch (e) {
-      console.log(chalk.red('Failed to deploy the application to the device or emulator'));
-    }
-  }
+      if (options.device || options.emulator || options.target) {
+        return deploy.deployToDevice(options);
+      }
+    })
+    .catch(e => console.log(chalk.red(`Failed to deploy: ${e.message}`)));
 }
 
 module.exports = runWindows;
@@ -85,7 +73,7 @@ module.exports = runWindows;
 runWindows({
   root: 'C:\\github\\hack\\myapp',
   debug: true,
-  arch: 'x86',
+  arch: 'ARM',
   nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
-  desktop: true,
+  device: true
 });

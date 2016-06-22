@@ -1,27 +1,29 @@
 'use strict';
 
-var execSync = require('child_process').execSync;
-var path = require('path');
-var chalk = require('chalk');
-var glob = require('glob');
-var shell = require('shelljs');
-var MSBuildTools = require('./msbuildtools');
+const execSync = require('child_process').execSync;
+const path = require('path');
+const chalk = require('chalk');
+const glob = require('glob');
+const shell = require('shelljs');
+const MSBuildTools = require('./msbuildtools');
 
 function cleanSolution(options) {
-  shell.rm('-rf', glob.sync(path.join(options.root, 'windows/*/AppPackages')));
+  const appPackagesPath = glob.sync(path.join(options.root, 'windows/*/AppPackages'));
+  console.log(chalk.green(`Cleaning AppPackages folder ${appPackagesPath}`));
+  shell.rm('-rf', appPackagesPath);
 }
 
 function buildSolution(slnFile, buildType, buildArch) {
-  console.log(chalk.green('Building the solution'));
-  var msBuildTools = MSBuildTools.findAvailableVersion();
+  console.log(chalk.green(`Building ${slnFile}`));
+  const msBuildTools = MSBuildTools.findAvailableVersion();
   msBuildTools.buildProject(slnFile, buildType, buildArch, null);
 }
 
 function restoreNuGetPackages(options, slnFile) {
   console.log(chalk.green('Restoring NuGet packages'));
-  var nugetPath = options.nugetPath || '../.nuget/nuget.exe';
-  var results = execSync(nugetPath + ' restore ' + slnFile + ' -NonInteractive').toString().split('\r\n');
-  results.forEach(function (result) { console.log(chalk.green(result)); });
+  const nugetPath = options.nugetPath || path.resolve('../.nuget/nuget.exe');
+  const results = execSync(`"${nugetPath}" restore "${slnFile}" -NonInteractive`).toString().split('\r\n');
+  results.forEach(result => console.log(chalk.white(result)));
 }
 
 function getSolutionFile(options) {
@@ -29,8 +31,8 @@ function getSolutionFile(options) {
 }
 
 module.exports = {
-  buildSolution: buildSolution,
-  cleanSolution: cleanSolution,
-  getSolutionFile: getSolutionFile,
-  restoreNuGetPackages: restoreNuGetPackages
+  buildSolution,
+  cleanSolution,
+  getSolutionFile,
+  restoreNuGetPackages
 };

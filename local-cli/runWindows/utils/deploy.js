@@ -8,12 +8,10 @@ const path = require('path');
 const chalk = require('chalk');
 const glob = require('glob');
 const parse = require('xml-parser');
-const promisify = require('./promisify');
-const exec = promisify.exec;
 const WinAppDeployTool = require('./winappdeploytool');
 
 function getAppPackage(options) {
-  return glob(path.join(options.root, 'windows/*/AppPackages/*')).then(files => files[0]);
+  return glob.sync(path.join(options.root, 'windows/*/AppPackages/*'))[0];
 }
 
 function getWindowsStoreAppUtils() {
@@ -25,6 +23,14 @@ function getWindowsStoreAppUtils() {
 function getAppxManifest(options) {
   const appxPath = glob.sync(path.join(options.root, 'windows/*/bin/*/*/AppxManifest.xml'))[0];
   return parse(fs.readFileSync(appxPath, 'utf8'));
+}
+
+function handleResponseError(e) {
+  if (e.message.indexOf('Error code -2146233088')) {
+    throw new Error(`No Windows Mobile device was detected: ${e.message}`);
+  } else {
+    throw new Error(`Unexpected error deploying app: ${e.message}`);
+  }
 }
 
 // Errors: 0x80073d10 - bad architecture
@@ -45,33 +51,26 @@ function deployToDevice(options) {
     return;
   }
 
-  try {
-    console.log(chalk.green('Uninstalling app from ' + device.name))
-    deployTool.uninstallAppPackage(appName, device);
-  } catch (e) {
-    console.log(chalk.yellow('Failed to uninstall app from ' + device.name));
-  }
-
-  const appxFile = glob.sync(path.join(appPackageFolder, '*.appx'))[0];
-  try {
-    console.log(chalk.green('Installing app to ' + device.name));
-    console.log(chalk.green(deployTool.installAppPackage(appxFile, device, true, false)));
-  } catch (e) {
-    if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
-      try {
-        console.log(chalk.green(deployTool.installAppPackage(appxFile, device, true, true)));
-      } catch (err) {
-        console.log(chalk.red('Unexpected error deploying app: ' + e.message));
-        return;
-      }
-    } else if (e.message.indexOf('Error code -2146233088')) {
-      console.log(chalk.red('No Windows Mobile device was detected.'));
-      return;
-    } else {
-      console.log(chalk.red('Unexpected error deploying app: ' + e.message));
-      return;
+  return new Promise(resolve => {
+    try {
+      deployTool.uninstallAppPackage(appName, device);
+    } catch (e) {
+      console.log(chalk.yellow('Failed to uninstall app from ' + device.name));
     }
-  }
+
+    const appxFile = glob.sync(path.join(appPackageFolder, '*.appx'))[0];
+    try {
+      console.log(chalk.white(deployTool.installAppPackage(appxFile, device, true, false)));
+      resolve();
+    } catch (e) {
+      if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
+        console.log(chalk.white(deployTool.installAppPackage(appxFile, device, true, true)));
+        resolve();
+      } else {
+        handleResponseError(e);
+      }
+    }
+  });
 }
 
 function deployToDesktop(options) {
@@ -81,18 +80,20 @@ function deployToDesktop(options) {
   const appxManifest = getAppxManifest(options);
   const identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
   const appName = identity.attributes.Name;
+  const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
 
-  console.log(chalk.green('Removing old version of the app'));
-  return exec(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`)
-    .then(() => {
-      console.log(chalk.green('Installing new version of the app'));
-      const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
-      return exec(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Install-App "${script}"`);
-    })
-    .then(() => {
-      console.log(chalk.green('Starting the app'));
-      return exec(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Start-Locally ${appName}`);
-    });
+
+  return new Promise(resolve => {
+    console.log(chalk.green('Removing old version of the app'));
+    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`);
+
+    console.log(chalk.green('Installing new version of the app'));
+    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`);
+
+    console.log(chalk.green('Starting the app'));
+    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName}`);
+    resolve();
+  });
 }
 
 function startServerInNewWindow(options) {
@@ -115,7 +116,7 @@ function launchServer(options) {
     stdio: 'ignore'
   };
 
-  Promise.resolve(spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts));
+  return Promise.resolve(spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts));
 }
 
 module.exports = {

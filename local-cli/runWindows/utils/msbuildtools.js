@@ -9,18 +9,55 @@ const checkRequirements = require('./checkRequirements');
 
 const MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
 
+class MSBuildTools {
+  constructor(version, localPath) {
+    this.version = version;
+    this.path = localPath;
+  }
+
+  buildProject(slnFile, buildType, buildArch, config) {
+    console.log(chalk.green(`Building Solution: ${slnFile}`));
+    console.log(chalk.green(`Build configuration: ${buildType}`));
+    console.log(chalk.green(`Build platform: ${buildArch}`));
+
+    const args = [
+      '/clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal',
+      '/nologo',
+      `/p:Configuration=${buildType}`,
+      `/p:Platform=${buildArch}`
+    ];
+
+    if (config) {
+      Object.keys(config).forEach(function (key) {
+        args.push(`/p:${key}=${config[key]}`);
+      });
+    }
+
+    try {
+      checkRequirements.isWinSdkPresent('10.0');
+    } catch (e) {
+      console.log(chalk.red(e.message));
+      return;
+    }
+
+    const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + [slnFile].concat(args).join(' ');
+    const results = child_process.execSync(cmd).toString().split('\r\n');
+    results.forEach(result => console.log(chalk.white(result)));
+  }
+}
+
 function checkMSBuildVersion(version) {
   const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
   try {
     const output = child_process.execSync(query).toString();
-    const toolsPath = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
+    let toolsPath = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
     if (toolsPath) {
       toolsPath = toolsPath[1];
       // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
       if ((version === '15.0' || version === '14.0' && toolsPath.indexOf('amd64') > -1)) {
         toolsPath = path.resolve(toolsPath, '..');
       }
-      console.log(chalk.green('Found MSBuild v' + version + ' at ' + toolsPath));
+      console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
       return new MSBuildTools(version, toolsPath);
     }
   } catch (e) {
@@ -67,40 +104,3 @@ module.exports.getAllAvailableUAPVersions = function () {
 
   return results;
 };
-
-class MSBuildTools {
-  constructor(version, localPath) {
-    this.version = version;
-    this.path = localPath;
-  }
-
-  buildProject(slnFile, buildType, buildArch, config) {
-    console.log(chalk.green(`Building Solution: ${slnFile}`));
-    console.log(chalk.green(`Build configuration: ${buildType}`));
-    console.log(chalk.green(`Build platform: ${buildArch}`));
-
-    const args = [
-      '/clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal',
-      '/nologo',
-      `/p:Configuration=${buildType}`,
-      `/p:Platform=${buildArch}`
-    ];
-
-    if (config) {
-      Object.keys(config).forEach(function (key) {
-        args.push(`/p:${key}=${config[key]}`);
-      });
-    }
-
-    try {
-      checkRequirements.isWinSdkPresent('10.0');
-    } catch (e) {
-      console.log(chalk.red(e.message));
-      return;
-    }
-
-    const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + [slnFile].concat(args).join(' ');
-    const results = child_process.execSync(cmd).toString().split('\r\n');
-    results.forEach(result => console.log(chalk.yellow(result)));
-  }
-}

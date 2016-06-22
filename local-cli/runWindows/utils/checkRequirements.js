@@ -1,11 +1,11 @@
 'use strict';
 
-var child_process = require('child_process');
-var path = require('path');
-var shell = require('shelljs');
-var Version = require('./version');
+const execSync = require('child_process').execSync;
+const path = require('path');
+const shell = require('shelljs');
+const Version = require('./version');
 
-var REQUIRED_VERSIONS = {
+const REQUIRED_VERSIONS = {
   '10.0': {
     os: '6.3',
     msbuild: '14.0',
@@ -24,20 +24,20 @@ function getMinimalRequiredVersionFor (requirement, windowsTargetVersion) {
 }
 
 function getInstalledWindowsSdks () {
-  var installedSdks = [];
+  const installedSdks = [];
 
-  var execString = 'reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows" /s /v InstallationFolder /reg:32';
-  var output;
+  const execString = 'reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows" /s /v InstallationFolder /reg:32';
+  let output;
   try {
-    output = child_process.execSync(execString).toString();
+    output = execSync(execString).toString();
   } catch (e) {
     return installedSdks;
   }
 
-  var re = /\\Microsoft SDKs\\Windows\\v(\d+\.\d+)\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
-  var match;
+  const re = /\\Microsoft SDKs\\Windows\\v(\d+\.\d+)\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
+  let match;
   while ((match = re.exec(output))) {
-    var sdkPath = match[2];
+    const sdkPath = match[2];
     if (shell.test('-e', path.join(sdkPath, 'SDKManifest.xml'))) {
       installedSdks.push(Version.tryParse(match[1]));
     }
@@ -47,23 +47,20 @@ function getInstalledWindowsSdks () {
 }
 
 function checkWinSdk (windowsTargetVersion) {
-  var installedSdks = getInstalledWindowsSdks();
-  var requiredVersion = getMinimalRequiredVersionFor('windowssdk', windowsTargetVersion);
-  var hasSdkInstalled = installedSdks.some(function (installedSdk) {
-    return installedSdk.eq(requiredVersion);
-  });
+  const installedSdks = getInstalledWindowsSdks();
+  const requiredVersion = getMinimalRequiredVersionFor('windowssdk', windowsTargetVersion);
+  const hasSdkInstalled = installedSdks.some(installedSdk => installedSdk.eq(requiredVersion));
 
   if (hasSdkInstalled) { return shortenVersion(requiredVersion); }
 
   if (!hasSdkInstalled) {
-    var shortenedVersion = shortenVersion(requiredVersion)
-    var msg = 'Windows SDK not found. Ensure that you have installed ' +
-      'Windows ' + shortenedVersion + ' SDK along with Visual Studio or install ' +
-      'Windows ' + shortenedVersion + ' SDK separately from https://dev.windows.com/en-us/downloads';
-    throw new Error(msg);
+    const shortenedVersion = shortenVersion(requiredVersion);
+    throw new Error(
+      `Windows SDK not found. Ensure that you have installed Windows ${shortenedVersion} SDK along with Visual Studio or install Windows ${shortenedVersion} SDK separately from https://dev.windows.com/en-us/downloads`
+    );
   }
 }
 
-module.exports.isWinSdkPresent = function (target) {
+module.exports.isWinSdkPresent = function isWinSdkPresent(target) {
   return checkWinSdk(target);
 }
