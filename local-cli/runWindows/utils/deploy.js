@@ -14,8 +14,8 @@ function getAppPackage(options) {
   return glob.sync(path.join(options.root, 'windows/*/AppPackages/*'))[0];
 }
 
-function getWindowsStoreAppUtils() {
-  const appStorePath = path.join(__dirname, 'WindowsStoreAppUtils.ps1');
+function getWindowsStoreAppUtils(options) {
+  const appStorePath = path.join(options.root, 'node_modules/react-native-windows/local-cli/runWindows/utils/WindowsStoreAppUtils.ps1');
   execSync(`powershell Unblock-File "${appStorePath}"`);
   return appStorePath;
 }
@@ -103,7 +103,7 @@ function startServerInNewWindow(options) {
 
 function launchServer(options) {
   console.log(chalk.green('Starting the React-Native Server'));
-  const launchPackagerScript = path.resolve('node_modules/react-native/packager/launchPackager.bat');
+  const launchPackagerScript = path.join('node_modules/react-native/packager/launchPackager.bat');
   const opts = {
     cwd: options.root,
     detached: true,

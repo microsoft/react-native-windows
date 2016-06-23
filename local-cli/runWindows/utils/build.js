@@ -29,7 +29,7 @@ function buildSolution(slnFile, buildType, buildArch) {
 
 function restoreNuGetPackages(options, slnFile) {
   console.log(chalk.green('Restoring NuGet packages'));
-  const nugetPath = options.nugetPath || path.join(__dirname, 'node_modules/react-native-windows/local-cli/runWindows/.nuget/nuget.exe');
+  const nugetPath = options.nugetPath || path.join(options.root, 'node_modules/react-native-windows/local-cli/runWindows/.nuget/nuget.exe');
   const results = execSync(`"${nugetPath}" restore "${slnFile}" -NonInteractive`).toString().split(EOL);
   results.forEach(result => console.log(chalk.white(result)));
 }
