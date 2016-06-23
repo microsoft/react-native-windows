@@ -21,7 +21,8 @@ function getWindowsStoreAppUtils(options) {
 }
 
 function getAppxManifest(options) {
-  const appxPath = glob.sync(path.join(options.root, 'windows/*/bin/*/*/AppxManifest.xml'))[0];
+  const configuration = options.debug ? 'Debug' : 'Release';
+  const appxPath = glob.sync(path.join(options.root, `windows/*/bin/${options.arch}/${configuration}/AppxManifest.xml`))[0];
   return parse(fs.readFileSync(appxPath, 'utf8'));
 }
 
@@ -69,8 +70,7 @@ function deployToDevice(options) {
 
 function deployToDesktop(options) {
   const appPackageFolder = getAppPackage(options);
-
-  const windowsStoreAppUtils = getWindowsStoreAppUtils();
+  const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifest = getAppxManifest(options);
   const identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
   const appName = identity.attributes.Name;
