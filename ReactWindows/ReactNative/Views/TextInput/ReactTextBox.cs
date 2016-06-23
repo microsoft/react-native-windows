@@ -8,12 +8,10 @@ namespace ReactNative.Views.TextInput
     class ReactTextBox : TextBox, ILayoutManager
     {
         private int _eventCount;
-        private double _lastWidth;
-        private double _lastHeight;
 
         public ReactTextBox()
         {
-            LayoutUpdated += OnLayoutUpdated;
+            SizeChanged += OnSizeChanged;
         }
 
         public int CurrentEventCount
@@ -62,26 +60,18 @@ namespace ReactNative.Views.TextInput
             }
         }
 
-        private void OnLayoutUpdated(object sender, object e)
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var width = ActualWidth;
-            var height = ActualHeight;
-            if (width != _lastWidth || height != _lastHeight)
-            {
-                _lastWidth = width;
-                _lastHeight = height;
-
-                this.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new ReactTextChangedEvent(
-                            this.GetTag(),
-                            Text,
-                            width,
-                            height,
-                            IncrementEventCount()));
-            }
+            this.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactTextChangedEvent(
+                        this.GetTag(),
+                        Text,
+                        e.NewSize.Width,
+                        e.NewSize.Height,
+                        IncrementEventCount()));
         }
     }
 }
