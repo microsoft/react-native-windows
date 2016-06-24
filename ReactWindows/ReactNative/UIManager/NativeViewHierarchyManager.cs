@@ -20,7 +20,7 @@ namespace ReactNative.UIManager
     /// <see cref="UIManagerModule"/> communicates with this class by it's
     /// public interface methods:
     /// - <see cref="UpdateProperties(int, ReactStylesDiffMap)"/>
-    /// - <see cref="UpdateLayout(int, int, int, int, int, int)"/>
+    /// - <see cref="UpdateLayout(int, int, Dimensions)"/>
     /// - <see cref="CreateView(ThemedReactContext, int, string, ReactStylesDiffMap)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
     /// executing all the scheduled operations at the end of the JavaScript batch.
@@ -109,11 +109,8 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="parentTag">The parent view tag.</param>
         /// <param name="tag">The view tag.</param>
-        /// <param name="x">The left coordinate.</param>
-        /// <param name="y">The top coordinate.</param>
-        /// <param name="width">The layout width.</param>
-        /// <param name="height">The layout height.</param>
-        public void UpdateLayout(int parentTag, int tag, int x, int y, int width, int height)
+        /// <param name="dimensions">The dimensions.</param>
+        public void UpdateLayout(int parentTag, int tag, Dimensions dimensions)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")
@@ -134,13 +131,7 @@ namespace ReactNative.UIManager
 
                 if (!parentViewParentManager.NeedsCustomLayoutForChildren)
                 {
-                    UpdateLayout(viewToUpdate, viewManager, new Dimensions
-                    {
-                        X = x,
-                        Y = y,
-                        Width = width,
-                        Height = height,
-                    });
+                    UpdateLayout(viewToUpdate, viewManager, dimensions);
                 }
             }
         }
@@ -323,7 +314,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="outputBuffer">The output buffer.</param>
-        public void Measure(int tag, int[] outputBuffer)
+        public void Measure(int tag, double[] outputBuffer)
         {
             DispatcherHelpers.AssertOnDispatcher();
             var view = default(DependencyObject);
@@ -352,8 +343,8 @@ namespace ReactNative.UIManager
             var positionInRoot = rootTransform.TransformPoint(new Point(0, 0));
 
             var dimensions = viewManager.GetDimensions(uiElement);
-            outputBuffer[0] = (int)Math.Round(positionInRoot.X);
-            outputBuffer[1] = (int)Math.Round(positionInRoot.Y);
+            outputBuffer[0] = positionInRoot.X;
+            outputBuffer[1] = positionInRoot.Y;
             outputBuffer[2] = dimensions.Width;
             outputBuffer[3] = dimensions.Height;
         }

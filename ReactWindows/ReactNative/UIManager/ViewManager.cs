@@ -170,10 +170,10 @@ namespace ReactNative.UIManager
         {
             return new Dimensions
             {
-                X = (int)Math.Round(Canvas.GetLeft(view)),
-                Y = (int)Math.Round(Canvas.GetLeft(view)),
-                Width = (int)Math.Round(view.Width),
-                Height = (int)Math.Round(view.Height),
+                X = Canvas.GetLeft(view),
+                Y = Canvas.GetLeft(view),
+                Width = view.Width,
+                Height = view.Height,
             };
         }
 

@@ -214,10 +214,13 @@ namespace ReactNative.UIManager
             _uiViewOperationQueue.EnqueueUpdateLayout(
                 node.Parent.ReactTag,
                 node.ReactTag,
-                node.ScreenX,
-                node.ScreenY,
-                node.ScreenWidth,
-                node.ScreenHeight);
+                new Dimensions
+                {
+                    X = node.LayoutX,
+                    Y = node.LayoutY,
+                    Width = node.LayoutWidth,
+                    Height = node.LayoutHeight
+                });
 #else
             ApplyLayoutBase(node);
 #endif
@@ -385,13 +388,13 @@ namespace ReactNative.UIManager
             // node in the hierarchy to emulate what the layout would look like
             // if it were actually built with native views, which have integral
             // top/left/bottom/right values.
-            var x = node.ScreenX;
-            var y = node.ScreenY;
+            var x = node.LayoutX;
+            var y = node.LayoutY;
 
             while (parent != null && parent.IsLayoutOnly)
             {
-                x += (int)Math.Round(parent.LayoutX);
-                y += (int)Math.Round(parent.LayoutY);
+                x += parent.LayoutX;
+                y += parent.LayoutY;
                 parent = parent.Parent;
             }
 
@@ -408,24 +411,27 @@ namespace ReactNative.UIManager
 
             if (borderParent != null)
             {
-                x -= (int)Math.Round(borderParent.GetLeftBorderWidth());
-                y -= (int)Math.Round(borderParent.GetTopBorderWidth());
+                x -= borderParent.GetLeftBorderWidth();
+                y -= borderParent.GetTopBorderWidth();
             }
 
             ApplyLayoutRecursive(node, x, y);
         }
 
-        private void ApplyLayoutRecursive(ReactShadowNode node, int x, int y)
+        private void ApplyLayoutRecursive(ReactShadowNode node, double x, double y)
         {
             if (!node.IsLayoutOnly && node.NativeParent != null)
             {
                 _uiViewOperationQueue.EnqueueUpdateLayout(
                     node.NativeParent.ReactTag,
                     node.ReactTag,
-                    x,
-                    y,
-                    node.ScreenWidth,
-                    node.ScreenHeight);
+                    new Dimensions
+                    {
+                        X = x,
+                        Y = y,
+                        Width = node.LayoutWidth,
+                        Height = node.LayoutHeight,
+                    });
 
                 return;
             }
@@ -441,8 +447,8 @@ namespace ReactNative.UIManager
 
                 _tagsWithLayoutVisited.Add(child.ReactTag, true);
 
-                var childX = child.ScreenX;
-                var childY = child.ScreenY;
+                var childX = (double)child.LayoutX;
+                var childY = (double)child.LayoutY;
 
                 childX += x;
                 childY += y;
