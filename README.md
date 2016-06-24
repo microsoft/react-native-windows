@@ -28,8 +28,10 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ## Getting Started
 
 - Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
+- Change your working directory to the project directory you specified in the `react native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (i.e., `cd AwesomeProject`).
+- Install [rnpm](https://github.com/rnpm/rnpm) via NPM, globally (i.e., `npm install -g rnpm`).
 - Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
-- Initialize Windows project with `rnpm windows` command (with `rnpm` installed globally).
+- Initialize Windows project with `rnpm windows` command in the project directory.
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
 ### Requirements
