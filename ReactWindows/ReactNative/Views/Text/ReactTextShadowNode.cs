@@ -190,6 +190,15 @@ namespace ReactNative.Views.Text
             uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, this);
         }
 
+        /// <summary>
+        /// Marks a node as updated.
+        /// </summary>
+        protected override void MarkUpdated()
+        {
+            base.MarkUpdated();
+            dirty();
+        }
+
         private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             // This is not a terribly efficient way of projecting the height of
