@@ -85,7 +85,7 @@ function deployToDesktop(options) {
     execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`);
 
     console.log(chalk.green('Starting the app'));
-    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName}`);
+    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${options.proxy}`);
     resolve();
   });
 }

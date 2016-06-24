@@ -29,6 +29,11 @@ namespace ReactNative.DevSupport
         bool IsEnabled { get; set; }
 
         /// <summary>
+        /// Enables or disables remote debugging.
+        /// </summary>
+        bool IsRemoteDebuggingEnabled { get; set; }
+
+        /// <summary>
         /// The source map URL.
         /// </summary>
         string SourceMapUrl { get; }
