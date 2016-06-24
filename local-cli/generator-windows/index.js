@@ -34,7 +34,7 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(path.join('windows', '.gitignore'))
     );
   },
-  
+
   writing: function () {
     var projectGuid = uuid.v4();
     var packageGuid = uuid.v4();
@@ -45,7 +45,13 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('index.windows.js'),
       templateVars
     );
-    
+
+    this.fs.copyTpl(
+      this.templatePath('bundle.bat'),
+      this.destinationPath('bundle.bat'),
+      templateVars
+    );
+
     this.fs.copyTpl(
       this.templatePath(path.join('src', '**')),
       this.destinationPath(path.join('windows', this.name)),
@@ -85,7 +91,7 @@ module.exports = yeoman.Base.extend({
     if (!peerDependencies) {
       return;
     }
-    
+
     if (fs.existsSync(REACT_NATIVE_PACKAGE_JSON_PATH())) {
       return;
     }
@@ -94,7 +100,7 @@ module.exports = yeoman.Base.extend({
     if (!reactNativeVersion) {
       return;
     }
-    
+
     console.log(`Installing react-native@${reactNativeVersion}...`);
     this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true });
 
