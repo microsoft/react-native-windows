@@ -347,13 +347,7 @@ namespace ReactNative.UIManager
             }
 
             // TODO: better way to get relative position?
-            var uiElement = view as UIElement;
-            if (uiElement == null)
-            {
-                throw new InvalidOperationException(
-                    $"Could not convert view of type '{view.GetType()}' to '{typeof(UIElement)}.");
-            }
-
+            var uiElement = view.As<UIElement>();
             var rootTransform = uiElement.TransformToVisual(rootView);
             var positionInRoot = rootTransform.TransformPoint(new Point(0, 0));
 

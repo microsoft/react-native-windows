@@ -36,14 +36,5 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="inline">The instance.</param>
         public abstract void UpdateInline(Inline inline);
-
-        /// <summary>
-        /// Marks a node as updated.
-        /// </summary>
-        protected override void MarkUpdated()
-        {
-            base.MarkUpdated();
-            dirty();
-        }
     }
 }

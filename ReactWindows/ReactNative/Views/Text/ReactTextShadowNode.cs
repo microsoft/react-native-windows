@@ -176,14 +176,6 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
-        /// Marks a node as updated.
-        /// </summary>
-        protected override void MarkUpdated()
-        {
-            dirty();
-        }
-
-        /// <summary>
         /// Called after a layout step at the end of a UI batch from
         /// <see cref="UIManagerModule"/>. May be used to enqueue additional UI
         /// operations for the native view. Will only be called on nodes marked

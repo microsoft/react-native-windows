@@ -93,7 +93,6 @@ namespace ReactNative.Shell
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
                 new ReactViewManager(),
-                //new ReactTextInlineImageViewManager(),
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),
                 new ReactWebViewManager(),

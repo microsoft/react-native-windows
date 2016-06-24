@@ -121,30 +121,11 @@ namespace ReactNative.Views.Text
         /// <param name="inline">The instance.</param>
         public override void UpdateInline(Inline inline)
         {
-            if (_letterSpacing != inline.CharacterSpacing)
-            {
-                inline.CharacterSpacing = _letterSpacing;
-            }
-
-            if (_fontSize.HasValue && inline.FontSize != _fontSize.Value)
-            {
-                inline.FontSize = _fontSize.Value;
-            }
-
-            if (_fontStyle.HasValue && inline.FontStyle != _fontStyle.Value)
-            {
-                inline.FontStyle = _fontStyle.Value;
-            }
-
-            if (_fontWeight.HasValue && inline.FontWeight.Weight != _fontWeight.Value.Weight)
-            {
-                inline.FontWeight = _fontWeight.Value;
-            }
-
-            if (_fontFamily != null && inline.FontFamily.Source != _fontFamily)
-            {
-                inline.FontFamily = new FontFamily(_fontFamily);
-            }
+            inline.CharacterSpacing = _letterSpacing;
+            inline.FontSize = _fontSize ?? 15;
+            inline.FontStyle = _fontStyle ?? FontStyle.Normal;
+            inline.FontWeight = _fontWeight ?? FontWeights.Normal;
+            inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : FontFamily.XamlAutoFontFamily;
         }
     }
 }
