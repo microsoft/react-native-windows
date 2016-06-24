@@ -152,8 +152,8 @@ function Start-Locally {
         [Parameter(Mandatory=$true, Position=0, ValueFromPipelineByPropertyName=$true)]
         [string] $ID, <# package.appxmanifest//Identity@name #>
 
-        [Parameter(Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
-        [string] $proxy
+        [Parameter(Mandatory=$false, Position=1, ValueFromPipelineByPropertyName=$true)]
+        [string] $args
     )
     
     $package = Get-AppxPackage $ID
@@ -164,6 +164,5 @@ function Start-Locally {
 
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
-    $args = "{'remoteDebugging': " + $proxy + "}"
     $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
 }
