@@ -150,9 +150,8 @@ function Install-AppFromAppx {
 function Start-Locally {
     param(
         [Parameter(Mandatory=$true, Position=0, ValueFromPipelineByPropertyName=$true)]
-        [string] $ID <# package.appxmanifest//Identity@name #>
-    )
-    param(
+        [string] $ID, <# package.appxmanifest//Identity@name #>
+
         [Parameter(Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [string] $proxy
     )
@@ -165,6 +164,6 @@ function Start-Locally {
 
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
-    $args = "{'remotingDebugging': " + $proxy + "}"
+    $args = "{'remoteDebugging': " + $proxy + "}"
     $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
 }
