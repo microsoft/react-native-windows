@@ -32,16 +32,6 @@ namespace ReactNative.Tests.UIManager
         }
 
         [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]
-        public void FrameworkElementExtensions_ExistingTag()
-        {
-            var button = new Button();
-            button.Tag = new object();
-
-            AssertEx.Throws<InvalidOperationException>(() => button.SetTag(1));
-            AssertEx.Throws<InvalidOperationException>(() => button.SetReactContext(null));
-        }
-
-        [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]
         public void FrameworkElementExtensions_Get_Set()
         {
             var button = new Button();
