@@ -25,10 +25,6 @@ namespace ReactNative.UIManager
         private bool _isLayoutOnly;
         private int _totalNativeChildren = 0;
         private ReactShadowNode _nativeParent;
-        //private double _absoluteLeft;
-        //private double _absoluteTop;
-        //private double _absoluteRight;
-        //private double _absoluteBottom;
 
         private List<ReactShadowNode> _nativeChildren;
 
