@@ -20,7 +20,7 @@ namespace ReactNative.UIManager
     /// </remarks>
     public class UIImplementation
     {
-        private readonly int[] _measureBuffer = new int[4];
+        private readonly double[] _measureBuffer = new double[4];
 
         private readonly ViewManagerRegistry _viewManagers;
         private readonly UIViewOperationQueue _operationsQueue;
@@ -517,7 +517,7 @@ namespace ReactNative.UIManager
                 var cssRoot = _shadowNodeRegistry.GetNode(tag);
                 NotifyBeforeOnLayoutRecursive(cssRoot);
                 CalculateRootLayout(cssRoot);
-                ApplyUpdatesRecursive(cssRoot, 0, 0, eventDispatcher);
+                ApplyUpdatesRecursive(cssRoot, eventDispatcher);
             }
 
             _nativeViewHierarchyOptimizer.OnBatchComplete();
@@ -663,7 +663,7 @@ namespace ReactNative.UIManager
             nodeToRemove.RemoveAllChildren();
         }
 
-        private void MeasureLayout(int tag, int ancestorTag, int[] outputBuffer)
+        private void MeasureLayout(int tag, int ancestorTag, double[] outputBuffer)
         {
             var node = _shadowNodeRegistry.GetNode(tag);
             var ancestor = _shadowNodeRegistry.GetNode(ancestorTag);
@@ -692,7 +692,7 @@ namespace ReactNative.UIManager
             MeasureLayoutRelativeToVerifiedAncestor(node, ancestor, outputBuffer);
         }
 
-        private void MeasureLayoutRelativeToParent(int tag, int[] outputBuffer)
+        private void MeasureLayoutRelativeToParent(int tag, double[] outputBuffer)
         {
             var node = _shadowNodeRegistry.GetNode(tag);
             if (node == null)
@@ -714,21 +714,21 @@ namespace ReactNative.UIManager
         private void MeasureLayoutRelativeToVerifiedAncestor(
             ReactShadowNode node, 
             ReactShadowNode ancestor, 
-            int[] outputBuffer)
+            double[] outputBuffer)
         {
-            var offsetX = 0;
-            var offsetY = 0;
+            var offsetX = 0.0;
+            var offsetY = 0.0;
             if (node != ancestor)
             {
-                offsetX = (int)Math.Round(node.LayoutX);
-                offsetY = (int)Math.Round(node.LayoutY);
+                offsetX = node.LayoutX;
+                offsetY = node.LayoutY;
                 var current = node.Parent;
                 while (current != ancestor)
                 {
                     Debug.Assert(current != null);
                     AssertNodeDoesNotNeedCustomLayoutForChildren(current);
-                    offsetX += (int)Math.Round(current.LayoutX);
-                    offsetY += (int)Math.Round(current.LayoutY);
+                    offsetX += current.LayoutX;
+                    offsetY += current.LayoutY;
                     current = current.Parent;
                 }
 
@@ -737,8 +737,8 @@ namespace ReactNative.UIManager
 
             outputBuffer[0] = offsetX;
             outputBuffer[1] = offsetY;
-            outputBuffer[2] = node.ScreenWidth;
-            outputBuffer[3] = node.ScreenHeight;
+            outputBuffer[2] = node.LayoutWidth;
+            outputBuffer[3] = node.LayoutHeight;
         }
 
         private void AssertViewExists(int reactTag, [CallerMemberName]string caller = null)
@@ -803,8 +803,6 @@ namespace ReactNative.UIManager
 
         private void ApplyUpdatesRecursive(
             ReactShadowNode cssNode, 
-            double absoluteX, 
-            double absoluteY, 
             EventDispatcher eventDispatcher)
         {
             if (!cssNode.HasUpdates)
@@ -818,8 +816,6 @@ namespace ReactNative.UIManager
                 {
                     ApplyUpdatesRecursive(
                         cssNode.GetChildAt(i),
-                        absoluteX + cssNode.LayoutX,
-                        absoluteY + cssNode.LayoutY,
                         eventDispatcher);
                 }
             }
@@ -828,8 +824,6 @@ namespace ReactNative.UIManager
             if (!_shadowNodeRegistry.IsRootNode(tag))
             {
                 cssNode.DispatchUpdates(
-                    absoluteX,
-                    absoluteY,
                     _operationsQueue,
                     _nativeViewHierarchyOptimizer);
 
@@ -838,10 +832,10 @@ namespace ReactNative.UIManager
                     eventDispatcher.DispatchEvent(
                         OnLayoutEvent.Obtain(
                             tag,
-                            cssNode.ScreenX,
-                            cssNode.ScreenY,
-                            cssNode.ScreenWidth,
-                            cssNode.ScreenHeight));
+                            cssNode.LayoutX,
+                            cssNode.LayoutY,
+                            cssNode.LayoutWidth,
+                            cssNode.LayoutHeight));
                 }
             }
 
