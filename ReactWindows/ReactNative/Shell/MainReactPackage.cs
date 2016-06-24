@@ -85,7 +85,7 @@ namespace ReactNative.Shell
                 new ReactProgressBarViewManager(),
                 new ReactProgressRingViewManager(),
                 new ReactPickerManager(),
-                new ReactRawTextManager(),
+                new ReactRunManager(),
                 //new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
                 new ReactSplitViewManager(),
@@ -93,8 +93,7 @@ namespace ReactNative.Shell
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
                 new ReactViewManager(),
-                //new ReactTextInlineImageViewManager(),
-                new ReactVirtualTextViewManager(),
+                new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),
                 new ReactWebViewManager(),
             };

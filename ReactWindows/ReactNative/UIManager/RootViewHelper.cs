@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
 
 namespace ReactNative.UIManager
@@ -8,15 +8,15 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class RootViewHelper
     {
-        private static readonly ConditionalWeakTable<FrameworkElement, FrameworkElement> s_parent =
-            new ConditionalWeakTable<FrameworkElement, FrameworkElement>();
+        private static readonly Dictionary<DependencyObject, DependencyObject> s_parent =
+            new Dictionary<DependencyObject, DependencyObject>();
 
         /// <summary>
         /// Returns the root view of a givenview in a React application.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <returns>The root view instance.</returns>
-        public static ReactRootView GetRootView(FrameworkElement view)
+        public static ReactRootView GetRootView(DependencyObject view)
         {
             var current = view;
             while (true)
@@ -32,14 +32,19 @@ namespace ReactNative.UIManager
                     return rootView;
                 }
 
-                var mapped = default(FrameworkElement);
+                var mapped = default(DependencyObject);
+                var frameworkElement = default(FrameworkElement);
                 if (s_parent.TryGetValue(current, out mapped))
                 {
-                    current = mapped;
+                    current = mapped as FrameworkElement;
+                }
+                else if ((frameworkElement = current as FrameworkElement) != null)
+                {
+                    current = frameworkElement.Parent;
                 }
                 else
                 {
-                    current = (FrameworkElement)current.Parent;
+                    return null;
                 }
             }
         }
@@ -52,10 +57,12 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// TODO: (#302) Remove this shim.
         /// </remarks>
-        internal static void SetParent(this FrameworkElement element, FrameworkElement parent)
+        internal static void SetParent(this DependencyObject element, DependencyObject parent)
         {
-            RemoveParent(element);
-            s_parent.Add(element, parent);
+            lock (s_parent)
+            {
+                s_parent.Add(element, parent);
+            }
         }
 
         /// <summary>
@@ -65,9 +72,12 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// TODO: (#302) Remove this shim.
         /// </remarks>
-        internal static void RemoveParent(this FrameworkElement element)
+        internal static void RemoveParent(this DependencyObject element)
         {
-            s_parent.Remove(element);
+            lock (s_parent)
+            {
+                s_parent.Remove(element);
+            }
         }
     }
 }

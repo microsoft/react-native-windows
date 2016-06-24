@@ -262,7 +262,7 @@ namespace ReactNative.Tests.Bridge
             Assert.AreEqual(43, id);
             Assert.AreEqual(1, args.Length);
             var d = args[0];
-            Assert.AreEqual(1, d.Count);
+            Assert.AreEqual(3, d.Count);
             var actualMessage = default(string);
             Assert.IsTrue(d.TryGetValue("message", out actualMessage));
             Assert.AreEqual(expectedMessage, actualMessage);

@@ -455,6 +455,13 @@ namespace ReactNative.Views.TextInput
             view.TextChanging -= OnTextChanging;
         }
 
+        public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
+        {
+            Canvas.SetLeft(view, dimensions.X);
+            Canvas.SetTop(view, dimensions.Y);
+            view.Width = dimensions.Width;
+        }
+
         /// <summary>
         /// Returns the view instance for <see cref="ReactTextBox"/>.
         /// </summary>

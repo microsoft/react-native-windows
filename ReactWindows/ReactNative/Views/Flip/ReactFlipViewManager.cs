@@ -65,14 +65,14 @@ namespace ReactNative.Views.Flip
                 : null;
         }
 
-        public override void AddView(FlipView parent, FrameworkElement child, int index)
+        public override void AddView(FlipView parent, DependencyObject child, int index)
         {
             parent.Items.Insert(index, child);
         }
 
-        public override FrameworkElement GetChildAt(FlipView parent, int index)
+        public override DependencyObject GetChildAt(FlipView parent, int index)
         {
-            return (FrameworkElement)parent.Items[index];
+            return (DependencyObject)parent.Items[index];
         }
 
         public override int GetChildCount(FlipView parent)

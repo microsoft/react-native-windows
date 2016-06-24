@@ -1,13 +1,16 @@
 ﻿using Facebook.CSSLayout;
 using ReactNative.Bridge;
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using Windows.Foundation;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.TextInput
 {
@@ -15,27 +18,171 @@ namespace ReactNative.Views.TextInput
     /// This extension of <see cref="LayoutShadowNode"/> is responsible for 
     /// measuring the layout for Native <see cref="TextBox"/>.
     /// </summary>
-    public class ReactTextInputShadowNode : ReactTextShadowNode
+    public class ReactTextInputShadowNode : LayoutShadowNode
     {
         private const int Unset = -1;
 
         private float[] _computedPadding;
 
-        private int _numberOfLines = Unset;
+        private int _letterSpacing;
+        private int _numberOfLines;
+
+        private double _fontSize = Unset;
+        private double _lineHeight;
+
+        private FontStyle? _fontStyle;
+        private FontWeight? _fontWeight;
+        private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
+
+        private string _fontFamily;
+        private string _text;
+
         private int _jsEventCount = Unset;
 
         /// <summary>
         /// Instantiates the <see cref="ReactTextInputShadowNode"/>.
         /// </summary>
         public ReactTextInputShadowNode()
-            : base(false)
         {
             var computedPadding = GetDefaultPaddings();
             SetPadding(CSSSpacingType.Left, computedPadding[0]);
             SetPadding(CSSSpacingType.Top, computedPadding[1]);
             SetPadding(CSSSpacingType.Right, computedPadding[2]);
             SetPadding(CSSSpacingType.Bottom, computedPadding[3]);
-            MeasureFunction = MeasureText;
+            MeasureFunction = MeasureTextInput;
+        }
+
+        /// <summary>
+        /// Sets the text for the node.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        [ReactProp("text")]
+        public void SetText(string text)
+        {
+            _text = text ?? "";
+            MarkUpdated();
+        }
+
+        /// <summary>
+        /// Sets the font size for the node.
+        /// </summary>
+        /// <param name="fontSize">The font size.</param>
+        [ReactProp(ViewProps.FontSize, DefaultDouble = Unset)]
+        public void SetFontSize(double fontSize)
+        {
+            if (_fontSize != fontSize)
+            {
+                _fontSize = fontSize;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets the font family for the node.
+        /// </summary>
+        /// <param name="fontFamily">The font family.</param>
+        [ReactProp(ViewProps.FontFamily)]
+        public void SetFontFamily(string fontFamily)
+        {
+            if (_fontFamily != fontFamily)
+            {
+                _fontFamily = fontFamily;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets the font weight for the node.
+        /// </summary>
+        /// <param name="fontWeightString">The font weight string.</param>
+        [ReactProp(ViewProps.FontWeight)]
+        public void SetFontWeight(string fontWeightString)
+        {
+            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightString);
+            if (_fontWeight.HasValue != fontWeight.HasValue ||
+                (_fontWeight.HasValue && fontWeight.HasValue &&
+                _fontWeight.Value.Weight != fontWeight.Value.Weight))
+            {
+                _fontWeight = fontWeight;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets the font style for the node.
+        /// </summary>
+        /// <param name="fontStyleString">The font style string.</param>
+        [ReactProp(ViewProps.FontStyle)]
+        public void SetFontStyle(string fontStyleString)
+        {
+            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
+            if (_fontStyle != fontStyle)
+            {
+                _fontStyle = fontStyle;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets the letter spacing for the node.
+        /// </summary>
+        /// <param name="letterSpacing">The letter spacing.</param>
+        [ReactProp(ViewProps.LetterSpacing)]
+        public void SetLetterSpacing(int letterSpacing)
+        {
+            var spacing = 50 * letterSpacing; // TODO: Find exact multiplier (50) to match iOS
+
+            if (_letterSpacing != spacing)
+            {
+                _letterSpacing = spacing;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets the line height.
+        /// </summary>
+        /// <param name="lineHeight">The line height.</param>
+        [ReactProp(ViewProps.LineHeight)]
+        public virtual void SetLineHeight(double lineHeight)
+        {
+            if (_lineHeight != lineHeight)
+            {
+                _lineHeight = lineHeight;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets the maximum number of lines.
+        /// </summary>
+        /// <param name="numberOfLines">Max number of lines.</param>
+        [ReactProp(ViewProps.NumberOfLines)]
+        public virtual void SetNumberOfLines(int numberOfLines)
+        {
+            if (_numberOfLines != numberOfLines)
+            {
+                _numberOfLines = numberOfLines;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets the text alignment.
+        /// </summary>
+        /// <param name="textAlign">The text alignment string.</param>
+        [ReactProp(ViewProps.TextAlign)]
+        public void SetTextAlign(string textAlign)
+        {
+            var textAlignment = textAlign == "auto" || textAlign == null ?
+                TextAlignment.DetectFromContent :
+                EnumHelpers.Parse<TextAlignment>(textAlign);
+
+            if (_textAlignment != textAlignment)
+            {
+                _textAlignment = textAlignment;
+                MarkUpdated();
+            }
         }
 
         /// <summary>
@@ -46,25 +193,6 @@ namespace ReactNative.Views.TextInput
         public void SetMostRecentEventCount(int mostRecentEventCount)
         {
             _jsEventCount = mostRecentEventCount;
-        }
-
-        /// <summary>
-        /// Set the number of lines for the text input.
-        /// </summary>
-        /// <param name="numberOfLines">The number of lines.</param>
-        [ReactProp("numberOfLines")]
-        public override void SetNumberOfLines(int numberOfLines)
-        {
-            _numberOfLines = numberOfLines;
-        }
-
-        /// <summary>
-        /// Called once per batch of updates by the <see cref="UIManagerModule"/>
-        /// if the text node is dirty.
-        /// </summary>
-        public override void OnBeforeLayout()
-        {
-            return;
         }
 
         /// <summary>
@@ -83,62 +211,17 @@ namespace ReactNative.Views.TextInput
 
             if (_jsEventCount != Unset)
             {
-                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, Tuple.Create(_jsEventCount, Text));
+                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, Tuple.Create(_jsEventCount, _text));
             }
         }
 
-        private MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        /// <summary>
+        /// Marks a node as updated.
+        /// </summary>
+        protected override void MarkUpdated()
         {
-            _computedPadding = GetComputedPadding();
-
-            var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
-            var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
-
-            var borderLeftWidth = GetBorder(CSSSpacingType.Left);
-            var borderRightWidth = GetBorder(CSSSpacingType.Right);
-
-            normalizedWidth -= _computedPadding[0];
-            normalizedWidth -= _computedPadding[2];
-            normalizedWidth -= CSSConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth;
-            normalizedWidth -= CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth;
-
-            // This is not a terribly efficient way of projecting the height of
-            // the text elements. It requires that we have access to the
-            // dispatcher in order to do measurement, which, for obvious
-            // reasons, can cause perceived performance issues as it will block
-            // the UI thread from handling other work.
-            //
-            // TODO: determine another way to measure text elements.
-            var task = DispatcherHelpers.CallOnDispatcher(() =>
-            {
-                var textNode = (ReactTextInputShadowNode)node;
-
-                var textBlock = new TextBlock
-                {
-                    TextWrapping = TextWrapping.Wrap,
-                };
-
-                var normalizedText = string.IsNullOrEmpty(textNode.Text) ? " " : textNode.Text;
-                var inline = new Run { Text = normalizedText };
-                FormatInline(textNode, inline, true);
-
-                textBlock.Inlines.Add(inline);
-
-                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
-
-                var borderTopWidth = GetBorder(CSSSpacingType.Top);
-                var borderBottomWidth = GetBorder(CSSSpacingType.Bottom);
-
-                var finalizedHeight = (float)textBlock.DesiredSize.Height;
-                finalizedHeight += _computedPadding[1];
-                finalizedHeight += _computedPadding[3];
-                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
-
-                return new MeasureOutput(width, finalizedHeight);
-            });
-
-            return task.Result;
+            base.MarkUpdated();
+            dirty();
         }
 
         private float[] GetDefaultPaddings()
@@ -162,6 +245,94 @@ namespace ReactNative.Views.TextInput
                 GetPadding(CSSSpacingType.Right),
                 GetPadding(CSSSpacingType.Bottom),
             };
+        }
+
+        private static MeasureOutput MeasureTextInput(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        {
+            var textInputNode = (ReactTextInputShadowNode)node;
+            textInputNode._computedPadding = textInputNode.GetComputedPadding();
+
+            var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
+            var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
+
+            var borderLeftWidth = textInputNode.GetBorder(CSSSpacingType.Left);
+            var borderRightWidth = textInputNode.GetBorder(CSSSpacingType.Right);
+
+            normalizedWidth -= textInputNode._computedPadding[0];
+            normalizedWidth -= textInputNode._computedPadding[2];
+            normalizedWidth -= CSSConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth;
+            normalizedWidth -= CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth;
+
+            // This is not a terribly efficient way of projecting the height of
+            // the text elements. It requires that we have access to the
+            // dispatcher in order to do measurement, which, for obvious
+            // reasons, can cause perceived performance issues as it will block
+            // the UI thread from handling other work.
+            //
+            // TODO: determine another way to measure text elements.
+            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            {
+                var textNode = (ReactTextInputShadowNode)node;
+
+                var textBlock = new TextBlock
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                };
+
+                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
+                var inline = new Run { Text = normalizedText };
+                FormatInline(textNode, inline, true);
+
+                textBlock.Inlines.Add(inline);
+
+                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
+
+                var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
+                var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
+
+                var finalizedHeight = (float)textBlock.DesiredSize.Height;
+                finalizedHeight += textInputNode._computedPadding[1];
+                finalizedHeight += textInputNode._computedPadding[3];
+                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+
+                return new MeasureOutput(width, finalizedHeight);
+            });
+
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Formats an inline instance with shadow properties.
+        /// </summary>
+        /// <param name="textNode">The text shadow node.</param>
+        /// <param name="inline">The inline.</param>
+        /// <param name="measureOnly">Signals if the operation is used only for measurement.</param>
+        protected static void FormatInline(ReactTextInputShadowNode textNode, Inline inline, bool measureOnly)
+        {
+            if (textNode._fontSize != Unset)
+            {
+                var fontSize = textNode._fontSize;
+                inline.FontSize = fontSize;
+            }
+
+            if (textNode._fontStyle.HasValue)
+            {
+                var fontStyle = textNode._fontStyle.Value;
+                inline.FontStyle = fontStyle;
+            }
+
+            if (textNode._fontWeight.HasValue)
+            {
+                var fontWeight = textNode._fontWeight.Value;
+                inline.FontWeight = fontWeight;
+            }
+
+            if (textNode._fontFamily != null)
+            {
+                var fontFamily = new FontFamily(textNode._fontFamily);
+                inline.FontFamily = fontFamily;
+            }
         }
     }
 }

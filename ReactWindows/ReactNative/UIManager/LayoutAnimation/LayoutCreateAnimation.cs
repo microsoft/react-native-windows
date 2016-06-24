@@ -17,23 +17,20 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// time and the new view position and size.
         /// </summary>
         /// <param name="view">The view to create the animation for.</param>
-        /// <param name="x">The new X-coordinate for the view.</param>
-        /// <param name="y">The new Y-coordinate for the view.</param>
-        /// <param name="width">The new width for the view.</param>
-        /// <param name="height">The new height for the view.</param>
+        /// <param name="dimensions">The view dimensions</param>
         /// <returns>
         /// An observable sequence that starts an animation when subscribed to,
         /// stops the animation when disposed, and that completes 
         /// simultaneously with the underlying animation.
         /// </returns>
-        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, int x, int y, int width, int height)
+        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, x);
-            Canvas.SetTop(view, y);
-            view.Width = width;
-            view.Height = height;
+            Canvas.SetLeft(view, dimensions.X);
+            Canvas.SetTop(view, dimensions.Y);
+            view.Width = dimensions.Width;
+            view.Height = dimensions.Height;
 
-            return base.CreateAnimationCore(view, x, y, width, height);
+            return base.CreateAnimationCore(view, dimensions);
         }
 
         /// <summary>

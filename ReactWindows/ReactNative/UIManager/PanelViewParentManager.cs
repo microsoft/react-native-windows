@@ -27,7 +27,7 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        public override FrameworkElement GetChildAt(TPanel parent, int index)
+        public override DependencyObject GetChildAt(TPanel parent, int index)
         {
             return (FrameworkElement)parent.Children[index];
         }
@@ -38,9 +38,10 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        public sealed override void AddView(TPanel parent, FrameworkElement child, int index)
+        public sealed override void AddView(TPanel parent, DependencyObject child, int index)
         {
-            parent.Children.Insert(index, child);
+            var uiElementChild = child.As<UIElement>();
+            parent.Children.Insert(index, uiElementChild);
         }
 
         /// <summary>
