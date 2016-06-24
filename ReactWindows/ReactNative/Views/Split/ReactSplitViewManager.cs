@@ -1,11 +1,11 @@
-﻿using ReactNative.UIManager;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.UIManager;
+using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Split.Events;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Newtonsoft.Json.Linq;
-using ReactNative.UIManager.Annotations;
 
 namespace ReactNative.Views.Split
 {
@@ -104,7 +104,7 @@ namespace ReactNative.Views.Split
             }
         }
 
-        public override void AddView(SplitView parent, FrameworkElement child, int index)
+        public override void AddView(SplitView parent, DependencyObject child, int index)
         {
             if (index != 0 && index != 1)
             {
@@ -113,19 +113,19 @@ namespace ReactNative.Views.Split
                     $"'{Name}' only supports two child, the content and the pane.");
             }
 
+            child.SetParent(parent);
+            var uiElementChild = child.As<UIElement>();
             if (index == 0)
             {
-                parent.Content = child;
-                child.SetParent(parent);
+                parent.Content = uiElementChild;
             }
             else
             {
-                parent.Pane = child;
-                child.SetParent(parent);
+                parent.Pane = uiElementChild;
             }
         }
 
-        public override FrameworkElement GetChildAt(SplitView parent, int index)
+        public override DependencyObject GetChildAt(SplitView parent, int index)
         {
             if (index != 0 && index != 1)
             {
@@ -173,8 +173,17 @@ namespace ReactNative.Views.Split
 
         public override void RemoveAllChildren(SplitView parent)
         {
-            parent.Content = null;
-            parent.Pane = null;
+            if (parent.Content != null)
+            {
+                parent.Content.RemoveParent();
+                parent.Content = null;
+            }
+            
+            if (parent.Pane != null)
+            {
+                parent.Pane.RemoveParent();
+                parent.Pane = null;
+            }
         }
 
         public override void RemoveChildAt(SplitView parent, int index)
@@ -185,7 +194,7 @@ namespace ReactNative.Views.Split
                 content.RemoveParent();
                 parent.Content = null;
             }
-            else if (index == 0)
+            else if (index == 1)
             {
                 var pane = EnsurePane(parent);
                 pane.RemoveParent();
@@ -234,7 +243,7 @@ namespace ReactNative.Views.Split
                     new SplitViewOpenedEvent(view.GetTag()));
         }
 
-        private static FrameworkElement EnsureContent(SplitView view)
+        private static DependencyObject EnsureContent(SplitView view)
         {
             var child = view.Content;
             if (child == null)
@@ -242,16 +251,10 @@ namespace ReactNative.Views.Split
                 throw new InvalidOperationException("SplitView does not have a content child.");
             }
 
-            var frameworkElement = child as FrameworkElement;
-            if (frameworkElement == null)
-            {
-                throw new InvalidOperationException("Invalid child element in SplitView content.");
-            }
-
-            return frameworkElement;
+            return child;
         }
 
-        private static FrameworkElement EnsurePane(SplitView view)
+        private static DependencyObject EnsurePane(SplitView view)
         {
             var child = view.Pane;
             if (child == null)
@@ -259,13 +262,7 @@ namespace ReactNative.Views.Split
                 throw new InvalidOperationException("SplitView does not have a pane child.");
             }
 
-            var frameworkElement = child as FrameworkElement;
-            if (frameworkElement == null)
-            {
-                throw new InvalidOperationException("Invalid child element in SplitView pane.");
-            }
-
-            return frameworkElement;
+            return child;
         }
     }
 }

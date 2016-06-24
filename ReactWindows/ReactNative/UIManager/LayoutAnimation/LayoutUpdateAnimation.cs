@@ -29,20 +29,17 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// time and the new view position and size.
         /// </summary>
         /// <param name="view">The view to create the animation for.</param>
-        /// <param name="x">The new X-coordinate for the view.</param>
-        /// <param name="y">The new Y-coordinate for the view.</param>
-        /// <param name="width">The new width for the view.</param>
-        /// <param name="height">The new height for the view.</param>
+        /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
-        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, int x, int y, int width, int height)
+        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
         {
             var currentX = Canvas.GetLeft(view);
             var currentY = Canvas.GetTop(view);
             var currentWidth = view.Width;
             var currentHeight = view.Height;
 
-            var animateLocation = x != currentX || y != currentY;
-            var animateSize = width != currentWidth || height != currentHeight;
+            var animateLocation = dimensions.X != currentX || dimensions.Y != currentY;
+            var animateSize = dimensions.Width != currentWidth || dimensions.Height != currentHeight;
 
             if (!animateLocation && !animateSize)
             {
@@ -50,38 +47,38 @@ namespace ReactNative.UIManager.LayoutAnimation
             }
 
             var storyboard = new Storyboard();
-            if (currentX != x)
+            if (currentX != dimensions.X)
             {
                 storyboard.Children.Add(
-                    CreateTimeline(view, "(Canvas.Left)", currentX, x));
+                    CreateTimeline(view, "(Canvas.Left)", currentX, dimensions.X));
             }
 
-            if (currentY != y)
+            if (currentY != dimensions.Y)
             {
                 storyboard.Children.Add(
-                    CreateTimeline(view, "(Canvas.Top)", currentY, y));
+                    CreateTimeline(view, "(Canvas.Top)", currentY, dimensions.Y));
             }
 
-            if (currentWidth != width)
+            if (currentWidth != dimensions.Width)
             {
-                var timeline = CreateTimeline(view, "Width", currentWidth, width);
+                var timeline = CreateTimeline(view, "Width", currentWidth, dimensions.Width);
                 timeline.EnableDependentAnimation = true;
                 storyboard.Children.Add(timeline);
             }
 
-            if (currentHeight != height)
+            if (currentHeight != dimensions.Height)
             {
-                var timeline = CreateTimeline(view, "Height", currentHeight, height);
+                var timeline = CreateTimeline(view, "Height", currentHeight, dimensions.Height);
                 timeline.EnableDependentAnimation = true;
                 storyboard.Children.Add(timeline);
             }
 
             return new StoryboardObservable(storyboard, () =>
             {
-                Canvas.SetLeft(view, x);
-                Canvas.SetTop(view, y);
-                view.Width = width;
-                view.Height = height;
+                Canvas.SetLeft(view, dimensions.X);
+                Canvas.SetTop(view, dimensions.Y);
+                view.Width = dimensions.Width;
+                view.Height = dimensions.Height;
             });
         }
 

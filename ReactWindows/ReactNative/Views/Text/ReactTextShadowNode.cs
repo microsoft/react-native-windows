@@ -19,16 +19,10 @@ namespace ReactNative.Views.Text
     /// </summary>
     public class ReactTextShadowNode : LayoutShadowNode
     {
-        private const double FontSizeUnset = -1;
-        private readonly bool _isVirtual;
-
-        private bool _underline;
-        private uint? _color;
-
         private int _letterSpacing;
         private int _numberOfLines;
 
-        private double _fontSize = FontSizeUnset;
+        private double? _fontSize;
         private double _lineHeight;
 
         private FontStyle? _fontStyle;
@@ -36,154 +30,39 @@ namespace ReactNative.Views.Text
         private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
 
         private string _fontFamily;
-        private Inline _inline;
+
+        /// <summary>
+        /// Instantiates a <see cref="ReactTextShadowNode"/>.
+        /// </summary>
+        public ReactTextShadowNode()
+        {
+            MeasureFunction = MeasureText;
+        }
 
         /// <summary>
         /// Instantiates the <see cref="ReactTextShadowNode"/>.
         /// </summary>
-        /// <param name="isVirtual">
-        /// A flag signaling whether or not the shadow node is virtual.
+        /// <param name="isRoot">
+        /// A flag signaling whether or not the node is the root node.
         /// </param>
-        public ReactTextShadowNode(bool isVirtual)
+        public ReactTextShadowNode(bool isRoot)
         {
-            _isVirtual = isVirtual;
-
-            if (!isVirtual)
+            if (isRoot)
             {
                 MeasureFunction = MeasureText;
             }
         }
 
         /// <summary>
-        /// Flag signaling if the given node is virtual.
-        /// </summary>
-        /// <remarks>
-        /// All text nodes except the root text node are virtual.
-        /// </remarks>
-        public override bool IsVirtual
-        {
-            get
-            {
-                return _isVirtual;
-            }
-        }
-
-        /// <summary>
-        /// Flag signaling if the given node is a root node for virtual nodes.
-        /// </summary>
-        /// <remarks>
-        /// The root text node is a virtual anchor.
-        /// </remarks>
-        public override bool IsVirtualAnchor
-        {
-            get
-            {
-                return !_isVirtual;
-            }
-        }
-
-        /// <summary>
-        /// The text value.
-        /// </summary>
-        protected string Text
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Called once per batch of updates by the <see cref="UIManagerModule"/>
-        /// if the text node is dirty.
-        /// </summary>
-        public override void OnBeforeLayout()
-        {
-            if (_isVirtual)
-            {
-                return;
-            }
-
-            _inline = DispatcherHelpers.CallOnDispatcher(() => ReactTextShadowNodeInlineVisitor.Apply(this)).Result;
-            MarkUpdated();
-        }
-
-        /// <summary>
-        /// Called to aggregate all the changes to the virtual text nodes.
-        /// </summary>
-        /// <param name="uiViewOperationQueue">The UI operation queue.</param>
-        public override void OnCollectExtraUpdates(UIViewOperationQueue uiViewOperationQueue)
-        {
-            if (_isVirtual)
-            {
-                return;
-            }
-
-            base.OnCollectExtraUpdates(uiViewOperationQueue);
-
-            if (_inline != null)
-            {
-                var _paddings = new Thickness()
-                {
-                    Left =  float.IsNaN(GetPadding(CSSSpacingType.Left)) ?
-                                float.IsNaN(GetPadding(CSSSpacingType.Horizontal)) ?
-                                    float.IsNaN(GetPadding(CSSSpacingType.All)) ? 0 : 
-                                    GetPadding(CSSSpacingType.All) :
-                                GetPadding(CSSSpacingType.Horizontal) :
-                            GetPadding(CSSSpacingType.Left),
-                    Top =   float.IsNaN(GetPadding(CSSSpacingType.Top)) ?
-                                float.IsNaN(GetPadding(CSSSpacingType.Vertical)) ?
-                                    float.IsNaN(GetPadding(CSSSpacingType.All)) ? 0 :
-                                    GetPadding(CSSSpacingType.All) :
-                                GetPadding(CSSSpacingType.Vertical) :
-                            GetPadding(CSSSpacingType.Top),
-                };
-
-                var args = Tuple.Create(
-                    _inline,
-                    _textAlignment,
-                    _lineHeight,
-                    _numberOfLines,
-                    _letterSpacing,
-                    _paddings);
-
-                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, args);
-            }
-        }
-
-        /// <summary>
-        /// Sets the text for the node.
-        /// </summary>
-        /// <param name="text">The text.</param>
-        [ReactProp("text")]
-        public void SetText(string text)
-        {
-            Text = text;
-            MarkUpdated();
-        }
-
-        /// <summary>
         /// Sets the font size for the node.
         /// </summary>
         /// <param name="fontSize">The font size.</param>
-        [ReactProp(ViewProps.FontSize, DefaultDouble = FontSizeUnset)]
-        public void SetFontSize(double fontSize)
+        [ReactProp(ViewProps.FontSize)]
+        public void SetFontSize(double? fontSize)
         {
             if (_fontSize != fontSize)
             {
                 _fontSize = fontSize;
-                MarkUpdated();
-            }
-        }
-
-        /// <summary>
-        /// Sets the font color for the node.
-        /// </summary>
-        /// <param name="color">The masked color value.</param>
-        [ReactProp(ViewProps.Color, CustomType = "Color")]
-        public void SetColor(uint? color)
-        {
-            if (_color != color)
-            {
-                _color = color;
                 MarkUpdated();
             }
         }
@@ -241,11 +120,6 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.LetterSpacing)]
         public void SetLetterSpacing(int letterSpacing)
         {
-            if (_isVirtual)
-            {
-                ThrowException("letterSpacing");
-            }
-
             var spacing = 50 * letterSpacing; // TODO: Find exact multiplier (50) to match iOS
 
             if (_letterSpacing != spacing)
@@ -262,11 +136,6 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.LineHeight)]
         public virtual void SetLineHeight(double lineHeight)
         {
-            if (_isVirtual)
-            {
-                ThrowException("lineHeight");
-            }
-
             if (_lineHeight != lineHeight)
             {
                 _lineHeight = lineHeight;
@@ -281,11 +150,6 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.NumberOfLines)]
         public virtual void SetNumberOfLines(int numberOfLines)
         {
-            if (_isVirtual)
-            {
-                ThrowException("numberOfLines");
-            }
-
             if (_numberOfLines != numberOfLines)
             {
                 _numberOfLines = numberOfLines;
@@ -300,11 +164,6 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.TextAlign)]
         public void SetTextAlign(string textAlign)
         {
-            if (_isVirtual)
-            {
-                ThrowException("textAlign");
-            }
-
             var textAlignment = textAlign == "auto" || textAlign == null ? 
                 TextAlignment.DetectFromContent :
                 EnumHelpers.Parse<TextAlignment>(textAlign);
@@ -317,75 +176,18 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
-        /// Sets the text decoration.
+        /// Called after a layout step at the end of a UI batch from
+        /// <see cref="UIManagerModule"/>. May be used to enqueue additional UI
+        /// operations for the native view. Will only be called on nodes marked
+        /// as updated.
         /// </summary>
-        /// <param name="textDecoration">The text decoration string.</param>
-        [ReactProp(ViewProps.TextDecorationLine)]
-        public void SetTextDecoration(string textDecoration)
+        /// <param name="uiViewOperationQueue">
+        /// Interface for enqueueing UI operations.
+        /// </param>
+        public override void OnCollectExtraUpdates(UIViewOperationQueue uiViewOperationQueue)
         {
-            var underline = textDecoration?.Contains("underline") ?? false;
-
-            if (_underline != underline)
-            {
-                _underline = underline;
-                MarkUpdated();
-            }       
-        }
-
-        /// <summary>
-        /// Marks a node as updated.
-        /// </summary>
-        protected override void MarkUpdated()
-        {
-            base.MarkUpdated();
-
-            if (!_isVirtual)
-            {
-                dirty();
-            }
-        }
-
-        /// <summary>
-        /// Formats an inline instance with shadow properties.
-        /// </summary>
-        /// <param name="textNode">The text shadow node.</param>
-        /// <param name="inline">The inline.</param>
-        /// <param name="measureOnly">Signals if the operation is used only for measurement.</param>
-        protected static void FormatInline(ReactTextShadowNode textNode, Inline inline, bool measureOnly)
-        {
-            if (!measureOnly && textNode._color.HasValue)
-            {
-                inline.Foreground = new SolidColorBrush(ColorHelpers.Parse(textNode._color.Value));
-            }
-
-            if (textNode._fontSize != FontSizeUnset)
-            {
-                var fontSize = textNode._fontSize;
-                inline.FontSize = fontSize;
-            }
-
-            if (textNode._fontStyle.HasValue)
-            {
-                var fontStyle = textNode._fontStyle.Value;
-                inline.FontStyle = fontStyle;
-            }
-
-            if (textNode._fontWeight.HasValue)
-            {
-                var fontWeight = textNode._fontWeight.Value;
-                inline.FontWeight = fontWeight;
-            }
-
-            if (textNode._fontFamily != null)
-            {
-                var fontFamily = new FontFamily(textNode._fontFamily);
-                inline.FontFamily = fontFamily;
-            }
-        }
-
-        private static void ThrowException(string property)
-        {
-            throw new InvalidOperationException("Property "  + property + " is supported only on the outermost text block.");
+            base.OnCollectExtraUpdates(uiViewOperationQueue);
+            uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, this);
         }
 
         private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
@@ -399,7 +201,7 @@ namespace ReactNative.Views.Text
             // TODO: determine another way to measure text elements.
             var task = DispatcherHelpers.CallOnDispatcher(() =>
             {
-                var textBlock = new TextBlock
+                var textBlock = new RichTextBlock
                 {
                     TextWrapping = TextWrapping.Wrap,
                     TextAlignment = TextAlignment.DetectFromContent,
@@ -407,83 +209,53 @@ namespace ReactNative.Views.Text
                 };
 
                 var textNode = (ReactTextShadowNode)node;
+                textNode.UpdateTextBlockCore(textBlock, true);
 
-                textBlock.CharacterSpacing = textNode._letterSpacing;
-                textBlock.LineHeight = textNode._lineHeight;
-                textBlock.MaxLines = textNode._numberOfLines;
-                textBlock.TextAlignment = textNode._textAlignment;
-
-                textBlock.Inlines.Add(ReactTextShadowNodeInlineVisitor.Apply(node));
-
-                try
+                var block = new Paragraph();
+                foreach (var child in textNode.Children)
                 {
-                    var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
-                    var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
-                    textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
-                    return new MeasureOutput(
-                        (float)Math.Ceiling(textBlock.DesiredSize.Width),
-                        (float)Math.Ceiling(textBlock.DesiredSize.Height));
+                    block.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
                 }
-                finally
-                {
-                    textBlock.Inlines.Clear();
-                }
+                textBlock.Blocks.Add(block);
+
+                var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
+                var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
+                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
+                return new MeasureOutput(
+                    (float)Math.Ceiling(textBlock.DesiredSize.Width),
+                    (float)Math.Ceiling(textBlock.DesiredSize.Height));
             });
 
             return task.Result;
         }
 
-        class ReactTextShadowNodeInlineVisitor : CSSNodeVisitor<Inline>
+        /// <summary>
+        /// Updates the properties of a <see cref="RichTextBlock"/> view.
+        /// </summary>
+        /// <param name="textBlock">The view.</param>
+        public void UpdateTextBlock(RichTextBlock textBlock)
         {
-            private static readonly ReactTextShadowNodeInlineVisitor s_instance = new ReactTextShadowNodeInlineVisitor();
+            UpdateTextBlockCore(textBlock, false);
+        }
 
-            public static Inline Apply(CSSNode node)
+        private void UpdateTextBlockCore(RichTextBlock textBlock, bool measureOnly)
+        {
+            textBlock.CharacterSpacing = _letterSpacing;
+            textBlock.LineHeight = _lineHeight;
+            textBlock.MaxLines = _numberOfLines;
+            textBlock.TextAlignment = _textAlignment;
+            textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : FontFamily.XamlAutoFontFamily;
+            textBlock.FontSize = _fontSize ?? 15;
+            textBlock.FontStyle = _fontStyle ?? FontStyle.Normal;
+            textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
+
+            if (!measureOnly)
             {
-                return s_instance.Visit(node);
-            }
-
-            protected sealed override Inline Make(CSSNode node, IList<Inline> children)
-            {
-                var textNode = (ReactTextShadowNode)node;
-                if (textNode._isVirtual)
-                {
-                    textNode.MarkUpdateSeen();
-                }
-
-                var text = textNode.Text;
-                if (text != null && children.Count > 0)
-                {
-                    throw new InvalidOperationException("Only leaf nodes can contain text.");
-                }
-                else if (text != null)
-                {
-                    var inline = new Run();
-                    inline.Text = text;
-                    FormatInline(textNode, inline, false);
-                    return inline;              
-                }
-                else if (textNode._underline)
-                {
-                    var inline = new Underline();
-                    foreach (var child in children)
-                    {
-                        inline.Inlines.Add(child);
-                    }
-
-                    FormatInline(textNode, inline, false);
-                    return inline;
-                }
-                else
-                {
-                    var inline = new Span();
-                    foreach (var child in children)
-                    {
-                        inline.Inlines.Add(child);
-                    }
-
-                    FormatInline(textNode, inline, false);
-                    return inline;
-                }
+                textBlock.Padding = new Thickness(
+                    this.GetPaddingSpace(CSSSpacingType.Left),
+                    this.GetPaddingSpace(CSSSpacingType.Top),
+                    0,
+                    0);
             }
         }
     }

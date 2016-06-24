@@ -1,5 +1,4 @@
-﻿using ReactNative.UIManager;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.UIManager
@@ -16,9 +15,10 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        protected override void AddView(TCanvas parent, FrameworkElement child, int index)
+        protected override void AddView(TCanvas parent, DependencyObject child, int index)
         {
-            parent.Children.Insert(index, child);
+            var uiElementChild = child.As<UIElement>();
+            parent.Children.Insert(index, uiElementChild);
         }
 
         /// <summary>

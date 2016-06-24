@@ -123,7 +123,7 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        public sealed override void AddView(Border parent, FrameworkElement child, int index)
+        public sealed override void AddView(Border parent, DependencyObject child, int index)
         {
             var inner = GetInnerElement(parent);
             AddView(inner, child, index);
@@ -146,7 +146,7 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        public override FrameworkElement GetChildAt(Border parent, int index)
+        public override DependencyObject GetChildAt(Border parent, int index)
         {
             var inner = GetInnerElement(parent);
             return GetChildAt(inner, index);
@@ -201,7 +201,7 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        protected abstract void AddView(TFrameworkElement parent, FrameworkElement child, int index);
+        protected abstract void AddView(TFrameworkElement parent, DependencyObject child, int index);
 
         /// <summary>
         /// Gets the number of children in the view parent.

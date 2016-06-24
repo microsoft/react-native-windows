@@ -32,12 +32,8 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// time and the new view position and size.
         /// </summary>
         /// <param name="view">The view to create the animation for.</param>
-        /// <param name="x">The new X-coordinate for the view.</param>
-        /// <param name="y">The new Y-coordinate for the view.</param>
-        /// <param name="width">The new width for the view.</param>
-        /// <param name="height">The new height for the view.</param>
-        /// <returns>The storyboard.</returns>
-        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, int x, int y, int width, int height)
+        /// <param name="dimensions">The view dimensions.</param>
+        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
         {
             var fromValue = IsReverse ? 1.0 : 0.0;
             var toValue = IsReverse ? 0.0 : 1.0;
