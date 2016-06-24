@@ -153,7 +153,7 @@ function Start-Locally {
         [string] $ID, <# package.appxmanifest//Identity@name #>
 
         [Parameter(Mandatory=$false, Position=1, ValueFromPipelineByPropertyName=$true)]
-        [string] $args
+        [string[]] $argv
     )
     
     $package = Get-AppxPackage $ID
@@ -164,5 +164,6 @@ function Start-Locally {
 
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
+    $args = [system.String]::Join(",", $argv)
     $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
 }

@@ -76,7 +76,6 @@ function deployToDesktop(options) {
   const appName = identity.attributes.Name;
   const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
   const args = ["remoteDebugging", options.proxy];
-  const 
 
   return new Promise(resolve => {
     console.log(chalk.green('Removing old version of the app'));
