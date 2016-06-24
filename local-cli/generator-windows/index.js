@@ -48,7 +48,7 @@ module.exports = yeoman.Base.extend({
 
     this.fs.copyTpl(
       this.templatePath('bundle.bat'),
-      this.destinationPath('bundle.bat'),
+      this.destinationPath(path.join('windows', 'bundle.bat')),
       templateVars
     );
 
