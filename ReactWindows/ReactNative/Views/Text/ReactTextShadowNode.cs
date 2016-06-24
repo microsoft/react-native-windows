@@ -217,7 +217,7 @@ namespace ReactNative.Views.Text
                 };
 
                 var textNode = (ReactTextShadowNode)node;
-                textNode.UpdateTextBlock(textBlock);
+                textNode.UpdateTextBlockCore(textBlock, true);
 
                 var block = new Paragraph();
                 foreach (var child in textNode.Children)
@@ -243,6 +243,11 @@ namespace ReactNative.Views.Text
         /// <param name="textBlock">The view.</param>
         public void UpdateTextBlock(RichTextBlock textBlock)
         {
+            UpdateTextBlockCore(textBlock, false);
+        }
+
+        private void UpdateTextBlockCore(RichTextBlock textBlock, bool measureOnly)
+        {
             textBlock.CharacterSpacing = _letterSpacing;
             textBlock.LineHeight = _lineHeight;
             textBlock.MaxLines = _numberOfLines;
@@ -251,6 +256,15 @@ namespace ReactNative.Views.Text
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? FontStyle.Normal;
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
+
+            if (!measureOnly)
+            {
+                textBlock.Padding = new Thickness(
+                    this.GetPaddingSpace(CSSSpacingType.Left),
+                    this.GetPaddingSpace(CSSSpacingType.Top),
+                    0,
+                    0);
+            }
         }
     }
 }
