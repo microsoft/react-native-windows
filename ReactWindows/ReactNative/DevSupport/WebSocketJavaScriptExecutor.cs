@@ -4,7 +4,6 @@ using ReactNative.Bridge;
 using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
-using System.Reactive.Disposables;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +25,6 @@ namespace ReactNative.DevSupport
         private bool _connected;
         private DataWriter _messageWriter;
         private int _requestId;
-
         private bool _isDisposed;
          
         public WebSocketJavaScriptExecutor()
