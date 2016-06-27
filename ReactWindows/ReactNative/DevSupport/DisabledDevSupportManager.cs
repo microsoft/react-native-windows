@@ -33,6 +33,12 @@ namespace ReactNative.DevSupport
             set;
         }
 
+        public bool IsRemoteDebuggingEnabled
+        {
+            get;
+            set;
+        }
+
         public string SourceMapUrl
         {
             get

@@ -75,7 +75,7 @@ function deployToDesktop(options) {
   const identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
   const appName = identity.attributes.Name;
   const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
-
+  const args = ["remoteDebugging", options.proxy];
 
   return new Promise(resolve => {
     console.log(chalk.green('Removing old version of the app'));
@@ -85,7 +85,7 @@ function deployToDesktop(options) {
     execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`);
 
     console.log(chalk.green('Starting the app'));
-    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName}`);
+    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`);
     resolve();
   });
 }
