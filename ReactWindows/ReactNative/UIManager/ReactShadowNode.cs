@@ -25,10 +25,6 @@ namespace ReactNative.UIManager
         private bool _isLayoutOnly;
         private int _totalNativeChildren = 0;
         private ReactShadowNode _nativeParent;
-        private double _absoluteLeft;
-        private double _absoluteTop;
-        private double _absoluteRight;
-        private double _absoluteBottom;
 
         private List<ReactShadowNode> _nativeChildren;
 
@@ -216,49 +212,6 @@ namespace ReactNative.UIManager
             }
         }
 
-        /// <summary>
-        /// The rounded layout x-coordinate.
-        /// </summary>
-        public int ScreenX
-        {
-            get
-            {
-                return (int)Math.Round(LayoutX);
-            }
-        }
-
-        /// <summary>
-        /// The rounded layout y-coordinate.
-        /// </summary>
-        public int ScreenY
-        {
-            get
-            {
-                return (int)Math.Round(LayoutY);
-            }
-        }
-
-        /// <summary>
-        /// The rounded layout width.
-        /// </summary>
-        public int ScreenWidth
-        {
-            get
-            {
-                return (int)Math.Round(_absoluteRight - _absoluteLeft);
-            }
-        }
-
-        /// <summary>
-        /// The rounded layout height.
-        /// </summary>
-        public int ScreenHeight
-        {
-            get
-            {
-                return (int)Math.Round(_absoluteBottom - _absoluteTop);
-            }
-        }
         /// <summary>
         /// Marks that an update has been seen.
         /// </summary>
@@ -497,8 +450,6 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Dispatches a batch of updates.
         /// </summary>
-        /// <param name="absoluteX">The absolute x-coordinate.</param>
-        /// <param name="absoluteY">The absolute y-coordinate.</param>
         /// <param name="uiViewOperationQueue">
         /// Interface for enqueueing UI operations.
         /// </param>
@@ -506,8 +457,6 @@ namespace ReactNative.UIManager
         /// Interface for optimizing native hierarchy calls.
         /// </param>
         internal void DispatchUpdates(
-            double absoluteX, 
-            double absoluteY, 
             UIViewOperationQueue uiViewOperationQueue,
             NativeViewHierarchyOptimizer nativeViewHierarchyOptimizer)
         {
@@ -518,11 +467,6 @@ namespace ReactNative.UIManager
 
             if (HasNewLayout)
             {
-                _absoluteLeft = (int)Math.Round(absoluteX + LayoutX);
-                _absoluteTop = (int)Math.Round(absoluteY + LayoutY);
-                _absoluteRight = (int)Math.Round(_absoluteLeft + LayoutWidth);
-                _absoluteBottom = (int)Math.Round(_absoluteTop + LayoutHeight);
-
                 nativeViewHierarchyOptimizer.HandleUpdateLayout(this);
             }
         }
