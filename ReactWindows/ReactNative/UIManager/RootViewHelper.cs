@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml;
 
 namespace ReactNative.UIManager
@@ -32,20 +33,61 @@ namespace ReactNative.UIManager
                     return rootView;
                 }
 
-                var mapped = default(DependencyObject);
-                var frameworkElement = default(FrameworkElement);
-                if (s_parent.TryGetValue(current, out mapped))
+                current = GetParent(current);
+            }
+        }
+
+        /// <summary>
+        /// Returns the list of pointer events views in the hierarchy, starting
+        /// from the root view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <returns>The pointer events hierarchy.</returns>
+        public static IList<UIElement> GetReactViewHierarchy(DependencyObject view)
+        {
+            return GetReactViewHierarchyCore(view).Reverse().ToList();
+        }
+
+        private static IEnumerable<UIElement> GetReactViewHierarchyCore(DependencyObject view)
+        {
+            var current = view;
+            while (true)
+            {
+                if (current == null)
                 {
-                    current = mapped as FrameworkElement;
+                    yield break;
                 }
-                else if ((frameworkElement = current as FrameworkElement) != null)
+
+                if (current is ReactRootView)
                 {
-                    current = frameworkElement.Parent;
+                    yield break;
                 }
-                else
+
+                var uiElement = current as UIElement;
+                if (uiElement != null && uiElement.HasTag())
                 {
-                    return null;
+                    yield return uiElement;
                 }
+
+                current = GetParent(current);
+            }
+        }
+
+        private static DependencyObject GetParent(DependencyObject current)
+        {
+            var mapped = default(DependencyObject);
+            var frameworkElement = default(FrameworkElement);
+            if (s_parent.TryGetValue(current, out mapped))
+            {
+                return mapped;
+            }
+            else if ((frameworkElement = current as FrameworkElement) != null)
+            {
+                return frameworkElement.Parent;
+            }
+            else
+            {
+                return null;
             }
         }
 

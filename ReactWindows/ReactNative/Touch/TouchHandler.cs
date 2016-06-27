@@ -4,7 +4,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 
@@ -46,7 +45,7 @@ namespace ReactNative.Touch
                 throw new InvalidOperationException("A pointer with this ID already exists.");
             }
 
-            var reactView = GetReactViewFromView(e.OriginalSource as FrameworkElement);
+            var reactView = GetReactViewFromView(e.OriginalSource as UIElement);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
                 var pointer = new ReactPointer();
@@ -121,20 +120,31 @@ namespace ReactNative.Touch
             return -1;
         }
 
-        private FrameworkElement GetReactViewFromView(FrameworkElement originalSource)
+        private UIElement GetReactViewFromView(DependencyObject originalSource)
         {
-            var result = originalSource;
-            while (result != null && result != _view)
+            var viewHierarchy = RootViewHelper.GetReactViewHierarchy(originalSource);
+            if (viewHierarchy.Count == 0)
             {
-                if (result.HasTag())
-                {
-                    return result;
-                }
-
-                result = result.Parent as FrameworkElement;
+                return null;
             }
 
-            return result;
+            var target = -1;
+            for (var i = 0; i < viewHierarchy.Count; ++i)
+            {
+                var view = viewHierarchy[i];
+                var pointerEvents = view.GetPointerEvents();
+                if (pointerEvents != PointerEvents.None && pointerEvents != PointerEvents.BoxNone)
+                {
+                    target = i;
+                }
+
+                if (pointerEvents == PointerEvents.BoxOnly || pointerEvents == PointerEvents.None)
+                {
+                    break;
+                }
+            }
+
+            return target < 0 ? null : viewHierarchy[target];
         }
 
         private void UpdatePointerForEvent(ReactPointer pointer, PointerRoutedEventArgs e)
@@ -232,7 +242,7 @@ namespace ReactNative.Touch
             public uint Identifier { get; set; }
 
             [JsonIgnore]
-            public FrameworkElement ReactView { get; set; }
+            public UIElement ReactView { get; set; }
 
             [JsonProperty(PropertyName = "timestamp")]
             public ulong Timestamp { get; set; }
