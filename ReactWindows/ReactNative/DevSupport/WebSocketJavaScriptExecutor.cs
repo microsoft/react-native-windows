@@ -25,12 +25,14 @@ namespace ReactNative.DevSupport
         private bool _connected;
         private DataWriter _messageWriter;
         private int _requestId;
+        private bool _isDisposed;
          
         public WebSocketJavaScriptExecutor()
         {
             _webSocket = new MessageWebSocket();
             _webSocket.Control.MessageType = SocketMessageType.Utf8;
             _webSocket.MessageReceived += OnMessageReceived;
+            _webSocket.Closed += OnClosed;
 
             _injectedObjects = new JObject();
             _callbacks = new Dictionary<int, TaskCompletionSource<JToken>>();
@@ -138,6 +140,7 @@ namespace ReactNative.DevSupport
 
         public void Dispose()
         {
+            _isDisposed = true;
             _messageWriter.Dispose();
             _webSocket.Dispose();
         }
@@ -190,9 +193,20 @@ namespace ReactNative.DevSupport
 
         private async Task SendMessageAsync(int requestId, string message)
         {
-            _messageWriter.WriteString(message);
-            await _messageWriter.StoreAsync();
-            // TODO: check result of `StoreAsync()`
+            if (!_isDisposed)
+            {
+                _messageWriter.WriteString(message);
+                await _messageWriter.StoreAsync();
+                // TODO: check result of `StoreAsync()`
+            }
+            else
+            {
+                var callback = default(TaskCompletionSource<JToken>);
+                if (_callbacks.TryGetValue(requestId, out callback))
+                {
+                    callback.TrySetResult(JValue.CreateNull());
+                }
+            }
         }
 
         private void OnMessageReceived(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
@@ -210,24 +224,29 @@ namespace ReactNative.DevSupport
                     if (_callbacks.TryGetValue(replyId, out callback))
                     {
                         var result = default(JToken);
-                        if (json.TryGetValue("result", out result))
+                        if (json != null && json.TryGetValue("result", out result))
                         {
                             if (result.Type == JTokenType.String)
                             {
-                                callback.SetResult(JToken.Parse(result.Value<string>()));
+                                callback.TrySetResult(JToken.Parse(result.Value<string>()));
                             }
                             else
                             {
-                                callback.SetResult(result);
+                                callback.TrySetResult(result);
                             }
                         }
                         else
                         {
-                            callback.SetResult(null);
+                            callback.TrySetResult(null);
                         }
                     }
                 }
             }
+        }
+
+        private void OnClosed(IWebSocket sender, WebSocketClosedEventArgs args)
+        {
+            Dispose();
         }
     }
 }

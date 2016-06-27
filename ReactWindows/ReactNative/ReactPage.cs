@@ -1,4 +1,5 @@
-﻿using ReactNative.Modules.Core;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
 using Windows.System;
@@ -79,17 +80,17 @@ namespace ReactNative
         /// <summary>
         /// The root view managed by the page.
         /// </summary>
-        public ReactRootView RootView
-        {
-            get;
-        }
+        public ReactRootView RootView { get; }
 
         /// <summary>
         /// Called when the application is first initialized.
         /// </summary>
-        public void OnCreate()
+        /// <param name="arguments">The launch arguments.</param>
+        public void OnCreate(string arguments)
         {
             RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+
+            ApplyArguments(arguments);
             RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) =>
@@ -171,7 +172,6 @@ namespace ReactNative
                 }
             }
         }
-        
 
         private IReactInstanceManager CreateReactInstanceManager()
         {
@@ -185,6 +185,25 @@ namespace ReactNative
 
             builder.Packages.AddRange(Packages);
             return builder.Build();
+        }
+
+        private void ApplyArguments(string arguments)
+        {
+            if (!string.IsNullOrEmpty(arguments))
+            {
+                var args = arguments.Split(',');
+                if (args.Length % 2 != 0)
+                {
+                    throw new ArgumentException("Expected even number of arguments.", nameof(arguments));
+                }
+
+                var index = Array.IndexOf(args, "remoteDebugging");
+                var isRemoteDebuggingEnabled = default(bool);
+                if (index % 2 == 0 && bool.TryParse(args[index + 1], out isRemoteDebuggingEnabled))
+                {
+                    _reactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
+                }
+            }
         }
     }
 }
