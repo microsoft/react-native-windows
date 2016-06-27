@@ -1,5 +1,4 @@
-﻿using ReactNative.Views.View;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.UIManager
@@ -8,7 +7,7 @@ namespace ReactNative.UIManager
     /// View parent manager for bordered canvases.
     /// </summary>
     public abstract class BorderedCanvasManager<TCanvas> : BorderedViewParentManager<TCanvas>
-        where TCanvas : ReactCanvas
+        where TCanvas : Canvas
     {
         /// <summary>
         /// Adds a child at the given index.

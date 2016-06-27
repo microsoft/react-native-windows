@@ -1,4 +1,5 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Reflection;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml.Controls;
 
@@ -7,7 +8,7 @@ namespace ReactNative.Views.View
     /// <summary>
     /// View manager for React view instances.
     /// </summary>
-    public class ReactViewManager : BorderedCanvasManager<ReactCanvas>
+    public class ReactViewManager : BorderedCanvasManager<Canvas>
     {
         /// <summary>
         /// The name of this view manager. This will be the name used to 
@@ -25,38 +26,22 @@ namespace ReactNative.Views.View
         /// Set the pointer events handling mode for the view.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <param name="pointerEvents">The pointerEvents mode.</param>
+        /// <param name="pointerEventsString">The pointerEvents mode.</param>
         [ReactProp(ViewProps.PointerEvents)]
-        public void SetPointerEvents(Border view, string pointerEvents)
+        public void SetPointerEvents(Border view, string pointerEventsString)
         {
-            var inner = GetInnerElement(view);
-
-            if (pointerEvents.Equals("none"))
-            {
-                inner.PointerEvents = PointerEvents.None;
-            }
-            else if (pointerEvents.Equals("box-none"))
-            {
-                inner.PointerEvents = PointerEvents.BoxNone;
-            }
-            else if (pointerEvents.Equals("box-only"))
-            {
-                inner.PointerEvents = PointerEvents.BoxOnly;
-            }
-            else
-            {
-                inner.PointerEvents = PointerEvents.Auto;
-            }
+            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsString) ?? PointerEvents.Auto;
+            view.SetPointerEvents(pointerEvents);
         }
 
         /// <summary>
-        /// Creates a new view instance of type <see cref="ReactCanvas"/>.
+        /// Creates a new view instance of type <see cref="Canvas"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ReactCanvas CreateInnerElement(ThemedReactContext reactContext)
+        protected override Canvas CreateInnerElement(ThemedReactContext reactContext)
         {
-            return new ReactCanvas();
+            return new Canvas();
         }
     }
 }
