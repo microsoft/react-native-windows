@@ -41,6 +41,7 @@ namespace ReactNative.UIManager
         public const string PaddingTop = "paddingTop";
         public const string PaddingBottom = "paddingBottom";
 
+        public const string PointerEvents = "pointerEvents";
         public const string Position = "position";
         public const string Right = "right";
         public const string Top = "top";

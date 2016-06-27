@@ -359,6 +359,8 @@
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
     <Compile Include="Views\Text\ReactSpanViewManager.cs" />
     <Compile Include="UIManager\BorderedCanvasManager.cs" />
+    <Compile Include="Views\View\IReactPointerEventsView.cs" />
+    <Compile Include="Views\View\ReactCanvas.cs" />
     <Compile Include="Views\View\ReactViewManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
     <Compile Include="UIManager\BorderedViewParentManager.cs" />

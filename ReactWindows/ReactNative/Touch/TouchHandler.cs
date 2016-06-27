@@ -2,10 +2,12 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
+using ReactNative.Views.View;
 using System;
 using System.Collections.Generic;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 namespace ReactNative.Touch
@@ -126,9 +128,22 @@ namespace ReactNative.Touch
             var result = originalSource;
             while (result != null && result != _view)
             {
-                if (result.HasTag())
+                if (result is Border && (result as Border)?.Child is IReactPointerEventsView)
                 {
-                    return result;
+                    var pointerEventsView = ((IReactPointerEventsView)((Border)result).Child).GetPointerEventsView();
+                    if (pointerEventsView != null)
+                    {
+                        return pointerEventsView;
+                    }
+                }
+
+                if (result is IReactPointerEventsView)
+                {
+                    var pointerEventsView = ((IReactPointerEventsView)result).GetPointerEventsView();
+                    if (pointerEventsView != null)
+                    {
+                        return pointerEventsView;
+                    }
                 }
 
                 result = result.Parent as FrameworkElement;
