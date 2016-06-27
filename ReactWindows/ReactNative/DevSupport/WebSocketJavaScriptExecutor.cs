@@ -203,30 +203,10 @@ namespace ReactNative.DevSupport
             }
             else
             {
-                DoCallback(requestId, null);
-            }
-        }
-
-        private void DoCallback(int replyId, JObject json)
-        {
-            var callback = default(TaskCompletionSource<JToken>);
-            if (_callbacks.TryGetValue(replyId, out callback))
-            {
-                var result = default(JToken);
-                if (json != null && json.TryGetValue("result", out result))
+                var callback = default(TaskCompletionSource<JToken>);
+                if (_callbacks.TryGetValue(requestId, out callback))
                 {
-                    if (result.Type == JTokenType.String)
-                    {
-                        callback.SetResult(JToken.Parse(result.Value<string>()));
-                    }
-                    else
-                    {
-                        callback.SetResult(result);
-                    }
-                }
-                else
-                {
-                    callback.SetResult(null);
+                    callback.TrySetResult(JValue.CreateNull());
                 }
             }
         }
@@ -242,7 +222,26 @@ namespace ReactNative.DevSupport
                 if (json.ContainsKey("replyID"))
                 {
                     var replyId = json.Value<int>("replyID");
-                    DoCallback(replyId, json);
+                    var callback = default(TaskCompletionSource<JToken>);
+                    if (_callbacks.TryGetValue(replyId, out callback))
+                    {
+                        var result = default(JToken);
+                        if (json != null && json.TryGetValue("result", out result))
+                        {
+                            if (result.Type == JTokenType.String)
+                            {
+                                callback.TrySetResult(JToken.Parse(result.Value<string>()));
+                            }
+                            else
+                            {
+                                callback.TrySetResult(result);
+                            }
+                        }
+                        else
+                        {
+                            callback.TrySetResult(null);
+                        }
+                    }
                 }
             }
         }
