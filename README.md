@@ -44,7 +44,6 @@ If this is your first time using UWP, you may be able to install the SDK by open
 
 Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
 
-- Ask a question on [StackOverflow](http://stackoverflow.com/) and tag it with `react-native-windows`
 - Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-platforms
 - If it turns out that you may have found a bug, please [open an issue](#opening-issues)
 
