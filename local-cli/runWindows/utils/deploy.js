@@ -21,7 +21,7 @@ function getWindowsStoreAppUtils(options) {
 }
 
 function getAppxManifest(options) {
-  const configuration = options.debug ? 'Debug' : 'Release';
+  const configuration = options.release ? 'Release' : 'Debug';
   const appxPath = glob.sync(path.join(options.root, `windows/*/bin/${options.arch}/${configuration}/AppxManifest.xml`))[0];
   return parse(fs.readFileSync(appxPath, 'utf8'));
 }
