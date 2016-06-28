@@ -1,11 +1,10 @@
 'use strict';
 
-var chalk = require('chalk');
-var fs = require('fs');
-var path = require('path');
-var utils = require('../generator-utils');
-var uuid = require('uuid');
-var yeoman = require('yeoman-generator');
+const chalk = require('chalk');
+const fs = require('fs');
+const path = require('path');
+const uuid = require('uuid');
+const yeoman = require('yeoman-generator');
 
 const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
   return path.resolve(
@@ -14,7 +13,7 @@ const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
     'react-native',
     'package.json'
   );
-}
+};
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -34,18 +33,18 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(path.join('windows', '.gitignore'))
     );
   },
-  
+
   writing: function () {
-    var projectGuid = uuid.v4();
-    var packageGuid = uuid.v4();
-    var templateVars = { name: this.name, ns: this.options.ns, projectGuid, packageGuid };
+    const projectGuid = uuid.v4();
+    const packageGuid = uuid.v4();
+    const templateVars = { name: this.name, ns: this.options.ns, projectGuid, packageGuid };
 
     this.fs.copyTpl(
       this.templatePath('index.windows.js'),
       this.destinationPath('index.windows.js'),
       templateVars
     );
-    
+
     this.fs.copyTpl(
       this.templatePath(path.join('src', '**')),
       this.destinationPath(path.join('windows', this.name)),
@@ -80,25 +79,25 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function() {
-    var reactNativeWindowsPackageJson = require('../../package.json');
-    var peerDependencies = reactNativeWindowsPackageJson.peerDependencies;
+    const reactNativeWindowsPackageJson = require('../../package.json');
+    const peerDependencies = reactNativeWindowsPackageJson.peerDependencies;
     if (!peerDependencies) {
       return;
     }
-    
+
     if (fs.existsSync(REACT_NATIVE_PACKAGE_JSON_PATH())) {
       return;
     }
 
-    var reactNativeVersion = peerDependencies['react-native'];
+    const reactNativeVersion = peerDependencies['react-native'];
     if (!reactNativeVersion) {
       return;
     }
-    
+
     console.log(`Installing react-native@${reactNativeVersion}...`);
     this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true });
 
-    var reactVersion = peerDependencies.react;
+    const reactVersion = peerDependencies.react;
     if (!reactVersion) {
       return;
     }
@@ -108,9 +107,9 @@ module.exports = yeoman.Base.extend({
   },
 
   end: function() {
-    var projectPath = path.resolve(this.destinationRoot(), 'windows', this.name);
+    const projectPath = path.resolve(this.destinationRoot(), 'windows', this.name);
     this.log(chalk.white.bold('To run your app on UWP:'));
-    this.log(chalk.white('   Open ' + projectPath + '.sln in Visual Studio'));
+    this.log(chalk.white(`   Open ${projectPath}.sln in Visual Studio`));
     this.log(chalk.white('   Deploy the application and run on the specified destination'));
   }
 });
