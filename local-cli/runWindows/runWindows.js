@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
 
-function runWindows(options) {
+function runWindows(config, args, options) {
   // Fix up options
   options.root = options.root || process.cwd();
   if (options.debug && options.release) {
