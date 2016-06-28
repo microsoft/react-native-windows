@@ -52,9 +52,7 @@ namespace ReactNative
         /// <param name="reactInstanceManager">
         /// The React instance manager.
         /// </param>
-        /// <param name="moduleName">
-        /// The module name.
-        /// </param>
+        /// <param name="moduleName">The module name.</param>
         public void StartReactApplication(IReactInstanceManager reactInstanceManager, string moduleName)
         {
             DispatcherHelpers.AssertOnDispatcher();

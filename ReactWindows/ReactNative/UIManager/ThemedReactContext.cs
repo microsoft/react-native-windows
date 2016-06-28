@@ -16,8 +16,8 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The inner context.</param>
         public ThemedReactContext(ReactContext reactContext)
         {
-             InitializeWithInstance(reactContext.ReactInstance);
-             _reactContext = reactContext;
+            InitializeWithInstance(reactContext.ReactInstance);
+            _reactContext = reactContext;
         }
 
         /// <summary>

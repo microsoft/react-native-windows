@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml;
 
 namespace ReactNative.UIManager
@@ -8,15 +9,15 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class RootViewHelper
     {
-        private static readonly ConditionalWeakTable<FrameworkElement, FrameworkElement> s_parent =
-            new ConditionalWeakTable<FrameworkElement, FrameworkElement>();
+        private static readonly Dictionary<DependencyObject, DependencyObject> s_parent =
+            new Dictionary<DependencyObject, DependencyObject>();
 
         /// <summary>
         /// Returns the root view of a givenview in a React application.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <returns>The root view instance.</returns>
-        public static ReactRootView GetRootView(FrameworkElement view)
+        public static ReactRootView GetRootView(DependencyObject view)
         {
             var current = view;
             while (true)
@@ -32,15 +33,61 @@ namespace ReactNative.UIManager
                     return rootView;
                 }
 
-                var mapped = default(FrameworkElement);
-                if (s_parent.TryGetValue(current, out mapped))
+                current = GetParent(current);
+            }
+        }
+
+        /// <summary>
+        /// Returns the list of pointer events views in the hierarchy, starting
+        /// from the root view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <returns>The pointer events hierarchy.</returns>
+        public static IList<UIElement> GetReactViewHierarchy(DependencyObject view)
+        {
+            return GetReactViewHierarchyCore(view).Reverse().ToList();
+        }
+
+        private static IEnumerable<UIElement> GetReactViewHierarchyCore(DependencyObject view)
+        {
+            var current = view;
+            while (true)
+            {
+                if (current == null)
                 {
-                    current = mapped;
+                    yield break;
                 }
-                else
+
+                if (current is ReactRootView)
                 {
-                    current = (FrameworkElement)current.Parent;
+                    yield break;
                 }
+
+                var uiElement = current as UIElement;
+                if (uiElement != null && uiElement.HasTag())
+                {
+                    yield return uiElement;
+                }
+
+                current = GetParent(current);
+            }
+        }
+
+        private static DependencyObject GetParent(DependencyObject current)
+        {
+            var mapped = default(DependencyObject);
+            var frameworkElement = default(FrameworkElement);
+            if (s_parent.TryGetValue(current, out mapped))
+            {
+                return mapped;
+            }
+            else if ((frameworkElement = current as FrameworkElement) != null)
+            {
+                return frameworkElement.Parent;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -52,10 +99,12 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// TODO: (#302) Remove this shim.
         /// </remarks>
-        internal static void SetParent(this FrameworkElement element, FrameworkElement parent)
+        internal static void SetParent(this DependencyObject element, DependencyObject parent)
         {
-            RemoveParent(element);
-            s_parent.Add(element, parent);
+            lock (s_parent)
+            {
+                s_parent.Add(element, parent);
+            }
         }
 
         /// <summary>
@@ -65,9 +114,12 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// TODO: (#302) Remove this shim.
         /// </remarks>
-        internal static void RemoveParent(this FrameworkElement element)
+        internal static void RemoveParent(this DependencyObject element)
         {
-            s_parent.Remove(element);
+            lock (s_parent)
+            {
+                s_parent.Remove(element);
+            }
         }
     }
 }

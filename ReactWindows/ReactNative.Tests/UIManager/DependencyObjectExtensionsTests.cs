@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 namespace ReactNative.Tests.UIManager
 {
     [TestClass]
-    public class FrameworkElementExtensionsTests
+    public class DependencyObjectExtensionsTests
     {
         [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]
         public void FrameworkElementExtensions_ArgumentChecks()
@@ -15,30 +15,20 @@ namespace ReactNative.Tests.UIManager
             var element = new Button();
 
             AssertEx.Throws<ArgumentNullException>(
-                () => FrameworkElementExtensions.SetTag(null, 0),
+                () => DependencyObjectExtensions.SetTag(null, 0),
                 ex => Assert.AreEqual("view", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => FrameworkElementExtensions.SetReactContext(null, null),
+                () => DependencyObjectExtensions.SetReactContext(null, null),
                 ex => Assert.AreEqual("view", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => FrameworkElementExtensions.GetTag(null),
+                () => DependencyObjectExtensions.GetTag(null),
                 ex => Assert.AreEqual("view", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => FrameworkElementExtensions.GetReactContext(null),
+                () => DependencyObjectExtensions.GetReactContext(null),
                 ex => Assert.AreEqual("view", ex.ParamName));
-        }
-
-        [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]
-        public void FrameworkElementExtensions_ExistingTag()
-        {
-            var button = new Button();
-            button.Tag = new object();
-
-            AssertEx.Throws<InvalidOperationException>(() => button.SetTag(1));
-            AssertEx.Throws<InvalidOperationException>(() => button.SetReactContext(null));
         }
 
         [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]

@@ -172,7 +172,7 @@ namespace ReactNative.Views.Scroll
         /// <remarks>
         /// <see cref="ReactScrollViewManager"/> only supports one child.
         /// </remarks>
-        public override void AddView(ScrollViewer parent, FrameworkElement child, int index)
+        public override void AddView(ScrollViewer parent, DependencyObject child, int index)
         {
             if (index != 0)
             {
@@ -184,8 +184,8 @@ namespace ReactNative.Views.Scroll
                 throw new InvalidOperationException("ScrollViewer already has a child element.");
             }
 
-            child.VerticalAlignment = VerticalAlignment.Top;
-            child.HorizontalAlignment = HorizontalAlignment.Left;
+            child.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
+            child.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
             parent.Content = child;
         }
 
@@ -198,7 +198,7 @@ namespace ReactNative.Views.Scroll
         /// <remarks>
         /// <see cref="ReactScrollViewManager"/> only supports one child.
         /// </remarks>
-        public override FrameworkElement GetChildAt(ScrollViewer parent, int index)
+        public override DependencyObject GetChildAt(ScrollViewer parent, int index)
         {
             if (index != 0)
             {
@@ -405,7 +405,7 @@ namespace ReactNative.Views.Scroll
                         }));
         }
 
-        private static FrameworkElement EnsureChild(ScrollViewer view)
+        private static DependencyObject EnsureChild(ScrollViewer view)
         {
             var child = view.Content;
             if (child == null)
@@ -413,13 +413,13 @@ namespace ReactNative.Views.Scroll
                 throw new InvalidOperationException("ScrollView does not have any children.");
             }
 
-            var frameworkElement = child as FrameworkElement;
-            if (frameworkElement == null)
+            var dependencyObject = child as DependencyObject;
+            if (dependencyObject == null)
             {
                 throw new InvalidOperationException("Invalid child element in ScrollView.");
             }
 
-            return frameworkElement;
+            return dependencyObject;
         }
 
         private static void ScrollTo(ScrollViewer scrollView, double x, double y, bool animated)

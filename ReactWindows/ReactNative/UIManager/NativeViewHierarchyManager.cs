@@ -9,7 +9,6 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.UIManager
@@ -21,7 +20,7 @@ namespace ReactNative.UIManager
     /// <see cref="UIManagerModule"/> communicates with this class by it's
     /// public interface methods:
     /// - <see cref="UpdateProperties(int, ReactStylesDiffMap)"/>
-    /// - <see cref="UpdateLayout(int, int, int, int, int, int)"/>
+    /// - <see cref="UpdateLayout(int, int, Dimensions)"/>
     /// - <see cref="CreateView(ThemedReactContext, int, string, ReactStylesDiffMap)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
     /// executing all the scheduled operations at the end of the JavaScript batch.
@@ -48,7 +47,7 @@ namespace ReactNative.UIManager
     public class NativeViewHierarchyManager
     {
         private readonly IDictionary<int, IViewManager> _tagsToViewManagers;
-        private readonly IDictionary<int, FrameworkElement> _tagsToViews;
+        private readonly IDictionary<int, DependencyObject> _tagsToViews;
         private readonly IDictionary<int, bool> _rootTags;
         private readonly ViewManagerRegistry _viewManagers;
         private readonly JavaScriptResponderHandler _jsResponderHandler;
@@ -63,7 +62,7 @@ namespace ReactNative.UIManager
         {
             _viewManagers = viewManagers;
             _layoutAnimator = new LayoutAnimationController();
-            _tagsToViews = new Dictionary<int, FrameworkElement>();
+            _tagsToViews = new Dictionary<int, DependencyObject>();
             _tagsToViewManagers = new Dictionary<int, IViewManager>();
             _rootTags = new Dictionary<int, bool>();
             _jsResponderHandler = new JavaScriptResponderHandler();
@@ -110,11 +109,8 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="parentTag">The parent view tag.</param>
         /// <param name="tag">The view tag.</param>
-        /// <param name="x">The left coordinate.</param>
-        /// <param name="y">The top coordinate.</param>
-        /// <param name="width">The layout width.</param>
-        /// <param name="height">The layout height.</param>
-        public void UpdateLayout(int parentTag, int tag, int x, int y, int width, int height)
+        /// <param name="dimensions">The dimensions.</param>
+        public void UpdateLayout(int parentTag, int tag, Dimensions dimensions)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")
@@ -122,6 +118,7 @@ namespace ReactNative.UIManager
                 .With("tag", tag))
             {
                 var viewToUpdate = ResolveView(tag);
+                var viewManager = ResolveViewManager(tag);
                 
                 var parentViewManager = default(IViewManager);
                 var parentViewParentManager = default(IViewParentManager);
@@ -134,7 +131,7 @@ namespace ReactNative.UIManager
 
                 if (!parentViewParentManager.NeedsCustomLayoutForChildren)
                 {
-                    UpdateLayout(viewToUpdate, x, y, width, height);
+                    UpdateLayout(viewToUpdate, viewManager, dimensions);
                 }
             }
         }
@@ -159,7 +156,7 @@ namespace ReactNative.UIManager
                 _tagsToViewManagers.Add(tag, viewManager);
 
                 // Uses an extension method and `Tag` property on 
-                // FrameworkElement to store the tag of the view.
+                // DependencyObject to store the tag of the view.
                 view.SetTag(tag);
                 view.SetReactContext(themedContext);
 
@@ -242,7 +239,7 @@ namespace ReactNative.UIManager
                 for (var i = 0; i < viewsToAdd.Length; ++i)
                 {
                     var viewAtIndex = viewsToAdd[i];
-                    var viewToAdd = default(FrameworkElement);
+                    var viewToAdd = default(DependencyObject);
                     if (!_tagsToViews.TryGetValue(viewAtIndex.Tag, out viewToAdd))
                     {
                         throw new InvalidOperationException(
@@ -258,7 +255,7 @@ namespace ReactNative.UIManager
                 for (var i = 0; i < tagsToDelete.Length; ++i)
                 {
                     var tagToDelete = tagsToDelete[i];
-                    var viewToDestroy = default(FrameworkElement);
+                    var viewToDestroy = default(DependencyObject);
                     if (!_tagsToViews.TryGetValue(tagToDelete, out viewToDestroy))
                     {
                         throw new InvalidOperationException(
@@ -317,16 +314,23 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="outputBuffer">The output buffer.</param>
-        public void Measure(int tag, int[] outputBuffer)
+        public void Measure(int tag, double[] outputBuffer)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            var v = default(FrameworkElement);
-            if (!_tagsToViews.TryGetValue(tag, out v))
+            var view = default(DependencyObject);
+            if (!_tagsToViews.TryGetValue(tag, out view))
             {
                 throw new ArgumentOutOfRangeException(nameof(tag));
             }
 
-            var rootView = RootViewHelper.GetRootView(v);
+            var viewManager = default(IViewManager);
+            if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            {
+                throw new InvalidOperationException(
+                    $"Could not find view manager for tag '{tag}.");
+            }
+
+            var rootView = RootViewHelper.GetRootView(view);
             if (rootView == null)
             {
                 throw new InvalidOperationException(
@@ -334,13 +338,15 @@ namespace ReactNative.UIManager
             }
 
             // TODO: better way to get relative position?
-            var rootTransform = v.TransformToVisual(rootView);
+            var uiElement = view.As<UIElement>();
+            var rootTransform = uiElement.TransformToVisual(rootView);
             var positionInRoot = rootTransform.TransformPoint(new Point(0, 0));
 
-            outputBuffer[0] = (int)Math.Round(positionInRoot.X);
-            outputBuffer[1] = (int)Math.Round(positionInRoot.Y);
-            outputBuffer[2] = (int)Math.Round(v.Width);
-            outputBuffer[3] = (int)Math.Round(v.Height);
+            var dimensions = viewManager.GetDimensions(uiElement);
+            outputBuffer[0] = positionInRoot.X;
+            outputBuffer[1] = positionInRoot.Y;
+            outputBuffer[2] = dimensions.Width;
+            outputBuffer[3] = dimensions.Height;
         }
 
         /// <summary>
@@ -363,14 +369,15 @@ namespace ReactNative.UIManager
         /// <returns>The view target.</returns>
         public int FindTargetForTouch(int reactTag, double touchX, double touchY)
         {
-            var view = default(FrameworkElement);
+            var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(reactTag, out view))
             {
                 throw new InvalidOperationException(
                     $"Could not find view with tag '{reactTag}'.");
             }
 
-            var target = VisualTreeHelper.FindElementsInHostCoordinates(new Point(touchX, touchY), view)
+            var uiElement = view.As<UIElement>();
+            var target = VisualTreeHelper.FindElementsInHostCoordinates(new Point(touchX, touchY), uiElement)
                 .OfType<FrameworkElement>()
                 .Where(e => e.HasTag())
                 .FirstOrDefault();
@@ -400,7 +407,7 @@ namespace ReactNative.UIManager
                 return;
             }
 
-            var view = default(FrameworkElement);
+            var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(reactTag, out view))
             {
                 throw new InvalidOperationException(
@@ -427,7 +434,7 @@ namespace ReactNative.UIManager
         public void DispatchCommand(int reactTag, int commandId, JArray args)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            var view = default(FrameworkElement);
+            var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(reactTag, out view))
             {
                 throw new InvalidOperationException(
@@ -473,9 +480,9 @@ namespace ReactNative.UIManager
             throw new NotImplementedException();
         }
 
-        private FrameworkElement ResolveView(int tag)
+        private DependencyObject ResolveView(int tag)
         {
-            var view = default(FrameworkElement);
+            var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(tag, out view))
             {
                 throw new InvalidOperationException(
@@ -507,7 +514,7 @@ namespace ReactNative.UIManager
             view.SetReactContext(themedContext);
         }
 
-        private void DropView(FrameworkElement view)
+        private void DropView(DependencyObject view)
         {
             DispatcherHelpers.AssertOnDispatcher();
             var tag = view.GetTag();
@@ -527,7 +534,7 @@ namespace ReactNative.UIManager
                     for (var i = viewParentManager.GetChildCount(view) - 1; i >= 0; --i)
                     {
                         var child = viewParentManager.GetChildAt(view, i);
-                        var managedChild = default(FrameworkElement);
+                        var managedChild = default(DependencyObject);
                         if (_tagsToViews.TryGetValue(child.GetTag(), out managedChild))
                         {
                             DropView(managedChild);
@@ -542,23 +549,16 @@ namespace ReactNative.UIManager
             _tagsToViewManagers.Remove(tag);
         }
 
-        private void UpdateLayout(FrameworkElement viewToUpdate, int x, int y, int width, int height)
+        private void UpdateLayout(DependencyObject viewToUpdate, IViewManager viewManager, Dimensions dimensions)
         {
-            var layoutManager = default(ILayoutManager);
-            if (_layoutAnimator.ShouldAnimateLayout(viewToUpdate))
+            var frameworkElement = viewToUpdate as FrameworkElement;
+            if (frameworkElement != null && _layoutAnimator.ShouldAnimateLayout(frameworkElement))
             {
-                _layoutAnimator.ApplyLayoutUpdate(viewToUpdate, x, y, width, height);
-            }
-            else if ((layoutManager = viewToUpdate as ILayoutManager) != null)
-            {
-                layoutManager.UpdateLayout(x, y, width, height);
+                _layoutAnimator.ApplyLayoutUpdate(frameworkElement, dimensions);
             }
             else
-            {
-                Canvas.SetLeft(viewToUpdate, x);
-                Canvas.SetTop(viewToUpdate, y);
-                viewToUpdate.Width = width;
-                viewToUpdate.Height = height;
+            {;
+                viewManager.SetDimensions(viewToUpdate, dimensions);
             }
         }
     }

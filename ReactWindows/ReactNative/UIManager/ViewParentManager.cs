@@ -6,8 +6,15 @@ namespace ReactNative.UIManager
     /// <summary>
     /// Class providing child management API for view managers.
     /// </summary>
-    public abstract class ViewParentManager<TFrameworkElement> : BaseViewManager<TFrameworkElement, LayoutShadowNode>, IViewParentManager
+    /// <typeparam name="TFrameworkElement">
+    /// The view type this class manages.
+    /// </typeparam>
+    /// <typeparam name="TLayoutShadowNode">
+    /// The shadow node type used by this manager class.
+    /// </typeparam>
+    public abstract class ViewParentManager<TFrameworkElement, TLayoutShadowNode> : BaseViewManager<TFrameworkElement, TLayoutShadowNode>, IViewParentManager
         where TFrameworkElement : FrameworkElement
+        where TLayoutShadowNode : LayoutShadowNode
     {
         /// <summary>
         /// The <see cref="Type"/> instance that represents the type of shadow
@@ -42,10 +49,7 @@ namespace ReactNative.UIManager
         /// Creates a shadow node instance for the view manager.
         /// </summary>
         /// <returns>The shadow node instance.</returns>
-        public sealed override LayoutShadowNode CreateShadowNodeInstance()
-        {
-            return new LayoutShadowNode();
-        }
+        public abstract override TLayoutShadowNode CreateShadowNodeInstance();
 
         /// <summary>
         /// Implement this method to receive optional extra data enqueued from
@@ -64,7 +68,7 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        public abstract void AddView(TFrameworkElement parent, FrameworkElement child, int index);
+        public abstract void AddView(TFrameworkElement parent, DependencyObject child, int index);
 
         /// <summary>
         /// Gets the number of children in the view parent.
@@ -79,7 +83,7 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        public abstract FrameworkElement GetChildAt(TFrameworkElement parent, int index);
+        public abstract DependencyObject GetChildAt(TFrameworkElement parent, int index);
 
         /// <summary>
         /// Removes the child at the given index.
@@ -96,31 +100,50 @@ namespace ReactNative.UIManager
 
         #region IViewParentManager
 
-        void IViewParentManager.AddView(FrameworkElement parent, FrameworkElement child, int index)
+        void IViewParentManager.AddView(DependencyObject parent, DependencyObject child, int index)
         {
             AddView((TFrameworkElement)parent, child, index);
         }
 
-        int IViewParentManager.GetChildCount(FrameworkElement parent)
+        int IViewParentManager.GetChildCount(DependencyObject parent)
         {
             return GetChildCount((TFrameworkElement)parent);
         }
 
-        FrameworkElement IViewParentManager.GetChildAt(FrameworkElement parent, int index)
+        DependencyObject IViewParentManager.GetChildAt(DependencyObject parent, int index)
         {
             return GetChildAt((TFrameworkElement)parent, index);
         }
 
-        void IViewParentManager.RemoveChildAt(FrameworkElement parent, int index)
+        void IViewParentManager.RemoveChildAt(DependencyObject parent, int index)
         {
             RemoveChildAt((TFrameworkElement)parent, index);
         }
 
-        void IViewParentManager.RemoveAllChildren(FrameworkElement parent)
+        void IViewParentManager.RemoveAllChildren(DependencyObject parent)
         {
             RemoveAllChildren((TFrameworkElement)parent);
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Class providing child management API for view managers.
+    /// </summary>
+    /// <typeparam name="TFrameworkElement">
+    /// The view type this class manages.
+    /// </typeparam>
+    public abstract class ViewParentManager<TFrameworkElement> : ViewParentManager<TFrameworkElement, LayoutShadowNode>
+        where TFrameworkElement : FrameworkElement
+    {
+        /// <summary>
+        /// Creates a shadow node instance for the view manager.
+        /// </summary>
+        /// <returns>The shadow node instance.</returns>
+        public sealed override LayoutShadowNode CreateShadowNodeInstance()
+        {
+            return new LayoutShadowNode();
+        }
     }
 }

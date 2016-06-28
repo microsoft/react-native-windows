@@ -62,7 +62,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="viewToUpdate">The view to update.</param>
         /// <param name="props">The properties.</param>
-        void UpdateProperties(FrameworkElement viewToUpdate, ReactStylesDiffMap props);
+        void UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props);
 
         /// <summary>
         /// Creates a view and installs event emitters on it.
@@ -70,7 +70,7 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The context.</param>
         /// <param name="jsResponderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        FrameworkElement CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler);
+        DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler);
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
@@ -82,7 +82,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        void OnDropViewInstance(ThemedReactContext reactContext, FrameworkElement view);
+        void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view);
 
         /// <summary>
         /// This method should return the subclass of <see cref="ReactShadowNode"/>
@@ -103,7 +103,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        void UpdateExtraData(FrameworkElement root, object extraData);
+        void UpdateExtraData(DependencyObject root, object extraData);
 
         /// <summary>
         /// Implement this method to receive events/commands directly from
@@ -114,6 +114,20 @@ namespace ReactNative.UIManager
         /// </param>
         /// <param name="commandId">Identifer for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
-        void ReceiveCommand(FrameworkElement view, int commandId, JArray args);
+        void ReceiveCommand(DependencyObject view, int commandId, JArray args);
+
+        /// <summary>
+        /// Gets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <returns>The view dimensions.</returns>
+        Dimensions GetDimensions(DependencyObject view);
+
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        void SetDimensions(DependencyObject view, Dimensions dimensions);
     }
 }
