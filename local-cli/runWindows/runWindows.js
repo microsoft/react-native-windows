@@ -39,12 +39,10 @@ function runWindows(config, args, options) {
 
   return deploy.startServerInNewWindow(options)
     .then(() => {
-      if (options.desktop) {
-        return deploy.deployToDesktop(options);
-      }
-
       if (options.device || options.emulator || options.target) {
         return deploy.deployToDevice(options);
+      } else {
+        return deploy.deployToDesktop(options);
       }
     })
     .catch(e => console.error(chalk.red(`Failed to deploy: ${e.message}`)));
@@ -79,40 +77,26 @@ module.exports = {
   description: 'builds your app and starts it on a connected Windows desktop, emulator or device',
   func: runWindows,
   options: [{
-    command: '--debug',
-    description: 'Specifies a debug build',
-    default: true,
-  }, {
-    command: '--release',
+    flags: '--release',
     description: 'Specifies a release build',
-    default: false,
   }, {
-    command: '--root [string]',
+    flags: '--root [string]',
     description: 'Override the root directory for the windows build which contains the windows folder.',
-    default: '',
   }, {
-    command: '--arch [string]',
+    flags: '--arch [string]',
     description: 'The build architecture (ARM, x86, x64)',
     default: 'x86',
   }, {
-    command: '--desktop',
-    description: 'Deploys the app to the desltop',
-    default: true,
-  }, {
-    command: '--emulator',
+    flags: '--emulator',
     description: 'Deploys the app to an emulator',
-    default: false,
   }, {
-    command: '--device',
+    flags: '--device',
     description: 'Deploys the app to a connected device',
-    default: false,
   }, {
-    command: '--target [string]',
+    flags: '--target [string]',
     description: 'Deploys the app to the specified GUID for a device.',
-    default: '',
   }, {
-    command: '--proxy',
+    flags: '--proxy',
     description: 'Deploys the app in remote debugging mode.',
-    default: false,
   }]
 };
