@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
 
-function runWindows(options) {
+function runWindows(config, args, options) {
   // Fix up options
   options.root = options.root || process.cwd();
   if (options.debug && options.release) {
@@ -72,6 +72,7 @@ runWindows({
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
+ *    proxy: Boolean - Run using remote JS proxy
  */
 module.exports = {
   name: 'run-windows',
@@ -109,5 +110,9 @@ module.exports = {
     command: '--target [string]',
     description: 'Deploys the app to the specified GUID for a device.',
     default: '',
+  }, {
+    command: '--proxy',
+    description: 'Deploys the app in remote debugging mode.',
+    default: false,
   }]
 };

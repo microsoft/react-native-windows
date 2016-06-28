@@ -31,7 +31,6 @@ namespace ReactNative.DevSupport
 
         private bool _isDevSupportEnabled = true;
         private bool _isShakeDetectorRegistered;
-        private bool _isUsingJsProxy;
 
         private ReactContext _currentContext;
         private RedBoxDialog _redBoxDialog;
@@ -76,9 +75,18 @@ namespace ReactNative.DevSupport
             }
             set
             {
-                _isDevSupportEnabled = value;
-                ReloadSettings();
+                if (value != _isDevSupportEnabled)
+                {
+                    _isDevSupportEnabled = value;
+                    ReloadSettings();
+                }
             }
+        }
+
+        public bool IsRemoteDebuggingEnabled
+        {
+            get;
+            set;
         }
 
         public string SourceMapUrl
@@ -191,12 +199,12 @@ namespace ReactNative.DevSupport
                         "Reload JavaScript",
                         HandleReloadJavaScript),
                     new DevOptionHandler(
-                        _isUsingJsProxy
+                        IsRemoteDebuggingEnabled
                             ? "Stop JS Remote Debugging"
                             : "Start JS Remote Debugging",
                         () =>
                         {
-                            _isUsingJsProxy = !_isUsingJsProxy;
+                            IsRemoteDebuggingEnabled = !IsRemoteDebuggingEnabled;
                             HandleReloadJavaScript();
                         }),
                     new DevOptionHandler(
@@ -270,14 +278,14 @@ namespace ReactNative.DevSupport
 
             HideRedboxDialog();
 
-            var message = !_isUsingJsProxy 
+            var message = !IsRemoteDebuggingEnabled
                 ? "Fetching JavaScript bundle." 
                 : "Connecting to remote debugger.";
 
             var progressDialog = new ProgressDialog("Please wait...", message);
             var dialogOperation = progressDialog.ShowAsync();
 
-            if (_isUsingJsProxy)
+            if (IsRemoteDebuggingEnabled)
             {
                 await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, progressDialog.Token);
             }

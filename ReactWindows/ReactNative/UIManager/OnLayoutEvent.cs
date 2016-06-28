@@ -6,12 +6,12 @@ namespace ReactNative.UIManager
 {
     class OnLayoutEvent : Event
     {
-        private int _x;
-        private int _y;
-        private int _width;
-        private int _height;
+        private double _x;
+        private double _y;
+        private double _width;
+        private double _height;
 
-        private OnLayoutEvent(int viewTag, int x, int y, int width, int height)
+        private OnLayoutEvent(int viewTag, double x, double y, double width, double height)
             : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
         {
             _x = x;
@@ -48,7 +48,7 @@ namespace ReactNative.UIManager
             eventEmitter.receiveEvent(ViewTag, EventName, eventArgs);
         }
 
-        public static OnLayoutEvent Obtain(int viewTag, int x, int y, int width, int height)
+        public static OnLayoutEvent Obtain(int viewTag, double x, double y, double width, double height)
         {
             // TODO: Introduce pooling mechanism
             return new OnLayoutEvent(viewTag, x, y, width, height);

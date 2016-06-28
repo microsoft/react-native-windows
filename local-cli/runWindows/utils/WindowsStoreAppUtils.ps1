@@ -150,9 +150,12 @@ function Install-AppFromAppx {
 function Start-Locally {
     param(
         [Parameter(Mandatory=$true, Position=0, ValueFromPipelineByPropertyName=$true)]
-        [string] $ID <# package.appxmanifest//Identity@name #>
-    )
+        [string] $ID, <# package.appxmanifest//Identity@name #>
 
+        [Parameter(Mandatory=$false, Position=1, ValueFromPipelineByPropertyName=$true)]
+        [string[]] $argv
+    )
+    
     $package = Get-AppxPackage $ID
     $manifest = Get-appxpackagemanifest $package
     $applicationUserModelId = $package.PackageFamilyName + "!" + $manifest.package.applications.application.id
@@ -161,5 +164,6 @@ function Start-Locally {
 
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
-    $appActivator.ActivateApplication($applicationUserModelId,$null,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
+    $args = [system.String]::Join(",", $argv)
+    $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
 }

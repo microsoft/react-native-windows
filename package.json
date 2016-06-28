@@ -34,5 +34,8 @@
     "xml-parser": "^1.2.1",
     "yeoman-environment": "^1.2.7",
     "yeoman-generator": "^0.20.3"
+  },
+  "rnpm": {
+    "plugin": "./local-cli/index.js"
   }
 }

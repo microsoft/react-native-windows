@@ -18,7 +18,7 @@ namespace ReactNative.UIManager
     public class UIViewOperationQueue
     {
         private readonly object _gate = new object();
-        private readonly int[] _measureBuffer = new int[4];
+        private readonly double[] _measureBuffer = new double[4];
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
@@ -193,25 +193,16 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="parentTag">The parent tag.</param>
         /// <param name="tag">The view tag.</param>
-        /// <param name="x">The x-coordinate of the view.</param>
-        /// <param name="y">The y-coordinate of the view.</param>
-        /// <param name="width">The width of the view.</param>
-        /// <param name="height">The height of the view.</param>
+        /// <param name="dimensions">The dimensions.</param>
         public void EnqueueUpdateLayout(
             int parentTag,
             int tag,
-            int x,
-            int y,
-            int width,
-            int height)
+            Dimensions dimensions)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.UpdateLayout(
                 parentTag,
                 tag,
-                x,
-                y,
-                width,
-                height));
+                dimensions));
         }
 
         /// <summary>

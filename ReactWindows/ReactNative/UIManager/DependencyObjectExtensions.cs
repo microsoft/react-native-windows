@@ -1,16 +1,50 @@
-﻿using ReactNative.Bridge;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 
 namespace ReactNative.UIManager
 {
-    static class DependencyObjectExtensions
+    /// <summary>
+    /// Extension methods for <see cref="DependencyObject"/>.
+    /// </summary>
+    public static class DependencyObjectExtensions
     {
         private static readonly ConditionalWeakTable<DependencyObject, DependencyObjectData> s_properties =
             new ConditionalWeakTable<DependencyObject, DependencyObjectData>();
 
-        public static void SetTag(this DependencyObject view, int tag)
+        /// <summary>
+        /// Sets the pointer events for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="pointerEvents">The pointer events.</param>
+        public static void SetPointerEvents(this DependencyObject view, PointerEvents pointerEvents)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            s_properties.GetOrCreateValue(view).PointerEvents = pointerEvents;
+        }
+
+        /// <summary>
+        /// Gets the pointer events for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <returns>The pointer events.</returns>
+        public static PointerEvents GetPointerEvents(this DependencyObject view)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            var elementData = default(DependencyObjectData);
+            if (!s_properties.TryGetValue(view, out elementData) || !elementData.PointerEvents.HasValue)
+            {
+                return PointerEvents.Auto;
+            }
+
+            return elementData.PointerEvents.Value;
+        }
+
+        internal static void SetTag(this DependencyObject view, int tag)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -18,7 +52,7 @@ namespace ReactNative.UIManager
             s_properties.GetOrCreateValue(view).Tag = tag;
         }
 
-        public static int GetTag(this DependencyObject view)
+        internal static int GetTag(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -32,7 +66,7 @@ namespace ReactNative.UIManager
             return elementData.Tag.Value;
         }
 
-        public static bool HasTag(this DependencyObject view)
+        internal static bool HasTag(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -41,7 +75,7 @@ namespace ReactNative.UIManager
             return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
         }
 
-        public static void SetReactContext(this DependencyObject view, ThemedReactContext context)
+        internal static void SetReactContext(this DependencyObject view, ThemedReactContext context)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -49,7 +83,7 @@ namespace ReactNative.UIManager
             s_properties.GetOrCreateValue(view).Context = context;
         }
 
-        public static ThemedReactContext GetReactContext(this DependencyObject view)
+        internal static ThemedReactContext GetReactContext(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -63,7 +97,7 @@ namespace ReactNative.UIManager
             return elementData.Context;
         }
 
-        public static T As<T>(this DependencyObject view)
+        internal static T As<T>(this DependencyObject view)
             where T : DependencyObject
         {
             var convertedView = view as T;
@@ -77,6 +111,8 @@ namespace ReactNative.UIManager
         class DependencyObjectData
         {
             public ThemedReactContext Context { get; set; }
+
+            public PointerEvents? PointerEvents { get; set; }
 
             public int? Tag { get; set; }
         }

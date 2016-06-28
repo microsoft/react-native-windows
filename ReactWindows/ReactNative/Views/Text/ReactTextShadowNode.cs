@@ -190,6 +190,15 @@ namespace ReactNative.Views.Text
             uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, this);
         }
 
+        /// <summary>
+        /// Marks a node as updated.
+        /// </summary>
+        protected override void MarkUpdated()
+        {
+            base.MarkUpdated();
+            dirty();
+        }
+
         private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             // This is not a terribly efficient way of projecting the height of
@@ -222,8 +231,8 @@ namespace ReactNative.Views.Text
                 var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
                 return new MeasureOutput(
-                    (float)Math.Ceiling(textBlock.DesiredSize.Width),
-                    (float)Math.Ceiling(textBlock.DesiredSize.Height));
+                    (float)textBlock.DesiredSize.Width,
+                    (float)textBlock.DesiredSize.Height);
             });
 
             return task.Result;
