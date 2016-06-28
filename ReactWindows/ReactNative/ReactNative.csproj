@@ -290,6 +290,9 @@
     <Compile Include="UIManager\DependencyObjectViewManager.cs" />
     <Compile Include="UIManager\ThemedReactContext.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
+    <Compile Include="Views\Image\ImageHelpers.cs" />
+    <Compile Include="Views\Image\ImageReference.cs" />
+    <Compile Include="Views\Image\ReactImageShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />

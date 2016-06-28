@@ -23,7 +23,6 @@ var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
 
 var flattenStyle = require('flattenStyle');
-var invariant = require('invariant');
 var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
 var resolveAssetSource = require('resolveAssetSource');
@@ -61,6 +60,7 @@ var ImageViewAttributes = merge(ReactNativeViewAttributes.UIView, {
   resizeMode: true,
   progressiveRenderingEnabled: true,
   fadeDuration: true,
+  shouldNotifyLoadEvents: true,
 });
 
 var Image = React.createClass({
@@ -113,6 +113,21 @@ var Image = React.createClass({
 
   statics: {
     resizeMode: ImageResizeMode,
+
+    getSize(
+      url: string,
+      success: (width: number, height: number) => void,
+      failure: (error: any) => void,
+    ) {
+      return ImageLoader.getSize(url)
+        .then(function(sizes) {
+          success(sizes.width, sizes.height);
+        })
+        .catch(failure || function() {
+          console.warn('Failed to get size for image: ' + url);
+        });
+    },
+
     /**
      * Prefetches a remote image for later use by downloading it to the disk
      * cache
@@ -171,6 +186,10 @@ var Image = React.createClass({
       console.warn('source.uri should not be an empty string');
     }
 
+    if (this.props.src) {
+      console.warn('The <Image> component requires a `source` property rather than `src`.');
+    }
+
     if (source && source.uri) {
       var {width, height} = source;
       var style = flattenStyle([{width, height}, styles.base, this.props.style]);
@@ -178,6 +197,7 @@ var Image = React.createClass({
 
       var nativeProps = merge(this.props, {
         style,
+        shouldNotifyLoadEvents: !!(onLoadStart || onLoad || onLoadEnd),
         src: source.uri,
         loadingIndicatorSrc: loadingIndicatorSource ? loadingIndicatorSource.uri : null,
       });
@@ -222,6 +242,7 @@ var cfg = {
     defaultImageSrc: true,
     imageTag: true,
     progressHandlerRegistered: true,
+    shouldNotifyLoadEvents: true,
   },
 };
 var RKImage = requireNativeComponent('RCTImageView', Image, cfg);
