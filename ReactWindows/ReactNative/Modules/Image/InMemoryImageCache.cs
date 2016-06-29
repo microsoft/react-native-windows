@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
@@ -13,8 +12,8 @@ namespace ReactNative.Modules.Image
 {
     class InMemoryImageCache : IImageCache
     {
-        private readonly IDictionary<string, Impl> _cache =
-            new Dictionary<string, Impl>();
+        private readonly IDictionary<string, ImageReference> _cache =
+            new Dictionary<string, ImageReference>();
 
         private readonly IUriLoader _uriLoader;
          
@@ -25,7 +24,7 @@ namespace ReactNative.Modules.Image
 
         public IImageReference Get(string uri)
         {
-            var reference = default(Impl);
+            var reference = default(ImageReference);
             lock (_cache)
             {
                 if (_cache.TryGetValue(uri, out reference))
@@ -40,7 +39,7 @@ namespace ReactNative.Modules.Image
                 {
                     if (!_cache.TryGetValue(uri, out reference))
                     {
-                        reference = new Impl(uri, this);
+                        reference = new ImageReference(uri, this);
                         _cache.Add(uri, reference);
                     }
                     else
@@ -53,12 +52,12 @@ namespace ReactNative.Modules.Image
             return reference;
         }
 
-        private void Release(Impl reference)
+        private void Release(ImageReference reference)
         {
             _cache.Remove(reference.Uri);
         }
 
-        class Impl : IImageReference
+        class ImageReference : IImageReference
         {
             private readonly InMemoryImageCache _parent;
             private readonly ReplaySubject<Unit> _subject;
@@ -66,7 +65,7 @@ namespace ReactNative.Modules.Image
             private IDisposable _subscription;
             private int _refCount = 1;
 
-            public Impl(string uri, InMemoryImageCache parent)
+            public ImageReference(string uri, InMemoryImageCache parent)
             {
                 Uri = uri;
                 _parent = parent;
