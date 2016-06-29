@@ -56,20 +56,22 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            var r = _imageCache.Get(uriString);
-            try
+            using (var reference = _imageCache.Get(uriString))
             {
-                await r.LoadedObservable.FirstAsync();
-                DispatcherHelpers.RunOnDispatcher(() =>
-                    promise.Resolve(new JObject
-                    {
-                        { "width", r.Image.PixelWidth },
-                        { "height", r.Image.PixelHeight },
-                    }));
-            }
-            catch (ImageFailedException ex)
-            {
-                promise.Reject(ErrorGetSizeFailure, ex.Message);
+                try
+                {
+                    await reference.LoadedObservable.FirstAsync();
+                    DispatcherHelpers.RunOnDispatcher(() =>
+                        promise.Resolve(new JObject
+                        {
+                            { "width", reference.Image.PixelWidth },
+                            { "height", reference.Image.PixelHeight },
+                        }));
+                }
+                catch (ImageFailedException ex)
+                {
+                    promise.Reject(ErrorGetSizeFailure, ex.Message);
+                }
             }
         }
     }

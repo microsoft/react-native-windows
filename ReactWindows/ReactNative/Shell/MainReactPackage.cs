@@ -45,7 +45,7 @@ namespace ReactNative.Shell
         }
 
         private MainReactPackage(IUriLoader uriLoader)
-            : this(new InMemoryImageCache(uriLoader), uriLoader)
+            : this(new RefCountImageCache(uriLoader), uriLoader)
         {
         }
 

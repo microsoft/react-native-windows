@@ -10,14 +10,14 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Modules.Image
 {
-    class InMemoryImageCache : IImageCache
+    class RefCountImageCache : IImageCache
     {
         private readonly IDictionary<string, ImageReference> _cache =
             new Dictionary<string, ImageReference>();
 
         private readonly IUriLoader _uriLoader;
          
-        public InMemoryImageCache(IUriLoader uriLoader)
+        public RefCountImageCache(IUriLoader uriLoader)
         {
             _uriLoader = uriLoader;
         }
@@ -52,20 +52,15 @@ namespace ReactNative.Modules.Image
             return reference;
         }
 
-        private void Release(ImageReference reference)
-        {
-            _cache.Remove(reference.Uri);
-        }
-
         class ImageReference : IImageReference
         {
-            private readonly InMemoryImageCache _parent;
+            private readonly RefCountImageCache _parent;
             private readonly ReplaySubject<Unit> _subject;
 
             private IDisposable _subscription;
             private int _refCount = 1;
 
-            public ImageReference(string uri, InMemoryImageCache parent)
+            public ImageReference(string uri, RefCountImageCache parent)
             {
                 Uri = uri;
                 _parent = parent;
@@ -105,7 +100,7 @@ namespace ReactNative.Modules.Image
                     {
                         _subscription.Dispose();
                         _subject.Dispose();
-                        _parent.Release(this);
+                        _parent._cache.Remove(Uri);
                     }
                 }
             }
