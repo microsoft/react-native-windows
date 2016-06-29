@@ -14,7 +14,7 @@ namespace ReactNative.Modules.Image
 
         public Task PrefetchAsync(string uri)
         {
-            return Task.FromResult(true);
+            throw new NotImplementedException("Prefetch is not yet implemented.");
         }
     }
 }
