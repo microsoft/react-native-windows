@@ -10,7 +10,14 @@ namespace ReactNative.Modules.Image
         private const string ErrorPrefetchFailure = "E_PREFETCH_FAILURE";
         private const string ErrorGetSizeFailure = "E_GET_SIZE_FAILURE";
 
-        private readonly IImageCache _cache = new InMemoryImageCache();
+        private readonly IImageCache _imageCache;
+        private readonly IUriLoader _uriLoader;
+
+        public ImageLoaderModule(IImageCache imageCache, IUriLoader uriLoader)
+        {
+            _imageCache = imageCache;
+            _uriLoader = uriLoader;
+        }
 
         public override string Name
         {
@@ -29,15 +36,14 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            var r = _cache.Get(uriString);
             try
             {
-                await r.LoadedObservable.FirstAsync();
+                await _uriLoader.PrefetchAsync(uriString);
                 promise.Resolve(true);
             }
-            catch (ImageFailedException ex)
+            catch (System.Exception ex)
             {
-                promise.Reject(ErrorGetSizeFailure, ex.Message);
+                promise.Reject(ErrorPrefetchFailure, ex.Message);
             }
         }
 
@@ -50,19 +56,20 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            var r = _cache.Get(uriString);
+            var r = _imageCache.Get(uriString);
             try
             {
                 await r.LoadedObservable.FirstAsync();
-                promise.Resolve(new JObject
-                {
-                    { "width", r.Image.PixelWidth },
-                    { "height", r.Image.PixelHeight },
-                });
+                DispatcherHelpers.RunOnDispatcher(() =>
+                    promise.Resolve(new JObject
+                    {
+                        { "width", r.Image.PixelWidth },
+                        { "height", r.Image.PixelHeight },
+                    }));
             }
             catch (ImageFailedException ex)
             {
-                promise.Reject(ErrorPrefetchFailure, ex.Message);
+                promise.Reject(ErrorGetSizeFailure, ex.Message);
             }
         }
     }

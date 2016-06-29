@@ -6,7 +6,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -16,6 +15,13 @@ namespace ReactNative.Modules.Image
     {
         private readonly IDictionary<string, Impl> _cache =
             new Dictionary<string, Impl>();
+
+        private readonly IUriLoader _uriLoader;
+         
+        public InMemoryImageCache(IUriLoader uriLoader)
+        {
+            _uriLoader = uriLoader;
+        }
 
         public IImageReference Get(string uri)
         {
@@ -34,7 +40,7 @@ namespace ReactNative.Modules.Image
                 {
                     if (!_cache.TryGetValue(uri, out reference))
                     {
-                        reference = new Impl(this, uri);
+                        reference = new Impl(uri, this);
                         _cache.Add(uri, reference);
                     }
                     else
@@ -55,20 +61,16 @@ namespace ReactNative.Modules.Image
         class Impl : IImageReference
         {
             private readonly InMemoryImageCache _parent;
-            private readonly IDisposable _disposable;
+            private readonly ReplaySubject<Unit> _subject;
+
+            private IDisposable _subscription;
             private int _refCount = 1;
 
-            public Impl(InMemoryImageCache parent, string uri)
+            public Impl(string uri, InMemoryImageCache parent)
             {
-                _parent = parent;
                 Uri = uri;
-
-                Image = new BitmapImage();
-
-                var io = CreateObservable();
-                LoadedObservable = io;
-                _disposable = io.Connect();
-
+                _parent = parent;
+                _subject = new ReplaySubject<Unit>(1);
                 InitializeImage();
             }
 
@@ -80,16 +82,15 @@ namespace ReactNative.Modules.Image
             public BitmapImage Image
             {
                 get;
+                private set;
             }
 
             public IObservable<Unit> LoadedObservable
             {
-                get;
-            }
-
-            public IObservable<string> FailedObservable
-            {
-                get;
+                get
+                {
+                    return _subject;
+                }
             }
 
             public void Increment()
@@ -103,40 +104,49 @@ namespace ReactNative.Modules.Image
                 {
                     if (Interlocked.Decrement(ref _refCount) == 0)
                     {
-                        _disposable.Dispose();
+                        _subscription.Dispose();
+                        _subject.Dispose();
                         _parent.Release(this);
                     }
                 }
             }
 
-            private IConnectableObservable<Unit> CreateObservable()
+            private void DoSubscribe(BitmapImage image)
             {
                 var openedObservable = Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
-                    h => Image.ImageOpened += h,
-                    h => Image.ImageOpened -= h)
+                    h => image.ImageOpened += h,
+                    h => image.ImageOpened -= h)
                     .Select(_ => default(Unit));
 
                 var failedObservable = Observable.FromEventPattern<ExceptionRoutedEventHandler, ExceptionRoutedEventArgs>(
-                    h => Image.ImageFailed += h,
-                    h => Image.ImageFailed -= h)
+                    h => image.ImageFailed += h,
+                    h => image.ImageFailed -= h)
                     .Select<EventPattern<ExceptionRoutedEventArgs>, Unit>(pattern =>
                     {
                         throw new Exception(pattern.EventArgs.ErrorMessage);
                     });
 
-                return openedObservable
+                _subscription = openedObservable
                     .Merge(failedObservable)
-                    .Replay(1);
+                    .Subscribe(_subject);
             }
 
             private async void InitializeImage()
             {
-
-                var streamRef = RandomAccessStreamReference.CreateFromUri(new Uri(Uri));
-                using (var stream = await streamRef.OpenReadAsync())
+                var stream = await _parent._uriLoader.OpenReadAsync(Uri);
+                DispatcherHelpers.RunOnDispatcher(async () =>
                 {
-                    DispatcherHelpers.RunOnDispatcher(async () => await Image.SetSourceAsync(stream));
-                }
+                    Image = new BitmapImage();
+                    DoSubscribe(Image);
+                    try
+                    {
+                        await Image.SetSourceAsync(stream);
+                    }
+                    finally
+                    {
+                        stream.Dispose();
+                    }
+                });
             }
         }
     }
