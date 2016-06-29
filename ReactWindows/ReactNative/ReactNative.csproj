@@ -193,7 +193,6 @@
     <Compile Include="Modules\DevSupport\IDeveloperSettings.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\DefaultUriLoader.cs" />
-    <Compile Include="Modules\Image\DiskCacheUriLoader.cs" />
     <Compile Include="Modules\Image\IImageCache.cs" />
     <Compile Include="Modules\Image\IImageReference.cs" />
     <Compile Include="Modules\Image\ImageFailedException.cs" />
