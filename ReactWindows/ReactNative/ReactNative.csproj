@@ -192,7 +192,10 @@
     <Compile Include="Modules\DevSupport\SourceCodeModule.cs" />
     <Compile Include="Modules\DevSupport\IDeveloperSettings.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
+    <Compile Include="Modules\Image\IImageCache.cs" />
+    <Compile Include="Modules\Image\IImageReference.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
+    <Compile Include="Modules\Image\InMemoryImageCache.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\IConnectionProfile.cs" />

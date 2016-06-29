@@ -1,9 +1,14 @@
 ﻿using ReactNative.Bridge;
+using System.Reactive.Linq;
 
 namespace ReactNative.Modules.Image
 {
     class ImageLoaderModule : NativeModuleBase
     {
+        private const string ErrorInvalidUri = "E_INVALID_URI";
+
+        private readonly IImageCache _cache = new InMemoryImageCache();
+
         public override string Name
         {
             get
@@ -13,10 +18,19 @@ namespace ReactNative.Modules.Image
         }
 
         [ReactMethod]
-        public void prefetchImage(string uriString, IPromise promise)
+        public async void prefetchImage(string uriString, IPromise promise)
         {
-            // TODO: (#366) Implement prefetch mechanism.
-            promise.Reject("EUNSPECIFIED", "Prefetch is not yet supported.");
+            if (uriString == null)
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
+                return;
+            }
+
+            var r = _cache.Get(uriString);
+            try
+            {
+                await r.LoadedObservable.FirstAsync();
+            }
         }
     }
 }
