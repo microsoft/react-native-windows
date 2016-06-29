@@ -194,6 +194,7 @@
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\IImageCache.cs" />
     <Compile Include="Modules\Image\IImageReference.cs" />
+    <Compile Include="Modules\Image\ImageFailedException.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
     <Compile Include="Modules\Image\InMemoryImageCache.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
