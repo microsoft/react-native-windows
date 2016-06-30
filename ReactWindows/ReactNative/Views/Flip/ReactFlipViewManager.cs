@@ -102,7 +102,9 @@ namespace ReactNative.Views.Flip
                 case SetPage:
                     // TODO: (#328) Fix issue with `setPage` on mount
                     await Task.Yield();
+                    view.SelectionChanged -= OnSelectionChanged;
                     view.SelectedIndex = args.First.Value<int>();
+                    view.SelectionChanged += OnSelectionChanged;
                     break;
             }
         }
