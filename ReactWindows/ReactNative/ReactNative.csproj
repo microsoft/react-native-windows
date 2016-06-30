@@ -192,7 +192,13 @@
     <Compile Include="Modules\DevSupport\SourceCodeModule.cs" />
     <Compile Include="Modules\DevSupport\IDeveloperSettings.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
+    <Compile Include="Modules\Image\DefaultUriLoader.cs" />
+    <Compile Include="Modules\Image\IImageCache.cs" />
+    <Compile Include="Modules\Image\IImageReference.cs" />
+    <Compile Include="Modules\Image\ImageFailedException.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
+    <Compile Include="Modules\Image\RefCountImageCache.cs" />
+    <Compile Include="Modules\Image\IUriLoader.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\IConnectionProfile.cs" />
@@ -299,7 +305,6 @@
     <Compile Include="UIManager\UIImplementationProvider.cs" />
     <Compile Include="Views\Image\ReactImageLoadEvent.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
-    <Compile Include="Views\Image\ReactVirtualImageManager.cs" />
     <Compile Include="Views\Picker\ReactPickerManager.cs" />
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
     <Compile Include="Views\Scroll\ScrollEventType.cs" />
