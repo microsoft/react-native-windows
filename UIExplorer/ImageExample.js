@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -566,7 +566,6 @@ exports.examples = [
     render: function() {
       return <ImageSizeExample source={fullImage} />;
     },
-    platforms: ['android','ios'],
   },
   {
     title: 'MultipleSourcesExample',
