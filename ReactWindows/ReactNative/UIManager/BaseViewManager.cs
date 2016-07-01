@@ -2,6 +2,7 @@
 using ReactNative.UIManager.Annotations;
 using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Media3D;
 
 namespace ReactNative.UIManager
@@ -159,6 +160,17 @@ namespace ReactNative.UIManager
         {
             var transform = EnsureTransform(view);
             transform.RotationZ = -1.0 * rotation;
+        }
+
+        /// <summary>
+        /// Sets the z-index of the element.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="zIndex">The z-index.</param>
+        [ReactProp("zIndex")]
+        public void SetZIndex(TFrameworkElement view, int zIndex)
+        {
+            Canvas.SetZIndex(view, zIndex);
         }
 
         private void SetTransformMatrix(TFrameworkElement view, JObject matrix)
