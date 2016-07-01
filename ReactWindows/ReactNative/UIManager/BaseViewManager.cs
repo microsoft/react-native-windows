@@ -80,15 +80,29 @@ namespace ReactNative.UIManager
         private void SetProjectionMatrix(TFrameworkElement view, double[] matrix)
         {
             var projection = EnsureProjection(view);
-            var matrix3d = new Matrix3D(
+            var transformMatrix = new Matrix3D(
                 matrix[0], matrix[1], matrix[2], matrix[3],
                 matrix[4], matrix[5], matrix[6], matrix[7],
                 matrix[8], matrix[9], matrix[10], matrix[11],
                 matrix[12], matrix[13], matrix[14], matrix[15]);
 
-            projection.ProjectionMatrix = matrix3d;
+            var translateMatrix = Matrix3D.Identity;
+            var translateBackMatrix = Matrix3D.Identity;
+            if (!double.IsNaN(view.Width))
+            {
+                translateMatrix.OffsetX = -view.Width / 2;
+                translateBackMatrix.OffsetX = view.Width / 2;
+            }
+
+            if (!double.IsNaN(view.Height))
+            {
+                translateMatrix.OffsetY = -view.Height / 2;
+                translateBackMatrix.OffsetY = view.Height / 2;
+            }
+
+            projection.ProjectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
         }
-        
+
         private void ResetProjectionMatrix(TFrameworkElement view)
         {
             var projection = view.Projection;
