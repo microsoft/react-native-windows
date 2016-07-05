@@ -2,6 +2,8 @@
 using ReactNative.UIManager.Annotations;
 using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Media3D;
@@ -75,6 +77,39 @@ namespace ReactNative.UIManager
         public void SetZIndex(TFrameworkElement view, int zIndex)
         {
             Canvas.SetZIndex(view, zIndex);
+        }
+
+        /// <summary>
+        /// Sets the accessibility label of the element.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="label">The label.</param>
+        [ReactProp("accessibilityLabel")]
+        public void SetAccessibilityLabel(TFrameworkElement view, string label)
+        {
+            AutomationProperties.SetName(view, label);
+        }
+
+        /// <summary>
+        /// Sets the accessibility live region.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="liveRegion">The live region.</param>
+        [ReactProp("accessibilityLiveRegion")]
+        public void SetAccessibilityLiveRegion(TFrameworkElement view, string liveRegion)
+        {
+            var liveSetting = AutomationLiveSetting.Off;
+            switch (liveRegion)
+            {
+                case "polite":
+                    liveSetting = AutomationLiveSetting.Polite;
+                    break;
+                case "assertive":
+                    liveSetting = AutomationLiveSetting.Assertive;
+                    break;
+            }
+
+            AutomationProperties.SetLiveSetting(view, liveSetting);
         }
 
         private void SetProjectionMatrix(TFrameworkElement view, double[] matrix)
