@@ -3,6 +3,7 @@ using ReactNative.UIManager.Annotations;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Media3D;
 
 namespace ReactNative.UIManager
@@ -17,53 +18,22 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private const string PROP_DECOMPOSED_MATRIX = "decomposedMatrix";
-        private const string PROP_DECOMPOSED_MATRIX_ROTATE = "rotate";
-        private const string PROP_DECOMPOSED_MATRIX_ROTATE_X = "rotateX";
-        private const string PROP_DECOMPOSED_MATRIX_ROTATE_Y = "rotateY";
-        private const string PROP_DECOMPOSED_MATRIX_SCALE_X = "scaleX";
-        private const string PROP_DECOMPOSED_MATRIX_SCALE_Y = "scaleY";
-        private const string PROP_DECOMPOSED_MATRIX_TRANSLATE_X = "translateX";
-        private const string PROP_DECOMPOSED_MATRIX_TRANSLATE_Y = "translateY";
-        private const string PROP_TRANSFORM = "transform";
-        private const string PROP_OPACITY = "opacity";
-
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
         /// properties, based on the <see cref="JObject"/> map.
         /// </summary>
         /// <param name="view">The view instance.</param>
-        /// <param name="decomposedMatrix">The requested styling properties to set.</param>
-        [ReactProp(PROP_DECOMPOSED_MATRIX)]
-        public void SetDecomposedMatrix(TFrameworkElement view, JObject decomposedMatrix)
+        /// <param name="matrix">The transform matrix.</param>
+        [ReactProp("transform")]
+        public void SetTransform(TFrameworkElement view, double[] matrix)
         {
-            if (decomposedMatrix == null)
+            if (matrix == null)
             {
-                ResetTransformMatrix(view);
+                ResetProjectionMatrix(view);
             }
             else
             {
-                SetTransformMatrix(view, decomposedMatrix);
-            }
-        }
-
-        /// <summary>
-        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
-        /// properties, based on the <see cref="JObject"/> map.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="decomposedMatrix">The requested styling properties to set.</param>
-        [ReactProp(PROP_TRANSFORM)]
-        public void SetTransform(TFrameworkElement view, JObject decomposedMatrix)
-        {
-            if (decomposedMatrix == null)
-            {
-                ResetTransformMatrix(view);
-            }
-            else
-            {
-                SetTransformCenterPoint(view);
-                SetTransformMatrix(view, decomposedMatrix);
+                SetProjectionMatrix(view, matrix);
             }
         }
 
@@ -72,58 +42,10 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="opacity">The opacity value.</param>
-        [ReactProp(PROP_OPACITY, DefaultDouble = 1.0)]
+        [ReactProp("opacity", DefaultDouble = 1.0)]
         public void SetOpacity(TFrameworkElement view, double opacity)
         {
             view.Opacity = opacity;
-        }
-
-        /// <summary>
-        /// Sets the scale factor for the X-dimension of the <typeparamref name="TFrameworkElement"/>.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="factor">The scaling factor.</param>
-        [ReactProp(PROP_DECOMPOSED_MATRIX_SCALE_X, DefaultDouble = 1.0)]
-        public void SetScaleX(TFrameworkElement view, double factor)
-        {
-            var transform = EnsureTransform(view);
-            transform.ScaleX = factor;
-        }
-
-        /// <summary>
-        /// Sets the scale factor for the Y-dimension of the <typeparamref name="TFrameworkElement"/>.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="factor">The scaling factor.</param>
-        [ReactProp(PROP_DECOMPOSED_MATRIX_SCALE_Y, DefaultDouble = 1.0)]
-        public void SetScaleY(TFrameworkElement view, double factor)
-        {
-            var transform = EnsureTransform(view);
-            transform.ScaleY = factor;
-        }
-
-        /// <summary>
-        /// Sets the X-coordinate translation for the <typeparamref name="TFrameworkElement"/>.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="distance">The translation distance.</param>
-        [ReactProp(PROP_DECOMPOSED_MATRIX_TRANSLATE_X, DefaultDouble = 1.0)]
-        public void SetTranslationX(TFrameworkElement view, double distance)
-        {
-            var transform = EnsureTransform(view);
-            transform.TranslateX = distance;
-        }
-
-        /// <summary>
-        /// Sets the Y-coordinate translation for the <typeparamref name="TFrameworkElement"/>.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="distance">The translation distance.</param>
-        [ReactProp(PROP_DECOMPOSED_MATRIX_TRANSLATE_Y, DefaultDouble = 1.0)]
-        public void SetTranslationY(TFrameworkElement view, double distance)
-        {
-            var transform = EnsureTransform(view);
-            transform.TranslateY = distance;
         }
 
         /// <summary>
@@ -144,24 +66,6 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void SetRotationX(TFrameworkElement view, double rotation)
-        {
-            var transform = EnsureTransform(view);
-            transform.RotationX = rotation;
-        }
-
-        private void SetRotationY(TFrameworkElement view, double rotation)
-        {
-            var transform = EnsureTransform(view);
-            transform.RotationY = rotation;
-        }
-
-        private void SetRotationZ(TFrameworkElement view, double rotation)
-        {
-            var transform = EnsureTransform(view);
-            transform.RotationZ = -1.0 * rotation;
-        }
-
         /// <summary>
         /// Sets the z-index of the element.
         /// </summary>
@@ -173,68 +77,60 @@ namespace ReactNative.UIManager
             Canvas.SetZIndex(view, zIndex);
         }
 
-        private void SetTransformMatrix(TFrameworkElement view, JObject matrix)
+        private void SetProjectionMatrix(TFrameworkElement view, double[] matrix)
         {
-            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_X, view, SetTranslationX);
-            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_TRANSLATE_Y, view, SetTranslationY);
-            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_X, view, SetRotationX);
-            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE_Y, view, SetRotationY);
-            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_ROTATE, view, SetRotationZ);
-            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_X, view, SetScaleX);
-            ApplyProperty<double>(matrix, PROP_DECOMPOSED_MATRIX_SCALE_Y, view, SetScaleY);
-        }
-        
-        private void ResetTransformMatrix(TFrameworkElement view)
-        {
-            SetTranslationX(view, 0.0);
-            SetTranslationY(view, 0.0);
-            SetRotationX(view, 0.0);
-            SetRotationY(view, 0.0);
-            SetRotationZ(view, 0.0);
-            SetScaleX(view, 1.0);
-            SetScaleY(view, 1.0);
-        }
+            var projection = EnsureProjection(view);
+            var transformMatrix = new Matrix3D(
+                matrix[0], matrix[1], matrix[2], matrix[3],
+                matrix[4], matrix[5], matrix[6], matrix[7],
+                matrix[8], matrix[9], matrix[10], matrix[11],
+                matrix[12], matrix[13], matrix[14], matrix[15]);
 
-        private void SetTransformCenterPoint(TFrameworkElement view)
-        {
-            var transform = EnsureTransform(view);
-
+            var translateMatrix = Matrix3D.Identity;
+            var translateBackMatrix = Matrix3D.Identity;
             if (!double.IsNaN(view.Width))
             {
-                transform.CenterX = view.Width / 2;
+                translateMatrix.OffsetX = -view.Width / 2;
+                translateBackMatrix.OffsetX = view.Width / 2;
             }
 
             if (!double.IsNaN(view.Height))
             {
-                transform.CenterY = view.Height / 2;
+                translateMatrix.OffsetY = -view.Height / 2;
+                translateBackMatrix.OffsetY = view.Height / 2;
             }
+
+            projection.ProjectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
         }
 
-        private static void ApplyProperty<T>(JObject matrix, string name, TFrameworkElement view, Action<TFrameworkElement, T> apply)
+        private void ResetProjectionMatrix(TFrameworkElement view)
         {
-            var token = default(JToken);
-            if (matrix.TryGetValue(name, out token))
+            var projection = view.Projection;
+            var matrixProjection = projection as Matrix3DProjection;
+            if (projection != null && matrixProjection == null)
             {
-                apply(view, token.ToObject<T>());
+                throw new InvalidOperationException("Unknown projection set on framework element.");
             }
+
+            view.Projection = null;
         }
 
-        private static CompositeTransform3D EnsureTransform(FrameworkElement view)
+        private static Matrix3DProjection EnsureProjection(FrameworkElement view)
         {
-            var transform = view.Transform3D;
-            var compositeTransform = transform as CompositeTransform3D;
-            if (transform != null && compositeTransform == null)
+            var projection = view.Projection;
+            var matrixProjection = projection as Matrix3DProjection;
+            if (projection != null && matrixProjection == null)
             {
-                throw new InvalidOperationException("Unknown transform set on framework element.");
+                throw new InvalidOperationException("Unknown projection set on framework element.");
             }
 
-            if (compositeTransform == null)
+            if (matrixProjection == null)
             {
-                compositeTransform = new CompositeTransform3D();
-                view.Transform3D = compositeTransform;
+                matrixProjection = new Matrix3DProjection();
+                view.Projection = matrixProjection;
             }
 
-            return compositeTransform;
+            return matrixProjection;
         }
     }
 }
