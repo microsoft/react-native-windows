@@ -9,12 +9,6 @@ const shell = require('shelljs');
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
 
-function cleanSolution(options) {
-  const appPackagesPath = glob.sync(path.join(options.root, 'windows/*/AppPackages'));
-  console.log(chalk.green(`Cleaning AppPackages folder ${appPackagesPath}`));
-  shell.rm('-rf', appPackagesPath);
-}
-
 function buildSolution(slnFile, buildType, buildArch) {
   const minVersion = new Version(10, 0, 10586, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();

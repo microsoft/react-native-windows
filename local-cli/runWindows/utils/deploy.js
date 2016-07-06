@@ -11,7 +11,9 @@ const parse = require('xml-parser');
 const WinAppDeployTool = require('./winappdeploytool');
 
 function getAppPackage(options) {
-  return glob.sync(path.join(options.root, 'windows/*/AppPackages/*'))[0];
+  const configuration = options.release ? 'Release' : 'Debug';
+  const arch = options.arch ? options.arch : 'x86';
+  return glob.sync(path.join(options.root, `windows/*/AppPackages/*_${arch}_${configuration}_*`))[0];
 }
 
 function getWindowsStoreAppUtils(options) {
@@ -96,10 +98,12 @@ function deployToDesktop(options) {
 function startServerInNewWindow(options) {
   return new Promise(resolve => {
     http.get('http://localhost:8081/status', res => {
-      if (res === 200) {
+      if (res.statusCode === 200) {
         console.log(chalk.green('React-Native Server already started'));
-        resolve();
-      }
+      } else {
+        console.log(chalk.red('React-Native Server not responding'));
+      }       
+      resolve();
     }).on('error', () => resolve(launchServer(options)));
   });
 }
