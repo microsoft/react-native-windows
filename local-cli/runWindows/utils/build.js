@@ -34,7 +34,6 @@ function getSolutionFile(options) {
 
 module.exports = {
   buildSolution,
-  cleanSolution,
   getSolutionFile,
   restoreNuGetPackages
 };
