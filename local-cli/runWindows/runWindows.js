@@ -30,7 +30,6 @@ function runWindows(config, args, options) {
   const buildArch = options.arch ? options.arch : 'x86';
 
   try {
-    build.cleanSolution(options);
     build.buildSolution(slnFile, buildType, buildArch);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
