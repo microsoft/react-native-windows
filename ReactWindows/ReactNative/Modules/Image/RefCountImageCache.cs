@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
@@ -56,8 +57,8 @@ namespace ReactNative.Modules.Image
         {
             private readonly RefCountImageCache _parent;
             private readonly ReplaySubject<Unit> _subject;
+            private readonly SingleAssignmentDisposable _subscription;
 
-            private IDisposable _subscription;
             private int _refCount = 1;
 
             public ImageReference(string uri, RefCountImageCache parent)
@@ -65,6 +66,8 @@ namespace ReactNative.Modules.Image
                 Uri = uri;
                 _parent = parent;
                 _subject = new ReplaySubject<Unit>(1);
+                _subscription = new SingleAssignmentDisposable();
+
                 InitializeImage();
             }
 
@@ -120,7 +123,7 @@ namespace ReactNative.Modules.Image
                         throw new Exception(pattern.EventArgs.ErrorMessage);
                     });
 
-                _subscription = openedObservable
+                _subscription.Disposable = openedObservable
                     .Merge(failedObservable)
                     .Subscribe(_subject);
             }
