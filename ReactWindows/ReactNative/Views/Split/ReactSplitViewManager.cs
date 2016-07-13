@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 
 namespace ReactNative.Views.Split
 {
@@ -114,7 +113,6 @@ namespace ReactNative.Views.Split
                     $"'{Name}' only supports two child, the content and the pane.");
             }
 
-            var source = new RelativeSource();
             var uiElementChild = child.As<UIElement>();
             if (index == 0)
             {
