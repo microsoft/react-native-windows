@@ -311,6 +311,7 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Measures a view and sets the output buffer to (x, y, width, height).
+        /// Measurements are relative to the RootView.
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="outputBuffer">The output buffer.</param>
@@ -345,6 +346,39 @@ namespace ReactNative.UIManager
             var dimensions = viewManager.GetDimensions(uiElement);
             outputBuffer[0] = positionInRoot.X;
             outputBuffer[1] = positionInRoot.Y;
+            outputBuffer[2] = dimensions.Width;
+            outputBuffer[3] = dimensions.Height;
+        }
+
+        /// <summary>
+        /// Measures a view and sets the output buffer to (x, y, width, height).
+        /// Measurements are relative to the window.
+        /// </summary>
+        /// <param name="tag">The view tag.</param>
+        /// <param name="outputBuffer">The output buffer.</param>
+        public void MeasureInWindow(int tag, double[] outputBuffer)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            var view = default(DependencyObject);
+            if (!_tagsToViews.TryGetValue(tag, out view))
+            {
+                throw new ArgumentOutOfRangeException(nameof(tag));
+            }
+
+            var viewManager = default(IViewManager);
+            if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            {
+                throw new InvalidOperationException(
+                    $"Could not find view manager for tag '{tag}.");
+            }
+
+            var uiElement = view.As<UIElement>();
+            var windowTransform = uiElement.TransformToVisual(Window.Current.Content);
+            var positionInWindow = windowTransform.TransformPoint(new Point(0, 0));
+
+            var dimensions = viewManager.GetDimensions(uiElement);
+            outputBuffer[0] = positionInWindow.X;
+            outputBuffer[1] = positionInWindow.Y;
             outputBuffer[2] = dimensions.Width;
             outputBuffer[3] = dimensions.Height;
         }

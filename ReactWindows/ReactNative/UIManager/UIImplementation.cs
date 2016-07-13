@@ -449,6 +449,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Determines the width, height, and location relative to the window
+        /// of the given view and returns the values via an asynchronous callback.
+        /// </summary>
+        /// <param name="reactTag">The view tag to measure.</param>
+        /// <param name="callback">The callback.</param>
+        public void MeasureInWindow(int reactTag, ICallback callback)
+        {
+            _operationsQueue.EnqueueMeasureInWindow(reactTag, callback);
+        }
+
+        /// <summary>
         /// Measures the view specified by <paramref name="tag"/> relative to
         /// the given <paramref name="ancestorTag"/>. This means that the
         /// returned x, y are relative to the origin x, y of the ancestor view.
