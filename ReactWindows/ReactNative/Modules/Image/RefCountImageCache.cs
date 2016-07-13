@@ -174,7 +174,7 @@ namespace ReactNative.Modules.Image
                 {
                     lock (_gate)
                     {
-                        _observer.OnCompleted();
+                        _observer.OnError(error);
                     }
                 }
 
@@ -182,7 +182,7 @@ namespace ReactNative.Modules.Image
                 {
                     lock (_gate)
                     {
-                        _observer.OnCompleted();
+                        _observer.OnNext(value);
                     }
                 }
 
