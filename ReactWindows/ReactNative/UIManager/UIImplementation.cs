@@ -247,7 +247,7 @@ namespace ReactNative.UIManager
                 for (var i = 0; i < numToMove; ++i)
                 {
                     var moveFromIndex = moveFrom[i];
-                    var tagToMove = cssNodeToManage.GetChildAt(i).ReactTag;
+                    var tagToMove = cssNodeToManage.GetChildAt(moveFromIndex).ReactTag;
                     viewsToAdd[i] = new ViewAtIndex(tagToMove, moveTo[i]);
                     indicesToRemove[i] = moveFromIndex;
                     tagsToRemove[i] = tagToMove;
