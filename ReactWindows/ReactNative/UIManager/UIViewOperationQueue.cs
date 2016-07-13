@@ -265,6 +265,33 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Enqueues an operation to measure the view relative to the window.
+        /// </summary>
+        /// <param name="reactTag">The tag of the view to measure.</param>
+        /// <param name="callback">The measurement result callback.</param>
+        public void EnqueueMeasureInWindow(int reactTag, ICallback callback)
+        {
+            EnqueueOperation(() =>
+            {
+                try
+                {
+                    _nativeViewHierarchyManager.MeasureInWindow(reactTag, _measureBuffer);
+                }
+                catch (Exception)
+                {
+                    callback.Invoke();
+                    return;
+                }
+
+                var x = _measureBuffer[0];
+                var y = _measureBuffer[1];
+                var width = _measureBuffer[2];
+                var height = _measureBuffer[3];
+                callback.Invoke(0, 0, width, height, x, y);
+            });
+        }
+
+        /// <summary>
         /// Enqueues an operation to find a touch target.
         /// </summary>
         /// <param name="reactTag">The parent view to search from.</param>
