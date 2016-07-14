@@ -60,7 +60,6 @@ namespace ReactNative.Views.Text
             var span = (Span)parent;
             var inline = (Inline)child;
             span.Inlines.Insert(index, inline);
-            inline.SetParent(span);
         }
 
         /// <summary>
@@ -122,11 +121,6 @@ namespace ReactNative.Views.Text
         public void RemoveAllChildren(DependencyObject parent)
         {
             var span = (Span)parent;
-            foreach (var inline in span.Inlines)
-            {
-                inline.RemoveParent();
-            }
-
             span.Inlines.Clear();
         }
 
@@ -138,7 +132,6 @@ namespace ReactNative.Views.Text
         public void RemoveChildAt(DependencyObject parent, int index)
         {
             var span = (Span)parent;
-            span.Inlines[index].RemoveParent();
             span.Inlines.RemoveAt(index);
         }
 

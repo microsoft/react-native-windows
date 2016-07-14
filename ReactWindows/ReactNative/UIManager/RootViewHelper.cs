@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace ReactNative.UIManager
 {
@@ -9,9 +10,6 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class RootViewHelper
     {
-        private static readonly Dictionary<DependencyObject, DependencyObject> s_parent =
-            new Dictionary<DependencyObject, DependencyObject>();
-
         /// <summary>
         /// Returns the root view of a givenview in a React application.
         /// </summary>
@@ -33,7 +31,7 @@ namespace ReactNative.UIManager
                     return rootView;
                 }
 
-                current = GetParent(current);
+                current = GetParent(current, true);
             }
         }
 
@@ -69,56 +67,33 @@ namespace ReactNative.UIManager
                     yield return uiElement;
                 }
 
-                current = GetParent(current);
+                current = GetParent(current, false);
             }
         }
 
-        private static DependencyObject GetParent(DependencyObject current)
+        private static DependencyObject GetParent(DependencyObject view, bool findRoot)
         {
-            var mapped = default(DependencyObject);
-            var frameworkElement = default(FrameworkElement);
-            if (s_parent.TryGetValue(current, out mapped))
+            //
+            // If the intent is to find the root view (usually for the purpose
+            // of measurement), then we use the more robust VisualTreeHelper.
+            // Otherwise, we just use the FrameworkElement.Parent property.
+            // 
+            // This is a bit of a hack to ensure that the SplitView (and
+            // perhaps other views) continues to work as expected. In the case
+            // of SplitView, if we use the VisualTreeHelper to enumerate the
+            // view hierarchy on pointer pressed, it will find a React view 
+            // parent that will capture the pointer and prevent the SplitView
+            // from closing on click of the lightweight layer Rect (i.e., 
+            // when the pointer is pressed outside the SplitView pane). 
+            //
+
+            if (!findRoot)
             {
-                return mapped;
-            }
-            else if ((frameworkElement = current as FrameworkElement) != null)
-            {
-                return frameworkElement.Parent;
+                return (view as FrameworkElement)?.Parent;
             }
             else
             {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Associate an element with its parent.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        /// <param name="parent">The parent.</param>
-        /// <remarks>
-        /// TODO: (#302) Remove this shim.
-        /// </remarks>
-        internal static void SetParent(this DependencyObject element, DependencyObject parent)
-        {
-            lock (s_parent)
-            {
-                s_parent.Add(element, parent);
-            }
-        }
-
-        /// <summary>
-        /// Unassociate a parent element.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        /// <remarks>
-        /// TODO: (#302) Remove this shim.
-        /// </remarks>
-        internal static void RemoveParent(this DependencyObject element)
-        {
-            lock (s_parent)
-            {
-                s_parent.Remove(element);
+                return VisualTreeHelper.GetParent(view);
             }
         }
     }
