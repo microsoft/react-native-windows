@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
@@ -56,8 +57,9 @@ namespace ReactNative.Modules.Image
         {
             private readonly RefCountImageCache _parent;
             private readonly ReplaySubject<Unit> _subject;
+            private readonly ObserverWrapper _observerWrapper;
+            private readonly SingleAssignmentDisposable _subscription;
 
-            private IDisposable _subscription;
             private int _refCount = 1;
 
             public ImageReference(string uri, RefCountImageCache parent)
@@ -65,6 +67,9 @@ namespace ReactNative.Modules.Image
                 Uri = uri;
                 _parent = parent;
                 _subject = new ReplaySubject<Unit>(1);
+                _observerWrapper = new ObserverWrapper(_subject);
+                _subscription = new SingleAssignmentDisposable();
+
                 InitializeImage();
             }
 
@@ -99,6 +104,7 @@ namespace ReactNative.Modules.Image
                     if (Interlocked.Decrement(ref _refCount) == 0)
                     {
                         _subscription.Dispose();
+                        _observerWrapper.Dispose();
                         _subject.Dispose();
                         _parent._cache.Remove(Uri);
                     }
@@ -120,9 +126,9 @@ namespace ReactNative.Modules.Image
                         throw new Exception(pattern.EventArgs.ErrorMessage);
                     });
 
-                _subscription = openedObservable
+                _subscription.Disposable = openedObservable
                     .Merge(failedObservable)
-                    .Subscribe(_subject);
+                    .Subscribe(_observerWrapper);
             }
 
             private async void InitializeImage()
@@ -141,6 +147,52 @@ namespace ReactNative.Modules.Image
                         stream.Dispose();
                     }
                 });
+            }
+
+            class ObserverWrapper : IObserver<Unit>, IDisposable
+            {
+                private static readonly IObserver<Unit> s_nop = Observer.Create<Unit>(_ => { });
+
+                private readonly object _gate = new object();
+
+                private IObserver<Unit> _observer;
+
+                public ObserverWrapper(IObserver<Unit> inner)
+                {
+                    _observer = inner;
+                }
+
+                public void OnCompleted()
+                {
+                    lock (_gate)
+                    {
+                        _observer.OnCompleted();
+                    }
+                }
+
+                public void OnError(Exception error)
+                {
+                    lock (_gate)
+                    {
+                        _observer.OnError(error);
+                    }
+                }
+
+                public void OnNext(Unit value)
+                {
+                    lock (_gate)
+                    {
+                        _observer.OnNext(value);
+                    }
+                }
+
+                public void Dispose()
+                {
+                    lock (_gate)
+                    {
+                        _observer = s_nop;
+                    }
+                }
             }
         }
     }
