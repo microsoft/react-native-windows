@@ -56,7 +56,6 @@ namespace ReactNative.Views.Text
                 };
             }
 
-            inlineChild.SetParent(parent);
             parent.Blocks.OfType<Paragraph>().First().Inlines.Insert(index, inlineChild);
         }
 
@@ -97,11 +96,6 @@ namespace ReactNative.Views.Text
         public override void RemoveAllChildren(RichTextBlock parent)
         {
             var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
-            foreach (var inline in inlines)
-            {
-                inline.RemoveParent();
-            }
-
             inlines.Clear();
         }
 
@@ -113,7 +107,6 @@ namespace ReactNative.Views.Text
         public override void RemoveChildAt(RichTextBlock parent, int index)
         {
             var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
-            inlines[index].RemoveParent();
             inlines.RemoveAt(index);
         }
 
