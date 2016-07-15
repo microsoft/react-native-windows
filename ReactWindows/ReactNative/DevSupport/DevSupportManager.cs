@@ -446,7 +446,7 @@ namespace ReactNative.DevSupport
         private Task ReloadJavaScriptFromFileAsync(CancellationToken token)
         {
             _reactInstanceCommandsHandler.OnBundleFileReloadRequest();
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
         private void RegisterDevOptionsMenuTriggers()
