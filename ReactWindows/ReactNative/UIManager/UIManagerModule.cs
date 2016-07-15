@@ -465,7 +465,8 @@ namespace ReactNative.UIManager
             var batchId = _batchId++;
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "onBatchCompleteUI")
-                .With("BatchId", batchId))
+                .With("BatchId", batchId)
+                .Start())
             {
                 _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
             }

@@ -246,21 +246,22 @@ namespace ReactNative.UIManager.Events
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ScheduleDispatch"))
-            {
-                MoveStagedEventsToDispatchQueue();
+            var activity = Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ScheduleDispatch").Start();
 
-                if (!Volatile.Read(ref _hasDispatchScheduled))
-                {
-                    _hasDispatchScheduled = true;
-                    _reactContext.RunOnJavaScriptQueueThread(DispatchEvents);
-                }
+            MoveStagedEventsToDispatchQueue();
+
+            if (!Volatile.Read(ref _hasDispatchScheduled))
+            {
+                _hasDispatchScheduled = true;
+                _reactContext.RunOnJavaScriptQueueThread(() => DispatchEvents(activity));
             }
         }
 
-        private void DispatchEvents()
+        private void DispatchEvents(IDisposable activity)
         {
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchEvents"))
+            using (activity) { }
+
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchEvents").Start())
             {
                 _hasDispatchScheduled = false;
 

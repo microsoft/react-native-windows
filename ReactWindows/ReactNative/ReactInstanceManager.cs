@@ -336,7 +336,7 @@ namespace ReactNative
             if (reactContext == null)
                 throw new ArgumentNullException(nameof(reactContext));
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAllViewManagers"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAllViewManagers").Start())
             {
                 var allViewManagers = new List<IViewManager>();
                 foreach (var package in _packages)
@@ -539,7 +539,7 @@ namespace ReactNative
                 reactContext.NativeModuleCallExceptionHandler = _devSupportManager.HandleException;
             }
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
             {
                 var coreModulesPackage = 
                     new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
@@ -549,14 +549,14 @@ namespace ReactNative
 
             foreach (var reactPackage in _packages)
             {
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCustomReactPackage"))
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCustomReactPackage").Start())
                 {
                     ProcessPackage(reactPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);
                 }
             }
 
             var nativeModuleRegistry = default(NativeModuleRegistry);
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "buildNativeModuleRegistry"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "buildNativeModuleRegistry").Start())
             {
                 nativeModuleRegistry = nativeRegistryBuilder.Build();
             }
@@ -573,7 +573,7 @@ namespace ReactNative
             };
 
             var reactInstance = default(ReactInstance);
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createReactInstance"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createReactInstance").Start())
             {
                 reactInstance = reactInstanceBuilder.Build();
             }
@@ -584,7 +584,7 @@ namespace ReactNative
 
             reactInstance.Initialize();
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "RunJavaScriptBundle"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "RunJavaScriptBundle").Start())
             {
                 await reactInstance.InitializeBridgeAsync();
             }
