@@ -7,7 +7,7 @@ namespace ReactNative.Tracing
     {
         private readonly ILoggingTarget _target;
         private readonly string _name;
-        private readonly LoggingLevel? _level;
+        private readonly LoggingLevel _level;
         private readonly LoggingOptions _options;
 
         private LoggingFields _fields;
@@ -35,22 +35,7 @@ namespace ReactNative.Tracing
 
         public LoggingActivity Create()
         {
-            if (_fields == null && !_level.HasValue)
-            {
-                return _target.StartActivity(_name);
-            }
-            else if (!_level.HasValue)
-            {
-                return _target.StartActivity(_name, _fields);
-            }
-            else if (_options == null)
-            {
-                return _target.StartActivity(_name, _fields, _level.Value);
-            }
-            else
-            {
-                return _target.StartActivity(_name, _fields, _level.Value, _options);
-            }
+            return _target.StartActivity(_name, _fields, _level, _options);
         }
     }
 }
