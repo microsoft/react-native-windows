@@ -380,7 +380,8 @@ namespace ReactNative.UIManager
                 _batches.Add(() =>
                 {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchUI")
-                        .With("BatchId", batchId))
+                        .With("BatchId", batchId)
+                        .Start())
                     {
                         if (operations != null)
                         {

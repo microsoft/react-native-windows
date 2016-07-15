@@ -115,14 +115,15 @@ namespace ReactNative.UIManager
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")
                 .With("parentTag", parentTag)
-                .With("tag", tag))
+                .With("tag", tag)
+                .Start())
             {
                 var viewToUpdate = ResolveView(tag);
                 var viewManager = ResolveViewManager(tag);
-                
+
                 var parentViewManager = default(IViewManager);
                 var parentViewParentManager = default(IViewParentManager);
-                if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) || 
+                if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) ||
                     (parentViewParentManager = parentViewManager as IViewParentManager) == null)
                 {
                     throw new InvalidOperationException(
@@ -148,7 +149,8 @@ namespace ReactNative.UIManager
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
                 .With("tag", tag)
-                .With("className", className))
+                .With("className", className)
+                .Start())
             {
                 var viewManager = _viewManagers.Get(className);
                 var view = viewManager.CreateView(themedContext, _jsResponderHandler);

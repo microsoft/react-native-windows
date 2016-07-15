@@ -103,7 +103,7 @@ namespace ReactNative.Bridge
 
                 var jsExecutor = _jsExecutorFactory();
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor"))
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor").Start())
                 {
                     _bridge = new ReactBridge(
                         jsExecutor,
@@ -111,7 +111,7 @@ namespace ReactNative.Bridge
                         QueueConfiguration.NativeModulesQueueThread);
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig"))
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
                 {
                     _bridge.SetGlobalVariable("__fbBatchedBridgeConfig", BuildModulesConfig());
                 }
@@ -138,7 +138,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "<callback>"))
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "<callback>").Start())
                 {
                     _bridge.InvokeCallback(callbackId, arguments);
                 }
@@ -156,7 +156,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName))
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName).Start())
                 {
                     if (_bridge == null)
                     {
@@ -361,7 +361,7 @@ namespace ReactNative.Bridge
                 // bad state so we don't want to call anything on them.
                 if (!_parent.IsDisposed)
                 {
-                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "OnBatchComplete"))
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "OnBatchComplete").Start())
                     {
                         _parent._registry.OnBatchComplete();
                     }

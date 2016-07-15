@@ -246,7 +246,7 @@ namespace ReactNative.UIManager.Events
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ScheduleDispatch"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ScheduleDispatch").Start())
             {
                 MoveStagedEventsToDispatchQueue();
 
@@ -260,7 +260,7 @@ namespace ReactNative.UIManager.Events
 
         private void DispatchEvents()
         {
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchEvents"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchEvents").Start())
             {
                 _hasDispatchScheduled = false;
 

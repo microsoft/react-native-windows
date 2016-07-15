@@ -8,6 +8,6 @@
         /// <summary>
         /// Trace tag for React components.
         /// </summary>
-        public const string Tag = "React"; 
+        public const int Tag = 0; 
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using Windows.Foundation.Diagnostics;
 
 namespace ReactNative.Tracing
 {
@@ -7,7 +9,7 @@ namespace ReactNative.Tracing
     /// </summary>
     static class Tracer
     {
-        /// <summary>
+                /// <summary>
         /// Trace ID for bridge events.
         /// </summary>
         public const int TRACE_TAG_REACT_BRIDGE = 0; 
@@ -23,38 +25,29 @@ namespace ReactNative.Tracing
         public const int TRACE_TAG_REACT_VIEW = 2;
 
         /// <summary>
-        /// Creates a disposable to trace an operation from start to finish.
+        /// The logging channel instance.
         /// </summary>
-        /// <param name="traceId">The trace ID.</param>
-        /// <param name="title">The event title.</param>
-        /// <returns>
-        /// The instance to dispose when the operation is finished.
-        /// </returns>
-        public static TraceDisposable Trace(int traceId, string title)
+        public static LoggingChannel Instance { get; } = new LoggingChannel("ReactWindows", null);
+
+        public static LoggingActivityBuilder Trace(int tag, string name)
         {
-            return new TraceDisposable(traceId, title);
+            return new LoggingActivityBuilder(Instance, name, LoggingLevel.Information, new LoggingOptions
+            {
+                Tags = tag,
+            });
         }
 
-        /// <summary>
-        /// Writes a trace.
-        /// </summary>
-        /// <param name="tag">The trace tag.</param>
-        /// <param name="message">The trace message.</param>
-        public static void Write(string tag, string message)
+        public static void Write(int tag, string eventName)
         {
-            EventSourceManager.Instance.Write(tag, message);
+            Instance.LogEvent(eventName, null, LoggingLevel.Information, new LoggingOptions
+            {
+                Tags = tag
+            });
         }
 
-        /// <summary>
-        /// Write an error.
-        /// </summary>
-        /// <param name="tag">The trace tag.</param>
-        /// <param name="message">The trace message.</param>
-        /// <param name="exception">The exception.</param>
-        public static void Error(string tag, string message, Exception exception)
+        public static void Error(int tag, string eventName, Exception ex)
         {
-            EventSourceManager.Instance.Write(tag, message);
-            EventSourceManager.Instance.Write(tag, exception);
+            Instance.LogEvent(eventName, null, LoggingLevel.Error);
         }
     }
 }

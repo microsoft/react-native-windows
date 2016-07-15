@@ -73,7 +73,7 @@ namespace ReactNative.Bridge
         /// <param name="writer">The JSON writer.</param>
         internal void WriteModuleDescriptions(JsonWriter writer)
         {
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "CreateJSON"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "CreateJSON").Start())
             {
                 writer.WriteStartObject();
                 foreach (var moduleDef in _moduleTable)
@@ -113,7 +113,7 @@ namespace ReactNative.Bridge
         internal void NotifyReactInstanceInitialize()
         {
             DispatcherHelpers.AssertOnDispatcher();
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize").Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {
@@ -129,7 +129,7 @@ namespace ReactNative.Bridge
         internal void NotifyReactInstanceDispose()
         {
             DispatcherHelpers.AssertOnDispatcher();
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy").Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {

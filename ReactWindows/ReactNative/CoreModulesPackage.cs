@@ -35,7 +35,7 @@ namespace ReactNative
         public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
         {
             var uiManagerModule = default(INativeModule);
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule"))
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
                 var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
                 uiManagerModule = new UIManagerModule(

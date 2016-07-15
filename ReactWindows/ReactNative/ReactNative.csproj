@@ -224,6 +224,12 @@
     <Compile Include="Reflection\EnumHelpers.Static.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
+    <Compile Include="Tracing\LoggingActivityBuilder.cs" />
+    <Compile Include="Tracing\LoggingActivityBuilderExtensions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LoggingActivityBuilderExtensions.tt</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\BorderExtensions.cs" />
     <Compile Include="UIManager\ColorHelpers.cs" />
     <Compile Include="UIManager\CSSNodeExtensions.cs" />
@@ -282,8 +288,6 @@
     <Compile Include="Bridge\IReactBridge.cs" />
     <Compile Include="Bridge\ReactMethodAttribute.cs" />
     <Compile Include="Reflection\ReflectionHelpers.cs" />
-    <Compile Include="Tracing\EventSourceManager.cs" />
-    <Compile Include="Tracing\TraceDisposable.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\AppRegistry.cs" />
     <Compile Include="UIManager\Events\TouchEventType.cs" />
@@ -376,6 +380,10 @@
     <Content Include="Bridge\JavaScriptModuleBase.Generated.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>JavaScriptModuleBase.Generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Tracing\LoggingActivityBuilderExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LoggingActivityBuilderExtensions.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
