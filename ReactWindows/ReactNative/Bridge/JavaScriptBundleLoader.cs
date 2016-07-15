@@ -168,7 +168,7 @@ namespace ReactNative.Bridge
 
             public override Task InitializeAsync()
             {
-                return Task.FromResult(false);
+                return Task.CompletedTask;
             }
 
             public override void LoadScript(IReactBridge executor)

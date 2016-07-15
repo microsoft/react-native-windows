@@ -21,12 +21,12 @@ namespace ReactNative.Modules.StatusBar
 
         public IAsyncAction HideAsync()
         {
-            return Task.FromResult(false).AsAsyncAction();
+            return Task.CompletedTask.AsAsyncAction();
         }
 
         public IAsyncAction ShowAsync()
         {
-            return Task.FromResult(false).AsAsyncAction();
+            return Task.CompletedTask.AsAsyncAction();
         }
     }
 }

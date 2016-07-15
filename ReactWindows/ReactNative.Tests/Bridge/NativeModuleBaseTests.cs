@@ -394,7 +394,7 @@ namespace ReactNative.Tests.Bridge
             [ReactMethod]
             public Task Foo(ICallback callback)
             {
-                return Task.FromResult(true);
+                return Task.CompletedTask;
             }
         }
 
@@ -411,7 +411,7 @@ namespace ReactNative.Tests.Bridge
             [ReactMethod]
             public Task Foo(IPromise promise)
             {
-                return Task.FromResult(true);
+                return Task.CompletedTask;
             }
         }
 
@@ -428,7 +428,7 @@ namespace ReactNative.Tests.Bridge
             [ReactMethod]
             public Task Foo()
             {
-                return Task.FromResult(true);
+                return Task.CompletedTask;
             }
         }
 
