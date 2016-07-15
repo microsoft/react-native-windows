@@ -3,6 +3,7 @@ using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Core;
 using System;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace ReactNative.Modules.Location
 {
     class LocationModule : ReactContextNativeModuleBase
     {
-        private IDisposable _geolocatorSubscription;
+        private readonly SerialDisposable _currentSubscription = new SerialDisposable();
 
         public LocationModule(ReactContext reactContext) 
             : base(reactContext)
@@ -44,6 +45,8 @@ namespace ReactNative.Modules.Location
 
             try
             {
+                // TODO: Enable retrieval from position history using `MaximumAge` filter
+
                 var task = geolocator.GetGeopositionAsync().AsTask();
                 var completedTask = await Task.WhenAny(
                     task, 
@@ -120,21 +123,18 @@ namespace ReactNative.Modules.Location
                 }
             });
 
-            _geolocatorSubscription = new CompositeDisposable(2)
-            {
-                positionSubscription,
-                statusSubscription,
-            };
+            _currentSubscription.Disposable =
+                new CompositeDisposable(2)
+                {
+                    positionSubscription,
+                    statusSubscription,
+                };
         }
 
         [ReactMethod]
         public void stopObserving()
         {
-            if (_geolocatorSubscription != null)
-            {
-                _geolocatorSubscription.Dispose();
-                _geolocatorSubscription = null;
-            }
+            _currentSubscription.Disposable = Disposable.Empty;
         }
 
         private static JObject ConvertGeoposition(Geoposition geoposition)
@@ -159,6 +159,7 @@ namespace ReactNative.Modules.Location
         class LocationOptions
         {
             private const double DefaultLocationAccuracy = 100;
+            private const double DefaultMaximumAge = 86.4e6 /* TimeSpan.FromDays(1).TotalMilliseconds */;
 
             private LocationOptions(long timeout, double maximumAge, bool highAccuracy, double distanceFilter)
             {
@@ -179,7 +180,7 @@ namespace ReactNative.Modules.Location
             public static LocationOptions FromJson(JObject json)
             {
                 var timeout = 
-                    json.ContainsKey("timeout") ? json.Value<long>("timeout") : long.MaxValue;
+                    json.ContainsKey("timeout") ? json.Value<long>("timeout") : -1;
                 var maximumAge = 
                     json.ContainsKey("maximumAge") ? json.Value<double>("maximumAge") : double.PositiveInfinity;
                 var highAccuracy =
