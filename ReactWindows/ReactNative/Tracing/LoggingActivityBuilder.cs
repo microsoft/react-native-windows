@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.Foundation.Diagnostics;
+﻿using Windows.Foundation.Diagnostics;
 
 namespace ReactNative.Tracing
 {

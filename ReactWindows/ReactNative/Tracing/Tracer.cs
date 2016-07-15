@@ -8,7 +8,7 @@ namespace ReactNative.Tracing
     /// </summary>
     static class Tracer
     {
-                /// <summary>
+        /// <summary>
         /// Trace ID for bridge events.
         /// </summary>
         public const int TRACE_TAG_REACT_BRIDGE = 0; 
