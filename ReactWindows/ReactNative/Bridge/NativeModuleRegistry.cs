@@ -168,7 +168,11 @@ namespace ReactNative.Bridge
 
             public void Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
             {
-                _methods[methodId].Method.Invoke(reactInstance, parameters);
+                var method = _methods[methodId];
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
+                {
+                    method.Method.Invoke(reactInstance, parameters);
+                }
             }
 
             public void WriteModuleDescription(JsonWriter writer)

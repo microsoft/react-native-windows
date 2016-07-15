@@ -31,23 +31,36 @@ namespace ReactNative.Tracing
 
         public static LoggingActivityBuilder Trace(int tag, string name)
         {
-            return new LoggingActivityBuilder(Instance, name, LoggingLevel.Information, new LoggingOptions
+            if (Instance.Enabled)
             {
-                Tags = tag,
-            });
+                return new LoggingActivityBuilder(Instance, name, LoggingLevel.Information, new LoggingOptions
+                {
+                    Tags = tag,
+                });
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static void Write(int tag, string eventName)
         {
-            Instance.LogEvent(eventName, null, LoggingLevel.Information, new LoggingOptions
+            if (Instance.Enabled)
             {
-                Tags = tag
-            });
+                Instance.LogEvent(eventName, null, LoggingLevel.Information, new LoggingOptions
+                {
+                    Tags = tag
+                });
+            }
         }
 
         public static void Error(int tag, string eventName, Exception ex)
         {
-            Instance.LogEvent(eventName, null, LoggingLevel.Error);
+            if (Instance.Enabled)
+            {
+                Instance.LogEvent(eventName, null, LoggingLevel.Error);
+            }
         }
     }
 }

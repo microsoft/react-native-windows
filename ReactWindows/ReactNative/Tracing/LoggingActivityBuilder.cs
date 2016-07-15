@@ -1,4 +1,5 @@
-﻿using Windows.Foundation.Diagnostics;
+﻿using System;
+using Windows.Foundation.Diagnostics;
 
 namespace ReactNative.Tracing
 {
@@ -10,20 +11,6 @@ namespace ReactNative.Tracing
         private readonly LoggingOptions _options;
 
         private LoggingFields _fields;
-        private LoggingActivity _activity;
-
-        public LoggingActivityBuilder(ILoggingTarget target, string name)
-        {
-            _target = target;
-            _name = name;
-        }
-
-        public LoggingActivityBuilder(ILoggingTarget target, string name, LoggingLevel level)
-        {
-            _target = target;
-            _name = name;
-            _level = level;
-        }
 
         public LoggingActivityBuilder(ILoggingTarget target, string name, LoggingLevel level, LoggingOptions options)
         {
@@ -33,7 +20,20 @@ namespace ReactNative.Tracing
             _options = options;
         }
 
-        public LoggingActivity Start()
+        public LoggingFields Fields
+        {
+            get
+            {
+                if (_fields == null)
+                {
+                    _fields = new LoggingFields();
+                }
+
+                return _fields;
+            }
+        }
+
+        public LoggingActivity Create()
         {
             if (_fields == null && !_level.HasValue)
             {
@@ -50,19 +50,6 @@ namespace ReactNative.Tracing
             else
             {
                 return _target.StartActivity(_name, _fields, _level.Value, _options);
-            }
-        }
-
-        internal LoggingFields Fields
-        {
-            get
-            {
-                if (_fields == null)
-                {
-                    _fields = new LoggingFields();
-                }
-
-                return _fields;
             }
         }
     }

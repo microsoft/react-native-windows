@@ -48,13 +48,21 @@ foreach (var type in types)
 #>
         public static LoggingActivityBuilder With(this LoggingActivityBuilder builder, string name, <#=type.Name#> value)
         {
-            builder.Fields.Add<#=type.Name#>(name, value);
+			if (builder != null)
+			{
+                builder.Fields.Add<#=type.Name#>(name, value);
+            }
+
 			return builder;
         }
 
 		public static LoggingActivityBuilder With(this LoggingActivityBuilder builder, string name, <#=type.Name#>[] value)
         {
-            builder.Fields.Add<#=type.Name#>Array(name, value);
+			if (builder != null)
+			{
+                builder.Fields.Add<#=type.Name#>Array(name, value);
+			}
+
 			return builder;
         }
 
@@ -67,13 +75,21 @@ foreach (var mapping in mappings)
 #>
         public static LoggingActivityBuilder With(this LoggingActivityBuilder builder, string name, <#=mapping.Key.Name#> value)
         {
-            builder.Fields.Add<#=mapping.Value#>(name, value);
+			if (builder != null)
+			{
+	            builder.Fields.Add<#=mapping.Value#>(name, value);
+			}
+
 			return builder;
         }
 
 		public static LoggingActivityBuilder With(this LoggingActivityBuilder builder, string name, <#=mapping.Key.Name#>[] value)
         {
-            builder.Fields.Add<#=mapping.Value#>Array(name, value);
+			if (builder != null)
+			{
+	            builder.Fields.Add<#=mapping.Value#>Array(name, value);
+			}
+
 			return builder;
         }
 
@@ -86,18 +102,30 @@ foreach (var other in others)
 #>
         public static LoggingActivityBuilder With(this LoggingActivityBuilder builder, string name, <#=other#> value)
         {
-            builder.Fields.Add<#=other#>(name, value);
+			if (builder != null)
+			{
+	            builder.Fields.Add<#=other#>(name, value);
+			}
+
 			return builder;
         }
 
 		public static LoggingActivityBuilder With(this LoggingActivityBuilder builder, string name, <#=other#>[] value)
         {
-            builder.Fields.Add<#=other#>Array(name, value);
+			if (builder != null)
+			{
+	            builder.Fields.Add<#=other#>Array(name, value);
+			}
+
 			return builder;
         }
 
 <#
 }
 #>
+		public static IDisposable Start(this LoggingActivityBuilder builder)
+		{
+			return builder?.Create();
+		}
     }
 }
