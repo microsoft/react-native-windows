@@ -93,6 +93,10 @@ const APIExamples = [
     module: require('./ClipboardExample'),
   },
   {
+    key: 'GeolocationExample',
+    module: require('./GeolocationExample'),
+  },
+  {
     key: 'LayoutExample',
     module: require('./LayoutExample'),
   },
