@@ -5,6 +5,7 @@ using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Image;
 using ReactNative.Modules.Launch;
+using ReactNative.Modules.Location;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
 using ReactNative.Modules.StatusBar;
@@ -77,7 +78,7 @@ namespace ReactNative.Shell
                 new DialogModule(reactContext),
                 new ImageLoaderModule(_imageCache, _uriLoader),
                 new LauncherModule(),
-                //new LocationModule(reactContext),
+                new LocationModule(reactContext),
                 new NetworkingModule(reactContext),
                 new NetInfoModule(reactContext),
                 new StatusBarModule(),
