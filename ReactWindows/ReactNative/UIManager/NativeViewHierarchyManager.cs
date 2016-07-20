@@ -115,14 +115,15 @@ namespace ReactNative.UIManager
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")
                 .With("parentTag", parentTag)
-                .With("tag", tag))
+                .With("tag", tag)
+                .Start())
             {
                 var viewToUpdate = ResolveView(tag);
                 var viewManager = ResolveViewManager(tag);
-                
+
                 var parentViewManager = default(IViewManager);
                 var parentViewParentManager = default(IViewParentManager);
-                if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) || 
+                if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) ||
                     (parentViewParentManager = parentViewManager as IViewParentManager) == null)
                 {
                     throw new InvalidOperationException(
@@ -148,7 +149,8 @@ namespace ReactNative.UIManager
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
                 .With("tag", tag)
-                .With("className", className))
+                .With("className", className)
+                .Start())
             {
                 var viewManager = _viewManagers.Get(className);
                 var view = viewManager.CreateView(themedContext, _jsResponderHandler);
@@ -311,6 +313,7 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Measures a view and sets the output buffer to (x, y, width, height).
+        /// Measurements are relative to the RootView.
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="outputBuffer">The output buffer.</param>
@@ -345,6 +348,39 @@ namespace ReactNative.UIManager
             var dimensions = viewManager.GetDimensions(uiElement);
             outputBuffer[0] = positionInRoot.X;
             outputBuffer[1] = positionInRoot.Y;
+            outputBuffer[2] = dimensions.Width;
+            outputBuffer[3] = dimensions.Height;
+        }
+
+        /// <summary>
+        /// Measures a view and sets the output buffer to (x, y, width, height).
+        /// Measurements are relative to the window.
+        /// </summary>
+        /// <param name="tag">The view tag.</param>
+        /// <param name="outputBuffer">The output buffer.</param>
+        public void MeasureInWindow(int tag, double[] outputBuffer)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            var view = default(DependencyObject);
+            if (!_tagsToViews.TryGetValue(tag, out view))
+            {
+                throw new ArgumentOutOfRangeException(nameof(tag));
+            }
+
+            var viewManager = default(IViewManager);
+            if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            {
+                throw new InvalidOperationException(
+                    $"Could not find view manager for tag '{tag}.");
+            }
+
+            var uiElement = view.As<UIElement>();
+            var windowTransform = uiElement.TransformToVisual(Window.Current.Content);
+            var positionInWindow = windowTransform.TransformPoint(new Point(0, 0));
+
+            var dimensions = viewManager.GetDimensions(uiElement);
+            outputBuffer[0] = positionInWindow.X;
+            outputBuffer[1] = positionInWindow.Y;
             outputBuffer[2] = dimensions.Width;
             outputBuffer[3] = dimensions.Height;
         }

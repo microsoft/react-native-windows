@@ -1,9 +1,24 @@
-﻿using ReactNative.Bridge;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
+using System.Reactive.Linq;
 
 namespace ReactNative.Modules.Image
 {
     class ImageLoaderModule : NativeModuleBase
     {
+        private const string ErrorInvalidUri = "E_INVALID_URI";
+        private const string ErrorPrefetchFailure = "E_PREFETCH_FAILURE";
+        private const string ErrorGetSizeFailure = "E_GET_SIZE_FAILURE";
+
+        private readonly IImageCache _imageCache;
+        private readonly IUriLoader _uriLoader;
+
+        public ImageLoaderModule(IImageCache imageCache, IUriLoader uriLoader)
+        {
+            _imageCache = imageCache;
+            _uriLoader = uriLoader;
+        }
+
         public override string Name
         {
             get
@@ -13,10 +28,51 @@ namespace ReactNative.Modules.Image
         }
 
         [ReactMethod]
-        public void prefetchImage(string uriString, IPromise promise)
+        public async void prefetchImage(string uriString, IPromise promise)
         {
-            // TODO: (#366) Implement prefetch mechanism.
-            promise.Reject("EUNSPECIFIED", "Prefetch is not yet supported.");
+            if (string.IsNullOrEmpty(uriString))
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
+                return;
+            }
+
+            try
+            {
+                await _uriLoader.PrefetchAsync(uriString);
+                promise.Resolve(true);
+            }
+            catch (System.Exception ex)
+            {
+                promise.Reject(ErrorPrefetchFailure, ex.Message);
+            }
+        }
+
+        [ReactMethod]
+        public async void getSize(string uriString, IPromise promise)
+        {
+            if (string.IsNullOrEmpty(uriString))
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot get the size of an image for an empty URI.");
+                return;
+            }
+
+            using (var reference = _imageCache.Get(uriString))
+            {
+                try
+                {
+                    await reference.LoadedObservable.FirstAsync();
+                    DispatcherHelpers.RunOnDispatcher(() =>
+                        promise.Resolve(new JObject
+                        {
+                            { "width", reference.Image.PixelWidth },
+                            { "height", reference.Image.PixelHeight },
+                        }));
+                }
+                catch (ImageFailedException ex)
+                {
+                    promise.Reject(ErrorGetSizeFailure, ex.Message);
+                }
+            }
         }
     }
 }

@@ -113,7 +113,6 @@ namespace ReactNative.Views.Split
                     $"'{Name}' only supports two child, the content and the pane.");
             }
 
-            child.SetParent(parent);
             var uiElementChild = child.As<UIElement>();
             if (index == 0)
             {
@@ -173,31 +172,18 @@ namespace ReactNative.Views.Split
 
         public override void RemoveAllChildren(SplitView parent)
         {
-            if (parent.Content != null)
-            {
-                parent.Content.RemoveParent();
-                parent.Content = null;
-            }
-            
-            if (parent.Pane != null)
-            {
-                parent.Pane.RemoveParent();
-                parent.Pane = null;
-            }
+            parent.Content = null;
+            parent.Pane = null;
         }
 
         public override void RemoveChildAt(SplitView parent, int index)
         {
             if (index == 0)
             {
-                var content = EnsureContent(parent);
-                content.RemoveParent();
                 parent.Content = null;
             }
             else if (index == 1)
             {
-                var pane = EnsurePane(parent);
-                pane.RemoveParent();
                 parent.Pane = null;
             }
             else

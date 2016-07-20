@@ -5,6 +5,7 @@ using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Image;
 using ReactNative.Modules.Launch;
+using ReactNative.Modules.Location;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
 using ReactNative.Modules.StatusBar;
@@ -33,6 +34,33 @@ namespace ReactNative.Shell
     /// </summary>
     public class MainReactPackage : IReactPackage
     {
+        private readonly IImageCache _imageCache;
+        private readonly IUriLoader _uriLoader;
+
+        /// <summary>
+        /// Instantiates the <see cref="MainReactPackage"/>. 
+        /// </summary>
+        public MainReactPackage()
+            : this(new DefaultUriLoader())
+        {
+        }
+
+        private MainReactPackage(IUriLoader uriLoader)
+            : this(new RefCountImageCache(uriLoader), uriLoader)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="MainReactPackage"/>. 
+        /// </summary>
+        /// <param name="imageCache">The image cache.</param>
+        /// <param name="uriLoader">The URI loader.</param>
+        public MainReactPackage(IImageCache imageCache, IUriLoader uriLoader)
+        {
+            _imageCache = imageCache;
+            _uriLoader = uriLoader;
+        }
+
         /// <summary>
         /// Creates the list of native modules to register with the react
         /// instance. 
@@ -48,9 +76,9 @@ namespace ReactNative.Shell
                 //new CameraRollManager(reactContext),
                 new ClipboardModule(),
                 new DialogModule(reactContext),
-                new ImageLoaderModule(),
+                new ImageLoaderModule(_imageCache, _uriLoader),
                 new LauncherModule(),
-                //new LocationModule(reactContext),
+                new LocationModule(reactContext),
                 new NetworkingModule(reactContext),
                 new NetInfoModule(reactContext),
                 new StatusBarModule(),
@@ -81,7 +109,7 @@ namespace ReactNative.Shell
             return new List<IViewManager>
             {
                 new ReactFlipViewManager(),
-                new ReactImageManager(),
+                new ReactImageManager(_imageCache),
                 new ReactProgressBarViewManager(),
                 new ReactProgressRingViewManager(),
                 new ReactPickerManager(),

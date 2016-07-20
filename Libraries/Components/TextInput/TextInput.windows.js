@@ -13,12 +13,12 @@
 
 var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
-var NativeMethodsMixin = require('NativeMethodsMixin');
+var NativeMethodsMixin = require('react/lib/NativeMethodsMixin');
 var Platform = require('Platform');
-var PropTypes = require('ReactPropTypes');
+var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
-var ReactNative = require('ReactNative');
-var ReactChildren = require('ReactChildren');
+var ReactNative = require('react/lib/ReactNative');
+var ReactChildren = require('react/lib/ReactChildren');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var TextInputState = require('TextInputState');
@@ -27,7 +27,6 @@ var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
 var View = require('View');
 
-var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
 var requireNativeComponent = require('requireNativeComponent');

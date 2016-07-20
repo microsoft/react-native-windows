@@ -1,7 +1,10 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Modules.Image;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,11 +17,19 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly Dictionary<Border, ExceptionRoutedEventHandler> _imageFailedHandlers =
-            new Dictionary<Border, ExceptionRoutedEventHandler>();
+        private readonly Dictionary<Border, SerialDisposable> _disposables =
+            new Dictionary<Border, SerialDisposable>();
 
-        private readonly Dictionary<Border, RoutedEventHandler> _imageOpenedHandlers =
-            new Dictionary<Border, RoutedEventHandler>();
+        private readonly IImageCache _imageCache;
+
+        /// <summary>
+        /// Instantiates the <see cref="ReactImageManager"/>.  
+        /// </summary>
+        /// <param name="imageCache">The image cache.</param>
+        public ReactImageManager(IImageCache imageCache)
+        {
+            _imageCache = imageCache;
+        }
 
         /// <summary>
         /// The view manager name.
@@ -101,7 +112,6 @@ namespace ReactNative.Views.Image
         public void SetSource(Border view, string source)
         {
             var imageBrush = (ImageBrush)view.Background;
-            imageBrush.ImageSource = new BitmapImage(new Uri(source));
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -110,6 +120,28 @@ namespace ReactNative.Views.Image
                     new ReactImageLoadEvent(
                         view.GetTag(),
                         ReactImageLoadEvent.OnLoadStart));
+
+            var reference = _imageCache.Get(source);
+            var subscription = reference.LoadedObservable.Subscribe(
+                _ =>
+                {
+                    imageBrush.ImageSource = reference.Image;
+                    OnImageOpened(view);
+                },
+                _ => OnImageFailed(view));
+
+            var disposable = default(SerialDisposable);
+            if (!_disposables.TryGetValue(view, out disposable))
+            {
+                disposable = new SerialDisposable();
+                _disposables.Add(view, disposable);
+            }
+
+            disposable.Disposable = new CompositeDisposable
+            {
+                reference,
+                subscription,
+            };
         }
         
         /// <summary>
@@ -164,18 +196,11 @@ namespace ReactNative.Views.Image
         {
             var imageBrush = (ImageBrush)view.Background;
 
-            var imageFailedHandler = default(ExceptionRoutedEventHandler);
-            if (_imageFailedHandlers.TryGetValue(view, out imageFailedHandler))
+            var disposable = default(SerialDisposable);
+            if (_disposables.TryGetValue(view, out disposable))
             {
-                _imageFailedHandlers.Remove(view);
-                imageBrush.ImageFailed -= imageFailedHandler;
-            }
-
-            var imageOpenedHandler = default(RoutedEventHandler);
-            if (_imageOpenedHandlers.TryGetValue(view, out imageOpenedHandler))
-            {
-                _imageOpenedHandlers.Remove(view);
-                imageBrush.ImageOpened -= imageOpenedHandler;
+                disposable.Dispose();
+                _disposables.Remove(view);
             }
         }
 
@@ -192,29 +217,7 @@ namespace ReactNative.Views.Image
             };
         }
 
-        /// <summary>
-        /// Install custom event emitters on the given view.
-        /// </summary>
-        /// <param name="reactContext">The React context.</param>
-        /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, Border view)
-        {
-            var imageBrush = (ImageBrush)view.Background;
-
-            var imageFailedHandler = new ExceptionRoutedEventHandler(
-                (sender, args) => OnImageFailed(view, args));
-
-            imageBrush.ImageFailed += imageFailedHandler;
-
-            var imageOpenedHandler = new RoutedEventHandler(
-                (sender, args) => OnImageOpened(view, args));
-
-            imageBrush.ImageOpened += imageOpenedHandler;
-
-            _imageFailedHandlers.Add(view, imageFailedHandler);
-        }
-
-        private void OnImageFailed(Border view, ExceptionRoutedEventArgs args)
+        private void OnImageFailed(Border view)
         {
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -225,7 +228,7 @@ namespace ReactNative.Views.Image
                         ReactImageLoadEvent.OnLoadEnd));
         }
 
-        private void OnImageOpened(Border view, RoutedEventArgs args)
+        private void OnImageOpened(Border view)
         {
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()

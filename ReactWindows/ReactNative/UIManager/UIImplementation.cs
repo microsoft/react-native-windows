@@ -247,7 +247,7 @@ namespace ReactNative.UIManager
                 for (var i = 0; i < numToMove; ++i)
                 {
                     var moveFromIndex = moveFrom[i];
-                    var tagToMove = cssNodeToManage.GetChildAt(i).ReactTag;
+                    var tagToMove = cssNodeToManage.GetChildAt(moveFromIndex).ReactTag;
                     viewsToAdd[i] = new ViewAtIndex(tagToMove, moveTo[i]);
                     indicesToRemove[i] = moveFromIndex;
                     tagsToRemove[i] = tagToMove;
@@ -446,6 +446,17 @@ namespace ReactNative.UIManager
         public void Measure(int reactTag, ICallback callback)
         {
             _operationsQueue.EnqueueMeasure(reactTag, callback);
+        }
+
+        /// <summary>
+        /// Determines the width, height, and location relative to the window
+        /// of the given view and returns the values via an asynchronous callback.
+        /// </summary>
+        /// <param name="reactTag">The view tag to measure.</param>
+        /// <param name="callback">The callback.</param>
+        public void MeasureInWindow(int reactTag, ICallback callback)
+        {
+            _operationsQueue.EnqueueMeasureInWindow(reactTag, callback);
         }
 
         /// <summary>
@@ -795,7 +806,8 @@ namespace ReactNative.UIManager
         private void CalculateRootLayout(ReactShadowNode cssRoot)
         {
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactShadowNode.CalculateLayout")
-                .With("RootTag", cssRoot.ReactTag))
+                .With("RootTag", cssRoot.ReactTag)
+                .Start())
             {
                 cssRoot.CalculateLayout();
             }

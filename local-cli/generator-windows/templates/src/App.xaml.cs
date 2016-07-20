@@ -54,7 +54,7 @@ namespace <%= ns %>
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                _reactPage.OnCreate();
+                _reactPage.OnCreate(e.Arguments);
 
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();

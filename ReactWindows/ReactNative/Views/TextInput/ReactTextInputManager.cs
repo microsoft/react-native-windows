@@ -20,8 +20,8 @@ namespace ReactNative.Views.TextInput
     /// </summary>
     class ReactTextInputManager : BaseViewManager<ReactTextBox, ReactTextInputShadowNode>
     {
-        private static readonly int FocusTextInput = 1;
-        private static readonly int BlurTextInput = 2;
+        private const int FocusTextInput = 1;
+        private const int BlurTextInput = 2;
 
         private bool _onSelectionChange;
 

@@ -11,7 +11,9 @@ const parse = require('xml-parser');
 const WinAppDeployTool = require('./winappdeploytool');
 
 function getAppPackage(options) {
-  return glob.sync(path.join(options.root, 'windows/*/AppPackages/*'))[0];
+  const configuration = options.release ? 'Release' : 'Debug';
+  const arch = options.arch ? options.arch : 'x86';
+  return glob.sync(path.join(options.root, `windows/*/AppPackages/*_${arch}_${configuration}_*`))[0];
 }
 
 function getWindowsStoreAppUtils(options) {
@@ -21,7 +23,7 @@ function getWindowsStoreAppUtils(options) {
 }
 
 function getAppxManifest(options) {
-  const configuration = options.debug ? 'Debug' : 'Release';
+  const configuration = options.release ? 'Release' : 'Debug';
   const appxPath = glob.sync(path.join(options.root, `windows/*/bin/${options.arch}/${configuration}/AppxManifest.xml`))[0];
   return parse(fs.readFileSync(appxPath, 'utf8'));
 }
@@ -75,7 +77,7 @@ function deployToDesktop(options) {
   const identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
   const appName = identity.attributes.Name;
   const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
-
+  const args = ["remoteDebugging", options.proxy ? 'true' : 'false'];
 
   return new Promise(resolve => {
     console.log(chalk.green('Removing old version of the app'));
@@ -84,8 +86,11 @@ function deployToDesktop(options) {
     console.log(chalk.green('Installing new version of the app'));
     execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`);
 
+    const appFamilyName = execSync(`powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`);
+    execSync(`CheckNetIsolation LoopbackExempt -a -n=${appFamilyName}`);
+
     console.log(chalk.green('Starting the app'));
-    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName}`);
+    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`);
     resolve();
   });
 }
@@ -93,10 +98,12 @@ function deployToDesktop(options) {
 function startServerInNewWindow(options) {
   return new Promise(resolve => {
     http.get('http://localhost:8081/status', res => {
-      if (res === 200) {
+      if (res.statusCode === 200) {
         console.log(chalk.green('React-Native Server already started'));
-        resolve();
-      }
+      } else {
+        console.log(chalk.red('React-Native Server not responding'));
+      }       
+      resolve();
     }).on('error', () => resolve(launchServer(options)));
   });
 }

@@ -9,4 +9,4 @@ module.exports = [{
     flags: '--namespace <namespace>',
     description: 'The native project namespace.'
   }]
-}]
+}];

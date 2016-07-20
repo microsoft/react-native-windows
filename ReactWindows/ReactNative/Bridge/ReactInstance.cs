@@ -97,29 +97,33 @@ namespace ReactNative.Bridge
         {
             await _bundleLoader.InitializeAsync();
 
-            await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
             {
-                QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
-
-                var jsExecutor = _jsExecutorFactory();
-
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor"))
+                _bridge = await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
                 {
-                    _bridge = new ReactBridge(
-                        jsExecutor,
-                        new NativeModulesReactCallback(this),
-                        QueueConfiguration.NativeModulesQueueThread);
-                }
+                    QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig"))
-                {
-                    _bridge.SetGlobalVariable("__fbBatchedBridgeConfig", BuildModulesConfig());
-                }
+                    var jsExecutor = _jsExecutorFactory();
 
-                _bundleLoader.LoadScript(_bridge);
+                    var bridge = default(ReactBridge);
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor").Start())
+                    {
+                        bridge = new ReactBridge(
+                            jsExecutor,
+                            new NativeModulesReactCallback(this),
+                            QueueConfiguration.NativeModulesQueueThread);
+                    }
 
-                return _bridge;
-            });
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
+                    {
+                        bridge.SetGlobalVariable("__fbBatchedBridgeConfig", BuildModulesConfig());
+                    }
+
+                    _bundleLoader.LoadScript(bridge);
+
+                    return bridge;
+                });
+            }
         }
 
         public void InvokeCallback(int callbackId, JArray arguments)
@@ -138,7 +142,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "<callback>"))
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "<callback>").Start())
                 {
                     _bridge.InvokeCallback(callbackId, arguments);
                 }
@@ -156,7 +160,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName))
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName).Start())
                 {
                     if (_bridge == null)
                     {
@@ -361,7 +365,7 @@ namespace ReactNative.Bridge
                 // bad state so we don't want to call anything on them.
                 if (!_parent.IsDisposed)
                 {
-                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "OnBatchComplete"))
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "OnBatchComplete").Start())
                     {
                         _parent._registry.OnBatchComplete();
                     }

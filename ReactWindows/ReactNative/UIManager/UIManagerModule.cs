@@ -256,6 +256,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Determines the width, height, and location relative to the window
+        /// of the given view and returns the values via an asynchronous callback.
+        /// </summary>
+        /// <param name="reactTag">The view tag to measure.</param>
+        /// <param name="callback">The callback.</param>
+        [ReactMethod]
+        public void measureInWindow(int reactTag, ICallback callback)
+        {
+            _uiImplementation.MeasureInWindow(reactTag, callback);
+        }
+
+        /// <summary>
         /// Measure the view specified by <paramref name="tag"/> to the given
         /// <paramref name="ancestorTag"/>. This means that the returned x, y
         /// are relative to the origin x, y of the ancestor view.
@@ -453,7 +465,8 @@ namespace ReactNative.UIManager
             var batchId = _batchId++;
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "onBatchCompleteUI")
-                .With("BatchId", batchId))
+                .With("BatchId", batchId)
+                .Start())
             {
                 _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
             }

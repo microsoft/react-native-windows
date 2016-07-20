@@ -10,10 +10,10 @@
  */
 'use strict';
 
-var NativeMethodsMixin = require('NativeMethodsMixin');
+var NativeMethodsMixin = require('react/lib/NativeMethodsMixin');
 var React = require('React');
-var ReactNative = require('ReactNative');
-var ReactPropTypes = require('ReactPropTypes');
+var ReactNative = require('react/lib/ReactNative');
+var ReactPropTypes = require('react/lib/ReactPropTypes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
 var View = require('View');

@@ -1,4 +1,6 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Reflection;
+using ReactNative.UIManager;
+using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.Views.View
@@ -18,6 +20,18 @@ namespace ReactNative.Views.View
             {
                 return "RCTView";
             }
+        }
+
+        /// <summary>
+        /// Set the pointer events handling mode for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="pointerEventsString">The pointerEvents mode.</param>
+        [ReactProp(ViewProps.PointerEvents)]
+        public void SetPointerEvents(Border view, string pointerEventsString)
+        {
+            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsString) ?? PointerEvents.Auto;
+            view.SetPointerEvents(pointerEvents);
         }
 
         /// <summary>
