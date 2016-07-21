@@ -1,4 +1,4 @@
-This is a very rough 
+Disclaimer: these tables are not necessarily complete or up-to-date. Feel free to add information on missing features, components, and modules as you encounter them.
 
 ## Components
 
