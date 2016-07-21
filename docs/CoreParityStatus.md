@@ -56,7 +56,7 @@ This is a very rough
 | Dimensions | Ready |  |
 | IntentAndroid | n/a | Android-only. |
 | InteractionManager | Ready |  |
-| LayoutAnimation | Partial | [#175](https://github.com/ReactWindows/react-native-windows/issues/175), [#217](https://github.com/ReactWindows/react-native-windows/issues/217), [#508](https://github.com/ReactWindows/react-native-windows/issues/508) |
+| LayoutAnimation | Partial | Missing [#175](https://github.com/ReactWindows/react-native-windows/issues/175), [#217](https://github.com/ReactWindows/react-native-windows/issues/217), [#508](https://github.com/ReactWindows/react-native-windows/issues/508) |
 | Linking | Partial | [Missing functionality to get initial (i.e., launch) URI (#301).](https://github.com/ReactWindows/react-native-windows/issues/301) |
 | LinkingIOS | n/a | iOS-only. |
 | NativeMethodsMixin | Ready |  |
@@ -77,7 +77,7 @@ This is a very rough
 |------|--------|-------------|
 | Flexbox | Ready |  |
 | ShadowPropTypesIOS | n/a | iOS-only. |
-| Geolocation | Ready |  |
-| Network | Ready |  |
-| Timers | Ready |  |
+| Geolocation | Ready |  See [Source](../ReactWindows/ReactNative/Modules/Location/LocationModule.cs). |
+| Network | Ready | See [Source](../ReactWindows/ReactNative/Modules/Network/NetworkingModule.cs).  |
+| Timers | Ready | See [Source](../ReactWindows/ReactNative/Modules/Core/Timing.cs). |
 | Colors | Ready |  |
