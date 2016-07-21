@@ -26,6 +26,7 @@ namespace ReactNative.Tests.Bridge.Queue
         public void MessageQueueThread_CreateUiThread_ThrowsNotSupported()
         {
             AssertEx.Throws<NotSupportedException>(() => MessageQueueThreadSpec.Create("ui", MessageQueueThreadKind.DispatcherThread));
+            AssertEx.Throws<NotSupportedException>(() => MessageQueueThreadSpec.Create("layout", MessageQueueThreadKind.LayoutThread));
         }
 
         [TestMethod]
@@ -33,12 +34,14 @@ namespace ReactNative.Tests.Bridge.Queue
         {
             var thrown = 0;
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => thrown++));
+            var layoutThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.LayoutThreadSpec, ex => thrown++));
             var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => thrown++);
             var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), ex => thrown++);
 
             var queueThreads = new[]
             {
                 uiThread,
+                layoutThread,
                 backgroundThread,
                 taskPoolThread
             };
@@ -69,12 +72,14 @@ namespace ReactNative.Tests.Bridge.Queue
             });
 
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, handler));
+            var layoutThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.LayoutThreadSpec, handler));
             var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), handler);
             var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), handler);
 
             var queueThreads = new[]
             {
                 uiThread,
+                layoutThread,
                 backgroundThread,
                 taskPoolThread
             };
@@ -90,9 +95,10 @@ namespace ReactNative.Tests.Bridge.Queue
         [TestMethod]
         public async Task MessageQueueThread_OneAtATime()
         {
-            var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
-            var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });
-            var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); });
+            var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => Assert.Fail()));
+            var layoutThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.LayoutThreadSpec, ex => Assert.Fail()));
+            var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => Assert.Fail());
+            var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), ex => Assert.Fail());
 
             var enter = new AutoResetEvent(false);
             var exit = new AutoResetEvent(false);
@@ -100,6 +106,7 @@ namespace ReactNative.Tests.Bridge.Queue
             var queueThreads = new[] 
             {
                 uiThread,
+                layoutThread,
                 backgroundThread,
                 taskPoolThread
             };
@@ -124,13 +131,15 @@ namespace ReactNative.Tests.Bridge.Queue
         [TestMethod]
         public async Task MessageQueueThread_Dispose()
         {
-            var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
-            var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });
-            var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); });
+            var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => Assert.Fail()));
+            var layoutThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.LayoutThreadSpec, ex => Assert.Fail()));
+            var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => Assert.Fail());
+            var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), ex => Assert.Fail());
 
             var queueThreads = new[]
             {
                 uiThread,
+                layoutThread,
                 backgroundThread,
                 taskPoolThread
             };

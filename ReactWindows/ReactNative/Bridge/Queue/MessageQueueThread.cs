@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.System.Threading;
 using Windows.UI.Core;
@@ -124,7 +125,9 @@ namespace ReactNative.Bridge.Queue
             switch (spec.Kind)
             {
                 case MessageQueueThreadKind.DispatcherThread:
-                    return new DispatcherMessageQueueThread(spec.Name, handler);
+                case MessageQueueThreadKind.LayoutThread:
+                    var isSecondary = spec.Kind == MessageQueueThreadKind.LayoutThread;
+                    return new DispatcherMessageQueueThread(spec.Name, handler, isSecondary);
                 case MessageQueueThreadKind.BackgroundSingleThread:
                     return new SingleBackgroundMessageQueueThread(spec.Name, handler);
                 case MessageQueueThreadKind.BackgroundAnyThread:
@@ -137,20 +140,28 @@ namespace ReactNative.Bridge.Queue
 
         class DispatcherMessageQueueThread : MessageQueueThread
         {
+            private static readonly CoreApplicationView s_secondaryView = CoreApplication.CreateNewView();
             private static readonly IObserver<Action> s_nop = Observer.Create<Action>(_ => { });
 
+            private readonly bool _isSecondary;
             private readonly Subject<Action> _actionSubject;
             private readonly IDisposable _subscription;
 
             private IObserver<Action> _actionObserver;
 
-            public DispatcherMessageQueueThread(string name, Action<Exception> handler)
+            public DispatcherMessageQueueThread(string name, Action<Exception> handler, bool isSecondary)
                 : base(name)
             {
+                _isSecondary = isSecondary;
                 _actionSubject = new Subject<Action>();
                 _actionObserver = _actionSubject;
+
+                var dispatcher = isSecondary
+                    ? s_secondaryView.Dispatcher
+                    : CoreApplication.GetCurrentView().Dispatcher;
+
                 _subscription = _actionSubject
-                    .ObserveOnDispatcher()
+                    .ObserveOn(dispatcher)
                     .Subscribe(action =>
                     {
                         try
@@ -171,7 +182,7 @@ namespace ReactNative.Bridge.Queue
 
             protected override bool IsOnThreadCore()
             {
-                return CoreWindow.GetForCurrentThread().Dispatcher != null;
+                return GetApplicationView() != null;
             }
 
             protected override void Dispose(bool disposing)
@@ -180,6 +191,20 @@ namespace ReactNative.Bridge.Queue
                 Interlocked.Exchange(ref _actionObserver, s_nop);
                 _actionSubject.Dispose();
                 _subscription.Dispose();
+            }
+
+            private CoreApplicationView GetApplicationView()
+            {
+                if (_isSecondary && s_secondaryView.Dispatcher.HasThreadAccess)
+                {
+                    return s_secondaryView;
+                }
+                else if (!_isSecondary)
+                {
+                    return CoreApplication.GetCurrentView();
+                }
+
+                return null;
             }
         }
 
