@@ -82,6 +82,18 @@ If you encounter a bug with the React Native Windows plugin, we would like to he
 
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed in the [Getting Help](#getting-help) section. There are limited resources available for handling issues and by keeping the list of open issues lean we can respond in a timely manner.
 
+## FAQs
+
+1. Running `rnpm windows` fails with `No compatible version found: react-native-windows@0.x.*`
+
+We try to keep up-to-date with the latest version of `react-native`, but sometimes we fall a bit behind. The default behavior of the Windows init RNPM plugin is to try and install the version of `react-native-windows` that matches the version of `react-native` that you're using (from the `package.json` file of your project).  Often times, an older version of `react-native-windows` will work just fine with a later version of `react-native`, so a good first attempt is to try and select the latest (or release candidate) version of `react-native-windows` using the `--windowsVersion` flag.  E.g.,
+
+```
+rnpm windows --windowsVersion 0.x.0-rc.0
+```
+
+Where `x` is the version of `react-native` you have installed.
+
 ## Contributing
 
 For more information about contributing PRs and issues, see our [Contribution Guidelines](https://github.com/ReactWindows/react-native-windows/blob/master/CONTRIBUTING.md) **(Coming Soon)**.
