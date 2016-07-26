@@ -4,6 +4,7 @@ using ReactNative.Collections;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -73,6 +74,7 @@ namespace ReactNative.Modules.Network
         /// <param name="requestId">The request ID.</param>
         /// <param name="headers">The headers.</param>
         /// <param name="data">The request data.</param>
+        /// <param name="responseType">The response type (either "text" or "base64").</param>
         /// <param name="useIncrementalUpdates">
         /// <code>true</code> if incremental updates are allowed.
         /// </param>
@@ -84,6 +86,7 @@ namespace ReactNative.Modules.Network
             int requestId,
             string[][] headers,
             JObject data,
+            string responseType,
             bool useIncrementalUpdates,
             int timeout)
         {
@@ -130,6 +133,7 @@ namespace ReactNative.Modules.Network
                         useIncrementalUpdates,
                         timeout,
                         request,
+                        responseType,
                         token));
 
                     return;
@@ -162,6 +166,7 @@ namespace ReactNative.Modules.Network
                 useIncrementalUpdates,
                 timeout,
                 request,
+                responseType,
                 token));
         }
 
@@ -189,6 +194,7 @@ namespace ReactNative.Modules.Network
             bool useIncrementalUpdates,
             int timeout,
             HttpRequestMessage request,
+            string responseType,
             CancellationToken token)
         {
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
@@ -199,6 +205,7 @@ namespace ReactNative.Modules.Network
                 useIncrementalUpdates,
                 timeout,
                 request,
+                responseType,
                 token);
         }
 
@@ -207,6 +214,7 @@ namespace ReactNative.Modules.Network
             bool useIncrementalUpdates,
             int timeout,
             HttpRequestMessage request,
+            string responseType,
             CancellationToken token)
         {
             var timeoutSource = timeout > 0
@@ -222,12 +230,13 @@ namespace ReactNative.Modules.Network
                     {
                         OnResponseReceived(requestId, response);
 
-                        if (useIncrementalUpdates)
+                        if (useIncrementalUpdates && responseType == "text")
                         {
+                            var length = response.Content.Headers.ContentLength;
                             using (var inputStream = await response.Content.ReadAsInputStreamAsync())
                             using (var stream = inputStream.AsStreamForRead())
                             {
-                                await ProcessResponseIncrementalAsync(requestId, stream, timeoutSource.Token);
+                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token);
                                 OnRequestSuccess(requestId);
                             }
                         }
@@ -235,10 +244,26 @@ namespace ReactNative.Modules.Network
                         {
                             if (response.Content != null)
                             {
-                                var responseBody = await response.Content.ReadAsStringAsync();
-                                if (responseBody != null)
+                                if (responseType == "text")
                                 {
-                                    OnDataReceived(requestId, responseBody);
+                                    var responseBody = await response.Content.ReadAsStringAsync();
+                                    if (responseBody != null)
+                                    {
+                                        OnDataReceived(requestId, responseBody);
+                                    }
+                                }
+                                else
+                                {
+                                    Debug.Assert(responseType == "base64");
+                                    using (var memoryStream = new MemoryStream())
+                                    {
+                                        using (var outputStream = memoryStream.AsOutputStream())
+                                        {
+                                            await response.Content.WriteToStreamAsync(outputStream);
+                                        }
+
+                                        OnDataReceived(requestId, Convert.ToBase64String(memoryStream.ToArray()));
+                                    }
                                 }
                             }
 
@@ -271,15 +296,18 @@ namespace ReactNative.Modules.Network
             }
         }
 
-        private async Task ProcessResponseIncrementalAsync(int requestId, Stream stream, CancellationToken token)
+        private async Task ProcessResponseIncrementalAsync(int requestId, Stream stream, ulong? length, CancellationToken token)
         {
             using (var reader = new StreamReader(stream, Encoding.UTF8, true, MaxChunkSizeBetweenFlushes, true))
             {
                 var buffer = new char[MaxChunkSizeBetweenFlushes];
                 var read = default(int);
+                var progress = 0;
+                var total = length.HasValue ? (long)length : -1;
                 while ((read = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0)
                 {
-                    OnDataReceived(requestId, new string(buffer, 0, read));
+                    progress += read;
+                    OnIncrementalDataReceived(requestId, new string(buffer, 0, read), progress, total);
                 }
             }
         }
@@ -303,6 +331,19 @@ namespace ReactNative.Modules.Network
             };
 
             EventEmitter.emit("didReceiveNetworkResponse", args);
+        }
+
+        private void OnIncrementalDataReceived(int requestId, string data, long progress, long total)
+        {
+            var args = new JArray
+            {
+                requestId,
+                data,
+                progress,
+                total
+            };
+
+            EventEmitter.emit("didReceiveNetworkIncrementalData", args);
         }
 
         private void OnDataReceived(int requestId, string responseBody)
