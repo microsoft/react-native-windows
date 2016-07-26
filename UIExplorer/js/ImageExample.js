@@ -602,6 +602,7 @@ exports.examples = [
         />
       );
     },
+    platforms: ['android', 'ios'],
   },
 ];
 

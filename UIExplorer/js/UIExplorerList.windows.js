@@ -101,10 +101,6 @@ const APIExamples = [
     module: require('./LayoutExample'),
   },
   {
-    key: 'LayoutEventsExample',
-    module: require('./LayoutEventsExample'),
-  },
-  {
     key: 'NavigationExperimentalExample',
     module: require('./NavigationExperimental/NavigationExperimentalExample'),
   },
