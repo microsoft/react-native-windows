@@ -94,6 +94,10 @@ namespace ReactNative.Modules.Network
                 throw new ArgumentNullException(nameof(method));
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
+            if (responseType == null)
+                throw new ArgumentNullException(nameof(responseType));
+            if (responseType != "text" && responseType != "base64")
+                throw new ArgumentOutOfRangeException(nameof(responseType));
 
             var request = new HttpRequestMessage(new HttpMethod(method), url);
 
