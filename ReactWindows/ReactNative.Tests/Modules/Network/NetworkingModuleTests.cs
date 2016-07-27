@@ -4,7 +4,6 @@ using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Network;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -24,12 +23,20 @@ namespace ReactNative.Tests.Modules.Network
             var module = CreateNetworkingModule(new DefaultHttpClient(), new MockInvocationHandler());
 
             AssertEx.Throws<ArgumentNullException>(
-                () => module.sendRequest(null, new Uri("http://example.com"), 0, null, null, false, 0),
+                () => module.sendRequest(null, new Uri("http://example.com"), 0, null, null, "text", false, 0),
                 ex => Assert.AreEqual("method", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => module.sendRequest("get", null, 0, null, null, false, 0),
+                () => module.sendRequest("get", null, 0, null, null, "text", false, 0),
                 ex => Assert.AreEqual("url", ex.ParamName));
+
+            AssertEx.Throws<ArgumentNullException>(
+                () => module.sendRequest("get", new Uri("http://example.com"), 0, null, null, null, false, 0),
+                ex => Assert.AreEqual("responseType", ex.ParamName));
+
+            AssertEx.Throws<ArgumentOutOfRangeException>(
+                () => module.sendRequest("get", new Uri("http://example.com"), 0, null, null, "", false, 0),
+                ex => Assert.AreEqual("responseType", ex.ParamName));
         }
 
         [TestMethod]
@@ -47,7 +54,7 @@ namespace ReactNative.Tests.Modules.Network
             });
 
             var module = CreateNetworkingModule(httpClient, new MockInvocationHandler());
-            module.sendRequest(method, new Uri("http://example.com"), 1, null, null, false, 1000);
+            module.sendRequest(method, new Uri("http://example.com"), 1, null, null, "text", false, 1000);
             waitHandle.WaitOne();
             Assert.IsTrue(passed);
         }
@@ -74,7 +81,7 @@ namespace ReactNative.Tests.Modules.Network
 
             var module = CreateNetworkingModule(httpClient, new MockInvocationHandler());
 
-            module.sendRequest("get", new Uri("http://example.com"), 1, headers, null, false, 1000);
+            module.sendRequest("get", new Uri("http://example.com"), 1, headers, null, "text", false, 1000);
             waitHandle.WaitOne();
             Assert.IsTrue(passed);
         }
@@ -106,7 +113,7 @@ namespace ReactNative.Tests.Modules.Network
                 }),
                 new MockInvocationHandler());
 
-            module.sendRequest("post", new Uri("http://example.com"), 1, headers, data, false, 1000);
+            module.sendRequest("post", new Uri("http://example.com"), 1, headers, data, "text", false, 1000);
             waitHandle.WaitOne();
 
             Assert.IsTrue(passed);
@@ -139,7 +146,7 @@ namespace ReactNative.Tests.Modules.Network
                 waitHandle.Set();
             }));
 
-            module.sendRequest("post", new Uri("http://example.com"), 1, null, data, false, 1000);
+            module.sendRequest("post", new Uri("http://example.com"), 1, null, data, "text", false, 1000);
             waitHandle.WaitOne();
 
             Assert.IsTrue(passed);
@@ -184,7 +191,7 @@ namespace ReactNative.Tests.Modules.Network
             }),
             new MockInvocationHandler());
 
-            module.sendRequest("post", new Uri("http://example.com"), 1, headers, data, false, 1000);
+            module.sendRequest("post", new Uri("http://example.com"), 1, headers, data, "text", false, 1000);
             waitHandle.WaitOne();
 
             Assert.IsTrue(passed);
@@ -223,7 +230,7 @@ namespace ReactNative.Tests.Modules.Network
             }));
 
             var uri = new Uri("http://example.com");
-            module.sendRequest("get", uri, 42, null, null, false, 1000);
+            module.sendRequest("get", uri, 42, null, null, "text", false, 1000);
 
             onReceived.WaitOne();
             Assert.IsNotNull(onReceivedData);
@@ -277,11 +284,48 @@ namespace ReactNative.Tests.Modules.Network
             }));
 
             var uri = new Uri("http://example.com");
-            module.sendRequest("get", uri, 42, null, null, false, 1000);
+            module.sendRequest("get", uri, 42, null, null, "text", false, 1000);
 
             onReceived.WaitOne();
             Assert.AreEqual(42, onReceivedData[0].Value<int>());
             Assert.AreEqual("Hello World", onReceivedData[1].Value<string>());
+        }
+
+        [TestMethod]
+        public void NetworkingModule_Response_Content_Base64()
+        {
+            var onReceived = new AutoResetEvent(false);
+            var onReceivedData = default(JArray);
+
+            var bytes = Encoding.UTF8.GetBytes("Hello World");
+            var module = CreateNetworkingModule(new MockHttpClient(request =>
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Ok);
+                response.RequestMessage = request;
+
+                var stream = new MemoryStream(bytes);
+                response.Content = new HttpStreamContent(stream.AsInputStream());
+                return response;
+            }),
+            new MockInvocationHandler((name, args) =>
+            {
+                if (name == "emit" && args.Length == 2)
+                {
+                    var eventName = args[0] as string;
+                    if (eventName == "didReceiveNetworkData")
+                    {
+                        onReceivedData = args[1] as JArray;
+                        onReceived.Set();
+                    }
+                }
+            }));
+
+            var uri = new Uri("http://example.com");
+            module.sendRequest("get", uri, 42, null, null, "base64", false, 1000);
+
+            onReceived.WaitOne();
+            Assert.AreEqual(42, onReceivedData[0].Value<int>());
+            Assert.AreEqual(Convert.ToBase64String(bytes), onReceivedData[1].Value<string>());
         }
 
         [TestMethod]
@@ -313,7 +357,7 @@ namespace ReactNative.Tests.Modules.Network
                 if (name == "emit" && args.Length == 2)
                 {
                     var eventName = args[0] as string;
-                    if (eventName == "didReceiveNetworkData")
+                    if (eventName == "didReceiveNetworkIncrementalData")
                     {
                         builder.Append(((JArray)args[1])[1].Value<string>());
                     }
@@ -325,7 +369,7 @@ namespace ReactNative.Tests.Modules.Network
             }));
 
             var uri = new Uri("http://example.com");
-            module.sendRequest("get", uri, 0, null, null, true, 1000);
+            module.sendRequest("get", uri, 0, null, null, "text", true, 1000);
 
             onReceived.WaitOne();
             Assert.AreEqual(expected, builder.ToString());
