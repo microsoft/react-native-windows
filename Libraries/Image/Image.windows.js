@@ -214,7 +214,7 @@ var Image = React.createClass({
             {this.props.children}
           </View>
         );
-      } else if (!this.context.isInAParentText) {
+      } else {
           return <RKImage {...nativeProps}/>;
       }
     }
