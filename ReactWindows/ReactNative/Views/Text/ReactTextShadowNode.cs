@@ -267,5 +267,23 @@ namespace ReactNative.Views.Text
                     0);
             }
         }
+
+        /// <summary>
+        /// Run layout on the children if necessary.
+        /// </summary>
+        /// <returns>The children whose shadow nodes may need to dispatch updates.</returns>
+        public override IEnumerable<CSSNode> calculateLayoutOnChildren()
+        {
+            // Run flexbox on the children which are inline views.
+            foreach (var child in this.Children)
+            {
+                if (!(child is ReactRunShadowNode) && !(child is ReactSpanShadowNode))
+                {
+                    child.CalculateLayout();
+                }
+            }
+
+            return this.Children;
+        }
     }
 }

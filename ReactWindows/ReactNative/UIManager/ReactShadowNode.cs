@@ -1,6 +1,7 @@
 ﻿using Facebook.CSSLayout;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ReactNative.UIManager
 {
@@ -523,6 +524,19 @@ namespace ReactNative.UIManager
             var removed = this[i];
             base.RemoveChildAt(i);
             return (ReactShadowNode)removed;
+        }
+
+        /// <summary>
+        /// Run layout on the children if necessary.
+        /// </summary>
+        /// <returns>The children whose shadow nodes may need to dispatch updates.</returns>
+        public virtual IEnumerable<CSSNode> calculateLayoutOnChildren()
+        {
+            return IsVirtualAnchor ?
+                // All of the descendants are virtual so none of them are involved in layout.
+                Enumerable.Empty<CSSNode>() :
+                // Just return the children. Flexbox calculations have already been run on them.
+                this.Children;
         }
     }
 }

@@ -822,14 +822,11 @@ namespace ReactNative.UIManager
                 return;
             }
 
-            if (!cssNode.IsVirtualAnchor)
+            foreach (var child in cssNode.calculateLayoutOnChildren())
             {
-                for (var i = 0; i < cssNode.ChildCount; ++i)
-                {
-                    ApplyUpdatesRecursive(
-                        cssNode.GetChildAt(i),
-                        eventDispatcher);
-                }
+                ApplyUpdatesRecursive(
+                    (ReactShadowNode)child,
+                    eventDispatcher);
             }
 
             var tag = cssNode.ReactTag;
