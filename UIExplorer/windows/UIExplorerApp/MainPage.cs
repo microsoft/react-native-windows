@@ -19,7 +19,7 @@ namespace UIExplorerApp
         {
             get
             {
-                return "Examples/UIExplorer/UIExplorerApp.windows";
+                return "Examples/UIExplorer/js/UIExplorerApp.windows";
             }
         }
 
