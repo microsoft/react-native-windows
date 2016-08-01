@@ -55,11 +55,9 @@ For information on parity status with Android and iOS, including details on impl
 ## Examples
 
 ```
-git clone https://github.com/ReactWindows/react-native-windows.git
+git clone --recursive https://github.com/ReactWindows/react-native-windows.git
 cd react-native-windows
 npm install
-git submodule init
-git submodule update
 ```
 
 ### Running the examples
