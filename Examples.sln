@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIExplorerApp", "UIExplorer\windows\UIExplorerApp\UIExplorerApp.csproj", "{283F872F-7145-45A4-8EE0-4A6DB9FB2628}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative", "..\ReactWindows\ReactNative\ReactNative.csproj", "{C7673AD5-E3AA-468C-A5FD-FA38154E205C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies", "Movies\windows\Movies\Movies.csproj", "{6493B464-9927-4A1B-964B-CE51FC8E0422}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,26 @@ Global
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|x64.Build.0 = Release|x64
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|x86.ActiveCfg = Release|x86
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|x86.Build.0 = Release|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|ARM.ActiveCfg = Debug|ARM
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|ARM.Build.0 = Debug|ARM
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|ARM.Deploy.0 = Debug|ARM
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|x64.ActiveCfg = Debug|x64
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|x64.Build.0 = Debug|x64
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|x64.Deploy.0 = Debug|x64
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|x86.ActiveCfg = Debug|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|x86.Build.0 = Debug|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Debug|x86.Deploy.0 = Debug|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|Any CPU.ActiveCfg = Release|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|ARM.ActiveCfg = Release|ARM
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|ARM.Build.0 = Release|ARM
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|ARM.Deploy.0 = Release|ARM
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|x64.ActiveCfg = Release|x64
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|x64.Build.0 = Release|x64
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|x64.Deploy.0 = Release|x64
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|x86.ActiveCfg = Release|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|x86.Build.0 = Release|x86
+		{6493B464-9927-4A1B-964B-CE51FC8E0422}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
