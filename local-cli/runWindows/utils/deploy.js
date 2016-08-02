@@ -12,8 +12,7 @@ const WinAppDeployTool = require('./winappdeploytool');
 
 function getAppPackage(options) {
   const configuration = options.release ? 'Release' : 'Debug';
-  const arch = options.arch ? options.arch : 'x86';
-  return glob.sync(path.join(options.root, `windows/*/AppPackages/*_${arch}_${configuration}_*`))[0];
+  return glob.sync(path.join(options.root, `windows/*/AppPackages/*_${options.arch}_${configuration}_*`))[0];
 }
 
 function getWindowsStoreAppUtils(options) {

@@ -28,10 +28,9 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ## Getting Started
 
 - Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
-- Change your working directory to the project directory you specified in the `react native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (i.e., `cd AwesomeProject`).
-- Install [rnpm](https://github.com/rnpm/rnpm) via NPM, globally (i.e., `npm install -g rnpm`).
+- Change your working directory to the project directory you specified in the `react-native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (e.g., `cd AwesomeProject`).
 - Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
-- Initialize Windows project with `rnpm windows` command in the project directory.
+- Initialize Windows project with `react-native windows` command in the project directory.
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
 ### Requirements
@@ -84,12 +83,12 @@ The GitHub issues are intended for bug reports and feature requests. For help an
 
 ## FAQs
 
-1. Running `rnpm windows` fails with `No compatible version found: react-native-windows@0.x.*`
+1. Running `react-native windows` fails with `No compatible version found: react-native-windows@0.x.*`
 
 We try to keep up-to-date with the latest version of `react-native`, but sometimes we fall a bit behind. The default behavior of the Windows init RNPM plugin is to try and install the version of `react-native-windows` that matches the version of `react-native` that you're using (from the `package.json` file of your project).  Often times, an older version of `react-native-windows` will work just fine with a later version of `react-native`, so a good first attempt is to try and select the latest (or release candidate) version of `react-native-windows` using the `--windowsVersion` flag.  E.g.,
 
 ```
-rnpm windows --windowsVersion 0.x.0-rc.0
+react-native windows --windowsVersion 0.x.0-rc.0
 ```
 
 Where `x` is the version of `react-native` you have installed.

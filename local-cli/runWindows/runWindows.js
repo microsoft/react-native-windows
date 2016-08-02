@@ -27,10 +27,9 @@ function runWindows(config, args, options) {
 
   // Get build/deploy options
   const buildType = options.release ? 'Release' : 'Debug';
-  const buildArch = options.arch ? options.arch : 'x86';
 
   try {
-    build.buildSolution(slnFile, buildType, buildArch);
+    build.buildSolution(slnFile, buildType, options.arch);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
@@ -76,26 +75,26 @@ module.exports = {
   description: 'builds your app and starts it on a connected Windows desktop, emulator or device',
   func: runWindows,
   options: [{
-    flags: '--release',
+    command: '--release',
     description: 'Specifies a release build',
   }, {
-    flags: '--root [string]',
+    command: '--root [string]',
     description: 'Override the root directory for the windows build which contains the windows folder.',
   }, {
-    flags: '--arch [string]',
+    command: '--arch [string]',
     description: 'The build architecture (ARM, x86, x64)',
     default: 'x86',
   }, {
-    flags: '--emulator',
+    command: '--emulator',
     description: 'Deploys the app to an emulator',
   }, {
-    flags: '--device',
+    command: '--device',
     description: 'Deploys the app to a connected device',
   }, {
-    flags: '--target [string]',
+    command: '--target [string]',
     description: 'Deploys the app to the specified GUID for a device.',
   }, {
-    flags: '--proxy',
+    command: '--proxy',
     description: 'Deploys the app in remote debugging mode.',
   }]
 };
