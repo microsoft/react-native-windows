@@ -76,7 +76,16 @@ namespace ReactNative.Views.Text
         /// <returns>The child view.</returns>
         public override DependencyObject GetChildAt(RichTextBlock parent, int index)
         {
-            return parent.Blocks.OfType<Paragraph>().First().Inlines[index];
+            var child = parent.Blocks.OfType<Paragraph>().First().Inlines[index];
+            var childInlineContainer = child as InlineUIContainer;
+            if (childInlineContainer != null)
+            {
+                return childInlineContainer.Child;
+            }
+            else
+            {
+                return child;
+            }
         }
 
         /// <summary>
