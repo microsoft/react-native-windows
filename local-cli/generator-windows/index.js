@@ -109,7 +109,6 @@ module.exports = yeoman.Base.extend({
   end: function() {
     const projectPath = path.resolve(this.destinationRoot(), 'windows', this.name);
     this.log(chalk.white.bold('To run your app on UWP:'));
-    this.log(chalk.white(`   Open ${projectPath}.sln in Visual Studio`));
-    this.log(chalk.white('   Deploy the application and run on the specified destination'));
+    this.log(chalk.white('   react-native run-windows'));
   }
 });
