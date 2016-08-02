@@ -131,8 +131,8 @@ namespace ReactNative.Views.Text
         /// <summary>
         /// This method will be called by <see cref="UIManagerModule"/> once
         /// per batch, before calculating layout. This will only be called for
-        /// nodes that are marked as updated with <see cref="MarkUpdated"/> or
-        /// require layout (i.e., marked with <see cref="dirty"/>).
+        /// nodes that are marked as updated with <see cref="ReactShadowNode.MarkUpdated"/> or
+        /// require layout (i.e., marked with <see cref="ReactShadowNode.dirty"/> ).
         /// </summary>
         public override void OnBeforeLayout()
         {
