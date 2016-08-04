@@ -40,6 +40,17 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
+        /// Sets whether or not the text is selectable.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="selectable">A flag indicating whether or not the text is selectable.</param>
+        [ReactProp("selectable")]
+        public void SetSelectable(RichTextBlock view, bool selectable)
+        {
+            view.IsTextSelectionEnabled = selectable;
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
