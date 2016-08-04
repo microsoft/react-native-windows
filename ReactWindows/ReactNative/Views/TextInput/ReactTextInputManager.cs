@@ -300,6 +300,7 @@ namespace ReactNative.Views.TextInput
         public void SetMultiline(ReactTextBox view, bool multiline)
         {
             view.AcceptsReturn = multiline;
+            view.TextWrapping = multiline ? TextWrapping.Wrap : TextWrapping.NoWrap;
         }
 
         /// <summary>
