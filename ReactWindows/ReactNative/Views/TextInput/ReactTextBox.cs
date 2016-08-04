@@ -41,6 +41,7 @@ namespace ReactNative.Views.TextInput
 
         protected override void OnGotFocus(RoutedEventArgs e)
         {
+            base.OnGotFocus(e);
             if (ClearTextOnFocus)
             {
                 Text = "";
