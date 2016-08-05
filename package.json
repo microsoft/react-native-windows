@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.31.0-rc.1",
+  "version": "0.31.0",
   "description": "React Native platform extensions for the Universal Windows Platform.",
   "license": "MIT",
   "repository": {
@@ -22,11 +22,11 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react-native": "0.31.0-rc.0",
+    "react-native": "^0.31.0",
     "react": "~15.2.1"
   },
   "devDependencies": {
-    "react-native": "0.31.0-rc.0",
+    "react-native": "^0.31.0",
     "react": "~15.2.1"
   },
   "dependencies": {
