@@ -1,6 +1,6 @@
 {
   "name": "rnpm-plugin-windows",
-  "version": "0.2.0-rc.0",
+  "version": "0.2.0",
   "description": "rnpm plugin that generates a Windows template project",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,9 @@
     "node": ">= 4.0.0"
   },
   "license": "MIT",
+  "peerDependencies": {
+    "react-native": ">=0.31.0"
+  },
   "dependencies": {
     "semver": "^5.0.3",
     "chalk": "^1.1.3"
