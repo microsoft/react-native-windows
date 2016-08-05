@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Facebook.CSSLayout": "2.0.1-pre",
+    "Facebook.CSSLayout": "2.0.0-pre",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Newtonsoft.Json": "9.0.1",
     "System.Reactive": "3.0.0",
