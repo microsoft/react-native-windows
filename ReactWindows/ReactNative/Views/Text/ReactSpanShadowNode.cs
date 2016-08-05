@@ -127,23 +127,5 @@ namespace ReactNative.Views.Text
             inline.FontWeight = _fontWeight ?? FontWeights.Normal;
             inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : FontFamily.XamlAutoFontFamily;
         }
-
-        /// <summary>
-        /// This method will be called by <see cref="UIManagerModule"/> once
-        /// per batch, before calculating layout. This will only be called for
-        /// nodes that are marked as updated with <see cref="ReactShadowNode.MarkUpdated"/> or
-        /// require layout (i.e., marked with <see cref="ReactShadowNode.dirty"/> ).
-        /// </summary>
-        public override void OnBeforeLayout()
-        {
-            // Run flexbox on the children which are inline views.
-            foreach (var child in this.Children)
-            {
-                if (!(child is ReactRunShadowNode) && !(child is ReactSpanShadowNode))
-                {
-                    child.CalculateLayout();
-                }
-            }
-        }
     }
 }
