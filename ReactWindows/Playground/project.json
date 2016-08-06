@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Facebook.CSSLayout": "2.0.0-pre",
+    "Facebook.CSSLayout": "2.0.1-pre",
     "Microsoft.ApplicationInsights": "1.0.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.0.0",
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
