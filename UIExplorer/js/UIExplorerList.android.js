@@ -51,10 +51,6 @@ var ComponentExamples: Array<UIExplorerExample> = [
     module: require('./ModalExample'),
   },
   {
-    key: 'NativeAnimationsExample',
-    module: require('./NativeAnimationsExample'),
-  },
-  {
     key: 'PickerExample',
     module: require('./PickerExample'),
   },
@@ -73,6 +69,10 @@ var ComponentExamples: Array<UIExplorerExample> = [
   {
     key: 'StatusBarExample',
     module: require('./StatusBarExample'),
+  },
+  {
+    key: 'SwipeableListViewExample',
+    module: require('./SwipeableListViewExample')
   },
   {
     key: 'SwitchExample',
@@ -118,6 +118,10 @@ const APIExamples = [
     module: require('./AlertExample').AlertExample,
   },
   {
+    key: 'AnimatedExample',
+    module: require('./AnimatedExample'),
+  },
+  {
     key: 'AppStateExample',
     module: require('./AppStateExample'),
   },
@@ -160,6 +164,10 @@ const APIExamples = [
   {
     key: 'LayoutExample',
     module: require('./LayoutExample'),
+  },
+  {
+    key: 'NativeAnimationsExample',
+    module: require('./NativeAnimationsExample'),
   },
   {
     key: 'NavigationExperimentalExample',
