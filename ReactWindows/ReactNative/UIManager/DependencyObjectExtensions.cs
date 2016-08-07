@@ -11,6 +11,7 @@ namespace ReactNative.UIManager
     {
         private static readonly ConditionalWeakTable<DependencyObject, DependencyObjectData> s_properties =
             new ConditionalWeakTable<DependencyObject, DependencyObjectData>();
+        private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();
 
         /// <summary>
         /// Sets the pointer events for the view.
@@ -42,6 +43,46 @@ namespace ReactNative.UIManager
             }
 
             return elementData.PointerEvents.Value;
+        }
+
+        /// <summary>
+        /// Associates an implementation of IReactCompoundView with the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="compoundView">The implementation of IReactCompoundView.</param>
+        public static void SetReactCompoundView(this DependencyObject view, IReactCompoundView compoundView)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            s_properties.GetOrCreateValue(view).CompoundView = compoundView;
+        }
+
+        /// <summary>
+        /// Gets the implementation of IReactCompoundView associated with the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <returns>
+        /// The implementation of IReactCompoundView associated with the view. Defaults to
+        /// an instance of ReactDefaultCompoundView when no other implementation has been
+        /// provided.
+        /// </returns>
+        public static IReactCompoundView GetReactCompoundView(this DependencyObject view)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            var elementData = default(DependencyObjectData);
+            if (s_properties.TryGetValue(view, out elementData))
+            {
+                var compoundView = elementData.CompoundView;
+                if (compoundView != null)
+                {
+                    return compoundView;
+                }
+            }
+
+            return s_defaultCompoundView;
         }
 
         internal static void SetTag(this DependencyObject view, int tag)
@@ -115,6 +156,8 @@ namespace ReactNative.UIManager
             public PointerEvents? PointerEvents { get; set; }
 
             public int? Tag { get; set; }
+
+            public IReactCompoundView CompoundView { get; set; }
         }
     }
 }
