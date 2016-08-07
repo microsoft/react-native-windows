@@ -272,7 +272,9 @@
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
+    <Compile Include="UIManager\ReactDefaultCompoundView.cs" />
     <Compile Include="UIManager\Dimensions.cs" />
+    <Compile Include="UIManager\IReactCompoundView.cs" />
     <Compile Include="UIManager\IViewManager.cs" />
     <Compile Include="UIManager\IViewParentManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\BaseLayoutAnimation.cs" />
@@ -362,6 +364,7 @@
     <Compile Include="Views\Text\ReactInlineViewManager.cs" />
     <Compile Include="Views\Text\ReactSpanShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineShadowNodeVisitor.cs" />
+    <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\ViewManagersPropertyCache.cs" />
     <Compile Include="UIManager\ViewProps.cs" />
     <Compile Include="Views\Text\ReactRunManager.cs" />

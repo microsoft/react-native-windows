@@ -13,6 +13,7 @@ namespace ReactNative.Views.Text
     /// </summary>
     public class ReactTextViewManager : ViewParentManager<RichTextBlock, ReactTextShadowNode>
     {
+        private static readonly IReactCompoundView s_compoundView = new ReactTextCompoundView();
         private const double DefaultFontSize = 15;
 
         /// <summary>
@@ -162,6 +163,7 @@ namespace ReactNative.Views.Text
             };
 
             richTextBlock.Blocks.Add(new Paragraph());
+            richTextBlock.SetReactCompoundView(s_compoundView);
 
             return richTextBlock;
         }
