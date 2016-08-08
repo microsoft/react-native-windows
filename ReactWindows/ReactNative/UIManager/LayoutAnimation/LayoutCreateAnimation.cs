@@ -12,6 +12,17 @@ namespace ReactNative.UIManager.LayoutAnimation
     class LayoutCreateAnimation : BaseLayoutAnimation
     {
         /// <summary>
+        /// Signals if the animation should be performed in reverse.
+        /// </summary>
+        protected override bool IsReverse
+        {
+            get
+            {
+                return false;
+            }
+        }
+        
+        /// <summary>
         /// Create an observable animation to be used to animate the view, 
         /// based on the animation configuration supplied at initialization
         /// time and the new view position and size.
@@ -31,17 +42,6 @@ namespace ReactNative.UIManager.LayoutAnimation
             view.Height = dimensions.Height;
 
             return base.CreateAnimationCore(view, dimensions);
-        }
-
-        /// <summary>
-        /// Signals if the animation should be performed in reverse.
-        /// </summary>
-        protected override bool IsReverse
-        {
-            get
-            {
-                return false;
-            }
         }
     }
 }

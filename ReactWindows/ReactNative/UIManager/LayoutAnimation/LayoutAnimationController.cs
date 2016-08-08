@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
@@ -24,6 +25,7 @@ namespace ReactNative.UIManager.LayoutAnimation
 
         private readonly LayoutAnimation _layoutCreateAnimation = new LayoutCreateAnimation();
         private readonly LayoutAnimation _layoutUpdateAnimation = new LayoutUpdateAnimation();
+        private readonly LayoutAnimation _layoutDeleteAnimation = new LayoutDeleteAnimation();
 
         private bool _shouldAnimateLayout;
 
@@ -53,6 +55,13 @@ namespace ReactNative.UIManager.LayoutAnimation
             if (updateData != null)
             {
                 _layoutUpdateAnimation.InitializeFromConfig(updateData, globalDuration);
+                _shouldAnimateLayout = true;
+            }
+
+            var deleteData = config.Value<JObject>("delete");
+            if (deleteData != null)
+            {
+                _layoutDeleteAnimation.InitializeFromConfig(deleteData, globalDuration);
                 _shouldAnimateLayout = true;
             }
 #else
@@ -97,14 +106,42 @@ namespace ReactNative.UIManager.LayoutAnimation
             }
             else
             {
-                // Get the serial disposable for the view
-                var serialDisposable = _activeAnimations.GetOrCreateValue(view);
+                StartAnimation(view, animation);
+            }
+        }
 
-                // Dispose any existing animations
-                serialDisposable.Disposable = Disposable.Empty;
+        /// <summary>
+        /// Animate a view deletion using the layout animation configuration
+        /// supplied during initialization.
+        /// </summary>
+        /// <param name="view">The view to animation.</param>
+        /// <param name="finally">
+        /// Called once the animation is finished, should be used to completely
+        /// remove the view.
+        /// </param>
+        public void DeleteView(FrameworkElement view, Action @finally)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
 
-                // Start the next animation
-                serialDisposable.Disposable = animation.Subscribe();
+            var layoutAnimation = _layoutDeleteAnimation;
+
+            var animation = layoutAnimation.CreateAnimation(
+                view, new Dimensions
+                {
+                    X = Canvas.GetLeft(view),
+                    Y = Canvas.GetTop(view),
+                    Width = view.Width,
+                    Height = view.Height,
+                });
+
+            if (animation != null)
+            {
+                view.IsHitTestVisible = false;
+                StartAnimation(view, animation.Finally(@finally));
+            }
+            else
+            {
+                @finally();
             }
         }
 
@@ -116,6 +153,18 @@ namespace ReactNative.UIManager.LayoutAnimation
             _layoutCreateAnimation.Reset();
             _layoutUpdateAnimation.Reset();
             _shouldAnimateLayout = false;
+        }
+
+        private void StartAnimation(FrameworkElement view, IObservable<Unit> animation)
+        {
+            // Get the serial disposable for the view
+            var serialDisposable = _activeAnimations.GetOrCreateValue(view);
+
+            // Dispose any existing animations
+            serialDisposable.Disposable = Disposable.Empty;
+
+            // Start the next animation
+            serialDisposable.Disposable = animation.Subscribe();
         }
     }
 }

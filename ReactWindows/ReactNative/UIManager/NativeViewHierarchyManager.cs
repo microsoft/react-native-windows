@@ -231,7 +231,19 @@ namespace ReactNative.UIManager
                             $"Trying to remove an out of order index '{indexToRemove}' (last index was '{lastIndexToRemove}') for view tag '{tag}'.");
                     }
 
-                    viewParentManager.RemoveChildAt(viewToManage, indexToRemove);
+                    var viewToRemove = viewParentManager.GetChildAt(viewToManage, indexToRemove) as FrameworkElement;
+                    if (viewToRemove != null &&
+                        _layoutAnimator.ShouldAnimateLayout(viewToRemove) &&
+                        tagsToDelete.Contains(viewToRemove.GetTag()))
+                    {
+                        // The view will be removed and dropped by the 'delete'
+                        // layout animation instead, so do nothing.
+                    }
+                    else
+                    {
+                        viewParentManager.RemoveChildAt(viewToManage, indexToRemove);
+                    }
+
                     lastIndexToRemove = indexToRemove;
                 }
             }
@@ -264,7 +276,20 @@ namespace ReactNative.UIManager
                             $"Trying to destroy unknown view tag '{tagToDelete}'.");
                     }
 
-                    DropView(viewToDestroy);
+                    var elementToDestroy = viewToDestroy as FrameworkElement;
+                    if (elementToDestroy != null &&
+                        _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
+                    {
+                        _layoutAnimator.DeleteView(elementToDestroy, () =>
+                        {
+                            viewParentManager.RemoveView(viewToManage, viewToDestroy);
+                            DropView(viewToDestroy);
+                        });
+                    }
+                    else
+                    {
+                        DropView(viewToDestroy);
+                    }
                 }
             }
         }
