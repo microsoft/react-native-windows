@@ -12,9 +12,6 @@ namespace ReactNative.Reflection
 
         public static T Parse<T>(string value)
         {
-#if NO_REFLECTION
-            return ParseStatic<T>(value);
-#else
             var lookup = s_enumCache.GetOrAdd(
                 typeof(T),
                 type => Enum.GetValues(type)
@@ -32,7 +29,6 @@ namespace ReactNative.Reflection
             }
 
             return (T)result;
-#endif
         }
 
         public static T? ParseNullable<T>(string value)
