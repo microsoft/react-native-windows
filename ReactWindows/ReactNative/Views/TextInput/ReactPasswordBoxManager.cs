@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.TextInput
 {
-    class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactTextInputShadowNode>
+    class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
         public override string Name
         {
@@ -91,7 +91,7 @@ namespace ReactNative.Views.TextInput
 
         #endregion
 
-        public override ReactTextInputShadowNode CreateShadowNodeInstance()
+        public override ReactPasswordBoxShadowNode CreateShadowNodeInstance()
         {
             throw new NotImplementedException();
         }
