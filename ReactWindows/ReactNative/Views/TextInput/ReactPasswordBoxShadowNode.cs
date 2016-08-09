@@ -25,14 +25,12 @@ namespace ReactNative.Views.TextInput
         private float[] _computedPadding;
 
         private int _letterSpacing;
-        private int _numberOfLines;
 
         private double _fontSize = Unset;
         private double _lineHeight;
 
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
-        private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
 
         private string _fontFamily;
         private string _text;
@@ -149,38 +147,6 @@ namespace ReactNative.Views.TextInput
             if (_lineHeight != lineHeight)
             {
                 _lineHeight = lineHeight;
-                MarkUpdated();
-            }
-        }
-
-        /// <summary>
-        /// Sets the maximum number of lines.
-        /// </summary>
-        /// <param name="numberOfLines">Max number of lines.</param>
-        [ReactProp(ViewProps.NumberOfLines)]
-        public virtual void SetNumberOfLines(int numberOfLines)
-        {
-            if (_numberOfLines != numberOfLines)
-            {
-                _numberOfLines = numberOfLines;
-                MarkUpdated();
-            }
-        }
-
-        /// <summary>
-        /// Sets the text alignment.
-        /// </summary>
-        /// <param name="textAlign">The text alignment string.</param>
-        [ReactProp(ViewProps.TextAlign)]
-        public void SetTextAlign(string textAlign)
-        {
-            var textAlignment = textAlign == "auto" || textAlign == null ?
-                TextAlignment.DetectFromContent :
-                EnumHelpers.Parse<TextAlignment>(textAlign);
-
-            if (_textAlignment != textAlignment)
-            {
-                _textAlignment = textAlignment;
                 MarkUpdated();
             }
         }
