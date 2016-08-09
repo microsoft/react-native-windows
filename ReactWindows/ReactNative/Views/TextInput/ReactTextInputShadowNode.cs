@@ -252,16 +252,16 @@ namespace ReactNative.Views.TextInput
             var textInputNode = (ReactTextInputShadowNode)node;
             textInputNode._computedPadding = textInputNode.GetComputedPadding();
 
-            var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
-            var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
-
             var borderLeftWidth = textInputNode.GetBorder(CSSSpacingType.Left);
             var borderRightWidth = textInputNode.GetBorder(CSSSpacingType.Right);
 
-            normalizedWidth -= textInputNode._computedPadding[0];
-            normalizedWidth -= textInputNode._computedPadding[2];
-            normalizedWidth -= CSSConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth;
-            normalizedWidth -= CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth;
+            var normalizedWidth = Math.Max(0,
+                (CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width)
+                - textInputNode._computedPadding[0]
+                - textInputNode._computedPadding[2]
+                - (CSSConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth)
+                - (CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
+            var normalizedHeight = Math.Max(0, CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
             // This is not a terribly efficient way of projecting the height of
             // the text elements. It requires that we have access to the
