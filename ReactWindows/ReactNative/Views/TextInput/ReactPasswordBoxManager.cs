@@ -3,6 +3,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
+using System.Collections.Generic;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -11,11 +12,98 @@ namespace ReactNative.Views.TextInput
 {
     class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
+        private const int FocusTextInput = 1;
+        private const int BlurTextInput = 2;
+
         public override string Name
         {
             get
             {
                 return "PasswordBox";
+            }
+        }
+
+        /// <summary>
+        /// The exported custom bubbling event types.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+        {
+            get
+            {
+                return new Dictionary<string, object>()
+                {
+                    {
+                        "topSubmitEditing",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onSubmitEditing" },
+                                    { "captured" , "onSubmitEditingCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topEndEditing",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onEndEditing" },
+                                    { "captured" , "onEndEditingCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topFocus",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onFocus" },
+                                    { "captured" , "onFocusCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topBlur",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onBlur" },
+                                    { "captured" , "onBlurCapture" }
+                                }
+                            }
+                        }
+                    },
+                };
+            }
+        }
+
+        /// <summary>
+        /// The commands map for the <see cref="ReactTextInputManager"/>.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> CommandsMap
+        {
+            get
+            {
+                return new Dictionary<string, object>()
+                {
+                    { "focusTextInput", FocusTextInput },
+                    { "blurTextInput", BlurTextInput },
+                };
             }
         }
 
@@ -87,6 +175,17 @@ namespace ReactNative.Views.TextInput
         {
             var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
             view.FontStyle = fontStyle ?? FontStyle.Normal;
+        }
+
+        /// <summary>
+        /// Sets the default text placeholder property on the <see cref="PasswordBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="placeholder">The placeholder text.</param>
+        [ReactProp("placeholder")]
+        public void SetPlaceholder(PasswordBox view, string placeholder)
+        {
+            view.PlaceholderText = placeholder;
         }
 
         #endregion
