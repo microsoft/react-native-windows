@@ -3,8 +3,8 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
-using System;
 using System.Collections.Generic;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -298,16 +298,36 @@ namespace ReactNative.Views.TextInput
 
         #endregion
 
+        #region Overrides
+
         public override ReactPasswordBoxShadowNode CreateShadowNodeInstance()
         {
             return new ReactPasswordBoxShadowNode();
         }
 
-        public override void UpdateExtraData(PasswordBox root, object extraData)
+        /// <summary>
+        /// Update the view with extra data.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="extraData">The extra data.</param>
+        public override void UpdateExtraData(PasswordBox view, object extraData)
         {
-            
+            var paddings = extraData as float[];
+            if (paddings != null)
+            {
+                view.Padding = new Thickness(
+                    paddings[0],
+                    paddings[1],
+                    paddings[2],
+                    paddings[3]);
+            }
         }
 
+        /// <summary>
+        /// Returns the view instance for <see cref="PasswordBox"/>.
+        /// </summary>
+        /// <param name="reactContext">The themed React Context</param>
+        /// <returns>A new initialized <see cref="PasswordBox"/></returns>
         protected override PasswordBox CreateViewInstance(ThemedReactContext reactContext)
         {
             return new PasswordBox();
@@ -334,5 +354,108 @@ namespace ReactNative.Views.TextInput
                 frame?.Focus(FocusState.Programmatic);
             }
         }
+
+        /// <summary>
+        /// Installing the textchanged event emitter on the <see cref="TextInput"/> Control.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The <see cref="PasswordBox"/> view instance.</param>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, PasswordBox view)
+        {
+            view.PasswordChanged += OnPasswordChanged;
+            view.GotFocus += OnGotFocus;
+            view.LostFocus += OnLostFocus;
+            view.KeyDown += OnKeyDown;
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="ReactTextInputManager"/>.
+        /// subclass. Unregister all event handlers for the <see cref="PasswordBox"/>.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The <see cref="PasswordBox"/>.</param>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, PasswordBox view)
+        {
+            view.KeyDown -= OnKeyDown;
+            view.LostFocus -= OnLostFocus;
+            view.GotFocus -= OnGotFocus;
+            view.PasswordChanged -= OnPasswordChanged;
+        }
+
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The output buffer.</param>
+        public override void SetDimensions(PasswordBox view, Dimensions dimensions)
+        {
+            Canvas.SetLeft(view, dimensions.X);
+            Canvas.SetTop(view, dimensions.Y);
+            view.Width = dimensions.Width;
+        }
+
+        #endregion
+
+        #region Events
+
+        private void OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var textBox = (PasswordBox)sender;
+            textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactTextChangedEvent(
+                        textBox.GetTag(),
+                        textBox.Password,
+                        textBox.ActualWidth,
+                        textBox.ActualHeight,
+                        0));
+        }
+
+        private void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = (PasswordBox)sender;
+            textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactTextInputFocusEvent(textBox.GetTag()));
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = (PasswordBox)sender;
+            var eventDispatcher = textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher;
+
+            eventDispatcher.DispatchEvent(
+                new ReactTextInputBlurEvent(textBox.GetTag()));
+
+            eventDispatcher.DispatchEvent(
+                new ReactTextInputEndEditingEvent(
+                      textBox.GetTag(),
+                      textBox.Password));
+        }
+
+        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                var textBox = (PasswordBox)sender;
+                e.Handled = true;
+                textBox.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new ReactTextInputSubmitEditingEvent(
+                            textBox.GetTag(),
+                            textBox.Password));
+            }
+        }
+
+        #endregion
     }
 }

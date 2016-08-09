@@ -118,6 +118,7 @@ namespace ReactNative.Shell
                 new ReactScrollViewManager(),
                 new ReactSplitViewManager(),
                 new ReactSwitchManager(),
+                new ReactPasswordBoxManager(),
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
                 new ReactViewManager(),
