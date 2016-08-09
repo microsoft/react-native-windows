@@ -9,6 +9,11 @@
         /// Dispatcher thread type.
         /// </summary>
         DispatcherThread,
+
+        /// <summary>
+        /// Layout thread type.
+        /// </summary>
+        LayoutThread,
         
         /// <summary>
         /// Single background thread type.
