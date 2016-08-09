@@ -35,7 +35,7 @@ namespace ReactNative.Views.TextInput
         private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
 
         private string _fontFamily;
-        private string _password;
+        private string _text;
 
         private int _jsEventCount = Unset;
 
@@ -53,13 +53,13 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the password for the node.
+        /// Sets the text for the node.
         /// </summary>
-        /// <param name="password">The password.</param>
-        [ReactProp("password")]
-        public void SetPassword(string password)
+        /// <param name="text">The text.</param>
+        [ReactProp("text")]
+        public void SetText(string text)
         {
-            _password = password ?? "";
+            _password = text ?? "";
             MarkUpdated();
         }
 
@@ -276,7 +276,7 @@ namespace ReactNative.Views.TextInput
 
                 var passwordBox = new PasswordBox();
 
-                var normalizedText = string.IsNullOrEmpty(textNode._password) ? " " : textNode._password;
+                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
                 FormatPasswordBox(textNode, passwordBox, true);
 
                 passwordBox.Password = normalizedText;
