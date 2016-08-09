@@ -51,8 +51,6 @@ namespace ReactNative.DevSupport
 
         abstract class StackFrameBase : IStackFrame
         {
-            private const string UnknownFileName = "<filename unknown>";
-
             public abstract int Column { get; }
 
             public abstract string FileName { get; }
@@ -65,7 +63,7 @@ namespace ReactNative.DevSupport
             {
                 get
                 {
-                    return $"{FileName ?? UnknownFileName}:{Line}:{Column}";
+                    return $"{FileName}:{Line}:{Column}";
                 }
             }
         }
@@ -169,6 +167,9 @@ namespace ReactNative.DevSupport
 
             public SystemStackFrame(StackFrame stackFrame)
             {
+                if (stackFrame == null)
+                    throw new ArgumentNullException(nameof(stackFrame));
+
                 _stackFrame = stackFrame;
             }
 
@@ -184,7 +185,7 @@ namespace ReactNative.DevSupport
             {
                 get
                 {
-                    return _stackFrame.GetFileName();
+                    return _stackFrame.GetFileName() ?? "<unknown file>";
                 }
             }
 
@@ -200,7 +201,7 @@ namespace ReactNative.DevSupport
             {
                 get
                 {
-                    return _stackFrame.GetMethod().Name;
+                    return _stackFrame.GetMethod()?.Name ?? "<unknown method>";
                 }
             }
         }
