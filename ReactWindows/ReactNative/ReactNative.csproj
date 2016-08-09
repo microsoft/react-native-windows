@@ -222,7 +222,6 @@
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootView.cs" />
     <Compile Include="Reflection\EnumHelpers.cs" />
-    <Compile Include="Reflection\EnumHelpers.Static.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
