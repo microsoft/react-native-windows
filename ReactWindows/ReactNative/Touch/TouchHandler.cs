@@ -46,11 +46,11 @@ namespace ReactNative.Touch
             }
 
             var reactView = GetReactViewFromView(e.OriginalSource as UIElement);
-            var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView,
-                e.GetCurrentPoint(reactView).Position);
 
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
+                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView,
+                    e.GetCurrentPoint(reactView).Position);
                 var pointer = new ReactPointer();
                 pointer.Target = reactTag;
                 pointer.PointerId = e.Pointer.PointerId;
