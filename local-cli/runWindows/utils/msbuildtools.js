@@ -47,7 +47,7 @@ class MSBuildTools {
       return;
     }
 
-    const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + [slnFile].concat(args).join(' ');
+    const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + ['"' + slnFile + '"'].concat(args).join(' ');
     const results = child_process.execSync(cmd).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
