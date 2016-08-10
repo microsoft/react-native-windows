@@ -228,27 +228,33 @@ namespace ReactNative.Views.TextInput
                 - (CSSConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth)
                 - (CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
             var normalizedHeight = Math.Max(0, CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height);
-            var textNode = (ReactPasswordBoxShadowNode)node;
 
-            var passwordBox = new PasswordBox();
+            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            {
+                var textNode = (ReactPasswordBoxShadowNode)node;
 
-            var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
-            FormatPasswordBox(textNode, passwordBox, true);
+                var passwordBox = new PasswordBox();
 
-            passwordBox.Password = normalizedText;
+                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
+                FormatPasswordBox(textNode, passwordBox, true);
 
-            passwordBox.Measure(new Size(normalizedWidth, normalizedHeight));
+                passwordBox.Password = normalizedText;
 
-            var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
-            var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
+                passwordBox.Measure(new Size(normalizedWidth, normalizedHeight));
 
-            var finalizedHeight = (float)passwordBox.DesiredSize.Height;
-            finalizedHeight += textInputNode._computedPadding[1];
-            finalizedHeight += textInputNode._computedPadding[3];
-            finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-            finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+                var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
+                var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
 
-            return new MeasureOutput(width, finalizedHeight);
+                var finalizedHeight = (float)passwordBox.DesiredSize.Height;
+                finalizedHeight += textInputNode._computedPadding[1];
+                finalizedHeight += textInputNode._computedPadding[3];
+                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+
+                return new MeasureOutput(width, finalizedHeight);
+            });
+
+            return task.Result;
         }
 
         /// <summary>

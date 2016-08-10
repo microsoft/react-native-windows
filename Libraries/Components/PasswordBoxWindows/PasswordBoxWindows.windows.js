@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule PasswordBox
+ * @providesModule PasswordBoxWindows
  * @flow
  */
 'use strict';
@@ -20,7 +20,7 @@ var ReactNative = require('react/lib/ReactNative');
 var ReactChildren = require('react/lib/ReactChildren');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
-var PasswordInputState = require('PasswordInputState');
+var PasswordBoxInputState = require('PasswordBoxInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var View = require('View');
@@ -28,7 +28,7 @@ var View = require('View');
 var invariant = require('fbjs/lib/invariant');
 var requireNativeComponent = require('requireNativeComponent');
 
-var RCTTextBox = requireNativeComponent('PasswordBox', null);
+var RCTTextBox = requireNativeComponent('PasswordBoxWindows', null);
 
 type Event = Object;
 
@@ -63,10 +63,10 @@ type Event = Object;
  *  </View>
  * ```
  */
-var PasswordBox = React.createClass({
+var PasswordBoxWindows = React.createClass({
   statics: {
     /* TODO(brentvatne) docs are needed for this */
-    State: PasswordInputState,
+    State: PasswordBoxInputState,
   },
 
   propTypes: {
@@ -333,7 +333,7 @@ var PasswordBox = React.createClass({
    * Returns if the input is currently focused.
    */
   isFocused: function(): boolean {
-    return PasswordInputState.currentlyFocusedField() ===
+    return PasswordBoxInputState.currentlyFocusedField() ===
       ReactNative.findNodeHandle(this.refs.input);
   },
 
@@ -522,4 +522,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = PasswordBox;
+module.exports = PasswordBoxWindows;
