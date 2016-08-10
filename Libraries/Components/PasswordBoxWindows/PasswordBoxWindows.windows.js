@@ -72,26 +72,7 @@ var PasswordBoxWindows = React.createClass({
   propTypes: {
     ...View.propTypes,
     /**
-     * Can tell TextInput to automatically capitalize certain characters.
-     *
-     * - characters: all characters,
-     * - words: first letter of each word
-     * - sentences: first letter of each sentence (default)
-     * - none: don't auto capitalize anything
-     */
-    autoCapitalize: PropTypes.oneOf([
-      'none',
-      'sentences',
-      'words',
-      'characters',
-    ]),
-    /**
      * If false, disables auto-correct. The default value is true.
-     */
-    autoCorrect: PropTypes.bool,
-    /**
-     * If true, focuses the input on componentDidMount.
-     * The default value is false.
      */
     autoFocus: PropTypes.bool,
     /**

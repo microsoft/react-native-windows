@@ -26,6 +26,7 @@ var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
 var View = require('View');
+var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
 
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
@@ -46,7 +47,7 @@ if (Platform.OS === 'android') {
   var RCTTextView = requireNativeComponent('RCTTextView', null);
   var RCTTextField = requireNativeComponent('RCTTextField', null);
 } else if (Platform.OS === 'windows') {
-  var RCTTextBox = requireNativeComponent('RCTTextBox', null);      
+  var RCTTextBox = requireNativeComponent('RCTTextBox', null);
 }
 
 type Event = Object;
@@ -586,7 +587,7 @@ var TextInput = React.createClass({
       </TouchableWithoutFeedback>
     );
   },
-  
+
   _renderWindows: function() {
     var textContainer;
 
@@ -608,31 +609,54 @@ var TextInput = React.createClass({
         !childCount,
         'TextInput children are not supported on Windows.'
     );
-    
-    var textContainer =
-      <RCTTextBox
-        ref="input"
-        style={[this.props.style]}
-        autoCorrect={this.props.autoCorrect}
-        keyboardType={this.props.keyboardType}
-        mostRecentEventCount={0}
-        multiline={this.props.multiline}
-        maxLength={this.props.maxLength}
-        onFocus={this._onFocus}
-        onBlur={this._onBlur}
-        onChange={this._onChange}
-        onSelectionChange={onSelectionChange}
-        onEndEditing={this.props.onEndEditing}
-        onSubmitEditing={this.props.onSubmitEditing}
-        clearTextOnFocus={this.props.clearTextOnFocus}
-        selectTextOnFocus={this.props.selectTextOnFocus}
-        onLayout={this.props.onLayout}
-        placeholder={this.props.placeholder}
-        selectionColor={this.props.selectionColor}
-        text={this._getText()}
-        editable={this.props.editable}
-      />;
-    
+
+    var textContainer;
+    if (this.props.secureTextEntry) {
+      textContainer =
+        <PasswordBoxWindows
+          ref="input"
+          style={[this.props.style]}
+          keyboardType={this.props.keyboardType}
+          maxLength={this.props.maxLength}
+          onFocus={this._onFocus}
+          onBlur={this._onBlur}
+          onChange={this._onChange}
+          onEndEditing={this.props.onEndEditing}
+          onSubmitEditing={this.props.onSubmitEditing}
+          clearTextOnFocus={this.props.clearTextOnFocus}
+          selectTextOnFocus={this.props.selectTextOnFocus}
+          onLayout={this.props.onLayout}
+          placeholder={this.props.placeholder}
+          selectionColor={this.props.selectionColor}
+          text={this._getText()}
+          editable={this.props.editable}
+        />;
+    } else {
+      textContainer =
+        <RCTTextBox
+          ref="input"
+          style={[this.props.style]}
+          autoCorrect={this.props.autoCorrect}
+          keyboardType={this.props.keyboardType}
+          mostRecentEventCount={0}
+          multiline={this.props.multiline}
+          maxLength={this.props.maxLength}
+          onFocus={this._onFocus}
+          onBlur={this._onBlur}
+          onChange={this._onChange}
+          onSelectionChange={onSelectionChange}
+          onEndEditing={this.props.onEndEditing}
+          onSubmitEditing={this.props.onSubmitEditing}
+          clearTextOnFocus={this.props.clearTextOnFocus}
+          selectTextOnFocus={this.props.selectTextOnFocus}
+          onLayout={this.props.onLayout}
+          placeholder={this.props.placeholder}
+          selectionColor={this.props.selectionColor}
+          text={this._getText()}
+          editable={this.props.editable}
+        />;
+    }
+
     return (
       <TouchableWithoutFeedback
         onPress={this._onPress}
@@ -645,7 +669,7 @@ var TextInput = React.createClass({
       </TouchableWithoutFeedback>
     );
   },
-  
+
 
   _onFocus: function(event: Event) {
     if (this.props.onFocus) {
