@@ -77,7 +77,7 @@ namespace ReactNative.Views.Text
         /// <returns>The shadow node instance.</returns>
         public override ReactTextShadowNode CreateShadowNodeInstance()
         {
-            return new ReactTextShadowNode(true);
+            return new ReactTextShadowNode();
         }
 
         /// <summary>

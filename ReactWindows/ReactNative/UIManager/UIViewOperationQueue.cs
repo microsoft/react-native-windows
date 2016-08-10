@@ -47,7 +47,7 @@ namespace ReactNative.UIManager
         /// </returns>
         public bool IsEmpty()
         {
-            lock (_operations)
+            lock (_gate)
             {
                 return _operations.Count == 0;
             }
@@ -369,14 +369,14 @@ namespace ReactNative.UIManager
         /// <param name="batchId">The batch identifier.</param>
         internal void DispatchViewUpdates(int batchId)
         {
-            var operations = _operations.Count == 0 ? null : _operations;
-            if (operations != null)
-            {
-                _operations = new List<Action>();
-            }
-
             lock (_gate)
             {
+                var operations = _operations.Count == 0 ? null : _operations;
+                if (operations != null)
+                {
+                    _operations = new List<Action>();
+                }
+
                 _batches.Add(() =>
                 {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchUI")

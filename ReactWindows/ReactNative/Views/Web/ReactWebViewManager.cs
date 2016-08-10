@@ -228,7 +228,7 @@ namespace ReactNative.Views.Web
             {
                 var script = default(string);
 
-                if (_injectedJS.TryGetValue(webView.GetTag(), out script) && script.Length > 0)
+                if (_injectedJS.TryGetValue(webView.GetTag(), out script) && !string.IsNullOrWhiteSpace(script))
                 {
                     string[] args = { script };
                     try

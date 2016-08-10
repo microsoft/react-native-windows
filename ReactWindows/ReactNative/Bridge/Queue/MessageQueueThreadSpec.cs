@@ -29,6 +29,11 @@ namespace ReactNative.Bridge.Queue
         public static MessageQueueThreadSpec DispatcherThreadSpec { get; } = new MessageQueueThreadSpec(MessageQueueThreadKind.DispatcherThread, "main_ui");
 
         /// <summary>
+        /// Singleton layout <see cref="IMessageQueueThread"/> specification. 
+        /// </summary>
+        public static MessageQueueThreadSpec LayoutThreadSpec { get; } = new MessageQueueThreadSpec(MessageQueueThreadKind.LayoutThread, "layout");
+
+        /// <summary>
         /// Factory for creating <see cref="MessageQueueThreadSpec"/>s.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -38,7 +43,12 @@ namespace ReactNative.Bridge.Queue
         {
             if (kind == MessageQueueThreadKind.DispatcherThread)
             {
-                throw new NotSupportedException("Use the singleton MainUiThreadSpec instance.");
+                throw new NotSupportedException("Use the singleton DispatcherThreadSpec instance.");
+            }
+
+            if (kind == MessageQueueThreadKind.LayoutThread)
+            {
+                throw new NotSupportedException("Use the singleton LayoutThreadSpec instance.");
             }
 
             return new MessageQueueThreadSpec(kind, name);
