@@ -187,22 +187,11 @@ var PasswordBoxWindows = React.createClass({
      */
     maxLength: PropTypes.number,
     /**
-     * Sets the number of lines for a TextInput. Use it with multiline set to
-     * true to be able to fill the lines.
-     * @platform android
-     */
-    numberOfLines: PropTypes.number,
-    /**
      * If true, the keyboard disables the return key when there is no text and
      * automatically enables it when there is text. The default value is false.
      * @platform ios
      */
     enablesReturnKeyAutomatically: PropTypes.bool,
-    /**
-     * If true, the text input can be multiple lines.
-     * The default value is false.
-     */
-    multiline: PropTypes.bool,
     /**
      * Callback that is called when the text input is blurred
      */
@@ -244,6 +233,14 @@ var PasswordBoxWindows = React.createClass({
      * Invoked on mount and layout changes with `{x, y, width, height}`.
      */
     onLayout: PropTypes.func,
+    /**
+     * The string used for the password character mask
+     */
+    passwordChar: PropTypes.string,
+    /**
+     * The password reveal mode, either "Hidden", "Peek", or "Visible"
+     */
+    passwordRevealMode: PropTypes.string,
     /**
      * The string that will be rendered before text input has been entered
      */
@@ -432,6 +429,8 @@ var PasswordBoxWindows = React.createClass({
         clearTextOnFocus={this.props.clearTextOnFocus}
         selectTextOnFocus={this.props.selectTextOnFocus}
         onLayout={this.props.onLayout}
+        passwordChar={this.props.passwordChar}
+        passwordRevealMode={this.props.passwordRevealMode}
         placeholder={this.props.placeholder}
         selectionColor={this.props.selectionColor}
         text={this._getText()}

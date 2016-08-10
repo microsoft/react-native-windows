@@ -26,7 +26,7 @@ class Playground extends Component {
         <Text style={styles.instructions}>
           Shake or press Shift+F10 for dev menu
         </Text>
-        <PasswordBoxWindows />
+        <PasswordBoxWindows placeholder="Hello world" passwordChar="x"/>
       </View>
     );
   }
