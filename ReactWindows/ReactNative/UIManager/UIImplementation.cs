@@ -191,6 +191,23 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Used by the native animated module to bypass the process of
+        /// updating the values through the shadow view hierarchy. This method
+        /// will directly update the native views, which means that updates for
+        /// layout-related properties won't be handled properly.
+        /// </summary>
+        /// <param name="tag">The view tag.</param>
+        /// <param name="props">The properties</param>
+        /// <remarks>
+        /// Make sure you know what you're doing before calling this method :)
+        /// </remarks>
+        public void SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+        }
+
+        /// <summary>
         /// Manage the children of a view.
         /// </summary>
         /// <param name="viewTag">The view tag of the parent view.</param>
