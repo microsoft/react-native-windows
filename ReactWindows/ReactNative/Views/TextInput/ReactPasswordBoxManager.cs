@@ -23,7 +23,7 @@ namespace ReactNative.Views.TextInput
         {
             get
             {
-                return "PasswordBox";
+                return "PasswordBoxWindows";
             }
         }
 

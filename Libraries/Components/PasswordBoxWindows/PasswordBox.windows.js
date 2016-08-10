@@ -14,31 +14,19 @@
 var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
 var NativeMethodsMixin = require('react/lib/NativeMethodsMixin');
-var Platform = require('Platform');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('react/lib/ReactNative');
 var ReactChildren = require('react/lib/ReactChildren');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
-var TextInputState = require('TextInputState');
+var PasswordInputState = require('PasswordInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
-var UIManager = require('UIManager');
 var View = require('View');
 
-var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
 var requireNativeComponent = require('requireNativeComponent');
-
-var onlyMultiline = {
-  onTextInput: true, // not supported in Open Source yet
-  children: true,
-};
-
-var notMultiline = {
-  // nothing yet
-};
 
 var RCTTextBox = requireNativeComponent('PasswordBox', null);
 
@@ -56,7 +44,7 @@ type Event = Object;
  * example:
  *
  * ```
- *   <TextInput
+ *   <PasswordBox
  *     style={{height: 40, borderColor: 'gray', borderWidth: 1}}
  *     onChangeText={(text) => this.setState({text})}
  *     value={this.state.text}
@@ -71,14 +59,14 @@ type Event = Object;
  *
  * ```
  *  <View style={{ borderBottomColor: '#000000', borderBottomWidth: 1, }}>
- *    <TextInput {...props} />
+ *    <PasswordBox {...props} />
  *  </View>
  * ```
  */
 var PasswordBox = React.createClass({
   statics: {
     /* TODO(brentvatne) docs are needed for this */
-    State: TextInputState,
+    State: PasswordInputState,
   },
 
   propTypes: {
@@ -97,6 +85,10 @@ var PasswordBox = React.createClass({
       'words',
       'characters',
     ]),
+    /**
+     * If false, disables auto-correct. The default value is true.
+     */
+    autoCorrect: PropTypes.bool,
     /**
      * If true, focuses the input on componentDidMount.
      * The default value is false.
@@ -195,11 +187,22 @@ var PasswordBox = React.createClass({
      */
     maxLength: PropTypes.number,
     /**
+     * Sets the number of lines for a TextInput. Use it with multiline set to
+     * true to be able to fill the lines.
+     * @platform android
+     */
+    numberOfLines: PropTypes.number,
+    /**
      * If true, the keyboard disables the return key when there is no text and
      * automatically enables it when there is text. The default value is false.
      * @platform ios
      */
     enablesReturnKeyAutomatically: PropTypes.bool,
+    /**
+     * If true, the text input can be multiple lines.
+     * The default value is false.
+     */
+    multiline: PropTypes.bool,
     /**
      * Callback that is called when the text input is blurred
      */
@@ -221,6 +224,10 @@ var PasswordBox = React.createClass({
      * Callback that is called when text input ends.
      */
     onEndEditing: PropTypes.func,
+    /**
+     * Callback that is called when the text input selection is changed
+     */
+    onSelectionChange: PropTypes.func,
     /**
      * Callback that is called when the text input's submit button is pressed.
      * Invalid if multiline={true} is specified.
@@ -320,13 +327,13 @@ var PasswordBox = React.createClass({
    */
   mixins: [NativeMethodsMixin, TimerMixin],
 
-  viewConfig: (RCTTextBox.viewConfig: Object),
+  viewConfig: RCTTextBox.viewConfig,
 
   /**
    * Returns if the input is currently focused.
    */
   isFocused: function(): boolean {
-    return TextInputState.currentlyFocusedField() ===
+    return PasswordInputState.currentlyFocusedField() ===
       ReactNative.findNodeHandle(this.refs.input);
   },
 
@@ -389,7 +396,7 @@ var PasswordBox = React.createClass({
       this.props.defaultValue;
   },
 
-  _render: function() {
+  render: function() {
     var textContainer;
 
     var onSelectionChange;
@@ -408,7 +415,7 @@ var PasswordBox = React.createClass({
     ReactChildren.forEach(children, () => ++childCount);
     invariant(
         !childCount,
-        'TextInput children are not supported on Windows.'
+        'PasswordBox children are not supported on Windows.'
     );
 
     var textContainer =
@@ -416,7 +423,6 @@ var PasswordBox = React.createClass({
         ref="input"
         style={[this.props.style]}
         keyboardType={this.props.keyboardType}
-        mostRecentEventCount={0}
         maxLength={this.props.maxLength}
         onFocus={this._onFocus}
         onBlur={this._onBlur}

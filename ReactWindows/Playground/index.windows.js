@@ -8,8 +8,10 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
+
+import { PasswordBoxWindows } from 'react-native-windows';
 
 class Playground extends Component {
   render() {
@@ -24,6 +26,7 @@ class Playground extends Component {
         <Text style={styles.instructions}>
           Shake or press Shift+F10 for dev menu
         </Text>
+        <PasswordBoxWindows />
       </View>
     );
   }
