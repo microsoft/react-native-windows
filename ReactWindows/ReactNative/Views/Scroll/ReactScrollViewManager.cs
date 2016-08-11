@@ -156,8 +156,8 @@ namespace ReactNative.Views.Scroll
         {
             view.ViewChanging -= OnViewChanging;
             view.ChangeView(
-                contentOffset.Value<double?>("x"), 
-                contentOffset.Value<double?>("y"), 
+                contentOffset.Value<double>("x"), 
+                contentOffset.Value<double>("y"), 
                 null,
                 true);
             view.ViewChanging += OnViewChanging;
