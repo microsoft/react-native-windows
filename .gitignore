@@ -111,6 +111,7 @@ packages/
 #Other files
 *.DotSettings
 .vs/
+.vscode/
 *project.lock.json
 
 #JavaScript files

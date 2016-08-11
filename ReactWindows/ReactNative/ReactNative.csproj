@@ -320,6 +320,8 @@
     <Compile Include="Views\Split\Events\SplitViewOpenedEvent.cs" />
     <Compile Include="Views\Split\ReactSplitViewManager.cs" />
     <Compile Include="Views\TextInput\InputScopeHelpers.cs" />
+    <Compile Include="Views\TextInput\ReactPasswordBoxManager.cs" />
+    <Compile Include="Views\TextInput\ReactPasswordBoxShadowNode.cs" />
     <Compile Include="Views\TextInput\ReactTextBox.cs" />
     <Compile Include="Views\TextInput\ReactTextChangedEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputBlurEvent.cs" />
