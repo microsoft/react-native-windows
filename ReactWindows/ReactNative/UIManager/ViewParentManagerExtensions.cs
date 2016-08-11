@@ -2,6 +2,9 @@
 
 namespace ReactNative.UIManager
 {
+    /// <summary>
+    /// Extension methods for <see cref="IViewParentManager"/>. 
+    /// </summary>
     public static class ViewParentManagerExtensions
     {
         /// <summary>

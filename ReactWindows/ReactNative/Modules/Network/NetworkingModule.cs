@@ -142,7 +142,7 @@ namespace ReactNative.Modules.Network
 
                     return;
                 }
-                else if ((formData = data.Value<JArray>("formData")) != null)
+                else if ((formData = (JArray)data.GetValue("formData")) != null)
                 {
                     if (headerData.ContentType == null)
                     {
