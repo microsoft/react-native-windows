@@ -26,7 +26,7 @@ namespace ReactNative.Animated
             }
         }
 
-        public long BFSColor
+        public long BfsColor
         {
             get;
             set;

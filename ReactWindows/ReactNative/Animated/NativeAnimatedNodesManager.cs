@@ -286,9 +286,9 @@ namespace ReactNative.Animated
             var nodesQueue = new Queue<AnimatedNode>();
             foreach (var node in _updatedNodes)
             {
-                if (node.BFSColor != _animatedGraphBFSColor)
+                if (node.BfsColor != _animatedGraphBFSColor)
                 {
-                    node.BFSColor = _animatedGraphBFSColor;
+                    node.BfsColor = _animatedGraphBFSColor;
                     activeNodesCount++;
                     nodesQueue.Enqueue(node);
                 }
@@ -298,9 +298,9 @@ namespace ReactNative.Animated
             {
                 animation.RunAnimationStep(renderingTime);
                 var valueNode = animation.AnimatedValue;
-                if (valueNode.BFSColor != _animatedGraphBFSColor)
+                if (valueNode.BfsColor != _animatedGraphBFSColor)
                 {
-                    valueNode.BFSColor = _animatedGraphBFSColor;
+                    valueNode.BfsColor = _animatedGraphBFSColor;
                     activeNodesCount++;
                     nodesQueue.Enqueue(valueNode);
                 }
@@ -319,9 +319,9 @@ namespace ReactNative.Animated
                     foreach (var child in nextNode.Children)
                     {
                         child.ActiveIncomingNodes++;
-                        if (child.BFSColor != _animatedGraphBFSColor)
+                        if (child.BfsColor != _animatedGraphBFSColor)
                         {
-                            child.BFSColor = _animatedGraphBFSColor;
+                            child.BfsColor = _animatedGraphBFSColor;
                             activeNodesCount++;
                             nodesQueue.Enqueue(child);
                         }
@@ -343,9 +343,9 @@ namespace ReactNative.Animated
             // ones connected to active animations
             foreach (var node in _updatedNodes)
             {
-                if (node.ActiveIncomingNodes == 0 && node.BFSColor != _animatedGraphBFSColor)
+                if (node.ActiveIncomingNodes == 0 && node.BfsColor != _animatedGraphBFSColor)
                 {
-                    node.BFSColor = _animatedGraphBFSColor;
+                    node.BfsColor = _animatedGraphBFSColor;
                     updatedNodesCount++;
                     nodesQueue.Enqueue(node);
                 }
@@ -354,9 +354,9 @@ namespace ReactNative.Animated
             foreach (var animation in _activeAnimations)
             {
                 var valueNode = animation.AnimatedValue;
-                if (valueNode.ActiveIncomingNodes == 0 && valueNode.BFSColor != _animatedGraphBFSColor)
+                if (valueNode.ActiveIncomingNodes == 0 && valueNode.BfsColor != _animatedGraphBFSColor)
                 {
-                    valueNode.BFSColor = _animatedGraphBFSColor;
+                    valueNode.BfsColor = _animatedGraphBFSColor;
                     updatedNodesCount++;
                     nodesQueue.Enqueue(valueNode);
                 }
@@ -385,9 +385,9 @@ namespace ReactNative.Animated
                     foreach (var child in nextNode.Children)
                     {
                         child.ActiveIncomingNodes--;
-                        if (child.BFSColor != _animatedGraphBFSColor && child.ActiveIncomingNodes == 0)
+                        if (child.BfsColor != _animatedGraphBFSColor && child.ActiveIncomingNodes == 0)
                         {
-                            child.BFSColor = _animatedGraphBFSColor;
+                            child.BfsColor = _animatedGraphBFSColor;
                             updatedNodesCount++;
                             nodesQueue.Enqueue(child);
                         }

@@ -24,10 +24,10 @@ namespace ReactNative.Animated
         private double _springTension;
         private bool _overshootClampingEnabled;
 
-        // all physics simulation objects are final and reused in each processing pass
-        private readonly PhysicsState _currentState = new PhysicsState();
-        private readonly PhysicsState _previousState = new PhysicsState();
-        private readonly PhysicsState _tempState = new PhysicsState();
+        // all physics simulation objects are reused in each processing pass
+        private PhysicsState _currentState = new PhysicsState();
+        private PhysicsState _previousState = new PhysicsState();
+        private PhysicsState _tempState = new PhysicsState();
         private double _startValue;
         private double _endValue;
         // thresholds for determining when the spring is at rest
@@ -155,9 +155,6 @@ namespace ReactNative.Animated
             // iterate over the true time
             while (_timeAccumulator >= SolverTimestepSec)
             {
-                /* begin debug
-                iterations++;
-                end debug */
                 _timeAccumulator -= SolverTimestepSec;
 
                 if (_timeAccumulator < SolverTimestepSec)
@@ -236,7 +233,7 @@ namespace ReactNative.Animated
             }
         }
 
-        class PhysicsState
+        struct PhysicsState
         {
             public double Position;
             public double Velocity;
