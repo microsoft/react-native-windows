@@ -17,28 +17,25 @@ var NativeMethodsMixin = require('react/lib/NativeMethodsMixin');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('react/lib/ReactNative');
-var ReactChildren = require('react/lib/ReactChildren');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
-var PasswordBoxInputState = require('PasswordBoxInputState');
+var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var View = require('View');
 
-var invariant = require('fbjs/lib/invariant');
 var requireNativeComponent = require('requireNativeComponent');
 
-var RCTTextBox = requireNativeComponent('PasswordBoxWindows', null);
+var NativePasswordBox = requireNativeComponent('PasswordBoxWindows', null);
 
 type Event = Object;
 
 /**
- * A foundational component for inputting text into the app via a
+ * A foundational component for inputting passwords into the app via a
  * keyboard. Props provide configurability for several features, such as
- * auto-correction, auto-capitalization, placeholder text, and different keyboard
- * types, such as a numeric keypad.
+ * placeholder text, and different keyboardvtypes, such as a numeric keypad.
  *
- * The simplest use case is to plop down a `TextInput` and subscribe to the
+ * The simplest use case is to plop down a `PasswordBoxWindows` and subscribe to the
  * `onChangeText` events to read the user input. There are also other events,
  * such as `onSubmitEditing` and `onFocus` that can be subscribed to. A simple
  * example:
@@ -50,23 +47,11 @@ type Event = Object;
  *     value={this.state.text}
  *   />
  * ```
- *
- * Note that some props are only available with `multiline={true/false}`.
- * Additionally, border styles that apply to only one side of the element
- * (e.g., `borderBottomColor`, `borderLeftWidth`, etc.) will not be applied if
- * `multiline=false`. To achieve the same effect, you can wrap your `TextInput`
- * in a `View`:
- *
- * ```
- *  <View style={{ borderBottomColor: '#000000', borderBottomWidth: 1, }}>
- *    <PasswordBox {...props} />
- *  </View>
- * ```
  */
 var PasswordBoxWindows = React.createClass({
   statics: {
     /* TODO(brentvatne) docs are needed for this */
-    State: PasswordBoxInputState,
+    State: TextInputState,
   },
 
   propTypes: {
@@ -195,10 +180,6 @@ var PasswordBoxWindows = React.createClass({
      */
     onEndEditing: PropTypes.func,
     /**
-     * Callback that is called when the text input selection is changed
-     */
-    onSelectionChange: PropTypes.func,
-    /**
      * Callback that is called when the text input's submit button is pressed.
      * Invalid if multiline={true} is specified.
      */
@@ -230,11 +211,6 @@ var PasswordBoxWindows = React.createClass({
      * The text color of the placeholder string
      */
     placeholderTextColor: PropTypes.string,
-    /**
-     * If true, the text input obscures the text entered so that sensitive text
-     * like passwords stay secure. The default value is false.
-     */
-    secureTextEntry: PropTypes.bool,
     /**
     * The highlight (and cursor on ios) color of the text input
     */
@@ -305,13 +281,13 @@ var PasswordBoxWindows = React.createClass({
    */
   mixins: [NativeMethodsMixin, TimerMixin],
 
-  viewConfig: RCTTextBox.viewConfig,
+  viewConfig: NativePasswordBox.viewConfig,
 
   /**
    * Returns if the input is currently focused.
    */
   isFocused: function(): boolean {
-    return PasswordBoxInputState.currentlyFocusedField() ===
+    return TextInputState.currentlyFocusedField() ===
       ReactNative.findNodeHandle(this.refs.input);
   },
 
@@ -375,29 +351,8 @@ var PasswordBoxWindows = React.createClass({
   },
 
   render: function() {
-    var textContainer;
-
-    var onSelectionChange;
-    if (this.props.selectionState || this.props.onSelectionChange) {
-      onSelectionChange = (event: Event) => {
-        if (this.props.selectionState) {
-          var selection = event.nativeEvent.selection;
-          this.props.selectionState.update(selection.start, selection.end);
-        }
-        this.props.onSelectionChange && this.props.onSelectionChange(event);
-      };
-    }
-
-    var children = this.props.children;
-    var childCount = 0;
-    ReactChildren.forEach(children, () => ++childCount);
-    invariant(
-        !childCount,
-        'PasswordBox children are not supported on Windows.'
-    );
-
     var textContainer =
-      <RCTTextBox
+      <NativePasswordBox
         ref="input"
         style={[this.props.style]}
         keyboardType={this.props.keyboardType}

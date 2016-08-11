@@ -589,8 +589,6 @@ var TextInput = React.createClass({
   },
 
   _renderWindows: function() {
-    var textContainer;
-
     var onSelectionChange;
     if (this.props.selectionState || this.props.onSelectionChange) {
       onSelectionChange = (event: Event) => {

@@ -8,7 +8,6 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 
@@ -25,7 +24,6 @@ class Playground extends Component {
         <Text style={styles.instructions}>
           Shake or press Shift+F10 for dev menu
         </Text>
-        <TextInput secureTextEntry={true}/>
       </View>
     );
   }

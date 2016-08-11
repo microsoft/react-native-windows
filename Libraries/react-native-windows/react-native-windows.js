@@ -13,10 +13,10 @@
 var ReactWindows = {
   // Components
   get FlipViewWindows() { return require('FlipViewWindows'); },
+  get PasswordBoxWindows() { return require('PasswordBoxWindows'); },
   get ProgressBarWindows() {return require('ProgressBarWindows');},
   get ProgressRingWindows() {return require('ProgressRingWindows');},
   get SplitViewWindows() { return require('SplitViewWindows'); },
-  get PasswordBoxWindows() { return require('PasswordBoxWindows'); },
 };
 
 module.exports = ReactWindows;
