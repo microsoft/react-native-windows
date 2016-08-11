@@ -85,4 +85,4 @@ JsValueRef ChakraHost::RunScriptFromFile(const wchar_t* szFileName)
 	JsRunScript(contents.c_str(), currentSourceContext++, szFileName, &result);
 
 	return result;
-}
+};
