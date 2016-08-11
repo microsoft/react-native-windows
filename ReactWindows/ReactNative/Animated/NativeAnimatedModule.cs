@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.UIManager;
-using Windows.UI.Xaml.Media;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using ReactNative.Modules.Core;
+using ReactNative.UIManager;
+using System;
+using System.Collections.Generic;
+using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Animated
 {

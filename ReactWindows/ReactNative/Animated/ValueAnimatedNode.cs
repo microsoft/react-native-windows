@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System;
 
 namespace ReactNative.Animated
 {
@@ -7,15 +7,15 @@ namespace ReactNative.Animated
     {
         private Action<double> _valueListener;
 
+        public ValueAnimatedNode(int tag, JObject config)
+            : this(tag)
+        {
+            Value = config.Value<double>("value");
+        }
+
         public ValueAnimatedNode(int tag)
             : base(tag)
         {
-        }
-
-        public ValueAnimatedNode(int tag, JObject config)
-            : base(tag)
-        {
-            Value = config.Value<double>("value");
         }
 
         public double Value
