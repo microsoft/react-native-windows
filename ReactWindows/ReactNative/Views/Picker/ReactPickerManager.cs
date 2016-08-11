@@ -73,21 +73,20 @@ namespace ReactNative.Views.Picker
 
             for (var index = 0; index < items.Count; index++)
             {
-                var item = (JObject)items[index];
-                var label = item.GetValue("label");
+                var itemData = (JObject)items[index];
+                var label = itemData.Value<string>("label");
                 if (label != null)
                 {
-                    var comboBoxItem = new ComboBoxItem();
-                    
-                    comboBoxItem.Content = label.Value<string>();
-                    var color = (item.GetValue("color"));
+                    var item = new ComboBoxItem();
+                    item.Content = label;
+                    var color = itemData.GetValue("color");
                     if (color != null)
                     {
                         var rgb = color.Value<uint>();
-                        comboBoxItem.Foreground = new SolidColorBrush(ColorHelpers.Parse(rgb));
+                        item.Foreground = new SolidColorBrush(ColorHelpers.Parse(rgb));
                     } 
 
-                    view.Items.Add(comboBoxItem);
+                    view.Items.Add(item);
                 }            
             } 
               
