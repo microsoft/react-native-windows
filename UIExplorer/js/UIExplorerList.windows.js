@@ -97,6 +97,14 @@ const APIExamples = [
     module: require('./GeolocationExample'),
   },
   {
+    key: 'LinkingExample',
+    module: require('./LinkingExample'),
+  },
+  {
+    key: 'LayoutAnimationExample',
+    module: require('./LayoutAnimationExample'),
+  },
+  {
     key: 'LayoutExample',
     module: require('./LayoutExample'),
   },
@@ -115,6 +123,10 @@ const APIExamples = [
   {
     key: 'PointerEventsExample',
     module: require('./PointerEventsExample'),
+  },
+  {
+    key: 'TransformExample',
+    module: require('./TransformExample'),
   },
   {
     key: 'TimerExample',

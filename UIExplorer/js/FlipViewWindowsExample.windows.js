@@ -1,4 +1,11 @@
 /**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
  * The examples provided by Facebook are for non-commercial testing and
  * evaluation purposes only.
  *
@@ -37,16 +44,16 @@ var IMAGE_URIS = [
   'http://apod.nasa.gov/apod/image/1510/lunareclipse_27Sep_beletskycrop4.jpg',
 ];
 
-var LikeCount = React.createClass({
-  getInitialState: function() {
-    return {
-      likes: 7,
-    };
-  },
-  onClick: function() {
+class LikeCount extends React.Component {
+  state = {
+    likes: 7,
+  };
+
+  onClick = () => {
     this.setState({likes: this.state.likes + 1});
-  },
-  render: function() {
+  };
+
+  render() {
     var thumbsUp = '\uD83D\uDC4D';
     return (
       <View style={styles.likeContainer}>
@@ -60,16 +67,17 @@ var LikeCount = React.createClass({
         </Text>
       </View>
     );
-  },
-});
+  }
+}
 
-var Button = React.createClass({
-  _handlePress: function() {
+class Button extends React.Component {
+  _handlePress = () => {
     if (this.props.enabled && this.props.onPress) {
       this.props.onPress();
     }
-  },
-  render: function() {
+  };
+
+  render() {
     return (
       <TouchableWithoutFeedback onPress={this._handlePress}>
         <View style={[styles.button, this.props.enabled ? {} : styles.buttonDisabled]}>
@@ -78,39 +86,49 @@ var Button = React.createClass({
       </TouchableWithoutFeedback>
     );
   }
-});
+}
 
-var FlipViewWindowsExample = React.createClass({
-  statics: {
-    title: '<FlipViewWindows>',
-    description: 'Container that allows to flip left and right between child views.'
-  },
-  getInitialState: function() {
-    return {
-      page: 0,
-      animationsAreEnabled: true,
-      progress: {
-        position: 0,
-        offset: 0,
-      },
-    };
-  },
+class ProgressBar extends React.Component {
+  render() {
+    var fractionalPosition = (this.props.progress.position + this.props.progress.offset);
+    var progressBarSize = (fractionalPosition / (PAGES - 1)) * this.props.size;
+    return (
+      <View style={[styles.progressBarContainer, {width: this.props.size}]}>
+        <View style={[styles.progressBar, {width: progressBarSize}]}/>
+      </View>
+    );
+  }
+}
 
-  onSelectionChange: function(e) {
+class FlipViewWindowsExample extends React.Component {
+  static title = '<FlipViewWindows>';
+  static description = 'Container that allows to flip left and right between child views.';
+
+  state = {
+    page: 0,
+    animationsAreEnabled: true,
+    scrollEnabled: true,
+    progress: {
+      position: 0,
+      offset: 0,
+    },
+  };
+
+  onSelectionChange = (e) => {
     this.setState({page: e.nativeEvent.position});
-  },
+  };
 
-  move: function(delta) {
+  move = (delta) => {
     var page = this.state.page + delta;
     this.go(page);
-  },
+  };
 
-  go: function(page) {
+  go = (page) => {
     this.flipView.setPage(page);
     this.setState({page});
-  },
+  };
 
-  render: function() {
+  render() {
     var pages = [];
     for (var i = 0; i < PAGES; i++) {
       var pageStyle = {
@@ -134,8 +152,8 @@ var FlipViewWindowsExample = React.createClass({
         <FlipViewWindows
           style={styles.flipView}
           alwaysAnimate={this.state.animationsAreEnabled}
+          initialPage={0}
           onSelectionChange={this.onSelectionChange}
-          selectedIndex={this.state.page}
           ref={flipView => { this.flipView = flipView; }}>
           {pages}
         </FlipViewWindows>
@@ -156,13 +174,14 @@ var FlipViewWindowsExample = React.createClass({
           <Button text="Start" enabled={page > 0} onPress={() => this.go(0)}/>
           <Button text="Prev" enabled={page > 0} onPress={() => this.move(-1)}/>
           <Text style={styles.buttonText}>Page {page + 1} / {PAGES}</Text>
+          <ProgressBar size={100} progress={this.state.progress}/>
           <Button text="Next" enabled={page < PAGES - 1} onPress={() => this.move(1)}/>
           <Button text="Last" enabled={page < PAGES - 1} onPress={() => this.go(PAGES - 1)}/>
         </View>
       </View>
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   buttons: {
@@ -186,9 +205,6 @@ var styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-  },
-  scrollStateText: {
-    color: '#99d1b7',
   },
   container: {
     flex: 1,
