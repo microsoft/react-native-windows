@@ -52,6 +52,10 @@ if (Platform.OS === 'android') {
 
 type Event = Object;
 
+function notSupported(prop) {
+  console.warn(`this.props.${prop} is not supported when secureTextEntry is set to true`);
+}
+
 /**
  * A foundational component for inputting text into the app via a
  * keyboard. Props provide configurability for several features, such as
@@ -589,6 +593,26 @@ var TextInput = React.createClass({
   },
 
   _renderWindows: function() {
+
+    if (this.props.secureTextEntry) {
+      // Warn if using properties not supported during secureTextEntry
+      if (this.props.onSelectionChange) {
+        notSupported('onSelectionChange');
+      }
+
+      if (this.props.autoCorrect) {
+        notSupported('autoCorrect');
+      }
+
+      if (this.props.autoCapitalize) {
+        notSupported('autoCapitalize');
+      }
+
+      if (this.props.multiline) {
+        notSupported('multiline');
+      }
+    }
+
     var onSelectionChange;
     if (this.props.selectionState || this.props.onSelectionChange) {
       onSelectionChange = (event: Event) => {
