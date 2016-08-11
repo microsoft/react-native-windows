@@ -16,9 +16,6 @@ namespace ReactNative.Views.TextInput
 {
     class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
-        private const int FocusTextInput = 1;
-        private const int BlurTextInput = 2;
-
         public override string Name
         {
             get
@@ -92,21 +89,6 @@ namespace ReactNative.Views.TextInput
                             }
                         }
                     },
-                };
-            }
-        }
-
-        /// <summary>
-        /// The commands map for the <see cref="ReactTextInputManager"/>.
-        /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
-        {
-            get
-            {
-                return new Dictionary<string, object>()
-                {
-                    { "focusTextInput", FocusTextInput },
-                    { "blurTextInput", BlurTextInput },
                 };
             }
         }
@@ -344,11 +326,11 @@ namespace ReactNative.Views.TextInput
         /// <param name="args">Optional arguments for the command.</param>
         public override void ReceiveCommand(PasswordBox view, int commandId, JArray args)
         {
-            if (commandId == FocusTextInput)
+            if (commandId == ReactTextInputManager.FocusTextInput)
             {
                 view.Focus(FocusState.Programmatic);
             }
-            else if (commandId == BlurTextInput)
+            else if (commandId == ReactTextInputManager.BlurTextInput)
             {
                 var frame = Window.Current?.Content as Frame;
                 frame?.Focus(FocusState.Programmatic);
