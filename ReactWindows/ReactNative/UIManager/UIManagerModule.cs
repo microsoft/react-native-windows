@@ -85,6 +85,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// The UI implementation.
+        /// </summary>
+        public UIImplementation UIImplementation
+        {
+            get
+            {
+                return _uiImplementation;
+            }
+        }
+
+        /// <summary>
         /// Registers a new root view.
         /// </summary>
         /// <param name="rootView">The root view instance.</param>

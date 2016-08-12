@@ -40,6 +40,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// The native view hierarchy manager.
+        /// </summary>
+        internal NativeViewHierarchyManager NativeViewHierarchyManager
+        {
+            get
+            {
+                return _nativeViewHierarchyManager;
+            }
+        } 
+
+        /// <summary>
         /// Checks if the operation queue is empty.
         /// </summary>
         /// <returns>

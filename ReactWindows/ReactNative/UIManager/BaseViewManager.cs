@@ -25,17 +25,17 @@ namespace ReactNative.UIManager
         /// properties, based on the <see cref="JObject"/> map.
         /// </summary>
         /// <param name="view">The view instance.</param>
-        /// <param name="matrix">The transform matrix.</param>
+        /// <param name="transforms">The list of transforms.</param>
         [ReactProp("transform")]
-        public void SetTransform(TFrameworkElement view, double[] matrix)
+        public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            if (matrix == null)
+            if (transforms == null)
             {
                 ResetProjectionMatrix(view);
             }
             else
             {
-                SetProjectionMatrix(view, matrix);
+                SetProjectionMatrix(view, transforms);
             }
         }
 
@@ -112,14 +112,10 @@ namespace ReactNative.UIManager
             AutomationProperties.SetLiveSetting(view, liveSetting);
         }
 
-        private void SetProjectionMatrix(TFrameworkElement view, double[] matrix)
+        private void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
         {
             var projection = EnsureProjection(view);
-            var transformMatrix = new Matrix3D(
-                matrix[0], matrix[1], matrix[2], matrix[3],
-                matrix[4], matrix[5], matrix[6], matrix[7],
-                matrix[8], matrix[9], matrix[10], matrix[11],
-                matrix[12], matrix[13], matrix[14], matrix[15]);
+            var transformMatrix = TransformHelper.ProcessTransform(transforms);
 
             var translateMatrix = Matrix3D.Identity;
             var translateBackMatrix = Matrix3D.Identity;

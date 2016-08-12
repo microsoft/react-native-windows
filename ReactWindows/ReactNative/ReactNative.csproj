@@ -115,6 +115,19 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animated\AdditionAnimatedNode.cs" />
+    <Compile Include="Animated\AnimatedNode.cs" />
+    <Compile Include="Animated\AnimationDriver.cs" />
+    <Compile Include="Animated\FrameBasedAnimationDriver.cs" />
+    <Compile Include="Animated\InterpolationAnimatedNode.cs" />
+    <Compile Include="Animated\MultiplicationAnimatedNode.cs" />
+    <Compile Include="Animated\NativeAnimatedModule.cs" />
+    <Compile Include="Animated\NativeAnimatedNodesManager.cs" />
+    <Compile Include="Animated\PropsAnimatedNode.cs" />
+    <Compile Include="Animated\SpringAnimationDriver.cs" />
+    <Compile Include="Animated\StyleAnimatedNode.cs" />
+    <Compile Include="Animated\TransformAnimatedNode.cs" />
+    <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\ILifecycleEventListener.cs" />
@@ -272,6 +285,7 @@
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutDeleteAnimation.cs" />
+    <Compile Include="UIManager\MatrixMathHelper.cs" />
     <Compile Include="UIManager\ReactDefaultCompoundView.cs" />
     <Compile Include="UIManager\Dimensions.cs" />
     <Compile Include="UIManager\IReactCompoundView.cs" />
@@ -302,6 +316,7 @@
     <Compile Include="UIManager\LayoutAnimation\LayoutUpdateAnimation.cs" />
     <Compile Include="UIManager\DependencyObjectViewManager.cs" />
     <Compile Include="UIManager\ThemedReactContext.cs" />
+    <Compile Include="UIManager\TransformHelper.cs" />
     <Compile Include="UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
@@ -415,6 +430,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
