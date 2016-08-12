@@ -3,6 +3,8 @@ using ReactNative.Bridge;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.UIManager
@@ -17,14 +19,24 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
+        private const long TicksPerFrame = 166666;
+        private const long MaxNonBatchedTicksPerFrame = 83333;
+
+        private static Stopwatch s_stopwatch = Stopwatch.StartNew();
+
         private readonly object _gate = new object();
+        private readonly object _nonBatchedGate = new object();
         private readonly double[] _measureBuffer = new double[4];
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
 
+        private readonly IList<Action> _nonBatchedOperations = new List<Action>();
+
         private IList<Action> _operations = new List<Action>();
         private IList<Action> _batches = new List<Action>();
+
+        private long _lastRenderingTicks = -1;
 
         /// <summary>
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
@@ -161,11 +173,14 @@ namespace ReactNative.UIManager
             string viewClassName,
             ReactStylesDiffMap initialProps)
         {
-            EnqueueOperation(() => _nativeViewHierarchyManager.CreateView(
-                themedContext,
-                viewReactTag,
-                viewClassName,
-                initialProps));
+            lock (_nonBatchedGate)
+            {
+                _nonBatchedOperations.Add(() => _nativeViewHierarchyManager.CreateView(
+                   themedContext,
+                   viewReactTag,
+                   viewClassName,
+                   initialProps));
+            }
         }
 
         /// <summary>
@@ -380,20 +395,42 @@ namespace ReactNative.UIManager
         /// <param name="batchId">The batch identifier.</param>
         internal void DispatchViewUpdates(int batchId)
         {
+            var operations = _operations.Count == 0 ? null : _operations;
+            if (operations != null)
+            {
+                _operations = new List<Action>();
+            }
+
+            var nonBatchedOperations = default(Action[]);
+            lock (_nonBatchedGate)
+            {
+                if (_nonBatchedOperations.Count > 0)
+                {
+                    nonBatchedOperations = _nonBatchedOperations.ToArray();
+                    _nonBatchedOperations.Clear();
+                }
+                else
+                {
+                    nonBatchedOperations = null;
+                }
+            }
+
             lock (_gate)
             {
-                var operations = _operations.Count == 0 ? null : _operations;
-                if (operations != null)
-                {
-                    _operations = new List<Action>();
-                }
-
                 _batches.Add(() =>
                 {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchUI")
                         .With("BatchId", batchId)
                         .Start())
                     {
+                        if (nonBatchedOperations != null)
+                        {
+                            foreach (var operation in nonBatchedOperations)
+                            {
+                                operation();
+                            }
+                        }
+
                         if (operations != null)
                         {
                             foreach (var operation in operations)
@@ -418,6 +455,15 @@ namespace ReactNative.UIManager
 
         private void OnRendering(object sender, object e)
         {
+            var renderingArgs = e as RenderingEventArgs;
+            if (renderingArgs != null)
+            {
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
+                {
+                    DispatchPendingNonBatchedOperations(renderingArgs.RenderingTime);
+                }
+            }
+
             lock (_gate)
             {
                 foreach (var batch in _batches)
@@ -426,6 +472,44 @@ namespace ReactNative.UIManager
                 }
 
                 _batches.Clear();
+            }
+        }
+
+        private void DispatchPendingNonBatchedOperations(TimeSpan renderingTime)
+        {
+            if (_lastRenderingTicks < 0)
+            {
+                _lastRenderingTicks = renderingTime.Ticks;
+            }
+
+            var ticksSinceLastFrame = renderingTime.Ticks - _lastRenderingTicks;
+            _lastRenderingTicks = renderingTime.Ticks;
+            var lastFrameTicksOverage = Math.Max(0, ticksSinceLastFrame - TicksPerFrame);
+            var allowedTicks = MaxNonBatchedTicksPerFrame - lastFrameTicksOverage;
+
+            var frameStartTicks = s_stopwatch.ElapsedTicks;
+            while (true)
+            {
+                // Use up to `MaxNonBatchedTicksPerFrame` minus the delay in the last frame
+                var elapsedTicks = s_stopwatch.ElapsedTicks - frameStartTicks;
+                if (elapsedTicks > allowedTicks)
+                {
+                    break;
+                }
+
+                var nextOperation = default(Action);
+                lock (_nonBatchedGate)
+                {
+                    if (_nonBatchedOperations.Count == 0)
+                    {
+                        break;
+                    }
+
+                    nextOperation = _nonBatchedOperations[0];
+                    _nonBatchedOperations.RemoveAt(0);
+                }
+
+                nextOperation();
             }
         }
     }
