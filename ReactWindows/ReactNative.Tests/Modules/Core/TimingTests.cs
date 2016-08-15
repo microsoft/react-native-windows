@@ -296,6 +296,33 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
         }
 
+        [TestMethod]
+        public async Task Timing_Correct_Order()
+        {
+            var ids = new List<int>();
+            var countdown = new CountdownEvent(1);
+            var context = CreateReactContext(new MockInvocationHandler((name, args) =>
+            {
+                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                ids.AddRange((IList<int>)args[0]);
+                countdown.Signal();
+            }));
+
+            var timing = new Timing(context);
+            timing.Initialize();
+            await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
+
+            var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            timing.createTimer(1, 300000, now, false);
+            timing.createTimer(2, 1, now, false);
+
+            Assert.IsTrue(countdown.Wait(1000));
+            Assert.IsTrue(ids.SequenceEqual(new[] { 2 }));
+            timing.deleteTimer(1);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+        }
+
         private static ReactContext CreateReactContext(IInvocationHandler handler)
         {
             var context = new ReactContext();
