@@ -16,8 +16,10 @@ public:
 	ChakraJavaScriptExecutor();
 	virtual ~ChakraJavaScriptExecutor();
 
-	JsonValue^ GetGlobalVariable(String^ variableName);
-	void SetGlobalVariable(String^ variableName, JsonValue^ value);
+	String^ GetGlobalVariable(String^ variableName);
+	void SetGlobalVariable(String^ variableName, String^ value);
+
+	String^ RunScript(String^ source, String^ sourceUri);
 private:
 	ChakraHost host;
 };
