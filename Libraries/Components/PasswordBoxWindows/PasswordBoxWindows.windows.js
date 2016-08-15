@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule TextInput
+ * @providesModule PasswordBoxWindows
  * @flow
  */
 'use strict';
@@ -14,80 +14,41 @@
 var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
 var NativeMethodsMixin = require('react/lib/NativeMethodsMixin');
-var Platform = require('Platform');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('react/lib/ReactNative');
-var ReactChildren = require('react/lib/ReactChildren');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
-var UIManager = require('UIManager');
 var View = require('View');
-var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
 
-var emptyFunction = require('fbjs/lib/emptyFunction');
-var invariant = require('fbjs/lib/invariant');
 var requireNativeComponent = require('requireNativeComponent');
 
-var onlyMultiline = {
-  onTextInput: true, // not supported in Open Source yet
-  children: true,
-};
-
-var notMultiline = {
-  // nothing yet
-};
-
-if (Platform.OS === 'android') {
-  var AndroidTextInput = requireNativeComponent('AndroidTextInput', null);
-} else if (Platform.OS === 'ios') {
-  var RCTTextView = requireNativeComponent('RCTTextView', null);
-  var RCTTextField = requireNativeComponent('RCTTextField', null);
-} else if (Platform.OS === 'windows') {
-  var RCTTextBox = requireNativeComponent('RCTTextBox', null);
-}
+var NativePasswordBox = requireNativeComponent('PasswordBoxWindows', null);
 
 type Event = Object;
 
-function notSupported(prop) {
-  console.warn(`this.props.${prop} is not supported when secureTextEntry is set to true`);
-}
-
 /**
- * A foundational component for inputting text into the app via a
+ * A foundational component for inputting passwords into the app via a
  * keyboard. Props provide configurability for several features, such as
- * auto-correction, auto-capitalization, placeholder text, and different keyboard
- * types, such as a numeric keypad.
+ * placeholder text, and different keyboardvtypes, such as a numeric keypad.
  *
- * The simplest use case is to plop down a `TextInput` and subscribe to the
+ * The simplest use case is to plop down a `PasswordBoxWindows` and subscribe to the
  * `onChangeText` events to read the user input. There are also other events,
  * such as `onSubmitEditing` and `onFocus` that can be subscribed to. A simple
  * example:
  *
  * ```
- *   <TextInput
+ *   <PasswordBox
  *     style={{height: 40, borderColor: 'gray', borderWidth: 1}}
  *     onChangeText={(text) => this.setState({text})}
  *     value={this.state.text}
  *   />
  * ```
- *
- * Note that some props are only available with `multiline={true/false}`.
- * Additionally, border styles that apply to only one side of the element
- * (e.g., `borderBottomColor`, `borderLeftWidth`, etc.) will not be applied if
- * `multiline=false`. To achieve the same effect, you can wrap your `TextInput`
- * in a `View`:
- *
- * ```
- *  <View style={{ borderBottomColor: '#000000', borderBottomWidth: 1, }}>
- *    <TextInput {...props} />
- *  </View>
- * ```
  */
-var TextInput = React.createClass({
+var PasswordBoxWindows = React.createClass({
   statics: {
     /* TODO(brentvatne) docs are needed for this */
     State: TextInputState,
@@ -96,26 +57,7 @@ var TextInput = React.createClass({
   propTypes: {
     ...View.propTypes,
     /**
-     * Can tell TextInput to automatically capitalize certain characters.
-     *
-     * - characters: all characters,
-     * - words: first letter of each word
-     * - sentences: first letter of each sentence (default)
-     * - none: don't auto capitalize anything
-     */
-    autoCapitalize: PropTypes.oneOf([
-      'none',
-      'sentences',
-      'words',
-      'characters',
-    ]),
-    /**
      * If false, disables auto-correct. The default value is true.
-     */
-    autoCorrect: PropTypes.bool,
-    /**
-     * If true, focuses the input on componentDidMount.
-     * The default value is false.
      */
     autoFocus: PropTypes.bool,
     /**
@@ -211,22 +153,11 @@ var TextInput = React.createClass({
      */
     maxLength: PropTypes.number,
     /**
-     * Sets the number of lines for a TextInput. Use it with multiline set to
-     * true to be able to fill the lines.
-     * @platform android
-     */
-    numberOfLines: PropTypes.number,
-    /**
      * If true, the keyboard disables the return key when there is no text and
      * automatically enables it when there is text. The default value is false.
      * @platform ios
      */
     enablesReturnKeyAutomatically: PropTypes.bool,
-    /**
-     * If true, the text input can be multiple lines.
-     * The default value is false.
-     */
-    multiline: PropTypes.bool,
     /**
      * Callback that is called when the text input is blurred
      */
@@ -249,10 +180,6 @@ var TextInput = React.createClass({
      */
     onEndEditing: PropTypes.func,
     /**
-     * Callback that is called when the text input selection is changed
-     */
-    onSelectionChange: PropTypes.func,
-    /**
      * Callback that is called when the text input's submit button is pressed.
      * Invalid if multiline={true} is specified.
      */
@@ -269,6 +196,14 @@ var TextInput = React.createClass({
      */
     onLayout: PropTypes.func,
     /**
+     * The string used for the password character mask
+     */
+    passwordChar: PropTypes.string,
+    /**
+     * The password reveal mode, either "Hidden", "Peek", or "Visible"
+     */
+    passwordRevealMode: PropTypes.string,
+    /**
      * The string that will be rendered before text input has been entered
      */
     placeholder: PropTypes.string,
@@ -276,11 +211,6 @@ var TextInput = React.createClass({
      * The text color of the placeholder string
      */
     placeholderTextColor: PropTypes.string,
-    /**
-     * If true, the text input obscures the text entered so that sensitive text
-     * like passwords stay secure. The default value is false.
-     */
-    secureTextEntry: PropTypes.bool,
     /**
     * The highlight (and cursor on ios) color of the text input
     */
@@ -351,14 +281,7 @@ var TextInput = React.createClass({
    */
   mixins: [NativeMethodsMixin, TimerMixin],
 
-  viewConfig:
-    ((Platform.OS === 'ios' && RCTTextField ?
-      RCTTextField.viewConfig :
-      (Platform.OS === 'android' && AndroidTextInput ?
-        AndroidTextInput.viewConfig :
-        (Platform.OS === 'windows' && RCTTextBox ?
-          RCTTextBox.viewConfig :
-          {}))) : Object),
+  viewConfig: NativePasswordBox.viewConfig,
 
   /**
    * Returns if the input is currently focused.
@@ -421,263 +344,34 @@ var TextInput = React.createClass({
     this.setNativeProps({text: ''});
   },
 
-  render: function() {
-    if (Platform.OS === 'ios') {
-      return this._renderIOS();
-    } else if (Platform.OS === 'android') {
-      return this._renderAndroid();
-    } else if (Platform.OS === 'windows') {
-      return this._renderWindows();
-    }
-  },
-
   _getText: function(): ?string {
     return typeof this.props.value === 'string' ?
       this.props.value :
       this.props.defaultValue;
   },
 
-  _renderIOS: function() {
-    var textContainer;
-
-    var onSelectionChange;
-    if (this.props.selectionState || this.props.onSelectionChange) {
-      onSelectionChange = (event: Event) => {
-        if (this.props.selectionState) {
-          var selection = event.nativeEvent.selection;
-          this.props.selectionState.update(selection.start, selection.end);
-        }
-        this.props.onSelectionChange && this.props.onSelectionChange(event);
-      };
-    }
-
-    var props = Object.assign({}, this.props);
-    props.style = [styles.input, this.props.style];
-    if (!props.multiline) {
-      for (var propKey in onlyMultiline) {
-        if (props[propKey]) {
-          throw new Error(
-            'TextInput prop `' + propKey + '` is only supported with multiline.'
-          );
-        }
-      }
-      textContainer =
-        <RCTTextField
-          ref="input"
-          {...props}
-          onFocus={this._onFocus}
-          onBlur={this._onBlur}
-          onChange={this._onChange}
-          onSelectionChange={onSelectionChange}
-          onSelectionChangeShouldSetResponder={emptyFunction.thatReturnsTrue}
-          text={this._getText()}
-        />;
-    } else {
-      for (var propKey in notMultiline) {
-        if (props[propKey]) {
-          throw new Error(
-            'TextInput prop `' + propKey + '` cannot be used with multiline.'
-          );
-        }
-      }
-
-      var children = props.children;
-      var childCount = 0;
-      ReactChildren.forEach(children, () => ++childCount);
-      invariant(
-        !(props.value && childCount),
-        'Cannot specify both value and children.'
-      );
-      if (childCount >= 1) {
-        children = <Text style={props.style}>{children}</Text>;
-      }
-      if (props.inputView) {
-        children = [children, props.inputView];
-      }
-      textContainer =
-        <RCTTextView
-          ref="input"
-          {...props}
-          children={children}
-          onFocus={this._onFocus}
-          onBlur={this._onBlur}
-          onChange={this._onChange}
-          onSelectionChange={onSelectionChange}
-          onTextInput={this._onTextInput}
-          onSelectionChangeShouldSetResponder={emptyFunction.thatReturnsTrue}
-          text={this._getText()}
-        />;
-    }
-
-    return (
-      <TouchableWithoutFeedback
-        onPress={this._onPress}
-        rejectResponderTermination={true}
-        accessible={props.accessible}
-        accessibilityLabel={props.accessibilityLabel}
-        accessibilityTraits={props.accessibilityTraits}
-        testID={props.testID}>
-        {textContainer}
-      </TouchableWithoutFeedback>
-    );
-  },
-
-  _renderAndroid: function() {
-    var onSelectionChange;
-    if (this.props.selectionState || this.props.onSelectionChange) {
-      onSelectionChange = (event: Event) => {
-        if (this.props.selectionState) {
-          var selection = event.nativeEvent.selection;
-          this.props.selectionState.update(selection.start, selection.end);
-        }
-        this.props.onSelectionChange && this.props.onSelectionChange(event);
-      };
-    }
-
-    var autoCapitalize =
-      UIManager.AndroidTextInput.Constants.AutoCapitalizationType[this.props.autoCapitalize];
-    var children = this.props.children;
-    var childCount = 0;
-    ReactChildren.forEach(children, () => ++childCount);
-    invariant(
-      !(this.props.value && childCount),
-      'Cannot specify both value and children.'
-    );
-    if (childCount > 1) {
-      children = <Text>{children}</Text>;
-    }
-
+  render: function() {
     var textContainer =
-      <AndroidTextInput
+      <NativePasswordBox
         ref="input"
         style={[this.props.style]}
-        autoCapitalize={autoCapitalize}
-        autoCorrect={this.props.autoCorrect}
         keyboardType={this.props.keyboardType}
-        mostRecentEventCount={0}
-        multiline={this.props.multiline}
-        numberOfLines={this.props.numberOfLines}
         maxLength={this.props.maxLength}
         onFocus={this._onFocus}
         onBlur={this._onBlur}
         onChange={this._onChange}
-        onSelectionChange={onSelectionChange}
-        onTextInput={this._onTextInput}
         onEndEditing={this.props.onEndEditing}
         onSubmitEditing={this.props.onSubmitEditing}
-        blurOnSubmit={this.props.blurOnSubmit}
+        clearTextOnFocus={this.props.clearTextOnFocus}
+        selectTextOnFocus={this.props.selectTextOnFocus}
         onLayout={this.props.onLayout}
-        password={this.props.password || this.props.secureTextEntry}
+        passwordChar={this.props.passwordChar}
+        passwordRevealMode={this.props.passwordRevealMode}
         placeholder={this.props.placeholder}
-        placeholderTextColor={this.props.placeholderTextColor}
         selectionColor={this.props.selectionColor}
         text={this._getText()}
-        underlineColorAndroid={this.props.underlineColorAndroid}
-        children={children}
         editable={this.props.editable}
-        selectTextOnFocus={this.props.selectTextOnFocus}
-        returnKeyType={this.props.returnKeyType}
-        returnKeyLabel={this.props.returnKeyLabel}
       />;
-
-    return (
-      <TouchableWithoutFeedback
-        onPress={this._onPress}
-        accessible={this.props.accessible}
-        accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityComponentType={this.props.accessibilityComponentType}
-        testID={this.props.testID}>
-        {textContainer}
-      </TouchableWithoutFeedback>
-    );
-  },
-
-  _renderWindows: function() {
-
-    if (this.props.secureTextEntry) {
-      // Warn if using properties not supported during secureTextEntry
-      if (this.props.onSelectionChange) {
-        notSupported('onSelectionChange');
-      }
-
-      if (this.props.autoCorrect) {
-        notSupported('autoCorrect');
-      }
-
-      if (this.props.autoCapitalize) {
-        notSupported('autoCapitalize');
-      }
-
-      if (this.props.multiline) {
-        notSupported('multiline');
-      }
-    }
-
-    var onSelectionChange;
-    if (this.props.selectionState || this.props.onSelectionChange) {
-      onSelectionChange = (event: Event) => {
-        if (this.props.selectionState) {
-          var selection = event.nativeEvent.selection;
-          this.props.selectionState.update(selection.start, selection.end);
-        }
-        this.props.onSelectionChange && this.props.onSelectionChange(event);
-      };
-    }
-
-    var children = this.props.children;
-    var childCount = 0;
-    ReactChildren.forEach(children, () => ++childCount);
-    invariant(
-        !childCount,
-        'TextInput children are not supported on Windows.'
-    );
-
-    var textContainer;
-    if (this.props.secureTextEntry) {
-      textContainer =
-        <PasswordBoxWindows
-          ref="input"
-          style={[this.props.style]}
-          keyboardType={this.props.keyboardType}
-          maxLength={this.props.maxLength}
-          onFocus={this._onFocus}
-          onBlur={this._onBlur}
-          onChange={this._onChange}
-          onEndEditing={this.props.onEndEditing}
-          onSubmitEditing={this.props.onSubmitEditing}
-          clearTextOnFocus={this.props.clearTextOnFocus}
-          selectTextOnFocus={this.props.selectTextOnFocus}
-          onLayout={this.props.onLayout}
-          placeholder={this.props.placeholder}
-          selectionColor={this.props.selectionColor}
-          text={this._getText()}
-          editable={this.props.editable}
-        />;
-    } else {
-      textContainer =
-        <RCTTextBox
-          ref="input"
-          style={[this.props.style]}
-          autoCorrect={this.props.autoCorrect}
-          keyboardType={this.props.keyboardType}
-          mostRecentEventCount={0}
-          multiline={this.props.multiline}
-          maxLength={this.props.maxLength}
-          onFocus={this._onFocus}
-          onBlur={this._onBlur}
-          onChange={this._onChange}
-          onSelectionChange={onSelectionChange}
-          onEndEditing={this.props.onEndEditing}
-          onSubmitEditing={this.props.onSubmitEditing}
-          clearTextOnFocus={this.props.clearTextOnFocus}
-          selectTextOnFocus={this.props.selectTextOnFocus}
-          onLayout={this.props.onLayout}
-          placeholder={this.props.placeholder}
-          selectionColor={this.props.selectionColor}
-          text={this._getText()}
-          editable={this.props.editable}
-        />;
-    }
 
     return (
       <TouchableWithoutFeedback
@@ -763,4 +457,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = TextInput;
+module.exports = PasswordBoxWindows;

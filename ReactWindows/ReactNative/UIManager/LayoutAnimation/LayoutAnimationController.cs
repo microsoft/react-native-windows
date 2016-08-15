@@ -44,21 +44,21 @@ namespace ReactNative.UIManager.LayoutAnimation
 
             _shouldAnimateLayout = false;
             var globalDuration = config.Value<int>("duration");
-            var createData = config.Value<JObject>("create");
+            var createData = (JObject)config.GetValue("create");
             if (createData != null)
             {
                 _layoutCreateAnimation.InitializeFromConfig(createData, globalDuration);
                 _shouldAnimateLayout = true;
             }
 
-            var updateData = config.Value<JObject>("update");
+            var updateData = (JObject)config.GetValue("update");
             if (updateData != null)
             {
                 _layoutUpdateAnimation.InitializeFromConfig(updateData, globalDuration);
                 _shouldAnimateLayout = true;
             }
 
-            var deleteData = config.Value<JObject>("delete");
+            var deleteData = (JObject)config.GetValue("delete");
             if (deleteData != null)
             {
                 _layoutDeleteAnimation.InitializeFromConfig(deleteData, globalDuration);

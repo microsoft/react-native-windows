@@ -8,7 +8,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
 
 class Playground extends Component {

@@ -64,7 +64,7 @@ namespace ReactNative.Tests.Bridge.Queue
         public async Task MessageQueueThread_HandlesException()
         {
             var exception = new Exception();
-            var countdown = new CountdownEvent(3);
+            var countdown = new CountdownEvent(4);
             var handler = new Action<Exception>(ex =>
             {
                 Assert.AreSame(exception, ex);

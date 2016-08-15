@@ -134,7 +134,7 @@ namespace ReactNative.Views.Web
                         request.Method = HttpMethod.Get;
                     }
 
-                    var headers = source.Value<JObject>("headers");
+                    var headers = (JObject)source.GetValue("headers");
                     if (headers != null)
                     {
                         foreach (var header in headers)
