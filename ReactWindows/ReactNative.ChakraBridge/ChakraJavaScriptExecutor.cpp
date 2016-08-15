@@ -95,3 +95,20 @@ String^ ChakraJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
 
 	return ref new String(szBuf, bufLen);
 }
+
+IAsyncOperation<String^>^ ChakraJavaScriptExecutor::RunScriptFromFile(String^ sourceUri)
+{
+	Uri^ fileUri = ref new Uri(sourceUri);
+	return create_async([this, fileUri, sourceUri]
+	{
+		return create_task(StorageFile::GetFileFromApplicationUriAsync(fileUri))
+			.then([this, sourceUri](StorageFile^ storageFile)
+			{
+				return create_task(FileIO::ReadTextAsync(storageFile));
+			})
+			.then([this, sourceUri](String^ str)
+			{
+				return create_async([this, sourceUri, str] { return this->RunScript(str, sourceUri); });
+			});
+	});
+}
