@@ -10,10 +10,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ChakraHost.cpp" />
+    <ClCompile Include="ChakraJavaScriptExecutor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ChakraHost.h" />
+    <ClInclude Include="ChakraJavaScriptExecutor.h" />
   </ItemGroup>
 </Project>
