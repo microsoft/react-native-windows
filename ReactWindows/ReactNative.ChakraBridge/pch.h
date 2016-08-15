@@ -2,6 +2,8 @@
 
 #define USE_EDGEMODE_JSRT
 #include <jsrt.h>
+#include <stdio.h>
+#include <tchar.h>
 #include "targetver.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
@@ -16,5 +18,15 @@
         if (error != JsNoError) \
         { \
             return error; \
+        } \
+    }
+
+#define IfFailThrow(v, e) \
+    { \
+        JsErrorCode error = (v); \
+        if (error != JsNoError) \
+        { \
+            ThrowException((e)); \
+            return JS_INVALID_REFERENCE; \
         } \
     }
