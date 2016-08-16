@@ -12,6 +12,24 @@
 
 #include <windows.h>
 
+#define IfFailRetNothing(v) \
+    { \
+        this->jsStatus = (v); \
+        if (this->jsStatus != JsNoError) \
+        { \
+            return; \
+        } \
+    }
+
+#define IfFailRetNullPtr(v) \
+    { \
+        this->jsStatus = (v); \
+        if (this->jsStatus != JsNoError) \
+        { \
+            return nullptr; \
+        } \
+    }
+
 #define IfFailRet(v) \
     { \
         JsErrorCode error = (v); \

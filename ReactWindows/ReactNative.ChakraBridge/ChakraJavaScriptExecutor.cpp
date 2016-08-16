@@ -5,93 +5,50 @@ using namespace ReactNative::ChakraBridge;
 
 ChakraJavaScriptExecutor::ChakraJavaScriptExecutor()
 {
-	this->host.Init();
+	this->jsStatus = this->host.Init();
 }
 
 ChakraJavaScriptExecutor::~ChakraJavaScriptExecutor()
 {
-	this->host.Destroy();
+	this->jsStatus = this->host.Destroy();
 }
 
 void ChakraJavaScriptExecutor::SetGlobalVariable(String^ variableName, String^ stringifiedText)
 {
-	JsErrorCode status = JsNoError;
-	
 	JsValueRef valueStringified;
-	status = JsPointerToString(stringifiedText->Data(), stringifiedText->Length(), &valueStringified);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNothing(JsPointerToString(stringifiedText->Data(), stringifiedText->Length(), &valueStringified));
 
 	JsValueRef valueJson;
-	status = this->host.JsonParse(valueStringified, &valueJson);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
-
-	status = this->host.SetGlobalVariable(variableName->Data(), valueJson);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNothing(this->host.JsonParse(valueStringified, &valueJson));
+	IfFailRetNothing(this->host.SetGlobalVariable(variableName->Data(), valueJson));
 }
 
 String^ ChakraJavaScriptExecutor::GetGlobalVariable(String^ variableName)
 {
-	JsErrorCode status = JsNoError;
-
 	JsValueRef globalVariable;
-	status = this->host.GetGlobalVariable(variableName->Data(), &globalVariable);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNullPtr(this->host.GetGlobalVariable(variableName->Data(), &globalVariable));
 
 	JsValueRef globalVariableJson;
-	status = this->host.JsonStringify(globalVariable, &globalVariableJson);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNullPtr(this->host.JsonStringify(globalVariable, &globalVariableJson));
 
 	const wchar_t* szBuf;
 	size_t bufLen;
-	status = JsStringToPointer(globalVariableJson, &szBuf, &bufLen);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNullPtr(JsStringToPointer(globalVariableJson, &szBuf, &bufLen));
 
 	return ref new String(szBuf, bufLen);
 }
 
 String^ ChakraJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
 {
-	JsErrorCode status = JsNoError;
-
 	JsValueRef result;
-	status = this->host.RunScript(source->Data(), sourceUri->Data(), &result);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNullPtr(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
 
 	JsValueRef resultJson;
-	status = this->host.JsonStringify(result, &resultJson);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
 
 	const wchar_t* szBuf;
 	size_t bufLen;
-	status = JsStringToPointer(resultJson, &szBuf, &bufLen);
-	if (status != JsNoError)
-	{
-		// TODO: Throw right error
-	}
+	IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
 
 	return ref new String(szBuf, bufLen);
 }
@@ -111,4 +68,116 @@ IAsyncOperation<String^>^ ChakraJavaScriptExecutor::RunScriptFromFile(String^ so
 				return create_async([this, sourceUri, str] { return this->RunScript(str, sourceUri); });
 			});
 	});
+}
+
+String^ ChakraJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
+{
+	JsPropertyIdRef modulePropertyId;
+	IfFailRetNullPtr(JsGetPropertyIdFromName(moduleName->Data(), &modulePropertyId));
+
+	JsValueRef moduleObject;
+	IfFailRetNullPtr(JsGetProperty(host.globalObject, modulePropertyId, &moduleObject));
+
+	JsValueType moduleType;
+	IfFailRetNullPtr(JsGetValueType(moduleObject, &moduleType));
+
+	// Call require to load function
+	if (moduleType != JsObject)
+	{
+		JsValueRef moduleString;
+		IfFailRetNullPtr(JsPointerToString(moduleName->Data(), moduleName->Length(), &moduleString));
+
+		JsValueRef requireArguments[2] = { host.globalObject, moduleString };
+		IfFailRetNullPtr(JsCallFunction(host.requireObject, requireArguments, 2, &moduleObject));
+	}
+
+	JsPropertyIdRef methodPropertyId;
+	IfFailRetNullPtr(JsGetPropertyIdFromName(methodName->Data(), &methodPropertyId));
+
+	JsValueRef methodObject;
+	IfFailRetNullPtr(JsGetProperty(moduleObject, methodPropertyId, &methodObject));
+
+	JsValueRef argObj;
+	IfFailRetNullPtr(JsPointerToString(args->Data(), args->Length(), &argObj));
+
+	JsValueRef jsonObj;
+	IfFailRetNullPtr(host.JsonParse(argObj, &jsonObj));
+
+	JsValueRef result;
+	JsValueRef newArgs[2] = { host.globalObject, jsonObj };
+	IfFailRetNullPtr(JsCallFunction(methodObject, newArgs, 2, &result));
+
+	JsValueRef stringifiedResult;
+	IfFailRetNullPtr(host.JsonStringify(result, &stringifiedResult));
+
+	const wchar_t* szStringified;
+	size_t stringifiedLength;
+	IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szStringified, &stringifiedLength));
+
+	return ref new String(szStringified, stringifiedLength);
+}
+
+String^ ChakraJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args)
+{
+	JsPropertyIdRef fbBridgeId;
+	IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
+
+	JsValueRef fbBridgeObj;
+	IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
+
+	JsPropertyIdRef methodId;
+	IfFailRetNullPtr(JsGetPropertyIdFromName(L"invokeCallbackAndReturnFlushedQueue", &methodId));
+
+	JsValueRef method;
+	IfFailRetNullPtr(JsGetProperty(fbBridgeObj, methodId, &method));
+
+	JsValueRef callbackIdRef;
+	IfFailRetNullPtr(JsIntToNumber(callbackId, &callbackIdRef));
+
+	JsValueRef argsObj;
+	IfFailRetNullPtr(JsPointerToString(args->Data(), args->Length(), &argsObj));
+
+	JsValueRef argsJson;
+	IfFailRetNullPtr(host.JsonParse(argsObj, &argsJson));
+
+	JsValueRef result;
+	JsValueRef newArgs[3] = { host.globalObject, callbackIdRef, argsJson };
+	IfFailRetNullPtr(JsCallFunction(method, newArgs, 3, &result));
+
+	JsValueRef stringifiedResult;
+	IfFailRetNullPtr(host.JsonStringify(result, &stringifiedResult));
+
+	const wchar_t* szStringified;
+	size_t stringifiedLength;
+	IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szStringified, &stringifiedLength));
+
+	return ref new String(szStringified, stringifiedLength);
+}
+
+String^ ChakraJavaScriptExecutor::FlushedQueue()
+{
+	JsPropertyIdRef fbBridgeId;
+	IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
+
+	JsValueRef fbBridgeObj;
+	IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
+
+	JsPropertyIdRef methodId;
+	IfFailRetNullPtr(JsGetPropertyIdFromName(L"flushedQueue", &methodId));
+
+	JsValueRef method;
+	IfFailRetNullPtr(JsGetProperty(fbBridgeObj, methodId, &method));
+
+	JsValueRef result;
+	JsValueRef newArgs[1] = { host.globalObject };
+	IfFailRetNullPtr(JsCallFunction(method, newArgs, 1, &result));
+
+	JsValueRef stringifiedResult;
+	IfFailRetNullPtr(host.JsonStringify(result, &stringifiedResult));
+
+	const wchar_t* szStringified;
+	size_t stringifiedLength;
+	IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szStringified, &stringifiedLength));
+
+	return ref new String(szStringified, stringifiedLength);
 }
