@@ -190,6 +190,7 @@
   <ItemGroup>
     <ClInclude Include="ChakraHost.h" />
     <ClInclude Include="ChakraJavaScriptExecutor.h" />
+    <ClInclude Include="ChakraStringResult.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>

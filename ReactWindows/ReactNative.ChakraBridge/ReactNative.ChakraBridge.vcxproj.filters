@@ -17,5 +17,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ChakraHost.h" />
     <ClInclude Include="ChakraJavaScriptExecutor.h" />
+    <ClInclude Include="ChakraStringResult.h" />
   </ItemGroup>
 </Project>

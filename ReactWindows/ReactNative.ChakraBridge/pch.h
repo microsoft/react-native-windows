@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <tchar.h>
 #include "targetver.h"
+#include "ChakraStringResult.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -12,21 +13,14 @@
 
 #include <windows.h>
 
-#define IfFailRetNothing(v) \
-    { \
-        this->jsStatus = (v); \
-        if (this->jsStatus != JsNoError) \
-        { \
-            return; \
-        } \
-    }
-
 #define IfFailRetNullPtr(v) \
     { \
-        this->jsStatus = (v); \
-        if (this->jsStatus != JsNoError) \
+        JsErrorCode status = (v); \
+        if (status != JsNoError) \
         { \
-            return nullptr; \
+            ChakraStringResult stringResult; \
+			stringResult.ErrorCode = status; \
+			return stringResult; \
         } \
     }
 

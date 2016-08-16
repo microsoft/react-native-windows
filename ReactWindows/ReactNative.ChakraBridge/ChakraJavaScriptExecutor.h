@@ -4,6 +4,7 @@
 #include <jsrt.h>
 #include <ppltasks.h>
 #include "ChakraHost.h"
+#include "ChakraStringResult.h"
 
 using namespace concurrency;
 using namespace Platform;
@@ -17,26 +18,20 @@ namespace ReactNative { namespace ChakraBridge {
 public ref class ChakraJavaScriptExecutor sealed
 {
 public:
-	ChakraJavaScriptExecutor();
-	virtual ~ChakraJavaScriptExecutor();
+	int InitializeHost();
+	int DisposeHost();
 
-	String^ GetGlobalVariable(String^ variableName);
-	void SetGlobalVariable(String^ variableName, String^ value);
+	ChakraStringResult GetGlobalVariable(String^ variableName);
+	int SetGlobalVariable(String^ variableName, String^ value);
 
-	String^ RunScript(String^ source, String^ sourceUri);
-	IAsyncOperation<String^>^ RunScriptFromFile(String^ sourceUri);
+	ChakraStringResult RunScript(String^ source, String^ sourceUri);
+	IAsyncOperation<ChakraStringResult>^ RunScriptFromFile(String^ sourceUri);
 
-	String^ CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args); // TODO: Parse the arg
-	String^ InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args); // global object "__fbBatchedBridge", method "invokeCallbackAndReturnFlushedQueue" parse the arg
-	String^ FlushedQueue(); // global object "__fbBatchedBridge", "flushedQueue", invoke with global obj
-
-	property int Status
-	{
-		int get() { return jsStatus;  }
-	}
+	ChakraStringResult CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args); // TODO: Parse the arg
+	ChakraStringResult InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args); // global object "__fbBatchedBridge", method "invokeCallbackAndReturnFlushedQueue" parse the arg
+	ChakraStringResult FlushedQueue(); // global object "__fbBatchedBridge", "flushedQueue", invoke with global obj
 private:
 	ChakraHost host;
-	int jsStatus;
 };
 
 };};
