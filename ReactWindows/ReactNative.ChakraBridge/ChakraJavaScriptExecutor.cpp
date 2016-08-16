@@ -21,6 +21,8 @@ int ChakraJavaScriptExecutor::SetGlobalVariable(String^ variableName, String^ st
 	JsValueRef valueJson;
 	IfFailRet(this->host.JsonParse(valueStringified, &valueJson));
 	IfFailRet(this->host.SetGlobalVariable(variableName->Data(), valueJson));
+
+	return JsNoError;
 }
 
 ChakraStringResult ChakraJavaScriptExecutor::GetGlobalVariable(String^ variableName)
