@@ -84,36 +84,91 @@ namespace ReactNative.Modules.PushNotification
 
         }
 
-        [ReactMethod]
-        public void getScheduledLocalNotifications(ICallback callback)
+        /// <summary>
+        /// Gets the current badge number for the app icon on the home screen
+        /// </summary>
+        /// <param name="callback"></param>
+        public void getApplicationIconBadgeNumber(ICallback callback)
         {
 
         }
 
+        /// <summary>
+        /// Cancel local notifications.
+        /// 
+        /// Optionally restricts the set of canceled notifications to those
+        /// notifications whose `userInfo` fields match the corresponding fields
+        /// in the `userInfo` argument.
+        /// </summary>
+        /// <param name="userInfo"></param>
         [ReactMethod]
         public void cancelLocalNotifications(JObject userInfo)
         {
 
         }
 
+        /// <summary>
+        /// Gets the local notifications that are currently scheduled
+        /// </summary>
+        /// <param name="callback"></param>
+        [ReactMethod]
+        public void getScheduledLocalNotifications(ICallback callback)
+        {
+
+        }
+
+        /// <summary>
+        /// Requests notification permissions from iOS, prompting the user's
+        /// dialog box. By default, it will request all notification permissions, but
+        /// subset of these can be requested by passing a map of requested permissions.
+        /// 
+        /// The following permissions are supported:
+        ///  - `alert`
+        ///  - `badge`
+        ///  - `sound`
+        ///  
+        /// If a map is provided to the method, only the permissions with truthy values will be requested.
+        /// 
+        /// This method returns a promise that will resolve when the user accepts,
+        /// rejects, or if the permissions were previously rejected. The promise
+        /// resolves to the current state of the permission.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="promise"></param>
         [ReactMethod]
         public void requestPermissions(JObject permissions, IPromise promise)
         {
 
         }
 
+        /// <summary>
+        /// Unregister for all remote notifications received via Push Notification service.
+        /// </summary>
         [ReactMethod]
         public void abandonPermissions()
         {
 
         }
 
+        /// <summary>
+        /// See what push permissions are currently enabled. `callback` will be invoked with a permissions object:
+        /// 
+        /// - `alert`: boolean
+        /// - `badge`: boolean
+        /// - `sound`: boolean
+        /// </summary>
+        /// <param name="callback"></param>
         [ReactMethod]
         public void checkPermissions(ICallback callback)
         {
 
         }
 
+        /// <summary>
+        /// This method returns a promise that resolves to either the notification
+        /// object if the app was launched by a push notification, or `null` otherwise.
+        /// </summary>
+        /// <param name="promise"></param>
         [ReactMethod]
         public void getInitialNotification(IPromise promise)
         {
