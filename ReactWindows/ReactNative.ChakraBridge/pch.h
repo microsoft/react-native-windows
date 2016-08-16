@@ -2,8 +2,6 @@
 
 #include <collection.h>
 #include <ppltasks.h>
-
-#define USE_EDGEMODE_JSRT
 #include <jsrt.h>
 #include <stdio.h>
 #include <tchar.h>

@@ -14,7 +14,6 @@ using namespace Windows::Storage::Streams;
 
 namespace ReactNative { namespace ChakraBridge {
 
-[Windows::Foundation::Metadata::WebHostHidden]
 public ref class ChakraJavaScriptExecutor sealed
 {
 public:
@@ -25,7 +24,7 @@ public:
 	int SetGlobalVariable(String^ variableName, String^ value);
 
 	ChakraStringResult RunScript(String^ source, String^ sourceUri);
-	IAsyncOperation<ChakraStringResult>^ RunScriptFromFile(String^ sourceUri);
+	IAsyncOperation<ChakraStringResult>^ RunScriptFromFileAsync(String^ sourceUri);
 
 	ChakraStringResult CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args); // TODO: Parse the arg
 	ChakraStringResult InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args); // global object "__fbBatchedBridge", method "invokeCallbackAndReturnFlushedQueue" parse the arg

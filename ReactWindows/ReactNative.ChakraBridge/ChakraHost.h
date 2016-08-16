@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "pch.h"
-#define USE_EDGEMODE_JSRT
 #include <jsrt.h>
 
 class ChakraHost

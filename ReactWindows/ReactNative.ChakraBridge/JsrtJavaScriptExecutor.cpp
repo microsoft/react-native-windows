@@ -57,7 +57,7 @@ ChakraStringResult ChakraJavaScriptExecutor::RunScript(String^ source, String^ s
 	return finalResult;
 }
 
-IAsyncOperation<ChakraStringResult>^ ChakraJavaScriptExecutor::RunScriptFromFile(String^ sourceUri)
+IAsyncOperation<ChakraStringResult>^ ChakraJavaScriptExecutor::RunScriptFromFileAsync(String^ sourceUri)
 {
 	Uri^ fileUri = ref new Uri(sourceUri);
 	return create_async([this, fileUri, sourceUri]
