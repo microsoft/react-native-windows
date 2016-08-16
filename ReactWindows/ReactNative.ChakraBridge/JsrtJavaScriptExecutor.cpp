@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "ChakraJavaScriptExecutor.h"
+#include "JsrtJavaScriptExecutor.h"
 
 using namespace ReactNative::ChakraBridge;
 
@@ -37,9 +37,7 @@ ChakraStringResult ChakraJavaScriptExecutor::GetGlobalVariable(String^ variableN
 	size_t bufLen;
 	IfFailRetNullPtr(JsStringToPointer(globalVariableJson, &szBuf, &bufLen));
 
-	ChakraStringResult finalResult;
-	finalResult.ErrorCode = JsNoError;
-	finalResult.Result = ref new String(szBuf, bufLen);
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
 	return finalResult;
 }
 
@@ -55,9 +53,7 @@ ChakraStringResult ChakraJavaScriptExecutor::RunScript(String^ source, String^ s
 	size_t bufLen;
 	IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
 
-	ChakraStringResult finalResult;
-	finalResult.ErrorCode = JsNoError;
-	finalResult.Result = ref new String(szBuf, bufLen);
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
 	return finalResult;
 }
 
@@ -122,9 +118,7 @@ ChakraStringResult ChakraJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(S
 	size_t bufLen;
 	IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szBuf, &bufLen));
 
-	ChakraStringResult finalResult;
-	finalResult.ErrorCode = JsNoError;
-	finalResult.Result = ref new String(szBuf, bufLen);
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
 	return finalResult;
 }
 
@@ -162,9 +156,7 @@ ChakraStringResult ChakraJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue
 	size_t bufLen;
 	IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szBuf, &bufLen));
 
-	ChakraStringResult finalResult;
-	finalResult.ErrorCode = JsNoError;
-	finalResult.Result = ref new String(szBuf, bufLen);
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
 	return finalResult;
 }
 
@@ -193,8 +185,6 @@ ChakraStringResult ChakraJavaScriptExecutor::FlushedQueue()
 	size_t bufLen;
 	IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szBuf, &bufLen));
 
-	ChakraStringResult finalResult;
-	finalResult.ErrorCode = JsNoError;
-	finalResult.Result = ref new String(szBuf, bufLen);
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
 	return finalResult;
 }
