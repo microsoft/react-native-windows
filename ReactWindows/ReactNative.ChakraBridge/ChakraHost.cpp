@@ -42,11 +42,8 @@ JsValueRef InvokeConsole(const wchar_t* kind, JsValueRef callee, bool isConstruc
 		size_t szBufLen;
 		IfFailThrow(JsStringToPointer(resultJSString, &szBuf, &szBufLen), L"Failed to get string from pointer.");
 
-		size_t szNewBufLen = szBufLen + 2;
-		wchar_t* innerBuff = new wchar_t[szNewBufLen];
-		swprintf(innerBuff, szNewBufLen, L"%s ", szBuf);
-		OutputDebugStringW(innerBuff);
-		delete[] innerBuff;
+		OutputDebugStringW(szBuf);
+		OutputDebugStringW(L" ");
 	}
 
 	OutputDebugStringW(L"\n");
