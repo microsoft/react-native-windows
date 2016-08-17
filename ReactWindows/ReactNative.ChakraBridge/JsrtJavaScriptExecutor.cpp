@@ -3,17 +3,17 @@
 
 using namespace ReactNative::ChakraBridge;
 
-int ChakraJavaScriptExecutor::InitializeHost()
+int JsrtJavaScriptExectutor::InitializeHost()
 {
 	return this->host.Init();
 }
 
-int ChakraJavaScriptExecutor::DisposeHost()
+int JsrtJavaScriptExectutor::DisposeHost()
 {
 	return this->host.Destroy();
 }
 
-int ChakraJavaScriptExecutor::SetGlobalVariable(String^ variableName, String^ stringifiedText)
+int JsrtJavaScriptExectutor::SetGlobalVariable(String^ variableName, String^ stringifiedText)
 {
 	JsValueRef valueStringified;
 	IfFailRet(JsPointerToString(stringifiedText->Data(), stringifiedText->Length(), &valueStringified));
@@ -25,7 +25,7 @@ int ChakraJavaScriptExecutor::SetGlobalVariable(String^ variableName, String^ st
 	return JsNoError;
 }
 
-ChakraStringResult ChakraJavaScriptExecutor::GetGlobalVariable(String^ variableName)
+ChakraStringResult JsrtJavaScriptExectutor::GetGlobalVariable(String^ variableName)
 {
 	JsValueRef globalVariable;
 	IfFailRetNullPtr(this->host.GetGlobalVariable(variableName->Data(), &globalVariable));
@@ -41,7 +41,7 @@ ChakraStringResult ChakraJavaScriptExecutor::GetGlobalVariable(String^ variableN
 	return finalResult;
 }
 
-ChakraStringResult ChakraJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
+ChakraStringResult JsrtJavaScriptExectutor::RunScript(String^ source, String^ sourceUri)
 {
 	JsValueRef result;
 	IfFailRetNullPtr(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
@@ -57,24 +57,23 @@ ChakraStringResult ChakraJavaScriptExecutor::RunScript(String^ source, String^ s
 	return finalResult;
 }
 
-IAsyncOperation<ChakraStringResult>^ ChakraJavaScriptExecutor::RunScriptFromFileAsync(String^ sourceUri)
+ChakraStringResult JsrtJavaScriptExectutor::RunScriptFromFile(String^ sourceFilePath, String^ sourceUri)
 {
-	Uri^ fileUri = ref new Uri(sourceUri);
-	return create_async([this, fileUri, sourceUri]
-	{
-		return create_task(StorageFile::GetFileFromApplicationUriAsync(fileUri))
-			.then([this, sourceUri](StorageFile^ storageFile)
-			{
-				return create_task(FileIO::ReadTextAsync(storageFile));
-			})
-			.then([this, sourceUri](String^ str)
-			{
-				return create_async([this, sourceUri, str] { return this->RunScript(str, sourceUri); });
-			});
-	});
+	JsValueRef result;
+	IfFailRetNullPtr(this->host.RunScriptFromFile(sourceFilePath->Data(), sourceUri->Data(), &result));
+
+	JsValueRef resultJson;
+	IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
+
+	const wchar_t* szBuf;
+	size_t bufLen;
+	IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
+
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
+	return finalResult;
 }
 
-ChakraStringResult ChakraJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
+ChakraStringResult JsrtJavaScriptExectutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
 {
 	JsPropertyIdRef modulePropertyId;
 	IfFailRetNullPtr(JsGetPropertyIdFromName(moduleName->Data(), &modulePropertyId));
@@ -122,7 +121,7 @@ ChakraStringResult ChakraJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(S
 	return finalResult;
 }
 
-ChakraStringResult ChakraJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args)
+ChakraStringResult JsrtJavaScriptExectutor::InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args)
 {
 	JsPropertyIdRef fbBridgeId;
 	IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
@@ -160,7 +159,7 @@ ChakraStringResult ChakraJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue
 	return finalResult;
 }
 
-ChakraStringResult ChakraJavaScriptExecutor::FlushedQueue()
+ChakraStringResult JsrtJavaScriptExectutor::FlushedQueue()
 {
 	JsPropertyIdRef fbBridgeId;
 	IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
