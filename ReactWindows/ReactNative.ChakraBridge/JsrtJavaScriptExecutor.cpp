@@ -81,19 +81,6 @@ ChakraStringResult JsrtJavaScriptExectutor::CallFunctionAndReturnFlushedQueue(St
 	JsValueRef moduleObject;
 	IfFailRetNullPtr(JsGetProperty(host.globalObject, modulePropertyId, &moduleObject));
 
-	JsValueType moduleType;
-	IfFailRetNullPtr(JsGetValueType(moduleObject, &moduleType));
-
-	// Call require to load function
-	if (moduleType != JsObject)
-	{
-		JsValueRef moduleString;
-		IfFailRetNullPtr(JsPointerToString(moduleName->Data(), moduleName->Length(), &moduleString));
-
-		JsValueRef requireArguments[2] = { host.globalObject, moduleString };
-		IfFailRetNullPtr(JsCallFunction(host.requireObject, requireArguments, 2, &moduleObject));
-	}
-
 	JsPropertyIdRef methodPropertyId;
 	IfFailRetNullPtr(JsGetPropertyIdFromName(methodName->Data(), &methodPropertyId));
 

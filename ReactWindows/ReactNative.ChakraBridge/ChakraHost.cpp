@@ -192,15 +192,6 @@ JsErrorCode ChakraHost::InitConsole()
 	return JsNoError;
 };
 
-JsErrorCode ChakraHost::InitRequire()
-{
-	JsPropertyIdRef requirePropertyId;
-	IfFailRet(JsGetPropertyIdFromName(L"require", &requirePropertyId));
-	IfFailRet(JsGetProperty(globalObject, requirePropertyId, &requireObject));
-
-	return JsNoError;
-};
-
 JsErrorCode ChakraHost::Init()
 {
 	currentSourceContext = 0;
@@ -213,7 +204,6 @@ JsErrorCode ChakraHost::Init()
 
 	IfFailRet(InitJson());
 	IfFailRet(InitConsole());
-	IfFailRet(InitRequire());
 
 	return JsNoError;
 };

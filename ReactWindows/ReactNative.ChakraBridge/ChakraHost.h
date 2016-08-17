@@ -19,11 +19,9 @@ public:
 	JsErrorCode SetGlobalVariable(const wchar_t* szPropertyName, JsValueRef value);
 
 	JsValueRef globalObject;
-	JsValueRef requireObject;
 private:
 	JsErrorCode InitJson();
 	JsErrorCode InitConsole();
-	JsErrorCode InitRequire();
 
 	unsigned currentSourceContext;
 	JsRuntimeHandle runtime;
