@@ -56,50 +56,115 @@ JsValueRef InvokeConsole(const wchar_t* kind, JsValueRef callee, bool isConstruc
 JsValueRef CALLBACK ConsoleLog(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
 	return InvokeConsole(L"log", callee, isConstructCall, arguments, argumentCount, callbackState);
-};
+}
 
 JsValueRef CALLBACK ConsoleWarn(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
 	return InvokeConsole(L"warn", callee, isConstructCall, arguments, argumentCount, callbackState);
-};
+}
 
 JsValueRef CALLBACK ConsoleInfo(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
 	return InvokeConsole(L"info", callee, isConstructCall, arguments, argumentCount, callbackState);
-};
+}
 
 JsValueRef CALLBACK ConsoleError(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
 	return InvokeConsole(L"error", callee, isConstructCall, arguments, argumentCount, callbackState);
-};
+}
+
+JsErrorCode ChakraHost::SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination)
+{
+	JsErrorCode status = JsNoError;
+	FILE *file;
+	char *rawBytes = nullptr;
+	wchar_t *contents = nullptr;
+
+	if (_wfopen_s(&file, szPath, L"rb"))
+	{
+		status = JsErrorInvalidArgument;
+		goto cleanup;
+	}
+
+	unsigned int current = ftell(file);
+	fseek(file, 0, SEEK_END);
+	unsigned int end = ftell(file);
+	fseek(file, current, SEEK_SET);
+	unsigned int lengthBytes = end - current;
+	rawBytes = (char *)calloc(lengthBytes + 1, sizeof(char));
+
+	if (rawBytes == nullptr)
+	{
+		status = JsErrorFatal;
+		goto cleanup;
+	}
+
+	fread((void *)rawBytes, sizeof(char), lengthBytes, file);
+
+	contents = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
+	if (contents == nullptr)
+	{
+		status = JsErrorFatal;
+		goto cleanup;
+	}
+
+	if (MultiByteToWideChar(CP_UTF8, 0, rawBytes, lengthBytes + 1, contents, lengthBytes + 1) == 0)
+	{
+		status = JsErrorFatal;
+		goto cleanup;
+	}
+
+	IfFailCleanup(SerializeScript(contents, szDestination));
+
+cleanup:
+	if (rawBytes)
+	{
+		free(rawBytes);
+	}
+	if (contents)
+	{
+		free(contents);
+	}
+	
+	return status;
+}
 
 JsErrorCode ChakraHost::SerializeScript(const wchar_t* szScript, const wchar_t* szDestination)
 {
+	JsErrorCode status;
 	BYTE* buf = NULL;
 	ULONG bufSize = 0L;
-	IfFailRet(JsSerializeScript(szScript, buf, &bufSize));
+	IfFailCleanup(JsSerializeScript(szScript, buf, &bufSize));
 	
 	buf = new BYTE[bufSize];
-	IfFailRet(JsSerializeScript(szScript, buf, &bufSize));
+	IfFailCleanup(JsSerializeScript(szScript, buf, &bufSize));
 
 	FILE *file;
-	if (_wfopen_s(&file, szDestination, L"rb"))
+	if (_wfopen_s(&file, szDestination, L"wb"))
 	{
-		return JsErrorInvalidArgument;
+		status = JsErrorInvalidArgument;
+		goto cleanup;
 	}
 
 	if (fwrite(buf, sizeof(BYTE), bufSize, file) != bufSize)
 	{
-		return JsErrorFatal;
+		status = JsErrorFatal;
+		goto cleanup;
 	}
 	
 	if (fclose(file))
 	{
-		return JsErrorFatal;
+		status = JsErrorFatal;
+		goto cleanup;
 	}
 
-	return JsNoError;
-};
+cleanup:
+	if (buf)
+	{
+		delete[] buf;
+	}
+	return status;
+}
 
 JsErrorCode ChakraHost::RunScriptFromFile(const wchar_t* szFileName, const wchar_t* szSourceUri, JsValueRef* result)
 {
@@ -124,6 +189,10 @@ JsErrorCode ChakraHost::RunScriptFromFile(const wchar_t* szFileName, const wchar
 	}
 
 	fread((void *)rawBytes, sizeof(char), lengthBytes, file);
+	if (fclose(file))
+	{
+		return JsErrorFatal;
+	}
 
 	wchar_t *contents = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
 	if (contents == nullptr)
@@ -150,21 +219,21 @@ JsErrorCode ChakraHost::RunScriptFromFile(const wchar_t* szFileName, const wchar
 JsErrorCode ChakraHost::RunScript(const wchar_t* szScript, const wchar_t* szSourceUri, JsValueRef* result)
 {
 	return JsRunScript(szScript, currentSourceContext++, szSourceUri, result);
-};
+}
 
 JsErrorCode ChakraHost::JsonStringify(JsValueRef argument, JsValueRef* result)
 {
 	JsValueRef args[2] = { globalObject, argument };
 	IfFailRet(JsCallFunction(jsonStringifyObject, args, 2, result));
 	return JsNoError;
-};
+}
 
 JsErrorCode ChakraHost::JsonParse(JsValueRef argument, JsValueRef* result)
 {
 	JsValueRef args[2] = { globalObject, argument };
 	IfFailRet(JsCallFunction(jsonParseObject, args, 2, result));
 	return JsNoError;
-};
+}
 
 JsErrorCode ChakraHost::GetGlobalVariable(const wchar_t* szPropertyName, JsValueRef* result)
 {
@@ -198,7 +267,7 @@ JsErrorCode ChakraHost::InitJson()
 	IfFailRet(JsGetProperty(jsonObject, jsonStringifyId, &jsonStringifyObject));
 
 	return JsNoError;
-};
+}
 
 JsErrorCode ChakraHost::InitConsole()
 {
@@ -215,7 +284,7 @@ JsErrorCode ChakraHost::InitConsole()
 	IfFailRet(DefineHostCallback(consoleObject, L"error", ConsoleError, this));
 
 	return JsNoError;
-};
+}
 
 JsErrorCode ChakraHost::Init()
 {
@@ -231,7 +300,7 @@ JsErrorCode ChakraHost::Init()
 	IfFailRet(InitConsole());
 
 	return JsNoError;
-};
+}
 
 JsErrorCode ChakraHost::Destroy()
 {
@@ -239,4 +308,4 @@ JsErrorCode ChakraHost::Destroy()
 	IfFailRet(JsDisposeRuntime(runtime));
 
 	return JsNoError;
-};
+}

@@ -42,3 +42,12 @@
             return JS_INVALID_REFERENCE; \
         } \
     }
+
+#define IfFailCleanup(v) \
+    { \
+        status = (v); \
+        if (status != JsNoError) \
+        { \
+            goto cleanup; \
+        } \
+    }
