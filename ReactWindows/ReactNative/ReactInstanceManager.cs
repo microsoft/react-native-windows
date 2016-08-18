@@ -143,7 +143,7 @@ namespace ReactNative
         /// enforced to keep developers from accidentally creating their
         /// applications multiple times.
         /// </summary>
-        public void CreateReactContextInBackground()
+        public async void CreateReactContextInBackground()
         {
             if (_hasStartedCreatingInitialContext)
             {
@@ -154,7 +154,7 @@ namespace ReactNative
             }
 
             _hasStartedCreatingInitialContext = true;
-            RecreateReactContextInBackgroundInner();
+            await RecreateReactContextInBackgroundInnerAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace ReactNative
         /// if configuration has changed or the developer has requested the
         /// applicatio
         /// </summary>
-        public void RecreateReactContextInBackground()
+        public async void RecreateReactContextInBackground()
         {
             if (!_hasStartedCreatingInitialContext)
             {
@@ -171,7 +171,7 @@ namespace ReactNative
                     "create context background call.");
             }
 
-            RecreateReactContextInBackgroundInner();
+            await RecreateReactContextInBackgroundInnerAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -349,13 +349,20 @@ namespace ReactNative
             }
         }
 
-        private void RecreateReactContextInBackgroundInner()
+        private async Task RecreateReactContextInBackgroundInnerAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             if (_useDeveloperSupport && _jsBundleFile == null && _jsMainModuleName != null)
             {
-                _devSupportManager.HandleReloadJavaScript();
+                if (await _devSupportManager.HasUpToDateBundleInCacheAsync())
+                {
+                    OnJavaScriptBundleLoadedFromServer();
+                }
+                else
+                {
+                    _devSupportManager.HandleReloadJavaScript();
+                }
             }
             else
             {

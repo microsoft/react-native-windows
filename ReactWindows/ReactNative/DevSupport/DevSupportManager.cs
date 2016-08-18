@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace ReactNative.DevSupport
 {
@@ -137,6 +138,23 @@ namespace ReactNative.DevSupport
             {
                 ExceptionDispatchInfo.Capture(exception).Throw();
             }
+        }
+
+        public async Task<bool> HasUpToDateBundleInCacheAsync()
+        {
+            if (_isDevSupportEnabled)
+            {
+                var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate;
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var bundleItem = await localFolder.TryGetItemAsync(JSBundleFileName);
+                if (bundleItem != null)
+                {
+                    var bundleProperties = await bundleItem.GetBasicPropertiesAsync();
+                    return bundleProperties.DateModified > lastUpdateTime;
+                }
+            }
+
+            return false;
         }
 
         public void ShowNewNativeError(string message, Exception exception)
