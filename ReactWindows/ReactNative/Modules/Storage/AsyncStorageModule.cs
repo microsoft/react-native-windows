@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -13,7 +14,7 @@ namespace ReactNative.Modules.Storage
         private const string DirectoryName = "AsyncStorage\\";
         private const string FileExtension = ".data";
 
-        private readonly object _gate = new object();
+        private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
 
         public override string Name
         {
@@ -35,23 +36,25 @@ namespace ReactNative.Modules.Storage
             var error = default(JObject);
             var data = new JArray();
 
-            await Task.Run(() =>
+            await _mutex.WaitAsync().ConfigureAwait(false);
+            try
             {
-                lock (_gate)
+                foreach (var key in keys)
                 {
-                    foreach (var key in keys)
+                    if (key == null)
                     {
-                        if (key == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
-                            break;
-                        }
-
-                        var value = Get(key);
-                        data.Add(new JArray(key, value));
+                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        break;
                     }
+
+                    var value = await GetAsync(key).ConfigureAwait(false);
+                    data.Add(new JArray(key, value));
                 }
-            });
+            }
+            finally
+            {
+                _mutex.Release();
+            }
 
             if (error != null)
             {
@@ -74,38 +77,40 @@ namespace ReactNative.Modules.Storage
 
             var error = default(JObject);
 
-            await Task.Run(() =>
+            await _mutex.WaitAsync().ConfigureAwait(false);
+            try
             {
-                lock (_gate)
+                foreach (var pair in keyValueArray)
                 {
-                    foreach (var pair in keyValueArray)
+                    if (pair.Length != 2)
                     {
-                        if (pair.Length != 2)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
-                            break;
-                        }
+                        error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
+                        break;
+                    }
 
-                        if (pair[0] == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
-                            break;
-                        }
+                    if (pair[0] == null)
+                    {
+                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        break;
+                    }
 
-                        if (pair[1] == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
-                            break;
-                        }
+                    if (pair[1] == null)
+                    {
+                        error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
+                        break;
+                    }
 
-                        error = Set(pair[0], pair[1]);
-                        if (error != null)
-                        {
-                            break;
-                        }
+                    error = await SetAsync(pair[0], pair[1]).ConfigureAwait(false);
+                    if (error != null)
+                    {
+                        break;
                     }
                 }
-            });
+            }
+            finally
+            {
+                _mutex.Release();
+            }
 
             if (error != null)
             {
@@ -128,26 +133,28 @@ namespace ReactNative.Modules.Storage
 
             var error = default(JObject);
 
-            await Task.Run(() =>
+            await _mutex.WaitAsync().ConfigureAwait(false);
+            try
             {
-                lock (_gate)
+                foreach (var key in keys)
                 {
-                    foreach (var key in keys)
+                    if (key == null)
                     {
-                        if (key == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
-                            break;
-                        }
+                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        break;
+                    }
 
-                        error = Remove(key);
-                        if (error != null)
-                        {
-                            break;
-                        }
+                    error = await RemoveAsync(key).ConfigureAwait(false);
+                    if (error != null)
+                    {
+                        break;
                     }
                 }
-            });
+            }
+            finally
+            {
+                _mutex.Release();
+            }
 
             if (error != null)
             {
@@ -170,38 +177,40 @@ namespace ReactNative.Modules.Storage
 
             var error = default(JObject);
 
-            await Task.Run(() =>
+            await _mutex.WaitAsync().ConfigureAwait(false);
+            try
             {
-                lock (_gate)
+                foreach (var pair in keyValueArray)
                 {
-                    foreach (var pair in keyValueArray)
+                    if (pair.Length != 2)
                     {
-                        if (pair.Length != 2)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
-                            break;
-                        }
+                        error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
+                        break;
+                    }
 
-                        if (pair[0] == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
-                            break;
-                        }
+                    if (pair[0] == null)
+                    {
+                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        break;
+                    }
 
-                        if (pair[1] == null)
-                        {
-                            error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
-                            break;
-                        }
+                    if (pair[1] == null)
+                    {
+                        error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
+                        break;
+                    }
 
-                        error = Merge(pair[0], pair[1]);
-                        if (error != null)
-                        {
-                            break;
-                        }
+                    error = await MergeAsync(pair[0], pair[1]).ConfigureAwait(false);
+                    if (error != null)
+                    {
+                        break;
                     }
                 }
-            });
+            }
+            finally
+            {
+                _mutex.Release();
+            }
 
             if (error != null)
             {
@@ -216,18 +225,20 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void clear(ICallback callback)
         {
-            await Task.Run(() =>
+            await _mutex.WaitAsync().ConfigureAwait(false);
+            try
             {
-                lock (_gate)
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var storageItem = await localFolder.TryGetItemAsync(DirectoryName).AsTask().ConfigureAwait(false);
+                if (storageItem != null)
                 {
-                    var localFolder = ApplicationData.Current.LocalFolder;
-                    var storageItem = localFolder.TryGetItemAsync(DirectoryName).AsTask().Result;
-                    if (storageItem != null)
-                    {
-                        storageItem.DeleteAsync().AsTask().Wait();
-                    }
+                    await storageItem.DeleteAsync().AsTask().ConfigureAwait(false);
                 }
-            });
+            }
+            finally
+            {
+                _mutex.Release();
+            }
 
             callback.Invoke();
         }
@@ -237,51 +248,53 @@ namespace ReactNative.Modules.Storage
         {
             var keys = new JArray();
 
-            await Task.Run(() =>
+            await _mutex.WaitAsync().ConfigureAwait(false);
+            try
             {
-                lock (_gate)
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var storageItem = await localFolder.TryGetItemAsync(DirectoryName).AsTask().ConfigureAwait(false);
+                if (storageItem != null)
                 {
-                    var localFolder = ApplicationData.Current.LocalFolder;
-                    var storageItem = localFolder.TryGetItemAsync(DirectoryName).AsTask().Result;
-                    if (storageItem != null)
+                    var directory = await localFolder.GetFolderAsync(DirectoryName).AsTask().ConfigureAwait(false);
+                    var items = await directory.GetItemsAsync().AsTask().ConfigureAwait(false);
+                    foreach (var item in items)
                     {
-                        var directory = localFolder.GetFolderAsync(DirectoryName).AsTask().Result;
-                        var items = directory.GetItemsAsync().AsTask().Result;
-                        foreach (var item in items)
+                        var itemName = item.Name;
+                        var itemLength = itemName.Length;
+                        var extLength = FileExtension.Length;
+                        if (itemName.EndsWith(FileExtension) && itemLength > extLength)
                         {
-                            var itemName = item.Name;
-                            var itemLength = itemName.Length;
-                            var extLength = FileExtension.Length;
-                            if (itemName.EndsWith(FileExtension) && itemLength > extLength)
-                            {
-                                keys.Add(item.Name.Substring(0, itemLength - extLength));
-                            }
+                            keys.Add(item.Name.Substring(0, itemLength - extLength));
                         }
                     }
                 }
-            });
+            }
+            finally
+            {
+                _mutex.Release();
+            }
 
             callback.Invoke(null, keys);
         }
 
-        private string Get(string key)
+        private async Task<string> GetAsync(string key)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
             var fileName = GetFileName(key);
 
-            var storageItem = localFolder.TryGetItemAsync(fileName).AsTask().Result;
+            var storageItem = await localFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
             if (storageItem != null)
             {
-                var file = localFolder.GetFileAsync(fileName).AsTask().Result;
-                return FileIO.ReadTextAsync(file).AsTask().Result;
+                var file = await localFolder.GetFileAsync(fileName).AsTask().ConfigureAwait(false);
+                return await FileIO.ReadTextAsync(file).AsTask().ConfigureAwait(false);
             }
 
             return null;
         }
 
-        private JObject Merge(string key, string value)
+        private async Task<JObject> MergeAsync(string key, string value)
         {
-            var oldValue = Get(key);
+            var oldValue = await GetAsync(key).ConfigureAwait(false);
 
             var newValue = default(string);
             if (oldValue == null)
@@ -296,27 +309,27 @@ namespace ReactNative.Modules.Storage
                 newValue = oldJson.ToString(Formatting.None);
             }
 
-            return Set(key, newValue);
+            return await SetAsync(key, newValue).ConfigureAwait(false);
         }
 
-        private JObject Remove(string key)
+        private async Task<JObject> RemoveAsync(string key)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
             var fileName = GetFileName(key);
-            var storageItem = localFolder.TryGetItemAsync(fileName).AsTask().Result;
+            var storageItem = await localFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
             if (storageItem != null)
             {
-                storageItem.DeleteAsync().AsTask().Wait();
+                await storageItem.DeleteAsync().AsTask().ConfigureAwait(false);
             }
 
             return null;
         }
 
-        private JObject Set(string key, string value)
+        private async Task<JObject> SetAsync(string key, string value)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
-            var file = localFolder.CreateFileAsync(GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().Result;
-            FileIO.WriteTextAsync(file, value).AsTask().Wait();
+            var file = await localFolder.CreateFileAsync(GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
+            await FileIO.WriteTextAsync(file, value).AsTask().ConfigureAwait(false);
             return default(JObject);
         }
 
