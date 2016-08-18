@@ -188,6 +188,10 @@ namespace ReactNative.DevSupport
                             }
                         }
                     }
+                    catch (OperationCanceledException)
+                    when (disposable.IsDisposed)
+                    {
+                    }
                     catch
                     {
                         await Task.Delay(LongPollFailureDelayMs);
