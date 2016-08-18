@@ -73,6 +73,34 @@ JsValueRef CALLBACK ConsoleError(JsValueRef callee, bool isConstructCall, JsValu
 	return InvokeConsole(L"error", callee, isConstructCall, arguments, argumentCount, callbackState);
 }
 
+JsErrorCode ChakraHost::RunSerializedScriptFromFile(const wchar_t* szSerializedPath, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result)
+{
+	JsErrorCode status = JsNoError;
+
+	FILE* file = NULL;
+	BYTE* buffer = NULL;
+	if (_wfopen_s(&file, szSerializedPath, L"rb"))
+	{
+		status = JsErrorInvalidArgument;
+		goto cleanup;
+	}
+
+	unsigned int current = ftell(file);
+	fseek(file, 0, SEEK_END);
+	unsigned int end = ftell(file);
+	fseek(file, current, SEEK_SET);
+	unsigned int lengthBytes = end - current;
+	buffer = (BYTE*)calloc(lengthBytes + 1, sizeof(BYTE));
+	fread((void *)buffer, sizeof(BYTE), lengthBytes, file);
+	fclose(file);
+
+
+	//JsRunSerializedScriptWithCallback()
+
+cleanup:
+	return status;
+}
+
 JsErrorCode ChakraHost::SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination)
 {
 	JsErrorCode status = JsNoError;
@@ -100,6 +128,7 @@ JsErrorCode ChakraHost::SerializeScriptFromFile(const wchar_t* szPath, const wch
 	}
 
 	fread((void *)rawBytes, sizeof(char), lengthBytes, file);
+	fclose(file);
 
 	contents = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
 	if (contents == nullptr)
