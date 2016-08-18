@@ -133,14 +133,14 @@ namespace ReactNative.Modules.Image
 
             private async void InitializeImage()
             {
-                var stream = await _parent._uriLoader.OpenReadAsync(Uri);
+                var stream = await _parent._uriLoader.OpenReadAsync(Uri).ConfigureAwait(false);
                 DispatcherHelpers.RunOnDispatcher(async () =>
                 {
                     Image = new BitmapImage();
                     DoSubscribe(Image);
                     try
                     {
-                        await Image.SetSourceAsync(stream);
+                        await Image.SetSourceAsync(stream).AsTask().ConfigureAwait(false);
                     }
                     finally
                     {

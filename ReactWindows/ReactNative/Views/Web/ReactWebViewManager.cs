@@ -233,7 +233,7 @@ namespace ReactNative.Views.Web
                     string[] args = { script };
                     try
                     {
-                        await webView.InvokeScriptAsync("eval", args);
+                        await webView.InvokeScriptAsync("eval", args).AsTask().ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {    

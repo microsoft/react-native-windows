@@ -9,7 +9,7 @@ namespace ReactNative.Modules.Image
         public async Task<IRandomAccessStreamWithContentType> OpenReadAsync(string uri)
         {
             var streamRef = RandomAccessStreamReference.CreateFromUri(new Uri(uri));
-            return await streamRef.OpenReadAsync();
+            return await streamRef.OpenReadAsync().AsTask().ConfigureAwait(false);
         }
 
         public Task PrefetchAsync(string uri)

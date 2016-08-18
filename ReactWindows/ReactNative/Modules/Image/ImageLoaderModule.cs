@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 
 namespace ReactNative.Modules.Image
 {
@@ -38,7 +39,7 @@ namespace ReactNative.Modules.Image
 
             try
             {
-                await _uriLoader.PrefetchAsync(uriString);
+                await _uriLoader.PrefetchAsync(uriString).ConfigureAwait(false);
                 promise.Resolve(true);
             }
             catch (System.Exception ex)
@@ -60,7 +61,7 @@ namespace ReactNative.Modules.Image
             {
                 try
                 {
-                    await reference.LoadedObservable.FirstAsync();
+                    await reference.LoadedObservable.FirstAsync().ToTask().ConfigureAwait(false);
                     DispatcherHelpers.RunOnDispatcher(() =>
                         promise.Resolve(new JObject
                         {

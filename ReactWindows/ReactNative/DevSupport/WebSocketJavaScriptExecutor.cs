@@ -54,7 +54,7 @@ namespace ReactNative.DevSupport
                 {
                     try
                     {
-                        await ConnectCoreAsync(uri, timeoutSource.Token);
+                        await ConnectCoreAsync(uri, timeoutSource.Token).ConfigureAwait(false);
                         return;
                     }
                     catch (OperationCanceledException ex)
@@ -153,13 +153,13 @@ namespace ReactNative.DevSupport
                 if (!_connected)
                 {
                     asyncAction = _webSocket.ConnectAsync(uri);
-                    await asyncAction;
+                    await asyncAction.AsTask().ConfigureAwait(false);
                     _messageWriter = new DataWriter(_webSocket.OutputStream);
                     _connected = true;
                 }
             }
 
-            await PrepareJavaScriptRuntimeAsync(token);
+            await PrepareJavaScriptRuntimeAsync(token).ConfigureAwait(false);
         }
 
         private async Task<JToken> PrepareJavaScriptRuntimeAsync(CancellationToken token)
@@ -179,10 +179,10 @@ namespace ReactNative.DevSupport
                         { "method", "prepareJSRuntime" },
                     };
 
-                    await SendMessageAsync(requestId, request.ToString(Formatting.None));
-                    await Task.WhenAny(callback.Task, cancellationSource.Task);
+                    await SendMessageAsync(requestId, request.ToString(Formatting.None)).ConfigureAwait(false);
+                    await Task.WhenAny(callback.Task, cancellationSource.Task).ConfigureAwait(false);
                     token.ThrowIfCancellationRequested();
-                    return await callback.Task;
+                    return await callback.Task.ConfigureAwait(false);
                 }
                 finally
                 {
@@ -196,7 +196,7 @@ namespace ReactNative.DevSupport
             if (!_isDisposed)
             {
                 _messageWriter.WriteString(message);
-                await _messageWriter.StoreAsync();
+                await _messageWriter.StoreAsync().AsTask().ConfigureAwait(false);
                 // TODO: check result of `StoreAsync()`
             }
             else

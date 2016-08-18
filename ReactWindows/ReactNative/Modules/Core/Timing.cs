@@ -27,7 +27,9 @@ namespace ReactNative.Modules.Core
         public Timing(ReactContext reactContext)
             : base(reactContext)
         {
-            _timers = new HeapBasedPriorityQueue<TimerData>(Comparer<TimerData>.Create((x, y) => (int)(x.TargetTime.Ticks - y.TargetTime.Ticks)));
+            _timers = new HeapBasedPriorityQueue<TimerData>(
+                Comparer<TimerData>.Create((x, y) => 
+                    x.TargetTime.CompareTo(y.TargetTime)));
         }
 
         /// <summary>
@@ -92,7 +94,7 @@ namespace ReactNative.Modules.Core
         /// Creates a timer with the given properties.
         /// </summary>
         /// <param name="callbackId">The timer identifier.</param>
-        /// <param name="duration">The duration.</param>
+        /// <param name="duration">The duration in milliseconds.</param>
         /// <param name="jsSchedulingTime">
         /// The Unix timestamp when the timer was created.
         /// </param>

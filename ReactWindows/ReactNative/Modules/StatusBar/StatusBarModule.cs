@@ -57,11 +57,11 @@ namespace ReactNative.Modules.StatusBar
             {
                 if (hide)
                 {
-                    await _statusBar.HideAsync();
+                    await _statusBar.HideAsync().AsTask().ConfigureAwait(false);
                 }
                 else
                 {
-                    await _statusBar.ShowAsync();
+                    await _statusBar.ShowAsync().AsTask().ConfigureAwait(false);
                 }
             });
         }
@@ -115,7 +115,7 @@ namespace ReactNative.Modules.StatusBar
         /// <param name="action">The action.</param>
         private static async void RunOnDispatcher(DispatchedHandler action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action);
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
     }
 }

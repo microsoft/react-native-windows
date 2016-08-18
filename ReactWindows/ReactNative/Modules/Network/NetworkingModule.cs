@@ -201,8 +201,8 @@ namespace ReactNative.Modules.Network
             string responseType,
             CancellationToken token)
         {
-            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri);
-            var inputStream = await storageFile.OpenReadAsync();
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().ConfigureAwait(false);
+            var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
             request.Content = new HttpStreamContent(inputStream);
             await ProcessRequestAsync(
                 requestId,
@@ -210,7 +210,7 @@ namespace ReactNative.Modules.Network
                 timeout,
                 request,
                 responseType,
-                token);
+                token).ConfigureAwait(false);
         }
 
         private async Task ProcessRequestAsync(
@@ -230,17 +230,17 @@ namespace ReactNative.Modules.Network
                 try
                 {
                     using (token.Register(timeoutSource.Cancel))
-                    using (var response = await _client.SendRequestAsync(request, timeoutSource.Token))
+                    using (var response = await _client.SendRequestAsync(request, timeoutSource.Token).ConfigureAwait(false))
                     {
                         OnResponseReceived(requestId, response);
 
                         if (useIncrementalUpdates && responseType == "text")
                         {
                             var length = response.Content.Headers.ContentLength;
-                            using (var inputStream = await response.Content.ReadAsInputStreamAsync())
+                            using (var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false))
                             using (var stream = inputStream.AsStreamForRead())
                             {
-                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token);
+                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
                                 OnRequestSuccess(requestId);
                             }
                         }
@@ -250,7 +250,7 @@ namespace ReactNative.Modules.Network
                             {
                                 if (responseType == "text")
                                 {
-                                    var responseBody = await response.Content.ReadAsStringAsync();
+                                    var responseBody = await response.Content.ReadAsStringAsync().AsTask().ConfigureAwait(false);
                                     if (responseBody != null)
                                     {
                                         OnDataReceived(requestId, responseBody);
@@ -263,7 +263,7 @@ namespace ReactNative.Modules.Network
                                     {
                                         using (var outputStream = memoryStream.AsOutputStream())
                                         {
-                                            await response.Content.WriteToStreamAsync(outputStream);
+                                            await response.Content.WriteToStreamAsync(outputStream).AsTask().ConfigureAwait(false);
                                         }
 
                                         OnDataReceived(requestId, Convert.ToBase64String(memoryStream.ToArray()));
@@ -308,7 +308,7 @@ namespace ReactNative.Modules.Network
                 var read = default(int);
                 var progress = 0;
                 var total = length.HasValue ? (long)length : -1;
-                while ((read = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                while ((read = await reader.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
                 {
                     progress += read;
                     OnIncrementalDataReceived(requestId, new string(buffer, 0, read), progress, total);
