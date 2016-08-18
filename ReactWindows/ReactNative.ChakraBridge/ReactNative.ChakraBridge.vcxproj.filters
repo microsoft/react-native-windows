@@ -16,5 +16,6 @@
     <ClInclude Include="ChakraHost.h" />
     <ClInclude Include="ChakraStringResult.h" />
     <ClInclude Include="JsrtJavaScriptExecutor.h" />
+    <ClInclude Include="SerializedSourceContext.h" />
   </ItemGroup>
 </Project>

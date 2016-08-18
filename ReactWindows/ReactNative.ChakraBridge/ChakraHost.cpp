@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "ChakraHost.h"
+#include "SerializedSourceContext.h"
 
 void ThrowException(const wchar_t* szException)
 {
@@ -73,6 +74,54 @@ JsValueRef CALLBACK ConsoleError(JsValueRef callee, bool isConstructCall, JsValu
 	return InvokeConsole(L"error", callee, isConstructCall, arguments, argumentCount, callbackState);
 }
 
+bool CALLBACK LoadSourceCallback(JsSourceContext sourceContext, const wchar_t** scriptBuffer)
+{
+	SerializedSourceContext* context = (SerializedSourceContext*)sourceContext;
+	FILE* file;
+	
+	_wfopen_s(&file, context->sourcePath, L"rb");
+
+	unsigned int current = ftell(file);
+	fseek(file, 0, SEEK_END);
+	unsigned int end = ftell(file);
+	fseek(file, current, SEEK_SET);
+	unsigned int lengthBytes = end - current;
+	char* rawBytes = (char *)calloc(lengthBytes + 1, sizeof(char));
+
+	if (rawBytes == nullptr)
+	{
+		return false;
+	}
+
+	fread((void *)rawBytes, sizeof(char), lengthBytes, file);
+	fclose(file);
+
+	wchar_t* contents = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
+	if (contents == nullptr)
+	{
+		free(rawBytes);
+		return false;
+	}
+
+	if (MultiByteToWideChar(CP_UTF8, 0, rawBytes, lengthBytes + 1, contents, lengthBytes + 1) == 0)
+	{
+		free(rawBytes);
+		free(contents);
+		return false;
+	}
+
+	free(rawBytes);
+	*scriptBuffer = contents;
+
+	return true;
+}
+
+void CALLBACK UnloadSourceCallback(JsSourceContext sourceContext)
+{
+	SerializedSourceContext* context = (SerializedSourceContext*)sourceContext;
+	delete context;
+}
+
 JsErrorCode ChakraHost::RunSerializedScriptFromFile(const wchar_t* szSerializedPath, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result)
 {
 	JsErrorCode status = JsNoError;
@@ -94,8 +143,18 @@ JsErrorCode ChakraHost::RunSerializedScriptFromFile(const wchar_t* szSerializedP
 	fread((void *)buffer, sizeof(BYTE), lengthBytes, file);
 	fclose(file);
 
+	SerializedSourceContext* context = new SerializedSourceContext();
+	context->byteCode = buffer;
+	context->sourcePath = szPath;
+	context->scriptBuffer = nullptr;
 
-	//JsRunSerializedScriptWithCallback()
+	JsRunSerializedScriptWithCallback(
+		&LoadSourceCallback,
+		&UnloadSourceCallback,
+		buffer,
+		(JsSourceContext)context,
+		szSourceUri,
+		result);
 
 cleanup:
 	return status;
