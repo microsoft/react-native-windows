@@ -586,7 +586,7 @@ namespace ReactNative
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "RunJavaScriptBundle").Start())
             {
-                await reactInstance.InitializeBridgeAsync();
+                await reactInstance.InitializeBridgeAsync().ConfigureAwait(false);
             }
 
             return reactContext;

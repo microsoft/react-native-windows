@@ -111,7 +111,7 @@ namespace ReactNative.Modules.WebSocket
         {
             try
             {
-                await webSocket.ConnectAsync(new Uri(url));
+                await webSocket.ConnectAsync(new Uri(url)).AsTask().ConfigureAwait(false);
                 _webSocketConnections.Add(id, webSocket);
 
                 var dataWriter = new DataWriter(webSocket.OutputStream);
@@ -134,7 +134,7 @@ namespace ReactNative.Modules.WebSocket
             try
             {
                 dataWriter.WriteString(message);
-                await dataWriter.StoreAsync();
+                await dataWriter.StoreAsync().AsTask().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

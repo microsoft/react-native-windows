@@ -52,7 +52,7 @@ namespace ReactNative.Modules.Clipboard
                     }
                     else if (clip.Contains(DataTransfer.StandardDataFormats.Text))
                     {
-                        var text = await clip.GetTextAsync();
+                        var text = await clip.GetTextAsync().AsTask().ConfigureAwait(false);
                         promise.Resolve(text);
                     }
                     else
@@ -95,7 +95,7 @@ namespace ReactNative.Modules.Clipboard
         /// <param name="action">The action.</param>
         private static async void RunOnDispatcher(DispatchedHandler action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action);
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
     }
 }

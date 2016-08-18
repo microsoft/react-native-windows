@@ -287,11 +287,11 @@ namespace ReactNative.DevSupport
 
             if (IsRemoteDebuggingEnabled)
             {
-                await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, progressDialog.Token);
+                await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, progressDialog.Token).ConfigureAwait(false);
             }
             else if (_jsBundleFile == null)
             {
-                await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, progressDialog.Token);
+                await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, progressDialog.Token).ConfigureAwait(false);
             }
             else
             {
@@ -389,7 +389,7 @@ namespace ReactNative.DevSupport
         {
             try
             {
-                await _devServerHelper.LaunchDevToolsAsync(token);
+                await _devServerHelper.LaunchDevToolsAsync(token).ConfigureAwait(true);
                 var factory = new Func<IJavaScriptExecutor>(() =>
                 {
                     var executor = new WebSocketJavaScriptExecutor();
@@ -419,27 +419,28 @@ namespace ReactNative.DevSupport
         {
             var localFolder = ApplicationData.Current.LocalFolder;
             var localFile = await localFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.ReplaceExisting);
-            using (var stream = await localFile.OpenStreamForWriteAsync())
+            try
             {
-                try
+                using (var stream = await localFile.OpenStreamForWriteAsync())
                 {
                     await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
-                    dismissProgress();
-                    DispatcherHelpers.RunOnDispatcher(_reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer);
                 }
-                catch (DebugServerException ex)
-                {
-                    dismissProgress();
-                    ShowNewNativeError(ex.Message, ex);
-                }
-                catch (Exception ex)
-                {
-                    dismissProgress();
-                    ShowNewNativeError(
-                        "Unable to download JS bundle. Did you forget to " +
-                        "start the development server or connect your device?",
-                        ex);
-                }
+
+                dismissProgress();
+                _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
+            }
+            catch (DebugServerException ex)
+            {
+                dismissProgress();
+                ShowNewNativeError(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                dismissProgress();
+                ShowNewNativeError(
+                    "Unable to download JS bundle. Did you forget to " +
+                    "start the development server or connect your device?",
+                    ex);
             }
         }
 

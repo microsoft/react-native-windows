@@ -95,7 +95,7 @@ namespace ReactNative.Bridge
 
         public async Task InitializeBridgeAsync()
         {
-            await _bundleLoader.InitializeAsync();
+            await _bundleLoader.InitializeAsync().ConfigureAwait(false);
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
             {
@@ -122,7 +122,7 @@ namespace ReactNative.Bridge
                     _bundleLoader.LoadScript(bridge);
 
                     return bridge;
-                });
+                }).ConfigureAwait(false);
             }
         }
 
