@@ -73,6 +73,34 @@ JsValueRef CALLBACK ConsoleError(JsValueRef callee, bool isConstructCall, JsValu
 	return InvokeConsole(L"error", callee, isConstructCall, arguments, argumentCount, callbackState);
 };
 
+JsErrorCode ChakraHost::SerializeScript(const wchar_t* szScript, const wchar_t* szDestination)
+{
+	BYTE* buf = NULL;
+	ULONG bufSize = 0L;
+	IfFailRet(JsSerializeScript(szScript, buf, &bufSize));
+	
+	buf = new BYTE[bufSize];
+	IfFailRet(JsSerializeScript(szScript, buf, &bufSize));
+
+	FILE *file;
+	if (_wfopen_s(&file, szDestination, L"rb"))
+	{
+		return JsErrorInvalidArgument;
+	}
+
+	if (fwrite(buf, sizeof(BYTE), bufSize, file) != bufSize)
+	{
+		return JsErrorFatal;
+	}
+	
+	if (fclose(file))
+	{
+		return JsErrorFatal;
+	}
+
+	return JsNoError;
+};
+
 JsErrorCode ChakraHost::RunScriptFromFile(const wchar_t* szFileName, const wchar_t* szSourceUri, JsValueRef* result)
 {
 	JsErrorCode status = JsNoError;

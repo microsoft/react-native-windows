@@ -9,6 +9,8 @@ public:
 	JsErrorCode Init();
 	JsErrorCode Destroy();
 
+	JsErrorCode SerializeScript(const wchar_t* szScript, const wchar_t* szDestination);
+
 	JsErrorCode RunScript(const wchar_t* szScript, const wchar_t* szSourceUri, JsValueRef* result);
 	JsErrorCode RunScriptFromFile(const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
 
