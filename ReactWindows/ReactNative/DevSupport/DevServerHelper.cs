@@ -113,11 +113,11 @@ namespace ReactNative.DevSupport
         public async Task DownloadBundleFromUrlAsync(string jsModulePath, Stream outputStream, CancellationToken token)
         {
             var bundleUrl = GetSourceUrl(jsModulePath);
-            using (var response = await _client.GetAsync(bundleUrl, token))
+            using (var response = await _client.GetAsync(bundleUrl, token).ConfigureAwait(false))
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    var body = await response.Content.ReadAsStringAsync();
+                    var body = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var exception = DebugServerException.Parse(body);
                     if (exception == null)
                     {
@@ -130,7 +130,7 @@ namespace ReactNative.DevSupport
                     throw exception;
                 }
 
-                await response.Content.CopyToAsync(outputStream);
+                await response.Content.CopyToAsync(outputStream).ConfigureAwait(false);
             }
         }
 
@@ -143,14 +143,14 @@ namespace ReactNative.DevSupport
             var statusUrl = CreatePackagerStatusUrl(DebugServerHost);
             try
             {
-                using (var response = await _client.GetAsync(statusUrl))
+                using (var response = await _client.GetAsync(statusUrl).ConfigureAwait(false))
                 {
                     if (!response.IsSuccessStatusCode)
                     {
                         return false;
                     }
 
-                    var body = await response.Content.ReadAsStringAsync();
+                    var body = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     return body == PackagerOkStatus;
                 }
             }
@@ -180,7 +180,7 @@ namespace ReactNative.DevSupport
                     var onChangeUrl = CreateOnChangeEndpointUrl(DebugServerHost);
                     try
                     {
-                        using (var response = await onChangePollingClient.GetAsync(onChangeUrl, disposable.Token))
+                        using (var response = await onChangePollingClient.GetAsync(onChangeUrl, disposable.Token).ConfigureAwait(false))
                         {
                             if (response.StatusCode == HttpStatusCode.ResetContent)
                             {
@@ -194,7 +194,7 @@ namespace ReactNative.DevSupport
                     }
                     catch
                     {
-                        await Task.Delay(LongPollFailureDelayMs);
+                        await Task.Delay(LongPollFailureDelayMs).ConfigureAwait(false);
                     }
                 }
             });
@@ -208,7 +208,7 @@ namespace ReactNative.DevSupport
         public async Task LaunchDevToolsAsync(CancellationToken token)
         {
             var url = CreateLaunchDevToolsCommandUrl();
-            await _client.GetAsync(url, token);
+            await _client.GetAsync(url, token).ConfigureAwait(false);
             // Ignore response, nothing to report here.
         }
 

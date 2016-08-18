@@ -68,7 +68,7 @@ namespace ReactNative.DevSupport
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 ExceptionDispatchInfo.Capture(exception).Throw();
-            });
+            }).AsTask().ConfigureAwait(false);
         }
 
         public void HandleReloadJavaScript()

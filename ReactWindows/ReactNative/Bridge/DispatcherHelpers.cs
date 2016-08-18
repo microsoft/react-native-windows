@@ -22,7 +22,7 @@ namespace ReactNative.Bridge
 
         public static async void RunOnDispatcher(DispatchedHandler action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action);
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
 
         public static Task<T> CallOnDispatcher<T>(Func<T> func)

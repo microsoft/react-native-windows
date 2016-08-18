@@ -26,7 +26,7 @@ namespace ReactNative.Modules.Network
             {
                 try
                 {
-                    return await asyncInfo;
+                    return await asyncInfo.AsTask().ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {

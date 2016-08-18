@@ -50,11 +50,11 @@ namespace ReactNative.Modules.Location
                 var task = geolocator.GetGeopositionAsync().AsTask();
                 var completedTask = await Task.WhenAny(
                     task, 
-                    Task.Delay(TimeSpan.FromMilliseconds(locationOptions.Timeout)));
+                    Task.Delay(TimeSpan.FromMilliseconds(locationOptions.Timeout))).ConfigureAwait(false);
 
                 if (completedTask == task)
                 {
-                    var geoposition = await task;
+                    var geoposition = await task.ConfigureAwait(false);
                     success.Invoke(ConvertGeoposition(geoposition));
                 }
                 else

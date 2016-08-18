@@ -100,7 +100,7 @@ namespace ReactNative.Bridge.Queue
                     _currentThreadIsProcessingItems = false;
                 }
             }, 
-            WorkItemPriority.Normal);
+            WorkItemPriority.Normal).AsTask().ConfigureAwait(false);
         }
 
         /// <summary>

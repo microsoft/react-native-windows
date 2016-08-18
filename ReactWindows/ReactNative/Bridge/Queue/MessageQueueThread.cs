@@ -309,7 +309,7 @@ namespace ReactNative.Bridge.Queue
                     {
                         _handler(ex);
                     }
-                });
+                }).ConfigureAwait(false);
             }
 
             protected override void Dispose(bool disposing)

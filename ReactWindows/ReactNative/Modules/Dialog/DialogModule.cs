@@ -68,7 +68,7 @@ namespace ReactNative.Modules.Dialog
             _pendingDialog = null;
             if (pendingDialog != null)
             {
-                await pendingDialog.ShowAsync();
+                await pendingDialog.ShowAsync().AsTask().ConfigureAwait(false);
             }
         }
 
@@ -112,7 +112,7 @@ namespace ReactNative.Modules.Dialog
             {
                 if (_isInForeground)
                 {
-                    await messageDialog.ShowAsync();
+                    await messageDialog.ShowAsync().AsTask().ConfigureAwait(false);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace ReactNative.Modules.Dialog
 
         private static async void RunOnDispatcher(DispatchedHandler action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action);
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
     }
 }
