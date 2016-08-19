@@ -1,8 +1,6 @@
 #pragma once
 
 #include "pch.h"
-#include <jsrt.h>
-#include <ppltasks.h>
 #include "ChakraHost.h"
 #include "ChakraStringResult.h"
 
