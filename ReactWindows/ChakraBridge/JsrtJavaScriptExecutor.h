@@ -8,9 +8,6 @@
 
 using namespace concurrency;
 using namespace Platform;
-using namespace Windows::Foundation;
-using namespace Windows::Storage;
-using namespace Windows::Storage::Streams;
 
 namespace ChakraBridge {
 
@@ -28,6 +25,8 @@ public:
 
 	int SerializeScript(String^ source, String^ destination);
 	int SerializeScriptFromFile(String^ file, String^ destination);
+	ChakraStringResult RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri);
+	ChakraStringResult RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri);
 
     ChakraStringResult CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args); 
     ChakraStringResult InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args); 

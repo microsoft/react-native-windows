@@ -82,6 +82,38 @@ int JsrtJavaScriptExectutor::SerializeScriptFromFile(String^ file, String^ desti
 	return this->host.SerializeScriptFromFile(file->Data(), destination->Data());
 }
 
+ChakraStringResult JsrtJavaScriptExectutor::RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri)
+{
+	JsValueRef result;
+	IfFailRetNullPtr(this->host.RunSerailizedScript(buffer->Data, sourceFilePath->Data(), sourceUri->Data(), &result));
+
+	JsValueRef resultJson;
+	IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
+
+	const wchar_t* szBuf;
+	size_t bufLen;
+	IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
+
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
+	return finalResult;
+}
+
+ChakraStringResult JsrtJavaScriptExectutor::RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri)
+{
+	JsValueRef result;
+	IfFailRetNullPtr(this->host.RunSerializedScriptFromFile(serializedPath->Data(), sourceFilePath->Data(), sourceUri->Data(), &result));
+
+	JsValueRef resultJson;
+	IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
+
+	const wchar_t* szBuf;
+	size_t bufLen;
+	IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
+
+	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
+	return finalResult;
+}
+
 ChakraStringResult JsrtJavaScriptExectutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
 {
     JsPropertyIdRef modulePropertyId;
@@ -133,7 +165,7 @@ ChakraStringResult JsrtJavaScriptExectutor::InvokeCallbackAndReturnFlushedQueue(
 
     JsValueRef callbackIdRef;
     IfFailRetNullPtr(JsIntToNumber(callbackId, &callbackIdRef));
-
+	
     JsValueRef argsObj;
     IfFailRetNullPtr(JsPointerToString(args->Data(), args->Length(), &argsObj));
 
