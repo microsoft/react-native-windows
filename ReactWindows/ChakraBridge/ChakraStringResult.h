@@ -2,12 +2,12 @@
 
 using namespace Platform;
 
-namespace ReactNative { namespace ChakraBridge {
+namespace ChakraBridge {
 
 public value struct ChakraStringResult
 {
-	int ErrorCode;
-	String^ Result;
+    int ErrorCode;
+    String^ Result;
 };
 
-};};
+};
