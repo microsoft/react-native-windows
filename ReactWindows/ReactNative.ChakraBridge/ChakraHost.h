@@ -12,6 +12,7 @@ public:
 	JsErrorCode SerializeScript(const wchar_t* szScript, const wchar_t* szDestination);
 	JsErrorCode SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination);
 
+	JsErrorCode RunSerailizedScript(BYTE* buffer, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
 	JsErrorCode RunSerializedScriptFromFile(const wchar_t* szSerializedPath, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
 
 	JsErrorCode RunScript(const wchar_t* szScript, const wchar_t* szSourceUri, JsValueRef* result);
@@ -34,46 +35,3 @@ private:
 	JsValueRef jsonParseObject;
 	JsValueRef jsonStringifyObject;
 };
-
-/*
-struct MySourceContext
-{
-	~MySourceContext()
-	{
-		delete [] byteCode;
-		delete [] sourcePath;
-		if (scriptBuffer)
-		{
-			delete [] scriptBuffer;
-		}
-	}
-
-	char * byteCode;
-	char * sourcePath;
-	wchar_t * scriptBuffer;
-};
-
-bool JsSerializedScriptLoadSourceCallback(JsSourceContext sourceContext, wchar_t ** scriptBuffer)
-{
-	MySourceContext * mySourceContext = (MySourceContext *)sourceContext;
-	*scriptBuffer = ReadSource(mySourceContext->sourcePath);
-	return true;
-}
-
-void JsSerializedScriptUnloadCallback(JsSourceContext sourceContext)
-{
-	MySourceContext * mySourceContext = (MySourceContext *)sourceContext;
-	delete mySourceContext;
-}
-
-void RunScript(char * byteCode, char * sourcePath)
-{
-
-	MySourceContext * sourceContext = new MySourceContext;
-	sourceContext->byteCode = byteCode;
-	sourceContext->sourcePath = sourcePath;
-	sourceContext->scriptBuffer = nullptr;
-	JsValueRef result;
-	JsRunSerializeScriptWithCallBack(&JsSerializedScriptLoadSourceCallback, &JsSerializedScriptUnloadCallback, byteCode, sourceContext, sourcePath, &result);
-}
-*/

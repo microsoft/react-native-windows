@@ -122,16 +122,31 @@ void CALLBACK UnloadSourceCallback(JsSourceContext sourceContext)
 	delete context;
 }
 
+JsErrorCode ChakraHost::RunSerailizedScript(BYTE* buffer, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result)
+{
+	SerializedSourceContext* context = new SerializedSourceContext();
+	context->byteCode = buffer;
+	context->sourcePath = szPath;
+	context->scriptBuffer = nullptr;
+
+	IfFailRet(JsRunSerializedScriptWithCallback(
+		&LoadSourceCallback,
+		&UnloadSourceCallback,
+		buffer,
+		(JsSourceContext)context,
+		szSourceUri,
+		result));
+
+	return JsNoError;
+}
+
 JsErrorCode ChakraHost::RunSerializedScriptFromFile(const wchar_t* szSerializedPath, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result)
 {
-	JsErrorCode status = JsNoError;
-
 	FILE* file = NULL;
 	BYTE* buffer = NULL;
 	if (_wfopen_s(&file, szSerializedPath, L"rb"))
 	{
-		status = JsErrorInvalidArgument;
-		goto cleanup;
+		return JsErrorInvalidArgument;
 	}
 
 	unsigned int current = ftell(file);
@@ -143,21 +158,9 @@ JsErrorCode ChakraHost::RunSerializedScriptFromFile(const wchar_t* szSerializedP
 	fread((void *)buffer, sizeof(BYTE), lengthBytes, file);
 	fclose(file);
 
-	SerializedSourceContext* context = new SerializedSourceContext();
-	context->byteCode = buffer;
-	context->sourcePath = szPath;
-	context->scriptBuffer = nullptr;
+	IfFailRet(RunSerailizedScript(buffer, szPath, szSourceUri, result));
 
-	JsRunSerializedScriptWithCallback(
-		&LoadSourceCallback,
-		&UnloadSourceCallback,
-		buffer,
-		(JsSourceContext)context,
-		szSourceUri,
-		result);
-
-cleanup:
-	return status;
+	return JsNoError;
 }
 
 JsErrorCode ChakraHost::SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination)
