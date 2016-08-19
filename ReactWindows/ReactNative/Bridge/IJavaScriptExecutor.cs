@@ -14,8 +14,22 @@ namespace ReactNative.Bridge
         /// <param name="moduleName">The module name.</param>
         /// <param name="methodName">The method name.</param>
         /// <param name="arguments">The arguments.</param>
-        /// <returns>The result of the call.</returns>
-        JToken Call(string moduleName, string methodName, JArray arguments);
+        /// <returns>The flushed queue of native operations.</returns>
+        JToken CallFunctionReturnFlushedQueue(string moduleName, string methodName, JArray arguments);
+
+        /// <summary>
+        /// Invoke the JavaScript callback.
+        /// </summary>
+        /// <param name="callbackId">The callback identifier.</param>
+        /// <param name="arguments">The arguments.</param>
+        /// <returns>The flushed queue of native operations.</returns>
+        JToken InvokeCallbackAndReturnFlushedQueue(int callbackId, JArray arguments);
+
+        /// <summary>
+        /// Invoke the React 'flushedQueue' function.
+        /// </summary>
+        /// <returns>The flushed queue of native operations.</returns>
+        JToken FlushedQueue();
 
         /// <summary>
         /// Sets a global variable in the JavaScript runtime.

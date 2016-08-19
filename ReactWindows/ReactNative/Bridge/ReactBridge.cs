@@ -51,15 +51,7 @@ namespace ReactNative.Bridge
         /// <param name="arguments">The arguments.</param>
         public void CallFunction(string module, string method, JArray arguments)
         {
-            var allArgs = new JArray
-            {
-                module,
-                method,
-                arguments,
-            };
-
-            var response = _jsExecutor.Call("__fbBatchedBridge", "callFunctionReturnFlushedQueue", allArgs);
-
+            var response = _jsExecutor.CallFunctionReturnFlushedQueue(module, method, arguments);
             ProcessResponse(response);
         }
 
@@ -70,14 +62,7 @@ namespace ReactNative.Bridge
         /// <param name="arguments">The arguments.</param>
         public void InvokeCallback(int callbackId, JArray arguments)
         {
-            var allArgs = new JArray
-            {
-                callbackId,
-                arguments,
-            };
-            
-            var response = _jsExecutor.Call("__fbBatchedBridge", "invokeCallbackAndReturnFlushedQueue", allArgs);
-
+            var response = _jsExecutor.InvokeCallbackAndReturnFlushedQueue(callbackId, arguments);
             ProcessResponse(response);
         }
 
@@ -107,8 +92,7 @@ namespace ReactNative.Bridge
                 throw new ArgumentNullException(nameof(sourceUrl));
 
             _jsExecutor.RunScript(script, sourceUrl);
-            var response = _jsExecutor.Call("__fbBatchedBridge", "flushedQueue", s_empty);
-
+            var response = _jsExecutor.FlushedQueue();
             ProcessResponse(response);
         }
 
