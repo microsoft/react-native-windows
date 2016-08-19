@@ -73,6 +73,15 @@ ChakraStringResult JsrtJavaScriptExectutor::RunScriptFromFile(String^ sourceFile
     return finalResult;
 }
 
+int JsrtJavaScriptExectutor::SerializeScript(String^ source, String^ destination) {
+	return this->host.SerializeScript(source->Data(), destination->Data());
+}
+
+int JsrtJavaScriptExectutor::SerializeScriptFromFile(String^ file, String^ destination)
+{
+	return this->host.SerializeScriptFromFile(file->Data(), destination->Data());
+}
+
 ChakraStringResult JsrtJavaScriptExectutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
 {
     JsPropertyIdRef modulePropertyId;

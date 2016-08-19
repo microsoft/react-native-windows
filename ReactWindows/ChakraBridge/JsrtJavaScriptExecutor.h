@@ -26,9 +26,12 @@ public:
     ChakraStringResult RunScript(String^ source, String^ sourceUri);
     ChakraStringResult RunScriptFromFile(String^ sourceFilePath, String^ sourceUri);
 
-    ChakraStringResult CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args); // TODO: Parse the arg
-    ChakraStringResult InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args); // global object "__fbBatchedBridge", method "invokeCallbackAndReturnFlushedQueue" parse the arg
-    ChakraStringResult FlushedQueue(); // global object "__fbBatchedBridge", "flushedQueue", invoke with global obj
+	int SerializeScript(String^ source, String^ destination);
+	int SerializeScriptFromFile(String^ file, String^ destination);
+
+    ChakraStringResult CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args); 
+    ChakraStringResult InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args); 
+    ChakraStringResult FlushedQueue(); 
 private:
     ChakraHost host;
 };
