@@ -20,6 +20,6 @@ namespace ReactNative.Modules.Image
         /// </summary>
         /// <param name="uri">The URI.</param>
         /// <returns>A task to await the stream.</returns>
-        Task<IRandomAccessStreamWithContentType> OpenReadAsync(string uri);
+        Task<IRandomAccessStream> OpenReadAsync(string uri);
     }
 }
