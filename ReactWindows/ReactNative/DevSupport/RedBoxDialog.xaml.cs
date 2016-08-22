@@ -11,7 +11,7 @@ namespace ReactNative.DevSupport
     /// <summary>
     /// The content dialog for red box exception display.
     /// </summary>
-    public sealed partial class RedBoxDialog : ContentDialog, INotifyPropertyChanged
+    sealed partial class RedBoxDialog : ContentDialog, INotifyPropertyChanged
     {
         private readonly Action _onClick;
 
