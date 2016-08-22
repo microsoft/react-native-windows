@@ -9,13 +9,13 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ChakraHost.cpp" />
-    <ClCompile Include="JsrtJavaScriptExecutor.cpp" />
+    <ClCompile Include="NativeJavaScriptExecutor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="ChakraHost.h" />
     <ClInclude Include="ChakraStringResult.h" />
-    <ClInclude Include="JsrtJavaScriptExecutor.h" />
     <ClInclude Include="SerializedSourceContext.h" />
+    <ClInclude Include="NativeJavaScriptExecutor.h" />
   </ItemGroup>
 </Project>

@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "JsrtJavaScriptExecutor.h"
+#include "NativeJavaScriptExecutor.h"
 
 using namespace ChakraBridge;
 
-int JsrtJavaScriptExectutor::InitializeHost()
+int NativeJavaScriptExecutor::InitializeHost()
 {
     return this->host.Init();
 }
 
-int JsrtJavaScriptExectutor::DisposeHost()
+int NativeJavaScriptExecutor::DisposeHost()
 {
     return this->host.Destroy();
 }
 
-int JsrtJavaScriptExectutor::SetGlobalVariable(String^ variableName, String^ stringifiedText)
+int NativeJavaScriptExecutor::SetGlobalVariable(String^ variableName, String^ stringifiedText)
 {
     JsValueRef valueStringified;
     IfFailRet(JsPointerToString(stringifiedText->Data(), stringifiedText->Length(), &valueStringified));
@@ -25,7 +25,7 @@ int JsrtJavaScriptExectutor::SetGlobalVariable(String^ variableName, String^ str
     return JsNoError;
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::GetGlobalVariable(String^ variableName)
+ChakraStringResult NativeJavaScriptExecutor::GetGlobalVariable(String^ variableName)
 {
     JsValueRef globalVariable;
     IfFailRetNullPtr(this->host.GetGlobalVariable(variableName->Data(), &globalVariable));
@@ -41,7 +41,7 @@ ChakraStringResult JsrtJavaScriptExectutor::GetGlobalVariable(String^ variableNa
     return finalResult;
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::RunScript(String^ source, String^ sourceUri)
+ChakraStringResult NativeJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
 {
     JsValueRef result;
     IfFailRetNullPtr(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
@@ -57,7 +57,7 @@ ChakraStringResult JsrtJavaScriptExectutor::RunScript(String^ source, String^ so
     return finalResult;
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::RunScriptFromFile(String^ sourceFilePath, String^ sourceUri)
+ChakraStringResult NativeJavaScriptExecutor::RunScriptFromFile(String^ sourceFilePath, String^ sourceUri)
 {
     JsValueRef result;
     IfFailRetNullPtr(this->host.RunScriptFromFile(sourceFilePath->Data(), sourceUri->Data(), &result));
@@ -73,16 +73,16 @@ ChakraStringResult JsrtJavaScriptExectutor::RunScriptFromFile(String^ sourceFile
     return finalResult;
 }
 
-int JsrtJavaScriptExectutor::SerializeScript(String^ source, String^ destination) {
+int NativeJavaScriptExecutor::SerializeScript(String^ source, String^ destination) {
 	return this->host.SerializeScript(source->Data(), destination->Data());
 }
 
-int JsrtJavaScriptExectutor::SerializeScriptFromFile(String^ file, String^ destination)
+int NativeJavaScriptExecutor::SerializeScriptFromFile(String^ file, String^ destination)
 {
 	return this->host.SerializeScriptFromFile(file->Data(), destination->Data());
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri)
+ChakraStringResult NativeJavaScriptExecutor::RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri)
 {
 	JsValueRef result;
 	IfFailRetNullPtr(this->host.RunSerailizedScript(buffer->Data, sourceFilePath->Data(), sourceUri->Data(), &result));
@@ -98,7 +98,7 @@ ChakraStringResult JsrtJavaScriptExectutor::RunSerializedScript(const Array<byte
 	return finalResult;
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri)
+ChakraStringResult NativeJavaScriptExecutor::RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri)
 {
 	JsValueRef result;
 	IfFailRetNullPtr(this->host.RunSerializedScriptFromFile(serializedPath->Data(), sourceFilePath->Data(), sourceUri->Data(), &result));
@@ -114,7 +114,7 @@ ChakraStringResult JsrtJavaScriptExectutor::RunSerializedScriptFromFile(String^ 
 	return finalResult;
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
+ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
 {
     JsPropertyIdRef modulePropertyId;
     IfFailRetNullPtr(JsGetPropertyIdFromName(moduleName->Data(), &modulePropertyId));
@@ -149,7 +149,7 @@ ChakraStringResult JsrtJavaScriptExectutor::CallFunctionAndReturnFlushedQueue(St
     return finalResult;
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args)
+ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args)
 {
     JsPropertyIdRef fbBridgeId;
     IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
@@ -187,7 +187,7 @@ ChakraStringResult JsrtJavaScriptExectutor::InvokeCallbackAndReturnFlushedQueue(
     return finalResult;
 }
 
-ChakraStringResult JsrtJavaScriptExectutor::FlushedQueue()
+ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
 {
     JsPropertyIdRef fbBridgeId;
     IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
