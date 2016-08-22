@@ -8,10 +8,9 @@ namespace ReactNative.Touch
     /// This class coordinates JavaScript responder commands for the 
     /// <see cref="ReactNative.UIManager.UIManagerModule"/>. It should be set 
     /// as the <see cref="IOnInterceptTouchEventListener"/> for all newly 
-    /// created native views that implement 
-    /// <see cref="IReactInterceptingViewParent"/> and will dispatch touch
-    /// events to the JavaScript gesture recognizer when the JavaScript
-    /// responder is set to be enabled.
+    /// created native views that implement IReactInterceptingViewParent and 
+    /// will dispatch touch events to the JavaScript gesture recognizer when
+    /// the JavaScript responder is set to be enabled.
     /// </summary>
     public class JavaScriptResponderHandler : IOnInterceptTouchEventListener
     {

@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative", "ReactNative\ReactNative.csproj", "{C7673AD5-E3AA-468C-A5FD-FA38154E205C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{D52267B5-396F-424A-BB26-C9E750032846}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Tests", "ReactNative.Tests\ReactNative.Tests.csproj", "{5AC8108B-1C39-4C4A-8653-DBBE4ECCE691}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "ChakraBridge\ChakraBridge.vcxproj", "{4B72C796-16D5-4E3A-81C0-3E36F531E578}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +147,36 @@ Global
 		{5AC8108B-1C39-4C4A-8653-DBBE4ECCE691}.ReleaseBundle|x86.ActiveCfg = Release|x86
 		{5AC8108B-1C39-4C4A-8653-DBBE4ECCE691}.ReleaseBundle|x86.Build.0 = Release|x86
 		{5AC8108B-1C39-4C4A-8653-DBBE4ECCE691}.ReleaseBundle|x86.Deploy.0 = Release|x86
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|ARM.Build.0 = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x64.ActiveCfg = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x64.Build.0 = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x86.Build.0 = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|Any CPU.ActiveCfg = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|Any CPU.Build.0 = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x64.Build.0 = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x86.Build.0 = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|Any CPU.ActiveCfg = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|ARM.ActiveCfg = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|ARM.Build.0 = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x64.ActiveCfg = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x64.Build.0 = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x86.ActiveCfg = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x86.Build.0 = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|Any CPU.ActiveCfg = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|Any CPU.Build.0 = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x64.Build.0 = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

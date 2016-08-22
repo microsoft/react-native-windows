@@ -9,7 +9,7 @@ namespace ReactNative.DevSupport
     /// <remarks>
     /// This is used when awaiting the regeneration of the JavaScript bundle.
     /// </remarks>
-    public sealed partial class ProgressDialog : ContentDialog
+    sealed partial class ProgressDialog : ContentDialog
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
 
