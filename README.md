@@ -36,6 +36,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ### Requirements
 
 In addition to the requirements from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html):
+- [NPM 3.x](https://www.npmjs.com/package/npm)
 - [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
 - [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
 
