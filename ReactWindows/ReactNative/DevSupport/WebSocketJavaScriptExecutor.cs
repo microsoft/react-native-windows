@@ -54,7 +54,7 @@ namespace ReactNative.DevSupport
                 {
                     try
                     {
-                        await ConnectCoreAsync(uri, timeoutSource.Token);
+                        await ConnectCoreAsync(uri, timeoutSource.Token).ConfigureAwait(false);
                         return;
                     }
                     catch (OperationCanceledException ex)

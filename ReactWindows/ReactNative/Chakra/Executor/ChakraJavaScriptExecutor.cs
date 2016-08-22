@@ -308,14 +308,25 @@ namespace ReactNative.Chakra.Executor
 
         private string Stringify(JavaScriptValue value)
         {
-            JavaScriptValue result;
-            Native.ThrowIfError(Native.JsCallFunction(
-                _stringifyFunction, 
-                new[] { _globalObject, value }, 
-                2, out 
-                result));
-
-            return result.ToString();
+            switch (value.ValueType)
+            {
+                case JavaScriptValueType.Undefined:
+                case JavaScriptValueType.Null:
+                case JavaScriptValueType.Number:
+                case JavaScriptValueType.String:
+                case JavaScriptValueType.Boolean:
+                case JavaScriptValueType.Object:
+                case JavaScriptValueType.Array:
+                case JavaScriptValueType.TypedArray:
+                    return ConvertJson(value).ToString(Formatting.None);
+                case JavaScriptValueType.Function:
+                case JavaScriptValueType.Error:
+                case JavaScriptValueType.Symbol:
+                case JavaScriptValueType.ArrayBuffer:
+                    return value.ConvertToString().ToString();
+                default:
+                    throw new NotImplementedException();
+            }
         }
         #endregion
 
