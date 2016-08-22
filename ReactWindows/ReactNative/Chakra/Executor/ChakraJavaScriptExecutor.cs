@@ -300,8 +300,7 @@ namespace ReactNative.Chakra.Executor
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(
-                    "Error in ChakraExecutor.ConsoleCallback: " + ex.Message);
+                Debug.WriteLine($"Error in ChakraExecutor.ConsoleCallback: {ex.Message}");
             }
 
             return JavaScriptValue.Undefined;
@@ -309,22 +308,14 @@ namespace ReactNative.Chakra.Executor
 
         private string Stringify(JavaScriptValue value)
         {
-            switch (value.ValueType)
-            {
-                case JavaScriptValueType.Undefined:
-                case JavaScriptValueType.Null:
-                case JavaScriptValueType.Number:
-                case JavaScriptValueType.String:
-                case JavaScriptValueType.Boolean:
-                case JavaScriptValueType.Object:
-                case JavaScriptValueType.Array:
-                    return ConvertJson(value).ToString(Formatting.None);
-                case JavaScriptValueType.Function:
-                case JavaScriptValueType.Error:
-                    return value.ConvertToString().ToString();
-                default:
-                    throw new NotImplementedException();
-            }
+            JavaScriptValue result;
+            Native.ThrowIfError(Native.JsCallFunction(
+                _stringifyFunction, 
+                new[] { _globalObject, value }, 
+                2, out 
+                result));
+
+            return result.ToString();
         }
         #endregion
 

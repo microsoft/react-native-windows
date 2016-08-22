@@ -6,49 +6,51 @@ namespace ReactNative.Tests
 {
     class MockJavaScriptExecutor : IJavaScriptExecutor
     {
-        private readonly Func<string, string, JArray, JToken> _onCall;
-        private readonly Action<string, string> _runScript;
-        private readonly Action<string, JToken> _onSetGlobalVariable;
-        private readonly Action _onDispose;
+        public Func<string, string, JArray, JToken> OnCallFunctionReturnFlushedQueue { get; set; } = EmptyCallFunctionReturnFlushedQueue;
+        public Func<int, JArray, JToken> OnInvokeCallbackAndReturnFlushedQueue { get; set; } = EmptyInvokeCallbackAndReturnFlushedQueue;
+        public Func<JToken> OnFlushQueue { get; set; } = EmptyFlushQueue;
 
-        public MockJavaScriptExecutor(
-            Func<string, string, JArray, JToken> onCall)
-            : this(onCall, (_, __) => { }, (_, __) => { }, () => { })
-        {
-        }
+        public Action<string, string> OnRunScript { get; set; } = EmptyRunScript;
+        public Action<string, JToken> OnSetGlobalVariable { get; set; } = EmptySetGlobalVariable;
+        public Action OnDispose { get; set; } = EmptyAction;
 
-        public MockJavaScriptExecutor(
-            Func<string, string, JArray, JToken> onCall,
-            Action<string, string> runScript,
-            Action<string, JToken> onSetGlobalVariable,
-            Action onDispose)
-        {
-            _onCall = onCall;
-            _runScript = runScript;
-            _onSetGlobalVariable = onSetGlobalVariable;
-            _onDispose = onDispose;
-        }
+        private static readonly Action EmptyAction = () => { };
+        private static readonly Action<string, string> EmptyRunScript = (_, __) => { };
+        private static readonly Action<string, JToken> EmptySetGlobalVariable = (_, __) => { };
+        private static readonly Func<string, string, JArray, JToken> EmptyCallFunctionReturnFlushedQueue = (_, __, ___) => { throw new NotImplementedException(); };
+        private static readonly Func<int, JArray, JToken> EmptyInvokeCallbackAndReturnFlushedQueue = (_, __) => { throw new NotImplementedException(); };
+        private static readonly Func<JToken> EmptyFlushQueue = () => { throw new NotImplementedException(); };
 
         public void Initialize() { }
 
-        public JToken Call(string moduleName, string methodName, JArray arguments)
-        {
-            return _onCall(moduleName, methodName, arguments);
-        }
-
         public void RunScript(string script, string sourceUrl)
         {
-            _runScript(script, sourceUrl);
+            OnRunScript(script, sourceUrl);
         }
 
         public void SetGlobalVariable(string propertyName, JToken value)
         {
-            _onSetGlobalVariable(propertyName, value);
+            OnSetGlobalVariable(propertyName, value);
         }
 
         public void Dispose()
         {
-            _onDispose();
+            OnDispose();
+        }
+
+        public JToken CallFunctionReturnFlushedQueue(string moduleName, string methodName, JArray arguments)
+        {
+            return OnCallFunctionReturnFlushedQueue(moduleName, methodName, arguments);
+        }
+
+        public JToken InvokeCallbackAndReturnFlushedQueue(int callbackId, JArray arguments)
+        {
+            return OnInvokeCallbackAndReturnFlushedQueue(callbackId, arguments);
+        }
+
+        public JToken FlushedQueue()
+        {
+            return OnFlushQueue();
         }
     }
 }
