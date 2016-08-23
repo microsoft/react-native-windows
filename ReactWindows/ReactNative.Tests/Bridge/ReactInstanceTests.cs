@@ -24,7 +24,12 @@ namespace ReactNative.Tests.Bridge
                 .Add<TestJavaScriptModule>()
                 .Build();
 
-            var executor = new MockJavaScriptExecutor((p0, p1, p2) => JValue.CreateNull());
+            var executor = new MockJavaScriptExecutor
+            {
+                OnCallFunctionReturnFlushedQueue = (_, __, ___) => JValue.CreateNull(),
+                OnFlushQueue = () => JValue.CreateNull(),
+                OnInvokeCallbackAndReturnFlushedQueue = (_, __) => JValue.CreateNull()
+            };
             var builder = new ReactInstance.Builder()
             {
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
@@ -58,7 +63,12 @@ namespace ReactNative.Tests.Bridge
 
             var jsRegistry = new JavaScriptModuleRegistry.Builder().Build();
 
-            var executor = new MockJavaScriptExecutor((p0, p1, p2) => JValue.CreateNull());
+            var executor = new MockJavaScriptExecutor
+            {
+                OnCallFunctionReturnFlushedQueue = (_, __, ___) => JValue.CreateNull(),
+                OnFlushQueue = () => JValue.CreateNull(),
+                OnInvokeCallbackAndReturnFlushedQueue = (_, __) => JValue.CreateNull()
+            };
             var builder = new ReactInstance.Builder()
             {
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
@@ -108,7 +118,12 @@ namespace ReactNative.Tests.Bridge
                 .Build();
 
             var jsRegistry = new JavaScriptModuleRegistry.Builder().Build();
-            var executor = new MockJavaScriptExecutor((p0, p1, p2) => JValue.CreateNull());
+            var executor = new MockJavaScriptExecutor
+            {
+                OnCallFunctionReturnFlushedQueue = (_, __, ___) => JValue.CreateNull(),
+                OnFlushQueue = () => JValue.CreateNull(),
+                OnInvokeCallbackAndReturnFlushedQueue = (_, __) => JValue.CreateNull()
+            };
 
             var exception = new Exception();
             var tcs = new TaskCompletionSource<Exception>();

@@ -14,15 +14,19 @@ namespace ReactNative.Tests.Chakra.Executor
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
             {
                 AssertEx.Throws<ArgumentNullException>(
-                    () => executor.Call(null, "foo", new JArray()),
+                    () => executor.CallFunctionReturnFlushedQueue(null, "foo", new JArray()),
                     ex => Assert.AreEqual("moduleName", ex.ParamName));
 
                 AssertEx.Throws<ArgumentNullException>(
-                    () => executor.Call("foo", null, new JArray()),
+                    () => executor.CallFunctionReturnFlushedQueue("foo", null, new JArray()),
                     ex => Assert.AreEqual("methodName", ex.ParamName));
 
                 AssertEx.Throws<ArgumentNullException>(
-                    () => executor.Call("foo", "bar", null),
+                    () => executor.CallFunctionReturnFlushedQueue("foo", "bar", null),
+                    ex => Assert.AreEqual("arguments", ex.ParamName));
+
+                AssertEx.Throws<ArgumentNullException>(
+                    () => executor.InvokeCallbackAndReturnFlushedQueue(0, null),
                     ex => Assert.AreEqual("arguments", ex.ParamName));
 
                 AssertEx.Throws<ArgumentNullException>(

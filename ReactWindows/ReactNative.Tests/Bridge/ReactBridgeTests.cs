@@ -120,10 +120,15 @@ namespace ReactNative.Tests.Bridge
             {
                 var jsonResponse = JArray.Parse("[[42,17],[16,22],[[],[\"foo\"]]]");
 
-                var executor = new MockJavaScriptExecutor((module, method, args) =>
+                var executor = new MockJavaScriptExecutor
                 {
-                    return jsonResponse;
-                });
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) =>
+                    {
+                        Assert.AreEqual(module, "module");
+                        Assert.AreEqual(method, "method");
+                        return jsonResponse;
+                    }
+                };
 
                 var callbacks = new List<Tuple<int, int, JArray>>();
                 var eventHandler = new AutoResetEvent(false);
@@ -166,10 +171,13 @@ namespace ReactNative.Tests.Bridge
             using (var nativeThread = CreateNativeModulesThread())
             {
                 var count = 0;
-                var executor = new MockJavaScriptExecutor((module, method, args) =>
+                var executor = new MockJavaScriptExecutor
                 {
-                    return responses[count++];
-                });
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) =>
+                    {
+                        return responses[count++];
+                    }
+                };
 
                 var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
 

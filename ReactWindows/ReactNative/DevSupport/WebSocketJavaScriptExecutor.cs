@@ -26,7 +26,7 @@ namespace ReactNative.DevSupport
         private DataWriter _messageWriter;
         private int _requestId;
         private bool _isDisposed;
-         
+
         public WebSocketJavaScriptExecutor()
         {
             _webSocket = new MessageWebSocket();
@@ -73,34 +73,28 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public JToken Call(string moduleName, string methodName, JArray arguments)
+        public JToken CallFunctionReturnFlushedQueue(string moduleName, string methodName, JArray arguments)
         {
-            var requestId = Interlocked.Increment(ref _requestId);
-            var callback = new TaskCompletionSource<JToken>();
-            _callbacks.Add(requestId, callback);
+            return Call("callFunctionReturnFlushedQueue", new JArray
+            {
+                moduleName,
+                methodName,
+                arguments,
+            });
+        }
 
-            try
+        public JToken InvokeCallbackAndReturnFlushedQueue(int callbackId, JArray arguments)
+        {
+            return Call("invokeCallbackAndReturnFlushedQueue", new JArray
             {
-                var request = new JObject
-                {
-                    { "id", requestId },
-                    { "method", methodName },
-                    { "arguments", arguments },
-                };
+                callbackId,
+                arguments,
+            });
+        }
 
-                SendMessageAsync(requestId, request.ToString(Formatting.None)).Wait();
-                return callback.Task.Result;
-            }
-            catch (AggregateException ex)
-            when (ex.InnerExceptions.Count == 1)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                /* Should not */ throw;
-            }
-            finally
-            {
-                _callbacks.Remove(requestId);
-            }
+        public JToken FlushedQueue()
+        {
+            return Call("flushedQueue", new JArray());
         }
 
         public void RunScript(string script, string sourceUrl)
@@ -145,6 +139,37 @@ namespace ReactNative.DevSupport
             _webSocket.Dispose();
         }
 
+        private JToken Call(string methodName, JArray arguments)
+        {
+            var requestId = Interlocked.Increment(ref _requestId);
+            var callback = new TaskCompletionSource<JToken>();
+            _callbacks.Add(requestId, callback);
+
+            try
+            {
+                var request = new JObject
+                {
+                    { "id", requestId },
+                    { "method", methodName },
+                    { "arguments", arguments },
+                };
+
+                SendMessageAsync(requestId, request.ToString(Formatting.None)).Wait();
+                return callback.Task.Result;
+            }
+            catch (AggregateException ex)
+            when (ex.InnerExceptions.Count == 1)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                /* Should not */
+                throw;
+            }
+            finally
+            {
+                _callbacks.Remove(requestId);
+            }
+        }
+
         private async Task ConnectCoreAsync(Uri uri, CancellationToken token)
         {
             var asyncAction = default(IAsyncAction);
@@ -153,13 +178,13 @@ namespace ReactNative.DevSupport
                 if (!_connected)
                 {
                     asyncAction = _webSocket.ConnectAsync(uri);
-                    await asyncAction.AsTask().ConfigureAwait(false);
+                    await asyncAction;
                     _messageWriter = new DataWriter(_webSocket.OutputStream);
                     _connected = true;
                 }
             }
 
-            await PrepareJavaScriptRuntimeAsync(token).ConfigureAwait(false);
+            await PrepareJavaScriptRuntimeAsync(token);
         }
 
         private async Task<JToken> PrepareJavaScriptRuntimeAsync(CancellationToken token)
@@ -179,10 +204,10 @@ namespace ReactNative.DevSupport
                         { "method", "prepareJSRuntime" },
                     };
 
-                    await SendMessageAsync(requestId, request.ToString(Formatting.None)).ConfigureAwait(false);
-                    await Task.WhenAny(callback.Task, cancellationSource.Task).ConfigureAwait(false);
+                    await SendMessageAsync(requestId, request.ToString(Formatting.None));
+                    await Task.WhenAny(callback.Task, cancellationSource.Task);
                     token.ThrowIfCancellationRequested();
-                    return await callback.Task.ConfigureAwait(false);
+                    return await callback.Task;
                 }
                 finally
                 {
@@ -196,7 +221,7 @@ namespace ReactNative.DevSupport
             if (!_isDisposed)
             {
                 _messageWriter.WriteString(message);
-                await _messageWriter.StoreAsync().AsTask().ConfigureAwait(false);
+                await _messageWriter.StoreAsync();
                 // TODO: check result of `StoreAsync()`
             }
             else
