@@ -1,10 +1,12 @@
-﻿using ReactNative.Modules.Image;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -21,6 +23,9 @@ namespace ReactNative.Views.Image
             new Dictionary<Border, SerialDisposable>();
 
         private readonly IImageCache _imageCache;
+
+        private readonly Dictionary<int, Dictionary<string, double>> _imageSources =
+            new Dictionary<int, Dictionary<string, double>>();
 
         /// <summary>
         /// Instantiates the <see cref="ReactImageManager"/>.  
@@ -107,41 +112,49 @@ namespace ReactNative.Views.Image
         /// Set the source URI of the image.
         /// </summary>
         /// <param name="view">The image view instance.</param>
-        /// <param name="source">The source URI.</param>
+        /// <param name="sources">The source URI.</param>
         [ReactProp("src")]
-        public void SetSource(Border view, string source)
+        public void SetSource(Border view, object[] sources)
         {
-            var imageBrush = (ImageBrush)view.Background;
-
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        ReactImageLoadEvent.OnLoadStart));
-
-            var reference = _imageCache.Get(source);
-            var subscription = reference.LoadedObservable.Subscribe(
-                _ =>
-                {
-                    imageBrush.ImageSource = reference.Image;
-                    OnImageOpened(view);
-                },
-                _ => OnImageFailed(view));
-
-            var disposable = default(SerialDisposable);
-            if (!_disposables.TryGetValue(view, out disposable))
+            // There is no image source
+            if (sources.Length == 0)
             {
-                disposable = new SerialDisposable();
-                _disposables.Add(view, disposable);
+                return;
             }
 
-            disposable.Disposable = new CompositeDisposable
+            // Optimize for the case where we have just one uri, case in which we don't need the sizes
+            if (sources.Length == 1)
             {
-                reference,
-                subscription,
-            };
+                var uri = new ReactStylesDiffMap((JObject)sources[0]).GetProperty<string>("uri");
+                SetUriFromSingleSource(view, uri);
+            }
+            else
+            {
+                var viewSources = default(Dictionary<string, double>);
+                if (_imageSources.TryGetValue(view.GetTag(), out viewSources))
+                {
+                    viewSources.Clear();
+                }
+                else
+                {
+                    viewSources = new Dictionary<string, double>();
+                }
+
+                foreach (var source in sources)
+                {
+                    var props = new ReactStylesDiffMap((JObject)source);
+                    viewSources.Add(props.GetProperty<string>("uri"), props.GetProperty<double>("width") * props.GetProperty<double>("height"));
+                }
+                _imageSources.Add(view.GetTag(), viewSources);
+
+                if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
+                {
+                    // If we need to choose from multiple uris but the size is not yet set, wait for layout pass
+                    return;
+                }
+
+                SetUriFromMultipleSources(view);
+            }
         }
         
         /// <summary>
@@ -196,12 +209,32 @@ namespace ReactNative.Views.Image
         {
             var imageBrush = (ImageBrush)view.Background;
 
+            var sources = default(Dictionary<string, double>);
+            if (_imageSources.TryGetValue(view.GetTag(), out sources))
+            {
+                _imageSources.Remove(view.GetTag());
+            }
+
             var disposable = default(SerialDisposable);
             if (_disposables.TryGetValue(view, out disposable))
             {
                 disposable.Dispose();
                 _disposables.Remove(view);
             }
+        }
+
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The output buffer.</param>
+        public override void SetDimensions(Border view, Dimensions dimensions)
+        {
+            Canvas.SetLeft(view, dimensions.X);
+            Canvas.SetTop(view, dimensions.Y);
+            view.Width = dimensions.Width;
+            view.Height = dimensions.Height;
+            SetUriFromMultipleSources(view);
         }
 
         /// <summary>
@@ -243,6 +276,63 @@ namespace ReactNative.Views.Image
                 new ReactImageLoadEvent(
                     view.GetTag(),
                     ReactImageLoadEvent.OnLoadEnd));
+        }
+
+        /// <summary>
+        /// Set the source URI of the image.
+        /// </summary>
+        /// <param name="view">The image view instance.</param>
+        /// <param name="source">The source URI.</param>
+        private void SetUriFromSingleSource(Border view, string source)
+        {
+            var imageBrush = (ImageBrush)view.Background;
+
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactImageLoadEvent(
+                        view.GetTag(),
+                        ReactImageLoadEvent.OnLoadStart));
+
+            var reference = _imageCache.Get(source);
+            var subscription = reference.LoadedObservable.Subscribe(
+                _ =>
+                {
+                    imageBrush.ImageSource = reference.Image;
+                    OnImageOpened(view);
+                },
+                _ => OnImageFailed(view));
+
+            var disposable = default(SerialDisposable);
+            if (!_disposables.TryGetValue(view, out disposable))
+            {
+                disposable = new SerialDisposable();
+                _disposables.Add(view, disposable);
+            }
+
+            disposable.Disposable = new CompositeDisposable
+            {
+                reference,
+                subscription,
+            };
+        }
+
+        /// <summary>
+        /// Chooses the uri with the size closest to the target image size. Must be called only after the
+        /// layout pass when the sizes of the target image have been computed, and when there are at least
+        /// two sources to choose from.
+        /// </summary>
+        /// <param name="view">The image view instance.</param>
+        private void SetUriFromMultipleSources(Border view)
+        {
+            var sources = default(Dictionary<string, double>);
+            if (_imageSources.TryGetValue(view.GetTag(), out sources))
+            {
+                var targetImageSize = view.Width * view.Height;
+                var bestUri = sources.OrderBy(source => Math.Abs(1.0 - (source.Value) / targetImageSize)).First().Key;
+                SetUriFromSingleSource(view, bestUri);
+            }
         }
     }
 }

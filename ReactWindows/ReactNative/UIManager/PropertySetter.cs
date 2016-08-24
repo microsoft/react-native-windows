@@ -1,4 +1,5 @@
 ﻿using ReactNative.UIManager.Annotations;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -114,8 +115,15 @@ namespace ReactNative.UIManager
                 return defaultFunc(_attribute);
             }
 
-            return props.GetProperty(Name)?
-                .ToObject(PropertyType);
+            var prop = props.GetProperty(Name);
+            if (prop != null && prop.Type == JTokenType.Array)
+            {
+                return prop.ToObject<object[]>();
+            }
+            else
+            {
+                return prop?.ToObject(PropertyType);
+            }
         }
 
         private void Invoke(object instance, object[] args)
