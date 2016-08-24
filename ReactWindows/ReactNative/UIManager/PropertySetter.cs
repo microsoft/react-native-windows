@@ -115,15 +115,8 @@ namespace ReactNative.UIManager
                 return defaultFunc(_attribute);
             }
 
-            var prop = props.GetProperty(Name);
-            if (prop != null && prop.Type == JTokenType.Array)
-            {
-                return prop.ToObject<object[]>();
-            }
-            else
-            {
-                return prop?.ToObject(PropertyType);
-            }
+            return props.GetProperty(Name)?
+                .ToObject(PropertyType);
         }
 
         private void Invoke(object instance, object[] args)

@@ -114,18 +114,18 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         /// <param name="sources">The source URI.</param>
         [ReactProp("src")]
-        public void SetSource(Border view, object[] sources)
+        public void SetSource(Border view, JArray sources)
         {
             // There is no image source
-            if (sources.Length == 0)
+            if (sources.Count == 0)
             {
                 return;
             }
 
             // Optimize for the case where we have just one uri, case in which we don't need the sizes
-            if (sources.Length == 1)
+            if (sources.Count == 1)
             {
-                var uri = new ReactStylesDiffMap((JObject)sources[0]).GetProperty<string>("uri");
+                var uri = ((JObject)sources[0]).Value<string>("uri");
                 SetUriFromSingleSource(view, uri);
             }
             else
@@ -142,8 +142,8 @@ namespace ReactNative.Views.Image
 
                 foreach (var source in sources)
                 {
-                    var props = new ReactStylesDiffMap((JObject)source);
-                    viewSources.Add(props.GetProperty<string>("uri"), props.GetProperty<double>("width") * props.GetProperty<double>("height"));
+                    var sourceData = (JObject)source;
+                    viewSources.Add(sourceData.Value<string>("uri"), sourceData.Value<double>("width") * sourceData.Value<double>("height"));
                 }
                 _imageSources.Add(view.GetTag(), viewSources);
 
@@ -152,7 +152,6 @@ namespace ReactNative.Views.Image
                     // If we need to choose from multiple uris but the size is not yet set, wait for layout pass
                     return;
                 }
-
                 SetUriFromMultipleSources(view);
             }
         }
@@ -224,30 +223,23 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
-        /// Sets the dimensions of the view.
-        /// </summary>
-        /// <param name="view">The view.</param>
-        /// <param name="dimensions">The output buffer.</param>
-        public override void SetDimensions(Border view, Dimensions dimensions)
-        {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
-            SetUriFromMultipleSources(view);
-        }
-
-        /// <summary>
         /// Creates the image view instance.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new Border
+            var view = new Border
             {
                 Background = new ImageBrush(),
             };
+            view.SizeChanged += OnSizeChanged;
+            return view;
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetUriFromMultipleSources((Border)sender);
         }
 
         private void OnImageFailed(Border view)
