@@ -4,17 +4,20 @@
 
 struct SerializedSourceContext
 {
-	BYTE* byteCode;
-	const wchar_t* sourcePath;
-	wchar_t* scriptBuffer;
+    BYTE* byteCode;
+    const wchar_t* sourcePath;
+    wchar_t* scriptBuffer;
 
-	~SerializedSourceContext()
-	{
-		delete[] byteCode;
-		delete[] sourcePath;
-		if (scriptBuffer)
-		{
-			delete[] scriptBuffer;
-		}
-	}
+    ~SerializedSourceContext()
+    {
+        if (byteCode)
+        {
+            delete[] byteCode;
+        }
+
+        if (scriptBuffer)
+        {
+            delete[] scriptBuffer;
+        }
+    }
 };
