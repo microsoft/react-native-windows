@@ -167,8 +167,6 @@
     <Compile Include="Bridge\Queue\MessageQueueThreadSpec.cs" />
     <Compile Include="Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
-    <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
-    <Compile Include="Common\WindowsPlatformHelper.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
@@ -195,7 +193,6 @@
     <Compile Include="Bridge\ReactBridge.cs" />
     <Compile Include="Bridge\ReactContext.cs" />
     <Compile Include="Bridge\ReactContextNativeModuleBase.cs" />
-    <Compile Include="Common\ReactConstants.cs" />
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
@@ -235,7 +232,6 @@
     <Compile Include="ReactContextInitializedEventArgs.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootView.cs" />
-    <Compile Include="Reflection\EnumHelpers.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
@@ -280,7 +276,6 @@
     <Compile Include="Modules\Core\RCTDeviceEventEmitter.cs" />
     <Compile Include="Modules\Core\RCTNativeAppEventEmitter.cs" />
     <Compile Include="Bridge\ReactDelegateFactoryBase.cs" />
-    <Compile Include="Reflection\ExpressionExtensions.cs" />
     <Compile Include="IReactPackage.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
@@ -293,7 +288,6 @@
     <Compile Include="UIManager\IViewManager.cs" />
     <Compile Include="UIManager\IViewParentManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\BaseLayoutAnimation.cs" />
-    <Compile Include="Collections\JObjectExtensions.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutAnimation.cs" />
     <Compile Include="UIManager\LayoutAnimation\StoryboardObservable.cs" />
     <Compile Include="UIManager\MeasureAssertions.cs" />
@@ -305,7 +299,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bridge\IReactBridge.cs" />
     <Compile Include="Bridge\ReactMethodAttribute.cs" />
-    <Compile Include="Reflection\ReflectionHelpers.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\AppRegistry.cs" />
     <Compile Include="UIManager\Events\TouchEventType.cs" />
@@ -436,7 +429,12 @@
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ReactNative.Portable\ReactNative.Portable.csproj">
+      <Project>{5676db59-377c-48e6-bd41-b1d80161abce}</Project>
+      <Name>ReactNative.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
+  <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
