@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ReactNative.Reflection
 {
-    static partial class EnumHelpers
+    public static class EnumHelpers
     {
         private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>> s_enumCache =
             new ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>>();
