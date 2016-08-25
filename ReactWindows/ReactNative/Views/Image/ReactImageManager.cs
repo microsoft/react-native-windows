@@ -10,7 +10,6 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Views.Image
 {
@@ -19,8 +18,8 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly Dictionary<Border, SerialDisposable> _disposables =
-            new Dictionary<Border, SerialDisposable>();
+        private readonly Dictionary<int, SerialDisposable> _disposables =
+            new Dictionary<int, SerialDisposable>();
 
         private readonly IImageCache _imageCache;
 
@@ -119,7 +118,7 @@ namespace ReactNative.Views.Image
             // There is no image source
             if (sources.Count == 0)
             {
-                return;
+                throw new ArgumentException("Sources must not be empty.", nameof(sources));
             }
 
             // Optimize for the case where we have just one uri, case in which we don't need the sizes
@@ -131,7 +130,8 @@ namespace ReactNative.Views.Image
             else
             {
                 var viewSources = default(Dictionary<string, double>);
-                if (_imageSources.TryGetValue(view.GetTag(), out viewSources))
+                var tag = view.GetTag();
+                if (_imageSources.TryGetValue(tag, out viewSources))
                 {
                     viewSources.Clear();
                 }
@@ -145,13 +145,15 @@ namespace ReactNative.Views.Image
                     var sourceData = (JObject)source;
                     viewSources.Add(sourceData.Value<string>("uri"), sourceData.Value<double>("width") * sourceData.Value<double>("height"));
                 }
-                _imageSources.Add(view.GetTag(), viewSources);
+
+                _imageSources.Add(tag, viewSources);
 
                 if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
                 {
                     // If we need to choose from multiple uris but the size is not yet set, wait for layout pass
                     return;
                 }
+
                 SetUriFromMultipleSources(view);
             }
         }
@@ -207,18 +209,19 @@ namespace ReactNative.Views.Image
         public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
         {
             var imageBrush = (ImageBrush)view.Background;
+            var tag = view.GetTag();
 
             var sources = default(Dictionary<string, double>);
-            if (_imageSources.TryGetValue(view.GetTag(), out sources))
+            if (_imageSources.TryGetValue(tag, out sources))
             {
-                _imageSources.Remove(view.GetTag());
+                _imageSources.Remove(tag);
             }
 
             var disposable = default(SerialDisposable);
-            if (_disposables.TryGetValue(view, out disposable))
+            if (_disposables.TryGetValue(tag, out disposable))
             {
                 disposable.Dispose();
-                _disposables.Remove(view);
+                _disposables.Remove(tag);
             }
         }
 
@@ -233,6 +236,7 @@ namespace ReactNative.Views.Image
             {
                 Background = new ImageBrush(),
             };
+
             view.SizeChanged += OnSizeChanged;
             return view;
         }
@@ -278,13 +282,14 @@ namespace ReactNative.Views.Image
         private void SetUriFromSingleSource(Border view, string source)
         {
             var imageBrush = (ImageBrush)view.Background;
+            var tag = view.GetTag();
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
                     new ReactImageLoadEvent(
-                        view.GetTag(),
+                        tag,
                         ReactImageLoadEvent.OnLoadStart));
 
             var reference = _imageCache.Get(source);
@@ -297,10 +302,10 @@ namespace ReactNative.Views.Image
                 _ => OnImageFailed(view));
 
             var disposable = default(SerialDisposable);
-            if (!_disposables.TryGetValue(view, out disposable))
+            if (!_disposables.TryGetValue(tag, out disposable))
             {
                 disposable = new SerialDisposable();
-                _disposables.Add(view, disposable);
+                _disposables.Add(tag, disposable);
             }
 
             disposable.Disposable = new CompositeDisposable
