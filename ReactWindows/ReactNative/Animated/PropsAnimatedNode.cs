@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ReactNative.Animated
 {
-    internal class PropsAnimatedNode : AnimatedNode
+    class PropsAnimatedNode : AnimatedNode
     {
         private readonly NativeAnimatedNodesManager _manager;
         private readonly Dictionary<string, int> _propMapping;
