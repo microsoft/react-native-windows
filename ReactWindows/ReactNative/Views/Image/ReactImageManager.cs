@@ -120,9 +120,8 @@ namespace ReactNative.Views.Image
             {
                 throw new ArgumentException("Sources must not be empty.", nameof(sources));
             }
-
             // Optimize for the case where we have just one uri, case in which we don't need the sizes
-            if (sources.Count == 1)
+            else if (sources.Count == 1)
             {
                 var uri = ((JObject)sources[0]).Value<string>("uri");
                 SetUriFromSingleSource(view, uri);
@@ -146,7 +145,7 @@ namespace ReactNative.Views.Image
                     viewSources.Add(sourceData.Value<string>("uri"), sourceData.Value<double>("width") * sourceData.Value<double>("height"));
                 }
 
-                _imageSources.Add(tag, viewSources);
+                _imageSources[tag] = viewSources;
 
                 if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
                 {
@@ -232,18 +231,24 @@ namespace ReactNative.Views.Image
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
-            var view = new Border
+            return new Border
             {
                 Background = new ImageBrush(),
             };
-
-            view.SizeChanged += OnSizeChanged;
-            return view;
         }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The output buffer.</param>
+        public override void SetDimensions(Border view, Dimensions dimensions)
         {
-            SetUriFromMultipleSources((Border)sender);
+            Canvas.SetLeft(view, dimensions.X);
+            Canvas.SetTop(view, dimensions.Y);
+            view.Width = dimensions.Width;
+            view.Height = dimensions.Height;
+            SetUriFromMultipleSources(view);
         }
 
         private void OnImageFailed(Border view)
