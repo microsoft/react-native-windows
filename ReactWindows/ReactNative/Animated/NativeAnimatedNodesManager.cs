@@ -155,6 +155,9 @@ namespace ReactNative.Animated
             var animation = default(AnimationDriver);
             switch (type)
             {
+                case "decay":
+                    animation = new DecayAnimationDriver(animationId, valueNode, endCallback, animationConfig);
+                    break;
                 case "frames":
                     animation = new FrameBasedAnimationDriver(animationId, valueNode, endCallback, animationConfig);
                     break;

@@ -118,6 +118,7 @@
     <Compile Include="Animated\AdditionAnimatedNode.cs" />
     <Compile Include="Animated\AnimatedNode.cs" />
     <Compile Include="Animated\AnimationDriver.cs" />
+    <Compile Include="Animated\DecayAnimationDriver.cs" />
     <Compile Include="Animated\FrameBasedAnimationDriver.cs" />
     <Compile Include="Animated\InterpolationAnimatedNode.cs" />
     <Compile Include="Animated\MultiplicationAnimatedNode.cs" />
