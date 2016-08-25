@@ -3,7 +3,7 @@ using System;
 
 namespace ReactNative.Animated
 {
-    internal class MultiplicationAnimatedNode : ValueAnimatedNode
+    class MultiplicationAnimatedNode : ValueAnimatedNode
     {
         private readonly NativeAnimatedNodesManager _manager;
         private readonly int[] _inputNodes;

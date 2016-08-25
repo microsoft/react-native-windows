@@ -4,7 +4,7 @@ using System;
 
 namespace ReactNative.Animated
 {
-    internal class SpringAnimationDriver : AnimationDriver
+    class SpringAnimationDriver : AnimationDriver
     {
         /// <summary>
         /// Maximum amount of time to simulate per physics iteration in seconds (4 frames at 60 FPS).

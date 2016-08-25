@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ReactNative.Animated
 {
-    internal class TransformAnimatedNode : AnimatedNode
+    class TransformAnimatedNode : AnimatedNode
     {
         private readonly NativeAnimatedNodesManager _manager;
         private readonly List<TransformConfig> _transformConfigs;

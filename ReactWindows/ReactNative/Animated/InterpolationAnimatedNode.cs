@@ -3,7 +3,7 @@ using System;
 
 namespace ReactNative.Animated
 {
-    internal class InterpolationAnimatedNode : ValueAnimatedNode
+    class InterpolationAnimatedNode : ValueAnimatedNode
     {
         private readonly double[] _inputRange;
         private readonly double[] _outputRange;
