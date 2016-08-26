@@ -115,7 +115,7 @@ namespace ReactNative.Chakra.Executor
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
-            string source = LoadScript(script).Result;
+            string source = LoadScriptAsync(script).Result;
 
             try
             {
@@ -131,7 +131,7 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<string> LoadScript(string file)
+        private static async Task<string> LoadScriptAsync(string file)
         {
             try
             {
