@@ -115,7 +115,7 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private async Task<bool> EnsureSerializedScriptAsync(string scriptFile, string binFile)
+        private static async Task<bool> EnsureSerializedScriptAsync(string scriptFile, string binFile)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
 
