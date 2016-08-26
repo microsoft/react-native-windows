@@ -119,18 +119,16 @@ namespace ReactNative.Chakra.Executor
         {
             var localFolder = ApplicationData.Current.LocalFolder;
 
-            try
+            var scriptItem = await StorageFile.GetFileFromPathAsync(scriptFile);
+            var scriptItemProps = await scriptItem.GetBasicPropertiesAsync();
+            var item = await localFolder.TryGetItemAsync(binFile);
+            if (item != null)
             {
-                var scriptItem = await StorageFile.GetFileFromPathAsync(scriptFile);
-                var scriptItemProps = await scriptItem.GetBasicPropertiesAsync();
-                var item = await localFolder.GetItemAsync(binFile);
                 var props = await item.GetBasicPropertiesAsync();
                 return props.DateModified > scriptItemProps.DateModified;
             }
-            catch (FileNotFoundException)
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
