@@ -121,7 +121,7 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                var scriptItem = await localFolder.GetItemAsync(Path.GetFileName(scriptFile));
+                var scriptItem = await StorageFile.GetFileFromPathAsync(scriptFile);
                 var scriptItemProps = await scriptItem.GetBasicPropertiesAsync();
                 var item = await localFolder.GetItemAsync(binFile);
                 var props = await item.GetBasicPropertiesAsync();
