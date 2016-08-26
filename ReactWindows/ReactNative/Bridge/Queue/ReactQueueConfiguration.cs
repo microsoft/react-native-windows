@@ -77,6 +77,7 @@ namespace ReactNative.Bridge.Queue
         /// <param name="spec">The configuration specification.</param>
         /// <param name="exceptionHandler">The exception handler.</param>
         /// <returns>The queue configuration.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "ReactQueueConfiguration is disposable wrapper.")]
         public static ReactQueueConfiguration Create(
             ReactQueueConfigurationSpec spec,
             Action<Exception> exceptionHandler)

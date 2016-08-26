@@ -190,6 +190,8 @@ namespace ReactNative.Bridge
             {
                 reactInstance.Dispose();
             }
+
+            _lock.Dispose();
         }
 
         /// <summary>

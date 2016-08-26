@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -19,7 +20,7 @@ namespace ReactNative.Bridge
             {
                 if (_invokeHandler != null)
                 {
-                    throw new InvalidOperationException("InvokeHandler set more than once.");
+                    throw new InvalidOperationException(Invariant($"{nameof(InvocationHandler)} set more than once."));
                 }
 
                 _invokeHandler = value;
@@ -42,6 +43,7 @@ namespace ReactNative.Bridge
         /// executed. This is to overcome the absense of a performant "proxy"
         /// implementation in the .NET framework.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "CallerMemberName must be used with a default argument.")]
         protected void Invoke(object[] args, [CallerMemberName]string caller = null)
         {
             if (caller == null)
@@ -49,7 +51,7 @@ namespace ReactNative.Bridge
 
             if (_invokeHandler == null)
             {
-                throw new InvalidOperationException("InvokeHandler has not been set.");
+                throw new InvalidOperationException(Invariant($"{nameof(InvocationHandler)} has not been set."));
             }
 
             _invokeHandler.Invoke(caller, args);

@@ -1,6 +1,7 @@
 ﻿using Facebook.CSSLayout;
 using System;
 using System.Collections.Generic;
+using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -229,10 +230,10 @@ namespace ReactNative.UIManager
         /// Insert a child at the given index.
         /// </summary>
         /// <param name="child">The child.</param>
-        /// <param name="i">The index.</param>
-        public void AddChildAt(CSSNode child, int i)
+        /// <param name="index">The index.</param>
+        public void AddChildAt(CSSNode child, int index)
         {
-            InsertChild(i, child);
+            InsertChild(index, child);
             MarkUpdated();
             var node = (ReactShadowNode)child;
 
@@ -245,10 +246,10 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Removes the child at the given index.
         /// </summary>
-        /// <param name="i">The index.</param>
-        public new ReactShadowNode RemoveChildAt(int i)
+        /// <param name="index">The index.</param>
+        public new ReactShadowNode RemoveChildAt(int index)
         {
-            var removed = RemoveAndReturnChildAt(i);
+            var removed = RemoveAndReturnChildAt(index);
 
             MarkUpdated();
 
@@ -328,11 +329,11 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Gets the child node at the given index.
         /// </summary>
-        /// <param name="i">The index.</param>
+        /// <param name="index">The index.</param>
         /// <returns>The child node.</returns>
-        public ReactShadowNode GetChildAt(int i)
+        public ReactShadowNode GetChildAt(int index)
         {
-            return (ReactShadowNode)this[i];
+            return (ReactShadowNode)this[index];
         }
 
         /// <summary>
@@ -360,16 +361,16 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Removes the native child at the given index.
         /// </summary>
-        /// <param name="i">The index.</param>
-        public void RemoveNativeChildAt(int i)
+        /// <param name="index">The index.</param>
+        public void RemoveNativeChildAt(int index)
         {
             if (_nativeChildren == null)
             {
                 throw new InvalidOperationException("No native children available.");
             }
 
-            var removed = _nativeChildren[i];
-            _nativeChildren.RemoveAt(i);
+            var removed = _nativeChildren[index];
+            _nativeChildren.RemoveAt(index);
             removed._nativeParent = null;
         }
 
@@ -441,7 +442,7 @@ namespace ReactNative.UIManager
             if (!found)
             {
                 throw new InvalidOperationException(
-                    $"Child '{child.ReactTag}' was not a child of '{ReactTag}'.");
+                    Invariant($"Child '{child.ReactTag}' was not a child of '{ReactTag}'."));
             }
 
             return index;

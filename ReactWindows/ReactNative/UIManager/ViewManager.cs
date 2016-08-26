@@ -99,11 +99,11 @@ namespace ReactNative.UIManager
         /// Creates a view and installs event emitters on it.
         /// </summary>
         /// <param name="reactContext">The context.</param>
-        /// <param name="jsResponderHandler">The responder handler.</param>
+        /// <param name="responderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
         public TFrameworkElement CreateView(
             ThemedReactContext reactContext,
-            JavaScriptResponderHandler jsResponderHandler)
+            JavaScriptResponderHandler responderHandler)
         {
             var view = CreateViewInstance(reactContext);
             AddEventEmitters(reactContext, view);

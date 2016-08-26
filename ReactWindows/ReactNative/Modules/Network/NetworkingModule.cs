@@ -18,7 +18,7 @@ namespace ReactNative.Modules.Network
     /// <summary>
     /// Implements the XMLHttpRequest JavaScript interface.
     /// </summary>
-    public class NetworkingModule : ReactContextNativeModuleBase
+    public class NetworkingModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private const int MaxChunkSizeBetweenFlushes = 8 * 1024; // 8kb
         private readonly IHttpClient _client;
@@ -30,6 +30,7 @@ namespace ReactNative.Modules.Network
         /// Instantiates the <see cref="NetworkingModule"/>.
         /// </summary>
         /// <param name="reactContext">The context.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "HttpClient disposed by module.")]
         internal NetworkingModule(ReactContext reactContext)
             : this(CreateDefaultHttpClient(), reactContext)
         {
@@ -142,7 +143,7 @@ namespace ReactNative.Modules.Network
 
                     return;
                 }
-                else if ((formData = (JArray)data.GetValue("formData")) != null)
+                else if ((formData = (JArray)data.GetValue("formData", StringComparison.Ordinal)) != null)
                 {
                     if (headerData.ContentType == null)
                     {
@@ -165,13 +166,30 @@ namespace ReactNative.Modules.Network
                 }
             }
 
-            _tasks.Add(requestId, token => ProcessRequestAsync(
-                requestId,
-                useIncrementalUpdates,
-                timeout,
-                request,
-                responseType,
-                token));
+            _tasks.Add(requestId, async token =>
+            {
+                using (request)
+                {
+                    try
+                    {
+                        await ProcessRequestAsync(
+                            requestId,
+                            useIncrementalUpdates,
+                            timeout,
+                            request,
+                            responseType,
+                            token);
+                    }
+                    finally
+                    {
+                        var content = request.Content;
+                        if (content != null)
+                        {
+                            content.Dispose();
+                        }
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -190,6 +208,28 @@ namespace ReactNative.Modules.Network
         public override void OnReactInstanceDispose()
         {
             _shuttingDown = true;
+        }
+
+        /// <summary>
+        /// Called when the host receives the suspend event.
+        /// </summary>
+        public void OnSuspend()
+        {
+        }
+
+        /// <summary>
+        /// Called when the host receives the resume event.
+        /// </summary>
+        public void OnResume()
+        {
+        }
+
+        /// <summary>
+        /// Called when the host is disposed.
+        /// </summary>
+        public void OnDestroy()
+        {
+            _client.Dispose();
         }
 
         private async Task ProcessRequestFromUriAsync(
@@ -292,10 +332,6 @@ namespace ReactNative.Modules.Network
                     }
 
                     OnRequestError(requestId, ex.Message, false);
-                }
-                finally
-                {
-                    request.Dispose();
                 }
             }
         }

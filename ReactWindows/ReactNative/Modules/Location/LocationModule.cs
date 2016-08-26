@@ -9,10 +9,11 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using static System.FormattableString;
 
 namespace ReactNative.Modules.Location
 {
-    class LocationModule : ReactContextNativeModuleBase
+    class LocationModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private readonly SerialDisposable _currentSubscription = new SerialDisposable();
 
@@ -64,10 +65,11 @@ namespace ReactNative.Modules.Location
             }
             catch (Exception ex)
             {
-                error.Invoke($"Location request failed with exception: {ex}");
+                error.Invoke(Invariant($"Location request failed with exception: {ex}"));
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "CompositeDisposable managed by serial disposable and parent module.")]
         [ReactMethod]
         public void startObserving(JObject options)
         {
@@ -135,6 +137,19 @@ namespace ReactNative.Modules.Location
         public void stopObserving()
         {
             _currentSubscription.Disposable = Disposable.Empty;
+        }
+
+        public void OnSuspend()
+        {        
+        }
+
+        public void OnResume()
+        {
+        }
+
+        public void OnDestroy()
+        {
+            _currentSubscription.Dispose();
         }
 
         private static JObject ConvertGeoposition(Geoposition geoposition)

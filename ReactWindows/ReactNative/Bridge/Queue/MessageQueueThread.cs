@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge.Queue
 {
@@ -61,7 +62,7 @@ namespace ReactNative.Bridge.Queue
 
             if (IsDisposed)
             {
-                Tracer.Write(ReactConstants.Tag, $"Dropping enqueued action on disposed '{_name}' thread.");
+                Tracer.Write(ReactConstants.Tag, Invariant($"Dropping enqueued action on disposed '{_name}' thread."));
                 return;
             }
 
@@ -131,7 +132,7 @@ namespace ReactNative.Bridge.Queue
                     return new AnyBackgroundMessageQueueThread(spec.Name, handler);
                 default:
                     throw new InvalidOperationException(
-                        $"Unknown thread type '{spec.Kind}' with name '{spec.Name}'.");
+                        Invariant($"Unknown thread type '{spec.Kind}' with name '{spec.Name}'."));
             }
         }
 
@@ -144,6 +145,7 @@ namespace ReactNative.Bridge.Queue
 
             private IObserver<Action> _actionObserver;
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             public DispatcherMessageQueueThread(string name, Action<Exception> handler)
                 : base(name)
             {
@@ -225,9 +227,14 @@ namespace ReactNative.Bridge.Queue
 
                 // Unblock the background thread.
                 Enqueue(s_canary);
+
                 _doneHandle.WaitOne();
+                _doneHandle.Dispose();
+                _indicator.Dispose();
+                _queue.Dispose();
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             private void Run()
             {
                 while (true)

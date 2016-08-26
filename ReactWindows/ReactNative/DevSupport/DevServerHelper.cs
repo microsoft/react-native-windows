@@ -9,13 +9,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using static System.FormattableString;
 
 namespace ReactNative.DevSupport
 {
     /// <summary>
     /// Helper class for debug server running in the host machine.
     /// </summary> 
-    class DevServerHelper
+    sealed class DevServerHelper : IDisposable
     {
         private const string DeviceLocalhost = "localhost:8081";
         private const string BundleUrlFormat = "http://{0}/{1}.bundle?platform=windows&dev={2}&hot={3}";
@@ -124,7 +125,7 @@ namespace ReactNative.DevSupport
                         var nl = Environment.NewLine;
                         exception = new DebugServerException(
                             "The development server returned response error code: " +
-                            $"{response.StatusCode}{nl}{nl}URL: {bundleUrl}{nl}{nl}Body:{nl}{body}");
+                            Invariant($"{response.StatusCode}{nl}{nl}URL: {bundleUrl}{nl}{nl}Body:{nl}{body}"));
                     }
 
                     throw exception;
@@ -258,6 +259,14 @@ namespace ReactNative.DevSupport
                 mainModuleName,
                 IsJavaScriptDevModeEnabled ? "true" : "false",
                 IsHotModuleReplacementEnabled ? "true" : "false");
+        }
+
+        /// <summary>
+        /// Disposes the <see cref="DevServerHelper"/>. 
+        /// </summary>
+        public void Dispose()
+        {
+            _client.Dispose();
         }
 
         private string CreatePackagerStatusUrl(string host)

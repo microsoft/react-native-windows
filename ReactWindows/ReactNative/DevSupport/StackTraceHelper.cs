@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using static System.FormattableString;
 
 namespace ReactNative.DevSupport
 {
@@ -63,7 +64,7 @@ namespace ReactNative.DevSupport
             {
                 get
                 {
-                    return $"{FileName}:{Line}:{Column}";
+                    return Invariant($"{FileName}:{Line}:{Column}");
                 }
             }
         }

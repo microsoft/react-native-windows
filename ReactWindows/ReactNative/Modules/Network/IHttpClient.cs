@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 
@@ -7,7 +8,7 @@ namespace ReactNative.Modules.Network
     /// <summary>
     /// An interface for HTTP clients.
     /// </summary>
-    public interface IHttpClient
+    public interface IHttpClient : IDisposable
     {
         /// <summary>
         /// Send an asynchronous HTTP request.

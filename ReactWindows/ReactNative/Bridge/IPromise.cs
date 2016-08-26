@@ -30,16 +30,16 @@ namespace ReactNative.Bridge
         /// Report an exception.
         /// </summary>
         /// <param name="code">The error code.</param>
-        /// <param name="e">The exception.</param>
-        void Reject(string code, Exception e);
+        /// <param name="exception">The exception.</param>
+        void Reject(string code, Exception exception);
 
         /// <summary>
         /// Report an exception with a custom error message.
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
-        /// <param name="e">The exception.</param>
-        void Reject(string code, string message, Exception e);
+        /// <param name="exception">The exception.</param>
+        void Reject(string code, string message, Exception exception);
 
         /// <summary>
         /// Report an error which wasn't caused by an exception.

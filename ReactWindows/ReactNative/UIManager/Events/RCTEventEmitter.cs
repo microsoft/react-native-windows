@@ -24,10 +24,10 @@ namespace ReactNative.UIManager.Events
         /// </summary>
         /// <param name="eventName">The event name.</param>
         /// <param name="touches">The touches.</param>
-        /// <param name="changedIndices">The changed indices.</param>
-        public void receiveTouches(string eventName, JArray touches, JArray changedIndices)
+        /// <param name="changedIndexes">The changed indices.</param>
+        public void receiveTouches(string eventName, JArray touches, JArray changedIndexes)
         {
-            Invoke(eventName, touches, changedIndices);
+            Invoke(eventName, touches, changedIndexes);
         }
     }
 }

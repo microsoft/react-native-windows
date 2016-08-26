@@ -135,7 +135,7 @@ namespace ReactNative.UIManager
         /// manage children calls for multiple other views.
         /// </summary>
         /// <param name="nodeToManage">The node to manage.</param>
-        /// <param name="indicesToRemove">The indices to remove.</param>
+        /// <param name="indexesToRemove">The indices to remove.</param>
         /// <param name="tagsToRemove">The tags to remove.</param>
         /// <param name="viewsToAdd">The views to add.</param>
         /// <param name="tagsToDelete">The tags to delete.</param>
@@ -149,7 +149,7 @@ namespace ReactNative.UIManager
         /// have already completed by the time a corresponding method here is
         /// called.
         /// </remarks>
-        public void HandleManageChildren(ReactShadowNode nodeToManage, int[] indicesToRemove, int[] tagsToRemove, ViewAtIndex[] viewsToAdd, int[] tagsToDelete)
+        public void HandleManageChildren(ReactShadowNode nodeToManage, int[] indexesToRemove, int[] tagsToRemove, ViewAtIndex[] viewsToAdd, int[] tagsToDelete)
         {
 #if !ENABLED
             _uiViewOperationQueue.EnqueueManageChildren(

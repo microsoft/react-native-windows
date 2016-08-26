@@ -21,24 +21,24 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Instantiates the <see cref="IReactBridge"/>.
         /// </summary>
-        /// <param name="jsExecutor">The JavaScript executor.</param>
+        /// <param name="executor">The JavaScript executor.</param>
         /// <param name="reactCallback">The native callback handler.</param>
         /// <param name="nativeModulesQueueThread">
         /// The native modules queue thread.
         /// </param>
         public ReactBridge(
-            IJavaScriptExecutor jsExecutor,
+            IJavaScriptExecutor executor,
             IReactCallback reactCallback,
             IMessageQueueThread nativeModulesQueueThread)
         {
-            if (jsExecutor == null)
-                throw new ArgumentNullException(nameof(jsExecutor));
+            if (executor == null)
+                throw new ArgumentNullException(nameof(executor));
             if (reactCallback == null)
                 throw new ArgumentNullException(nameof(reactCallback));
             if (nativeModulesQueueThread == null)
                 throw new ArgumentNullException(nameof(nativeModulesQueueThread));
 
-            _jsExecutor = jsExecutor;
+            _jsExecutor = executor;
             _reactCallback = reactCallback;
             _nativeModulesQueueThread = nativeModulesQueueThread;
         }
@@ -46,12 +46,12 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Calls a JavaScript function.
         /// </summary>
-        /// <param name="module">The module ID.</param>
+        /// <param name="moduleName">The module ID.</param>
         /// <param name="method">The method ID.</param>
         /// <param name="arguments">The arguments.</param>
-        public void CallFunction(string module, string method, JArray arguments)
+        public void CallFunction(string moduleName, string method, JArray arguments)
         {
-            var response = _jsExecutor.CallFunctionReturnFlushedQueue(module, method, arguments);
+            var response = _jsExecutor.CallFunctionReturnFlushedQueue(moduleName, method, arguments);
             ProcessResponse(response);
         }
 

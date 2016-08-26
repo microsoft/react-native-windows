@@ -8,6 +8,7 @@ namespace ReactNative.Modules.Network
 {
     static class HttpContentHelpers
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller responsible for disposing content.")]
         public static IHttpContent CreateFromBody(HttpContentHeaderData headerData, string body)
         {
             if (headerData.ContentEncoding == "gzip")
@@ -48,6 +49,7 @@ namespace ReactNative.Modules.Network
             return result;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         private static IHttpContent CreateGzip(string body)
         {
             var stream = new MemoryStream();

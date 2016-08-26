@@ -52,11 +52,11 @@ namespace ReactNative.Views.Text
         /// <summary>
         /// Sets the font weight for the node.
         /// </summary>
-        /// <param name="fontWeightString">The font weight string.</param>
+        /// <param name="fontWeightValue">The font weight string.</param>
         [ReactProp(ViewProps.FontWeight)]
-        public void SetFontWeight(string fontWeightString)
+        public void SetFontWeight(string fontWeightValue)
         {
-            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightString);
+            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
                 _fontWeight.Value.Weight != fontWeight.Value.Weight))
@@ -69,11 +69,11 @@ namespace ReactNative.Views.Text
         /// <summary>
         /// Sets the font style for the node.
         /// </summary>
-        /// <param name="fontStyleString">The font style string.</param>
+        /// <param name="fontStyleValue">The font style string.</param>
         [ReactProp(ViewProps.FontStyle)]
-        public void SetFontStyle(string fontStyleString)
+        public void SetFontStyle(string fontStyleValue)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
+            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleValue);
             if (_fontStyle != fontStyle)
             {
                 _fontStyle = fontStyle;
@@ -88,7 +88,7 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.LetterSpacing)]
         public void SetLetterSpacing(int letterSpacing)
         {
-            var spacing = 50 * letterSpacing; // TODO: Find exact multiplier (50) to match iOS
+            var spacing = 50*letterSpacing; // TODO: Find exact multiplier (50) to match iOS
 
             if (_letterSpacing != spacing)
             {

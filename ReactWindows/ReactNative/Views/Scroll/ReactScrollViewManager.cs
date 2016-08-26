@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using static System.FormattableString;
 
 namespace ReactNative.Views.Scroll
 {
@@ -176,12 +177,12 @@ namespace ReactNative.Views.Scroll
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "ScrollViewer currently only supports one child.");
+                throw new ArgumentOutOfRangeException(nameof(index), Invariant($"{nameof(ScrollViewer)} currently only supports one child."));
             }
 
             if (parent.Content != null)
             {
-                throw new InvalidOperationException("ScrollViewer already has a child element.");
+                throw new InvalidOperationException(Invariant($"{nameof(ScrollViewer)} already has a child element."));
             }
 
             child.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
@@ -280,7 +281,7 @@ namespace ReactNative.Views.Scroll
                     break;
                 default:
                     throw new InvalidOperationException(
-                        $"Unsupported command '{commandId}' received by '{typeof(ReactScrollViewManager)}'.");
+                        Invariant($"Unsupported command '{commandId}' received by '{typeof(ReactScrollViewManager)}'."));
             }
         }
 
@@ -410,13 +411,13 @@ namespace ReactNative.Views.Scroll
             var child = view.Content;
             if (child == null)
             {
-                throw new InvalidOperationException("ScrollView does not have any children.");
+                throw new InvalidOperationException(Invariant($"{nameof(ScrollViewer)} does not have any children."));
             }
 
             var dependencyObject = child as DependencyObject;
             if (dependencyObject == null)
             {
-                throw new InvalidOperationException("Invalid child element in ScrollView.");
+                throw new InvalidOperationException(Invariant($"Invalid child element in {nameof(ScrollViewer)}."));
             }
 
             return dependencyObject;

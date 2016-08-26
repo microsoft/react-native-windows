@@ -273,7 +273,7 @@ namespace ReactNative.Collections
                 if (2 * i + 1 < _size && !IsHigherPriority(i, 2 * i + 1)
                     || 2 * i + 2 < _size && !IsHigherPriority(i, 2 * i + 2))
                 {
-                    throw new Exception("Heap invariant violated");
+                    throw new InvalidOperationException("Heap invariant violated");
                 }
             }
         }

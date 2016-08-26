@@ -9,6 +9,7 @@ namespace ReactNative.Modules.Network
     {
         private readonly HttpClient _client;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "HttpClient disposed by container.")]
         public DefaultHttpClient()
             : this(new HttpClient())
         {
@@ -34,6 +35,11 @@ namespace ReactNative.Modules.Network
                     throw;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _client.Dispose();
         }
     }
 }

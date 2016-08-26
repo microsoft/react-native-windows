@@ -15,7 +15,7 @@ namespace ReactNative.Animated
         public FrameBasedAnimationDriver(int id, ValueAnimatedNode animatedValue, ICallback endCallback, JObject config)
             : base(id, animatedValue, endCallback)
         {
-            _frames = config.GetValue("frames").ToObject<double[]>();
+            _frames = config.GetValue("frames", StringComparison.Ordinal).ToObject<double[]>();
             _toValue = config.Value<double>("toValue");
         }
 

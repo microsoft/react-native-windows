@@ -65,24 +65,24 @@ namespace ReactNative.Tests.Bridge
                 var actual = JObject.Parse(stringWriter.ToString());
                 Assert.AreEqual(1, actual.Properties().Count());
 
-                var moduleDef = actual.GetValue("Test") as JObject;
+                var moduleDef = actual.GetValue("Test", StringComparison.Ordinal) as JObject;
                 Assert.IsNotNull(moduleDef);
 
-                var moduleId = moduleDef.GetValue("moduleID");
+                var moduleId = moduleDef.GetValue("moduleID", StringComparison.Ordinal);
                 Assert.IsNotNull(moduleId);
                 Assert.AreEqual("0", moduleId.ToString());
 
-                var methods = moduleDef.GetValue("methods") as JObject;
+                var methods = moduleDef.GetValue("methods", StringComparison.Ordinal) as JObject;
                 Assert.IsNotNull(methods);
 
-                var fooMethod = methods.GetValue("Foo") as JObject;
+                var fooMethod = methods.GetValue("Foo", StringComparison.Ordinal) as JObject;
                 Assert.IsNotNull(fooMethod);
 
-                var barMethod = methods.GetValue("Bar") as JObject;
+                var barMethod = methods.GetValue("Bar", StringComparison.Ordinal) as JObject;
                 Assert.IsNotNull(barMethod);
 
-                var fooMethodId = fooMethod.GetValue("methodID");
-                var barMethodId = barMethod.GetValue("methodID");
+                var fooMethodId = fooMethod.GetValue("methodID", StringComparison.Ordinal);
+                var barMethodId = barMethod.GetValue("methodID", StringComparison.Ordinal);
                 Assert.AreNotEqual(fooMethodId.ToString(), barMethodId.ToString());
                 Assert.IsTrue(fooMethodId.ToString() == "0" || fooMethodId.ToString() == "1");
                 Assert.IsTrue(barMethodId.ToString() == "0" || barMethodId.ToString() == "1");

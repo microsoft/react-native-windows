@@ -9,7 +9,7 @@ using Windows.Storage;
 
 namespace ReactNative.Modules.Storage
 {
-    class AsyncStorageModule : NativeModuleBase
+    class AsyncStorageModule : NativeModuleBase, ILifecycleEventListener
     {
         private const string DirectoryName = "AsyncStorage\\";
         private const string FileExtension = ".data";
@@ -275,6 +275,19 @@ namespace ReactNative.Modules.Storage
             }
 
             callback.Invoke(null, keys);
+        }
+
+        public void OnSuspend()
+        {
+        }
+
+        public void OnResume()
+        {
+        }
+
+        public void OnDestroy()
+        {
+            _mutex.Dispose();
         }
 
         private async Task<string> GetAsync(string key)
