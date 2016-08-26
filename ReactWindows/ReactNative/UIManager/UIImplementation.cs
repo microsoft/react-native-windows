@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Facebook.CSSLayout;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Modules.I18N;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
@@ -11,7 +13,7 @@ using System.Runtime.CompilerServices;
 namespace ReactNative.UIManager
 {
     /// <summary>
-    /// An class that is used to receive React commands from JavaScript and 
+    /// An class that is used to receive React commands from JavaScript and
     /// translate them into a shadow node hierarchy that is then mapped to a
     /// native view hierarchy.
     /// </summary>
@@ -228,11 +230,11 @@ namespace ReactNative.UIManager
         /// corresponding views and data structures should be reclaimed.
         /// </param>
         public void ManageChildren(
-            int viewTag, 
+            int viewTag,
             int[] moveFrom,
             int[] moveTo,
             int[] addChildTags,
-            int[] addAtIndices, 
+            int[] addAtIndices,
             int[] removeFrom)
         {
             if (moveFrom?.Length != moveTo?.Length)
@@ -298,7 +300,7 @@ namespace ReactNative.UIManager
             // 2) Iterate the indices being removed from high to low and remove
             //    them. Going high to low makes sure we remove the correct
             //    index when there are multiple to remove.
-            // 3) Iterate the views being added by index low to high and add 
+            // 3) Iterate the views being added by index low to high and add
             //    them. Like the view removal, iteration direction is important
             //    to preserve the correct index.
 
@@ -508,7 +510,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Similar to <see cref="Measure(int, ICallback)"/> and 
+        /// Similar to <see cref="Measure(int, ICallback)"/> and
         /// <see cref="MeasureLayout(int, int, ICallback, ICallback)"/>,
         /// measures relative to the immediate parent.
         /// </summary>
@@ -533,7 +535,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Invoked at the end of a transaction to commit any updates to the 
+        /// Invoked at the end of a transaction to commit any updates to the
         /// node hierarchy.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher.</param>
@@ -659,6 +661,11 @@ namespace ReactNative.UIManager
         private ReactShadowNode CreateRootShadowNode()
         {
             var rootCssNode = new ReactShadowNode();
+            if (I18NUtil.IsRightToLeft)
+            {
+                rootCssNode.Direction = CSSDirection.RTL;
+            }
+
             rootCssNode.ViewClass = "Root";
             return rootCssNode;
         }
@@ -740,8 +747,8 @@ namespace ReactNative.UIManager
         }
 
         private void MeasureLayoutRelativeToVerifiedAncestor(
-            ReactShadowNode node, 
-            ReactShadowNode ancestor, 
+            ReactShadowNode node,
+            ReactShadowNode ancestor,
             double[] outputBuffer)
         {
             var offsetX = 0.0;
@@ -831,7 +838,7 @@ namespace ReactNative.UIManager
         }
 
         private void ApplyUpdatesRecursive(
-            ReactShadowNode cssNode, 
+            ReactShadowNode cssNode,
             EventDispatcher eventDispatcher)
         {
             if (!cssNode.HasUpdates)
