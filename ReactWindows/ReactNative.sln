@@ -13,13 +13,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "ChakraBridg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Portable", "ReactNative.Portable\ReactNative.Portable.csproj", "{5676DB59-377C-48E6-BD41-B1D80161ABCE}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ReactNative.Shared", "ReactNative.Shared\ReactNative.Shared.shproj", "{8B8D3EAB-CF77-4ABB-ACBA-363B1A898D42}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		ReactNative.Shared\ReactNative.Shared.projitems*{8b8d3eab-cf77-4abb-acba-363b1a898d42}*SharedItemsImports = 13
-		ReactNative.Shared\ReactNative.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
