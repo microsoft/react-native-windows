@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "ChakraHost.h"
 #include "SerializedSourceContext.h"
+#include "JsStringify.h"
 
 void ThrowException(const wchar_t* szException)
 {
@@ -22,45 +23,12 @@ JsErrorCode DefineHostCallback(JsValueRef globalObject, const wchar_t *callbackN
     IfFailRet(JsSetProperty(globalObject, propertyId, function, true));
 
     return JsNoError;
-};
-
-JsErrorCode Stringify(JsValueRef value, ChakraHost* self, const wchar_t** szResult, size_t* sResult)
-{
-    JsValueType type;
-    IfFailRet(JsGetValueType(value, &type));
-
-    switch (type)
-    {
-    case JsUndefined:
-    case JsNull:
-    case JsNumber:
-    case JsString:
-    case JsBoolean:
-    case JsObject:
-    case JsArray:
-    case JsTypedArray:
-        JsValueRef resultJSON;
-        IfFailRet(self->JsonStringify(value, &resultJSON));
-        IfFailRet(JsStringToPointer(resultJSON, szResult, sResult));
-        break;
-    case JsFunction:
-    case JsError:
-    case JsSymbol:
-    case JsArrayBuffer:
-        JsValueRef resultString;
-        IfFailRet(JsConvertValueToString(value, &resultString));
-        IfFailRet(JsStringToPointer(resultString, szResult, sResult));
-        break;
-    }
-
-    return JsNoError;
 }
 
 JsValueRef InvokeConsole(const wchar_t* kind, JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
 #ifdef _DEBUG
 
-    ChakraHost* self = (ChakraHost*)callbackState;
     wchar_t buff[56];
     swprintf(buff, 56, L"[JS {%s}] ", kind);
     OutputDebugStringW(buff);
@@ -68,11 +36,8 @@ JsValueRef InvokeConsole(const wchar_t* kind, JsValueRef callee, bool isConstruc
     // First argument is this-context, ignore...
     for (USHORT i = 1; i < argumentCount; i++)
     {
-        const wchar_t* szBuf;
-        size_t szBufLen;
-        IfFailThrow(Stringify(arguments[i], self, &szBuf, &szBufLen), L"Failed to convert object to string");
-
-        OutputDebugStringW(szBuf);
+        std::set<JsValueRef> values;
+        IfFailThrow(StringifyJsValue(arguments[i], 0, values), L"Failed to convert object to string");
         OutputDebugStringW(L" ");
     }
 
@@ -398,10 +363,10 @@ JsErrorCode ChakraHost::InitConsole()
     IfFailRet(JsCreateObject(&consoleObject));
     IfFailRet(JsSetProperty(globalObject, consolePropertyId, consoleObject, true));
 
-    IfFailRet(DefineHostCallback(consoleObject, L"info", ConsoleInfo, this));
-    IfFailRet(DefineHostCallback(consoleObject, L"log", ConsoleLog, this));
-    IfFailRet(DefineHostCallback(consoleObject, L"warn", ConsoleWarn, this));
-    IfFailRet(DefineHostCallback(consoleObject, L"error", ConsoleError, this));
+    IfFailRet(DefineHostCallback(consoleObject, L"info", ConsoleInfo, nullptr));
+    IfFailRet(DefineHostCallback(consoleObject, L"log", ConsoleLog, nullptr));
+    IfFailRet(DefineHostCallback(consoleObject, L"warn", ConsoleWarn, nullptr));
+    IfFailRet(DefineHostCallback(consoleObject, L"error", ConsoleError, nullptr));
 
     return JsNoError;
 }
