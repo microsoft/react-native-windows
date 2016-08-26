@@ -131,7 +131,7 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private async Task<string> LoadScript(string file)
+        private static async Task<string> LoadScript(string file)
         {
             try
             {
