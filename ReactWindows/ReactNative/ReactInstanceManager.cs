@@ -373,7 +373,7 @@ namespace ReactNative
         private void RecreateReactContextInBackgroundFromBundleFile()
         {
             RecreateReactContextInBackground(
-                () => new NativeJavaScriptExecutor(),
+                () => new ChakraJavaScriptExecutor(),
                 JavaScriptBundleLoader.CreateFileLoader(_jsBundleFile));
         }
 
@@ -395,7 +395,7 @@ namespace ReactNative
         private void OnJavaScriptBundleLoadedFromServer()
         {
             RecreateReactContextInBackground(
-                () => new NativeJavaScriptExecutor(),
+                () => new ChakraJavaScriptExecutor(),
                 JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
                     _devSupportManager.SourceUrl,
                     _devSupportManager.DownloadedJavaScriptBundleFile));
