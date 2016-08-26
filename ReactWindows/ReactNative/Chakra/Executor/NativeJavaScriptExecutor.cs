@@ -99,7 +99,7 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                if(!EnsureSerializedScript(script, binPath).Result)
+                if(!EnsureSerializedScriptAsync(script, binPath).Result)
                 {
                     Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
                 }
@@ -115,7 +115,7 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private async Task<bool> EnsureSerializedScript(string scriptFile, string binPath)
+        private async Task<bool> EnsureSerializedScriptAsync(string scriptFile, string binPath)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
 
