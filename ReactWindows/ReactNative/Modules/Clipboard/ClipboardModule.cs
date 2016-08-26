@@ -11,7 +11,6 @@ namespace ReactNative.Modules.Clipboard
     /// </summary>
     class ClipboardModule : NativeModuleBase
     {
-
         /// <summary>
         /// The name of the native module.
         /// </summary>
