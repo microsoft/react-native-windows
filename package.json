@@ -35,8 +35,8 @@
     "shelljs": "^0.7.0",
     "uuid": "^2.0.1",
     "xml-parser": "^1.2.1",
-    "yeoman-environment": "^1.2.7",
-    "yeoman-generator": "^0.20.3"
+    "yeoman-environment": "^1.5.3",
+    "yeoman-generator": "^0.21.2"
   },
   "rnpm": {
     "plugin": "./local-cli/index.js"
