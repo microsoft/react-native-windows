@@ -8,6 +8,7 @@ namespace ReactNative.Modules.I18N
     /// </summary>
     static class I18NUtil
     {
+
         private const string AllowRTL = "RCTI18nUtil_allowRTL";
         private const string ForceRTL = "RCTI18nUtil_forceRTL";
 
