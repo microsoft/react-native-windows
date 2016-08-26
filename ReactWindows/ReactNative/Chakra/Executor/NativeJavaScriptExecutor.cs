@@ -95,13 +95,11 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                /*
                 var binFile = script + ".bin";
                 if (!HasUpToDateSerializedScript(binFile).Result)
                 {
                     _executor.SerializeScriptFromFile(script, binFile);
                 }
-                */
                 var result = _executor.RunScriptFromFile(script, sourceUrl);
                 Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
             }
