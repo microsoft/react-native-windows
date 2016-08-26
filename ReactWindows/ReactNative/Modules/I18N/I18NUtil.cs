@@ -1,24 +1,16 @@
-﻿using System.Globalization;
+﻿using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
 
-namespace ReactNative.Modules.Internationalization
+namespace ReactNative.Modules.I18N
 {
     /// <summary>
     /// Class used for right to left preferences.
     /// </summary>
-    static class InternationalizationUtil
+    static class I18NUtil
     {
         private const string AllowRTL = "RCTI18nUtil_allowRTL";
         private const string ForceRTL = "RCTI18nUtil_forceRTL";
 
-        static InternationalizationUtil()
-        {
-            if (ApplicationData.Current.LocalSettings.Values[AllowRTL] == null)
-                ApplicationData.Current.LocalSettings.Values[AllowRTL] = false;
-
-            if (ApplicationData.Current.LocalSettings.Values[ForceRTL] == null)
-                ApplicationData.Current.LocalSettings.Values[ForceRTL] = false;
-        }
 
         /// <summary>
         /// Check if the system is using Right to Left. This only happens when the app:
@@ -29,8 +21,7 @@ namespace ReactNative.Modules.Internationalization
         {
             get
             {
-                if (IsRightToLeftForced) return true;
-                return IsRightToLeftAllowed && IsDeviceRightToLeft;
+                return IsRightToLeftForced || (IsRightToLeftAllowed && IsDeviceRightToLeft);
             }
         }
 
@@ -41,7 +32,7 @@ namespace ReactNative.Modules.Internationalization
         {
             get
             {
-                return (bool)ApplicationData.Current.LocalSettings.Values[AllowRTL];
+                return (bool?)ApplicationData.Current.LocalSettings.Values[AllowRTL] ?? false;
             }
             set
             {
@@ -56,7 +47,7 @@ namespace ReactNative.Modules.Internationalization
         {
             get
             {
-                return (bool)ApplicationData.Current.LocalSettings.Values[ForceRTL];
+                return (bool?)ApplicationData.Current.LocalSettings.Values[ForceRTL] ?? false;
             }
             set
             {
@@ -68,7 +59,7 @@ namespace ReactNative.Modules.Internationalization
         {
             get
             {
-                return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+                return ResourceContext.GetForCurrentView().QualifierValues["LayoutDirection"] == "RTL";
             }
         }
     }

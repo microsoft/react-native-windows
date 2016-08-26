@@ -5,7 +5,7 @@ using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Image;
-using ReactNative.Modules.Internationalization;
+using ReactNative.Modules.I18N;
 using ReactNative.Modules.Launch;
 using ReactNative.Modules.Location;
 using ReactNative.Modules.NetInfo;
@@ -79,7 +79,7 @@ namespace ReactNative.Shell
                 new ClipboardModule(),
                 new DialogModule(reactContext),
                 new ImageLoaderModule(_imageCache, _uriLoader),
-                new InternationalizationModule(),
+                new I18NModule(),
                 new LauncherModule(),
                 new LocationModule(reactContext),
                 new NativeAnimatedModule(reactContext),

@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace ReactNative.Modules.Internationalization
+namespace ReactNative.Modules.I18N
 {
     /// <summary>
     /// A module that allows JS to get/set right to left preferences.
     /// </summary>
-    class InternationalizationModule : NativeModuleBase
+    class I18NModule : NativeModuleBase
     {
         private const string ModuleName = "I18nManager";
         private const string IsRtl = "isRTL";
         private const string LocalIdentifier = "localeIdentifier";
 
-
-        internal InternationalizationModule()
-        {
-
-        }
 
         /// <summary>
         /// Gets the module name.
@@ -30,13 +25,16 @@ namespace ReactNative.Modules.Internationalization
             }
         }
 
+        /// <summary>
+        /// The constants exported by this module.
+        /// </summary>
         public override IReadOnlyDictionary<string, object> Constants
         {
             get
             {
                 return new Dictionary<string, object>
                 {
-                    { IsRtl, InternationalizationUtil.IsRightToLeft },
+                    { IsRtl, I18NUtil.IsRightToLeft },
                     { LocalIdentifier, CultureInfo.CurrentCulture.Name }
                 };
             }
@@ -49,7 +47,7 @@ namespace ReactNative.Modules.Internationalization
         [ReactMethod]
         public void allowRTL(bool value)
         {
-            InternationalizationUtil.IsRightToLeftAllowed = value;
+            I18NUtil.IsRightToLeftAllowed = value;
         }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace ReactNative.Modules.Internationalization
         [ReactMethod]
         public void forceRTL(bool value)
         {
-            InternationalizationUtil.IsRightToLeftForced = true;
+            I18NUtil.IsRightToLeftForced = true;
         }
     }
 }

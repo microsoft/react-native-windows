@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Facebook.CSSLayout;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Modules.Internationalization;
+using ReactNative.Modules.I18N;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
@@ -660,8 +661,10 @@ namespace ReactNative.UIManager
         private ReactShadowNode CreateRootShadowNode()
         {
             var rootCssNode = new ReactShadowNode();
-            if (InternationalizationUtil.IsRightToLeft)
-                rootCssNode.Direction = Facebook.CSSLayout.CSSDirection.RTL;
+            if (I18NUtil.IsRightToLeft)
+            {
+                rootCssNode.Direction = CSSDirection.RTL;
+            }
 
             rootCssNode.ViewClass = "Root";
             return rootCssNode;
