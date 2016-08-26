@@ -9,7 +9,6 @@ namespace ReactNative.Modules.I18N
     /// </summary>
     class I18NModule : NativeModuleBase
     {
-
         private const string ModuleName = "I18nManager";
         private const string IsRtl = "isRTL";
         private const string LocalIdentifier = "localeIdentifier";
