@@ -116,17 +116,21 @@ ChakraStringResult NativeJavaScriptExecutor::RunSerializedScriptFromFile(String^
 
 ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
 {
-    JsPropertyIdRef modulePropertyId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(moduleName->Data(), &modulePropertyId));
+    JsPropertyIdRef fbBridgeId;
+    IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
 
-    JsValueRef moduleObject;
-    IfFailRetNullPtr(JsGetProperty(host.globalObject, modulePropertyId, &moduleObject));
+    JsValueRef fbBridgeObj;
+    IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
 
-    JsPropertyIdRef methodPropertyId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(methodName->Data(), &methodPropertyId));
+    JsPropertyIdRef methodId;
+    IfFailRetNullPtr(JsGetPropertyIdFromName(L"callFunctionReturnFlushedQueue", &methodId));
 
-    JsValueRef methodObject;
-    IfFailRetNullPtr(JsGetProperty(moduleObject, methodPropertyId, &methodObject));
+    JsValueRef method;
+    IfFailRetNullPtr(JsGetProperty(fbBridgeObj, methodId, &method));
+
+    JsValueRef moduleNameRef, methodNameRef;
+    IfFailRetNullPtr(JsPointerToString(moduleName->Data(), moduleName->Length(), &moduleNameRef));
+    IfFailRetNullPtr(JsPointerToString(methodName->Data(), methodName->Length(), &methodNameRef));
 
     JsValueRef argObj;
     IfFailRetNullPtr(JsPointerToString(args->Data(), args->Length(), &argObj));
@@ -135,8 +139,8 @@ ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(S
     IfFailRetNullPtr(host.JsonParse(argObj, &jsonObj));
 
     JsValueRef result;
-    JsValueRef newArgs[2] = { host.globalObject, jsonObj };
-    IfFailRetNullPtr(JsCallFunction(methodObject, newArgs, 2, &result));
+    JsValueRef newArgs[4] = { host.globalObject, moduleNameRef, methodNameRef, jsonObj };
+    IfFailRetNullPtr(JsCallFunction(method, newArgs, 4, &result));
 
     JsValueRef stringifiedResult;
     IfFailRetNullPtr(host.JsonStringify(result, &stringifiedResult));
@@ -165,7 +169,7 @@ ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue
 
     JsValueRef callbackIdRef;
     IfFailRetNullPtr(JsIntToNumber(callbackId, &callbackIdRef));
-	
+
     JsValueRef argsObj;
     IfFailRetNullPtr(JsPointerToString(args->Data(), args->Length(), &argsObj));
 

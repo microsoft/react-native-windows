@@ -14,19 +14,19 @@ using System.Threading.Tasks;
 namespace ReactNative
 {
     /// <summary>
-    /// This interface manages instances of <see cref="IReactInstance" />. 
-    /// It exposes a way to configure React instances using 
+    /// This interface manages instances of <see cref="IReactInstance" />.
+    /// It exposes a way to configure React instances using
     /// <see cref="IReactPackage"/> and keeps track of the lifecycle of that
     /// instance. It also sets up a connection between the instance and the
     /// developer support functionality of the framework.
     ///
-    /// An instance of this manager is required to start the JavaScript 
+    /// An instance of this manager is required to start the JavaScript
     /// application in <see cref="ReactRootView"/>
     /// (<see cref="ReactRootView.StartReactApplication(IReactInstanceManager, string)"/>).
     ///
     /// The lifecycle of the instance of <see cref="IReactInstanceManager"/>
-    /// should be bound to the application that owns the 
-    /// <see cref="ReactRootView"/> that is used to render the React 
+    /// should be bound to the application that owns the
+    /// <see cref="ReactRootView"/> that is used to render the React
     /// application using this instance manager. It is required to pass
     /// lifecycle events to the instance manager (i.e., <see cref="OnSuspend"/>,
     /// <see cref="OnDestroy"/>, and <see cref="OnResume(Action)"/>).
@@ -60,7 +60,7 @@ namespace ReactNative
         private ReactInstanceManager(
             string jsBundleFile,
             string jsMainModuleName,
-            IReadOnlyList<IReactPackage> packages, 
+            IReadOnlyList<IReactPackage> packages,
             bool useDeveloperSupport,
             LifecycleState initialLifecycleState,
             UIImplementationProvider uiImplementationProvider,
@@ -79,7 +79,7 @@ namespace ReactNative
             _devSupportManager = _useDeveloperSupport
                 ? (IDevSupportManager)new DevSupportManager(
                     new ReactInstanceDevCommandsHandler(this),
-                    _jsBundleFile, 
+                    _jsBundleFile,
                     _jsMainModuleName)
                 : new DisabledDevSupportManager();
 
@@ -100,7 +100,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Signals whether <see cref="CreateReactContextInBackground"/> has 
+        /// Signals whether <see cref="CreateReactContextInBackground"/> has
         /// been called. Will return <code>false</code> after  <see cref="OnDestroy"/>
         /// until a new initial context has been created.
         /// </summary>
@@ -135,7 +135,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Trigger the React context initialization asynchronously in a 
+        /// Trigger the React context initialization asynchronously in a
         /// background task. This enables applications to pre-load the
         /// application JavaScript, and execute global core code before the
         /// <see cref="ReactRootView"/> is available and measure. This should
@@ -484,7 +484,7 @@ namespace ReactNative
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            // Reset view content as it's going to be populated by the 
+            // Reset view content as it's going to be populated by the
             // application content from JavaScript
             rootView.TouchHandler?.Dispose();
             rootView.Children.Clear();
@@ -530,7 +530,7 @@ namespace ReactNative
         }
 
         private async Task<ReactContext> CreateReactContextAsync(
-            Func<IJavaScriptExecutor> jsExecutorFactory, 
+            Func<IJavaScriptExecutor> jsExecutorFactory,
             JavaScriptBundleLoader jsBundleLoader)
         {
             Tracer.Write(ReactConstants.Tag, "Creating React context.");
@@ -548,7 +548,7 @@ namespace ReactNative
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
             {
-                var coreModulesPackage = 
+                var coreModulesPackage =
                     new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);

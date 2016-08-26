@@ -1,7 +1,10 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace ReactNative.Chakra.Executor
 {
@@ -11,14 +14,25 @@ namespace ReactNative.Chakra.Executor
     public class NativeJavaScriptExecutor : IJavaScriptExecutor
     {
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
+        private readonly bool _useSerialization;
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
-        public NativeJavaScriptExecutor()
+        /// <param name="useSerialization">true to use serialization, else false.</param>
+        public NativeJavaScriptExecutor(bool useSerialization)
         {
+            _useSerialization = useSerialization;
             _executor = new ChakraBridge.NativeJavaScriptExecutor();
             Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
+        /// </summary>
+        public NativeJavaScriptExecutor() : this(false)
+        {
+
         }
 
         /// <summary>
@@ -78,17 +92,11 @@ namespace ReactNative.Chakra.Executor
             return JToken.Parse(result.Result);
         }
 
-        /// <summary>
-        /// Runs the given script.
-        /// </summary>
-        /// <param name="script">The script.</param>
-        /// <param name="sourceUrl">The source URL.</param>
-        public void RunScript(string script, string sourceUrl)
+        private void RunNormalScript(string script, string sourceUrl)
         {
-            if (script == null)
-                throw new ArgumentNullException(nameof(script));
-            if (sourceUrl == null)
-                throw new ArgumentNullException(nameof(sourceUrl));
+            var localFolder = ApplicationData.Current.LocalFolder;
+            var binFile = "ReactNativeSerializedBundle.bin";
+            var binPath = Path.Combine(localFolder.Path, binFile);
 
             try
             {
@@ -102,6 +110,69 @@ namespace ReactNative.Chakra.Executor
                 var stackTrace = jsonError.Value<string>("stack");
                 throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
             }
+        }
+
+        private void RunSerializedScript(string script, string sourceUrl)
+        {
+            var localFolder = ApplicationData.Current.LocalFolder;
+            var binFile = "ReactNativeSerializedBundle.bin";
+            var binPath = Path.Combine(localFolder.Path, binFile);
+
+            try
+            {
+                if(!EnsureSerializedScriptAsync(script, binFile).Result)
+                {
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
+                }
+
+                var result = _executor.RunSerializedScriptFromFile(script, binPath, sourceUrl);
+                Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
+            }
+            catch (JavaScriptScriptException ex)
+            {
+                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
+                var message = jsonError.Value<string>("message");
+                var stackTrace = jsonError.Value<string>("stack");
+                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
+            }
+        }
+
+        /// <summary>
+        /// Runs the given script.
+        /// </summary>
+        /// <param name="script">The script.</param>
+        /// <param name="sourceUrl">The source URL.</param>
+        public void RunScript(string script, string sourceUrl)
+        {
+            if (script == null)
+                throw new ArgumentNullException(nameof(script));
+            if (sourceUrl == null)
+                throw new ArgumentNullException(nameof(sourceUrl));
+
+            if (_useSerialization)
+            {
+                RunNormalScript(script, sourceUrl);
+            }
+            else
+            {
+                RunSerializedScript(script, sourceUrl);
+            }
+        }
+
+        private static async Task<bool> EnsureSerializedScriptAsync(string scriptFile, string binFile)
+        {
+            var localFolder = ApplicationData.Current.LocalFolder;
+
+            var scriptItem = await StorageFile.GetFileFromPathAsync(scriptFile);
+            var scriptItemProps = await scriptItem.GetBasicPropertiesAsync();
+            var item = await localFolder.TryGetItemAsync(binFile);
+            if (item != null)
+            {
+                var props = await item.GetBasicPropertiesAsync();
+                return props.DateModified > scriptItemProps.DateModified;
+            }
+
+            return false;
         }
 
         /// <summary>
