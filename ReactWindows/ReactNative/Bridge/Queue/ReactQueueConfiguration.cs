@@ -10,16 +10,16 @@ namespace ReactNative.Bridge.Queue
     /// </summary>
     class ReactQueueConfiguration : IReactQueueConfiguration
     {
-        private readonly MessageQueueThread _dispatcherQueueThread;
-        private readonly MessageQueueThread _layoutQueueThread;
-        private readonly MessageQueueThread _nativeModulesQueueThread;
-        private readonly MessageQueueThread _jsQueueThread;
+        private readonly IMessageQueueThread _dispatcherQueueThread;
+        private readonly IMessageQueueThread _layoutQueueThread;
+        private readonly IMessageQueueThread _nativeModulesQueueThread;
+        private readonly IMessageQueueThread _jsQueueThread;
 
         private ReactQueueConfiguration(
-            MessageQueueThread dispatcherQueueThread,
-            MessageQueueThread layoutQueueThread,
-            MessageQueueThread nativeModulesQueueThread,
-            MessageQueueThread jsQueueThread)
+            IMessageQueueThread dispatcherQueueThread,
+            IMessageQueueThread layoutQueueThread,
+            IMessageQueueThread nativeModulesQueueThread,
+            IMessageQueueThread jsQueueThread)
         {
             _dispatcherQueueThread = dispatcherQueueThread;
             _layoutQueueThread = layoutQueueThread;

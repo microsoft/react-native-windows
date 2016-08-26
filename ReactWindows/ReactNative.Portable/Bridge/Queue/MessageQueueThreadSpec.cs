@@ -21,7 +21,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// The type of the <see cref="IMessageQueueThread"/>.
         /// </summary>
-        internal MessageQueueThreadKind Kind { get; }
+        public MessageQueueThreadKind Kind { get; }
 
         /// <summary>
         /// Singleton dispatcher <see cref="IMessageQueueThread"/> specification.

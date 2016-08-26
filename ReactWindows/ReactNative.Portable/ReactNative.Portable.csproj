@@ -13,8 +13,8 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile44</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +34,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bridge\ICallback.cs" />
+    <Compile Include="Bridge\IInvocationHandler.cs" />
+    <Compile Include="Bridge\IJavaScriptExecutor.cs" />
+    <Compile Include="Bridge\IJavaScriptModule.cs" />
+    <Compile Include="Bridge\ILifecycleEventListener.cs" />
+    <Compile Include="Bridge\INativeMethod.cs" />
+    <Compile Include="Bridge\INativeModule.cs" />
+    <Compile Include="Bridge\IOnBatchCompleteListener.cs" />
+    <Compile Include="Bridge\IPromise.cs" />
+    <Compile Include="Bridge\IReactBridge.cs" />
+    <Compile Include="Bridge\IReactCallback.cs" />
+    <Compile Include="Bridge\IReactDelegateFactory.cs" />
+    <Compile Include="Bridge\IReactInstance.cs" />
+    <Compile Include="Bridge\Queue\IMessageQueueThread.cs" />
+    <Compile Include="Bridge\Queue\IReactQueueConfiguration.cs" />
+    <Compile Include="Bridge\Queue\MessageQueueThreadExtensions.cs" />
+    <Compile Include="Bridge\Queue\MessageQueueThreadKind.cs" />
+    <Compile Include="Bridge\Queue\MessageQueueThreadSpec.cs" />
+    <Compile Include="Bridge\Queue\ReactQueueConfigurationSpec.cs" />
     <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="Collections\JObjectExtensions.cs" />
     <Compile Include="Common\ReactConstants.cs" />
@@ -45,6 +64,10 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=3.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Interfaces.3.0.0\lib\netstandard1.0\System.Reactive.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

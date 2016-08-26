@@ -5,7 +5,7 @@ namespace ReactNative.Bridge.Queue
     /// <summary>
     /// Encapsulates an action queue.
     /// </summary>
-    public interface IMessageQueueThread
+    public interface IMessageQueueThread : IDisposable
     {
         /// <summary>
         /// Runs the given action on this thread. 

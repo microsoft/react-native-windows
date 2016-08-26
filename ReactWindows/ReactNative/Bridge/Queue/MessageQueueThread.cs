@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.System.Threading;
-using Windows.UI.Core;
 
 namespace ReactNative.Bridge.Queue
 {
