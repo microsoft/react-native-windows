@@ -93,12 +93,15 @@ namespace ReactNative.Chakra.Executor
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
+            var localFolder = ApplicationData.Current.LocalFolder;
+            var binFile = "ReactNativeSerializedBundle.bin";
+            var binPath = Path.Combine(localFolder.Path, binFile);
+
             try
             {
-                var binFile = script + ".bin";
-                if (!HasUpToDateSerializedScript(binFile).Result)
+                if(!EnsureSerializedScript(script, binPath).Result)
                 {
-                    _executor.SerializeScriptFromFile(script, binFile);
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
                 }
                 var result = _executor.RunScriptFromFile(script, sourceUrl);
                 Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
@@ -112,16 +115,17 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<bool> HasUpToDateSerializedScript(string binFile)
+        private async Task<bool> EnsureSerializedScript(string scriptFile, string binPath)
         {
-            var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate;
             var localFolder = ApplicationData.Current.LocalFolder;
 
             try
             {
-                var item = await localFolder.GetItemAsync(binFile);
+                var scriptItem = await localFolder.GetItemAsync(Path.GetFileName(scriptFile));
+                var scriptItemProps = await scriptItem.GetBasicPropertiesAsync();
+                var item = await localFolder.GetItemAsync(Path.GetFileName(binPath));
                 var props = await item.GetBasicPropertiesAsync();
-                return props.DateModified > lastUpdateTime;
+                return props.DateModified > scriptItemProps.DateModified;
             }
             catch (FileNotFoundException)
             {
