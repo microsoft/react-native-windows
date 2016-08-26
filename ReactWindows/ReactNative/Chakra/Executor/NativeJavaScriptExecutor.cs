@@ -99,7 +99,7 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                if(!EnsureSerializedScriptAsync(script, binPath).Result)
+                if(!EnsureSerializedScriptAsync(script, binFile).Result)
                 {
                     Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
                 }
@@ -115,7 +115,7 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private async Task<bool> EnsureSerializedScriptAsync(string scriptFile, string binPath)
+        private async Task<bool> EnsureSerializedScriptAsync(string scriptFile, string binFile)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
 
@@ -123,7 +123,7 @@ namespace ReactNative.Chakra.Executor
             {
                 var scriptItem = await localFolder.GetItemAsync(Path.GetFileName(scriptFile));
                 var scriptItemProps = await scriptItem.GetBasicPropertiesAsync();
-                var item = await localFolder.GetItemAsync(Path.GetFileName(binPath));
+                var item = await localFolder.GetItemAsync(binFile);
                 var props = await item.GetBasicPropertiesAsync();
                 return props.DateModified > scriptItemProps.DateModified;
             }
