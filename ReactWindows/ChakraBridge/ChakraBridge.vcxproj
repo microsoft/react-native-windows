@@ -206,14 +206,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="asprintf.h" />
     <ClInclude Include="ChakraHost.h" />
+    <ClInclude Include="JsStringify.h" />
     <ClInclude Include="NativeJavaScriptExecutor.h" />
     <ClInclude Include="ChakraStringResult.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SerializedSourceContext.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="asprintf.cpp" />
     <ClCompile Include="ChakraHost.cpp" />
+    <ClCompile Include="JsStringify.cpp" />
     <ClCompile Include="NativeJavaScriptExecutor.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
