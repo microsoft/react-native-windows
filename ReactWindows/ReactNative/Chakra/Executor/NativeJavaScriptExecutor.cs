@@ -92,7 +92,7 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                var result = _executor.RunScript(script, sourceUrl);
+                var result = _executor.RunScriptFromFile(script, sourceUrl);
                 Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
             }
             catch (JavaScriptScriptException ex)

@@ -3,6 +3,8 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Diagnostics;
+using System.IO;
+using Windows.Storage;
 
 namespace ReactNative.Chakra.Executor
 {
@@ -112,10 +114,26 @@ namespace ReactNative.Chakra.Executor
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
+            string source = null;
+            try
+            {
+                var storageFile = StorageFile.GetFileFromPathAsync(script).AsTask().Result;
+                using (var stream = storageFile.OpenStreamForReadAsync().Result)
+                using (var reader = new StreamReader(stream))
+                {
+                    source = reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = $"File read exception for asset '{script}'.";
+                throw new InvalidOperationException(exceptionMessage, ex);
+            }
+
             try
             {
                 _context = JavaScriptSourceContext.Increment(_context);
-                JavaScriptContext.RunScript(script, _context, sourceUrl);
+                JavaScriptContext.RunScript(source, _context, sourceUrl);
             }
             catch (JavaScriptScriptException ex)
             {
