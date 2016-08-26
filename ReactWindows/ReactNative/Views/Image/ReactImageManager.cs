@@ -137,6 +137,7 @@ namespace ReactNative.Views.Image
                 else
                 {
                     viewSources = new Dictionary<string, double>();
+                    _imageSources.Add(tag, viewSources);
                 }
 
                 foreach (var source in sources)
@@ -145,11 +146,9 @@ namespace ReactNative.Views.Image
                     viewSources.Add(sourceData.Value<string>("uri"), sourceData.Value<double>("width") * sourceData.Value<double>("height"));
                 }
 
-                _imageSources[tag] = viewSources;
-
                 if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
                 {
-                    // If we need to choose from multiple uris but the size is not yet set, wait for layout pass
+                    // If we need to choose from multiple URIs but the size is not yet set, wait for layout pass
                     return;
                 }
 
@@ -244,10 +243,7 @@ namespace ReactNative.Views.Image
         /// <param name="dimensions">The output buffer.</param>
         public override void SetDimensions(Border view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
+            base.SetDimensions(view, dimensions);
             SetUriFromMultipleSources(view);
         }
 
@@ -332,7 +328,18 @@ namespace ReactNative.Views.Image
             if (_imageSources.TryGetValue(view.GetTag(), out sources))
             {
                 var targetImageSize = view.Width * view.Height;
-                var bestUri = sources.OrderBy(source => Math.Abs(1.0 - (source.Value) / targetImageSize)).First().Key;
+                var bestPrecision = double.MaxValue;
+                var bestUri = default(string);
+                foreach (var source in sources)
+                {
+                    var precision = Math.Abs(1.0 - (source.Value / targetImageSize));
+                    if (precision < bestPrecision)
+                    {
+                        bestPrecision = precision;
+                        bestUri = source.Key;
+                    }
+                }
+
                 SetUriFromSingleSource(view, bestUri);
             }
         }
