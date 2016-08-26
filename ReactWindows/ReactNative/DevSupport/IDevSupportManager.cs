@@ -60,6 +60,12 @@ namespace ReactNative.DevSupport
         void HandleReloadJavaScript();
 
         /// <summary>
+        /// Checks if an up-to-date JavaScript bundle is ready.
+        /// </summary>
+        /// <returns>A task to await the result.</returns>
+        Task<bool> HasUpToDateBundleInCacheAsync();
+
+        /// <summary>
         /// Dismisses the red box exception dialog.
         /// </summary>
         void HideRedboxDialog();

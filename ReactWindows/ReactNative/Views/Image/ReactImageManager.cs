@@ -213,7 +213,10 @@ namespace ReactNative.Views.Image
         {
             return new Border
             {
-                Background = new ImageBrush(),
+                Background = new ImageBrush
+                {
+                    Stretch = Stretch.UniformToFill,
+                },
             };
         }
 
