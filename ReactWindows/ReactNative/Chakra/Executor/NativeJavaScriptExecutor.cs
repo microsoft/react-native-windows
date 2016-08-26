@@ -2,6 +2,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using System.Threading.Tasks;
+using Windows.Storage;
+using System.IO;
 
 namespace ReactNative.Chakra.Executor
 {
@@ -92,6 +95,13 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
+                /*
+                var binFile = script + ".bin";
+                if (!HasUpToDateSerializedScript(binFile).Result)
+                {
+                    _executor.SerializeScriptFromFile(script, binFile);
+                }
+                */
                 var result = _executor.RunScriptFromFile(script, sourceUrl);
                 Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
             }
@@ -101,6 +111,23 @@ namespace ReactNative.Chakra.Executor
                 var message = jsonError.Value<string>("message");
                 var stackTrace = jsonError.Value<string>("stack");
                 throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
+            }
+        }
+
+        private static async Task<bool> HasUpToDateSerializedScript(string binFile)
+        {
+            var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate;
+            var localFolder = ApplicationData.Current.LocalFolder;
+
+            try
+            {
+                var item = await localFolder.GetItemAsync(binFile);
+                var props = await item.GetBasicPropertiesAsync();
+                return props.DateModified > lastUpdateTime;
+            }
+            catch (FileNotFoundException)
+            {
+                return false;
             }
         }
 
