@@ -17,7 +17,6 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="ChakraHost.h" />
     <ClInclude Include="ChakraStringResult.h" />
-    <ClInclude Include="SerializedSourceContext.h" />
     <ClInclude Include="NativeJavaScriptExecutor.h" />
     <ClInclude Include="asprintf.h" />
     <ClInclude Include="JsStringify.h" />

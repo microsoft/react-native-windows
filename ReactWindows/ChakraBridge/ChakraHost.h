@@ -33,7 +33,7 @@ public:
 	/// <returns>
 	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
 	/// </returns>
-	JsErrorCode SerializeScript(const wchar_t* szScript, const wchar_t* szDestination);
+	JsErrorCode SerializeScript(const wchar_t* szScript, const wchar_t* szDestination, BYTE** buffer);
 
 	/// <summary>
 	/// Loads a script file, serializes its contents and then saves to the desired location.
@@ -43,7 +43,7 @@ public:
 	/// <returns>
 	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
 	/// </returns>
-	JsErrorCode SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination);
+	JsErrorCode SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination, BYTE** buffer);
 
 	/// <summary>
 	/// Runs a serialized script from the given byte buffer and source URI and returns the <see cref="JsValueRef" /> result.
