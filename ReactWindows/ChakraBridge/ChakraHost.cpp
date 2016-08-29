@@ -143,12 +143,10 @@ JsErrorCode ChakraHost::RunSerializedScriptFromFile(const wchar_t* szSerializedP
         return JsErrorInvalidArgument;
     }
 
-    unsigned int current = ftell(file);
     fseek(file, 0, SEEK_END);
-    unsigned int end = ftell(file);
-    fseek(file, current, SEEK_SET);
-    unsigned int lengthBytes = end - current;
-    buffer = (BYTE*)calloc(lengthBytes + 1, sizeof(BYTE));
+    unsigned int lengthBytes = ftell(file);
+    fseek(file, 0, SEEK_SET);
+    buffer = new BYTE[lengthBytes];
     fread((void *)buffer, sizeof(BYTE), lengthBytes, file);
     fclose(file);
 

@@ -121,7 +121,7 @@ namespace ReactNative.Chakra.Executor
                     Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
                 }
 
-                var result = _executor.RunSerializedScriptFromFile(script, binPath, sourceUrl);
+                var result = _executor.RunSerializedScriptFromFile(binPath, script, sourceUrl);
                 Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
             }
             catch (JavaScriptScriptException ex)
