@@ -167,7 +167,7 @@ namespace ReactNative.UIManager
             DefaultSingle = Undefined)]
         public void SetPaddings(int index, float padding)
         {
-            SetPadding(ViewProps.PaddingMarginSpacingTypes[index], padding);
+            SetPaddingCore(ViewProps.PaddingMarginSpacingTypes[index], padding);
         }
 
         /// <summary>
@@ -207,6 +207,19 @@ namespace ReactNative.UIManager
         public void SetShouldNotifyOnLayout(bool shouldNotifyOnLayout)
         {
             ShouldNotifyOnLayout = shouldNotifyOnLayout;
+        }
+
+        /// <summary>
+        /// Sets the padding of the shadow node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="padding">The padding value.</param>
+        /// <remarks>
+        /// Override this virtual method if the view has custom padding behavior.
+        /// </remarks>
+        protected virtual void SetPaddingCore(CSSSpacingType spacingType, float padding)
+        {
+            SetPadding(spacingType, padding);
         }
     }
 }
