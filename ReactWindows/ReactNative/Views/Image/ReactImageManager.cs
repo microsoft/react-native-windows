@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -23,8 +22,8 @@ namespace ReactNative.Views.Image
 
         private readonly IImageCache _imageCache;
 
-        private readonly Dictionary<int, Dictionary<string, double>> _imageSources =
-            new Dictionary<int, Dictionary<string, double>>();
+        private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
+            new Dictionary<int, List<KeyValuePair<string, double>>>();
 
         /// <summary>
         /// Instantiates the <see cref="ReactImageManager"/>.  
@@ -128,23 +127,20 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                var viewSources = default(Dictionary<string, double>);
+                var viewSources = new List<KeyValuePair<string, double>>();
                 var tag = view.GetTag();
-                if (_imageSources.TryGetValue(tag, out viewSources))
-                {
-                    viewSources.Clear();
-                }
-                else
-                {
-                    viewSources = new Dictionary<string, double>();
-                    _imageSources.Add(tag, viewSources);
-                }
+                _imageSources.Add(tag, viewSources);
 
                 foreach (var source in sources)
                 {
                     var sourceData = (JObject)source;
-                    viewSources.Add(sourceData.Value<string>("uri"), sourceData.Value<double>("width") * sourceData.Value<double>("height"));
+                    viewSources.Add(
+                        new KeyValuePair<string, double>(
+                            sourceData.Value<string>("uri"),
+                            sourceData.Value<double>("width") * sourceData.Value<double>("height")));
                 }
+
+                viewSources.Sort((p1, p2) => p1.Value.CompareTo(p2.Value));
 
                 if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
                 {
@@ -206,21 +202,15 @@ namespace ReactNative.Views.Image
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
         {
-            var imageBrush = (ImageBrush)view.Background;
             var tag = view.GetTag();
-
-            var sources = default(Dictionary<string, double>);
-            if (_imageSources.TryGetValue(tag, out sources))
-            {
-                _imageSources.Remove(tag);
-            }
-
             var disposable = default(SerialDisposable);
             if (_disposables.TryGetValue(tag, out disposable))
             {
                 disposable.Dispose();
                 _disposables.Remove(tag);
             }
+
+            _imageSources.Remove(tag);
         }
 
         /// <summary>
@@ -324,23 +314,43 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         private void SetUriFromMultipleSources(Border view)
         {
-            var sources = default(Dictionary<string, double>);
+            var sources = default(List<KeyValuePair<string, double>>);
             if (_imageSources.TryGetValue(view.GetTag(), out sources))
             {
                 var targetImageSize = view.Width * view.Height;
-                var bestPrecision = double.MaxValue;
-                var bestUri = default(string);
-                foreach (var source in sources)
+                var left = 0;
+                var right = sources.Count - 1;
+                var bestResult = default(KeyValuePair<string, double>);
+                do
                 {
-                    var precision = Math.Abs(1.0 - (source.Value / targetImageSize));
-                    if (precision < bestPrecision)
+                    var mid = (left + right) >> 1;
+                    bestResult = sources[mid];
+                    if (sources[mid].Value < targetImageSize)
                     {
-                        bestPrecision = precision;
-                        bestUri = source.Key;
+                        left = mid + 1;
+                    }
+                    else if (sources[mid].Value > targetImageSize)
+                    {
+                        right = mid - 1;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
+                while (left <= right);
 
-                SetUriFromSingleSource(view, bestUri);
+                if (left < sources.Count && Math.Abs(sources[left].Value - targetImageSize) < Math.Abs(bestResult.Value - targetImageSize))
+                {
+                    bestResult = sources[left];
+                }
+
+                if (right >= 0 && right != left && Math.Abs(sources[right].Value - targetImageSize) < Math.Abs(bestResult.Value - targetImageSize))
+                {
+                    bestResult = sources[right];
+                }
+
+                SetUriFromSingleSource(view, bestResult.Key);
             }
         }
     }
