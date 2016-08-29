@@ -94,10 +94,6 @@ namespace ReactNative.Chakra.Executor
 
         private void RunNormalScript(string script, string sourceUrl)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var binFile = "ReactNativeSerializedBundle.bin";
-            var binPath = Path.Combine(localFolder.Path, binFile);
-
             try
             {
                 var result = _executor.RunScriptFromFile(script, sourceUrl);
@@ -151,11 +147,11 @@ namespace ReactNative.Chakra.Executor
 
             if (_useSerialization)
             {
-                RunNormalScript(script, sourceUrl);
+                RunSerializedScript(script, sourceUrl);
             }
             else
             {
-                RunSerializedScript(script, sourceUrl);
+                RunNormalScript(script, sourceUrl);
             }
         }
 
