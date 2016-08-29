@@ -81,6 +81,7 @@ JsErrorCode ChakraHost::RunScriptFromFile(const wchar_t* szFileName, const wchar
     unsigned int lengthBytes = ftell(file);
     fseek(file, 0, SEEK_SET);
     wchar_t* rawBytes = new wchar_t[lengthBytes + 1];
+    rawBytes[lengthBytes] = L'\0';
     fread(rawBytes, sizeof(wchar_t), lengthBytes, file);
     fclose(file);
 
