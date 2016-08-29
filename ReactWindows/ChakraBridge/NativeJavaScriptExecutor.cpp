@@ -41,36 +41,20 @@ ChakraStringResult NativeJavaScriptExecutor::GetGlobalVariable(String^ variableN
     return finalResult;
 }
 
-ChakraStringResult NativeJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
+int NativeJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
 {
     JsValueRef result;
-    IfFailRetNullPtr(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
+    IfFailRet(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
 
-    JsValueRef resultJson;
-    IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
-
-    const wchar_t* szBuf;
-    size_t bufLen;
-    IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
-
-    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
-    return finalResult;
+    return JsNoError;
 }
 
-ChakraStringResult NativeJavaScriptExecutor::RunScriptFromFile(String^ sourceFilePath, String^ sourceUri)
+int NativeJavaScriptExecutor::RunScriptFromFile(String^ sourceFilePath, String^ sourceUri)
 {
     JsValueRef result;
-    IfFailRetNullPtr(this->host.RunScriptFromFile(sourceFilePath->Data(), sourceUri->Data(), &result));
+    IfFailRet(this->host.RunScriptFromFile(sourceFilePath->Data(), sourceUri->Data(), &result));
 
-    JsValueRef resultJson;
-    IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
-
-    const wchar_t* szBuf;
-    size_t bufLen;
-    IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
-
-    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
-    return finalResult;
+    return JsNoError;
 }
 
 int NativeJavaScriptExecutor::SerializeScript(String^ source, String^ destination) {
@@ -82,36 +66,20 @@ int NativeJavaScriptExecutor::SerializeScriptFromFile(String^ file, String^ dest
 	return this->host.SerializeScriptFromFile(file->Data(), destination->Data());
 }
 
-ChakraStringResult NativeJavaScriptExecutor::RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri)
+int NativeJavaScriptExecutor::RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri)
 {
 	JsValueRef result;
-	IfFailRetNullPtr(this->host.RunSerailizedScript(buffer->Data, sourceFilePath->Data(), sourceUri->Data(), &result));
+	IfFailRet(this->host.RunSerailizedScript(buffer->Data, sourceFilePath->Data(), sourceUri->Data(), &result));
 
-	JsValueRef resultJson;
-	IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
-
-	const wchar_t* szBuf;
-	size_t bufLen;
-	IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
-
-	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
-	return finalResult;
+    return JsNoError;
 }
 
-ChakraStringResult NativeJavaScriptExecutor::RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri)
+int NativeJavaScriptExecutor::RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri)
 {
 	JsValueRef result;
-	IfFailRetNullPtr(this->host.RunSerializedScriptFromFile(serializedPath->Data(), sourceFilePath->Data(), sourceUri->Data(), &result));
+	IfFailRet(this->host.RunSerializedScriptFromFile(serializedPath->Data(), sourceFilePath->Data(), sourceUri->Data(), &result));
 
-	JsValueRef resultJson;
-	IfFailRetNullPtr(this->host.JsonStringify(result, &resultJson));
-
-	const wchar_t* szBuf;
-	size_t bufLen;
-	IfFailRetNullPtr(JsStringToPointer(resultJson, &szBuf, &bufLen));
-
-	ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
-	return finalResult;
+    return JsNoError;
 }
 
 ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)

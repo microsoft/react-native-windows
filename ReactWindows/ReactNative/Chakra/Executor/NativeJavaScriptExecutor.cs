@@ -96,8 +96,7 @@ namespace ReactNative.Chakra.Executor
         {
             try
             {
-                var result = _executor.RunScriptFromFile(script, sourceUrl);
-                Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
+                Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScriptFromFile(script, sourceUrl));
             }
             catch (JavaScriptScriptException ex)
             {
@@ -121,8 +120,7 @@ namespace ReactNative.Chakra.Executor
                     Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
                 }
 
-                var result = _executor.RunSerializedScriptFromFile(binPath, script, sourceUrl);
-                Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
+                Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScriptFromFile(binPath, script, sourceUrl));
             }
             catch (JavaScriptScriptException ex)
             {

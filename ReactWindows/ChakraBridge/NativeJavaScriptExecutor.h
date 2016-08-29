@@ -57,7 +57,7 @@ public:
 	/// <returns>
 	/// A compount result with the JSON stringified value and an error code if any occurred.
 	/// </returns>
-    ChakraStringResult RunScript(String^ source, String^ sourceUri);
+    int RunScript(String^ source, String^ sourceUri);
 
 	/// <summary>
 	/// Runs the script from the file location and source URI and returns the result.
@@ -67,7 +67,7 @@ public:
 	/// <returns>
 	/// A compount result with the JSON stringified value and an error code if any occurred.
 	/// </returns>
-    ChakraStringResult RunScriptFromFile(String^ sourceFilePath, String^ sourceUri);
+    int RunScriptFromFile(String^ sourceFilePath, String^ sourceUri);
 
 	/// <summary>
 	/// Serializes a source script to a file destination.
@@ -98,8 +98,8 @@ public:
 	/// <returns>
 	/// A compount result with the JSON stringified value and an error code if any occurred.
 	/// </returns>
-	ChakraStringResult RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri);
-	
+	int RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri);
+
 	/// <summary>
 	/// Runs a serialzed script from the serialized path, the source file path and source URI.
 	/// </summary>
@@ -109,7 +109,7 @@ public:
 	/// <returns>
 	/// A compount result with the JSON stringified value and an error code if any occurred.
 	/// </returns>
-	ChakraStringResult RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri);
+    int RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri);
 
 	/// <summary>
 	/// Calls the underlying function with the given module and method name and JSON stringified arguments.
@@ -120,8 +120,8 @@ public:
 	/// <returns>
 	/// A compount result with the JSON stringified value and an error code if any occurred.
 	/// </returns>
-    ChakraStringResult CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args); 
-    
+    ChakraStringResult CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args);
+
 	/// <summary>
 	/// Calls the underlying function with the callback ID and JSON stringified arguments.
 	/// </summary>
@@ -130,15 +130,15 @@ public:
 	/// <returns>
 	/// A compount result with the JSON stringified value and an error code if any occurred.
 	/// </returns>
-	ChakraStringResult InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args); 
-    
+	ChakraStringResult InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args);
+
 	/// <summary>
 	/// Calls the flush queue function.
 	/// </summary>
 	/// <returns>
 	/// A compount result with the JSON stringified value and an error code if any occurred.
 	/// </returns>
-	ChakraStringResult FlushedQueue(); 
+	ChakraStringResult FlushedQueue();
 private:
     ChakraHost host;
 };
