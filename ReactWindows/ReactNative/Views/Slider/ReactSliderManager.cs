@@ -1,16 +1,11 @@
-using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using ReactNative.UIManager.Events;
-using System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.Slider
 {
     /// <summary>
-    /// A view manager responsible for rendering picker.
+    /// A view manager responsible for rendering Slider.
     /// </summary>
     public class ReactSliderManager : BaseViewManager<Windows.UI.Xaml.Controls.Slider, ReactSliderShadowNode>
     { 
@@ -26,7 +21,7 @@ namespace ReactNative.Views.Slider
         }
 
         /// <summary>
-        /// Sets whether a picker is disabled.
+        /// Sets whether a slider is disabled.
         /// </summary>
         /// <param name="view">a slider view.</param>
         /// <param name="disabled">
@@ -44,7 +39,7 @@ namespace ReactNative.Views.Slider
         /// </summary>
         /// <param name="view">a slider view.</param>
         /// <param name="minimum">
-        ///
+        /// The minimum slider value.
         /// </param>
         [ReactProp("minimumValue")]
         public void SetMinimumValue(Windows.UI.Xaml.Controls.Slider view, double minimum)
@@ -56,8 +51,8 @@ namespace ReactNative.Views.Slider
         /// Sets to change slider maximum value.
         /// </summary>
         /// <param name="view">a slider view.</param>
-        /// <param name="minimum">
-        ///
+        /// <param name="maximum">
+        /// The maximum slider value.
         /// </param>
         [ReactProp("maximumValue")]
         public void SetMaximumValue(Windows.UI.Xaml.Controls.Slider view, double maximum)
@@ -70,7 +65,7 @@ namespace ReactNative.Views.Slider
         /// </summary>
         /// <param name="view">The slider view.</param>
         /// <param name="value">
-        ///
+        /// Slider value.
         /// </param>
         [ReactProp(ViewProps.Value)]
         public void SetValue(Windows.UI.Xaml.Controls.Slider view, double value)
@@ -83,7 +78,7 @@ namespace ReactNative.Views.Slider
         /// </summary>
         /// <param name="view">The slider view.</param>
         /// <param name="step">
-        ///
+        /// Slider step.
         /// </param>
         [ReactProp("step")]
         public void SetStep(Windows.UI.Xaml.Controls.Slider view, double step)
@@ -92,7 +87,7 @@ namespace ReactNative.Views.Slider
         }
 
         /// <summary>
-        /// This method should return the <see cref="ReactPickerShadowNode"/>
+        /// This method should return the <see cref="ReactSliderShadowNode"/>
         /// which will be then used for measuring the position and size of the
         /// view. 
         /// </summary>
@@ -104,9 +99,13 @@ namespace ReactNative.Views.Slider
 
         public override void UpdateExtraData(Windows.UI.Xaml.Controls.Slider root, object extraData)
         {
-            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns the view instance for <see cref="Slider"/>.
+        /// </summary>
+        /// <param name="reactContext"></param>
+        /// <returns></returns>
         protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance(ThemedReactContext reactContext)
         {
             return new Windows.UI.Xaml.Controls.Slider();
@@ -148,7 +147,5 @@ namespace ReactNative.Views.Slider
                         slider.GetTag(),
                         slider.Value));
         }
-
-
     }
 }

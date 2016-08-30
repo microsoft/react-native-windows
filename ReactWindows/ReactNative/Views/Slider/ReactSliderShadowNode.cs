@@ -1,16 +1,15 @@
 ﻿using Facebook.CSSLayout;
 using ReactNative.UIManager;
-using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.Views.Slider
 {
     /// <summary>
-    /// The shadow node implementation for Picker views.
+    /// The shadow node implementation for Slider views.
     /// </summary>
     public class ReactSliderShadowNode : LayoutShadowNode
     {
         /// <summary>
-        /// Instantiates the <see cref="ReactPickerShadowNode"/>.
+        /// Instantiates the <see cref="ReactSliderShadowNode"/>.
         /// </summary>
         public ReactSliderShadowNode()
         {
