@@ -94,14 +94,9 @@ namespace ReactNative.Chakra.Executor
 
         private void RunNormalScript(string script, string sourceUrl)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var binFile = "ReactNativeSerializedBundle.bin";
-            var binPath = Path.Combine(localFolder.Path, binFile);
-
             try
             {
-                var result = _executor.RunScriptFromFile(script, sourceUrl);
-                Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
+                Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScriptFromFile(script, sourceUrl));
             }
             catch (JavaScriptScriptException ex)
             {
@@ -125,8 +120,7 @@ namespace ReactNative.Chakra.Executor
                     Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
                 }
 
-                var result = _executor.RunSerializedScriptFromFile(script, binPath, sourceUrl);
-                Native.ThrowIfError((JavaScriptErrorCode)result.ErrorCode);
+                Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScriptFromFile(binPath, script, sourceUrl));
             }
             catch (JavaScriptScriptException ex)
             {
@@ -151,11 +145,11 @@ namespace ReactNative.Chakra.Executor
 
             if (_useSerialization)
             {
-                RunNormalScript(script, sourceUrl);
+                RunSerializedScript(script, sourceUrl);
             }
             else
             {
-                RunSerializedScript(script, sourceUrl);
+                RunNormalScript(script, sourceUrl);
             }
         }
 
