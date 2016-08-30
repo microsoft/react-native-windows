@@ -5,6 +5,7 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Text;
@@ -24,6 +25,15 @@ namespace ReactNative.Views.TextInput
         internal const int BlurTextInput = 2;
 
         private bool _onSelectionChange;
+
+        private static readonly Color DefaultTextBoxBorder =
+            new Color
+            {
+                A = byte.Parse("FF", NumberStyles.AllowHexSpecifier),
+                R = byte.Parse("7A", NumberStyles.AllowHexSpecifier),
+                G = byte.Parse("7A", NumberStyles.AllowHexSpecifier),
+                B = byte.Parse("7A", NumberStyles.AllowHexSpecifier)
+            };
 
         /// <summary>
         /// The name of the view manager.
@@ -210,6 +220,19 @@ namespace ReactNative.Views.TextInput
         public void SetPlaceholder(ReactTextBox view, string placeholder)
         {
             view.PlaceholderText = placeholder;
+        }
+
+        /// <summary>
+        /// Sets the border color for the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp("borderColor", CustomType = "Color")]
+        public void SetBorderColor(ReactTextBox view, uint? color)
+        {
+            view.BorderBrush = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : new SolidColorBrush(DefaultTextBoxBorder);
         }
 
         /// <summary>
@@ -441,7 +464,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup by the <see cref="ReactTextInputManager"/>.
         /// subclass. Unregister all event handlers for the <see cref="ReactTextBox"/>.
         /// </summary>
