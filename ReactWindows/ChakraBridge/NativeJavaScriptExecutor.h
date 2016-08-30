@@ -70,48 +70,6 @@ public:
     int RunScriptFromFile(String^ sourceFilePath, String^ sourceUri);
 
 	/// <summary>
-	/// Serializes a source script to a file destination.
-	/// </summary>
-	/// <param name="source">The source script to serialize.</param>
-	/// <param name="destination">The destination to save the serialized script.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	int SerializeScript(String^ source, String^ destination);
-
-	/// <summary>
-	/// Serializes a script from a file location with source URI.
-	/// </summary>
-	/// <param name="file">The location of the source file to serialize.</param>
-	/// <param name="destination">The destination to save the serialized source.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	int SerializeScriptFromFile(String^ file, String^ destination);
-
-	/// <summary>
-	/// Runs a serialized script from the byte array, source file path, and source URI.
-	/// </summary>
-	/// <param name="buffer">The buffer containing the serialized script.</param>
-	/// <param name="sourceFilePath">The path of the source file.</param>
-	/// <param name="sourceUri">The source URI.</param>
-	/// <returns>
-	/// A compount result with the JSON stringified value and an error code if any occurred.
-	/// </returns>
-	int RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri);
-
-	/// <summary>
-	/// Runs a serialzed script from the serialized path, the source file path and source URI.
-	/// </summary>
-	/// <param name="serializedPath">The path containing the serailized script.</param>
-	/// <param name="sourceFilePath">The path of the source file.</param>
-	/// <param name="sourceUri">The source URI.</param>
-	/// <returns>
-	/// A compount result with the JSON stringified value and an error code if any occurred.
-	/// </returns>
-    int RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri);
-
-	/// <summary>
 	/// Calls the underlying function with the given module and method name and JSON stringified arguments.
 	/// </summary>
 	/// <param name="moduleName">The module name to call.</param>

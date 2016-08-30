@@ -26,48 +26,6 @@ public:
 	JsErrorCode Destroy();
 
 	/// <summary>
-	/// Serializes a given script and saves it to the desired location.
-	///</summary>
-	/// <param name="szScript">The script string to serialize</param>
-	/// <param name="szDestination">The destination to save the serialized script.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	JsErrorCode SerializeScript(const wchar_t* szScript, const wchar_t* szDestination);
-
-	/// <summary>
-	/// Loads a script file, serializes its contents and then saves to the desired location.
-	///</summary>
-	/// <param name="szPath">The file path of the script to serialize.</param>
-	/// <param name="szDestination">The destination to save the serialized script.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	JsErrorCode SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination);
-
-	/// <summary>
-	/// Runs a serialized script from the given byte buffer and source URI and returns the <see cref="JsValueRef" /> result.
-	///</summary>
-	/// <param name="buffer">A byte buffer which contains the serialized byte code.</param>
-	/// <param name="szSourceUri">The source URI for the script.</param>
-	/// <param name="result">[Out] The result from running the serialized script.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	JsErrorCode RunSerailizedScript(BYTE* buffer, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
-
-	/// <summary>
-	/// Loads a serialized script from the path, runs it with the byte buffer and source URI and returns the <see cref="JsValueRef" /> result.
-	///</summary>
-	/// <param name="szSerializedPath">The path containing the serialized script.</param>
-	/// <param name="szSourceUri">The source URI for the script.</param>
-	/// <param name="result">[Out] The result from running the serialized script.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	JsErrorCode RunSerializedScriptFromFile(const wchar_t* szSerializedPath, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
-
-	/// <summary>
 	/// Runs the given script with the source URI and returns the <see cref="JsValueRef" /> result.
 	///</summary>
 	/// <param name="szScript">The script to run.</param>

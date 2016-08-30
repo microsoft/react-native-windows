@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "ChakraHost.h"
-#include "SerializedSourceContext.h"
 #include "JsStringify.h"
 
 void ThrowException(const wchar_t* szException)
@@ -11,7 +10,7 @@ void ThrowException(const wchar_t* szException)
     JsPointerToString(szException, wcslen(szException), &errorValue);
     JsCreateError(errorValue, &errorObject);
     JsSetException(errorObject);
-};
+}
 
 JsErrorCode DefineHostCallback(JsValueRef globalObject, const wchar_t *callbackName, JsNativeFunction callback, void *callbackState)
 {
@@ -66,187 +65,6 @@ JsValueRef CALLBACK ConsoleInfo(JsValueRef callee, bool isConstructCall, JsValue
 JsValueRef CALLBACK ConsoleError(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
     return InvokeConsole(L"error", callee, isConstructCall, arguments, argumentCount, callbackState);
-}
-
-bool CALLBACK LoadSourceCallback(JsSourceContext sourceContext, const wchar_t** scriptBuffer)
-{
-    SerializedSourceContext* context = (SerializedSourceContext*)sourceContext;
-    FILE* file;
-
-    _wfopen_s(&file, context->sourcePath, L"rb");
-
-    unsigned int current = ftell(file);
-    fseek(file, 0, SEEK_END);
-    unsigned int end = ftell(file);
-    fseek(file, current, SEEK_SET);
-    unsigned int lengthBytes = end - current;
-    char* rawBytes = (char *)calloc(lengthBytes + 1, sizeof(char));
-
-    if (rawBytes == nullptr)
-    {
-        return false;
-    }
-
-    fread((void *)rawBytes, sizeof(char), lengthBytes, file);
-    fclose(file);
-
-    wchar_t* contents = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
-    if (contents == nullptr)
-    {
-        free(rawBytes);
-        return false;
-    }
-
-    if (MultiByteToWideChar(CP_UTF8, 0, rawBytes, lengthBytes + 1, contents, lengthBytes + 1) == 0)
-    {
-        free(rawBytes);
-        free(contents);
-        return false;
-    }
-
-    free(rawBytes);
-    *scriptBuffer = contents;
-
-    return true;
-}
-
-void CALLBACK UnloadSourceCallback(JsSourceContext sourceContext)
-{
-    SerializedSourceContext* context = (SerializedSourceContext*)sourceContext;
-    delete context;
-}
-
-JsErrorCode ChakraHost::RunSerailizedScript(BYTE* buffer, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result)
-{
-    SerializedSourceContext* context = new SerializedSourceContext();
-    context->byteCode = buffer;
-    context->sourcePath = szPath;
-    context->scriptBuffer = nullptr;
-
-    IfFailRet(JsRunSerializedScriptWithCallback(
-        &LoadSourceCallback,
-        &UnloadSourceCallback,
-        buffer,
-        (JsSourceContext)context,
-        szSourceUri,
-        result));
-
-    return JsNoError;
-}
-
-JsErrorCode ChakraHost::RunSerializedScriptFromFile(const wchar_t* szSerializedPath, const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result)
-{
-    FILE* file = NULL;
-    BYTE* buffer = NULL;
-    if (_wfopen_s(&file, szSerializedPath, L"rb"))
-    {
-        return JsErrorInvalidArgument;
-    }
-
-    fseek(file, 0, SEEK_END);
-    unsigned int lengthBytes = ftell(file);
-    fseek(file, 0, SEEK_SET);
-    buffer = new BYTE[lengthBytes];
-    fread((void *)buffer, sizeof(BYTE), lengthBytes, file);
-    fclose(file);
-
-    IfFailRet(RunSerailizedScript(buffer, szPath, szSourceUri, result));
-
-    return JsNoError;
-}
-
-JsErrorCode ChakraHost::SerializeScriptFromFile(const wchar_t* szPath, const wchar_t* szDestination)
-{
-    JsErrorCode status = JsNoError;
-    FILE *file;
-    char *rawBytes = nullptr;
-    wchar_t *contents = nullptr;
-
-    if (_wfopen_s(&file, szPath, L"rb"))
-    {
-        status = JsErrorInvalidArgument;
-        goto cleanup;
-    }
-
-    unsigned int current = ftell(file);
-    fseek(file, 0, SEEK_END);
-    unsigned int end = ftell(file);
-    fseek(file, current, SEEK_SET);
-    unsigned int lengthBytes = end - current;
-    rawBytes = (char *)calloc(lengthBytes + 1, sizeof(char));
-
-    if (rawBytes == nullptr)
-    {
-        status = JsErrorFatal;
-        goto cleanup;
-    }
-
-    fread((void *)rawBytes, sizeof(char), lengthBytes, file);
-    fclose(file);
-
-    contents = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
-    if (contents == nullptr)
-    {
-        status = JsErrorFatal;
-        goto cleanup;
-    }
-
-    if (MultiByteToWideChar(CP_UTF8, 0, rawBytes, lengthBytes + 1, contents, lengthBytes + 1) == 0)
-    {
-        status = JsErrorFatal;
-        goto cleanup;
-    }
-
-    IfFailCleanup(SerializeScript(contents, szDestination));
-
-cleanup:
-    if (rawBytes)
-    {
-        free(rawBytes);
-    }
-    if (contents)
-    {
-        free(contents);
-    }
-
-    return status;
-}
-
-JsErrorCode ChakraHost::SerializeScript(const wchar_t* szScript, const wchar_t* szDestination)
-{
-    JsErrorCode status;
-    BYTE* buf = NULL;
-    ULONG bufSize = 0L;
-    IfFailCleanup(JsSerializeScript(szScript, buf, &bufSize));
-
-    buf = new BYTE[bufSize];
-    IfFailCleanup(JsSerializeScript(szScript, buf, &bufSize));
-
-    FILE *file;
-    if (_wfopen_s(&file, szDestination, L"wb"))
-    {
-        status = JsErrorInvalidArgument;
-        goto cleanup;
-    }
-
-    if (fwrite(buf, sizeof(BYTE), bufSize, file) != bufSize)
-    {
-        status = JsErrorFatal;
-        goto cleanup;
-    }
-
-    if (fclose(file))
-    {
-        status = JsErrorFatal;
-        goto cleanup;
-    }
-
-cleanup:
-    if (buf)
-    {
-        delete[] buf;
-    }
-    return status;
 }
 
 JsErrorCode ChakraHost::RunScriptFromFile(const wchar_t* szFileName, const wchar_t* szSourceUri, JsValueRef* result)

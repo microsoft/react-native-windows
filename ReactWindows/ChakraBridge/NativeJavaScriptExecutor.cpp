@@ -45,7 +45,6 @@ int NativeJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
 {
     JsValueRef result;
     IfFailRet(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
-
     return JsNoError;
 }
 
@@ -53,32 +52,6 @@ int NativeJavaScriptExecutor::RunScriptFromFile(String^ sourceFilePath, String^ 
 {
     JsValueRef result;
     IfFailRet(this->host.RunScriptFromFile(sourceFilePath->Data(), sourceUri->Data(), &result));
-
-    return JsNoError;
-}
-
-int NativeJavaScriptExecutor::SerializeScript(String^ source, String^ destination) {
-	return this->host.SerializeScript(source->Data(), destination->Data());
-}
-
-int NativeJavaScriptExecutor::SerializeScriptFromFile(String^ file, String^ destination)
-{
-	return this->host.SerializeScriptFromFile(file->Data(), destination->Data());
-}
-
-int NativeJavaScriptExecutor::RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri)
-{
-	JsValueRef result;
-	IfFailRet(this->host.RunSerailizedScript(buffer->Data, sourceFilePath->Data(), sourceUri->Data(), &result));
-
-    return JsNoError;
-}
-
-int NativeJavaScriptExecutor::RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri)
-{
-	JsValueRef result;
-	IfFailRet(this->host.RunSerializedScriptFromFile(serializedPath->Data(), sourceFilePath->Data(), sourceUri->Data(), &result));
-
     return JsNoError;
 }
 
