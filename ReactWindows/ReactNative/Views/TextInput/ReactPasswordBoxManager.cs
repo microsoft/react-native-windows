@@ -14,8 +14,14 @@ using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.TextInput
 {
+    /// <summary>
+    /// View manager for <see cref="PasswordBox"/>.
+    /// </summary>
     class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
+        /// <summary>
+        /// The name of the view manager.
+        /// </summary>
         public override string Name
         {
             get
@@ -191,7 +197,20 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the background color for the <see cref="PasswordBox"/>.
+        /// Sets the border color for the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp("borderColor", CustomType = "Color")]
+        public void SetBorderColor(PasswordBox view, uint? color)
+        {
+            view.BorderBrush = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : new SolidColorBrush(ReactTextInputManager.DefaultTextBoxBorder);
+        }
+
+        /// <summary>
+        /// Sets the background color for the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="color">The masked color value.</param>
@@ -351,7 +370,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup by the <see cref="ReactTextInputManager"/>.
         /// subclass. Unregister all event handlers for the <see cref="PasswordBox"/>.
         /// </summary>

@@ -86,7 +86,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="color">The masked color value.</param>
         [ReactProp("borderColor", CustomType = "Color")]
-        public void SetBorderCOlor(uint? color)
+        public void SetBorderColor(uint? color)
         {
             if (color.HasValue)
             {

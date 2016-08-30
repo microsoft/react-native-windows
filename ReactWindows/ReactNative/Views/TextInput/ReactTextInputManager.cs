@@ -26,7 +26,7 @@ namespace ReactNative.Views.TextInput
 
         private bool _onSelectionChange;
 
-        private static readonly Color DefaultTextBoxBorder =
+        internal static readonly Color DefaultTextBoxBorder =
             new Color
             {
                 A = byte.Parse("FF", NumberStyles.AllowHexSpecifier),
