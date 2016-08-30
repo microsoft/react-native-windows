@@ -61,7 +61,7 @@ namespace ReactNative.Tests.Bridge.Queue
         public async Task MessageQueueThread_HandlesException()
         {
             var exception = new Exception();
-            var countdown = new CountdownEvent(4);
+            var countdown = new CountdownEvent(1);
             var handler = new Action<Exception>(ex =>
             {
                 Assert.AreSame(exception, ex);
@@ -78,6 +78,8 @@ namespace ReactNative.Tests.Bridge.Queue
                 backgroundThread,
                 taskPoolThread
             };
+
+            countdown.AddCount(queueThreads.Length - 1);
 
             foreach (var queueThread in queueThreads)
             {

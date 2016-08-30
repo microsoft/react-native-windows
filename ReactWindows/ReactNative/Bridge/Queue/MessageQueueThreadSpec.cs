@@ -38,7 +38,7 @@ namespace ReactNative.Bridge.Queue
         {
             if (kind == MessageQueueThreadKind.DispatcherThread)
             {
-                throw new NotSupportedException("Use the singleton MainUiThreadSpec instance.");
+                throw new NotSupportedException("Use the singleton DispatcherThreadSpec instance.");
             }
 
             return new MessageQueueThreadSpec(kind, name);

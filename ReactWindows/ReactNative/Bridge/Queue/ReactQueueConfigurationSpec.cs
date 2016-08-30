@@ -32,7 +32,7 @@ namespace ReactNative.Bridge.Queue
         {
             get;
         }
-        
+
         /// <summary>
         /// The default <see cref="ReactQueueConfigurationSpec"/> instance.
         /// </summary>
@@ -81,7 +81,7 @@ namespace ReactNative.Bridge.Queue
                 {
                     if (_jsQueueThreadSpec != null)
                     {
-                        throw new InvalidOperationException("Setting native modules queue thread spec multiple times!");
+                        throw new InvalidOperationException("Setting JavaScript queue thread spec multiple times!");
                     }
 
                     _jsQueueThreadSpec = value;

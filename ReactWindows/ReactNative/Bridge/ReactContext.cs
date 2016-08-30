@@ -207,8 +207,8 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Asserts that the current thread is on the React instance native
-        /// modules queue thread.
+        /// Asserts that the current thread is on the React instance dispatcher
+        /// queue thread.
         /// </summary>
         public void AssertOnDispatcherQueueThread()
         {

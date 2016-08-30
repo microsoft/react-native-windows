@@ -3,8 +3,6 @@ using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using System;
-using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -37,20 +35,6 @@ namespace ReactNative.Views.Text
         public ReactTextShadowNode()
         {
             MeasureFunction = MeasureText;
-        }
-
-        /// <summary>
-        /// Instantiates the <see cref="ReactTextShadowNode"/>.
-        /// </summary>
-        /// <param name="isRoot">
-        /// A flag signaling whether or not the node is the root node.
-        /// </param>
-        public ReactTextShadowNode(bool isRoot)
-        {
-            if (isRoot)
-            {
-                MeasureFunction = MeasureText;
-            }
         }
 
         /// <summary>

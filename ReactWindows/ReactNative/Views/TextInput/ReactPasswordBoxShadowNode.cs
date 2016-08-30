@@ -6,11 +6,8 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using Windows.Foundation;
-using Windows.UI.Core;
 using Windows.UI.Text;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.TextInput
