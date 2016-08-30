@@ -198,6 +198,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReactNative.Portable\ReactNative.Portable.csproj">
+      <Project>{5676db59-377c-48e6-bd41-b1d80161abce}</Project>
+      <Name>ReactNative.Portable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReactNative\ReactNative.csproj">
       <Project>{c7673ad5-e3aa-468c-a5fd-fa38154e205c}</Project>
       <Name>ReactNative</Name>

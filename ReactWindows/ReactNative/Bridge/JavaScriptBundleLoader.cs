@@ -10,7 +10,7 @@ namespace ReactNative.Bridge
     /// <see cref="IReactInstance"/> to load a correct bundle through the
     /// <see cref="IReactBridge"/>.
     /// </summary>
-    public abstract class JavaScriptBundleLoader
+    public abstract class JavaScriptBundleLoader : IJavaScriptBundleLoader
     {
         /// <summary>
         /// The source URL of the bundle.

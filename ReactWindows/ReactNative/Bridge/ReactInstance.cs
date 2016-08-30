@@ -2,12 +2,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using ReactNative.Common;
-using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ReactNative.Tracing;
 
 namespace ReactNative.Bridge
 {
@@ -17,7 +17,7 @@ namespace ReactNative.Bridge
     /// </summary>
     class ReactInstance : IReactInstance, IDisposable
     {
-        private readonly NativeModuleRegistry _registry;
+        private readonly INativeModuleRegistry _registry;
         private readonly JavaScriptModuleRegistry _jsRegistry;
         private readonly Func<IJavaScriptExecutor> _jsExecutorFactory;
         private readonly JavaScriptBundleLoader _bundleLoader;
@@ -32,7 +32,7 @@ namespace ReactNative.Bridge
         private ReactInstance(
             ReactQueueConfigurationSpec reactQueueConfigurationSpec,
             Func<IJavaScriptExecutor> jsExecutorFactory,
-            NativeModuleRegistry registry,
+            INativeModuleRegistry registry,
             JavaScriptModuleRegistry jsModuleRegistry,
             JavaScriptBundleLoader bundleLoader,
             Action<Exception> nativeModuleCallExceptionHandler)
@@ -105,7 +105,7 @@ namespace ReactNative.Bridge
 
                     var jsExecutor = _jsExecutorFactory();
 
-                    var bridge = default(ReactBridge);
+                    var bridge = default(IReactBridge);
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor").Start())
                     {
                         bridge = new ReactBridge(
@@ -257,7 +257,7 @@ namespace ReactNative.Bridge
         public sealed class Builder
         {
             private ReactQueueConfigurationSpec _reactQueueConfigurationSpec;
-            private NativeModuleRegistry _registry;
+            private INativeModuleRegistry _registry;
             private JavaScriptModuleRegistry _jsModuleRegistry;
             private Func<IJavaScriptExecutor> _jsExecutorFactory;
             private JavaScriptBundleLoader _bundleLoader;
@@ -271,7 +271,7 @@ namespace ReactNative.Bridge
                 }
             }
 
-            public NativeModuleRegistry Registry
+            public INativeModuleRegistry Registry
             {
                 set
                 {

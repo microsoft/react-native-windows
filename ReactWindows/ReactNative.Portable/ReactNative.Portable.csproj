@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,25 +35,43 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
+    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
+    <Compile Include="Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="Bridge\ICallback.cs" />
     <Compile Include="Bridge\IInvocationHandler.cs" />
+    <Compile Include="Bridge\IJavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\IJavaScriptExecutor.cs" />
     <Compile Include="Bridge\IJavaScriptModule.cs" />
     <Compile Include="Bridge\ILifecycleEventListener.cs" />
     <Compile Include="Bridge\INativeMethod.cs" />
     <Compile Include="Bridge\INativeModule.cs" />
+    <Compile Include="Bridge\INativeModuleRegistry.cs" />
     <Compile Include="Bridge\IOnBatchCompleteListener.cs" />
     <Compile Include="Bridge\IPromise.cs" />
     <Compile Include="Bridge\IReactBridge.cs" />
     <Compile Include="Bridge\IReactCallback.cs" />
+    <Compile Include="Bridge\IReactContext.cs" />
     <Compile Include="Bridge\IReactDelegateFactory.cs" />
     <Compile Include="Bridge\IReactInstance.cs" />
+    <Compile Include="Bridge\JavaScriptModuleBase.cs" />
+    <Compile Include="Bridge\JavaScriptModuleBase.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JavaScriptModuleBase.Generated.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bridge\JavaScriptModuleRegistration.cs" />
+    <Compile Include="Bridge\JavaScriptModuleRegistry.cs" />
+    <Compile Include="Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="Bridge\Queue\IMessageQueueThread.cs" />
     <Compile Include="Bridge\Queue\IReactQueueConfiguration.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadExtensions.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadKind.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadSpec.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfigurationSpec.cs" />
+    <Compile Include="Bridge\ReactDelegateFactoryBase.cs" />
+    <Compile Include="Bridge\ReactMethodAttribute.cs" />
+    <Compile Include="Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="Collections\JObjectExtensions.cs" />
     <Compile Include="Common\ReactConstants.cs" />
@@ -73,6 +92,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Bridge\JavaScriptModuleBase.Generated.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>JavaScriptModuleBase.Generated.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

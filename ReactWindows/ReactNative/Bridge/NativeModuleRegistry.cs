@@ -11,7 +11,7 @@ namespace ReactNative.Bridge
     /// <summary>
     /// A set of native APIs exposed to a particular JavaScript instance.
     /// </summary>
-    public sealed class NativeModuleRegistry
+    public sealed class NativeModuleRegistry : INativeModuleRegistry
     {
         private readonly IReadOnlyList<ModuleDefinition> _moduleTable;
         private readonly IReadOnlyDictionary<Type, INativeModule> _moduleInstances;
@@ -71,7 +71,7 @@ namespace ReactNative.Bridge
         /// Write the module descriptions to the given <see cref="JsonWriter"/>.
         /// </summary>
         /// <param name="writer">The JSON writer.</param>
-        internal void WriteModuleDescriptions(JsonWriter writer)
+        public void WriteModuleDescriptions(JsonWriter writer)
         {
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "CreateJSON").Start())
             {
@@ -92,7 +92,7 @@ namespace ReactNative.Bridge
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
-        internal void Invoke(
+        public void Invoke(
             IReactInstance reactInstance,
             int moduleId,
             int methodId,
@@ -110,7 +110,7 @@ namespace ReactNative.Bridge
         /// Hook to notify modules that the <see cref="IReactInstance"/> has
         /// been initialized.
         /// </summary>
-        internal void NotifyReactInstanceInitialize()
+        public void NotifyReactInstanceInitialize()
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize").Start())
@@ -126,7 +126,7 @@ namespace ReactNative.Bridge
         /// Hook to notify modules that the <see cref="IReactInstance"/> has
         /// been disposed.
         /// </summary>
-        internal void NotifyReactInstanceDispose()
+        public void NotifyReactInstanceDispose()
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy").Start())

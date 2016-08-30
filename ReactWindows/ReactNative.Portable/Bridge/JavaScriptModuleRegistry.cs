@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace ReactNative.Bridge
@@ -122,14 +123,16 @@ namespace ReactNative.Bridge
                         nameof(type));
                 }
 
-                if (!typeof(IJavaScriptModule).IsAssignableFrom(type))
+                if (!typeof(IJavaScriptModule).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                 {
                     throw new ArgumentException(
                         $"JavaScript module '{type}' must derive from IJavaScriptModule.",
                         nameof(type));
                 }
 
-                var defaultConstructor = type.GetConstructor(Array.Empty<Type>());
+                var defaultConstructor =
+                    type.GetTypeInfo().DeclaredConstructors.FirstOrDefault(ctor => ctor.GetParameters().Length == 0);
+
                 if (defaultConstructor == null || !defaultConstructor.IsPublic)
                 {
                     throw new ArgumentException(

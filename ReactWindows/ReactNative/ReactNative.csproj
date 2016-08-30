@@ -128,27 +128,15 @@
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
     <Compile Include="Animated\ValueAnimatedNode.cs" />
-    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
-    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
-    <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
-    <Compile Include="Bridge\ReactInstance.cs" />
-    <Compile Include="Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBase.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBase.Generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>JavaScriptModuleBase.Generated.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bridge\JavaScriptModuleRegistration.cs" />
-    <Compile Include="Bridge\JavaScriptModuleRegistry.cs" />
-    <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
-    <Compile Include="Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="Bridge\NativeModuleBase.cs" />
+    <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
+    <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\LimitedConcurrencyTaskScheduler.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThread.cs" />
-    <Compile Include="Bridge\ReflectionReactDelegateFactory.cs" />
+    <Compile Include="Bridge\ReactContextNativeModuleBase.cs" />
+    <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="Common\WindowsPlatformHelper.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
@@ -176,7 +164,6 @@
     <Compile Include="Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
     <Compile Include="Bridge\ReactBridge.cs" />
     <Compile Include="Bridge\ReactContext.cs" />
-    <Compile Include="Bridge\ReactContextNativeModuleBase.cs" />
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
@@ -258,7 +245,6 @@
     <Compile Include="Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="Modules\Core\RCTDeviceEventEmitter.cs" />
     <Compile Include="Modules\Core\RCTNativeAppEventEmitter.cs" />
-    <Compile Include="Bridge\ReactDelegateFactoryBase.cs" />
     <Compile Include="IReactPackage.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
@@ -280,7 +266,6 @@
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Bridge\ReactMethodAttribute.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\AppRegistry.cs" />
     <Compile Include="UIManager\Events\TouchEventType.cs" />
@@ -375,10 +360,6 @@
     <EmbeddedResource Include="Properties\ReactNative.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bridge\JavaScriptModuleBase.Generated.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>JavaScriptModuleBase.Generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Tracing\LoggingActivityBuilderExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LoggingActivityBuilderExtensions.generated.cs</LastGenOutput>
