@@ -1,5 +1,4 @@
 ﻿using Facebook.CSSLayout;
-using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -22,7 +21,16 @@ namespace ReactNative.Views.TextInput
     {
         private const int Unset = -1;
 
+        private static readonly float[] s_defaultPaddings = new[]
+        {
+            10f,
+            3f,
+            6f,
+            5f,
+        };
+
         private float[] _computedPadding;
+        private bool[] _isUserPadding = new bool[4];
 
         private int _letterSpacing;
         private int _numberOfLines;
@@ -44,11 +52,10 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         public ReactTextInputShadowNode()
         {
-            var computedPadding = GetDefaultPaddings();
-            SetPadding(CSSSpacingType.Left, computedPadding[0]);
-            SetPadding(CSSSpacingType.Top, computedPadding[1]);
-            SetPadding(CSSSpacingType.Right, computedPadding[2]);
-            SetPadding(CSSSpacingType.Bottom, computedPadding[3]);
+            SetPadding(CSSSpacingType.Left, s_defaultPaddings[0]);
+            SetPadding(CSSSpacingType.Top, s_defaultPaddings[1]);
+            SetPadding(CSSSpacingType.Right, s_defaultPaddings[2]);
+            SetPadding(CSSSpacingType.Bottom, s_defaultPaddings[3]);
             MeasureFunction = MeasureTextInput;
         }
 
@@ -216,6 +223,31 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the padding of the shadow node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="padding">The padding value.</param>
+        protected override void SetPaddingCore(CSSSpacingType spacingType, float padding)
+        {
+            MarkUpdated();
+            switch (spacingType)
+            {
+                case CSSSpacingType.Left:
+                case CSSSpacingType.Top:
+                case CSSSpacingType.Right:
+                case CSSSpacingType.Bottom:
+                    var index = (int)spacingType;
+                    var isUndefined = CSSConstants.IsUndefined(padding);
+                    SetPadding(spacingType, isUndefined ? s_defaultPaddings[index] : padding);
+                    _isUserPadding[index] = !isUndefined;
+                    break;
+                default:
+                    base.SetPaddingCore(spacingType, padding);
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Marks a node as updated.
         /// </summary>
         protected override void MarkUpdated()
@@ -224,27 +256,35 @@ namespace ReactNative.Views.TextInput
             dirty();
         }
 
-        private float[] GetDefaultPaddings()
-        {
-            // TODO: calculate dynamically
-            return new[]
-            {
-                10f,
-                3f,
-                6f,
-                5f,
-            };
-        }
-
         private float[] GetComputedPadding()
         {
             return new float[]
             {
-                GetPadding(CSSSpacingType.Left),
-                GetPadding(CSSSpacingType.Top),
-                GetPadding(CSSSpacingType.Right),
-                GetPadding(CSSSpacingType.Bottom),
+                GetTextInputPadding(CSSSpacingType.Left),
+                GetTextInputPadding(CSSSpacingType.Top),
+                GetTextInputPadding(CSSSpacingType.Right),
+                GetTextInputPadding(CSSSpacingType.Bottom),
             };
+        }
+
+        private float GetTextInputPadding(CSSSpacingType spacingType)
+        {
+            var index = (int)spacingType;
+            var isUserPadding = _isUserPadding[index];
+            var originalPadding = GetPadding(spacingType);
+            if (!isUserPadding)
+            {
+                SetPadding(spacingType, CSSConstants.Undefined);        
+            }
+
+            var result = this.GetPaddingValue(spacingType);
+            if (CSSConstants.IsUndefined(result))
+            {
+                result = originalPadding;
+            }
+
+            SetPadding(spacingType, originalPadding);
+            return result;
         }
 
         private static MeasureOutput MeasureTextInput(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
