@@ -78,13 +78,13 @@ namespace ReactNative.Tests
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 manager.CreateReactContextInBackground();
 
                 try
                 {
-                    manager.CreateReactContextInBackground();
+                    await manager.CreateReactContextInBackgroundAsync();
                 }
                 catch (InvalidOperationException)
                 {
@@ -126,11 +126,11 @@ namespace ReactNative.Tests
             var manager = CreateReactInstanceManager(jsBundleFile);
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 try
                 {
-                    manager.RecreateReactContextInBackground();
+                    await manager.RecreateReactContextInBackgroundAsync();
                 }
                 catch (InvalidOperationException)
                 {
