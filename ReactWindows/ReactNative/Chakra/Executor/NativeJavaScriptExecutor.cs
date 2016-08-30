@@ -2,6 +2,9 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.IO;
+using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace ReactNative.Chakra.Executor
 {
@@ -11,14 +14,25 @@ namespace ReactNative.Chakra.Executor
     public class NativeJavaScriptExecutor : IJavaScriptExecutor
     {
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
+        private readonly bool _useSerialization;
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
-        public NativeJavaScriptExecutor()
+        public NativeJavaScriptExecutor() : this(false)
+        {
+
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
+        /// </summary>
+        /// <param name="useSerialization">true to use serialization, else false.</param>
+        public NativeJavaScriptExecutor(bool useSerialization)
         {
             _executor = new ChakraBridge.NativeJavaScriptExecutor();
             Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
+            _useSerialization = useSerialization;
         }
 
         /// <summary>
@@ -92,7 +106,15 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScriptFromFile(script, sourceUrl));
+                if(_useSerialization)
+                {
+                    var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(script, binPath, sourceUrl));
+                }
+                else
+                {
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(script, sourceUrl));
+                }
             }
             catch (JavaScriptScriptException ex)
             {
