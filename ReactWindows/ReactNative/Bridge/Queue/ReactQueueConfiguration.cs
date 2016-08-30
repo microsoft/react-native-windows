@@ -11,18 +11,15 @@ namespace ReactNative.Bridge.Queue
     class ReactQueueConfiguration : IReactQueueConfiguration
     {
         private readonly MessageQueueThread _dispatcherQueueThread;
-        private readonly MessageQueueThread _layoutQueueThread;
         private readonly MessageQueueThread _nativeModulesQueueThread;
         private readonly MessageQueueThread _jsQueueThread;
 
         private ReactQueueConfiguration(
             MessageQueueThread dispatcherQueueThread,
-            MessageQueueThread layoutQueueThread,
             MessageQueueThread nativeModulesQueueThread,
             MessageQueueThread jsQueueThread)
         {
             _dispatcherQueueThread = dispatcherQueueThread;
-            _layoutQueueThread = layoutQueueThread;
             _nativeModulesQueueThread = nativeModulesQueueThread;
             _jsQueueThread = jsQueueThread;
         }
@@ -35,17 +32,6 @@ namespace ReactNative.Bridge.Queue
             get
             {
                 return _dispatcherQueueThread;
-            }
-        }
-
-        /// <summary>
-        /// The layout queue thread.
-        /// </summary>
-        public IMessageQueueThread LayoutQueueThread
-        {
-            get
-            {
-                return _layoutQueueThread;
             }
         }
 
@@ -81,7 +67,6 @@ namespace ReactNative.Bridge.Queue
         public void Dispose()
         {
             _dispatcherQueueThread.Dispose();
-            _layoutQueueThread.Dispose();
             _nativeModulesQueueThread.Dispose();
             _jsQueueThread.Dispose();
         }
@@ -99,9 +84,6 @@ namespace ReactNative.Bridge.Queue
             var dispatcherThreadSpec = MessageQueueThreadSpec.DispatcherThreadSpec;
             var dispatcherThread = MessageQueueThread.Create(dispatcherThreadSpec, exceptionHandler);
 
-            var layoutThreadSpec = MessageQueueThreadSpec.LayoutThreadSpec;
-            var layoutThread = MessageQueueThread.Create(layoutThreadSpec, exceptionHandler);
-
             var jsThread = spec.JSQueueThreadSpec != dispatcherThreadSpec
                 ? MessageQueueThread.Create(spec.JSQueueThreadSpec, exceptionHandler)
                 : dispatcherThread;
@@ -110,7 +92,7 @@ namespace ReactNative.Bridge.Queue
                 ? MessageQueueThread.Create(spec.NativeModulesQueueThreadSpec, exceptionHandler)
                 : dispatcherThread;
 
-            return new ReactQueueConfiguration(dispatcherThread, layoutThread, nativeModulesThread, jsThread);
+            return new ReactQueueConfiguration(dispatcherThread, nativeModulesThread, jsThread);
         }
     }
 }

@@ -70,7 +70,7 @@ namespace ReactNative.UIManager
         /// </returns>
         public bool IsEmpty()
         {
-            lock (_gate)
+            lock (_operations)
             {
                 return _operations.Count == 0;
             }
