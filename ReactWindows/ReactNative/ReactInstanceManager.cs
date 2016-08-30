@@ -145,6 +145,21 @@ namespace ReactNative
         /// </summary>
         public async void CreateReactContextInBackground()
         {
+            await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Trigger the React context initialization asynchronously in a
+        /// background task. This enables applications to pre-load the
+        /// application JavaScript, and execute global core code before the
+        /// <see cref="ReactRootView"/> is available and measure. This should
+        /// only be called the first time the application is set up, which is
+        /// enforced to keep developers from accidentally creating their
+        /// applications multiple times.
+        /// </summary>
+        /// <returns>A task to await the result.</returns>
+        internal async Task CreateReactContextInBackgroundAsync()
+        {
             if (_hasStartedCreatingInitialContext)
             {
                 throw new InvalidOperationException(
@@ -160,9 +175,20 @@ namespace ReactNative
         /// <summary>
         /// Recreate the React application and context. This should be called
         /// if configuration has changed or the developer has requested the
-        /// applicatio
+        /// application to be reloaded.
         /// </summary>
         public async void RecreateReactContextInBackground()
+        {
+            await RecreateReactContextInBackgroundAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Recreate the React application and context. This should be called
+        /// if configuration has changed or the developer has requested the
+        /// application to be reloaded.
+        /// </summary>
+        /// <returns>A task to await the result.</returns>
+        internal async Task RecreateReactContextInBackgroundAsync()
         {
             if (!_hasStartedCreatingInitialContext)
             {
