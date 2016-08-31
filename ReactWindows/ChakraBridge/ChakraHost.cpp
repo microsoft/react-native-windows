@@ -68,26 +68,28 @@ JsValueRef CALLBACK ConsoleError(JsValueRef callee, bool isConstructCall, JsValu
     return InvokeConsole(L"error", callee, isConstructCall, arguments, argumentCount, callbackState);
 }
 
-JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData)
+JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap)
 {
-    FILE *file;
     *pData = nullptr;
 
-    if (_wfopen_s(&file, szPath, L"rb"))
+    *hFile = CreateFile2(szPath, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, OPEN_EXISTING, nullptr);
+    if (*hFile == INVALID_HANDLE_VALUE)
     {
-        return JsErrorInvalidArgument;
+        return JsErrorFatal;
     }
 
-    unsigned int current = ftell(file);
-    fseek(file, 0, SEEK_END);
-    unsigned int end = ftell(file);
-    fseek(file, current, SEEK_SET);
-    unsigned int lengthBytes = end - current;
-
-    *pData = new BYTE[lengthBytes];
-    fread(*pData, sizeof(BYTE), lengthBytes, file);
-    if (fclose(file))
+    *hMap = CreateFileMapping(*hFile, nullptr, PAGE_READWRITE | SEC_RESERVE, 0, 0, L"ReactNativeMapping");
+    if (*hMap == NULL)
     {
+        CloseHandle(*hFile);
+        return JsErrorFatal;
+    }
+
+    *pData = (BYTE*)MapViewOfFile(*hMap, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, 0);
+    if (*pData == NULL)
+    {
+        CloseHandle(*hMap);
+        CloseHandle(*hFile);
         return JsErrorFatal;
     }
 
@@ -176,6 +178,8 @@ void CALLBACK UnloadSourceCallback(JsSourceContext sourceContext)
 
 JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
 {
+    HANDLE hFile = NULL;
+    HANDLE hMap = NULL;
     JsErrorCode status = JsNoError;
     ULONG bufferSize = 0L;
     BYTE* buffer = nullptr;
@@ -195,12 +199,14 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     }
     else
     {
-        IfFailRet(LoadByteCode(szSerializedPath, &buffer));
+        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap));
     }
 
     SerializedSourceContext* context = new SerializedSourceContext();
     context->byteBuffer = buffer;
     context->scriptBuffer = szScriptBuffer;
+    context->fileHandle = hFile;
+    context->mapHandle = hMap;
 
     IfFailRet(JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result));
     return status;

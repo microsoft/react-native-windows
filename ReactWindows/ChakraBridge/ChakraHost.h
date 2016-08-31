@@ -3,7 +3,7 @@
 #include "pch.h"
 #include <jsrt.h>
 bool CompareLastWrite(const wchar_t* szPath1, const wchar_t* szPath2);
-JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData);
+JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap);
 JsErrorCode LoadFileContents(const wchar_t* szPath, wchar_t** pszData);
 
 /// <summary>
