@@ -11,6 +11,18 @@ namespace ReactNative.Modules.Clipboard
     /// </summary>
     class ClipboardModule : NativeModuleBase
     {
+        private readonly IClipboardInstance _clipboard;
+
+        public ClipboardModule() : this(new ClipboardInstance())
+        {
+
+        }
+
+        public ClipboardModule(IClipboardInstance clipboard)
+        {
+            _clipboard = clipboard;
+        }
+
         /// <summary>
         /// The name of the native module.
         /// </summary>
@@ -38,7 +50,7 @@ namespace ReactNative.Modules.Clipboard
             {
                 try
                 {
-                    var clip = DataTransfer.Clipboard.GetContent();
+                    var clip = _clipboard.GetContent();
                     if (clip == null)
                     {
                         promise.Resolve("");
@@ -71,13 +83,13 @@ namespace ReactNative.Modules.Clipboard
             {
                 if (text == null)
                 {
-                    DataTransfer.Clipboard.Clear();
+                    _clipboard.Clear();
                 }
                 else
                 {
                     var package = new DataTransfer.DataPackage();
                     package.SetData(DataTransfer.StandardDataFormats.Text, text);
-                    DataTransfer.Clipboard.SetContent(package);
+                    _clipboard.SetContent(package);
                 }
             });
         }
