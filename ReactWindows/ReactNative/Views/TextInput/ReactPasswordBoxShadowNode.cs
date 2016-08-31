@@ -31,9 +31,6 @@ namespace ReactNative.Views.TextInput
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
 
-        private Color? _background;
-        private Color? _borderColor;
-
         private string _fontFamily;
         private string _text;
 
@@ -48,42 +45,6 @@ namespace ReactNative.Views.TextInput
             SetPadding(CSSSpacingType.Right, computedPadding[2]);
             SetPadding(CSSSpacingType.Bottom, computedPadding[3]);
             MeasureFunction = MeasureTextInput;
-        }
-
-        /// <summary>
-        /// Sets the background color for the <see cref="ReactTextBox"/>.
-        /// </summary>
-        /// <param name="color">The masked color value.</param>
-        [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
-        public void SetBackgroundColor(uint? color)
-        {
-            if (color.HasValue)
-            {
-                var background = ColorHelpers.Parse(color.Value);
-                if (background != _background)
-                {
-                    _background = background;
-                    MarkUpdated();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sets the border color for the <see cref="ReactTextBox"/>.
-        /// </summary>
-        /// <param name="color">The masked color value.</param>
-        [ReactProp("borderColor", CustomType = "Color")]
-        public void SetBorderColor(uint? color)
-        {
-            if (color.HasValue)
-            {
-                var borderColor = ColorHelpers.Parse(color.Value);
-                if (borderColor != _borderColor)
-                {
-                    _borderColor = borderColor;
-                    MarkUpdated();
-                }
-            }
         }
 
         /// <summary>
