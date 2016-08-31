@@ -16,11 +16,6 @@ namespace ReactNative.Bridge.Queue
         IMessageQueueThread DispatcherQueueThread { get; }
 
         /// <summary>
-        /// The layout thread.
-        /// </summary>
-        IMessageQueueThread LayoutQueueThread { get; }
-
-        /// <summary>
         /// The native modules thread.
         /// </summary>
         IMessageQueueThread NativeModulesQueueThread { get; }

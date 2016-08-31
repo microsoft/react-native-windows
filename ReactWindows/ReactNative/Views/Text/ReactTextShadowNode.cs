@@ -3,8 +3,6 @@ using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using System;
-using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -187,36 +185,41 @@ namespace ReactNative.Views.Text
 
         private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
-            // TODO: Measure text with DirectWrite or other API that does not
-            // require dispatcher access. Currently, we're instantiating a
-            // second CoreApplicationView (that is never activated) and using
-            // its Dispatcher thread to calculate layout.
-
-            var textNode = (ReactTextShadowNode)node;
-            textNode.ThemedContext.AssertOnLayoutQueueThread();
-
-            var textBlock = new RichTextBlock
+            // This is not a terribly efficient way of projecting the height of
+            // the text elements. It requires that we have access to the
+            // dispatcher in order to do measurement, which, for obvious
+            // reasons, can cause perceived performance issues as it will block
+            // the UI thread from handling other work.
+            //
+            // TODO: determine another way to measure text elements.
+            var task = DispatcherHelpers.CallOnDispatcher(() =>
             {
-                TextWrapping = TextWrapping.Wrap,
-                TextAlignment = TextAlignment.DetectFromContent,
-                TextTrimming = TextTrimming.CharacterEllipsis,
-            };
+                var textBlock = new RichTextBlock
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                    TextAlignment = TextAlignment.DetectFromContent,
+                    TextTrimming = TextTrimming.CharacterEllipsis,
+                };
 
-            textNode.UpdateTextBlockCore(textBlock, true);
+                var textNode = (ReactTextShadowNode)node;
+                textNode.UpdateTextBlockCore(textBlock, true);
 
-            var block = new Paragraph();
-            foreach (var child in textNode.Children)
-            {
-                block.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
-            }
-            textBlock.Blocks.Add(block);
+                var block = new Paragraph();
+                foreach (var child in textNode.Children)
+                {
+                    block.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
+                }
+                textBlock.Blocks.Add(block);
 
-            var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
-            var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
-            textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
-            return new MeasureOutput(
-                (float)textBlock.DesiredSize.Width,
-                (float)textBlock.DesiredSize.Height);
+                var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
+                var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
+                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
+                return new MeasureOutput(
+                    (float)textBlock.DesiredSize.Width,
+                    (float)textBlock.DesiredSize.Height);
+            });
+
+            return task.Result;
         }
 
         /// <summary>

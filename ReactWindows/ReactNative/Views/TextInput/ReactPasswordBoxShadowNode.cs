@@ -7,9 +7,7 @@ using ReactNative.Views.Text;
 using System;
 using Windows.Foundation;
 using Windows.UI.Text;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.TextInput
@@ -212,27 +210,39 @@ namespace ReactNative.Views.TextInput
                 - (CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
             var normalizedHeight = Math.Max(0, CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
-            var textNode = (ReactPasswordBoxShadowNode)node;
+            // This is not a terribly efficient way of projecting the height of
+            // the text elements. It requires that we have access to the
+            // dispatcher in order to do measurement, which, for obvious
+            // reasons, can cause perceived performance issues as it will block
+            // the UI thread from handling other work.
+            //
+            // TODO: determine another way to measure text elements.
+            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            {
+                var textNode = (ReactPasswordBoxShadowNode)node;
 
-            var passwordBox = new PasswordBox();
+                var passwordBox = new PasswordBox();
 
-            var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
-            FormatPasswordBox(textNode, passwordBox, true);
+                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
+                FormatPasswordBox(textNode, passwordBox, true);
 
-            passwordBox.Password = normalizedText;
+                passwordBox.Password = normalizedText;
 
-            passwordBox.Measure(new Size(normalizedWidth, normalizedHeight));
+                passwordBox.Measure(new Size(normalizedWidth, normalizedHeight));
 
-            var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
-            var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
+                var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
+                var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
 
-            var finalizedHeight = (float)passwordBox.DesiredSize.Height;
-            finalizedHeight += textInputNode._computedPadding[1];
-            finalizedHeight += textInputNode._computedPadding[3];
-            finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-            finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+                var finalizedHeight = (float)passwordBox.DesiredSize.Height;
+                finalizedHeight += textInputNode._computedPadding[1];
+                finalizedHeight += textInputNode._computedPadding[3];
+                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
 
-            return new MeasureOutput(width, finalizedHeight);
+                return new MeasureOutput(width, finalizedHeight);
+            });
+
+            return task.Result;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Facebook.CSSLayout;
+using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -290,7 +291,6 @@ namespace ReactNative.Views.TextInput
         private static MeasureOutput MeasureTextInput(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             var textInputNode = (ReactTextInputShadowNode)node;
-            textInputNode.ThemedContext.AssertOnLayoutQueueThread();
             textInputNode._computedPadding = textInputNode.GetComputedPadding();
 
             var borderLeftWidth = textInputNode.GetBorder(CSSSpacingType.Left);
@@ -304,35 +304,43 @@ namespace ReactNative.Views.TextInput
                 - (CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
             var normalizedHeight = Math.Max(0, CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
-            // TODO: Measure text with DirectWrite or other API that does not
-            // require dispatcher access. Currently, we're instantiating a
-            // second CoreApplicationView (that is never activated) and using
-            // its Dispatcher thread to calculate layout.
-            var textNode = (ReactTextInputShadowNode)node;
-
-            var textBlock = new TextBlock
+            // This is not a terribly efficient way of projecting the height of
+            // the text elements. It requires that we have access to the
+            // dispatcher in order to do measurement, which, for obvious
+            // reasons, can cause perceived performance issues as it will block
+            // the UI thread from handling other work.
+            //
+            // TODO: determine another way to measure text elements.
+            var task = DispatcherHelpers.CallOnDispatcher(() =>
             {
-                TextWrapping = TextWrapping.Wrap,
-            };
+                var textNode = (ReactTextInputShadowNode)node;
 
-            var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
-            var inline = new Run { Text = normalizedText };
-            FormatInline(textNode, inline, true);
+                var textBlock = new TextBlock
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                };
 
-            textBlock.Inlines.Add(inline);
+                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
+                var inline = new Run { Text = normalizedText };
+                FormatInline(textNode, inline, true);
 
-            textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
+                textBlock.Inlines.Add(inline);
 
-            var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
-            var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
+                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-            var finalizedHeight = (float)textBlock.DesiredSize.Height;
-            finalizedHeight += textInputNode._computedPadding[1];
-            finalizedHeight += textInputNode._computedPadding[3];
-            finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-            finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+                var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
+                var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
 
-            return new MeasureOutput(width, finalizedHeight);
+                var finalizedHeight = (float)textBlock.DesiredSize.Height;
+                finalizedHeight += textInputNode._computedPadding[1];
+                finalizedHeight += textInputNode._computedPadding[3];
+                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+
+                return new MeasureOutput(width, finalizedHeight);
+            });
+
+            return task.Result;
         }
 
         /// <summary>
