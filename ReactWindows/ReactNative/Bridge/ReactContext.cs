@@ -227,40 +227,6 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Checks if the current thread is on the React instance layout
-        /// queue thread.
-        /// </summary>
-        /// <returns>
-        /// <b>true</b> if the call is from the layout queue thread,
-        ///  <b>false</b> otherwise.
-        /// </returns>
-        public bool IsOnLayoutQueueThread()
-        {
-            AssertReactInstance();
-            return _reactInstance.QueueConfiguration.LayoutQueueThread.IsOnThread();
-        }
-
-        /// <summary>
-        /// Asserts that the current thread is on the React instance layout
-        /// queue thread.
-        /// </summary>
-        public void AssertOnLayoutQueueThread()
-        {
-            AssertReactInstance();
-            _reactInstance.QueueConfiguration.LayoutQueueThread.AssertOnThread();
-        }
-
-        /// <summary>
-        /// Enqueues an action on the layout queue thread.
-        /// </summary>
-        /// <param name="action">The action.</param>
-        public void RunOnLayoutQueueThread(Action action)
-        {
-            AssertReactInstance();
-            _reactInstance.QueueConfiguration.LayoutQueueThread.RunOnQueue(action);
-        }
-
-        /// <summary>
         /// Checks if the current thread is on the React instance
         /// JavaScript queue thread.
         /// </summary>
