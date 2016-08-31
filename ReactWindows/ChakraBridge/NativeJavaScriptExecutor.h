@@ -59,15 +59,16 @@ public:
 	/// </returns>
     int RunScript(String^ source, String^ sourceUri);
 
-	/// <summary>
-	/// Runs the script from the file location and source URI and returns the result.
-	/// </summary>
-	/// <param name="sourceFilePath">The file path which contains the source to run.</param>
-	/// <param name="sourceUri">The source URI of the script to run.</param>
-	/// <returns>
-	/// A compount result with the JSON stringified value and an error code if any occurred.
-	/// </returns>
-    int RunScriptFromFile(String^ sourceFilePath, String^ sourceUri);
+    /// <summary>
+    /// Runs the given serialized script with the source URI and returns the result.
+    /// </summary>
+    /// <param name="source">The source of the script to run.</param>
+    /// <param name="serialized">The serialized script to run.</param>
+    /// <param name="sourceUri">The source URI of the script to run.</param>
+    /// <returns>
+    /// A compount result with the JSON stringified value and an error code if any occurred.
+    /// </returns>
+    int RunSerializedScript(String^ source, String^ serialized, String^ sourceUri);
 
 	/// <summary>
 	/// Calls the underlying function with the given module and method name and JSON stringified arguments.

@@ -212,6 +212,7 @@
     <ClInclude Include="NativeJavaScriptExecutor.h" />
     <ClInclude Include="ChakraStringResult.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SerializedSourceContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="asprintf.cpp" />

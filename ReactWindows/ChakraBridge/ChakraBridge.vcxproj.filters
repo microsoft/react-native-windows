@@ -20,5 +20,6 @@
     <ClInclude Include="NativeJavaScriptExecutor.h" />
     <ClInclude Include="asprintf.h" />
     <ClInclude Include="JsStringify.h" />
+    <ClInclude Include="SerializedSourceContext.h" />
   </ItemGroup>
 </Project>

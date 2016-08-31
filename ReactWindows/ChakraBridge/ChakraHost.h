@@ -3,6 +3,10 @@
 #include "pch.h"
 #include <jsrt.h>
 
+bool CompareLastWrite(const wchar_t* szPath1, const wchar_t* szPath2);
+JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap);
+JsErrorCode LoadFileContents(const wchar_t* szPath, wchar_t** pszData);
+
 /// <summary>
 /// This class wraps the main functionality dealing with the JSRT.
 /// </summary>
@@ -25,27 +29,28 @@ public:
 	/// </returns>
 	JsErrorCode Destroy();
 
-	/// <summary>
-	/// Runs the given script with the source URI and returns the <see cref="JsValueRef" /> result.
-	///</summary>
-	/// <param name="szScript">The script to run.</param>
-	/// <param name="szSourceUri">The source URI of the script.</param>
-	/// <param name="result">[Out] The result from running the script.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	JsErrorCode RunScript(const wchar_t* szScript, const wchar_t* szSourceUri, JsValueRef* result);
+    /// <summary>
+    /// Runs the script from the file location with the source URI and returns the <see cref="JsValueRef" /> result.
+    ///</summary>
+    /// <param name="szPath">The location of the script to run.</param>
+    /// <param name="szSourceUri">The source URI of the script.</param>
+    /// <param name="result">[Out] The result from running the script.</param>
+    /// <returns>
+    /// JsNoError is no error, else a JsErrorCode with the appropriate error.
+    /// </returns>
+    JsErrorCode RunScript(const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
 
-	/// <summary>
-	/// Runs the script from the file location with the source URI and returns the <see cref="JsValueRef" /> result.
-	///</summary>
-	/// <param name="szPath">The location of the script to run.</param>
-	/// <param name="szSourceUri">The source URI of the script.</param>
-	/// <param name="result">[Out] The result from running the script.</param>
-	/// <returns>
-	/// JsNoError is no error, else a JsErrorCode with the appropriate error.
-	/// </returns>
-	JsErrorCode RunScriptFromFile(const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
+    /// <summary>
+    /// Runs the serialized script from the serialized file location with source file path, source URI and returns the <see cref="JsValueRef" /> result.
+    /// </summary>
+    /// <param name="szPath">The location of the script to run.</param>
+    /// <param name="szSerializedPath">The location of the serialized script to run.</param>
+    /// <param name="szSourceUri">The source URI of the script.</param>
+    /// <param name="result">[Out] The result from running the script.</param>
+    /// <returns>
+    /// JsNoError is no error, else a JsErrorCode with the appropriate error.
+    /// </returns>
+    JsErrorCode RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result);
 
 	/// <summary>
 	/// Calls JSON stringify on the given <see cref="JsValueRef" /> and returns the <see cref="JsValueRef" /> result.
