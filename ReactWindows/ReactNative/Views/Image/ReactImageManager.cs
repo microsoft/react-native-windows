@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Collections;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -114,22 +115,33 @@ namespace ReactNative.Views.Image
         [ReactProp("src")]
         public void SetSource(Border view, JArray sources)
         {
+            var count = sources.Count;
+
             // There is no image source
-            if (sources.Count == 0)
+            if (count == 0)
             {
                 throw new ArgumentException("Sources must not be empty.", nameof(sources));
             }
             // Optimize for the case where we have just one uri, case in which we don't need the sizes
-            else if (sources.Count == 1)
+            else if (count == 1)
             {
                 var uri = ((JObject)sources[0]).Value<string>("uri");
                 SetUriFromSingleSource(view, uri);
             }
             else
             {
-                var viewSources = new List<KeyValuePair<string, double>>();
+                var viewSources = default(List<KeyValuePair<string, double>>);
                 var tag = view.GetTag();
-                _imageSources.Add(tag, viewSources);
+
+                if (_imageSources.TryGetValue(tag, out viewSources))
+                {
+                    viewSources.Clear();
+                }
+                else
+                {
+                    viewSources = new List<KeyValuePair<string, double>>(count);
+                    _imageSources.Add(tag, viewSources);
+                }
 
                 foreach (var source in sources)
                 {
@@ -318,38 +330,7 @@ namespace ReactNative.Views.Image
             if (_imageSources.TryGetValue(view.GetTag(), out sources))
             {
                 var targetImageSize = view.Width * view.Height;
-                var left = 0;
-                var right = sources.Count - 1;
-                var bestResult = default(KeyValuePair<string, double>);
-                do
-                {
-                    var mid = (left + right) >> 1;
-                    bestResult = sources[mid];
-                    if (sources[mid].Value < targetImageSize)
-                    {
-                        left = mid + 1;
-                    }
-                    else if (sources[mid].Value > targetImageSize)
-                    {
-                        right = mid - 1;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                while (left <= right);
-
-                if (left < sources.Count && Math.Abs(sources[left].Value - targetImageSize) < Math.Abs(bestResult.Value - targetImageSize))
-                {
-                    bestResult = sources[left];
-                }
-
-                if (right >= 0 && right != left && Math.Abs(sources[right].Value - targetImageSize) < Math.Abs(bestResult.Value - targetImageSize))
-                {
-                    bestResult = sources[right];
-                }
-
+                var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));
                 SetUriFromSingleSource(view, bestResult.Key);
             }
         }
