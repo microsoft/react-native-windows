@@ -18,14 +18,6 @@ namespace ReactNative.Bridge.Queue
         }
 
         /// <summary>
-        /// The Layout <see cref="IMessageQueueThread"/> specification. 
-        /// </summary>
-        public MessageQueueThreadSpec LayoutQueueThreadSpec
-        {
-            get;
-        }
-
-        /// <summary>
         /// The native modules <see cref="IMessageQueueThread"/> specification.
         /// </summary>
         public MessageQueueThreadSpec NativeModulesQueueThreadSpec
@@ -50,8 +42,8 @@ namespace ReactNative.Bridge.Queue
         {
             return new Builder()
             {
-                NativeModulesQueueThreadSpec = MessageQueueThreadSpec.Create("native_modules", MessageQueueThreadKind.BackgroundAnyThread),
                 JSQueueThreadSpec = MessageQueueThreadSpec.Create("js", MessageQueueThreadKind.BackgroundSingleThread),
+                NativeModulesQueueThreadSpec = MessageQueueThreadSpec.Create("native_modules", MessageQueueThreadKind.BackgroundAnyThread),
             }
             .Build();
         }

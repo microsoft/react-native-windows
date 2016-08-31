@@ -19,6 +19,7 @@ namespace ReactNative.Tests.Modules.Clipboard
         }
 
         [TestMethod]
+        [Ignore]
         public void ClipboardModule_GetString_Method()
         {
             var module = new ClipboardModule();
@@ -38,6 +39,7 @@ namespace ReactNative.Tests.Modules.Clipboard
         }
 
         [TestMethod]
+        [Ignore]
         public void ClipboardModule_SetString_Null_Method()
         {
             var module = new ClipboardModule();

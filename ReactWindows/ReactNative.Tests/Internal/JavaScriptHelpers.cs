@@ -49,16 +49,11 @@ namespace ReactNative.Tests
             };
 
             var scripts = new KeyValuePair<string, string>[scriptUris.Length];
-
             for (var i = 0; i < scriptUris.Length; ++i)
             {
                 var uri = scriptUris[i];
                 var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(uri));
-                using (var stream = await storageFile.OpenStreamForReadAsync())
-                using (var reader = new StreamReader(stream))
-                {
-                    scripts[i] = new KeyValuePair<string, string>(uri, reader.ReadToEnd());
-                }
+                scripts[i] = new KeyValuePair<string, string>(uri, storageFile.Path);
             }
 
             await jsQueueThread.CallOnQueue(() =>
