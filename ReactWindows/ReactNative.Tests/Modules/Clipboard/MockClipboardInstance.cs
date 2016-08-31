@@ -14,7 +14,7 @@ namespace ReactNative.Tests.Modules.Clipboard
 
         public void Clear()
         {
-            _package.SetData(StandardDataFormats.Text, null);
+            _package.SetData(StandardDataFormats.Text, "");
 
         }
 
