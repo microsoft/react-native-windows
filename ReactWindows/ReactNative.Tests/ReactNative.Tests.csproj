@@ -103,6 +103,7 @@
     <Compile Include="Bridge\ReactContextNativeModuleBaseTests.cs" />
     <Compile Include="Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="Bridge\ReactBridgeTests.cs" />
+    <Compile Include="Collections\ListExtensionsTests.cs" />
     <Compile Include="Internal\AssertEx.cs" />
     <Compile Include="Bridge\NativeModuleRegistryTests.cs" />
     <Compile Include="Internal\Constants\DictionaryHelpers.cs" />

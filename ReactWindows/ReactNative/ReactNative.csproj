@@ -169,6 +169,7 @@
     <Compile Include="Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
+    <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Common\WindowsPlatformHelper.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
