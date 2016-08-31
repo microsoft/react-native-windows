@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Media;
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// This extension of <see cref="LayoutShadowNode"/> is responsible for 
+    /// This extension of <see cref="LayoutShadowNode"/> is responsible for
     /// measuring the layout for Native <see cref="TextBox"/>.
     /// </summary>
     public class ReactTextInputShadowNode : LayoutShadowNode
@@ -275,7 +275,7 @@ namespace ReactNative.Views.TextInput
             var originalPadding = GetPadding(spacingType);
             if (!isUserPadding)
             {
-                SetPadding(spacingType, CSSConstants.Undefined);        
+                SetPadding(spacingType, CSSConstants.Undefined);
             }
 
             var result = this.GetPaddingValue(spacingType);

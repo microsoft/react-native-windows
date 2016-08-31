@@ -6,6 +6,7 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -13,7 +14,7 @@ using Windows.UI.Xaml.Media;
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// This extension of <see cref="LayoutShadowNode"/> is responsible for 
+    /// This extension of <see cref="LayoutShadowNode"/> is responsible for
     /// measuring the layout for Native <see cref="PasswordBox"/>.
     /// </summary>
     public class ReactPasswordBoxShadowNode : LayoutShadowNode
