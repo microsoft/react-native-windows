@@ -202,7 +202,9 @@
     <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="Modules\AppState\AppStateModule.cs" />
+    <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
+    <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
     <Compile Include="Modules\Core\JavaScriptException.cs" />
     <Compile Include="Modules\Core\JSTimersExecution.cs" />
     <Compile Include="Modules\DevSupport\SourceCodeModule.cs" />
