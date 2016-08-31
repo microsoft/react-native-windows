@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReactNative.Collections
 {
@@ -15,18 +12,19 @@ namespace ReactNative.Collections
                 throw new ArgumentOutOfRangeException(nameof(list));
             }
 
-            var minIndex = 0;
+            var min = list[0];
             for (var i = 1; i < list.Count; ++i)
             {
-                if (f(list[i]) > f(list[minIndex]))
+                var current = list[i];
+                if (f(current) > f(min))
                 {
                     break; 
                 }
 
-                minIndex = i;
+                min = current;
             }
 
-            return list[minIndex];
+            return min;
         }
     }
 }
