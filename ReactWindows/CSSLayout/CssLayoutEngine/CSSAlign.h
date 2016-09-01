@@ -2,7 +2,7 @@
 
 namespace CssLayoutEngine
 {
-    public enum CSSAlign
+    public enum class CSSAlign
     {
         AUTO,
         FLEX_START,

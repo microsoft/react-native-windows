@@ -8,10 +8,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Class1.cpp" />
+    <ClCompile Include="CSSConstants.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Class1.h" />
+    <ClInclude Include="CSSAlign.h" />
+    <ClInclude Include="CSSConstants.h" />
+    <ClInclude Include="SpacingType.h" />
   </ItemGroup>
 </Project>
