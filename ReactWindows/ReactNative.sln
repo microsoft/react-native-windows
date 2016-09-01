@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Tests", "ReactN
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "ChakraBridge\ChakraBridge.vcxproj", "{4B72C796-16D5-4E3A-81C0-3E36F531E578}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSSLayout", "CSSLayout\CSSLayout\CSSLayout.vcxproj", "{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -147,6 +149,30 @@ Global
 		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x64.Build.0 = Release|x64
 		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.ActiveCfg = Release|Win32
 		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.Build.0 = Release|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Debug|ARM.ActiveCfg = Debug|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Debug|ARM.Build.0 = Debug|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Debug|x64.ActiveCfg = Debug|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Debug|x64.Build.0 = Debug|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Debug|x86.ActiveCfg = Debug|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Debug|x86.Build.0 = Debug|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.DebugBundle|x64.Build.0 = Debug|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.DebugBundle|x86.Build.0 = Debug|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Release|ARM.ActiveCfg = Release|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Release|ARM.Build.0 = Release|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Release|x64.ActiveCfg = Release|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Release|x64.Build.0 = Release|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Release|x86.ActiveCfg = Release|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.Release|x86.Build.0 = Release|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.ReleaseBundle|x64.Build.0 = Release|x64
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{060CAE25-DFE6-4C68-A63C-8D47D7C024B7}.ReleaseBundle|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
