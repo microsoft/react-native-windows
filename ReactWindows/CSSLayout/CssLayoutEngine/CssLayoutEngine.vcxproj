@@ -207,7 +207,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CSSAlign.h" />
+    <ClInclude Include="CSSCachedMeasurement.h" />
     <ClInclude Include="CSSConstants.h" />
+    <ClInclude Include="CSSDirection.h" />
+    <ClInclude Include="CSSFlexDirection.h" />
+    <ClInclude Include="CSSJustify.h" />
+    <ClInclude Include="CSSMeasureMode.h" />
+    <ClInclude Include="CSSOverflow.h" />
+    <ClInclude Include="CSSPositionType.h" />
+    <ClInclude Include="CSSWrap.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SpacingType.h" />
   </ItemGroup>

@@ -15,5 +15,13 @@
     <ClInclude Include="CSSAlign.h" />
     <ClInclude Include="CSSConstants.h" />
     <ClInclude Include="SpacingType.h" />
+    <ClInclude Include="CSSWrap.h" />
+    <ClInclude Include="CSSPositionType.h" />
+    <ClInclude Include="CSSOverflow.h" />
+    <ClInclude Include="CSSJustify.h" />
+    <ClInclude Include="CSSDirection.h" />
+    <ClInclude Include="CSSFlexDirection.h" />
+    <ClInclude Include="CSSMeasureMode.h" />
+    <ClInclude Include="CSSCachedMeasurement.h" />
   </ItemGroup>
 </Project>
