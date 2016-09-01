@@ -83,7 +83,10 @@ namespace ReactNative.Views.Slider
         [ReactProp("step")]
         public void SetStep(Windows.UI.Xaml.Controls.Slider view, double step)
         {
-            view.StepFrequency = step;
+            if (step > 0)
+            {
+                view.StepFrequency = step;
+            }
         }
 
         /// <summary>
@@ -108,7 +111,10 @@ namespace ReactNative.Views.Slider
         /// <returns></returns>
         protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new Windows.UI.Xaml.Controls.Slider();
+            return new Windows.UI.Xaml.Controls.Slider()
+            {
+                StepFrequency = 0.000001
+            };
         }
 
         /// <summary>
