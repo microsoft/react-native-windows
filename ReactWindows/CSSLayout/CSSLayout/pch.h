@@ -7,4 +7,3 @@
 #endif
 
 #include <windows.h>
-
