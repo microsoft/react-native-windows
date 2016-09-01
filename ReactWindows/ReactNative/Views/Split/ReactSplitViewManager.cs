@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using static System.FormattableString;
 
 namespace ReactNative.Views.Split
 {
@@ -85,7 +86,7 @@ namespace ReactNative.Views.Split
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(panePosition),
-                    $"Unknown pane position '{placement}'.");
+                    Invariant($"Unknown pane position '{placement}'."));
             }
 
             view.PanePlacement = placement;
@@ -110,7 +111,7 @@ namespace ReactNative.Views.Split
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(index),
-                    $"'{Name}' only supports two child, the content and the pane.");
+                    Invariant($"'{Name}' only supports two child, the content and the pane."));
             }
 
             var uiElementChild = child.As<UIElement>();
@@ -130,7 +131,7 @@ namespace ReactNative.Views.Split
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(index),
-                    $"'{Name}' only supports two child, the content and the pane.");
+                    Invariant($"'{Name}' only supports two child, the content and the pane."));
             }
 
             return index == 0
@@ -190,7 +191,7 @@ namespace ReactNative.Views.Split
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(index),
-                    $"'{Name}' only supports two child, the content and the pane.");
+                    Invariant($"'{Name}' only supports two child, the content and the pane."));
             }
         }
 
@@ -234,7 +235,7 @@ namespace ReactNative.Views.Split
             var child = view.Content;
             if (child == null)
             {
-                throw new InvalidOperationException("SplitView does not have a content child.");
+                throw new InvalidOperationException(Invariant($"{nameof(SplitView)} does not have a content child."));
             }
 
             return child;
@@ -245,7 +246,7 @@ namespace ReactNative.Views.Split
             var child = view.Pane;
             if (child == null)
             {
-                throw new InvalidOperationException("SplitView does not have a pane child.");
+                throw new InvalidOperationException(Invariant($"{nameof(SplitView)} does not have a pane child."));
             }
 
             return child;

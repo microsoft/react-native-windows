@@ -1,6 +1,7 @@
 ﻿using ReactNative.UIManager;
 using System;
 using Windows.UI.Xaml.Documents;
+using static System.FormattableString;
 
 namespace ReactNative.Views.Text
 {
@@ -46,7 +47,7 @@ namespace ReactNative.Views.Text
         public override Dimensions GetDimensions(Run view)
         {
             throw new InvalidOperationException(
-                $"Dimensions are not available for a virtual text node.");
+                Invariant($"Dimensions are not available for a virtual text node."));
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using ReactNative.UIManager.Annotations;
+using System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -238,6 +239,9 @@ namespace ReactNative.UIManager
         /// <returns>The inner element.</returns>
         protected TFrameworkElement GetInnerElement(Border parent)
         {
+            if (parent == null)
+                throw new ArgumentNullException(nameof(parent));
+
             return (TFrameworkElement)parent.Child;
         }
     }

@@ -2,6 +2,7 @@
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using static System.FormattableString;
 
 namespace ReactNative.Animated
 {
@@ -15,7 +16,7 @@ namespace ReactNative.Animated
         {
             _manager = manager;
 
-            var props = (JObject)config.GetValue("props");
+            var props = (JObject)config.GetValue("props", StringComparison.Ordinal);
             _propMapping = new Dictionary<string, int>(props.Count);
             foreach (var entry in props)
             {
@@ -53,7 +54,7 @@ namespace ReactNative.Animated
                 else
                 {
                     throw new InvalidOperationException(
-                        $"Unsupported type of node used in property node '{node.GetType()}'.");
+                        Invariant($"Unsupported type of node used in property node '{node.GetType()}'."));
                 }
             }
 

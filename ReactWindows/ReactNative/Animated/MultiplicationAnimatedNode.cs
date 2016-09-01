@@ -12,7 +12,7 @@ namespace ReactNative.Animated
             : base(tag)
         {
             _manager = manager;
-            _inputNodes = config.GetValue("input").ToObject<int[]>();
+            _inputNodes = config.GetValue("input", StringComparison.Ordinal).ToObject<int[]>();
         }
 
         public override void Update()

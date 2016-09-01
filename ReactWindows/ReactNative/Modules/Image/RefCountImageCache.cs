@@ -123,7 +123,7 @@ namespace ReactNative.Modules.Image
                     h => image.ImageFailed -= h)
                     .Select<EventPattern<ExceptionRoutedEventArgs>, Unit>(pattern =>
                     {
-                        throw new Exception(pattern.EventArgs.ErrorMessage);
+                        throw new InvalidOperationException(pattern.EventArgs.ErrorMessage);
                     });
 
                 _subscription.Disposable = openedObservable

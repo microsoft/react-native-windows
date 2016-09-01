@@ -6,13 +6,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
+using static System.FormattableString;
 
 namespace ReactNative.Chakra.Executor
 {
     /// <summary>
     /// JavaScript runtime wrapper.
     /// </summary>
-    public class ChakraJavaScriptExecutor : IJavaScriptExecutor
+    public sealed class ChakraJavaScriptExecutor : IJavaScriptExecutor
     {
         private const string JsonName = "JSON";
         private const string FBBatchedBridgeVariableName = "__fbBatchedBridge";
@@ -311,7 +312,7 @@ namespace ReactNative.Chakra.Executor
         {
             try
             {
-                Debug.Write($"[JS {kind}]");
+                Debug.Write(Invariant($"[JS {kind}]"));
 
                 // First argument is this-context, ignore...
                 for (var i = 1; i < argumentCount; ++i)
@@ -323,7 +324,7 @@ namespace ReactNative.Chakra.Executor
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error in ChakraExecutor.ConsoleCallback: {ex.Message}");
+                Debug.WriteLine(Invariant($"Error in ChakraExecutor.ConsoleCallback: {ex.Message}"));
             }
 
             return JavaScriptValue.Undefined;

@@ -89,11 +89,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the font weight for the node.
         /// </summary>
-        /// <param name="fontWeightString">The font weight string.</param>
+        /// <param name="fontWeightValue">The font weight string.</param>
         [ReactProp(ViewProps.FontWeight)]
-        public void SetFontWeight(string fontWeightString)
+        public void SetFontWeight(string fontWeightValue)
         {
-            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightString);
+            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
                 _fontWeight.Value.Weight != fontWeight.Value.Weight))
@@ -106,11 +106,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the font style for the node.
         /// </summary>
-        /// <param name="fontStyleString">The font style string.</param>
+        /// <param name="fontStyleSValue">The font style string.</param>
         [ReactProp(ViewProps.FontStyle)]
-        public void SetFontStyle(string fontStyleString)
+        public void SetFontStyle(string fontStyleSValue)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
+            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleSValue);
             if (_fontStyle != fontStyle)
             {
                 _fontStyle = fontStyle;
@@ -125,7 +125,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.LetterSpacing)]
         public void SetLetterSpacing(int letterSpacing)
         {
-            var spacing = 50 * letterSpacing; // TODO: Find exact multiplier (50) to match iOS
+            var spacing = 50*letterSpacing; // TODO: Find exact multiplier (50) to match iOS
 
             if (_letterSpacing != spacing)
             {
@@ -252,7 +252,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="textNode">The text shadow node.</param>
         /// <param name="box">The password box.</param>
         /// <param name="measureOnly">Signals if the operation is used only for measurement.</param>
-        protected static void FormatPasswordBox(ReactPasswordBoxShadowNode textNode, PasswordBox box, bool measureOnly)
+        protected static void FormatPasswordBox(ReactPasswordBoxShadowNode textNode, Control box, bool measureOnly)
         {
             if (textNode._fontSize != Unset)
             {

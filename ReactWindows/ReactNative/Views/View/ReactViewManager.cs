@@ -41,11 +41,11 @@ namespace ReactNative.Views.View
         /// Set the pointer events handling mode for the view.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <param name="pointerEventsString">The pointerEvents mode.</param>
+        /// <param name="pointerEventsValue">The pointerEvents mode.</param>
         [ReactProp(ViewProps.PointerEvents)]
-        public void SetPointerEvents(Border view, string pointerEventsString)
+        public void SetPointerEvents(Border view, string pointerEventsValue)
         {
-            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsString) ?? PointerEvents.Auto;
+            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
             view.SetPointerEvents(pointerEvents);
         }
 

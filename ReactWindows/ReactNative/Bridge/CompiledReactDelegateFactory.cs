@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -14,7 +15,6 @@ namespace ReactNative.Bridge
     public sealed class CompiledReactDelegateFactory : ReactDelegateFactoryBase
     {
         private static readonly ConstructorInfo s_newArgumentNullException = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new ArgumentNullException(default(string)));
-        private static readonly ConstructorInfo s_newArgumentException = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new ArgumentException(default(string), default(string)));
         private static readonly ConstructorInfo s_newNativeArgumentParseException = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new NativeArgumentsParseException(default(string), default(string)));
         private static readonly ConstructorInfo s_newNativeArgumentParseExceptionInner = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new NativeArgumentsParseException(default(string), default(string), default(Exception)));
         private static readonly MethodInfo s_createCallback = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreateCallback(default(JToken), default(IReactInstance))));
@@ -114,7 +114,7 @@ namespace ReactNative.Bridge
                             s_stringFormat,
                             Expression.Constant(CultureInfo.InvariantCulture),
                             Expression.Constant(
-                                $"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'."
+                                Invariant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'.")
                             ),
                             Expression.Convert(
                                 Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
@@ -177,7 +177,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseExceptionInner,
                             Expression.Constant(
-                                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'."
+                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'.")
                             ),
                             Expression.Constant(parameterName),
                             ex
@@ -238,7 +238,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseException,
                             Expression.Constant(
-                                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'."
+                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'.")
                             ),
                             Expression.Constant(parameterName)
                         ),

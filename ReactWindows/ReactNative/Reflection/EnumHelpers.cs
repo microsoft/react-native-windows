@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using static System.FormattableString;
 
 namespace ReactNative.Reflection
 {
@@ -25,7 +26,7 @@ namespace ReactNative.Reflection
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),
-                    $"Invalid value '{value}' for type '{typeof(T)}'.");
+                    Invariant($"Invalid value '{value}' for type '{typeof(T)}'."));
             }
 
             return (T)result;

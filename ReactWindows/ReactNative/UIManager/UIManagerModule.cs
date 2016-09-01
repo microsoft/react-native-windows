@@ -186,7 +186,7 @@ namespace ReactNative.UIManager
         /// <param name="addChildTags">
         /// A list of tags of views to add to the parent.
         /// </param>
-        /// <param name="addAtIndices">
+        /// <param name="addAtIndexes">
         /// A list of indices to insert the child tags at.
         /// </param>
         /// <param name="removeFrom">
@@ -199,7 +199,7 @@ namespace ReactNative.UIManager
             int[] moveFrom,
             int[] moveTo,
             int[] addChildTags,
-            int[] addAtIndices,
+            int[] addAtIndexes,
             int[] removeFrom)
         {
             _uiImplementation.ManageChildren(
@@ -207,7 +207,7 @@ namespace ReactNative.UIManager
                 moveFrom,
                 moveTo,
                 addChildTags,
-                addAtIndices,
+                addAtIndexes,
                 removeFrom);
         }
 
@@ -251,7 +251,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void removeSubviewsFromContainerWithID(int containerTag)
         {
-            _uiImplementation.RemoveSubviewsFromContainerWithID(containerTag);
+            _uiImplementation.RemoveSubViewsFromContainerWithId(containerTag);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace ReactNative.UIManager
             JArray point,
             ICallback callback)
         {
-            _uiImplementation.FindSubviewIn(
+            _uiImplementation.FindSubViewIn(
                 reactTag,
                 point[0].Value<double>(),
                 point[1].Value<double>(),
@@ -432,7 +432,7 @@ namespace ReactNative.UIManager
 
         #endregion
 
-        #region ILifecycleEventListener
+        #region ILifecycleEventListenere
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -458,8 +458,9 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            _uiImplementation.OnShutdown();
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+            _uiImplementation.OnShutdown();
+            _eventDispatcher.OnDestroy();
         }
 
         #endregion

@@ -45,7 +45,7 @@ namespace ReactNative.Touch
         /// Called to evaluate touch interception occurs on a view parent.
         /// </summary>
         /// <param name="sender">The sender of the event.</param>
-        /// <param name="e">
+        /// <param name="event">
         /// The motion event being dispatched down the hierarchy.
         /// </param>
         /// <returns>
@@ -53,7 +53,7 @@ namespace ReactNative.Touch
         /// dispatch to this view, or <code>false</code> to allow the motion 
         /// event to be delivered to the child view.
         /// </returns>
-        public bool OnInterceptTouchEvent(object sender, PointerRoutedEventArgs e)
+        public bool OnInterceptTouchEvent(object sender, PointerRoutedEventArgs @event)
         {
             throw new NotImplementedException();
         }

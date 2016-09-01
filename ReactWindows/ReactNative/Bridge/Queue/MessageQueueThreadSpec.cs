@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge.Queue
 {
@@ -38,7 +39,7 @@ namespace ReactNative.Bridge.Queue
         {
             if (kind == MessageQueueThreadKind.DispatcherThread)
             {
-                throw new NotSupportedException("Use the singleton DispatcherThreadSpec instance.");
+                throw new NotSupportedException(Invariant($"Use the singleton {nameof(DispatcherThreadSpec)} instance."));
             }
 
             return new MessageQueueThreadSpec(kind, name);

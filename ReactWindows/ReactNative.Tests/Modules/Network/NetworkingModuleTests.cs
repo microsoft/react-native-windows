@@ -421,6 +421,10 @@ namespace ReactNative.Tests.Modules.Network
             {
                 return Task.FromResult(_func(request));
             }
+
+            public void Dispose()
+            {
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -127,7 +128,7 @@ namespace ReactNative.UIManager
                     (parentViewParentManager = parentViewManager as IViewParentManager) == null)
                 {
                     throw new InvalidOperationException(
-                        $"Trying to use view with tag '{tag}' as a parent, but its manager doesn't extend ViewParentManager.");
+                        Invariant($"Trying to use view with tag '{tag}' as a parent, but its manager doesn't extend ViewParentManager."));
                 }
 
                 if (!parentViewParentManager.NeedsCustomLayoutForChildren)
@@ -192,43 +193,43 @@ namespace ReactNative.UIManager
         /// Manages the children of a React view.
         /// </summary>
         /// <param name="tag">The tag of the view to manager.</param>
-        /// <param name="indicesToRemove">Child indices to remove.</param>
+        /// <param name="indexesToRemove">Child indices to remove.</param>
         /// <param name="viewsToAdd">Views to add.</param>
         /// <param name="tagsToDelete">Tags to delete.</param>
-        public void ManageChildren(int tag, int[] indicesToRemove, ViewAtIndex[] viewsToAdd, int[] tagsToDelete)
+        public void ManageChildren(int tag, int[] indexesToRemove, ViewAtIndex[] viewsToAdd, int[] tagsToDelete)
         {
             var viewManager = default(IViewManager);
             if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
             {
                 throw new InvalidOperationException(
-                    $"Trying to manage children with tag '{tag}' which doesn't exist.");
+                    Invariant($"Trying to manage children with tag '{tag}' which doesn't exist."));
             }
 
             var viewParentManager = (IViewParentManager)viewManager;
             var viewToManage = _tagsToViews[tag];
 
             var lastIndexToRemove = viewParentManager.GetChildCount(viewToManage);
-            if (indicesToRemove != null)
+            if (indexesToRemove != null)
             {
-                for (var i = indicesToRemove.Length - 1; i >= 0; --i)
+                for (var i = indexesToRemove.Length - 1; i >= 0; --i)
                 {
-                    var indexToRemove = indicesToRemove[i];
+                    var indexToRemove = indexesToRemove[i];
                     if (indexToRemove < 0)
                     {
                         throw new InvalidOperationException(
-                            $"Trying to remove a negative index '{indexToRemove}' on view tag '{tag}'.");
+                            Invariant($"Trying to remove a negative index '{indexToRemove}' on view tag '{tag}'."));
                     }
 
                     if (indexToRemove >= viewParentManager.GetChildCount(viewToManage))
                     {
                         throw new InvalidOperationException(
-                            $"Trying to remove a view index '{indexToRemove}' greater than the child could for view tag '{tag}'.");
+                            Invariant($"Trying to remove a view index '{indexToRemove}' greater than the child could for view tag '{tag}'."));
                     }
 
                     if (indexToRemove >= lastIndexToRemove)
                     {
                         throw new InvalidOperationException(
-                            $"Trying to remove an out of order index '{indexToRemove}' (last index was '{lastIndexToRemove}') for view tag '{tag}'.");
+                            Invariant($"Trying to remove an out of order index '{indexToRemove}' (last index was '{lastIndexToRemove}') for view tag '{tag}'."));
                     }
 
                     var viewToRemove = viewParentManager.GetChildAt(viewToManage, indexToRemove) as FrameworkElement;
@@ -257,7 +258,7 @@ namespace ReactNative.UIManager
                     if (!_tagsToViews.TryGetValue(viewAtIndex.Tag, out viewToAdd))
                     {
                         throw new InvalidOperationException(
-                            $"Trying to add unknown view tag '{viewAtIndex.Tag}'.");
+                            Invariant($"Trying to add unknown view tag '{viewAtIndex.Tag}'."));
                     }
 
                     viewParentManager.AddView(viewToManage, viewToAdd, viewAtIndex.Index);
@@ -273,7 +274,7 @@ namespace ReactNative.UIManager
                     if (!_tagsToViews.TryGetValue(tagToDelete, out viewToDestroy))
                     {
                         throw new InvalidOperationException(
-                            $"Trying to destroy unknown view tag '{tagToDelete}'.");
+                            Invariant($"Trying to destroy unknown view tag '{tagToDelete}'."));
                     }
 
                     var elementToDestroy = viewToDestroy as FrameworkElement;
@@ -311,7 +312,7 @@ namespace ReactNative.UIManager
                 if (viewToAdd == null)
                 {
                     throw new InvalidOperationException(
-                        $"Trying to add unknown view tag: {childrenTags[i]}.");
+                        Invariant($"Trying to add unknown view tag: {childrenTags[i]}."));
                 }
 
                 viewManager.AddView(viewToManage, viewToAdd, i);
@@ -328,7 +329,7 @@ namespace ReactNative.UIManager
             if (!_rootTags.ContainsKey(rootViewTag))
             {
                 throw new InvalidOperationException(
-                    $"View with tag '{rootViewTag}' is not registered as a root view.");
+                    Invariant($"View with tag '{rootViewTag}' is not registered as a root view."));
             }
 
             var rootView = _tagsToViews[rootViewTag];
@@ -355,14 +356,14 @@ namespace ReactNative.UIManager
             if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
             {
                 throw new InvalidOperationException(
-                    $"Could not find view manager for tag '{tag}.");
+                    Invariant($"Could not find view manager for tag '{tag}."));
             }
 
             var rootView = RootViewHelper.GetRootView(view);
             if (rootView == null)
             {
                 throw new InvalidOperationException(
-                    $"Native view '{tag}' is no longer on screen.");
+                    Invariant($"Native view '{tag}' is no longer on screen."));
             }
 
             // TODO: better way to get relative position?
@@ -396,7 +397,7 @@ namespace ReactNative.UIManager
             if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
             {
                 throw new InvalidOperationException(
-                    $"Could not find view manager for tag '{tag}.");
+                    Invariant($"Could not find view manager for tag '{tag}."));
             }
 
             var uiElement = view.As<UIElement>();
@@ -434,7 +435,7 @@ namespace ReactNative.UIManager
             if (!_tagsToViews.TryGetValue(reactTag, out view))
             {
                 throw new InvalidOperationException(
-                    $"Could not find view with tag '{reactTag}'.");
+                    Invariant($"Could not find view with tag '{reactTag}'."));
             }
 
             var uiElement = view.As<UIElement>();
@@ -446,7 +447,7 @@ namespace ReactNative.UIManager
             if (target == null)
             {
                 throw new InvalidOperationException(
-                    $"Could not find React view at coordinates '{touchX},{touchY}'.");
+                    Invariant($"Could not find React view at coordinates '{touchX},{touchY}'."));
             }
 
             return target.GetTag();
@@ -472,7 +473,7 @@ namespace ReactNative.UIManager
             if (!_tagsToViews.TryGetValue(reactTag, out view))
             {
                 throw new InvalidOperationException(
-                    $"Could not find view with tag '{reactTag}'.");
+                    Invariant($"Could not find view with tag '{reactTag}'."));
             }
 
             // TODO: (#306) Finish JS responder implementation. 
@@ -499,7 +500,7 @@ namespace ReactNative.UIManager
             if (!_tagsToViews.TryGetValue(reactTag, out view))
             {
                 throw new InvalidOperationException(
-                    $"Trying to send command to a non-existent view with tag '{reactTag}.");
+                    Invariant($"Trying to send command to a non-existent view with tag '{reactTag}."));
             }
 
             var viewManager = ResolveViewManager(reactTag);
@@ -547,7 +548,7 @@ namespace ReactNative.UIManager
             if (!_tagsToViews.TryGetValue(tag, out view))
             {
                 throw new InvalidOperationException(
-                    $"Trying to resolve view with tag '{tag}' which doesn't exist.");
+                    Invariant($"Trying to resolve view with tag '{tag}' which doesn't exist."));
             }
 
             return view;
@@ -559,7 +560,7 @@ namespace ReactNative.UIManager
             if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
             {
                 throw new InvalidOperationException(
-                    $"ViewManager for tag '{tag}' could not be found.");
+                    Invariant($"ViewManager for tag '{tag}' could not be found."));
             }
 
             return viewManager;

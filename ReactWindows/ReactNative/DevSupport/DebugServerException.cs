@@ -4,6 +4,7 @@ using ReactNative.Common;
 using ReactNative.Tracing;
 using System;
 using System.Linq;
+using static System.FormattableString;
 
 namespace ReactNative.DevSupport
 {
@@ -15,7 +16,14 @@ namespace ReactNative.DevSupport
     public class DebugServerException : Exception
     {
         private DebugServerException(string description, string fileName, int lineNumber, int column)
-            : this($"{description}{Environment.NewLine} at {fileName}:{lineNumber}:{column}")
+            : this(Invariant($"{description}{Environment.NewLine} at {fileName}:{lineNumber}:{column}"))
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="DebugServerException"/>. 
+        /// </summary>
+        public DebugServerException()
         {
         }
 
@@ -25,6 +33,16 @@ namespace ReactNative.DevSupport
         /// <param name="message">The exception message.</param>
         public DebugServerException(string message)
             : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="DebugServerException"/>. 
+        /// </summary>
+        /// <param name="message">The exception message.</param>
+        /// <param name="inner">The inner exception.</param>
+        public DebugServerException(string message, Exception inner)
+            : base(message, inner)
         {
         }
 

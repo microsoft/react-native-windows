@@ -16,12 +16,12 @@ using Windows.UI.Xaml;
 
 namespace ReactNative.DevSupport
 {
-    class DevSupportManager : IDevSupportManager
+    class DevSupportManager : IDevSupportManager, IDisposable
     {
         private const int NativeErrorCookie = -1;
         private const string JSBundleFileName = "ReactNativeDevBundle.js";
 
-        private readonly ShakeAccelerometer _accelerometer = ShakeAccelerometer.GetDefault();
+        private readonly ShakeAccelerometer _accelerometer = ShakeAccelerometer.Instance;
         private readonly SerialDisposable _pollingDisposable = new SerialDisposable();
 
         private readonly IReactInstanceDevCommandsHandler _reactInstanceCommandsHandler;
@@ -347,6 +347,12 @@ namespace ReactNative.DevSupport
             }
         }
 
+        public void Dispose()
+        {
+            _pollingDisposable.Dispose();
+            _devServerHelper.Dispose();
+        }
+
         private void ResetCurrentContext(ReactContext context)
         {
             if (_currentContext == context)
@@ -358,18 +364,11 @@ namespace ReactNative.DevSupport
 
             if (_devSettings.IsHotModuleReplacementEnabled && context != null)
             {
-                try
-                {
-                    var uri = new Uri(SourceUrl);
-                    var path = uri.LocalPath.Substring(1); // strip initial slash in path
-                    var host = uri.Host;
-                    var port = uri.Port;
-                    context.GetJavaScriptModule<HMRClient>().enable("windows", path, host, port);
-                }
-                catch (Exception ex)
-                {
-                    HandleException(ex);
-                }
+                var uri = new Uri(SourceUrl);
+                var path = uri.LocalPath.Substring(1); // strip initial slash in path
+                var host = uri.Host;
+                var port = uri.Port;
+                context.GetJavaScriptModule<HMRClient>().enable("windows", path, host, port);
             }
         }
 

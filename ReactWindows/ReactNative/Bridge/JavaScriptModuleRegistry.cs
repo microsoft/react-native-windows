@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -44,7 +45,7 @@ namespace ReactNative.Bridge
                     if (!_moduleRegistrations.TryGetValue(typeof(T), out registration))
                     {
                         throw new InvalidOperationException(
-                            $"JS module '{typeof(T)}' hasn't been registered.");
+                            Invariant($"JS module '{typeof(T)}' hasn't been registered."));
                     }
 
                     var type = registration.ModuleInterface;
@@ -118,14 +119,14 @@ namespace ReactNative.Bridge
                 if (type.GetTypeInfo().IsAbstract)
                 {
                     throw new ArgumentException(
-                        $"JavaScript module '{type}' must not be abstract.",
+                        Invariant($"JavaScript module '{type}' must not be abstract."),
                         nameof(type));
                 }
 
                 if (!typeof(IJavaScriptModule).IsAssignableFrom(type))
                 {
                     throw new ArgumentException(
-                        $"JavaScript module '{type}' must derive from IJavaScriptModule.",
+                        Invariant($"JavaScript module '{type}' must derive from IJavaScriptModule."),
                         nameof(type));
                 }
 
@@ -133,7 +134,7 @@ namespace ReactNative.Bridge
                 if (defaultConstructor == null || !defaultConstructor.IsPublic)
                 {
                     throw new ArgumentException(
-                        $"JavaScript module '{type}' must have a public default constructor.",
+                        Invariant($"JavaScript module '{type}' must have a public default constructor."),
                         nameof(type));
                 }
             }

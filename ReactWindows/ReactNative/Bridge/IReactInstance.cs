@@ -30,11 +30,11 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Invokes a JavaScript function.
         /// </summary>
-        /// <param name="module">The module ID.</param>
+        /// <param name="moduleName">The module name.</param>
         /// <param name="method">The method ID.</param>
         /// <param name="arguments">The arguments.</param>
         /// <param name="tracingName">The tracing name.</param>
-        void InvokeFunction(string module, string method, JArray arguments, string tracingName);
+        void InvokeFunction(string moduleName, string method, JArray arguments, string tracingName);
 
         /// <summary>
         /// Invokes a JavaScript callback.
