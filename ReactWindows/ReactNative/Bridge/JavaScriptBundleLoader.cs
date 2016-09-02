@@ -87,11 +87,7 @@ namespace ReactNative.Bridge
                 try
                 {
                     var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask().ConfigureAwait(false);
-                    using (var stream = await storageFile.OpenStreamForReadAsync().ConfigureAwait(false))
-                    using (var reader = new StreamReader(stream))
-                    {
-                        _script = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    }
+                    _script = storageFile.Path;
                 }
                 catch (Exception ex)
                 {
@@ -108,8 +104,6 @@ namespace ReactNative.Bridge
                 }
 
                 bridge.RunScript(_script, SourceUrl);
-                
-                _script = null;
             }
         }
 
@@ -132,11 +126,7 @@ namespace ReactNative.Bridge
                 {
                     var localFolder = ApplicationData.Current.LocalFolder;
                     var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).AsTask().ConfigureAwait(false);
-                    using (var stream = await storageFile.OpenStreamForReadAsync().ConfigureAwait(false))
-                    using (var reader = new StreamReader(stream))
-                    {
-                        _script = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    }
+                    _script = storageFile.Path;
                 }
                 catch (Exception ex)
                 {

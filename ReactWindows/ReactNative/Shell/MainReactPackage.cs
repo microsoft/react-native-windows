@@ -5,6 +5,7 @@ using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Image;
+using ReactNative.Modules.I18N;
 using ReactNative.Modules.Launch;
 using ReactNative.Modules.Location;
 using ReactNative.Modules.NetInfo;
@@ -39,7 +40,7 @@ namespace ReactNative.Shell
         private readonly IUriLoader _uriLoader;
 
         /// <summary>
-        /// Instantiates the <see cref="MainReactPackage"/>. 
+        /// Instantiates the <see cref="MainReactPackage"/>.
         /// </summary>
         public MainReactPackage()
             : this(new DefaultUriLoader())
@@ -52,7 +53,7 @@ namespace ReactNative.Shell
         }
 
         /// <summary>
-        /// Instantiates the <see cref="MainReactPackage"/>. 
+        /// Instantiates the <see cref="MainReactPackage"/>.
         /// </summary>
         /// <param name="imageCache">The image cache.</param>
         /// <param name="uriLoader">The URI loader.</param>
@@ -64,7 +65,7 @@ namespace ReactNative.Shell
 
         /// <summary>
         /// Creates the list of native modules to register with the react
-        /// instance. 
+        /// instance.
         /// </summary>
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of native modules.</returns>
@@ -78,6 +79,7 @@ namespace ReactNative.Shell
                 new ClipboardModule(),
                 new DialogModule(reactContext),
                 new ImageLoaderModule(_imageCache, _uriLoader),
+                new I18NModule(),
                 new LauncherModule(),
                 new LocationModule(reactContext),
                 new NativeAnimatedModule(reactContext),
@@ -90,8 +92,8 @@ namespace ReactNative.Shell
         }
 
         /// <summary>
-        /// Creates the list of JavaScript modules to register with the 
-        /// React instance. 
+        /// Creates the list of JavaScript modules to register with the
+        /// React instance.
         /// </summary>
         /// <returns>The list of JavaScript modules.</returns>
         public IReadOnlyList<Type> CreateJavaScriptModulesConfig()

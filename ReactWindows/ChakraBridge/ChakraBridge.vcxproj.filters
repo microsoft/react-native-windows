@@ -10,6 +10,8 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ChakraHost.cpp" />
     <ClCompile Include="NativeJavaScriptExecutor.cpp" />
+    <ClCompile Include="asprintf.cpp" />
+    <ClCompile Include="JsStringify.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -17,5 +19,7 @@
     <ClInclude Include="ChakraStringResult.h" />
     <ClInclude Include="SerializedSourceContext.h" />
     <ClInclude Include="NativeJavaScriptExecutor.h" />
+    <ClInclude Include="asprintf.h" />
+    <ClInclude Include="JsStringify.h" />
   </ItemGroup>
 </Project>

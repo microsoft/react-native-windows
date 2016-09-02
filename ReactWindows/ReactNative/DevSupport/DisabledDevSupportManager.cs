@@ -75,6 +75,11 @@ namespace ReactNative.DevSupport
         {
         }
 
+        public Task<bool> HasUpToDateBundleInCacheAsync()
+        {
+            return Task.FromResult(false);
+        }
+
         public void HideRedboxDialog()
         {
         }
