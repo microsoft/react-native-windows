@@ -10,6 +10,7 @@ namespace ReactNative.Views.Slider
     /// </summary>
     public class ReactSliderManager : BaseViewManager<Windows.UI.Xaml.Controls.Slider, ReactSliderShadowNode>
     {
+        private const double Epsilon = 1e-4;
         private const double Undefined = double.NegativeInfinity;
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace ReactNative.Views.Slider
             {
                 if (step == 0)
                 {
-                    step = double.Epsilon;
+                    step = Epsilon;
                 }
 
                 view.StepFrequency = step;
