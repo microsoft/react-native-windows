@@ -20,6 +20,7 @@ using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
 using ReactNative.Views.Progress;
 using ReactNative.Views.Scroll;
+using ReactNative.Views.Slider;
 using ReactNative.Views.Split;
 using ReactNative.Views.Switch;
 using ReactNative.Views.Text;
@@ -129,6 +130,7 @@ namespace ReactNative.Shell
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),
                 new ReactWebViewManager(),
+                new ReactSliderManager(),
             };
         }
     }
