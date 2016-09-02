@@ -121,6 +121,7 @@ namespace ReactNative.Shell
                 new ReactRunManager(),
                 //new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
+                new ReactSliderManager(),
                 new ReactSplitViewManager(),
                 new ReactSwitchManager(),
                 new ReactPasswordBoxManager(),
@@ -130,7 +131,6 @@ namespace ReactNative.Shell
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),
                 new ReactWebViewManager(),
-                new ReactSliderManager(),
             };
         }
     }

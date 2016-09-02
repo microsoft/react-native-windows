@@ -188,20 +188,6 @@ namespace ReactNative.UIManager
                         { "registrationName", "onLayout" },
                     }
                 },
-                {
-                    "topValueChange",
-                    new Map
-                    {
-                        { "registrationName", "onValueChange" },
-                    }
-                },
-                {
-                    "topSlidingComplete",
-                    new Map
-                    {
-                        { "registrationName", "onSlidingComplete" },
-                    }
-                },
             };
         }
 

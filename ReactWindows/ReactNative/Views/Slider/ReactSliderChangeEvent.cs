@@ -18,8 +18,8 @@ namespace ReactNative.Views.Slider
         /// <param name="viewTag">The view tag.</param>
         /// <param name="value">Slider value.</param>
         public ReactSliderChangeEvent(int viewTag, double value)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
-            {
+            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+        {
             _value = value;
         }
 
@@ -30,7 +30,7 @@ namespace ReactNative.Views.Slider
         {
             get
             {
-                return "topValueChange";
+                return "topChange";
             }
         }
 
@@ -41,10 +41,10 @@ namespace ReactNative.Views.Slider
         public override void Dispatch(RCTEventEmitter eventEmitter)
         {
             var eventData = new JObject
-                {
-                    { "target", ViewTag },
-                    { "value", _value },
-                };
+            {
+                { "target", ViewTag },
+                { "value", _value },
+            };
 
             eventEmitter.receiveEvent(ViewTag, EventName, eventData);
         }
