@@ -4,9 +4,9 @@ namespace CssLayoutEngine
 {
     public enum class CSSFlexDirection
     {
-        COLUMN,
-        COLUMN_REVERSE,
-        ROW,
-        ROW_REVERSE
+        Column,
+        ColumnReverse,
+        Row,
+        RowReverse
     };
 }

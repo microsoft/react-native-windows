@@ -9,6 +9,7 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="CSSConstants.cpp" />
+    <ClCompile Include="LayoutEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -23,5 +24,8 @@
     <ClInclude Include="CSSFlexDirection.h" />
     <ClInclude Include="CSSMeasureMode.h" />
     <ClInclude Include="CSSCachedMeasurement.h" />
+    <ClInclude Include="CSSLayoutContext.h" />
+    <ClInclude Include="MeasureOutput.h" />
+    <ClInclude Include="LayoutEngine.h" />
   </ItemGroup>
 </Project>

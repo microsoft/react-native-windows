@@ -4,7 +4,7 @@ namespace CssLayoutEngine
 {
     public enum class CSSWrap
     {
-        NOWRAP,
-        WRAP,
+        NoWrap,
+        Wrap,
     };
 }

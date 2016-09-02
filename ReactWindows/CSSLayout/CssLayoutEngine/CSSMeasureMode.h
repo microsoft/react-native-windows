@@ -4,8 +4,8 @@ namespace CssLayoutEngine
 {
     public enum class CSSMeasureMode
     {
-        UNDEFINED,
-        EXACTLY,
-        AT_MOST,
+        Undefined,
+        Exactly,
+        AtMost,
     };
 }

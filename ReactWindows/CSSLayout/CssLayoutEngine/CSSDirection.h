@@ -4,7 +4,7 @@ namespace CssLayoutEngine
 {
     public enum class CSSDirection
     {
-        INHERIT,
+        Inherit,
         LTR,
         RTL,
     };

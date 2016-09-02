@@ -4,10 +4,10 @@ namespace CssLayoutEngine
 {
     public enum class CSSJustify
     {
-        FLEX_START,
-        CENTER,
-        FLEX_END,
-        SPACE_BETWEEN,
-        SPACE_AROUND,
+        FlexStart,
+        Center,
+        FlexEnd,
+        SpaceBetween,
+        SpaceAround,
     };
 }
