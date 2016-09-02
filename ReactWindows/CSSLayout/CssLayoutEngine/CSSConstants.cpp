@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "CSSConstants.h"
 
-using namespace CssLayoutEngine;
+using namespace CSSLayoutEngine;
 
-bool CSSConstants::IsNaN(float value)
+bool CSSConstants::IsUndefined(float value)
 {
     return isnan(value);
 }

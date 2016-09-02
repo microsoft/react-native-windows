@@ -10,12 +10,23 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="CSSConstants.cpp" />
     <ClCompile Include="LayoutEngine.cpp" />
+    <ClCompile Include="CSSAlign.cpp" />
+    <ClCompile Include="CSSCachedMeasurement.cpp" />
+    <ClCompile Include="CSSDirection.cpp" />
+    <ClCompile Include="CSSFlexDirection.cpp" />
+    <ClCompile Include="MeasureOutput.cpp" />
+    <ClCompile Include="CSSWrap.cpp" />
+    <ClCompile Include="CSSPositionType.cpp" />
+    <ClCompile Include="CSSOverflow.cpp" />
+    <ClCompile Include="CSSMeasureMode.cpp" />
+    <ClCompile Include="CSSLayoutContext.cpp" />
+    <ClCompile Include="CSSJustify.cpp" />
+    <ClCompile Include="Spacing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="CSSAlign.h" />
     <ClInclude Include="CSSConstants.h" />
-    <ClInclude Include="SpacingType.h" />
     <ClInclude Include="CSSWrap.h" />
     <ClInclude Include="CSSPositionType.h" />
     <ClInclude Include="CSSOverflow.h" />
@@ -27,5 +38,6 @@
     <ClInclude Include="CSSLayoutContext.h" />
     <ClInclude Include="MeasureOutput.h" />
     <ClInclude Include="LayoutEngine.h" />
+    <ClInclude Include="Spacing.h" />
   </ItemGroup>
 </Project>

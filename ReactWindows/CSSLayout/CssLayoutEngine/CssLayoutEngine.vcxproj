@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ad339437-3414-495e-8198-8d09d09d07a2}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>CssLayoutEngine</RootNamespace>
+    <RootNamespace>CSSLayoutEngine</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -37,6 +37,7 @@
     <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <ProjectName>CSSLayoutEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -220,11 +221,22 @@
     <ClInclude Include="LayoutEngine.h" />
     <ClInclude Include="MeasureOutput.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SpacingType.h" />
+    <ClInclude Include="Spacing.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CSSAlign.cpp" />
+    <ClCompile Include="CSSCachedMeasurement.cpp" />
     <ClCompile Include="CSSConstants.cpp" />
+    <ClCompile Include="CSSDirection.cpp" />
+    <ClCompile Include="CSSFlexDirection.cpp" />
+    <ClCompile Include="CSSJustify.cpp" />
+    <ClCompile Include="CSSLayoutContext.cpp" />
+    <ClCompile Include="CSSMeasureMode.cpp" />
+    <ClCompile Include="CSSOverflow.cpp" />
+    <ClCompile Include="CSSPositionType.cpp" />
+    <ClCompile Include="CSSWrap.cpp" />
     <ClCompile Include="LayoutEngine.cpp" />
+    <ClCompile Include="MeasureOutput.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -233,6 +245,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Spacing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSSLayout\CSSLayout.vcxproj">

@@ -4,7 +4,7 @@
 #include "CSSFlexDirection.h"
 #include "CSSPositionType.h"
 
-using namespace CssLayoutEngine;
+using namespace CSSLayoutEngine;
 
 int CSS_FLEX_DIRECTION_COLUMN = (int)CSSFlexDirection::Column;
 int CSS_FLEX_DIRECTION_COLUMN_REVERSE = (int)CSSFlexDirection::ColumnReverse;

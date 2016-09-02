@@ -1,16 +1,18 @@
 #pragma once
 #include "CSSMeasureMode.h"
 
-namespace CssLayoutEngine
+using namespace Platform;
+
+namespace CSSLayoutEngine
 {
     public ref class CSSCachedMeasurement sealed
     {
     public:
-        float AvailableWidth;
-        float AvailableHeight;
-        CSSMeasureMode WidthMeasureMode;
-        CSSMeasureMode HeightMeasureMode;
-        float ComputedWidth;
-        float ComputedHeight;
+        property float AvailableWidth;
+        property float AvailableHeight;
+        property IBox<CSSMeasureMode>^ WidthMeasureMode;
+        property IBox<CSSMeasureMode>^ HeightMeasureMode;
+        property float ComputedWidth;
+        property float ComputedHeight;
     };
 }

@@ -2,12 +2,24 @@
 
 #include "MeasureOutput.h"
 
-namespace CssLayoutEngine
+namespace CSSLayoutEngine
 {
     public ref class CSSLayoutContext sealed
     {
     public:
-        MeasureOutput^ measureOutput = ref new MeasureOutput();
-        int CurrentGenerationCount;
+        CSSLayoutContext()
+        {
+            mMeasureOutput = ref new MeasureOutput();
+        }
+
+        property MeasureOutput^ MeasureOutputField
+        {
+            MeasureOutput^ get() { return mMeasureOutput; }
+            void set(MeasureOutput^ output) { mMeasureOutput = output; }
+        }
+        property int CurrentGenerationCount;
+
+    private:
+        MeasureOutput^ mMeasureOutput;
     };
 }

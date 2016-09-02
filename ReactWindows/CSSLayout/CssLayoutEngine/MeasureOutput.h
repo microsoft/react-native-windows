@@ -1,11 +1,11 @@
 #pragma once
 
-namespace CssLayoutEngine
+namespace CSSLayoutEngine
 {
     public ref class MeasureOutput sealed
     {
     public:
-        float Width;
-        float Height;
+        property float Width;
+        property float Height;
     };
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace CssLayoutEngine
+namespace CSSLayoutEngine
 {
     public enum class CSSDirection
     {

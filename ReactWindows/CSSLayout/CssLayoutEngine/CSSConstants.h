@@ -2,11 +2,15 @@
 
 #include <cmath>
 
-namespace CssLayoutEngine
+namespace CSSLayoutEngine
 {
     public ref class CSSConstants sealed
     {
     public:
-        bool IsNaN(float value);
+        static property float Undefined
+        {
+            float get() { return NAN; }
+        }
+        static bool IsUndefined(float value);
     };
 }
