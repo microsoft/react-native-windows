@@ -123,11 +123,11 @@ namespace ReactNative.UIManager
                 var newWidth = args.NewSize.Width;
                 var newHeight = args.NewSize.Height;
 
-                Context.RunOnLayoutQueueThread(() =>
+                Context.RunOnNativeModulesQueueThread(() =>
                 {
                     if (currentCount == resizeCount)
                     {
-                        Context.AssertOnLayoutQueueThread();
+                        Context.AssertOnNativeModulesQueueThread();
                         _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight, _eventDispatcher);
                     }
                 });
@@ -145,8 +145,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void removeRootView(int rootViewTag)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.RemoveRootView(rootViewTag));
+            _uiImplementation.RemoveRootView(rootViewTag);
         }
 
         /// <summary>
@@ -159,8 +158,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void createView(int tag, string className, int rootViewTag, JObject props)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.CreateView(tag, className, rootViewTag, props));
+            _uiImplementation.CreateView(tag, className, rootViewTag, props);
         }
 
         /// <summary>
@@ -172,8 +170,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void updateView(int tag, string className, JObject props)
         {
-            Context.RunOnLayoutQueueThread(() =>
-            _uiImplementation.UpdateView(tag, className, props));
+            _uiImplementation.UpdateView(tag, className, props);
         }
 
         /// <summary>
@@ -189,7 +186,7 @@ namespace ReactNative.UIManager
         /// <param name="addChildTags">
         /// A list of tags of views to add to the parent.
         /// </param>
-        /// <param name="addAtIndices">
+        /// <param name="addAtIndexes">
         /// A list of indices to insert the child tags at.
         /// </param>
         /// <param name="removeFrom">
@@ -202,17 +199,16 @@ namespace ReactNative.UIManager
             int[] moveFrom,
             int[] moveTo,
             int[] addChildTags,
-            int[] addAtIndices,
+            int[] addAtIndexes,
             int[] removeFrom)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ManageChildren(
-                    viewTag,
-                    moveFrom,
-                    moveTo,
-                    addChildTags,
-                    addAtIndices,
-                    removeFrom));
+            _uiImplementation.ManageChildren(
+                viewTag,
+                moveFrom,
+                moveTo,
+                addChildTags,
+                addAtIndexes,
+                removeFrom);
         }
 
         /// <summary>
@@ -228,8 +224,7 @@ namespace ReactNative.UIManager
             int viewTag,
             int[] childrenTags)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.SetChildren(viewTag, childrenTags));
+            _uiImplementation.SetChildren(viewTag, childrenTags);
         }
 
         /// <summary>
@@ -245,8 +240,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void replaceExistingNonRootView(int oldTag, int newTag)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ReplaceExistingNonRootView(oldTag, newTag));
+            _uiImplementation.ReplaceExistingNonRootView(oldTag, newTag);
         }
 
         /// <summary>
@@ -257,8 +251,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void removeSubviewsFromContainerWithID(int containerTag)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.RemoveSubviewsFromContainerWithID(containerTag));
+            _uiImplementation.RemoveSubViewsFromContainerWithId(containerTag);
         }
 
         /// <summary>
@@ -270,8 +263,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void measure(int reactTag, ICallback callback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.Measure(reactTag, callback));
+            _uiImplementation.Measure(reactTag, callback);
         }
 
         /// <summary>
@@ -283,8 +275,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void measureInWindow(int reactTag, ICallback callback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.MeasureInWindow(reactTag, callback));
+            _uiImplementation.MeasureInWindow(reactTag, callback);
         }
 
         /// <summary>
@@ -309,8 +300,7 @@ namespace ReactNative.UIManager
             ICallback errorCallback,
             ICallback successCallback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.MeasureLayout(tag, ancestorTag, errorCallback, successCallback));
+            _uiImplementation.MeasureLayout(tag, ancestorTag, errorCallback, successCallback);
         }
 
         /// <summary>
@@ -333,8 +323,7 @@ namespace ReactNative.UIManager
             ICallback errorCallback,
             ICallback successCallback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.MeasureLayoutRelativeToParent(tag, errorCallback, successCallback));
+            _uiImplementation.MeasureLayoutRelativeToParent(tag, errorCallback, successCallback);
         }
 
         /// <summary>
@@ -357,12 +346,11 @@ namespace ReactNative.UIManager
             JArray point,
             ICallback callback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.FindSubviewIn(
-                    reactTag,
-                    point[0].Value<double>(),
-                    point[1].Value<double>(),
-                    callback));
+            _uiImplementation.FindSubViewIn(
+                reactTag,
+                point[0].Value<double>(),
+                point[1].Value<double>(),
+                callback);
         }
 
         /// <summary>
@@ -375,8 +363,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void setJSResponder(int reactTag, bool blockNativeResponder)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.SetJavaScriptResponder(reactTag, blockNativeResponder));
+            _uiImplementation.SetJavaScriptResponder(reactTag, blockNativeResponder);
         }
 
         /// <summary>
@@ -385,8 +372,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void clearJSResponder()
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ClearJavaScriptResponder());
+            _uiImplementation.ClearJavaScriptResponder();
         }
 
         /// <summary>
@@ -398,8 +384,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void dispatchViewManagerCommand(int reactTag, int commandId, JArray commandArgs)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.DispatchViewManagerCommand(reactTag, commandId, commandArgs));
+            _uiImplementation.DispatchViewManagerCommand(reactTag, commandId, commandArgs);
         }
 
         /// <summary>
@@ -421,8 +406,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void showPopupMenu(int reactTag, string[] items, ICallback error, ICallback success)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ShowPopupMenu(reactTag, items, error, success));
+            _uiImplementation.ShowPopupMenu(reactTag, items, error, success);
         }
 
         /// <summary>
@@ -443,13 +427,12 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void configureNextLayoutAnimation(JObject config, ICallback success, ICallback error)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ConfigureNextLayoutAnimation(config, success, error));
+            _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
         #endregion
 
-        #region ILifecycleEventListener
+        #region ILifecycleEventListenere
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -475,8 +458,9 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            _uiImplementation.OnShutdown();
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+            _uiImplementation.OnShutdown();
+            _eventDispatcher.OnDestroy();
         }
 
         #endregion
@@ -492,15 +476,12 @@ namespace ReactNative.UIManager
         {
             var batchId = _batchId++;
 
-            Context.RunOnLayoutQueueThread(() =>
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "onBatchCompleteUI")
+                .With("BatchId", batchId)
+                .Start())
             {
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "onBatchCompleteUI")
-                    .With("BatchId", batchId)
-                    .Start())
-                {
-                    _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
-                }
-            });
+                _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
+            }
         }
 
         #endregion

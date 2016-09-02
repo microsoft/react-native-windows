@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Windows.UI.Xaml.Media.Media3D;
+using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -82,7 +83,7 @@ namespace ReactNative.UIManager
                         break;
                     default:
                         throw new InvalidOperationException(
-                            $"Unsupported transform type: '{transformType}'");
+                            Invariant($"Unsupported transform type: '{transformType}'"));
                 }
 
                 MatrixMathHelper.MultiplyInto(ref result, helperMatrix);

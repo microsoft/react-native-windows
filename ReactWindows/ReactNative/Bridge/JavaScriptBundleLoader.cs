@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -91,13 +92,16 @@ namespace ReactNative.Bridge
                 }
                 catch (Exception ex)
                 {
-                    var exceptionMessage = $"File read exception for asset '{SourceUrl}'.";
+                    var exceptionMessage = Invariant($"File read exception for asset '{SourceUrl}'.");
                     throw new InvalidOperationException(exceptionMessage, ex);
                 }
             }
 
             public override void LoadScript(IReactBridge bridge)
             {
+                if (bridge == null)
+                    throw new ArgumentNullException(nameof(bridge));
+
                 if (_script == null)
                 {
                     throw new InvalidOperationException("Bundle loader has not yet been initialized.");
@@ -130,13 +134,16 @@ namespace ReactNative.Bridge
                 }
                 catch (Exception ex)
                 {
-                    var exceptionMessage = $"File read exception for asset '{SourceUrl}'.";
+                    var exceptionMessage = Invariant($"File read exception for asset '{SourceUrl}'.");
                     throw new InvalidOperationException(exceptionMessage, ex);
                 }
             }
 
             public override void LoadScript(IReactBridge executor)
             {
+                if (executor == null)
+                    throw new ArgumentNullException(nameof(executor));
+
                 executor.RunScript(_script, SourceUrl);
             }
         }
@@ -163,6 +170,9 @@ namespace ReactNative.Bridge
 
             public override void LoadScript(IReactBridge executor)
             {
+                if (executor == null)
+                    throw new ArgumentNullException(nameof(executor));
+
                 executor.RunScript(_proxySourceUrl, SourceUrl);
             }
         }

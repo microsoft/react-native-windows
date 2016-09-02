@@ -5,9 +5,10 @@ using ReactNative.Common;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -27,8 +28,6 @@ namespace ReactNative.Bridge
 
         private bool _initialized;
 
-        private int _pendingJsCalls;
-
         private ReactInstance(
             ReactQueueConfigurationSpec reactQueueConfigurationSpec,
             Func<IJavaScriptExecutor> jsExecutorFactory,
@@ -47,10 +46,6 @@ namespace ReactNative.Bridge
                 reactQueueConfigurationSpec,
                 HandleException);
         }
-
-        public event EventHandler<BridgeBusyEventArgs> BridgeBusy;
-
-        public event EventHandler<BridgeIdleEventArgs> BridgeIdle;
 
         public bool IsDisposed
         {
@@ -191,16 +186,12 @@ namespace ReactNative.Bridge
             }).Wait();
 
             QueueConfiguration.Dispose();
-
-            if (Interlocked.Exchange(ref _pendingJsCalls, 0) != 0)
-            {
-                OnBridgeIdle();
-            }
         }
 
         private string BuildModulesConfig()
         {
-            using (var stringWriter = new StringWriter())
+            var stringWriter = new StringWriter(CultureInfo.InvariantCulture);
+            try
             {
                 using (var writer = new JsonTextWriter(stringWriter))
                 {
@@ -212,46 +203,19 @@ namespace ReactNative.Bridge
 
                 return stringWriter.ToString();
             }
+            finally
+            {
+                if (stringWriter != null)
+                {
+                    stringWriter.Dispose();
+                }
+            }
         }
 
         private void HandleException(Exception ex)
         {
             _nativeModuleCallExceptionHandler(ex);
             QueueConfiguration.DispatcherQueueThread.RunOnQueue(Dispose);
-        }
-
-        private void IncrementPendingJsCalls()
-        {
-            if (Interlocked.Increment(ref _pendingJsCalls) == 1)
-            {
-                OnBridgeBusy();
-            }
-        }
-
-        private void DecrementPendingJsCalls()
-        {
-            if (Interlocked.Decrement(ref _pendingJsCalls) == 0)
-            {
-                OnBridgeIdle();
-            }
-        }
-
-        private void OnBridgeIdle()
-        {
-            var bridgeIdle = BridgeIdle;
-            if (bridgeIdle != null)
-            {
-                bridgeIdle(this, new BridgeIdleEventArgs());
-            }
-        }
-
-        private void OnBridgeBusy()
-        {
-            var bridgeBusy = BridgeBusy;
-            if (bridgeBusy != null)
-            {
-                bridgeBusy(this, new BridgeBusyEventArgs());
-            }
         }
 
         public sealed class Builder
@@ -331,7 +295,7 @@ namespace ReactNative.Bridge
             private void AssertNotNull(object value, string name)
             {
                 if (value == null)
-                    throw new InvalidOperationException($"'{name}' has not been set.");
+                    throw new InvalidOperationException(Invariant($"'{name}' has not been set."));
             }
         }
 
@@ -370,8 +334,6 @@ namespace ReactNative.Bridge
                         _parent._registry.OnBatchComplete();
                     }
                 }
-
-                _parent.DecrementPendingJsCalls();
             }
         }
     }

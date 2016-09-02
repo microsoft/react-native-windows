@@ -15,14 +15,23 @@ using Windows.UI.Xaml.Media;
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// This extension of <see cref="LayoutShadowNode"/> is responsible for 
+    /// This extension of <see cref="LayoutShadowNode"/> is responsible for
     /// measuring the layout for Native <see cref="TextBox"/>.
     /// </summary>
     public class ReactTextInputShadowNode : LayoutShadowNode
     {
         private const int Unset = -1;
 
+        private static readonly float[] s_defaultPaddings = new[]
+        {
+            10f,
+            3f,
+            6f,
+            5f,
+        };
+
         private float[] _computedPadding;
+        private bool[] _isUserPadding = new bool[4];
 
         private int _letterSpacing;
         private int _numberOfLines;
@@ -44,11 +53,10 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         public ReactTextInputShadowNode()
         {
-            var computedPadding = GetDefaultPaddings();
-            SetPadding(CSSSpacingType.Left, computedPadding[0]);
-            SetPadding(CSSSpacingType.Top, computedPadding[1]);
-            SetPadding(CSSSpacingType.Right, computedPadding[2]);
-            SetPadding(CSSSpacingType.Bottom, computedPadding[3]);
+            SetPadding(CSSSpacingType.Left, s_defaultPaddings[0]);
+            SetPadding(CSSSpacingType.Top, s_defaultPaddings[1]);
+            SetPadding(CSSSpacingType.Right, s_defaultPaddings[2]);
+            SetPadding(CSSSpacingType.Bottom, s_defaultPaddings[3]);
             MeasureFunction = MeasureTextInput;
         }
 
@@ -94,11 +102,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the font weight for the node.
         /// </summary>
-        /// <param name="fontWeightString">The font weight string.</param>
+        /// <param name="fontWeightValue">The font weight string.</param>
         [ReactProp(ViewProps.FontWeight)]
-        public void SetFontWeight(string fontWeightString)
+        public void SetFontWeight(string fontWeightValue)
         {
-            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightString);
+            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
                 _fontWeight.Value.Weight != fontWeight.Value.Weight))
@@ -111,11 +119,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the font style for the node.
         /// </summary>
-        /// <param name="fontStyleString">The font style string.</param>
+        /// <param name="fontStyleValue">The font style string.</param>
         [ReactProp(ViewProps.FontStyle)]
-        public void SetFontStyle(string fontStyleString)
+        public void SetFontStyle(string fontStyleValue)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
+            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleValue);
             if (_fontStyle != fontStyle)
             {
                 _fontStyle = fontStyle;
@@ -130,7 +138,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.LetterSpacing)]
         public void SetLetterSpacing(int letterSpacing)
         {
-            var spacing = 50 * letterSpacing; // TODO: Find exact multiplier (50) to match iOS
+            var spacing = 50*letterSpacing; // TODO: Find exact multiplier (50) to match iOS
 
             if (_letterSpacing != spacing)
             {
@@ -216,6 +224,31 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the padding of the shadow node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="padding">The padding value.</param>
+        protected override void SetPaddingCore(CSSSpacingType spacingType, float padding)
+        {
+            MarkUpdated();
+            switch (spacingType)
+            {
+                case CSSSpacingType.Left:
+                case CSSSpacingType.Top:
+                case CSSSpacingType.Right:
+                case CSSSpacingType.Bottom:
+                    var index = (int)spacingType;
+                    var isUndefined = CSSConstants.IsUndefined(padding);
+                    SetPadding(spacingType, isUndefined ? s_defaultPaddings[index] : padding);
+                    _isUserPadding[index] = !isUndefined;
+                    break;
+                default:
+                    base.SetPaddingCore(spacingType, padding);
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Marks a node as updated.
         /// </summary>
         protected override void MarkUpdated()
@@ -224,33 +257,40 @@ namespace ReactNative.Views.TextInput
             dirty();
         }
 
-        private float[] GetDefaultPaddings()
-        {
-            // TODO: calculate dynamically
-            return new[]
-            {
-                10f,
-                3f,
-                6f,
-                5f,
-            };
-        }
-
         private float[] GetComputedPadding()
         {
             return new float[]
             {
-                GetPadding(CSSSpacingType.Left),
-                GetPadding(CSSSpacingType.Top),
-                GetPadding(CSSSpacingType.Right),
-                GetPadding(CSSSpacingType.Bottom),
+                GetTextInputPadding(CSSSpacingType.Left),
+                GetTextInputPadding(CSSSpacingType.Top),
+                GetTextInputPadding(CSSSpacingType.Right),
+                GetTextInputPadding(CSSSpacingType.Bottom),
             };
+        }
+
+        private float GetTextInputPadding(CSSSpacingType spacingType)
+        {
+            var index = (int)spacingType;
+            var isUserPadding = _isUserPadding[index];
+            var originalPadding = GetPadding(spacingType);
+            if (!isUserPadding)
+            {
+                SetPadding(spacingType, CSSConstants.Undefined);
+            }
+
+            var result = this.GetPaddingValue(spacingType);
+            if (CSSConstants.IsUndefined(result))
+            {
+                result = originalPadding;
+            }
+
+            SetPadding(spacingType, originalPadding);
+            return result;
         }
 
         private static MeasureOutput MeasureTextInput(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             var textInputNode = (ReactTextInputShadowNode)node;
-            textInputNode.ThemedContext.AssertOnLayoutQueueThread();
             textInputNode._computedPadding = textInputNode.GetComputedPadding();
 
             var borderLeftWidth = textInputNode.GetBorder(CSSSpacingType.Left);
@@ -264,35 +304,43 @@ namespace ReactNative.Views.TextInput
                 - (CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
             var normalizedHeight = Math.Max(0, CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
-            // TODO: Measure text with DirectWrite or other API that does not
-            // require dispatcher access. Currently, we're instantiating a
-            // second CoreApplicationView (that is never activated) and using
-            // its Dispatcher thread to calculate layout.
-            var textNode = (ReactTextInputShadowNode)node;
-
-            var textBlock = new TextBlock
+            // This is not a terribly efficient way of projecting the height of
+            // the text elements. It requires that we have access to the
+            // dispatcher in order to do measurement, which, for obvious
+            // reasons, can cause perceived performance issues as it will block
+            // the UI thread from handling other work.
+            //
+            // TODO: determine another way to measure text elements.
+            var task = DispatcherHelpers.CallOnDispatcher(() =>
             {
-                TextWrapping = TextWrapping.Wrap,
-            };
+                var textNode = (ReactTextInputShadowNode)node;
 
-            var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
-            var inline = new Run { Text = normalizedText };
-            FormatInline(textNode, inline, true);
+                var textBlock = new TextBlock
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                };
 
-            textBlock.Inlines.Add(inline);
+                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
+                var inline = new Run { Text = normalizedText };
+                FormatInline(textNode, inline);
 
-            textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
+                textBlock.Inlines.Add(inline);
 
-            var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
-            var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
+                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-            var finalizedHeight = (float)textBlock.DesiredSize.Height;
-            finalizedHeight += textInputNode._computedPadding[1];
-            finalizedHeight += textInputNode._computedPadding[3];
-            finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-            finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+                var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
+                var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
 
-            return new MeasureOutput(width, finalizedHeight);
+                var finalizedHeight = (float)textBlock.DesiredSize.Height;
+                finalizedHeight += textInputNode._computedPadding[1];
+                finalizedHeight += textInputNode._computedPadding[3];
+                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+
+                return new MeasureOutput(width, finalizedHeight);
+            });
+
+            return task.Result;
         }
 
         /// <summary>
@@ -300,8 +348,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="textNode">The text shadow node.</param>
         /// <param name="inline">The inline.</param>
-        /// <param name="measureOnly">Signals if the operation is used only for measurement.</param>
-        protected static void FormatInline(ReactTextInputShadowNode textNode, Inline inline, bool measureOnly)
+        protected static void FormatInline(ReactTextInputShadowNode textNode, TextElement inline)
         {
             if (textNode._fontSize != Unset)
             {

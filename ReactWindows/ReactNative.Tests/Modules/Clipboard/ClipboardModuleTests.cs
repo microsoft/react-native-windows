@@ -11,7 +11,8 @@ namespace ReactNative.Tests.Modules.Clipboard
         [TestMethod]
         public void ClipboardModule_ArgumentChecks()
         {
-            var module = new ClipboardModule();
+            var clipboard = new MockClipboardInstance();
+            var module = new ClipboardModule(clipboard);
 
             AssertEx.Throws<ArgumentNullException>(
                 () => module.getString(null),
@@ -21,13 +22,14 @@ namespace ReactNative.Tests.Modules.Clipboard
         [TestMethod]
         public void ClipboardModule_GetString_Method()
         {
-            var module = new ClipboardModule();
+            var clipboard = new MockClipboardInstance();
+            var module = new ClipboardModule(clipboard);
 
             var result = "";
             var str = "test string";
             var waitHandle = new AutoResetEvent(false);
 
-            var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); }, 
+            var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
                                           (code, message, e) => { result = message; waitHandle.Set(); });
 
             module.setString(str);
@@ -40,7 +42,9 @@ namespace ReactNative.Tests.Modules.Clipboard
         [TestMethod]
         public void ClipboardModule_SetString_Null_Method()
         {
-            var module = new ClipboardModule();
+            var clipboard = new MockClipboardInstance();
+            var module = new ClipboardModule(clipboard);
+
             var result = "";
             var waitHandle = new AutoResetEvent(false);
 

@@ -32,6 +32,7 @@ namespace ReactNative
             _uiImplementationProvider = uiImplementationProvider;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller manages scope of returned list of disposables.")]
         public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
         {
             var uiManagerModule = default(INativeModule);

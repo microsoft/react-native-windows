@@ -79,7 +79,7 @@ namespace ReactNative.Views.Picker
                 {
                     var item = new ComboBoxItem();
                     item.Content = label;
-                    var color = itemData.GetValue("color");
+                    var color = itemData.GetValue("color", StringComparison.Ordinal);
                     if (color != null)
                     {
                         var rgb = color.Value<uint>();

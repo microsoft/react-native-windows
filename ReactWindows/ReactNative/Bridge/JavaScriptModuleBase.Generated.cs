@@ -22,6 +22,7 @@ namespace ReactNative.Bridge
         /// executed. This is to overcome the absense of a performant "proxy"
         /// implementation in the .NET framework.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "CallerMemberName must be used with a default argument.")]
         protected void Invoke([CallerMemberName]string caller = null)
         {
             Invoke(default(object[]), caller);
@@ -43,6 +44,7 @@ namespace ReactNative.Bridge
         /// executed. This is to overcome the absense of a performant "proxy"
         /// implementation in the .NET framework.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "CallerMemberName must be used with a default argument.")]
         protected void Invoke(object arg0, [CallerMemberName]string caller = null)
         {
             Invoke(new[] { arg0 }, caller);
@@ -65,6 +67,7 @@ namespace ReactNative.Bridge
         /// executed. This is to overcome the absense of a performant "proxy"
         /// implementation in the .NET framework.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "CallerMemberName must be used with a default argument.")]
         protected void Invoke(object arg0, object arg1, [CallerMemberName]string caller = null)
         {
             Invoke(new[] { arg0, arg1 }, caller);
@@ -88,6 +91,7 @@ namespace ReactNative.Bridge
         /// executed. This is to overcome the absense of a performant "proxy"
         /// implementation in the .NET framework.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "CallerMemberName must be used with a default argument.")]
         protected void Invoke(object arg0, object arg1, object arg2, [CallerMemberName]string caller = null)
         {
             Invoke(new[] { arg0, arg1, arg2 }, caller);
@@ -112,6 +116,7 @@ namespace ReactNative.Bridge
         /// executed. This is to overcome the absense of a performant "proxy"
         /// implementation in the .NET framework.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "CallerMemberName must be used with a default argument.")]
         protected void Invoke(object arg0, object arg1, object arg2, object arg3, [CallerMemberName]string caller = null)
         {
             Invoke(new[] { arg0, arg1, arg2, arg3 }, caller);

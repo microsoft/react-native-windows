@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "NativeJavaScriptExecutor.h"
 
+const wchar_t* BATCH_BRIDGE = L"__fbBatchedBridge";
+
 using namespace ChakraBridge;
 
 int NativeJavaScriptExecutor::InitializeHost()
@@ -45,47 +47,20 @@ int NativeJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
 {
     JsValueRef result;
     IfFailRet(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
-
     return JsNoError;
 }
 
-int NativeJavaScriptExecutor::RunScriptFromFile(String^ sourceFilePath, String^ sourceUri)
+int NativeJavaScriptExecutor::RunSerializedScript(String^ source, String^ serialized, String^ sourceUri)
 {
     JsValueRef result;
-    IfFailRet(this->host.RunScriptFromFile(sourceFilePath->Data(), sourceUri->Data(), &result));
-
-    return JsNoError;
-}
-
-int NativeJavaScriptExecutor::SerializeScript(String^ source, String^ destination) {
-	return this->host.SerializeScript(source->Data(), destination->Data());
-}
-
-int NativeJavaScriptExecutor::SerializeScriptFromFile(String^ file, String^ destination)
-{
-	return this->host.SerializeScriptFromFile(file->Data(), destination->Data());
-}
-
-int NativeJavaScriptExecutor::RunSerializedScript(const Array<byte>^ buffer, String^ sourceFilePath, String^ sourceUri)
-{
-	JsValueRef result;
-	IfFailRet(this->host.RunSerailizedScript(buffer->Data, sourceFilePath->Data(), sourceUri->Data(), &result));
-
-    return JsNoError;
-}
-
-int NativeJavaScriptExecutor::RunSerializedScriptFromFile(String^ serializedPath, String^ sourceFilePath, String^ sourceUri)
-{
-	JsValueRef result;
-	IfFailRet(this->host.RunSerializedScriptFromFile(serializedPath->Data(), sourceFilePath->Data(), sourceUri->Data(), &result));
-
+    IfFailRet(this->host.RunSerializedScript(source->Data(), serialized->Data(), sourceUri->Data(), &result));
     return JsNoError;
 }
 
 ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
 {
     JsPropertyIdRef fbBridgeId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
+    IfFailRetNullPtr(JsGetPropertyIdFromName(BATCH_BRIDGE, &fbBridgeId));
 
     JsValueRef fbBridgeObj;
     IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
@@ -124,7 +99,7 @@ ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(S
 ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args)
 {
     JsPropertyIdRef fbBridgeId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
+    IfFailRetNullPtr(JsGetPropertyIdFromName(BATCH_BRIDGE, &fbBridgeId));
 
     JsValueRef fbBridgeObj;
     IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
@@ -162,7 +137,7 @@ ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue
 ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
 {
     JsPropertyIdRef fbBridgeId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(L"__fbBatchedBridge", &fbBridgeId));
+    IfFailRetNullPtr(JsGetPropertyIdFromName(BATCH_BRIDGE, &fbBridgeId));
 
     JsValueRef fbBridgeObj;
     IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));

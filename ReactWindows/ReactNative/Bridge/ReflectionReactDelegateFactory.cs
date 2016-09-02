@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -56,7 +57,7 @@ namespace ReactNative.Bridge
         private Extractor CreateExtractor(Type type, string moduleName, string methodName)
         {
             var exceptionFormat =
-                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{{0}}'.";
+                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{{0}}'.");
            
             if (type == typeof(ICallback))
             {
@@ -74,7 +75,7 @@ namespace ReactNative.Bridge
                         {
                             throw new NativeArgumentsParseException(
                                 string.Format(exceptionFormat, index),
-                                "jsArguments",
+                                "arguments",
                                 ex);
                         }
                     });
@@ -90,7 +91,7 @@ namespace ReactNative.Bridge
                         {
                             throw new NativeArgumentsParseException(
                                 string.Format(exceptionFormat, index + "' and '" + (index + 1)),
-                                "jsArguments");
+                                "arguments");
                         }
 
                         try
@@ -103,7 +104,7 @@ namespace ReactNative.Bridge
                         {
                             throw new NativeArgumentsParseException(
                                 string.Format(exceptionFormat, index + "' and '" + nextIndex),
-                                "jsArguments",
+                                "arguments",
                                 ex);
                         }
                     });
@@ -124,7 +125,7 @@ namespace ReactNative.Bridge
                         {
                             throw new NativeArgumentsParseException(
                                 string.Format(exceptionFormat, index),
-                                "jsArguments",
+                                "arguments",
                                 ex.InnerException);
                         }
                     });
@@ -151,7 +152,7 @@ namespace ReactNative.Bridge
             if (jsArguments.Count != n) 
             {
                 throw new NativeArgumentsParseException(
-                    $"Module '{moduleInstance.Name}' method '{method.Name}' got '{jsArguments.Count}' arguments, expected '{n}'.",
+                    Invariant($"Module '{moduleInstance.Name}' method '{method.Name}' got '{jsArguments.Count}' arguments, expected '{n}'."),
                     nameof(jsArguments));
             }
 

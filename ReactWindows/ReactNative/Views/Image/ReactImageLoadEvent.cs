@@ -1,5 +1,6 @@
 ﻿using ReactNative.UIManager.Events;
 using System;
+using static System.FormattableString;
 
 namespace ReactNative.Views.Image
 {
@@ -53,7 +54,7 @@ namespace ReactNative.Views.Image
                         return "topLoadStart";
                     default:
                         throw new InvalidOperationException(
-                            $"Invalid image event '{_eventType}'.");
+                            Invariant($"Invalid image event '{_eventType}'."));
                 }
             }
         }

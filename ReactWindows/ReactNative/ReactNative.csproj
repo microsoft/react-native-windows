@@ -169,6 +169,7 @@
     <Compile Include="Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
+    <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Common\WindowsPlatformHelper.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
@@ -200,8 +201,11 @@
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Modules\AppState\AppStateModule.cs" />
+    <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
+    <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
     <Compile Include="Modules\Core\JavaScriptException.cs" />
     <Compile Include="Modules\Core\JSTimersExecution.cs" />
     <Compile Include="Modules\DevSupport\SourceCodeModule.cs" />
@@ -327,6 +331,10 @@
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />
     <Compile Include="Views\Progress\ReactProgressRingShadowNode.cs" />
+    <Compile Include="Views\Slider\ReactSliderChangeEvent.cs" />
+    <Compile Include="Views\Slider\ReactSliderCompleteEvent.cs" />
+    <Compile Include="Views\Slider\ReactSliderManager.cs" />
+    <Compile Include="Views\Slider\ReactSliderShadowNode.cs" />
     <Compile Include="Views\Split\Events\SplitViewClosedEvent.cs" />
     <Compile Include="UIManager\LayoutAnimation\InterpolationType.cs" />
     <Compile Include="UIManager\UIImplementationProvider.cs" />

@@ -119,7 +119,7 @@ namespace ReactNative.DevSupport
             catch (AggregateException ex)
             when (ex.InnerExceptions.Count == 1)
             {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw ex.InnerException;
             }
             finally
             {

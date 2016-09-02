@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.Web;
 using Windows.Web.Http;
+using static System.FormattableString;
 
 namespace ReactNative.Views.Web
 {
@@ -109,48 +110,50 @@ namespace ReactNative.Views.Web
                 var uri = source.Value<string>("uri");
                 if (uri != null)
                 {
-                    var request = new HttpRequestMessage();
-                    request.RequestUri = new Uri(uri);
-
-                    var method = source.Value<string>("method");
-                    if (method != null)
+                    using (var request = new HttpRequestMessage())
                     {
-                        if (method.Equals("GET"))
+                        request.RequestUri = new Uri(uri);
+
+                        var method = source.Value<string>("method");
+                        if (method != null)
                         {
-                            request.Method = HttpMethod.Get;
-                        }
-                        else if (method.Equals("POST"))
-                        {
-                            request.Method = HttpMethod.Post;
+                            if (method.Equals("GET"))
+                            {
+                                request.Method = HttpMethod.Get;
+                            }
+                            else if (method.Equals("POST"))
+                            {
+                                request.Method = HttpMethod.Post;
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException(
+                                    Invariant($"Unsupported method '{method}' received by '{typeof(ReactWebViewManager)}'."));
+                            }
                         }
                         else
                         {
-                            throw new InvalidOperationException(
-                                $"Unsupported method '{method}' received by '{typeof(ReactWebViewManager)}'.");
+                            request.Method = HttpMethod.Get;
                         }
-                    }
-                    else
-                    {
-                        request.Method = HttpMethod.Get;
-                    }
 
-                    var headers = (JObject)source.GetValue("headers");
-                    if (headers != null)
-                    {
-                        foreach (var header in headers)
+                        var headers = (JObject)source.GetValue("headers", StringComparison.Ordinal);
+                        if (headers != null)
                         {
-                            request.Headers.Append(header.Key, header.Value.Value<string>());
+                            foreach (var header in headers)
+                            {
+                                request.Headers.Append(header.Key, header.Value.Value<string>());
+                            }
                         }
-                    }
 
-                    var body = source.Value<string>("body");
-                    if (body != null)
-                    {
-                        request.Content = new HttpStringContent(body);
-                    }
+                        var body = source.Value<string>("body");
+                        if (body != null)
+                        {
+                            request.Content = new HttpStringContent(body);
+                        }
 
-                    view.NavigateWithHttpRequestMessage(request);
-                    return;
+                        view.NavigateWithHttpRequestMessage(request);
+                        return;
+                    }
                 }
             }
             
@@ -181,7 +184,7 @@ namespace ReactNative.Views.Web
                     break;
                 default:
                     throw new InvalidOperationException(
-                        $"Unsupported command '{commandId}' received by '{typeof(ReactWebViewManager)}'.");
+                        Invariant($"Unsupported command '{commandId}' received by '{typeof(ReactWebViewManager)}'."));
             }
         }
 
@@ -247,7 +250,7 @@ namespace ReactNative.Views.Web
             }      
         }
 
-        private void OnNavigationStarting(object sender, WebViewNavigationStartingEventArgs e)
+        private static void OnNavigationStarting(object sender, WebViewNavigationStartingEventArgs e)
         {
             var webView = (WebView)sender;
 
@@ -264,7 +267,7 @@ namespace ReactNative.Views.Web
                          webView.CanGoForward));
         }
 
-        private void LoadFinished(WebView webView, string uri)
+        private static void LoadFinished(WebView webView, string uri)
         {
             webView.GetReactContext().GetNativeModule<UIManagerModule>()
                     .EventDispatcher

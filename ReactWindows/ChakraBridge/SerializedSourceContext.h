@@ -4,20 +4,23 @@
 
 struct SerializedSourceContext
 {
-    BYTE* byteCode;
-    const wchar_t* sourcePath;
+    HANDLE fileHandle;
+    HANDLE mapHandle;
+    BYTE* byteBuffer;
     wchar_t* scriptBuffer;
 
     ~SerializedSourceContext()
     {
-        if (byteCode)
+        if (fileHandle != NULL)
         {
-            delete[] byteCode;
+            UnmapViewOfFile(byteBuffer);
+            CloseHandle(mapHandle);
+            CloseHandle(fileHandle);
         }
-
-        if (scriptBuffer)
+        else
         {
-            delete[] scriptBuffer;
+            delete[] byteBuffer;
         }
+        delete[] scriptBuffer;
     }
 };

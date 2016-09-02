@@ -4,6 +4,7 @@ using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -150,7 +151,7 @@ namespace ReactNative.Bridge
                 if (methodMap.TryGetValue(method.Name, out existingMethod))
                 {
                     throw new NotSupportedException(
-                        $"React module '{GetType()}' with name '{Name}' has more than one ReactMethod with the name '{method.Name}'.");
+                        Invariant($"React module '{GetType()}' with name '{Name}' has more than one ReactMethod with the name '{method.Name}'."));
                 }
 
                 methodMap.Add(method.Name, new NativeMethod(this, method));

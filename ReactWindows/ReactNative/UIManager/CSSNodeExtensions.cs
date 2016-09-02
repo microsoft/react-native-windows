@@ -27,7 +27,7 @@ namespace ReactNative.UIManager
             return 0.0f;
         }
 
-        public static float GetPaddingSpace(this CSSNode node, CSSSpacingType spacingType)
+        public static float GetPaddingValue(this CSSNode node, CSSSpacingType spacingType)
         {
             var padding = node.GetPadding(spacingType);
             if (!CSSConstants.IsUndefined(padding))
@@ -55,13 +55,15 @@ namespace ReactNative.UIManager
                 return padding;
             }
 
-            padding = node.GetPadding(CSSSpacingType.All);
-            if (!CSSConstants.IsUndefined(padding))
-            {
-                return padding;
-            }
+            return node.GetPadding(CSSSpacingType.All);
+        }
 
-            return 0.0f;
+        public static float GetPaddingSpace(this CSSNode node, CSSSpacingType spacingType)
+        {
+            var padding = node.GetPaddingValue(spacingType);
+            return CSSConstants.IsUndefined(padding)
+                ? 0.0f
+                : padding;
         }
 
         public static float GetTopBorderWidth(this CSSNode node)

@@ -6,16 +6,15 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Text;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// This extension of <see cref="LayoutShadowNode"/> is responsible for 
+    /// This extension of <see cref="LayoutShadowNode"/> is responsible for
     /// measuring the layout for Native <see cref="PasswordBox"/>.
     /// </summary>
     public class ReactPasswordBoxShadowNode : LayoutShadowNode
@@ -90,11 +89,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the font weight for the node.
         /// </summary>
-        /// <param name="fontWeightString">The font weight string.</param>
+        /// <param name="fontWeightValue">The font weight string.</param>
         [ReactProp(ViewProps.FontWeight)]
-        public void SetFontWeight(string fontWeightString)
+        public void SetFontWeight(string fontWeightValue)
         {
-            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightString);
+            var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
                 _fontWeight.Value.Weight != fontWeight.Value.Weight))
@@ -107,11 +106,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Sets the font style for the node.
         /// </summary>
-        /// <param name="fontStyleString">The font style string.</param>
+        /// <param name="fontStyleSValue">The font style string.</param>
         [ReactProp(ViewProps.FontStyle)]
-        public void SetFontStyle(string fontStyleString)
+        public void SetFontStyle(string fontStyleSValue)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
+            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleSValue);
             if (_fontStyle != fontStyle)
             {
                 _fontStyle = fontStyle;
@@ -126,7 +125,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.LetterSpacing)]
         public void SetLetterSpacing(int letterSpacing)
         {
-            var spacing = 50 * letterSpacing; // TODO: Find exact multiplier (50) to match iOS
+            var spacing = 50*letterSpacing; // TODO: Find exact multiplier (50) to match iOS
 
             if (_letterSpacing != spacing)
             {
@@ -212,27 +211,39 @@ namespace ReactNative.Views.TextInput
                 - (CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
             var normalizedHeight = Math.Max(0, CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
-            var textNode = (ReactPasswordBoxShadowNode)node;
+            // This is not a terribly efficient way of projecting the height of
+            // the text elements. It requires that we have access to the
+            // dispatcher in order to do measurement, which, for obvious
+            // reasons, can cause perceived performance issues as it will block
+            // the UI thread from handling other work.
+            //
+            // TODO: determine another way to measure text elements.
+            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            {
+                var textNode = (ReactPasswordBoxShadowNode)node;
 
-            var passwordBox = new PasswordBox();
+                var passwordBox = new PasswordBox();
 
-            var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
-            FormatPasswordBox(textNode, passwordBox, true);
+                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
+                FormatPasswordBox(textNode, passwordBox, true);
 
-            passwordBox.Password = normalizedText;
+                passwordBox.Password = normalizedText;
 
-            passwordBox.Measure(new Size(normalizedWidth, normalizedHeight));
+                passwordBox.Measure(new Size(normalizedWidth, normalizedHeight));
 
-            var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
-            var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
+                var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
+                var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
 
-            var finalizedHeight = (float)passwordBox.DesiredSize.Height;
-            finalizedHeight += textInputNode._computedPadding[1];
-            finalizedHeight += textInputNode._computedPadding[3];
-            finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-            finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+                var finalizedHeight = (float)passwordBox.DesiredSize.Height;
+                finalizedHeight += textInputNode._computedPadding[1];
+                finalizedHeight += textInputNode._computedPadding[3];
+                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
 
-            return new MeasureOutput(width, finalizedHeight);
+                return new MeasureOutput(width, finalizedHeight);
+            });
+
+            return task.Result;
         }
 
         /// <summary>
@@ -241,7 +252,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="textNode">The text shadow node.</param>
         /// <param name="box">The password box.</param>
         /// <param name="measureOnly">Signals if the operation is used only for measurement.</param>
-        protected static void FormatPasswordBox(ReactPasswordBoxShadowNode textNode, PasswordBox box, bool measureOnly)
+        protected static void FormatPasswordBox(ReactPasswordBoxShadowNode textNode, Control box, bool measureOnly)
         {
             if (textNode._fontSize != Unset)
             {

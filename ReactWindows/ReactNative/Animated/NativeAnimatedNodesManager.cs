@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Reflection;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using static System.FormattableString;
 
 namespace ReactNative.Animated
 {
@@ -52,7 +52,7 @@ namespace ReactNative.Animated
             if (_animatedNodes.ContainsKey(tag))
             {
                 throw new InvalidOperationException(
-                    $"Animated node with tag '{tag}' already exists.");
+                    Invariant($"Animated node with tag '{tag}' already exists."));
             }
 
             var type = config.Value<string>("type");
@@ -81,7 +81,7 @@ namespace ReactNative.Animated
                     node = new TransformAnimatedNode(tag, config, this);
                     break;
                 default:
-                    throw new InvalidOperationException($"Unsupported node type: '{type}'");
+                    throw new InvalidOperationException(Invariant($"Unsupported node type: '{type}'"));
             }
 
             _animatedNodes.Add(tag, node);
@@ -98,14 +98,14 @@ namespace ReactNative.Animated
             if (!_animatedNodes.TryGetValue(tag, out node))
             {
                 throw new InvalidOperationException(
-                    $"Animated node with tag '{tag}' does not exist.");
+                    Invariant($"Animated node with tag '{tag}' does not exist."));
             }
 
             var valueNode = node as ValueAnimatedNode;
             if (valueNode == null)
             {
                 throw new InvalidOperationException(
-                    $"Animated node with tag '{tag}' is not a value node.");
+                    Invariant($"Animated node with tag '{tag}' is not a value node."));
             }
 
             valueNode.SetValueListener(callback);
@@ -119,7 +119,7 @@ namespace ReactNative.Animated
             if (valueNode == null)
             {
                 throw new InvalidOperationException(
-                    $"Animated node with tag '{tag}' is not a value node.");
+                    Invariant($"Animated node with tag '{tag}' is not a value node."));
             }
 
             valueNode.SetValueListener(null);
@@ -133,7 +133,7 @@ namespace ReactNative.Animated
             if (valueNode == null)
             {
                 throw new InvalidOperationException(
-                    $"Animated node with tag '{tag}' is not a value node.");
+                    Invariant($"Animated node with tag '{tag}' is not a value node."));
             }
 
             valueNode.Value = value;
@@ -148,7 +148,7 @@ namespace ReactNative.Animated
             if (valueNode == null)
             {
                 throw new InvalidOperationException(
-                    $"Animated node with tag '{animatedNodeTag}' is not a value node.");
+                    Invariant($"Animated node with tag '{animatedNodeTag}' is not a value node."));
             }
 
             var type = animationConfig.Value<string>("type");
@@ -165,7 +165,7 @@ namespace ReactNative.Animated
                     animation = new SpringAnimationDriver(animationId, valueNode, endCallback, animationConfig);
                     break;
                 default:
-                    throw new InvalidOperationException($"Unsupported animation type: '{type}'");
+                    throw new InvalidOperationException(Invariant($"Unsupported animation type: '{type}'"));
             }
 
             _activeAnimations.Add(animation);
@@ -228,7 +228,7 @@ namespace ReactNative.Animated
             if (propsAnimatedNode.ConnectedViewTag != -1)
             {
                 throw new InvalidOperationException(
-                    $"Animated node '{animatedNodeTag}' is already attached to a view.");
+                    Invariant($"Animated node '{animatedNodeTag}' is already attached to a view."));
             }
 
             propsAnimatedNode.ConnectedViewTag = viewTag;
@@ -405,7 +405,7 @@ namespace ReactNative.Animated
             if (activeNodesCount != updatedNodesCount)
             {
                 throw new InvalidOperationException(
-                    $"Looks like animated nodes graph has cycles, there are {activeNodesCount} but visited only {updatedNodesCount}.");
+                    Invariant($"Looks like animated nodes graph has cycles, there are {activeNodesCount} but visited only {updatedNodesCount}."));
             }
 
             // Clean _updatedNodes queue
@@ -450,7 +450,7 @@ namespace ReactNative.Animated
             if (!_animatedNodes.TryGetValue(tag, out node))
             {
                 throw new InvalidOperationException(
-                    $"Animated node with tag '{tag}' does not exist.");
+                    Invariant($"Animated node with tag '{tag}' does not exist."));
             }
 
             return node;

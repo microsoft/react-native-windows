@@ -8,12 +8,28 @@ namespace ReactNative.Bridge
     public class NativeArgumentsParseException : ArgumentException
     {
         /// <summary>
-        /// Instantiates the <see cref="NativeArgumentsParseException"/>.
+        /// Instantiates the <see cref="NativeArgumentsParseException"/>. 
+        /// </summary>
+        public NativeArgumentsParseException()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="NativeArgumentsParseException"/>. 
         /// </summary>
         /// <param name="message">The exception message.</param>
-        /// <param name="paramName">The parameter name.</param>
-        public NativeArgumentsParseException(string message, string paramName)
-            : base(message, paramName)
+        public NativeArgumentsParseException(string message)
+            : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="NativeArgumentsParseException"/>. 
+        /// </summary>
+        /// <param name="message">The exception message.</param>
+        /// <param name="innerException">The inner exception.</param>
+        public NativeArgumentsParseException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
 
@@ -21,10 +37,20 @@ namespace ReactNative.Bridge
         /// Instantiates the <see cref="NativeArgumentsParseException"/>.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        /// <param name="paramName">The parameter name.</param>
+        /// <param name="parameterName">The parameter name.</param>
+        public NativeArgumentsParseException(string message, string parameterName)
+            : base(message, parameterName)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="NativeArgumentsParseException"/>.
+        /// </summary>
+        /// <param name="message">The exception message.</param>
+        /// <param name="parameterName">The parameter name.</param>
         /// <param name="innerException">The inner exception.</param>
-        public NativeArgumentsParseException(string message, string paramName, Exception innerException)
-            : base(message, paramName, innerException)
+        public NativeArgumentsParseException(string message, string parameterName, Exception innerException)
+            : base(message, parameterName, innerException)
         {
         }
     }

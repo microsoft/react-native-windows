@@ -32,18 +32,21 @@ namespace ReactNative.DevSupport
         /// Get the default shake accelerometer.
         /// </summary>
         /// <returns>The default shake accelerometer.</returns>
-        public static ShakeAccelerometer GetDefault()
+        public static ShakeAccelerometer Instance
         {
-            if (s_instance == null)
+            get
             {
-                var accelerometer = Accelerometer.GetDefault();
-                if (accelerometer != null)
+                if (s_instance == null)
                 {
-                    s_instance = new ShakeAccelerometer(accelerometer);
+                    var accelerometer = Accelerometer.GetDefault();
+                    if (accelerometer != null)
+                    {
+                        s_instance = new ShakeAccelerometer(accelerometer);
+                    }
                 }
-            }
 
-            return s_instance;
+                return s_instance;
+            }
         }
 
         private void OnReadingChanged(Accelerometer sender, AccelerometerReadingChangedEventArgs args)

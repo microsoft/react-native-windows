@@ -235,18 +235,18 @@ namespace ReactNative.UIManager
         /// Enqueues an operation to manage the children of a view.
         /// </summary>
         /// <param name="tag">The view to manage.</param>
-        /// <param name="indicesToRemove">The indices to remove.</param>
+        /// <param name="indexesToRemove">The indices to remove.</param>
         /// <param name="viewsToAdd">The views to add.</param>
         /// <param name="tagsToDelete">The tags to delete.</param>
         public void EnqueueManageChildren(
             int tag,
-            int[] indicesToRemove,
+            int[] indexesToRemove,
             ViewAtIndex[] viewsToAdd,
             int[] tagsToDelete)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.ManageChildren(
                 tag,
-                indicesToRemove,
+                indexesToRemove,
                 viewsToAdd,
                 tagsToDelete));
         }
@@ -276,7 +276,7 @@ namespace ReactNative.UIManager
                 {
                     _nativeViewHierarchyManager.Measure(reactTag, _measureBuffer);
                 }
-                catch (Exception)
+                catch
                 {
                     callback.Invoke();
                     return;
@@ -303,7 +303,7 @@ namespace ReactNative.UIManager
                 {
                     _nativeViewHierarchyManager.MeasureInWindow(reactTag, _measureBuffer);
                 }
-                catch (Exception)
+                catch
                 {
                     callback.Invoke();
                     return;

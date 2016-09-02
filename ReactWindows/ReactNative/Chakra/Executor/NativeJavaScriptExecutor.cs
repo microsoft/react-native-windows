@@ -3,8 +3,8 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace ReactNative.Chakra.Executor
 {
@@ -19,20 +19,20 @@ namespace ReactNative.Chakra.Executor
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
-        /// <param name="useSerialization">true to use serialization, else false.</param>
-        public NativeJavaScriptExecutor(bool useSerialization)
+        public NativeJavaScriptExecutor() : this(false)
         {
-            _useSerialization = useSerialization;
-            _executor = new ChakraBridge.NativeJavaScriptExecutor();
-            Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
+
         }
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
-        public NativeJavaScriptExecutor() : this(false)
+        /// <param name="useSerialization">true to use serialization, else false.</param>
+        public NativeJavaScriptExecutor(bool useSerialization)
         {
-
+            _executor = new ChakraBridge.NativeJavaScriptExecutor();
+            Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
+            _useSerialization = useSerialization;
         }
 
         /// <summary>
@@ -92,45 +92,6 @@ namespace ReactNative.Chakra.Executor
             return JToken.Parse(result.Result);
         }
 
-        private void RunNormalScript(string script, string sourceUrl)
-        {
-            try
-            {
-                Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScriptFromFile(script, sourceUrl));
-            }
-            catch (JavaScriptScriptException ex)
-            {
-                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
-                var message = jsonError.Value<string>("message");
-                var stackTrace = jsonError.Value<string>("stack");
-                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
-            }
-        }
-
-        private void RunSerializedScript(string script, string sourceUrl)
-        {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var binFile = "ReactNativeSerializedBundle.bin";
-            var binPath = Path.Combine(localFolder.Path, binFile);
-
-            try
-            {
-                if(!EnsureSerializedScriptAsync(script, binFile).Result)
-                {
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScriptFromFile(script, binPath));
-                }
-
-                Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScriptFromFile(binPath, script, sourceUrl));
-            }
-            catch (JavaScriptScriptException ex)
-            {
-                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
-                var message = jsonError.Value<string>("message");
-                var stackTrace = jsonError.Value<string>("stack");
-                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
-            }
-        }
-
         /// <summary>
         /// Runs the given script.
         /// </summary>
@@ -143,30 +104,25 @@ namespace ReactNative.Chakra.Executor
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
-            if (_useSerialization)
+            try
             {
-                RunSerializedScript(script, sourceUrl);
+                if(_useSerialization)
+                {
+                    var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(script, binPath, sourceUrl));
+                }
+                else
+                {
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(script, sourceUrl));
+                }
             }
-            else
+            catch (JavaScriptScriptException ex)
             {
-                RunNormalScript(script, sourceUrl);
+                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
+                var message = jsonError.Value<string>("message");
+                var stackTrace = jsonError.Value<string>("stack");
+                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
             }
-        }
-
-        private static async Task<bool> EnsureSerializedScriptAsync(string scriptFile, string binFile)
-        {
-            var localFolder = ApplicationData.Current.LocalFolder;
-
-            var scriptItem = await StorageFile.GetFileFromPathAsync(scriptFile);
-            var scriptItemProps = await scriptItem.GetBasicPropertiesAsync();
-            var item = await localFolder.TryGetItemAsync(binFile);
-            if (item != null)
-            {
-                var props = await item.GetBasicPropertiesAsync();
-                return props.DateModified > scriptItemProps.DateModified;
-            }
-
-            return false;
         }
 
         /// <summary>

@@ -57,7 +57,7 @@ namespace ReactNative.UIManager
         public const string FontFamily = "fontFamily";
         public const string LetterSpacing = "letterSpacing";
         public const string LineHeight = "lineHeight";
-        public const string NeedsOffscreenAlphaCompositing = "needsOffscreenAlphaCompositing";
+        public const string NeedsOffScreenAlphaCompositing = "needsOffscreenAlphaCompositing";
         public const string NumberOfLines = "numberOfLines";
         public const string Value = "value";
         public const string ResizeMode = "resizeMode";
@@ -82,6 +82,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Ordered list of margin spacing types.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "IReadOnlyList is immutable.")]
         public static readonly IReadOnlyList<CSSSpacingType> PaddingMarginSpacingTypes = 
             new List<CSSSpacingType>
             {
@@ -97,6 +98,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Ordered list of border spacing types.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "IReadOnlyList is immutable.")]
         public static readonly IReadOnlyList<CSSSpacingType> BorderSpacingTypes =
             new List<CSSSpacingType>
             {

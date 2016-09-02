@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+using static System.FormattableString;
 
 namespace ReactNative.Modules.WebSocket
 {
@@ -72,7 +73,7 @@ namespace ReactNative.Modules.WebSocket
             {
                 Tracer.Write(
                     ReactConstants.Tag,
-                    $"Cannot close WebSocket. Unknown WebSocket id {id}.");
+                    Invariant($"Cannot close WebSocket. Unknown WebSocket id {id}."));
 
                 return;
             }
@@ -89,7 +90,7 @@ namespace ReactNative.Modules.WebSocket
             {
                 Tracer.Error(
                     ReactConstants.Tag,
-                    $"Could not close WebSocket connection for id '{id}'.",
+                    Invariant($"Could not close WebSocket connection for id '{id}'."),
                     ex);
             }
         }
@@ -101,7 +102,7 @@ namespace ReactNative.Modules.WebSocket
             if (!_dataWriters.TryGetValue(id, out dataWriter))
             {
                 throw new InvalidOperationException(
-                    $"Cannot send a message. Unknown WebSocket id '{id}'.");
+                    Invariant($"Cannot send a message. Unknown WebSocket id '{id}'."));
             }
 
             SendMessageInBackground(id, dataWriter, message);

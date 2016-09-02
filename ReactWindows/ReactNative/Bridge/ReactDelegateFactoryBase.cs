@@ -24,10 +24,10 @@ namespace ReactNative
         /// <summary>
         /// Create an invocation delegate from the given method.
         /// </summary>
-        /// <param name="module">The native module instance.</param>
+        /// <param name="nativeModule">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public abstract Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method);
+        public abstract Action<INativeModule, IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
 
         /// <summary>
         /// Extracts the native method type from the method.
@@ -168,6 +168,9 @@ namespace ReactNative
 
             public void Reject(Exception e)
             {
+                if (e == null)
+                    throw new ArgumentNullException(nameof(e));
+
                 Reject(DefaultError, e.Message, e);
             }
 

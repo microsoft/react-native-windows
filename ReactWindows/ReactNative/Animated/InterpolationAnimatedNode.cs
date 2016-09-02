@@ -13,8 +13,8 @@ namespace ReactNative.Animated
         public InterpolationAnimatedNode(int tag, JObject config)
             : base(tag)
         {
-            _inputRange = config.GetValue("inputRange").ToObject<double[]>();
-            _outputRange = config.GetValue("outputRange").ToObject<double[]>();
+            _inputRange = config.GetValue("inputRange", StringComparison.Ordinal).ToObject<double[]>();
+            _outputRange = config.GetValue("outputRange", StringComparison.Ordinal).ToObject<double[]>();
         }
 
         protected override void OnAttachedToNode(AnimatedNode parent)

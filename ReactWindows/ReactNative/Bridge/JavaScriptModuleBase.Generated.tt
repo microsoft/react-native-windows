@@ -55,6 +55,7 @@ for (var i = 0; i <= maxArgs; ++i)
         /// executed. This is to overcome the absense of a performant "proxy"
         /// implementation in the .NET framework.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "CallerMemberName must be used with a default argument.")]
         protected void Invoke(<#=string.Join("", paramArgs.Select(x => x + ", "))#>[CallerMemberName]string caller = null)
         {
 <#

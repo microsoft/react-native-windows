@@ -112,7 +112,7 @@ namespace ReactNative.UIManager
             AutomationProperties.SetLiveSetting(view, liveSetting);
         }
 
-        private void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
+        private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
         {
             var projection = EnsureProjection(view);
             var transformMatrix = TransformHelper.ProcessTransform(transforms);
@@ -134,7 +134,7 @@ namespace ReactNative.UIManager
             projection.ProjectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
         }
 
-        private void ResetProjectionMatrix(TFrameworkElement view)
+        private static void ResetProjectionMatrix(TFrameworkElement view)
         {
             var projection = view.Projection;
             var matrixProjection = projection as Matrix3DProjection;

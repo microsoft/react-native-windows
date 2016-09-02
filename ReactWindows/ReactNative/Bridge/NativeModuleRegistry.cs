@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -99,9 +100,9 @@ namespace ReactNative.Bridge
             JArray parameters)
         {
             if (moduleId < 0)
-                throw new ArgumentOutOfRangeException("Invalid module ID: " + moduleId, nameof(moduleId));
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Invalid module ID: " + moduleId);
             if (_moduleTable.Count < moduleId)
-                throw new ArgumentOutOfRangeException("Call to unknown module: " + moduleId, nameof(moduleId));
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
 
             _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
         }
@@ -235,7 +236,7 @@ namespace ReactNative.Bridge
                     throw new ArgumentNullException(nameof(module));
                 if (module.Name == null)
                     throw new ArgumentException(
-                        $"Native module '{module.GetType()}' cannot have a null `Name`.",
+                        Invariant($"Native module '{module.GetType()}' cannot have a null `Name`."),
                         nameof(module));
 
                 var existing = default(INativeModule);

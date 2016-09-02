@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.FormattableString;
 
 namespace ReactNative.Views.Scroll
 {
@@ -15,7 +16,7 @@ namespace ReactNative.Views.Scroll
                 case ScrollEventType.Scroll:
                     return "topScroll";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), $"Unknown scroll event type '{type}'.");
+                    throw new ArgumentOutOfRangeException(nameof(type), Invariant($"Unknown scroll event type '{type}'."));
             }
         }
     }

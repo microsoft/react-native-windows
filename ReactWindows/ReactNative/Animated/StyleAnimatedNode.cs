@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using static System.FormattableString;
 
 namespace ReactNative.Animated
 {
@@ -14,7 +15,7 @@ namespace ReactNative.Animated
         {
             _manager = manager;
 
-            var style = (JObject)config.GetValue("style");
+            var style = (JObject)config.GetValue("style", StringComparison.Ordinal);
             _propMapping = new Dictionary<string, int>(style.Count);
             foreach (var entry in style)
             {
@@ -40,7 +41,7 @@ namespace ReactNative.Animated
                 else
                 {
                     throw new InvalidOperationException(
-                        $"Unsupported type of node used in property node: '{node.GetType()}'");
+                        Invariant($"Unsupported type of node used in property node: '{node.GetType()}'"));
                 }
             }
         }
