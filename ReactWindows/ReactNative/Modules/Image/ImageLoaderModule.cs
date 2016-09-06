@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
@@ -69,7 +70,7 @@ namespace ReactNative.Modules.Image
                             { "height", reference.Image.PixelHeight },
                         }));
                 }
-                catch (ImageFailedException ex)
+                catch (Exception ex)
                 {
                     promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
