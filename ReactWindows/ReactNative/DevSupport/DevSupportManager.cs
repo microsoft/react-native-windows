@@ -434,6 +434,7 @@ namespace ReactNative.DevSupport
 
         private async Task ReloadJavaScriptFromServerAsync(Action dismissProgress, CancellationToken token)
         {
+            var downloaded = false;
             var localFolder = ApplicationData.Current.LocalFolder;
             var localFile = await localFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.ReplaceExisting);
             try
@@ -445,6 +446,7 @@ namespace ReactNative.DevSupport
 
                 dismissProgress();
                 _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
+                downloaded = true;
             }
             catch (DebugServerException ex)
             {
@@ -458,6 +460,13 @@ namespace ReactNative.DevSupport
                     "Unable to download JS bundle. Did you forget to " +
                     "start the development server or connect your device?",
                     ex);
+            }
+            finally
+            {
+                if (!downloaded)
+                {
+                    await localFile.DeleteAsync();
+                }
             }
         }
 
