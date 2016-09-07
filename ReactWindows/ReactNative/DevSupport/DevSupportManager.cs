@@ -434,19 +434,20 @@ namespace ReactNative.DevSupport
 
         private async Task ReloadJavaScriptFromServerAsync(Action dismissProgress, CancellationToken token)
         {
-            var downloaded = false;
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var localFile = await localFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.ReplaceExisting);
+            var moved = false;
+            var temporaryFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
             try
             {
-                using (var stream = await localFile.OpenStreamForWriteAsync())
+                using (var stream = await temporaryFile.OpenStreamForWriteAsync())
                 {
                     await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
                 }
 
+                await temporaryFile.MoveAsync(ApplicationData.Current.LocalFolder, JSBundleFileName, NameCollisionOption.ReplaceExisting);
+                moved = true;
+
                 dismissProgress();
                 _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
-                downloaded = true;
             }
             catch (DebugServerException ex)
             {
@@ -463,9 +464,9 @@ namespace ReactNative.DevSupport
             }
             finally
             {
-                if (!downloaded)
+                if (!moved)
                 {
-                    await localFile.DeleteAsync();
+                    await temporaryFile.DeleteAsync();
                 }
             }
         }
