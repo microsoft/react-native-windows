@@ -455,14 +455,17 @@ namespace ReactNative.DevSupport
 
         private async Task ReloadJavaScriptFromServerAsync(Action dismissProgress, CancellationToken token)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var localFile = await localFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.ReplaceExisting);
+            var moved = false;
+            var temporaryFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
             try
             {
-                using (var stream = await localFile.OpenStreamForWriteAsync())
+                using (var stream = await temporaryFile.OpenStreamForWriteAsync())
                 {
                     await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
                 }
+
+                await temporaryFile.MoveAsync(ApplicationData.Current.LocalFolder, JSBundleFileName, NameCollisionOption.ReplaceExisting);
+                moved = true;
 
                 dismissProgress();
                 _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
@@ -479,6 +482,13 @@ namespace ReactNative.DevSupport
                     "Unable to download JS bundle. Did you forget to " +
                     "start the development server or connect your device?",
                     ex);
+            }
+            finally
+            {
+                if (!moved)
+                {
+                    await temporaryFile.DeleteAsync();
+                }
             }
         }
 
