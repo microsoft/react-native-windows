@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using System;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -60,7 +61,7 @@ namespace ReactNative.Modules.Image
                         });
                     }
                 }
-                catch (ImageFailedException ex)
+                catch (Exception ex)
                 {
                     promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
