@@ -211,14 +211,11 @@
     <Compile Include="Modules\DevSupport\SourceCodeModule.cs" />
     <Compile Include="Modules\DevSupport\IDeveloperSettings.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
-    <Compile Include="Modules\Image\DefaultUriLoader.cs" />
-    <Compile Include="Modules\Image\IImageCache.cs" />
-    <Compile Include="Modules\Image\IImageReference.cs" />
+    <Compile Include="Modules\Image\BitmapImageHelpers.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
-    <Compile Include="Modules\Image\RefCountImageCache.cs" />
-    <Compile Include="Modules\Image\IUriLoader.cs" />
     <Compile Include="Modules\I18N\I18NModule.cs" />
     <Compile Include="Modules\I18N\I18NUtil.cs" />
+    <Compile Include="Modules\Image\ImageLoadStatus.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
     <Compile Include="Modules\Location\LocationModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />

@@ -2,7 +2,7 @@
 using ReactNative.Bridge;
 using System;
 using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Modules.Image
 {
@@ -11,15 +11,6 @@ namespace ReactNative.Modules.Image
         private const string ErrorInvalidUri = "E_INVALID_URI";
         private const string ErrorPrefetchFailure = "E_PREFETCH_FAILURE";
         private const string ErrorGetSizeFailure = "E_GET_SIZE_FAILURE";
-
-        private readonly IImageCache _imageCache;
-        private readonly IUriLoader _uriLoader;
-
-        public ImageLoaderModule(IImageCache imageCache, IUriLoader uriLoader)
-        {
-            _imageCache = imageCache;
-            _uriLoader = uriLoader;
-        }
 
         public override string Name
         {
@@ -30,27 +21,13 @@ namespace ReactNative.Modules.Image
         }
 
         [ReactMethod]
-        public async void prefetchImage(string uriString, IPromise promise)
+        public void prefetchImage(string uriString, IPromise promise)
         {
-            if (string.IsNullOrEmpty(uriString))
-            {
-                promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
-                return;
-            }
-
-            try
-            {
-                await _uriLoader.PrefetchAsync(uriString).ConfigureAwait(false);
-                promise.Resolve(true);
-            }
-            catch (System.Exception ex)
-            {
-                promise.Reject(ErrorPrefetchFailure, ex.Message);
-            }
+            promise.Reject(ErrorPrefetchFailure, "Prefetch is not yet implemented.");
         }
 
         [ReactMethod]
-        public async void getSize(string uriString, IPromise promise)
+        public void getSize(string uriString, IPromise promise)
         {
             if (string.IsNullOrEmpty(uriString))
             {
@@ -58,23 +35,37 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            using (var reference = _imageCache.Get(uriString))
+            DispatcherHelpers.RunOnDispatcher(async () =>
             {
                 try
                 {
-                    await reference.LoadedObservable.FirstAsync().ToTask().ConfigureAwait(false);
-                    DispatcherHelpers.RunOnDispatcher(() =>
+                    var bitmapImage = new BitmapImage();
+                    var loadQuery = bitmapImage.GetStreamLoadObservable()
+                        .Where(status => status == ImageLoadStatus.OnLoadEnd)
+                        .FirstAsync()
+                        .Replay(1);
+
+                    using (loadQuery.Connect())
+                    {
+                        using (var stream = await BitmapImageHelpers.GetStreamAsync(uriString))
+                        {
+                            await bitmapImage.SetSourceAsync(stream);
+                        }
+
+                        await loadQuery;
+
                         promise.Resolve(new JObject
                         {
-                            { "width", reference.Image.PixelWidth },
-                            { "height", reference.Image.PixelHeight },
-                        }));
+                            { "width", bitmapImage.PixelWidth },
+                            { "height", bitmapImage.PixelHeight },
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
                     promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
-            }
+            });
         }
     }
 }
