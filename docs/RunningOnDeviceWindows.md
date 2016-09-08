@@ -58,4 +58,13 @@ react-native bundle --platform windows --entry-file index.windows.js
     --assets-dest windows\myapp\ReactAssets
 ```
 
+To generate the release (minified) bundle, add the --dev=false : 
+
+```
+react-native bundle --platform windows --entry-file index.windows.js 
+    --bundle-output windows\myapp\ReactAssets\index.windows.bundle
+    --assets-dest windows\myapp\ReactAssets
+    --dev=false
+```
+
 Be sure to update the paths to match the path to your ReactAssets folder.
