@@ -1,7 +1,9 @@
 ﻿using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -133,20 +135,27 @@ namespace ReactNative.Modules.Image
 
             private async void InitializeImage()
             {
-                var stream = await _parent._uriLoader.OpenReadAsync(Uri).ConfigureAwait(false);
-                DispatcherHelpers.RunOnDispatcher(async () =>
+                try
                 {
-                    Image = new BitmapImage();
-                    DoSubscribe(Image);
-                    try
+                    var stream = await _parent._uriLoader.OpenReadAsync(Uri).ConfigureAwait(false);
+                    DispatcherHelpers.RunOnDispatcher(async () =>
                     {
-                        await Image.SetSourceAsync(stream).AsTask().ConfigureAwait(false);
-                    }
-                    finally
-                    {
-                        stream.Dispose();
-                    }
-                });
+                        Image = new BitmapImage();
+                        DoSubscribe(Image);
+                        try
+                        {
+                            await Image.SetSourceAsync(stream).AsTask().ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            stream.Dispose();
+                        }
+                    });
+                }
+                catch (FileNotFoundException ex)
+                {
+                    _observerWrapper.OnError(ex);
+                }
             }
 
             class ObserverWrapper : IObserver<Unit>, IDisposable

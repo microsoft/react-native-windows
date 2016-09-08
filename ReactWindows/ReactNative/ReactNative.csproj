@@ -214,7 +214,6 @@
     <Compile Include="Modules\Image\DefaultUriLoader.cs" />
     <Compile Include="Modules\Image\IImageCache.cs" />
     <Compile Include="Modules\Image\IImageReference.cs" />
-    <Compile Include="Modules\Image\ImageFailedException.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
     <Compile Include="Modules\Image\RefCountImageCache.cs" />
     <Compile Include="Modules\Image\IUriLoader.cs" />
