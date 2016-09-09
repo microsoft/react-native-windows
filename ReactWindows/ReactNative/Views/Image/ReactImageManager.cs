@@ -10,6 +10,7 @@ using System.Reactive.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Views.Image
 {
@@ -21,19 +22,8 @@ namespace ReactNative.Views.Image
         private readonly Dictionary<int, SerialDisposable> _disposables =
             new Dictionary<int, SerialDisposable>();
 
-        private readonly IImageCache _imageCache;
-
         private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
             new Dictionary<int, List<KeyValuePair<string, double>>>();
-
-        /// <summary>
-        /// Instantiates the <see cref="ReactImageManager"/>.  
-        /// </summary>
-        /// <param name="imageCache">The image cache.</param>
-        public ReactImageManager(IImageCache imageCache)
-        {
-            _imageCache = imageCache;
-        }
 
         /// <summary>
         /// The view manager name.
@@ -263,7 +253,7 @@ namespace ReactNative.Views.Image
                         ReactImageLoadEvent.OnLoadEnd));
         }
 
-        private void OnImageOpened(Border view)
+        private void OnImageStatusUpdate(Border view, ImageLoadStatus status)
         {
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -272,12 +262,7 @@ namespace ReactNative.Views.Image
             eventDispatcher.DispatchEvent(
                 new ReactImageLoadEvent(
                     view.GetTag(),
-                    ReactImageLoadEvent.OnLoad));
-
-            eventDispatcher.DispatchEvent(
-                new ReactImageLoadEvent(
-                    view.GetTag(),
-                    ReactImageLoadEvent.OnLoadEnd));
+                    (int)status));
         }
 
         /// <summary>
@@ -285,27 +270,10 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="source">The source URI.</param>
-        private void SetUriFromSingleSource(Border view, string source)
+        private async void SetUriFromSingleSource(Border view, string source)
         {
             var imageBrush = (ImageBrush)view.Background;
             var tag = view.GetTag();
-
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactImageLoadEvent(
-                        tag,
-                        ReactImageLoadEvent.OnLoadStart));
-
-            var reference = _imageCache.Get(source);
-            var subscription = reference.LoadedObservable.Subscribe(
-                _ =>
-                {
-                    imageBrush.ImageSource = reference.Image;
-                    OnImageOpened(view);
-                },
-                _ => OnImageFailed(view));
 
             var disposable = default(SerialDisposable);
             if (!_disposables.TryGetValue(tag, out disposable))
@@ -314,11 +282,28 @@ namespace ReactNative.Views.Image
                 _disposables.Add(tag, disposable);
             }
 
-            disposable.Disposable = new CompositeDisposable
+            var image = new BitmapImage();
+            if (BitmapImageHelpers.IsBase64Uri(source))
             {
-                reference,
-                subscription,
-            };
+                disposable.Disposable = image.GetStreamLoadObservable().Subscribe(
+                    status => OnImageStatusUpdate(view, status),
+                    _ => OnImageFailed(view));
+
+                using (var stream = await BitmapImageHelpers.GetStreamAsync(source))
+                {
+                    await image.SetSourceAsync(stream);
+                }
+            }
+            else
+            {
+                disposable.Disposable = image.GetUriLoadObservable().Subscribe(
+                    status => OnImageStatusUpdate(view, status),
+                    _ => OnImageFailed(view));
+
+                image.UriSource = new Uri(source);
+            }
+
+            imageBrush.ImageSource = image;
         }
 
         /// <summary>
