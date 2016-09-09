@@ -24,7 +24,7 @@ namespace ReactNative.Tests.Bridge
 
                     AssertEx.Throws<ArgumentNullException>(
                         () => new ReactBridge(null, reactCallback, nativeThread),
-                        ex => Assert.AreEqual("jsExecutor", ex.ParamName));
+                        ex => Assert.AreEqual("executor", ex.ParamName));
 
                     AssertEx.Throws<ArgumentNullException>(
                         () => new ReactBridge(executor, null, nativeThread),
