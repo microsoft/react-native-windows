@@ -38,6 +38,8 @@ namespace ReactNative.DevSupport
         private Action _dismissRedBoxDialog;
         private bool _redBoxDialogOpen;
         private DevOptionDialog _devOptionsDialog;
+        private Action _dismissDevOptionsDialog;
+        private bool _devOptionsDialogOpen;
 
         public DevSupportManager(
             IReactInstanceDevCommandsHandler reactInstanceCommandsHandler,
@@ -252,9 +254,12 @@ namespace ReactNative.DevSupport
                         }),
                 };
 
+                _devOptionsDialogOpen = true;
                 _devOptionsDialog = new DevOptionDialog();
                 _devOptionsDialog.Closed += (_, __) =>
                 {
+                    _devOptionsDialogOpen = false;
+                    _dismissDevOptionsDialog = null;
                     _devOptionsDialog = null;
                 };
 
@@ -263,13 +268,28 @@ namespace ReactNative.DevSupport
                     _devOptionsDialog.Add(option.Name, option.OnSelect);
                 }
 
+                if (_redBoxDialog != null)
+                {
+                    _dismissRedBoxDialog();
+                }
+
                 var asyncInfo = _devOptionsDialog.ShowAsync();
+                _dismissDevOptionsDialog = asyncInfo.Cancel;
 
                 foreach (var option in options)
                 {
                     option.AsyncInfo = asyncInfo;
                 }
             });
+        }
+
+        private void HideDevOptionsDialog()
+        {
+            var dismissDevOptionsDialog = _dismissDevOptionsDialog;
+            if (_devOptionsDialogOpen && dismissDevOptionsDialog != null)
+            {
+                dismissDevOptionsDialog();
+            }
         }
 
         public void OnNewReactContextCreated(ReactContext context)
@@ -295,6 +315,7 @@ namespace ReactNative.DevSupport
             DispatcherHelpers.AssertOnDispatcher();
 
             HideRedboxDialog();
+            HideDevOptionsDialog();
 
             var message = !IsRemoteDebuggingEnabled
                 ? "Fetching JavaScript bundle." 
@@ -434,14 +455,17 @@ namespace ReactNative.DevSupport
 
         private async Task ReloadJavaScriptFromServerAsync(Action dismissProgress, CancellationToken token)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var localFile = await localFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.ReplaceExisting);
+            var moved = false;
+            var temporaryFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
             try
             {
-                using (var stream = await localFile.OpenStreamForWriteAsync())
+                using (var stream = await temporaryFile.OpenStreamForWriteAsync())
                 {
                     await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
                 }
+
+                await temporaryFile.MoveAsync(ApplicationData.Current.LocalFolder, JSBundleFileName, NameCollisionOption.ReplaceExisting);
+                moved = true;
 
                 dismissProgress();
                 _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
@@ -458,6 +482,13 @@ namespace ReactNative.DevSupport
                     "Unable to download JS bundle. Did you forget to " +
                     "start the development server or connect your device?",
                     ex);
+            }
+            finally
+            {
+                if (!moved)
+                {
+                    await temporaryFile.DeleteAsync();
+                }
             }
         }
 
