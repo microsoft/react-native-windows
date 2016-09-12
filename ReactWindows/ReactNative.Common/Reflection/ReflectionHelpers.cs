@@ -8,7 +8,7 @@ namespace ReactNative.Reflection
     /// <summary>
     /// Helpers for <see cref="MemberInfo"/>.
     /// </summary>
-    static class ReflectionHelpers
+    public static class ReflectionHelpers
     {
         /// <summary>
         /// Checks if a method is asynchronous.
@@ -19,7 +19,7 @@ namespace ReactNative.Reflection
         /// </returns>
         public static bool IsAsync(this MethodInfo methodInfo)
         {
-            return typeof(Task).IsAssignableFrom(methodInfo.ReturnType);
+            return typeof(Task).GetTypeInfo().IsAssignableFrom(methodInfo.ReturnType.GetTypeInfo());
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -129,44 +129,14 @@
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
     <Compile Include="Animated\ValueAnimatedNode.cs" />
-    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
-    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
-    <Compile Include="Bridge\ILifecycleEventListener.cs" />
-    <Compile Include="Bridge\IPromise.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
-    <Compile Include="Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
-    <Compile Include="Bridge\IInvocationHandler.cs" />
-    <Compile Include="Bridge\IJavaScriptExecutor.cs" />
-    <Compile Include="Bridge\IJavaScriptModule.cs" />
-    <Compile Include="Bridge\IReactCallback.cs" />
-    <Compile Include="Bridge\IReactDelegateFactory.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBase.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBase.Generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>JavaScriptModuleBase.Generated.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bridge\JavaScriptModuleRegistration.cs" />
-    <Compile Include="Bridge\JavaScriptModuleRegistry.cs" />
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
-    <Compile Include="Bridge\NativeArgumentsParseException.cs" />
-    <Compile Include="Bridge\ICallback.cs" />
-    <Compile Include="Bridge\IReactInstance.cs" />
-    <Compile Include="Bridge\INativeMethod.cs" />
-    <Compile Include="Bridge\IOnBatchCompleteListener.cs" />
     <Compile Include="Bridge\NativeModuleBase.cs" />
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
-    <Compile Include="Bridge\Queue\ReactQueueConfigurationSpec.cs" />
-    <Compile Include="Bridge\Queue\IReactQueueConfiguration.cs" />
-    <Compile Include="Bridge\Queue\IMessageQueueThread.cs" />
     <Compile Include="Bridge\Queue\LimitedConcurrencyTaskScheduler.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThread.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThreadExtensions.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThreadKind.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThreadSpec.cs" />
-    <Compile Include="Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="Collections\ListExtensions.cs" />
@@ -238,7 +208,6 @@
     <Compile Include="ReactContextInitializedEventArgs.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootView.cs" />
-    <Compile Include="Reflection\EnumHelpers.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
@@ -278,12 +247,9 @@
     <Compile Include="Chakra\JavaScriptValue.cs" />
     <Compile Include="Chakra\JavaScriptValueType.cs" />
     <Compile Include="Chakra\Native.cs" />
-    <Compile Include="Bridge\INativeModule.cs" />
     <Compile Include="Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="Modules\Core\RCTDeviceEventEmitter.cs" />
     <Compile Include="Modules\Core\RCTNativeAppEventEmitter.cs" />
-    <Compile Include="Bridge\ReactDelegateFactoryBase.cs" />
-    <Compile Include="Reflection\ExpressionExtensions.cs" />
     <Compile Include="IReactPackage.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
@@ -306,9 +272,6 @@
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Bridge\IReactBridge.cs" />
-    <Compile Include="Bridge\ReactMethodAttribute.cs" />
-    <Compile Include="Reflection\ReflectionHelpers.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\AppRegistry.cs" />
     <Compile Include="UIManager\Events\TouchEventType.cs" />
@@ -407,10 +370,6 @@
     <EmbeddedResource Include="Properties\ReactNative.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bridge\JavaScriptModuleBase.Generated.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>JavaScriptModuleBase.Generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Tracing\LoggingActivityBuilderExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LoggingActivityBuilderExtensions.generated.cs</LastGenOutput>
@@ -442,6 +401,14 @@
     <ProjectReference Include="..\ChakraBridge\ChakraBridge.vcxproj">
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactNative.Bridge\ReactNative.Bridge.csproj">
+      <Project>{bb680b12-67de-4cc9-9af4-b3622a02aa47}</Project>
+      <Name>ReactNative.Bridge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactNative.Common\ReactNative.Common.csproj">
+      <Project>{1396e697-be10-4a16-8b7e-c6aa7e826452}</Project>
+      <Name>ReactNative.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

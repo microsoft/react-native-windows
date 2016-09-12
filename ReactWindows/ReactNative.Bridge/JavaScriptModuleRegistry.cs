@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -45,7 +45,7 @@ namespace ReactNative.Bridge
                     if (!_moduleRegistrations.TryGetValue(typeof(T), out registration))
                     {
                         throw new InvalidOperationException(
-                            Invariant($"JS module '{typeof(T)}' hasn't been registered."));
+                            $"JS module '{typeof(T)}' hasn't been registered.");
                     }
 
                     var type = registration.ModuleInterface;
@@ -119,22 +119,24 @@ namespace ReactNative.Bridge
                 if (type.GetTypeInfo().IsAbstract)
                 {
                     throw new ArgumentException(
-                        Invariant($"JavaScript module '{type}' must not be abstract."),
+                        $"JavaScript module '{type}' must not be abstract.",
                         nameof(type));
                 }
 
-                if (!typeof(IJavaScriptModule).IsAssignableFrom(type))
+                if (!typeof(IJavaScriptModule).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                 {
                     throw new ArgumentException(
-                        Invariant($"JavaScript module '{type}' must derive from IJavaScriptModule."),
+                        $"JavaScript module '{type}' must derive from IJavaScriptModule.",
                         nameof(type));
                 }
 
-                var defaultConstructor = type.GetConstructor(Array.Empty<Type>());
+                var defaultConstructor =
+                    type.GetTypeInfo().DeclaredConstructors.FirstOrDefault(ctor => ctor.GetParameters().Length == 0);
+
                 if (defaultConstructor == null || !defaultConstructor.IsPublic)
                 {
                     throw new ArgumentException(
-                        Invariant($"JavaScript module '{type}' must have a public default constructor."),
+                        $"JavaScript module '{type}' must have a public default constructor.",
                         nameof(type));
                 }
             }

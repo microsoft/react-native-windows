@@ -2,11 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using static System.FormattableString;
 
 namespace ReactNative.Reflection
 {
-    static partial class EnumHelpers
+    public static partial class EnumHelpers
     {
         private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>> s_enumCache =
             new ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>>();
@@ -26,7 +25,7 @@ namespace ReactNative.Reflection
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),
-                    Invariant($"Invalid value '{value}' for type '{typeof(T)}'."));
+                    $"Invalid value '{value}' for type '{typeof(T)}'.");
             }
 
             return (T)result;
