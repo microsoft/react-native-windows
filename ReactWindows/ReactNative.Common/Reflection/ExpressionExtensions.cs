@@ -6,7 +6,7 @@ namespace ReactNative.Reflection
     /// <summary>
     /// Helper methods for expressions.
     /// </summary>
-    static class ExpressionExtensions
+    public static class ExpressionExtensions
     {
         /// <summary>
         /// Transforms an expression into a parameter that can be used in

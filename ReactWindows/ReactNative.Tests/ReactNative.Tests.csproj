@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -178,6 +178,14 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReactNative.Bridge\ReactNative.Bridge.csproj">
+      <Project>{bb680b12-67de-4cc9-9af4-b3622a02aa47}</Project>
+      <Name>ReactNative.Bridge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactNative.Common\ReactNative.Common.csproj">
+      <Project>{1396e697-be10-4a16-8b7e-c6aa7e826452}</Project>
+      <Name>ReactNative.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReactNative\ReactNative.csproj">
       <Project>{c7673ad5-e3aa-468c-a5fd-fa38154e205c}</Project>
       <Name>ReactNative</Name>

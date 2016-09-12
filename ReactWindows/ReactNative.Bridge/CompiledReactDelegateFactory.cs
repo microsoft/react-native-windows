@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReactNative.Reflection;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using static System.FormattableString;
+using ReactNative.Reflection;
 
 namespace ReactNative.Bridge
 {
@@ -114,7 +113,7 @@ namespace ReactNative.Bridge
                             s_stringFormat,
                             Expression.Constant(CultureInfo.InvariantCulture),
                             Expression.Constant(
-                                Invariant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'.")
+                                $"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'."
                             ),
                             Expression.Convert(
                                 Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
@@ -177,7 +176,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseExceptionInner,
                             Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'.")
+                                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'."
                             ),
                             Expression.Constant(parameterName),
                             ex
@@ -238,7 +237,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseException,
                             Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'.")
+                                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'."
                             ),
                             Expression.Constant(parameterName)
                         ),
