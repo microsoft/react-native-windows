@@ -323,6 +323,7 @@
     <Compile Include="UIManager\TransformHelper.cs" />
     <Compile Include="UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
+    <Compile Include="Views\Image\ReactImageShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />
