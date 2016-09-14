@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using static System.FormattableString;
@@ -76,13 +77,12 @@ namespace ReactNative.Bridge
         {
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "CreateJSON").Start())
             {
-                writer.WriteStartObject();
+                writer.WriteStartArray();
                 foreach (var moduleDef in _moduleTable)
                 {
-                    writer.WritePropertyName(moduleDef.Name);
                     moduleDef.WriteModuleDescription(writer);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
         }
 
@@ -141,12 +141,10 @@ namespace ReactNative.Bridge
 
         class ModuleDefinition
         {
-            private readonly int _id;
             private readonly IList<MethodRegistration> _methods;
 
-            public ModuleDefinition(int id, string name, INativeModule target)
+            public ModuleDefinition(string name, INativeModule target)
             {
-                _id = id;
                 Name = name;
                 Target = target;
                 _methods = new List<MethodRegistration>(target.Methods.Count);
@@ -178,26 +176,51 @@ namespace ReactNative.Bridge
 
             public void WriteModuleDescription(JsonWriter writer)
             {
-                writer.WriteStartObject();
-                writer.WritePropertyName("moduleID");
-                writer.WriteValue(_id);
-                writer.WritePropertyName("methods");
-                writer.WriteStartObject();
-                for (var i = 0; i < _methods.Count; ++i)
-                {
-                    var method = _methods[i];
-                    writer.WritePropertyName(method.Name);
-                    writer.WriteStartObject();
-                    writer.WritePropertyName("methodID");
-                    writer.WriteValue(i);
-                    writer.WritePropertyName("type");
-                    writer.WriteValue(method.Method.Type);
-                    writer.WriteEndObject();
-                }
-                writer.WriteEndObject();
-                writer.WritePropertyName("constants");
+                writer.WriteStartArray();
+                writer.WriteValue(Name);
                 JObject.FromObject(Target.Constants).WriteTo(writer);
-                writer.WriteEndObject();
+
+                if (_methods.Count > 0)
+                {
+                    var syncMethodIds = new List<int>();
+                    var promiseMethodIds = new List<int>();
+                    writer.WriteStartArray();
+                    for (var i = 0; i < _methods.Count; ++i)
+                    {
+                        var method = _methods[i];
+                        writer.WriteValue(method.Name);
+                        if (method.Method.Type == ReactDelegateFactoryBase.PromiseMethodType)
+                        {
+                            promiseMethodIds.Add(i);
+                        }
+                        else if (method.Method.Type == ReactDelegateFactoryBase.SyncMethodType)
+                        {
+                            syncMethodIds.Add(i);
+                        }
+                    }
+                    writer.WriteEndArray();
+
+                    if (promiseMethodIds.Count > 0 || syncMethodIds.Count > 0)
+                    {
+                        WriteList(writer, promiseMethodIds);
+                        if (syncMethodIds.Count > 0)
+                        {
+                            WriteList(writer, syncMethodIds);
+                        }
+                    }
+                }
+
+                writer.WriteEndArray();
+            }
+
+            private static void WriteList(JsonWriter writer, IList<int> values)
+            {
+                writer.WriteStartArray();
+                for (var i = 0; i < values.Count; ++i)
+                {
+                    writer.WriteValue(values[i]);
+                }
+                writer.WriteEndArray();
             }
 
             class MethodRegistration
@@ -270,7 +293,7 @@ namespace ReactNative.Bridge
                 var idx = 0;
                 foreach (var module in _modules.Values)
                 {
-                    var moduleDef = new ModuleDefinition(idx++, module.Name, module);
+                    var moduleDef = new ModuleDefinition(module.Name, module);
                     moduleTable.Add(moduleDef);
                     moduleInstances.Add(module.GetType(), module);
                 }
