@@ -23,77 +23,18 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
-  Platform,
-} = ReactNative;
-var UIExplorerBlock = require('./UIExplorerBlock');
-var UIExplorerPage = require('./UIExplorerPage');
+const React = require('react');
 
-var invariant = require('fbjs/lib/invariant');
+const UIExplorerExampleContainer = require('./UIExplorerExampleContainer');
 
 import type { Example, ExampleModule } from 'ExampleTypes';
 
 var createExamplePage = function(title: ?string, exampleModule: ExampleModule)
   : ReactClass<any> {
-  invariant(!!exampleModule.examples, 'The module must have examples');
 
   class ExamplePage extends React.Component {
-    static title = exampleModule.title;
-    static description = exampleModule.description;
-
-    getBlock = (example: Example, i) => {
-      // Filter platform-specific examples
-      var {title, description, platform, platforms} = example;
-      if (platform) {
-        if (Platform.OS !== platform) {
-          return null;
-        }
-        title += ' (' + platform + ' only)';
-      }
-      else if (platforms) {
-        if (platforms.indexOf(Platform.OS) < 0) {
-          return null;
-        }
-        title += ' (' + platforms.join(', ') + ' only)';
-      }
-      // Hack warning: This is a hack because the www UI explorer used to
-      // require render to be called. It should just return elements now.
-      var originalRender = React.render;
-      var originalIOSRender = ReactNative.render;
-      var renderedComponent;
-      // TODO remove typecasts when Flow bug #6560135 is fixed
-      // and workaround is removed from react-native.js
-      (React: Object).render =
-      (ReactNative: Object).render =
-        function(element, container) {
-          renderedComponent = element;
-        };
-      var result = example.render(null);
-      if (result) {
-        renderedComponent = React.cloneElement(result, {
-          navigator: this.props.navigator,
-        });
-      }
-      (React: Object).render = originalRender;
-      (ReactNative: Object).render = originalIOSRender;
-      return (
-        <UIExplorerBlock
-          key={i}
-          title={title}
-          description={description}>
-          {renderedComponent}
-        </UIExplorerBlock>
-      );
-    };
-
     render() {
-      return (
-        <UIExplorerPage title={title}>
-          {exampleModule.examples.map(this.getBlock)}
-        </UIExplorerPage>
-      );
+      return <UIExplorerExampleContainer module={exampleModule} title={title} />;
     }
   }
 

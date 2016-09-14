@@ -32,6 +32,8 @@ const Linking = require('Linking');
 const React = require('react');
 const StatusBar = require('StatusBar');
 const StyleSheet = require('StyleSheet');
+const ToolbarAndroid = require('ToolbarAndroid');
+const UIExplorerExampleContainer = require('./UIExplorerExampleContainer');
 const UIExplorerExampleList = require('./UIExplorerExampleList');
 const UIExplorerList = require('./UIExplorerList');
 const UIExplorerNavigationReducer = require('./UIExplorerNavigationReducer');
@@ -40,14 +42,16 @@ const UIExplorerHeaderWindows = require('./UIExplorerHeaderWindows');
 const URIActionMap = require('./URIActionMap');
 const View = require('View');
 
+import type {UIExplorerNavigationState} from './UIExplorerNavigationReducer';
+
 const DRAWER_WIDTH_LEFT = 56;
 
 type Props = {
   exampleFromAppetizeParams: string,
 };
 
-type State = {
-  initialExampleUri: ?string,
+type State = UIExplorerNavigationState & {
+  externalExample: ?string,
 };
 
 class UIExplorerApp extends React.Component {
@@ -91,10 +95,10 @@ class UIExplorerApp extends React.Component {
         paneWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
         keyboardDismissMode="on-drag"
         onPaneOpen={() => {
-          this._overrideBackPressForSplitView = true;
+          this._overrideBackPressForPane = true;
         }}
         onPaneClose={() => {
-          this._overrideBackPressForSplitView = false;
+          this._overrideBackPressForPane = false;
         }}
         ref={(splitView) => { this.splitView = splitView; }}
         renderPaneView={this._renderPaneContent}
@@ -139,7 +143,6 @@ class UIExplorerApp extends React.Component {
     if (stack && stack.routes[index]) {
       const {key} = stack.routes[index];
       const ExampleModule = UIExplorerList.Modules[key];
-      const ExampleComponent = UIExplorerExampleList.makeRenderable(ExampleModule);
       return (
         <View style={styles.container}>
           <UIExplorerHeaderWindows
@@ -147,7 +150,8 @@ class UIExplorerApp extends React.Component {
             title={title}
             style={styles.header}
           />
-          <ExampleComponent
+          <UIExplorerExampleContainer
+            module={ExampleModule}
             ref={(example) => { this._exampleRef = example; }}
           />
         </View>
@@ -173,15 +177,17 @@ class UIExplorerApp extends React.Component {
     this.splitView && this.splitView.closePane();
     const newState = UIExplorerNavigationReducer(this.state, action);
     if (this.state !== newState) {
-      this.setState(newState);
-      AsyncStorage.setItem('UIExplorerAppState', JSON.stringify(newState));
+      this.setState(
+        newState,
+        () => AsyncStorage.setItem('UIExplorerAppState', JSON.stringify(this.state))
+      );
       return true;
     }
     return false;
   }
 
   _handleBackButtonPress() {
-    if (this._overrideBackPressForSplitView) {
+    if (this._overrideBackPressForPane) {
       // This hack is necessary because split view provides an imperative API
       // with open and close methods. This code would be cleaner if the split
       // view provided an `isOpen` prop and allowed us to pass a `onPaneClose` handler.
@@ -203,8 +209,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
+  toolbar: {
     backgroundColor: '#E9EAED',
+    height: 56,
   },
   paneContentWrapper: {
     flex: 1,
