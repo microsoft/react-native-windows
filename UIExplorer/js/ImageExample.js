@@ -575,7 +575,7 @@ exports.examples = [
         />
       );
     },
-    platform: 'ios',
+    platforms: ['ios', 'windows'],
   },
   {
     title: 'Cap Insets',

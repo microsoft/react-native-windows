@@ -148,11 +148,27 @@ class RewriteExampleInvalidCharacters extends React.Component {
   }
 }
 
+class ToggleDefaultPaddingExample extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {hasPadding: false};
+  }
+  render() {
+    return (
+      <View>
+        <TextInput style={this.state.hasPadding ? { padding: 10 } : null}/>
+        <Text onPress={() => this.setState({hasPadding: !this.state.hasPadding})}>
+          Toggle padding
+        </Text>
+      </View>
+    );
+  }
+}
+
 var styles = StyleSheet.create({
   multiline: {
     height: 60,
     fontSize: 16,
-    padding: 4,
     marginBottom: 10,
   },
   eventLabel: {
@@ -161,7 +177,6 @@ var styles = StyleSheet.create({
   },
   singleLine: {
     fontSize: 16,
-    padding: 4,
   },
   singleLineWithHeightTextInput: {
     height: 30,
@@ -331,5 +346,9 @@ exports.examples = [
         </View>
       );
     }
+  },
+  {
+    title: 'Toggle Default Padding',
+    render: function(): ReactElement { return <ToggleDefaultPaddingExample />; },
   },
 ];
