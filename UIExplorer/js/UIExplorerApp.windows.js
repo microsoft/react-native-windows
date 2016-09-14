@@ -90,10 +90,10 @@ class UIExplorerApp extends React.Component {
         panePosition={SplitViewWindows.positions.Left}
         paneWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
         keyboardDismissMode="on-drag"
-        onDrawerOpen={() => {
+        onPaneOpen={() => {
           this._overrideBackPressForSplitView = true;
         }}
-        onDrawerClose={() => {
+        onPaneClose={() => {
           this._overrideBackPressForSplitView = false;
         }}
         ref={(splitView) => { this.splitView = splitView; }}
