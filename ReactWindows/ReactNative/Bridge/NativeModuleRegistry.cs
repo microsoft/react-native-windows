@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using static System.FormattableString;
@@ -290,7 +289,6 @@ namespace ReactNative.Bridge
                 var moduleTable = new List<ModuleDefinition>(_modules.Count); 
                 var moduleInstances = new Dictionary<Type, INativeModule>(_modules.Count);
 
-                var idx = 0;
                 foreach (var module in _modules.Values)
                 {
                     var moduleDef = new ModuleDefinition(module.Name, module);
