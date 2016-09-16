@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -56,7 +57,7 @@ namespace ReactNative.Bridge
         private Extractor CreateExtractor(Type type, string moduleName, string methodName)
         {
             var exceptionFormat =
-                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{{0}}'.";
+                string.Format(CultureInfo.InvariantCulture, "Error extracting argument for module '{0}' method '{1}' at index '{{0}}'.", moduleName, methodName);
            
             if (type == typeof(ICallback))
             {
@@ -151,7 +152,7 @@ namespace ReactNative.Bridge
             if (jsArguments.Count != n) 
             {
                 throw new NativeArgumentsParseException(
-                    $"Module '{moduleInstance.Name}' method '{method.Name}' got '{jsArguments.Count}' arguments, expected '{n}'.",
+                    string.Format(CultureInfo.InvariantCulture, "Module '{0}' method '{1}' got '{2}' arguments, expected '{3}'.", moduleInstance.Name, method.Name, jsArguments.Count, n),
                     nameof(jsArguments));
             }
 

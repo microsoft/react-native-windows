@@ -113,7 +113,7 @@ namespace ReactNative.Bridge
                             s_stringFormat,
                             Expression.Constant(CultureInfo.InvariantCulture),
                             Expression.Constant(
-                                $"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'."
+                                string.Format(CultureInfo.InvariantCulture, "Module '{0}' method '{1}' got '{{0}}' arguments, expected '{2}'.", module.Name, method.Name, argc)
                             ),
                             Expression.Convert(
                                 Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
@@ -176,7 +176,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseExceptionInner,
                             Expression.Constant(
-                                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'."
+                                string.Format(CultureInfo.InvariantCulture, "Error extracting argument for module '{0}' method '{1}' at index '{2}'.", moduleName, methodName, argumentIndex)
                             ),
                             Expression.Constant(parameterName),
                             ex
@@ -237,7 +237,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseException,
                             Expression.Constant(
-                                $"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'."
+                                string.Format(CultureInfo.InvariantCulture, "Error extracting argument for module '{0}' method '{1}' at index '{2}' and '{3}'.", moduleName, methodName, argumentIndex, argumentIndex + 1)
                             ),
                             Expression.Constant(parameterName)
                         ),
