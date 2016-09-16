@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -45,7 +46,7 @@ namespace ReactNative.Bridge
                     if (!_moduleRegistrations.TryGetValue(typeof(T), out registration))
                     {
                         throw new InvalidOperationException(
-                            $"JS module '{typeof(T)}' hasn't been registered.");
+                            string.Format(CultureInfo.InvariantCulture, "JS module '{0}' hasn't been registered.", typeof(T)));
                     }
 
                     var type = registration.ModuleInterface;
@@ -119,14 +120,14 @@ namespace ReactNative.Bridge
                 if (type.GetTypeInfo().IsAbstract)
                 {
                     throw new ArgumentException(
-                        $"JavaScript module '{type}' must not be abstract.",
+                        string.Format(CultureInfo.InvariantCulture, "JavaScript module '{0}' must not be abstract.", type),
                         nameof(type));
                 }
 
                 if (!typeof(IJavaScriptModule).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                 {
                     throw new ArgumentException(
-                        $"JavaScript module '{type}' must derive from IJavaScriptModule.",
+                        string.Format(CultureInfo.InvariantCulture, "JavaScript module '{0}' must derive from IJavaScriptModule.", type),
                         nameof(type));
                 }
 
@@ -136,7 +137,7 @@ namespace ReactNative.Bridge
                 if (defaultConstructor == null || !defaultConstructor.IsPublic)
                 {
                     throw new ArgumentException(
-                        $"JavaScript module '{type}' must have a public default constructor.",
+                        string.Format(CultureInfo.InvariantCulture, "JavaScript module '{0}' must have a public default constructor.", type),
                         nameof(type));
                 }
             }
