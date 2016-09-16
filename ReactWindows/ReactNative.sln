@@ -17,25 +17,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Common", "React
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		DebugBundle|Any CPU = DebugBundle|Any CPU
 		DebugBundle|ARM = DebugBundle|ARM
 		DebugBundle|x64 = DebugBundle|x64
 		DebugBundle|x86 = DebugBundle|x86
-		Release|Any CPU = Release|Any CPU
 		Release|ARM = Release|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-		ReleaseBundle|Any CPU = ReleaseBundle|Any CPU
 		ReleaseBundle|ARM = ReleaseBundle|ARM
 		ReleaseBundle|x64 = ReleaseBundle|x64
 		ReleaseBundle|x86 = ReleaseBundle|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D52267B5-396F-424A-BB26-C9E750032846}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.Debug|ARM.ActiveCfg = Debug|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.Debug|ARM.Build.0 = Debug|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -45,7 +40,6 @@ Global
 		{D52267B5-396F-424A-BB26-C9E750032846}.Debug|x86.ActiveCfg = Debug|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.Debug|x86.Build.0 = Debug|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.Debug|x86.Deploy.0 = Debug|x86
-		{D52267B5-396F-424A-BB26-C9E750032846}.DebugBundle|Any CPU.ActiveCfg = DebugBundle|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.DebugBundle|ARM.ActiveCfg = DebugBundle|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.DebugBundle|ARM.Build.0 = DebugBundle|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.DebugBundle|ARM.Deploy.0 = DebugBundle|ARM
@@ -55,7 +49,6 @@ Global
 		{D52267B5-396F-424A-BB26-C9E750032846}.DebugBundle|x86.ActiveCfg = DebugBundle|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.DebugBundle|x86.Build.0 = DebugBundle|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.DebugBundle|x86.Deploy.0 = DebugBundle|x86
-		{D52267B5-396F-424A-BB26-C9E750032846}.Release|Any CPU.ActiveCfg = Release|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.Release|ARM.ActiveCfg = Release|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.Release|ARM.Build.0 = Release|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.Release|ARM.Deploy.0 = Release|ARM
@@ -65,7 +58,6 @@ Global
 		{D52267B5-396F-424A-BB26-C9E750032846}.Release|x86.ActiveCfg = Release|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.Release|x86.Build.0 = Release|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.Release|x86.Deploy.0 = Release|x86
-		{D52267B5-396F-424A-BB26-C9E750032846}.ReleaseBundle|Any CPU.ActiveCfg = ReleaseBundle|x86
 		{D52267B5-396F-424A-BB26-C9E750032846}.ReleaseBundle|ARM.ActiveCfg = ReleaseBundle|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.ReleaseBundle|ARM.Build.0 = ReleaseBundle|ARM
 		{D52267B5-396F-424A-BB26-C9E750032846}.ReleaseBundle|ARM.Deploy.0 = ReleaseBundle|ARM
