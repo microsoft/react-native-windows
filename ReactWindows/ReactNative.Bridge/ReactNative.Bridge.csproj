@@ -43,6 +43,7 @@
     <Compile Include="CompiledReactDelegateFactory.cs" />
     <Compile Include="ICallback.cs" />
     <Compile Include="IInvocationHandler.cs" />
+    <Compile Include="IJavaScriptBundleLoader.cs" />
     <Compile Include="IJavaScriptExecutor.cs" />
     <Compile Include="IJavaScriptModule.cs" />
     <Compile Include="ILifecycleEventListener.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="ReactDelegateFactoryBase.cs" />
     <Compile Include="ReactMethodAttribute.cs" />
     <Compile Include="ReflectionReactDelegateFactory.cs" />
+    <Compile Include="RemoteDebuggerJavaScriptBundleLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="JavaScriptModuleBase.Generated.tt">
