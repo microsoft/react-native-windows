@@ -6,15 +6,13 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule Platform
+ * @providesModule setupDevtools
  * @flow
  */
-
 'use strict';
 
-var Platform = {
-  OS: 'windows',
-  select: (obj: Object) => obj.windows,
-};
+function setupDevtools() {
+  // No-op on Windows
+}
 
-module.exports = Platform;
+module.exports = setupDevtools;

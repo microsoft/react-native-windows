@@ -13,8 +13,20 @@ namespace ReactNative
     /// </summary>
     public abstract class ReactDelegateFactoryBase : IReactDelegateFactory
     {
-        const string METHOD_TYPE_REMOTE = "remote";
-        const string METHOD_TYPE_REMOTE_ASYNC = "remoteAsync";
+        /// <summary>
+        /// Discriminator for asynchronous methods.
+        /// </summary>
+        public const string AsyncMethodType = "async";
+
+        /// <summary>
+        /// Discriminator for synchronous methods.
+        /// </summary>
+        public const string SyncMethodType = "sync";
+
+        /// <summary>
+        /// Discriminator for methods with promises.
+        /// </summary>
+        public const string PromiseMethodType = "promise";
         
         /// <summary>
         /// Instantiates a <see cref="ReactDelegateFactoryBase"/>.
@@ -44,10 +56,10 @@ namespace ReactNative
             var parameters = method.GetParameters();
             if (parameters.Length > 0 && parameters.Last().ParameterType == typeof(IPromise))
             {
-                return METHOD_TYPE_REMOTE_ASYNC;
+                return PromiseMethodType;
             }
 
-            return METHOD_TYPE_REMOTE;
+            return AsyncMethodType;
         }
 
         /// <summary>

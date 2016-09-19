@@ -1,0 +1,5 @@
+# Make sure we never publish ChakraBridge build to NPM
+ARM/
+Debug/
+x64/
+x86/

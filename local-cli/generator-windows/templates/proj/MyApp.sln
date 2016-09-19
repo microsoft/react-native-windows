@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= name %>", "<%= name %>\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative", "..\node_modules\react-native-windows\ReactWindows\ReactNative\ReactNative.csproj", "{C7673AD5-E3AA-468C-A5FD-FA38154E205C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "..\node_modules\react-native-windows\ReactWindows\ChakraBridge\ChakraBridge.vcxproj", "{4B72C796-16D5-4E3A-81C0-3E36F531E578}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -83,6 +85,30 @@ Global
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.ReleaseBundle|x64.Build.0 = Release|x64
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.ReleaseBundle|x86.ActiveCfg = Release|x86
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.ReleaseBundle|x86.Build.0 = Release|x86
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|ARM.Build.0 = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x64.ActiveCfg = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x64.Build.0 = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x86.Build.0 = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x64.Build.0 = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.DebugBundle|x86.Build.0 = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|ARM.ActiveCfg = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|ARM.Build.0 = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x64.ActiveCfg = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x64.Build.0 = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x86.ActiveCfg = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x86.Build.0 = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x64.Build.0 = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

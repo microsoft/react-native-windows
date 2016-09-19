@@ -94,7 +94,15 @@ namespace ReactNative.UIManager
             s_properties.GetOrCreateValue(view).Tag = tag;
         }
 
-        internal static int GetTag(this DependencyObject view)
+        /// <summary>
+        /// Get the React tag for the view instance. 
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>The React tag.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if tag is not available for the view.
+        /// </exception>
+        public static int GetTag(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -108,7 +116,14 @@ namespace ReactNative.UIManager
             return elementData.Tag.Value;
         }
 
-        internal static bool HasTag(this DependencyObject view)
+        /// <summary>
+        /// Checks if a React tag is available for the view instance.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>
+        /// <code>true</code> if the view has a tag, <code>false</code> otherwise.
+        /// </returns>
+        public static bool HasTag(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -125,7 +140,16 @@ namespace ReactNative.UIManager
             s_properties.GetOrCreateValue(view).Context = context;
         }
 
-        internal static ThemedReactContext GetReactContext(this DependencyObject view)
+        /// <summary>
+        /// Gets the <see cref="ThemedReactContext"/> associated with the view
+        /// instance.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>The context.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if context is not available for the view.
+        /// </exception>
+        public static ThemedReactContext GetReactContext(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
