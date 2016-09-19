@@ -14,6 +14,7 @@
 
 var Platform = {
   OS: 'windows',
+  select: (obj: Object) => obj.windows,
 };
 
 module.exports = Platform;
