@@ -19,7 +19,7 @@ namespace ReactNative.Bridge
         private static readonly MethodInfo s_createCallback = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreateCallback(default(JToken), default(IReactInstance))));
         private static readonly MethodInfo s_createPromise = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreatePromise(default(JToken), default(JToken), default(IReactInstance))));
         private static readonly MethodInfo s_toObject = ((MethodInfo)ReflectionHelpers.InfoOf((JToken token) => token.ToObject(typeof(Type))));
-        private static readonly MethodInfo s_stringFormat = (MethodInfo)ReflectionHelpers.InfoOf(() => string.Format(default(IFormatProvider), default(string), default(object)));
+        private static readonly MethodInfo s_stringFormat = (MethodInfo)ReflectionHelpers.InfoOf(() => string.Format(default(IFormatProvider), default(string), default(object[])));
         private static readonly MethodInfo s_getIndex = (MethodInfo)ReflectionHelpers.InfoOf((JArray arr) => arr[0]);
         private static readonly PropertyInfo s_countProperty = (PropertyInfo)ReflectionHelpers.InfoOf((JArray arr) => arr.Count);
 
@@ -99,7 +99,7 @@ namespace ReactNative.Bridge
             //         string.Format(
             //             CultureInfo.InvariantCulture,
             //             "Module '{module.Name}' method '{method.Name}' got '{0}' arguments, expected '{parameterCount}'."
-            //             jsArguments.Count));
+            //             new object[] { jsArguments.Count }));
             //
             blockStatements[3] = Expression.IfThen(
                 Expression.NotEqual(
@@ -115,9 +115,12 @@ namespace ReactNative.Bridge
                             Expression.Constant(
                                 string.Format(CultureInfo.InvariantCulture, "Module '{0}' method '{1}' got '{{0}}' arguments, expected '{2}'.", module.Name, method.Name, argc)
                             ),
-                            Expression.Convert(
-                                Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
-                                typeof(object)
+                            Expression.NewArrayInit(
+                                typeof(object),
+                                Expression.Convert(
+                                    Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
+                                    typeof(object)
+                                )
                             )
                         ),
                         Expression.Constant(jsArgumentsParameter.Name)
