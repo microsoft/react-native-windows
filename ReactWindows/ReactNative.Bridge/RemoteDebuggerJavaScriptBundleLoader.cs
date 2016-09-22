@@ -24,12 +24,11 @@ namespace ReactNative.Bridge
             return CompletedTask;
         }
 
-        public void LoadScript(IReactBridge executor)
+        public void LoadScript(IReactBridge bridge)
         {
-            if (executor == null)
-                throw new ArgumentNullException(nameof(executor));
+            if (bridge == null) throw new ArgumentNullException(nameof(bridge));
 
-            executor.RunScript(_proxySourceUrl, SourceUrl);
+            bridge.RunScript(_proxySourceUrl, SourceUrl);
         }
     }
 }

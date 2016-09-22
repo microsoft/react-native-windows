@@ -3,7 +3,7 @@
 namespace ReactNative.Bridge
 {
     /// <summary>
-    /// A class that stores JavaScript bundle information and allows the
+    /// Stores JavaScript bundle information and allows the
     /// <see cref="IReactInstance"/> to load a correct bundle through the
     /// <see cref="IReactBridge"/>.
     /// </summary>
@@ -15,16 +15,15 @@ namespace ReactNative.Bridge
         string SourceUrl { get; }
 
         /// <summary>
-        /// Initializes the JavaScript bundle loader, typically making an
-        /// asynchronous call to cache the bundle in memory.
+        /// Initializes the JavaScript bundle loader.
         /// </summary>
         /// <returns>A task to await initialization.</returns>
         Task InitializeAsync();
 
         /// <summary>
-        /// Loads the bundle into a JavaScript executor.
+        /// Loads the bundle into a JavaScript bridge.
         /// </summary>
-        /// <param name="executor">The JavaScript executor.</param>
-        void LoadScript(IReactBridge executor);
+        /// <param name="bridge">The JavaScript bridge.</param>
+        void LoadScript(IReactBridge bridge);
     }
 }

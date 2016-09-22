@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ReactNative.Reflection
 {
-    public static partial class EnumHelpers
+    public static class EnumHelpers
     {
         private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>> s_enumCache =
             new ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>>();
@@ -25,7 +25,7 @@ namespace ReactNative.Reflection
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),
-                    $"Invalid value '{value}' for type '{typeof(T)}'.");
+                    string.Format("Invalid value '{0}' for type '{1}'.", value, typeof(T)));
             }
 
             return (T)result;

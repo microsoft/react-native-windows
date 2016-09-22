@@ -32,12 +32,13 @@ namespace ReactNative.Bridge
             }
         }
 
-        public void LoadScript(IReactBridge executor)
+        public void LoadScript(IReactBridge bridge)
         {
-            if (executor == null)
-                throw new ArgumentNullException(nameof(executor));
+            if (bridge == null) throw new ArgumentNullException(nameof(bridge));
 
-            executor.RunScript(_script, SourceUrl);
+            if (_script == null) throw new InvalidOperationException("Bundle loader has not yet been initialized.");
+
+            bridge.RunScript(_script, SourceUrl);
         }
     }
 }

@@ -38,8 +38,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BridgeBusyEventArgs.cs" />
-    <Compile Include="BridgeIdleEventArgs.cs" />
     <Compile Include="CompiledReactDelegateFactory.cs" />
     <Compile Include="ICallback.cs" />
     <Compile Include="IInvocationHandler.cs" />

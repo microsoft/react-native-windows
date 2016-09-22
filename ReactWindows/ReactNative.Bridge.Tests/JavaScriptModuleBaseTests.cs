@@ -1,5 +1,4 @@
-﻿using ReactNative.Bridge;
-using NMock;
+﻿using NMock;
 using NUnit.Framework;
 
 namespace ReactNative.Bridge.Tests
