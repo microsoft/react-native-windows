@@ -16,10 +16,10 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 - [Documentation](#documentation)
 - [Examples](#examples)
 - [Extending React Native](#extending-react-native)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Opening Issues](#opening-issues)
 - [Contributing](#contributing)
 - [License](#license)
+- [Code of Conduct](#code-of-conduct)
 
 ## Introduction
 
@@ -105,3 +105,7 @@ We're still working on our CI story. In the meantime, please be sure to run the 
 ## License
 
 The React Native Windows plugin is provided under the [MIT License](LICENSE).
+
+## Code of Conduct
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
