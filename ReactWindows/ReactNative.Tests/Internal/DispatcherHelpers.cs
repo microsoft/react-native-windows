@@ -9,7 +9,7 @@ namespace ReactNative.Tests
     {
         public static async Task RunOnDispatcherAsync(Action action)
         {
-            await App.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action));
+            await App.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action)).AsTask().ConfigureAwait(false);
         }
 
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
@@ -21,9 +21,22 @@ namespace ReactNative.Tests
                 var result = func();
 
                 Task.Run(() => tcs.SetResult(result));
-            });
+            }).ConfigureAwait(false);
 
-            return await tcs.Task;
+            return await tcs.Task.ConfigureAwait(false);
+        }
+
+        public static async Task CallOnDispatcherAsync(Func<Task> asyncFunc)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            await RunOnDispatcherAsync(async () =>
+            {
+                await asyncFunc();
+                await Task.Run(() => tcs.SetResult(true));
+            }).ConfigureAwait(false);
+
+            await tcs.Task.ConfigureAwait(false);
         }
     }
 }

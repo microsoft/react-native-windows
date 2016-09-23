@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative
@@ -14,7 +14,7 @@ namespace ReactNative
     /// <summary>
     /// Base page for React Native applications.
     /// </summary>
-    public abstract class ReactPage : Page
+    public abstract class ReactPage : Page, IAsyncDisposable
     {
         private readonly IReactInstanceManager _reactInstanceManager;
 
@@ -124,11 +124,11 @@ namespace ReactNative
         /// <summary>
         /// Called before the application shuts down.
         /// </summary>
-        public void OnDestroy()
+        public Task DisposeAsync()
         {
-            _reactInstanceManager.OnDestroy();
-            
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
+
+            return _reactInstanceManager.DisposeAsync();            
         }
 
         /// <summary>
