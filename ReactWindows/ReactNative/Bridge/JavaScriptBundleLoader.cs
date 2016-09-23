@@ -7,7 +7,7 @@ using static System.FormattableString;
 namespace ReactNative.Bridge
 {
     /// <summary>
-    /// A class that stores JavaScript bundle information and allows the
+    /// Stores JavaScript bundle information and allows the
     /// <see cref="IReactInstance"/> to load a correct bundle through the
     /// <see cref="IReactBridge"/>.
     /// </summary>
@@ -19,17 +19,16 @@ namespace ReactNative.Bridge
         public abstract string SourceUrl { get; }
 
         /// <summary>
-        /// Initializes the JavaScript bundle loader, typically making an
-        /// asynchronous call to cache the bundle in memory.
+        /// Initializes the JavaScript bundle loader.
         /// </summary>
         /// <returns>A task to await initialization.</returns>
         public abstract Task InitializeAsync();
 
         /// <summary>
-        /// Loads the bundle into a JavaScript executor.
+        /// Loads the bundle into a JavaScript bridge.
         /// </summary>
-        /// <param name="executor">The JavaScript executor.</param>
-        public abstract void LoadScript(IReactBridge executor);
+        /// <param name="bridge">The JavaScript bridge.</param>
+        public abstract void LoadScript(IReactBridge bridge);
 
         /// <summary>
         /// This loader will read the file from the project directory.
@@ -78,16 +77,17 @@ namespace ReactNative.Bridge
                 SourceUrl = fileName;
             }
 
-            public override string SourceUrl
-            {
-                get;
-            }
+            public override string SourceUrl { get; }
 
             public override async Task InitializeAsync()
             {
                 try
                 {
-                    var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask().ConfigureAwait(false);
+                    var storageFile =
+                        await
+                            StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl))
+                                .AsTask()
+                                .ConfigureAwait(false);
                     _script = storageFile.Path;
                 }
                 catch (Exception ex)
@@ -99,13 +99,9 @@ namespace ReactNative.Bridge
 
             public override void LoadScript(IReactBridge bridge)
             {
-                if (bridge == null)
-                    throw new ArgumentNullException(nameof(bridge));
+                if (bridge == null) throw new ArgumentNullException(nameof(bridge));
 
-                if (_script == null)
-                {
-                    throw new InvalidOperationException("Bundle loader has not yet been initialized.");
-                }
+                if (_script == null) throw new InvalidOperationException("Bundle loader has not yet been initialized.");
 
                 bridge.RunScript(_script, SourceUrl);
             }
@@ -139,12 +135,13 @@ namespace ReactNative.Bridge
                 }
             }
 
-            public override void LoadScript(IReactBridge executor)
+            public override void LoadScript(IReactBridge bridge)
             {
-                if (executor == null)
-                    throw new ArgumentNullException(nameof(executor));
+                    if (bridge == null) throw new ArgumentNullException(nameof(bridge));
 
-                executor.RunScript(_script, SourceUrl);
+                    if (_script == null) throw new InvalidOperationException("Bundle loader has not yet been initialized.");
+
+                    bridge.RunScript(_script, SourceUrl);
             }
         }
 
@@ -168,12 +165,11 @@ namespace ReactNative.Bridge
                 return Task.CompletedTask;
             }
 
-            public override void LoadScript(IReactBridge executor)
+            public override void LoadScript(IReactBridge bridge)
             {
-                if (executor == null)
-                    throw new ArgumentNullException(nameof(executor));
+                if (bridge == null) throw new ArgumentNullException(nameof(bridge));
 
-                executor.RunScript(_proxySourceUrl, SourceUrl);
+                bridge.RunScript(_proxySourceUrl, SourceUrl);
             }
         }
     }

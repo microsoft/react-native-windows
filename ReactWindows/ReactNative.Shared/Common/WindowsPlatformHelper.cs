@@ -16,6 +16,9 @@
         public static DeviceFamilyType DeviceFamily {
             get
             {
+#if !WINDOWS_UWP
+                return DeviceFamilyType.Desktop;
+#else
                 var family = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
                 switch(family)
                 {
@@ -34,6 +37,7 @@
                     default:
                         return DeviceFamilyType.Unknown;
                 }
+#endif
             }
         }
     }
