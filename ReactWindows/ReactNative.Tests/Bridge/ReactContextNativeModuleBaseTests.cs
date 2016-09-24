@@ -21,7 +21,7 @@ namespace ReactNative.Tests.Bridge
 
         class TestModule : ReactContextNativeModuleBase
         {
-            public TestModule(ReactContext reactContext)
+            public TestModule(IReactContext reactContext)
                 : base(reactContext)
             {
             }

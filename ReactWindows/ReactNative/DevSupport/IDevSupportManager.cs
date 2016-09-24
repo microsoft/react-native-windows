@@ -82,13 +82,13 @@ namespace ReactNative.DevSupport
         /// Notify when a new React context is created.
         /// </summary>
         /// <param name="context">The React context.</param>
-        void OnNewReactContextCreated(ReactContext context);
+        void OnNewReactContextCreated(IReactContext context);
 
         /// <summary>
         /// Notify when a new React context is destroyed.
         /// </summary>
         /// <param name="context">The React context.</param>
-        void OnReactContextDestroyed(ReactContext context);
+        void OnReactContextDestroyed(IReactContext context);
 
         /// <summary>
         /// Reload developer settings.

@@ -131,6 +131,7 @@
     <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\CachedJavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\FileJavaScriptBundleLoader.cs" />
+    <Compile Include="Bridge\IReactContext.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\IJavaScriptBundleLoader.cs" />
