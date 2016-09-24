@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IInvocationHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptBundleLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ILifecycleEventListener.cs" />
@@ -21,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.cs" />
@@ -37,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactDelegateFactoryBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactMethodAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReflectionReactDelegateFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\RemoteDebuggerJavaScriptBundleLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
