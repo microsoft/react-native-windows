@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -40,6 +40,29 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactMethodAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\RemoteDebuggerJavaScriptBundleLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JavaScriptValueToJTokenConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptBackgroundWorkItemCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptBeforeCollectCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptEngineException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptErrorCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptFatalException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptMemoryAllocationCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptMemoryEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptNativeFunction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptObjectFinalizeCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptPropertyId.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptRuntime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptRuntimeAttributes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptRuntimeVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptScriptException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptSourceContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptThreadServiceCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptUsageException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptValueType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />

@@ -2,7 +2,6 @@
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
-using Windows.UI.Xaml;
 
 namespace ReactNative.Modules.Core
 {
