@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
+    <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

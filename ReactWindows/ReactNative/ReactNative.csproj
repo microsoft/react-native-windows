@@ -228,6 +228,7 @@
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
+    <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutDeleteAnimation.cs" />
     <Compile Include="UIManager\MatrixMathHelper.cs" />
     <Compile Include="UIManager\ReactDefaultCompoundView.cs" />
@@ -241,14 +242,8 @@
     <Compile Include="UIManager\MeasureAssertions.cs" />
     <Compile Include="UIManager\ReactStylesDiffMap.cs" />
     <Compile Include="UIManager\ReactStylesDiffMapExtensions.cs" />
-    <Compile Include="UIManager\Events\Event.cs" />
-    <Compile Include="UIManager\Events\EventDispatcher.cs" />
-    <Compile Include="UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracing\Tracer.cs" />
-    <Compile Include="UIManager\AppRegistry.cs" />
-    <Compile Include="UIManager\Events\TouchEventType.cs" />
-    <Compile Include="UIManager\Events\TouchEventTypeExtensions.cs" />
     <Compile Include="UIManager\LayoutAnimation\InterpolationTypeExtensions.cs" />
     <Compile Include="UIManager\LayoutAnimation\AnimatedPropertyType.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutCreateAnimation.cs" />

@@ -71,6 +71,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\Event.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\RCTEventEmitter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventTypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.Generated.tt" />
