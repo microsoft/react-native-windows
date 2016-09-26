@@ -12,6 +12,6 @@
 
 module.exports = {
   openURL: function(url) {
-    console.error('IntentAndroid is not supported on iOS');
+    console.error('IntentAndroid is not supported on Windows');
   },
 };
