@@ -23,7 +23,7 @@ namespace ReactNative.Tests.UIManager.Events
             var context = new ReactContext();
             var dispatcher = new EventDispatcher(context);
             AssertEx.Throws<ArgumentNullException>(() => dispatcher.DispatchEvent(null), ex => Assert.AreEqual("event", ex.ParamName));
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace ReactNative.Tests.UIManager.Events
             AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnSuspend());
             AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnReactInstanceDispose());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -65,7 +65,7 @@ namespace ReactNative.Tests.UIManager.Events
 
             Assert.IsTrue(waitDispatched.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -100,7 +100,7 @@ namespace ReactNative.Tests.UIManager.Events
             Assert.IsTrue(waitDispatched.WaitOne());
             Assert.IsTrue(waitDispatched.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -130,7 +130,7 @@ namespace ReactNative.Tests.UIManager.Events
                 Assert.IsTrue(waitDispatched.WaitOne());
             }
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -174,7 +174,7 @@ namespace ReactNative.Tests.UIManager.Events
             // Second event is disposed after dispatch
             Assert.IsTrue(disposed.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -218,7 +218,7 @@ namespace ReactNative.Tests.UIManager.Events
             // Second event is disposed after dispatch
             Assert.IsTrue(disposed.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -270,7 +270,7 @@ namespace ReactNative.Tests.UIManager.Events
                 Assert.IsTrue(waitDispatched.WaitOne());
             }
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -302,7 +302,7 @@ namespace ReactNative.Tests.UIManager.Events
 
             Assert.IsFalse(waitDispatched.WaitOne(500));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -334,7 +334,7 @@ namespace ReactNative.Tests.UIManager.Events
 
             Assert.IsFalse(waitDispatched.WaitOne(500));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -366,7 +366,7 @@ namespace ReactNative.Tests.UIManager.Events
 
             Assert.IsFalse(waitDispatched.WaitOne(500));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -398,7 +398,7 @@ namespace ReactNative.Tests.UIManager.Events
             await DispatcherHelpers.RunOnDispatcherAsync(dispatcher.OnResume);
             Assert.IsTrue(waitDispatched.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         private static async Task<ReactContext> CreateContextAsync(IJavaScriptExecutor executor)

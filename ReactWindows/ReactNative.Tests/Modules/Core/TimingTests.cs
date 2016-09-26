@@ -34,7 +34,7 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(waitHandle.WaitOne(1000));
             Assert.IsTrue(new[] { 42 }.SequenceEqual(ids));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace ReactNative.Tests.Modules.Core
 
             Assert.IsTrue(countdown.Wait(count * 2));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace ReactNative.Tests.Modules.Core
             timing.deleteTimer(id);
             Assert.IsFalse(waitHandle.WaitOne(1000));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -117,7 +117,7 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsFalse(waitHandle.WaitOne(1000));
             await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
             Assert.IsTrue(waitHandle.WaitOne(1000));
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -152,7 +152,7 @@ namespace ReactNative.Tests.Modules.Core
             Assert.AreEqual(42, ids.Distinct().SingleOrDefault());
             Assert.IsTrue(ids.Count >= repeat);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -195,7 +195,7 @@ namespace ReactNative.Tests.Modules.Core
             countdown.Signal();
             Assert.IsTrue(countdown.Wait(batchCount * maxDuration / 4 * 2));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -245,7 +245,7 @@ namespace ReactNative.Tests.Modules.Core
 
             Assert.IsTrue(waitHandle.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -269,7 +269,7 @@ namespace ReactNative.Tests.Modules.Core
 
             Assert.IsTrue(new[] { 42 }.SequenceEqual(ids));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -293,7 +293,7 @@ namespace ReactNative.Tests.Modules.Core
             countdown.Wait();
             timing.deleteTimer(42);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         [TestMethod]
@@ -320,7 +320,7 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(ids.SequenceEqual(new[] { 2 }));
             timing.deleteTimer(1);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
         private static ReactContext CreateReactContext(IInvocationHandler handler)

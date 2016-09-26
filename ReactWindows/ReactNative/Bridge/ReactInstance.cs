@@ -16,7 +16,7 @@ namespace ReactNative.Bridge
     /// A higher level API on top of the <see cref="IJavaScriptExecutor" /> and module registries. This provides an
     /// environment allowing the invocation of JavaScript methods.
     /// </summary>
-    class ReactInstance : IReactInstance, IDisposable
+    class ReactInstance : IReactInstance, IAsyncDisposable
     {
         private readonly NativeModuleRegistry _registry;
         private readonly JavaScriptModuleRegistry _jsRegistry;
@@ -167,7 +167,7 @@ namespace ReactNative.Bridge
             });
         }
 
-        public void Dispose()
+        public async Task DisposeAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -179,13 +179,13 @@ namespace ReactNative.Bridge
             IsDisposed = true;
             _registry.NotifyReactInstanceDispose();
 
-            QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+            await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
             {
                 using (_bridge) { }
                 return true;
-            }).Wait();
+            }).ConfigureAwait(false);
 
-            QueueConfiguration.Dispose();
+            await Task.Run(new Action(QueueConfiguration.Dispose)).ConfigureAwait(false);
         }
 
         private string BuildModulesConfig()
@@ -215,7 +215,8 @@ namespace ReactNative.Bridge
         private void HandleException(Exception ex)
         {
             _nativeModuleCallExceptionHandler(ex);
-            QueueConfiguration.DispatcherQueueThread.RunOnQueue(Dispose);
+            QueueConfiguration.DispatcherQueueThread.RunOnQueue(async () => 
+                await DisposeAsync().ConfigureAwait(false));
         }
 
         public sealed class Builder

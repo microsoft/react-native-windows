@@ -30,7 +30,7 @@ namespace ReactNative
     /// <see cref="ReactRootView"/> that is used to render the React
     /// application using this instance manager. It is required to pass
     /// lifecycle events to the instance manager (i.e., <see cref="OnSuspend"/>,
-    /// <see cref="OnDestroy"/>, and <see cref="OnResume(Action)"/>).
+    /// <see cref="IAsyncDisposable.DisposeAsync"/>, and <see cref="OnResume(Action)"/>).
     /// </summary>
     public class ReactInstanceManager : IReactInstanceManager
     {
@@ -102,8 +102,9 @@ namespace ReactNative
 
         /// <summary>
         /// Signals whether <see cref="CreateReactContextInBackground"/> has
-        /// been called. Will return <code>false</code> after  <see cref="OnDestroy"/>
-        /// until a new initial context has been created.
+        /// been called. Will return <code>false</code> after 
+        /// <see cref="IAsyncDisposable.DisposeAsync"/>  until a new initial
+        /// context has been created.
         /// </summary>
         public bool HasStartedCreatingInitialContext
         {
@@ -277,7 +278,7 @@ namespace ReactNative
         /// <summary>
         /// Destroy the <see cref="IReactInstanceManager"/>.
         /// </summary>
-        public void OnDestroy()
+        public async Task DisposeAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -290,7 +291,7 @@ namespace ReactNative
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
-                currentReactContext.Dispose();
+                await currentReactContext.DisposeAsync().ConfigureAwait(false);
                 _currentReactContext = null;
                 _hasStartedCreatingInitialContext = false;
             }
@@ -450,7 +451,7 @@ namespace ReactNative
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
-                TearDownReactContext(currentReactContext);
+                await TearDownReactContextAsync(currentReactContext);
                 _currentReactContext = null;
             }
 
@@ -537,7 +538,7 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
         }
 
-        private void TearDownReactContext(ReactContext reactContext)
+        private async Task TearDownReactContextAsync(ReactContext reactContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -551,7 +552,7 @@ namespace ReactNative
                 DetachViewFromInstance(rootView, reactContext.ReactInstance);
             }
 
-            reactContext.Dispose();
+            await reactContext.DisposeAsync();
             _devSupportManager.OnReactContextDestroyed(reactContext);
             // TODO: add memory pressure hooks
         }

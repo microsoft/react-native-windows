@@ -131,6 +131,8 @@
     <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
+    <Compile Include="Bridge\IAsyncCancelable.cs" />
+    <Compile Include="Bridge\IAsyncDisposable.cs" />
     <Compile Include="Bridge\ILifecycleEventListener.cs" />
     <Compile Include="Bridge\IPromise.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
