@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -20,7 +19,7 @@ namespace ReactNative.Bridge
         private static readonly MethodInfo s_createCallback = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreateCallback(default(JToken), default(IReactInstance))));
         private static readonly MethodInfo s_createPromise = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreatePromise(default(JToken), default(JToken), default(IReactInstance))));
         private static readonly MethodInfo s_toObject = ((MethodInfo)ReflectionHelpers.InfoOf((JToken token) => token.ToObject(typeof(Type))));
-        private static readonly MethodInfo s_stringFormat = (MethodInfo)ReflectionHelpers.InfoOf(() => string.Format(default(IFormatProvider), default(string), default(object)));
+        private static readonly MethodInfo s_stringFormat = (MethodInfo)ReflectionHelpers.InfoOf(() => string.Format(default(IFormatProvider), default(string), default(object[])));
         private static readonly MethodInfo s_getIndex = (MethodInfo)ReflectionHelpers.InfoOf((JArray arr) => arr[0]);
         private static readonly PropertyInfo s_countProperty = (PropertyInfo)ReflectionHelpers.InfoOf((JArray arr) => arr.Count);
 
@@ -100,7 +99,7 @@ namespace ReactNative.Bridge
             //         string.Format(
             //             CultureInfo.InvariantCulture,
             //             "Module '{module.Name}' method '{method.Name}' got '{0}' arguments, expected '{parameterCount}'."
-            //             jsArguments.Count));
+            //             new object[] { jsArguments.Count }));
             //
             blockStatements[3] = Expression.IfThen(
                 Expression.NotEqual(
@@ -114,11 +113,14 @@ namespace ReactNative.Bridge
                             s_stringFormat,
                             Expression.Constant(CultureInfo.InvariantCulture),
                             Expression.Constant(
-                                Invariant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'.")
+                                string.Format(CultureInfo.InvariantCulture, "Module '{0}' method '{1}' got '{{0}}' arguments, expected '{2}'.", module.Name, method.Name, argc)
                             ),
-                            Expression.Convert(
-                                Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
-                                typeof(object)
+                            Expression.NewArrayInit(
+                                typeof(object),
+                                Expression.Convert(
+                                    Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
+                                    typeof(object)
+                                )
                             )
                         ),
                         Expression.Constant(jsArgumentsParameter.Name)
@@ -177,7 +179,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseExceptionInner,
                             Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'.")
+                                string.Format(CultureInfo.InvariantCulture, "Error extracting argument for module '{0}' method '{1}' at index '{2}'.", moduleName, methodName, argumentIndex)
                             ),
                             Expression.Constant(parameterName),
                             ex
@@ -238,7 +240,7 @@ namespace ReactNative.Bridge
                         Expression.New(
                             s_newNativeArgumentParseException,
                             Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'.")
+                                string.Format(CultureInfo.InvariantCulture, "Error extracting argument for module '{0}' method '{1}' at index '{2}' and '{3}'.", moduleName, methodName, argumentIndex, argumentIndex + 1)
                             ),
                             Expression.Constant(parameterName)
                         ),

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Globalization;
 using System.Runtime.CompilerServices;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -20,7 +20,7 @@ namespace ReactNative.Bridge
             {
                 if (_invokeHandler != null)
                 {
-                    throw new InvalidOperationException(Invariant($"{nameof(InvocationHandler)} set more than once."));
+                    throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "{0} set more than once.", nameof(InvocationHandler)));
                 }
 
                 _invokeHandler = value;
@@ -51,7 +51,7 @@ namespace ReactNative.Bridge
 
             if (_invokeHandler == null)
             {
-                throw new InvalidOperationException(Invariant($"{nameof(InvocationHandler)} has not been set."));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "{0} has not been set.", nameof(InvocationHandler)));
             }
 
             _invokeHandler.Invoke(caller, args);

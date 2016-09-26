@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Reflection;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -45,7 +46,7 @@ namespace ReactNative.Bridge
                     if (!_moduleRegistrations.TryGetValue(typeof(T), out registration))
                     {
                         throw new InvalidOperationException(
-                            Invariant($"JS module '{typeof(T)}' hasn't been registered."));
+                            string.Format(CultureInfo.InvariantCulture, "JS module '{0}' hasn't been registered.", typeof(T)));
                     }
 
                     var type = registration.ModuleInterface;
@@ -119,22 +120,24 @@ namespace ReactNative.Bridge
                 if (type.GetTypeInfo().IsAbstract)
                 {
                     throw new ArgumentException(
-                        Invariant($"JavaScript module '{type}' must not be abstract."),
+                        string.Format(CultureInfo.InvariantCulture, "JavaScript module '{0}' must not be abstract.", type),
                         nameof(type));
                 }
 
-                if (!typeof(IJavaScriptModule).IsAssignableFrom(type))
+                if (!typeof(IJavaScriptModule).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                 {
                     throw new ArgumentException(
-                        Invariant($"JavaScript module '{type}' must derive from IJavaScriptModule."),
+                        string.Format(CultureInfo.InvariantCulture, "JavaScript module '{0}' must derive from IJavaScriptModule.", type),
                         nameof(type));
                 }
 
-                var defaultConstructor = type.GetConstructor(Array.Empty<Type>());
+                var defaultConstructor =
+                    type.GetTypeInfo().DeclaredConstructors.FirstOrDefault(ctor => ctor.GetParameters().Length == 0);
+
                 if (defaultConstructor == null || !defaultConstructor.IsPublic)
                 {
                     throw new ArgumentException(
-                        Invariant($"JavaScript module '{type}' must have a public default constructor."),
+                        string.Format(CultureInfo.InvariantCulture, "JavaScript module '{0}' must have a public default constructor.", type),
                         nameof(type));
                 }
             }

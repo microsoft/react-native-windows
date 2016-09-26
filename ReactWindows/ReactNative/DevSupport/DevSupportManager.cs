@@ -12,7 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
-using Windows.UI.Xaml;
 
 namespace ReactNative.DevSupport
 {

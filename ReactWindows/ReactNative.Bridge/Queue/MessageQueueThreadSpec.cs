@@ -1,5 +1,5 @@
 ﻿using System;
-using static System.FormattableString;
+using System.Globalization;
 
 namespace ReactNative.Bridge.Queue
 {
@@ -22,7 +22,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// The type of the <see cref="IMessageQueueThread"/>.
         /// </summary>
-        internal MessageQueueThreadKind Kind { get; }
+        public MessageQueueThreadKind Kind { get; }
 
         /// <summary>
         /// Singleton dispatcher <see cref="IMessageQueueThread"/> specification.
@@ -39,7 +39,7 @@ namespace ReactNative.Bridge.Queue
         {
             if (kind == MessageQueueThreadKind.DispatcherThread)
             {
-                throw new NotSupportedException(Invariant($"Use the singleton {nameof(DispatcherThreadSpec)} instance."));
+                throw new NotSupportedException(String.Format(CultureInfo.InvariantCulture, "Use the singleton {0} instance.", nameof(DispatcherThreadSpec)));
             }
 
             return new MessageQueueThreadSpec(kind, name);

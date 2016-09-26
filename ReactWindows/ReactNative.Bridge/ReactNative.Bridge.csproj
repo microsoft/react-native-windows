@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BB680B12-67DE-4CC9-9AF4-B3622A02AA47}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReactNative.Bridge</RootNamespace>
+    <AssemblyName>ReactNative.Bridge</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\ReactNative.Bridge.XML</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CompiledReactDelegateFactory.cs" />
+    <Compile Include="ICallback.cs" />
+    <Compile Include="IInvocationHandler.cs" />
+    <Compile Include="IJavaScriptBundleLoader.cs" />
+    <Compile Include="IJavaScriptExecutor.cs" />
+    <Compile Include="IJavaScriptModule.cs" />
+    <Compile Include="ILifecycleEventListener.cs" />
+    <Compile Include="INativeMethod.cs" />
+    <Compile Include="INativeModule.cs" />
+    <Compile Include="IOnBatchCompleteListener.cs" />
+    <Compile Include="IPromise.cs" />
+    <Compile Include="IReactBridge.cs" />
+    <Compile Include="IReactCallback.cs" />
+    <Compile Include="IReactDelegateFactory.cs" />
+    <Compile Include="IReactInstance.cs" />
+    <Compile Include="JavaScriptModuleBase.cs" />
+    <Compile Include="JavaScriptModuleBase.Generated1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JavaScriptModuleBase.Generated.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JavaScriptModuleRegistration.cs" />
+    <Compile Include="JavaScriptModuleRegistry.cs" />
+    <Compile Include="NativeArgumentsParseException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queue\IMessageQueueThread.cs" />
+    <Compile Include="Queue\IReactQueueConfiguration.cs" />
+    <Compile Include="Queue\MessageQueueThreadExtensions.cs" />
+    <Compile Include="Queue\MessageQueueThreadKind.cs" />
+    <Compile Include="Queue\MessageQueueThreadSpec.cs" />
+    <Compile Include="Queue\ReactQueueConfigurationSpec.cs" />
+    <Compile Include="ReactDelegateFactoryBase.cs" />
+    <Compile Include="ReactMethodAttribute.cs" />
+    <Compile Include="ReflectionReactDelegateFactory.cs" />
+    <Compile Include="RemoteDebuggerJavaScriptBundleLoader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="JavaScriptModuleBase.Generated.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>JavaScriptModuleBase.Generated1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReactNative.Common\ReactNative.Common.csproj">
+      <Project>{1396e697-be10-4a16-8b7e-c6aa7e826452}</Project>
+      <Name>ReactNative.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=3.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Interfaces.3.0.0\lib\netstandard1.0\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

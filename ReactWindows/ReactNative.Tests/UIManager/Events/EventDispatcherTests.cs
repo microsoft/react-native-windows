@@ -420,7 +420,7 @@ namespace ReactNative.Tests.UIManager.Events
             var instance = new ReactInstance.Builder
             {
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
-                BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
+                BundleLoader = new FileJavaScriptBundleLoader("ms-appx:///Resources/test.js"),
                 JavaScriptModuleRegistry = jsModules,
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
