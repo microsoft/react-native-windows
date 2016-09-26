@@ -35,12 +35,12 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
-        public UIImplementation(ReactContext reactContext, IReadOnlyList<IViewManager> viewManagers)
+        public UIImplementation(IReactContext reactContext, IReadOnlyList<IViewManager> viewManagers)
             : this(reactContext, new ViewManagerRegistry(viewManagers))
         {
         }
 
-        private UIImplementation(ReactContext reactContext, ViewManagerRegistry viewManagers)
+        private UIImplementation(IReactContext reactContext, ViewManagerRegistry viewManagers)
             : this(
                   viewManagers,
                   new UIViewOperationQueue(reactContext, new NativeViewHierarchyManager(viewManagers)))

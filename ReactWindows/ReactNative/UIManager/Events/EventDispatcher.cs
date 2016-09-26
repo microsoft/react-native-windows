@@ -81,7 +81,7 @@ namespace ReactNative.UIManager.Events
         private readonly IDictionary<string, short> _eventNameToEventId = new Dictionary<string, short>();
         private readonly List<Event> _eventStaging = new List<Event>();
 
-        private readonly ReactContext _reactContext;
+        private readonly IReactContext _reactContext;
 
         private Event[] _eventsToDispatch = new Event[16];
         private int _eventsToDispatchSize = 0;
@@ -92,7 +92,7 @@ namespace ReactNative.UIManager.Events
         /// Instantiates the <see cref="EventDispatcher"/>.
         /// </summary>
         /// <param name="reactContext">The context.</param>
-        public EventDispatcher(ReactContext reactContext)
+        public EventDispatcher(IReactContext reactContext)
         {
             if (reactContext == null)
                 throw new ArgumentNullException(nameof(reactContext));

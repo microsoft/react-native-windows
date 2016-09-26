@@ -29,7 +29,7 @@ namespace ReactNative.UIManager
         private readonly double[] _measureBuffer = new double[4];
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
-        private readonly ReactContext _reactContext;
+        private readonly IReactContext _reactContext;
 
         private readonly IList<Action> _nonBatchedOperations = new List<Action>();
 
@@ -45,7 +45,7 @@ namespace ReactNative.UIManager
         /// <param name="nativeViewHierarchyManager">
         /// The native view hierarchy manager.
         /// </param>
-        public UIViewOperationQueue(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager)
+        public UIViewOperationQueue(IReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;

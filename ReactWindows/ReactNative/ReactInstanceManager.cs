@@ -48,7 +48,7 @@ namespace ReactNative
         private bool _hasStartedCreatingInitialContext;
         private Task _contextInitializationTask;
         private Func<IJavaScriptExecutor> _pendingJsExecutorFactory;
-        private JavaScriptBundleLoader _pendingJsBundleLoader;
+        private IJavaScriptBundleLoader _pendingJsBundleLoader;
         private string _sourceUrl;
         private ReactContext _currentReactContext;
         private Action _defaultBackButtonHandler;
@@ -127,7 +127,7 @@ namespace ReactNative
         /// <summary>
         /// Gets the current React context instance.
         /// </summary>
-        public ReactContext CurrentReactContext
+        public IReactContext CurrentReactContext
         {
             get
             {
@@ -358,7 +358,7 @@ namespace ReactNative
         /// The application context.
         /// </param>
         /// <returns>The list of view managers.</returns>
-        public IReadOnlyList<IViewManager> CreateAllViewManagers(ReactContext reactContext)
+        public IReadOnlyList<IViewManager> CreateAllViewManagers(IReactContext reactContext)
         {
             if (reactContext == null)
                 throw new ArgumentNullException(nameof(reactContext));
@@ -401,7 +401,7 @@ namespace ReactNative
         {
             RecreateReactContextInBackground(
                 () => new ChakraJavaScriptExecutor(),
-                JavaScriptBundleLoader.CreateFileLoader(_jsBundleFile));
+                new FileJavaScriptBundleLoader(_jsBundleFile));
         }
 
         private void InvokeDefaultOnBackPressed()
@@ -412,25 +412,25 @@ namespace ReactNative
 
         private void OnReloadWithJavaScriptDebugger(Func<IJavaScriptExecutor> javaScriptExecutorFactory)
         {
+            string proxySourceUrl = _devSupportManager.JavaScriptBundleUrlForRemoteDebugging;
+            string realSourceUrl = _devSupportManager.SourceUrl;
             RecreateReactContextInBackground(
                 javaScriptExecutorFactory,
-                JavaScriptBundleLoader.CreateRemoteDebuggerLoader(
-                    _devSupportManager.JavaScriptBundleUrlForRemoteDebugging,
-                    _devSupportManager.SourceUrl));
+                new RemoteDebuggerJavaScriptBundleLoader(proxySourceUrl, realSourceUrl));
         }
 
         private void OnJavaScriptBundleLoadedFromServer()
         {
+            string sourceUrl = _devSupportManager.SourceUrl;
+            string cachedFileLocation = _devSupportManager.DownloadedJavaScriptBundleFile;
             RecreateReactContextInBackground(
                 () => new ChakraJavaScriptExecutor(),
-                JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
-                    _devSupportManager.SourceUrl,
-                    _devSupportManager.DownloadedJavaScriptBundleFile));
+                new CachedJavaScriptBundleLoader(sourceUrl, cachedFileLocation));
         }
 
         private void RecreateReactContextInBackground(
             Func<IJavaScriptExecutor> jsExecutorFactory,
-            JavaScriptBundleLoader jsBundleLoader)
+            IJavaScriptBundleLoader jsBundleLoader)
         {
             if (_contextInitializationTask == null)
             {
@@ -445,7 +445,7 @@ namespace ReactNative
 
         private async Task InitializeReactContextAsync(
             Func<IJavaScriptExecutor> jsExecutorFactory,
-            JavaScriptBundleLoader jsBundleLoader)
+            IJavaScriptBundleLoader jsBundleLoader)
         {
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
@@ -537,7 +537,7 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
         }
 
-        private void TearDownReactContext(ReactContext reactContext)
+        private void TearDownReactContext(IReactContext reactContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -558,7 +558,7 @@ namespace ReactNative
 
         private async Task<ReactContext> CreateReactContextAsync(
             Func<IJavaScriptExecutor> jsExecutorFactory,
-            JavaScriptBundleLoader jsBundleLoader)
+            IJavaScriptBundleLoader jsBundleLoader)
         {
             Tracer.Write(ReactConstants.Tag, "Creating React context.");
 
@@ -628,7 +628,7 @@ namespace ReactNative
 
         private void ProcessPackage(
             IReactPackage reactPackage,
-            ReactContext reactContext,
+            IReactContext reactContext,
             NativeModuleRegistry.Builder nativeRegistryBuilder,
             JavaScriptModuleRegistry.Builder jsModulesBuilder)
         {
@@ -643,7 +643,7 @@ namespace ReactNative
             }
         }
 
-        private void MoveReactContextToCurrentLifecycleState(ReactContext reactContext)
+        private void MoveReactContextToCurrentLifecycleState(IReactContext reactContext)
         {
             if (_lifecycleState == LifecycleState.Resumed)
             {
@@ -651,7 +651,7 @@ namespace ReactNative
             }
         }
 
-        private void OnReactContextInitialized(ReactContext reactContext)
+        private void OnReactContextInitialized(IReactContext reactContext)
         {
             ReactContextInitialized?
                 .Invoke(this, new ReactContextInitializedEventArgs(reactContext));

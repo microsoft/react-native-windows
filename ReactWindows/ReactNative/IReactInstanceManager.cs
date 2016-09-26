@@ -52,7 +52,7 @@ namespace ReactNative
         /// <summary>
         /// The current React context.
         /// </summary>
-        ReactContext CurrentReactContext { get; }
+        IReactContext CurrentReactContext { get; }
 
         /// <summary>
         /// Trigger the React context initialization asynchronously in a 
@@ -121,6 +121,6 @@ namespace ReactNative
         /// The application context.
         /// </param>
         /// <returns>The list of view managers.</returns>
-        IReadOnlyList<IViewManager> CreateAllViewManagers(ReactContext reactContext);
+        IReadOnlyList<IViewManager> CreateAllViewManagers(IReactContext reactContext);
     }
 }

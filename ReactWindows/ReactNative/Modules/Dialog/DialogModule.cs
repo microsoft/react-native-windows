@@ -23,7 +23,7 @@ namespace ReactNative.Modules.Dialog
         private MessageDialog _pendingDialog;
         private bool _isInForeground;
 
-        public DialogModule(ReactContext reactContext)
+        public DialogModule(IReactContext reactContext)
             : base(reactContext)
         {
         }

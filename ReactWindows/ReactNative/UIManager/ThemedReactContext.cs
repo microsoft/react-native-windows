@@ -8,13 +8,13 @@ namespace ReactNative.UIManager
     /// </summary>
     public class ThemedReactContext : ReactContext
     {
-        private readonly ReactContext _reactContext;
+        private readonly IReactContext _reactContext;
 
         /// <summary>
         /// Instantiates the <see cref="ThemedReactContext"/>.
         /// </summary>
         /// <param name="reactContext">The inner context.</param>
-        public ThemedReactContext(ReactContext reactContext)
+        public ThemedReactContext(IReactContext reactContext)
         {
             InitializeWithInstance(reactContext.ReactInstance);
             _reactContext = reactContext;

@@ -420,7 +420,7 @@ namespace ReactNative.Tests.UIManager.Events
             var instance = new ReactInstance.Builder
             {
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
-                BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
+                BundleLoader = new FileJavaScriptBundleLoader("ms-appx:///Resources/test.js"),
                 JavaScriptModuleRegistry = jsModules,
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
@@ -437,7 +437,7 @@ namespace ReactNative.Tests.UIManager.Events
             return reactInstance.InitializeBridgeAsync();
         }
 
-        private static IDisposable BlockJavaScriptThread(ReactContext reactContext)
+        private static IDisposable BlockJavaScriptThread(IReactContext reactContext)
         {
             var enter = new AutoResetEvent(false);
             var exit = new AutoResetEvent(false);

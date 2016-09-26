@@ -2,7 +2,6 @@
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
-using Windows.UI.Xaml;
 
 namespace ReactNative.Modules.Core
 {
@@ -30,7 +29,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of native modules.</returns>
-        IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext);
+        IReadOnlyList<INativeModule> CreateNativeModules(IReactContext reactContext);
 
         /// <summary>
         /// Creates the list of JavaScript modules to register with the 
@@ -51,6 +50,6 @@ namespace ReactNative.Modules.Core
         /// </summary>
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of view managers.</returns>
-        IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext);
+        IReadOnlyList<IViewManager> CreateViewManagers(IReactContext reactContext);
     }
 }

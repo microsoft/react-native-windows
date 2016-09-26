@@ -35,7 +35,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="uiImplementation">The UI implementation.</param>
         public UIManagerModule(
-            ReactContext reactContext,
+            IReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementation uiImplementation)
             : base(reactContext)

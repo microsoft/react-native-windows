@@ -43,7 +43,7 @@ namespace ReactNative.Shell
         /// </summary>
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of native modules.</returns>
-        public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
+        public IReadOnlyList<INativeModule> CreateNativeModules(IReactContext reactContext)
         {
             return new List<INativeModule>
             {
@@ -82,7 +82,7 @@ namespace ReactNative.Shell
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of view managers.</returns>
         public IReadOnlyList<IViewManager> CreateViewManagers(
-            ReactContext reactContext)
+            IReactContext reactContext)
         {
             return new List<IViewManager>
             {
