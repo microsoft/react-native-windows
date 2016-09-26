@@ -49,7 +49,7 @@ namespace ReactNative.Tests.Bridge
             var secondJSModule = instance.GetJavaScriptModule<TestJavaScriptModule>();
             Assert.AreSame(firstJSModule, secondJSModule);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(instance.Dispose);
+            await DispatcherHelpers.CallOnDispatcherAsync(instance.DisposeAsync);
         }
 
         [TestMethod]
@@ -98,11 +98,11 @@ namespace ReactNative.Tests.Bridge
             Assert.IsTrue(caught);
             Assert.AreEqual(1, module.InitializeCalls);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(() => instance.Dispose());
+            await DispatcherHelpers.CallOnDispatcherAsync(instance.DisposeAsync);
             Assert.AreEqual(1, module.OnReactInstanceDisposeCalls);
 
             // Dispose is idempotent
-            await DispatcherHelpers.RunOnDispatcherAsync(() => instance.Dispose());
+            await DispatcherHelpers.CallOnDispatcherAsync(instance.DisposeAsync);
             Assert.AreEqual(1, module.OnReactInstanceDisposeCalls);
 
             Assert.IsTrue(instance.IsDisposed);

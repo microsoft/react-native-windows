@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using System.Collections.Generic;
-using System.Reactive.Disposables;
 
 namespace ReactNative.Bridge
 {
@@ -10,7 +9,7 @@ namespace ReactNative.Bridge
     /// environment allowing the invocation of JavaScript methods and lets a
     /// set of native APIs be invokable from JavaScript as well.
     /// </summary>
-    public interface IReactInstance : ICancelable
+    public interface IReactInstance : IAsyncCancelable
     {
         /// <summary>
         /// Enumerates the available native modules.

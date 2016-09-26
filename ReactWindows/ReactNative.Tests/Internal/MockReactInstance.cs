@@ -4,6 +4,7 @@ using ReactNative.Bridge.Queue;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ReactNative.Tests
 {
@@ -84,9 +85,10 @@ namespace ReactNative.Tests
             _function(module, method, arguments, tracingName);
         }
 
-        public void Dispose()
+        public Task DisposeAsync()
         {
             Interlocked.Increment(ref _isDisposed);
+            return Task.CompletedTask;
         }
     }
 }
