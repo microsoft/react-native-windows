@@ -215,7 +215,8 @@ namespace ReactNative.Bridge
         private void HandleException(Exception ex)
         {
             _nativeModuleCallExceptionHandler(ex);
-            QueueConfiguration.DispatcherQueueThread.RunOnQueue(async () => await DisposeAsync());
+            QueueConfiguration.DispatcherQueueThread.RunOnQueue(async () => 
+                await DisposeAsync().ConfigureAwait(false));
         }
 
         public sealed class Builder

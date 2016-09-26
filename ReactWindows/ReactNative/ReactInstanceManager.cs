@@ -291,7 +291,7 @@ namespace ReactNative
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
-                await currentReactContext.DisposeAsync();
+                await currentReactContext.DisposeAsync().ConfigureAwait(false);
                 _currentReactContext = null;
                 _hasStartedCreatingInitialContext = false;
             }

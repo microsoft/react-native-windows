@@ -219,7 +219,7 @@ namespace ReactNative.Tests
             });
 
             var completedTask = await Task.WhenAny(
-                Task.Delay(50000),
+                Task.Delay(5000),
                 tcs.Task);
 
             Assert.IsTrue(tcs.Task.IsCompleted);
