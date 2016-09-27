@@ -112,6 +112,17 @@ namespace ReactNative.UIManager
             AutomationProperties.SetLiveSetting(view, liveSetting);
         }
 
+        /// <summary>
+        /// Sets the test ID, i.e., the automation ID.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="testId">The test ID.</param>
+        [ReactProp("testID")]
+        public void SetTestId(TFrameworkElement view, string testId)
+        {
+            AutomationProperties.SetAutomationId(view, testId);
+        }
+
         private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
         {
             var projection = EnsureProjection(view);
