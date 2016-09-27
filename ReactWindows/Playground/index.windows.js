@@ -22,7 +22,7 @@ class Playground extends Component {
           To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
-          Shake or press Shift+F10 for dev menu
+          Shake or press Shift+F10 for dev menu from WoB
         </Text>
       </View>
     );

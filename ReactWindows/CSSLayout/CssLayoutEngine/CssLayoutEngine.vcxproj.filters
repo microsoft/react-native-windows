@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>79859a6b-3a60-4c0c-b32f-7576ff734859</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="CSSConstants.cpp" />
+    <ClCompile Include="LayoutEngine.cpp" />
+    <ClCompile Include="CSSAlign.cpp" />
+    <ClCompile Include="CSSCachedMeasurement.cpp" />
+    <ClCompile Include="CSSDirection.cpp" />
+    <ClCompile Include="CSSFlexDirection.cpp" />
+    <ClCompile Include="MeasureOutput.cpp" />
+    <ClCompile Include="CSSWrap.cpp" />
+    <ClCompile Include="CSSPositionType.cpp" />
+    <ClCompile Include="CSSOverflow.cpp" />
+    <ClCompile Include="CSSMeasureMode.cpp" />
+    <ClCompile Include="CSSLayoutContext.cpp" />
+    <ClCompile Include="CSSJustify.cpp" />
+    <ClCompile Include="Spacing.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="CSSAlign.h" />
+    <ClInclude Include="CSSConstants.h" />
+    <ClInclude Include="CSSWrap.h" />
+    <ClInclude Include="CSSPositionType.h" />
+    <ClInclude Include="CSSOverflow.h" />
+    <ClInclude Include="CSSJustify.h" />
+    <ClInclude Include="CSSDirection.h" />
+    <ClInclude Include="CSSFlexDirection.h" />
+    <ClInclude Include="CSSMeasureMode.h" />
+    <ClInclude Include="CSSCachedMeasurement.h" />
+    <ClInclude Include="CSSLayoutContext.h" />
+    <ClInclude Include="MeasureOutput.h" />
+    <ClInclude Include="LayoutEngine.h" />
+    <ClInclude Include="Spacing.h" />
+  </ItemGroup>
+</Project>
