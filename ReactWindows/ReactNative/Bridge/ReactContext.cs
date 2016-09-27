@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ReactNative.Bridge
 {
@@ -11,7 +12,7 @@ namespace ReactNative.Bridge
     /// Abstract context wrapper for the React instance to manage
     /// lifecycle events.
     /// </summary>
-    public class ReactContext : IDisposable
+    public class ReactContext : IAsyncDisposable
     {
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
         private readonly List<ILifecycleEventListener> _lifecycleEventListeners =
@@ -164,7 +165,7 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Called by the host when the application shuts down.
         /// </summary>
-        public void Dispose()
+        public async Task DisposeAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -188,7 +189,7 @@ namespace ReactNative.Bridge
             var reactInstance = _reactInstance;
             if (reactInstance != null)
             {
-                reactInstance.Dispose();
+                await reactInstance.DisposeAsync().ConfigureAwait(false);
             }
 
             _lock.Dispose();

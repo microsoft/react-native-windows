@@ -4,6 +4,7 @@ using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative
 {
@@ -23,9 +24,9 @@ namespace ReactNative
     /// <see cref="ReactRootView"/> that is used to render the React 
     /// application using this instance manager. It is required to pass
     /// lifecycle events to the instance manager (i.e., <see cref="OnSuspend"/>,
-    /// <see cref="OnDestroy"/>, and <see cref="OnResume(Action)"/>).
+    /// <see cref="IAsyncDisposable.DisposeAsync"/>, and <see cref="OnResume(Action)"/>).
     /// </summary>
-    public interface IReactInstanceManager
+    public interface IReactInstanceManager : IAsyncDisposable
     {
         /// <summary>
         /// Event triggered when a React context has been initialized.
@@ -39,8 +40,9 @@ namespace ReactNative
 
         /// <summary>
         /// Signals whether <see cref="CreateReactContextInBackground"/> has 
-        /// been called. Will return <code>false</code> after  <see cref="OnDestroy"/>
-        /// until a new initial context has been created.
+        /// been called. Will return <code>false</code> after 
+        /// <see cref="IAsyncDisposable.DisposeAsync"/> until a new initial 
+        /// context has been created.
         /// </summary>
         bool HasStartedCreatingInitialContext { get; }
 
@@ -86,11 +88,6 @@ namespace ReactNative
         /// The action to take when back is pressed.
         /// </param>
         void OnResume(Action onBackPressed);
-
-        /// <summary>
-        /// Destroy the <see cref="IReactInstanceManager"/>.
-        /// </summary>
-        void OnDestroy();
 
         /// <summary>
         /// Attach given <paramref name="rootView"/> to a React instance

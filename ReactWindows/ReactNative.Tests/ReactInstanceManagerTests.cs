@@ -47,7 +47,7 @@ namespace ReactNative.Tests
                 () => manager.OnResume(null),
                 ex => Assert.AreEqual("onBackPressed", ex.ParamName));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
@@ -65,7 +65,7 @@ namespace ReactNative.Tests
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
@@ -94,7 +94,7 @@ namespace ReactNative.Tests
 
             Assert.IsTrue(caught);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
@@ -116,7 +116,7 @@ namespace ReactNative.Tests
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
@@ -140,7 +140,7 @@ namespace ReactNative.Tests
 
             Assert.IsTrue(caught);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
@@ -156,7 +156,7 @@ namespace ReactNative.Tests
 
             Assert.IsTrue(waitHandle.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
@@ -174,14 +174,55 @@ namespace ReactNative.Tests
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
 
             await DispatcherHelpers.RunOnDispatcherAsync(
                 () => manager.CreateReactContextInBackground());
 
             Assert.IsTrue(waitHandle.WaitOne());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(manager.OnDestroy);
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_DisposeAsync_WhileBusy()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile);
+
+            var initializedEvent = new AutoResetEvent(false);
+            manager.ReactContextInitialized += (sender, args) => initializedEvent.Set();
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                await manager.CreateReactContextInBackgroundAsync();
+            });
+
+            var e = new AutoResetEvent(false);
+
+            initializedEvent.WaitOne();
+            manager.CurrentReactContext.RunOnNativeModulesQueueThread(() =>
+            {
+                e.WaitOne();
+                var x = DispatcherHelpers.CallOnDispatcherAsync(() =>
+                {
+                    return 42;
+                }).Result;
+            });
+
+            var tcs = new TaskCompletionSource<bool>();
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            {
+                e.Set();
+                await manager.DisposeAsync();
+                await Task.Run(() => tcs.SetResult(true));
+            });
+
+            var completedTask = await Task.WhenAny(
+                Task.Delay(5000),
+                tcs.Task);
+
+            Assert.IsTrue(tcs.Task.IsCompleted);
         }
 
         private static ReactInstanceManager CreateReactInstanceManager()
