@@ -18,6 +18,7 @@
   "files": [
     "Libraries",
     "ReactWindows/ReactNative",
+    "ReactWindows/ReactNative.Shared",
     "ReactWindows/ChakraBridge",
     "local-cli",
     "README.md"
