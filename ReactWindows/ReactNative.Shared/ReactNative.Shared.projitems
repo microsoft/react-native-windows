@@ -24,7 +24,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.Generated.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IMessageQueueThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IReactQueueConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\Event.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\RCTEventEmitter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventTypeExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.Generated.tt" />
   </ItemGroup>
 </Project>

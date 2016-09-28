@@ -133,14 +133,6 @@
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBase.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBase.Generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>JavaScriptModuleBase.Generated.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bridge\JavaScriptModuleRegistration.cs" />
-    <Compile Include="Bridge\JavaScriptModuleRegistry.cs" />
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="Bridge\NativeModuleBase.cs" />
@@ -288,16 +280,11 @@
     <Compile Include="UIManager\MeasureAssertions.cs" />
     <Compile Include="UIManager\ReactStylesDiffMap.cs" />
     <Compile Include="UIManager\ReactStylesDiffMapExtensions.cs" />
-    <Compile Include="UIManager\Events\Event.cs" />
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
-    <Compile Include="UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bridge\ReactMethodAttribute.cs" />
     <Compile Include="Reflection\ReflectionHelpers.cs" />
     <Compile Include="Tracing\Tracer.cs" />
-    <Compile Include="UIManager\AppRegistry.cs" />
-    <Compile Include="UIManager\Events\TouchEventType.cs" />
-    <Compile Include="UIManager\Events\TouchEventTypeExtensions.cs" />
     <Compile Include="UIManager\LayoutAnimation\InterpolationTypeExtensions.cs" />
     <Compile Include="UIManager\LayoutAnimation\AnimatedPropertyType.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutCreateAnimation.cs" />
@@ -392,10 +379,6 @@
     <EmbeddedResource Include="Properties\ReactNative.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bridge\JavaScriptModuleBase.Generated.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>JavaScriptModuleBase.Generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Tracing\LoggingActivityBuilderExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LoggingActivityBuilderExtensions.generated.cs</LastGenOutput>

@@ -96,8 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\ReactInstanceTests.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
-    <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Bridge\NativeModuleBaseTests.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
     <Compile Include="Bridge\ReactContextNativeModuleBaseTests.cs" />
