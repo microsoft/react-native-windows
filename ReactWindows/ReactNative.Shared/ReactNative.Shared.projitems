@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>eea8b852-4d07-48e1-8294-a21ab5909fe5</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ReactNative.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IInvocationHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptExecutor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ILifecycleEventListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IOnBatchCompleteListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactDelegateFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IMessageQueueThread.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IReactQueueConfiguration.cs" />
+  </ItemGroup>
+</Project>

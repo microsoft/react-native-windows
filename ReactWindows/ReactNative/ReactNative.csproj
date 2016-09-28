@@ -131,18 +131,8 @@
     <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
-    <Compile Include="Bridge\IAsyncCancelable.cs" />
-    <Compile Include="Bridge\IAsyncDisposable.cs" />
-    <Compile Include="Bridge\ILifecycleEventListener.cs" />
-    <Compile Include="Bridge\IPromise.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
-    <Compile Include="Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
-    <Compile Include="Bridge\IInvocationHandler.cs" />
-    <Compile Include="Bridge\IJavaScriptExecutor.cs" />
-    <Compile Include="Bridge\IJavaScriptModule.cs" />
-    <Compile Include="Bridge\IReactCallback.cs" />
-    <Compile Include="Bridge\IReactDelegateFactory.cs" />
     <Compile Include="Bridge\JavaScriptModuleBase.cs" />
     <Compile Include="Bridge\JavaScriptModuleBase.Generated.cs">
       <AutoGen>True</AutoGen>
@@ -153,16 +143,10 @@
     <Compile Include="Bridge\JavaScriptModuleRegistry.cs" />
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\NativeArgumentsParseException.cs" />
-    <Compile Include="Bridge\ICallback.cs" />
-    <Compile Include="Bridge\IReactInstance.cs" />
-    <Compile Include="Bridge\INativeMethod.cs" />
-    <Compile Include="Bridge\IOnBatchCompleteListener.cs" />
     <Compile Include="Bridge\NativeModuleBase.cs" />
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfigurationSpec.cs" />
-    <Compile Include="Bridge\Queue\IReactQueueConfiguration.cs" />
-    <Compile Include="Bridge\Queue\IMessageQueueThread.cs" />
     <Compile Include="Bridge\Queue\LimitedConcurrencyTaskScheduler.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThread.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadExtensions.cs" />
@@ -173,6 +157,7 @@
     <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Common\WindowsPlatformHelper.cs" />
+    <Compile Include="CompiledReactDelegateFactory.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
@@ -280,7 +265,6 @@
     <Compile Include="Chakra\JavaScriptValue.cs" />
     <Compile Include="Chakra\JavaScriptValueType.cs" />
     <Compile Include="Chakra\Native.cs" />
-    <Compile Include="Bridge\INativeModule.cs" />
     <Compile Include="Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="Modules\Core\RCTDeviceEventEmitter.cs" />
     <Compile Include="Modules\Core\RCTNativeAppEventEmitter.cs" />
@@ -308,7 +292,6 @@
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Bridge\IReactBridge.cs" />
     <Compile Include="Bridge\ReactMethodAttribute.cs" />
     <Compile Include="Reflection\ReflectionHelpers.cs" />
     <Compile Include="Tracing\Tracer.cs" />
@@ -447,6 +430,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
