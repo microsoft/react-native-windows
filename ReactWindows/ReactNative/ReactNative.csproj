@@ -131,6 +131,7 @@
     <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
+    <Compile Include="Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
@@ -149,7 +150,6 @@
     <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Common\WindowsPlatformHelper.cs" />
-    <Compile Include="CompiledReactDelegateFactory.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
