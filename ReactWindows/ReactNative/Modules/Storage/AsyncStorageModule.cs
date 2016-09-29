@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +13,32 @@ namespace ReactNative.Modules.Storage
 {
     class AsyncStorageModule : NativeModuleBase, ILifecycleEventListener
     {
-        private const string DirectoryName = "AsyncStorage\\";
+        private const string DirectoryName = "AsyncStorage";
         private const string FileExtension = ".data";
+        
+        private static readonly IDictionary<char, string> s_charToString = new Dictionary<char, string>
+        {
+            { '\\', "{bsl}" },
+            { '/', "{fsl}" },
+            { ':', "{col}" },
+            { '*', "{asx}" },
+            { '?', "{q}" },
+            { '<', "{gt}" },
+            { '>', "{lt}" },
+            { '|', "{bar}" },
+            { '\"', "{quo}" },
+            { '.', "{dot}" },
+            { '{', "{ocb}" },
+            { '}', "{ccb}" },
+        };
+
+        private static readonly IDictionary<string, char> s_stringToChar = s_charToString.ToDictionary(kv => kv.Value, kv => kv.Key);
+
+        private static readonly int s_maxReplace = s_charToString.Values.Select(s => s.Length).Max();
 
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
+
+        private StorageFolder _cachedFolder;
 
         public override string Name
         {
@@ -228,11 +252,11 @@ namespace ReactNative.Modules.Storage
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
             {
-                var localFolder = ApplicationData.Current.LocalFolder;
-                var storageItem = await localFolder.TryGetItemAsync(DirectoryName).AsTask().ConfigureAwait(false);
-                if (storageItem != null)
+                var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+                if (storageFolder != null)
                 {
-                    await storageItem.DeleteAsync().AsTask().ConfigureAwait(false);
+                    await storageFolder.DeleteAsync().AsTask().ConfigureAwait(false);
+                    _cachedFolder = null;
                 }
             }
             finally
@@ -251,20 +275,16 @@ namespace ReactNative.Modules.Storage
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
             {
-                var localFolder = ApplicationData.Current.LocalFolder;
-                var storageItem = await localFolder.TryGetItemAsync(DirectoryName).AsTask().ConfigureAwait(false);
-                if (storageItem != null)
+                var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+                if (storageFolder != null)
                 {
-                    var directory = await localFolder.GetFolderAsync(DirectoryName).AsTask().ConfigureAwait(false);
-                    var items = await directory.GetItemsAsync().AsTask().ConfigureAwait(false);
+                    var items = await storageFolder.GetItemsAsync().AsTask().ConfigureAwait(false);
                     foreach (var item in items)
                     {
                         var itemName = item.Name;
-                        var itemLength = itemName.Length;
-                        var extLength = FileExtension.Length;
-                        if (itemName.EndsWith(FileExtension) && itemLength > extLength)
+                        if (itemName.EndsWith(FileExtension))
                         {
-                            keys.Add(item.Name.Substring(0, itemLength - extLength));
+                            keys.Add(GetKeyName(itemName));
                         }
                     }
                 }
@@ -292,14 +312,16 @@ namespace ReactNative.Modules.Storage
 
         private async Task<string> GetAsync(string key)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var fileName = GetFileName(key);
-
-            var storageItem = await localFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
-            if (storageItem != null)
+            var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+            if (storageFolder != null)
             {
-                var file = await localFolder.GetFileAsync(fileName).AsTask().ConfigureAwait(false);
-                return await FileIO.ReadTextAsync(file).AsTask().ConfigureAwait(false);
+                var fileName = GetFileName(key);
+                var storageItem = await storageFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
+                if (storageItem != null)
+                {
+                    var file = await storageFolder.GetFileAsync(fileName).AsTask().ConfigureAwait(false);
+                    return await FileIO.ReadTextAsync(file).AsTask().ConfigureAwait(false);
+                }
             }
 
             return null;
@@ -327,12 +349,15 @@ namespace ReactNative.Modules.Storage
 
         private async Task<JObject> RemoveAsync(string key)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var fileName = GetFileName(key);
-            var storageItem = await localFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
-            if (storageItem != null)
+            var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+            if (storageFolder != null)
             {
-                await storageItem.DeleteAsync().AsTask().ConfigureAwait(false);
+                var fileName = GetFileName(key);
+                var storageItem = await storageFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
+                if (storageItem != null)
+                {
+                    await storageItem.DeleteAsync().AsTask().ConfigureAwait(false);
+                }
             }
 
             return null;
@@ -340,65 +365,105 @@ namespace ReactNative.Modules.Storage
 
         private async Task<JObject> SetAsync(string key, string value)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var file = await localFolder.CreateFileAsync(GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
+            var storageFolder = await GetAsyncStorageFolder(true).ConfigureAwait(false);
+            var file = await storageFolder.CreateFileAsync(GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
             await FileIO.WriteTextAsync(file, value).AsTask().ConfigureAwait(false);
             return default(JObject);
         }
 
+        private async Task<StorageFolder> GetAsyncStorageFolder(bool createIfNotExists)
+        {
+            if (_cachedFolder == null)
+            {
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var storageFolderItem = await localFolder.TryGetItemAsync(DirectoryName);
+                _cachedFolder = storageFolderItem != null || createIfNotExists
+                    ? await localFolder.CreateFolderAsync(DirectoryName, CreationCollisionOption.OpenIfExists)
+                    : null;
+            }
+
+            return _cachedFolder;
+        }
+
         private static string GetFileName(string key)
         {
-            var sb = new StringBuilder();
-            sb.Append(DirectoryName);
-            foreach (var ch in key)
+            var sb = default(StringBuilder);
+            for (var i = 0; i < key.Length; ++i)
             {
-                switch (ch)
+                var ch = key[i];
+                var replacement = default(string);
+                if (s_charToString.TryGetValue(ch, out replacement))
                 {
-                    case '\\':
-                        sb.Append("{bsl}");
-                        break;
-                    case '/':
-                        sb.Append("{fsl}");
-                        break;
-                    case ':':
-                        sb.Append("{col}");
-                        break;
-                    case '*':
-                        sb.Append("{asx}");
-                        break;
-                    case '?':
-                        sb.Append("{q}");
-                        break;
-                    case '<':
-                        sb.Append("{lt}");
-                        break;
-                    case '>':
-                        sb.Append("{gt}");
-                        break;
-                    case '|':
-                        sb.Append("{bar}");
-                        break;
-                    case '"':
-                        sb.Append("{quo}");
-                        break;
-                    case '.':
-                        sb.Append("{dot}");
-                        break;
-                    case '{':
-                        sb.Append("{ocb}");
-                        break;
-                    case '}':
-                        sb.Append("{ccb}");
-                        break;
-                    default:
-                        sb.Append(ch);
-                        break;
+                    if (sb == null)
+                    {
+                        sb = new StringBuilder();
+                        sb.Append(key, 0, i);
+                    }
+
+                    sb.Append(replacement);
+                }
+                else if (sb != null)
+                {
+                    sb.Append(ch);
+                }
+            }
+            
+            if (sb == null)
+            {
+                return string.Concat(key, FileExtension);
+            }
+            else
+            {
+                sb.Append(FileExtension);
+                return sb.ToString();
+            }
+        }
+
+        private static string GetKeyName(string fileName)
+        {
+            var length = fileName.Length - FileExtension.Length;
+            var sb = default(StringBuilder);
+            for (var i = 0; i < length; ++i)
+            {
+                var start = fileName[i];
+                if (start == '{')
+                {
+                    var j = i;
+                    while (j < length && (j - i) < s_maxReplace)
+                    {
+                        var end = fileName[++j];
+                        if (end == '}')
+                        {
+                            break;
+                        }
+                    }
+
+                    if (j < length && (j - i) < s_maxReplace)
+                    {
+                        var substring = fileName.Substring(i, j - i + 1);
+                        var replacement = default(char);
+                        if (s_stringToChar.TryGetValue(substring, out replacement))
+                        {
+                            if (sb == null)
+                            {
+                                sb = new StringBuilder();
+                                sb.Append(fileName, 0, i);
+                            }
+
+                            sb.Append(replacement);
+                            i = j;
+                        }
+                    }
+                }
+                else if (sb != null)
+                {
+                    sb.Append(start);
                 }
             }
 
-            sb.Append(FileExtension);
-
-            return sb.ToString();
+            return sb == null
+                ? fileName.Substring(0, length)
+                : sb.ToString();
         }
 
         private static void DeepMergeInto(JObject oldJson, JObject newJson)
