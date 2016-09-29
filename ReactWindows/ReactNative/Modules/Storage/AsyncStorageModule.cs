@@ -36,9 +36,9 @@ namespace ReactNative.Modules.Storage
 
         private static readonly int s_maxReplace = s_charToString.Values.Select(s => s.Length).Max();
 
-        private static StorageFolder s_cachedFolder;
-
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
+
+        private StorageFolder s_cachedFolder;
 
         public override string Name
         {
@@ -370,7 +370,7 @@ namespace ReactNative.Modules.Storage
             return default(JObject);
         }
 
-        private static async Task<StorageFolder> GetAsyncStorageFolder(bool createIfNotExists)
+        private async Task<StorageFolder> GetAsyncStorageFolder(bool createIfNotExists)
         {
             if (s_cachedFolder == null)
             {
