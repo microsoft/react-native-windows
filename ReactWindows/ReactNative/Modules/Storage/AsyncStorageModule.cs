@@ -377,7 +377,7 @@ namespace ReactNative.Modules.Storage
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
                 var storageFolderItem = await localFolder.TryGetItemAsync(DirectoryName);
-                _cachedFolder = storageFolderItem == null && createIfNotExists
+                _cachedFolder = storageFolderItem != null || createIfNotExists
                     ? await localFolder.CreateFolderAsync(DirectoryName, CreationCollisionOption.OpenIfExists)
                     : null;
             }
