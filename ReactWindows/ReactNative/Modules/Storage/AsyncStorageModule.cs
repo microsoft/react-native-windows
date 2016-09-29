@@ -428,7 +428,7 @@ namespace ReactNative.Modules.Storage
                 if (start == '{')
                 {
                     var j = i;
-                    while (j < fileName.Length && (j - i) < s_maxReplace)
+                    while (j < length && (j - i) < s_maxReplace)
                     {
                         var end = fileName[++j];
                         if (end == '}')

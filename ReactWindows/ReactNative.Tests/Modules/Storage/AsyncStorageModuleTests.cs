@@ -43,7 +43,7 @@ namespace ReactNative.Tests.Modules.Storage
         }
        
         [TestMethod]
-        public void AsyncStorageModule_GetAllKeys_Valid()
+        public void AsyncStorageModule_GetAllKeys_SpecialCharacters()
         {
             var module = new AsyncStorageModule();
             var waitHandle = new AutoResetEvent(false);
@@ -76,6 +76,9 @@ namespace ReactNative.Tests.Modules.Storage
                 new[] { ".", "10" },
                 new[] { "{", "11" },
                 new[] { "}", "12" },
+                new[] { "\\/:*?<>|\".{}", "13" },
+                new[] { "abc\\abc/abc:abc*abc?abc<abc>abc|abc\"abc.abc{abc}abc", "13" },
+                new[] { "foo:bar", "14" },
             };
 
             module.multiSet(pairs, callback);
