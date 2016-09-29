@@ -264,7 +264,7 @@ namespace ReactNative.Modules.Storage
                         var extLength = FileExtension.Length;
                         if (itemName.EndsWith(FileExtension) && itemLength > extLength)
                         {
-                            keys.Add(item.Name.Substring(0, itemLength - extLength));
+                            keys.Add(GetKeyName(item.Name.Substring(0, itemLength - extLength)));
                         }
                     }
                 }
@@ -346,53 +346,36 @@ namespace ReactNative.Modules.Storage
             return default(JObject);
         }
 
+        private static readonly Dictionary<char, string> KeyToFileMapping = new Dictionary<char, string>
+        {
+            { '\\', "{bsl}" }, {'/',"{fsl}" }, {':',"{col}" }, {'*',"{asx}" }, {'?',"{q}" },
+            {'<',"{lt}" }, {'>',"{gt}" }, {'|',"{bar}" }, {'"',"{quo}" }, {'.',"{dot}" },
+            {'{',"{ocb}" }, {'}',"{ccb}" },
+        };
+
+        private static readonly Dictionary<string, char> FileToKeyMapping =
+            KeyToFileMapping.ToDictionary(pair => pair.Value, pair => pair.Key);
+
+        private static string GetKeyName(string filename)
+        {
+            return FileToKeyMapping.Aggregate(filename, (current, mapping) => current.Replace(mapping.Key, mapping.Value.ToString()));
+        }
+
         private static string GetFileName(string key)
         {
             var sb = new StringBuilder();
             sb.Append(DirectoryName);
             foreach (var ch in key)
             {
-                switch (ch)
+                string toAppend;
+
+                if (KeyToFileMapping.TryGetValue(ch, out toAppend))
                 {
-                    case '\\':
-                        sb.Append("{bsl}");
-                        break;
-                    case '/':
-                        sb.Append("{fsl}");
-                        break;
-                    case ':':
-                        sb.Append("{col}");
-                        break;
-                    case '*':
-                        sb.Append("{asx}");
-                        break;
-                    case '?':
-                        sb.Append("{q}");
-                        break;
-                    case '<':
-                        sb.Append("{lt}");
-                        break;
-                    case '>':
-                        sb.Append("{gt}");
-                        break;
-                    case '|':
-                        sb.Append("{bar}");
-                        break;
-                    case '"':
-                        sb.Append("{quo}");
-                        break;
-                    case '.':
-                        sb.Append("{dot}");
-                        break;
-                    case '{':
-                        sb.Append("{ocb}");
-                        break;
-                    case '}':
-                        sb.Append("{ccb}");
-                        break;
-                    default:
-                        sb.Append(ch);
-                        break;
+                    sb.Append(toAppend);
+                }
+                else
+                {
+                    sb.Append(ch);
                 }
             }
 
