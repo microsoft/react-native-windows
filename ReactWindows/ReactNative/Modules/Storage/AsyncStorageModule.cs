@@ -38,7 +38,7 @@ namespace ReactNative.Modules.Storage
 
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
 
-        private StorageFolder s_cachedFolder;
+        private StorageFolder _cachedFolder;
 
         public override string Name
         {
@@ -252,11 +252,11 @@ namespace ReactNative.Modules.Storage
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
             {
-                var localFolder = ApplicationData.Current.LocalFolder;
-                var storageItem = await localFolder.TryGetItemAsync(DirectoryName).AsTask().ConfigureAwait(false);
-                if (storageItem != null)
+                var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+                if (storageFolder != null)
                 {
-                    await storageItem.DeleteAsync().AsTask().ConfigureAwait(false);
+                    await storageFolder.DeleteAsync().AsTask().ConfigureAwait(false);
+                    _cachedFolder = null;
                 }
             }
             finally
@@ -275,15 +275,16 @@ namespace ReactNative.Modules.Storage
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
             {
-                var storageFolder = await GetAsyncStorageFolder(false);
+                var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
                 if (storageFolder != null)
                 {
                     var items = await storageFolder.GetItemsAsync().AsTask().ConfigureAwait(false);
                     foreach (var item in items)
                     {
-                        if (item.Name.EndsWith(FileExtension))
+                        var itemName = item.Name;
+                        if (itemName.EndsWith(FileExtension))
                         {
-                            keys.Add(GetKeyName(item.Name));
+                            keys.Add(GetKeyName(itemName));
                         }
                     }
                 }
@@ -311,7 +312,7 @@ namespace ReactNative.Modules.Storage
 
         private async Task<string> GetAsync(string key)
         {
-            var storageFolder = await GetAsyncStorageFolder(false);
+            var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
             if (storageFolder != null)
             {
                 var fileName = GetFileName(key);
@@ -348,7 +349,7 @@ namespace ReactNative.Modules.Storage
 
         private async Task<JObject> RemoveAsync(string key)
         {
-            var storageFolder = await GetAsyncStorageFolder(false);
+            var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
             if (storageFolder != null)
             {
                 var fileName = GetFileName(key);
@@ -364,7 +365,7 @@ namespace ReactNative.Modules.Storage
 
         private async Task<JObject> SetAsync(string key, string value)
         {
-            var storageFolder = await GetAsyncStorageFolder(true);
+            var storageFolder = await GetAsyncStorageFolder(true).ConfigureAwait(false);
             var file = await storageFolder.CreateFileAsync(GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
             await FileIO.WriteTextAsync(file, value).AsTask().ConfigureAwait(false);
             return default(JObject);
@@ -372,16 +373,16 @@ namespace ReactNative.Modules.Storage
 
         private async Task<StorageFolder> GetAsyncStorageFolder(bool createIfNotExists)
         {
-            if (s_cachedFolder == null)
+            if (_cachedFolder == null)
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
                 var storageFolderItem = await localFolder.TryGetItemAsync(DirectoryName);
-                s_cachedFolder = storageFolderItem == null && createIfNotExists
+                _cachedFolder = storageFolderItem == null && createIfNotExists
                     ? await localFolder.CreateFolderAsync(DirectoryName, CreationCollisionOption.OpenIfExists)
                     : null;
             }
 
-            return s_cachedFolder;
+            return _cachedFolder;
         }
 
         private static string GetFileName(string key)
