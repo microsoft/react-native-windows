@@ -1,14 +1,15 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NMock;
+using NUnit.Framework;
 using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
 
 namespace ReactNative.Tests.Collections
 {
-    [TestClass]
+    [TestFixture]
     public class ListExtensionsTests
     {
-        [TestMethod]
+        [Test]
         public void ListExtensions_LocalMin()
         {
             var list = new List<int>{ 1, 3, 7, 12, 18 };

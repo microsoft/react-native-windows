@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
+    <Compile Include="Collections\ListExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
