@@ -36,17 +36,11 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Returns the list of pointer events views in the hierarchy, starting
-        /// from the root view.
+        /// Gets the hierarchy of React views from the given view.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <returns>The pointer events hierarchy.</returns>
-        public static IList<UIElement> GetReactViewHierarchy(DependencyObject view)
-        {
-            return GetReactViewHierarchyCore(view).Reverse().ToList();
-        }
-
-        private static IEnumerable<UIElement> GetReactViewHierarchyCore(DependencyObject view)
+        /// <returns>The view hierarchy.</returns>
+        public static IEnumerable<UIElement> GetReactViewHierarchy(DependencyObject view)
         {
             var current = view;
             while (true)
