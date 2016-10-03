@@ -4,8 +4,10 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Touch
 {
@@ -45,8 +47,7 @@ namespace ReactNative.Touch
                 throw new InvalidOperationException("A pointer with this ID already exists.");
             }
 
-            var reactView = GetReactViewFromView(e.OriginalSource as UIElement);
-
+            var reactView = GetReactViewFromPoint(e.GetCurrentPoint(_view).Position);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
                 var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView,
@@ -123,31 +124,38 @@ namespace ReactNative.Touch
             return -1;
         }
 
-        private UIElement GetReactViewFromView(DependencyObject originalSource)
+        private UIElement GetReactViewFromPoint(Point point)
         {
-            var viewHierarchy = RootViewHelper.GetReactViewHierarchy(originalSource);
-            if (viewHierarchy.Count == 0)
-            {
-                return null;
-            }
+            var sources = VisualTreeHelper.FindElementsInHostCoordinates(point, _view);
 
-            var target = -1;
-            for (var i = 0; i < viewHierarchy.Count; ++i)
+            // Get the first React view that does not have pointer events set
+            // to 'none' or 'box-none', and is not a child of a view with 
+            // 'box-only' or 'none' settings for pointer events.
+
+            // TODO: use pooled data structure
+            var isBoxOnlyCache = new Dictionary<UIElement, bool>();
+            foreach (var source in sources)
             {
-                var view = viewHierarchy[i];
-                var pointerEvents = view.GetPointerEvents();
-                if (pointerEvents != PointerEvents.None && pointerEvents != PointerEvents.BoxNone)
+                if (!source.HasTag())
                 {
-                    target = i;
+                    continue;
                 }
 
-                if (pointerEvents == PointerEvents.BoxOnly || pointerEvents == PointerEvents.None)
+                var pointerEvents = source.GetPointerEvents();
+                if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
                 {
-                    break;
+                    continue;
+                }
+
+                var viewHierarchy = RootViewHelper.GetReactViewHierarchy(source);
+                var isBoxOnly = IsBoxOnlyWithCache(viewHierarchy, isBoxOnlyCache);
+                if (!isBoxOnly)
+                {
+                    return source;
                 }
             }
 
-            return target < 0 ? null : viewHierarchy[target];
+            return null;
         }
 
         private void UpdatePointerForEvent(ReactPointer pointer, PointerRoutedEventArgs e)
@@ -182,6 +190,42 @@ namespace ReactNative.Touch
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(touchEvent);
+        }
+
+        private static bool IsBoxOnlyWithCache(IEnumerable<UIElement> hierarchy, IDictionary<UIElement, bool> cache)
+        {
+            var enumerator = hierarchy.GetEnumerator();
+
+            // Skip the first element (only checking ancestors)
+            if (!enumerator.MoveNext())
+            {
+                return false;
+            }
+
+            return IsBoxOnlyWithCacheRecursive(enumerator, cache);
+        }
+
+        private static bool IsBoxOnlyWithCacheRecursive(IEnumerator<UIElement> enumerator, IDictionary<UIElement, bool> cache)
+        {
+            if (!enumerator.MoveNext())
+            {
+                return false;
+            }
+
+            var currentView = enumerator.Current;
+            var isBoxOnly = default(bool);
+            if (!cache.TryGetValue(currentView, out isBoxOnly))
+            {
+                var pointerEvents = currentView.GetPointerEvents();
+
+                isBoxOnly = pointerEvents == PointerEvents.BoxOnly 
+                    || pointerEvents == PointerEvents.None
+                    || IsBoxOnlyWithCacheRecursive(enumerator, cache);
+
+                cache.Add(currentView, isBoxOnly);
+            }
+
+            return isBoxOnly;
         }
 
         class TouchEvent : Event
