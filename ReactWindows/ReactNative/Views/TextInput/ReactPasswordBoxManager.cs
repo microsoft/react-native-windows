@@ -274,16 +274,13 @@ namespace ReactNative.Views.TextInput
         [ReactProp("keyboardType")]
         public void SetKeyboardType(PasswordBox view, string keyboardType)
         {
-            view.InputScope = null;
-            if (keyboardType != null)
-            {
-                var inputScope = new InputScope();
-                inputScope.Names.Add(
-                    new InputScopeName(
-                        InputScopeHelpers.FromString(keyboardType)));
+            var inputScope = new InputScope();
+            var nameValue = keyboardType != null
+                ? InputScopeHelpers.FromStringForPasswordBox(keyboardType)
+                : InputScopeNameValue.Password;
 
-                view.InputScope = inputScope;
-            }
+            inputScope.Names.Add(new InputScopeName(nameValue));
+            view.InputScope = inputScope;
         }
 
         /// <summary>
