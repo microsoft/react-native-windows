@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeArgumentsParseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IMessageQueueThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\MessageQueueThreadExtensions.cs" />
