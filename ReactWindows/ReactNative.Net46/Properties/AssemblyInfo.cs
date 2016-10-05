@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ReactNative.Shared.Tests")]
+[assembly: AssemblyTitle("ReactNative.Net46")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ReactNative.Shared.Tests")]
+[assembly: AssemblyProduct("ReactNative.Net46")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("98efa5d4-a185-4971-ae77-3845e31b84ce")]
+[assembly: Guid("22cbff9c-fe36-43e8-a246-266c7635e662")]
 
 // Version information for an assembly consists of the following four values:
 //

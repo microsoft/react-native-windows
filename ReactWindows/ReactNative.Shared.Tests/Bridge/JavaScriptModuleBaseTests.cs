@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using ReactNative.Bridge;
 
-namespace ReactNative.Shared.Tests.Bridge
+namespace ReactNative.Tests.Bridge
 {
     [TestFixture]
     public class JavaScriptModuleBaseTests
