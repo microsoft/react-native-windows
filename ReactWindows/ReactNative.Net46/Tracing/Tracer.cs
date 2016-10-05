@@ -9,14 +9,14 @@ namespace ReactNative.Tracing
 
         }
     }
-    class NullLoggingActivityBuilder
+    public class NullLoggingActivityBuilder
     {
         public IDisposable Start()
         {
             return new NullDisposable();
         }
     }
-    static class Tracer
+    public static class Tracer
     {
         public const int TRACE_TAG_REACT_BRIDGE = 0;
         public const int TRACE_TAG_REACT_APPS = 1;

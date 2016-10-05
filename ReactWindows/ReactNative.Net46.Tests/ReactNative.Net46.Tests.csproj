@@ -109,8 +109,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
-    <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -126,5 +124,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" Condition="Exists('..\ReactNative.Shared\ReactNative.Shared.projitems')" />
+  <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
