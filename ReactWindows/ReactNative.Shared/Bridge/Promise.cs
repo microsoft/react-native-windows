@@ -56,14 +56,13 @@ namespace ReactNative.Bridge
                     ? JToken.FromObject(errorData) 
                     : null;
                 _reject.Invoke(new JObject
-                    {
-                        { "code", code ?? DefaultError },
-                        { "message", message },
-                        { "stack", e?.StackTrace },
-                        { "userInfo", userInfo },
-                    });
+                {
+                    { "code", code ?? DefaultError },
+                    { "message", message },
+                    { "stack", e?.StackTrace },
+                    { "userInfo", userInfo },
+                });
             }
         }
     }
-
 }
