@@ -1,7 +1,8 @@
 ﻿{
   "dependencies": {
     "Facebook.CSSLayout": "2.0.1-pre",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+    "NUnit": "3.4.1"
   },
   "frameworks": {
     "uap10.0": {}
