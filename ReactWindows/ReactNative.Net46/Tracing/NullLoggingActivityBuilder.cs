@@ -15,15 +15,9 @@ namespace ReactNative.Tracing
         {
             return new NullDisposable();
         }
-
-        /// <summary>
-        /// Empty disposable object.
-        /// </summary>
+        
         class NullDisposable : IDisposable
         {
-            /// <summary>
-            /// Dispose method to conform to IDisposable.
-            /// </summary>
             public void Dispose()
             {
 
