@@ -9,6 +9,7 @@ namespace ReactNative.Tracing
 
         }
     }
+
     public class NullLoggingActivityBuilder
     {
         public IDisposable Start()
@@ -16,6 +17,7 @@ namespace ReactNative.Tracing
             return new NullDisposable();
         }
     }
+
     public static class Tracer
     {
         public const int TRACE_TAG_REACT_BRIDGE = 0;
