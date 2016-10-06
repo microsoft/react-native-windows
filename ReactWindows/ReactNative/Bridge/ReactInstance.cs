@@ -120,8 +120,9 @@ namespace ReactNative.Bridge
                     }
 
                     _bundleLoader.LoadScript(_bridge);
+
                     return default(object);
-                });
+                }).ConfigureAwait(false);
             }
         }
 
