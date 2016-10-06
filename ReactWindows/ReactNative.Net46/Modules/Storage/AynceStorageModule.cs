@@ -38,7 +38,6 @@ namespace ReactNative.Modules.Storage
 
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
 
-        // private StorageFolder _cachedFolder;
         private IFolder _cachedFolder;
 
         public override string Name
@@ -376,7 +375,6 @@ namespace ReactNative.Modules.Storage
         {
             if (_cachedFolder == null)
             {
-                // var localFolder = ApplicationData.Current.LocalFolder;
                 var localFolder = FileSystem.Current.LocalStorage;
 
                 if (localFolder.CheckExistsAsync(DirectoryName).Result == ExistenceCheckResult.FolderExists)
