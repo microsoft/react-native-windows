@@ -109,15 +109,19 @@ namespace ReactNative.Bridge
                             QueueConfiguration.NativeModulesQueueThread);
                     }
 
-                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
-                    {
-                        bridge.SetGlobalVariable("__fbBatchedBridgeConfig", BuildModulesConfig());
-                    }
-
-                    _bundleLoader.LoadScript(bridge);
-
                     return bridge;
                 }).ConfigureAwait(false);
+
+                await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+                {
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
+                    {
+                        _bridge.SetGlobalVariable("__fbBatchedBridgeConfig", BuildModulesConfig());
+                    }
+
+                    _bundleLoader.LoadScript(_bridge);
+                    return default(object);
+                });
             }
         }
 
