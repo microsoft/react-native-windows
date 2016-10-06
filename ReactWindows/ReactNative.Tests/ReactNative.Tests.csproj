@@ -96,9 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\PromiseTests.cs" />
+    <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
     <Compile Include="Bridge\ReactInstanceTests.cs" />
     <Compile Include="Bridge\NativeModuleBaseTests.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
     <Compile Include="Bridge\ReactContextNativeModuleBaseTests.cs" />
     <Compile Include="Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="Bridge\ReactBridgeTests.cs" />

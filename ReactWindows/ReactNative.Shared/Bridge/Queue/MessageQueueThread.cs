@@ -7,9 +7,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.System.Threading;
-using Windows.UI.Core;
 using static System.FormattableString;
 
 namespace ReactNative.Bridge.Queue
@@ -173,7 +170,7 @@ namespace ReactNative.Bridge.Queue
 
             protected override bool IsOnThreadCore()
             {
-                return CoreWindow.GetForCurrentThread().Dispatcher != null;
+                return SynchronizationContext.Current != null;
             }
 
             protected override void Dispose(bool disposing)
@@ -193,7 +190,6 @@ namespace ReactNative.Bridge.Queue
             private readonly BlockingCollection<Action> _queue;
             private readonly ThreadLocal<bool> _indicator;
             private readonly ManualResetEvent _doneHandle;
-            private readonly IAsyncAction _asyncAction;
 
             public SingleBackgroundMessageQueueThread(string name, Action<Exception> handler)
                 : base(name)
@@ -202,13 +198,13 @@ namespace ReactNative.Bridge.Queue
                 _queue = new BlockingCollection<Action>();
                 _indicator = new ThreadLocal<bool>();
                 _doneHandle = new ManualResetEvent(false);
-                _asyncAction = ThreadPool.RunAsync(_ =>
-                {
-                    _indicator.Value = true;
-                    Run();
-                    _doneHandle.Set();
-                },
-                WorkItemPriority.Normal);
+                Task.Run(() =>
+                    {
+                        _indicator.Value = true;
+                        Run();
+                        _doneHandle.Set();
+                    }
+                );
             }
 
             protected override bool IsOnThreadCore()

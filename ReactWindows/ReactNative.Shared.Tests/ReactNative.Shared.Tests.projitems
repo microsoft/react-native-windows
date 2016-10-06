@@ -9,8 +9,6 @@
     <Import_RootNamespace>ReactNative.Shared.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistryTests.cs" />
   </ItemGroup>

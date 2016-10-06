@@ -115,8 +115,6 @@
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
-    <Compile Include="Bridge\Queue\LimitedConcurrencyTaskScheduler.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThread.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
@@ -141,8 +139,6 @@
     <Compile Include="Chakra\Executor\ChakraJavaScriptExecutor.cs" />
     <Compile Include="Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
     <Compile Include="Bridge\ReactBridge.cs" />
-    <Compile Include="Bridge\ReactContext.cs" />
-    <Compile Include="Bridge\ReactContextNativeModuleBase.cs" />
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
@@ -152,7 +148,6 @@
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
     <Compile Include="Modules\Core\JavaScriptException.cs" />
-    <Compile Include="Modules\Core\JSTimersExecution.cs" />
     <Compile Include="Modules\DevSupport\SourceCodeModule.cs" />
     <Compile Include="Modules\DevSupport\IDeveloperSettings.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
@@ -197,7 +192,6 @@
     <Compile Include="LifecycleState.cs" />
     <Compile Include="IReactInstanceManager.cs" />
     <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
-    <Compile Include="Modules\Core\Timing.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="ReactInstanceManager.cs" />
     <Compile Include="Modules\Core\DeviceEventManagerModule.cs" />
