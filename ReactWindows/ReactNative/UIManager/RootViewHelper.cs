@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -40,7 +39,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns>The view hierarchy.</returns>
-        public static IEnumerable<UIElement> GetReactViewHierarchy(DependencyObject view)
+        public static IEnumerable<DependencyObject> GetReactViewHierarchy(DependencyObject view)
         {
             var current = view;
             while (true)
@@ -63,6 +62,19 @@ namespace ReactNative.UIManager
 
                 current = GetParent(current, false);
             }
+        }
+
+        /// <summary>
+        /// Checks if the view is part of the React hierarchy.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>
+        /// <code>true</code> if the view is part of the hierarchy, otherwise
+        /// <code>false</code>.
+        /// </returns>
+        public static bool IsReactSubview(DependencyObject view)
+        {
+            return GetReactViewHierarchy(view).GetEnumerator().MoveNext();
         }
 
         private static DependencyObject GetParent(DependencyObject view, bool findRoot)
