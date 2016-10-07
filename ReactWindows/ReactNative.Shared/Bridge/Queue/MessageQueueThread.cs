@@ -8,6 +8,7 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.FormattableString;
+using System.Windows.Threading;
 
 namespace ReactNative.Bridge.Queue
 {
@@ -149,7 +150,7 @@ namespace ReactNative.Bridge.Queue
                 _actionSubject = new Subject<Action>();
                 _actionObserver = _actionSubject;
                 _subscription = _actionSubject
-                    .ObserveOnDispatcher()
+                    .ObserveOn(Dispatcher.CurrentDispatcher)
                     .Subscribe(action =>
                     {
                         try

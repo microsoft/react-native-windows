@@ -129,9 +129,9 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [Test]
-        public Task MessageQueueThread_Dispose()
+        public async Task MessageQueueThread_Dispose()
         {
-            var uiThread = CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
+            var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
             var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });
             var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); });
             Assert.IsTrue(true);

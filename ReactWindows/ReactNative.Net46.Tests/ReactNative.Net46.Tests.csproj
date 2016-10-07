@@ -114,7 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
-    <Compile Include="Internal\DispatchHelpers.cs" />
+    <Compile Include="Internal\DispatcherHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
