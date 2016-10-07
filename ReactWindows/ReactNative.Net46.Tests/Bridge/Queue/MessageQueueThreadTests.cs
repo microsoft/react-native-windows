@@ -4,6 +4,7 @@ using ReactNative.Bridge.Queue;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using static ReactNative.Tests.DispatcherHelpers;
 
 namespace ReactNative.Tests.Bridge.Queue
@@ -33,6 +34,18 @@ namespace ReactNative.Tests.Bridge.Queue
             );
         }
 
+        [SetUp]
+        public void SetUp()
+        {
+            var waitForApplicationRun = new ManualResetEventSlim();
+            Task.Run(() =>
+            {
+                var app = new Application();
+                app.Startup += (s, e) => { waitForApplicationRun.Set(); };
+                app.Run();
+            });
+        }
+
         [Test]
         public async Task MessageQueueThread_IsOnThread()
         {
@@ -58,7 +71,7 @@ namespace ReactNative.Tests.Bridge.Queue
                 });
             }
 
-            Assert.IsTrue(countdown.Wait(50));
+            Assert.IsTrue(countdown.Wait(5000));
             Assert.AreEqual(0, thrown);
         }
 
@@ -134,26 +147,27 @@ namespace ReactNative.Tests.Bridge.Queue
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
             var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });
             var taskPoolThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("any", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); });
-            Assert.IsTrue(true);
-            //var queueThreads = new[]
-            //{
-            //    uiThread,
-            //    backgroundThread,
-            //    taskPoolThread
-            //};
 
-            //var waitHandle = new AutoResetEvent(false);
-            
-            //foreach (var queueThread in queueThreads)
-            //{
-            //    queueThread.Dispose();
-            //    queueThread.RunOnQueue(() =>
-            //    {
-            //        waitHandle.Set();
-            //    });
+            var queueThreads = new[]
+            {
+                uiThread,
+                backgroundThread,
+                taskPoolThread
+            };
 
-            //    Assert.IsFalse(waitHandle.WaitOne(500));
-            //}
+            var waitHandle = new AutoResetEvent(false);
+
+            foreach (var queueThread in queueThreads)
+            {
+                queueThread.Dispose();
+                queueThread.RunOnQueue(() =>
+                {
+                    waitHandle.Set();
+                });
+
+                Assert.IsFalse(waitHandle.WaitOne(500));
+            }
+            Assert.True(true);
         }
     }
 }

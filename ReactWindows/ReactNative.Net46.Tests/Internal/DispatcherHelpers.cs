@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Windows;
 
 namespace ReactNative.Tests
 {
@@ -8,7 +10,11 @@ namespace ReactNative.Tests
     {
         public static async Task RunOnDispatcherAsync(Action action)
         {
-            await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+            var dispatcher = Application.Current != null
+                ? Application.Current.Dispatcher
+                : Dispatcher.CurrentDispatcher;
+
+            await dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
