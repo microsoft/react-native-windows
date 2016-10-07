@@ -8,7 +8,9 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.FormattableString;
+#if NET46
 using System.Windows.Threading;
+#endif
 
 namespace ReactNative.Bridge.Queue
 {
@@ -149,6 +151,7 @@ namespace ReactNative.Bridge.Queue
             {
                 _actionSubject = new Subject<Action>();
                 _actionObserver = _actionSubject;
+#if NET46
                 _subscription = _actionSubject
                     .ObserveOn(Dispatcher.CurrentDispatcher)
                     .Subscribe(action =>
@@ -162,6 +165,21 @@ namespace ReactNative.Bridge.Queue
                             handler(ex);
                         }
                     });
+#else
+                _subscription = _actionSubject
+                    .ObserveOnDispatcher()
+                    .Subscribe(action =>
+                    {
+                        try
+                        {
+                            action();
+                        }
+                        catch (Exception ex)
+                        {
+                            handler(ex);
+                        }
+                    });
+#endif
             }
 
             protected override void Enqueue(Action action)
