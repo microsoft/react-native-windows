@@ -74,7 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modules\Storage\AynceStorageModule.cs" />
+    <Compile Include="Modules\Storage\AyncStorageModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracing\NullLoggingActivityBuilder.cs" />
     <Compile Include="Tracing\Tracer.cs" />
