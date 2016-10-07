@@ -75,6 +75,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersExecution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\Timing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\DevSupport\IDeveloperSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\DevSupport\SourceCodeModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />

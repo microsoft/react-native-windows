@@ -4,7 +4,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
@@ -47,7 +46,7 @@ namespace ReactNative.Touch
                 throw new InvalidOperationException("A pointer with this ID already exists.");
             }
 
-            var reactView = GetReactViewFromPoint(e.GetCurrentPoint(_view).Position);
+            var reactView = GetReactViewTarget(e);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
                 var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView,
@@ -124,8 +123,16 @@ namespace ReactNative.Touch
             return -1;
         }
 
-        private UIElement GetReactViewFromPoint(Point point)
+        private UIElement GetReactViewTarget(PointerRoutedEventArgs e)
         {
+            // If the target is not a child of the root view, then this pointer
+            // event does not belong to React.
+            if (!RootViewHelper.IsReactSubview(e.OriginalSource as DependencyObject))
+            {
+                return null;
+            }
+
+            var point = e.GetCurrentPoint(_view).Position;
             var sources = VisualTreeHelper.FindElementsInHostCoordinates(point, _view);
 
             // Get the first React view that does not have pointer events set
@@ -133,7 +140,7 @@ namespace ReactNative.Touch
             // 'box-only' or 'none' settings for pointer events.
 
             // TODO: use pooled data structure
-            var isBoxOnlyCache = new Dictionary<UIElement, bool>();
+            var isBoxOnlyCache = new Dictionary<DependencyObject, bool>();
             foreach (var source in sources)
             {
                 if (!source.HasTag())
@@ -192,7 +199,7 @@ namespace ReactNative.Touch
                 .DispatchEvent(touchEvent);
         }
 
-        private static bool IsBoxOnlyWithCache(IEnumerable<UIElement> hierarchy, IDictionary<UIElement, bool> cache)
+        private static bool IsBoxOnlyWithCache(IEnumerable<DependencyObject> hierarchy, IDictionary<DependencyObject, bool> cache)
         {
             var enumerator = hierarchy.GetEnumerator();
 
@@ -205,7 +212,7 @@ namespace ReactNative.Touch
             return IsBoxOnlyWithCacheRecursive(enumerator, cache);
         }
 
-        private static bool IsBoxOnlyWithCacheRecursive(IEnumerator<UIElement> enumerator, IDictionary<UIElement, bool> cache)
+        private static bool IsBoxOnlyWithCacheRecursive(IEnumerator<DependencyObject> enumerator, IDictionary<DependencyObject, bool> cache)
         {
             if (!enumerator.MoveNext())
             {

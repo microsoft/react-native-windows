@@ -59,8 +59,17 @@ namespace ReactNative.Views.Text
         public void AddView(DependencyObject parent, DependencyObject child, int index)
         {
             var span = (Span)parent;
-            var inline = (Inline)child;
-            span.Inlines.Insert(index, inline);
+
+            var inlineChild = child as Inline;
+            if (inlineChild == null)
+            {
+                inlineChild = new InlineUIContainer
+                {
+                    Child = (UIElement)child,
+                };
+            }
+
+            span.Inlines.Insert(index, inlineChild);
         }
 
         /// <summary>
@@ -87,7 +96,16 @@ namespace ReactNative.Views.Text
         public DependencyObject GetChildAt(DependencyObject parent, int index)
         {
             var span = (Span)parent;
-            return span.Inlines[index];
+            var child = span.Inlines[index];
+            var childInlineContainer = child as InlineUIContainer;
+            if (childInlineContainer != null)
+            {
+                return childInlineContainer.Child;
+            }
+            else
+            {
+                return child;
+            }
         }
 
         /// <summary>
