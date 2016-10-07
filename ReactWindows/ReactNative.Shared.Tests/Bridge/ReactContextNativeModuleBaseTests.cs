@@ -1,18 +1,20 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NMock;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using System;
 
 namespace ReactNative.Tests.Bridge
 {
-    [TestClass]
+    [TestFixture]
     public class ReactContextNativeModuleBaseTests
     {
-        [TestMethod]
+        [Test]
         public void ReactContextNativeModuleBase_ArgumentChecks()
         {
-            AssertEx.Throws<ArgumentNullException>(
-                () => new TestModule(null),
-                ex => Assert.AreEqual("reactContext", ex.ParamName));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                delegate { new TestModule(null); }
+            );
+            Assert.AreEqual("reactContext", ex.ParamName);
 
             var context = new ReactContext();
             var module = new TestModule(context);
