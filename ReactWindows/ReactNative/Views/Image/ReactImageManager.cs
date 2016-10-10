@@ -259,10 +259,29 @@ namespace ReactNative.Views.Image
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher;
 
-            eventDispatcher.DispatchEvent(
-                new ReactImageLoadEvent(
-                    view.GetTag(),
-                    (int)status));
+            if (status == ImageLoadStatus.OnLoad)
+            {
+                var bitmapImage = GetBitmapImage(view);
+                eventDispatcher.DispatchEvent(
+                    new ReactImageLoadEvent(
+                        view.GetTag(),
+                        (int)status,
+                        bitmapImage.UriSource.AbsolutePath,
+                        bitmapImage.PixelWidth,
+                        bitmapImage.PixelHeight));
+            }
+            else
+            {
+                eventDispatcher.DispatchEvent(
+                    new ReactImageLoadEvent(
+                        view.GetTag(),
+                        (int)status));
+            }
+        }
+
+        private BitmapImage GetBitmapImage(Border view)
+        {
+            return (BitmapImage)((ImageBrush)view.Background).ImageSource;
         }
 
         /// <summary>

@@ -7,10 +7,12 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.System.Threading;
-using Windows.UI.Core;
 using static System.FormattableString;
+#if WINDOWS_UWP
+using Windows.UI.Core;
+#else
+using System.Windows.Threading;
+#endif
 
 namespace ReactNative.Bridge.Queue
 {
@@ -152,7 +154,11 @@ namespace ReactNative.Bridge.Queue
                 _actionSubject = new Subject<Action>();
                 _actionObserver = _actionSubject;
                 _subscription = _actionSubject
+#if WINDOWS_UWP
                     .ObserveOnDispatcher()
+#else
+                    .ObserveOn(Dispatcher.CurrentDispatcher)
+#endif
                     .Subscribe(action =>
                     {
                         try
@@ -173,7 +179,11 @@ namespace ReactNative.Bridge.Queue
 
             protected override bool IsOnThreadCore()
             {
+#if WINDOWS_UWP
                 return CoreWindow.GetForCurrentThread().Dispatcher != null;
+#else
+                return Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread;
+#endif
             }
 
             protected override void Dispose(bool disposing)
@@ -193,7 +203,6 @@ namespace ReactNative.Bridge.Queue
             private readonly BlockingCollection<Action> _queue;
             private readonly ThreadLocal<bool> _indicator;
             private readonly ManualResetEvent _doneHandle;
-            private readonly IAsyncAction _asyncAction;
 
             public SingleBackgroundMessageQueueThread(string name, Action<Exception> handler)
                 : base(name)
@@ -202,13 +211,12 @@ namespace ReactNative.Bridge.Queue
                 _queue = new BlockingCollection<Action>();
                 _indicator = new ThreadLocal<bool>();
                 _doneHandle = new ManualResetEvent(false);
-                _asyncAction = ThreadPool.RunAsync(_ =>
+                Task.Run(() =>
                 {
                     _indicator.Value = true;
                     Run();
                     _doneHandle.Set();
-                },
-                WorkItemPriority.Normal);
+                });
             }
 
             protected override bool IsOnThreadCore()
