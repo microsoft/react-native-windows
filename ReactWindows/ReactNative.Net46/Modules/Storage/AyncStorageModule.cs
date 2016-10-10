@@ -12,29 +12,6 @@ namespace ReactNative.Modules.Storage
 {
     class AsyncStorageModule : NativeModuleBase, ILifecycleEventListener
     {
-        private const string DirectoryName = "AsyncStorage";
-        private const string FileExtension = ".data";
-
-        private static readonly IDictionary<char, string> s_charToString = new Dictionary<char, string>
-        {
-            { '\\', "{bsl}" },
-            { '/', "{fsl}" },
-            { ':', "{col}" },
-            { '*', "{asx}" },
-            { '?', "{q}" },
-            { '<', "{gt}" },
-            { '>', "{lt}" },
-            { '|', "{bar}" },
-            { '\"', "{quo}" },
-            { '.', "{dot}" },
-            { '{', "{ocb}" },
-            { '}', "{ccb}" },
-        };
-
-        private static readonly IDictionary<string, char> s_stringToChar = s_charToString.ToDictionary(kv => kv.Value, kv => kv.Key);
-
-        private static readonly int s_maxReplace = s_charToString.Values.Select(s => s.Length).Max();
-
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
 
         private IFolder _cachedFolder;
@@ -281,7 +258,7 @@ namespace ReactNative.Modules.Storage
                     foreach (var item in items)
                     {
                         var itemName = item.Name;
-                        if (itemName.EndsWith(FileExtension))
+                        if (itemName.EndsWith(AsyncStorageConstants.FileExtension))
                         {
                             keys.Add(GetKeyName(itemName));
                         }
@@ -376,13 +353,13 @@ namespace ReactNative.Modules.Storage
             {
                 var localFolder = FileSystem.Current.LocalStorage;
 
-                if (localFolder.CheckExistsAsync(DirectoryName).Result == ExistenceCheckResult.FolderExists)
+                if (localFolder.CheckExistsAsync(AsyncStorageConstants.DirectoryName).Result == ExistenceCheckResult.FolderExists)
                 {
                     _cachedFolder = localFolder;
                 }
                 else
                 {
-                    _cachedFolder = await localFolder.CreateFolderAsync(DirectoryName, CreationCollisionOption.OpenIfExists);
+                    _cachedFolder = await localFolder.CreateFolderAsync(AsyncStorageConstants.DirectoryName, CreationCollisionOption.OpenIfExists);
                 }
             }
 
@@ -396,7 +373,7 @@ namespace ReactNative.Modules.Storage
             {
                 var ch = key[i];
                 var replacement = default(string);
-                if (s_charToString.TryGetValue(ch, out replacement))
+                if (AsyncStorageConstants.CharToString.TryGetValue(ch, out replacement))
                 {
                     if (sb == null)
                     {
@@ -414,18 +391,18 @@ namespace ReactNative.Modules.Storage
 
             if (sb == null)
             {
-                return string.Concat(key, FileExtension);
+                return string.Concat(key, AsyncStorageConstants.FileExtension);
             }
             else
             {
-                sb.Append(FileExtension);
+                sb.Append(AsyncStorageConstants.FileExtension);
                 return sb.ToString();
             }
         }
 
         private static string GetKeyName(string fileName)
         {
-            var length = fileName.Length - FileExtension.Length;
+            var length = fileName.Length - AsyncStorageConstants.FileExtension.Length;
             var sb = default(StringBuilder);
             for (var i = 0; i < length; ++i)
             {
@@ -433,7 +410,7 @@ namespace ReactNative.Modules.Storage
                 if (start == '{')
                 {
                     var j = i;
-                    while (j < length && (j - i) < s_maxReplace)
+                    while (j < length && (j - i) < AsyncStorageConstants.MaxReplace)
                     {
                         var end = fileName[++j];
                         if (end == '}')
@@ -442,11 +419,11 @@ namespace ReactNative.Modules.Storage
                         }
                     }
 
-                    if (j < length && (j - i) < s_maxReplace)
+                    if (j < length && (j - i) < AsyncStorageConstants.MaxReplace)
                     {
                         var substring = fileName.Substring(i, j - i + 1);
                         var replacement = default(char);
-                        if (s_stringToChar.TryGetValue(substring, out replacement))
+                        if (AsyncStorageConstants.StringToChar.TryGetValue(substring, out replacement))
                         {
                             if (sb == null)
                             {
