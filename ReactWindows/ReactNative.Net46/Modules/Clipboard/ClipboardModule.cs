@@ -1,6 +1,11 @@
 ﻿using ReactNative.Bridge;
 using System;
-using DataTransfer = Windows.ApplicationModel.DataTransfer;
+using System.Threading.Tasks;
+using AsyncClipboardService.Clipboard;
+using AsyncWindowsClipboard;
+using System.Threading;
+using System.Windows.Threading;
+// using DataTransfer = Windows.ApplicationModel.DataTransfer;
 
 namespace ReactNative.Modules.Clipboard
 {
@@ -10,6 +15,7 @@ namespace ReactNative.Modules.Clipboard
     class ClipboardModule : NativeModuleBase
     {
         private readonly IClipboardInstance _clipboard;
+        private WindowsClipboardService _clipboardService = new WindowsClipboardService();
 
         public ClipboardModule() : this(new ClipboardInstance())
         {
@@ -48,14 +54,13 @@ namespace ReactNative.Modules.Clipboard
             {
                 try
                 {
-                    var clip = _clipboard.GetContent();
-                    if (clip == null)
+                    if (_clipboard.GetContent() == null)
                     {
                         promise.Resolve("");
                     }
                     else if (_clipboard.ContainsText())
                     {
-                        var text = await _clipboard.GetContent().GetTextAsync;
+                        var text = await _clipboardService.GetTextAsync().ConfigureAwait(false);
                         promise.Resolve(text);
                     }
                     else
@@ -77,7 +82,7 @@ namespace ReactNative.Modules.Clipboard
         [ReactMethod]
         public void setString(string text)
         {
-            RunOnDispatcher(() =>
+            RunOnDispatcher(async () =>
             {
                 if (text == null)
                 {
@@ -85,9 +90,7 @@ namespace ReactNative.Modules.Clipboard
                 }
                 else
                 {
-                    var package = new DataTransfer.DataPackage();
-                    package.SetData(DataTransfer.StandardDataFormats.Text, text);
-                    _clipboard.SetContent(package);
+                    await _clipboardService.SetTextAsync(text);
                 }
             });
         }
@@ -96,9 +99,9 @@ namespace ReactNative.Modules.Clipboard
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
-        private static async void RunOnDispatcher(DispatchedHandler action)
+        private static async void RunOnDispatcher(Func<Task> action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
+            await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
     }
 }
