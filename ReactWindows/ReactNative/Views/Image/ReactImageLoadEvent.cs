@@ -36,18 +36,7 @@ namespace ReactNative.Views.Image
         /// <param name="viewId">The view identifier.</param>
         /// <param name="eventType">The event identifier.</param>
         public ReactImageLoadEvent(int viewId, int eventType)
-            : this(viewId, eventType, null)
-        {
-        }
-
-        /// <summary>
-        /// Instantiates a <see cref="ReactImageLoadEvent"/>.
-        /// </summary>
-        /// <param name="viewId">The view identifier.</param>
-        /// <param name="eventType">The event identifier.</param>
-        /// <param name="imageUri">The image URI.</param>
-        public ReactImageLoadEvent(int viewId, int eventType, string imageUri)
-            : this(viewId, eventType, imageUri, 0, 0)
+            : this(viewId, eventType, null, 0, 0)
         {
         }
 
