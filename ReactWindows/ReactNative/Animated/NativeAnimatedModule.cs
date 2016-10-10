@@ -101,30 +101,37 @@ namespace ReactNative.Animated
             var nodesManager = new NativeAnimatedNodesManager(uiImpl);
             _animatedFrameCallback = (sender, args) =>
             {
-                var renderingArgs = args as RenderingEventArgs;
-                if (renderingArgs == null)
+                try
                 {
-                    return;
-                }
-
-                var operations = default(List<Action<NativeAnimatedNodesManager>>);
-                lock (_operationsGate)
-                {
-                    operations = _readyOperations;
-                    _readyOperations = null;
-                }
-
-                if (operations != null)
-                {
-                    foreach (var operation in operations)
+                    var renderingArgs = args as RenderingEventArgs;
+                    if (renderingArgs == null)
                     {
-                        operation(nodesManager);
+                        return;
+                    }
+
+                    var operations = default(List<Action<NativeAnimatedNodesManager>>);
+                    lock (_operationsGate)
+                    {
+                        operations = _readyOperations;
+                        _readyOperations = null;
+                    }
+
+                    if (operations != null)
+                    {
+                        foreach (var operation in operations)
+                        {
+                            operation(nodesManager);
+                        }
+                    }
+
+                    if (nodesManager.HasActiveAnimations)
+                    {
+                        nodesManager.RunUpdates(renderingArgs.RenderingTime);
                     }
                 }
-
-                if (nodesManager.HasActiveAnimations)
+                catch (Exception ex)
                 {
-                    nodesManager.RunUpdates(renderingArgs.RenderingTime);
+                    Context.HandleException(ex);
                 }
             };
 

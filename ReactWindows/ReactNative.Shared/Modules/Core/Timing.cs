@@ -64,7 +64,7 @@ namespace ReactNative.Modules.Core
             _suspended = true;
             if (_renderingHandled)
             {
-                CompositionTarget.Rendering -= DoFrame;
+                CompositionTarget.Rendering -= DoFrameSafe;
                 _renderingHandled = false;
             }
         }
@@ -77,7 +77,7 @@ namespace ReactNative.Modules.Core
             _suspended = false;
             if (!_renderingHandled)
             {
-                CompositionTarget.Rendering += DoFrame;
+                CompositionTarget.Rendering += DoFrameSafe;
                 _renderingHandled = true;
             }
         }
@@ -89,7 +89,7 @@ namespace ReactNative.Modules.Core
         {
             if (_renderingHandled)
             {
-                CompositionTarget.Rendering -= DoFrame;
+                CompositionTarget.Rendering -= DoFrameSafe;
                 _renderingHandled = false;
             }
         }
@@ -139,6 +139,18 @@ namespace ReactNative.Modules.Core
             lock (_gate)
             {
                 _timers.Remove(new TimerData(timerId));
+            }
+        }
+
+        private void DoFrameSafe(object sender, object e)
+        {
+            try
+            {
+                DoFrame(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Context.HandleException(ex);
             }
         }
 
