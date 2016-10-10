@@ -253,35 +253,19 @@ namespace ReactNative.Views.Image
                         ReactImageLoadEvent.OnLoadEnd));
         }
 
-        private void OnImageStatusUpdate(Border view, ImageLoadStatus status)
+        private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
         {
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher;
 
-            if (status == ImageLoadStatus.OnLoad)
-            {
-                var bitmapImage = GetBitmapImage(view);
-                eventDispatcher.DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        (int)status,
-                        bitmapImage.UriSource.AbsolutePath,
-                        bitmapImage.PixelWidth,
-                        bitmapImage.PixelHeight));
-            }
-            else
-            {
-                eventDispatcher.DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        (int)status));
-            }
-        }
-
-        private BitmapImage GetBitmapImage(Border view)
-        {
-            return (BitmapImage)((ImageBrush)view.Background).ImageSource;
+            eventDispatcher.DispatchEvent(
+                new ReactImageLoadEvent(
+                    view.GetTag(),
+                    (int)status.LoadStatus,
+                    status.Metadata.Uri,
+                    status.Metadata.Width,
+                    status.Metadata.Height));
         }
 
         /// <summary>
