@@ -371,7 +371,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnSuspend()
         {
-            CompositionTarget.Rendering -= OnRendering;
+            CompositionTarget.Rendering -= OnRenderingSafe;
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnResume()
         {
-            CompositionTarget.Rendering += OnRendering;
+            CompositionTarget.Rendering += OnRenderingSafe;
         }
 
         /// <summary>
@@ -453,6 +453,18 @@ namespace ReactNative.UIManager
             }
         }
 
+        private void OnRenderingSafe(object sender, object e)
+        {
+            try
+            {
+                OnRendering(sender, e);
+            }
+            catch (Exception ex)
+            {
+                _reactContext.HandleException(ex);
+            }
+        }
+
         private void OnRendering(object sender, object e)
         {
             var renderingArgs = e as RenderingEventArgs;
@@ -466,12 +478,17 @@ namespace ReactNative.UIManager
 
             lock (_gate)
             {
-                foreach (var batch in _batches)
+                try
                 {
-                    batch();
+                    foreach (var batch in _batches)
+                    {
+                        batch();
+                    }
                 }
-
-                _batches.Clear();
+                finally
+                {
+                    _batches.Clear();
+                }
             }
         }
 

@@ -129,7 +129,7 @@ namespace ReactNative.UIManager.Events
                 _rctEventEmitter = _reactContext.GetJavaScriptModule<RCTEventEmitter>();
             }
 
-            CompositionTarget.Rendering += ScheduleDispatch;
+            CompositionTarget.Rendering += ScheduleDispatcherSafe;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace ReactNative.UIManager.Events
         private void ClearCallback()
         {
             DispatcherHelpers.AssertOnDispatcher();
-            CompositionTarget.Rendering -= ScheduleDispatch;
+            CompositionTarget.Rendering -= ScheduleDispatcherSafe;
         }
 
         private void MoveStagedEventsToDispatchQueue()
@@ -241,6 +241,18 @@ namespace ReactNative.UIManager.Events
             return ((long)viewTag) |
                 (((long)eventTypeId) & 0xffff) << 32 |
                 (((long)coalescingKey) & 0xffff) << 48;
+        }
+
+        private void ScheduleDispatcherSafe(object sender, object e)
+        {
+            try
+            {
+                ScheduleDispatch(sender, e);
+            }
+            catch (Exception ex)
+            {
+                _reactContext.HandleException(ex);
+            }
         }
 
         private void ScheduleDispatch(object sender, object e)
