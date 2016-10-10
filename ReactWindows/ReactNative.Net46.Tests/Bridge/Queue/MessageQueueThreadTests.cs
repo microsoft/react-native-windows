@@ -16,12 +16,12 @@ namespace ReactNative.Tests.Bridge.Queue
         public void MessageQueueThread_ArgumentChecks()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                delegate { MessageQueueThread.Create(null, ex2 => { }); }
+                () => { MessageQueueThread.Create(null, ex2 => { }); }
             );
             Assert.AreEqual("spec", ex.ParamName);
 
             ArgumentNullException ex3 = Assert.Throws<ArgumentNullException>(
-                delegate { MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, null); }
+                () => { MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, null); }
             );
             Assert.AreEqual("handler", ex3.ParamName);
         }
@@ -30,7 +30,7 @@ namespace ReactNative.Tests.Bridge.Queue
         public void MessageQueueThread_CreateUiThread_ThrowsNotSupported()
         {
             Assert.Throws<NotSupportedException>(
-                delegate { MessageQueueThreadSpec.Create("ui", MessageQueueThreadKind.DispatcherThread); }
+                () => { MessageQueueThreadSpec.Create("ui", MessageQueueThreadKind.DispatcherThread); }
             );
         }
 

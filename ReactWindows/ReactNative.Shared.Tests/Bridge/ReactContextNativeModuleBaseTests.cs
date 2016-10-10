@@ -12,7 +12,7 @@ namespace ReactNative.Tests.Bridge
         public void ReactContextNativeModuleBase_ArgumentChecks()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                delegate { new TestModule(null); }
+                () => { new TestModule(null); }
             );
             Assert.AreEqual("reactContext", ex.ParamName);
 
