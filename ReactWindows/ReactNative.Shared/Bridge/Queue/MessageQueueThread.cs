@@ -153,23 +153,12 @@ namespace ReactNative.Bridge.Queue
             {
                 _actionSubject = new Subject<Action>();
                 _actionObserver = _actionSubject;
+                _subscription = _actionSubject
 #if WINDOWS_UWP
-                _subscription = _actionSubject
                     .ObserveOnDispatcher()
-                    .Subscribe(action =>
-                    {
-                        try
-                        {
-                            action();
-                        }
-                        catch (Exception ex)
-                        {
-                            handler(ex);
-                        }
-                    });
 #else
-                _subscription = _actionSubject
                     .ObserveOn(Dispatcher.CurrentDispatcher)
+#endif
                     .Subscribe(action =>
                     {
                         try
@@ -181,7 +170,6 @@ namespace ReactNative.Bridge.Queue
                             handler(ex);
                         }
                     });
-#endif
             }
 
             protected override void Enqueue(Action action)
