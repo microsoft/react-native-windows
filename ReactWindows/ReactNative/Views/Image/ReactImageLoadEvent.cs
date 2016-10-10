@@ -1,4 +1,5 @@
-﻿using ReactNative.UIManager.Events;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.UIManager.Events;
 using System;
 using static System.FormattableString;
 
@@ -25,16 +26,35 @@ namespace ReactNative.Views.Image
         public const int OnLoadStart = 3;
 
         private readonly int _eventType;
+        private readonly string _imageUri;
+        private readonly int _width;
+        private readonly int _height;
 
         /// <summary>
         /// Instantiates a <see cref="ReactImageLoadEvent"/>.
         /// </summary>
         /// <param name="viewId">The view identifier.</param>
         /// <param name="eventType">The event identifier.</param>
-        public ReactImageLoadEvent(int viewId, int eventType) 
+        public ReactImageLoadEvent(int viewId, int eventType)
+            : this(viewId, eventType, null, 0, 0)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="ReactImageLoadEvent"/>.
+        /// </summary>
+        /// <param name="viewId">The view identifier.</param>
+        /// <param name="eventType">The event identifier.</param>
+        /// <param name="imageUri">The image URI.</param>
+        /// <param name="width">The image width.</param>
+        /// <param name="height">The image height.</param>
+        public ReactImageLoadEvent(int viewId, int eventType, string imageUri, int width, int height) 
             : base(viewId, TimeSpan.FromTicks(Environment.TickCount))
         {
             _eventType = eventType;
+            _imageUri = imageUri;
+            _width = width;
+            _height = height;
         }
 
         /// <summary>
@@ -76,7 +96,35 @@ namespace ReactNative.Views.Image
         /// <param name="eventEmitter">The event emitter.</param>
         public override void Dispatch(RCTEventEmitter eventEmitter)
         {
-            eventEmitter.receiveEvent(ViewTag, EventName, null);
+            var eventData = default(JObject);
+
+            if (_imageUri != null || _eventType == OnLoad)
+            {
+                eventData = new JObject();
+
+                if (_imageUri != null)
+                {
+                    eventData.Add("uri", _imageUri);
+                }
+
+                if (_eventType == OnLoad)
+                {
+                    var sourceData = new JObject
+                    {
+                        { "width", _width },
+                        { "height", _height },
+                    };
+
+                    if (_imageUri != null)
+                    {
+                        sourceData.Add("url", _imageUri);
+                    }
+
+                    eventData.Add("source", sourceData);
+                }
+            }
+
+            eventEmitter.receiveEvent(ViewTag, EventName, eventData);
         }
     }
 }
