@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.System.Threading;
 
 namespace ReactNative.Bridge.Queue
 {
@@ -63,7 +62,7 @@ namespace ReactNative.Bridge.Queue
         /// </summary>
         private async void NotifyThreadPoolOfPendingWork()
         {
-            await ThreadPool.RunAsync(_ =>
+            await Task.Run(() =>
             {
                 // Note that the current thread is now processing work items.
                 // This is necessary to enable inlining of tasks into this thread.
@@ -99,8 +98,7 @@ namespace ReactNative.Bridge.Queue
                 {
                     _currentThreadIsProcessingItems = false;
                 }
-            }, 
-            WorkItemPriority.Normal).AsTask().ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
 
         /// <summary>
