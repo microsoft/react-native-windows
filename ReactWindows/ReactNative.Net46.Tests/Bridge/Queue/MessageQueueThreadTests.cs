@@ -169,5 +169,16 @@ namespace ReactNative.Tests.Bridge.Queue
             }
             Assert.True(true);
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            var waitForApplicationExit = new ManualResetEventSlim();
+            Task.Run(() =>
+            {
+                Application.Current.Exit += (s, e) => { waitForApplicationExit.Set(); };
+                Application.Current.Shutdown();
+            });
+        }
     }
 }

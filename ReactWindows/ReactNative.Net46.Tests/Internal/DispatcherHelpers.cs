@@ -10,11 +10,17 @@ namespace ReactNative.Tests
     {
         public static async Task RunOnDispatcherAsync(Action action)
         {
-            var dispatcher = Application.Current != null
+            Dispatcher dispatcher = Application.Current != null
                 ? Application.Current.Dispatcher
                 : Dispatcher.CurrentDispatcher;
-
-            await dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+            if (Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread)
+            {
+                dispatcher.Invoke(action);
+            }
+            else
+            {
+                await dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+            }
         }
 
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
