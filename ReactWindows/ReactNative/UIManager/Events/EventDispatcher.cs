@@ -243,6 +243,18 @@ namespace ReactNative.UIManager.Events
                 (((long)coalescingKey) & 0xffff) << 48;
         }
 
+        private void ScheduleDispatcherSafe(object sender, object e)
+        {
+            try
+            {
+                ScheduleDispatch(sender, e);
+            }
+            catch (Exception ex)
+            {
+                _reactContext.HandleException(ex);
+            }
+        }
+
         private void ScheduleDispatch(object sender, object e)
         {
             DispatcherHelpers.AssertOnDispatcher();
