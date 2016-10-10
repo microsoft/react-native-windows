@@ -11,7 +11,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Tests", "ReactN
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "ChakraBridge\ChakraBridge.vcxproj", "{4B72C796-16D5-4E3A-81C0-3E36F531E578}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ReactNative.Shared", "ReactNative.Shared\ReactNative.Shared.shproj", "{EEA8B852-4D07-48E1-8294-A21AB5909FE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Shared.Tests", "ReactNative.Shared.Tests\ReactNative.Shared.Tests.csproj", "{98EFA5D4-A185-4971-AE77-3845E31B84CE}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ReactNative.Shared\ReactNative.Shared.projitems*{98efa5d4-a185-4971-ae77-3845e31b84ce}*SharedItemsImports = 4
+		ReactNative.Shared\ReactNative.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
+		ReactNative.Shared\ReactNative.Shared.projitems*{eea8b852-4d07-48e1-8294-a21ab5909fe5}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
@@ -147,6 +156,28 @@ Global
 		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x64.Build.0 = Release|x64
 		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.ActiveCfg = Release|Win32
 		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.ReleaseBundle|x86.Build.0 = Release|Win32
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Debug|ARM.ActiveCfg = Debug|ARM
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Debug|x64.ActiveCfg = Debug|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Debug|x64.Build.0 = Debug|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Debug|x86.ActiveCfg = Debug|x86
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Debug|x86.Build.0 = Debug|x86
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.DebugBundle|ARM.ActiveCfg = Release|ARM
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.DebugBundle|ARM.Build.0 = Release|ARM
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.DebugBundle|x64.Build.0 = Debug|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.DebugBundle|x86.ActiveCfg = Debug|x86
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.DebugBundle|x86.Build.0 = Debug|x86
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Release|ARM.ActiveCfg = Release|ARM
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Release|x64.ActiveCfg = Release|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Release|x64.Build.0 = Release|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Release|x86.ActiveCfg = Release|x86
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.Release|x86.Build.0 = Release|x86
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.ReleaseBundle|x64.Build.0 = Release|x64
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.ReleaseBundle|x86.ActiveCfg = Release|x86
+		{98EFA5D4-A185-4971-AE77-3845E31B84CE}.ReleaseBundle|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

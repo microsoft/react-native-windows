@@ -41,6 +41,58 @@ namespace ReactNative.Tests.Modules.Storage
             Assert.AreEqual(error["message"], "Invalid Value");
             Assert.IsNull(result);
         }
+       
+        [TestMethod]
+        public void AsyncStorageModule_GetAllKeys_SpecialCharacters()
+        {
+            var module = new AsyncStorageModule();
+            var waitHandle = new AutoResetEvent(false);
+
+            var error = default(JObject);
+            var result = default(JArray);
+            var callback = new MockCallback(res =>
+            {
+                error = res.Length > 0 ? (JObject)res[0] : null;
+                result = res.Length > 1 ? (JArray)res[1] : null;
+                waitHandle.Set();
+            });
+
+            module.clear(callback);
+            Assert.IsTrue(waitHandle.WaitOne());
+            Assert.IsNull(error);
+            Assert.IsNull(result);
+
+            var pairs = new[]
+            {
+                new[] { "\\", "1" },
+                new[] { "/", "2" },
+                new[] { ":", "3" },
+                new[] { "*", "4" },
+                new[] { "?", "5" },
+                new[] { "<", "6" },
+                new[] { ">", "7" },
+                new[] { "|", "8" },
+                new[] { "\"", "9" },
+                new[] { ".", "10" },
+                new[] { "{", "11" },
+                new[] { "}", "12" },
+                new[] { "\\/:*?<>|\".{}", "13" },
+                new[] { "abc\\abc/abc:abc*abc?abc<abc>abc|abc\"abc.abc{abc}abc", "13" },
+                new[] { "foo:bar", "14" },
+            };
+
+            module.multiSet(pairs, callback);
+            Assert.IsTrue(waitHandle.WaitOne());
+            Assert.IsNull(error);
+            Assert.IsNull(result);
+
+            module.getAllKeys(callback);
+            Assert.IsTrue(waitHandle.WaitOne());
+            Assert.IsNull(error);
+            var expectedKeys = pairs.Select(arr => arr[0]).OrderBy(s => s);
+            var actualKeys = result.ToObject<string[]>().OrderBy(s => s);
+            Assert.IsTrue(expectedKeys.SequenceEqual(actualKeys));
+        }
 
         [TestMethod]
         public void AsyncStorageModule_multiGet_Method()
@@ -184,8 +236,8 @@ namespace ReactNative.Tests.Modules.Storage
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.AreEqual(
-                JArray.FromObject(array).ToString(Formatting.None),
-                result.ToString(Formatting.None));
+            JArray.FromObject(array).ToString(Formatting.None),
+            result.ToString(Formatting.None));
         }
 
         [TestMethod]
