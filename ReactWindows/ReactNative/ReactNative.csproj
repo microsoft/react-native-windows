@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{C7673AD5-E3AA-468C-A5FD-FA38154E205C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -110,25 +110,14 @@
     <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
-    <Compile Include="Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
-    <Compile Include="Bridge\NativeArgumentsParseException.cs" />
-    <Compile Include="Bridge\NativeModuleBase.cs" />
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
-    <Compile Include="Bridge\Queue\ReactQueueConfigurationSpec.cs" />
     <Compile Include="Bridge\Queue\LimitedConcurrencyTaskScheduler.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThread.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThreadExtensions.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThreadKind.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThreadSpec.cs" />
-    <Compile Include="Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
-    <Compile Include="Collections\HeapBasedPriorityQueue.cs" />
-    <Compile Include="Collections\ListExtensions.cs" />
-    <Compile Include="Common\WindowsPlatformHelper.cs" />
     <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
@@ -150,12 +139,10 @@
     <Compile Include="DevSupport\StackFrameExtensions.cs" />
     <Compile Include="DevSupport\StackTraceHelper.cs" />
     <Compile Include="Chakra\Executor\ChakraJavaScriptExecutor.cs" />
-    <Compile Include="Chakra\Executor\JavaScriptValueToJTokenConverter.cs" />
     <Compile Include="Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
     <Compile Include="Bridge\ReactBridge.cs" />
     <Compile Include="Bridge\ReactContext.cs" />
     <Compile Include="Bridge\ReactContextNativeModuleBase.cs" />
-    <Compile Include="Common\ReactConstants.cs" />
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
@@ -166,8 +153,6 @@
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
     <Compile Include="Modules\Core\JavaScriptException.cs" />
     <Compile Include="Modules\Core\JSTimersExecution.cs" />
-    <Compile Include="Modules\DevSupport\SourceCodeModule.cs" />
-    <Compile Include="Modules\DevSupport\IDeveloperSettings.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\BitmapImageHelpers.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
@@ -196,7 +181,6 @@
     <Compile Include="ReactContextInitializedEventArgs.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootView.cs" />
-    <Compile Include="Reflection\EnumHelpers.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
@@ -214,33 +198,9 @@
     <Compile Include="Modules\Core\Timing.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="ReactInstanceManager.cs" />
-    <Compile Include="Chakra\JavaScriptBackgroundWorkItemCallback.cs" />
-    <Compile Include="Chakra\JavaScriptBeforeCollectCallback.cs" />
-    <Compile Include="Chakra\JavaScriptContext.cs" />
-    <Compile Include="Chakra\JavaScriptEngineException.cs" />
-    <Compile Include="Chakra\JavaScriptErrorCode.cs" />
-    <Compile Include="Chakra\JavaScriptException.cs" />
-    <Compile Include="Chakra\JavaScriptFatalException.cs" />
-    <Compile Include="Chakra\JavaScriptMemoryAllocationCallback.cs" />
-    <Compile Include="Chakra\JavaScriptMemoryEventType.cs" />
-    <Compile Include="Chakra\JavaScriptNativeFunction.cs" />
-    <Compile Include="Chakra\JavaScriptObjectFinalizeCallback.cs" />
-    <Compile Include="Chakra\JavaScriptPropertyId.cs" />
-    <Compile Include="Chakra\JavaScriptRuntime.cs" />
-    <Compile Include="Chakra\JavaScriptRuntimeAttributes.cs" />
-    <Compile Include="Chakra\JavaScriptRuntimeVersion.cs" />
-    <Compile Include="Chakra\JavaScriptScriptException.cs" />
-    <Compile Include="Chakra\JavaScriptSourceContext.cs" />
-    <Compile Include="Chakra\JavaScriptThreadServiceCallback.cs" />
-    <Compile Include="Chakra\JavaScriptUsageException.cs" />
-    <Compile Include="Chakra\JavaScriptValue.cs" />
-    <Compile Include="Chakra\JavaScriptValueType.cs" />
-    <Compile Include="Chakra\Native.cs" />
     <Compile Include="Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="Modules\Core\RCTDeviceEventEmitter.cs" />
     <Compile Include="Modules\Core\RCTNativeAppEventEmitter.cs" />
-    <Compile Include="Bridge\ReactDelegateFactoryBase.cs" />
-    <Compile Include="Reflection\ExpressionExtensions.cs" />
     <Compile Include="IReactPackage.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
@@ -253,7 +213,6 @@
     <Compile Include="UIManager\IViewManager.cs" />
     <Compile Include="UIManager\IViewParentManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\BaseLayoutAnimation.cs" />
-    <Compile Include="Collections\JObjectExtensions.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutAnimation.cs" />
     <Compile Include="UIManager\LayoutAnimation\StoryboardObservable.cs" />
     <Compile Include="UIManager\MeasureAssertions.cs" />
@@ -261,8 +220,6 @@
     <Compile Include="UIManager\ReactStylesDiffMapExtensions.cs" />
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Bridge\ReactMethodAttribute.cs" />
-    <Compile Include="Reflection\ReflectionHelpers.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\LayoutAnimation\InterpolationTypeExtensions.cs" />
     <Compile Include="UIManager\LayoutAnimation\AnimatedPropertyType.cs" />
@@ -314,11 +271,8 @@
     <Compile Include="UIManager\OnLayoutEvent.cs" />
     <Compile Include="UIManager\PointerEvents.cs" />
     <Compile Include="UIManager\PropertySetter.cs" />
-    <Compile Include="UIManager\Annotations\ReactPropBaseAttribute.cs" />
-    <Compile Include="UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="UIManager\SizeMonitoringCanvas.cs" />
     <Compile Include="UIManager\NativeViewHierarchyManager.cs" />
-    <Compile Include="UIManager\Annotations\ReactPropAttribute.cs" />
     <Compile Include="UIManager\ReactShadowNode.cs" />
     <Compile Include="UIManager\IRootView.cs" />
     <Compile Include="UIManager\ShadowNodeRegistry.cs" />
@@ -397,7 +351,7 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -40,7 +40,11 @@ namespace <%= ns %>
         {
             get
             {
+#if !BUNDLE || DEBUG
                 return true;
+#else
+                return false;
+#endif
             }
         }
     }
