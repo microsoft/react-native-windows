@@ -8,7 +8,9 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.FormattableString;
-#if NET46
+#if WINDOWS_UWP
+using Windows.UI.Core;
+#else
 using System.Windows.Threading;
 #endif
 
@@ -151,9 +153,9 @@ namespace ReactNative.Bridge.Queue
             {
                 _actionSubject = new Subject<Action>();
                 _actionObserver = _actionSubject;
-#if NET46
+#if WINDOWS_UWP
                 _subscription = _actionSubject
-                    .ObserveOn(Dispatcher.CurrentDispatcher)
+                    .ObserveOnDispatcher()
                     .Subscribe(action =>
                     {
                         try
@@ -167,7 +169,7 @@ namespace ReactNative.Bridge.Queue
                     });
 #else
                 _subscription = _actionSubject
-                    .ObserveOnDispatcher()
+                    .ObserveOn(Dispatcher.CurrentDispatcher)
                     .Subscribe(action =>
                     {
                         try
@@ -189,7 +191,11 @@ namespace ReactNative.Bridge.Queue
 
             protected override bool IsOnThreadCore()
             {
-                return SynchronizationContext.Current != null;
+#if WINDOWS_UWP
+                return CoreWindow.GetForCurrentThread().Dispatcher != null;
+#else
+                return Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread;
+#endif
             }
 
             protected override void Dispose(bool disposing)
@@ -218,12 +224,11 @@ namespace ReactNative.Bridge.Queue
                 _indicator = new ThreadLocal<bool>();
                 _doneHandle = new ManualResetEvent(false);
                 Task.Run(() =>
-                    {
-                        _indicator.Value = true;
-                        Run();
-                        _doneHandle.Set();
-                    }
-                );
+                {
+                    _indicator.Value = true;
+                    Run();
+                    _doneHandle.Set();
+                });
             }
 
             protected override bool IsOnThreadCore()

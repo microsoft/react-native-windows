@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -16,7 +17,7 @@ namespace ReactNative.Bridge
 
         public static bool IsOnDispatcher()
         {
-            return Dispatcher.CurrentDispatcher != null;
+            return Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread;
         }
 
         public static async void RunOnDispatcher(Action action)
