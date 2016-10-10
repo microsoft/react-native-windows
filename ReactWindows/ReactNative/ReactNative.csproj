@@ -139,7 +139,6 @@
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
-    <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\BitmapImageHelpers.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
@@ -181,6 +180,7 @@
     <Compile Include="UIManager\CSSNodeExtensions.cs" />
     <Compile Include="LifecycleState.cs" />
     <Compile Include="IReactInstanceManager.cs" />
+    <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="ReactInstanceManager.cs" />
     <Compile Include="IReactPackage.cs" />
