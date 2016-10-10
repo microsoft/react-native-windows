@@ -1,3 +1,6 @@
 [submodule "Examples"]
 	path = Examples
 	url = https://github.com/ReactWindows/react-native-windows
+[submodule "ChakraCore"]
+	path = ChakraCore
+	url = git://github.com/Microsoft/ChakraCore.git
