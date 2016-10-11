@@ -116,17 +116,12 @@
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
-    <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\DevServerHelper.cs" />
     <Compile Include="DevSupport\DevSupportManager.cs" />
-    <Compile Include="DevSupport\DisabledDevSupportManager.cs" />
-    <Compile Include="DevSupport\HMRClient.cs" />
-    <Compile Include="DevSupport\IReactInstanceDevCommandsHandler.cs" />
-    <Compile Include="DevSupport\IStackFrame.cs" />
     <Compile Include="DevSupport\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
     </Compile>
@@ -134,20 +129,16 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
-    <Compile Include="DevSupport\StackFrameExtensions.cs" />
-    <Compile Include="DevSupport\StackTraceHelper.cs" />
     <Compile Include="Chakra\Executor\ChakraJavaScriptExecutor.cs" />
     <Compile Include="Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
     <Compile Include="Bridge\ReactBridge.cs" />
     <Compile Include="CoreModulesPackage.cs" />
-    <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Modules\AppState\AppStateModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
-    <Compile Include="Modules\Core\JavaScriptException.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\BitmapImageHelpers.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
@@ -191,9 +182,6 @@
     <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="ReactInstanceManager.cs" />
-    <Compile Include="Modules\Core\DeviceEventManagerModule.cs" />
-    <Compile Include="Modules\Core\RCTDeviceEventEmitter.cs" />
-    <Compile Include="Modules\Core\RCTNativeAppEventEmitter.cs" />
     <Compile Include="IReactPackage.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
