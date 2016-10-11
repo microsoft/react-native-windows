@@ -96,9 +96,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\CSSNodeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\CSSNodeVisitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Dimensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\Event.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventTypeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\MeasureAssertions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\OnLayoutEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PointerEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMapExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ThemedReactContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
   </ItemGroup>
 </Project>
