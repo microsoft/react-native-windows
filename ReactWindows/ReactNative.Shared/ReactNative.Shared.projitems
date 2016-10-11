@@ -9,6 +9,13 @@
     <Import_RootNamespace>ReactNative.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\AnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\AnimationDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\DecayAnimationDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\FrameBasedAnimationDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\InterpolationAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\SpringAnimationDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
