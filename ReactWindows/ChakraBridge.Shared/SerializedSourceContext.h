@@ -1,6 +1,10 @@
 #pragma once
 
+#if USE_EDGEMODE_JSRT
 #include <jsrt.h>
+#else
+#include <ChakraCore.h>
+#endif
 
 struct SerializedSourceContext
 {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{45d41acc-2c3c-43d2-bc10-02aa73ffc7c7}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)asprintf.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraHost.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JsStringify.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NativeJavaScriptExecutor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)asprintf.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraHost.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraStringResult.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JsStringify.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NativeJavaScriptExecutor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SerializedSourceContext.h" />
+  </ItemGroup>
+</Project>
