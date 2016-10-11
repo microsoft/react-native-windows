@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -14,3 +15,22 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBaseTests.cs" />
   </ItemGroup>
 </Project>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>eea8b852-4d07-48e1-8294-a21ab5909fe6</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ReactNative.Shared.Tests</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBaseTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistryTests.cs" />
+  </ItemGroup>
+</Project>
+>>>>>>> Extract shareable ChakraBridge code into Shared Project. Use ChakraBridge.Shared from ChakraBridge project. Create new ChakraBridge.Net46 project and reference ChakraBridge.Shared. Reconcile differences with UWP Managed C++ and C++/CLI with macros. Minor style fixups for consistency.
