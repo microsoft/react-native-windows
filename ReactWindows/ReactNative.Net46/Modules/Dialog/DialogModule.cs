@@ -3,9 +3,6 @@ using ReactNative.Bridge;
 using ReactNative.Collections;
 using System.Collections.Generic;
 using System.Windows;
-// using Windows.ApplicationModel.Core;
-// using Windows.UI.Core;
-// using Windows.UI.Popups;
 
 namespace ReactNative.Modules.Dialog
 {

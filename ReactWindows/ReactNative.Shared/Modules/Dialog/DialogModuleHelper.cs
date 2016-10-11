@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ReactNative.Modules.Dialog
+﻿namespace ReactNative.Modules.Dialog
 {
     static class DialogModuleHelper
     {
