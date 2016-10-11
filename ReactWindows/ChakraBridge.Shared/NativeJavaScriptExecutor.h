@@ -4,14 +4,22 @@
 #include "ChakraHost.h"
 #include "ChakraStringResult.h"
 
+#if _WINRT_DLL
 using namespace Platform;
+#else _WINRT_DLL
+using namespace System;
+#endif _WINRT_DLL
 
 namespace ChakraBridge {
 
 /// <summary>
 /// This class interfaces with the unmanaged JSRT Chakra Host.
 /// </summary>
+#if _WINRT_DLL
 public ref class NativeJavaScriptExecutor sealed
+#else _WINRT_DLL
+public class NativeJavaScriptExecutor sealed
+#endif _WINRT_DLL
 {
 public:
 	/// <summary>

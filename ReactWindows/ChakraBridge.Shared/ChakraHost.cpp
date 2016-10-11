@@ -178,10 +178,14 @@ void CALLBACK UnloadSourceCallback(JsSourceContext sourceContext)
 
 JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
 {
+#if USE_EDGEMODE_JSRT
+    ULONG bufferSize = 0UL;
+#else 
+    unsigned int bufferSize = 0UL;
+#endif
     HANDLE hFile = NULL;
     HANDLE hMap = NULL;
     JsErrorCode status = JsNoError;
-    ULONG bufferSize = 0L;
     BYTE* buffer = nullptr;
     wchar_t* szScriptBuffer = nullptr;
     IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
@@ -262,11 +266,13 @@ JsErrorCode ChakraHost::InitJson()
 
     JsPropertyIdRef jsonParseId;
     IfFailRet(JsGetPropertyIdFromName(L"parse", &jsonParseId));
-    IfFailRet(JsGetProperty(jsonObject, jsonParseId, &jsonParseObject));
+    declareManagedPointerReferenceFor(JsValueRef, jsonParseObject);
+    IfFailRet(JsGetProperty(jsonObject, jsonParseId, managedPointerReferenceFor_jsonParseObject));
 
     JsPropertyIdRef jsonStringifyId;
     IfFailRet(JsGetPropertyIdFromName(L"stringify", &jsonStringifyId));
-    IfFailRet(JsGetProperty(jsonObject, jsonStringifyId, &jsonStringifyObject));
+    declareManagedPointerReferenceFor(JsValueRef, jsonStringifyObject);
+    IfFailRet(JsGetProperty(jsonObject, jsonStringifyId, managedPointerReferenceFor_jsonStringifyObject));
 
     return JsNoError;
 }
@@ -292,11 +298,16 @@ JsErrorCode ChakraHost::Init()
 {
     currentSourceContext = 0;
 
-    IfFailRet(JsCreateRuntime(JsRuntimeAttributeNone, nullptr, &runtime));
-    IfFailRet(JsCreateContext(runtime, &context));
+    declareManagedPointerReferenceFor(JsRuntimeHandle, runtime);
+    IfFailRet(JsCreateRuntime(JsRuntimeAttributeNone, nullptr, managedPointerReferenceFor_runtime));
+
+    declareManagedPointerReferenceFor(JsContextRef, context);
+    IfFailRet(JsCreateContext(runtime, managedPointerReferenceFor_context));
+
     IfFailRet(JsSetCurrentContext(context));
 
-    IfFailRet(JsGetGlobalObject(&globalObject));
+    declareManagedPointerReferenceFor(JsValueRef, globalObject);
+    IfFailRet(JsGetGlobalObject(managedPointerReferenceFor_globalObject));
 
     IfFailRet(InitJson());
     IfFailRet(InitConsole());
