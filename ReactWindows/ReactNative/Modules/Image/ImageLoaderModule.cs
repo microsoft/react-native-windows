@@ -41,7 +41,7 @@ namespace ReactNative.Modules.Image
                 {
                     var bitmapImage = new BitmapImage();
                     var loadQuery = bitmapImage.GetStreamLoadObservable()
-                        .Where(status => status == ImageLoadStatus.OnLoadEnd)
+                        .Where(status => status.LoadStatus == ImageLoadStatus.OnLoadEnd)
                         .FirstAsync()
                         .Replay(1);
 

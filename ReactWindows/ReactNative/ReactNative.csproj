@@ -145,6 +145,8 @@
     <Compile Include="Modules\I18N\I18NModule.cs" />
     <Compile Include="Modules\I18N\I18NUtil.cs" />
     <Compile Include="Modules\Image\ImageLoadStatus.cs" />
+    <Compile Include="Modules\Image\ImageMetadata.cs" />
+    <Compile Include="Modules\Image\ImageStatusEventData.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
     <Compile Include="Modules\Location\LocationModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
