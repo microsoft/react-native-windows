@@ -1,6 +1,10 @@
 #pragma once
 
+#if _WINRT_DLL
 using namespace Platform;
+#else _WINRT_DLL
+using namespace System;
+#endif _WINRT_DLL
 
 namespace ChakraBridge {
 
