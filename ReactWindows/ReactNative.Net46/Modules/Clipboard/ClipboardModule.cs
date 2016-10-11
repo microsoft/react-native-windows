@@ -1,11 +1,5 @@
 ﻿using ReactNative.Bridge;
 using System;
-using System.Threading.Tasks;
-using AsyncClipboardService.Clipboard;
-using AsyncWindowsClipboard;
-using System.Threading;
-using System.Windows.Threading;
-// using DataTransfer = Windows.ApplicationModel.DataTransfer;
 
 namespace ReactNative.Modules.Clipboard
 {
@@ -15,8 +9,7 @@ namespace ReactNative.Modules.Clipboard
     class ClipboardModule : NativeModuleBase
     {
         private readonly IClipboardInstance _clipboard;
-        private WindowsClipboardService _clipboardService = new WindowsClipboardService();
-
+        
         public ClipboardModule() : this(new ClipboardInstance())
         {
 
@@ -50,29 +43,16 @@ namespace ReactNative.Modules.Clipboard
                 throw new ArgumentNullException(nameof(promise));
             }
 
-            RunOnDispatcher(async () =>
+            if (_clipboard.ContainsText())
             {
-                try
-                {
-                    if (_clipboard.GetContent() == null)
-                    {
-                        promise.Resolve("");
-                    }
-                    else if (_clipboard.ContainsText())
-                    {
-                        var text = await _clipboardService.GetTextAsync().ConfigureAwait(false);
-                        promise.Resolve(text);
-                    }
-                    else
-                    {
-                        promise.Resolve("");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    promise.Reject(ex);
-                }
-            });
+                var text = _clipboard.GetText();
+                promise.Resolve(text);
+            }
+            else
+            {
+                promise.Resolve("");
+            }
+
         }
 
         /// <summary>
@@ -82,26 +62,8 @@ namespace ReactNative.Modules.Clipboard
         [ReactMethod]
         public void setString(string text)
         {
-            RunOnDispatcher(async () =>
-            {
-                if (text == null)
-                {
-                    _clipboard.Clear();
-                }
-                else
-                {
-                    await _clipboardService.SetTextAsync(text);
-                }
-            });
+            _clipboard.SetText(text);
         }
 
-        /// <summary>
-        /// Run action on UI thread.
-        /// </summary>
-        /// <param name="action">The action.</param>
-        private static async void RunOnDispatcher(Func<Task> action)
-        {
-            await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
-        }
     }
 }

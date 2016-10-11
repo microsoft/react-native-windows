@@ -23,5 +23,15 @@ namespace ReactNative.Modules.Clipboard
         {
             return System.Windows.Clipboard.ContainsText();
         }
+
+        public string GetText()
+        {
+            return System.Windows.Clipboard.GetText();
+        }
+
+        public void SetText(string str)
+        {
+            System.Windows.Clipboard.SetText(str);
+        }
     }
 }

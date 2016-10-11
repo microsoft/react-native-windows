@@ -25,5 +25,7 @@ namespace ReactNative.Modules.Clipboard
         void SetContent(IDataObject package);
 
         bool ContainsText();
+        string GetText();
+        void SetText(string str);
     }
 }
