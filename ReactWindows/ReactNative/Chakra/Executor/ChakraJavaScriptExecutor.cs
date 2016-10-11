@@ -410,7 +410,7 @@ namespace ReactNative.Chakra.Executor
             if (fbBatchedBridge.ValueType != JavaScriptValueType.Object)
             {
                 throw new InvalidOperationException(
-                    Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' instance.  Check the JavaScript bundle to ensure it is generated correctly."));
+                    Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' object.  Check the JavaScript bundle to ensure it is generated correctly."));
             }
 
             return fbBatchedBridge;
