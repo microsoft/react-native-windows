@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using Newtonsoft.Json.Linq;
 
 namespace ReactNative.Modules.Storage
 {
-    class AsyncStorageConstants
+    class AsyncStorageHelpers
     {
         public const string DirectoryName = "AsyncStorage";
         public const string FileExtension = ".data";
 
-        public static readonly IDictionary<char, string> s_charToString = new Dictionary<char, string>
+        private static readonly IDictionary<char, string> s_charToString = new Dictionary<char, string>
         {
             { '\\', "{bsl}" },
             { '/', "{fsl}" },
@@ -28,9 +26,9 @@ namespace ReactNative.Modules.Storage
             { '}', "{ccb}" },
         };
 
-        public static readonly IDictionary<string, char> s_stringToChar = s_charToString.ToDictionary(kv => kv.Value, kv => kv.Key);
+        private static readonly IDictionary<string, char> s_stringToChar = s_charToString.ToDictionary(kv => kv.Value, kv => kv.Key);
 
-        public static readonly int s_maxReplace = s_charToString.Values.Select(s => s.Length).Max();
+        private static readonly int s_maxReplace = s_charToString.Values.Select(s => s.Length).Max();
 
         public static string GetFileName(string key)
         {
@@ -61,7 +59,7 @@ namespace ReactNative.Modules.Storage
             }
             else
             {
-                sb.Append(AsyncStorageConstants.FileExtension);
+                sb.Append(AsyncStorageHelpers.FileExtension);
                 return sb.ToString();
             }
         }
@@ -130,6 +128,31 @@ namespace ReactNative.Modules.Storage
                     oldJson[key] = value;
                 }
             }
+        }
+
+        public static JObject GetError(string key, string errorMessage)
+        {
+            var errorMap = new JObject
+            {
+                { "message", errorMessage },
+            };
+
+            if (key != null)
+            {
+                errorMap.Add("key", key);
+            }
+
+            return errorMap;
+        }
+
+        public static JObject GetInvalidKeyError(string key)
+        {
+            return GetError(key, "Invalid key");
+        }
+
+        public static JObject GetInvalidValueError(string key)
+        {
+            return GetError(key, "Invalid Value");
         }
     }
 }
