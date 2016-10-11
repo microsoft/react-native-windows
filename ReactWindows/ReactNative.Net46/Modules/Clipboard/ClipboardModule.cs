@@ -64,6 +64,5 @@ namespace ReactNative.Modules.Clipboard
         {
             _clipboard.SetText(text);
         }
-
     }
 }
