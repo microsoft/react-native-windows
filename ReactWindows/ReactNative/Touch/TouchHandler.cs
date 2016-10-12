@@ -4,6 +4,8 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using Windows.Foundation;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
@@ -46,18 +48,25 @@ namespace ReactNative.Touch
                 throw new InvalidOperationException("A pointer with this ID already exists.");
             }
 
-            var reactView = GetReactViewTarget(e);
+            var originalSource = e.OriginalSource as DependencyObject;
+            var rootPoint = e.GetCurrentPoint(_view);
+            var reactView = GetReactViewTarget(originalSource, rootPoint.Position);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
-                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView,
-                    e.GetCurrentPoint(reactView).Position);
+                var pointerPoint = e.GetCurrentPoint(reactView);
+                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, pointerPoint.Position);
                 var pointer = new ReactPointer();
                 pointer.Target = reactTag;
                 pointer.PointerId = e.Pointer.PointerId;
-                pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
                 pointer.Identifier = ++_pointerIDs;
+                pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
+                pointer.IsLeftButton = pointerPoint.Properties.IsLeftButtonPressed;
+                pointer.IsRightButton = pointerPoint.Properties.IsRightButtonPressed;
+                pointer.IsMiddleButton = pointerPoint.Properties.IsMiddleButtonPressed;
+                pointer.IsHorizontalMouseWheel = pointerPoint.Properties.IsHorizontalMouseWheel;
+                pointer.IsEraser = pointerPoint.Properties.IsEraser;
                 pointer.ReactView = reactView;
-                UpdatePointerForEvent(pointer, e);
+                UpdatePointerForEvent(pointer, rootPoint, pointerPoint);
 
                 var pointerIndex = _pointers.Count;
                 _pointers.Add(pointer);
@@ -124,16 +133,15 @@ namespace ReactNative.Touch
             return -1;
         }
 
-        private UIElement GetReactViewTarget(PointerRoutedEventArgs e)
+        private UIElement GetReactViewTarget(DependencyObject originalSource, Point point)
         {
             // If the target is not a child of the root view, then this pointer
             // event does not belong to React.
-            if (!RootViewHelper.IsReactSubview(e.OriginalSource as DependencyObject))
+            if (!RootViewHelper.IsReactSubview(originalSource))
             {
                 return null;
             }
 
-            var point = e.GetCurrentPoint(_view).Position;
             var sources = VisualTreeHelper.FindElementsInHostCoordinates(point, _view);
 
             // Get the first React view that does not have pointer events set
@@ -168,15 +176,23 @@ namespace ReactNative.Touch
 
         private void UpdatePointerForEvent(ReactPointer pointer, PointerRoutedEventArgs e)
         {
-            var viewPoint = e.GetCurrentPoint(_view);
-            var positionInRoot = viewPoint.Position;
-            var positionInView = e.GetCurrentPoint(pointer.ReactView).Position;
+            var rootPoint = e.GetCurrentPoint(_view);
+            var viewPoint = e.GetCurrentPoint(pointer.ReactView);
+            UpdatePointerForEvent(pointer, rootPoint, viewPoint);
+        }
+
+        private void UpdatePointerForEvent(ReactPointer pointer, PointerPoint rootPoint, PointerPoint viewPoint)
+        {
+            var positionInRoot = rootPoint.Position;
+            var positionInView = viewPoint.Position;
 
             pointer.PageX = (float)positionInRoot.X;
             pointer.PageY = (float)positionInRoot.Y;
             pointer.LocationX = (float)positionInView.X;
             pointer.LocationY = (float)positionInView.Y;
-            pointer.Timestamp = viewPoint.Timestamp / 1000; // Convert microseconds to milliseconds;
+            pointer.Timestamp = rootPoint.Timestamp / 1000; // Convert microseconds to milliseconds;
+            pointer.Force = rootPoint.Properties.Pressure;
+            pointer.IsBarrelButtonPressed = rootPoint.Properties.IsBarrelButtonPressed;
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
@@ -316,6 +332,27 @@ namespace ReactNative.Touch
 
             [JsonProperty(PropertyName = "pointerType")]
             public string PointerType { get; set; }
+
+            [JsonProperty(PropertyName = "force")]
+            public double Force { get; set; }
+
+            [JsonProperty(PropertyName = "isLeftButton", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool IsLeftButton { get; set; }
+
+            [JsonProperty(PropertyName = "isRightButton", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool IsRightButton { get; set; }
+
+            [JsonProperty(PropertyName = "isMiddleButton", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool IsMiddleButton { get; set; }
+
+            [JsonProperty(PropertyName = "isBarrelButtonPressed", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool IsBarrelButtonPressed { get; set; }
+
+            [JsonProperty(PropertyName = "isHorizontalScrollWheel", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool IsHorizontalMouseWheel { get; set; }
+
+            [JsonProperty(PropertyName = "isEraser", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool IsEraser { get; set; }
         }
     }
 }
