@@ -55,7 +55,7 @@ namespace ReactNative.Tests.Modules.NetInfo
             context.OnResume();
 
             networkInfo.NetworkInterface = new MockNetworkInterface("InternetAccess");
-            networkInfo.OnNetworkAvailabilityChanged(new object(), new object());
+            networkInfo.OnNetworkAvailabilityChanged(new object(), new NetworkAvailabilityEventArgs());
             Assert.IsTrue(emitted.WaitOne());
             Assert.AreEqual(CreateNetworkInfo("InternetAccess"), state);
         }
@@ -162,9 +162,9 @@ namespace ReactNative.Tests.Modules.NetInfo
                 _onStop();
             }
 
-            public void OnNetworkAvailabilityChanged(object source)
+            public void OnNetworkAvailabilityChanged(object source, NetworkAvailabilityEventArgs e)
             {
-                NetworkAvailabilityChanged?.Invoke(source);
+                NetworkAvailabilityChanged?.Invoke(source, e);
             }
         }
 
