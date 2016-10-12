@@ -180,7 +180,7 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
 {
 #if USE_EDGEMODE_JSRT
     ULONG bufferSize = 0UL;
-#else 
+#else if USE_CHAKRACORE_JSRT 
     unsigned int bufferSize = 0UL;
 #endif
     HANDLE hFile = NULL;

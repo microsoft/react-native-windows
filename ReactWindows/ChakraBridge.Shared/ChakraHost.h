@@ -4,7 +4,7 @@
 
 #if USE_EDGEMODE_JSRT
 #include <jsrt.h>
-#else
+#else if USE_CHAKRACORE_JSRT
 #include <ChakraCore.h>
 #endif
 
