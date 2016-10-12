@@ -95,19 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animated\AdditionAnimatedNode.cs" />
-    <Compile Include="Animated\AnimatedNode.cs" />
-    <Compile Include="Animated\AnimationDriver.cs" />
-    <Compile Include="Animated\DecayAnimationDriver.cs" />
-    <Compile Include="Animated\FrameBasedAnimationDriver.cs" />
-    <Compile Include="Animated\InterpolationAnimatedNode.cs" />
     <Compile Include="Animated\MultiplicationAnimatedNode.cs" />
     <Compile Include="Animated\NativeAnimatedModule.cs" />
     <Compile Include="Animated\NativeAnimatedNodesManager.cs" />
     <Compile Include="Animated\PropsAnimatedNode.cs" />
-    <Compile Include="Animated\SpringAnimationDriver.cs" />
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
-    <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
@@ -178,7 +171,6 @@
     </Compile>
     <Compile Include="UIManager\BorderExtensions.cs" />
     <Compile Include="UIManager\ColorHelpers.cs" />
-    <Compile Include="UIManager\CSSNodeExtensions.cs" />
     <Compile Include="LifecycleState.cs" />
     <Compile Include="IReactInstanceManager.cs" />
     <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
@@ -191,16 +183,12 @@
     <Compile Include="UIManager\LayoutAnimation\LayoutDeleteAnimation.cs" />
     <Compile Include="UIManager\MatrixMathHelper.cs" />
     <Compile Include="UIManager\ReactDefaultCompoundView.cs" />
-    <Compile Include="UIManager\Dimensions.cs" />
     <Compile Include="UIManager\IReactCompoundView.cs" />
     <Compile Include="UIManager\IViewManager.cs" />
     <Compile Include="UIManager\IViewParentManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\BaseLayoutAnimation.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutAnimation.cs" />
     <Compile Include="UIManager\LayoutAnimation\StoryboardObservable.cs" />
-    <Compile Include="UIManager\MeasureAssertions.cs" />
-    <Compile Include="UIManager\ReactStylesDiffMap.cs" />
-    <Compile Include="UIManager\ReactStylesDiffMapExtensions.cs" />
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracing\Tracer.cs" />
@@ -210,7 +198,6 @@
     <Compile Include="UIManager\LayoutAnimation\LayoutAnimationController.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutUpdateAnimation.cs" />
     <Compile Include="UIManager\DependencyObjectViewManager.cs" />
-    <Compile Include="UIManager\ThemedReactContext.cs" />
     <Compile Include="UIManager\TransformHelper.cs" />
     <Compile Include="UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
@@ -251,8 +238,6 @@
     <Compile Include="UIManager\IPropertySetter.cs" />
     <Compile Include="UIManager\LayoutShadowNode.cs" />
     <Compile Include="UIManager\NativeViewHierarchyOptimizer.cs" />
-    <Compile Include="UIManager\OnLayoutEvent.cs" />
-    <Compile Include="UIManager\PointerEvents.cs" />
     <Compile Include="UIManager\PropertySetter.cs" />
     <Compile Include="UIManager\SizeMonitoringCanvas.cs" />
     <Compile Include="UIManager\NativeViewHierarchyManager.cs" />
@@ -263,7 +248,6 @@
     <Compile Include="UIManager\UIManagerModule.cs" />
     <Compile Include="UIManager\UIManagerModule.Constants.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
-    <Compile Include="UIManager\ViewAtIndex.cs" />
     <Compile Include="UIManager\ViewParentManager.cs" />
     <Compile Include="UIManager\PanelViewParentManager.cs" />
     <Compile Include="UIManager\ViewManager.cs" />
@@ -272,7 +256,6 @@
     <Compile Include="Views\TextInput\ReactTextInputShadowNode.cs" />
     <Compile Include="Views\Switch\ReactSwitchManager.cs" />
     <Compile Include="Views\Switch\ReactSwitchShadowNode.cs" />
-    <Compile Include="UIManager\CSSNodeVisitor.cs" />
     <Compile Include="Views\Text\ReactRunShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineViewManager.cs" />
@@ -280,7 +263,6 @@
     <Compile Include="Views\Text\ReactInlineShadowNodeVisitor.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\ViewManagersPropertyCache.cs" />
-    <Compile Include="UIManager\ViewProps.cs" />
     <Compile Include="Views\Text\ReactRunManager.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
