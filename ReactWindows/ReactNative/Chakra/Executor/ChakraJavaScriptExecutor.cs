@@ -402,6 +402,20 @@ namespace ReactNative.Chakra.Executor
             return _parseFunction;
         }
 
+        private JavaScriptValue EnsureBatchedBridge()
+        {
+            var globalObject = EnsureGlobalObject();
+            var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
+            var fbBatchedBridge = globalObject.GetProperty(propertyId);
+            if (fbBatchedBridge.ValueType != JavaScriptValueType.Object)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' object.  Check the JavaScript bundle to ensure it is generated correctly."));
+            }
+
+            return fbBatchedBridge;
+        }
+
         private JavaScriptValue EnsureStringifyFunction()
         {
             if (!_stringifyFunction.IsValid)
@@ -418,9 +432,7 @@ namespace ReactNative.Chakra.Executor
         {
             if (!_callFunctionAndReturnFlushedQueueFunction.IsValid)
             {
-                var globalObject = EnsureGlobalObject();
-                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                var fbBatchedBridge = EnsureBatchedBridge();
                 var functionPropertyId = JavaScriptPropertyId.FromString("callFunctionReturnFlushedQueue");
                 _callFunctionAndReturnFlushedQueueFunction = fbBatchedBridge.GetProperty(functionPropertyId);
             }
@@ -432,9 +444,7 @@ namespace ReactNative.Chakra.Executor
         {
             if (!_invokeCallbackAndReturnFlushedQueueFunction.IsValid)
             {
-                var globalObject = EnsureGlobalObject();
-                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                var fbBatchedBridge = EnsureBatchedBridge();
                 var functionPropertyId = JavaScriptPropertyId.FromString("invokeCallbackAndReturnFlushedQueue");
                 _invokeCallbackAndReturnFlushedQueueFunction = fbBatchedBridge.GetProperty(functionPropertyId);
             }
@@ -446,9 +456,7 @@ namespace ReactNative.Chakra.Executor
         {
             if (!_flushedQueueFunction.IsValid)
             {
-                var globalObject = EnsureGlobalObject();
-                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                var fbBatchedBridge = EnsureBatchedBridge();
                 var functionPropertyId = JavaScriptPropertyId.FromString("flushedQueue");
                 _flushedQueueFunction = fbBatchedBridge.GetProperty(functionPropertyId);
             }

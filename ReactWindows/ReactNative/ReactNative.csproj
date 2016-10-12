@@ -95,19 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animated\AdditionAnimatedNode.cs" />
-    <Compile Include="Animated\AnimatedNode.cs" />
-    <Compile Include="Animated\AnimationDriver.cs" />
-    <Compile Include="Animated\DecayAnimationDriver.cs" />
-    <Compile Include="Animated\FrameBasedAnimationDriver.cs" />
-    <Compile Include="Animated\InterpolationAnimatedNode.cs" />
     <Compile Include="Animated\MultiplicationAnimatedNode.cs" />
     <Compile Include="Animated\NativeAnimatedModule.cs" />
     <Compile Include="Animated\NativeAnimatedNodesManager.cs" />
     <Compile Include="Animated\PropsAnimatedNode.cs" />
-    <Compile Include="Animated\SpringAnimationDriver.cs" />
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
-    <Compile Include="Animated\ValueAnimatedNode.cs" />
     <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
     <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
@@ -115,20 +108,13 @@
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
-    <Compile Include="Bridge\Queue\LimitedConcurrencyTaskScheduler.cs" />
-    <Compile Include="Bridge\Queue\MessageQueueThread.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
-    <Compile Include="DevSupport\DebugServerException.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\DevServerHelper.cs" />
     <Compile Include="DevSupport\DevSupportManager.cs" />
-    <Compile Include="DevSupport\DisabledDevSupportManager.cs" />
-    <Compile Include="DevSupport\HMRClient.cs" />
-    <Compile Include="DevSupport\IReactInstanceDevCommandsHandler.cs" />
-    <Compile Include="DevSupport\IStackFrame.cs" />
     <Compile Include="DevSupport\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
     </Compile>
@@ -136,29 +122,24 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
-    <Compile Include="DevSupport\StackFrameExtensions.cs" />
-    <Compile Include="DevSupport\StackTraceHelper.cs" />
     <Compile Include="Chakra\Executor\ChakraJavaScriptExecutor.cs" />
     <Compile Include="Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
     <Compile Include="Bridge\ReactBridge.cs" />
-    <Compile Include="Bridge\ReactContext.cs" />
-    <Compile Include="Bridge\ReactContextNativeModuleBase.cs" />
     <Compile Include="CoreModulesPackage.cs" />
-    <Compile Include="DevSupport\IDevSupportManager.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Modules\AppState\AppStateModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
-    <Compile Include="Modules\Core\JavaScriptException.cs" />
-    <Compile Include="Modules\Core\JSTimersExecution.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\BitmapImageHelpers.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
     <Compile Include="Modules\I18N\I18NModule.cs" />
     <Compile Include="Modules\I18N\I18NUtil.cs" />
     <Compile Include="Modules\Image\ImageLoadStatus.cs" />
+    <Compile Include="Modules\Image\ImageMetadata.cs" />
+    <Compile Include="Modules\Image\ImageStatusEventData.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
     <Compile Include="Modules\Location\LocationModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
@@ -191,16 +172,11 @@
     </Compile>
     <Compile Include="UIManager\BorderExtensions.cs" />
     <Compile Include="UIManager\ColorHelpers.cs" />
-    <Compile Include="UIManager\CSSNodeExtensions.cs" />
     <Compile Include="LifecycleState.cs" />
     <Compile Include="IReactInstanceManager.cs" />
     <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
-    <Compile Include="Modules\Core\Timing.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="ReactInstanceManager.cs" />
-    <Compile Include="Modules\Core\DeviceEventManagerModule.cs" />
-    <Compile Include="Modules\Core\RCTDeviceEventEmitter.cs" />
-    <Compile Include="Modules\Core\RCTNativeAppEventEmitter.cs" />
     <Compile Include="IReactPackage.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
@@ -208,16 +184,12 @@
     <Compile Include="UIManager\LayoutAnimation\LayoutDeleteAnimation.cs" />
     <Compile Include="UIManager\MatrixMathHelper.cs" />
     <Compile Include="UIManager\ReactDefaultCompoundView.cs" />
-    <Compile Include="UIManager\Dimensions.cs" />
     <Compile Include="UIManager\IReactCompoundView.cs" />
     <Compile Include="UIManager\IViewManager.cs" />
     <Compile Include="UIManager\IViewParentManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\BaseLayoutAnimation.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutAnimation.cs" />
     <Compile Include="UIManager\LayoutAnimation\StoryboardObservable.cs" />
-    <Compile Include="UIManager\MeasureAssertions.cs" />
-    <Compile Include="UIManager\ReactStylesDiffMap.cs" />
-    <Compile Include="UIManager\ReactStylesDiffMapExtensions.cs" />
     <Compile Include="UIManager\Events\EventDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracing\Tracer.cs" />
@@ -227,7 +199,6 @@
     <Compile Include="UIManager\LayoutAnimation\LayoutAnimationController.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutUpdateAnimation.cs" />
     <Compile Include="UIManager\DependencyObjectViewManager.cs" />
-    <Compile Include="UIManager\ThemedReactContext.cs" />
     <Compile Include="UIManager\TransformHelper.cs" />
     <Compile Include="UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
@@ -268,8 +239,6 @@
     <Compile Include="UIManager\IPropertySetter.cs" />
     <Compile Include="UIManager\LayoutShadowNode.cs" />
     <Compile Include="UIManager\NativeViewHierarchyOptimizer.cs" />
-    <Compile Include="UIManager\OnLayoutEvent.cs" />
-    <Compile Include="UIManager\PointerEvents.cs" />
     <Compile Include="UIManager\PropertySetter.cs" />
     <Compile Include="UIManager\SizeMonitoringCanvas.cs" />
     <Compile Include="UIManager\NativeViewHierarchyManager.cs" />
@@ -280,7 +249,6 @@
     <Compile Include="UIManager\UIManagerModule.cs" />
     <Compile Include="UIManager\UIManagerModule.Constants.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
-    <Compile Include="UIManager\ViewAtIndex.cs" />
     <Compile Include="UIManager\ViewParentManager.cs" />
     <Compile Include="UIManager\PanelViewParentManager.cs" />
     <Compile Include="UIManager\ViewManager.cs" />
@@ -289,7 +257,6 @@
     <Compile Include="Views\TextInput\ReactTextInputShadowNode.cs" />
     <Compile Include="Views\Switch\ReactSwitchManager.cs" />
     <Compile Include="Views\Switch\ReactSwitchShadowNode.cs" />
-    <Compile Include="UIManager\CSSNodeVisitor.cs" />
     <Compile Include="Views\Text\ReactRunShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineViewManager.cs" />
@@ -297,7 +264,6 @@
     <Compile Include="Views\Text\ReactInlineShadowNodeVisitor.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\ViewManagersPropertyCache.cs" />
-    <Compile Include="UIManager\ViewProps.cs" />
     <Compile Include="Views\Text\ReactRunManager.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
