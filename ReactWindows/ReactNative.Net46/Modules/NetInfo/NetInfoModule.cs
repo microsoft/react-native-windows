@@ -97,7 +97,6 @@ namespace ReactNative.Modules.NetInfo
 
         private void OnAvailabilityChanged(object ignored, NetworkAvailabilityEventArgs e)
         {
-            var connectivity = CreateConnectivityEventMap();
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("networkStatusDidChange", CreateConnectivityEventMap());
         }

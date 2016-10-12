@@ -326,7 +326,7 @@ namespace ReactNative.Bridge
         /// <remarks>
         /// This method should be called exactly once.
         /// </remarks>
-        internal void InitializeWithInstance(IReactInstance instance)
+        public void InitializeWithInstance(IReactInstance instance)
         {
             if (instance == null)
                 throw new ArgumentNullException(nameof(instance));
