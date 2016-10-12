@@ -23,6 +23,7 @@ namespace ReactNative.Touch
             _pointers = new List<ReactPointer>();
 
             _view.PointerPressed += OnPointerPressed;
+            _view.RightTapped += OnRightPointerPressed;
             _view.PointerMoved += OnPointerMoved;
             _view.PointerReleased += OnPointerReleased;
             _view.PointerCanceled += OnPointerCanceled;
@@ -32,6 +33,7 @@ namespace ReactNative.Touch
         public void Dispose()
         {
             _view.PointerPressed -= OnPointerPressed;
+            _view.RightTapped -= OnRightPointerPressed;
             _view.PointerMoved -= OnPointerMoved;
             _view.PointerReleased -= OnPointerReleased;
             _view.PointerCanceled -= OnPointerCanceled;
@@ -54,6 +56,7 @@ namespace ReactNative.Touch
                 var pointer = new ReactPointer();
                 pointer.Target = reactTag;
                 pointer.PointerId = e.Pointer.PointerId;
+                pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
                 pointer.Identifier = ++_pointerIDs;
                 pointer.ReactView = reactView;
                 UpdatePointerForEvent(pointer, e);
@@ -62,6 +65,11 @@ namespace ReactNative.Touch
                 _pointers.Add(pointer);
                 DispatchTouchEvent(TouchEventType.Start, _pointers, pointerIndex);
             }
+        }
+
+        private void OnRightPointerPressed(object sender, RightTappedRoutedEventArgs e)
+        {
+            e.Handled = false;
         }
 
         private void OnPointerMoved(object sender, PointerRoutedEventArgs e)
@@ -312,6 +320,9 @@ namespace ReactNative.Touch
 
             [JsonProperty(PropertyName = "pageY")]
             public float PageY { get; set; }
+
+            [JsonProperty(PropertyName = "pointerType")]
+            public string PointerType { get; set; }
         }
     }
 }
