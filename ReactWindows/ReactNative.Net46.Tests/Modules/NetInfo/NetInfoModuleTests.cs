@@ -30,7 +30,7 @@ namespace ReactNative.Tests.Modules.NetInfo
 
             networkInfo.NetworkInterface = new MockNetworkInterface("InternetAccess");
             netInfo.getCurrentConnectivity(promise);
-            Assert.AreEqual(CreateNetworkInfo("InternetAccess").ToString(Formatting.None), state);
+            Assert.AreEqual(CreateNetworkInfo("InternetAccess"), state);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace ReactNative.Tests.Modules.NetInfo
             context.OnResume();
 
             networkInfo.NetworkInterface = new MockNetworkInterface("InternetAccess");
-            networkInfo.OnNetworkAvailabilityChanged(new object(), new NetworkAvailabilityEventArgs());
+            networkInfo.OnNetworkAvailabilityChanged(new object(), (NetworkAvailabilityEventArgs)null);
             Assert.IsTrue(emitted.WaitOne());
             Assert.AreEqual(CreateNetworkInfo("InternetAccess"), state);
         }
