@@ -21,6 +21,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraCore", "ChakraCore\ChakraCore.vcxproj", "{E41C872E-3D05-4857-BDB3-EB1285F6D18F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge.Net46", "ChakraBridge.Net46\ChakraBridge.Net46.vcxproj", "{A6FEF92B-8984-46CB-A49D-97F8F1038819}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E41C872E-3D05-4857-BDB3-EB1285F6D18F} = {E41C872E-3D05-4857-BDB3-EB1285F6D18F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge.Shared", "ChakraBridge.Shared\ChakraBridge.Shared.vcxitems", "{45D41ACC-2C3C-43D2-BC10-02AA73FFC7C7}"
 EndProject
