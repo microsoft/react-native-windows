@@ -23,7 +23,6 @@ namespace ReactNative.Touch
             _pointers = new List<ReactPointer>();
 
             _view.PointerPressed += OnPointerPressed;
-            _view.RightTapped += OnRightPointerPressed;
             _view.PointerMoved += OnPointerMoved;
             _view.PointerReleased += OnPointerReleased;
             _view.PointerCanceled += OnPointerCanceled;
@@ -33,7 +32,6 @@ namespace ReactNative.Touch
         public void Dispose()
         {
             _view.PointerPressed -= OnPointerPressed;
-            _view.RightTapped -= OnRightPointerPressed;
             _view.PointerMoved -= OnPointerMoved;
             _view.PointerReleased -= OnPointerReleased;
             _view.PointerCanceled -= OnPointerCanceled;
@@ -65,11 +63,6 @@ namespace ReactNative.Touch
                 _pointers.Add(pointer);
                 DispatchTouchEvent(TouchEventType.Start, _pointers, pointerIndex);
             }
-        }
-
-        private void OnRightPointerPressed(object sender, RightTappedRoutedEventArgs e)
-        {
-            e.Handled = false;
         }
 
         private void OnPointerMoved(object sender, PointerRoutedEventArgs e)
