@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -63,7 +63,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
     <NMakeOutput>
     </NMakeOutput>
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
@@ -71,7 +71,7 @@
     <IntDir />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
     <NMakeOutput>
     </NMakeOutput>
     <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
@@ -80,19 +80,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
-    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
     <OutDir>.\Build</OutDir>
     <IntDir />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
-    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
     <OutDir>.\Build</OutDir>
     <IntDir />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CustomBuildStep>
-      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</Command>
+      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,31 +101,31 @@
       <Message>Building ChakraCore ($(Configuration)) ...</Message>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</Command>
+      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CustomBuildStep>
-      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</Command>
+      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CustomBuildStep>
       <Message>Building ChakraCore ($(Configuration)) ...</Message>
-      <Outputs>"$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.lib"</Outputs>
+      <Outputs>&amp;quot;$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.lib&amp;quot;</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</Command>
+      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</Command>
+      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</Command>
+      <Command>msbuild /m /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)..\ChakraCore\Build\Chakra.Core.sln"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
