@@ -53,20 +53,20 @@ namespace ReactNative.Touch
             var reactView = GetReactViewTarget(originalSource, rootPoint.Position);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
-                var pointerPoint = e.GetCurrentPoint(reactView);
-                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, pointerPoint.Position);
+                var viewPoint = e.GetCurrentPoint(reactView);
+                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint.Position);
                 var pointer = new ReactPointer();
                 pointer.Target = reactTag;
                 pointer.PointerId = e.Pointer.PointerId;
                 pointer.Identifier = ++_pointerIDs;
                 pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
-                pointer.IsLeftButton = pointerPoint.Properties.IsLeftButtonPressed;
-                pointer.IsRightButton = pointerPoint.Properties.IsRightButtonPressed;
-                pointer.IsMiddleButton = pointerPoint.Properties.IsMiddleButtonPressed;
-                pointer.IsHorizontalMouseWheel = pointerPoint.Properties.IsHorizontalMouseWheel;
-                pointer.IsEraser = pointerPoint.Properties.IsEraser;
+                pointer.IsLeftButton = viewPoint.Properties.IsLeftButtonPressed;
+                pointer.IsRightButton = viewPoint.Properties.IsRightButtonPressed;
+                pointer.IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed;
+                pointer.IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel;
+                pointer.IsEraser = viewPoint.Properties.IsEraser;
                 pointer.ReactView = reactView;
-                UpdatePointerForEvent(pointer, rootPoint, pointerPoint);
+                UpdatePointerForEvent(pointer, rootPoint, viewPoint);
 
                 var pointerIndex = _pointers.Count;
                 _pointers.Add(pointer);
