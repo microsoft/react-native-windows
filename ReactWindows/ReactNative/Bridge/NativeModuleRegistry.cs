@@ -291,12 +291,29 @@ namespace ReactNative.Bridge
 
                 foreach (var module in _modules.Values)
                 {
-                    var moduleDef = new ModuleDefinition(module.Name, module);
+                    var name = NormalizeModuleName(module.Name);
+                    var moduleDef = new ModuleDefinition(name, module);
                     moduleTable.Add(moduleDef);
                     moduleInstances.Add(module.GetType(), module);
                 }
 
                 return new NativeModuleRegistry(moduleTable, moduleInstances);
+            }
+
+            private static string NormalizeModuleName(string name)
+            {
+                if (name.StartsWith("RCT"))
+                {
+                    return name.Substring(3);
+                }
+                else if (name.StartsWith("RK"))
+                {
+                    return name.Substring(2);
+                }
+                else
+                {
+                    return name;
+                }
             }
         }
     }
