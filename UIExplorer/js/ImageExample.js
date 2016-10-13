@@ -612,7 +612,7 @@ exports.examples = [
     render: function() {
       return (
         <Image
-          source={require('image!LegacyImage')}
+          source={require('image!legacy_image')}
         />
       );
     },
@@ -646,7 +646,7 @@ exports.examples = [
         </View>
       );
     },
-    platforms: ['android', 'ios'],
+    platform: 'ios',
   },
 ];
 
