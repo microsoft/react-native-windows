@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 //using Windows.Storage;
-//using System.Net.Http.Filters;
 
 namespace ReactNative.Modules.Network
 {
@@ -277,9 +276,8 @@ namespace ReactNative.Modules.Network
 
                         if (useIncrementalUpdates && responseType == "text")
                         {
-                            var length = response.Content.Headers.ContentLength;
-                            using (var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false))
-                            using (var stream = inputStream.AsStreamForRead())
+                            var length = (ulong)response.Content.Headers.ContentLength;
+                            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                             {
                                 await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
                                 OnRequestSuccess(requestId);
@@ -304,7 +302,7 @@ namespace ReactNative.Modules.Network
                                     {
                                         using (var outputStream = memoryStream)
                                         {
-                                            await response.Content.WriteToStreamAsync(outputStream).AsTask().ConfigureAwait(false);
+                                            await response.Content.CopyToAsync(outputStream).ConfigureAwait(false);
                                         }
 
                                         OnDataReceived(requestId, Convert.ToBase64String(memoryStream.ToArray()));
