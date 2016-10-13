@@ -18,6 +18,9 @@ namespace ReactNative.Views.Scroll
     {
         private const int CommandScrollTo = 1;
 
+        private readonly IDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
+            new Dictionary<ScrollViewer, ScrollViewerData>();
+
         /// <summary>
         /// The name of the view manager.
         /// </summary>
@@ -99,7 +102,16 @@ namespace ReactNative.Views.Scroll
         [ReactProp("scrollEnabled", DefaultBoolean = true)]
         public void SetEnabled(ScrollViewer view, bool enabled)
         {
-            view.IsEnabled = enabled;
+            if (enabled)
+            {
+                view.VerticalScrollMode = ScrollMode.Auto;
+                view.HorizontalScrollMode = _scrollViewerData[view].HorizontalScrollMode;
+            }
+            else
+            {
+                view.VerticalScrollMode = ScrollMode.Disabled;
+                view.HorizontalScrollMode = ScrollMode.Disabled;
+            }
         }
 
         /// <summary>
@@ -112,9 +124,11 @@ namespace ReactNative.Views.Scroll
         [ReactProp("horizontal")]
         public void SetHorizontal(ScrollViewer view, bool horizontal)
         {
-            view.HorizontalScrollMode = horizontal
+            var horizontalScrollMode = horizontal
                 ? ScrollMode.Auto
                 : ScrollMode.Disabled;
+
+            view.HorizontalScrollMode = _scrollViewerData[view].HorizontalScrollMode = horizontalScrollMode;
         }
 
         /// <summary>
@@ -255,6 +269,8 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ScrollViewer view)
         {
+            _scrollViewerData.Remove(view);
+
             view.ViewChanging -= OnViewChanging;
             view.DirectManipulationStarted -= OnDirectManipulationStarted;
             view.DirectManipulationCompleted -= OnDirectManipulationCompleted;
@@ -292,13 +308,19 @@ namespace ReactNative.Views.Scroll
         /// <returns>The view instance.</returns>
         protected override ScrollViewer CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new ScrollViewer
+            var scrollViewerData = new ScrollViewerData();
+
+            var scrollViewer = new ScrollViewer
             {
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
                 HorizontalScrollMode = ScrollMode.Disabled,
                 VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
                 VerticalScrollMode = ScrollMode.Auto,
             };
+
+            _scrollViewerData.Add(scrollViewer, scrollViewerData);
+
+            return scrollViewer;
         }
 
         /// <summary>
@@ -452,6 +474,11 @@ namespace ReactNative.Views.Scroll
             {
                 eventEmitter.receiveEvent(ViewTag, EventName, _data);
             }
+        }
+
+        class ScrollViewerData
+        {
+            public ScrollMode HorizontalScrollMode = ScrollMode.Disabled;
         }
     }
 }
