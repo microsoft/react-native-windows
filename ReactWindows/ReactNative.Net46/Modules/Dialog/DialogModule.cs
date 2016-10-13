@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace ReactNative.Modules.Dialog
 {
-    class DialogModule : ReactContextNativeModuleBase, ILifecycleEventListener
+    class DialogModule : ReactContextNativeModuleBase
     {
         public DialogModule(ReactContext reactContext)
             : base(reactContext)
@@ -35,23 +35,6 @@ namespace ReactNative.Modules.Dialog
             }
         }
 
-        public override void Initialize()
-        {
-            Context.AddLifecycleEventListener(this);
-        }
-
-        public void OnSuspend()
-        {
-        }
-
-        public async void OnResume()
-        {
-        }
-
-        public void OnDestroy()
-        {
-        }
-
         [ReactMethod]
         public void showAlert(
             JObject config,
@@ -75,17 +58,20 @@ namespace ReactNative.Modules.Dialog
                 {
                     actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonNegativeValue);
                 }
-            } else if (containsPositive)
+            }
+            else if (containsPositive)
             {
                 var result = MessageBox.Show(message, title, MessageBoxButton.OK);
                 if (result == MessageBoxResult.OK)
                 {
                     actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
                 }
-            } else if (containsTitle)
+            }
+            else if (containsTitle)
             {
                 MessageBox.Show(message, title);
-            } else
+            }
+            else
             {
                 MessageBox.Show(message);
             }
