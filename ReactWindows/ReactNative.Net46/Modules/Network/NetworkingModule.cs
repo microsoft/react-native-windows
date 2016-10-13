@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using PCLStorage;
 using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Core;
@@ -241,8 +242,10 @@ namespace ReactNative.Modules.Network
             string responseType,
             CancellationToken token)
         {
-            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().ConfigureAwait(false);
-            var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
+            var storageFile = await FileSystem.Current.GetFileFromPathAsync(uri.ToString()).ConfigureAwait(false);
+            var input = await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+            byte[] byteArray = Encoding.UTF8.GetBytes(input);
+            MemoryStream inputStream = new MemoryStream(byteArray);
             request.Content = new StreamContent(inputStream);
             await ProcessRequestAsync(
                 requestId,

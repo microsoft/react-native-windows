@@ -87,7 +87,7 @@ namespace ReactNative.UIManager
         [ReactProp("accessibilityLabel")]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
-            AutomationProperties.SetName(view, label);
+            AutomationProperties.SetName(view, label ?? "");
         }
 
         /// <summary>

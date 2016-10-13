@@ -100,6 +100,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\HttpContentHeaderData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\IHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />
