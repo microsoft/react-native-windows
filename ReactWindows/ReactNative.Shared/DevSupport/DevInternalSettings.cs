@@ -1,6 +1,10 @@
 ﻿using ReactNative.Modules.DevSupport;
 using System.Collections.Generic;
+#if WINDOWS_UWP
 using Windows.Storage;
+#else
+using PCLStorage;
+#endif
 
 namespace ReactNative.DevSupport
 {
@@ -121,6 +125,7 @@ namespace ReactNative.DevSupport
 
         private T GetSetting<T>(string key, T defaultValue)
         {
+#if WINDOWS_UWP
             var values = ApplicationData.Current.LocalSettings.Values;
             if (values.ContainsKey(key))
             {
@@ -130,14 +135,25 @@ namespace ReactNative.DevSupport
                     return (T)data;
                 }
             }
+#else
+            var value = ReactNative.Net46.Properties.Settings.Default[key];
+            if (value is T)
+            {
+                return (T)value;
+            }
+#endif
 
             return defaultValue;
         }
 
         private void SetSetting<T>(string key, T value)
         {
+#if WINDOWS_UWP
             var values = ApplicationData.Current.LocalSettings.Values;
             values[key] = value;
+#else
+            ReactNative.Net46.Properties.Settings.Default[key] = value;
+#endif
 
             if (s_triggerReload.Contains(key))
             {
