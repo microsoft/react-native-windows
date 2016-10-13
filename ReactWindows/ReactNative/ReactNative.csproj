@@ -156,7 +156,6 @@
     <Compile Include="Modules\StatusBar\MobileStatusBar.cs" />
     <Compile Include="Modules\StatusBar\NopStatusBar.cs" />
     <Compile Include="Modules\StatusBar\StatusBarModule.cs" />
-    <Compile Include="Modules\Storage\AsyncStorageErrorHelpers.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
     <Compile Include="ReactContextInitializedEventArgs.cs" />
