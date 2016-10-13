@@ -120,7 +120,7 @@ namespace ReactNative.UIManager
         [ReactProp("testID")]
         public void SetTestId(TFrameworkElement view, string testId)
         {
-            AutomationProperties.SetAutomationId(view, testId);
+            AutomationProperties.SetAutomationId(view, testId ?? "");
         }
 
         private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)

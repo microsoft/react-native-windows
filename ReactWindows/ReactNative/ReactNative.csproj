@@ -159,6 +159,7 @@
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootView.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
+    <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
     <Compile Include="Tracing\LoggingActivityBuilderExtensions.generated.cs">
