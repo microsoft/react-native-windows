@@ -354,11 +354,13 @@ namespace ReactNative.Modules.Network
         private void OnResponseReceived(int requestId, HttpResponseMessage response)
         {
             var headerData = new JObject();
-            TranslateHeaders(headerData, response.Headers);
+            IDictionary<string, string> headers = response.Headers.ToDictionary((kvp) => kvp.Key, (kvp) => kvp.Value.ToString());
+            TranslateHeaders(headerData, headers);
 
             if (response.Content != null)
             {
-                TranslateHeaders(headerData, response.Content.Headers);
+                IDictionary<string, string> contentHeaders = response.Content.Headers.ToDictionary((kvp)=>kvp.Key, (kvp)=>kvp.Value.ToString());
+                TranslateHeaders(headerData, contentHeaders);
             }
 
             var args = new JArray
@@ -425,7 +427,7 @@ namespace ReactNative.Modules.Network
                     case "content-type":
                         break;
                     default:
-                        request.Headers[key] = header[1];
+                        request.Headers.Add(key, header[1]);
                         break;
                 }
             }
