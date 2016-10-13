@@ -123,6 +123,10 @@
   <ItemGroup>
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
     <Compile Include="Internal\DispatcherHelpers.cs" />
+    <Compile Include="Internal\MockInvocationHandler.cs" />
+    <Compile Include="Internal\MockPromise.cs" />
+    <Compile Include="Internal\MockReactInstance.cs" />
+    <Compile Include="Modules\NetInfo\NetInfoModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
