@@ -50,14 +50,14 @@ namespace ReactNative.Modules.Image
             }
         }
 
-        public static IObservable<ImageLoadStatus> GetStreamLoadObservable(this BitmapImage image)
+        public static IObservable<ImageStatusEventData> GetStreamLoadObservable(this BitmapImage image)
         {
             return image.GetOpenedObservable()
                 .Merge(image.GetFailedObservable(), Scheduler.Default)
-                .StartWith(ImageLoadStatus.OnLoadStart);
+                .StartWith(new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
         }
 
-        public static IObservable<ImageLoadStatus> GetUriLoadObservable(this BitmapImage image)
+        public static IObservable<ImageStatusEventData> GetUriLoadObservable(this BitmapImage image)
         {
             return Observable.Merge(
                 Scheduler.Default,
@@ -66,34 +66,50 @@ namespace ReactNative.Modules.Image
                 image.GetFailedObservable());
         }
 
-        private static IObservable<ImageLoadStatus> GetOpenedObservable(this BitmapImage image)
+        private static IObservable<ImageStatusEventData> GetOpenedObservable(this BitmapImage image)
         {
             return Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
                 h => image.ImageOpened += h,
                 h => image.ImageOpened -= h)
-                .Select(_ => ImageLoadStatus.OnLoad)
+                .Select(args =>
+                {
+                    var bitmapImage = args.Sender as BitmapImage;
+                    if (bitmapImage != null)
+                    {
+                        return new ImageStatusEventData(
+                            ImageLoadStatus.OnLoad,
+                            new ImageMetadata(
+                                image.UriSource?.AbsoluteUri,
+                                image.PixelWidth,
+                                image.PixelHeight));
+                    }
+                    else
+                    {
+                        return new ImageStatusEventData(ImageLoadStatus.OnLoad);
+                    }
+                })
                 .Take(1)
-                .Concat(Observable.Return(ImageLoadStatus.OnLoadEnd));
+                .Concat(Observable.Return(new ImageStatusEventData(ImageLoadStatus.OnLoadEnd)));
         }
 
-        private static IObservable<ImageLoadStatus> GetFailedObservable(this BitmapImage image)
+        private static IObservable<ImageStatusEventData> GetFailedObservable(this BitmapImage image)
         {
             return Observable.FromEventPattern<ExceptionRoutedEventHandler, ExceptionRoutedEventArgs>(
                 h => image.ImageFailed += h,
                 h => image.ImageFailed -= h)
-                .Select<EventPattern<ExceptionRoutedEventArgs>, ImageLoadStatus>(pattern =>
+                .Select<EventPattern<ExceptionRoutedEventArgs>, ImageStatusEventData>(pattern =>
                 {
                     throw new InvalidOperationException(pattern.EventArgs.ErrorMessage);
                 });
         }
 
-        private static IObservable<ImageLoadStatus> GetDownloadingObservable(this BitmapImage image)
+        private static IObservable<ImageStatusEventData> GetDownloadingObservable(this BitmapImage image)
         {
             return Observable.FromEventPattern<DownloadProgressEventHandler, DownloadProgressEventArgs>(
                 h => image.DownloadProgress += h,
                 h => image.DownloadProgress -= h)
                 .Take(1)
-                .Select(_ => ImageLoadStatus.OnLoadStart);
+                .Select(_ => new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
         }
 
         private static byte ColorValue(double frontColor, double frontAlpha, double backColor, double backAlpha)

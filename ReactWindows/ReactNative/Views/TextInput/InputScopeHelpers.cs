@@ -28,5 +28,16 @@ namespace ReactNative.Views.TextInput
                     return InputScopeNameValue.Default;
             }
         }
+
+        public static InputScopeNameValue FromStringForPasswordBox(string inputScope)
+        {
+            switch (inputScope)
+            {
+                case "number-pad":
+                    return InputScopeNameValue.NumericPin;
+                default:
+                    return InputScopeNameValue.Password;
+            }
+        }
     }
 }

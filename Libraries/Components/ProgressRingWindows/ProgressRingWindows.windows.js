@@ -7,7 +7,7 @@
 'use strict';
 
 var React = require('React');
-var ReactPropTypes = require('ReactPropTypes');
+var ReactPropTypes = require('react/lib/ReactPropTypes');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var View = require('View');
 var requireNativeComponent = require('requireNativeComponent');

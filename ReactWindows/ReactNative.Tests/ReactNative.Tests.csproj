@@ -95,15 +95,12 @@
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bridge\PromiseTests.cs" />
     <Compile Include="Bridge\ReactInstanceTests.cs" />
-    <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
-    <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Bridge\NativeModuleBaseTests.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
-    <Compile Include="Bridge\ReactContextNativeModuleBaseTests.cs" />
     <Compile Include="Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="Bridge\ReactBridgeTests.cs" />
-    <Compile Include="Collections\ListExtensionsTests.cs" />
     <Compile Include="Internal\AssertEx.cs" />
     <Compile Include="Bridge\NativeModuleRegistryTests.cs" />
     <Compile Include="Internal\Constants\DictionaryHelpers.cs" />
@@ -183,12 +180,11 @@
       <Name>ReactNative</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -280,7 +280,7 @@ namespace ReactNative.Views.Image
                         ReactImageLoadEvent.OnLoadEnd));
         }
 
-        private void OnImageStatusUpdate(Border view, ImageLoadStatus status)
+        private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
         {
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -289,7 +289,10 @@ namespace ReactNative.Views.Image
             eventDispatcher.DispatchEvent(
                 new ReactImageLoadEvent(
                     view.GetTag(),
-                    (int)status));
+                    (int)status.LoadStatus,
+                    status.Metadata.Uri,
+                    status.Metadata.Width,
+                    status.Metadata.Height));
         }
 
         /// <summary>

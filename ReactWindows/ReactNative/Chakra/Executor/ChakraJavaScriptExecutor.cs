@@ -64,13 +64,26 @@ namespace ReactNative.Chakra.Executor
             if (arguments == null)
                 throw new ArgumentNullException(nameof(arguments));
 
-            var method = EnsureCallFunction();
+            var moduleNameValue = JavaScriptValue.FromString(moduleName);
+            moduleNameValue.AddRef();
+            var methodNameValue = JavaScriptValue.FromString(methodName);
+            methodNameValue.AddRef();
+            var argumentsValue = ConvertJson(arguments);
+            argumentsValue.AddRef();
+
             var callArguments = new JavaScriptValue[4];
             callArguments[0] = EnsureGlobalObject();
-            callArguments[1] = JavaScriptValue.FromString(moduleName);
-            callArguments[2] = JavaScriptValue.FromString(methodName);
-            callArguments[3] = ConvertJson(arguments);
-            return ConvertJson(method.CallFunction(callArguments));
+            callArguments[1] = moduleNameValue;
+            callArguments[2] = methodNameValue;
+            callArguments[3] = argumentsValue;
+            var method = EnsureCallFunction();
+            var flushedQueue = ConvertJson(method.CallFunction(callArguments));
+
+            argumentsValue.Release();
+            methodNameValue.Release();
+            moduleNameValue.Release();
+
+            return flushedQueue;
         }
 
         /// <summary>
@@ -96,12 +109,22 @@ namespace ReactNative.Chakra.Executor
             if (arguments == null)
                 throw new ArgumentNullException(nameof(arguments));
 
-            var method = EnsureInvokeFunction();
+            var callbackIdValue = JavaScriptValue.FromInt32(callbackId);
+            callbackIdValue.AddRef();
+            var argumentsValue = ConvertJson(arguments);
+            argumentsValue.AddRef();
+
             var callArguments = new JavaScriptValue[3];
             callArguments[0] = EnsureGlobalObject();
-            callArguments[1] = JavaScriptValue.FromInt32(callbackId);
-            callArguments[2] = ConvertJson(arguments);
-            return ConvertJson(method.CallFunction(callArguments));
+            callArguments[1] = callbackIdValue;
+            callArguments[2] = argumentsValue;
+            var method = EnsureInvokeFunction();
+            var flushedQueue = ConvertJson(method.CallFunction(callArguments));
+
+            argumentsValue.Release();
+            callbackIdValue.Release();
+
+            return flushedQueue;
         }
 
         /// <summary>
@@ -229,22 +252,23 @@ namespace ReactNative.Chakra.Executor
 #else
         private JavaScriptValue ConvertJson(JToken token)
         {
+            var jsonString = token.ToString(Formatting.None);
+            var jsonStringValue = JavaScriptValue.FromString(jsonString);
+            jsonStringValue.AddRef();
             var parseFunction = EnsureParseFunction();
-
-            var json = token.ToString(Formatting.None);
-            var jsonValue = JavaScriptValue.FromString(json);
-
-            return parseFunction.CallFunction(_globalObject, jsonValue);
+            var jsonValue = parseFunction.CallFunction(_globalObject, jsonStringValue);
+            jsonStringValue.Release();
+            return jsonValue;
         }
 
         private JToken ConvertJson(JavaScriptValue value)
         {
             var stringifyFunction = EnsureStringifyFunction();
-
-            var jsonValue = stringifyFunction.CallFunction(_globalObject, value);
-            var json = jsonValue.ToString();
-
-            return JToken.Parse(json);
+            var jsonStringValue = stringifyFunction.CallFunction(_globalObject, value);
+            jsonStringValue.AddRef();
+            var jsonString = jsonStringValue.ToString();
+            jsonStringValue.Release();
+            return JToken.Parse(jsonString);
         }
 #endif
 
@@ -378,6 +402,20 @@ namespace ReactNative.Chakra.Executor
             return _parseFunction;
         }
 
+        private JavaScriptValue EnsureBatchedBridge()
+        {
+            var globalObject = EnsureGlobalObject();
+            var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
+            var fbBatchedBridge = globalObject.GetProperty(propertyId);
+            if (fbBatchedBridge.ValueType != JavaScriptValueType.Object)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' object.  Check the JavaScript bundle to ensure it is generated correctly."));
+            }
+
+            return fbBatchedBridge;
+        }
+
         private JavaScriptValue EnsureStringifyFunction()
         {
             if (!_stringifyFunction.IsValid)
@@ -394,9 +432,7 @@ namespace ReactNative.Chakra.Executor
         {
             if (!_callFunctionAndReturnFlushedQueueFunction.IsValid)
             {
-                var globalObject = EnsureGlobalObject();
-                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                var fbBatchedBridge = EnsureBatchedBridge();
                 var functionPropertyId = JavaScriptPropertyId.FromString("callFunctionReturnFlushedQueue");
                 _callFunctionAndReturnFlushedQueueFunction = fbBatchedBridge.GetProperty(functionPropertyId);
             }
@@ -408,9 +444,7 @@ namespace ReactNative.Chakra.Executor
         {
             if (!_invokeCallbackAndReturnFlushedQueueFunction.IsValid)
             {
-                var globalObject = EnsureGlobalObject();
-                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                var fbBatchedBridge = EnsureBatchedBridge();
                 var functionPropertyId = JavaScriptPropertyId.FromString("invokeCallbackAndReturnFlushedQueue");
                 _invokeCallbackAndReturnFlushedQueueFunction = fbBatchedBridge.GetProperty(functionPropertyId);
             }
@@ -422,9 +456,7 @@ namespace ReactNative.Chakra.Executor
         {
             if (!_flushedQueueFunction.IsValid)
             {
-                var globalObject = EnsureGlobalObject();
-                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                var fbBatchedBridge = EnsureBatchedBridge();
                 var functionPropertyId = JavaScriptPropertyId.FromString("flushedQueue");
                 _flushedQueueFunction = fbBatchedBridge.GetProperty(functionPropertyId);
             }

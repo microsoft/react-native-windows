@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.33.0-rc.0",
+  "version": "0.35.0-rc.0",
   "description": "React Native platform extensions for the Universal Windows Platform.",
   "license": "MIT",
   "repository": {
@@ -18,17 +18,18 @@
   "files": [
     "Libraries",
     "ReactWindows/ReactNative",
+    "ReactWindows/ReactNative.Shared",
     "ReactWindows/ChakraBridge",
     "local-cli",
     "README.md"
   ],
   "peerDependencies": {
-    "react-native": "0.32.0",
-    "react": "15.3.0"
+    "react-native": "~0.35.0-rc.0",
+    "react": "~15.3.1"
   },
   "devDependencies": {
-    "react-native": "0.32.0",
-    "react": "15.3.0"
+    "react-native": "~0.35.0-rc.0",
+    "react": "~15.3.1"
   },
   "dependencies": {
     "chalk": "^1.1.3",
