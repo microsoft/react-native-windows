@@ -62,6 +62,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SocketMessaging, Version=1.1.6002.26530, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SocketMessaging.1.1.6002.26530\lib\net451\SocketMessaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -115,6 +119,7 @@
     <Compile Include="DevSupport\RedBoxDialog.xaml.cs">
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="Modules\Storage\AyncStorageModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\INetworkInformation.cs" />
