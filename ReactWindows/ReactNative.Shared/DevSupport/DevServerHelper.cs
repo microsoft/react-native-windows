@@ -7,8 +7,10 @@ using System.Net.Http;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.System.Threading;
 using Windows.UI.Core;
+#endif
 using static System.FormattableString;
 
 namespace ReactNative.DevSupport
@@ -172,7 +174,7 @@ namespace ReactNative.DevSupport
         {
             var disposable = new CancellationDisposable();
 
-            var task = ThreadPool.RunAsync(async _ =>
+            var task = Task.Run(async () =>
             {
                 var onChangePollingClient = new HttpClient();
                 onChangePollingClient.DefaultRequestHeaders.Connection.Add("keep-alive");
@@ -185,7 +187,11 @@ namespace ReactNative.DevSupport
                         {
                             if (response.StatusCode == HttpStatusCode.ResetContent)
                             {
+#if WINDOWS_UWP
                                 DispatcherHelpers.RunOnDispatcher(new DispatchedHandler(onServerContentChanged));
+#else
+                                DispatcherHelpers.RunOnDispatcher(onServerContentChanged);
+#endif
                             }
                         }
                     }

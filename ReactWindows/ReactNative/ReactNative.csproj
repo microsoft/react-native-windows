@@ -112,7 +112,6 @@
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DevSupport\DevServerHelper.cs" />
     <Compile Include="DevSupport\DevSupportManager.cs" />
     <Compile Include="DevSupport\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
