@@ -3,9 +3,9 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
-using PCLStorage;
-using ReactNative.Modules.Storage;
+using Windows.Storage;
 using static System.FormattableString;
 
 namespace ReactNative.Chakra.Executor
@@ -155,31 +155,20 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<string> LoadScriptAsync(string fileName)
+        private static async Task<string> LoadScriptAsync(string file)
         {
             try
             {
-                //IFolder storageFolder;
-                //var localFolder = FileSystem.Current.LocalStorage;
-
-                //if (localFolder.CheckExistsAsync(AsyncStorageHelpers.DirectoryName).Result == ExistenceCheckResult.FolderExists)
-                //{
-                //    storageFolder = localFolder;
-                //}
-                //else
-                //{
-                //    storageFolder = await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists);
-                //}
-                //var resolvedFileName = AsyncStorageHelpers.GetFileName(fileName);
-                //var storageItem = await storageFolder.GetFileAsync(resolvedFileName).ConfigureAwait(false);
-                //var file = await storageFolder.GetFileAsync(resolvedFileName).ConfigureAwait(false);
-                //return await FileExtensions.ReadAllTextAsync(file).ConfigureAwait(false);
-                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
-                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+                var storageFile = await StorageFile.GetFileFromPathAsync(file).AsTask().ConfigureAwait(false);
+                using (var stream = await storageFile.OpenStreamForReadAsync().ConfigureAwait(false))
+                using (var reader = new StreamReader(stream))
+                {
+                    return await reader.ReadToEndAsync().ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
-                var exceptionMessage = $"File read exception for asset '{fileName}'.";
+                var exceptionMessage = $"File read exception for asset '{file}'.";
                 throw new InvalidOperationException(exceptionMessage, ex);
             }
         }
