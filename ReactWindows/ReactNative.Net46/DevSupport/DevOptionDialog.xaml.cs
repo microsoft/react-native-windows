@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace ReactNative.DevSupport
 {
-    sealed partial class DevOptionDialog : Window
+    sealed partial class DevOptionDialog
     {
         public DevOptionDialog()
         {
