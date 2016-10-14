@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReactNative.DevSupport"
              mc:Ignorable="d" 
-             Title="Dev Options" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+             Title="Dev Options" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Topmost="True">
     <StackPanel Name="OptionsStackPanel">
         <StackPanel.Resources>
             <Style TargetType="Button">

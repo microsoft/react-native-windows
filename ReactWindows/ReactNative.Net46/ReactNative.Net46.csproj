@@ -61,8 +61,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Core.3.0.0\lib\net46\System.Reactive.Core.dll</HintPath>
       <Private>True</Private>
@@ -89,6 +91,8 @@
       <HintPath>..\packages\PCLStorage.1.0.2\lib\net45\PCLStorage.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -102,6 +106,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
+    <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
+      <DependentUpon>DevOptionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DevSupport\ProgressDialog.xaml.cs">
+      <DependentUpon>ProgressDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DevSupport\RedBoxDialog.xaml.cs">
+      <DependentUpon>RedBoxDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Storage\AyncStorageModule.cs" />
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\INetworkInformation.cs" />
@@ -122,6 +135,20 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DevSupport\DevOptionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DevSupport\ProgressDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DevSupport\RedBoxDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
