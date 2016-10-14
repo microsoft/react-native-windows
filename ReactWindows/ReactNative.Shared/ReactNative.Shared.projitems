@@ -52,6 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactDelegateFactoryBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactMethodAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReflectionReactDelegateFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JavaScriptValueToJTokenConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptBackgroundWorkItemCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptBeforeCollectCallback.cs" />
