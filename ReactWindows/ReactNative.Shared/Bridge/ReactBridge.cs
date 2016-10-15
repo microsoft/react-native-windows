@@ -12,8 +12,6 @@ namespace ReactNative.Bridge
     /// </summary>
     public class ReactBridge : IReactBridge
     {
-        private static readonly JArray s_empty = new JArray();
-
         private readonly IJavaScriptExecutor _jsExecutor;
         private readonly IReactCallback _reactCallback;
         private readonly IMessageQueueThread _nativeModulesQueueThread;
@@ -131,7 +129,7 @@ namespace ReactNative.Bridge
                     var args = (JArray)paramsArray[i];
 
                     _reactCallback.Invoke(moduleId, methodId, args);
-                };
+                }
 
                 _reactCallback.OnBatchComplete();
             });
