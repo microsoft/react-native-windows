@@ -128,7 +128,6 @@
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Modules\AppState\AppStateModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
@@ -156,7 +155,6 @@
     <Compile Include="Modules\StatusBar\MobileStatusBar.cs" />
     <Compile Include="Modules\StatusBar\NopStatusBar.cs" />
     <Compile Include="Modules\StatusBar\StatusBarModule.cs" />
-    <Compile Include="Modules\Storage\AsyncStorageErrorHelpers.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
     <Compile Include="ReactContextInitializedEventArgs.cs" />
