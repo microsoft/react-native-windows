@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.Storage;
+#else
+using System;
+using System.Configuration;
 #endif
 
 namespace ReactNative.DevSupport
@@ -134,10 +137,14 @@ namespace ReactNative.DevSupport
                 }
             }
 #else
-            var value = ReactNative.Net46.Properties.Settings.Default[key];
-            if (value is T)
+            try
             {
-                return (T)value;
+                Boolean result = Boolean.TryParse(ConfigurationManager.AppSettings[key], out result);
+                return (T) (object) result;
+            }
+            catch (ConfigurationErrorsException)
+            {
+                
             }
 #endif
 
@@ -150,7 +157,15 @@ namespace ReactNative.DevSupport
             var values = ApplicationData.Current.LocalSettings.Values;
             values[key] = value;
 #else
-            ReactNative.Net46.Properties.Settings.Default[key] = value;
+            var values = ConfigurationManager.AppSettings;
+            if (values[key] == null)
+            {
+                values.Add(key, value.ToString());
+            }
+            else
+            {
+                values[key] = value.ToString();
+            }
 #endif
 
             if (s_triggerReload.Contains(key))
