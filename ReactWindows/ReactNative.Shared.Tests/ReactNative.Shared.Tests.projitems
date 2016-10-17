@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBaseTests.cs" />
   </ItemGroup>
 </Project>

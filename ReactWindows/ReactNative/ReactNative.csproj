@@ -101,8 +101,6 @@
     <Compile Include="Animated\PropsAnimatedNode.cs" />
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
-    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
-    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
@@ -118,7 +116,6 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
-    <Compile Include="Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
