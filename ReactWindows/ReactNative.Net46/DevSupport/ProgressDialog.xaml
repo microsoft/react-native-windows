@@ -19,9 +19,9 @@
                    Margin="0 10 0 0"
                    Grid.Row="0" />
         <ProgressBar IsEnabled="True"
-                      IsIndeterminate="True"
-                      VerticalAlignment="Center" 
-                      HorizontalAlignment="Center"
-                      Grid.Row="1" />
+                     IsIndeterminate="True"
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Center"
+                     Grid.Row="1" />
     </Grid>
 </Window>
