@@ -35,9 +35,10 @@ const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
   );
 };
 
-function getLatestPackage() {
+function getLatestVersion() {
   return fetch('https://registry.npmjs.org/react-native-windows?version=latest')
-    .then(result => result && result.ok && result.json());
+    .then(result => result && result.ok && result.json())
+    .then(result => result.version)
 }
 
 function checkPackageExists(version) {
@@ -47,10 +48,10 @@ function checkPackageExists(version) {
       if (result && result.ok) {
         return result.json().then(pkg => pkg.version);
       } else {
-        return getLatestPackage().then(latest => {
+        return getLatestPackage().then(latestVersion => {
           throw new Error(`Could not find react-native-windows@${version}. ` +
-            `Latest version of react-native-windows is ${latest.version}, try switching to ` +
-            `react-native@${semver.major(latest.version)}.${semver.minor(latest.version)}.*.`);
+            `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
+            `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`);
         });          
       }
     });
@@ -91,14 +92,12 @@ module.exports = function windows(config, args, options) {
   const version = options.windowsVersion ? options.windowsVersion : getReactNativeVersion();
 
   return getInstallPackage(version)
-    .then(rnwPackage =>
-    {
+    .then(rnwPackage => {
       console.log(chalk.green(`Installing ${rnwPackage}...`));
       execSync(`npm install --save ${rnwPackage}`);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
       generateWindows(process.cwd(), name, ns);
-    })
-    .catch(error => console.error(error.message));
+    }).catch(error => console.error(error.message));
 }
