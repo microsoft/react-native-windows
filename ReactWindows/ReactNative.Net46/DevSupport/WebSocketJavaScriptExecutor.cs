@@ -2,13 +2,13 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
+using SocketMessaging;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using SocketMessaging;
 
 namespace ReactNative.DevSupport
 {

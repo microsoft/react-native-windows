@@ -8,7 +8,6 @@ using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
-using Windows.System.Threading;
 using Windows.UI.Core;
 #endif
 using static System.FormattableString;

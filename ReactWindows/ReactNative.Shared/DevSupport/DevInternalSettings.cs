@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.Storage;
-#else
-using PCLStorage;
 #endif
 
 namespace ReactNative.DevSupport
