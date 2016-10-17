@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else
+using System.Windows;
+#endif
 using static System.FormattableString;
 
 namespace ReactNative.UIManager

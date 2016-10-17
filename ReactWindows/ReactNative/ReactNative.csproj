@@ -182,8 +182,6 @@
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\LayoutDeleteAnimation.cs" />
     <Compile Include="UIManager\MatrixMathHelper.cs" />
-    <Compile Include="UIManager\ReactDefaultCompoundView.cs" />
-    <Compile Include="UIManager\IReactCompoundView.cs" />
     <Compile Include="UIManager\IViewManager.cs" />
     <Compile Include="UIManager\IViewParentManager.cs" />
     <Compile Include="UIManager\LayoutAnimation\BaseLayoutAnimation.cs" />
@@ -234,7 +232,6 @@
     <Compile Include="UIManager\RootViewHelper.cs" />
     <Compile Include="UIManager\RootViewManager.cs" />
     <Compile Include="UIManager\SimpleViewManager.cs" />
-    <Compile Include="UIManager\DependencyObjectExtensions.cs" />
     <Compile Include="UIManager\IPropertySetter.cs" />
     <Compile Include="UIManager\LayoutShadowNode.cs" />
     <Compile Include="UIManager\NativeViewHierarchyOptimizer.cs" />
