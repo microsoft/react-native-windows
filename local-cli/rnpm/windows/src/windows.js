@@ -41,13 +41,13 @@ function getLatestVersion() {
     .then(result => result.version)
 }
 
-function checkPackageExists(version) {
+function getMatchingVersion(version) {
   return fetch(`https://registry.npmjs.org/react-native-windows?version=${version}`)
     .then(result => {
       if (result && result.ok) {
         return result.json().then(pkg => pkg.version);
       } else {
-        return getLatestPackage().then(latestVersion => {
+        return getLatestVersion().then(latestVersion => {
           throw new Error(`Could not find react-native-windows@${version}. ` +
             `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
             `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`);
@@ -71,7 +71,7 @@ function getInstallPackage(version) {
 
   const validVersionOrRange = validVersion || validRange;
   if (validVersionOrRange) {
-    return checkPackageExists(validVersionOrRange)
+    return getMatchingVersion(validVersionOrRange)
       .then(resultVersion => packageToInstall + '@' + resultVersion);
   } else {
     return Promise.resolve(version);
