@@ -43,8 +43,7 @@ function getLatestVersion() {
 
 function checkPackageExists(version) {
   return fetch(`https://registry.npmjs.org/react-native-windows?version=${version}`)
-    .then(result =>
-    {
+    .then(result => {
       if (result && result.ok) {
         return result.json().then(pkg => pkg.version);
       } else {
