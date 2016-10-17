@@ -165,7 +165,7 @@ namespace ReactNative.DevSupport
 #else
                 var lastUpdateTime = File.GetCreationTime(Assembly.GetExecutingAssembly().Location);
                 var localFolder = FileSystem.Current.LocalStorage;
-                if (localFolder.CheckExistsAsync(JSBundleFileName).Result == ExistenceCheckResult.FileExists)
+                if (await localFolder.CheckExistsAsync(JSBundleFileName) == ExistenceCheckResult.FileExists)
                 {
                     return File.GetLastWriteTime(JSBundleFileName) > lastUpdateTime;
                 }
