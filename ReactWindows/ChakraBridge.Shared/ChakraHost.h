@@ -1,7 +1,12 @@
 ﻿#pragma once
 
 #include "pch.h"
+
+#if USE_EDGEMODE_JSRT
 #include <jsrt.h>
+#else if USE_CHAKRACORE_JSRT
+#include <ChakraCore.h>
+#endif
 
 bool CompareLastWrite(const wchar_t* szPath1, const wchar_t* szPath2);
 JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap);

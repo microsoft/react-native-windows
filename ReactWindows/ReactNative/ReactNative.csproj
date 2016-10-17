@@ -101,13 +101,7 @@
     <Compile Include="Animated\PropsAnimatedNode.cs" />
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
-    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
-    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
-    <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
-    <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
-    <Compile Include="Bridge\NativeModuleRegistry.cs" />
-    <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
@@ -122,9 +116,6 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
-    <Compile Include="Chakra\Executor\ChakraJavaScriptExecutor.cs" />
-    <Compile Include="Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
-    <Compile Include="Bridge\ReactBridge.cs" />
     <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="GlobalSuppressions.cs" />

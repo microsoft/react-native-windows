@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ReactNative.Tests.Bridge
 {
-    [TestClass]
+    [TestFixture]
     public class NativeModuleBaseTests
     {
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_ReactMethod_ThrowsNotSupported()
         {
             var actions = new Action[]
@@ -27,17 +27,17 @@ namespace ReactNative.Tests.Bridge
 
             foreach (var action in actions)
             {
-                AssertEx.Throws<NotSupportedException>(action);
+                Assert.That(() => { action(); }, Throws.Exception.With.TypeOf<NotSupportedException>());
             }
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_ReactMethod_Async_ThrowsNotImplemented()
         {
-            AssertEx.Throws<NotImplementedException>(() => new AsyncNotImplementedNativeModule());
+            Assert.That(() => new AsyncNotImplementedNativeModule(), Throws.Exception.With.TypeOf<NotImplementedException>());
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_ArgumentNull()
         {
             var testModule = new TestNativeModule();
@@ -45,15 +45,18 @@ namespace ReactNative.Tests.Bridge
             testModule.Initialize();
 
             var reactInstance = new MockReactInstance();
-            AssertEx.Throws<ArgumentNullException>(
-                () => testModule.Methods[nameof(TestNativeModule.Foo)].Invoke(null, new JArray()),
-                ex => Assert.AreEqual("reactInstance", ex.ParamName));
-            AssertEx.Throws<ArgumentNullException>(
-                () => testModule.Methods[nameof(TestNativeModule.Foo)].Invoke(reactInstance, null),
-                ex => Assert.AreEqual("jsArguments", ex.ParamName));
+            Assert.That(
+                () => { testModule.Methods[nameof(TestNativeModule.Foo)].Invoke(null, new JArray()); }, 
+                Throws.ArgumentNullException.With.Property("ParamName").EqualTo("reactInstance")
+            );
+
+            Assert.That(
+                () => { testModule.Methods[nameof(TestNativeModule.Foo)].Invoke(reactInstance, null); },
+                Throws.ArgumentNullException.With.Property("ParamName").EqualTo("jsArguments")
+            );
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_ArgumentInvalidCount()
         {
             var testModule = new TestNativeModule();
@@ -61,12 +64,15 @@ namespace ReactNative.Tests.Bridge
             testModule.Initialize();
 
             var reactInstance = new MockReactInstance();
-            AssertEx.Throws<NativeArgumentsParseException>(
-                () => testModule.Methods[nameof(TestNativeModule.Bar)].Invoke(reactInstance, new JArray()),
-                ex => Assert.AreEqual("jsArguments", ex.ParamName));
+            Assert.That(
+                () => { testModule.Methods[nameof(TestNativeModule.Bar)].Invoke(reactInstance, new JArray()); },
+                Throws.Exception.With.TypeOf<NativeArgumentsParseException>()
+                    .And.Property("ParamName")
+                    .EqualTo("jsArguments")
+            );
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_ArgumentConversionException()
         {
             var testModule = new TestNativeModule();
@@ -74,12 +80,15 @@ namespace ReactNative.Tests.Bridge
             testModule.Initialize();
 
             var reactInstance = new MockReactInstance();
-            AssertEx.Throws<NativeArgumentsParseException>(
-                () => testModule.Methods[nameof(TestNativeModule.Bar)].Invoke(reactInstance, JArray.FromObject(new[] { default(object) })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+            Assert.That(
+                () => { testModule.Methods[nameof(TestNativeModule.Bar)].Invoke(reactInstance, JArray.FromObject(new[] { default(object) })); },
+                Throws.Exception.With.TypeOf<NativeArgumentsParseException>()
+                    .And.Property("ParamName")
+                    .EqualTo("arguments")
+            );
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation()
         {
             var fooCount = 0;
@@ -88,19 +97,19 @@ namespace ReactNative.Tests.Bridge
 
             testModule.Initialize();
 
-            Assert.AreEqual(2, testModule.Methods.Count);
+            Assert.That(testModule.Methods.Count, Is.EqualTo(2));
 
             var reactInstance = new MockReactInstance();
             testModule.Methods[nameof(TestNativeModule.Foo)].Invoke(reactInstance, new JArray());
             testModule.Methods[nameof(TestNativeModule.Foo)].Invoke(reactInstance, new JArray());
-            Assert.AreEqual(2, fooCount);
+            Assert.That(fooCount, Is.EqualTo(2));
 
             testModule.Methods[nameof(TestNativeModule.Bar)].Invoke(reactInstance, JArray.FromObject(new[] { 42 }));
             testModule.Methods[nameof(TestNativeModule.Bar)].Invoke(reactInstance, JArray.FromObject(new[] { 17 }));
-            Assert.AreEqual(59, barSum);
+            Assert.That(barSum, Is.EqualTo(59));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Callbacks()
         {
             var callbackArgs = new object[] { 1, 2, 3 };
@@ -117,11 +126,11 @@ namespace ReactNative.Tests.Bridge
             });
 
             module.Methods[nameof(CallbackNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { 42 }));
-            Assert.AreEqual(42, id);
-            Assert.IsTrue(args.Cast<object>().SequenceEqual(callbackArgs));
+            Assert.That(id, Is.EqualTo(42));
+            Assert.That(args.Cast<object>(), Is.EqualTo(callbackArgs));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Callbacks_InvalidArgumentThrows()
         {
             var callbackArgs = new object[] { 1, 2, 3 };
@@ -137,12 +146,15 @@ namespace ReactNative.Tests.Bridge
                 args = a.ToObject<List<int>>();
             });
 
-            AssertEx.Throws<NativeArgumentsParseException>(
-                () => module.Methods[nameof(CallbackNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { default(object) })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+            Assert.That(
+                () => { module.Methods[nameof(CallbackNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { default(object) })); },
+                Throws.Exception.With.TypeOf<NativeArgumentsParseException>()
+                    .And.Property("ParamName")
+                    .EqualTo("arguments")
+            );
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Callbacks_NullCallback()
         {
             var module = new CallbackNativeModule(null);
@@ -158,10 +170,10 @@ namespace ReactNative.Tests.Bridge
             });
 
             module.Methods[nameof(CallbackNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { 42 }));
-            Assert.AreEqual(0, args.Count);
+            Assert.That(args.Count, Is.EqualTo(0));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_Resolve()
         {
             var module = new PromiseNativeModule(() => 17);
@@ -177,11 +189,11 @@ namespace ReactNative.Tests.Bridge
             });
 
             module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { 42, 43 }));
-            Assert.AreEqual(42, id);
-            Assert.IsTrue(args.SequenceEqual(new[] { 17 }));
+            Assert.That(id, Is.EqualTo(42));
+            Assert.That(args, Is.EqualTo(new[] { 17 }));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_CompiledDelegateFactory_Perf()
         {
             var module = new PerfNativeModule(CompiledReactDelegateFactory.Instance);
@@ -195,9 +207,11 @@ namespace ReactNative.Tests.Bridge
             {
                 module.Methods[nameof(PerfNativeModule.Foo)].Invoke(reactInstance, args);
             }
+
+            // FIXME: no explicit assertions
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_InvalidArgumentThrows()
         {
             var module = new PromiseNativeModule(() => 17);
@@ -212,16 +226,28 @@ namespace ReactNative.Tests.Bridge
                 args = a.ToObject<List<int>>();
             });
 
-            AssertEx.Throws<NativeArgumentsParseException>(
-                () => module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { default(object), 43 })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+            Assert.That(
+                () =>
+                {
+                    module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance,
+                        JArray.FromObject(new[] { default(object), 43 }));
+                },
+                Throws.Exception.With.TypeOf<NativeArgumentsParseException>()
+                    .And.Property("ParamName")
+                    .EqualTo("arguments"));
 
-            AssertEx.Throws<NativeArgumentsParseException>(
-                () => module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { 42, default(object) })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+            Assert.That(
+                () =>
+                {
+                    module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance,
+                        JArray.FromObject(new[] { 42, default(object) }));
+                },
+                Throws.Exception.With.TypeOf<NativeArgumentsParseException>()
+                    .And.Property("ParamName")
+                    .EqualTo("arguments"));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_IncorrectArgumentCount()
         {
             var module = new PromiseNativeModule(() => null);
@@ -236,12 +262,18 @@ namespace ReactNative.Tests.Bridge
                 args = a.ToObject<List<object>>();
             });
 
-            AssertEx.Throws<NativeArgumentsParseException>(
-                () => module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { 42 })),
-                ex => Assert.AreEqual("jsArguments", ex.ParamName));
+            Assert.That(
+                () =>
+                {
+                    module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance,
+                        JArray.FromObject(new[] { 42 }));
+                },
+                Throws.Exception.With.TypeOf<NativeArgumentsParseException>()
+                    .And.Property("ParamName")
+                    .EqualTo("jsArguments"));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_Reject()
         {
             var expectedMessage = "Foo bar baz";
@@ -268,7 +300,7 @@ namespace ReactNative.Tests.Bridge
             Assert.AreEqual(expectedMessage, actualMessage);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_NullCallback()
         {
             var module = new PromiseNativeModule(() => null);
@@ -288,7 +320,7 @@ namespace ReactNative.Tests.Bridge
             Assert.IsNull(args[0]);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_ReflectionDelegateFactory_Perf()
         {
             var module = new PerfNativeModule(ReflectionReactDelegateFactory.Instance);

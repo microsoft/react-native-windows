@@ -1,8 +1,11 @@
 ﻿#pragma once
 
-#include <collection.h>
-#include <ppltasks.h>
+#if USE_EDGEMODE_JSRT
 #include <jsrt.h>
+#else if USE_CHAKRACORE_JSRT
+#include <ChakraCore.h>
+#endif
+
 #include <stdio.h>
 #include <tchar.h>
 #include "ChakraStringResult.h"
@@ -13,14 +16,26 @@
 
 #include <windows.h>
 
+#if _WINRT_DLL
+#define managedNew(type) ref new \
+    type
+#define declareManagedPointerReferenceFor(t, value) auto managedPointerReferenceFor_##value = &value
+#else _WINRT_DLL
+#include <vcclr.h>
+
+#define managedNew(type) gcnew \
+    type
+#define declareManagedPointerReferenceFor(t, value)  pin_ptr<t> managedPointerReferenceFor_##value = &value
+#endif _WINRT_DLL
+
 #define IfFailRetNullPtr(v) \
     { \
         JsErrorCode status = (v); \
         if (status != JsNoError) \
         { \
             ChakraStringResult stringResult; \
-			stringResult.ErrorCode = status; \
-			return stringResult; \
+            stringResult.ErrorCode = status; \
+            return stringResult; \
         } \
     }
 

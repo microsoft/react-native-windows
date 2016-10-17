@@ -1,6 +1,11 @@
 #pragma once
 
+#if USE_EDGEMODE_JSRT
 #include <jsrt.h>
+#else if USE_CHAKRACORE_JSRT 
+#include <ChakraCore.h>
+#endif
+
 #include <set>
 
 /// <summary>
