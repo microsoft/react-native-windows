@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -100,7 +100,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Dialog\DialogModuleHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\DefaultHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\HttpContentHeaderData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\HttpContentHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\IHttpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />

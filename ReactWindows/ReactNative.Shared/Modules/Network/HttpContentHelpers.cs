@@ -1,27 +1,43 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+#if WINDOWS_UWP
+using Windows.Web.Http;
+using Windows.Web.Http.Headers;
+using HttpContentType = Windows.Web.Http.IHttpContent;
+#else
 using System.Net.Http;
 using System.Net.Http.Headers;
+using HttpContentType = System.Net.Http.HttpContent;
+#endif
 
 namespace ReactNative.Modules.Network
 {
     static class HttpContentHelpers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller responsible for disposing content.")]
-        public static HttpContent CreateFromBody(HttpContentHeaderData headerData, string body)
+        public static HttpContentType CreateFromBody(HttpContentHeaderData headerData, string body)
         {
             if (headerData.ContentEncoding == "gzip")
             {
                 var content = CreateGzip(body);
+#if WINDOWS_UWP
+                content.Headers.ContentType = new HttpMediaTypeHeaderValue(headerData.ContentType);
+                content.Headers.ContentEncoding.ParseAdd(headerData.ContentEncoding);
+#else
                 content.Headers.ContentType = new MediaTypeHeaderValue(headerData.ContentType);
                 content.Headers.ContentEncoding.Add(headerData.ContentEncoding);
+#endif
                 return content;
             }
             else
             {
                 var content = CreateString(body);
+#if WINDOWS_UWP
+                content.Headers.ContentType = new HttpMediaTypeHeaderValue(headerData.ContentType);
+#else
                 content.Headers.ContentType = new MediaTypeHeaderValue(headerData.ContentType);
+#endif
                 return content;
             }
         }
@@ -50,7 +66,7 @@ namespace ReactNative.Modules.Network
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        private static HttpContent CreateGzip(string body)
+        private static HttpContentType CreateGzip(string body)
         {
             var stream = new MemoryStream();
 
@@ -73,12 +89,20 @@ namespace ReactNative.Modules.Network
             }
 
             stream.Position = 0;
+#if WINDOWS_UWP
+            return new HttpStreamContent(stream.AsInputStream());
+#else
             return new StreamContent(stream);
+#endif
         }
 
-        private static HttpContent CreateString(string body)
+        private static HttpContentType CreateString(string body)
         {
+#if WINDOWS_UWP
+            return new HttpStringContent(body);
+#else
             return new StringContent(body);
+#endif
         }
     }
 }

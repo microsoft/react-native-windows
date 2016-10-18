@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using PCLStorage;
 using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Core;
@@ -7,11 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
+using Windows.Storage;
+using Windows.Web.Http;
+using Windows.Web.Http.Filters;
+#else
+using PCLStorage;
+using System.Linq;
+using System.Net.Http;
+using HttpMultipartFormDataContent = System.Net.Http.MultipartFormDataContent;
+using HttpStreamContent = System.Net.Http.StreamContent;
+using HttpStringContent = System.Net.Http.StringContent;
+#endif
 
 namespace ReactNative.Modules.Network
 {
@@ -150,7 +159,7 @@ namespace ReactNative.Modules.Network
                         headerData.ContentType = "multipart/form-data";
                     }
 
-                    var formDataContent = new MultipartFormDataContent();
+                    var formDataContent = new HttpMultipartFormDataContent();
                     foreach (var content in formData)
                     {
                         var fieldName = content.Value<string>("fieldName");
@@ -158,7 +167,7 @@ namespace ReactNative.Modules.Network
                         var stringContent = content.Value<string>("string");
                         if (stringContent != null)
                         {
-                            formDataContent.Add(new StringContent(stringContent), fieldName);
+                            formDataContent.Add(new HttpStringContent(stringContent), fieldName);
                         }
                     }
 
@@ -241,11 +250,16 @@ namespace ReactNative.Modules.Network
             string responseType,
             CancellationToken token)
         {
+#if WINDOWS_UWP
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().ConfigureAwait(false);
+            var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
+#else
             var storageFile = await FileSystem.Current.GetFileFromPathAsync(uri.ToString()).ConfigureAwait(false);
             var input = await storageFile.ReadAllTextAsync().ConfigureAwait(false);
             byte[] byteArray = Encoding.UTF8.GetBytes(input);
             MemoryStream inputStream = new MemoryStream(byteArray);
-            request.Content = new StreamContent(inputStream);
+#endif
+            request.Content = new HttpStreamContent(inputStream);
             await ProcessRequestAsync(
                 requestId,
                 useIncrementalUpdates,
@@ -278,12 +292,22 @@ namespace ReactNative.Modules.Network
 
                         if (useIncrementalUpdates && responseType == "text")
                         {
+#if WINDOWS_UWP
+                            var length = response.Content.Headers.ContentLength;
+                            using (var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false))
+                            using (var stream = inputStream.AsStreamForRead())
+                            {
+                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
+                                OnRequestSuccess(requestId);
+                            }
+#else
                             var length = (ulong)response.Content.Headers.ContentLength;
                             using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                             {
                                 await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
                                 OnRequestSuccess(requestId);
                             }
+#endif
                         }
                         else
                         {
@@ -291,7 +315,11 @@ namespace ReactNative.Modules.Network
                             {
                                 if (responseType == "text")
                                 {
+#if WINDOWS_UWP
+                                    var responseBody = await response.Content.ReadAsStringAsync().AsTask().ConfigureAwait(false);
+#else
                                     var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                                     if (responseBody != null)
                                     {
                                         OnDataReceived(requestId, responseBody);
@@ -302,10 +330,17 @@ namespace ReactNative.Modules.Network
                                     Debug.Assert(responseType == "base64");
                                     using (var memoryStream = new MemoryStream())
                                     {
+#if WINDOWS_UWP
+                                        using (var outputStream = memoryStream.AsOutputStream())
+                                        {
+                                            await response.Content.WriteToStreamAsync(outputStream).AsTask().ConfigureAwait(false);
+                                        }
+#else
                                         using (var outputStream = memoryStream)
                                         {
                                             await response.Content.CopyToAsync(outputStream).ConfigureAwait(false);
                                         }
+#endif
 
                                         OnDataReceived(requestId, Convert.ToBase64String(memoryStream.ToArray()));
                                     }
@@ -356,13 +391,21 @@ namespace ReactNative.Modules.Network
         private void OnResponseReceived(int requestId, HttpResponseMessage response)
         {
             var headerData = new JObject();
+#if WINDOWS_UWP
+            TranslateHeaders(headerData, response.Headers);
+#else
             IDictionary<string, string> headers = response.Headers.ToDictionary((kvp) => kvp.Key, (kvp) => kvp.Value.ToString());
             TranslateHeaders(headerData, headers);
+#endif
 
             if (response.Content != null)
             {
-                IDictionary<string, string> contentHeaders = response.Content.Headers.ToDictionary((kvp)=>kvp.Key, (kvp)=>kvp.Value.ToString());
+#if WINDOWS_UWP
+                TranslateHeaders(headerData, response.Content.Headers);
+#else
+                IDictionary<string, string> contentHeaders = response.Content.Headers.ToDictionary((kvp) => kvp.Key, (kvp) => kvp.Value.ToString());
                 TranslateHeaders(headerData, contentHeaders);
+#endif
             }
 
             var args = new JArray
@@ -429,7 +472,11 @@ namespace ReactNative.Modules.Network
                     case "content-type":
                         break;
                     default:
+#if WINDOWS_UWP
+                        request.Headers[key] = header[1];
+#else
                         request.Headers.Add(key, header[1]);
+#endif
                         break;
                 }
             }
@@ -453,11 +500,20 @@ namespace ReactNative.Modules.Network
 
         private static IHttpClient CreateDefaultHttpClient()
         {
+#if WINDOWS_UWP
+            return new DefaultHttpClient(
+                new HttpClient(
+                    new HttpBaseProtocolFilter
+                    {
+                        AllowAutoRedirect = false,
+                    }));
+#else
             var webRequestHandler = new WebRequestHandler();
             webRequestHandler.AllowAutoRedirect = false;
             return new DefaultHttpClient(
                 new HttpClient(webRequestHandler)
             );
+#endif
         }
     }
 }
