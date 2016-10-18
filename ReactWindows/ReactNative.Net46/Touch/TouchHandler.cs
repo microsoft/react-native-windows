@@ -36,29 +36,23 @@ namespace ReactNative.Touch
 
         private void OnPointerPressed(object sender, MouseButtonEventArgs e)
         {
-            var pointerId = e.Pointer.PointerId;
-            if (IndexOfPointerWithId(pointerId) != -1)
-            {
-                throw new InvalidOperationException("A pointer with this ID already exists.");
-            }
-
             var originalSource = e.OriginalSource as DependencyObject;
-            var rootPoint = e.GetCurrentPoint(_view);
-            var reactView = GetReactViewTarget(originalSource, rootPoint.Position);
-            if (reactView != null && _view.CapturePointer(e.Pointer))
+            var rootPoint = e.GetPosition(_view);
+            var reactView = GetReactViewTarget(originalSource, rootPoint);
+            if (reactView != null && _view.CaptureMouse())
             {
-                var viewPoint = e.GetCurrentPoint(reactView);
-                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint.Position);
+                var viewPoint = e.GetPosition(reactView);
+                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint);
                 var pointer = new ReactPointer();
                 pointer.Target = reactTag;
-                pointer.PointerId = e.Pointer.PointerId;
+                pointer.PointerId = (uint)e.Device.GetHashCode();
                 pointer.Identifier = ++_pointerIDs;
-                pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
-                pointer.IsLeftButton = viewPoint.Properties.IsLeftButtonPressed;
-                pointer.IsRightButton = viewPoint.Properties.IsRightButtonPressed;
-                pointer.IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed;
-                pointer.IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel;
-                pointer.IsEraser = viewPoint.Properties.IsEraser;
+                pointer.PointerType = "M";
+                pointer.IsLeftButton = e.LeftButton == MouseButtonState.Pressed;
+                pointer.IsRightButton = e.RightButton == MouseButtonState.Pressed;
+                pointer.IsMiddleButton = e.MiddleButton == MouseButtonState.Pressed;
+                pointer.IsHorizontalMouseWheel = false;
+                pointer.IsEraser = false;
                 pointer.ReactView = reactView;
                 UpdatePointerForEvent(pointer, rootPoint, viewPoint);
 
@@ -70,7 +64,7 @@ namespace ReactNative.Touch
 
         private void OnPointerMoved(object sender, MouseEventArgs e)
         {
-            var pointerIndex = IndexOfPointerWithId(e.Pointer.PointerId);
+            var pointerIndex = 1;
             if (pointerIndex != -1)
             {
                 var pointer = _pointers[pointerIndex];
@@ -84,19 +78,9 @@ namespace ReactNative.Touch
             OnPointerConcluded(TouchEventType.End, e);
         }
 
-        private void OnPointerCanceled(object sender, MouseButtonEventArgs e)
-        {
-            OnPointerConcluded(TouchEventType.Cancel, e);
-        }
-
-        private void OnPointerCaptureLost(object sender, MouseButtonEventArgs e)
-        {
-            OnPointerConcluded(TouchEventType.Cancel, e);
-        }
-
         private void OnPointerConcluded(TouchEventType touchEventType, MouseButtonEventArgs e)
         {
-            var pointerIndex = IndexOfPointerWithId(e.Pointer.PointerId);
+            var pointerIndex = 1;
             if (pointerIndex != -1)
             {
                 var pointer = _pointers[pointerIndex];
@@ -110,7 +94,7 @@ namespace ReactNative.Touch
                     _pointerIDs = 0;
                 }
 
-                _view.ReleasePointerCapture(e.Pointer);
+                _view.ReleaseMouseCapture();
             }
         }
 
@@ -136,7 +120,25 @@ namespace ReactNative.Touch
                 return null;
             }
 
-            var sources = VisualTreeHelper.FindElementsInHostCoordinates(point, _view);
+            // population of sources provided by:
+            // http://stackoverflow.com/questions/2059475/what-is-the-silverlights-findelementsinhostcoordinates-equivalent-in-wpf
+            var sources = new List<DependencyObject>();
+            //changed from external edits, because VisualHit is
+            //only a DependencyObject and may not be a UIElement
+            //this could cause exceptions or may not be compiling at all
+            //simply filter the result for class UIElement and
+            //cast it to IEnumerable<UIElement> if you need
+            //the very exact same result including type
+
+            VisualTreeHelper.HitTest(
+                _view,
+                null,
+                new HitTestResultCallback(
+                    (HitTestResult hit) => {
+                        sources.Add(hit.VisualHit);
+                        return HitTestResultBehavior.Continue;
+                    }),
+                new PointHitTestParameters(point));
 
             // Get the first React view that does not have pointer events set
             // to 'none' or 'box-none', and is not a child of a view with 
@@ -161,7 +163,7 @@ namespace ReactNative.Touch
                 var isBoxOnly = IsBoxOnlyWithCache(viewHierarchy, isBoxOnlyCache);
                 if (!isBoxOnly)
                 {
-                    return source;
+                    return (UIElement)source;
                 }
             }
 
@@ -170,23 +172,27 @@ namespace ReactNative.Touch
 
         private void UpdatePointerForEvent(ReactPointer pointer, MouseButtonEventArgs e)
         {
-            var rootPoint = e.GetCurrentPoint(_view);
-            var viewPoint = e.GetCurrentPoint(pointer.ReactView);
+            var rootPoint = e.GetPosition(_view);
+            var viewPoint = e.GetPosition(pointer.ReactView);
             UpdatePointerForEvent(pointer, rootPoint, viewPoint);
         }
 
-        private void UpdatePointerForEvent(ReactPointer pointer, PointerPoint rootPoint, PointerPoint viewPoint)
+        private void UpdatePointerForEvent(ReactPointer pointer, MouseEventArgs e)
         {
-            var positionInRoot = rootPoint.Position;
-            var positionInView = viewPoint.Position;
+            var rootPoint = e.GetPosition(_view);
+            var viewPoint = e.GetPosition(pointer.ReactView);
+            UpdatePointerForEvent(pointer, rootPoint, viewPoint);
+        }
+
+        private void UpdatePointerForEvent(ReactPointer pointer, Point rootPoint, Point viewPoint)
+        {
+            var positionInRoot = rootPoint;
+            var positionInView = viewPoint;
 
             pointer.PageX = (float)positionInRoot.X;
             pointer.PageY = (float)positionInRoot.Y;
             pointer.LocationX = (float)positionInView.X;
             pointer.LocationY = (float)positionInView.Y;
-            pointer.Timestamp = rootPoint.Timestamp / 1000; // Convert microseconds to milliseconds;
-            pointer.Force = rootPoint.Properties.Pressure;
-            pointer.IsBarrelButtonPressed = rootPoint.Properties.IsBarrelButtonPressed;
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
