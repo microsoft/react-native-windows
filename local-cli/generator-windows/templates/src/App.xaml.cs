@@ -55,8 +55,6 @@ namespace <%= ns %>
                     var protocolArgs = (IProtocolActivatedEventArgs)args;
                     LauncherModule.InitialUrl = protocolArgs.Uri.AbsoluteUri;
                     break;
-                default:
-                    break;
             }
 
             if (args.PreviousExecutionState != ApplicationExecutionState.Running &&
@@ -118,7 +116,7 @@ namespace <%= ns %>
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }

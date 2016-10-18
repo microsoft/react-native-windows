@@ -14,7 +14,6 @@ namespace ReactNative.Modules.Launch
     public class LauncherModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private static readonly Subject<string> s_urlSubject = new Subject<string>();
-
         private static string s_activatedUrl;
 
         private bool _initialized;
@@ -145,6 +144,8 @@ namespace ReactNative.Modules.Launch
         /// </summary>
         public void OnResume()
         {
+            // Wait for initialization to subscribe to protect against sending
+            // events to a context that has not been fully initialized.
             if (_initialized)
             {
                 _subscription = CreateUrlSuscription();
