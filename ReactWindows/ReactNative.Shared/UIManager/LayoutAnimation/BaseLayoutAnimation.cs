@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Reactive;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
+#else
+using System.Windows;
+using System.Windows.Media.Animation;
+#endif
 
 namespace ReactNative.UIManager.LayoutAnimation
 {
@@ -77,7 +82,11 @@ namespace ReactNative.UIManager.LayoutAnimation
             };
 
             Storyboard.SetTarget(timeline, view);
+#if WINDOWS_UWP
             Storyboard.SetTargetProperty(timeline, "Opacity");
+#else
+            Storyboard.SetTargetProperty(timeline, new PropertyPath("Opacity"));
+#endif
 
             return timeline;
         }
