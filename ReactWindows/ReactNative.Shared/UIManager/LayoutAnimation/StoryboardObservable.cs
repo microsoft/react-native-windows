@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Linq;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Media.Animation;
+#else
+using System.Windows.Media.Animation;
+#endif
 
 namespace ReactNative.UIManager.LayoutAnimation
 {
@@ -26,8 +30,13 @@ namespace ReactNative.UIManager.LayoutAnimation
             _storyboard.Begin();
 
             return Observable.FromEventPattern<object>(
+#if WINDOWS_UWP
                 h => _storyboard.Completed += h,
                 h => _storyboard.Completed -= h)
+#else
+                h => _storyboard.Completed += new EventHandler(h),
+                h => _storyboard.Completed -= new EventHandler(h))
+#endif
                 .Select(v => default(Unit))
                 .Finally(() =>
                 {

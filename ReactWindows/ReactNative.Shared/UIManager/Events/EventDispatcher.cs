@@ -3,7 +3,11 @@ using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows.Media;
+#endif
 using static System.FormattableString;
 
 namespace ReactNative.UIManager.Events

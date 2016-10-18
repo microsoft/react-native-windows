@@ -1,5 +1,9 @@
 ﻿using System;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Media.Media3D;
+#else
+using System.Windows.Media.Media3D;
+#endif
 
 namespace ReactNative.UIManager
 {

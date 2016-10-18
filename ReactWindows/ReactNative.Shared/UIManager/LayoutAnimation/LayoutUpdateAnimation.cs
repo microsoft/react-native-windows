@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Reactive;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+#else
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
+#endif
 
 namespace ReactNative.UIManager.LayoutAnimation
 {
@@ -62,14 +68,18 @@ namespace ReactNative.UIManager.LayoutAnimation
             if (currentWidth != dimensions.Width)
             {
                 var timeline = CreateTimeline(view, "Width", currentWidth, dimensions.Width);
+#if WINDOWS_UWP
                 timeline.EnableDependentAnimation = true;
+#endif
                 storyboard.Children.Add(timeline);
             }
 
             if (currentHeight != dimensions.Height)
             {
                 var timeline = CreateTimeline(view, "Height", currentHeight, dimensions.Height);
+#if WINDOWS_UWP
                 timeline.EnableDependentAnimation = true;
+#endif
                 storyboard.Children.Add(timeline);
             }
 
@@ -94,7 +104,11 @@ namespace ReactNative.UIManager.LayoutAnimation
             };
 
             Storyboard.SetTarget(timeline, view);
+#if WINDOWS_UWP
             Storyboard.SetTargetProperty(timeline, path);
+#else
+            Storyboard.SetTargetProperty(timeline, new PropertyPath(path));
+#endif
 
             return timeline;
         }

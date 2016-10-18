@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Linq;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using System.Windows;
+using System.Windows.Controls;
+#endif
 
 namespace ReactNative.UIManager.LayoutAnimation
 {

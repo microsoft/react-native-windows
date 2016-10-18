@@ -1,7 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Media.Media3D;
+#else
+using System.Windows.Media.Media3D;
+#endif
 using static System.FormattableString;
 
 namespace ReactNative.UIManager

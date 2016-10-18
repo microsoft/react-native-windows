@@ -1,6 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Media.Animation;
+#else
+using System.Windows.Media.Animation;
+#endif
 
 namespace ReactNative.UIManager.LayoutAnimation
 {

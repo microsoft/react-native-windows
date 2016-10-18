@@ -1,4 +1,8 @@
-﻿using Windows.UI;
+﻿#if WINDOWS_UWP
+using Windows.UI;
+#else
+using System.Windows.Media;
+#endif
 
 namespace ReactNative.UIManager
 {
