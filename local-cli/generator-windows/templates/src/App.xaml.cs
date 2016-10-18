@@ -53,7 +53,7 @@ namespace <%= ns %>
                 case ActivationKind.Protocol:
                 case ActivationKind.ProtocolForResults:
                     var protocolArgs = (IProtocolActivatedEventArgs)args;
-                    LauncherModule.InitialUrl = protocolArgs.Uri.AbsoluteUri;
+                    LauncherModule.SetActivatedUrl(protocolArgs.Uri.AbsoluteUri);
                     break;
             }
 

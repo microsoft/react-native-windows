@@ -127,7 +127,7 @@ namespace ReactNative.Modules.Launch
         /// </summary>
         public override void Initialize()
         {
-            _subscription = CreateUrlSuscription();
+            _subscription = CreateUrlSubscription();
             _initialized = true;
         }
 
@@ -148,7 +148,7 @@ namespace ReactNative.Modules.Launch
             // events to a context that has not been fully initialized.
             if (_initialized)
             {
-                _subscription = CreateUrlSuscription();
+                _subscription = CreateUrlSubscription();
             }
         }
 
@@ -169,7 +169,7 @@ namespace ReactNative.Modules.Launch
             s_urlSubject.OnNext(url);
         }
 
-        private IDisposable CreateUrlSuscription()
+        private IDisposable CreateUrlSubscription()
         {
             return s_urlSubject.Subscribe(url =>
                 Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
