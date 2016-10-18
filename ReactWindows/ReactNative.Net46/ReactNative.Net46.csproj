@@ -61,6 +61,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
+    <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Storage\AyncStorageModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
