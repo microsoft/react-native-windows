@@ -158,21 +158,6 @@ namespace ReactNative.Chakra.Executor
         {
             try
             {
-                //IFolder storageFolder;
-                //var localFolder = FileSystem.Current.LocalStorage;
-
-                //if (localFolder.CheckExistsAsync(AsyncStorageHelpers.DirectoryName).Result == ExistenceCheckResult.FolderExists)
-                //{
-                //    storageFolder = localFolder;
-                //}
-                //else
-                //{
-                //    storageFolder = await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists);
-                //}
-                //var resolvedFileName = AsyncStorageHelpers.GetFileName(fileName);
-                //var storageItem = await storageFolder.GetFileAsync(resolvedFileName).ConfigureAwait(false);
-                //var file = await storageFolder.GetFileAsync(resolvedFileName).ConfigureAwait(false);
-                //return await FileExtensions.ReadAllTextAsync(file).ConfigureAwait(false);
                 var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
                 return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
             }
