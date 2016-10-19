@@ -5,6 +5,7 @@ using Windows.Storage;
 #else
 using System;
 using System.Configuration;
+using static System.FormattableString;
 #endif
 
 namespace ReactNative.DevSupport
@@ -139,19 +140,12 @@ namespace ReactNative.DevSupport
 #else
             if (typeof(T) == typeof(bool))
             {
-                try
-                {
-                    Boolean result = Boolean.TryParse(ConfigurationManager.AppSettings[key], out result);
-                    return (T) (object) result;
-                }
-                catch (ConfigurationErrorsException)
-                {
-
-                }
+                Boolean result = Boolean.TryParse(ConfigurationManager.AppSettings[key], out result);
+                return (T) (object) result;
             }
             else
             {
-                throw new NotSupportedException($"Configuration values of type '{typeof(T)}' are not supported.");
+                throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));
             }
 #endif
 

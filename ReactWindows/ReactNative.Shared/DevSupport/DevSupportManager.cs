@@ -351,7 +351,7 @@ namespace ReactNative.DevSupport
             var dialogOperation = progressDialog.ShowAsync();
             Action cancel = dialogOperation.Cancel;
 #else
-            var dialogOperation = progressDialog.ShowDialog();
+            progressDialog.ShowDialog();
             Action cancel = progressDialog.Hide;
 #endif
             if (IsRemoteDebuggingEnabled)
