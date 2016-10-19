@@ -36,6 +36,40 @@ namespace <%= ns %>
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            base.OnLaunched(e);
+            OnCreate(e.Arguments);
+        }
+
+        /// <summary>
+        /// Invoked when the application is activated.
+        /// </summary>
+        /// <param name="args">The activated event arguments.</param>
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+
+            switch (args.Kind)
+            {
+                case ActivationKind.Protocol:
+                case ActivationKind.ProtocolForResults:
+                    var protocolArgs = (IProtocolActivatedEventArgs)args;
+                    LauncherModule.SetActivatedUrl(protocolArgs.Uri.AbsoluteUri);
+                    break;
+            }
+
+            if (args.PreviousExecutionState != ApplicationExecutionState.Running &&
+                args.PreviousExecutionState != ApplicationExecutionState.Suspended)
+            {
+                OnCreate(null);
+            }
+        }
+
+        /// <summary>
+        /// Called whenever the app is opened to initia
+        /// </summary>
+        /// <param name="arguments"></param>
+        private void OnCreate(string arguments)
+        {
             _reactPage.OnResume(Exit);
 
 #if DEBUG
@@ -54,7 +88,7 @@ namespace <%= ns %>
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                _reactPage.OnCreate(e.Arguments);
+                _reactPage.OnCreate(arguments);
 
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
@@ -82,7 +116,7 @@ namespace <%= ns %>
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
