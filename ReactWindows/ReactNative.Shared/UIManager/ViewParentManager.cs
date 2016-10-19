@@ -1,5 +1,9 @@
 ﻿using System;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else
+using System.Windows;
+#endif
 
 namespace ReactNative.UIManager
 {
@@ -98,7 +102,7 @@ namespace ReactNative.UIManager
         /// <param name="parent">The view parent.</param>
         public abstract void RemoveAllChildren(TFrameworkElement parent);
 
-        #region IViewParentManager
+#region IViewParentManager
 
         void IViewParentManager.AddView(DependencyObject parent, DependencyObject child, int index)
         {
@@ -125,7 +129,7 @@ namespace ReactNative.UIManager
             RemoveAllChildren((TFrameworkElement)parent);
         }
 
-        #endregion
+#endregion
     }
 
     /// <summary>

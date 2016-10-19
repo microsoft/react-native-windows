@@ -90,6 +90,7 @@
       <HintPath>..\packages\PCLStorage.1.0.2\lib\net45\PCLStorage.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -116,11 +117,25 @@
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
+    <Compile Include="Tracing\NullLoggingActivityBuilderExtensions.generated.cs">
+      <DependentUpon>NullLoggingActivityBuilderExtensions.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Tracing\NullLoggingActivityBuilder.cs" />
     <Compile Include="Tracing\Tracer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tracing\NullLoggingActivityBuilderExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NullLoggingActivityBuilderExtensions.generated.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

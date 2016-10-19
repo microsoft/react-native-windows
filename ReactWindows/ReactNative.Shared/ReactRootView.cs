@@ -2,7 +2,11 @@
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
+#if WINDOWS_UWP
 using Windows.Foundation;
+#else
+using System.Windows;
+#endif
 
 namespace ReactNative
 {

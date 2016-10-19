@@ -6,10 +6,16 @@ using ReactNative.UIManager.LayoutAnimation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if WINDOWS_UWP
 using Windows.Foundation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+#endif
 using static System.FormattableString;
 
 namespace ReactNative.UIManager
@@ -369,7 +375,11 @@ namespace ReactNative.UIManager
             // TODO: better way to get relative position?
             var uiElement = view.As<UIElement>();
             var rootTransform = uiElement.TransformToVisual(rootView);
+#if WINDOWS_UWP
             var positionInRoot = rootTransform.TransformPoint(new Point(0, 0));
+#else
+            var positionInRoot = rootTransform.Transform(new Point(0, 0));
+#endif
 
             var dimensions = viewManager.GetDimensions(uiElement);
             outputBuffer[0] = positionInRoot.X;
@@ -401,8 +411,13 @@ namespace ReactNative.UIManager
             }
 
             var uiElement = view.As<UIElement>();
+#if WINDOWS_UWP
             var windowTransform = uiElement.TransformToVisual(Window.Current.Content);
             var positionInWindow = windowTransform.TransformPoint(new Point(0, 0));
+#else
+            var windowTransform = uiElement.TransformToVisual(Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive));
+            var positionInWindow = windowTransform.Transform(new Point(0, 0));
+#endif
 
             var dimensions = viewManager.GetDimensions(uiElement);
             outputBuffer[0] = positionInWindow.X;
@@ -439,7 +454,22 @@ namespace ReactNative.UIManager
             }
 
             var uiElement = view.As<UIElement>();
+#if WINDOWS_UWP
             var target = VisualTreeHelper.FindElementsInHostCoordinates(new Point(touchX, touchY), uiElement)
+#else
+            var sources = new List<DependencyObject>();
+            VisualTreeHelper.HitTest(
+                uiElement,
+                null,
+                new HitTestResultCallback(
+                    (HitTestResult hit) =>
+                    {
+                        sources.Add(hit.VisualHit);
+                        return HitTestResultBehavior.Continue;
+                    }),
+                new PointHitTestParameters(new Point(touchX, touchY)));
+            var target = sources
+#endif
                 .OfType<FrameworkElement>()
                 .Where(e => e.HasTag())
                 .FirstOrDefault();
@@ -525,6 +555,7 @@ namespace ReactNative.UIManager
             DispatcherHelpers.AssertOnDispatcher();
             var view = ResolveView(tag);
 
+#if WINDOWS_UWP
             var menu = new PopupMenu();
             for (var i = 0; i < items.Length; ++i)
             {
@@ -536,6 +567,14 @@ namespace ReactNative.UIManager
                     },
                     i));
             }
+#else
+            var menu = new ContextMenu();
+            for (var i = 0; i < items.Length; ++i)
+            {
+                object item = new MenuItem();
+                // TODO: figure out how to add menu items
+            }
+#endif
 
             // TODO: figure out where to popup the menu
             // TODO: add continuation that calls the callback with empty args

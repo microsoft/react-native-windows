@@ -2,8 +2,13 @@
 using ReactNative.Touch;
 using System;
 using System.Collections.Generic;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using System.Windows;
+using System.Windows.Controls;
+#endif
 
 namespace ReactNative.UIManager
 {
@@ -221,7 +226,7 @@ namespace ReactNative.UIManager
         {
         }
 
-        #region IViewManager
+#region IViewManager
 
         void IViewManager.UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
@@ -263,6 +268,6 @@ namespace ReactNative.UIManager
             SetDimensions((TFrameworkElement)view, dimensions);
         }
 
-        #endregion
+#endregion
     }
 }

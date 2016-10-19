@@ -5,7 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows.Media;
+#endif
 
 namespace ReactNative.UIManager
 {

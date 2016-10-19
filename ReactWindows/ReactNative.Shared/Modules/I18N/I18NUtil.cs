@@ -1,5 +1,9 @@
-﻿using Windows.ApplicationModel.Resources.Core;
+﻿#if WINDOWS_UWP
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
+#else
+using System.Globalization;
+#endif
 
 namespace ReactNative.Modules.I18N
 {
@@ -59,7 +63,11 @@ namespace ReactNative.Modules.I18N
         {
             get
             {
+#if WINDOWS_UWP
                 return ResourceContext.GetForCurrentView().QualifierValues["LayoutDirection"] == "RTL";
+#else
+                return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+#endif
             }
         }
     }

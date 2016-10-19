@@ -1,5 +1,10 @@
-﻿using Windows.UI.Xaml;
+﻿#if WINDOWS_UWP
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using System.Windows;
+using System.Windows.Controls;
+#endif
 
 namespace ReactNative.UIManager
 {

@@ -5,8 +5,12 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+#if WINDOWS_UWP
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
+#else
+
+#endif
 
 namespace ReactNative.UIManager
 {
@@ -136,7 +140,7 @@ namespace ReactNative.UIManager
             return tag;
         }
 
-        #region React Methods
+#region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -430,9 +434,9 @@ namespace ReactNative.UIManager
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
-        #endregion
+#endregion
 
-        #region ILifecycleEventListenere
+#region ILifecycleEventListenere
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -440,7 +444,9 @@ namespace ReactNative.UIManager
         public void OnSuspend()
         {
             _uiImplementation.OnSuspend();
+#if WINDOWS_UWP
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+#endif
         }
 
         /// <summary>
@@ -449,7 +455,9 @@ namespace ReactNative.UIManager
         public void OnResume()
         {
             _uiImplementation.OnResume();
+#if WINDOWS_UWP
             ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
+#endif
         }
 
 
@@ -458,14 +466,16 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
+#if WINDOWS_UWP
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+#endif
             _uiImplementation.OnShutdown();
             _eventDispatcher.OnDestroy();
         }
 
-        #endregion
+#endregion
 
-        #region IOnBatchCompleteListener
+#region IOnBatchCompleteListener
 
         /// <summary>
         /// To implement the transactional requirement, UI changes are only
@@ -484,9 +494,9 @@ namespace ReactNative.UIManager
             }
         }
 
-        #endregion
+#endregion
 
-        #region NativeModuleBase
+#region NativeModuleBase
 
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
@@ -498,8 +508,8 @@ namespace ReactNative.UIManager
 
         #endregion
 
-        #region Dimensions
-
+#region Dimensions
+#if WINDOWS_UWP
         private void OnBoundsChanged(ApplicationView sender, object args)
         {
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
@@ -525,7 +535,7 @@ namespace ReactNative.UIManager
                 },
             };
         }
-
-        #endregion
+#endif
+#endregion
     }
 }

@@ -1,9 +1,15 @@
 ﻿using ReactNative.UIManager.Annotations;
 using System;
+#if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+#endif
 
 namespace ReactNative.UIManager
 {
