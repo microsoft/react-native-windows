@@ -10,9 +10,14 @@ using System.Reactive.Disposables;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI.Xaml;
+#else
+using PCLStorage;
+using System.Reflection;
+#endif
 
 namespace ReactNative.DevSupport
 {
@@ -21,7 +26,9 @@ namespace ReactNative.DevSupport
         private const int NativeErrorCookie = -1;
         private const string JSBundleFileName = "ReactNativeDevBundle.js";
 
+#if WINDOWS_UWP
         private readonly ShakeAccelerometer _accelerometer = ShakeAccelerometer.Instance;
+#endif
         private readonly SerialDisposable _pollingDisposable = new SerialDisposable();
 
         private readonly IReactInstanceDevCommandsHandler _reactInstanceCommandsHandler;
@@ -146,6 +153,7 @@ namespace ReactNative.DevSupport
         {
             if (_isDevSupportEnabled)
             {
+#if WINDOWS_UWP
                 var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate;
                 var localFolder = ApplicationData.Current.LocalFolder;
                 var bundleItem = await localFolder.TryGetItemAsync(JSBundleFileName);
@@ -154,6 +162,14 @@ namespace ReactNative.DevSupport
                     var bundleProperties = await bundleItem.GetBasicPropertiesAsync();
                     return bundleProperties.DateModified > lastUpdateTime;
                 }
+#else
+                var lastUpdateTime = File.GetCreationTime(Assembly.GetExecutingAssembly().Location);
+                var localFolder = FileSystem.Current.LocalStorage;
+                if (await localFolder.CheckExistsAsync(JSBundleFileName) == ExistenceCheckResult.FileExists)
+                {
+                    return File.GetLastWriteTime(JSBundleFileName) > lastUpdateTime;
+                }
+#endif
             }
 
             return false;
@@ -273,13 +289,22 @@ namespace ReactNative.DevSupport
                     _dismissRedBoxDialog();
                 }
 
+#if WINDOWS_UWP
                 var asyncInfo = _devOptionsDialog.ShowAsync();
                 _dismissDevOptionsDialog = asyncInfo.Cancel;
+                
+                foreach (var option in options)
+                {
+                    option.AsyncInfo = _dismissDevOptionsDialog;
+                }
+#else
+                var asyncInfo = _devOptionsDialog.ShowDialog();
 
                 foreach (var option in options)
                 {
-                    option.AsyncInfo = asyncInfo;
+                    option.AsyncInfo = _devOptionsDialog.Hide;
                 }
+#endif
             });
         }
 
@@ -322,20 +347,25 @@ namespace ReactNative.DevSupport
                 : "Connecting to remote debugger.";
 
             var progressDialog = new ProgressDialog("Please wait...", message);
+#if WINDOWS_UWP
             var dialogOperation = progressDialog.ShowAsync();
-
+            Action cancel = dialogOperation.Cancel;
+#else
+            progressDialog.ShowDialog();
+            Action cancel = progressDialog.Hide;
+#endif
             if (IsRemoteDebuggingEnabled)
             {
-                await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptInProxyMode(cancel, progressDialog.Token).ConfigureAwait(false);
             }
             else if (_jsBundleFile == null)
             {
-                await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptFromServerAsync(cancel, progressDialog.Token).ConfigureAwait(false);
             }
             else
             {
                 await ReloadJavaScriptFromFileAsync(progressDialog.Token);
-                dialogOperation.Cancel();
+                cancel();
             }
         }
 
@@ -343,7 +373,9 @@ namespace ReactNative.DevSupport
         {
             if (_isDevSupportEnabled)
             {
+#if WINDOWS_UWP
                 RegisterDevOptionsMenuTriggers();
+#endif
                 if (_devSettings.IsReloadOnJavaScriptChangeEnabled)
                 {
                     _pollingDisposable.Disposable =
@@ -357,7 +389,9 @@ namespace ReactNative.DevSupport
             }
             else
             {
+#if WINDOWS_UWP
                 UnregisterDevOptionsMenuTriggers();
+#endif
 
                 if (_redBoxDialog != null)
                 {
@@ -418,8 +452,13 @@ namespace ReactNative.DevSupport
                     _redBoxDialog = null;
                 };
 
+#if WINDOWS_UWP
                 var asyncInfo = _redBoxDialog.ShowAsync();
                 _dismissRedBoxDialog = asyncInfo.Cancel;
+#else
+                var asyncInfo = _redBoxDialog.ShowDialog();
+                _dismissRedBoxDialog = _redBoxDialog.Hide;
+#endif
             });
         }
 
@@ -456,6 +495,7 @@ namespace ReactNative.DevSupport
         private async Task ReloadJavaScriptFromServerAsync(Action dismissProgress, CancellationToken token)
         {
             var moved = false;
+#if WINDOWS_UWP
             var temporaryFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
             try
             {
@@ -490,6 +530,45 @@ namespace ReactNative.DevSupport
                     await temporaryFile.DeleteAsync();
                 }
             }
+#else
+            var localStorage = FileSystem.Current.LocalStorage;
+            var temporaryFolder = await localStorage.CreateFolderAsync("temp", CreationCollisionOption.GenerateUniqueName);
+            var temporaryFile = await temporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
+                    await temporaryFile.WriteAllTextAsync(stream.ToString());
+                }
+                string newPath = PortablePath.Combine(localStorage.ToString(), JSBundleFileName);
+                await temporaryFile.MoveAsync(newPath, NameCollisionOption.ReplaceExisting);
+                moved = true;
+
+                dismissProgress();
+                _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
+            }
+            catch (DebugServerException ex)
+            {
+                dismissProgress();
+                ShowNewNativeError(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                dismissProgress();
+                ShowNewNativeError(
+                    "Unable to download JS bundle. Did you forget to " +
+                    "start the development server or connect your device?",
+                    ex);
+            }
+            finally
+            {
+                if (!moved)
+                {
+                    await temporaryFile.DeleteAsync();
+                }
+            }
+#endif
         }
 
         private Task ReloadJavaScriptFromFileAsync(CancellationToken token)
@@ -498,6 +577,7 @@ namespace ReactNative.DevSupport
             return Task.CompletedTask;
         }
 
+#if WINDOWS_UWP
         private void RegisterDevOptionsMenuTriggers()
         {
             if (!_isShakeDetectorRegistered && _accelerometer != null)
@@ -520,6 +600,7 @@ namespace ReactNative.DevSupport
         {
             ShowDevOptionsDialog();
         }
+#endif
 
         class DevOptionHandler
         {
@@ -533,15 +614,11 @@ namespace ReactNative.DevSupport
 
             public string Name { get; }
 
-            public IAsyncInfo AsyncInfo { get; set; }
+            public Action AsyncInfo { get; set; }
 
             public void OnSelect()
             {
-                var asyncInfo = AsyncInfo;
-                if (asyncInfo != null)
-                {
-                    asyncInfo.Cancel();
-                }
+                AsyncInfo?.Invoke();
 
                 _onSelect();
             }
