@@ -1,0 +1,27 @@
+﻿<Window
+    x:Class="ReactNative.DevSupport.ProgressDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ReactNative.DevSupport"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="{Binding Path=Heading, Mode=OneTime}" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Topmost="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Name="MessageTextBlock"
+                   Text="{Binding Path=Message, Mode=OneTime}"
+                   HorizontalAlignment="Center"
+                   Margin="0 10 0 0"
+                   Grid.Row="0" />
+        <ProgressBar IsEnabled="True"
+                     IsIndeterminate="True"
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Center"
+                     Grid.Row="1" />
+    </Grid>
+</Window>
