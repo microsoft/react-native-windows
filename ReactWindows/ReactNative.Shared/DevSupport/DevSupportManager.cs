@@ -7,7 +7,6 @@ using ReactNative.Tracing;
 using System;
 using System.IO;
 using System.Reactive.Disposables;
-using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +16,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 #else
 using PCLStorage;
+using System.Reflection;
 #endif
 
 namespace ReactNative.DevSupport
@@ -295,7 +295,7 @@ namespace ReactNative.DevSupport
                 
                 foreach (var option in options)
                 {
-                    option.AsyncInfo = asyncInfo;
+                    option.AsyncInfo = _dismissDevOptionsDialog;
                 }
 #else
                 var asyncInfo = _devOptionsDialog.ShowDialog();
@@ -349,37 +349,24 @@ namespace ReactNative.DevSupport
             var progressDialog = new ProgressDialog("Please wait...", message);
 #if WINDOWS_UWP
             var dialogOperation = progressDialog.ShowAsync();
-            
-            if (IsRemoteDebuggingEnabled)
-            {
-                await ReloadJavaScriptInProxyMode(dialogOperation.Cancel, progressDialog.Token).ConfigureAwait(false);
-            }
-            else if (_jsBundleFile == null)
-            {
-                await ReloadJavaScriptFromServerAsync(dialogOperation.Cancel, progressDialog.Token).ConfigureAwait(false);
-            }
-            else
-            {
-                await ReloadJavaScriptFromFileAsync(progressDialog.Token);
-                dialogOperation.Cancel();
-            }
+            Action cancel = dialogOperation.Cancel;
 #else
             var dialogOperation = progressDialog.ShowDialog();
-
+            Action cancel = progressDialog.Hide;
+#endif
             if (IsRemoteDebuggingEnabled)
             {
-                await ReloadJavaScriptInProxyMode(progressDialog.Hide, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptInProxyMode(cancel, progressDialog.Token).ConfigureAwait(false);
             }
             else if (_jsBundleFile == null)
             {
-                await ReloadJavaScriptFromServerAsync(progressDialog.Hide, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptFromServerAsync(cancel, progressDialog.Token).ConfigureAwait(false);
             }
             else
             {
                 await ReloadJavaScriptFromFileAsync(progressDialog.Token);
-                progressDialog.Hide();
+                cancel();
             }
-#endif
         }
 
         public void ReloadSettings()
@@ -627,23 +614,11 @@ namespace ReactNative.DevSupport
 
             public string Name { get; }
 
-#if WINDOWS_UWP
-            public IAsyncInfo AsyncInfo { get; set; }
-#else
             public Action AsyncInfo { get; set; }
-#endif
 
             public void OnSelect()
             {
-                var asyncInfo = AsyncInfo;
-                if (asyncInfo != null)
-                {
-#if WINDOWS_UWP
-                    asyncInfo.Cancel();
-#else
-                    asyncInfo.Invoke();
-#endif
-                }
+                AsyncInfo?.Invoke();
 
                 _onSelect();
             }

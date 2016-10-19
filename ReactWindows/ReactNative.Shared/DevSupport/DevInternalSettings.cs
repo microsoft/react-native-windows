@@ -137,14 +137,21 @@ namespace ReactNative.DevSupport
                 }
             }
 #else
-            try
+            if (typeof(T) == typeof(bool))
             {
-                Boolean result = Boolean.TryParse(ConfigurationManager.AppSettings[key], out result);
-                return (T) (object) result;
+                try
+                {
+                    Boolean result = Boolean.TryParse(ConfigurationManager.AppSettings[key], out result);
+                    return (T) (object) result;
+                }
+                catch (ConfigurationErrorsException)
+                {
+
+                }
             }
-            catch (ConfigurationErrorsException)
+            else
             {
-                
+                throw new NotSupportedException($"Configuration values of type '{typeof(T)}' are not supported.");
             }
 #endif
 
