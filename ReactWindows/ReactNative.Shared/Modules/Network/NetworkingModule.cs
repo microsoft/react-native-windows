@@ -20,6 +20,7 @@ using System.Net.Http;
 using HttpMultipartFormDataContent = System.Net.Http.MultipartFormDataContent;
 using HttpStreamContent = System.Net.Http.StreamContent;
 using HttpStringContent = System.Net.Http.StringContent;
+using HttpBaseProtocolFilter = System.Net.Http.WebRequestHandler;
 #endif
 
 namespace ReactNative.Modules.Network
@@ -292,21 +293,20 @@ namespace ReactNative.Modules.Network
 
                         if (useIncrementalUpdates && responseType == "text")
                         {
-#if WINDOWS_UWP
                             var length = response.Content.Headers.ContentLength;
-                            using (var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false))
-                            using (var stream = inputStream.AsStreamForRead())
-                            {
-                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
-                                OnRequestSuccess(requestId);
-                            }
+#if WINDOWS_UWP
+                            var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false);
+                            var stream = inputStream.AsStreamForRead();
 #else
-                            var length = (ulong)response.Content.Headers.ContentLength;
-                            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                            var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#endif
+                            using (stream)
                             {
-                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
+                                await ProcessResponseIncrementalAsync(requestId, stream, (ulong)length, timeoutSource.Token).ConfigureAwait(false);
                                 OnRequestSuccess(requestId);
                             }
+#if WINDOWS_UWP
+                            inputStream.Dispose();
 #endif
                         }
                         else
@@ -500,20 +500,12 @@ namespace ReactNative.Modules.Network
 
         private static IHttpClient CreateDefaultHttpClient()
         {
-#if WINDOWS_UWP
             return new DefaultHttpClient(
                 new HttpClient(
                     new HttpBaseProtocolFilter
                     {
                         AllowAutoRedirect = false,
                     }));
-#else
-            var webRequestHandler = new WebRequestHandler();
-            webRequestHandler.AllowAutoRedirect = false;
-            return new DefaultHttpClient(
-                new HttpClient(webRequestHandler)
-            );
-#endif
         }
     }
 }
