@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using System;
@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace ReactNative.Tests.Bridge
 {
-    [TestClass]
+    [TestFixture]
     public class ReactBridgeTests
     {
-        [TestMethod]
+        [Test]
         public async Task ReactBridge_Ctor_ArgumentChecks()
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
@@ -22,22 +22,25 @@ namespace ReactNative.Tests.Bridge
                 {
                     var reactCallback = new MockReactCallback();
 
-                    AssertEx.Throws<ArgumentNullException>(
+                    Assert.That(
                         () => new ReactBridge(null, reactCallback, nativeThread),
-                        ex => Assert.AreEqual("executor", ex.ParamName));
+                        Throws.ArgumentNullException.With.Property("ParamName").EqualTo("executor")
+                    );
 
-                    AssertEx.Throws<ArgumentNullException>(
+                    Assert.That(
                         () => new ReactBridge(executor, null, nativeThread),
-                        ex => Assert.AreEqual("reactCallback", ex.ParamName));
+                        Throws.ArgumentNullException.With.Property("ParamName").EqualTo("reactCallback")
+                    );
 
-                    AssertEx.Throws<ArgumentNullException>(
+                    Assert.That(
                         () => new ReactBridge(executor, reactCallback, null),
-                        ex => Assert.AreEqual("nativeModulesQueueThread", ex.ParamName));
+                        Throws.ArgumentNullException.With.Property("ParamName").EqualTo("nativeModulesQueueThread")
+                    );
                 }
             });
         }
 
-        [TestMethod]
+        [Test]
         public async Task ReactBridge_Method_ArgumentChecks()
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
@@ -47,21 +50,21 @@ namespace ReactNative.Tests.Bridge
                     var reactCallback = new MockReactCallback();
                     var bridge = new ReactBridge(executor, reactCallback, nativeThread);
 
-                    AssertEx.Throws<ArgumentNullException>(
+                    Assert.That(
                         () => bridge.SetGlobalVariable(null, null),
-                        ex => Assert.AreEqual("propertyName", ex.ParamName));
+                        Throws.ArgumentNullException.With.Property("ParamName").EqualTo("propertyName")
+                    );
                 }
             });
         }
 
-        [TestMethod]
+        [Test]
         public async Task ReactBridge_CallFunction()
         {
             await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
             {
                 using (var nativeThread = CreateNativeModulesThread())
                 {
-                    var reactCallback = new MockReactCallback();
                     var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
                     var token = await jsQueueThread.CallOnQueue(() =>
                     {
@@ -79,19 +82,18 @@ namespace ReactNative.Tests.Bridge
                         },
                     };
 
-                    Assert.AreEqual(expected.ToString(Formatting.None), token.ToString(Formatting.None));
+                    Assert.That(expected.ToString(Formatting.None), Is.EqualTo(token.ToString(Formatting.None)));
                 }
             });
         }
 
-        [TestMethod]
+        [Test]
         public async Task ReactBridge_InvokeCallback()
         {
             await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
             {
                 using (var nativeThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("native", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); }))
                 {
-                    var reactCallback = new MockReactCallback();
                     var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
                     var token = await jsQueueThread.CallOnQueue(() =>
                     {
@@ -108,12 +110,12 @@ namespace ReactNative.Tests.Bridge
                         },
                     };
 
-                    Assert.AreEqual(expected.ToString(Formatting.None), token.ToString(Formatting.None));
+                    Assert.That(expected.ToString(Formatting.None), Is.EqualTo(token.ToString(Formatting.None)));
                 }
             });
         }
 
-        [TestMethod]
+        [Test]
         public void ReactBridge_ReactCallbacks()
         {
             using (var nativeThread = CreateNativeModulesThread())
@@ -154,7 +156,7 @@ namespace ReactNative.Tests.Bridge
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ReactBridge_InvalidJavaScriptResponse()
         {
             var responses = new[]
@@ -183,7 +185,10 @@ namespace ReactNative.Tests.Bridge
 
                 for (var i = 0; i < n; ++i)
                 {
-                    AssertEx.Throws<InvalidOperationException>(() => bridge.CallFunction("module", "method", new JArray()));
+                    Assert.That(
+                        () => bridge.CallFunction("module", "method", new JArray()),
+                        Throws.InvalidOperationException
+                    );
                 }
 
                 Assert.AreEqual(n, count);
@@ -208,11 +213,6 @@ namespace ReactNative.Tests.Bridge
 
             public MockReactCallback()
                 : this(() => { })
-            {
-            }
-
-            public MockReactCallback(Action<int, int, JArray> invoke)
-                : this(invoke, () => { })
             {
             }
 

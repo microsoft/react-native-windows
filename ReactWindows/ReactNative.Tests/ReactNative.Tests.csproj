@@ -98,7 +98,6 @@
     <Compile Include="Bridge\PromiseTests.cs" />
     <Compile Include="Bridge\ReactInstanceTests.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
-    <Compile Include="Bridge\ReactBridgeTests.cs" />
     <Compile Include="Internal\AssertEx.cs" />
     <Compile Include="Bridge\NativeModuleRegistryTests.cs" />
     <Compile Include="Internal\Constants\DictionaryHelpers.cs" />
