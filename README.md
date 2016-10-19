@@ -28,11 +28,6 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ## Getting Started
 
 - Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
-- Install the [Chocolatey package manager](https://chocolatey.org/) in an Administrator command prompt or PowerShell
-  * In the same Administrator command prompt, type ``choco install nodejs.install``
-  * also in the Administrator command prompt, type ``choco install python2``
-  * Test the nodejs install by typing ``refreshenv`` and ``npm version``. npm should be version 3.10 or newer.
-  * Exit the Administrator command prompt and start a non-Adminstrator shell as you normally would
 - Change your working directory to the project directory you specified in the `react-native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (e.g., `cd AwesomeProject`).
 - Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
 - Initialize Windows project with `react-native windows` command in the project directory.
@@ -41,15 +36,11 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ### Requirements
 
 In addition to the requirements from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html):
+- [NPM 3.x](https://www.npmjs.com/package/npm)
 - [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
-  * ``choco install VisualStudio2015Community`` (this will take some time)
-  * ``choco install vs2015.3``
 - [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
-  * ``choco install windows-sdk-10.1``
 
 If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln) in the ReactWindows folder in Visual Studio. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
-
-If you receive a build error that the 'ChakraBridge' project's target architecture doesn't match, change the 'Any CPU' dropdown in the Visual Studio toolbar to 'x86' or 'x64' so a common target is selected that is supported by all the projects in the solution.
 
 ## Getting Help
 
