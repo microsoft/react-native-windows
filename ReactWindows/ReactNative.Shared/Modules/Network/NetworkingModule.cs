@@ -472,11 +472,7 @@ namespace ReactNative.Modules.Network
                     case "content-type":
                         break;
                     default:
-#if WINDOWS_UWP
-                        request.Headers[key] = header[1];
-#else
                         request.Headers.Add(key, header[1]);
-#endif
                         break;
                 }
             }
