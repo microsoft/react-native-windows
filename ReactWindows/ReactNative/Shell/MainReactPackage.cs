@@ -54,7 +54,7 @@ namespace ReactNative.Shell
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
                 new I18NModule(),
-                new LauncherModule(),
+                new LauncherModule(reactContext),
                 new LocationModule(reactContext),
                 new NativeAnimatedModule(reactContext),
                 new NetworkingModule(reactContext),
