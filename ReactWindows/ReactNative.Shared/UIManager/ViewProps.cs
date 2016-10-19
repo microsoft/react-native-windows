@@ -46,6 +46,11 @@ namespace ReactNative.UIManager
         public const string Right = "right";
         public const string Top = "top";
         public const string Width = "width";
+
+        public const string MinWidth = "minWidth";
+        public const string MaxWidth = "maxWidth";
+        public const string MinHeight = "minHeight";
+        public const string MaxHeight = "maxHeight";
       
         // Properties that affect more than just layout
         public const string Disabled = "disabled";
@@ -114,15 +119,28 @@ namespace ReactNative.UIManager
             {
                 AlignItems,
                 AlignSelf,
-                Bottom,
                 Collapsible,
                 Flex,
                 FlexDirection,
                 FlexWrap,
-                Height,
                 JustifyContent,
+
+                /* position */
+                Position,
+                Right,
+                Top,
+                Bottom,
                 Left,
-                
+
+                /* dimensions */
+                Width,
+                Height,
+                MinWidth,
+                MaxWidth,
+                MinHeight,
+                MaxHeight,
+
+                /* margins */
                 Margin,
                 MarginVertical,
                 MarginHorizontal,
@@ -131,6 +149,7 @@ namespace ReactNative.UIManager
                 MarginTop,
                 MarginBottom,
                 
+                /* paddings */
                 Padding,
                 PaddingVertical,
                 PaddingHorizontal,
@@ -138,11 +157,6 @@ namespace ReactNative.UIManager
                 PaddingRight,
                 PaddingTop,
                 PaddingBottom,
-      
-                Position,
-                Right,
-                Top,
-                Width,
             };
 
         /// <summary>
