@@ -9,6 +9,8 @@ using HttpContentType = Windows.Web.Http.IHttpContent;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using HttpContentType = System.Net.Http.HttpContent;
+using HttpStringContent = System.Net.Http.StringContent;
+using HttpMediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 #endif
 
 namespace ReactNative.Modules.Network
@@ -21,11 +23,10 @@ namespace ReactNative.Modules.Network
             if (headerData.ContentEncoding == "gzip")
             {
                 var content = CreateGzip(body);
-#if WINDOWS_UWP
                 content.Headers.ContentType = new HttpMediaTypeHeaderValue(headerData.ContentType);
+#if WINDOWS_UWP
                 content.Headers.ContentEncoding.ParseAdd(headerData.ContentEncoding);
 #else
-                content.Headers.ContentType = new MediaTypeHeaderValue(headerData.ContentType);
                 content.Headers.ContentEncoding.Add(headerData.ContentEncoding);
 #endif
                 return content;
@@ -33,11 +34,7 @@ namespace ReactNative.Modules.Network
             else
             {
                 var content = CreateString(body);
-#if WINDOWS_UWP
                 content.Headers.ContentType = new HttpMediaTypeHeaderValue(headerData.ContentType);
-#else
-                content.Headers.ContentType = new MediaTypeHeaderValue(headerData.ContentType);
-#endif
                 return content;
             }
         }
@@ -98,11 +95,7 @@ namespace ReactNative.Modules.Network
 
         private static HttpContentType CreateString(string body)
         {
-#if WINDOWS_UWP
             return new HttpStringContent(body);
-#else
-            return new StringContent(body);
-#endif
         }
     }
 }

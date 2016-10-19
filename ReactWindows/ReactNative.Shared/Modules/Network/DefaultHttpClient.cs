@@ -41,9 +41,7 @@ namespace ReactNative.Modules.Network
                 }
             }
 #else
-            var asyncInfo = _client.SendAsync(request);
-            asyncInfo.Wait(token);
-            return await asyncInfo.ConfigureAwait(false);
+            return await _client.SendAsync(request, token).ConfigureAwait(false);
 #endif
         }
 
