@@ -8,11 +8,6 @@ namespace ReactNative.UIManager
     {
         private static readonly IReadOnlyDictionary<string, IPropertySetter> s_shadowEmpty = new Dictionary<string, IPropertySetter>();
 
-        private static readonly object[] s_viewArgsBuffer = new object[2];
-        private static readonly object[] s_groupViewArgsBuffer = new object[3];
-        private static readonly object[] s_shadowArgsBuffer = new object[1];
-        private static readonly object[] s_groupShadowArgsBuffer = new object[2];
-
         private static readonly IDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>> s_settersCache =
             new Dictionary<Type, IReadOnlyDictionary<string, IPropertySetter>>();
 

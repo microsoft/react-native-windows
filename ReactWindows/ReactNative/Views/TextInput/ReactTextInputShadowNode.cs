@@ -22,7 +22,7 @@ namespace ReactNative.Views.TextInput
     {
         private const int Unset = -1;
 
-        private static readonly float[] s_defaultPaddings = new[]
+        private static readonly float[] s_defaultPaddings = 
         {
             10f,
             3f,

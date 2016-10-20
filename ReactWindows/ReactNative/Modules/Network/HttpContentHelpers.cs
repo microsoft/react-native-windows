@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;

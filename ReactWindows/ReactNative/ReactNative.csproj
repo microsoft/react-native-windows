@@ -101,8 +101,6 @@
     <Compile Include="Animated\PropsAnimatedNode.cs" />
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
-    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
-    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
