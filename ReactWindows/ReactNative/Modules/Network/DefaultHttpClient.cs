@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-#if WINDOWS_UWP
 using Windows.Web.Http;
-#else
-using System.Net.Http;
-#endif
 
 namespace ReactNative.Modules.Network
 {
@@ -26,7 +22,6 @@ namespace ReactNative.Modules.Network
 
         public async Task<HttpResponseMessage> SendRequestAsync(HttpRequestMessage request, CancellationToken token)
         {
-#if WINDOWS_UWP
             var asyncInfo = _client.SendRequestAsync(request);
             using (token.Register(asyncInfo.Cancel))
             {
@@ -40,9 +35,6 @@ namespace ReactNative.Modules.Network
                     throw;
                 }
             }
-#else
-            return await _client.SendAsync(request, token).ConfigureAwait(false);
-#endif
         }
 
         public void Dispose()
