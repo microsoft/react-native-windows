@@ -42,6 +42,7 @@ function getLatestVersion() {
 }
 
 function getMatchingVersion(version) {
+  console.log(`Checking for react-native-windows version matching ${version}...`)
   return fetch(`https://registry.npmjs.org/react-native-windows?version=${version}`)
     .then(result => {
       if (result && result.ok) {
@@ -69,9 +70,8 @@ function getInstallPackage(version) {
     process.exit(1);
   }
 
-  const validVersionOrRange = validVersion || validRange;
-  if (validVersionOrRange) {
-    return getMatchingVersion(validVersionOrRange)
+  if (validVersion || validRange) {
+    return getMatchingVersion(version)
       .then(resultVersion => packageToInstall + '@' + resultVersion);
   } else {
     return Promise.resolve(version);
@@ -79,24 +79,30 @@ function getInstallPackage(version) {
 }
 
 function getReactNativeVersion() {
+  console.log('Reading react-native version from node_modules...');
   if (fs.existsSync(REACT_NATIVE_PACKAGE_JSON_PATH())) {
     const version = JSON.parse(fs.readFileSync(REACT_NATIVE_PACKAGE_JSON_PATH(), 'utf-8')).version;
     return `${semver.major(version)}.${semver.minor(version)}.*`;
   }
 }
 
+function getReactNativeAppName() {
+  console.log('Reading application name from package.json...');
+  return JSON.parse(fs.readFileSync('package.json', 'utf8')).name;
+}
+
 module.exports = function windows(config, args, options) {
-  const name = args[0] ? args[0] : JSON.parse(fs.readFileSync('package.json', 'utf8')).name;
+  const name = args[0] ? args[0] : getReactNativeAppName();
   const ns = options.namespace ? options.namespace : name;
   const version = options.windowsVersion ? options.windowsVersion : getReactNativeVersion();
 
   return getInstallPackage(version)
     .then(rnwPackage => {
-      console.log(chalk.green(`Installing ${rnwPackage}...`));
+      console.log(`Installing ${rnwPackage}...`);
       execSync(`npm install --save ${rnwPackage}`);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
       generateWindows(process.cwd(), name, ns);
-    }).catch(error => console.error(error.message));
+    }).catch(error => console.error(chalk.red(error.message)));
 }
