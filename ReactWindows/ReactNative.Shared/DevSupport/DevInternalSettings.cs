@@ -141,8 +141,8 @@ namespace ReactNative.DevSupport
             if (typeof(T) == typeof(bool))
             {
                 var result = default(bool);
-                bool.TryParse(ConfigurationManager.AppSettings[key], out result);
-                return (T)(object)result;
+                var parsed = bool.TryParse(ConfigurationManager.AppSettings[key], out result);
+                return (T)(object)(parsed && result);
             }
             else
             {
