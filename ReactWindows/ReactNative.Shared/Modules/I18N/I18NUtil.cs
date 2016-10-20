@@ -3,6 +3,9 @@ using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
 #else
 using System.Globalization;
+using System;
+using System.Configuration;
+using static System.FormattableString;
 #endif
 
 namespace ReactNative.Modules.I18N
@@ -36,11 +39,19 @@ namespace ReactNative.Modules.I18N
         {
             get
             {
+#if WINDOWS_UWP
                 return (bool?)ApplicationData.Current.LocalSettings.Values[AllowRTL] ?? false;
+#else
+                return Boolean.Parse(ConfigurationManager.AppSettings[AllowRTL]);
+#endif
             }
             set
             {
+#if WINDOWS_UWP
                 ApplicationData.Current.LocalSettings.Values[AllowRTL] = value;
+#else
+                ConfigurationManager.AppSettings[AllowRTL] = value.ToString();
+#endif
             }
         }
 
@@ -51,11 +62,19 @@ namespace ReactNative.Modules.I18N
         {
             get
             {
+#if WINDOWS_UWP
                 return (bool?)ApplicationData.Current.LocalSettings.Values[ForceRTL] ?? false;
+#else
+                return Boolean.Parse(ConfigurationManager.AppSettings[ForceRTL]);
+#endif
             }
             set
             {
+#if WINDOWS_UWP
                 ApplicationData.Current.LocalSettings.Values[ForceRTL] = value;
+#else
+                ConfigurationManager.AppSettings[AllowRTL] = value.ToString();
+#endif
             }
         }
 

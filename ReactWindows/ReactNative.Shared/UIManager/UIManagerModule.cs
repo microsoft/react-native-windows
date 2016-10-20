@@ -5,6 +5,9 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+
 #if WINDOWS_UWP
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -515,11 +518,17 @@ namespace ReactNative.UIManager
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("didUpdateDimensions", GetDimensions());
         }
+#endif
 
         private static IDictionary<string, object> GetDimensions()
         {
+#if WINDOWS_UWP
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
             var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+#else
+            var bounds = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+            var scale = 1;
+#endif
 
             return new Dictionary<string, object>
             {
@@ -535,7 +544,6 @@ namespace ReactNative.UIManager
                 },
             };
         }
-#endif
 #endregion
     }
 }
