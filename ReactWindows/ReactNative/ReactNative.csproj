@@ -109,12 +109,9 @@
     <Compile Include="Bridge\NativeModuleRegistry.cs" />
     <Compile Include="Bridge\Queue\ReactQueueConfiguration.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
-    <Compile Include="DevSupport\DevInternalSettings.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DevSupport\DevServerHelper.cs" />
-    <Compile Include="DevSupport\DevSupportManager.cs" />
     <Compile Include="DevSupport\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
     </Compile>
@@ -142,12 +139,6 @@
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\IConnectionProfile.cs" />
     <Compile Include="Modules\NetInfo\INetworkInformation.cs" />
-    <Compile Include="Modules\Network\DefaultHttpClient.cs" />
-    <Compile Include="Modules\Network\HttpContentHeaderData.cs" />
-    <Compile Include="Modules\Network\IHttpClient.cs" />
-    <Compile Include="Modules\Network\NetworkingModule.cs" />
-    <Compile Include="Modules\Network\HttpContentHelpers.cs" />
-    <Compile Include="Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModule.cs" />
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
     <Compile Include="Modules\StatusBar\MobileStatusBar.cs" />
