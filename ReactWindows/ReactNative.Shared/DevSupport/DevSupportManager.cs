@@ -292,7 +292,7 @@ namespace ReactNative.DevSupport
 #if WINDOWS_UWP
                 var asyncInfo = _devOptionsDialog.ShowAsync();
                 _dismissDevOptionsDialog = asyncInfo.Cancel;
-                
+
                 foreach (var option in options)
                 {
                     option.HideDialog = _dismissDevOptionsDialog;
@@ -343,7 +343,7 @@ namespace ReactNative.DevSupport
             HideDevOptionsDialog();
 
             var message = !IsRemoteDebuggingEnabled
-                ? "Fetching JavaScript bundle." 
+                ? "Fetching JavaScript bundle."
                 : "Connecting to remote debugger.";
 
             var progressDialog = new ProgressDialog("Please wait...", message);
