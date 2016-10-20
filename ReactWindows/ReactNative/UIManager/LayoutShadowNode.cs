@@ -23,6 +23,26 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets the minimum width of the shadow node.
+        /// </summary>
+        /// <param name="minWidth">The minimum width.</param>
+        [ReactProp(ViewProps.MinWidth, DefaultSingle = Undefined)]
+        public void SetMinWidth(float minWidth)
+        {
+            MinWidth = minWidth;
+        }
+
+        /// <summary>
+        /// Sets the maximum width of the shadow node.
+        /// </summary>
+        /// <param name="maxWidth">The maximum width.</param>
+        [ReactProp(ViewProps.MaxWidth, DefaultSingle = Undefined)]
+        public void SetMaxWidth(float maxWidth)
+        {
+            MaxWidth = maxWidth;
+        }
+
+        /// <summary>
         /// Set the heigth of the shadow node.
         /// </summary>
         /// <param name="height">The height.</param>
@@ -30,6 +50,26 @@ namespace ReactNative.UIManager
         public void SetHeight(float height)
         {
             Height = height;
+        }
+
+        /// <summary>
+        /// Sets the minimum height of the shadow node.
+        /// </summary>
+        /// <param name="minHeight">The minimum height.</param>
+        [ReactProp(ViewProps.MinHeight, DefaultSingle = Undefined)]
+        public void SetMinHeight(float minHeight)
+        {
+            MinHeight = minHeight;
+        }
+
+        /// <summary>
+        /// Sets the maximum height of the shadow node.
+        /// </summary>
+        /// <param name="maxHeight">The maximum height.</param>
+        [ReactProp(ViewProps.MaxHeight, DefaultSingle = Undefined)]
+        public void SetMaxHeight(float maxHeight)
+        {
+            MaxHeight = maxHeight;
         }
 
         /// <summary>
