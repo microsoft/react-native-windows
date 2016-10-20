@@ -1,12 +1,6 @@
 ﻿using ReactNative.Modules.DevSupport;
 using System.Collections.Generic;
-#if WINDOWS_UWP
 using Windows.Storage;
-#else
-using System;
-using System.Configuration;
-using static System.FormattableString;
-#endif
 
 namespace ReactNative.DevSupport
 {
@@ -127,7 +121,6 @@ namespace ReactNative.DevSupport
 
         private T GetSetting<T>(string key, T defaultValue)
         {
-#if WINDOWS_UWP
             var values = ApplicationData.Current.LocalSettings.Values;
             if (values.ContainsKey(key))
             {
@@ -137,37 +130,14 @@ namespace ReactNative.DevSupport
                     return (T)data;
                 }
             }
-#else
-            if (typeof(T) == typeof(bool))
-            {
-                Boolean result = Boolean.TryParse(ConfigurationManager.AppSettings[key], out result);
-                return (T) (object) result;
-            }
-            else
-            {
-                throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));
-            }
-#endif
 
             return defaultValue;
         }
 
         private void SetSetting<T>(string key, T value)
         {
-#if WINDOWS_UWP
             var values = ApplicationData.Current.LocalSettings.Values;
             values[key] = value;
-#else
-            var values = ConfigurationManager.AppSettings;
-            if (values[key] == null)
-            {
-                values.Add(key, value.ToString());
-            }
-            else
-            {
-                values[key] = value.ToString();
-            }
-#endif
 
             if (s_triggerReload.Contains(key))
             {

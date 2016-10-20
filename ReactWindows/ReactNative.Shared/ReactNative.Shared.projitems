@@ -81,9 +81,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DebugServerException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevInternalSettings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevServerHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevSupportManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DisabledDevSupportManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\HMRClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\IDevSupportManager.cs" />
