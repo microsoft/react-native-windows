@@ -293,16 +293,17 @@ namespace ReactNative.Modules.Network
 
                         if (useIncrementalUpdates && responseType == "text")
                         {
-                            var length = response.Content.Headers.ContentLength;
 #if WINDOWS_UWP
+                            var length = response.Content.Headers.ContentLength;
                             var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false);
                             var stream = inputStream.AsStreamForRead();
 #else
+                            var length = (ulong?)response.Content.Headers.ContentLength;
                             var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
                             using (stream)
                             {
-                                await ProcessResponseIncrementalAsync(requestId, stream, (ulong)length, timeoutSource.Token).ConfigureAwait(false);
+                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
                                 OnRequestSuccess(requestId);
                             }
 #if WINDOWS_UWP
