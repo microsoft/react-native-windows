@@ -146,17 +146,17 @@ namespace ReactNative.UIManager
             var translateBackMatrix = Matrix3D.Identity;
             if (!double.IsNaN(view.Width))
             {
-                translateMatrix.OffsetX = -view.Width/2;
-                translateBackMatrix.OffsetX = view.Width/2;
+                translateMatrix.OffsetX = -view.Width / 2;
+                translateBackMatrix.OffsetX = view.Width / 2;
             }
 
             if (!double.IsNaN(view.Height))
             {
-                translateMatrix.OffsetY = -view.Height/2;
-                translateBackMatrix.OffsetY = view.Height/2;
+                translateMatrix.OffsetY = -view.Height / 2;
+                translateBackMatrix.OffsetY = view.Height / 2;
             }
 
-            projection.ProjectionMatrix = translateMatrix*transformMatrix*translateBackMatrix;
+            projection.ProjectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
 #endif
         }
 
