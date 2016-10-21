@@ -527,7 +527,7 @@ namespace ReactNative.UIManager
             var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
 #else
             var bounds = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
-            var scale = 1;
+            var scale = new Double();
 #endif
 
             return new Dictionary<string, object>

@@ -11,9 +11,22 @@ using System.Windows;
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestFixture]
+    [TestFixture, RequiresSTA]
     public class UIManagerModuleTests
     {
+        [SetUp]
+        public void doSetup()
+        {
+            if (Application.Current == null)
+            {
+                new Application
+                {
+                    ShutdownMode = ShutdownMode.OnExplicitShutdown
+                }.Run();
+            }
+            new Window().Show();
+        }
+
         [Test]
         public void UIManagerModule_ArgumentChecks()
         {
