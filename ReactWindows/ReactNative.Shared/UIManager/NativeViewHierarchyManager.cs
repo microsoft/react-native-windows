@@ -552,10 +552,10 @@ namespace ReactNative.UIManager
         /// </param>
         public void ShowPopupMenu(int tag, string[] items, ICallback success)
         {
+#if WINDOWS_UWP
             DispatcherHelpers.AssertOnDispatcher();
             var view = ResolveView(tag);
 
-#if WINDOWS_UWP
             var menu = new PopupMenu();
             for (var i = 0; i < items.Length; ++i)
             {
@@ -566,13 +566,6 @@ namespace ReactNative.UIManager
                         success.Invoke(cmd.Id);
                     },
                     i));
-            }
-#else
-            var menu = new ContextMenu();
-            for (var i = 0; i < items.Length; ++i)
-            {
-                object item = new MenuItem();
-                // TODO: figure out how to add menu items
             }
 #endif
 

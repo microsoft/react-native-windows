@@ -20,24 +20,7 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        /// <summary>
-        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
-        /// properties, based on the <see cref="JObject"/> map.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="transforms">The list of transforms.</param>
-        [ReactProp("transform")]
-        public void SetTransform(TFrameworkElement view, JArray transforms)
-        {
-            if (transforms == null)
-            {
-                ResetProjectionMatrix(view);
-            }
-            else
-            {
-                SetProjectionMatrix(view, transforms);
-            }
-        }
+        // ToDo: SetTransform
 
         /// <summary>
         /// Sets the opacity of the <typeparamref name="TFrameworkElement"/>.
@@ -50,16 +33,7 @@ namespace ReactNative.UIManager
             view.Opacity = opacity;
         }
 
-        /// <summary>
-        /// Sets the overflow property for the <typeparamref name="TFrameworkElement"/>.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="overflow">The overflow value.</param>
-        [ReactProp("overflow")]
-        public void SetOverflow(TFrameworkElement view, string overflow)
-        {
-            // ToDo: Figure out how to manually manage overflow
-        }
+        // ToDo: SetOverflow
 
         /// <summary>
         /// Sets the z-index of the element.
@@ -82,17 +56,8 @@ namespace ReactNative.UIManager
         {
             AutomationProperties.SetName(view, label ?? "");
         }
-
-        /// <summary>
-        /// Sets the accessibility live region.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="liveRegion">The live region.</param>
-        [ReactProp("accessibilityLiveRegion")]
-        public void SetAccessibilityLiveRegion(TFrameworkElement view, string liveRegion)
-        {
-            // ToDo: Figure out the WPF way of marking a region as live
-        }
+        
+        // ToDo: SetAccessibilityLiveRegion
 
         /// <summary>
         /// Sets the test ID, i.e., the automation ID.
@@ -103,16 +68,6 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
-        }
-
-        private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
-        {
-            // ToDo: Figure out the WPF way to do transforms
-        }
-
-        private static void ResetProjectionMatrix(TFrameworkElement view)
-        {
-            // ToDo: Figure out the WPF way to reset transforms
         }
     }
 }
