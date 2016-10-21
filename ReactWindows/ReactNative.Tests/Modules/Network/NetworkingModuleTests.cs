@@ -375,6 +375,7 @@ namespace ReactNative.Tests.Modules.Network
             module.sendRequest("get", uri, 0, null, null, "text", true, 1000);
 
             onReceived.WaitOne();
+            Assert.IsNotNull(onCompleteData);
             AssertNotRequestError(onCompleteData);
             Assert.AreEqual(expected, builder.ToString());
         }
