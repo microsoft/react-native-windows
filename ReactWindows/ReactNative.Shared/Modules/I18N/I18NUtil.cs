@@ -42,7 +42,9 @@ namespace ReactNative.Modules.I18N
 #if WINDOWS_UWP
                 return (bool?)ApplicationData.Current.LocalSettings.Values[AllowRTL] ?? false;
 #else
-                return Boolean.Parse(ConfigurationManager.AppSettings[AllowRTL]);
+                var result = default(bool);
+                var parsed = bool.TryParse(ConfigurationManager.AppSettings[AllowRTL], out result);
+                return (bool)(object)(parsed && result);
 #endif
             }
             set
@@ -65,7 +67,9 @@ namespace ReactNative.Modules.I18N
 #if WINDOWS_UWP
                 return (bool?)ApplicationData.Current.LocalSettings.Values[ForceRTL] ?? false;
 #else
-                return Boolean.Parse(ConfigurationManager.AppSettings[ForceRTL]);
+                var result = default(bool);
+                var parsed = bool.TryParse(ConfigurationManager.AppSettings[ForceRTL], out result);
+                return (bool)(object)(parsed && result);
 #endif
             }
             set
