@@ -386,7 +386,10 @@ namespace ReactNative.Tests.Modules.Network
                 Assert.Fail("Invalid completion response from NetworkingModule.");
             }
 
-            Assert.AreEqual(2, onCompleteData.Count, "Network request failed with message: " + onCompleteData[2]);
+            if (onCompleteData.Count != 2)
+            {
+                Assert.Fail("Network request failed with message: " + onCompleteData[1]);
+            }
         }
 
         private static NetworkingModule CreateNetworkingModule(IHttpClient httpClient, IInvocationHandler handler)
