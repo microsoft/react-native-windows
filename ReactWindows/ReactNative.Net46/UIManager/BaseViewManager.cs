@@ -20,7 +20,7 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        // ToDo: SetTransform
+        // ToDo: SetTransform - ReactProp("transform")
 
         /// <summary>
         /// Sets the opacity of the <typeparamref name="TFrameworkElement"/>.
@@ -33,7 +33,7 @@ namespace ReactNative.UIManager
             view.Opacity = opacity;
         }
 
-        // ToDo: SetOverflow
+        // ToDo: SetOverflow - ReactProp("overflow")
 
         /// <summary>
         /// Sets the z-index of the element.
@@ -57,7 +57,7 @@ namespace ReactNative.UIManager
             AutomationProperties.SetName(view, label ?? "");
         }
         
-        // ToDo: SetAccessibilityLiveRegion
+        // ToDo: SetAccessibilityLiveRegion - ReactProp("accessibilityLiveRegion")
 
         /// <summary>
         /// Sets the test ID, i.e., the automation ID.
