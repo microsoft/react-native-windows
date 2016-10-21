@@ -489,8 +489,7 @@ namespace ReactNative.UIManager
                 parent.MarkUpdated();
             }
         }
-
-#if WINDOWS_UWP
+        
         /// <summary>
         /// Marks that the node is dirty.
         /// </summary>
@@ -501,7 +500,6 @@ namespace ReactNative.UIManager
                 base.dirty();
             }
         }
-#endif
 
         private void UpdateNativeChildrenCountInParent(int delta)
         {
