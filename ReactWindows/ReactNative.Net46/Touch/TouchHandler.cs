@@ -25,6 +25,9 @@ namespace ReactNative.Touch
             _view.MouseDown += OnPointerPressed;
             _view.MouseMove += OnPointerMoved;
             _view.MouseUp += OnPointerReleased;
+            _view.TouchDown += OnTouchPressed;
+            _view.TouchMove += OnTouchMoved;
+            _view.TouchUp += OnTouchReleased;
         }
 
         public void Dispose()
@@ -32,6 +35,37 @@ namespace ReactNative.Touch
             _view.MouseDown -= OnPointerPressed;
             _view.MouseMove -= OnPointerMoved;
             _view.MouseUp -= OnPointerReleased;
+            _view.TouchDown -= OnTouchPressed;
+            _view.TouchMove -= OnTouchMoved;
+            _view.TouchUp -= OnTouchReleased;
+        }
+
+        private void OnTouchPressed(object sender, TouchEventArgs e)
+        {
+            var originalSource = e.OriginalSource as DependencyObject;
+            var rootPoint = e.GetTouchPoint(_view);
+            var reactView = GetReactViewTarget(originalSource, rootPoint.Position);
+            if (reactView != null && _view.CaptureTouch(e.TouchDevice))
+            {
+                var viewPoint = rootPoint.Position;
+                var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint);
+                var pointer = new ReactPointer();
+                pointer.Target = reactTag;
+                pointer.PointerId = (uint)e.Device.GetHashCode();
+                pointer.Identifier = ++_pointerIDs;
+                pointer.PointerType = "touch";
+                pointer.IsLeftButton = false;
+                pointer.IsRightButton = false;
+                pointer.IsMiddleButton = false;
+                pointer.IsHorizontalMouseWheel = false;
+                pointer.IsEraser = false;
+                pointer.ReactView = reactView;
+                UpdatePointerForEvent(pointer, rootPoint.Position, viewPoint);
+
+                var pointerIndex = _pointers.Count;
+                _pointers.Add(pointer);
+                DispatchTouchEvent(TouchEventType.Start, _pointers, pointerIndex);
+            }
         }
 
         private void OnPointerPressed(object sender, MouseButtonEventArgs e)
@@ -62,6 +96,17 @@ namespace ReactNative.Touch
             }
         }
 
+        private void OnTouchMoved(object sender, TouchEventArgs e)
+        {
+            var pointerIndex = 1;
+            if (pointerIndex != -1)
+            {
+                var pointer = _pointers[pointerIndex];
+                UpdatePointerForEvent(pointer, e);
+                DispatchTouchEvent(TouchEventType.Move, _pointers, pointerIndex);
+            }
+        }
+
         private void OnPointerMoved(object sender, MouseEventArgs e)
         {
             var pointerIndex = 1;
@@ -73,9 +118,34 @@ namespace ReactNative.Touch
             }
         }
 
+        private void OnTouchReleased(object sender, TouchEventArgs e)
+        {
+            OnTouchConcluded(TouchEventType.End, e);
+        }
+
         private void OnPointerReleased(object sender, MouseButtonEventArgs e)
         {
             OnPointerConcluded(TouchEventType.End, e);
+        }
+
+        private void OnTouchConcluded(TouchEventType touchEventType, TouchEventArgs e)
+        {
+            var pointerIndex = 1;
+            if (pointerIndex != -1)
+            {
+                var pointer = _pointers[pointerIndex];
+                UpdatePointerForEvent(pointer, e);
+                DispatchTouchEvent(touchEventType, _pointers, pointerIndex);
+
+                _pointers.RemoveAt(pointerIndex);
+
+                if (_pointers.Count == 0)
+                {
+                    _pointerIDs = 0;
+                }
+
+                _view.ReleaseAllTouchCaptures();
+            }
         }
 
         private void OnPointerConcluded(TouchEventType touchEventType, MouseButtonEventArgs e)
@@ -168,6 +238,13 @@ namespace ReactNative.Touch
             }
 
             return null;
+        }
+
+        private void UpdatePointerForEvent(ReactPointer pointer, TouchEventArgs e)
+        {
+            var rootPoint = e.GetTouchPoint(_view);
+            var viewPoint = e.GetTouchPoint(pointer.ReactView);
+            UpdatePointerForEvent(pointer, rootPoint.Position, viewPoint.Position);
         }
 
         private void UpdatePointerForEvent(ReactPointer pointer, MouseButtonEventArgs e)
