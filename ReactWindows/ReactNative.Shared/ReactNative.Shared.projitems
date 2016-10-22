@@ -120,7 +120,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BaseViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvasManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
