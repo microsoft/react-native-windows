@@ -63,17 +63,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
-    <NMakeOutput>$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.dll</NMakeOutput>
-    <NMakeCleanCommandLine>msbuild /t:Clean /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore:Rebuild /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeReBuildCommandLine>
+    <NMakeBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore /p:Platform=x86 /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
+    <NMakeOutput>$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\x86_$(Configuration)\ChakraCore.dll</NMakeOutput>
+    <NMakeCleanCommandLine>msbuild /t:Clean /p:Platform=x86 /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore:Rebuild /p:Platform=x86 /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <NMakeBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
-    <NMakeOutput>$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.dll</NMakeOutput>
-    <NMakeCleanCommandLine>msbuild /t:Clean /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Bin\ChakraCore\ChakraCore.vcxproj"</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore:Rebuild /p:Platform=$(Platform) /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeReBuildCommandLine>
+    <NMakeBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore /p:Platform=x86 /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeBuildCommandLine>
+    <NMakeOutput>$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\x86_$(Configuration)\ChakraCore.dll</NMakeOutput>
+    <NMakeCleanCommandLine>msbuild /t:Clean /p:Platform=x86 /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Bin\ChakraCore\ChakraCore.vcxproj"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>msbuild /m /t:Core\Bin\ChakraCore:Rebuild /p:Platform=x86 /p:Configuration=$(Configuration) "$(SolutionDir)\..\ChakraCore\Build\Chakra.Core.sln"</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
