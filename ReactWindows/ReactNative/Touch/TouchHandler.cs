@@ -5,7 +5,9 @@ using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.UI.Input;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
@@ -142,7 +144,8 @@ namespace ReactNative.Touch
                 return null;
             }
 
-            var sources = VisualTreeHelper.FindElementsInHostCoordinates(point, _view);
+            var adjustedPoint = AdjustPointForStatusBar(point);
+            var sources = VisualTreeHelper.FindElementsInHostCoordinates(adjustedPoint, _view);
 
             // Get the first React view that does not have pointer events set
             // to 'none' or 'box-none', and is not a child of a view with 
@@ -250,6 +253,17 @@ namespace ReactNative.Touch
             }
 
             return isBoxOnly;
+        }
+
+        private static Point AdjustPointForStatusBar(Point point)
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var rect = StatusBar.GetForCurrentView().OccludedRect;
+                point.Y += rect.Height;
+            }
+
+            return point;
         }
 
         class TouchEvent : Event

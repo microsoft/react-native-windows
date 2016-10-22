@@ -244,6 +244,7 @@ namespace ReactNative.Tests.Modules.Network
 
             onComplete.WaitOne();
             Assert.IsNotNull(onCompleteData);
+            AssertNotRequestError(onCompleteData);
             Assert.AreEqual(42, onCompleteData[0].Value<int>());
             Assert.IsNull(onCompleteData[1].Value<string>());
         }
@@ -331,6 +332,7 @@ namespace ReactNative.Tests.Modules.Network
         [TestMethod]
         public void NetworkingModule_Response_Content_UseIncremental()
         {
+            var onCompleteData = default(JArray);
             var onReceived = new AutoResetEvent(false);
             var builder = new StringBuilder();
             var size = 32 * 1027;
@@ -363,6 +365,7 @@ namespace ReactNative.Tests.Modules.Network
                     }
                     else if (eventName == "didCompleteNetworkResponse")
                     {
+                        onCompleteData = args[1] as JArray;
                         onReceived.Set();
                     }
                 }
@@ -372,7 +375,22 @@ namespace ReactNative.Tests.Modules.Network
             module.sendRequest("get", uri, 0, null, null, "text", true, 1000);
 
             onReceived.WaitOne();
+            Assert.IsNotNull(onCompleteData);
+            AssertNotRequestError(onCompleteData);
             Assert.AreEqual(expected, builder.ToString());
+        }
+
+        private static void AssertNotRequestError(JArray onCompleteData)
+        {
+            if (onCompleteData.Count != 2 && onCompleteData.Count != 3)
+            {
+                Assert.Fail("Invalid completion response from NetworkingModule.");
+            }
+
+            if (onCompleteData.Count != 2)
+            {
+                Assert.Fail("Network request failed with message: " + onCompleteData[1]);
+            }
         }
 
         private static NetworkingModule CreateNetworkingModule(IHttpClient httpClient, IInvocationHandler handler)

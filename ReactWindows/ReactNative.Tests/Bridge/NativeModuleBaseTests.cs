@@ -250,21 +250,21 @@ namespace ReactNative.Tests.Bridge
             module.Initialize();
 
             var id = default(int);
-            var args = default(Dictionary<string, string>[]);
+            var args = default(JArray);
 
             var reactInstance = new MockReactInstance((i, a) =>
             {
                 id = i;
-                args = a.ToObject<Dictionary<string, string>[]>();
+                args = a;
             });
 
             module.Methods[nameof(CallbackNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { 42, 43 }));
             Assert.AreEqual(43, id);
-            Assert.AreEqual(1, args.Length);
-            var d = args[0];
-            Assert.AreEqual(3, d.Count);
-            var actualMessage = default(string);
-            Assert.IsTrue(d.TryGetValue("message", out actualMessage));
+            Assert.AreEqual(1, args.Count);
+            var error = args[0] as JObject;
+            Assert.IsNotNull(error);
+            Assert.AreEqual(4, error.Count);
+            var actualMessage = error.Value<string>("message");
             Assert.AreEqual(expectedMessage, actualMessage);
         }
 

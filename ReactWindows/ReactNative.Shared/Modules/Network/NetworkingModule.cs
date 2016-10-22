@@ -9,9 +9,19 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
+#else
+using PCLStorage;
+using System.Linq;
+using System.Net.Http;
+using HttpMultipartFormDataContent = System.Net.Http.MultipartFormDataContent;
+using HttpStreamContent = System.Net.Http.StreamContent;
+using HttpStringContent = System.Net.Http.StringContent;
+using HttpBaseProtocolFilter = System.Net.Http.WebRequestHandler;
+#endif
 
 namespace ReactNative.Modules.Network
 {
@@ -241,8 +251,15 @@ namespace ReactNative.Modules.Network
             string responseType,
             CancellationToken token)
         {
+#if WINDOWS_UWP
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().ConfigureAwait(false);
             var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
+#else
+            var storageFile = await FileSystem.Current.GetFileFromPathAsync(uri.ToString()).ConfigureAwait(false);
+            var input = await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+            var byteArray = Encoding.UTF8.GetBytes(input);
+            var inputStream = new MemoryStream(byteArray);
+#endif
             request.Content = new HttpStreamContent(inputStream);
             await ProcessRequestAsync(
                 requestId,
@@ -276,13 +293,22 @@ namespace ReactNative.Modules.Network
 
                         if (useIncrementalUpdates && responseType == "text")
                         {
+#if WINDOWS_UWP
                             var length = response.Content.Headers.ContentLength;
-                            using (var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false))
-                            using (var stream = inputStream.AsStreamForRead())
+                            var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false);
+                            var stream = inputStream.AsStreamForRead();
+#else
+                            var length = (ulong?)response.Content.Headers.ContentLength;
+                            var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#endif
+                            using (stream)
                             {
                                 await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
                                 OnRequestSuccess(requestId);
                             }
+#if WINDOWS_UWP
+                            inputStream.Dispose();
+#endif
                         }
                         else
                         {
@@ -290,7 +316,11 @@ namespace ReactNative.Modules.Network
                             {
                                 if (responseType == "text")
                                 {
+#if WINDOWS_UWP
                                     var responseBody = await response.Content.ReadAsStringAsync().AsTask().ConfigureAwait(false);
+#else
+                                    var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                                     if (responseBody != null)
                                     {
                                         OnDataReceived(requestId, responseBody);
@@ -301,10 +331,17 @@ namespace ReactNative.Modules.Network
                                     Debug.Assert(responseType == "base64");
                                     using (var memoryStream = new MemoryStream())
                                     {
+#if WINDOWS_UWP
                                         using (var outputStream = memoryStream.AsOutputStream())
                                         {
                                             await response.Content.WriteToStreamAsync(outputStream).AsTask().ConfigureAwait(false);
                                         }
+#else
+                                        using (var outputStream = memoryStream)
+                                        {
+                                            await response.Content.CopyToAsync(outputStream).ConfigureAwait(false);
+                                        }
+#endif
 
                                         OnDataReceived(requestId, Convert.ToBase64String(memoryStream.ToArray()));
                                     }
@@ -355,11 +392,23 @@ namespace ReactNative.Modules.Network
         private void OnResponseReceived(int requestId, HttpResponseMessage response)
         {
             var headerData = new JObject();
-            TranslateHeaders(headerData, response.Headers);
+#if WINDOWS_UWP
+            var responseHeaders = response.Headers;
+#else
+            var responseHeaders = response.Headers.Select(pair => 
+                new KeyValuePair<string, string>(pair.Key, string.Join(", ", pair.Value)));
+#endif
+            TranslateHeaders(headerData, responseHeaders);
 
             if (response.Content != null)
             {
-                TranslateHeaders(headerData, response.Content.Headers);
+#if WINDOWS_UWP
+                var responseContentHeaders = response.Content.Headers;
+#else
+                var responseContentHeaders = response.Content.Headers.Select(pair => 
+                    new KeyValuePair<string, string>(pair.Key, string.Join(", ", pair.Value)));
+#endif
+                TranslateHeaders(headerData, responseContentHeaders);
             }
 
             var args = new JArray
@@ -426,13 +475,13 @@ namespace ReactNative.Modules.Network
                     case "content-type":
                         break;
                     default:
-                        request.Headers[key] = header[1];
+                        request.Headers.Add(key, header[1]);
                         break;
                 }
             }
         }
 
-        private static void TranslateHeaders(JObject headerData, IDictionary<string, string> headers)
+        private static void TranslateHeaders(JObject headerData, IEnumerable<KeyValuePair<string, string>> headers)
         {
             foreach (var header in headers)
             {

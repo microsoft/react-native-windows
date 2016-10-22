@@ -11,15 +11,6 @@ namespace ReactNative.Modules.Dialog
 {
     class DialogModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
-        private const string ActionButtonClicked = "buttonClicked";
-        private const string ActionDismissed = "dismissed";
-
-        private const string KeyButtonPositive = "buttonPositive";
-        private const string KeyButtonNegative = "buttonNegative";
-
-        private const int KeyButtonPositiveValue = 0;
-        private const int KeyButtonNegativeValue = 1;
-
         private MessageDialog _pendingDialog;
         private bool _isInForeground;
 
@@ -42,10 +33,10 @@ namespace ReactNative.Modules.Dialog
             {
                 return new Dictionary<string, object>
                 {
-                    { ActionButtonClicked, ActionButtonClicked },
-                    { ActionDismissed, ActionDismissed },
-                    { KeyButtonPositive, KeyButtonPositiveValue },
-                    { KeyButtonNegative, KeyButtonNegativeValue },
+                    { DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.ActionButtonClicked },
+                    { DialogModuleHelper.ActionDismissed, DialogModuleHelper.ActionDismissed },
+                    { DialogModuleHelper.KeyButtonPositive, DialogModuleHelper.KeyButtonPositiveValue },
+                    { DialogModuleHelper.KeyButtonNegative, DialogModuleHelper.KeyButtonNegativeValue },
                 };
             }
         }
@@ -88,22 +79,22 @@ namespace ReactNative.Modules.Dialog
                 Title = config.Value<string>("title"),
             };
 
-            if (config.ContainsKey(KeyButtonPositive))
+            if (config.ContainsKey(DialogModuleHelper.KeyButtonPositive))
             {
                 messageDialog.Commands.Add(new UICommand
                 {
-                    Label = config.Value<string>(KeyButtonPositive),
-                    Id = KeyButtonPositiveValue,
+                    Label = config.Value<string>(DialogModuleHelper.KeyButtonPositive),
+                    Id = DialogModuleHelper.KeyButtonPositiveValue,
                     Invoked = target => OnInvoked(target, actionCallback),
                 });
             }
 
-            if (config.ContainsKey(KeyButtonNegative))
+            if (config.ContainsKey(DialogModuleHelper.KeyButtonNegative))
             {
                 messageDialog.Commands.Add(new UICommand
                 {
-                    Label = config.Value<string>(KeyButtonNegative),
-                    Id = KeyButtonNegativeValue,
+                    Label = config.Value<string>(DialogModuleHelper.KeyButtonNegative),
+                    Id = DialogModuleHelper.KeyButtonNegativeValue,
                     Invoked = target => OnInvoked(target, actionCallback),
                 });
             }
@@ -123,7 +114,7 @@ namespace ReactNative.Modules.Dialog
 
         private void OnInvoked(IUICommand target, ICallback callback)
         {
-            callback.Invoke(ActionButtonClicked, target.Id);
+            callback.Invoke(DialogModuleHelper.ActionButtonClicked, target.Id);
         }
 
         private static async void RunOnDispatcher(DispatchedHandler action)
