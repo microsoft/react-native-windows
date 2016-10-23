@@ -247,10 +247,10 @@
     <Compile Include="Views\Switch\ReactSwitchShadowNode.cs" />
     <Compile Include="Views\Text\ReactRunShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineShadowNode.cs" />
-    <Compile Include="Views\Text\ReactInlineViewManager.cs" />
     <Compile Include="Views\Text\ReactSpanShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineShadowNodeVisitor.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
+    <Compile Include="Views\Text\ReactTextInlineViewManager.cs" />
     <Compile Include="Views\ViewManagersPropertyCache.cs" />
     <Compile Include="Views\Text\ReactRunManager.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
