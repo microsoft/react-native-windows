@@ -47,6 +47,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\MessageQueueThreadKind.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\MessageQueueThreadSpec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfigurationSpec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactDelegateFactoryBase.cs" />

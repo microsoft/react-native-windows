@@ -11,8 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridgeTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
   </ItemGroup>
 </Project>
