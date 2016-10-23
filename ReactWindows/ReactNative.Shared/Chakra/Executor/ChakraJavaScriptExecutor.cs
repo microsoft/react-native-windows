@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PCLStorage;
 using ReactNative.Bridge;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
-using Windows.Storage;
 using static System.FormattableString;
 
 namespace ReactNative.Chakra.Executor
@@ -155,20 +154,16 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<string> LoadScriptAsync(string file)
+        private static async Task<string> LoadScriptAsync(string fileName)
         {
             try
             {
-                var storageFile = await StorageFile.GetFileFromPathAsync(file).AsTask().ConfigureAwait(false);
-                using (var stream = await storageFile.OpenStreamForReadAsync().ConfigureAwait(false))
-                using (var reader = new StreamReader(stream))
-                {
-                    return await reader.ReadToEndAsync().ConfigureAwait(false);
-                }
+                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
+                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                var exceptionMessage = $"File read exception for asset '{file}'.";
+                var exceptionMessage = $"File read exception for asset '{fileName}'.";
                 throw new InvalidOperationException(exceptionMessage, ex);
             }
         }
