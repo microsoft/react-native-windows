@@ -1,12 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 
 namespace ReactNative.Tests.UIManager
 {

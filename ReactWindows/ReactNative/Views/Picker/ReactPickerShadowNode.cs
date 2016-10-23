@@ -1,6 +1,5 @@
 ﻿using Facebook.CSSLayout;
 using ReactNative.UIManager;
-using Windows.UI.Xaml.Controls;
 
 namespace ReactNative.Views.Picker
 {

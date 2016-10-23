@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
-using Windows.UI.Xaml;
 
 namespace ReactNative.Tests.UIManager
 {

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
-using Windows.Networking.Connectivity;
 
 namespace ReactNative.Modules.NetInfo
 {

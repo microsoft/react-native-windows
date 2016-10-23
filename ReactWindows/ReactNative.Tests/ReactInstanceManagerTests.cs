@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ReactNative.Bridge;
-using ReactNative.Modules.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

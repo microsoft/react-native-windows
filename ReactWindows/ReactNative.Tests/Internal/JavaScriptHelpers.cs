@@ -3,7 +3,6 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
