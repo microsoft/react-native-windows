@@ -1,11 +1,16 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using static System.FormattableString;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.Storage;
+#else
+using System.IO;
+using System.Reflection;
+#endif
 
 namespace ReactNative.Tests
 {
@@ -45,15 +50,28 @@ namespace ReactNative.Tests
         {
             var scriptUris = new[]
             {
-                @"ms-appx:///Resources/test.js",
+                @"Resources/test.js",
             };
 
             var scripts = new KeyValuePair<string, string>[scriptUris.Length];
             for (var i = 0; i < scriptUris.Length; ++i)
             {
                 var uri = scriptUris[i];
-                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(uri));
-                scripts[i] = new KeyValuePair<string, string>(uri, storageFile.Path);
+#if WINDOWS_UWP
+                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + "/" + uri)); 
+                var filePath = storageFile.Path; 
+#else
+                var assembly = Assembly.GetAssembly(typeof(JavaScriptHelpers));
+                var assemblyName = assembly.GetName();
+                var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
+                if (pathToAssembly == null) throw new FileNotFoundException(Invariant($"Could not get directory name for code base of '{assemblyName}'."));
+                var pathToAssemblyResource = Path.Combine(pathToAssembly, uri);
+
+                var u = new Uri(pathToAssemblyResource);
+                var filePath = u.LocalPath;
+#endif
+
+                scripts[i] = new KeyValuePair<string, string>(uri, filePath);
             }
 
             await jsQueueThread.CallOnQueue(() =>
