@@ -203,6 +203,8 @@ namespace ReactNative.Views.Image
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
         {
+            base.OnDropViewInstance(reactContext, view);
+
             var tag = view.GetTag();
             var disposable = default(SerialDisposable);
             if (_disposables.TryGetValue(tag, out disposable))

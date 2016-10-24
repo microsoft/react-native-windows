@@ -28,6 +28,19 @@
         }
 
         /// <summary>
+        /// Used to install custom event emitters on the given view.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        /// <remarks>
+        /// Intentionally skipping call to base method because we don't care
+        /// about pointer enter/leave events on the root view.
+        /// </remarks>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, SizeMonitoringCanvas view)
+        {
+        }
+
+        /// <summary>
         /// Creates a new view instance of type <see cref="Windows.UI.Xaml.Controls.Panel"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
