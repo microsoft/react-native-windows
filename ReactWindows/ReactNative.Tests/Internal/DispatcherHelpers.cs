@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.System.Threading;
 using Windows.UI.Core;
 
 namespace ReactNative.Tests

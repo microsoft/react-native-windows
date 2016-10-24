@@ -11,9 +11,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
-using Windows.Foundation;
 using Windows.Storage;
-using Windows.UI.Xaml;
 #else
 using PCLStorage;
 using System.Reflection;

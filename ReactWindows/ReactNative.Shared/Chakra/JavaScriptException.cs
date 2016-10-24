@@ -1,7 +1,6 @@
 namespace ReactNative.Chakra
 {
     using System;
-    using System.Runtime.Serialization;
 
     /// <summary>
     ///     An exception returned from the Chakra engine.

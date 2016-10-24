@@ -13,8 +13,6 @@ namespace ReactNative.Views.Text
     /// </summary>
     public class ReactSpanViewManager : ReactTextInlineViewManager<Span, ReactSpanShadowNode>, IViewParentManager
     {
-        private const double DefaultFontSize = 15;
-
         /// <summary>
         /// The view manager name.
         /// </summary>
