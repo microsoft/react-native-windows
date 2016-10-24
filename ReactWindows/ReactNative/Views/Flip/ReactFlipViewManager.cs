@@ -92,6 +92,7 @@ namespace ReactNative.Views.Flip
 
         public override void OnDropViewInstance(ThemedReactContext reactContext, FlipView view)
         {
+            base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
         }
 
@@ -116,6 +117,7 @@ namespace ReactNative.Views.Flip
 
         protected override void AddEventEmitters(ThemedReactContext reactContext, FlipView view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.SelectionChanged += OnSelectionChanged;
         }
 

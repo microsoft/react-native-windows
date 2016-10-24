@@ -188,6 +188,20 @@ namespace ReactNative.UIManager
                         { "registrationName", "onLayout" },
                     }
                 },
+                {
+                    "topMouseOver",
+                    new Map
+                    {
+                        { "registrationName", "onMouseOver" },
+                    }
+                },
+                {
+                    "topMouseOut",
+                    new Map
+                    {
+                        { "registrationName", "onMouseOut" },
+                    }
+                },
             };
         }
 

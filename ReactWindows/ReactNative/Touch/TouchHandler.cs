@@ -42,6 +42,30 @@ namespace ReactNative.Touch
             _view.PointerCaptureLost -= OnPointerCaptureLost;
         }
 
+        public static void OnPointerEntered(DependencyObject view, PointerRoutedEventArgs e)
+        {
+            if (ShouldSendEnterLeaveEvent(view))
+            {
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
+            }
+        }
+
+        public static void OnPointerExited(DependencyObject view, PointerRoutedEventArgs e)
+        {
+            if (ShouldSendEnterLeaveEvent(view))
+            {
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
+            }
+        }
+
         private void OnPointerPressed(object sender, PointerRoutedEventArgs e)
         {
             var pointerId = e.Pointer.PointerId;
@@ -255,6 +279,28 @@ namespace ReactNative.Touch
             return isBoxOnly;
         }
 
+        private static bool ShouldSendEnterLeaveEvent(DependencyObject view)
+        {
+            // If the target is not a child of the root view, then this pointer
+            // event does not belong to React.
+            if (!RootViewHelper.IsReactSubview(view))
+            {
+                return false;
+            }
+
+            var viewHierarchy = RootViewHelper.GetReactViewHierarchy(view);
+            foreach (var ancestor in viewHierarchy)
+            {
+                var pointerEvents = ancestor.GetPointerEvents();
+                if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private static Point AdjustPointForStatusBar(Point point)
         {
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
@@ -312,6 +358,42 @@ namespace ReactNative.Touch
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
                 eventEmitter.receiveTouches(EventName, _touches, _changedIndices);
+            }
+        }
+
+        class PointerEnterExitEvent : Event
+        {
+            private readonly TouchEventType _touchEventType;
+
+            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag) 
+                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            {
+                _touchEventType = touchEventType;
+            }
+
+            public override string EventName
+            {
+                get
+                {
+                    return _touchEventType.GetJavaScriptEventName();
+                }
+            }
+
+            public override bool CanCoalesce
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                eventEmitter.receiveEvent(ViewTag, EventName, new JObject
+                {
+                    { "target", ViewTag },
+                });
+
             }
         }
 

@@ -59,10 +59,9 @@ namespace ReactNative.UIManager
                     yield break;
                 }
 
-                var uiElement = current as UIElement;
-                if (uiElement != null && uiElement.HasTag())
+                if (current.HasTag())
                 {
-                    yield return uiElement;
+                    yield return current;
                 }
 
                 current = GetParent(current, false);
