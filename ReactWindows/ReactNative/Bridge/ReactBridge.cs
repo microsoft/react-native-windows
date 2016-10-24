@@ -111,21 +111,21 @@ namespace ReactNative.Bridge
                 return;
             }
 
-            var moduleIds = messages[0].ToObject<int[]>();
-            var methodIds = messages[1].ToObject<int[]>();
+            var moduleIds = (JArray)messages[0];
+            var methodIds = (JArray)messages[1];
             var paramsArray = messages[2] as JArray;
             if (moduleIds == null || methodIds == null || paramsArray == null ||
-                moduleIds.Length != methodIds.Length || moduleIds.Length != paramsArray.Count)
+                moduleIds.Count != methodIds.Count || moduleIds.Count != paramsArray.Count)
             {
                 throw new InvalidOperationException("Unexpected React batch response.");
             }
 
             _nativeModulesQueueThread.RunOnQueue(() =>
             {
-                for (var i = 0; i < moduleIds.Length; ++i)
+                for (var i = 0; i < moduleIds.Count; ++i)
                 {
-                    var moduleId = moduleIds[i];
-                    var methodId = methodIds[i];
+                    var moduleId = moduleIds[i].Value<int>();
+                    var methodId = methodIds[i].Value<int>();
                     var args = (JArray)paramsArray[i];
 
                     _reactCallback.Invoke(moduleId, methodId, args);
@@ -134,5 +134,7 @@ namespace ReactNative.Bridge
                 _reactCallback.OnBatchComplete();
             });
         }
+
+
     }
 }
