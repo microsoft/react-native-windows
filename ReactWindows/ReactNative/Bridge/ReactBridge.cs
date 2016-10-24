@@ -3,6 +3,7 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Common;
 using ReactNative.Tracing;
 using System;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -107,8 +108,14 @@ namespace ReactNative.Bridge
             var messages = response as JArray;
             if (messages == null)
             {
-                Tracer.Write(ReactConstants.Tag, "Empty JavaScript Queue");
-                return;
+                throw new InvalidOperationException(
+                    "Did not get valid calls back from JavaScript. Message type: " + response.Type);
+            }
+
+            if (messages.Count < 3)
+            {
+                throw new InvalidOperationException(
+                    "Did not get valid calls back from JavaScript. Message count: " + messages.Count);
             }
 
             var moduleIds = messages[0] as JArray;
@@ -117,7 +124,8 @@ namespace ReactNative.Bridge
             if (moduleIds == null || methodIds == null || paramsArray == null ||
                 moduleIds.Count != methodIds.Count || moduleIds.Count != paramsArray.Count)
             {
-                throw new InvalidOperationException("Unexpected React batch response.");
+                throw new InvalidOperationException(
+                    "Did not get valid calls back from JavaScript. JSON: " + response);
             }
 
             _nativeModulesQueueThread.RunOnQueue(() =>
@@ -134,7 +142,5 @@ namespace ReactNative.Bridge
                 _reactCallback.OnBatchComplete();
             });
         }
-
-
     }
 }
