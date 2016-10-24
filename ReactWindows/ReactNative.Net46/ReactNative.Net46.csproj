@@ -123,7 +123,7 @@
     </Compile>
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
-    <Compile Include="Modules\Storage\AyncStorageModule.cs" />
+    <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />

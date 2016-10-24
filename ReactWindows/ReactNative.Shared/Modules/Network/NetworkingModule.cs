@@ -257,8 +257,8 @@ namespace ReactNative.Modules.Network
 #else
             var storageFile = await FileSystem.Current.GetFileFromPathAsync(uri.ToString()).ConfigureAwait(false);
             var input = await storageFile.ReadAllTextAsync().ConfigureAwait(false);
-            byte[] byteArray = Encoding.UTF8.GetBytes(input);
-            MemoryStream inputStream = new MemoryStream(byteArray);
+            var byteArray = Encoding.UTF8.GetBytes(input);
+            var inputStream = new MemoryStream(byteArray);
 #endif
             request.Content = new HttpStreamContent(inputStream);
             await ProcessRequestAsync(
@@ -293,16 +293,17 @@ namespace ReactNative.Modules.Network
 
                         if (useIncrementalUpdates && responseType == "text")
                         {
-                            var length = response.Content.Headers.ContentLength;
 #if WINDOWS_UWP
+                            var length = response.Content.Headers.ContentLength;
                             var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false);
                             var stream = inputStream.AsStreamForRead();
 #else
+                            var length = (ulong?)response.Content.Headers.ContentLength;
                             var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
                             using (stream)
                             {
-                                await ProcessResponseIncrementalAsync(requestId, stream, (ulong)length, timeoutSource.Token).ConfigureAwait(false);
+                                await ProcessResponseIncrementalAsync(requestId, stream, length, timeoutSource.Token).ConfigureAwait(false);
                                 OnRequestSuccess(requestId);
                             }
 #if WINDOWS_UWP
@@ -392,20 +393,22 @@ namespace ReactNative.Modules.Network
         {
             var headerData = new JObject();
 #if WINDOWS_UWP
-            TranslateHeaders(headerData, response.Headers);
+            var responseHeaders = response.Headers;
 #else
-            IDictionary<string, string> headers = response.Headers.ToDictionary((kvp) => kvp.Key, (kvp) => kvp.Value.ToString());
-            TranslateHeaders(headerData, headers);
+            var responseHeaders = response.Headers.Select(pair => 
+                new KeyValuePair<string, string>(pair.Key, string.Join(", ", pair.Value)));
 #endif
+            TranslateHeaders(headerData, responseHeaders);
 
             if (response.Content != null)
             {
 #if WINDOWS_UWP
-                TranslateHeaders(headerData, response.Content.Headers);
+                var responseContentHeaders = response.Content.Headers;
 #else
-                IDictionary<string, string> contentHeaders = response.Content.Headers.ToDictionary((kvp) => kvp.Key, (kvp) => kvp.Value.ToString());
-                TranslateHeaders(headerData, contentHeaders);
+                var responseContentHeaders = response.Content.Headers.Select(pair => 
+                    new KeyValuePair<string, string>(pair.Key, string.Join(", ", pair.Value)));
 #endif
+                TranslateHeaders(headerData, responseContentHeaders);
             }
 
             var args = new JArray
@@ -478,7 +481,7 @@ namespace ReactNative.Modules.Network
             }
         }
 
-        private static void TranslateHeaders(JObject headerData, IDictionary<string, string> headers)
+        private static void TranslateHeaders(JObject headerData, IEnumerable<KeyValuePair<string, string>> headers)
         {
             foreach (var header in headers)
             {

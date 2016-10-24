@@ -5,7 +5,6 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Text;

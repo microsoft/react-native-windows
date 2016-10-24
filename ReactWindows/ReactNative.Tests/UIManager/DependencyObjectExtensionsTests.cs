@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using System;
 using Windows.UI.Xaml.Controls;

@@ -101,8 +101,6 @@
     <Compile Include="Animated\PropsAnimatedNode.cs" />
     <Compile Include="Animated\StyleAnimatedNode.cs" />
     <Compile Include="Animated\TransformAnimatedNode.cs" />
-    <Compile Include="Bridge\BridgeBusyEventArgs.cs" />
-    <Compile Include="Bridge\BridgeIdleEventArgs.cs" />
     <Compile Include="Bridge\ReactInstance.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\JavaScriptBundleLoader.cs" />
@@ -201,10 +199,10 @@
     <Compile Include="Views\Switch\ReactSwitchShadowNode.cs" />
     <Compile Include="Views\Text\ReactRunShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineShadowNode.cs" />
-    <Compile Include="Views\Text\ReactInlineViewManager.cs" />
     <Compile Include="Views\Text\ReactSpanShadowNode.cs" />
     <Compile Include="Views\Text\ReactInlineShadowNodeVisitor.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
+    <Compile Include="Views\Text\ReactTextInlineViewManager.cs" />
     <Compile Include="Views\Text\ReactRunManager.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
