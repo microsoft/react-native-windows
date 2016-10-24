@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Tracing\NullLoggingActivityBuilder.cs" />
     <Compile Include="Tracing\Tracer.cs" />
+    <Compile Include="UIManager\BaseViewManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
