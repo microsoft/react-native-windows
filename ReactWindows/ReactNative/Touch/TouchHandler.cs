@@ -389,11 +389,27 @@ namespace ReactNative.Touch
 
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
-                eventEmitter.receiveEvent(ViewTag, EventName, new JObject
+                var eventData = new JObject
                 {
                     { "target", ViewTag },
-                });
+                };
 
+                var enterLeaveEventName = default(string);
+                if (_touchEventType == TouchEventType.Entered)
+                {
+                    enterLeaveEventName = "topMouseEnter";
+                }
+                else if (_touchEventType == TouchEventType.Exited)
+                {
+                    enterLeaveEventName = "topMouseLeave";
+                }
+               
+                if (enterLeaveEventName != null)
+                {
+                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
+                }
+
+                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
             }
         }
 

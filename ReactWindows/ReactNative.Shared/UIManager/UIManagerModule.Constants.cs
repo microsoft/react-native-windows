@@ -146,6 +146,34 @@ namespace ReactNative.UIManager
                         }
                     }
                 },
+                {
+                    TouchEventType.Entered.GetJavaScriptEventName(),
+                    new Map
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Map
+                            {
+                                { "bubbled", "onMouseOver" },
+                                { "captured", "onMouseOverCapture" },
+                            }
+                        }
+                    }
+                },
+                {
+                    TouchEventType.Exited.GetJavaScriptEventName(),
+                    new Map
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Map
+                            {
+                                { "bubbled", "onMouseOut" },
+                                { "captured", "onMouseOutCapture" },
+                            }
+                        }
+                    }
+                },
             };
         }
 
@@ -189,17 +217,17 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
-                    "topMouseOver",
+                    "topMouseEnter",
                     new Map
                     {
-                        { "registrationName", "onMouseOver" },
+                        { "registrationName", "onMouseEnter" },
                     }
                 },
                 {
-                    "topMouseOut",
+                    "topMouseLeave",
                     new Map
                     {
-                        { "registrationName", "onMouseOut" },
+                        { "registrationName", "onMouseLeave" },
                     }
                 },
             };
