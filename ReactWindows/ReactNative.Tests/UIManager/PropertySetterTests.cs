@@ -4,7 +4,6 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Windows.UI.Xaml;

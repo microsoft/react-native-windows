@@ -6,7 +6,7 @@ using static System.FormattableString;
 
 namespace ReactNative.Reflection
 {
-    static partial class EnumHelpers
+    static class EnumHelpers
     {
         private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>> s_enumCache =
             new ConcurrentDictionary<Type, IReadOnlyDictionary<string, object>>();

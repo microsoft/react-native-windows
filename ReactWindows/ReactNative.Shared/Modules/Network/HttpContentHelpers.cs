@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
 #if WINDOWS_UWP
 using Windows.Web.Http;

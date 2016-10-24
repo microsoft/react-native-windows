@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
