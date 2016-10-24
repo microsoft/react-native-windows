@@ -111,8 +111,8 @@ namespace ReactNative.Bridge
                 return;
             }
 
-            var moduleIds = (JArray)messages[0];
-            var methodIds = (JArray)messages[1];
+            var moduleIds = messages[0] as JArray;
+            var methodIds = messages[1] as JArray;
             var paramsArray = messages[2] as JArray;
             if (moduleIds == null || methodIds == null || paramsArray == null ||
                 moduleIds.Count != methodIds.Count || moduleIds.Count != paramsArray.Count)
