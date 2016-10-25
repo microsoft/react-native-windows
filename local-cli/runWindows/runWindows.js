@@ -14,7 +14,7 @@ function runWindows(config, args, options) {
 
   const slnFile = build.getSolutionFile(options);
   if (!slnFile) {
-    console.error(chalk.red('Visual Studio Solution file not found. Maybe run "rnpm windows" first?'));
+    console.error(chalk.red('Visual Studio Solution file not found. Maybe run "react-native windows" first?'));
     return;
   }
 
