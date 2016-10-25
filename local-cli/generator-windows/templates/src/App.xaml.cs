@@ -1,4 +1,5 @@
 ﻿using ReactNative;
+using ReactNative.Modules.Launch;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
