@@ -6,26 +6,16 @@ using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestFixture, RequiresSTA]
+    [TestFixture, Apartment(ApartmentState.STA)]
     public class UIManagerModuleTests
     {
-        [SetUp]
-        public void doSetup()
-        {
-            if (Application.Current == null)
-            {
-                new Application
-                {
-                    ShutdownMode = ShutdownMode.OnExplicitShutdown
-                }.Run();
-            }
-            new Window().Show();
-        }
 
         [Test]
         public void UIManagerModule_ArgumentChecks()
@@ -35,11 +25,11 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementation));
+                () => new UIManagerModule(context, null, uiImplementation, new FrameworkElement()));
             Assert.AreEqual("viewManagers", ex1.ParamName);
 
             ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, viewManagers, null));
+                () => new UIManagerModule(context, viewManagers, null, new FrameworkElement()));
             Assert.AreEqual("uiImplementation", ex2.ParamName);
         }
 
@@ -51,7 +41,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation));
+                () => new UIManagerModule(context, viewManagers, uiImplementation, new FrameworkElement()));
 
             var constants = module.Constants;
 
@@ -81,7 +71,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation));
+                () => new UIManagerModule(context, viewManagers, uiImplementation, new FrameworkElement()));
 
             var constants = module.Constants;
 

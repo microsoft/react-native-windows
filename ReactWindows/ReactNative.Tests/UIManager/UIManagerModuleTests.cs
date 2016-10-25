@@ -5,13 +5,14 @@ using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI.ViewManagement;
 
 namespace ReactNative.Tests.UIManager
 {
     [TestClass]
     public class UIManagerModuleTests
     {
-        [TestMethod]
+        [TestMethod, STAThread]
         public void UIManagerModule_ArgumentChecks()
         {
             var context = new ReactContext();
@@ -19,15 +20,15 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             AssertEx.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementation),
+                () => new UIManagerModule(context, null, uiImplementation, ApplicationView.GetForCurrentView()),
                 ex => Assert.AreEqual("viewManagers", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, viewManagers, null),
+                () => new UIManagerModule(context, viewManagers, null, ApplicationView.GetForCurrentView()),
                 ex => Assert.AreEqual("uiImplementation", ex.ParamName));
         }
 
-        [TestMethod]
+        [TestMethod, STAThread]
         public async Task UIManagerModule_CustomEvents_Constants()
         {
             var context = new ReactContext();
@@ -35,7 +36,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation));
+                () => new UIManagerModule(context, viewManagers, uiImplementation, ApplicationView.GetForCurrentView()));
 
             var constants = module.Constants;
 
@@ -57,7 +58,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("onLayout", constants.GetMap("customDirectEventTypes").GetMap("topLayout").GetValue("registrationName"));
         }
 
-        [TestMethod]
+        [TestMethod, STAThread]
         public async Task UIManagerModule_Constants_ViewManagerOverrides()
         {
             var context = new ReactContext();
@@ -65,7 +66,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation));
+                () => new UIManagerModule(context, viewManagers, uiImplementation, ApplicationView.GetForCurrentView()));
 
             var constants = module.Constants;
 
