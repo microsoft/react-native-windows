@@ -6,6 +6,13 @@ namespace ReactNative.Tests
 {
     class MockJavaScriptExecutor : IJavaScriptExecutor
     {
+        private static readonly Action EmptyAction = () => { };
+        private static readonly Action<string, string> EmptyRunScript = (_, __) => { };
+        private static readonly Action<string, JToken> EmptySetGlobalVariable = (_, __) => { };
+        private static readonly Func<string, string, JArray, JToken> EmptyCallFunctionReturnFlushedQueue = (_, __, ___) => { throw new NotImplementedException(); };
+        private static readonly Func<int, JArray, JToken> EmptyInvokeCallbackAndReturnFlushedQueue = (_, __) => { throw new NotImplementedException(); };
+        private static readonly Func<JToken> EmptyFlushQueue = () => { throw new NotImplementedException(); };
+
         public Func<string, string, JArray, JToken> OnCallFunctionReturnFlushedQueue { get; set; } = EmptyCallFunctionReturnFlushedQueue;
         public Func<int, JArray, JToken> OnInvokeCallbackAndReturnFlushedQueue { get; set; } = EmptyInvokeCallbackAndReturnFlushedQueue;
         public Func<JToken> OnFlushQueue { get; set; } = EmptyFlushQueue;
@@ -13,13 +20,6 @@ namespace ReactNative.Tests
         public Action<string, string> OnRunScript { get; set; } = EmptyRunScript;
         public Action<string, JToken> OnSetGlobalVariable { get; set; } = EmptySetGlobalVariable;
         public Action OnDispose { get; set; } = EmptyAction;
-
-        private static readonly Action EmptyAction = () => { };
-        private static readonly Action<string, string> EmptyRunScript = (_, __) => { };
-        private static readonly Action<string, JToken> EmptySetGlobalVariable = (_, __) => { };
-        private static readonly Func<string, string, JArray, JToken> EmptyCallFunctionReturnFlushedQueue = (_, __, ___) => { throw new NotImplementedException(); };
-        private static readonly Func<int, JArray, JToken> EmptyInvokeCallbackAndReturnFlushedQueue = (_, __) => { throw new NotImplementedException(); };
-        private static readonly Func<JToken> EmptyFlushQueue = () => { throw new NotImplementedException(); };
 
         public void Initialize() { }
 

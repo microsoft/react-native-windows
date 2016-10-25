@@ -3,7 +3,6 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
 using System.Collections.Generic;
-using static System.FormattableString;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Storage;
@@ -64,7 +63,7 @@ namespace ReactNative.Tests
                 var assembly = Assembly.GetAssembly(typeof(JavaScriptHelpers));
                 var assemblyName = assembly.GetName();
                 var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
-                if (pathToAssembly == null) throw new FileNotFoundException(Invariant($"Could not get directory name for code base of '{assemblyName}'."));
+                if (pathToAssembly == null) throw new FileNotFoundException($"Could not get directory name for code base of '{assemblyName}'.");
                 var pathToAssemblyResource = Path.Combine(pathToAssembly, uri);
 
                 var u = new Uri(pathToAssemblyResource);

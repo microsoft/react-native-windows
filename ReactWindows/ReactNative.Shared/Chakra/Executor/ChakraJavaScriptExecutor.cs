@@ -163,7 +163,7 @@ namespace ReactNative.Chakra.Executor
             }
             catch (Exception ex)
             {
-                var exceptionMessage = $"File read exception for asset '{fileName}'.";
+                var exceptionMessage = Invariant($"File read exception for asset '{fileName}'.");
                 throw new InvalidOperationException(exceptionMessage, ex);
             }
         }
