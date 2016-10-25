@@ -107,6 +107,11 @@ namespace ReactNative.Bridge
 
         private void ProcessResponse(JToken response)
         {
+            if (response == null || response.Type == JTokenType.Null || response.Type == JTokenType.Undefined)
+            {
+                return;
+            }
+
             var messages = response as JArray;
             if (messages == null)
             {
