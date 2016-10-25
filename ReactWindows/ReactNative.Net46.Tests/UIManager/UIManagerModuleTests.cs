@@ -1,12 +1,10 @@
 ﻿using NMock;
 using NUnit.Framework;
-using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
