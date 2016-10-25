@@ -22,9 +22,9 @@ namespace ReactNative.Touch
             _view = view;
             _pointers = new List<ReactPointer>();
 
-            _view.MouseDown += OnPointerPressed;
-            _view.MouseMove += OnPointerMoved;
-            _view.MouseUp += OnPointerReleased;
+            _view.MouseDown += OnMouseDown;
+            _view.MouseMove += OnMouseMove;
+            _view.MouseUp += OnMouseUp;
             _view.TouchDown += OnTouchPressed;
             _view.TouchMove += OnTouchMoved;
             _view.TouchUp += OnTouchReleased;
@@ -32,9 +32,9 @@ namespace ReactNative.Touch
 
         public void Dispose()
         {
-            _view.MouseDown -= OnPointerPressed;
-            _view.MouseMove -= OnPointerMoved;
-            _view.MouseUp -= OnPointerReleased;
+            _view.MouseDown -= OnMouseDown;
+            _view.MouseMove -= OnMouseMove;
+            _view.MouseUp -= OnMouseUp;
             _view.TouchDown -= OnTouchPressed;
             _view.TouchMove -= OnTouchMoved;
             _view.TouchUp -= OnTouchReleased;
@@ -51,7 +51,7 @@ namespace ReactNative.Touch
                 var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint);
                 var pointer = new ReactPointer();
                 pointer.Target = reactTag;
-                pointer.PointerId = (uint)e.Device.GetHashCode();
+                pointer.PointerId = (uint)rootPoint.TouchDevice.Id;
                 pointer.Identifier = ++_pointerIDs;
                 pointer.PointerType = "touch";
                 pointer.IsLeftButton = false;
@@ -68,7 +68,7 @@ namespace ReactNative.Touch
             }
         }
 
-        private void OnPointerPressed(object sender, MouseButtonEventArgs e)
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             var originalSource = e.OriginalSource as DependencyObject;
             var rootPoint = e.GetPosition(_view);
@@ -81,7 +81,7 @@ namespace ReactNative.Touch
                 pointer.Target = reactTag;
                 pointer.PointerId = (uint)e.Device.GetHashCode();
                 pointer.Identifier = ++_pointerIDs;
-                pointer.PointerType = "M";
+                pointer.PointerType = "mouse";
                 pointer.IsLeftButton = e.LeftButton == MouseButtonState.Pressed;
                 pointer.IsRightButton = e.RightButton == MouseButtonState.Pressed;
                 pointer.IsMiddleButton = e.MiddleButton == MouseButtonState.Pressed;
@@ -107,7 +107,7 @@ namespace ReactNative.Touch
             }
         }
 
-        private void OnPointerMoved(object sender, MouseEventArgs e)
+        private void OnMouseMove(object sender, MouseEventArgs e)
         {
             var pointerIndex = 1;
             if (pointerIndex != -1)
@@ -123,7 +123,7 @@ namespace ReactNative.Touch
             OnTouchConcluded(TouchEventType.End, e);
         }
 
-        private void OnPointerReleased(object sender, MouseButtonEventArgs e)
+        private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
             OnPointerConcluded(TouchEventType.End, e);
         }
@@ -204,7 +204,19 @@ namespace ReactNative.Touch
                 _view,
                 null,
                 new HitTestResultCallback(
-                    (HitTestResult hit) => {
+                    hit =>
+                    {
+                        var source = hit.VisualHit;
+                        if (!source.HasTag())
+                        {
+                            return HitTestResultBehavior.Continue;
+                        }
+                        var pointerEvents = source.GetPointerEvents();
+                        if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
+                        {
+                            return HitTestResultBehavior.Continue;
+                        }
+
                         sources.Add(hit.VisualHit);
                         return HitTestResultBehavior.Continue;
                     }),
@@ -218,17 +230,6 @@ namespace ReactNative.Touch
             var isBoxOnlyCache = new Dictionary<DependencyObject, bool>();
             foreach (var source in sources)
             {
-                if (!source.HasTag())
-                {
-                    continue;
-                }
-
-                var pointerEvents = source.GetPointerEvents();
-                if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
-                {
-                    continue;
-                }
-
                 var viewHierarchy = RootViewHelper.GetReactViewHierarchy(source);
                 var isBoxOnly = IsBoxOnlyWithCache(viewHierarchy, isBoxOnlyCache);
                 if (!isBoxOnly)
