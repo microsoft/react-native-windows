@@ -13,7 +13,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 #endif
 using static System.FormattableString;
@@ -458,15 +457,15 @@ namespace ReactNative.UIManager
             var target = VisualTreeHelper.FindElementsInHostCoordinates(new Point(touchX, touchY), uiElement)
 #else
             var sources = new List<DependencyObject>();
+            // ToDo: Consider a pooled structure to improve performance in touch heavy applications
             VisualTreeHelper.HitTest(
                 uiElement,
                 null,
-                new HitTestResultCallback(
-                    (HitTestResult hit) =>
-                    {
-                        sources.Add(hit.VisualHit);
-                        return HitTestResultBehavior.Continue;
-                    }),
+                hit =>
+                {
+                    sources.Add(hit.VisualHit);
+                    return HitTestResultBehavior.Continue;
+                },
                 new PointHitTestParameters(new Point(touchX, touchY)));
             var target = sources
 #endif
