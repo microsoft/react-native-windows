@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Disposables;
 
 namespace ReactNative.Tracing
 {
@@ -13,20 +14,12 @@ namespace ReactNative.Tracing
         /// <returns>An empty disposable object.</returns>
         public IDisposable Start()
         {
-            return new NullDisposable();
+            return Disposable.Empty;
         }
 
-        public NullDisposable Create()
+        public IDisposable Create()
         {
-            return new NullDisposable();
-        }
-        
-        public class NullDisposable : IDisposable
-        {
-            public void Dispose()
-            {
-
-            }
+            return Disposable.Empty;
         }
     }
 }

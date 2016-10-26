@@ -1,10 +1,7 @@
-﻿using NMock;
-using NUnit.Framework;
-using Newtonsoft.Json.Linq;
+﻿using NUnit.Framework;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace ReactNative.Tests.UIManager
 {

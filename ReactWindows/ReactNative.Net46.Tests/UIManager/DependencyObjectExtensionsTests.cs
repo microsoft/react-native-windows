@@ -1,13 +1,12 @@
-﻿using NMock;
-using NUnit.Framework;
-using ReactNative.Bridge;
+﻿using NUnit.Framework;
 using ReactNative.UIManager;
 using System;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestFixture, RequiresSTA]
+    [TestFixture, Apartment(ApartmentState.STA)]
     public class DependencyObjectExtensionsTests
     {
         [Test]

@@ -12,7 +12,7 @@ namespace ReactNative.Tests.UIManager
     [TestClass]
     public class UIManagerModuleTests
     {
-        [TestMethod, STAThread]
+        [TestMethod]
         public void UIManagerModule_ArgumentChecks()
         {
             var context = new ReactContext();

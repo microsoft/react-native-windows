@@ -1,5 +1,4 @@
-﻿using NMock;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ReactNative.UIManager;
 
 namespace ReactNative.Tests.UIManager

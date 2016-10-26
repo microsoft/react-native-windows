@@ -5,11 +5,12 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 
 #if WINDOWS_UWP
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
+#else
+using System.Windows;
 #endif
 
 namespace ReactNative.UIManager
@@ -43,7 +44,11 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="uiImplementation">The UI implementation.</param>
-        /// <param name="window">The ApplicationView/Framework Element.</param>
+#if WINDOWS_UWP
+        /// <param name="window">The ApplicationView.</param>
+#else
+        /// <param name="window">The Framework Element.</param>
+#endif
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
@@ -524,9 +529,9 @@ namespace ReactNative.UIManager
             _eventDispatcher.OnReactInstanceDispose();
         }
 
-        #endregion
+#endregion
 
-        #region Dimensions
+#region Dimensions
 #if WINDOWS_UWP
         private void OnBoundsChanged(ApplicationView sender, object args)
 #else
