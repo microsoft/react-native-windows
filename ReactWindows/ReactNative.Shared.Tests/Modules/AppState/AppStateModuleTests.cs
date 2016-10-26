@@ -1,6 +1,5 @@
-﻿using NMock;
+﻿using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Core;
