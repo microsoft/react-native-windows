@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.Storage;
+#else
+using PCLStorage;
+#endif
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
@@ -86,7 +90,11 @@ namespace ReactNative.Bridge
             {
                 try
                 {
+#if WINDOWS_UWP
                     var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask().ConfigureAwait(false);
+#else
+                    var storageFile = await FileSystem.Current.GetFileFromPathAsync(SourceUrl).ConfigureAwait(false);
+#endif
                     _script = storageFile.Path;
                 }
                 catch (Exception ex)
@@ -127,8 +135,12 @@ namespace ReactNative.Bridge
             {
                 try
                 {
+#if WINDOWS_UWP
                     var localFolder = ApplicationData.Current.LocalFolder;
                     var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).AsTask().ConfigureAwait(false);
+#else
+                    var storageFile = await FileSystem.Current.GetFileFromPathAsync(_cachedFileLocation).ConfigureAwait(false);
+#endif
                     _script = storageFile.Path;
                 }
                 catch (Exception ex)
