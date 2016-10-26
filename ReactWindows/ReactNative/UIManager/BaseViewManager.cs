@@ -16,7 +16,8 @@ namespace ReactNative.UIManager
     /// </summary>
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>
     /// <typeparam name="TLayoutShadowNode">Type of shadow node.</typeparam>
-    public abstract class BaseViewManager<TFrameworkElement, TLayoutShadowNode> : ViewManager<TFrameworkElement, TLayoutShadowNode>
+    public abstract class BaseViewManager<TFrameworkElement, TLayoutShadowNode> :
+            ViewManager<TFrameworkElement, TLayoutShadowNode>
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
