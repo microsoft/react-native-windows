@@ -113,10 +113,6 @@
     <Compile Include="Internal\MockViewManager.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModuleTests.cs" />
     <Compile Include="Modules\Clipboard\MockClipboardInstance.cs" />
-    <Compile Include="Modules\Core\JSTimersExecutionTests.cs" />
-    <Compile Include="Modules\Core\RCTDeviceEventEmitterTests.cs" />
-    <Compile Include="Modules\Core\RCTNativeAppEventEmitterTests.cs" />
-    <Compile Include="Modules\Core\TimingTests.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModuleTests.cs" />
     <Compile Include="Modules\Network\NetworkingModuleTests.cs" />
     <Compile Include="Modules\Network\TaskCancellationManagerTests.cs" />

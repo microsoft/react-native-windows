@@ -18,5 +18,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersExecutionTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTNativeAppEventEmitterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\TimingTests.cs" />
   </ItemGroup>
 </Project>
