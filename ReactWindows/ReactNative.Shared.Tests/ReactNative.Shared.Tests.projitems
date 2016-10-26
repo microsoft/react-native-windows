@@ -16,7 +16,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockPromise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersExecutionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitterTests.cs" />
