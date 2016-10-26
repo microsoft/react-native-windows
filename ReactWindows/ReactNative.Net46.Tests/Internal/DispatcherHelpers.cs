@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
+using NUnit.Framework;
 
 namespace ReactNative.Tests
 {
@@ -23,6 +24,7 @@ namespace ReactNative.Tests
             }
         }
 
+        [Apartment(ApartmentState.STA)]
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
         {
             var tcs = new TaskCompletionSource<T>();
