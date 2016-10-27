@@ -17,6 +17,10 @@ namespace ReactNative.Tracing
             return Disposable.Empty;
         }
 
+        /// <summary>
+        /// Dummy method to satisfy interface requirements.
+        /// </summary>
+        /// <returns>An empty disposable object.</returns>
         public IDisposable Create()
         {
             return Disposable.Empty;
