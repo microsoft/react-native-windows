@@ -133,6 +133,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
+    <Compile Include="Bridge\JavaScriptModuleRegistryMockTests.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
     <Compile Include="Internal\DispatcherHelpers.cs" />
     <Compile Include="Internal\MockInvocationHandler.cs" />
