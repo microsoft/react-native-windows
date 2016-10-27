@@ -2,10 +2,8 @@
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
 #else
-using System.Globalization;
-using System;
 using System.Configuration;
-using static System.FormattableString;
+using System.Globalization;
 #endif
 
 namespace ReactNative.Modules.I18N
