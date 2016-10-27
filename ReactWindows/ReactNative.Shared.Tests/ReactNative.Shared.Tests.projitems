@@ -26,5 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTNativeAppEventEmitterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\TimingTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModuleTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManagerTests.cs" />
   </ItemGroup>
 </Project>
