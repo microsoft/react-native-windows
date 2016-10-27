@@ -20,11 +20,11 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             AssertEx.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementation, ApplicationView.GetForCurrentView()),
+                () => new UIManagerModule(context, null, uiImplementation),
                 ex => Assert.AreEqual("viewManagers", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, viewManagers, null, ApplicationView.GetForCurrentView()),
+                () => new UIManagerModule(context, viewManagers, null),
                 ex => Assert.AreEqual("uiImplementation", ex.ParamName));
         }
 
@@ -36,7 +36,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation, ApplicationView.GetForCurrentView()));
+                () => new UIManagerModule(context, viewManagers, uiImplementation));
 
             var constants = module.Constants;
 
@@ -66,7 +66,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementation = new UIImplementation(context, viewManagers);
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation, ApplicationView.GetForCurrentView()));
+                () => new UIManagerModule(context, viewManagers, uiImplementation));
 
             var constants = module.Constants;
 

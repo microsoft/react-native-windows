@@ -45,8 +45,7 @@ namespace ReactNative
                     viewManagerList,
                     _uiImplementationProvider.Create(
                         reactContext, 
-                        viewManagerList),
-                    ApplicationView.GetForCurrentView());
+                        viewManagerList));
             }
 
             return new List<INativeModule>
