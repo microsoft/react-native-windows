@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
+using NUnit.Framework;
 
 namespace ReactNative.Tests
 {
@@ -23,6 +24,8 @@ namespace ReactNative.Tests
             }
         }
 
+        // Single thread apartment attribute for sake of being able to access UI elements on the same thread they're created from
+        [Apartment(ApartmentState.STA)]
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
         {
             var tcs = new TaskCompletionSource<T>();

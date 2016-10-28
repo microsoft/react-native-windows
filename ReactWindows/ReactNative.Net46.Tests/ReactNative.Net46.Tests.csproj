@@ -136,12 +136,24 @@
     <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="Bridge\JavaScriptModuleRegistryMockTests.cs" />
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
+    <Compile Include="Internal\Constants\DictionaryHelpers.cs" />
     <Compile Include="Internal\DispatcherHelpers.cs" />
     <Compile Include="Internal\MockInvocationHandler.cs" />
     <Compile Include="Internal\MockPromise.cs" />
     <Compile Include="Internal\MockReactInstance.cs" />
+    <Compile Include="Internal\MockViewManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIManager\AppRegistryTests.cs" />
+    <Compile Include="UIManager\DependencyObjectExtensionsTests.cs" />
+    <Compile Include="UIManager\PropertySetterTests.cs" />
+    <Compile Include="UIManager\ReactStylesDiffMapTests.cs" />
+    <Compile Include="UIManager\RootViewHelperTests.cs" />
+    <Compile Include="UIManager\ShadowNodeRegistryTests.cs" />
+    <Compile Include="UIManager\UIManagerModuleTests.cs" />
+    <Compile Include="UIManager\ViewAtIndexTests.cs" />
+    <Compile Include="UIManager\ViewManagerRegistryTests.cs" />
+    <Compile Include="UIManager\ViewManagersPropertyCacheTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -155,7 +167,19 @@
       <Name>ReactNative.Net46</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\test.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <ChakraCoreDll Include="$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ChakraCoreDll)"
+          DestinationFolder="$(OutputPath)" 
+          ContinueOnError="false" />
+  </Target>
 </Project>

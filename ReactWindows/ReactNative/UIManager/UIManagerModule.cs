@@ -44,7 +44,7 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(viewManagers));
             if (uiImplementation == null)
                 throw new ArgumentNullException(nameof(uiImplementation));
-
+            
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementation;
             _moduleConstants = CreateConstants(viewManagers);
@@ -136,7 +136,7 @@ namespace ReactNative.UIManager
             return tag;
         }
 
-        #region React Methods
+#region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -430,9 +430,9 @@ namespace ReactNative.UIManager
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
-        #endregion
+#endregion
 
-        #region ILifecycleEventListenere
+#region ILifecycleEventListenere
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -463,9 +463,9 @@ namespace ReactNative.UIManager
             _eventDispatcher.OnDestroy();
         }
 
-        #endregion
+#endregion
 
-        #region IOnBatchCompleteListener
+#region IOnBatchCompleteListener
 
         /// <summary>
         /// To implement the transactional requirement, UI changes are only
@@ -484,9 +484,9 @@ namespace ReactNative.UIManager
             }
         }
 
-        #endregion
+#endregion
 
-        #region NativeModuleBase
+#region NativeModuleBase
 
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
@@ -496,10 +496,9 @@ namespace ReactNative.UIManager
             _eventDispatcher.OnReactInstanceDispose();
         }
 
-        #endregion
+#endregion
 
-        #region Dimensions
-
+#region Dimensions
         private void OnBoundsChanged(ApplicationView sender, object args)
         {
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
@@ -510,7 +509,7 @@ namespace ReactNative.UIManager
         {
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
             var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-
+            
             return new Dictionary<string, object>
             {
                 {
@@ -525,7 +524,6 @@ namespace ReactNative.UIManager
                 },
             };
         }
-
-        #endregion
+#endregion
     }
 }
