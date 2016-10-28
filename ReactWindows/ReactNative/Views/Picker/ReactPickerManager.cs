@@ -123,6 +123,7 @@ namespace ReactNative.Views.Picker
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ComboBox view)
         {
+            base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
         }
   
@@ -144,6 +145,7 @@ namespace ReactNative.Views.Picker
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ComboBox view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.SelectionChanged += OnSelectionChanged;
         }
 

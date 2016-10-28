@@ -157,6 +157,41 @@ namespace ReactNative.Tests.Bridge
         }
 
         [Test]
+        public void ReactBridge_ValidJavaScriptResponse()
+        {
+            var responses = new[]
+{
+                JToken.Parse("null"),
+                JToken.Parse("undefined"),
+                JArray.Parse("[[],[],[]]"),
+                JArray.Parse("[[1],[1],[[]]]"),
+                JArray.Parse("[[1],[1],[[1,2,3]], 42]"),
+            };
+
+            var n = responses.Length;
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var count = 0;
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) =>
+                    {
+                        return responses[count++];
+                    }
+                };
+
+                var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
+
+                for (var i = 0; i < n; ++i)
+                {
+                    bridge.CallFunction("module", "method", new JArray());
+                }
+
+                Assert.AreEqual(n, count);
+            }
+        }
+
+        [Test]
         public void ReactBridge_InvalidJavaScriptResponse()
         {
             var responses = new[]
@@ -167,6 +202,13 @@ namespace ReactNative.Tests.Bridge
                 JArray.Parse("[[42],[],[]]"),
                 JArray.Parse("[[],[42],[]]"),
                 JArray.Parse("[[],[],[42]]"),
+                JArray.Parse("[[42],[42],[]]"),
+                JArray.Parse("[[42],[42],[[],[]]]"),
+                JArray.Parse("[]"),
+                JArray.Parse("[[]]"),
+                JArray.Parse("[[],[]]"),
+                JObject.Parse("{}"),
+                JToken.Parse("0"),
             };
 
             var n = responses.Length;

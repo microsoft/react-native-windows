@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Media3D;
 
@@ -16,7 +18,8 @@ namespace ReactNative.UIManager
     /// </summary>
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>
     /// <typeparam name="TLayoutShadowNode">Type of shadow node.</typeparam>
-    public abstract class BaseViewManager<TFrameworkElement, TLayoutShadowNode> : ViewManager<TFrameworkElement, TLayoutShadowNode>
+    public abstract class BaseViewManager<TFrameworkElement, TLayoutShadowNode> :
+            ViewManager<TFrameworkElement, TLayoutShadowNode>
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
@@ -121,6 +124,53 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        /// <remarks>
+        /// Be sure to call this base class method to register for pointer 
+        /// entered and pointer exited events.
+        /// </remarks>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            view.PointerEntered -= OnPointerEntered;
+            view.PointerExited -= OnPointerExited;
+        }
+
+        /// <summary>
+        /// Subclasses can override this method to install custom event 
+        /// emitters on the given view.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view instance.</param>
+        /// <remarks>
+        /// Consider overriding this method if your view needs to emit events
+        /// besides basic touch events to JavaScript (e.g., scroll events).
+        /// 
+        /// Make sure you call the base implementation to ensure base pointer
+        /// event handlers are subscribed.
+        /// </remarks>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            view.PointerEntered += OnPointerEntered;
+            view.PointerExited += OnPointerExited;
+        }
+
+        private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            TouchHandler.OnPointerEntered(view, e);
+        }
+
+        private void OnPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            TouchHandler.OnPointerExited(view, e);
         }
 
         private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
