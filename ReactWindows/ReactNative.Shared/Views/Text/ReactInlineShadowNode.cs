@@ -1,6 +1,10 @@
 ﻿using ReactNative.UIManager;
 using System.Collections.Generic;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Documents;
+#else
+using System.Windows.Documents;
+#endif
 
 namespace ReactNative.Views.Text
 {
