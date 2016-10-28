@@ -83,6 +83,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DebugServerException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevInternalSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevServerHelper.cs" />
@@ -95,6 +96,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackFrameExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackTraceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactInstanceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IReactPackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptException.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
