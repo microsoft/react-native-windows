@@ -5,7 +5,6 @@ using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.UI.ViewManagement;
 
 namespace ReactNative.Tests.UIManager
 {
@@ -28,7 +27,7 @@ namespace ReactNative.Tests.UIManager
                 ex => Assert.AreEqual("uiImplementation", ex.ParamName));
         }
 
-        [TestMethod, STAThread]
+        [TestMethod]
         public async Task UIManagerModule_CustomEvents_Constants()
         {
             var context = new ReactContext();
@@ -58,7 +57,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("onLayout", constants.GetMap("customDirectEventTypes").GetMap("topLayout").GetValue("registrationName"));
         }
 
-        [TestMethod, STAThread]
+        [TestMethod]
         public async Task UIManagerModule_Constants_ViewManagerOverrides()
         {
             var context = new ReactContext();

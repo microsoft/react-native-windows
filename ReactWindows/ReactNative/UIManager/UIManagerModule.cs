@@ -5,7 +5,6 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
