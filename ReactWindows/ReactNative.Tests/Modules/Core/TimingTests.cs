@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.System.Threading;
 
 namespace ReactNative.Tests.Modules.Core
 {
-    [TestFixture]
+    [TestClass]
     public class TimingTests
     {
-        [Test]
+        [TestMethod]
         public async Task Timing_Create()
         {
             var ids = new List<int>();
@@ -36,7 +37,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_ManyTimers()
         {
             var count = 1000;
@@ -68,7 +69,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_Create_Delete()
         {
             var ids = new List<int>();
@@ -93,7 +94,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_Suspend_Resume()
         {
             var ids = new List<int>();
@@ -119,7 +120,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_Repeat()
         {
             var ids = new List<int>();
@@ -132,8 +133,7 @@ namespace ReactNative.Tests.Modules.Core
                 ids.AddRange((IList<int>)args[0]);
                 if (countdown.CurrentCount > 0)
                 {
-                    Action runCode = () => { countdown.Signal(); };
-                    Task.Run(runCode).ConfigureAwait(false);
+                    var t = ThreadPool.RunAsync(_ => countdown.Signal());
                 }
             }));
 
@@ -155,7 +155,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_ManOrBoy()
         {
             var r = new Random();
@@ -198,7 +198,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_AnimationBehavior()
         {
             var id = 0;
@@ -248,7 +248,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_Zero_NoRepeat()
         {
             var ids = new List<int>();
@@ -272,7 +272,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_Zero_Repeat()
         {
             var ids = new List<int>();
@@ -296,7 +296,7 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Timing_Correct_Order()
         {
             var ids = new List<int>();
