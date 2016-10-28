@@ -108,7 +108,6 @@
     <Compile Include="Internal\MockPromise.cs" />
     <Compile Include="Internal\MockReactInstance.cs" />
     <Compile Include="Internal\MockInvocationHandler.cs" />
-    <Compile Include="Internal\MockJavaScriptExecutor.cs" />
     <Compile Include="Internal\MockEvent.cs" />
     <Compile Include="Internal\MockViewManager.cs" />
     <Compile Include="Modules\AppState\AppStateModuleTests.cs" />
