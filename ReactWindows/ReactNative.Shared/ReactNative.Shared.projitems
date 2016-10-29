@@ -107,6 +107,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\DeviceEventManagerModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersExecution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitter.cs" />

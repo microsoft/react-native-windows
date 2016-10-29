@@ -146,7 +146,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LoggingActivityBuilderExtensions.tt</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
@@ -238,7 +237,9 @@
       <Name>ChakraBridge</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Modules\Core\" />
+  </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
