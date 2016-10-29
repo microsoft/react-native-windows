@@ -93,7 +93,6 @@ namespace ReactNative
             RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
             
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
-            //Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
         }
         
         /// <summary>
@@ -121,7 +120,6 @@ namespace ReactNative
         public Task DisposeAsync()
         {
             RootView.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
-            //Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
 
             return _reactInstanceManager.DisposeAsync();            
         }
