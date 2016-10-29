@@ -148,6 +148,7 @@ namespace ReactNative.Views.Split
 
         public override void OnDropViewInstance(ThemedReactContext reactContext, SplitView view)
         {
+            base.OnDropViewInstance(reactContext, view);
             view.PaneClosed -= OnPaneClosed;
         }
 
@@ -201,6 +202,7 @@ namespace ReactNative.Views.Split
 
         protected override void AddEventEmitters(ThemedReactContext reactContext, SplitView view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.PaneClosed += OnPaneClosed;
         }
 

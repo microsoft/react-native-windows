@@ -25,5 +25,15 @@
         /// Touch cancel event type.
         /// </summary>
         Cancel,
+
+        /// <summary>
+        /// Pointer entered event type.
+        /// </summary>
+        Entered,
+
+        /// <summary>
+        /// Pointer exited event type.
+        /// </summary>
+        Exited,
     }
 }
