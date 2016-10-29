@@ -2,6 +2,9 @@
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Storage;
+#else
+using System.IO;
+using System.Reflection;
 #endif
 
 namespace ReactNative.Bridge
@@ -28,7 +31,12 @@ namespace ReactNative.Bridge
                 var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask().ConfigureAwait(false);
                 _script = storageFile.Path;
 #else
-                throw new NotImplementedException("Bundle loading of JavaScript currently only supported on Universal Windows.");
+                var assembly = Assembly.GetAssembly(typeof(FileJavaScriptBundleLoader));
+                var assemblyName = assembly.GetName();
+                var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
+                var pathToAssemblyResource = Path.Combine(pathToAssembly, SourceUrl.Replace("ms-appx:///", String.Empty));
+                var u = new Uri(pathToAssemblyResource);
+                _script = u.LocalPath;
 #endif
             }
             catch (Exception ex)
