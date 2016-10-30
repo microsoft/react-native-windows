@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animated\AdditionAnimatedNode.cs" />
+    <Compile Include="Animated\DiffClampAnimatedNode.cs" />
     <Compile Include="Animated\MultiplicationAnimatedNode.cs" />
     <Compile Include="Animated\NativeAnimatedModule.cs" />
     <Compile Include="Animated\NativeAnimatedNodesManager.cs" />

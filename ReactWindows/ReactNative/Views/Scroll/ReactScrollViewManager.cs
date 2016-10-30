@@ -269,6 +269,8 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ScrollViewer view)
         {
+            base.OnDropViewInstance(reactContext, view);
+
             _scrollViewerData.Remove(view);
 
             view.ViewChanging -= OnViewChanging;
@@ -330,6 +332,7 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ScrollViewer view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.DirectManipulationCompleted += OnDirectManipulationCompleted;
             view.DirectManipulationStarted += OnDirectManipulationStarted;
             view.ViewChanging += OnViewChanging;
