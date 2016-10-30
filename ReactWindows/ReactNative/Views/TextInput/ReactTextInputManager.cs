@@ -464,6 +464,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The <see cref="ReactTextBox"/>.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ReactTextBox view)
         {
+            base.OnDropViewInstance(reactContext, view);
             view.KeyDown -= OnKeyDown;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
@@ -498,6 +499,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.TextChanging += OnTextChanging;
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;

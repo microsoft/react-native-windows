@@ -120,14 +120,10 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
-        /// additional cleanup by the <see cref="IViewManager"/>
-        /// subclass.
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        /// <remarks>
-        /// Derived classes do not need to call this base method.
-        /// </remarks>
         public virtual void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
         {
         }

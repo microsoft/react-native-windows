@@ -128,6 +128,20 @@ namespace ReactNative.Views.Slider
         }
 
         /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
+        {
+            base.OnDropViewInstance(reactContext, view);
+            view.ValueChanged -= OnValueChange;
+            view.PointerReleased -= OnPointerReleased;
+            view.PointerCaptureLost -= OnPointerReleased;
+        }
+
+        /// <summary>
         /// Implement this method to receive optional extra data enqueued from
         /// the corresponding instance of <see cref="ReactShadowNode"/> in
         /// <see cref="ReactShadowNode.OnCollectExtraUpdates"/>.
@@ -156,6 +170,7 @@ namespace ReactNative.Views.Slider
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.ValueChanged += OnValueChange;
             view.PointerReleased += OnPointerReleased;
             view.PointerCaptureLost += OnPointerReleased;
