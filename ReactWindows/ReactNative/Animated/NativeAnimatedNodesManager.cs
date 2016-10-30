@@ -77,6 +77,9 @@ namespace ReactNative.Animated
                 case "multiplication":
                     node = new MultiplicationAnimatedNode(tag, config, this);
                     break;
+                case "diffclamp":
+                    node = new DiffClampAnimatedNode(tag, config, this);
+                    break;
                 case "transform":
                     node = new TransformAnimatedNode(tag, config, this);
                     break;

@@ -16,6 +16,10 @@ namespace ReactNative.UIManager.Events
                     return "topTouchMove";
                 case TouchEventType.Cancel:
                     return "topTouchCancel";
+                case TouchEventType.Entered:
+                    return "topMouseOver";
+                case TouchEventType.Exited:
+                    return "topMouseOut";
                 default:
                     throw new NotSupportedException("Unsupported touch event type.");
             }
