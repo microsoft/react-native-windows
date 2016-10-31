@@ -1,0 +1,42 @@
+version: 1.0.{build}
+max_jobs: 2
+image: Visual Studio 2015
+build_script:
+- cmd: >-
+    git submodule init
+
+    git submodule update
+
+    nuget restore ReactWindows\ReactNative.sln
+
+    set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
+
+    %DEVENV% /build "Debug|x64" ReactWindows\ReactNative.sln
+
+    npm install -g npm
+
+    npm version
+
+    npm install -g react-native-cli
+
+    npm install
+
+    mkdir ReactWindows\Playground\ReactAssets
+
+    react-native bundle --platform windows --entry-file ReactWindows/Playground/index.windows.js --bundle-output ReactWindows/Playground/ReactAssets/index.windows.bundle --assets-dest ReactWindows/Playground/ReactAssets/
+
+    %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
+
+    %DEVENV% /build "DebugBundle|x64" ReactWindows\ReactNative.sln
+
+    %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
+
+    %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
+
+    %DEVENV% /build "Release|x86" ReactWindows\ReactNative.sln
+
+    %DEVENV% /build "Release|ARM" ReactWindows\ReactNative.sln
+test:
+  assemblies:
+  - ReactWindows\ReactNative.Net46.Tests\bin\x86
+  - ReactWindows\ReactNative.Net46.Tests\bin\x64
