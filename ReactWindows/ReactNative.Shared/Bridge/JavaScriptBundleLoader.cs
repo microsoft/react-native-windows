@@ -1,6 +1,10 @@
-﻿using System;
+﻿using PCLStorage;
+using System;
 using System.Threading.Tasks;
-using Windows.Storage;
+#if !WINDOWS_UWP
+using System.IO;
+using System.Reflection;
+#endif
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
@@ -86,8 +90,17 @@ namespace ReactNative.Bridge
             {
                 try
                 {
-                    var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask().ConfigureAwait(false);
+#if WINDOWS_UWP
+                    var storageFile = await FileSystem.Current.GetFileFromPathAsync(new Uri(SourceUrl).ToString()).ConfigureAwait(false);
                     _script = storageFile.Path;
+#else
+                    var assembly = Assembly.GetAssembly(typeof(JavaScriptBundleLoader));
+                    var assemblyName = assembly.GetName();
+                    var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
+                    var pathToAssemblyResource = Path.Combine(pathToAssembly, SourceUrl.Replace("ms-appx:///", String.Empty));
+                    var u = new Uri(pathToAssemblyResource);
+                    _script = u.LocalPath;
+#endif
                 }
                 catch (Exception ex)
                 {
@@ -127,8 +140,8 @@ namespace ReactNative.Bridge
             {
                 try
                 {
-                    var localFolder = ApplicationData.Current.LocalFolder;
-                    var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).AsTask().ConfigureAwait(false);
+                    var localFolder = FileSystem.Current.LocalStorage;
+                    var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).ConfigureAwait(false);
                     _script = storageFile.Path;
                 }
                 catch (Exception ex)
