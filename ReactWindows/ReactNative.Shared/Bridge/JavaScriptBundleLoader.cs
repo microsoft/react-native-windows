@@ -1,7 +1,7 @@
 ﻿using PCLStorage;
 using System;
 using System.Threading.Tasks;
-#if NET46
+#if !WINDOWS_UWP
 using System.IO;
 using System.Reflection;
 #endif
@@ -132,7 +132,7 @@ namespace ReactNative.Bridge
                 var storageFile = await FileSystem.Current.GetFileFromPathAsync(new Uri(SourceUrl).ToString()).ConfigureAwait(false);
                 _script = storageFile.Path;
 #else
-                var assembly = Assembly.GetAssembly(typeof(FileJavaScriptBundleLoader));
+                var assembly = Assembly.GetAssembly(typeof(JavaScriptBundleLoader));
                 var assemblyName = assembly.GetName();
                 var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
                 var pathToAssemblyResource = Path.Combine(pathToAssembly, SourceUrl.Replace("ms-appx:///", String.Empty));
