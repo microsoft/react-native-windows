@@ -1,9 +1,9 @@
-﻿using System;
+﻿using PCLStorage;
+using System;
 using System.Threading.Tasks;
-#if WINDOWS_UWP
-using Windows.Storage;
-#else
-using PCLStorage;
+#if !WINDOWS_UWP
+using System.IO;
+using System.Reflection;
 #endif
 using static System.FormattableString;
 
@@ -70,6 +70,123 @@ namespace ReactNative.Bridge
         public static JavaScriptBundleLoader CreateRemoteDebuggerLoader(string proxySourceUrl, string realSourceUrl)
         {
             return new RemoteDebuggerJavaScriptBundleLoader(proxySourceUrl, realSourceUrl);
+        }
+    }
+
+    class CachedJavaScriptBundleLoader : JavaScriptBundleLoader
+    {
+        private readonly string _cachedFileLocation;
+        private string _script;
+
+        public CachedJavaScriptBundleLoader(string sourceUrl, string cachedFileLocation)
+        {
+            SourceUrl = sourceUrl;
+            _cachedFileLocation = cachedFileLocation;
+        }
+
+        public override string SourceUrl { get; }
+
+        public override async Task InitializeAsync()
+        {
+            try
+            {
+                var localFolder = FileSystem.Current.LocalStorage;
+                var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).ConfigureAwait(false);
+                _script = storageFile.Path;
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = FormattableString.Invariant($"File read exception for asset '{SourceUrl}'.");
+                throw new InvalidOperationException(exceptionMessage, ex);
+            }
+        }
+
+        public override void LoadScript(IReactBridge executor)
+        {
+            if (executor == null)
+                throw new ArgumentNullException(nameof(executor));
+
+            executor.RunScript(_script, SourceUrl);
+        }
+    }
+
+    class FileJavaScriptBundleLoader : JavaScriptBundleLoader
+    {
+        private string _script;
+
+        public FileJavaScriptBundleLoader(string fileName)
+        {
+            SourceUrl = fileName;
+        }
+
+        public override string SourceUrl
+        {
+            get;
+        }
+
+        public override async Task InitializeAsync()
+        {
+            try
+            {
+#if WINDOWS_UWP
+                var storageFile = await FileSystem.Current.GetFileFromPathAsync(new Uri(SourceUrl).ToString()).ConfigureAwait(false);
+                _script = storageFile.Path;
+#else
+                var assembly = Assembly.GetAssembly(typeof(JavaScriptBundleLoader));
+                var assemblyName = assembly.GetName();
+                var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
+                var pathToAssemblyResource = Path.Combine(pathToAssembly, SourceUrl.Replace("ms-appx:///", String.Empty));
+                var u = new Uri(pathToAssemblyResource);
+                _script = u.LocalPath;
+#endif
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = FormattableString.Invariant($"File read exception for asset '{SourceUrl}'.");
+                throw new InvalidOperationException(exceptionMessage, ex);
+            }
+        }
+
+        public override void LoadScript(IReactBridge bridge)
+        {
+            if (bridge == null)
+                throw new ArgumentNullException(nameof(bridge));
+
+            if (_script == null)
+            {
+                throw new InvalidOperationException("Bundle loader has not yet been initialized.");
+            }
+
+            bridge.RunScript(_script, SourceUrl);
+        }
+    }
+
+    class RemoteDebuggerJavaScriptBundleLoader : JavaScriptBundleLoader
+    {
+        private readonly string _proxySourceUrl;
+
+        public RemoteDebuggerJavaScriptBundleLoader(string proxySourceUrl, string realSourceUrl)
+        {
+            _proxySourceUrl = proxySourceUrl;
+            SourceUrl = realSourceUrl;
+        }
+
+        public override string SourceUrl
+        {
+            get;
+        }
+
+        public override Task InitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public override void LoadScript(IReactBridge executor)
+        {
+            if (executor == null)
+                throw new ArgumentNullException(nameof(executor));
+
+            executor.RunScript(_proxySourceUrl, SourceUrl);
         }
     }
 }
