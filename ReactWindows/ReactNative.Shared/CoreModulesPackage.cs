@@ -40,16 +40,22 @@ namespace ReactNative
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
                 var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
+#if WINDOWS_UWP
                 uiManagerModule = new UIManagerModule(
                     reactContext, 
                     viewManagerList,
                     _uiImplementationProvider.Create(
                         reactContext, 
-                        viewManagerList)
-#if !WINDOWS_UWP
-                    , Application.Current.MainWindow
+                        viewManagerList));
+#else
+                uiManagerModule = new UIManagerModule(
+                    reactContext,
+                    viewManagerList,
+                    _uiImplementationProvider.Create(
+                        reactContext,
+                        viewManagerList), 
+                    Application.Current.MainWindow);
 #endif
-                    );
             }
 
             return new List<INativeModule>
