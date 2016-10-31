@@ -16,9 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\InterpolationAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\SpringAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\CachedJavaScriptBundleLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\FileJavaScriptBundleLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
@@ -59,7 +57,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactMethodAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReflectionReactDelegateFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\RemoteDebuggerJavaScriptBundleLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JavaScriptValueToJTokenConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
