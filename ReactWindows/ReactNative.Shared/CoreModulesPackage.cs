@@ -7,6 +7,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace ReactNative
 {
@@ -44,7 +45,11 @@ namespace ReactNative
                     viewManagerList,
                     _uiImplementationProvider.Create(
                         reactContext, 
-                        viewManagerList));
+                        viewManagerList)
+#if !WINDOWS_UWP
+                    , Application.Current.MainWindow
+#endif
+                    );
             }
 
             return new List<INativeModule>

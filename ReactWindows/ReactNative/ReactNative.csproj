@@ -114,7 +114,6 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
-    <Compile Include="CoreModulesPackage.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
@@ -148,11 +147,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LoggingActivityBuilderExtensions.tt</DependentUpon>
     </Compile>
-    <Compile Include="LifecycleState.cs" />
-    <Compile Include="Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
-    <Compile Include="ReactInstanceManager.cs" />
-    <Compile Include="IReactPackage.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
