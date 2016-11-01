@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
@@ -8,27 +8,27 @@ using System.Linq;
 
 namespace ReactNative.Tests.Bridge
 {
-    [TestClass]
+    [TestFixture]
     public class NativeModuleRegistryTests
     {
-        [TestMethod]
+        [Test]
         public void NativeModuleRegistry_ArgumentChecks()
         {
             var builder = new NativeModuleRegistry.Builder();
-            AssertEx.Throws<ArgumentNullException>(
-                () => builder.Add(null),
-                ex => Assert.AreEqual("module", ex.ParamName));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => builder.Add(null));
+            Assert.AreEqual("module", ex.ParamName);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleRegistry_Override_Disallowed()
         {
             var builder = new NativeModuleRegistry.Builder();
             builder.Add(new OverrideDisallowedModule());
-            AssertEx.Throws<InvalidOperationException>(() => builder.Add(new OverrideDisallowedModule()));
+            Assert.Throws<InvalidOperationException>(() => builder.Add(new OverrideDisallowedModule()));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleRegistry_Override_Allowed()
         {
             var registry = new NativeModuleRegistry.Builder()
@@ -39,16 +39,16 @@ namespace ReactNative.Tests.Bridge
             Assert.AreEqual(1, registry.Modules.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleRegistry_ModuleWithNullName_Throws()
         {
             var builder = new NativeModuleRegistry.Builder();
-            AssertEx.Throws<ArgumentException>(
-                () => builder.Add(new NullNameModule()),
-                ex => Assert.AreEqual("module", ex.ParamName));
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => builder.Add(new NullNameModule()));
+            Assert.AreEqual("module", ex.ParamName);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleRegistry_WriteModuleDefinitions()
         {
             var registry = new NativeModuleRegistry.Builder()
