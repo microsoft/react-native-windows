@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace ReactNative.Tests.Bridge
@@ -11,16 +12,6 @@ namespace ReactNative.Tests.Bridge
     [TestFixture]
     public class JavaScriptModuleRegistryTests : JavaScriptModuleRegistrySharedTests
     {
-        private MockReactInstance _mockReactInstance;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-
-            _mockReactInstance = new MockReactInstance();
-        }
-
         [Test]
         public void InvokesReactInstanceWhenFetchedModuleIsCalled()
         {
@@ -31,24 +22,33 @@ namespace ReactNative.Tests.Bridge
                 .Build();
 
             var are = new AutoResetEvent(false);
+            var modules = new List<string>();
+            var methods = new List<string>();
+            var argsList = new List<JArray>();
 
-            var module = _registry.GetJavaScriptModule<TestJavaScriptModule>(_mockReactInstance);
+            var reactInstance = new MockReactInstance((mod, met, args, tracingName) =>
+            {
+                modules.Add(mod);
+                methods.Add(met);
+                argsList.Add(args);
+                are.Set();
+            });
 
-            _mockReactInstance.InvokeFunction(nameof(TestJavaScriptModule), nameof(TestJavaScriptModule.Foo),
-                JArray.FromObject(new[] {42}), "tracingName");
-
-            //_mockReactInstance.Expects.One.Method(
-            //    _ => _.InvokeFunction(null, null, null, null))
-            //    .With(
-            //        nameof(TestJavaScriptModule),
-            //        nameof(TestJavaScriptModule.Foo),
-            //        JArray.FromObject(new[] { 42 }),
-            //        NMock.Is.StringContaining("_"))
-            //    .Will(Invoke.Action(() => are.Set()));
+            var module = _registry.GetJavaScriptModule<TestJavaScriptModule>(reactInstance);
 
             module.Foo(42);
 
             are.WaitOne();
+
+            Assert.AreEqual(1, modules.Count);
+            Assert.AreEqual(1, methods.Count);
+            Assert.AreEqual(1, modules.Count);
+
+            Assert.AreEqual("TestJavaScriptModule", modules[0]);
+            Assert.AreEqual("Foo", methods[0]);
+            Assert.AreEqual(
+                JArray.FromObject(new[] { 42 }).ToString(Formatting.None),
+                argsList[0].ToString(Formatting.None));
         }
 
         [Test]
@@ -56,13 +56,8 @@ namespace ReactNative.Tests.Bridge
         {
             _registry = _registryBuilder.Build();
 
-            Assert.Throws<InvalidOperationException>(
-                () => { _registry.GetJavaScriptModule<TestJavaScriptModule>(_mockReactInstance); }
-            );
-
-            //Assert.That(
-            //    () => _registry.GetJavaScriptModule<TestJavaScriptModule>(_mockReactInstance.MockObject),
-            //    Throws.InvalidOperationException);
+            var reactInstance = new MockReactInstance();
+            AssertEx.Throws<InvalidOperationException>(() => _registry.GetJavaScriptModule<TestJavaScriptModule>(reactInstance));
         }
     }
 }
