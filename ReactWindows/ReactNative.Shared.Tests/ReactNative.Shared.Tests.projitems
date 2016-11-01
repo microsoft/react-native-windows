@@ -30,5 +30,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTNativeAppEventEmitterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManagerTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMapTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelperTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndexTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropertyCacheTests.cs" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,12 @@
 ﻿using NUnit.Framework;
 using ReactNative.UIManager;
 using System;
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Controls;
+#else
 using System.Threading;
 using System.Windows.Controls;
+#endif
 
 namespace ReactNative.Tests.UIManager
 {

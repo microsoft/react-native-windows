@@ -1,51 +1,54 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else
+using System.Windows;
+#endif
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestClass]
+    [TestFixture]
     public class ViewManagersPropertyCacheTests
     {
-        [TestMethod]
+        [Test]
         public void ViewManagersPropertyCache_ArgumentChecks()
         {
-            AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertiesForView(null, typeof(object)),
-                ex => Assert.AreEqual("viewManagerType", ex.ParamName));
+            ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
+                () => ViewManagersPropertyCache.GetNativePropertiesForView(null, typeof(object)));
+            Assert.AreEqual("viewManagerType", ex1.ParamName);
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertiesForView(typeof(object), null),
-                ex => Assert.AreEqual("shadowNodeType", ex.ParamName));
+            ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
+                () => ViewManagersPropertyCache.GetNativePropertiesForView(typeof(object), null));
+            Assert.AreEqual("shadowNodeType", ex2.ParamName);
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(null),
-                ex => Assert.AreEqual("type", ex.ParamName));
+            ArgumentNullException ex3 = Assert.Throws<ArgumentNullException>(
+                () => ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(null));
+            Assert.AreEqual("type", ex3.ParamName);
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType
-                (null),
-                ex => Assert.AreEqual("type", ex.ParamName));
+            ArgumentNullException ex4 = Assert.Throws<ArgumentNullException>(
+                () => ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(null));
+            Assert.AreEqual("type", ex4.ParamName);
         }
 
-        [TestMethod]
+        [Test]
         public void ViewManagersPropertyCache_ViewManager_Empty()
         {
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(typeof(EmptyTest));
             Assert.AreEqual(0, setters.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void ViewManagersPropertyCache_ShadowNode_Empty()
         {
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(typeof(ReactShadowNode));
             Assert.AreEqual(0, setters.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void ViewManagersPropertyCache_ViewManager_Set()
         {
             var instance = new ViewManagerValueTest();
@@ -60,13 +63,13 @@ namespace ReactNative.Tests.UIManager
                 { "Bar2", "v3" },
             });
 
-            AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateShadowNodeProperty(new ShadowNodeValueTest(), props));
-            AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateViewManagerProperty(null, null, props),
-                ex => Assert.AreEqual("viewManager", ex.ParamName));
-            AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateViewManagerProperty(instance, null, null),
-                ex => Assert.AreEqual("props", ex.ParamName));
+            Assert.Throws<NotSupportedException>(() => setters["Foo"].UpdateShadowNodeProperty(new ShadowNodeValueTest(), props));
+            ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
+                () => setters["Foo"].UpdateViewManagerProperty(null, null, props));
+            Assert.AreEqual("viewManager", ex1.ParamName);
+            ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
+                () => setters["Foo"].UpdateViewManagerProperty(instance, null, null));
+            Assert.AreEqual("props", ex2.ParamName);
 
             setters["Foo"].UpdateViewManagerProperty(instance, null, props);
             setters["Bar1"].UpdateViewManagerProperty(instance, null, props);
@@ -77,7 +80,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("v3", instance.BarValues[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void ViewManagersPropertyCache_ShadowNode_Set()
         {
             var instance = new ShadowNodeValueTest();
@@ -92,13 +95,13 @@ namespace ReactNative.Tests.UIManager
                 { "Qux2", "v3" },
             });
 
-            AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateViewManagerProperty(new ViewManagerValueTest(), null, props));
-            AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateShadowNodeProperty(null, props),
-                ex => Assert.AreEqual("shadowNode", ex.ParamName));
-            AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateShadowNodeProperty(instance, null),
-                ex => Assert.AreEqual("props", ex.ParamName));
+            Assert.Throws<NotSupportedException>(() => setters["Foo"].UpdateViewManagerProperty(new ViewManagerValueTest(), null, props));
+            ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
+                () => setters["Foo"].UpdateShadowNodeProperty(null, props));
+            Assert.AreEqual("shadowNode", ex1.ParamName);
+            ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
+                () => setters["Foo"].UpdateShadowNodeProperty(instance, null));
+            Assert.AreEqual("props", ex2.ParamName);
 
             setters["Foo"].UpdateShadowNodeProperty(instance, props);
             setters["Qux1"].UpdateShadowNodeProperty(instance, props);
@@ -109,7 +112,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("v3", instance.QuxValues[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void ViewManagersPropertyCache_GetNativePropertiesForView()
         {
             var props = ViewManagersPropertyCache.GetNativePropertiesForView(typeof(ViewManagerValueTest), typeof(ShadowNodeValueTest));
@@ -121,7 +124,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("String", props["Qux2"]);
         }
 
-        [TestMethod]
+        [Test]
         public void ViewManagersPropertyCache_Defaults()
         {
             var instance = new DefaultsTest();
@@ -232,7 +235,7 @@ namespace ReactNative.Tests.UIManager
 
         class DefaultsTest : MockViewManager
         {
-            #region ViewManager Test Methods
+#region ViewManager Test Methods
 
             public byte ByteValue;
             public sbyte SByteValue;
@@ -354,7 +357,7 @@ namespace ReactNative.Tests.UIManager
                 GroupValue[index] = value;
             }
 
-            #endregion
+#endregion
         }
     }
 }
