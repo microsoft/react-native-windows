@@ -13,12 +13,5 @@ namespace ReactNative.Tests.UIManager
         {
             Assert.IsNull(RootViewHelper.GetRootView(null));
         }
-
-        class TestRootView : Panel, IRootView
-        {
-            public void OnChildStartedNativeGesture(RoutedEventArgs ev)
-            {
-            }
-        }
     }
 }
