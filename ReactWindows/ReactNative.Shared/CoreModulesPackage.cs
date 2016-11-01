@@ -7,7 +7,9 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+#if !WINDOWS_UWP
 using System.Windows;
+#endif
 
 namespace ReactNative
 {
