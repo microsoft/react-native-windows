@@ -42,6 +42,10 @@ In addition to the requirements from the [Getting Started guide](http://facebook
 
 If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln) in the ReactWindows folder in Visual Studio. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
 
+### Setup Troubleshooting
+
+If you happen to run into issues while setting up React Native Windows on your machine, check out the [Setup Troubleshooting](docs/SetupTroubleshooting.md) documentation.
+
 ## Getting Help
 
 Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
