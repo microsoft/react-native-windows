@@ -1,14 +1,19 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using ReactNative.UIManager;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using System.Windows;
+using System.Windows.Controls;
+#endif
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestClass]
+    [TestFixture]
     public class RootViewHelperTests
     {
-        [TestMethod]
+        [Test]
         public void RootViewHelper_Null()
         {
             Assert.IsNull(RootViewHelper.GetRootView(null));

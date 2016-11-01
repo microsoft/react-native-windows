@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Core;
@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace ReactNative.Tests.Modules.AppState
 {
-    [TestClass]
+    [TestFixture]
     public class AppStateModuleTests
     {
-        [TestMethod]
+
+        [Test]
         public async Task AppStateModule_StateChecks()
         {
             var uninitializedState = CreateExpectedState("uninitialized");
@@ -39,7 +40,7 @@ namespace ReactNative.Tests.Modules.AppState
             Assert.AreEqual(backgroundState.ToString(), args[0].ToString());
         }
 
-        [TestMethod]
+        [Test]
         public async Task AppStateModule_Events()
         {
             var activeState = CreateExpectedState("active");

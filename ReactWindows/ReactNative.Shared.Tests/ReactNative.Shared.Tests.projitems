@@ -11,10 +11,33 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBaseTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\PromiseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridgeTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockPromise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersExecutionTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTNativeAppEventEmitterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModuleTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManagerTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMapTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelperTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndexTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropertyCacheTests.cs" />
   </ItemGroup>
 </Project>

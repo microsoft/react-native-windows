@@ -125,6 +125,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase">
@@ -136,22 +138,10 @@
     <Compile Include="Bridge\Queue\MessageQueueThreadTests.cs" />
     <Compile Include="Internal\Constants\DictionaryHelpers.cs" />
     <Compile Include="Internal\DispatcherHelpers.cs" />
-    <Compile Include="Internal\MockInvocationHandler.cs" />
-    <Compile Include="Internal\MockPromise.cs" />
-    <Compile Include="Internal\MockReactInstance.cs" />
     <Compile Include="Internal\MockViewManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIManager\AppRegistryTests.cs" />
-    <Compile Include="UIManager\DependencyObjectExtensionsTests.cs" />
-    <Compile Include="UIManager\PropertySetterTests.cs" />
-    <Compile Include="UIManager\ReactStylesDiffMapTests.cs" />
-    <Compile Include="UIManager\RootViewHelperTests.cs" />
-    <Compile Include="UIManager\ShadowNodeRegistryTests.cs" />
     <Compile Include="UIManager\UIManagerModuleTests.cs" />
-    <Compile Include="UIManager\ViewAtIndexTests.cs" />
-    <Compile Include="UIManager\ViewManagerRegistryTests.cs" />
-    <Compile Include="UIManager\ViewManagersPropertyCacheTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -176,8 +166,6 @@
     <ItemGroup>
       <ChakraCoreDll Include="$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(ChakraCoreDll)"
-          DestinationFolder="$(OutputPath)" 
-          ContinueOnError="false" />
+    <Copy SourceFiles="@(ChakraCoreDll)" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
   </Target>
 </Project>
