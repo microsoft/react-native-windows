@@ -41,7 +41,7 @@
         }
 
         /// <summary>
-        /// Creates a new view instance of type <see cref="Windows.UI.Xaml.Controls.Panel"/>.
+        /// Creates a new view instance of type <see cref="SizeMonitoringCanvas"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
