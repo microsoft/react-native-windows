@@ -1,7 +1,9 @@
 ﻿using PCLStorage;
 using System;
 using System.Threading.Tasks;
-#if !WINDOWS_UWP
+#if WINDOWS_UWP
+using Windows.Storage;
+#else
 using System.IO;
 using System.Reflection;
 #endif
@@ -86,28 +88,24 @@ namespace ReactNative.Bridge
                 get;
             }
 
+#if WINDOWS_UWP
             public override async Task InitializeAsync()
             {
-                try
-                {
-#if WINDOWS_UWP
-                    var storageFile = await FileSystem.Current.GetFileFromPathAsync(new Uri(SourceUrl).ToString()).ConfigureAwait(false);
-                    _script = storageFile.Path;
-#else
-                    var assembly = Assembly.GetAssembly(typeof(JavaScriptBundleLoader));
-                    var assemblyName = assembly.GetName();
-                    var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
-                    var pathToAssemblyResource = Path.Combine(pathToAssembly, SourceUrl.Replace("ms-appx:///", String.Empty));
-                    var u = new Uri(pathToAssemblyResource);
-                    _script = u.LocalPath;
-#endif
-                }
-                catch (Exception ex)
-                {
-                    var exceptionMessage = Invariant($"File read exception for asset '{SourceUrl}'.");
-                    throw new InvalidOperationException(exceptionMessage, ex);
-                }
+                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask().ConfigureAwait(false);
+                _script = storageFile.Path;
             }
+#else
+            public override Task InitializeAsync()
+            {
+                var assembly = Assembly.GetAssembly(typeof(JavaScriptBundleLoader));
+                var assemblyName = assembly.GetName();
+                var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
+                var pathToAssemblyResource = Path.Combine(pathToAssembly, SourceUrl.Replace("ms-appx:///", String.Empty));
+                var u = new Uri(pathToAssemblyResource);
+                _script = u.LocalPath;
+                return Task.CompletedTask;
+            }
+#endif
 
             public override void LoadScript(IReactBridge bridge)
             {
@@ -138,17 +136,9 @@ namespace ReactNative.Bridge
 
             public override async Task InitializeAsync()
             {
-                try
-                {
-                    var localFolder = FileSystem.Current.LocalStorage;
-                    var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).ConfigureAwait(false);
-                    _script = storageFile.Path;
-                }
-                catch (Exception ex)
-                {
-                    var exceptionMessage = Invariant($"File read exception for asset '{SourceUrl}'.");
-                    throw new InvalidOperationException(exceptionMessage, ex);
-                }
+                var localFolder = FileSystem.Current.LocalStorage;
+                var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).ConfigureAwait(false);
+                _script = storageFile.Path;
             }
 
             public override void LoadScript(IReactBridge executor)

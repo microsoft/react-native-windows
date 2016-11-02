@@ -26,7 +26,9 @@ namespace ReactNative.DevSupport
 
 #if WINDOWS_UWP
         private readonly ShakeAccelerometer _accelerometer = ShakeAccelerometer.Instance;
+        private bool _isShakeDetectorRegistered;
 #endif
+
         private readonly SerialDisposable _pollingDisposable = new SerialDisposable();
 
         private readonly IReactInstanceDevCommandsHandler _reactInstanceCommandsHandler;
@@ -36,7 +38,6 @@ namespace ReactNative.DevSupport
         private readonly DevServerHelper _devServerHelper;
 
         private bool _isDevSupportEnabled = true;
-        private bool _isShakeDetectorRegistered;
 
         private ReactContext _currentContext;
         private RedBoxDialog _redBoxDialog;
