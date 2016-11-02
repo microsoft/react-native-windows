@@ -2,9 +2,15 @@
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Collections.Generic;
+#if WINDOWS_UWP
 using Windows.UI.Text;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Media;
+#endif
 
 namespace ReactNative.Views.Text
 {
@@ -59,7 +65,11 @@ namespace ReactNative.Views.Text
             var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
+#if WINDOWS_UWP
                 _fontWeight.Value.Weight != fontWeight.Value.Weight))
+#else
+                _fontWeight.Value != fontWeight.Value))
+#endif
             {
                 _fontWeight = fontWeight;
                 MarkUpdated();
@@ -121,11 +131,16 @@ namespace ReactNative.Views.Text
         /// <param name="inline">The instance.</param>
         public override void UpdateInline(Inline inline)
         {
+#if WINDOWS_UWP
             inline.CharacterSpacing = _letterSpacing;
-            inline.FontSize = _fontSize ?? 15;
             inline.FontStyle = _fontStyle ?? FontStyle.Normal;
-            inline.FontWeight = _fontWeight ?? FontWeights.Normal;
             inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : FontFamily.XamlAutoFontFamily;
+#else
+            inline.FontStyle = _fontStyle ?? new FontStyle();
+            inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
+#endif
+            inline.FontSize = _fontSize ?? 15;
+            inline.FontWeight = _fontWeight ?? FontWeights.Normal;
         }
 
         /// <summary>
