@@ -2,17 +2,17 @@ version: 1.0.{build}
 max_jobs: 2
 image: Visual Studio 2015
 cache: 
-  - ReactWindows\packages -> **\packages.config
-  - '%USERPROFILE%\.nuget\packages -> **\project.json'  
+- ReactWindows\packages -> **\packages.config
+- '%USERPROFILE%\.nuget\packages -> **\project.json'  
 
 install:
-  - cmd: git submodule -q update --init
+- cmd: git submodule -q update --init
 
 before_build:
-  - nuget restore ReactWindows\ReactNative.sln
+- nuget restore ReactWindows\ReactNative.sln
 
 build_script:
-  - cmd: >-
+- cmd: >-
 
     set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
 
