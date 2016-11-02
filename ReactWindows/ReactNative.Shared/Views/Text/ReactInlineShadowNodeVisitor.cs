@@ -1,8 +1,13 @@
 ﻿using Facebook.CSSLayout;
 using ReactNative.UIManager;
 using System.Collections.Generic;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Shapes;
+#else
+using System.Windows.Documents;
+using System.Windows.Shapes;
+#endif
 
 namespace ReactNative.Views.Text
 {

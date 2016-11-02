@@ -189,6 +189,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\FontStyleHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNodeVisitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactRunManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactRunShadowNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanShadowNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactTextInlineViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>
 </Project>
