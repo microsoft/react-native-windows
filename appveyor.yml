@@ -1,12 +1,12 @@
 version: 1.0.{build}
 max_jobs: 2
 image: Visual Studio 2015
+cache: ReactWindows\packages -> **\project.json
+install:
+- cmd: git submodule -q update --init
+
 build_script:
 - cmd: >-
-    git submodule init
-
-    git submodule update
-
     nuget restore ReactWindows\ReactNative.sln
 
     set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
@@ -19,8 +19,8 @@ build_script:
 
     %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
 
-    %DEVENV% /build "DebugBundle|x64" ReactWindows\ReactNative.sln
+    %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
 
 test:
   assemblies:
-  - ReactWindows\ReactNative.Net46.Tests\bin\x64
+  - ReactWindows\ReactNative.Net46.Tests\bin\x64\**\*.Tests.dll
