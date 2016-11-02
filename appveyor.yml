@@ -21,14 +21,6 @@ build_script:
 
     %DEVENV% /build "DebugBundle|x64" ReactWindows\ReactNative.sln
 
-    %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
-
-    %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
-
-    %DEVENV% /build "Release|x86" ReactWindows\ReactNative.sln
-
-    %DEVENV% /build "Release|ARM" ReactWindows\ReactNative.sln
 test:
   assemblies:
-  - ReactWindows\ReactNative.Net46.Tests\bin\x86
   - ReactWindows\ReactNative.Net46.Tests\bin\x64
