@@ -134,7 +134,7 @@ namespace ReactNative.Animated
         private static int FindRangeIndex(double value, double[] ranges)
         {
             var index = 1;
-            for (; index < ranges.Length - 1; index++)
+            for (; index < ranges.Length - 1; ++index)
             {
                 if (ranges[index] >= value)
                 {
