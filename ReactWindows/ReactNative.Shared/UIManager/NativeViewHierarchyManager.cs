@@ -537,10 +537,10 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Shows a <see cref="PopupMenu"/>.
+        /// Shows a popup menu.
         /// </summary>
         /// <param name="tag">
-        /// The tag of the anchor view (the <see cref="PopupMenu"/> is
+        /// The tag of the anchor view (the popup menu is
         /// displayed next to this view); this needs to be the tag of a native
         /// view (shadow views cannot be anchors).
         /// </param>

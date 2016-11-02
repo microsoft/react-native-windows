@@ -95,6 +95,7 @@
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Bridge\PromiseTests.cs" />
     <Compile Include="Bridge\ReactInstanceTests.cs" />
     <Compile Include="Bridge\NativeModuleBaseTests.cs" />
@@ -108,7 +109,6 @@
     <Compile Include="Internal\MockPromise.cs" />
     <Compile Include="Internal\MockReactInstance.cs" />
     <Compile Include="Internal\MockInvocationHandler.cs" />
-    <Compile Include="Internal\MockJavaScriptExecutor.cs" />
     <Compile Include="Internal\MockEvent.cs" />
     <Compile Include="Internal\MockViewManager.cs" />
     <Compile Include="Modules\AppState\AppStateModuleTests.cs" />
@@ -177,6 +177,7 @@
       <Name>ReactNative</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -74,6 +74,9 @@ namespace ReactNative.Animated
                 case "addition":
                     node = new AdditionAnimatedNode(tag, config, this);
                     break;
+                case "division":
+                    node = new DivisionAnimatedNode(tag, config, this);
+                    break;
                 case "multiplication":
                     node = new MultiplicationAnimatedNode(tag, config, this);
                     break;

@@ -137,6 +137,8 @@ namespace ReactNative.DevSupport
                     return (T)data;
                 }
             }
+
+            return defaultValue;
 #else
             if (typeof(T) == typeof(bool))
             {
@@ -149,8 +151,6 @@ namespace ReactNative.DevSupport
                 throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));
             }
 #endif
-
-            return defaultValue;
         }
 
         private void SetSetting<T>(string key, T value)

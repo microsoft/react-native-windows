@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Animated\AdditionAnimatedNode.cs" />
     <Compile Include="Animated\DiffClampAnimatedNode.cs" />
+    <Compile Include="Animated\DivisionAnimatedNode.cs" />
     <Compile Include="Animated\MultiplicationAnimatedNode.cs" />
     <Compile Include="Animated\NativeAnimatedModule.cs" />
     <Compile Include="Animated\NativeAnimatedNodesManager.cs" />
@@ -182,22 +183,13 @@
     <Compile Include="Views\TextInput\ReactTextInputFocusEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputSelectionEvent.cs" />
     <Compile Include="Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
-    <Compile Include="Views\Text\FontStyleHelpers.cs" />
     <Compile Include="Views\Scroll\ReactScrollViewManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputShadowNode.cs" />
     <Compile Include="Views\Switch\ReactSwitchManager.cs" />
     <Compile Include="Views\Switch\ReactSwitchShadowNode.cs" />
-    <Compile Include="Views\Text\ReactRunShadowNode.cs" />
-    <Compile Include="Views\Text\ReactInlineShadowNode.cs" />
-    <Compile Include="Views\Text\ReactSpanShadowNode.cs" />
-    <Compile Include="Views\Text\ReactInlineShadowNodeVisitor.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
-    <Compile Include="Views\Text\ReactTextInlineViewManager.cs" />
-    <Compile Include="Views\Text\ReactRunManager.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
-    <Compile Include="Views\Text\ReactSpanViewManager.cs" />
-    <Compile Include="Views\View\ReactViewManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
     <Compile Include="Views\Web\Events\WebViewLoadingErrorEvent.cs" />
     <Compile Include="Views\Web\Events\WebViewLoadingEvent.cs" />
