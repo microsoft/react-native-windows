@@ -13,10 +13,6 @@ build_script:
 
     %DEVENV% /build "Debug|x64" ReactWindows\ReactNative.sln
 
-    npm install -g npm
-
-    npm version
-
     %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
 
     %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
