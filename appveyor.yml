@@ -17,14 +17,6 @@ build_script:
 
     npm version
 
-    npm install -g react-native-cli
-
-    npm install
-
-    mkdir ReactWindows\Playground\ReactAssets
-
-    react-native bundle --platform windows --entry-file ReactWindows/Playground/index.windows.js --bundle-output ReactWindows/Playground/ReactAssets/index.windows.bundle --assets-dest ReactWindows/Playground/ReactAssets/
-
     %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
 
     %DEVENV% /build "DebugBundle|x64" ReactWindows\ReactNative.sln
