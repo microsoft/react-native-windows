@@ -5,23 +5,11 @@ using System.Collections.Generic;
 
 namespace Playground.Net46
 {
-    class AppReactPage : ReactPage
+    internal class AppReactPage : ReactPage
     {
-        public override string MainComponentName
-        {
-            get
-            {
-                return "Playground.Net46";
-            }
-        }
+        public override string MainComponentName => "Playground.Net46";
 
-        public override string JavaScriptMainModuleName
-        {
-            get
-            {
-                return "ReactWindows/Playground.Net46/index.windows";
-            }
-        }
+        public override string JavaScriptMainModuleName => "ReactWindows/Playground.Net46/index.windows";
 
 #if BUNDLE
         public override string JavaScriptBundleFile
@@ -33,16 +21,10 @@ namespace Playground.Net46
         }
 #endif
 
-        public override List<IReactPackage> Packages
+        public override List<IReactPackage> Packages => new List<IReactPackage>
         {
-            get
-            {
-                return new List<IReactPackage>
-                {
-                    new MainReactPackage(),
-                };
-            }
-        }
+            new MainReactPackage(),
+        };
 
         public override bool UseDeveloperSupport
         {
