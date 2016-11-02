@@ -20,8 +20,7 @@ namespace ReactNative.Animated
             Value = 1;
             foreach (var tag in _inputNodes)
             {
-                var animatedNode = _manager.GetNodeById(tag);
-                var valueNode = animatedNode as ValueAnimatedNode;
+                var valueNode = _manager.GetNodeById(tag) as ValueAnimatedNode;
                 if (valueNode == null)
                 {
                     throw new InvalidOperationException(
