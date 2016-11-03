@@ -146,6 +146,10 @@ namespace ReactNative.DevSupport
                 var parsed = bool.TryParse(ConfigurationManager.AppSettings[key], out result);
                 return (T)(object)(parsed && result);
             }
+            else if (typeof(T) == typeof(string))
+            {
+                return (T)(object)ConfigurationManager.AppSettings[key];
+            }
             else
             {
                 throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));

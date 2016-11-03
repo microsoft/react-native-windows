@@ -10,6 +10,7 @@ using System.Reactive.Disposables;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 #if WINDOWS_UWP
 using Windows.Storage;
 #else
@@ -350,8 +351,11 @@ namespace ReactNative.DevSupport
             var dialogOperation = progressDialog.ShowAsync();
             Action cancel = dialogOperation.Cancel;
 #else
-            progressDialog.ShowDialog();
-            Action cancel = progressDialog.Hide;
+            progressDialog.Owner = Application.Current.MainWindow;
+
+            Action cancel = progressDialog.Close;
+
+            progressDialog.Show();
 #endif
             if (IsRemoteDebuggingEnabled)
             {
@@ -450,13 +454,16 @@ namespace ReactNative.DevSupport
                     _dismissRedBoxDialog = null;
                     _redBoxDialog = null;
                 };
-
+                
 #if WINDOWS_UWP
                 var asyncInfo = _redBoxDialog.ShowAsync();
                 _dismissRedBoxDialog = asyncInfo.Cancel;
 #else
-                var asyncInfo = _redBoxDialog.ShowDialog();
-                _dismissRedBoxDialog = _redBoxDialog.Hide;
+                _redBoxDialog.Owner = Application.Current.MainWindow;
+
+                _dismissRedBoxDialog = _redBoxDialog.Close;
+
+                _redBoxDialog.Show();
 #endif
             });
         }

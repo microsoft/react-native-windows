@@ -17,7 +17,9 @@
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;NET46</DefineConstants>
     <DocumentationFile>bin\x86\Debug\ReactNative.Net46.XML</DocumentationFile>
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
+    <WarningLevel>1</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -99,6 +101,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -113,9 +116,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
+    <Compile Include="DevSupport\Design\RedboxDesignData.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DevSupport\Controls\LoadingIndicator.cs" />
     <Compile Include="DevSupport\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
     </Compile>
@@ -157,6 +162,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DevSupport\Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Page Include="DevSupport\DevOptionDialog.xaml">
       <SubType>Designer</SubType>

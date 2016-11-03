@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Playground.Net46" Height="350" Width="525" WindowStartupLocation="CenterScreen" Background="BlueViolet">
+        Title="Playground.Net46" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Frame x:Name="RootFrame" Background="Pink"></Frame>
+        <Frame x:Name="RootFrame"></Frame>
     </Grid>
 </Window>

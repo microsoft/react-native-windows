@@ -87,7 +87,8 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string arguments)
         {
-            RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            //TODO: No ApplicationPageBackgroundThemeBrush in WPF, is there something we can look for?
+            //RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
 
             ApplyArguments(arguments);
             RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
