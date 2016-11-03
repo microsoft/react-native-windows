@@ -116,7 +116,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
-    <Compile Include="DevSupport\Design\RedboxDesignData.cs" />
+    <Compile Include="DevSupport\Design\ProgressDialogDesignData.cs" />
+    <Compile Include="DevSupport\Design\RedboxDialogDesignData.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>

@@ -5,24 +5,6 @@ using System.Windows;
 
 namespace ReactNative.DevSupport
 {
-    #region Design Time Data
-
-    internal sealed class DesignTimeProgressDialogData
-    {
-        public DesignTimeProgressDialogData()
-        {
-            Heading = @"Please wait...";
-
-            Message = @"Fetching JavaScript bundle";
-        }
-
-        public string Heading { get; }
-
-        public string Message { get; }
-    }
-
-    #endregion
-
     /// <summary>
     /// Content dialog for when the app is waiting.
     /// </summary>

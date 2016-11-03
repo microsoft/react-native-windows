@@ -4,13 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:ReactNative.DevSupport"
     xmlns:controls="clr-namespace:ReactNative.DevSupport.Controls"
+    xmlns:design="clr-namespace:ReactNative.DevSupport.Design"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{Binding Path=Heading, Mode=OneTime}"
     Style="{DynamicResource ContentDialogStyle}" 
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d" d:DesignHeight="125" d:DesignWidth="240"
-    d:DataContext ="{d:DesignInstance local:DesignTimeProgressDialogData, IsDesignTimeCreatable=True}">
+    d:DataContext ="{d:DesignInstance design:ProgressDialogDesignData, IsDesignTimeCreatable=True}">
 
     <Window.Resources>
         <ResourceDictionary>

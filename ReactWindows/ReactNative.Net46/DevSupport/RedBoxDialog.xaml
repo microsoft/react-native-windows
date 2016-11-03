@@ -76,26 +76,27 @@
                         Text="{Binding Path=Message, Mode=OneWay}"
                         TextWrapping="Wrap" />
 
-            <ListView Grid.Row="2" 
-                        Background="Transparent" 
-                        BorderThickness="0,0,0,0"
-                        ItemsSource="{Binding Path=StackTrace, Mode=OneWay}" 
-                        ItemTemplate="{StaticResource StackFrameTemplate}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="BorderBrush" Value="LightGray" />
-                        <Setter Property="BorderThickness" Value="0 0.5 0 0" />
-                        <Setter Property="Focusable" Value="True" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#33000000" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
+            <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  ScrollViewer.CanContentScroll="True">
+                <ListView Background="Transparent" 
+                          BorderThickness="0,0,0,0"
+                          ItemsSource="{Binding Path=StackTrace, Mode=OneWay}" 
+                          ItemTemplate="{StaticResource StackFrameTemplate}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="BorderBrush" Value="LightGray" />
+                            <Setter Property="BorderThickness" Value="0 0.5 0 0" />
+                            <Setter Property="Focusable" Value="False" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#33000000" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
 
-                </ListView.ItemContainerStyle>
-            </ListView>
-
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </ScrollViewer>
+            
             <Grid x:Name="CommandSpace" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
                 <Button Style="{StaticResource ContentDialogButtonStyle}" HorizontalAlignment="Left" Content="Close" IsCancel="True" Click="OnCloseButtonClicked"/>
                 <Button Style="{StaticResource ContentDialogButtonStyle}" HorizontalAlignment="Right" Content="Reload JavaScript" IsDefault="True" Click="OnReloadButtonClicked"/>
