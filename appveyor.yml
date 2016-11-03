@@ -4,9 +4,14 @@ image: Visual Studio 2015
 cache: 
 - ReactWindows\packages -> **\packages.config
 - '%USERPROFILE%\.nuget\packages -> **\project.json'  
+- ChakraCore\Build\VcBuild\bin -> ChakraCore\lib\Common\*.h 
 
-install:
-- cmd: git submodule -q update --init
+clone_script:
+- cmd: >-
+    git clone -q --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+    cd %APPVEYOR_BUILD_FOLDER%
+    git checkout -qf %APPVEYOR_REPO_COMMIT%
+    git submodule update --init --recursive
 
 before_build:
 - nuget restore ReactWindows\ReactNative.sln
