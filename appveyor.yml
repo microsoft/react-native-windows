@@ -2,9 +2,9 @@ version: 1.0.{build}
 max_jobs: 2
 image: Visual Studio 2015
 cache: 
-- ReactWindows\packages -> **\packages.config
-- '%USERPROFILE%\.nuget\packages -> **\project.json'  
-- ChakraCore\Build\VcBuild\bin -> ChakraCore\lib\Common\*.h 
+- ReactWindows\packages -> ReactWindows\**\packages.config
+- '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'  
+- ChakraCore\Build\VcBuild -> ChakraCore\lib\Common\*.h 
 
 clone_script:
 - cmd: >-
