@@ -5,17 +5,17 @@ namespace ReactNative.Animated
 {
     class DiffClampAnimatedNode : ValueAnimatedNode
     {
-        private readonly NativeAnimatedNodesManager _nativeAnimatedNodesManager;
+        private readonly NativeAnimatedNodesManager _manager;
         private readonly int _inputNodeTag;
         private readonly double _min;
         private readonly double _max;
 
         private double _lastValue;
 
-        public DiffClampAnimatedNode(int tag, JObject config, NativeAnimatedNodesManager nativeAnimatedNodesManager) 
+        public DiffClampAnimatedNode(int tag, JObject config, NativeAnimatedNodesManager manager) 
             : base(tag, config)
         {
-            _nativeAnimatedNodesManager = nativeAnimatedNodesManager;
+            _manager = manager;
             _inputNodeTag = config.Value<int>("input");
             _min = config.Value<double>("min");
             _max = config.Value<double>("max");
@@ -34,7 +34,7 @@ namespace ReactNative.Animated
 
         private double GetInputNodeValue()
         {
-            var valueAnimatedNode = _nativeAnimatedNodesManager.GetNodeById(_inputNodeTag) as ValueAnimatedNode;
+            var valueAnimatedNode = _manager.GetNodeById(_inputNodeTag) as ValueAnimatedNode;
             if (valueAnimatedNode == null) {
                 throw new InvalidOperationException(
                     "Illegal node ID set as an input for Animated.DiffClamp node.");
