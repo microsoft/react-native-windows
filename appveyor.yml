@@ -21,7 +21,7 @@ build_script:
 
     set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
 
-    %DEVENV% /build "Debug|x64" ReactWindows\ReactNative.sln
+    %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
 
     %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
 
