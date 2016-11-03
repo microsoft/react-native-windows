@@ -9,8 +9,11 @@ cache:
 clone_script:
 - cmd: >-
     git clone -q --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+
     cd %APPVEYOR_BUILD_FOLDER%
+
     git checkout -qf %APPVEYOR_REPO_COMMIT%
+
     git submodule update --init --recursive
 
 before_build:
@@ -18,7 +21,6 @@ before_build:
 
 build_script:
 - cmd: >-
-
     set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
 
     %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
