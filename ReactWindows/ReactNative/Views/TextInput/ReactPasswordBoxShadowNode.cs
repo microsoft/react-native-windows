@@ -5,7 +5,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
-using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -226,7 +225,6 @@ namespace ReactNative.Views.TextInput
             {
                 var textNode = (ReactPasswordBoxShadowNode)node;
 
-                var passwordBox = new PasswordBox();
                 var textBlock = new TextBlock
                 {
                     TextWrapping = TextWrapping.Wrap,
@@ -234,7 +232,7 @@ namespace ReactNative.Views.TextInput
 
                 var passwordChar = GetDefaultPasswordChar();
                 var normalizedText = !string.IsNullOrEmpty(textNode._text)
-                    ? string.Join("", Enumerable.Repeat(passwordChar, textNode._text.Length))
+                    ? new string(passwordChar[0], textNode._text.Length)
                     : passwordChar;
                 var inline = new Run { Text = normalizedText };
                 FormatTextElement(textNode, inline);
