@@ -5,9 +5,12 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
+using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Text;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.TextInput
@@ -18,6 +21,8 @@ namespace ReactNative.Views.TextInput
     /// </summary>
     public class ReactPasswordBoxShadowNode : LayoutShadowNode
     {
+        private static string s_passwordChar;
+
         private const int Unset = -1;
 
         private float[] _computedPadding;
@@ -222,18 +227,25 @@ namespace ReactNative.Views.TextInput
                 var textNode = (ReactPasswordBoxShadowNode)node;
 
                 var passwordBox = new PasswordBox();
+                var textBlock = new TextBlock
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                };
 
-                var normalizedText = string.IsNullOrEmpty(textNode._text) ? " " : textNode._text;
-                FormatPasswordBox(textNode, passwordBox, true);
+                var passwordChar = GetDefaultPasswordChar();
+                var normalizedText = !string.IsNullOrEmpty(textNode._text)
+                    ? string.Join("", Enumerable.Repeat(passwordChar, textNode._text.Length))
+                    : passwordChar;
+                var inline = new Run { Text = normalizedText };
+                FormatTextElement(textNode, inline);
+                textBlock.Inlines.Add(inline);
 
-                passwordBox.Password = normalizedText;
-
-                passwordBox.Measure(new Size(normalizedWidth, normalizedHeight));
+                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
                 var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
                 var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
 
-                var finalizedHeight = (float)passwordBox.DesiredSize.Height;
+                var finalizedHeight = (float)textBlock.DesiredSize.Height;
                 finalizedHeight += textInputNode._computedPadding[1];
                 finalizedHeight += textInputNode._computedPadding[3];
                 finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
@@ -245,36 +257,41 @@ namespace ReactNative.Views.TextInput
             return task.Result;
         }
 
-        /// <summary>
-        /// Formats an inline instance with shadow properties.
-        /// </summary>
-        /// <param name="textNode">The text shadow node.</param>
-        /// <param name="box">The password box.</param>
-        /// <param name="measureOnly">Signals if the operation is used only for measurement.</param>
-        protected static void FormatPasswordBox(ReactPasswordBoxShadowNode textNode, Control box, bool measureOnly)
+        private static string GetDefaultPasswordChar()
+        {
+            if (s_passwordChar == null)
+            {
+                var passwordBox = new PasswordBox();
+                s_passwordChar = passwordBox.PasswordChar;
+            }
+
+            return s_passwordChar;
+        }
+
+        private static void FormatTextElement(ReactPasswordBoxShadowNode textNode, TextElement inline)
         {
             if (textNode._fontSize != Unset)
             {
                 var fontSize = textNode._fontSize;
-                box.FontSize = fontSize;
+                inline.FontSize = fontSize;
             }
 
             if (textNode._fontStyle.HasValue)
             {
                 var fontStyle = textNode._fontStyle.Value;
-                box.FontStyle = fontStyle;
+                inline.FontStyle = fontStyle;
             }
 
             if (textNode._fontWeight.HasValue)
             {
                 var fontWeight = textNode._fontWeight.Value;
-                box.FontWeight = fontWeight;
+                inline.FontWeight = fontWeight;
             }
 
             if (textNode._fontFamily != null)
             {
                 var fontFamily = new FontFamily(textNode._fontFamily);
-                box.FontFamily = fontFamily;
+                inline.FontFamily = fontFamily;
             }
         }
     }
