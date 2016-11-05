@@ -68,16 +68,16 @@ namespace Playground.Net46
                 throw new InvalidOperationException("RootPage is null");
             }
 
-            if (this.RootPage != null)
-            {
-                this.InitializeRootPage();
-            }
-
             this.Shell = this.CreateShell();
 
             if (this.Shell != null)
             {
                 this.InitializeShell();
+            }
+
+            if (this.RootPage != null)
+            {
+                this.InitializeRootPage();
             }
         }
 

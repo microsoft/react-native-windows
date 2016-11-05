@@ -1,12 +1,19 @@
-﻿using System.Windows;
+﻿using ReactNative;
+using System.Windows;
 
 namespace Playground.Net46
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        #region Constructor(s)
+
+        public MainWindow(ShellViewModel viewModel)
         {
             InitializeComponent();
+
+            this.DataContext = viewModel;
         }
+
+        #endregion
     }
 }

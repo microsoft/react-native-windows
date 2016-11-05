@@ -152,6 +152,9 @@
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\UIManagerModule.cs" />
+    <Compile Include="Views\ReactCanvas.xaml.cs">
+      <DependentUpon>ReactCanvas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
@@ -169,6 +172,10 @@
     <Page Include="DevSupport\Resources\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReactCanvas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Page Include="DevSupport\DevOptionDialog.xaml">

@@ -163,15 +163,22 @@ namespace ReactNative.DevSupport
             var values = ApplicationData.Current.LocalSettings.Values;
             values[key] = value;
 #else
-            var values = ConfigurationManager.AppSettings;
-            if (values[key] == null)
+            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            var settings = configFile.AppSettings.Settings;
+
+            if (settings[key] == null)
             {
-                values.Add(key, value.ToString());
+                settings.Add(key, value.ToString());
             }
             else
             {
-                values[key] = value.ToString();
+                settings[key].Value = value.ToString();
             }
+
+            configFile.Save(ConfigurationSaveMode.Modified);
+
+            ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
 #endif
 
             if (s_triggerReload.Contains(key))

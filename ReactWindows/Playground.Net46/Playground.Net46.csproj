@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="PlaygroundBootstrapper.cs" />
     <Compile Include="ReactNativeBootstrapper.cs" />
+    <Compile Include="ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

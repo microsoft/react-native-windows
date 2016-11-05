@@ -298,11 +298,15 @@ namespace ReactNative.DevSupport
                     option.HideDialog = _dismissDevOptionsDialog;
                 }
 #else
-                var asyncInfo = _devOptionsDialog.ShowDialog();
+                _devOptionsDialog.Owner = Application.Current.MainWindow;
+
+                _dismissDevOptionsDialog = _devOptionsDialog.Close;
+
+                _devOptionsDialog.Show();
 
                 foreach (var option in options)
                 {
-                    option.HideDialog = _devOptionsDialog.Hide;
+                    option.HideDialog = _dismissDevOptionsDialog;
                 }
 #endif
             });
@@ -463,7 +467,7 @@ namespace ReactNative.DevSupport
 
                 _dismissRedBoxDialog = _redBoxDialog.Close;
 
-                _redBoxDialog.Show();
+                _redBoxDialog.ShowDialog();
 #endif
             });
         }

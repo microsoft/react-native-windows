@@ -87,13 +87,17 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string arguments)
         {
-            //TODO: No ApplicationPageBackgroundThemeBrush in WPF, is there something we can look for?
-            //RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            RootView.Background = (Brush)SystemColors.WindowBrush;
 
             ApplyArguments(arguments);
             RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
+
+            if (_reactInstanceManager.DevSupportManager.IsEnabled)
+            {
+                RootView.AddHandler(Mouse.MouseDownEvent, (MouseButtonEventHandler)OnMouseAcceleratorActivated);
+            }
         }
 
         /// <summary>
@@ -122,6 +126,11 @@ namespace ReactNative
         {
             RootView.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
+            if (_reactInstanceManager.DevSupportManager.IsEnabled)
+            {
+                RootView.RemoveHandler(Mouse.MouseUpEvent, (MouseButtonEventHandler)OnMouseAcceleratorActivated);
+            }
+
             return _reactInstanceManager.DisposeAsync();
         }
 
@@ -145,24 +154,31 @@ namespace ReactNative
         /// <param name="e"></param>
         private void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
         {
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
-            {
-                // Shift+F10 or Shift+Menu
-                if ((e.Key == Key.F10 || e.Key == Key.Apps) &&
-                    (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
-                {
-                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
-                }
-                // Ctrl+R
-                if (e.Key == Key.R && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-                {
-                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
-                }
-            }
             // Back button
             if (e.Key == Key.Back || e.Key == Key.BrowserBack)
             {
                 _reactInstanceManager.OnBackPressed();
+            }
+        }
+
+        private void OnMouseAcceleratorActivated(object sender, MouseButtonEventArgs e)
+        {
+            if (_reactInstanceManager.DevSupportManager.IsEnabled)
+            {
+                if (e.ChangedButton == MouseButton.Right)
+                {
+                    //Right Click + Apps Key
+                    if (Keyboard.IsKeyDown(Key.Apps))
+                    {
+                        _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
+                    }
+
+                    //Right Click + 'R'
+                    if (Keyboard.IsKeyDown(Key.R))
+                    {
+                        _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                    }
+                }
             }
         }
 
