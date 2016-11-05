@@ -45,4 +45,8 @@ npm install --save-dev rnpm-plugin-windows@0.1.*
 
 ## Running React Windows Applications
 
-Coming soon.
+Once `react-native-windows` is installed in your project, an additional RNPM plugin for running Windows apps is exposed to the `react-native-cli`.  To deploy your app to Desktop, execute:
+```
+react-native run-windows
+```
+For more information on the kinds of options and flags available for deploying to devices and emulators, use the `--help` flag to get the command usage information.
