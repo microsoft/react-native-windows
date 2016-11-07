@@ -20,7 +20,17 @@ clone_script:
 
     cd %APPVEYOR_BUILD_FOLDER%
 
-    git checkout -qf %APPVEYOR_REPO_COMMIT%
+    if not defined APPVEYOR_PULL_REQUEST_NUMBER (
+
+      git checkout -qf %APPVEYOR_REPO_COMMIT%
+   
+    ) else (
+    
+      git fetch -q origin +refs/pull/%APPVEYOR_PULL_REQUEST_NUMBER%/merge:
+
+      git checkout -qf FETCH_HEAD
+
+    )
 
     git submodule update --init --recursive
 
