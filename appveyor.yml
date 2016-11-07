@@ -8,7 +8,7 @@ cache:
 
 clone_script:
 - ps: >-
-    git clone -q $("--branch=" + $Env:APPVEYOR_REPO_BRANCH) $("https://github.com/" + $Env:APPVEYOR_REPO_NAME + ".git " + $Env:APPVEYOR_BUILD_FOLDER)
+    git clone -q $("--branch=" + $Env:APPVEYOR_REPO_BRANCH) $("https://github.com/" + $Env:APPVEYOR_REPO_NAME + ".git") $Env:APPVEYOR_BUILD_FOLDER
 
     cd $Env:APPVEYOR_BUILD_FOLDER
 
