@@ -8,6 +8,14 @@ cache:
 
 clone_script:
 - cmd: >-
+    @echo off
+
+    echo APPVEYOR_REPO_BRANCH -- %APPVEYOR_REPO_BRANCH%
+
+    echo APPVEYOR_REPO_NAME -- %APPVEYOR_REPO_NAME%
+
+    echo APPVEYOR_BUILD_FOLDER -- %APPVEYOR_BUILD_FOLDER%
+
     git clone -q --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
 
     cd %APPVEYOR_BUILD_FOLDER%
