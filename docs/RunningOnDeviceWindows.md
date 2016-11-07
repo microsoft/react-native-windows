@@ -6,11 +6,17 @@ category: Guides (Windows)
 permalink: docs/running-on-device-windows.html
 ---
 
-## Running the Universal Windows App
+## Running the Universal Windows App with react-native-cli
 
-Running a React Native Universal Windows app is easy. Open your solution in Visual Studio 2015, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
+You can deploy your react-native-windows app to the Desktop using the [react-native-cli](http://npmjs.com/packages/react-native-cli):
+```
+react-native run-windows
+```
+For more information on the kinds of options and flags available for deploying to devices and emulators, use the `--help` flag to get the command usage information.
 
-We're also planning on creating a `run-windows` command. In the meantime, just use Visual Studio. 
+## Running the Universal Windows App with Visual Studio
+
+Open your solution in Visual Studio 2015, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
 
 ### Desktop
 
