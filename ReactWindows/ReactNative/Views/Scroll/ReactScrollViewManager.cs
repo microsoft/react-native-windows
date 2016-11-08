@@ -179,6 +179,28 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
+        /// Sets the minimum zoom scale for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="zoomScale">The zoom scale.</param>
+        [ReactProp("minimumZoomScale")]
+        public void SetMinimumZoomScale(ScrollViewer view, float? zoomScale)
+        {
+            view.MaxZoomFactor = zoomScale ?? 1.0f;
+        }
+
+        /// <summary>
+        /// Sets the maximum zoon scale for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="zoomScale">The zoom scale.</param>
+        [ReactProp("maximumZoomScale")]
+        public void SetMaximumZoomScale(ScrollViewer view, float? zoomScale)
+        {
+            view.MinZoomFactor = zoomScale ?? 1.0f;
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
