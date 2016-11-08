@@ -352,8 +352,8 @@ namespace ReactNative.DevSupport
 
             var progressDialog = new ProgressDialog("Please wait...", message);
 #if WINDOWS_UWP
-            var dialogOperation = progressDialog.ShowAsync();
-            Action cancel = dialogOperation.Cancel;
+                var dialogOperation = progressDialog.ShowAsync();
+                Action cancel = dialogOperation.Cancel;
 #else
             progressDialog.Owner = Application.Current.MainWindow;
 
@@ -541,19 +541,26 @@ namespace ReactNative.DevSupport
                 }
             }
 #else
-            var localStorage = FileSystem.Current.LocalStorage;
-            var temporaryFolder = await localStorage.CreateFolderAsync("temp", CreationCollisionOption.GenerateUniqueName);
-            var temporaryFile = await temporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
+            
+
+            var temporaryFilePath = Path.GetTempPath() + JSBundleFileName;
+
+            //var temporaryFolder = await localStorage.GetFolderAsync(, CreationCollisionOption.GenerateUniqueName);
+            //var temporaryFile = await temporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
             try
             {
-                using (var stream = new MemoryStream())
+                using (var stream = new FileStream(temporaryFilePath, FileMode.Create))
                 {
                     await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
-                    await temporaryFile.WriteAllTextAsync(stream.ToString());
                 }
 
+                var temporaryFile = await FileSystem.Current.GetFileFromPathAsync(temporaryFilePath, token);
+
+                var localStorage = FileSystem.Current.LocalStorage;
+
                 string newPath = PortablePath.Combine(localStorage.Path, JSBundleFileName);
-                await temporaryFile.MoveAsync(newPath, NameCollisionOption.ReplaceExisting);
+
+                await temporaryFile.MoveAsync(newPath, NameCollisionOption.ReplaceExisting, token);
                 moved = true;
 
                 dismissProgress();
@@ -576,7 +583,13 @@ namespace ReactNative.DevSupport
             {
                 if (!moved)
                 {
-                    await temporaryFile.DeleteAsync();
+                    var temporaryFile = await FileSystem.Current.GetFileFromPathAsync(temporaryFilePath, token).ConfigureAwait(false);
+
+                    if (temporaryFile != null)
+                    {
+                        await temporaryFile.DeleteAsync(token).ConfigureAwait(false);
+                    }
+                    
                 }
             }
 #endif

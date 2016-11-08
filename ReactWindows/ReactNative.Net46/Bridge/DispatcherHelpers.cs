@@ -20,9 +20,28 @@ namespace ReactNative.Bridge
             return Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread;
         }
 
-        public static async void RunOnDispatcher(Action action)
+        public static async void RunOnDispatcher(Action action, bool runAsync = true)
         {
-            await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+            if (action == null)
+            {
+                throw new InvalidOperationException("No Action");
+            }
+
+            //if (IsOnDispatcher())
+            //{
+            //    action.Invoke();
+            //}
+            //else
+            //{
+                if (runAsync)
+                {
+                    await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+                }
+                else
+                {
+                    Dispatcher.CurrentDispatcher.Invoke(action);
+                }
+            //}
         }
 
         public static Task<T> CallOnDispatcher<T>(Func<T> func)

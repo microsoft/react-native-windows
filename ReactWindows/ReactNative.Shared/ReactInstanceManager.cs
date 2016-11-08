@@ -448,6 +448,8 @@ namespace ReactNative
             Func<IJavaScriptExecutor> jsExecutorFactory,
             JavaScriptBundleLoader jsBundleLoader)
         {
+            DispatcherHelpers.AssertOnDispatcher();
+
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
