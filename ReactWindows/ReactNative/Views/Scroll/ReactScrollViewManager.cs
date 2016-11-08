@@ -142,7 +142,7 @@ namespace ReactNative.Views.Scroll
         public void SetShowsHorizontalScrollIndicator(ScrollViewer view, bool showIndicator)
         {
             view.HorizontalScrollBarVisibility = showIndicator
-                ? ScrollBarVisibility.Visible
+                ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Hidden;
         }
 
@@ -186,18 +186,42 @@ namespace ReactNative.Views.Scroll
         [ReactProp("minimumZoomScale")]
         public void SetMinimumZoomScale(ScrollViewer view, float? zoomScale)
         {
-            view.MaxZoomFactor = zoomScale ?? 1.0f;
+            view.MinZoomFactor = zoomScale ?? 0.1f;
         }
 
         /// <summary>
-        /// Sets the maximum zoon scale for the view.
+        /// Sets the maximum zoom scale for the view.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="zoomScale">The zoom scale.</param>
         [ReactProp("maximumZoomScale")]
         public void SetMaximumZoomScale(ScrollViewer view, float? zoomScale)
         {
-            view.MinZoomFactor = zoomScale ?? 1.0f;
+            view.MaxZoomFactor = zoomScale ?? 10.0f;
+        }
+
+        /// <summary>
+        /// Sets the zoom scale for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="zoomScale">The zoom scale.</param>
+        [ReactProp("zoomScale")]
+        public void SetZoomScale(ScrollViewer view, float? zoomScale)
+        {
+            view.ChangeView(null, null, zoomScale ?? 1.0f);
+        }
+        
+        /// <summary>
+        /// Enables or disables scroll view zoom.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="enabled">Signals whether zoom is enabled.</param>
+        [ReactProp("zoomEnabled")]
+        public void SetZoomScale(ScrollViewer view, bool? enabled)
+        {
+            view.ZoomMode = (enabled ?? false) 
+                ? ZoomMode.Enabled 
+                : ZoomMode.Disabled;
         }
 
         /// <summary>
