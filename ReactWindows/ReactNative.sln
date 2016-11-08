@@ -24,6 +24,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraCore", "ChakraCore\ChakraCore.vcxproj", "{E02ED054-4FB2-4EEB-8835-36A5E542E368}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Net46", "Playground.Net46\Playground.Net46.csproj", "{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E02ED054-4FB2-4EEB-8835-36A5E542E368} = {E02ED054-4FB2-4EEB-8835-36A5E542E368}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

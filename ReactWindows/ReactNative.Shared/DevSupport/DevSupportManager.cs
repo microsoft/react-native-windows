@@ -551,7 +551,8 @@ namespace ReactNative.DevSupport
                     await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
                     await temporaryFile.WriteAllTextAsync(stream.ToString());
                 }
-                string newPath = PortablePath.Combine(localStorage.ToString(), JSBundleFileName);
+
+                string newPath = PortablePath.Combine(localStorage.Path, JSBundleFileName);
                 await temporaryFile.MoveAsync(newPath, NameCollisionOption.ReplaceExisting);
                 moved = true;
 

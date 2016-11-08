@@ -94,10 +94,9 @@ namespace ReactNative
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
-            {
-                RootView.AddHandler(Mouse.MouseDownEvent, (MouseButtonEventHandler)OnMouseAcceleratorActivated);
-            }
+            RootView.Focusable = true;
+            RootView.Focus();
+            RootView.FocusVisualStyle = null;
         }
 
         /// <summary>
@@ -126,11 +125,6 @@ namespace ReactNative
         {
             RootView.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
-            {
-                RootView.RemoveHandler(Mouse.MouseUpEvent, (MouseButtonEventHandler)OnMouseAcceleratorActivated);
-            }
-
             return _reactInstanceManager.DisposeAsync();
         }
 
@@ -154,31 +148,28 @@ namespace ReactNative
         /// <param name="e"></param>
         private void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
         {
+            if (_reactInstanceManager.DevSupportManager.IsEnabled)
+            {
+                var isShiftKeyDown = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+                var isCtrlKeyDown = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
+
+                //Ctrl+Shift+D or Ctrl+Shift+M
+                if (isShiftKeyDown && isCtrlKeyDown && (e.Key == Key.D || e.Key == Key.M) )
+                {
+                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
+                }
+
+                // Ctrl+Shift+R
+                if (isShiftKeyDown && isCtrlKeyDown && e.Key == Key.R)
+                {
+                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                }
+            }
+
             // Back button
             if (e.Key == Key.Back || e.Key == Key.BrowserBack)
             {
                 _reactInstanceManager.OnBackPressed();
-            }
-        }
-
-        private void OnMouseAcceleratorActivated(object sender, MouseButtonEventArgs e)
-        {
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
-            {
-                if (e.ChangedButton == MouseButton.Right)
-                {
-                    //Right Click + Apps Key
-                    if (Keyboard.IsKeyDown(Key.Apps))
-                    {
-                        _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
-                    }
-
-                    //Right Click + 'R'
-                    if (Keyboard.IsKeyDown(Key.R))
-                    {
-                        _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
-                    }
-                }
             }
         }
 
