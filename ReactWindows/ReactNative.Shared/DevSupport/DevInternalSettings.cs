@@ -164,7 +164,6 @@ namespace ReactNative.DevSupport
             values[key] = value;
 #else
             var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
             var settings = configFile.AppSettings.Settings;
 
             if (settings[key] == null)
@@ -177,7 +176,6 @@ namespace ReactNative.DevSupport
             }
 
             configFile.Save(ConfigurationSaveMode.Modified);
-
             ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
 #endif
 

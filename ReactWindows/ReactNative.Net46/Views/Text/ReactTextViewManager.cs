@@ -157,8 +157,8 @@ namespace ReactNative.Views.Text
             var richTextBlock = new TextBlock
             {
                 //IsTextSelectionEnabled = false,
-                //HorizontalContentAlignment = HorizontalAlignment.Left,
-                //TextTrimming = TextTrimming.CharacterEllipsis,
+                TextAlignment = TextAlignment.Left,
+                TextTrimming = TextTrimming.CharacterEllipsis,
             };
 
             //richTextBlock.Document = new FlowDocument();

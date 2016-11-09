@@ -23,7 +23,7 @@ namespace ReactNative.Views.Text
 
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
-        private HorizontalAlignment _textAlignment = HorizontalAlignment.Left;
+        private TextAlignment _textAlignment = TextAlignment.Left;
 
         private string _fontFamily;
 
@@ -147,8 +147,8 @@ namespace ReactNative.Views.Text
         public void SetTextAlign(string textAlign)
         {
             var textAlignment = textAlign == "auto" || textAlign == null ? 
-                HorizontalAlignment.Left :
-                EnumHelpers.Parse<HorizontalAlignment>(textAlign);
+                TextAlignment.Left :
+                EnumHelpers.Parse<TextAlignment>(textAlign);
 
             if (_textAlignment != textAlignment)
             {
@@ -194,8 +194,8 @@ namespace ReactNative.Views.Text
             {
                 var textBlock = new TextBlock
                 {
-                    //HorizontalContentAlignment = HorizontalAlignment.Left,
-                    // TextTrimming = TextTrimming.CharacterEllipsis,
+                    TextAlignment = TextAlignment.Left,
+                    TextTrimming = TextTrimming.CharacterEllipsis,
                 };
 
                 var textNode = (ReactTextShadowNode)node;
@@ -230,9 +230,8 @@ namespace ReactNative.Views.Text
         {
             //textBlock.CharacterSpacing = _letterSpacing;
             //textBlock.MaxLines = _numberOfLines;
-            //textBlock.Document = new FlowDocument();
-            //textBlock.Document.LineHeight = _lineHeight;
-            //textBlock.HorizontalContentAlignment = _textAlignment;
+            textBlock.LineHeight = _lineHeight;
+            textBlock.TextAlignment = _textAlignment;
             textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? new FontStyle();

@@ -18,7 +18,7 @@ namespace ReactNative.Bridge
 
         public static bool IsOnDispatcher()
         {
-            return Thread.CurrentThread == Application.Current.Dispatcher.Thread;
+            return Application.Current.Dispatcher.CheckAccess();
         }
 
         public static async void RunOnDispatcher(Action action, bool runAsync = true)
@@ -30,13 +30,19 @@ namespace ReactNative.Bridge
 
             if (IsOnDispatcher())
             {
-                action.Invoke();
+                if (runAsync)
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+                }
+                else
+                {
+                    action.Invoke();
+                }
             }
             else
             {
                 if (runAsync)
                 {
-                    //await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
                     await Application.Current.Dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
                 }
                 else

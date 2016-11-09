@@ -8,7 +8,7 @@ namespace ReactNative.Views.Text
     {
         public int GetReactTagAtPoint(UIElement reactView, Point point)
         {
-            var richTextBlock = reactView.As<RichTextBox>();
+            var richTextBlock = reactView.As<TextBlock>();
             var textPointer = richTextBlock.GetPositionFromPoint(point, true);
             return textPointer.Parent.GetTag();
         }

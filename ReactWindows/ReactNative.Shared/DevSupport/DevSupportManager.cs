@@ -93,7 +93,11 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public bool IsRemoteDebuggingEnabled { get; set; } = true;
+        public bool IsRemoteDebuggingEnabled
+        {
+            get;
+            set;
+        }
 
         public string SourceMapUrl
         {
@@ -295,9 +299,7 @@ namespace ReactNative.DevSupport
                 }
 #else
                 _devOptionsDialog.Owner = Application.Current.MainWindow;
-
                 _dismissDevOptionsDialog = _devOptionsDialog.Close;
-
                 _devOptionsDialog.Show();
 
                 foreach (var option in options)
@@ -348,13 +350,11 @@ namespace ReactNative.DevSupport
 
             var progressDialog = new ProgressDialog("Please wait...", message);
 #if WINDOWS_UWP
-                var dialogOperation = progressDialog.ShowAsync();
-                Action cancel = dialogOperation.Cancel;
+            var dialogOperation = progressDialog.ShowAsync();
+            Action cancel = dialogOperation.Cancel;
 #else
             progressDialog.Owner = Application.Current.MainWindow;
-
             Action cancel = progressDialog.Close;
-
             progressDialog.Show();
 #endif
             if (IsRemoteDebuggingEnabled)
@@ -432,7 +432,6 @@ namespace ReactNative.DevSupport
 
         private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
-            var isOnDispatcher = DispatcherHelpers.IsOnDispatcher();
             DispatcherHelpers.RunOnDispatcher(() =>
             {
                 if (_redBoxDialog == null)
@@ -461,9 +460,7 @@ namespace ReactNative.DevSupport
                 _dismissRedBoxDialog = asyncInfo.Cancel;
 #else
                 _redBoxDialog.Owner = Application.Current.MainWindow;
-
                 _dismissRedBoxDialog = _redBoxDialog.Close;
-
                 _redBoxDialog.ShowDialog();
 #endif
             });
@@ -538,12 +535,8 @@ namespace ReactNative.DevSupport
                 }
             }
 #else
-            
 
             var temporaryFilePath = Path.GetTempPath() + JSBundleFileName;
-
-            //var temporaryFolder = await localStorage.GetFolderAsync(, CreationCollisionOption.GenerateUniqueName);
-            //var temporaryFile = await temporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
             try
             {
                 using (var stream = new FileStream(temporaryFilePath, FileMode.Create))
@@ -552,9 +545,7 @@ namespace ReactNative.DevSupport
                 }
 
                 var temporaryFile = await FileSystem.Current.GetFileFromPathAsync(temporaryFilePath, token);
-
                 var localStorage = FileSystem.Current.LocalStorage;
-
                 string newPath = PortablePath.Combine(localStorage.Path, JSBundleFileName);
 
                 await temporaryFile.MoveAsync(newPath, NameCollisionOption.ReplaceExisting, token);
@@ -585,8 +576,7 @@ namespace ReactNative.DevSupport
                     if (temporaryFile != null)
                     {
                         await temporaryFile.DeleteAsync(token).ConfigureAwait(false);
-                    }
-                    
+                    }   
                 }
             }
 #endif
