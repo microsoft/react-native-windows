@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace ReactNative.Bridge
@@ -17,7 +18,7 @@ namespace ReactNative.Bridge
 
         public static bool IsOnDispatcher()
         {
-            return Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread;
+            return Thread.CurrentThread == Application.Current.Dispatcher.Thread;
         }
 
         public static async void RunOnDispatcher(Action action, bool runAsync = true)
@@ -27,21 +28,22 @@ namespace ReactNative.Bridge
                 throw new InvalidOperationException("No Action");
             }
 
-            //if (IsOnDispatcher())
-            //{
-            //    action.Invoke();
-            //}
-            //else
-            //{
+            if (IsOnDispatcher())
+            {
+                action.Invoke();
+            }
+            else
+            {
                 if (runAsync)
                 {
-                    await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+                    //await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+                    await Application.Current.Dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
                 }
                 else
                 {
-                    Dispatcher.CurrentDispatcher.Invoke(action);
+                    Application.Current.Dispatcher.Invoke(action);
                 }
-            //}
+            }
         }
 
         public static Task<T> CallOnDispatcher<T>(Func<T> func)

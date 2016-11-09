@@ -192,21 +192,19 @@ namespace ReactNative.Views.Text
             // TODO: determine another way to measure text elements.
             var task = DispatcherHelpers.CallOnDispatcher(() =>
             {
-                var textBlock = new RichTextBox
+                var textBlock = new TextBlock
                 {
-                    HorizontalContentAlignment = HorizontalAlignment.Left,
+                    //HorizontalContentAlignment = HorizontalAlignment.Left,
                     // TextTrimming = TextTrimming.CharacterEllipsis,
                 };
 
                 var textNode = (ReactTextShadowNode)node;
                 textNode.UpdateTextBlockCore(textBlock, true);
 
-                var block = new Paragraph();
                 foreach (var child in textNode.Children)
                 {
-                    block.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
+                    textBlock.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
                 }
-                textBlock.Document.Blocks.Add(block);
 
                 var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
                 var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
@@ -223,18 +221,18 @@ namespace ReactNative.Views.Text
         /// Updates the properties of a <see cref="RichTextBlock"/> view.
         /// </summary>
         /// <param name="textBlock">The view.</param>
-        public void UpdateTextBlock(RichTextBox textBlock)
+        public void UpdateTextBlock(TextBlock textBlock)
         {
             UpdateTextBlockCore(textBlock, false);
         }
 
-        private void UpdateTextBlockCore(RichTextBox textBlock, bool measureOnly)
+        private void UpdateTextBlockCore(TextBlock textBlock, bool measureOnly)
         {
             //textBlock.CharacterSpacing = _letterSpacing;
             //textBlock.MaxLines = _numberOfLines;
-            textBlock.Document = new FlowDocument();
-            textBlock.Document.LineHeight = _lineHeight;
-            textBlock.HorizontalContentAlignment = _textAlignment;
+            //textBlock.Document = new FlowDocument();
+            //textBlock.Document.LineHeight = _lineHeight;
+            //textBlock.HorizontalContentAlignment = _textAlignment;
             textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? new FontStyle();

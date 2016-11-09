@@ -12,7 +12,7 @@ namespace ReactNative.Views.Text
     /// <summary>
     /// The view manager for text views.
     /// </summary>
-    public class ReactTextViewManager : ViewParentManager<RichTextBox, ReactTextShadowNode>
+    public class ReactTextViewManager : ViewParentManager<TextBlock, ReactTextShadowNode>
     {
         private static readonly IReactCompoundView s_compoundView = new ReactTextCompoundView();
 
@@ -33,7 +33,7 @@ namespace ReactNative.Views.Text
         /// <param name="view">The view.</param>
         /// <param name="color">The masked color value.</param>
         [ReactProp(ViewProps.Color, CustomType = "Color")]
-        public void SetColor(RichTextBox view, uint? color)
+        public void SetColor(TextBlock view, uint? color)
         {
             view.Foreground = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
@@ -46,7 +46,7 @@ namespace ReactNative.Views.Text
         /// <param name="view">The view.</param>
         /// <param name="selectable">A flag indicating whether or not the text is selectable.</param>
         [ReactProp("selectable")]
-        public void SetSelectable(RichTextBox view, bool selectable)
+        public void SetSelectable(TextBlock view, bool selectable)
         {
             // ToDo: Manually control selectable
         }
@@ -57,7 +57,7 @@ namespace ReactNative.Views.Text
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        public override void AddView(RichTextBox parent, DependencyObject child, int index)
+        public override void AddView(TextBlock parent, DependencyObject child, int index)
         {
             var inlineChild = child as Inline;
             if (inlineChild == null)
@@ -68,7 +68,7 @@ namespace ReactNative.Views.Text
                 };
             }
 
-            ((IList)parent.Document.Blocks.OfType<Paragraph>().First().Inlines).Insert(index, inlineChild);
+            ((IList)parent.Inlines).Insert(index, inlineChild);
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace ReactNative.Views.Text
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        public override DependencyObject GetChildAt(RichTextBox parent, int index)
+        public override DependencyObject GetChildAt(TextBlock parent, int index)
         {
-            var child = ((IList)parent.Document.Blocks.OfType<Paragraph>().First().Inlines)[index];
+            var child = ((IList)parent.Inlines)[index];
             var childInlineContainer = child as InlineUIContainer;
             if (childInlineContainer != null)
             {
@@ -105,18 +105,18 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <returns>The number of children.</returns>
-        public override int GetChildCount(RichTextBox parent)
+        public override int GetChildCount(TextBlock parent)
         {
-            return ((IList)parent.Document.Blocks.OfType<Paragraph>().First().Inlines).Count;
+            return ((IList)parent.Inlines).Count;
         }
 
         /// <summary>
         /// Removes all children from the view parent.
         /// </summary>
         /// <param name="parent">The view parent.</param>
-        public override void RemoveAllChildren(RichTextBox parent)
+        public override void RemoveAllChildren(TextBlock parent)
         {
-            var inlines = parent.Document.Blocks.OfType<Paragraph>().First().Inlines;
+            var inlines = parent.Inlines;
             inlines.Clear();
         }
 
@@ -125,9 +125,9 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <param name="index">The index.</param>
-        public override void RemoveChildAt(RichTextBox parent, int index)
+        public override void RemoveChildAt(TextBlock parent, int index)
         {
-            var inlines = ((IList)parent.Document.Blocks.OfType<Paragraph>().First().Inlines);
+            var inlines = (IList)parent.Inlines;
             inlines.RemoveAt(index);
         }
 
@@ -136,7 +136,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public override void UpdateExtraData(RichTextBox root, object extraData)
+        public override void UpdateExtraData(TextBlock root, object extraData)
         {
             base.UpdateExtraData(root, extraData);
 
@@ -152,17 +152,17 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override RichTextBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override TextBlock CreateViewInstance(ThemedReactContext reactContext)
         {
-            var richTextBlock = new RichTextBox
+            var richTextBlock = new TextBlock
             {
                 //IsTextSelectionEnabled = false,
-                HorizontalContentAlignment = HorizontalAlignment.Left,
+                //HorizontalContentAlignment = HorizontalAlignment.Left,
                 //TextTrimming = TextTrimming.CharacterEllipsis,
             };
 
-            richTextBlock.Document = new FlowDocument();
-            richTextBlock.Document.Blocks.Add(new Paragraph());
+            //richTextBlock.Document = new FlowDocument();
+            //richTextBlock.Document.Blocks.Add(new Paragraph());
             richTextBlock.SetReactCompoundView(s_compoundView);
 
             return richTextBlock;

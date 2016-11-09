@@ -131,7 +131,7 @@ namespace ReactNative.Bridge.Queue
                 case MessageQueueThreadKind.BackgroundSingleThread:
                     return new SingleBackgroundMessageQueueThread(spec.Name, handler);
                 case MessageQueueThreadKind.BackgroundAnyThread:
-                    return new AnyBackgroundMessageQueueThread(spec.Name, handler);
+                    return new SingleBackgroundMessageQueueThread(spec.Name, handler);
                 default:
                     throw new InvalidOperationException(
                         Invariant($"Unknown thread type '{spec.Kind}' with name '{spec.Name}'."));

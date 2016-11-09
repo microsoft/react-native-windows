@@ -93,11 +93,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public bool IsRemoteDebuggingEnabled
-        {
-            get;
-            set;
-        }
+        public bool IsRemoteDebuggingEnabled { get; set; } = true;
 
         public string SourceMapUrl
         {
@@ -436,6 +432,7 @@ namespace ReactNative.DevSupport
 
         private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
+            var isOnDispatcher = DispatcherHelpers.IsOnDispatcher();
             DispatcherHelpers.RunOnDispatcher(() =>
             {
                 if (_redBoxDialog == null)
