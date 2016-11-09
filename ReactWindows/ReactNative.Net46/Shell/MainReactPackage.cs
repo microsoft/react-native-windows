@@ -13,7 +13,7 @@ using ReactNative.Modules.Network;
 //using ReactNative.Modules.StatusBar;
 using ReactNative.Modules.Storage;
 //using ReactNative.Modules.Vibration;
-//using ReactNative.Modules.WebSocket;
+using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
 using ReactNative.Views.Text;
 using ReactNative.Views.View;
@@ -63,7 +63,7 @@ namespace ReactNative.Shell
                 new NetInfoModule(reactContext),
                 //new StatusBarModule(),
                 //new VibrationModule(),
-                //new WebSocketModule(reactContext),
+                new WebSocketModule(reactContext),
             };
         }
 

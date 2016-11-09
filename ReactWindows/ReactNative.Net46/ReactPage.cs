@@ -150,17 +150,16 @@ namespace ReactNative
         {
             if (_reactInstanceManager.DevSupportManager.IsEnabled)
             {
-                var isShiftKeyDown = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
                 var isCtrlKeyDown = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
 
-                //Ctrl+Shift+D or Ctrl+Shift+M
-                if (isShiftKeyDown && isCtrlKeyDown && (e.Key == Key.D || e.Key == Key.M) )
+                //Ctrl+D or Ctrl+M
+                if (isCtrlKeyDown && (e.Key == Key.D || e.Key == Key.M) )
                 {
                     _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
                 }
 
-                // Ctrl+Shift+R
-                if (isShiftKeyDown && isCtrlKeyDown && e.Key == Key.R)
+                // Ctrl+R
+                if (isCtrlKeyDown && e.Key == Key.R)
                 {
                     _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
