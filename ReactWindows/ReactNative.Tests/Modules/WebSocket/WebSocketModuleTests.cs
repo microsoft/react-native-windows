@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿
+
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
