@@ -9,7 +9,7 @@
 | DrawerLayoutAndroid | n/a | Android-only. See [SplitViewWindows](../ReactWindows/ReactNative/Views/Split/ReactSplitViewManager.cs). |
 | Image | Ready | [Missing prefetch (#366).](https://github.com/ReactWindows/react-native-windows/issues/366) |
 | ListView | Ready | [RecyclerBackedScrollViewManager unavailable (#186).](https://github.com/ReactWindows/react-native-windows/issues/186) |
-| MapView | Not Started |  |
+| MapView | Not Started | [Deprecated]() on iOS. |
 | Modal | Not Started |  |
 | Navigator | Ready |  |
 | NavigatorIOS | n/a | iOS-only. |
