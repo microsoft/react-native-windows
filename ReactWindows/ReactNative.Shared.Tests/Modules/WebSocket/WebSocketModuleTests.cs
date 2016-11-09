@@ -1,19 +1,19 @@
-﻿
-
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using System;
+using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.WebSocket;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace ReactNative.Tests.Modules.WebSocket
 {
-    [TestClass]
+    [TestFixture]
     public class WebSocketModuleTests
     {
-        [TestMethod]
-        [TestCategory("Network")]
+        [Test]
+        [Category("Network")]
         public void WebSocketModule_OpenClosedEvent()
         {
             var waitHandle = new AutoResetEvent(false);
@@ -47,20 +47,23 @@ namespace ReactNative.Tests.Modules.WebSocket
             finally
             {
                 module.close(1000, "None", 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(5000));
+                waitHandle.Dispose(); //??
             }
 
-            Assert.AreEqual(1, openParams["id"]);
-            Assert.AreEqual(1, closeParams["id"]);
-            Assert.AreEqual(1000, closeParams["code"]);
-            Assert.AreEqual("None", closeParams["reason"]);
+            Assert.AreEqual(1, openParams["id"].Value<int>());
+            Assert.AreEqual(1, closeParams["id"].Value<int>());
+            Assert.AreEqual(1000, closeParams["code"].Value<int>());
+            Assert.AreEqual("None", closeParams["reason"].Value<string>());
         }
 
-        [TestMethod]
+        [Test]
         public void WebSocketModule_FailedEvent()
         {
             var waitHandle = new AutoResetEvent(false);
             var json = default(JObject);
+            bool websocketFailedCalled = false;
+
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
                 if (name == "emit" && args.Length == 2)
@@ -68,8 +71,13 @@ namespace ReactNative.Tests.Modules.WebSocket
                     var eventName = (string)args[0];
                     switch (eventName)
                     {
+                        case "websocketClosed":
+                            waitHandle.Set();
+                            break;
                         case "websocketFailed":
                             json = (JObject)args[1];
+
+                            websocketFailedCalled = true;
                             waitHandle.Set();
                             break;
                     }
@@ -80,18 +88,20 @@ namespace ReactNative.Tests.Modules.WebSocket
             try
             {
                 module.connect("ws://invalid.websocket.address", null, null, 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(5000));
             }
             finally
             {
                 module.close(1000, "None", 1);
+                waitHandle.Dispose();
             }
 
-            Assert.AreEqual(1, json["id"]);
+            Assert.True(websocketFailedCalled, @"'websocketFailed' event was expected but never received.");
+            Assert.AreEqual(1, json["id"].Value<int>());
         }
 
-        [TestMethod]
-        [TestCategory("Network")]
+        [Test]
+        [Category("Network")]
         public void WebSocketModule_DataEvent()
         {
             var waitHandle = new AutoResetEvent(false);
@@ -114,22 +124,26 @@ namespace ReactNative.Tests.Modules.WebSocket
                 }
             }));
 
+            int waitTimeout = System.Diagnostics.Debugger.IsAttached ? -1 : 5000;
+
             var module = new WebSocketModule(context);
             try
             {
                 module.connect("ws://echo.websocket.org", null, null, 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(waitTimeout));
                 module.send("FooBarBaz", 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(waitTimeout));
             }
             finally
             {
                 module.close(1000, "None", 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(waitTimeout));
+
+                waitHandle.Dispose();
             }
 
-            Assert.AreEqual(1, json["id"]);
-            Assert.AreEqual("FooBarBaz", json["data"]);
+            Assert.AreEqual(1, json["id"].Value<int>());
+            Assert.AreEqual("FooBarBaz", json["data"].Value<string>());
         }
 
         private ReactContext CreateReactContext(IInvocationHandler handler)

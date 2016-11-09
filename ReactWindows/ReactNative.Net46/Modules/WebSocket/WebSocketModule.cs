@@ -6,9 +6,6 @@ using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.WebSockets;
-using System.Threading;
 using WebSocketSharp;
 using static System.FormattableString;
 
@@ -16,15 +13,18 @@ namespace ReactNative.Modules.WebSocket
 {
     class WebSocketModule : ReactContextNativeModuleBase
     {
-        private readonly IDictionary<int, WebSocketSharp.WebSocket> _webSocketConnections;
-        private readonly IDictionary<int, StringWriter> _dataWriters;
+        private readonly IDictionary<int, WebSocketSharp.WebSocket> _webSocketConnections = new Dictionary<int, WebSocketSharp.WebSocket>();
+
+        #region Constructor(s)
 
         public WebSocketModule(ReactContext reactContext)
             : base(reactContext)
         {
-            _webSocketConnections = new Dictionary<int, WebSocketSharp.WebSocket>();
-            _dataWriters = new Dictionary<int, StringWriter>();
         }
+
+        #endregion
+
+        #region NativeModuleBase Overrides
 
         public override string Name
         {
@@ -34,29 +34,33 @@ namespace ReactNative.Modules.WebSocket
             }
         }
 
+        #endregion
+
+        #region Public Methods
+
         [ReactMethod]
         public void connect(string url, string[] protocols, JObject options, int id)
         {
-            var webSocket = new WebSocketSharp.WebSocket(url);
-
-            //webSocket.Control.MessageType = SocketMessageType.Utf8;
-
-            //if (protocols != null)
-            //{
-            //    foreach (var protocol in protocols)
-            //    {
-            //        webSocket.Control.SupportedProtocols.Add(protocol);
-            //    }
-            //}
-
             if (options != null && options.ContainsKey("origin"))
             {
                 throw new NotImplementedException(/* TODO: (#253) */);
             }
 
+            var webSocket = new WebSocketSharp.WebSocket(url);
+
             webSocket.OnMessage += (sender, args) =>
             {
                 OnMessageReceived(id, sender, args);
+            };
+
+            webSocket.OnOpen += (sender, args) =>
+            {
+                OnOpen(id, webSocket, args);
+            };
+
+            webSocket.OnError += (sender, args) =>
+            {
+                OnError(id, args);
             };
 
             webSocket.OnClose += (sender, args) =>
@@ -70,7 +74,8 @@ namespace ReactNative.Modules.WebSocket
         [ReactMethod]
         public void close(ushort code, string reason, int id)
         {
-            var webSocket = default(WebSocketSharp.WebSocket);
+            WebSocketSharp.WebSocket webSocket;
+
             if (!_webSocketConnections.TryGetValue(id, out webSocket))
             {
                 Tracer.Write(
@@ -82,14 +87,15 @@ namespace ReactNative.Modules.WebSocket
 
             try
             {
-                var writer = _dataWriters[id];
-                _dataWriters.Remove(id);
-                _webSocketConnections.Remove(id);
-                writer.Dispose();
                 webSocket.Close(code, reason);
             }
             catch (Exception ex)
             {
+                if (_webSocketConnections.ContainsKey(id))
+                {
+                    _webSocketConnections.Remove(id);
+                }
+
                 Tracer.Error(
                     ReactConstants.Tag,
                     Invariant($"Could not close WebSocket connection for id '{id}'."),
@@ -100,96 +106,86 @@ namespace ReactNative.Modules.WebSocket
         [ReactMethod]
         public void send(string message, int id)
         {
-            //var dataWriter = default(DataWriter);
-            //if (!_dataWriters.TryGetValue(id, out dataWriter))
-            //{
-            //    throw new InvalidOperationException(
-            //        Invariant($"Cannot send a message. Unknown WebSocket id '{id}'."));
-            //}
-
             SendMessageInBackground(id, message);
         }
 
-        private void InitializeInBackground(int id, string url, WebSocketSharp.WebSocket webSocket)
-        {
-            try
-            {
-                webSocket.Connect();
-                _webSocketConnections.Add(id, webSocket);
+        #endregion
 
-                //var dataWriter = new StringWriter(webSocket.OutputStream);
-                //dataWriter.UnicodeEncoding = UnicodeEncoding.Utf8;
-                //_dataWriters.Add(id, dataWriter);
+        #region Event Handlers
+
+        private void OnOpen(int id, WebSocketSharp.WebSocket webSocket, EventArgs args)
+        {
+            if (webSocket != null)
+            {
+                _webSocketConnections.Add(id, webSocket);
 
                 SendEvent("websocketOpen", new JObject
                 {
-                    { "id", id },
+                    {"id", id},
                 });
-            }
-            catch (Exception ex)
-            {
-                OnError(id, ex);
-            }
-        }
-
-        private void SendMessageInBackground(int id, string message)
-        {
-            try
-            {
-                //dataWriter.WriteString(message);
-                //await dataWriter.StoreAsync().AsTask().ConfigureAwait(false);
-                _webSocketConnections[id].SendAsync(message, null);
-            }
-            catch (Exception ex)
-            {
-                OnError(id, ex);
             }
         }
 
         private void OnClosed(int id, object webSocket, CloseEventArgs args)
         {
-            SendEvent("websocketClosed", new JObject
+            if (_webSocketConnections.ContainsKey(id))
             {
-                { "id", id },
-                { "code", args.Code },
-                { "reason", args.Reason },
-            });
+                _webSocketConnections.Remove(id);
+
+                SendEvent("websocketClosed", new JObject
+                {
+                    {"id", id},
+                    {"code", args.Code},
+                    {"reason", args.Reason},
+                });
+            }
+            else
+            {
+                SendEvent("websocketFailed", new JObject
+                {
+                    { "id", id },
+                    {"code", args.Code},
+                    { "message", args.Reason },
+                });
+            }
         }
 
-        private void OnError(int id, Exception exception)
+        private void OnError(int id, WebSocketSharp.ErrorEventArgs args)
         {
+            if (_webSocketConnections.ContainsKey(id))
+            {
+                _webSocketConnections.Remove(id);
+            }
+
             SendEvent("websocketFailed", new JObject
             {
                 { "id", id },
-                { "message", exception.Message },
+                { "message", args.Message },
             });
         }
 
         private void OnMessageReceived(int id, object sender, MessageEventArgs args)
         {
-            try
-            {
-                var message = args.Data;
-                SendEvent("websocketMessage", new JObject
-                    {
-                        { "id", id },
-                        { "data", message },
-                    });
+            var message = args.Data;
+            SendEvent("websocketMessage", new JObject
+                {
+                    { "id", id },
+                    { "data", message },
+                });
+        }
 
-                //using (var reader = args.GetDataReader())
-                //{
-                //    var message = reader.ReadString(reader.UnconsumedBufferLength);
-                //SendEvent("websocketMessage", new JObject
-                //    {
-                //        { "id", id },
-                //        { "data", message },
-                //    });
-                //}
-            }
-            catch (Exception ex)
-            {
-                OnError(id, ex);
-            }
+        #endregion
+
+        #region Private Methods
+
+        private void InitializeInBackground(int id, string url, WebSocketSharp.WebSocket webSocket)
+        {
+            webSocket?.Connect();
+        }
+
+        private void SendMessageInBackground(int id, string message)
+        {
+            _webSocketConnections[id].SendAsync(message, null);
         }
 
         private void SendEvent(string eventName, JObject parameters)
@@ -197,5 +193,7 @@ namespace ReactNative.Modules.WebSocket
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit(eventName, parameters);
         }
+
+        #endregion
     }
 }
