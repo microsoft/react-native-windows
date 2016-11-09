@@ -230,7 +230,7 @@ namespace ReactNative.Views.Text
         {
             //textBlock.CharacterSpacing = _letterSpacing;
             //textBlock.MaxLines = _numberOfLines;
-            textBlock.LineHeight = _lineHeight;
+            textBlock.LineHeight = _lineHeight != 0 ? _lineHeight : double.NaN;
             textBlock.TextAlignment = _textAlignment;
             textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
             textBlock.FontSize = _fontSize ?? 15;

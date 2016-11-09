@@ -22,7 +22,10 @@ class Playground extends Component {
           To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
-          Shake or press Shift+F10 for dev menu
+          Press Ctrl+R to reload
+        </Text>
+        <Text style={styles.instructions}>
+          Press Ctrl+D or Ctrl+M for dev menu
         </Text>
       </View>
     );
@@ -40,11 +43,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    width: 500
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+    width: 500
   },
 });
 
