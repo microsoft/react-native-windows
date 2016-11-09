@@ -13,10 +13,6 @@ namespace ReactNative.UIManager
     /// <summary>
     /// Native module to allow JavaScript to create and update native views.
     /// </summary>
-    /// <remarks>
-    /// TODO: 
-    /// 1) Add animation support to UIManagerModule
-    /// </remarks>
     public partial class UIManagerModule : ReactContextNativeModuleBase, ILifecycleEventListener, IOnBatchCompleteListener
     {
         private const int RootViewTagIncrement = 10;
