@@ -6,7 +6,7 @@ namespace ReactNative.UIManager.Events
     /// <summary>
     /// JavaScript event emitter.
     /// </summary>
-    public sealed class RCTEventEmitter : JavaScriptModuleBase
+    public class RCTEventEmitter : JavaScriptModuleBase
     {
         /// <summary>
         /// Receive an event.
@@ -14,7 +14,7 @@ namespace ReactNative.UIManager.Events
         /// <param name="targetTag">The target tag.</param>
         /// <param name="eventName">The event name.</param>
         /// <param name="event">The event data.</param>
-        public void receiveEvent(int targetTag, string eventName, JObject @event)
+        public virtual void receiveEvent(int targetTag, string eventName, JObject @event)
         {
             Invoke(targetTag, eventName, @event);
         }
@@ -25,7 +25,7 @@ namespace ReactNative.UIManager.Events
         /// <param name="eventName">The event name.</param>
         /// <param name="touches">The touches.</param>
         /// <param name="changedIndexes">The changed indices.</param>
-        public void receiveTouches(string eventName, JArray touches, JArray changedIndexes)
+        public virtual void receiveTouches(string eventName, JArray touches, JArray changedIndexes)
         {
             Invoke(eventName, touches, changedIndexes);
         }

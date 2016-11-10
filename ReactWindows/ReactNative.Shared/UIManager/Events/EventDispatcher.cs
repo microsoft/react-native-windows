@@ -83,7 +83,8 @@ namespace ReactNative.UIManager.Events
 
         private readonly IDictionary<long, int> _eventCookieToLastEventIndex = new Dictionary<long, int>();
         private readonly IDictionary<string, short> _eventNameToEventId = new Dictionary<string, short>();
-        private readonly List<Event> _eventStaging = new List<Event>();
+        private readonly IList<Event> _eventStaging = new List<Event>();
+        private readonly IList<IEventDispatcherListener> _listeners = new List<IEventDispatcherListener>();
 
         private readonly ReactContext _reactContext;
 
@@ -115,10 +116,43 @@ namespace ReactNative.UIManager.Events
             if (@event == null)
                 throw new ArgumentNullException(nameof(@event));
 
+            var eventHandled = false;
+            foreach (var listener in _listeners)
+            {
+                if (listener.OnEventDispatch(@event))
+                {
+                    eventHandled = true;
+                }
+            }
+            
+            // If the event was handled by one of the event listeners, don't send it to JavaScript.
+            if (eventHandled)
+            {
+                return;
+            }
+
             lock (_eventsStagingLock)
             {
                 _eventStaging.Add(@event);
             }
+        }
+
+        /// <summary>
+        /// Adds a listener to this <see cref="EventDispatcher"/>. 
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public void AddListener(IEventDispatcherListener listener)
+        {
+            _listeners.Add(listener);
+        }
+
+        /// <summary>
+        /// Removes a listener from this <see cref="EventDispatcher"/>. 
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public void RemoveListener(IEventDispatcherListener listener)
+        {
+            _listeners.Remove(listener);
         }
 
         /// <summary>
