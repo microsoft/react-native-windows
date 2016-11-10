@@ -21,7 +21,7 @@ using ReactNative.Views.View;
 //using ReactNative.Views.Image;
 //using ReactNative.Views.Picker;
 //using ReactNative.Views.Progress;
-//using ReactNative.Views.Scroll;
+using ReactNative.Views.Scroll;
 //using ReactNative.Views.Slider;
 //using ReactNative.Views.Split;
 //using ReactNative.Views.Switch;
@@ -95,7 +95,7 @@ namespace ReactNative.Shell
                 //new ReactPickerManager(),
                 new ReactRunManager(),
                 ////new RecyclerViewBackedScrollViewManager(),
-                //new ReactScrollViewManager(),
+                new ReactScrollViewManager(),
                 //new ReactSliderManager(),
                 //new ReactSplitViewManager(),
                 //new ReactSwitchManager(),

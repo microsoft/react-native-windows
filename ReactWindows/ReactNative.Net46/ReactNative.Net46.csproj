@@ -160,6 +160,7 @@
     <Compile Include="Views\ReactCanvas.xaml.cs">
       <DependentUpon>ReactCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Scroll\ReactScrollViewManager.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
