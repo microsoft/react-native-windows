@@ -18,7 +18,11 @@ namespace ReactNative.Bridge
 
         public static bool IsOnDispatcher()
         {
-            return Application.Current.Dispatcher.CheckAccess();
+            var dispatcher = Application.Current != null
+                ? Application.Current.Dispatcher
+                : Dispatcher.CurrentDispatcher;
+
+            return dispatcher.CheckAccess();
         }
 
         public static async void RunOnDispatcher(Action action, bool runAsync = true)
@@ -28,11 +32,16 @@ namespace ReactNative.Bridge
                 throw new InvalidOperationException("No Action");
             }
 
-            if (IsOnDispatcher())
+            var dispatcher = Application.Current != null
+                ? Application.Current.Dispatcher
+                : Dispatcher.CurrentDispatcher;
+
+
+            if (dispatcher.CheckAccess())
             {
                 if (runAsync)
                 {
-                    await Application.Current.Dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+                    await dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
                 }
                 else
                 {
@@ -43,11 +52,11 @@ namespace ReactNative.Bridge
             {
                 if (runAsync)
                 {
-                    await Application.Current.Dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+                    await dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
                 }
                 else
                 {
-                    Application.Current.Dispatcher.Invoke(action);
+                    dispatcher.Invoke(action);
                 }
             }
         }
