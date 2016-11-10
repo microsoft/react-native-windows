@@ -12,7 +12,7 @@
 
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var React = require('React');
-var ReactNative = require('react/lib/ReactNative');
+var ReactNative = require('ReactNative');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
