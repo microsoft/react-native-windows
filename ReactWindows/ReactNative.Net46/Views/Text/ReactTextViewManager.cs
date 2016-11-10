@@ -154,18 +154,15 @@ namespace ReactNative.Views.Text
         /// <returns>The view instance.</returns>
         protected override TextBlock CreateViewInstance(ThemedReactContext reactContext)
         {
-            var richTextBlock = new TextBlock
+            var textBlock = new TextBlock
             {
-                //IsTextSelectionEnabled = false,
                 TextAlignment = TextAlignment.Left,
                 TextTrimming = TextTrimming.CharacterEllipsis,
             };
 
-            //richTextBlock.Document = new FlowDocument();
-            //richTextBlock.Document.Blocks.Add(new Paragraph());
-            richTextBlock.SetReactCompoundView(s_compoundView);
+            textBlock.SetReactCompoundView(s_compoundView);
 
-            return richTextBlock;
+            return textBlock;
         }
     }
 }

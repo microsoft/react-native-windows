@@ -317,7 +317,6 @@ namespace ReactNative.Bridge
             public void Invoke(int moduleId, int methodId, JArray parameters)
             {
                 _parent.QueueConfiguration.NativeModulesQueueThread.AssertOnThread();
-                var isOnDispatcher = _parent.QueueConfiguration.DispatcherQueueThread.IsOnThread();
 
                 if (_parent.IsDisposed)
                 {

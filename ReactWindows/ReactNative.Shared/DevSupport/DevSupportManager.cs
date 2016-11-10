@@ -10,12 +10,12 @@ using System.Reactive.Disposables;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 #if WINDOWS_UWP
 using Windows.Storage;
 #else
 using PCLStorage;
 using System.Reflection;
+using System.Windows;
 #endif
 
 namespace ReactNative.DevSupport
@@ -535,7 +535,6 @@ namespace ReactNative.DevSupport
                 }
             }
 #else
-
             var temporaryFilePath = Path.GetTempPath() + JSBundleFileName;
             try
             {

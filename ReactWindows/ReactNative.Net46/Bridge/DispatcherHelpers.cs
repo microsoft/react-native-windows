@@ -1,13 +1,47 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 
 namespace ReactNative.Bridge
 {
-    static class DispatcherHelpers
+    internal static class DispatcherHelpers
     {
+        private static Dispatcher _dispatcher;
+
+        internal static Dispatcher CurrentDispatcher
+        {
+            get
+            {
+                if (_dispatcher == null)
+                {
+                    throw new InvalidOperationException("Dispatcher has not been set");
+                }
+
+                return _dispatcher;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                if (value.Thread.GetApartmentState() != ApartmentState.STA)
+                {
+                    throw new ArgumentException("Dispatcher must be an STA thread");
+                }
+
+                _dispatcher = value;
+            }
+        }
+
+        public static bool IsDispatcherSet()
+        {
+            return _dispatcher != null;
+        }
+
         public static void AssertOnDispatcher()
         {
             if (!IsOnDispatcher())
@@ -18,47 +52,17 @@ namespace ReactNative.Bridge
 
         public static bool IsOnDispatcher()
         {
-            var dispatcher = Application.Current != null
-                ? Application.Current.Dispatcher
-                : Dispatcher.CurrentDispatcher;
+            if (CurrentDispatcher == null)
+            {
+                throw new NullReferenceException("Dispatcher has not been set");
+            }
 
-            return dispatcher.CheckAccess();
+            return CurrentDispatcher.CheckAccess();
         }
 
-        public static async void RunOnDispatcher(Action action, bool runAsync = true)
+        public static async void RunOnDispatcher(Action action)
         {
-            if (action == null)
-            {
-                throw new InvalidOperationException("No Action");
-            }
-
-            var dispatcher = Application.Current != null
-                ? Application.Current.Dispatcher
-                : Dispatcher.CurrentDispatcher;
-
-
-            if (dispatcher.CheckAccess())
-            {
-                if (runAsync)
-                {
-                    await dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
-                }
-                else
-                {
-                    action.Invoke();
-                }
-            }
-            else
-            {
-                if (runAsync)
-                {
-                    await dispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
-                }
-                else
-                {
-                    dispatcher.Invoke(action);
-                }
-            }
+            await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
         public static Task<T> CallOnDispatcher<T>(Func<T> func)

@@ -125,6 +125,7 @@ namespace ReactNative.DevSupport
             }
         }
 
+        //TODO: Implement an abstraction or static helper to save settings based on the platform... The GetSetting and SetSetting methods or their contents are replicated elsewhere...
         private T GetSetting<T>(string key, T defaultValue)
         {
 #if WINDOWS_UWP

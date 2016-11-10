@@ -4,13 +4,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:ReactNative.DevSupport"
-    xmlns:design="clr-namespace:ReactNative.DevSupport.Design"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{DynamicResource ContentDialogStyle}"
     WindowStartupLocation="CenterOwner"
-    mc:Ignorable="d" d:DesignHeight="756" d:DesignWidth="548"
-    d:DataContext ="{d:DesignInstance design:RedBoxDialogDesignData, IsDesignTimeCreatable=True}">
+    mc:Ignorable="d" d:DesignHeight="756" d:DesignWidth="548">
 
     <Window.Resources>
         <ResourceDictionary>
