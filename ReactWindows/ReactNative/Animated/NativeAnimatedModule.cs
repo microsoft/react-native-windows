@@ -97,8 +97,8 @@ namespace ReactNative.Animated
         public override void Initialize()
         {
             var ctx = Context;
-            var uiImpl = ctx.GetNativeModule<UIManagerModule>().UIImplementation;
-            var nodesManager = new NativeAnimatedNodesManager(uiImpl);
+            var uiManager = ctx.GetNativeModule<UIManagerModule>();
+            var nodesManager = new NativeAnimatedNodesManager(uiManager);
             _animatedFrameCallback = (sender, args) =>
             {
                 try
@@ -308,7 +308,7 @@ namespace ReactNative.Animated
         /// Connects animated node to view.
         /// </summary>
         /// <param name="animatedNodeTag">Animated node tag.</param>
-        /// <param name="viewTag">React view tag.s</param>
+        /// <param name="viewTag">React view tag.</param>
         [ReactMethod]
         public void connectAnimatedNodeToView(int animatedNodeTag, int viewTag)
         {
@@ -326,6 +326,31 @@ namespace ReactNative.Animated
         {
             _operations.Add(manager =>
                 manager.DisconnectAnimatedNodeFromView(animatedNodeTag, viewTag));
+        }
+
+        /// <summary>
+        /// Adds an animated event to view.
+        /// </summary>
+        /// <param name="viewTag">The view tag.</param>
+        /// <param name="eventName">The event name.</param>
+        /// <param name="eventMapping">The event mapping.</param>
+        [ReactMethod]
+        public void addAnimatedEventToView(int viewTag, string eventName, JObject eventMapping)
+        {
+            _operations.Add(manager =>
+                manager.AddAnimatedEventToView(viewTag, eventName, eventMapping));
+        }
+
+        /// <summary>
+        /// Removes an animated event from view.
+        /// </summary>
+        /// <param name="viewTag">The view tag.</param>
+        /// <param name="eventName">The event name.</param>
+        [ReactMethod]
+        public void removeAnimatedEventFromView(int viewTag, string eventName)
+        {
+            _operations.Add(manager =>
+                manager.RemoveAnimatedEventFromView(viewTag, eventName));
         }
     }
 }
