@@ -4,7 +4,7 @@ using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
-//using ReactNative.Modules.Image;
+using ReactNative.Modules.Image;
 using ReactNative.Modules.I18N;
 //using ReactNative.Modules.Launch;
 //using ReactNative.Modules.Location;
@@ -18,7 +18,7 @@ using ReactNative.UIManager;
 using ReactNative.Views.Text;
 using ReactNative.Views.View;
 //using ReactNative.Views.Flip;
-//using ReactNative.Views.Image;
+using ReactNative.Views.Image;
 //using ReactNative.Views.Picker;
 //using ReactNative.Views.Progress;
 //using ReactNative.Views.Scroll;
@@ -54,7 +54,7 @@ namespace ReactNative.Shell
                 //new CameraRollManager(reactContext),
                 new ClipboardModule(),
                 new DialogModule(reactContext),
-                //new ImageLoaderModule(),
+                new ImageLoaderModule(),
                 new I18NModule(),
                 //new LauncherModule(reactContext),
                 //new LocationModule(reactContext),
@@ -89,7 +89,7 @@ namespace ReactNative.Shell
             return new List<IViewManager>
             {
                 //new ReactFlipViewManager(),
-                //new ReactImageManager(),
+                new ReactImageManager(),
                 //new ReactProgressBarViewManager(),
                 //new ReactProgressRingViewManager(),
                 //new ReactPickerManager(),
