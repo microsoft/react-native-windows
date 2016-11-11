@@ -54,7 +54,7 @@ namespace Playground.Net46
                 Application.Current.MainWindow = shellWindow;
             }
 
-            //Show Window it is not already active...
+            //Show Window if it is not already active...
             if (!shellWindow.IsActive)
             {
                 shellWindow.Show();
