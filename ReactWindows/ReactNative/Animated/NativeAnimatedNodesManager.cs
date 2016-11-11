@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.UIManager;
+using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -25,18 +26,22 @@ namespace ReactNative.Animated
     /// <remarks>
     /// This class should be accessed only from the dispatcher thread.
     /// </remarks>
-    class NativeAnimatedNodesManager
+    class NativeAnimatedNodesManager : IEventDispatcherListener
     {
-        private readonly Dictionary<int, AnimatedNode> _animatedNodes = new Dictionary<int, AnimatedNode>();
-        private readonly List<AnimationDriver> _activeAnimations = new List<AnimationDriver>();
-        private readonly List<AnimatedNode> _updatedNodes = new List<AnimatedNode>();
+        private readonly IDictionary<int, AnimatedNode> _animatedNodes = new Dictionary<int, AnimatedNode>();
+        private readonly IList<AnimationDriver> _activeAnimations = new List<AnimationDriver>();
+        private readonly IList<AnimatedNode> _updatedNodes = new List<AnimatedNode>();
+        private readonly IDictionary<Tuple<int, string>, EventAnimationDriver> _eventDrivers = new Dictionary<Tuple<int, string>, EventAnimationDriver>();
+        private readonly IReadOnlyDictionary<string, object> _customEventTypes;
         private readonly UIImplementation _uiImplementation;
 
         private int _animatedGraphBFSColor = 0;
 
-        public NativeAnimatedNodesManager(UIImplementation uiImplementation)
+        public NativeAnimatedNodesManager(UIManagerModule uiManager)
         {
-            this._uiImplementation = uiImplementation;
+            _uiImplementation = uiManager.UIImplementation;
+            uiManager.EventDispatcher.AddListener(this);
+            _customEventTypes = GetEventTypes(uiManager);
         }
 
         public bool HasActiveAnimations
@@ -259,6 +264,62 @@ namespace ReactNative.Animated
             propsAnimatedNode.ConnectedViewTag = -1;
         }
 
+        public void AddAnimatedEventToView(int viewTag, string eventName, JObject eventMapping)
+        {
+            var nodeTag = eventMapping.Value<int>("animatedValueTag");
+            var node = default(AnimatedNode);
+            if (!_animatedNodes.TryGetValue(nodeTag, out node))
+            {
+                 throw new InvalidOperationException(
+                     Invariant($"Animated node with tag '{nodeTag}' does not exist."));
+            }
+
+            var valueNode = node as ValueAnimatedNode;
+            if (valueNode == null)
+            {
+                 throw new InvalidOperationException(
+                     Invariant($"Animated node connected to event should be of type '{nameof(ValueAnimatedNode)}'."));
+            }
+            
+            var pathList = eventMapping["nativeEventPath"].ToObject<string[]>();
+            var @event = new EventAnimationDriver(pathList, valueNode);
+            _eventDrivers.Add(Tuple.Create(viewTag, eventName), @event);
+        }
+
+        public void RemoveAnimatedEventFromView(int viewTag, string eventName)
+        {
+            _eventDrivers.Remove(Tuple.Create(viewTag, eventName));
+        }
+
+        public bool OnEventDispatch(Event @event)
+        {
+            // Only support events dispatched from the dispatcher thread.
+            if (!DispatcherHelpers.IsOnDispatcher())
+            {
+                return false;
+            }
+
+            if (_eventDrivers.Count > 0)
+            {
+                var eventName = @event.EventName;
+                var customEventName = default(string);
+                if (TryGetRegistrationName(eventName, out customEventName))
+                {
+                    eventName = customEventName;
+                }
+
+                var eventDriver = default(EventAnimationDriver);
+                if (_eventDrivers.TryGetValue(Tuple.Create(@event.ViewTag, eventName), out eventDriver))
+                {
+                    @event.Dispatch(eventDriver);
+                    _updatedNodes.Add(eventDriver.ValueNode);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Animation loop performs BFS over the graph of animated nodes.
         /// </summary>
@@ -460,6 +521,38 @@ namespace ReactNative.Animated
             }
 
             return node;
+        }
+
+        private bool TryGetRegistrationName(string eventName, out string customEventName)
+        {
+            var customEvent = default(object);
+            if (!_customEventTypes.TryGetValue(eventName, out customEvent))
+            {
+                customEventName = default(string);
+                return false;
+            }
+
+            var customEventMap = customEvent as IReadOnlyDictionary<string, object>;
+            if (customEventMap == null)
+            {
+                customEventName = default(string);
+                return false;
+            }
+
+            var customEventRegistrationName = default(object);
+            if (!customEventMap.TryGetValue("registrationName", out customEventRegistrationName))
+            {
+                customEventName = default(string);
+                return false;
+            }
+
+            customEventName = customEventRegistrationName as string;
+            return customEventName != null;
+        }
+
+        private static IReadOnlyDictionary<string, object> GetEventTypes(UIManagerModule uiManager)
+        {
+            return (IReadOnlyDictionary<string, object>)uiManager.Constants["customDirectEventTypes"];
         }
     }
 }
