@@ -298,7 +298,16 @@ namespace ReactNative.DevSupport
                     option.HideDialog = _dismissDevOptionsDialog;
                 }
 #else
-                _devOptionsDialog.Owner = Application.Current.MainWindow;
+                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsActive)
+                {
+                    _devOptionsDialog.Owner = Application.Current.MainWindow;
+                }
+                else
+                {
+                    _devOptionsDialog.Topmost = true;
+                    _devOptionsDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                }
+
                 _dismissDevOptionsDialog = _devOptionsDialog.Close;
                 _devOptionsDialog.Show();
 
@@ -353,7 +362,16 @@ namespace ReactNative.DevSupport
             var dialogOperation = progressDialog.ShowAsync();
             Action cancel = dialogOperation.Cancel;
 #else
-            progressDialog.Owner = Application.Current.MainWindow;
+            if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsActive)
+            {
+                progressDialog.Owner = Application.Current.MainWindow;
+            }
+            else
+            {
+                progressDialog.Topmost = true;
+                progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
+            
             Action cancel = progressDialog.Close;
             progressDialog.Show();
 #endif
@@ -454,12 +472,21 @@ namespace ReactNative.DevSupport
                     _dismissRedBoxDialog = null;
                     _redBoxDialog = null;
                 };
-                
+
 #if WINDOWS_UWP
                 var asyncInfo = _redBoxDialog.ShowAsync();
                 _dismissRedBoxDialog = asyncInfo.Cancel;
 #else
-                _redBoxDialog.Owner = Application.Current.MainWindow;
+                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsActive)
+                {
+                    _redBoxDialog.Owner = Application.Current.MainWindow;
+                }
+                else
+                {
+                    _redBoxDialog.Topmost = true;
+                    _redBoxDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                }
+
                 _dismissRedBoxDialog = _redBoxDialog.Close;
                 _redBoxDialog.ShowDialog();
 #endif

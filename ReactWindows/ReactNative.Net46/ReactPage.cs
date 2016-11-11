@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 
@@ -34,11 +33,11 @@ namespace ReactNative
 
             this._rootView = new Lazy<ReactRootView>(() =>
             {
-                var rooview = CreateRootView();
+                var rootview = CreateRootView();
 
-                this.Content = rooview;
+                this.Content = rootview;
 
-                return rooview;
+                return rootview;
             });
         }
 
@@ -135,20 +134,14 @@ namespace ReactNative
         /// <summary>
         /// Called before the application shuts down.
         /// </summary>
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
             RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler) OnAcceleratorKeyActivated);
 
-            //NOTE: Don't want to create the reactInstanceManager to just dispose of it... what should
-            //be returned here if IsValueCreated == false?  Should this method be tagged with async
-            //and the this.ReactInstanceManager.DisposeAsync() have an await?
-
-            //if (_reactInstanceManager.IsValueCreated)
-            //{
-            //    return this.ReactInstanceManager.DisposeAsync();
-            //}
-
-            return this.ReactInstanceManager.DisposeAsync();
+            if (_reactInstanceManager.IsValueCreated)
+            {
+                await this.ReactInstanceManager.DisposeAsync().ConfigureAwait(false);
+            }
         }
 
         /// <summary>

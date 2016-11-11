@@ -41,9 +41,23 @@ namespace Playground.Net46
 
             if (shellWindow == null)
             {
-                shellWindow = new Window();
+                shellWindow = new Window
+                {
+                    ShowActivated = true,
+                    ShowInTaskbar = true,
+                    Title = "Playground.Net46",
+                    Height = 768,
+                    Width = 1024,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
+                };
 
                 Application.Current.MainWindow = shellWindow;
+            }
+
+            //Show Window it is not already active...
+            if (!shellWindow.IsActive)
+            {
+                shellWindow.Show();
             }
 
             var rootFrame = shellWindow.Content as Frame;
@@ -71,15 +85,8 @@ namespace Playground.Net46
                 rootFrame.Content = _reactPage;
             }
 
-            shellWindow.ShowActivated = true;
-            shellWindow.ShowInTaskbar = true;
-            shellWindow.Title = "Playground.Net46";
-            shellWindow.Height = 768;
-            shellWindow.Width = 1024;
-            shellWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
             // Ensure the current window is active
-            shellWindow.Show();
+            shellWindow.Activate();
         }
 
         /// <summary>
