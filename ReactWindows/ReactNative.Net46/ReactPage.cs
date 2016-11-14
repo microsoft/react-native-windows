@@ -22,20 +22,20 @@ namespace ReactNative
         /// </summary>
         protected ReactPage()
         {
-            this._reactInstanceManager = new Lazy<IReactInstanceManager>(() =>
+            _reactInstanceManager = new Lazy<IReactInstanceManager>(() =>
             {
-                DispatcherHelpers.CurrentDispatcher = this.Dispatcher;
+                DispatcherHelpers.CurrentDispatcher = base.Dispatcher;
 
                 var reactInstanceManager = CreateReactInstanceManager();
 
                 return reactInstanceManager;
             });
 
-            this._rootView = new Lazy<ReactRootView>(() =>
+            _rootView = new Lazy<ReactRootView>(() =>
             {
                 var rootview = CreateRootView();
 
-                this.Content = rootview;
+                base.Content = rootview;
 
                 return rootview;
             });
@@ -100,10 +100,8 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string[] arguments)
         {
-            RootView.Background = SystemColors.WindowBrush;
-
             ApplyArguments(arguments);
-            RootView.StartReactApplication(this.ReactInstanceManager, MainComponentName);
+            RootView.StartReactApplication(ReactInstanceManager, MainComponentName);
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
@@ -117,7 +115,7 @@ namespace ReactNative
         /// </summary>
         public void OnSuspend()
         {
-            this.ReactInstanceManager.OnSuspend();
+            ReactInstanceManager.OnSuspend();
         }
 
         /// <summary>
@@ -128,7 +126,7 @@ namespace ReactNative
         /// </param>
         public void OnResume(Action onBackPressed)
         {
-            this.ReactInstanceManager.OnResume(onBackPressed);
+            ReactInstanceManager.OnResume(onBackPressed);
         }
 
         /// <summary>
@@ -140,7 +138,7 @@ namespace ReactNative
 
             if (_reactInstanceManager.IsValueCreated)
             {
-                await this.ReactInstanceManager.DisposeAsync().ConfigureAwait(false);
+                await ReactInstanceManager.DisposeAsync().ConfigureAwait(false);
             }
         }
 
@@ -164,27 +162,27 @@ namespace ReactNative
         /// <param name="e"></param>
         private void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
         {
-            if (this.ReactInstanceManager.DevSupportManager.IsEnabled)
+            if (ReactInstanceManager.DevSupportManager.IsEnabled)
             {
                 var isCtrlKeyDown = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
 
                 //Ctrl+D or Ctrl+M
                 if (isCtrlKeyDown && (e.Key == Key.D || e.Key == Key.M))
                 {
-                    this.ReactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
+                    ReactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
                 }
 
                 // Ctrl+R
                 if (isCtrlKeyDown && e.Key == Key.R)
                 {
-                    this.ReactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                    ReactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
             }
 
             // Back button
             if (e.Key == Key.Back || e.Key == Key.BrowserBack)
             {
-                this.ReactInstanceManager.OnBackPressed();
+                ReactInstanceManager.OnBackPressed();
             }
         }
 
@@ -204,9 +202,15 @@ namespace ReactNative
 
         private void ApplyArguments(string[] arguments)
         {
-            if (arguments == null) return;
+            if (arguments == null)
+            {
+                return;
+            }
 
-            if (arguments.Length == 0) return;
+            if (arguments.Length == 0)
+            {
+                return;
+            }
 
             if (arguments.Length % 2 != 0)
             {
@@ -217,7 +221,7 @@ namespace ReactNative
             var isRemoteDebuggingEnabled = default(bool);
             if (index % 2 == 0 && bool.TryParse(arguments[index + 1], out isRemoteDebuggingEnabled))
             {
-                this.ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
+                ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
             }
         }
     }

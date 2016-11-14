@@ -1,4 +1,5 @@
-﻿using ReactNative.UIManager;
+﻿using System;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Collections;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace ReactNative.Views.Text
         [ReactProp("selectable")]
         public void SetSelectable(TextBlock view, bool selectable)
         {
-            // ToDo: Manually control selectable
+            throw new NotImplementedException();
         }
 
         /// <summary>

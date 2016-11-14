@@ -9,6 +9,9 @@ namespace ReactNative.DevSupport.Controls
     [TemplatePart(Name = "Border", Type = typeof(Border))]
     public class LoadingIndicator : Control
     {
+        /// <summary>
+        /// Property used to set the speed of the animation...
+        /// </summary>
         public static readonly DependencyProperty SpeedRatioProperty =
             DependencyProperty.Register("SpeedRatio", typeof(double), typeof(LoadingIndicator), new PropertyMetadata(1d, (o, e) =>
             {
@@ -34,6 +37,9 @@ namespace ReactNative.DevSupport.Controls
                 }
             }));
 
+        /// <summary>
+        /// Property used to indicate whether the animation should be made active...
+        /// </summary>
         public static readonly DependencyProperty IsActiveProperty =
             DependencyProperty.Register("IsActive", typeof(bool), typeof(LoadingIndicator), new PropertyMetadata(true, (o, e) =>
             {
@@ -70,7 +76,9 @@ namespace ReactNative.DevSupport.Controls
                 }
             }));
 
-        // Variables
+        /// <summary>
+        /// Border Template Part Accessor
+        /// </summary>
         protected Border PART_Border;
 
         /// <summary>
@@ -123,7 +131,7 @@ namespace ReactNative.DevSupport.Controls
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoadingIndicators.WPF.LoadingIndicator"/> class.
+        /// Initializes a new instance of the class.
         /// </summary>
         public LoadingIndicator()
         {

@@ -298,7 +298,7 @@ namespace ReactNative.DevSupport
                     option.HideDialog = _dismissDevOptionsDialog;
                 }
 #else
-                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsActive)
+                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
                 {
                     _devOptionsDialog.Owner = Application.Current.MainWindow;
                 }
@@ -362,7 +362,7 @@ namespace ReactNative.DevSupport
             var dialogOperation = progressDialog.ShowAsync();
             Action cancel = dialogOperation.Cancel;
 #else
-            if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsActive)
+            if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
             {
                 progressDialog.Owner = Application.Current.MainWindow;
             }
@@ -477,7 +477,7 @@ namespace ReactNative.DevSupport
                 var asyncInfo = _redBoxDialog.ShowAsync();
                 _dismissRedBoxDialog = asyncInfo.Cancel;
 #else
-                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsActive)
+                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
                 {
                     _redBoxDialog.Owner = Application.Current.MainWindow;
                 }

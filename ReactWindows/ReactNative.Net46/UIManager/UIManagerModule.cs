@@ -42,7 +42,7 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(viewManagers));
             if (uiImplementation == null)
                 throw new ArgumentNullException(nameof(uiImplementation));
-            if ( window == null )
+            if (window == null)
                 throw new ArgumentNullException(nameof(window));
 
             _window = window;

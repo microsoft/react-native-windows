@@ -218,7 +218,7 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
-        /// Updates the properties of a <see cref="RichTextBlock"/> view.
+        /// Updates the properties of a <see cref="TextBlock"/> view.
         /// </summary>
         /// <param name="textBlock">The view.</param>
         public void UpdateTextBlock(TextBlock textBlock)

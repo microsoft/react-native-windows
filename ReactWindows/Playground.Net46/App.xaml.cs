@@ -20,19 +20,18 @@ namespace Playground.Net46
         {
         }
 
+        /// <summary>
+        /// Override method fired prior to the Startup event when the Run method of the Application object is called...
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             OnCreate(e.Args);
         }
 
-        protected override void OnActivated(EventArgs e)
-        {
-            base.OnActivated(e);
-        }
-
         /// <summary>
-        /// Called whenever the app is opened to initia
+        /// Called whenever the app is opened to initialized...
         /// </summary>
         /// <param name="arguments"></param>
         private void OnCreate(string[] arguments)
@@ -55,7 +54,7 @@ namespace Playground.Net46
             }
 
             //Show Window if it is not already active...
-            if (!shellWindow.IsActive)
+            if (!shellWindow.IsLoaded)
             {
                 shellWindow.Show();
             }

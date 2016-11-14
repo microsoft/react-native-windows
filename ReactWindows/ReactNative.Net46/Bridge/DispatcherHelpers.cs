@@ -5,7 +5,7 @@ using System.Windows.Threading;
 
 namespace ReactNative.Bridge
 {
-    internal static class DispatcherHelpers
+    static class DispatcherHelpers
     {
         private static Dispatcher _dispatcher;
 
@@ -13,10 +13,7 @@ namespace ReactNative.Bridge
         {
             get
             {
-                if (_dispatcher == null)
-                {
-                    throw new InvalidOperationException("Dispatcher has not been set");
-                }
+                AssertDispatcherSet();
 
                 return _dispatcher;
             }
@@ -52,16 +49,15 @@ namespace ReactNative.Bridge
 
         public static bool IsOnDispatcher()
         {
-            if (CurrentDispatcher == null)
-            {
-                throw new NullReferenceException("Dispatcher has not been set");
-            }
+            AssertDispatcherSet();
 
             return CurrentDispatcher.CheckAccess();
         }
 
         public static async void RunOnDispatcher(Action action)
         {
+            AssertDispatcherSet();
+
             await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
@@ -79,6 +75,14 @@ namespace ReactNative.Bridge
             });
 
             return taskCompletionSource.Task;
+        }
+
+        private static void AssertDispatcherSet()
+        {
+            if (_dispatcher == null)
+            {
+                throw new InvalidOperationException("Dispatcher has not been set");
+            }
         }
     }
 }

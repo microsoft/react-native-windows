@@ -33,6 +33,7 @@
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DocumentationFile>bin\x64\Debug\ReactNative.Net46.XML</DocumentationFile>
     <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -46,6 +47,7 @@
     <OutputPath>bin\ARM\Debug\</OutputPath>
     <DocumentationFile>bin\ARM\Debug\ReactNative.Net46.XML</DocumentationFile>
     <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <PlatformTarget>ARM</PlatformTarget>

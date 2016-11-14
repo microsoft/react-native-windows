@@ -30,6 +30,10 @@ namespace ReactNative.DevSupport
 
         private readonly IDevSupportManager _debugManager;
 
+#if !WINDOWS_UWP
+        private readonly IDictionary<string, object> _localSettings = new Dictionary<string, object>();
+#endif
+
         public DevInternalSettings(IDevSupportManager debugManager)
         {
             _debugManager = debugManager;
@@ -125,7 +129,8 @@ namespace ReactNative.DevSupport
             }
         }
 
-        //TODO: Implement an abstraction or static helper to save settings based on the platform... The GetSetting and SetSetting methods or their contents are replicated elsewhere...
+
+        //TODO: Git Issue #878
         private T GetSetting<T>(string key, T defaultValue)
         {
 #if WINDOWS_UWP
@@ -141,20 +146,21 @@ namespace ReactNative.DevSupport
 
             return defaultValue;
 #else
-            if (typeof(T) == typeof(bool))
+            if (_localSettings.ContainsKey(key))
             {
-                var result = default(bool);
-                var parsed = bool.TryParse(ConfigurationManager.AppSettings[key], out result);
-                return (T)(object)(parsed && result);
+                var data = _localSettings[key];
+
+                if (data is T)
+                {
+                    return (T)data;
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));
+                }
             }
-            else if (typeof(T) == typeof(string))
-            {
-                return (T)(object)ConfigurationManager.AppSettings[key];
-            }
-            else
-            {
-                throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));
-            }
+
+            return defaultValue;
 #endif
         }
 
@@ -164,20 +170,7 @@ namespace ReactNative.DevSupport
             var values = ApplicationData.Current.LocalSettings.Values;
             values[key] = value;
 #else
-            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var settings = configFile.AppSettings.Settings;
-
-            if (settings[key] == null)
-            {
-                settings.Add(key, value.ToString());
-            }
-            else
-            {
-                settings[key].Value = value.ToString();
-            }
-
-            configFile.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+            _localSettings[key] = value;
 #endif
 
             if (s_triggerReload.Contains(key))
