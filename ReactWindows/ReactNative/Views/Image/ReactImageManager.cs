@@ -63,7 +63,7 @@ namespace ReactNative.Views.Image
             Tuple<JArray, Color?, Color?> imageExtraData = (Tuple<JArray, Color?, Color?>)extraData;
             var imageBrush = (ImageBrush)view.Background;
 
-            OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart);
+            OnImageStatusUpdate(view, new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
 
             var sources = imageExtraData.Item1;
             var tintColor = imageExtraData.Item2;
