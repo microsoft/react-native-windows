@@ -294,7 +294,9 @@ namespace ReactNative.Views.Image
             }
 
             var image = new BitmapImage();
+#if !WINDOWS_UWP
             image.BeginInit();
+#endif
             if (BitmapImageHelpers.IsBase64Uri(source))
             {
                 disposable.Disposable = image.GetStreamLoadObservable().Subscribe(
@@ -322,7 +324,9 @@ namespace ReactNative.Views.Image
 
                 image.UriSource = new Uri(source);
             }
+#if !WINDOWS_UWP
             image.EndInit();
+#endif
 
             imageBrush.ImageSource = image;
         }

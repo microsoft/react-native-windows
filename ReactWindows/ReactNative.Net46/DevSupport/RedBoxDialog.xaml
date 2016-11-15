@@ -37,13 +37,13 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-
+                        
                         <TextBlock Grid.Row="0"
                                    FontFamily="Monospace"
                                    FontSize="12"
                                    Foreground="{StaticResource ForegroundBrush}"
                                    Text="{Binding Path=Method, Mode=OneTime}"/>
-
+                        
                         <TextBlock Grid.Row="1"
                                    FontSize="10"
                                    Foreground="LightGray"
@@ -94,7 +94,7 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
             </ScrollViewer>
-
+            
             <Grid x:Name="CommandSpace" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
                 <Button Style="{StaticResource ContentDialogButtonStyle}" HorizontalAlignment="Left" Content="Close" IsCancel="True" Click="OnCloseButtonClicked"/>
                 <Button Style="{StaticResource ContentDialogButtonStyle}" HorizontalAlignment="Right" Content="Reload JavaScript" IsDefault="True" Click="OnReloadButtonClicked"/>

@@ -122,8 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
-    <Compile Include="DevSupport\Design\ProgressDialogDesignData.cs" />
-    <Compile Include="DevSupport\Design\RedboxDialogDesignData.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
@@ -161,9 +159,6 @@
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\UIManagerModule.cs" />
-    <Compile Include="Views\ReactCanvas.xaml.cs">
-      <DependentUpon>ReactCanvas.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />

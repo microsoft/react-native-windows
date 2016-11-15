@@ -1,11 +1,5 @@
-<<<<<<< HEAD:ReactWindows/ReactNative.Shared.Tests/Modules/WebSocket/WebSocketModuleTests.cs
-﻿using System;
-using NUnit.Framework;
 using Newtonsoft.Json.Linq;
-=======
-﻿using Newtonsoft.Json.Linq;
 using NUnit.Framework;
->>>>>>> upstream/master:ReactWindows/ReactNative.Shared.Tests/Modules/WebSocket/WebSocketModuleTests.cs
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.WebSocket;
