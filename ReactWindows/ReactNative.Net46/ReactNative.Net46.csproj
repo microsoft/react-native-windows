@@ -33,6 +33,7 @@
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DocumentationFile>bin\x64\Debug\ReactNative.Net46.XML</DocumentationFile>
     <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -46,6 +47,7 @@
     <OutputPath>bin\ARM\Debug\</OutputPath>
     <DocumentationFile>bin\ARM\Debug\ReactNative.Net46.XML</DocumentationFile>
     <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -179,10 +181,6 @@
     <Page Include="DevSupport\Resources\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ReactCanvas.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Page Include="DevSupport\DevOptionDialog.xaml">

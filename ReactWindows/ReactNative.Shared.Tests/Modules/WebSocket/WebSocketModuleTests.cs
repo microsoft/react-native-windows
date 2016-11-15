@@ -1,6 +1,11 @@
+<<<<<<< HEAD:ReactWindows/ReactNative.Shared.Tests/Modules/WebSocket/WebSocketModuleTests.cs
 ﻿using System;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
+=======
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+>>>>>>> upstream/master:ReactWindows/ReactNative.Shared.Tests/Modules/WebSocket/WebSocketModuleTests.cs
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.WebSocket;
@@ -12,6 +17,8 @@ namespace ReactNative.Tests.Modules.WebSocket
     [TestFixture]
     public class WebSocketModuleTests
     {
+        private const int WaitTimeoutInMs = 5000;
+
         [Test]
         [Category("Network")]
         public void WebSocketModule_OpenClosedEvent()
@@ -47,8 +54,8 @@ namespace ReactNative.Tests.Modules.WebSocket
             finally
             {
                 module.close(1000, "None", 1);
-                Assert.IsTrue(waitHandle.WaitOne(5000));
-                waitHandle.Dispose(); //??
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+                waitHandle.Dispose();
             }
 
             Assert.AreEqual(1, openParams["id"].Value<int>());
@@ -88,7 +95,7 @@ namespace ReactNative.Tests.Modules.WebSocket
             try
             {
                 module.connect("ws://invalid.websocket.address", null, null, 1);
-                Assert.IsTrue(waitHandle.WaitOne(5000));
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
             }
             finally
             {
@@ -96,7 +103,6 @@ namespace ReactNative.Tests.Modules.WebSocket
                 waitHandle.Dispose();
             }
 
-            Assert.True(websocketFailedCalled, @"'websocketFailed' event was expected but never received.");
             Assert.AreEqual(1, json["id"].Value<int>());
         }
 
@@ -130,14 +136,14 @@ namespace ReactNative.Tests.Modules.WebSocket
             try
             {
                 module.connect("ws://echo.websocket.org", null, null, 1);
-                Assert.IsTrue(waitHandle.WaitOne(waitTimeout));
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
                 module.send("FooBarBaz", 1);
-                Assert.IsTrue(waitHandle.WaitOne(waitTimeout));
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
             }
             finally
             {
                 module.close(1000, "None", 1);
-                Assert.IsTrue(waitHandle.WaitOne(waitTimeout));
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
 
                 waitHandle.Dispose();
             }

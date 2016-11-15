@@ -146,6 +146,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Dimensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\Event.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\EventDispatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\IEventDispatcherListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\RCTEventEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventTypeExtensions.cs" />

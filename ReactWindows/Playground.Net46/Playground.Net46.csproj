@@ -89,12 +89,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppReactPage.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PlaygroundBootstrapper.cs" />
-    <Compile Include="ReactNativeBootstrapper.cs" />
-    <Compile Include="ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -111,33 +105,18 @@
       <Name>ReactNative.Net46</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\LockScreenLogo.scale-200.png" />
-    <EmbeddedResource Include="Assets\SplashScreen.scale-200.png" />
-    <EmbeddedResource Include="Assets\Square150x150Logo.scale-200.png" />
-    <EmbeddedResource Include="Assets\Square44x44Logo.scale-200.png" />
-    <EmbeddedResource Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <EmbeddedResource Include="Assets\StoreLogo.png" />
-    <EmbeddedResource Include="Assets\Wide310x150Logo.scale-200.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <ItemGroup>
       <ChakraCoreDll Include="$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.*" />
     </ItemGroup>
     <Copy SourceFiles="@(ChakraCoreDll)" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
-  </Target>  
+  </Target>
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
