@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.WebSocket;
@@ -7,11 +7,13 @@ using System.Threading;
 
 namespace ReactNative.Tests.Modules.WebSocket
 {
-    [TestClass]
+    [TestFixture]
     public class WebSocketModuleTests
     {
-        [TestMethod]
-        [TestCategory("Network")]
+        private const int WaitTimeoutInMs = 5000;
+
+        [Test]
+        [Category("Network")]
         public void WebSocketModule_OpenClosedEvent()
         {
             var waitHandle = new AutoResetEvent(false);
@@ -45,16 +47,17 @@ namespace ReactNative.Tests.Modules.WebSocket
             finally
             {
                 module.close(1000, "None", 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+                waitHandle.Dispose();
             }
 
-            Assert.AreEqual(1, openParams["id"]);
-            Assert.AreEqual(1, closeParams["id"]);
-            Assert.AreEqual(1000, closeParams["code"]);
-            Assert.AreEqual("None", closeParams["reason"]);
+            Assert.AreEqual(1, openParams["id"].Value<int>());
+            Assert.AreEqual(1, closeParams["id"].Value<int>());
+            Assert.AreEqual(1000, closeParams["code"].Value<int>());
+            Assert.AreEqual("None", closeParams["reason"].Value<string>());
         }
 
-        [TestMethod]
+        [Test]
         public void WebSocketModule_FailedEvent()
         {
             var waitHandle = new AutoResetEvent(false);
@@ -78,18 +81,18 @@ namespace ReactNative.Tests.Modules.WebSocket
             try
             {
                 module.connect("ws://invalid.websocket.address", null, null, 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
             }
             finally
             {
                 module.close(1000, "None", 1);
             }
 
-            Assert.AreEqual(1, json["id"]);
+            Assert.AreEqual(1, json["id"].Value<int>());
         }
 
-        [TestMethod]
-        [TestCategory("Network")]
+        [Test]
+        [Category("Network")]
         public void WebSocketModule_DataEvent()
         {
             var waitHandle = new AutoResetEvent(false);
@@ -116,18 +119,20 @@ namespace ReactNative.Tests.Modules.WebSocket
             try
             {
                 module.connect("ws://echo.websocket.org", null, null, 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
                 module.send("FooBarBaz", 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
             }
             finally
             {
                 module.close(1000, "None", 1);
-                Assert.IsTrue(waitHandle.WaitOne());
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+
+                waitHandle.Dispose();
             }
 
-            Assert.AreEqual(1, json["id"]);
-            Assert.AreEqual("FooBarBaz", json["data"]);
+            Assert.AreEqual(1, json["id"].Value<int>());
+            Assert.AreEqual("FooBarBaz", json["data"].Value<string>());
         }
 
         private ReactContext CreateReactContext(IInvocationHandler handler)

@@ -15,5 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketModuleTests.cs" />
   </ItemGroup>
 </Project>

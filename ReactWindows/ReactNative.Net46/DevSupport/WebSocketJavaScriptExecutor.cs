@@ -9,6 +9,7 @@ using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using WebSocketSharp;
 
 namespace ReactNative.DevSupport
 {
@@ -17,7 +18,7 @@ namespace ReactNative.DevSupport
         private const int ConnectTimeoutMilliseconds = 5000;
         private const int ConnectRetryCount = 3;
 
-        private TcpClient _webSocket;
+        private WebSocket _webSocket;
         private readonly JObject _injectedObjects;
         private readonly IDictionary<int, TaskCompletionSource<JToken>> _callbacks;
 
@@ -166,8 +167,12 @@ namespace ReactNative.DevSupport
         {
             if (!_connected)
             {
-                _webSocket = TcpClient.Connect(IPAddress.Parse(uri.Host), uri.Port);
-                _webSocket.ReceivedMessage += OnMessageReceived;
+                _webSocket = new WebSocket(uri.AbsoluteUri);
+
+                _webSocket.OnMessage += OnMessageReceived;
+
+                _webSocket.ConnectAsync();
+
                 _connected = true;
             }
 
@@ -219,9 +224,9 @@ namespace ReactNative.DevSupport
             }
         }
 
-        private void OnMessageReceived(object sender, EventArgs args)
+        private void OnMessageReceived(object sender, MessageEventArgs args)
         {
-            var response = args.ToString();
+            var response = args.Data;
 
             var json = JObject.Parse(response);
             if (json.ContainsKey("replyID"))
