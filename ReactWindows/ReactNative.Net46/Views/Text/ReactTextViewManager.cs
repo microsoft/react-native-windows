@@ -1,4 +1,5 @@
-﻿using ReactNative.UIManager;
+﻿using System;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Collections;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace ReactNative.Views.Text
         [ReactProp("selectable")]
         public void SetSelectable(TextBlock view, bool selectable)
         {
-            // ToDo: Manually control selectable
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -154,18 +155,15 @@ namespace ReactNative.Views.Text
         /// <returns>The view instance.</returns>
         protected override TextBlock CreateViewInstance(ThemedReactContext reactContext)
         {
-            var richTextBlock = new TextBlock
+            var textBlock = new TextBlock
             {
-                //IsTextSelectionEnabled = false,
                 TextAlignment = TextAlignment.Left,
                 TextTrimming = TextTrimming.CharacterEllipsis,
             };
 
-            //richTextBlock.Document = new FlowDocument();
-            //richTextBlock.Document.Blocks.Add(new Paragraph());
-            richTextBlock.SetReactCompoundView(s_compoundView);
-
-            return richTextBlock;
+            textBlock.SetReactCompoundView(s_compoundView);
+            
+            return textBlock;
         }
     }
 }

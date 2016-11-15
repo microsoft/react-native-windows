@@ -1,12 +1,11 @@
-﻿using ReactNative.Bridge;
-using ReactNative.Modules.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
+using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 
 namespace ReactNative
 {
@@ -15,20 +14,34 @@ namespace ReactNative
     /// </summary>
     public abstract class ReactPage : Page, IAsyncDisposable
     {
-        private readonly IReactInstanceManager _reactInstanceManager;
-
-        private bool _isShiftKeyDown;
-        private bool _isControlKeyDown;
+        private readonly Lazy<IReactInstanceManager> _reactInstanceManager;
+        private readonly Lazy<ReactRootView> _rootView;
 
         /// <summary>
         /// Instantiates the <see cref="ReactPage"/>.
         /// </summary>
         protected ReactPage()
         {
-            _reactInstanceManager = CreateReactInstanceManager();
-            RootView = CreateRootView();
-            Content = RootView;
+            _reactInstanceManager = new Lazy<IReactInstanceManager>(() =>
+            {
+                DispatcherHelpers.CurrentDispatcher = base.Dispatcher;
+
+                var reactInstanceManager = CreateReactInstanceManager();
+
+                return reactInstanceManager;
+            });
+
+            _rootView = new Lazy<ReactRootView>(() =>
+            {
+                var rootview = CreateRootView();
+
+                base.Content = rootview;
+
+                return rootview;
+            });
         }
+
+        private IReactInstanceManager ReactInstanceManager => _reactInstanceManager.Value;
 
         /// <summary>
         /// The custom path of the bundle file.
@@ -79,18 +92,16 @@ namespace ReactNative
         /// <summary>
         /// The root view managed by the page.
         /// </summary>
-        public ReactRootView RootView { get; }
+        public ReactRootView RootView => _rootView.Value;
 
         /// <summary>
         /// Called when the application is first initialized.
         /// </summary>
         /// <param name="arguments">The launch arguments.</param>
-        public void OnCreate(string arguments)
+        public void OnCreate(string[] arguments)
         {
-            RootView.Background = (Brush)SystemColors.WindowBrush;
-
             ApplyArguments(arguments);
-            RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
+            RootView.StartReactApplication(ReactInstanceManager, MainComponentName);
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
@@ -104,7 +115,7 @@ namespace ReactNative
         /// </summary>
         public void OnSuspend()
         {
-            _reactInstanceManager.OnSuspend();
+            ReactInstanceManager.OnSuspend();
         }
 
         /// <summary>
@@ -115,17 +126,20 @@ namespace ReactNative
         /// </param>
         public void OnResume(Action onBackPressed)
         {
-            _reactInstanceManager.OnResume(onBackPressed);
+            ReactInstanceManager.OnResume(onBackPressed);
         }
 
         /// <summary>
         /// Called before the application shuts down.
         /// </summary>
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
-            RootView.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
+            RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler) OnAcceleratorKeyActivated);
 
-            return _reactInstanceManager.DisposeAsync();
+            if (_reactInstanceManager.IsValueCreated)
+            {
+                await ReactInstanceManager.DisposeAsync().ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -142,33 +156,33 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Captures the all key downs and Ups. 
+        /// Captures the all key downs and Ups.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
         {
-            if (_reactInstanceManager.DevSupportManager.IsEnabled)
+            if (ReactInstanceManager.DevSupportManager.IsEnabled)
             {
                 var isCtrlKeyDown = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
 
                 //Ctrl+D or Ctrl+M
-                if (isCtrlKeyDown && (e.Key == Key.D || e.Key == Key.M) )
+                if (isCtrlKeyDown && (e.Key == Key.D || e.Key == Key.M))
                 {
-                    _reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
+                    ReactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
                 }
 
                 // Ctrl+R
                 if (isCtrlKeyDown && e.Key == Key.R)
                 {
-                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                    ReactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
             }
 
             // Back button
             if (e.Key == Key.Back || e.Key == Key.BrowserBack)
             {
-                _reactInstanceManager.OnBackPressed();
+                ReactInstanceManager.OnBackPressed();
             }
         }
 
@@ -186,22 +200,28 @@ namespace ReactNative
             return builder.Build();
         }
 
-        private void ApplyArguments(string arguments)
+        private void ApplyArguments(string[] arguments)
         {
-            if (!string.IsNullOrEmpty(arguments))
+            if (arguments == null)
             {
-                var args = arguments.Split(',');
-                if (args.Length % 2 != 0)
-                {
-                    throw new ArgumentException("Expected even number of arguments.", nameof(arguments));
-                }
+                return;
+            }
 
-                var index = Array.IndexOf(args, "remoteDebugging");
-                var isRemoteDebuggingEnabled = default(bool);
-                if (index % 2 == 0 && bool.TryParse(args[index + 1], out isRemoteDebuggingEnabled))
-                {
-                    _reactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
-                }
+            if (arguments.Length == 0)
+            {
+                return;
+            }
+
+            if (arguments.Length % 2 != 0)
+            {
+                throw new ArgumentException("Expected even number of arguments.", nameof(arguments));
+            }
+
+            var index = Array.IndexOf(arguments, "remoteDebugging");
+            var isRemoteDebuggingEnabled = default(bool);
+            if (index % 2 == 0 && bool.TryParse(arguments[index + 1], out isRemoteDebuggingEnabled))
+            {
+                ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
             }
         }
     }

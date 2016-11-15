@@ -42,7 +42,7 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(viewManagers));
             if (uiImplementation == null)
                 throw new ArgumentNullException(nameof(uiImplementation));
-            if ( window == null )
+            if (window == null)
                 throw new ArgumentNullException(nameof(window));
 
             _window = window;
@@ -102,7 +102,7 @@ namespace ReactNative.UIManager
         /// <param name="rootView">The root view instance.</param>
         /// <returns>The root view tag.</returns>
         /// <remarks>
-        /// JavaScript can use the returned tag with to add or remove children 
+        /// JavaScript can use the returned tag with to add or remove children
         /// to this view through <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>.
         /// </remarks>
         public int AddMeasuredRootView(SizeMonitoringCanvas rootView)
@@ -213,7 +213,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Interface for fast tracking the initial adding of views.Children 
+        /// Interface for fast tracking the initial adding of views.Children
         /// view tags are assumed to be in order.
         /// </summary>
         /// <param name="viewTag">The view tag of the parent view.</param>
@@ -231,7 +231,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Replaces the view specified by the <paramref name="oldTag"/> with
         /// the view specified by <paramref name="newTag"/> within
-        /// <paramref name="oldTag"/>'s parent. This resolves to a simple 
+        /// <paramref name="oldTag"/>'s parent. This resolves to a simple
         /// <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>
         /// call, but React does not have enough information in JavaScript to
         /// formulate it itself.
@@ -510,7 +510,7 @@ namespace ReactNative.UIManager
         {
             var bounds = new Rect() {Height = _window.Height, Width = _window.Width};
             double scale = 1.0;
-            
+
             return new Dictionary<string, object>
             {
                 {

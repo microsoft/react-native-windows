@@ -1,13 +1,12 @@
-﻿using NMock;
+﻿using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.NetInfo;
 using System;
 using System.Net.NetworkInformation;
 using System.Threading;
+using System.Windows.Threading;
 
 namespace ReactNative.Tests.Modules.NetInfo
 {
@@ -34,8 +33,11 @@ namespace ReactNative.Tests.Modules.NetInfo
         }
 
         [Test]
+        [Apartment(ApartmentState.STA)]
         public void NetInfoModule_Event()
         {
+            SetDispatcherForTest();
+
             var networkInterface = new MockNetworkInterface("None");
             var networkInfo = new MockNetworkInformation(networkInterface);
 
@@ -61,8 +63,11 @@ namespace ReactNative.Tests.Modules.NetInfo
         }
 
         [Test]
+        [Apartment(ApartmentState.STA)]
         public void NetInfoModule_LifecycleChecks()
         {
+            SetDispatcherForTest();
+
             var started = new AutoResetEvent(false);
             var stopped = new AutoResetEvent(false);
 
@@ -103,6 +108,11 @@ namespace ReactNative.Tests.Modules.NetInfo
             var reactInstance = new TestReactInstance(eventEmitter);
             context.InitializeWithInstance(reactInstance);
             return context;
+        }
+
+        private static void SetDispatcherForTest()
+        {
+            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
         }
 
         class TestReactInstance : MockReactInstance

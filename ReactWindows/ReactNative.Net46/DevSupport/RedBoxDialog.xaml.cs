@@ -7,7 +7,7 @@ namespace ReactNative.DevSupport
     /// <summary>
     /// The content dialog for red box exception display.
     /// </summary>
-    internal sealed partial class RedBoxDialog : Window
+    sealed partial class RedBoxDialog : Window
     {
         #region Private Fields
 

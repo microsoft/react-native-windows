@@ -8,6 +8,9 @@ namespace ReactNative.DevSupport
     {
         #region Constructor(s)
 
+        /// <summary>
+        /// Initializes the DevOptionsDialog
+        /// </summary>
         public DevOptionDialog()
         {
             InitializeComponent();

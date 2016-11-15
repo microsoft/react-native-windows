@@ -1,9 +1,9 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using System.Windows;
-using NUnit.Framework;
+using System.Windows.Threading;
 
 namespace ReactNative.Tests
 {
