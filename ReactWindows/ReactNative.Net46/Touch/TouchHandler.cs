@@ -98,23 +98,21 @@ namespace ReactNative.Touch
 
         private void OnTouchMoved(object sender, TouchEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            if (_pointers != null && _pointers.Count > 0)
             {
-                var pointer = _pointers[pointerIndex];
+                var pointer = _pointers[0];
                 UpdatePointerForEvent(pointer, e);
-                DispatchTouchEvent(TouchEventType.Move, _pointers, pointerIndex);
+                DispatchTouchEvent(TouchEventType.Move, _pointers, 0);
             }
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            if (_pointers != null && _pointers.Count > 0)
             {
-                var pointer = _pointers[pointerIndex];
+                var pointer = _pointers[0];
                 UpdatePointerForEvent(pointer, e);
-                DispatchTouchEvent(TouchEventType.Move, _pointers, pointerIndex);
+                DispatchTouchEvent(TouchEventType.Move, _pointers, 0);
             }
         }
 
@@ -130,14 +128,13 @@ namespace ReactNative.Touch
 
         private void OnTouchConcluded(TouchEventType touchEventType, TouchEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            if (_pointers != null && _pointers.Count > 0)
             {
-                var pointer = _pointers[pointerIndex];
+                var pointer = _pointers[0];
                 UpdatePointerForEvent(pointer, e);
-                DispatchTouchEvent(touchEventType, _pointers, pointerIndex);
+                DispatchTouchEvent(touchEventType, _pointers, 0);
 
-                _pointers.RemoveAt(pointerIndex);
+                _pointers.RemoveAt(0);
 
                 if (_pointers.Count == 0)
                 {
@@ -150,14 +147,13 @@ namespace ReactNative.Touch
 
         private void OnPointerConcluded(TouchEventType touchEventType, MouseButtonEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            if (_pointers != null && _pointers.Count > 0)
             {
-                var pointer = _pointers[pointerIndex];
+                var pointer = _pointers[0];
                 UpdatePointerForEvent(pointer, e);
-                DispatchTouchEvent(touchEventType, _pointers, pointerIndex);
+                DispatchTouchEvent(touchEventType, _pointers, 0);
 
-                _pointers.RemoveAt(pointerIndex);
+                _pointers.RemoveAt(0);
 
                 if (_pointers.Count == 0)
                 {

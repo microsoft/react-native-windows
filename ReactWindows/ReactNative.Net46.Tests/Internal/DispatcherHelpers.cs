@@ -1,9 +1,9 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using System.Windows;
-using NUnit.Framework;
+using System.Windows.Threading;
 
 namespace ReactNative.Tests
 {
@@ -14,7 +14,7 @@ namespace ReactNative.Tests
             Dispatcher dispatcher = Application.Current != null
                 ? Application.Current.Dispatcher
                 : Dispatcher.CurrentDispatcher;
-            if (Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread)
+            if (dispatcher.CheckAccess())
             {
                 dispatcher.Invoke(action);
             }
