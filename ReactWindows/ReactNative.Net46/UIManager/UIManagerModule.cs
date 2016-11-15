@@ -510,7 +510,7 @@ namespace ReactNative.UIManager
         {
             var bounds = new Rect() {Height = _window.Height, Width = _window.Width};
             double scale = 1.0;
-
+            
             return new Dictionary<string, object>
             {
                 {

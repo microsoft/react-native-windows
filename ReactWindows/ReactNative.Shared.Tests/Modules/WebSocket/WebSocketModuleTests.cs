@@ -141,7 +141,7 @@ namespace ReactNative.Tests.Modules.WebSocket
 
                 waitHandle.Dispose();
             }
-            
+
             Assert.AreEqual(1, json["id"].Value<int>());
             Assert.AreEqual("FooBarBaz", json["data"].Value<string>());
         }

@@ -162,7 +162,7 @@ namespace ReactNative.Views.Text
             };
 
             textBlock.SetReactCompoundView(s_compoundView);
-            
+
             return textBlock;
         }
     }

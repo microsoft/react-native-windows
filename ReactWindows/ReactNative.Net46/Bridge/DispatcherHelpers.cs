@@ -57,7 +57,6 @@ namespace ReactNative.Bridge
 
         public static async void RunOnDispatcher(Action action, bool runAsync = true)
         {
-
             AssertDispatcherSet();
 
             await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);

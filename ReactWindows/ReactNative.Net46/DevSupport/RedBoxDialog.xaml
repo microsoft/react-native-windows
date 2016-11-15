@@ -94,7 +94,7 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
             </ScrollViewer>
-
+            
             <Grid x:Name="CommandSpace" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
                 <Button Style="{StaticResource ContentDialogButtonStyle}" HorizontalAlignment="Left" Content="Close" IsCancel="True" Click="OnCloseButtonClicked"/>
                 <Button Style="{StaticResource ContentDialogButtonStyle}" HorizontalAlignment="Right" Content="Reload JavaScript" IsDefault="True" Click="OnReloadButtonClicked"/>

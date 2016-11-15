@@ -372,7 +372,7 @@ namespace ReactNative.DevSupport
                 progressDialog.Topmost = true;
                 progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
-
+            
             Action cancel = progressDialog.Close;
             progressDialog.Show();
 #endif
