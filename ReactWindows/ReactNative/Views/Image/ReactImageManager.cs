@@ -245,9 +245,9 @@ namespace ReactNative.Views.Image
 
         private void OnImageFailed(Border view)
         {
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            AssertEventDispatcher();
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactImageLoadEvent(
                         view.GetTag(),
@@ -256,11 +256,9 @@ namespace ReactNative.Views.Image
 
         private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
         {
-            var eventDispatcher = view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher;
+            AssertEventDispatcher();
 
-            eventDispatcher.DispatchEvent(
+            EventDispatcher.DispatchEvent(
                 new ReactImageLoadEvent(
                     view.GetTag(),
                     (int)status.LoadStatus,

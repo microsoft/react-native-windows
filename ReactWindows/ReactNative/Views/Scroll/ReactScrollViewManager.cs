@@ -425,6 +425,8 @@ namespace ReactNative.Views.Scroll
             double y,
             double zoomFactor)
         {
+            AssertEventDispatcher();
+
             var reactTag = scrollViewer.GetTag();
 
             // Scroll position
@@ -458,9 +460,7 @@ namespace ReactNative.Views.Scroll
                 { "height", scrollViewer.ActualHeight },
             };
 
-            scrollViewer.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ScrollEvent(
                         reactTag,

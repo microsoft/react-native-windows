@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Net46", "Playgro
 		{E02ED054-4FB2-4EEB-8835-36A5E542E368} = {E02ED054-4FB2-4EEB-8835-36A5E542E368}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControlTestDriver", "NativeControlTestDriver2\NativeControlTestDriver.csproj", "{F570C142-ED0E-4489-9F0E-6F11317B9080}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ReactNative.Shared\ReactNative.Shared.projitems*{22cbff9c-fe36-43e8-a246-266c7635e662}*SharedItemsImports = 4
@@ -255,6 +257,30 @@ Global
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x64.Build.0 = Release|x64
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.ActiveCfg = Release|x86
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.Build.0 = Release|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Debug|ARM.Build.0 = Debug|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Debug|x64.ActiveCfg = Debug|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Debug|x64.Build.0 = Debug|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Debug|x86.ActiveCfg = Debug|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Debug|x86.Build.0 = Debug|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.DebugBundle|x64.Build.0 = Debug|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.DebugBundle|x86.ActiveCfg = Debug|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.DebugBundle|x86.Build.0 = Debug|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Release|ARM.ActiveCfg = Release|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Release|ARM.Build.0 = Release|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Release|x64.ActiveCfg = Release|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Release|x64.Build.0 = Release|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Release|x86.ActiveCfg = Release|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.Release|x86.Build.0 = Release|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.ReleaseBundle|x64.Build.0 = Release|x64
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.ReleaseBundle|x86.ActiveCfg = Release|x86
+		{F570C142-ED0E-4489-9F0E-6F11317B9080}.ReleaseBundle|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -119,11 +119,12 @@ namespace ReactNative.Views.Switch
 
         private void OnToggled(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var toggleSwitch = (ToggleSwitch)sender;
-            var reactContext = toggleSwitch.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
+
+            EventDispatcher
+                 .DispatchEvent(
                     new ReactSwitchEvent(
                         toggleSwitch.GetTag(),
                         toggleSwitch.IsOn));

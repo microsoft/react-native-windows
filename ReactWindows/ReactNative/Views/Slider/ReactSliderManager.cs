@@ -178,10 +178,11 @@ namespace ReactNative.Views.Slider
 
         private void OnValueChange(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var slider = (Windows.UI.Xaml.Controls.Slider)sender;
-            var reactContext = slider.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactSliderChangeEvent(
                         slider.GetTag(),
@@ -190,10 +191,11 @@ namespace ReactNative.Views.Slider
 
         private void OnPointerReleased(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var slider = (Windows.UI.Xaml.Controls.Slider)sender;
-            var reactContext = slider.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactSliderCompleteEvent(
                         slider.GetTag(),

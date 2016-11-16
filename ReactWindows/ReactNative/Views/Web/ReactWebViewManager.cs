@@ -286,9 +286,9 @@ namespace ReactNative.Views.Web
 
         private void LoadFailed(WebView webView, WebErrorStatus status, string message)
         {
-            var reactContext = webView.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            AssertEventDispatcher();
+
+            EventDispatcher
                 .DispatchEvent(
                     new WebViewLoadingErrorEvent(
                         webView.GetTag(),

@@ -224,6 +224,8 @@ namespace ReactNative.Touch
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
         {
+            AssertEventDispatcher();
+
             var touches = new JArray();
             foreach (var pointer in activePointers)
             {
@@ -237,10 +239,8 @@ namespace ReactNative.Touch
 
             var touchEvent = new TouchEvent(touchEventType, touches, changedIndices, coalescingKey);
 
-            _view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(touchEvent);
+            EventDispatcher.
+                DispatchEvent(touchEvent);
         }
 
         private static bool IsBoxOnlyWithCache(IEnumerable<DependencyObject> hierarchy, IDictionary<DependencyObject, bool> cache)
@@ -311,6 +311,20 @@ namespace ReactNative.Touch
 
             return point;
         }
+
+        #region IEventEmitter
+
+        public EventDispatcher EventDispatcher { get; set; }
+
+        public void AssertEventDispatcher()
+        {
+            if (EventDispatcher == null)
+            {
+                throw new InvalidOperationException("Event Dispatcher is null");
+            }
+        }
+
+        #endregion
 
         class TouchEvent : Event
         {

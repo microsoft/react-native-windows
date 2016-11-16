@@ -156,10 +156,11 @@ namespace ReactNative.Views.Picker
         /// <param name="e">the event.</param>
         private void OnSelectionChanged(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var comboBox = (ComboBox)sender;
-            var reactContext = comboBox.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactPickerEvent(
                         comboBox.GetTag(),

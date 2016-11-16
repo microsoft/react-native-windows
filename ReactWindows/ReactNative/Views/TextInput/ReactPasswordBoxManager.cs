@@ -401,10 +401,11 @@ namespace ReactNative.Views.TextInput
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var textBox = (PasswordBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
@@ -416,25 +417,25 @@ namespace ReactNative.Views.TextInput
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var textBox = (PasswordBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputFocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            var textBox = (PasswordBox)sender;
-            var eventDispatcher = textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher;
+            AssertEventDispatcher();
 
-            eventDispatcher.DispatchEvent(
+            var textBox = (PasswordBox)sender;
+
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputBlurEvent(textBox.GetTag()));
 
-            eventDispatcher.DispatchEvent(
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
                       textBox.GetTag(),
                       textBox.Password));
@@ -446,9 +447,10 @@ namespace ReactNative.Views.TextInput
             {
                 var textBox = (PasswordBox)sender;
                 e.Handled = true;
-                textBox.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
+
+                AssertEventDispatcher();
+
+                EventDispatcher
                     .DispatchEvent(
                         new ReactTextInputSubmitEditingEvent(
                             textBox.GetTag(),

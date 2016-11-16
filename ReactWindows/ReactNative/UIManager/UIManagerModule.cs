@@ -5,6 +5,7 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
@@ -45,6 +46,11 @@ namespace ReactNative.UIManager
             _uiImplementation = uiImplementation;
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
+
+            foreach (var eventEmitter in viewManagers.OfType<IEventEmitter>())
+            {
+                eventEmitter.EventDispatcher = _eventDispatcher;
+            }
         }
 
         /// <summary>

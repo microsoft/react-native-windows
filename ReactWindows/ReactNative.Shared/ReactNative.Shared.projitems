@@ -149,6 +149,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IPropertySetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IReactCompoundView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\IEventEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\LayoutAnimation\AnimatedPropertyType.cs" />

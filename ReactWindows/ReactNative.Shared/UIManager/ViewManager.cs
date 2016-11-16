@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
+using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
@@ -18,7 +19,7 @@ namespace ReactNative.UIManager
     /// <see cref="ReactShadowNode"/> subclasses used for calculating position
     /// and size for the corresponding native view.
     /// </summary>
-    public abstract class ViewManager<TFrameworkElement, TReactShadowNode> : IViewManager
+    public abstract class ViewManager<TFrameworkElement, TReactShadowNode> : IViewManager, IEventEmitter
         where TFrameworkElement : FrameworkElement
         where TReactShadowNode : ReactShadowNode
     {
@@ -222,7 +223,7 @@ namespace ReactNative.UIManager
         {
         }
 
-#region IViewManager
+        #region IViewManager
 
         void IViewManager.UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
@@ -264,6 +265,26 @@ namespace ReactNative.UIManager
             SetDimensions((TFrameworkElement)view, dimensions);
         }
 
-#endregion
+        #endregion
+
+        #region IEventEmitter
+
+        /// <summary>
+        /// The instance of the EventDispatcher relevant to the implementer's context
+        /// </summary>
+        public virtual EventDispatcher EventDispatcher { get; set; }
+
+        /// <summary>
+        /// Method of asserting the presence of the event dispatcher
+        /// </summary>
+        public virtual void AssertEventDispatcher()
+        {
+            if (EventDispatcher == null)
+            {
+                throw new InvalidOperationException("Event Dispatcher is null");
+            }
+        }
+
+        #endregion
     }
 }

@@ -216,18 +216,18 @@ namespace ReactNative.Views.Split
 
         private void OnPaneClosed(SplitView sender, object args)
         {
-            sender.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            AssertEventDispatcher();
+
+            EventDispatcher
                 .DispatchEvent(
                     new SplitViewClosedEvent(sender.GetTag()));
         }
 
         private void OnPaneOpened(SplitView view)
         {
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            AssertEventDispatcher();
+
+            EventDispatcher
                 .DispatchEvent(
                     new SplitViewOpenedEvent(view.GetTag()));
         }

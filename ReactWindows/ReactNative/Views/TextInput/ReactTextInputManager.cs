@@ -12,6 +12,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using ReactNative.UIManager.Events;
 
 namespace ReactNative.Views.TextInput
 {
@@ -489,6 +490,7 @@ namespace ReactNative.Views.TextInput
             return new ReactTextBox
             {
                 AcceptsReturn = false,
+                EventDispatcher = EventDispatcher
             };
         }
 
@@ -515,10 +517,11 @@ namespace ReactNative.Views.TextInput
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var textBox = (ReactTextBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
@@ -530,25 +533,25 @@ namespace ReactNative.Views.TextInput
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var textBox = (ReactTextBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputFocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            var textBox = (ReactTextBox)sender;
-            var eventDispatcher = textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher;
+            AssertEventDispatcher();
 
-            eventDispatcher.DispatchEvent(
+            var textBox = (ReactTextBox)sender;
+
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputBlurEvent(textBox.GetTag()));
 
-            eventDispatcher.DispatchEvent(
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
                       textBox.GetTag(),
                       textBox.Text));
@@ -556,15 +559,15 @@ namespace ReactNative.Views.TextInput
 
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             if (e.Key == VirtualKey.Enter)
             {
                 var textBox = (ReactTextBox)sender;
                 if (!textBox.AcceptsReturn)
                 {
                     e.Handled = true;
-                    textBox.GetReactContext()
-                        .GetNativeModule<UIManagerModule>()
-                        .EventDispatcher
+                    EventDispatcher
                         .DispatchEvent(
                             new ReactTextInputSubmitEditingEvent(
                                 textBox.GetTag(),
@@ -575,12 +578,13 @@ namespace ReactNative.Views.TextInput
 
         private void OnSelectionChanged(object sender, RoutedEventArgs e)
         {
+            AssertEventDispatcher();
+
             var textBox = (ReactTextBox)sender;
             var start = textBox.SelectionStart;
             var length = textBox.SelectionLength;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputSelectionEvent(
                         textBox.GetTag(),

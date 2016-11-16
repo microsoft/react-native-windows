@@ -1,4 +1,6 @@
 ﻿using ReactNative.Bridge;
+using System;
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -6,7 +8,7 @@ namespace ReactNative.UIManager
     /// A wrapper <see cref="ReactContext"/> that delegates lifecycle events to
     /// the original instance of <see cref="ReactContext"/>.
     /// </summary>
-    public class ThemedReactContext : ReactContext
+    public class ThemedReactContext
     {
         private readonly ReactContext _reactContext;
 
@@ -16,26 +18,27 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The inner context.</param>
         public ThemedReactContext(ReactContext reactContext)
         {
-            InitializeWithInstance(reactContext.ReactInstance);
             _reactContext = reactContext;
         }
 
         /// <summary>
-        /// Adds a lifecycle event listener to the context.
+        /// Gets the instance of the <see cref="INativeModule"/> associated
+        /// with the <see cref="IReactInstance"/>.
         /// </summary>
-        /// <param name="listener">The listener.</param>
-        public override void AddLifecycleEventListener(ILifecycleEventListener listener)
+        /// <typeparam name="T">Type of native module.</typeparam>
+        /// <returns>The native module instance.</returns>
+        public T GetNativeModule<T>() where T : INativeModule
         {
-            _reactContext.AddLifecycleEventListener(listener);
+            AssertReactContext();
+            return _reactContext.GetNativeModule<T>();
         }
 
-        /// <summary>
-        /// Removes a lifecycle event listener from the context.
-        /// </summary>
-        /// <param name="listener">The listener.</param>
-        public override void RemoveLifecycleEventListener(ILifecycleEventListener listener)
+        private void AssertReactContext()
         {
-            _reactContext.RemoveLifecycleEventListener(listener);
+            if ( _reactContext == null )
+            {
+                throw new InvalidOperationException("React context has not been set.");
+            }
         }
     }
 }

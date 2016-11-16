@@ -124,9 +124,7 @@ namespace ReactNative.Views.Flip
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipView = (FlipView)sender;
-            flipView.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new SelectionChangedEvent(
                         flipView.GetTag(),

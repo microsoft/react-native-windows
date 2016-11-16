@@ -81,8 +81,7 @@ namespace ReactNative.Shell
         /// </summary>
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of view managers.</returns>
-        public IReadOnlyList<IViewManager> CreateViewManagers(
-            ReactContext reactContext)
+        public IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext)
         {
             return new List<IViewManager>
             {

@@ -1,4 +1,5 @@
-﻿using ReactNative.Bridge;
+﻿using ReactNative;
+using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using ReactNative.Common;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
-namespace ReactNative
+namespace NativeControlTestDriver
 {
     /// <summary>
     /// This interface manages instances of <see cref="IReactInstance" />.
@@ -32,7 +33,7 @@ namespace ReactNative
     /// lifecycle events to the instance manager (i.e., <see cref="OnSuspend"/>,
     /// <see cref="IAsyncDisposable.DisposeAsync"/>, and <see cref="OnResume(Action)"/>).
     /// </summary>
-    public class ReactInstanceManager : IReactInstanceManager
+    public class MockReactInstanceManager : IReactInstanceManager
     {
         private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
 
@@ -58,7 +59,7 @@ namespace ReactNative
         /// </summary>
         public event EventHandler<ReactContextInitializedEventArgs> ReactContextInitialized;
 
-        private ReactInstanceManager(
+        private MockReactInstanceManager(
             string jsBundleFile,
             string jsMainModuleName,
             IReadOnlyList<IReactPackage> packages,
@@ -77,12 +78,12 @@ namespace ReactNative
             _packages = packages;
 
             _useDeveloperSupport = useDeveloperSupport;
-            _devSupportManager = _useDeveloperSupport
-                ? (IDevSupportManager)new DevSupportManager(
-                    new ReactInstanceDevCommandsHandler(this),
-                    _jsBundleFile,
-                    _jsMainModuleName)
-                : new DisabledDevSupportManager();
+            //_devSupportManager = _useDeveloperSupport
+            //    ? (IDevSupportManager)new DevSupportManager(
+            //        new ReactInstanceDevCommandsHandler(this),
+            //        _jsBundleFile,
+            //        _jsMainModuleName)
+            //    : new DisabledDevSupportManager();
 
             _lifecycleState = initialLifecycleState;
             _uiImplementationProvider = uiImplementationProvider;
@@ -210,17 +211,17 @@ namespace ReactNative
         /// </summary>
         public void OnBackPressed()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-            var reactContext = _currentReactContext;
-            if (reactContext == null)
-            {
-                Tracer.Write(ReactConstants.Tag, "Instance detached from instance manager.");
-                InvokeDefaultOnBackPressed();
-            }
-            else
-            {
-                reactContext.GetNativeModule<DeviceEventManagerModule>().EmitHardwareBackPressed();
-            }
+            //DispatcherHelpers.AssertOnDispatcher();
+            //var reactContext = _currentReactContext;
+            //if (reactContext == null)
+            //{
+            //    Tracer.Write(ReactConstants.Tag, "Instance detached from instance manager.");
+            //    InvokeDefaultOnBackPressed();
+            //}
+            //else
+            //{
+            //    reactContext.GetNativeModule<DeviceEventManagerModule>().EmitHardwareBackPressed();
+            //}
         }
 
         /// <summary>
@@ -228,21 +229,21 @@ namespace ReactNative
         /// </summary>
         public void OnSuspend()
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
 
-            _lifecycleState = LifecycleState.BeforeResume;
-            _defaultBackButtonHandler = null;
+            //_lifecycleState = LifecycleState.BeforeResume;
+            //_defaultBackButtonHandler = null;
 
-            if (_useDeveloperSupport)
-            {
-                _devSupportManager.IsEnabled = false;
-            }
+            //if (_useDeveloperSupport)
+            //{
+            //    _devSupportManager.IsEnabled = false;
+            //}
 
-            var currentReactContext = _currentReactContext;
-            if (currentReactContext != null)
-            {
-                _currentReactContext.OnSuspend();
-            }
+            //var currentReactContext = _currentReactContext;
+            //if (currentReactContext != null)
+            //{
+            //    _currentReactContext.OnSuspend();
+            //}
         }
 
         /// <summary>
@@ -254,25 +255,25 @@ namespace ReactNative
         /// </param>
         public void OnResume(Action onBackPressed)
         {
-            if (onBackPressed == null)
-                throw new ArgumentNullException(nameof(onBackPressed));
+            //if (onBackPressed == null)
+            //    throw new ArgumentNullException(nameof(onBackPressed));
 
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
 
-            _lifecycleState = LifecycleState.Resumed;
+            //_lifecycleState = LifecycleState.Resumed;
 
-            _defaultBackButtonHandler = onBackPressed;
+            //_defaultBackButtonHandler = onBackPressed;
 
-            if (_useDeveloperSupport)
-            {
-                _devSupportManager.IsEnabled = true;
-            }
+            //if (_useDeveloperSupport)
+            //{
+            //    _devSupportManager.IsEnabled = true;
+            //}
 
-            var currentReactContext = _currentReactContext;
-            if (currentReactContext != null)
-            {
-                currentReactContext.OnResume();
-            }
+            //var currentReactContext = _currentReactContext;
+            //if (currentReactContext != null)
+            //{
+            //    currentReactContext.OnResume();
+            //}
         }
 
         /// <summary>
@@ -280,7 +281,7 @@ namespace ReactNative
         /// </summary>
         public async Task DisposeAsync()
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
 
             // TODO: memory pressure hooks
             if (_useDeveloperSupport)
@@ -313,7 +314,7 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
 
             _attachedRootViews.Add(rootView);
 
@@ -339,7 +340,7 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
 
             if (_attachedRootViews.Remove(rootView))
             {
@@ -379,23 +380,25 @@ namespace ReactNative
 
         private async Task RecreateReactContextInBackgroundInnerAsync()
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            throw new Exception("RecreateReactContextInBackgroundInnerAsync called");
 
-            if (_useDeveloperSupport && _jsBundleFile == null && _jsMainModuleName != null)
-            {
-                if (await _devSupportManager.HasUpToDateBundleInCacheAsync())
-                {
-                    OnJavaScriptBundleLoadedFromServer();
-                }
-                else
-                {
-                    _devSupportManager.HandleReloadJavaScript();
-                }
-            }
-            else
-            {
-                RecreateReactContextInBackgroundFromBundleFile();
-            }
+            //DispatcherHelpers.AssertOnDispatcher();
+
+            //if (_useDeveloperSupport && _jsBundleFile == null && _jsMainModuleName != null)
+            //{
+            //    if (await _devSupportManager.HasUpToDateBundleInCacheAsync())
+            //    {
+            //        OnJavaScriptBundleLoadedFromServer();
+            //    }
+            //    else
+            //    {
+            //        _devSupportManager.HandleReloadJavaScript();
+            //    }
+            //}
+            //else
+            //{
+            //    RecreateReactContextInBackgroundFromBundleFile();
+            //}
         }
 
         private void RecreateReactContextInBackgroundFromBundleFile()
@@ -407,41 +410,49 @@ namespace ReactNative
 
         private void InvokeDefaultOnBackPressed()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-            _defaultBackButtonHandler?.Invoke();
+            throw new Exception("InvokeDefaultOnBackPressed called");
+
+            //DispatcherHelpers.AssertOnDispatcher();
+            //_defaultBackButtonHandler?.Invoke();
         }
 
         private void OnReloadWithJavaScriptDebugger(Func<IJavaScriptExecutor> javaScriptExecutorFactory)
         {
-            RecreateReactContextInBackground(
-                javaScriptExecutorFactory,
-                JavaScriptBundleLoader.CreateRemoteDebuggerLoader(
-                    _devSupportManager.JavaScriptBundleUrlForRemoteDebugging,
-                    _devSupportManager.SourceUrl));
+            throw new Exception("OnReloadWithJavaScriptDebugger called");
+
+            //RecreateReactContextInBackground(
+            //    javaScriptExecutorFactory,
+            //    JavaScriptBundleLoader.CreateRemoteDebuggerLoader(
+            //        _devSupportManager.JavaScriptBundleUrlForRemoteDebugging,
+            //        _devSupportManager.SourceUrl));
         }
 
         private void OnJavaScriptBundleLoadedFromServer()
         {
-            RecreateReactContextInBackground(
-                () => new ChakraJavaScriptExecutor(),
-                JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
-                    _devSupportManager.SourceUrl,
-                    _devSupportManager.DownloadedJavaScriptBundleFile));
+            throw new Exception("OnJavaScriptBundleLoadedFromServer called");
+
+            //RecreateReactContextInBackground(
+            //    () => new ChakraJavaScriptExecutor(),
+            //    JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
+            //        _devSupportManager.SourceUrl,
+            //        _devSupportManager.DownloadedJavaScriptBundleFile));
         }
 
         private void RecreateReactContextInBackground(
             Func<IJavaScriptExecutor> jsExecutorFactory,
             JavaScriptBundleLoader jsBundleLoader)
         {
-            if (_contextInitializationTask == null)
-            {
-                _contextInitializationTask = InitializeReactContextAsync(jsExecutorFactory, jsBundleLoader);
-            }
-            else
-            {
-                _pendingJsExecutorFactory = jsExecutorFactory;
-                _pendingJsBundleLoader = jsBundleLoader;
-            }
+            throw new Exception("RecreateReactContextInBackground called");
+
+            //if (_contextInitializationTask == null)
+            //{
+            //    _contextInitializationTask = InitializeReactContextAsync(jsExecutorFactory, jsBundleLoader);
+            //}
+            //else
+            //{
+            //    _pendingJsExecutorFactory = jsExecutorFactory;
+            //    _pendingJsBundleLoader = jsBundleLoader;
+            //}
         }
 
         private async Task InitializeReactContextAsync(
@@ -462,30 +473,30 @@ namespace ReactNative
             }
             catch (Exception ex)
             {
-                _devSupportManager.HandleException(ex);
+                _devSupportManager?.HandleException(ex);
             }
             finally
             {
                 _contextInitializationTask = null;
             }
 
-            if (_pendingJsExecutorFactory != null)
-            {
-                var pendingJsExecutorFactory = _pendingJsExecutorFactory;
-                var pendingJsBundleLoader = _pendingJsBundleLoader;
+            //if (_pendingJsExecutorFactory != null)
+            //{
+            //    var pendingJsExecutorFactory = _pendingJsExecutorFactory;
+            //    var pendingJsBundleLoader = _pendingJsBundleLoader;
 
-                _pendingJsExecutorFactory = null;
-                _pendingJsBundleLoader = null;
+            //    _pendingJsExecutorFactory = null;
+            //    _pendingJsBundleLoader = null;
 
-                RecreateReactContextInBackground(
-                    pendingJsExecutorFactory,
-                    pendingJsBundleLoader);
-            }
+            //    RecreateReactContextInBackground(
+            //        pendingJsExecutorFactory,
+            //        pendingJsBundleLoader);
+            //}
         }
 
         private void SetupReactContext(ReactContext reactContext)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
             if (_currentReactContext != null)
             {
                 throw new InvalidOperationException(
@@ -510,40 +521,37 @@ namespace ReactNative
             ReactRootView rootView,
             IReactInstance reactInstance)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
 
             // Reset view content as it's going to be populated by the
             // application content from JavaScript
-            rootView.TouchHandler?.Dispose();
-            rootView.Children.Clear();
-            rootView.Tag = null;
+            //rootView.TouchHandler?.Dispose();
+            //rootView.Children.Clear();
+            //rootView.Tag = null;
 
-            var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
-            var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
-            rootView.TouchHandler = new TouchHandler(rootView)
-            {
-                EventDispatcher = uiManagerModule.EventDispatcher
-            };
+            //var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
+            //var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
+            //rootView.TouchHandler = new TouchHandler(rootView);
 
-            var jsAppModuleName = rootView.JavaScriptModuleName;
-            var appParameters = new Dictionary<string, object>
-            {
-                { "rootTag", rootTag },
-                { "initalProps", null /* TODO: add launch options to root view */ }
-            };
+            //var jsAppModuleName = rootView.JavaScriptModuleName;
+            //var appParameters = new Dictionary<string, object>
+            //{
+            //    { "rootTag", rootTag },
+            //    { "initalProps", null /* TODO: add launch options to root view */ }
+            //};
 
-            reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
+            //reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
         }
 
         private void DetachViewFromInstance(ReactRootView rootView, IReactInstance reactInstance)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
         }
 
         private async Task TearDownReactContextAsync(ReactContext reactContext)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            //DispatcherHelpers.AssertOnDispatcher();
 
             if (_lifecycleState == LifecycleState.Resumed)
             {
@@ -564,68 +572,70 @@ namespace ReactNative
             Func<IJavaScriptExecutor> jsExecutorFactory,
             JavaScriptBundleLoader jsBundleLoader)
         {
-            Tracer.Write(ReactConstants.Tag, "Creating React context.");
+            throw new Exception("CreateReactContextAsync called");
 
-            _sourceUrl = jsBundleLoader.SourceUrl;
+            //Tracer.Write(ReactConstants.Tag, "Creating React context.");
 
-            var nativeRegistryBuilder = new NativeModuleRegistry.Builder();
-            var jsModulesBuilder = new JavaScriptModuleRegistry.Builder();
+            //_sourceUrl = jsBundleLoader.SourceUrl;
+
+            //var nativeRegistryBuilder = new NativeModuleRegistry.Builder();
+            //var jsModulesBuilder = new JavaScriptModuleRegistry.Builder();
 
             var reactContext = new ReactContext();
-            if (_useDeveloperSupport)
-            {
-                reactContext.NativeModuleCallExceptionHandler = _devSupportManager.HandleException;
-            }
+            //if (_useDeveloperSupport)
+            //{
+            //    reactContext.NativeModuleCallExceptionHandler = _devSupportManager.HandleException;
+            //}
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
-            {
-                var coreModulesPackage =
-                    new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
+            //using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
+            //{
+            //    var coreModulesPackage =
+            //        new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
 
-                ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);
-            }
+            //    ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);
+            //}
 
-            foreach (var reactPackage in _packages)
-            {
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCustomReactPackage").Start())
-                {
-                    ProcessPackage(reactPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);
-                }
-            }
+            //foreach (var reactPackage in _packages)
+            //{
+            //    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCustomReactPackage").Start())
+            //    {
+            //        ProcessPackage(reactPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);
+            //    }
+            //}
 
-            var nativeModuleRegistry = default(NativeModuleRegistry);
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "buildNativeModuleRegistry").Start())
-            {
-                nativeModuleRegistry = nativeRegistryBuilder.Build();
-            }
+            //var nativeModuleRegistry = default(NativeModuleRegistry);
+            //using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "buildNativeModuleRegistry").Start())
+            //{
+            //    nativeModuleRegistry = nativeRegistryBuilder.Build();
+            //}
 
-            var exceptionHandler = _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
-            var reactInstanceBuilder = new ReactInstance.Builder
-            {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
-                JavaScriptExecutorFactory = jsExecutorFactory,
-                Registry = nativeModuleRegistry,
-                JavaScriptModuleRegistry = jsModulesBuilder.Build(),
-                BundleLoader = jsBundleLoader,
-                NativeModuleCallExceptionHandler = exceptionHandler,
-            };
+            //var exceptionHandler = _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
+            //var reactInstanceBuilder = new ReactInstance.Builder
+            //{
+            //    QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+            //    JavaScriptExecutorFactory = jsExecutorFactory,
+            //    Registry = nativeModuleRegistry,
+            //    JavaScriptModuleRegistry = jsModulesBuilder.Build(),
+            //    BundleLoader = jsBundleLoader,
+            //    NativeModuleCallExceptionHandler = exceptionHandler,
+            //};
 
-            var reactInstance = default(ReactInstance);
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createReactInstance").Start())
-            {
-                reactInstance = reactInstanceBuilder.Build();
-            }
+            //var reactInstance = default(ReactInstance);
+            //using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createReactInstance").Start())
+            //{
+            //    reactInstance = reactInstanceBuilder.Build();
+            //}
 
-            // TODO: add bridge idle debug listener
+            //// TODO: add bridge idle debug listener
 
-            reactContext.InitializeWithInstance(reactInstance);
+            //reactContext.InitializeWithInstance(reactInstance);
 
-            reactInstance.Initialize();
+            //reactInstance.Initialize();
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "RunJavaScriptBundle").Start())
-            {
-                await reactInstance.InitializeBridgeAsync().ConfigureAwait(false);
-            }
+            //using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "RunJavaScriptBundle").Start())
+            //{
+            //    await reactInstance.InitializeBridgeAsync().ConfigureAwait(false);
+            //}
 
             return reactContext;
         }
@@ -657,8 +667,8 @@ namespace ReactNative
 
         private void OnReactContextInitialized(ReactContext reactContext)
         {
-            ReactContextInitialized?
-                .Invoke(this, new ReactContextInitializedEventArgs(reactContext));
+            //ReactContextInitialized?
+            //    .Invoke(this, new ReactContextInitializedEventArgs(reactContext));
         }
 
         private void ToggleElementInspector()
@@ -761,10 +771,10 @@ namespace ReactNative
             }
 
             /// <summary>
-            /// Instantiates a new <see cref="ReactInstanceManager"/>.
+            /// Instantiates a new <see cref="MockReactInstanceManager"/>.
             /// </summary>
             /// <returns>A React instance manager.</returns>
-            public ReactInstanceManager Build()
+            public MockReactInstanceManager Build()
             {
                 AssertNotNull(_initialLifecycleState, nameof(InitialLifecycleState));
 
@@ -783,7 +793,7 @@ namespace ReactNative
                     _uiImplementationProvider = new UIImplementationProvider();
                 }
 
-                return new ReactInstanceManager(
+                return new MockReactInstanceManager(
                     _jsBundleFile,
                     _jsMainModuleName,
                     _packages,
@@ -802,9 +812,9 @@ namespace ReactNative
 
         class ReactInstanceDevCommandsHandler : IReactInstanceDevCommandsHandler
         {
-            private readonly ReactInstanceManager _parent;
+            private readonly MockReactInstanceManager _parent;
 
-            public ReactInstanceDevCommandsHandler(ReactInstanceManager parent)
+            public ReactInstanceDevCommandsHandler(MockReactInstanceManager parent)
             {
                 _parent = parent;
             }

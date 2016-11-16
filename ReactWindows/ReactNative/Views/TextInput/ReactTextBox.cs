@@ -2,10 +2,12 @@
 using System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using ReactNative.UIManager.Events;
+using System;
 
 namespace ReactNative.Views.TextInput
 {
-    class ReactTextBox : TextBox
+    class ReactTextBox : TextBox, IEventEmitter
     {
         private int _eventCount;
 
@@ -56,9 +58,7 @@ namespace ReactNative.Views.TextInput
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            this.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
                         this.GetTag(),
@@ -67,5 +67,19 @@ namespace ReactNative.Views.TextInput
                         e.NewSize.Height,
                         IncrementEventCount()));
         }
+
+        #region IEventEmitter
+
+        public EventDispatcher EventDispatcher { get; set; }
+
+        public void AssertEventDispatcher()
+        {
+            if (EventDispatcher == null)
+            {
+                throw new InvalidOperationException("Event Dispatcher is null");
+            }
+        }
+
+        #endregion
     }
 }
