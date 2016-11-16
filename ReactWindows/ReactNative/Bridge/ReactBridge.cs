@@ -3,6 +3,7 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Common;
 using ReactNative.Tracing;
 using System;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -106,28 +107,40 @@ namespace ReactNative.Bridge
 
         private void ProcessResponse(JToken response)
         {
-            var messages = response as JArray;
-            if (messages == null)
+            if (response == null || response.Type == JTokenType.Null || response.Type == JTokenType.Undefined)
             {
-                Tracer.Write(ReactConstants.Tag, "Empty JavaScript Queue");
                 return;
             }
 
-            var moduleIds = messages[0].ToObject<int[]>();
-            var methodIds = messages[1].ToObject<int[]>();
+            var messages = response as JArray;
+            if (messages == null)
+            {
+                throw new InvalidOperationException(
+                    "Did not get valid calls back from JavaScript. Message type: " + response.Type);
+            }
+
+            if (messages.Count < 3)
+            {
+                throw new InvalidOperationException(
+                    "Did not get valid calls back from JavaScript. Message count: " + messages.Count);
+            }
+
+            var moduleIds = messages[0] as JArray;
+            var methodIds = messages[1] as JArray;
             var paramsArray = messages[2] as JArray;
             if (moduleIds == null || methodIds == null || paramsArray == null ||
-                moduleIds.Length != methodIds.Length || moduleIds.Length != paramsArray.Count)
+                moduleIds.Count != methodIds.Count || moduleIds.Count != paramsArray.Count)
             {
-                throw new InvalidOperationException("Unexpected React batch response.");
+                throw new InvalidOperationException(
+                    "Did not get valid calls back from JavaScript. JSON: " + response);
             }
 
             _nativeModulesQueueThread.RunOnQueue(() =>
             {
-                for (var i = 0; i < moduleIds.Length; ++i)
+                for (var i = 0; i < moduleIds.Count; ++i)
                 {
-                    var moduleId = moduleIds[i];
-                    var methodId = methodIds[i];
+                    var moduleId = moduleIds[i].Value<int>();
+                    var methodId = methodIds[i].Value<int>();
                     var args = (JArray)paramsArray[i];
 
                     _reactCallback.Invoke(moduleId, methodId, args);
