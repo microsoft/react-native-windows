@@ -143,9 +143,9 @@ namespace ReactNative.Views.Picker
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ComboBox view)
+        protected override void AddEventEmitters(ComboBox view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.SelectionChanged += OnSelectionChanged;
         }
 

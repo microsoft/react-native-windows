@@ -109,7 +109,7 @@ namespace ReactNative.UIManager
             JavaScriptResponderHandler jsResponderHandler)
         {
             var view = CreateViewInstance(reactContext);
-            AddEventEmitters(reactContext, view);
+            AddEventEmitters(view);
 
             // TODO: enable touch intercepting view parents
 
@@ -195,7 +195,7 @@ namespace ReactNative.UIManager
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
         /// </remarks>
-        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TDependencyObject view)
+        protected virtual void AddEventEmitters(TDependencyObject view)
         {
         }
 

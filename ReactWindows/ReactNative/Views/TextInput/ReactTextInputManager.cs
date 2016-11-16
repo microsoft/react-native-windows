@@ -499,9 +499,9 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
+        protected override void AddEventEmitters(ReactTextBox view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.TextChanging += OnTextChanging;
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;

@@ -115,9 +115,9 @@ namespace ReactNative.Views.Flip
             return new FlipView();
         }
 
-        protected override void AddEventEmitters(ThemedReactContext reactContext, FlipView view)
+        protected override void AddEventEmitters(FlipView view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.SelectionChanged += OnSelectionChanged;
         }
 

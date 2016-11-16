@@ -376,9 +376,9 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ScrollViewer view)
+        protected override void AddEventEmitters(ScrollViewer view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.DirectManipulationCompleted += OnDirectManipulationCompleted;
             view.DirectManipulationStarted += OnDirectManipulationStarted;
             view.ViewChanging += OnViewChanging;

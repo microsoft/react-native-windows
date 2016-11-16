@@ -358,9 +358,9 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="PasswordBox"/> view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, PasswordBox view)
+        protected override void AddEventEmitters(PasswordBox view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.PasswordChanged += OnPasswordChanged;
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;

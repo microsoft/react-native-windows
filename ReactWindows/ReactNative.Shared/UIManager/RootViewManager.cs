@@ -36,7 +36,7 @@
         /// Intentionally skipping call to base method because we don't care
         /// about pointer enter/leave events on the root view.
         /// </remarks>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, SizeMonitoringCanvas view)
+        protected override void AddEventEmitters(SizeMonitoringCanvas view)
         {
         }
 

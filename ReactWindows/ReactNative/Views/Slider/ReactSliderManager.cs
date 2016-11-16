@@ -168,9 +168,9 @@ namespace ReactNative.Views.Slider
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
+        protected override void AddEventEmitters(Windows.UI.Xaml.Controls.Slider view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.ValueChanged += OnValueChange;
             view.PointerReleased += OnPointerReleased;
             view.PointerCaptureLost += OnPointerReleased;

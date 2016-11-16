@@ -155,7 +155,7 @@ namespace ReactNative.UIManager
         /// Make sure you call the base implementation to ensure base pointer
         /// event handlers are subscribed.
         /// </remarks>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        protected override void AddEventEmitters(TFrameworkElement view)
         {
             view.PointerEntered += OnPointerEntered;
             view.PointerExited += OnPointerExited;

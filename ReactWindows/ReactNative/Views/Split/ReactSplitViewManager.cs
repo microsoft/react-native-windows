@@ -200,9 +200,9 @@ namespace ReactNative.Views.Split
         {
         }
 
-        protected override void AddEventEmitters(ThemedReactContext reactContext, SplitView view)
+        protected override void AddEventEmitters(SplitView view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.PaneClosed += OnPaneClosed;
         }
 
