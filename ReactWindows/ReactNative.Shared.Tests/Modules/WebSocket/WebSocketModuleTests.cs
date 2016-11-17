@@ -4,7 +4,6 @@ using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.WebSocket;
 using System.Threading;
-using System.Collections.Generic;
 
 namespace ReactNative.Tests.Modules.WebSocket
 {
@@ -63,8 +62,6 @@ namespace ReactNative.Tests.Modules.WebSocket
         {
             var waitHandle = new AutoResetEvent(false);
             var json = default(JObject);
-            bool websocketFailedCalled = false;
-
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
                 if (name == "emit" && args.Length == 2)
@@ -72,13 +69,8 @@ namespace ReactNative.Tests.Modules.WebSocket
                     var eventName = (string)args[0];
                     switch (eventName)
                     {
-                        case "websocketClosed":
-                            waitHandle.Set();
-                            break;
                         case "websocketFailed":
                             json = (JObject)args[1];
-
-                            websocketFailedCalled = true;
                             waitHandle.Set();
                             break;
                     }
@@ -94,7 +86,6 @@ namespace ReactNative.Tests.Modules.WebSocket
             finally
             {
                 module.close(1000, "None", 1);
-                waitHandle.Dispose();
             }
 
             Assert.AreEqual(1, json["id"].Value<int>());
@@ -123,8 +114,6 @@ namespace ReactNative.Tests.Modules.WebSocket
                         break;
                 }
             }));
-
-            int waitTimeout = System.Diagnostics.Debugger.IsAttached ? -1 : 5000;
 
             var module = new WebSocketModule(context);
             try
