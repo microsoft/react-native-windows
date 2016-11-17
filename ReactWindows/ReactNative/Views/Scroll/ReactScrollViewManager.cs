@@ -352,9 +352,8 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// Creates a new view instance.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ScrollViewer CreateViewInstance(ThemedReactContext reactContext)
+        protected override ScrollViewer CreateViewInstance()
         {
             var scrollViewerData = new ScrollViewerData();
 
@@ -374,7 +373,6 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// Adds event emitters for drag and scroll events.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ScrollViewer view)
         {

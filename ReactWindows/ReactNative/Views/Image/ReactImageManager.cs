@@ -219,9 +219,8 @@ namespace ReactNative.Views.Image
         /// <summary>
         /// Creates the image view instance.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The image view instance.</returns>
-        protected override Border CreateViewInstance(ThemedReactContext reactContext)
+        protected override Border CreateViewInstance()
         {
             return new Border
             {

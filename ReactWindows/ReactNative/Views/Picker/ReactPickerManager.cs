@@ -130,9 +130,8 @@ namespace ReactNative.Views.Picker
         /// <summary>
         /// Creates a new view instance of type <see cref="ComboBox"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ComboBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override ComboBox CreateViewInstance()
         {
             return new ComboBox();
         }
@@ -141,7 +140,6 @@ namespace ReactNative.Views.Picker
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ComboBox view)
         {

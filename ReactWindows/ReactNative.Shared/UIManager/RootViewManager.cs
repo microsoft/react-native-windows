@@ -45,7 +45,7 @@
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override SizeMonitoringCanvas CreateViewInstance(ThemedReactContext reactContext)
+        protected override SizeMonitoringCanvas CreateViewInstance()
         {
             return new SizeMonitoringCanvas();
         }

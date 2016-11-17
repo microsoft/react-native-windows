@@ -206,7 +206,7 @@ namespace ReactNative.Views.Split
             view.PaneClosed += OnPaneClosed;
         }
 
-        protected override SplitView CreateViewInstance(ThemedReactContext reactContext)
+        protected override SplitView CreateViewInstance()
         {
             return new SplitView
             {

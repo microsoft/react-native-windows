@@ -155,9 +155,8 @@ namespace ReactNative.Views.Slider
         /// <summary>
         /// Returns the view instance for <see cref="Slider"/>.
         /// </summary>
-        /// <param name="reactContext"></param>
         /// <returns></returns>
-        protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance(ThemedReactContext reactContext)
+        protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance()
         {
             return new Windows.UI.Xaml.Controls.Slider();
         }
@@ -166,7 +165,6 @@ namespace ReactNative.Views.Slider
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(Windows.UI.Xaml.Controls.Slider view)
         {

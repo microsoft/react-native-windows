@@ -324,9 +324,8 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Returns the view instance for <see cref="PasswordBox"/>.
         /// </summary>
-        /// <param name="reactContext">The themed React Context</param>
         /// <returns>A new initialized <see cref="PasswordBox"/></returns>
-        protected override PasswordBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override PasswordBox CreateViewInstance()
         {
             return new PasswordBox();
         }
@@ -356,7 +355,6 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Installing the textchanged event emitter on the <see cref="TextInput"/> Control.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="PasswordBox"/> view instance.</param>
         protected override void AddEventEmitters(PasswordBox view)
         {

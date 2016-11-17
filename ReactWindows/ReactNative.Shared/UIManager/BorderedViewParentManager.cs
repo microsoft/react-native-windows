@@ -183,11 +183,10 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <see cref="Border"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected sealed override Border CreateViewInstance(ThemedReactContext reactContext)
+        protected sealed override Border CreateViewInstance()
         {
-            var inner = CreateInnerElement(reactContext);
+            var inner = CreateInnerElement();
             return new Border
             {
                 BorderBrush = s_defaultBorderBrush,
@@ -198,9 +197,8 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TFrameworkElement CreateInnerElement(ThemedReactContext reactContext);
+        protected abstract TFrameworkElement CreateInnerElement();
 
         /// <summary>
         /// Adds a child at the given index.

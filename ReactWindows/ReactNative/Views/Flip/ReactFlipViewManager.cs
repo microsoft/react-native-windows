@@ -110,7 +110,7 @@ namespace ReactNative.Views.Flip
             }
         }
 
-        protected override FlipView CreateViewInstance(ThemedReactContext reactContext)
+        protected override FlipView CreateViewInstance()
         {
             return new FlipView();
         }

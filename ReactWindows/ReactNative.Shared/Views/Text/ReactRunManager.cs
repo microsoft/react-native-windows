@@ -69,9 +69,8 @@ namespace ReactNative.Views.Text
         /// <summary>
         /// Creates a new view instance of type <see cref="Run"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override Run CreateViewInstance(ThemedReactContext reactContext)
+        protected override Run CreateViewInstance()
         {
             return new Run();
         }

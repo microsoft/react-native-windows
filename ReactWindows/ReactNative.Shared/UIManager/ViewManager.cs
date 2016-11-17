@@ -111,7 +111,7 @@ namespace ReactNative.UIManager
             ThemedReactContext reactContext,
             JavaScriptResponderHandler responderHandler)
         {
-            var view = CreateViewInstance(reactContext);
+            var view = CreateViewInstance();
             AddEventEmitters(view);
 
             // TODO: enable touch intercepting view parents
@@ -195,9 +195,8 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TFrameworkElement CreateViewInstance(ThemedReactContext reactContext);
+        protected abstract TFrameworkElement CreateViewInstance();
 
         /// <summary>
         /// Subclasses can override this method to install custom event 
