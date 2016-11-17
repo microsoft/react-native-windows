@@ -19,7 +19,7 @@ namespace ReactNative.UIManager
     /// <see cref="ReactShadowNode"/> subclasses used for calculating position
     /// and size for the corresponding native view.
     /// </summary>
-    public abstract class ViewManager<TFrameworkElement, TReactShadowNode> : IViewManager, IEventEmitter
+    public abstract class ViewManager<TFrameworkElement, TReactShadowNode> : IViewManager
         where TFrameworkElement : FrameworkElement
         where TReactShadowNode : ReactShadowNode
     {
@@ -36,6 +36,11 @@ namespace ReactNative.UIManager
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
         protected ViewManager(IEventDispatcher eventDispatcher)
         {
+            if (eventDispatcher == null)
+            {
+                throw new ArgumentNullException(nameof(eventDispatcher));
+            }
+
             _eventDispatcher = eventDispatcher;
         }
 
@@ -233,7 +238,7 @@ namespace ReactNative.UIManager
         {
         }
 
-        #region IViewManager
+#region IViewManager
 
         void IViewManager.UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
@@ -275,9 +280,9 @@ namespace ReactNative.UIManager
             SetDimensions((TFrameworkElement)view, dimensions);
         }
 
-        #endregion
+#endregion
 
-        #region IEventEmitter
+#region IEventEmitter
 
         private IEventDispatcher _eventDispatcher;
 
@@ -302,6 +307,6 @@ namespace ReactNative.UIManager
             }
         }
 
-        #endregion
+#endregion
     }
 }

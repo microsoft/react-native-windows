@@ -21,6 +21,27 @@ namespace ReactNative.UIManager
         where TReactShadowNode : ReactShadowNode
     {
         /// <summary>
+        /// Instantiates the base class <see cref="DependencyObjectViewManager{TDependencyObject, TReactShadowNode}"/>.
+        /// </summary>
+        protected DependencyObjectViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="DependencyObjectViewManager{TDependencyObject, TReactShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected DependencyObjectViewManager(IEventDispatcher eventDispatcher)
+        {
+            if (eventDispatcher == null)
+            {
+                throw new ArgumentNullException(nameof(eventDispatcher));
+            }
+
+            _eventDispatcher = eventDispatcher;
+        }
+
+        /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
         /// </summary>
@@ -243,6 +264,33 @@ namespace ReactNative.UIManager
         void IViewManager.SetDimensions(DependencyObject view, Dimensions dimensions)
         {
             SetDimensions((TDependencyObject)view, dimensions);
+        }
+
+        #endregion
+
+#region IEventEmitter
+
+        private IEventDispatcher _eventDispatcher;
+
+        /// <summary>
+        /// The instance of the EventDispatcher relevant to the implementer's context
+        /// </summary>
+        public virtual IEventDispatcher EventDispatcher
+        {
+            get
+            {
+                if (_eventDispatcher == null)
+                {
+                    throw new InvalidOperationException("Event Dispatcher is null");
+                }
+
+                return _eventDispatcher;
+            }
+
+            set
+            {
+                _eventDispatcher = value;
+            }
         }
 
 #endregion

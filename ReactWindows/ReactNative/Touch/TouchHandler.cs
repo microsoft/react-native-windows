@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Touch
 {
-    class TouchHandler : IDisposable
+    class TouchHandler : IEventEmitter, IDisposable
     {
         private readonly FrameworkElement _view;
         private readonly List<ReactPointer> _pointers;

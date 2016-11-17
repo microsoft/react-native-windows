@@ -156,7 +156,7 @@ namespace ReactNative.UIManager
                 // Uses an extension method and `Tag` property on 
                 // DependencyObject to store the tag of the view.
                 view.SetTag(tag);
-                view.SetEventEmitter(viewManager as IEventEmitter);
+                view.SetEventEmitter(viewManager);
 
                 if (initialProperties != null)
                 {
@@ -593,7 +593,7 @@ namespace ReactNative.UIManager
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
             view.SetTag(tag);
-            view.SetEventEmitter(_rootViewManager as IEventEmitter);
+            view.SetEventEmitter(_rootViewManager);
         }
 
         private void DropView(DependencyObject view)

@@ -158,7 +158,9 @@ namespace ReactNative.UIManager
         public static IEventEmitter GetEventEmitter(this DependencyObject view)
         {
             if (view == null)
+            {
                 throw new ArgumentNullException(nameof(view));
+            }
 
             var elementData = default(DependencyObjectData);
             if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)

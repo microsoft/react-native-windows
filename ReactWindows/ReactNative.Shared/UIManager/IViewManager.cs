@@ -16,7 +16,7 @@ namespace ReactNative.UIManager
     /// <see cref="ReactShadowNode"/> subclasses used for calculating position
     /// and size for the corresponding native view.
     /// </summary>
-    public interface IViewManager
+    public interface IViewManager : IEventEmitter
     {
         /// <summary>
         /// The name of this view manager. This will be the name used to 

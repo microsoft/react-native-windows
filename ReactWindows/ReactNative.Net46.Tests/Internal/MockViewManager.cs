@@ -105,5 +105,11 @@ namespace ReactNative.Tests
         {
             throw new NotImplementedException();
         }
+
+        public virtual IEventDispatcher EventDispatcher
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
     }
 }
