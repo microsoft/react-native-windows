@@ -1,5 +1,6 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -7,6 +8,22 @@ namespace ReactNative.Views.Progress
 {
     class ReactProgressBarViewManager : BaseViewManager<ProgressBar, ProgressBarShadowNode>
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactProgressBarViewManager"/>.
+        /// </summary>
+        public ReactProgressBarViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactProgressBarViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactProgressBarViewManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         public override string Name
         {
             get

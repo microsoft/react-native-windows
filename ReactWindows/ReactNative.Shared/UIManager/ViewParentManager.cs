@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactNative.UIManager.Events;
+using System;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -20,6 +21,22 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="ViewParentManager{TFrameworkElement, TLayoutShadowNode}"/>.
+        /// </summary>
+        protected ViewParentManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ViewParentManager{TFrameworkElement, TLayoutShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected ViewParentManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// The <see cref="Type"/> instance that represents the type of shadow
         /// node that this manager will return from

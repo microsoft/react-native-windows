@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -23,6 +24,22 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="BaseViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        protected BaseViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BaseViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected BaseViewManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
         /// properties, based on the <see cref="JObject"/> map.

@@ -24,6 +24,22 @@ namespace ReactNative.UIManager
         where TReactShadowNode : ReactShadowNode
     {
         /// <summary>
+        /// Instantiates the base class <see cref="ViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        protected ViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected ViewManager(EventDispatcher eventDispatcher)
+        {
+            _eventDispatcher = eventDispatcher;
+        }
+
+        /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
         /// </summary>

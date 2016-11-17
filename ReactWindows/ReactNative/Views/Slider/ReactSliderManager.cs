@@ -1,5 +1,6 @@
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 
@@ -12,6 +13,22 @@ namespace ReactNative.Views.Slider
     {
         private const double Epsilon = 1e-4;
         private const double Undefined = double.NegativeInfinity;
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactSliderManager"/>.
+        /// </summary>
+        public ReactSliderManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactSliderManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactSliderManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         /// <summary>
         /// The name of the view manager.

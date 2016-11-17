@@ -1,5 +1,6 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -11,6 +12,22 @@ namespace ReactNative.Views.Progress
     /// </summary>
     class ReactProgressRingViewManager : BaseViewManager<ProgressRing, ReactProgressRingShadowNode>
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactProgressRingViewManager"/>.
+        /// </summary>
+        public ReactProgressRingViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactProgressRingViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactProgressRingViewManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.

@@ -2,6 +2,7 @@
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System.Collections.Generic;
 using Windows.System;
@@ -19,6 +20,22 @@ namespace ReactNative.Views.TextInput
     /// </summary>
     class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactPasswordBoxManager"/>.
+        /// </summary>
+        public ReactPasswordBoxManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactPasswordBoxManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactPasswordBoxManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// The name of the view manager.
         /// </summary>

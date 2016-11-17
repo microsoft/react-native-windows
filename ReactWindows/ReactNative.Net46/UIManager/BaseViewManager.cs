@@ -1,4 +1,5 @@
 ﻿using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
@@ -16,6 +17,22 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="BaseViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        protected BaseViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BaseViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected BaseViewManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         // ToDo: SetTransform - ReactProp("transform")
 
         /// <summary>

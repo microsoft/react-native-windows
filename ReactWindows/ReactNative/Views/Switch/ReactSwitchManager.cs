@@ -16,6 +16,22 @@ namespace ReactNative.Views.Switch
         private const string ReactClass = "RCTSwitch";
 
         /// <summary>
+        /// Instantiates the base class <see cref="ReactSwitchManager"/>.
+        /// </summary>
+        public ReactSwitchManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactSwitchManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactSwitchManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
         /// </summary>

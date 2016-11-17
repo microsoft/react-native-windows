@@ -29,6 +29,22 @@ namespace ReactNative.Views.TextInput
         internal static readonly Color DefaultTextBoxBorder = Color.FromArgb(255, 122, 122, 122);
 
         /// <summary>
+        /// Instantiates the base class <see cref="ReactTextInputManager"/>.
+        /// </summary>
+        public ReactTextInputManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactTextInputManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactTextInputManager(EventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// The name of the view manager.
         /// </summary>
         public override string Name
