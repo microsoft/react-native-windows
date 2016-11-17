@@ -175,8 +175,6 @@ namespace ReactNative.Bridge
 
             public void WriteModuleDescription(JsonWriter writer)
             {
-                if (Target == null) throw new NullReferenceException("Target");
-
                 writer.WriteStartArray();
                 writer.WriteValue(Name);
                 JObject.FromObject(Target.Constants).WriteTo(writer);

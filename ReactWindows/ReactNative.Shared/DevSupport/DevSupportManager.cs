@@ -10,7 +10,6 @@ using System.Reactive.Disposables;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 #if WINDOWS_UWP
 using Windows.Storage;
 #else

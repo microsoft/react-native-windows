@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 
 namespace ReactNative.Bridge
@@ -55,7 +54,7 @@ namespace ReactNative.Bridge
             return CurrentDispatcher.CheckAccess();
         }
 
-        public static async void RunOnDispatcher(Action action, bool runAsync = true)
+        public static async void RunOnDispatcher(Action action)
         {
             AssertDispatcherSet();
 
