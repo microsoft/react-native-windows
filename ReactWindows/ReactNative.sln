@@ -227,8 +227,6 @@ Global
 		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|x64.Build.0 = Release|x64
 		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|x86.ActiveCfg = Release|Win32
 		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|x86.Build.0 = Release|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|Any CPU.ActiveCfg = Release|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|Any CPU.Build.0 = Release|Win32
 		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|ARM.ActiveCfg = Release|x64
 		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|x64.ActiveCfg = Release|x64
 		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|x64.Build.0 = Release|x64
