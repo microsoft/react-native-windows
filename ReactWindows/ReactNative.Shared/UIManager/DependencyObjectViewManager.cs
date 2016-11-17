@@ -118,12 +118,11 @@ namespace ReactNative.UIManager
         /// additional cleanup by the <see cref="IViewManager"/>
         /// subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TDependencyObject view)
+        public virtual void OnDropViewInstance(TDependencyObject view)
         {
         }
 
@@ -185,7 +184,6 @@ namespace ReactNative.UIManager
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         /// <remarks>
         /// Consider overriding this method if your view needs to emit events
@@ -217,9 +215,9 @@ namespace ReactNative.UIManager
             return CreateView(jsResponderHandler);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
+        void IViewManager.OnDropViewInstance(DependencyObject view)
         {
-            OnDropViewInstance(reactContext, (TDependencyObject)view);
+            OnDropViewInstance((TDependencyObject)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()

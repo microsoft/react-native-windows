@@ -311,11 +311,10 @@ namespace ReactNative.Views.Scroll
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactScrollViewManager"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ScrollViewer view)
+        public override void OnDropViewInstance(ScrollViewer view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
 
             _scrollViewerData.Remove(view);
 

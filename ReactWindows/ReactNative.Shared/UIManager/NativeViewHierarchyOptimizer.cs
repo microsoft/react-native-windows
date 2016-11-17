@@ -82,7 +82,6 @@ namespace ReactNative.UIManager
         {
 #if !ENABLED
             _uiViewOperationQueue.EnqueueCreateView(
-                    themedContext,
                     node.ReactTag,
                     node.ViewClass,
                     initialProperties);
@@ -95,7 +94,6 @@ namespace ReactNative.UIManager
             if (!isLayoutOnly)
             {
                 _uiViewOperationQueue.EnqueueCreateView(
-                    themedContext,
                     node.ReactTag,
                     node.ViewClass,
                     initialProperties);
@@ -477,7 +475,6 @@ namespace ReactNative.UIManager
 
             // Create the view since it doesn't exist in the native hierarchy yet.
             _uiViewOperationQueue.EnqueueCreateView(
-                node.RootNode.ThemedContext,
                 node.ReactTag,
                 node.ViewClass,
                 props);

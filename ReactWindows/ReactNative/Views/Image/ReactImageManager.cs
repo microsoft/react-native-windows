@@ -199,11 +199,10 @@ namespace ReactNative.Views.Image
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
+        public override void OnDropViewInstance(Border view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
 
             var tag = view.GetTag();
             var disposable = default(SerialDisposable);

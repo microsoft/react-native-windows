@@ -120,9 +120,8 @@ namespace ReactNative.UIManager
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        public virtual void OnDropViewInstance(TFrameworkElement view)
         {
         }
 
@@ -231,9 +230,9 @@ namespace ReactNative.UIManager
             return CreateView(jsResponderHandler);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
+        void IViewManager.OnDropViewInstance(DependencyObject view)
         {
-            OnDropViewInstance(reactContext, (TFrameworkElement)view);
+            OnDropViewInstance((TFrameworkElement)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()

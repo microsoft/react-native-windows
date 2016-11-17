@@ -130,13 +130,12 @@ namespace ReactNative.UIManager
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         /// <remarks>
         /// Be sure to call this base class method to register for pointer 
         /// entered and pointer exited events.
         /// </remarks>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        public override void OnDropViewInstance(TFrameworkElement view)
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;

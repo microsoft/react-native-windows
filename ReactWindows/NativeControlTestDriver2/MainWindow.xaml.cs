@@ -21,16 +21,16 @@ namespace NativeControlTestDriver
 
         #endregion
 
-        private UIManagerModule uiManagerModule;
-        private ReactRootView rootView;
+        //private UIManagerModule uiManagerModule;
+        //private ReactRootView rootView;
 
-        private ReactContext reactContext = new ReactContext();
+        //private ReactContext reactContext = new ReactContext();
 
-        private UIImplementationProvider uiImplementationProvider = new UIImplementationProvider();
-        private UIImplementation uiImplementation;
+        //private UIImplementationProvider uiImplementationProvider = new UIImplementationProvider();
+        //private UIImplementation uiImplementation;
 
-        private int nextTag = 0;
-        private int rootViewTag;
+        private static int nextTag = 0;
+        //private int rootViewTag;
 
         public MainWindow()
         {
@@ -136,20 +136,20 @@ namespace NativeControlTestDriver
 
         private void OnRunTest2ButtonClicked(object sender, RoutedEventArgs e)
         {
-            JObject props = new JObject();
-            props.Add("fontSize", 20);
-            //jo.Add("color", "#FF00FF00");
-            props.Add("width", 150);
-            props.Add("height", 32);
-            props.Add("textAlign", "center");
+            //JObject props = new JObject();
+            //props.Add("fontSize", 20);
+            ////jo.Add("color", "#FF00FF00");
+            //props.Add("width", 150);
+            //props.Add("height", 32);
+            //props.Add("textAlign", "center");
 
-            int childTag = GetNextTag();
-            uiImplementation.CreateView(childTag, @"RCTText", rootViewTag, props);
+            //int childTag = GetNextTag();
+            //uiImplementation.CreateView(childTag, @"RCTText", rootViewTag, props);
 
-            int[] childrenTags = {childTag};
+            //int[] childrenTags = {childTag};
 
-            //uiImplementation.SetChildren(rootViewTag, childrenTags);
-            uiImplementation.ManageChildren(rootViewTag, null, null, childrenTags, null, null);
+            ////uiImplementation.SetChildren(rootViewTag, childrenTags);
+            //uiImplementation.ManageChildren(rootViewTag, null, null, childrenTags, null, null);
         }
 
         private int GetNextTag()
@@ -159,8 +159,6 @@ namespace NativeControlTestDriver
 
         #region ViewManager Tests
 
-        private ReactContext viewManagerTestReactContext;
-        private ThemedReactContext viewManagerTestThemedReactContext;
         private ReactTextViewManager textViewManager;
         private JavaScriptResponderHandler textViewManagerResponderHandler;
         private TextBlock textBlock;

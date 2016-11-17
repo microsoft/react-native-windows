@@ -131,11 +131,10 @@ namespace ReactNative.Views.Slider
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
+        public override void OnDropViewInstance(Windows.UI.Xaml.Controls.Slider view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.ValueChanged -= OnValueChange;
             view.PointerReleased -= OnPointerReleased;
             view.PointerCaptureLost -= OnPointerReleased;

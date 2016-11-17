@@ -171,7 +171,6 @@ namespace ReactNative.UIManager
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial properties.</param>
         public void EnqueueCreateView(
-            ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
             ReactStylesDiffMap initialProps)

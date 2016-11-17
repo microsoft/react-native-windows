@@ -192,11 +192,10 @@ namespace ReactNative.Views.Web
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactWebViewManager"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, WebView view)
+        public override void OnDropViewInstance(WebView view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.NavigationCompleted -= OnNavigationCompleted;
             view.NavigationStarting -= OnNavigationStarting;
         }

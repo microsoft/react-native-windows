@@ -620,7 +620,7 @@ namespace ReactNative.UIManager
             {
                 // For non-root views, we notify the view manager with `OnDropViewInstance`
                 var mgr = ResolveViewManager(tag);
-                mgr.OnDropViewInstance(view.GetReactContext(), view);
+                mgr.OnDropViewInstance(view);
             }
 
             var viewManager = default(IViewManager);

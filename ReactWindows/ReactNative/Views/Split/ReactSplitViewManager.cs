@@ -146,9 +146,9 @@ namespace ReactNative.Views.Split
             return count;
         }
 
-        public override void OnDropViewInstance(ThemedReactContext reactContext, SplitView view)
+        public override void OnDropViewInstance(SplitView view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.PaneClosed -= OnPaneClosed;
         }
 

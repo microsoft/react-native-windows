@@ -119,11 +119,10 @@ namespace ReactNative.Views.Picker
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactPickerManager"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ComboBox view)
+        public override void OnDropViewInstance(ComboBox view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.SelectionChanged -= OnSelectionChanged;
         }
   

@@ -80,12 +80,11 @@ namespace ReactNative.UIManager
         /// additional cleanup by the <see cref="IViewManager"/>
         /// subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view);
+        void OnDropViewInstance(DependencyObject view);
 
         /// <summary>
         /// This method should return the subclass of <see cref="ReactShadowNode"/>

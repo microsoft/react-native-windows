@@ -461,11 +461,10 @@ namespace ReactNative.Views.TextInput
         /// additional cleanup by the <see cref="ReactTextInputManager"/>.
         /// subclass. Unregister all event handlers for the <see cref="ReactTextBox"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/>.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ReactTextBox view)
+        public override void OnDropViewInstance(ReactTextBox view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.KeyDown -= OnKeyDown;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;

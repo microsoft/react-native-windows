@@ -90,9 +90,9 @@ namespace ReactNative.Views.Flip
             parent.Items.RemoveAt(index);
         }
 
-        public override void OnDropViewInstance(ThemedReactContext reactContext, FlipView view)
+        public override void OnDropViewInstance(FlipView view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.SelectionChanged -= OnSelectionChanged;
         }
 
