@@ -138,37 +138,6 @@ namespace ReactNative.UIManager
             return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
         }
 
-        internal static void SetReactContext(this DependencyObject view, ThemedReactContext context)
-        {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            s_properties.GetOrCreateValue(view).Context = context;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="ThemedReactContext"/> associated with the view
-        /// instance.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <returns>The context.</returns>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if context is not available for the view.
-        /// </exception>
-        public static ThemedReactContext GetReactContext(this DependencyObject view)
-        {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
-            {
-                throw new InvalidOperationException("Could not get tag for view.");
-            }
-
-            return elementData.Context;
-        }
-
         internal static void SetEventDispatcher(this DependencyObject view, EventDispatcher eventDispatcher)
         {
             if (view == null)
@@ -215,7 +184,7 @@ namespace ReactNative.UIManager
         {
             public EventDispatcher EventDispatcher { get; set; }
 
-            public ThemedReactContext Context { get; set; }
+            public ReactContext Context { get; set; }
 
             public PointerEvents? PointerEvents { get; set; }
 

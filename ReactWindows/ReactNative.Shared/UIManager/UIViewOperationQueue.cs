@@ -85,14 +85,12 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The root view tag.</param>
         /// <param name="rootView">The root view.</param>
-        /// <param name="themedRootContext">The React context.</param>
         public void AddRootView(
             int tag,
-            SizeMonitoringCanvas rootView,
-            ThemedReactContext themedRootContext)
+            SizeMonitoringCanvas rootView)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
+            _nativeViewHierarchyManager.AddRootView(tag, rootView);
         }
 
         /// <summary>

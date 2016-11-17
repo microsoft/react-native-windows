@@ -36,16 +36,6 @@ namespace ReactNative.UIManager
     /// All native view management methods listed above must be called from the
     /// dispatcher thread.
     /// 
-    /// The <see cref="EventDispatcher"/> instance that is passed to views that
-    /// this manager creates differs from the one that we pass to the
-    /// constructor. Instead we wrap the provided instance of 
-    /// <see cref="ReactContext"/> in an instance of <see cref="ThemedReactContext"/>
-    /// that additionally provides a correct theme based on the root view for
-    /// a view tree that we attach newly created views to. Therefore this view
-    /// manager will create a copy of <see cref="ThemedReactContext"/> that
-    /// wraps the instance of <see cref="ReactContext"/> for each root view
-    /// added to the manager (see
-    /// <see cref="AddRootView(int, SizeMonitoringCanvas, ThemedReactContext)"/>).
     /// 
     /// TODO: 
     /// 1) AnimationRegistry
@@ -435,10 +425,9 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="view">The root view.</param>
-        /// <param name="themedContext">The themed context.</param>
-        public void AddRootView(int tag, SizeMonitoringCanvas view, ThemedReactContext themedContext)
+        public void AddRootView(int tag, SizeMonitoringCanvas view)
         {
-            AddRootViewParent(tag, view, themedContext);
+            AddRootViewParent(tag, view);
         }
 
         /// <summary>
@@ -602,7 +591,7 @@ namespace ReactNative.UIManager
             return viewManager;
         }
 
-        private void AddRootViewParent(int tag, FrameworkElement view, ThemedReactContext themedContext)
+        private void AddRootViewParent(int tag, FrameworkElement view)
         {
             DispatcherHelpers.AssertOnDispatcher();
             _tagsToViews.Add(tag, view);

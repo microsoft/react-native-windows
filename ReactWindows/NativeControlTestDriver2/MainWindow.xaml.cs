@@ -89,7 +89,6 @@ namespace NativeControlTestDriver
 
             //uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers);
             //uiImplementation.OnResume();
-            //ThemedReactContext themedReactContext = new ThemedReactContext(reactContext);
 
             //rootViewTag = GetNextTag();
 

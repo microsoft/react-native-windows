@@ -71,13 +71,11 @@ namespace ReactNative.UIManager
         /// Handles the creation of a view.
         /// </summary>
         /// <param name="node">The shadow node for the view.</param>
-        /// <param name="themedContext">The themed context.</param>
         /// <param name="initialProperties">
         /// The initial properties for the view.
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node,
-            ThemedReactContext themedContext, 
             ReactStylesDiffMap initialProperties)
         {
 #if !ENABLED

@@ -71,23 +71,20 @@ namespace ReactNative.UIManager
         /// <param name="tag">The view tag.</param>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        /// <param name="context">The context.</param>
         public void RegisterRootView(
             SizeMonitoringCanvas rootView,
             int tag,
             double width,
-            double height,
-            ThemedReactContext context)
+            double height)
         {
             var rootCssNode = CreateRootShadowNode();
             rootCssNode.ReactTag = tag;
-            rootCssNode.ThemedContext = context;
             rootCssNode.Width = (float)width;
             rootCssNode.Height = (float)height;
             _shadowNodeRegistry.AddRootNode(rootCssNode);
 
             // Register it with the NativeViewHierarchyManager.
-            _operationsQueue.AddRootView(tag, rootView, context);
+            _operationsQueue.AddRootView(tag, rootView);
         }
 
         /// <summary>
@@ -143,7 +140,6 @@ namespace ReactNative.UIManager
             cssNode.ReactTag = tag;
             cssNode.ViewClass = className;
             cssNode.RootNode = rootNode;
-            cssNode.ThemedContext = rootNode.ThemedContext;
 
             _shadowNodeRegistry.AddNode(cssNode);
 
@@ -644,7 +640,7 @@ namespace ReactNative.UIManager
         {
             if (!cssNode.IsVirtual)
             {
-                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, cssNode.ThemedContext, styles);
+                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, styles);
             }
         }
 
