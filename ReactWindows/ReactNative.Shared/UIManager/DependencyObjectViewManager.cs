@@ -101,12 +101,9 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a view and installs event emitters on it.
         /// </summary>
-        /// <param name="reactContext">The context.</param>
         /// <param name="jsResponderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        public TDependencyObject CreateView(
-            ThemedReactContext reactContext,
-            JavaScriptResponderHandler jsResponderHandler)
+        public TDependencyObject CreateView(JavaScriptResponderHandler jsResponderHandler)
         {
             var view = CreateViewInstance();
             AddEventEmitters(view);
@@ -215,9 +212,9 @@ namespace ReactNative.UIManager
             UpdateProperties((TDependencyObject)viewToUpdate, props);
         }
 
-        DependencyObject IViewManager.CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        DependencyObject IViewManager.CreateView(JavaScriptResponderHandler jsResponderHandler)
         {
-            return CreateView(reactContext, jsResponderHandler);
+            return CreateView(jsResponderHandler);
         }
 
         void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)

@@ -254,8 +254,7 @@ namespace ReactNative.Views.Web
         {
             var webView = (WebView)sender;
 
-            webView.GetReactContext().GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            webView.GetEventDispatcher()
                 .DispatchEvent(
                     new WebViewLoadingEvent(
                          webView.GetTag(),
@@ -269,8 +268,7 @@ namespace ReactNative.Views.Web
 
         private static void LoadFinished(WebView webView, string uri)
         {
-            webView.GetReactContext().GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
+            webView.GetEventDispatcher()
                     .DispatchEvent(
                          new WebViewLoadingEvent(
                             webView.GetTag(),

@@ -167,7 +167,6 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial properties.</param>
@@ -180,7 +179,6 @@ namespace ReactNative.UIManager
             lock (_nonBatchedGate)
             {
                 _nonBatchedOperations.Add(() => _nativeViewHierarchyManager.CreateView(
-                   themedContext,
                    viewReactTag,
                    viewClassName,
                    initialProps));

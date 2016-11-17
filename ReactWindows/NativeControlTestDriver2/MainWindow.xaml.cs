@@ -167,14 +167,11 @@ namespace NativeControlTestDriver
 
         private void SetupViewManagerTest()
         {
-            this.viewManagerTestReactContext = new ReactContext();
-            this.viewManagerTestThemedReactContext = new ThemedReactContext(this.viewManagerTestReactContext);
-
             this.textViewManager = new ReactTextViewManager();
 
             this.textViewManagerResponderHandler = new JavaScriptResponderHandler();
 
-            this.textBlock = this.textViewManager.CreateView(this.viewManagerTestThemedReactContext, this.textViewManagerResponderHandler);
+            this.textBlock = this.textViewManager.CreateView(this.textViewManagerResponderHandler);
 
             if ( this.textBlock != null )
             {

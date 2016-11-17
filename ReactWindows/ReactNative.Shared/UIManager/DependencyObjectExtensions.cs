@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ReactNative.Bridge;
+using System;
 using System.Runtime.CompilerServices;
+using ReactNative.UIManager.Events;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -167,6 +169,37 @@ namespace ReactNative.UIManager
             return elementData.Context;
         }
 
+        internal static void SetEventDispatcher(this DependencyObject view, EventDispatcher eventDispatcher)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            s_properties.GetOrCreateValue(view).EventDispatcher = eventDispatcher;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="EventDispatcher"/> associated with the view
+        /// instance.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>The context.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if context is not available for the view.
+        /// </exception>
+        public static EventDispatcher GetEventDispatcher(this DependencyObject view)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            var elementData = default(DependencyObjectData);
+            if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
+            {
+                throw new InvalidOperationException("Could not get tag for view.");
+            }
+
+            return elementData.EventDispatcher;
+        }
+
         internal static T As<T>(this DependencyObject view)
             where T : DependencyObject
         {
@@ -180,6 +213,8 @@ namespace ReactNative.UIManager
 
         class DependencyObjectData
         {
+            public EventDispatcher EventDispatcher { get; set; }
+
             public ThemedReactContext Context { get; set; }
 
             public PointerEvents? PointerEvents { get; set; }

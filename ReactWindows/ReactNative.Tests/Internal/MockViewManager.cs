@@ -70,7 +70,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        public virtual DependencyObject CreateView(JavaScriptResponderHandler jsResponderHandler)
         {
             throw new NotImplementedException();
         }

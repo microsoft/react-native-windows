@@ -71,10 +71,9 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a view and installs event emitters on it.
         /// </summary>
-        /// <param name="reactContext">The context.</param>
         /// <param name="responderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler responderHandler);
+        DependencyObject CreateView(JavaScriptResponderHandler responderHandler);
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 

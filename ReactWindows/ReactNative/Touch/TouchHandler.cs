@@ -46,9 +46,7 @@ namespace ReactNative.Touch
         {
             if (ShouldSendEnterLeaveEvent(view))
             {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
+                view.GetEventDispatcher()
                     .DispatchEvent(
                         new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
             }
@@ -58,9 +56,7 @@ namespace ReactNative.Touch
         {
             if (ShouldSendEnterLeaveEvent(view))
             {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
+                view.GetEventDispatcher()
                     .DispatchEvent(
                         new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
             }

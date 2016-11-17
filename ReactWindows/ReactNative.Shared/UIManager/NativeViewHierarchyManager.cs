@@ -2,6 +2,7 @@
 using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.Tracing;
+using ReactNative.UIManager.Events;
 using ReactNative.UIManager.LayoutAnimation;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace ReactNative.UIManager
     /// public interface methods:
     /// - <see cref="UpdateProperties(int, ReactStylesDiffMap)"/>
     /// - <see cref="UpdateLayout(int, int, Dimensions)"/>
-    /// - <see cref="CreateView(ThemedReactContext, int, string, ReactStylesDiffMap)"/>
+    /// - <see cref="CreateView(int, string, ReactStylesDiffMap)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
     /// executing all the scheduled operations at the end of the JavaScript batch.
     /// </summary>
@@ -35,7 +36,7 @@ namespace ReactNative.UIManager
     /// All native view management methods listed above must be called from the
     /// dispatcher thread.
     /// 
-    /// The <see cref="ReactContext"/> instance that is passed to views that
+    /// The <see cref="EventDispatcher"/> instance that is passed to views that
     /// this manager creates differs from the one that we pass to the
     /// constructor. Instead we wrap the provided instance of 
     /// <see cref="ReactContext"/> in an instance of <see cref="ThemedReactContext"/>
@@ -146,11 +147,10 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a view with the given tag and class name.
         /// </summary>
-        /// <param name="themedContext">The context.</param>
         /// <param name="tag">The tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="initialProperties">The properties.</param>
-        public void CreateView(ThemedReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
+        public void CreateView(int tag, string className, ReactStylesDiffMap initialProperties)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
@@ -159,14 +159,19 @@ namespace ReactNative.UIManager
                 .Start())
             {
                 var viewManager = _viewManagers.Get(className);
-                var view = viewManager.CreateView(themedContext, _jsResponderHandler);
+                var view = viewManager.CreateView(_jsResponderHandler);
                 _tagsToViews.Add(tag, view);
                 _tagsToViewManagers.Add(tag, viewManager);
 
                 // Uses an extension method and `Tag` property on 
                 // DependencyObject to store the tag of the view.
                 view.SetTag(tag);
-                view.SetReactContext(themedContext);
+
+                var emitter = viewManager as IEventEmitter;
+                if (emitter != null)
+                {
+                    view.SetEventDispatcher(emitter.EventDispatcher);
+                }
 
                 if (initialProperties != null)
                 {
@@ -604,7 +609,7 @@ namespace ReactNative.UIManager
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
             view.SetTag(tag);
-            view.SetReactContext(themedContext);
+            view.SetEventDispatcher(_rootViewManager.EventDispatcher);
         }
 
         private void DropView(DependencyObject view)
