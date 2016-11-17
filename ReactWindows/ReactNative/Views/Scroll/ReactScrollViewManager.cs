@@ -422,8 +422,6 @@ namespace ReactNative.Views.Scroll
             double y,
             double zoomFactor)
         {
-            AssertEventDispatcher();
-
             var reactTag = scrollViewer.GetTag();
 
             // Scroll position

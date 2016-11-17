@@ -12,10 +12,5 @@ namespace ReactNative.UIManager
         /// The instance of the EventDispatcher relevant to the implementer's context
         /// </summary>
         EventDispatcher EventDispatcher { get; set; }
-
-        /// <summary>
-        /// Method of asserting the presence of the event dispatcher
-        /// </summary>
-        void AssertEventDispatcher();
     }
 }

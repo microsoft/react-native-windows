@@ -487,8 +487,7 @@ namespace ReactNative.Views.TextInput
         {
             return new ReactTextBox
             {
-                AcceptsReturn = false,
-                EventDispatcher = EventDispatcher
+                AcceptsReturn = false
             };
         }
 
@@ -514,10 +513,7 @@ namespace ReactNative.Views.TextInput
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var textBox = (ReactTextBox)sender;
-
             EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
@@ -530,10 +526,7 @@ namespace ReactNative.Views.TextInput
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var textBox = (ReactTextBox)sender;
-
             EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputFocusEvent(textBox.GetTag()));
@@ -541,8 +534,6 @@ namespace ReactNative.Views.TextInput
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var textBox = (ReactTextBox)sender;
 
             EventDispatcher.DispatchEvent(
@@ -556,8 +547,6 @@ namespace ReactNative.Views.TextInput
 
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             if (e.Key == VirtualKey.Enter)
             {
                 var textBox = (ReactTextBox)sender;
@@ -575,8 +564,6 @@ namespace ReactNative.Views.TextInput
 
         private void OnSelectionChanged(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var textBox = (ReactTextBox)sender;
             var start = textBox.SelectionStart;
             var length = textBox.SelectionLength;

@@ -253,7 +253,8 @@ namespace ReactNative.Views.Web
         {
             var webView = (WebView)sender;
 
-            webView.GetEventDispatcher()
+            webView.GetEventEmitter()
+                .EventDispatcher
                 .DispatchEvent(
                     new WebViewLoadingEvent(
                          webView.GetTag(),
@@ -267,7 +268,8 @@ namespace ReactNative.Views.Web
 
         private static void LoadFinished(WebView webView, string uri)
         {
-            webView.GetEventDispatcher()
+            webView.GetEventEmitter()
+                    .EventDispatcher
                     .DispatchEvent(
                          new WebViewLoadingEvent(
                             webView.GetTag(),
@@ -281,8 +283,6 @@ namespace ReactNative.Views.Web
 
         private void LoadFailed(WebView webView, WebErrorStatus status, string message)
         {
-            AssertEventDispatcher();
-
             EventDispatcher
                 .DispatchEvent(
                     new WebViewLoadingErrorEvent(

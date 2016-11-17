@@ -7,7 +7,7 @@ using System;
 
 namespace ReactNative.Views.TextInput
 {
-    class ReactTextBox : TextBox, IEventEmitter
+    class ReactTextBox : TextBox
     {
         private int _eventCount;
 
@@ -58,7 +58,8 @@ namespace ReactNative.Views.TextInput
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            EventDispatcher
+            this.GetEventEmitter()
+                .EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
                         this.GetTag(),
@@ -67,19 +68,5 @@ namespace ReactNative.Views.TextInput
                         e.NewSize.Height,
                         IncrementEventCount()));
         }
-
-        #region IEventEmitter
-
-        public EventDispatcher EventDispatcher { get; set; }
-
-        public void AssertEventDispatcher()
-        {
-            if (EventDispatcher == null)
-            {
-                throw new InvalidOperationException("Event Dispatcher is null");
-            }
-        }
-
-        #endregion
     }
 }

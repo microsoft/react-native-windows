@@ -216,8 +216,6 @@ namespace ReactNative.Views.Split
 
         private void OnPaneClosed(SplitView sender, object args)
         {
-            AssertEventDispatcher();
-
             EventDispatcher
                 .DispatchEvent(
                     new SplitViewClosedEvent(sender.GetTag()));
@@ -225,8 +223,6 @@ namespace ReactNative.Views.Split
 
         private void OnPaneOpened(SplitView view)
         {
-            AssertEventDispatcher();
-
             EventDispatcher
                 .DispatchEvent(
                     new SplitViewOpenedEvent(view.GetTag()));

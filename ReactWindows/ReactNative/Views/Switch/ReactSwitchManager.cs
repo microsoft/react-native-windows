@@ -116,10 +116,7 @@ namespace ReactNative.Views.Switch
 
         private void OnToggled(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var toggleSwitch = (ToggleSwitch)sender;
-
             EventDispatcher
                  .DispatchEvent(
                     new ReactSwitchEvent(

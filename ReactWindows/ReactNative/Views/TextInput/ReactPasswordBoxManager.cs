@@ -398,10 +398,7 @@ namespace ReactNative.Views.TextInput
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var textBox = (PasswordBox)sender;
-
             EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
@@ -414,10 +411,7 @@ namespace ReactNative.Views.TextInput
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var textBox = (PasswordBox)sender;
-
             EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputFocusEvent(textBox.GetTag()));
@@ -425,8 +419,6 @@ namespace ReactNative.Views.TextInput
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var textBox = (PasswordBox)sender;
 
             EventDispatcher.DispatchEvent(
@@ -444,8 +436,6 @@ namespace ReactNative.Views.TextInput
             {
                 var textBox = (PasswordBox)sender;
                 e.Handled = true;
-
-                AssertEventDispatcher();
 
                 EventDispatcher
                     .DispatchEvent(

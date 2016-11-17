@@ -17,7 +17,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("view", ex1.ParamName);
 
             ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
-                () => DependencyObjectExtensions.SetEventDispatcher(null, null));
+                () => DependencyObjectExtensions.SetEventEmitter(null, null));
             Assert.AreEqual("view", ex2.ParamName);
 
             ArgumentNullException ex3 = Assert.Throws<ArgumentNullException>(
@@ -25,7 +25,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("view", ex3.ParamName);
 
             ArgumentNullException ex4 = Assert.Throws<ArgumentNullException>(
-                () => DependencyObjectExtensions.GetEventDispatcher(null));
+                () => DependencyObjectExtensions.GetEventEmitter(null));
             Assert.AreEqual("view", ex4.ParamName);
         }
 
@@ -37,8 +37,8 @@ namespace ReactNative.Tests.UIManager
             button.SetTag(42);
             Assert.AreEqual(42, button.GetTag());
 
-            button.SetEventDispatcher(null);
-            Assert.IsNull(button.GetEventDispatcher());
+            button.SetEventEmitter(null);
+            Assert.IsNull(button.GetEventEmitter());
         }
 
     }

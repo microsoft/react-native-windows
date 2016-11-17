@@ -175,10 +175,7 @@ namespace ReactNative.Views.Slider
 
         private void OnValueChange(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var slider = (Windows.UI.Xaml.Controls.Slider)sender;
-
             EventDispatcher
                 .DispatchEvent(
                     new ReactSliderChangeEvent(
@@ -188,10 +185,7 @@ namespace ReactNative.Views.Slider
 
         private void OnPointerReleased(object sender, RoutedEventArgs e)
         {
-            AssertEventDispatcher();
-
             var slider = (Windows.UI.Xaml.Controls.Slider)sender;
-
             EventDispatcher
                 .DispatchEvent(
                     new ReactSliderCompleteEvent(

@@ -138,16 +138,16 @@ namespace ReactNative.UIManager
             return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
         }
 
-        internal static void SetEventDispatcher(this DependencyObject view, EventDispatcher eventDispatcher)
+        internal static void SetEventEmitter(this DependencyObject view, IEventEmitter eventEmitter)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrCreateValue(view).EventDispatcher = eventDispatcher;
+            s_properties.GetOrCreateValue(view).EventEmitter = eventEmitter;
         }
 
         /// <summary>
-        /// Gets the <see cref="EventDispatcher"/> associated with the view
+        /// Gets the <see cref="IEventEmitter"/> associated with the view
         /// instance.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -155,7 +155,7 @@ namespace ReactNative.UIManager
         /// <exception cref="InvalidOperationException">
         /// Thrown if context is not available for the view.
         /// </exception>
-        public static EventDispatcher GetEventDispatcher(this DependencyObject view)
+        public static IEventEmitter GetEventEmitter(this DependencyObject view)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
@@ -166,7 +166,7 @@ namespace ReactNative.UIManager
                 throw new InvalidOperationException("Could not get tag for view.");
             }
 
-            return elementData.EventDispatcher;
+            return elementData.EventEmitter;
         }
 
         internal static T As<T>(this DependencyObject view)
@@ -182,9 +182,7 @@ namespace ReactNative.UIManager
 
         class DependencyObjectData
         {
-            public EventDispatcher EventDispatcher { get; set; }
-
-            public ReactContext Context { get; set; }
+            public IEventEmitter EventEmitter { get; set; }
 
             public PointerEvents? PointerEvents { get; set; }
 

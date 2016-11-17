@@ -198,7 +198,6 @@ namespace ReactNative.UIManager
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         /// <remarks>
         /// Consider overriding this method if your view needs to emit events
@@ -264,19 +263,26 @@ namespace ReactNative.UIManager
 
         #region IEventEmitter
 
+        private EventDispatcher _eventDispatcher;
+
         /// <summary>
         /// The instance of the EventDispatcher relevant to the implementer's context
         /// </summary>
-        public virtual EventDispatcher EventDispatcher { get; set; }
-
-        /// <summary>
-        /// Method of asserting the presence of the event dispatcher
-        /// </summary>
-        public virtual void AssertEventDispatcher()
+        public virtual EventDispatcher EventDispatcher
         {
-            if (EventDispatcher == null)
+            get
             {
-                throw new InvalidOperationException("Event Dispatcher is null");
+                if (_eventDispatcher == null)
+                {
+                    throw new InvalidOperationException("Event Dispatcher is null");
+                }
+
+                return _eventDispatcher;
+            }
+
+            set
+            {
+                _eventDispatcher = value;
             }
         }
 

@@ -271,8 +271,6 @@ namespace ReactNative.Touch
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
         {
-            AssertEventDispatcher();
-
             var touches = new JArray();
             foreach (var pointer in activePointers)
             {
@@ -330,13 +328,26 @@ namespace ReactNative.Touch
 
         #region IEventEmitter
 
-        public EventDispatcher EventDispatcher { get; set; }
+        private EventDispatcher _eventDispatcher;
 
-        public void AssertEventDispatcher()
+        /// <summary>
+        /// The instance of the EventDispatcher relevant to the implementer's context
+        /// </summary>
+        public EventDispatcher EventDispatcher
         {
-            if (EventDispatcher == null)
+            get
             {
-                throw new InvalidOperationException("Event Dispatcher is null");
+                if (_eventDispatcher == null)
+                {
+                    throw new InvalidOperationException("Event Dispatcher is null");
+                }
+
+                return _eventDispatcher;
+            }
+
+            set
+            {
+                _eventDispatcher = value;
             }
         }
 
