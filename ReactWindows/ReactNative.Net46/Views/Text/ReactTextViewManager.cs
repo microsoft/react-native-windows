@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using ReactNative.UIManager.Events;
 
 namespace ReactNative.Views.Text
 {
@@ -18,14 +19,27 @@ namespace ReactNative.Views.Text
         private static readonly IReactCompoundView s_compoundView = new ReactTextCompoundView();
 
         /// <summary>
+        /// Instantiates the class <see cref="ReactTextViewManager"/>.
+        /// </summary>
+        public ReactTextViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactTextViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactTextViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// The name of the view manager.
         /// </summary>
         public override string Name
         {
-            get
-            {
-                return "RCTText";
-            }
+            get { return "RCTText"; }
         }
 
         /// <summary>
@@ -65,11 +79,11 @@ namespace ReactNative.Views.Text
             {
                 inlineChild = new InlineUIContainer
                 {
-                    Child = (UIElement)child,
+                    Child = (UIElement) child,
                 };
             }
 
-            ((IList)parent.Inlines).Insert(index, inlineChild);
+            ((IList) parent.Inlines).Insert(index, inlineChild);
         }
 
         /// <summary>
@@ -89,7 +103,7 @@ namespace ReactNative.Views.Text
         /// <returns>The child view.</returns>
         public override DependencyObject GetChildAt(TextBlock parent, int index)
         {
-            var child = ((IList)parent.Inlines)[index];
+            var child = ((IList) parent.Inlines)[index];
             var childInlineContainer = child as InlineUIContainer;
             if (childInlineContainer != null)
             {
@@ -97,7 +111,7 @@ namespace ReactNative.Views.Text
             }
             else
             {
-                return (DependencyObject)child;
+                return (DependencyObject) child;
             }
         }
 
@@ -108,7 +122,7 @@ namespace ReactNative.Views.Text
         /// <returns>The number of children.</returns>
         public override int GetChildCount(TextBlock parent)
         {
-            return ((IList)parent.Inlines).Count;
+            return ((IList) parent.Inlines).Count;
         }
 
         /// <summary>
@@ -128,7 +142,7 @@ namespace ReactNative.Views.Text
         /// <param name="index">The index.</param>
         public override void RemoveChildAt(TextBlock parent, int index)
         {
-            var inlines = (IList)parent.Inlines;
+            var inlines = (IList) parent.Inlines;
             inlines.RemoveAt(index);
         }
 
@@ -163,6 +177,40 @@ namespace ReactNative.Views.Text
             textBlock.SetReactCompoundView(s_compoundView);
 
             return textBlock;
+        }
+
+        /// <summary>
+        /// Installing the sizechanged event emitter on the <see cref="TextBlock"/> Control.
+        /// </summary>
+        /// <param name="view">The <see cref="TextBlock"/> view instance.</param>
+        protected override void AddEventEmitters(TextBlock view)
+        {
+            base.AddEventEmitters(view);
+            view.SizeChanged += OnSizeChanged;
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for
+        /// additional cleanup by the <see cref="ReactTextViewManager"/>.
+        /// subclass. Unregister all event handlers for the <see cref="TextBlock"/>.
+        /// </summary>
+        /// <param name="view">The <see cref="TextBlock"/>.</param>
+        public override void OnDropViewInstance(TextBlock view)
+        {
+            base.OnDropViewInstance(view);
+
+            view.SizeChanged -= OnSizeChanged;
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var textBlock = (TextBlock) sender;
+
+            int viewTag = textBlock.HasTag() ? textBlock.GetTag() : -1;
+
+            EventDispatcher
+                .DispatchEvent(
+                    new ReactTextViewSizeChangedEvent(viewTag, e.NewSize, e.PreviousSize, e.HeightChanged, e.WidthChanged));
         }
     }
 }

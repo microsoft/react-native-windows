@@ -310,9 +310,9 @@ namespace ReactNative.Touch
 
         #region IEventEmitter
 
-        private EventDispatcher _eventDispatcher;
+        private IEventDispatcher _eventDispatcher;
 
-        public EventDispatcher EventDispatcher
+        public IEventDispatcher EventDispatcher
         {
             get
             {

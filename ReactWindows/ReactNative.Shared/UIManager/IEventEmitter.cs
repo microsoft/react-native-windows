@@ -11,6 +11,6 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The instance of the EventDispatcher relevant to the implementer's context
         /// </summary>
-        EventDispatcher EventDispatcher { get; set; }
+        IEventDispatcher EventDispatcher { get; set; }
     }
 }

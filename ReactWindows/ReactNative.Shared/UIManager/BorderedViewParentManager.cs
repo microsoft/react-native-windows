@@ -1,4 +1,5 @@
 ﻿using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System;
 #if WINDOWS_UWP
 using Windows.UI;
@@ -29,6 +30,22 @@ namespace ReactNative.UIManager
         }
 
         private static readonly Brush s_defaultBorderBrush = new SolidColorBrush(Colors.Black);
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BorderedViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        protected BorderedViewParentManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BorderedViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected BorderedViewParentManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         /// <summary>
         /// Sets the border radius of the view.

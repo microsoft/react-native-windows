@@ -25,7 +25,7 @@ namespace ReactNative.Views.Slider
         /// Instantiates the base class <see cref="ReactSliderManager"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        public ReactSliderManager(EventDispatcher eventDispatcher)
+        public ReactSliderManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }

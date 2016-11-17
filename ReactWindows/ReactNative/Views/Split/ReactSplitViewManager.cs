@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Split.Events;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,22 @@ namespace ReactNative.Views.Split
     {
         private const int OpenPane = 1;
         private const int ClosePane = 2;
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactSplitViewManager"/>.
+        /// </summary>
+        public ReactSplitViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactSplitViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactSplitViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         public override string Name
         {

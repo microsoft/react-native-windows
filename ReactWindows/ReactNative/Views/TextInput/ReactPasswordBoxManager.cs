@@ -31,7 +31,7 @@ namespace ReactNative.Views.TextInput
         /// Instantiates the base class <see cref="ReactPasswordBoxManager"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        public ReactPasswordBoxManager(EventDispatcher eventDispatcher)
+        public ReactPasswordBoxManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }

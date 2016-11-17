@@ -44,6 +44,9 @@ namespace ReactNative.UIManager
             
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementation;
+
+            _uiImplementation.EventDispatcher = _eventDispatcher;
+
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
 
@@ -78,7 +81,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The event dispatcher for the module.
         /// </summary>
-        public EventDispatcher EventDispatcher
+        public IEventDispatcher EventDispatcher
         {
             get
             {
@@ -129,7 +132,7 @@ namespace ReactNative.UIManager
                     if (currentCount == resizeCount)
                     {
                         Context.AssertOnNativeModulesQueueThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight, _eventDispatcher);
+                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
                     }
                 });
             });
@@ -481,7 +484,7 @@ namespace ReactNative.UIManager
                 .With("BatchId", batchId)
                 .Start())
             {
-                _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
+                _uiImplementation.DispatchViewUpdates(batchId);
             }
         }
 

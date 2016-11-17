@@ -25,7 +25,7 @@ namespace ReactNative.Views.Picker
         /// Instantiates the base class <see cref="ReactPickerManager"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        public ReactPickerManager(EventDispatcher eventDispatcher)
+        public ReactPickerManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }

@@ -19,7 +19,7 @@ namespace ReactNative.Views.Progress
         /// Instantiates the base class <see cref="ReactProgressBarViewManager"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        public ReactProgressBarViewManager(EventDispatcher eventDispatcher)
+        public ReactProgressBarViewManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }

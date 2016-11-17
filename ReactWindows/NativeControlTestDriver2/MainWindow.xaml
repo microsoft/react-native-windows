@@ -11,7 +11,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
-            <RowDefinition Height=".5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -22,5 +23,7 @@
         <!--<ContentControl x:Name="ReactContent" Grid.Row="1" HorizontalAlignment="Stretch"></ContentControl>-->
         <!--<react:ReactRootView x:Name="RootView" Grid.Row="1" Background="Plum"/>-->
         <Canvas x:Name="ReactCanvas" Grid.Row="1" Background="Plum"/>
+        
+        <TextBox Grid.Row="2" x:Name="EventDepot" TextWrapping="Wrap"></TextBox>
     </Grid>
 </Window>

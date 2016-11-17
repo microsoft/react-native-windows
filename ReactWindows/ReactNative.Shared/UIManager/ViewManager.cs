@@ -34,7 +34,7 @@ namespace ReactNative.UIManager
         /// Instantiates the base class <see cref="ViewManager{TFrameworkElement, TReactShadowNode}"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        protected ViewManager(EventDispatcher eventDispatcher)
+        protected ViewManager(IEventDispatcher eventDispatcher)
         {
             _eventDispatcher = eventDispatcher;
         }
@@ -279,12 +279,12 @@ namespace ReactNative.UIManager
 
         #region IEventEmitter
 
-        private EventDispatcher _eventDispatcher;
+        private IEventDispatcher _eventDispatcher;
 
         /// <summary>
         /// The instance of the EventDispatcher relevant to the implementer's context
         /// </summary>
-        public virtual EventDispatcher EventDispatcher
+        public virtual IEventDispatcher EventDispatcher
         {
             get
             {

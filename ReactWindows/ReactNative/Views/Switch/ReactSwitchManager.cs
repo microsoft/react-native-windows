@@ -26,7 +26,7 @@ namespace ReactNative.Views.Switch
         /// Instantiates the base class <see cref="ReactSwitchManager"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        public ReactSwitchManager(EventDispatcher eventDispatcher)
+        public ReactSwitchManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }

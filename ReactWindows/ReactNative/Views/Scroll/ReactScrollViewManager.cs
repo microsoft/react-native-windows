@@ -22,6 +22,22 @@ namespace ReactNative.Views.Scroll
             new Dictionary<ScrollViewer, ScrollViewerData>();
 
         /// <summary>
+        /// Instantiates the class <see cref="ReactScrollViewManager"/>.
+        /// </summary>
+        public ReactScrollViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactScrollViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactScrollViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// The name of the view manager.
         /// </summary>
         public override string Name

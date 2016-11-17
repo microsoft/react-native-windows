@@ -21,7 +21,7 @@ namespace ReactNative.UIManager
     /// <remarks>
     /// TODO: Animation support
     /// </remarks>
-    public class UIImplementation
+    public class UIImplementation : IEventEmitter
     {
         private readonly double[] _measureBuffer = new double[4];
 
@@ -104,12 +104,10 @@ namespace ReactNative.UIManager
         /// <param name="rootViewTag">The root view tag.</param>
         /// <param name="newWidth">The new width.</param>
         /// <param name="newHeight">The new height.</param>
-        /// <param name="eventDispatcher">The event dispatcher.</param>
         public void UpdateRootNodeSize(
             int rootViewTag,
             double newWidth,
-            double newHeight,
-            EventDispatcher eventDispatcher)
+            double newHeight)
         {
             var rootCssNode = _shadowNodeRegistry.GetNode(rootViewTag);
             rootCssNode.Width = (float)newWidth;
@@ -121,7 +119,7 @@ namespace ReactNative.UIManager
             // detail.
             if (_operationsQueue.IsEmpty())
             {
-                DispatchViewUpdates(eventDispatcher, -1 /* no associated batch id */);
+                DispatchViewUpdates(-1 /* no associated batch id */);
             }
         }
 
@@ -535,16 +533,15 @@ namespace ReactNative.UIManager
         /// Invoked at the end of a transaction to commit any updates to the
         /// node hierarchy.
         /// </summary>
-        /// <param name="eventDispatcher">The event dispatcher.</param>
         /// <param name="batchId">The batch identifier.</param>
-        public void DispatchViewUpdates(EventDispatcher eventDispatcher, int batchId)
+        public void DispatchViewUpdates(int batchId)
         {
             foreach (var tag in _shadowNodeRegistry.RootNodeTags)
             {
                 var cssRoot = _shadowNodeRegistry.GetNode(tag);
                 NotifyBeforeOnLayoutRecursive(cssRoot);
                 CalculateRootLayout(cssRoot);
-                ApplyUpdatesRecursive(cssRoot, eventDispatcher);
+                ApplyUpdatesRecursive(cssRoot);
             }
 
             _nativeViewHierarchyOptimizer.OnBatchComplete();
@@ -834,9 +831,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void ApplyUpdatesRecursive(
-            ReactShadowNode cssNode,
-            EventDispatcher eventDispatcher)
+        private void ApplyUpdatesRecursive(ReactShadowNode cssNode)
         {
             if (!cssNode.HasUpdates)
             {
@@ -847,9 +842,7 @@ namespace ReactNative.UIManager
             {
                 for (var i = 0; i < cssNode.ChildCount; ++i)
                 {
-                    ApplyUpdatesRecursive(
-                        cssNode.GetChildAt(i),
-                        eventDispatcher);
+                    ApplyUpdatesRecursive(cssNode.GetChildAt(i));
                 }
             }
 
@@ -862,7 +855,7 @@ namespace ReactNative.UIManager
 
                 if (cssNode.ShouldNotifyOnLayout)
                 {
-                    eventDispatcher.DispatchEvent(
+                    EventDispatcher.DispatchEvent(
                         OnLayoutEvent.Obtain(
                             tag,
                             cssNode.LayoutX,
@@ -874,5 +867,32 @@ namespace ReactNative.UIManager
 
             cssNode.MarkUpdateSeen();
         }
+
+        #region IEventEmitter
+
+        private IEventDispatcher _eventDispatcher; //TODO: Pass in through constructor, make readonly...
+
+        /// <summary>
+        /// The instance of the EventDispatcher relevant to the implementer's context
+        /// </summary>
+        public IEventDispatcher EventDispatcher
+        {
+            get
+            {
+                if (_eventDispatcher == null)
+                {
+                    throw new InvalidOperationException("Event Dispatcher is null");
+                }
+
+                return _eventDispatcher;
+            }
+
+            set
+            {
+                _eventDispatcher = value;
+            }
+        }
+
+        #endregion
     }
 }

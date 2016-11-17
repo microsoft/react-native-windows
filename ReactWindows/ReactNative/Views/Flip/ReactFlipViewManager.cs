@@ -15,6 +15,22 @@ namespace ReactNative.Views.Flip
     {
         private const int SetPage = 1;
 
+        /// <summary>
+        /// Instantiates the class <see cref="ReactFlipViewManager"/>.
+        /// </summary>
+        public ReactFlipViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactFlipViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactFlipViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         public override string Name
         {
             get

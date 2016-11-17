@@ -32,7 +32,7 @@ namespace ReactNative.UIManager
         /// Instantiates the base class <see cref="ViewParentManager{TFrameworkElement, TLayoutShadowNode}"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        protected ViewParentManager(EventDispatcher eventDispatcher)
+        protected ViewParentManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }
@@ -158,6 +158,22 @@ namespace ReactNative.UIManager
     public abstract class ViewParentManager<TFrameworkElement> : ViewParentManager<TFrameworkElement, LayoutShadowNode>
         where TFrameworkElement : FrameworkElement
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="ViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        protected ViewParentManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected ViewParentManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// Creates a shadow node instance for the view manager.
         /// </summary>

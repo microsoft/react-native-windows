@@ -39,7 +39,7 @@ namespace ReactNative.Views.TextInput
         /// Instantiates the base class <see cref="ReactTextInputManager"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        public ReactTextInputManager(EventDispatcher eventDispatcher)
+        public ReactTextInputManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }

@@ -9,10 +9,13 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ReactNative.UIManager.Events;
+using System;
+using System.Threading.Tasks;
 
 namespace NativeControlTestDriver
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IEventDispatcherListener
     {
         #region Properties
 
@@ -104,7 +107,7 @@ namespace NativeControlTestDriver
 
             JObject props = new JObject();
             props.Add("fontSize", 20);
-            props.Add("width", "150px");
+            props.Add("width", 150);
             //props.Add("height", 32);
             props.Add("textAlign", "center");
 
@@ -158,13 +161,28 @@ namespace NativeControlTestDriver
 
         #region ViewManager Tests
 
+        private ReactContext textViewManagerReactContext;
+        private IEventDispatcher textViewManagerEventDispatcher;
         private ReactTextViewManager textViewManager;
         private JavaScriptResponderHandler textViewManagerResponderHandler;
         private TextBlock textBlock;
 
+
         private void SetupViewManagerTest()
         {
-            this.textViewManager = new ReactTextViewManager();
+            this.textViewManagerReactContext = new ReactContext
+            {
+                NativeModuleCallExceptionHandler = exception => { throw exception; }
+            };
+
+
+
+
+            this.textViewManagerEventDispatcher = new EventDispatcher(this.textViewManagerReactContext);
+
+            this.textViewManagerEventDispatcher.AddListener(this);
+
+            this.textViewManager = new ReactTextViewManager(this.textViewManagerEventDispatcher);
 
             this.textViewManagerResponderHandler = new JavaScriptResponderHandler();
 
@@ -175,6 +193,7 @@ namespace NativeControlTestDriver
                 this.textBlock.Text = "Hello World";
                 this.textBlock.Background = new SolidColorBrush(Colors.Fuchsia);
                 this.textBlock.Width = 300;
+                //this.textBlock.Tag = GetNextTag(); //Doesn't work
 
                 Canvas.SetTop(this.textBlock, 100);
                 Canvas.SetLeft(this.textBlock, 100);
@@ -184,9 +203,35 @@ namespace NativeControlTestDriver
                 //var ggg = (ViewParentManager<TextBlock, ReactTextShadowNode>) textViewManager;
                 //var shadowNodeInstance = textViewManager.CreateShadowNodeInstance();
             }
+        }
 
-      
+        public bool OnEventDispatch(Event @event)
+        {
+            var eventArgs = @event as ReactTextViewSizeChangedEvent;
 
+            if (eventArgs != null)
+            {
+                var sizeParams = new JObject
+                {
+                    { "newWidth", eventArgs.NewSize.Width },
+                    { "newHeight", eventArgs.NewSize.Height },
+                    { "prevWidth", eventArgs.PrevSize.Width },
+                    { "prevHeight", eventArgs.PrevSize.Height },
+                    { "heightChanged", eventArgs.HeightChanged },
+                    { "widthChanged", eventArgs.WidthChanged },
+                };
+
+                var eventData = new JObject()
+                {
+                    {"eventName", eventArgs.EventName},
+                    {"target", eventArgs.ViewTag},
+                    {"sizeParams", sizeParams},
+                };
+
+                this.EventDepot.Text = eventData.ToString();
+            }
+
+            return true;
         }
 
         #endregion

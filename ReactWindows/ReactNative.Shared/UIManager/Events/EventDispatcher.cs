@@ -44,7 +44,7 @@ namespace ReactNative.UIManager.Events
     /// EVENT_TYPE_ID_MASK =  0x0000ffff00000000
     /// COALESCING_KEY_MASK = 0xffff000000000000
     /// </remarks>
-    public class EventDispatcher : ILifecycleEventListener
+    public class EventDispatcher : IEventDispatcher, ILifecycleEventListener
     {
         private static IComparer<Event> s_eventComparer = Comparer<Event>.Create((x, y) =>
         {

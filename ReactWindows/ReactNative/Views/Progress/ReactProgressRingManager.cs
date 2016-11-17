@@ -23,7 +23,7 @@ namespace ReactNative.Views.Progress
         /// Instantiates the base class <see cref="ReactProgressRingViewManager"/>.
         /// </summary>
         /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
-        public ReactProgressRingViewManager(EventDispatcher eventDispatcher)
+        public ReactProgressRingViewManager(IEventDispatcher eventDispatcher)
             : base(eventDispatcher)
         {
         }

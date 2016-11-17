@@ -117,6 +117,7 @@
     <Compile Include="ReactCanvas.xaml.cs">
       <DependentUpon>ReactCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestReactInstanceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

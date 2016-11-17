@@ -1,5 +1,6 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,6 +15,22 @@ namespace ReactNative.Views.Text
     public class ReactTextViewManager : ViewParentManager<RichTextBlock, ReactTextShadowNode>
     {
         private static readonly IReactCompoundView s_compoundView = new ReactTextCompoundView();
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactTextViewManager"/>.
+        /// </summary>
+        public ReactTextViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactTextViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactTextViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         /// <summary>
         /// The name of the view manager.
