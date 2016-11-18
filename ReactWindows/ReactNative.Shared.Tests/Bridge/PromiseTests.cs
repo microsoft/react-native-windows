@@ -1,15 +1,15 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using System;
 using System.Threading;
 
 namespace ReactNative.Tests.Bridge
 {
-    [TestClass]
+    [TestFixture]
     public class PromiseTests
     {
-        [TestMethod]
+        [Test]
         public void Promise_Resolve()
         {
             var args = default(object[]);
@@ -31,7 +31,7 @@ namespace ReactNative.Tests.Bridge
             Assert.AreSame(o, args[0]);
         }
 
-        [TestMethod]
+        [Test]
         public void Promise_Reject()
         {
             var args = default(object[]);
@@ -53,11 +53,11 @@ namespace ReactNative.Tests.Bridge
 
             var json = args[0] as JObject;
             Assert.IsNotNull(json);
-            Assert.AreEqual(code, json["code"]);
-            Assert.AreEqual(message, json["message"]);
+            Assert.AreEqual(code, json["code"].ToString());
+            Assert.AreEqual(message, json["message"].ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void Promise_Reject_UserInfo()
         {
             var args = default(object[]);
@@ -83,7 +83,7 @@ namespace ReactNative.Tests.Bridge
             Assert.IsNotNull(json);
             var userInfo = json["userInfo"] as JObject;
             Assert.IsNotNull(userInfo);
-            Assert.AreEqual("baz", userInfo["qux"]);
+            Assert.AreEqual("baz", userInfo["qux"].ToString());
         }
     }
 }
