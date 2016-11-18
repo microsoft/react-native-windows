@@ -266,7 +266,7 @@ namespace ReactNative.UIManager
             SetDimensions((TDependencyObject)view, dimensions);
         }
 
-        #endregion
+#endregion
 
 #region IEventEmitter
 

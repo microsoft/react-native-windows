@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
-using ReactNative.UIManager.Events;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;

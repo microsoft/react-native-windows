@@ -39,7 +39,10 @@ namespace ReactNative.Views.Text
         /// </summary>
         public override string Name
         {
-            get { return "RCTText"; }
+            get
+            {
+                return "RCTText";
+            }
         }
 
         /// <summary>
@@ -79,11 +82,11 @@ namespace ReactNative.Views.Text
             {
                 inlineChild = new InlineUIContainer
                 {
-                    Child = (UIElement) child,
+                    Child = (UIElement)child,
                 };
             }
 
-            ((IList) parent.Inlines).Insert(index, inlineChild);
+            ((IList)parent.Inlines).Insert(index, inlineChild);
         }
 
         /// <summary>
@@ -103,7 +106,7 @@ namespace ReactNative.Views.Text
         /// <returns>The child view.</returns>
         public override DependencyObject GetChildAt(TextBlock parent, int index)
         {
-            var child = ((IList) parent.Inlines)[index];
+            var child = ((IList)parent.Inlines)[index];
             var childInlineContainer = child as InlineUIContainer;
             if (childInlineContainer != null)
             {
@@ -111,7 +114,7 @@ namespace ReactNative.Views.Text
             }
             else
             {
-                return (DependencyObject) child;
+                return (DependencyObject)child;
             }
         }
 
@@ -122,7 +125,7 @@ namespace ReactNative.Views.Text
         /// <returns>The number of children.</returns>
         public override int GetChildCount(TextBlock parent)
         {
-            return ((IList) parent.Inlines).Count;
+            return ((IList)parent.Inlines).Count;
         }
 
         /// <summary>
@@ -142,7 +145,7 @@ namespace ReactNative.Views.Text
         /// <param name="index">The index.</param>
         public override void RemoveChildAt(TextBlock parent, int index)
         {
-            var inlines = (IList) parent.Inlines;
+            var inlines = (IList)parent.Inlines;
             inlines.RemoveAt(index);
         }
 

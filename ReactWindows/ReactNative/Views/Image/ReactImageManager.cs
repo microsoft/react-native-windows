@@ -252,7 +252,8 @@ namespace ReactNative.Views.Image
 
         private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
         {
-            EventDispatcher.DispatchEvent(
+            EventDispatcher
+				.DispatchEvent(
                 new ReactImageLoadEvent(
                     view.GetTag(),
                     (int)status.LoadStatus,

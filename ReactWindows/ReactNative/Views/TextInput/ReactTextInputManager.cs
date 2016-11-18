@@ -503,7 +503,7 @@ namespace ReactNative.Views.TextInput
         {
             return new ReactTextBox
             {
-                AcceptsReturn = false
+                AcceptsReturn = false,
             };
         }
 

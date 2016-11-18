@@ -49,6 +49,7 @@ namespace ReactNative.UIManager
             _window = window;
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementation;
+            _uiImplementation.EventDispatcher = _eventDispatcher;
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
 

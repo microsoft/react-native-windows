@@ -13,7 +13,7 @@ namespace ReactNative.Views.Picker
     /// A view manager responsible for rendering picker.
     /// </summary>
     public class ReactPickerManager : BaseViewManager<ComboBox, ReactPickerShadowNode>
-    {
+    { 
         /// <summary>
         /// Instantiates the base class <see cref="ReactPickerManager"/>.
         /// </summary>
