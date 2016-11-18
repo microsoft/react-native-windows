@@ -1,13 +1,13 @@
-﻿using System;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using ReactNative.UIManager.Events;
 
 namespace ReactNative.Views.Text
 {
@@ -177,40 +177,6 @@ namespace ReactNative.Views.Text
             textBlock.SetReactCompoundView(s_compoundView);
 
             return textBlock;
-        }
-
-        /// <summary>
-        /// Installing the sizechanged event emitter on the <see cref="TextBlock"/> Control.
-        /// </summary>
-        /// <param name="view">The <see cref="TextBlock"/> view instance.</param>
-        protected override void AddEventEmitters(TextBlock view)
-        {
-            base.AddEventEmitters(view);
-            view.SizeChanged += OnSizeChanged;
-        }
-
-        /// <summary>
-        /// Called when view is detached from view hierarchy and allows for
-        /// additional cleanup by the <see cref="ReactTextViewManager"/>.
-        /// subclass. Unregister all event handlers for the <see cref="TextBlock"/>.
-        /// </summary>
-        /// <param name="view">The <see cref="TextBlock"/>.</param>
-        public override void OnDropViewInstance(TextBlock view)
-        {
-            base.OnDropViewInstance(view);
-
-            view.SizeChanged -= OnSizeChanged;
-        }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var textBlock = (TextBlock) sender;
-
-            int viewTag = textBlock.HasTag() ? textBlock.GetTag() : -1;
-
-            EventDispatcher
-                .DispatchEvent(
-                    new ReactTextViewSizeChangedEvent(viewTag, e.NewSize, e.PreviousSize, e.HeightChanged, e.WidthChanged));
         }
     }
 }
