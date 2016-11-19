@@ -2,6 +2,8 @@
 using Windows.UI.Text;
 #else
 using System.Windows;
+using WebSocketSharp;
+
 #endif
 
 namespace ReactNative.Views.Text
@@ -99,5 +101,87 @@ namespace ReactNative.Views.Text
             }
 #endif
         }
+
+#if !WINDOWS_UWP
+        public static FontStyle? ConvertFontStyle(string fontStyleValue)
+        {
+            FontStyle? fontStyle = null;
+
+            if (!fontStyleValue.IsNullOrEmpty())
+            {
+                var converter = new FontStyleConverter();
+
+                var convertFrom = converter.ConvertFromInvariantString(fontStyleValue);
+                if (convertFrom != null)
+                {
+                    var convertedFontStyle = (FontStyle)convertFrom;
+
+                    fontStyle = convertedFontStyle;
+                }
+            }
+
+            return fontStyle;
+        }
+
+        public static FontStretch? ConvertFontStretch(int usWidthClass)
+        {
+            FontStretch? fontStretch = null;
+
+            switch (usWidthClass)
+            {
+                case 1:
+                    fontStretch = FontStretches.UltraCondensed;
+                    break;
+                case 2:
+                    fontStretch = FontStretches.ExtraCondensed;
+                    break;
+                case 3:
+                    fontStretch = FontStretches.Condensed;
+                    break;
+                case 4:
+                    fontStretch = FontStretches.SemiCondensed;
+                    break;
+                case 5:
+                    fontStretch = FontStretches.Medium;
+                    break;
+                case 6:
+                    fontStretch = FontStretches.SemiExpanded;
+                    break;
+                case 7:
+                    fontStretch = FontStretches.Expanded;
+                    break;
+                case 8:
+                    fontStretch = FontStretches.ExtraExpanded;
+                    break;
+                case 9:
+                    fontStretch = FontStretches.UltraExpanded;
+                    break;
+            }
+            
+            return fontStretch;
+        }
+
+        public static FontStretch? ConvertFontStretch(string fontStretchValue)
+        {
+            FontStretch? fontStretch = null;
+
+            if (!fontStretchValue.IsNullOrEmpty())
+            {
+                var converter = new FontStretchConverter();
+
+                var convertFrom = converter.ConvertFromInvariantString(fontStretchValue);
+                if (convertFrom != null)
+                {
+                    var convertedFontStretch = (FontStretch)convertFrom;
+
+                    fontStretch = convertedFontStretch;
+                }
+            }
+
+            return fontStretch;
+        }
+
+#endif
+
     }
 }

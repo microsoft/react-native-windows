@@ -184,6 +184,9 @@ namespace NativeControlTestDriver
 
             this.textViewManager = new ReactTextViewManager(this.textViewManagerEventDispatcher);
 
+
+
+
             this.textViewManagerResponderHandler = new JavaScriptResponderHandler();
 
             this.textBlock = this.textViewManager.CreateView(this.textViewManagerResponderHandler);
@@ -207,29 +210,29 @@ namespace NativeControlTestDriver
 
         public bool OnEventDispatch(Event @event)
         {
-            var eventArgs = @event as ReactTextViewSizeChangedEvent;
+            //var eventArgs = @event as ReactTextViewSizeChangedEvent;
 
-            if (eventArgs != null)
-            {
-                var sizeParams = new JObject
-                {
-                    { "newWidth", eventArgs.NewSize.Width },
-                    { "newHeight", eventArgs.NewSize.Height },
-                    { "prevWidth", eventArgs.PrevSize.Width },
-                    { "prevHeight", eventArgs.PrevSize.Height },
-                    { "heightChanged", eventArgs.HeightChanged },
-                    { "widthChanged", eventArgs.WidthChanged },
-                };
+            //if (eventArgs != null)
+            //{
+            //    var sizeParams = new JObject
+            //    {
+            //        { "newWidth", eventArgs.NewSize.Width },
+            //        { "newHeight", eventArgs.NewSize.Height },
+            //        { "prevWidth", eventArgs.PrevSize.Width },
+            //        { "prevHeight", eventArgs.PrevSize.Height },
+            //        { "heightChanged", eventArgs.HeightChanged },
+            //        { "widthChanged", eventArgs.WidthChanged },
+            //    };
 
-                var eventData = new JObject()
-                {
-                    {"eventName", eventArgs.EventName},
-                    {"target", eventArgs.ViewTag},
-                    {"sizeParams", sizeParams},
-                };
+            //    var eventData = new JObject()
+            //    {
+            //        {"eventName", eventArgs.EventName},
+            //        {"target", eventArgs.ViewTag},
+            //        {"sizeParams", sizeParams},
+            //    };
 
-                this.EventDepot.Text = eventData.ToString();
-            }
+            //    this.EventDepot.Text = eventData.ToString();
+            //}
 
             return true;
         }
