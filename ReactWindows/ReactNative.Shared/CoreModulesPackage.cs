@@ -46,16 +46,12 @@ namespace ReactNative
                 uiManagerModule = new UIManagerModule(
                     reactContext, 
                     viewManagerList,
-                    _uiImplementationProvider.Create(
-                        reactContext, 
-                        viewManagerList));
+                    _uiImplementationProvider);
 #else
                 uiManagerModule = new UIManagerModule(
                     reactContext,
                     viewManagerList,
-                    _uiImplementationProvider.Create(
-                        reactContext,
-                        viewManagerList), 
+                    _uiImplementationProvider, 
                     Application.Current.MainWindow);
 #endif
             }

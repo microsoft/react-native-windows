@@ -16,15 +16,15 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             AssertEx.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementation),
+                () => new UIManagerModule(context, null, uiImplementationProvider),
                 ex => Assert.AreEqual("viewManagers", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
                 () => new UIManagerModule(context, viewManagers, null),
-                ex => Assert.AreEqual("uiImplementation", ex.ParamName));
+                ex => Assert.AreEqual("uiImplementationProvider", ex.ParamName));
         }
 
         [TestMethod]
@@ -32,10 +32,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider));
 
             var constants = module.Constants;
 
@@ -62,10 +62,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider));
 
             var constants = module.Constants;
 

@@ -29,25 +29,25 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
-        /// <param name="uiImplementation">The UI implementation.</param>
+        /// <param name="uiImplementationProvider">The UI implementation provider.</param>
         /// <param name="window">The Framework Element.</param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
-            UIImplementation uiImplementation,
+            UIImplementationProvider uiImplementationProvider,
             FrameworkElement window)
             : base(reactContext)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
-            if (uiImplementation == null)
-                throw new ArgumentNullException(nameof(uiImplementation));
+            if (uiImplementationProvider == null)
+                throw new ArgumentNullException(nameof(uiImplementationProvider));
             if (window == null)
                 throw new ArgumentNullException(nameof(window));
 
             _window = window;
             _eventDispatcher = new EventDispatcher(reactContext);
-            _uiImplementation = uiImplementation;
+            _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
         }
@@ -129,7 +129,7 @@ namespace ReactNative.UIManager
                     if (currentCount == resizeCount)
                     {
                         Context.AssertOnNativeModulesQueueThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight, _eventDispatcher);
+                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
                     }
                 });
             });
@@ -481,7 +481,7 @@ namespace ReactNative.UIManager
                 .With("BatchId", batchId)
                 .Start())
             {
-                _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
+                _uiImplementation.DispatchViewUpdates(batchId);
             }
         }
 
