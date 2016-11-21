@@ -27,7 +27,6 @@ namespace ReactNative.UIManager
         private const long MaxNonBatchedTicksPerFrame = 83333;
 
         private static Stopwatch s_stopwatch = Stopwatch.StartNew();
-        private static readonly Action[] EMPTY_ACTIONS_ARRAY = new Action[0];
 
         private readonly object _gate = new object();
         private readonly object _nonBatchedGate = new object();
@@ -481,7 +480,7 @@ namespace ReactNative.UIManager
                 }
             }
 
-            Action[] actions = EMPTY_ACTIONS_ARRAY;
+            Action[] actions = Array.Empty<Action>();;
             lock (_gate)
             {
                 actions = _batches.ToArray();
