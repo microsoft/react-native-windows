@@ -2,8 +2,6 @@
 using Windows.UI.Text;
 #else
 using System.Windows;
-using WebSocketSharp;
-
 #endif
 
 namespace ReactNative.Views.Text
@@ -107,7 +105,7 @@ namespace ReactNative.Views.Text
         {
             FontStyle? fontStyle = null;
 
-            if (!fontStyleValue.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(fontStyleValue))
             {
                 var converter = new FontStyleConverter();
 
@@ -165,7 +163,7 @@ namespace ReactNative.Views.Text
         {
             FontStretch? fontStretch = null;
 
-            if (!fontStretchValue.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(fontStretchValue))
             {
                 var converter = new FontStretchConverter();
 

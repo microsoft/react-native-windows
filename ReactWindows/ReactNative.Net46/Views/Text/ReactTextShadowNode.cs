@@ -1,12 +1,11 @@
-﻿using System;
-using Facebook.CSSLayout;
+﻿using Facebook.CSSLayout;
 using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace ReactNative.Views.Text
