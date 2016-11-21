@@ -278,8 +278,10 @@ namespace ReactNative.UIManager
                     {
                         _layoutAnimator.DeleteView(elementToDestroy, () =>
                         {
-                            viewParentManager.RemoveView(viewToManage, viewToDestroy);
-                            DropView(viewToDestroy);
+                            if (viewParentManager.TryRemoveView(viewToManage, viewToDestroy))
+                            {
+                                DropView(viewToDestroy);
+                            }
                         });
                     }
                     else
