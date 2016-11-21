@@ -339,7 +339,7 @@ namespace ReactNative.Touch
             {
                 if (_eventDispatcher == null)
                 {
-                    throw new InvalidOperationException("Event Dispatcher is null");
+                    throw new InvalidOperationException("Event Dispatcher is not set");
                 }
 
                 return _eventDispatcher;

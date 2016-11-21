@@ -1,7 +1,7 @@
 ﻿using ReactNative.Bridge;
+using ReactNative.UIManager.Events;
 using System;
 using System.Runtime.CompilerServices;
-using ReactNative.UIManager.Events;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
