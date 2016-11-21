@@ -7,6 +7,38 @@ namespace ReactNative.Bridge
 {
     static class DispatcherHelpers
     {
+        private static Dispatcher _dispatcher;
+
+        internal static Dispatcher CurrentDispatcher
+        {
+            get
+            {
+                AssertDispatcherSet();
+
+                return _dispatcher;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                if (value.Thread.GetApartmentState() != ApartmentState.STA)
+                {
+                    throw new ArgumentException("Dispatcher must be an STA thread");
+                }
+
+                _dispatcher = value;
+            }
+        }
+
+        public static bool IsDispatcherSet()
+        {
+            return _dispatcher != null;
+        }
+
         public static void AssertOnDispatcher()
         {
             if (!IsOnDispatcher())
@@ -17,12 +49,16 @@ namespace ReactNative.Bridge
 
         public static bool IsOnDispatcher()
         {
-            return Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread;
+            AssertDispatcherSet();
+
+            return CurrentDispatcher.CheckAccess();
         }
 
         public static async void RunOnDispatcher(Action action)
         {
-            await Dispatcher.CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+            AssertDispatcherSet();
+
+            await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
         public static Task<T> CallOnDispatcher<T>(Func<T> func)
@@ -39,6 +75,14 @@ namespace ReactNative.Bridge
             });
 
             return taskCompletionSource.Task;
+        }
+
+        private static void AssertDispatcherSet()
+        {
+            if (_dispatcher == null)
+            {
+                throw new InvalidOperationException("Dispatcher has not been set");
+            }
         }
     }
 }

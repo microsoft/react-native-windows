@@ -175,7 +175,6 @@ namespace ReactNative.UIManager
 
         private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
         {
-            var projection = EnsureProjection(view);
             var transformMatrix = TransformHelper.ProcessTransform(transforms);
 
             var translateMatrix = Matrix3D.Identity;
@@ -192,7 +191,36 @@ namespace ReactNative.UIManager
                 translateBackMatrix.OffsetY = view.Height / 2;
             }
 
-            projection.ProjectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
+            var projectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
+            ApplyProjection(view, projectionMatrix);
+        }
+
+        private static void ApplyProjection(TFrameworkElement view, Matrix3D projectionMatrix)
+        {
+            if (IsSimpleTranslationOnly(projectionMatrix))
+            {
+                ResetProjectionMatrix(view);
+                var transform = new MatrixTransform();
+                var matrix = transform.Matrix;
+                matrix.OffsetX = projectionMatrix.OffsetX;
+                matrix.OffsetY = projectionMatrix.OffsetY;
+                transform.Matrix = matrix;
+                view.RenderTransform = transform;
+            }
+            else
+            {
+                view.RenderTransform = new MatrixTransform();
+                var projection = EnsureProjection(view);
+                projection.ProjectionMatrix = projectionMatrix;
+            }
+        }
+
+        private static bool IsSimpleTranslationOnly(Matrix3D matrix)
+        {
+            // Matrix3D is a struct and passed-by-value. As such, we can modify
+            // the values in the matrix without affecting the caller.
+            matrix.OffsetX = matrix.OffsetY = 0;
+            return matrix.IsIdentity;
         }
 
         private static void ResetProjectionMatrix(TFrameworkElement view)

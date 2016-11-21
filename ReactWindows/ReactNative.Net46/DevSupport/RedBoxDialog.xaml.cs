@@ -1,23 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
-
-// The Content Dialog item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace ReactNative.DevSupport
 {
     /// <summary>
     /// The content dialog for red box exception display.
     /// </summary>
-    sealed partial class RedBoxDialog : Window, INotifyPropertyChanged
+    sealed partial class RedBoxDialog : Window
     {
+        #region Private Fields
+
         private readonly Action _onClick;
 
-        private string _message;
-        private IList<IStackFrame> _stackTrace;
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// The error cookie.
+        /// </summary>
+        public int ErrorCookie { get; set; }
+
+        /// <summary>
+        /// The message.
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// The stack trace.
+        /// </summary>
+        public IList<IStackFrame> StackTrace { get; set; } = new List<IStackFrame>();
+
+        #endregion
+
+        #region Constructor(s)
 
         /// <summary>
         /// Instantiates the <see cref="RedBoxDialog"/>.
@@ -29,58 +46,32 @@ namespace ReactNative.DevSupport
         {
             InitializeComponent();
 
+            this.DataContext = this;
+
             _onClick = onClick;
         }
 
-        /// <summary>
-        /// Notifies the event subscriber when properties change.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
 
-        /// <summary>
-        /// The error cookie.
-        /// </summary>
-        public int ErrorCookie
-        {
-            get;
-            set;
-        }
+        #region Event Handlers
 
-        /// <summary>
-        /// The exception message.
-        /// </summary>
-        public string Message
+        private void OnReloadButtonClicked(object sender, RoutedEventArgs e)
         {
-            get
+            if (_onClick != null)
             {
-                return _message;
+                _onClick();
             }
-            set
+            else
             {
-                _message = value;
-                OnNotifyPropertyChanged();
+                this.Close();
             }
         }
 
-        /// <summary>
-        /// The stack trace.
-        /// </summary>
-        public IList<IStackFrame> StackTrace
+        private void OnCloseButtonClicked(object sender, RoutedEventArgs e)
         {
-            get
-            {
-                return _stackTrace;
-            }
-            set
-            {
-                _stackTrace = value;
-                OnNotifyPropertyChanged();
-            }
+            this.Close();
         }
 
-        private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #endregion
     }
 }

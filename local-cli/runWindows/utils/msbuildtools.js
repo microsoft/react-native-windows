@@ -31,7 +31,8 @@ class MSBuildTools {
       '/clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal',
       '/nologo',
       `/p:Configuration=${buildType}`,
-      `/p:Platform=${buildArch}`
+      `/p:Platform=${buildArch}`,
+      '/p:AppxBundle=Never'
     ];
 
     if (config) {
