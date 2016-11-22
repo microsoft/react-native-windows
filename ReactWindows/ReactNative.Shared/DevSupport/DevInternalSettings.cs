@@ -129,7 +129,6 @@ namespace ReactNative.DevSupport
             }
         }
 
-
         //TODO: Git Issue #878
         private T GetSetting<T>(string key, T defaultValue)
         {

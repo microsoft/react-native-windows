@@ -156,7 +156,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Captures the all key downs and Ups. 
+        /// Captures the all key downs and Ups.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
