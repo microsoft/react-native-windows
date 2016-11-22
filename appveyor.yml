@@ -1,26 +1,38 @@
 version: 1.0.{build}
 max_jobs: 2
 image: Visual Studio 2015
-build_script:
-- cmd: >-
-    git submodule init
+cache: 
+- ReactWindows\packages -> ReactWindows\**\packages.config
+- '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'  
+- ChakraCore\Build\VcBuild -> ChakraCore\lib\Common\*.h 
 
-    git submodule update
+clone_script:
+- ps: >-
+    git clone -q $("--branch=" + $Env:APPVEYOR_REPO_BRANCH) $("https://github.com/" + $Env:APPVEYOR_REPO_NAME + ".git") $Env:APPVEYOR_BUILD_FOLDER
+
+    cd $Env:APPVEYOR_BUILD_FOLDER
+
+    if ($Env:APPVEYOR_PULL_REQUEST_NUMBER) { $("git fetch -q origin +refs/pull/" + $Env:APPVEYOR_PULL_REQUEST_NUMBER + "/merge:"); git checkout -qf FETCH_HEAD; }
+    else { $("git checkout -qf " + $Env:APPVEYOR_REPO_COMMIT); }
+
+    git submodule update -q --init --recursive
+
+before_build:
+- ps: >-
+    Get-ChildItem .\ChakraCore\Build\VcBuild * -recurse | ForEach-Object{$_.LastWriteTime = get-date}
 
     nuget restore ReactWindows\ReactNative.sln
 
+build_script:
+- cmd: >-
     set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
 
-    %DEVENV% /build "Debug|x64" ReactWindows\ReactNative.sln
-
-    npm install -g npm
-
-    npm version
+    %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
 
     %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
 
-    %DEVENV% /build "DebugBundle|x64" ReactWindows\ReactNative.sln
+    %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
 
 test:
   assemblies:
-  - ReactWindows\ReactNative.Net46.Tests\bin\x64
+  - ReactWindows\ReactNative.Net46.Tests\bin\x64\**\*.Tests.dll
