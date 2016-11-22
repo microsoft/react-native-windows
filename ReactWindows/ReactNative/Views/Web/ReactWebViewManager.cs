@@ -192,11 +192,10 @@ namespace ReactNative.Views.Web
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactWebViewManager"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, WebView view)
+        public override void OnDropViewInstance(WebView view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.NavigationCompleted -= OnNavigationCompleted;
             view.NavigationStarting -= OnNavigationStarting;
         }
@@ -204,9 +203,8 @@ namespace ReactNative.Views.Web
         /// <summary>
         /// Creates a new view instance of type <see cref="WebView"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override WebView CreateViewInstance(ThemedReactContext reactContext)
+        protected override WebView CreateViewInstance()
         {
             return new WebView();
         }
@@ -215,11 +213,10 @@ namespace ReactNative.Views.Web
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, WebView view)
+        protected override void AddEventEmitters(WebView view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.NavigationCompleted += OnNavigationCompleted;
             view.NavigationStarting += OnNavigationStarting;
         }
@@ -256,7 +253,7 @@ namespace ReactNative.Views.Web
         {
             var webView = (WebView)sender;
 
-            webView.GetReactContext().GetNativeModule<UIManagerModule>()
+            webView.GetEventEmitter()
                 .EventDispatcher
                 .DispatchEvent(
                     new WebViewLoadingEvent(
@@ -271,7 +268,7 @@ namespace ReactNative.Views.Web
 
         private static void LoadFinished(WebView webView, string uri)
         {
-            webView.GetReactContext().GetNativeModule<UIManagerModule>()
+            webView.GetEventEmitter()
                     .EventDispatcher
                     .DispatchEvent(
                          new WebViewLoadingEvent(
@@ -286,9 +283,7 @@ namespace ReactNative.Views.Web
 
         private void LoadFailed(WebView webView, WebErrorStatus status, string message)
         {
-            var reactContext = webView.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new WebViewLoadingErrorEvent(
                         webView.GetTag(),

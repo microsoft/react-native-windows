@@ -2,6 +2,7 @@
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System.Collections.Generic;
 using Windows.System;
@@ -19,6 +20,22 @@ namespace ReactNative.Views.TextInput
     /// </summary>
     class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactPasswordBoxManager"/>.
+        /// </summary>
+        public ReactPasswordBoxManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactPasswordBoxManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactPasswordBoxManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// The name of the view manager.
         /// </summary>
@@ -324,9 +341,8 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Returns the view instance for <see cref="PasswordBox"/>.
         /// </summary>
-        /// <param name="reactContext">The themed React Context</param>
         /// <returns>A new initialized <see cref="PasswordBox"/></returns>
-        protected override PasswordBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override PasswordBox CreateViewInstance()
         {
             return new PasswordBox();
         }
@@ -356,11 +372,10 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Installing the textchanged event emitter on the <see cref="TextInput"/> Control.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="PasswordBox"/> view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, PasswordBox view)
+        protected override void AddEventEmitters(PasswordBox view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.PasswordChanged += OnPasswordChanged;
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
@@ -372,11 +387,10 @@ namespace ReactNative.Views.TextInput
         /// additional cleanup by the <see cref="ReactTextInputManager"/>.
         /// subclass. Unregister all event handlers for the <see cref="PasswordBox"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="PasswordBox"/>.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, PasswordBox view)
+        public override void OnDropViewInstance(PasswordBox view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.KeyDown -= OnKeyDown;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
@@ -402,9 +416,7 @@ namespace ReactNative.Views.TextInput
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             var textBox = (PasswordBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
@@ -417,9 +429,7 @@ namespace ReactNative.Views.TextInput
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
             var textBox = (PasswordBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputFocusEvent(textBox.GetTag()));
         }
@@ -427,14 +437,11 @@ namespace ReactNative.Views.TextInput
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = (PasswordBox)sender;
-            var eventDispatcher = textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher;
 
-            eventDispatcher.DispatchEvent(
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputBlurEvent(textBox.GetTag()));
 
-            eventDispatcher.DispatchEvent(
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
                       textBox.GetTag(),
                       textBox.Password));
@@ -446,9 +453,8 @@ namespace ReactNative.Views.TextInput
             {
                 var textBox = (PasswordBox)sender;
                 e.Handled = true;
-                textBox.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
+
+                EventDispatcher
                     .DispatchEvent(
                         new ReactTextInputSubmitEditingEvent(
                             textBox.GetTag(),

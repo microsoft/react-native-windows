@@ -1,4 +1,5 @@
 ﻿using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System;
 #if WINDOWS_UWP
 using Windows.UI;
@@ -29,6 +30,22 @@ namespace ReactNative.UIManager
         }
 
         private static readonly Brush s_defaultBorderBrush = new SolidColorBrush(Colors.Black);
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BorderedViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        protected BorderedViewParentManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BorderedViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected BorderedViewParentManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         /// <summary>
         /// Sets the border radius of the view.
@@ -183,11 +200,10 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <see cref="Border"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected sealed override Border CreateViewInstance(ThemedReactContext reactContext)
+        protected sealed override Border CreateViewInstance()
         {
-            var inner = CreateInnerElement(reactContext);
+            var inner = CreateInnerElement();
             return new Border
             {
                 BorderBrush = s_defaultBorderBrush,
@@ -198,9 +214,8 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TFrameworkElement CreateInnerElement(ThemedReactContext reactContext);
+        protected abstract TFrameworkElement CreateInnerElement();
 
         /// <summary>
         /// Adds a child at the given index.

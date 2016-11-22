@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
@@ -71,7 +70,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        public virtual DependencyObject CreateView(JavaScriptResponderHandler jsResponderHandler)
         {
             throw new NotImplementedException();
         }
@@ -81,7 +80,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
+        public virtual void OnDropViewInstance(DependencyObject view)
         {
             throw new NotImplementedException();
         }
@@ -104,6 +103,12 @@ namespace ReactNative.Tests
         public virtual void UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
             throw new NotImplementedException();
+        }
+
+        public virtual IEventDispatcher EventDispatcher
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
     }
 }

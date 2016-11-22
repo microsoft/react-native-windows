@@ -22,6 +22,22 @@ namespace ReactNative.Views.Scroll
             new Dictionary<ScrollViewer, ScrollViewerData>();
 
         /// <summary>
+        /// Instantiates the class <see cref="ReactScrollViewManager"/>.
+        /// </summary>
+        public ReactScrollViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactScrollViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactScrollViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// The name of the view manager.
         /// </summary>
         public override string Name
@@ -311,11 +327,10 @@ namespace ReactNative.Views.Scroll
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactScrollViewManager"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ScrollViewer view)
+        public override void OnDropViewInstance(ScrollViewer view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
 
             _scrollViewerData.Remove(view);
 
@@ -352,9 +367,8 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// Creates a new view instance.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ScrollViewer CreateViewInstance(ThemedReactContext reactContext)
+        protected override ScrollViewer CreateViewInstance()
         {
             var scrollViewerData = new ScrollViewerData();
 
@@ -374,11 +388,10 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// Adds event emitters for drag and scroll events.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ScrollViewer view)
+        protected override void AddEventEmitters(ScrollViewer view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.DirectManipulationCompleted += OnDirectManipulationCompleted;
             view.DirectManipulationStarted += OnDirectManipulationStarted;
             view.ViewChanging += OnViewChanging;
@@ -458,9 +471,7 @@ namespace ReactNative.Views.Scroll
                 { "height", scrollViewer.ActualHeight },
             };
 
-            scrollViewer.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ScrollEvent(
                         reactTag,

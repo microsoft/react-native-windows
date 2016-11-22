@@ -190,9 +190,8 @@ namespace ReactNative.Views.Text
         /// <summary>
         /// Creates a new view instance of type <see cref="Span"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override Span CreateViewInstance(ThemedReactContext reactContext)
+        protected override Span CreateViewInstance()
         {
             return new Span();
         }

@@ -199,11 +199,10 @@ namespace ReactNative.Views.Image
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
+        public override void OnDropViewInstance(Border view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
 
             var tag = view.GetTag();
             var disposable = default(SerialDisposable);
@@ -219,9 +218,8 @@ namespace ReactNative.Views.Image
         /// <summary>
         /// Creates the image view instance.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The image view instance.</returns>
-        protected override Border CreateViewInstance(ThemedReactContext reactContext)
+        protected override Border CreateViewInstance()
         {
             return new Border
             {
@@ -245,9 +243,7 @@ namespace ReactNative.Views.Image
 
         private void OnImageFailed(Border view)
         {
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactImageLoadEvent(
                         view.GetTag(),
@@ -256,11 +252,8 @@ namespace ReactNative.Views.Image
 
         private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
         {
-            var eventDispatcher = view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher;
-
-            eventDispatcher.DispatchEvent(
+            EventDispatcher
+				.DispatchEvent(
                 new ReactImageLoadEvent(
                     view.GetTag(),
                     (int)status.LoadStatus,

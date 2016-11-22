@@ -3,9 +3,9 @@ using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace ReactNative.Views.Text
@@ -15,7 +15,6 @@ namespace ReactNative.Views.Text
     /// </summary>
     public class ReactTextShadowNode : LayoutShadowNode
     {
-        private int _letterSpacing;
         private int _numberOfLines;
 
         private double? _fontSize;
@@ -23,6 +22,7 @@ namespace ReactNative.Views.Text
 
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
+        private FontStretch? _fontStretch;
         private TextAlignment _textAlignment = TextAlignment.Left;
 
         private string _fontFamily;
@@ -87,7 +87,7 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.FontStyle)]
         public void SetFontStyle(string fontStyleValue)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleValue);
+            var fontStyle = FontStyleHelpers.ConvertFontStyle(fontStyleValue);
             if (_fontStyle != fontStyle)
             {
                 _fontStyle = fontStyle;
@@ -102,11 +102,10 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.LetterSpacing)]
         public void SetLetterSpacing(int letterSpacing)
         {
-            var spacing = 50*letterSpacing; // TODO: Find exact multiplier (50) to match iOS
-
-            if (_letterSpacing != spacing)
+            var fontStretch = FontStyleHelpers.ConvertFontStretch(letterSpacing);
+            if (_fontStretch != fontStretch)
             {
-                _letterSpacing = spacing;
+                _fontStretch = fontStretch;
                 MarkUpdated();
             }
         }
@@ -118,7 +117,7 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.LineHeight)]
         public virtual void SetLineHeight(double lineHeight)
         {
-            if (_lineHeight != lineHeight)
+            if (Math.Abs(_lineHeight - lineHeight) > 0.1)
             {
                 _lineHeight = lineHeight;
                 MarkUpdated();
@@ -228,17 +227,27 @@ namespace ReactNative.Views.Text
 
         private void UpdateTextBlockCore(TextBlock textBlock, bool measureOnly)
         {
-            //textBlock.CharacterSpacing = _letterSpacing;
-            //textBlock.MaxLines = _numberOfLines;
-            textBlock.LineHeight = _lineHeight != 0 ? _lineHeight : double.NaN;
+            textBlock.LineHeight = Math.Abs(_lineHeight) > 0.1 ? _lineHeight : double.NaN;
             textBlock.TextAlignment = _textAlignment;
-            textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
-            textBlock.FontSize = _fontSize ?? 15;
-            textBlock.FontStyle = _fontStyle ?? new FontStyle();
+
+            if (_fontFamily != null)
+            {
+                textBlock.FontFamily = new FontFamily(_fontFamily);
+            }
+
+            if (_fontSize.HasValue)
+            {
+                textBlock.FontSize = _fontSize.Value;
+            }
+            
+            textBlock.FontStyle = _fontStyle ?? FontStyles.Normal;
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
+            textBlock.FontStretch = _fontStretch ?? FontStretches.Normal;
 
             if (!measureOnly)
             {
+                //TODO: Why are the right and bottom paddings not set?
+
                 textBlock.Padding = new Thickness(
                     this.GetPaddingSpace(CSSSpacingType.Left),
                     this.GetPaddingSpace(CSSSpacingType.Top),

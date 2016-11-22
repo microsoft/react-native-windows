@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
+using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
@@ -22,6 +23,27 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TReactShadowNode : ReactShadowNode
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="ViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        protected ViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected ViewManager(IEventDispatcher eventDispatcher)
+        {
+            if (eventDispatcher == null)
+            {
+                throw new ArgumentNullException(nameof(eventDispatcher));
+            }
+
+            _eventDispatcher = eventDispatcher;
+        }
+
         /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
@@ -103,15 +125,12 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a view and installs event emitters on it.
         /// </summary>
-        /// <param name="reactContext">The context.</param>
         /// <param name="responderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        public TFrameworkElement CreateView(
-            ThemedReactContext reactContext,
-            JavaScriptResponderHandler responderHandler)
+        public TFrameworkElement CreateView(JavaScriptResponderHandler responderHandler)
         {
-            var view = CreateViewInstance(reactContext);
-            AddEventEmitters(reactContext, view);
+            var view = CreateViewInstance();
+            AddEventEmitters(view);
 
             // TODO: enable touch intercepting view parents
 
@@ -122,9 +141,8 @@ namespace ReactNative.UIManager
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        public virtual void OnDropViewInstance(TFrameworkElement view)
         {
         }
 
@@ -194,21 +212,19 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a new view instance of type <typeparamref name="TFrameworkElement"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TFrameworkElement CreateViewInstance(ThemedReactContext reactContext);
+        protected abstract TFrameworkElement CreateViewInstance();
 
         /// <summary>
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         /// <remarks>
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
         /// </remarks>
-        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        protected virtual void AddEventEmitters(TFrameworkElement view)
         {
         }
 
@@ -229,14 +245,14 @@ namespace ReactNative.UIManager
             UpdateProperties((TFrameworkElement)viewToUpdate, props);
         }
 
-        DependencyObject IViewManager.CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        DependencyObject IViewManager.CreateView(JavaScriptResponderHandler jsResponderHandler)
         {
-            return CreateView(reactContext, jsResponderHandler);
+            return CreateView(jsResponderHandler);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
+        void IViewManager.OnDropViewInstance(DependencyObject view)
         {
-            OnDropViewInstance(reactContext, (TFrameworkElement)view);
+            OnDropViewInstance((TFrameworkElement)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()
@@ -262,6 +278,33 @@ namespace ReactNative.UIManager
         void IViewManager.SetDimensions(DependencyObject view, Dimensions dimensions)
         {
             SetDimensions((TFrameworkElement)view, dimensions);
+        }
+
+#endregion
+
+#region IEventEmitter
+
+        private IEventDispatcher _eventDispatcher;
+
+        /// <summary>
+        /// The instance of the EventDispatcher relevant to the implementer's context
+        /// </summary>
+        public virtual IEventDispatcher EventDispatcher
+        {
+            get
+            {
+                if (_eventDispatcher == null)
+                {
+                    throw new InvalidOperationException("Event Dispatcher is null");
+                }
+
+                return _eventDispatcher;
+            }
+
+            set
+            {
+                _eventDispatcher = value;
+            }
         }
 
 #endregion

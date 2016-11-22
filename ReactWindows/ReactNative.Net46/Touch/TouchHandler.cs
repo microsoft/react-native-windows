@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace ReactNative.Touch
 {
-    class TouchHandler : IDisposable
+    class TouchHandler : IEventEmitter, IDisposable
     {
         private readonly FrameworkElement _view;
         private readonly List<ReactPointer> _pointers;
@@ -284,9 +284,7 @@ namespace ReactNative.Touch
 
             var touchEvent = new TouchEvent(touchEventType, touches, changedIndices, coalescingKey);
 
-            _view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(touchEvent);
         }
 
@@ -325,6 +323,35 @@ namespace ReactNative.Touch
 
             return isBoxOnly;
         }
+
+
+
+        #region IEventEmitter
+
+        private IEventDispatcher _eventDispatcher;
+
+        /// <summary>
+        /// The instance of the EventDispatcher relevant to the implementer's context
+        /// </summary>
+        public IEventDispatcher EventDispatcher
+        {
+            get
+            {
+                if (_eventDispatcher == null)
+                {
+                    throw new InvalidOperationException("Event Dispatcher is not set");
+                }
+
+                return _eventDispatcher;
+            }
+
+            set
+            {
+                _eventDispatcher = value;
+            }
+        }
+
+        #endregion
 
         class TouchEvent : Event
         {

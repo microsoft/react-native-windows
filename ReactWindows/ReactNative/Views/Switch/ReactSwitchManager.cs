@@ -16,6 +16,22 @@ namespace ReactNative.Views.Switch
         private const string ReactClass = "RCTSwitch";
 
         /// <summary>
+        /// Instantiates the base class <see cref="ReactSwitchManager"/>.
+        /// </summary>
+        public ReactSwitchManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactSwitchManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactSwitchManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
         /// </summary>
@@ -84,20 +100,18 @@ namespace ReactNative.Views.Switch
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactSwitchManager"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ToggleSwitch view)
+        public override void OnDropViewInstance(ToggleSwitch view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.Toggled -= OnToggled;
         }
 
         /// <summary>
         /// Creates a new view instance of type <see cref="ToggleSwitch"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ToggleSwitch CreateViewInstance(ThemedReactContext reactContext)
+        protected override ToggleSwitch CreateViewInstance()
         {
             var view = new ToggleSwitch();
             view.OnContent = null;
@@ -109,21 +123,18 @@ namespace ReactNative.Views.Switch
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ToggleSwitch view)
+        protected override void AddEventEmitters(ToggleSwitch view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.Toggled += OnToggled;
         }
 
         private void OnToggled(object sender, RoutedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)sender;
-            var reactContext = toggleSwitch.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
+            EventDispatcher
+                 .DispatchEvent(
                     new ReactSwitchEvent(
                         toggleSwitch.GetTag(),
                         toggleSwitch.IsOn));

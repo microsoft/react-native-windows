@@ -15,6 +15,22 @@ namespace ReactNative.Views.Picker
     public class ReactPickerManager : BaseViewManager<ComboBox, ReactPickerShadowNode>
     { 
         /// <summary>
+        /// Instantiates the base class <see cref="ReactPickerManager"/>.
+        /// </summary>
+        public ReactPickerManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactPickerManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactPickerManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// The name of the view manager.
         /// </summary>
         public override string Name
@@ -119,20 +135,18 @@ namespace ReactNative.Views.Picker
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="ReactPickerManager"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ComboBox view)
+        public override void OnDropViewInstance(ComboBox view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.SelectionChanged -= OnSelectionChanged;
         }
   
         /// <summary>
         /// Creates a new view instance of type <see cref="ComboBox"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ComboBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override ComboBox CreateViewInstance()
         {
             return new ComboBox();
         }
@@ -141,11 +155,10 @@ namespace ReactNative.Views.Picker
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ComboBox view)
+        protected override void AddEventEmitters(ComboBox view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.SelectionChanged += OnSelectionChanged;
         }
 
@@ -157,9 +170,7 @@ namespace ReactNative.Views.Picker
         private void OnSelectionChanged(object sender, RoutedEventArgs e)
         {
             var comboBox = (ComboBox)sender;
-            var reactContext = comboBox.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactPickerEvent(
                         comboBox.GetTag(),

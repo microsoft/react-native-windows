@@ -1,4 +1,5 @@
-﻿#if WINDOWS_UWP
+﻿using ReactNative.UIManager.Events;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
@@ -16,6 +17,22 @@ namespace ReactNative.UIManager
     public abstract class PanelViewParentManager<TPanel> : ViewParentManager<TPanel>
         where TPanel : Panel
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="PanelViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        protected PanelViewParentManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="PanelViewParentManager{TFrameworkElement}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected PanelViewParentManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// Gets the number of children for the view parent.
         /// </summary>

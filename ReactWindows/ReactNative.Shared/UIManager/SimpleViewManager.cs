@@ -1,4 +1,6 @@
-﻿#if WINDOWS_UWP
+﻿using ReactNative.UIManager.Events;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
 using System.Windows;
@@ -15,6 +17,22 @@ namespace ReactNative.UIManager
     public abstract class SimpleViewManager<TFrameworkElement> : BaseViewManager<TFrameworkElement, LayoutShadowNode>
         where TFrameworkElement : FrameworkElement
     {
+        /// <summary>
+        /// Instantiates the base class <see cref="SimpleViewManager{TFrameworkElement}"/>.
+        /// </summary>
+        protected SimpleViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BaseViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected SimpleViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         /// <summary>
         /// Creates a <see cref="LayoutShadowNode"/> instance.
         /// </summary>

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Split.Events;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,22 @@ namespace ReactNative.Views.Split
     {
         private const int OpenPane = 1;
         private const int ClosePane = 2;
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactSplitViewManager"/>.
+        /// </summary>
+        public ReactSplitViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactSplitViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactSplitViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         public override string Name
         {
@@ -146,9 +163,9 @@ namespace ReactNative.Views.Split
             return count;
         }
 
-        public override void OnDropViewInstance(ThemedReactContext reactContext, SplitView view)
+        public override void OnDropViewInstance(SplitView view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.PaneClosed -= OnPaneClosed;
         }
 
@@ -200,13 +217,13 @@ namespace ReactNative.Views.Split
         {
         }
 
-        protected override void AddEventEmitters(ThemedReactContext reactContext, SplitView view)
+        protected override void AddEventEmitters(SplitView view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.PaneClosed += OnPaneClosed;
         }
 
-        protected override SplitView CreateViewInstance(ThemedReactContext reactContext)
+        protected override SplitView CreateViewInstance()
         {
             return new SplitView
             {
@@ -216,18 +233,14 @@ namespace ReactNative.Views.Split
 
         private void OnPaneClosed(SplitView sender, object args)
         {
-            sender.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new SplitViewClosedEvent(sender.GetTag()));
         }
 
         private void OnPaneOpened(SplitView view)
         {
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new SplitViewOpenedEvent(view.GetTag()));
         }

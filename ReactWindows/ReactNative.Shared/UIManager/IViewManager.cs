@@ -16,7 +16,7 @@ namespace ReactNative.UIManager
     /// <see cref="ReactShadowNode"/> subclasses used for calculating position
     /// and size for the corresponding native view.
     /// </summary>
-    public interface IViewManager
+    public interface IViewManager : IEventEmitter
     {
         /// <summary>
         /// The name of this view manager. This will be the name used to 
@@ -71,22 +71,20 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Creates a view and installs event emitters on it.
         /// </summary>
-        /// <param name="reactContext">The context.</param>
         /// <param name="responderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler responderHandler);
+        DependencyObject CreateView(JavaScriptResponderHandler responderHandler);
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/>
         /// subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view);
+        void OnDropViewInstance(DependencyObject view);
 
         /// <summary>
         /// This method should return the subclass of <see cref="ReactShadowNode"/>

@@ -520,7 +520,10 @@ namespace ReactNative
 
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
-            rootView.TouchHandler = new TouchHandler(rootView);
+            rootView.TouchHandler = new TouchHandler(rootView)
+            {
+                EventDispatcher = uiManagerModule.EventDispatcher
+            };
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>

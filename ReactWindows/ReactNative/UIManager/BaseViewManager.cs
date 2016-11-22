@@ -24,6 +24,22 @@ namespace ReactNative.UIManager
         where TLayoutShadowNode : LayoutShadowNode
     {
         /// <summary>
+        /// Instantiates the base class <see cref="BaseViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        protected BaseViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="BaseViewManager{TFrameworkElement, TReactShadowNode}"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        protected BaseViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
+        /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
         /// properties, based on the <see cref="JObject"/> map.
         /// </summary>
@@ -130,13 +146,12 @@ namespace ReactNative.UIManager
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         /// <remarks>
         /// Be sure to call this base class method to register for pointer 
         /// entered and pointer exited events.
         /// </remarks>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        public override void OnDropViewInstance(TFrameworkElement view)
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
@@ -146,7 +161,6 @@ namespace ReactNative.UIManager
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
         /// <remarks>
         /// Consider overriding this method if your view needs to emit events
@@ -155,7 +169,7 @@ namespace ReactNative.UIManager
         /// Make sure you call the base implementation to ensure base pointer
         /// event handlers are subscribed.
         /// </remarks>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        protected override void AddEventEmitters(TFrameworkElement view)
         {
             view.PointerEntered += OnPointerEntered;
             view.PointerExited += OnPointerExited;

@@ -134,6 +134,7 @@
     <Compile Include="UIManager\ViewAtIndexTests.cs" />
     <Compile Include="UIManager\ViewManagerRegistryTests.cs" />
     <Compile Include="UIManager\ViewManagersPropertyCacheTests.cs" />
+    <Compile Include="Views\Text\ReactTextViewManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

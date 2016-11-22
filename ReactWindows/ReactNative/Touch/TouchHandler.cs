@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Touch
 {
-    class TouchHandler : IDisposable
+    class TouchHandler : IEventEmitter, IDisposable
     {
         private readonly FrameworkElement _view;
         private readonly List<ReactPointer> _pointers;
@@ -46,8 +46,7 @@ namespace ReactNative.Touch
         {
             if (ShouldSendEnterLeaveEvent(view))
             {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
+                view.GetEventEmitter()
                     .EventDispatcher
                     .DispatchEvent(
                         new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
@@ -58,8 +57,7 @@ namespace ReactNative.Touch
         {
             if (ShouldSendEnterLeaveEvent(view))
             {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
+                view.GetEventEmitter()
                     .EventDispatcher
                     .DispatchEvent(
                         new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
@@ -237,10 +235,8 @@ namespace ReactNative.Touch
 
             var touchEvent = new TouchEvent(touchEventType, touches, changedIndices, coalescingKey);
 
-            _view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(touchEvent);
+            EventDispatcher.
+                DispatchEvent(touchEvent);
         }
 
         private static bool IsBoxOnlyWithCache(IEnumerable<DependencyObject> hierarchy, IDictionary<DependencyObject, bool> cache)
@@ -311,6 +307,30 @@ namespace ReactNative.Touch
 
             return point;
         }
+
+        #region IEventEmitter
+
+        private IEventDispatcher _eventDispatcher;
+
+        public IEventDispatcher EventDispatcher
+        {
+            get
+            {
+                if (_eventDispatcher == null)
+                {
+                    throw new InvalidOperationException("Event Dispatcher is null");
+                }
+
+                return _eventDispatcher;
+            }
+
+            set
+            {
+                _eventDispatcher = value;
+            }
+        }
+
+        #endregion
 
         class TouchEvent : Event
         {

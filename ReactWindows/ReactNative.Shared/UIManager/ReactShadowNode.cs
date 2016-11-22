@@ -20,7 +20,6 @@ namespace ReactNative.UIManager
     public class ReactShadowNode : CSSNode
     {
         private ReactShadowNode _rootNode;
-        private ThemedReactContext _themedContext;
         private bool _nodeUpdated = true;
 
         private bool _isLayoutOnly;
@@ -117,27 +116,6 @@ namespace ReactNative.UIManager
             get
             {
                 return (ReactShadowNode)base.Parent;
-            }
-        }
-
-        /// <summary>
-        /// The themed context of the node.
-        /// </summary>
-        public ThemedReactContext ThemedContext
-        {
-            get
-            {
-                var themedContext = _themedContext;
-                if (themedContext == null)
-                {
-                    throw new InvalidOperationException("Themed context has not been set.");
-                }
-
-                return themedContext;
-            }
-            protected internal set
-            {
-                _themedContext = value;
             }
         }
 

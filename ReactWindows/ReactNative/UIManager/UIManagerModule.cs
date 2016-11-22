@@ -5,6 +5,7 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
@@ -43,8 +44,14 @@ namespace ReactNative.UIManager
             
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementation;
+            _uiImplementation.EventDispatcher = _eventDispatcher;
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
+
+            foreach (var eventEmitter in viewManagers.OfType<IEventEmitter>())
+            {
+                eventEmitter.EventDispatcher = _eventDispatcher;
+            }
         }
 
         /// <summary>
@@ -72,7 +79,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The event dispatcher for the module.
         /// </summary>
-        public EventDispatcher EventDispatcher
+        public IEventDispatcher EventDispatcher
         {
             get
             {
@@ -108,8 +115,7 @@ namespace ReactNative.UIManager
             var width = rootView.ActualWidth;
             var height = rootView.ActualHeight;
 
-            var context = new ThemedReactContext(Context);
-            _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
+            _uiImplementation.RegisterRootView(rootView, tag, width, height);
 
             var resizeCount = 0;
 
@@ -124,7 +130,7 @@ namespace ReactNative.UIManager
                     if (currentCount == resizeCount)
                     {
                         Context.AssertOnNativeModulesQueueThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight, _eventDispatcher);
+                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
                     }
                 });
             });
@@ -476,7 +482,7 @@ namespace ReactNative.UIManager
                 .With("BatchId", batchId)
                 .Start())
             {
-                _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
+                _uiImplementation.DispatchViewUpdates(batchId);
             }
         }
 

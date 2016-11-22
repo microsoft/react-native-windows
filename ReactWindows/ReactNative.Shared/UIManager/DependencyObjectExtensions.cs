@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReactNative.Bridge;
+using ReactNative.UIManager.Events;
+using System;
 using System.Runtime.CompilerServices;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -136,16 +138,16 @@ namespace ReactNative.UIManager
             return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
         }
 
-        internal static void SetReactContext(this DependencyObject view, ThemedReactContext context)
+        internal static void SetEventEmitter(this DependencyObject view, IEventEmitter eventEmitter)
         {
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrCreateValue(view).Context = context;
+            s_properties.GetOrCreateValue(view).EventEmitter = eventEmitter;
         }
 
         /// <summary>
-        /// Gets the <see cref="ThemedReactContext"/> associated with the view
+        /// Gets the <see cref="IEventEmitter"/> associated with the view
         /// instance.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -153,10 +155,12 @@ namespace ReactNative.UIManager
         /// <exception cref="InvalidOperationException">
         /// Thrown if context is not available for the view.
         /// </exception>
-        public static ThemedReactContext GetReactContext(this DependencyObject view)
+        public static IEventEmitter GetEventEmitter(this DependencyObject view)
         {
             if (view == null)
+            {
                 throw new ArgumentNullException(nameof(view));
+            }
 
             var elementData = default(DependencyObjectData);
             if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
@@ -164,7 +168,7 @@ namespace ReactNative.UIManager
                 throw new InvalidOperationException("Could not get tag for view.");
             }
 
-            return elementData.Context;
+            return elementData.EventEmitter;
         }
 
         internal static T As<T>(this DependencyObject view)
@@ -180,7 +184,7 @@ namespace ReactNative.UIManager
 
         class DependencyObjectData
         {
-            public ThemedReactContext Context { get; set; }
+            public IEventEmitter EventEmitter { get; set; }
 
             public PointerEvents? PointerEvents { get; set; }
 

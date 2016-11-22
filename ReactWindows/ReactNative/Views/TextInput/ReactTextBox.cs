@@ -2,6 +2,8 @@
 using System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using ReactNative.UIManager.Events;
+using System;
 
 namespace ReactNative.Views.TextInput
 {
@@ -56,8 +58,7 @@ namespace ReactNative.Views.TextInput
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            this.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
+            this.GetEventEmitter()
                 .EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(

@@ -85,14 +85,12 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The root view tag.</param>
         /// <param name="rootView">The root view.</param>
-        /// <param name="themedRootContext">The React context.</param>
         public void AddRootView(
             int tag,
-            SizeMonitoringCanvas rootView,
-            ThemedReactContext themedRootContext)
+            SizeMonitoringCanvas rootView)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
+            _nativeViewHierarchyManager.AddRootView(tag, rootView);
         }
 
         /// <summary>
@@ -167,12 +165,10 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial properties.</param>
         public void EnqueueCreateView(
-            ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
             ReactStylesDiffMap initialProps)
@@ -180,7 +176,6 @@ namespace ReactNative.UIManager
             lock (_nonBatchedGate)
             {
                 _nonBatchedOperations.Add(() => _nativeViewHierarchyManager.CreateView(
-                   themedContext,
                    viewReactTag,
                    viewClassName,
                    initialProps));

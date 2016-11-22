@@ -1,5 +1,6 @@
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 
@@ -12,6 +13,22 @@ namespace ReactNative.Views.Slider
     {
         private const double Epsilon = 1e-4;
         private const double Undefined = double.NegativeInfinity;
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactSliderManager"/>.
+        /// </summary>
+        public ReactSliderManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactSliderManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactSliderManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         /// <summary>
         /// The name of the view manager.
@@ -131,11 +148,10 @@ namespace ReactNative.Views.Slider
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
+        public override void OnDropViewInstance(Windows.UI.Xaml.Controls.Slider view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.ValueChanged -= OnValueChange;
             view.PointerReleased -= OnPointerReleased;
             view.PointerCaptureLost -= OnPointerReleased;
@@ -155,9 +171,8 @@ namespace ReactNative.Views.Slider
         /// <summary>
         /// Returns the view instance for <see cref="Slider"/>.
         /// </summary>
-        /// <param name="reactContext"></param>
         /// <returns></returns>
-        protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance(ThemedReactContext reactContext)
+        protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance()
         {
             return new Windows.UI.Xaml.Controls.Slider();
         }
@@ -166,11 +181,10 @@ namespace ReactNative.Views.Slider
         /// Subclasses can override this method to install custom event 
         /// emitters on the given view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
+        protected override void AddEventEmitters(Windows.UI.Xaml.Controls.Slider view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.ValueChanged += OnValueChange;
             view.PointerReleased += OnPointerReleased;
             view.PointerCaptureLost += OnPointerReleased;
@@ -179,9 +193,7 @@ namespace ReactNative.Views.Slider
         private void OnValueChange(object sender, RoutedEventArgs e)
         {
             var slider = (Windows.UI.Xaml.Controls.Slider)sender;
-            var reactContext = slider.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactSliderChangeEvent(
                         slider.GetTag(),
@@ -191,9 +203,7 @@ namespace ReactNative.Views.Slider
         private void OnPointerReleased(object sender, RoutedEventArgs e)
         {
             var slider = (Windows.UI.Xaml.Controls.Slider)sender;
-            var reactContext = slider.GetReactContext();
-            reactContext.GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactSliderCompleteEvent(
                         slider.GetTag(),

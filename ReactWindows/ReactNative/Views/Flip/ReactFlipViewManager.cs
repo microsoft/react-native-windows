@@ -15,6 +15,22 @@ namespace ReactNative.Views.Flip
     {
         private const int SetPage = 1;
 
+        /// <summary>
+        /// Instantiates the class <see cref="ReactFlipViewManager"/>.
+        /// </summary>
+        public ReactFlipViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactFlipViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactFlipViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
+
         public override string Name
         {
             get
@@ -90,9 +106,9 @@ namespace ReactNative.Views.Flip
             parent.Items.RemoveAt(index);
         }
 
-        public override void OnDropViewInstance(ThemedReactContext reactContext, FlipView view)
+        public override void OnDropViewInstance(FlipView view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.SelectionChanged -= OnSelectionChanged;
         }
 
@@ -110,23 +126,21 @@ namespace ReactNative.Views.Flip
             }
         }
 
-        protected override FlipView CreateViewInstance(ThemedReactContext reactContext)
+        protected override FlipView CreateViewInstance()
         {
             return new FlipView();
         }
 
-        protected override void AddEventEmitters(ThemedReactContext reactContext, FlipView view)
+        protected override void AddEventEmitters(FlipView view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.SelectionChanged += OnSelectionChanged;
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipView = (FlipView)sender;
-            flipView.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new SelectionChangedEvent(
                         flipView.GetTag(),

@@ -141,6 +141,12 @@ namespace ReactNative.Tests.UIManager
                     return typeof(ReactShadowNode);
                 }
             }
+
+            public override IEventDispatcher EventDispatcher
+            {
+                get;
+                set;
+            }
         }
     }
 }

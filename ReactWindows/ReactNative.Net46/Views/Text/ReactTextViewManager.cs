@@ -1,6 +1,7 @@
-﻿using System;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Windows;
@@ -16,6 +17,22 @@ namespace ReactNative.Views.Text
     public class ReactTextViewManager : ViewParentManager<TextBlock, ReactTextShadowNode>
     {
         private static readonly IReactCompoundView s_compoundView = new ReactTextCompoundView();
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactTextViewManager"/>.
+        /// </summary>
+        public ReactTextViewManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the class <see cref="ReactTextViewManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactTextViewManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         /// <summary>
         /// The name of the view manager.
@@ -151,9 +168,8 @@ namespace ReactNative.Views.Text
         /// <summary>
         /// Creates the view instance.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override TextBlock CreateViewInstance(ThemedReactContext reactContext)
+        protected override TextBlock CreateViewInstance()
         {
             var textBlock = new TextBlock
             {

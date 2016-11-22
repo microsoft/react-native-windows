@@ -12,6 +12,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using ReactNative.UIManager.Events;
 
 namespace ReactNative.Views.TextInput
 {
@@ -26,6 +27,22 @@ namespace ReactNative.Views.TextInput
         private bool _onSelectionChange;
 
         internal static readonly Color DefaultTextBoxBorder = Color.FromArgb(255, 122, 122, 122);
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactTextInputManager"/>.
+        /// </summary>
+        public ReactTextInputManager()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates the base class <see cref="ReactTextInputManager"/>.
+        /// </summary>
+        /// <param name="eventDispatcher">The event dispatcher to associate with this instance</param>
+        public ReactTextInputManager(IEventDispatcher eventDispatcher)
+            : base(eventDispatcher)
+        {
+        }
 
         /// <summary>
         /// The name of the view manager.
@@ -460,11 +477,10 @@ namespace ReactNative.Views.TextInput
         /// additional cleanup by the <see cref="ReactTextInputManager"/>.
         /// subclass. Unregister all event handlers for the <see cref="ReactTextBox"/>.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/>.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ReactTextBox view)
+        public override void OnDropViewInstance(ReactTextBox view)
         {
-            base.OnDropViewInstance(reactContext, view);
+            base.OnDropViewInstance(view);
             view.KeyDown -= OnKeyDown;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
@@ -482,9 +498,8 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Returns the view instance for <see cref="ReactTextBox"/>.
         /// </summary>
-        /// <param name="reactContext"></param>
         /// <returns></returns>
-        protected override ReactTextBox CreateViewInstance(ThemedReactContext reactContext)
+        protected override ReactTextBox CreateViewInstance()
         {
             return new ReactTextBox
             {
@@ -495,11 +510,10 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Installing the textchanged event emitter on the <see cref="TextInput"/> Control.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
+        protected override void AddEventEmitters(ReactTextBox view)
         {
-            base.AddEventEmitters(reactContext, view);
+            base.AddEventEmitters(view);
             view.TextChanging += OnTextChanging;
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;
@@ -516,9 +530,7 @@ namespace ReactNative.Views.TextInput
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (ReactTextBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
@@ -531,9 +543,7 @@ namespace ReactNative.Views.TextInput
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
             var textBox = (ReactTextBox)sender;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputFocusEvent(textBox.GetTag()));
         }
@@ -541,14 +551,11 @@ namespace ReactNative.Views.TextInput
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = (ReactTextBox)sender;
-            var eventDispatcher = textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher;
 
-            eventDispatcher.DispatchEvent(
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputBlurEvent(textBox.GetTag()));
 
-            eventDispatcher.DispatchEvent(
+            EventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
                       textBox.GetTag(),
                       textBox.Text));
@@ -562,9 +569,7 @@ namespace ReactNative.Views.TextInput
                 if (!textBox.AcceptsReturn)
                 {
                     e.Handled = true;
-                    textBox.GetReactContext()
-                        .GetNativeModule<UIManagerModule>()
-                        .EventDispatcher
+                    EventDispatcher
                         .DispatchEvent(
                             new ReactTextInputSubmitEditingEvent(
                                 textBox.GetTag(),
@@ -578,9 +583,8 @@ namespace ReactNative.Views.TextInput
             var textBox = (ReactTextBox)sender;
             var start = textBox.SelectionStart;
             var length = textBox.SelectionLength;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
+
+            EventDispatcher
                 .DispatchEvent(
                     new ReactTextInputSelectionEvent(
                         textBox.GetTag(),
