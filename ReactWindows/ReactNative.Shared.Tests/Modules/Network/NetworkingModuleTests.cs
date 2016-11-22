@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Network;
@@ -10,14 +10,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.Web.Http;
+#else
+using System.Net;
+using System.Net.Http;
+#endif
 
 namespace ReactNative.Tests.Modules.Network
 {
-    [TestClass]
+    [TestFixture]
     public class NetworkingModuleTests
     {
-        [TestMethod]
+        [Test]
         public void NetworkingModule_ArgumentChecks()
         {
             var module = CreateNetworkingModule(new DefaultHttpClient(), new MockInvocationHandler());
@@ -39,7 +44,7 @@ namespace ReactNative.Tests.Modules.Network
                 ex => Assert.AreEqual("responseType", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Request_Method()
         {
             var method = "GET";
@@ -59,7 +64,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsTrue(passed);
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Request_Headers()
         {
             var headers = new[]
@@ -72,8 +77,13 @@ namespace ReactNative.Tests.Modules.Network
             var waitHandle = new AutoResetEvent(false);
             var httpClient = new MockHttpClient(request =>
             {
+#if WINDOWS_UWP
                 passed &= request.Headers["foo"] == "bar";
                 passed &= request.Headers["X-RNTest"] == "42.424242";
+#else
+                passed &= request.Headers.GetValues("foo").First() == "bar";
+                passed &= request.Headers.GetValues("X-RNTest").First() == "42.424242";
+#endif
 
                 waitHandle.Set();
                 return new HttpResponseMessage(HttpStatusCode.NoContent);
@@ -86,7 +96,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsTrue(passed);
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Request_Content_String()
         {
             var data = new JObject
@@ -103,7 +113,11 @@ namespace ReactNative.Tests.Modules.Network
             var waitHandle = new AutoResetEvent(false);
             var module = CreateNetworkingModule(new MockHttpClient(request =>
                 {
+#if WINDOWS_UWP
                     var body = request.Content.ReadAsStringAsync().GetResults();
+#else
+                    var body = request.Content.ReadAsStringAsync().Result;
+#endif
                     var mediaType = request.Content.Headers.ContentType.ToString();
                     passed &= body == "Hello World";
                     passed &= mediaType == "text/plain";
@@ -119,7 +133,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsTrue(passed);
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Request_Content_String_NoContentType()
         {
             var data = new JObject
@@ -152,7 +166,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsTrue(passed);
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Request_Content_String_Gzip()
         {
             var data = new JObject
@@ -170,10 +184,15 @@ namespace ReactNative.Tests.Modules.Network
             var waitHandle = new AutoResetEvent(false);
             var module = CreateNetworkingModule(new MockHttpClient(request =>
             {
+#if WINDOWS_UWP
+                var inputStream = request.Content.ReadAsInputStreamAsync()
+                    .GetResults()
+                    .AsStreamForRead();
+#else
+                var inputStream = request.Content.ReadAsStreamAsync().Result;
+#endif
                 var gzipStream = new GZipStream(
-                    request.Content.ReadAsInputStreamAsync()
-                        .GetResults()
-                        .AsStreamForRead(),
+                    inputStream,
                     CompressionMode.Decompress);
 
                 using (var reader = new StreamReader(gzipStream))
@@ -197,7 +216,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsTrue(passed);
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Response_Headers()
         {
             var onReceived = new AutoResetEvent(false);
@@ -208,7 +227,11 @@ namespace ReactNative.Tests.Modules.Network
             {
                 var response = new HttpResponseMessage(HttpStatusCode.NoContent);
                 response.RequestMessage = request;
+#if WINDOWS_UWP
                 response.Headers["X-Foo"] = "bar";
+#else
+                response.Headers.Add("X-Foo", "bar");
+#endif
                 return response;
             }),
             new MockInvocationHandler((name, args) =>
@@ -249,7 +272,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsNull(onCompleteData[1].Value<string>());
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Response_Content()
         {
             var onReceived = new AutoResetEvent(false);
@@ -257,12 +280,20 @@ namespace ReactNative.Tests.Modules.Network
 
             var module = CreateNetworkingModule(new MockHttpClient(request =>
             {
+#if WINDOWS_UWP
                 var response = new HttpResponseMessage(HttpStatusCode.Ok);
+#else
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+#endif
                 response.RequestMessage = request;
 
                 var stream = new MemoryStream();
 
+#if WINDOWS_UWP
                 response.Content = new HttpStreamContent(stream.AsInputStream());
+#else
+                response.Content = new StreamContent(stream);
+#endif
                 using (var streamWriter = new StreamWriter(stream, Encoding.UTF8, 1024, true))
                 {
                     streamWriter.Write("Hello World");
@@ -292,7 +323,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.AreEqual("Hello World", onReceivedData[1].Value<string>());
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Response_Content_Base64()
         {
             var onReceived = new AutoResetEvent(false);
@@ -301,11 +332,19 @@ namespace ReactNative.Tests.Modules.Network
             var bytes = Encoding.UTF8.GetBytes("Hello World");
             var module = CreateNetworkingModule(new MockHttpClient(request =>
             {
+#if WINDOWS_UWP
                 var response = new HttpResponseMessage(HttpStatusCode.Ok);
+#else
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+#endif
                 response.RequestMessage = request;
 
                 var stream = new MemoryStream(bytes);
+#if WINDOWS_UWP
                 response.Content = new HttpStreamContent(stream.AsInputStream());
+#else
+                response.Content = new StreamContent(stream);
+#endif
                 return response;
             }),
             new MockInvocationHandler((name, args) =>
@@ -329,7 +368,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.AreEqual(Convert.ToBase64String(bytes), onReceivedData[1].Value<string>());
         }
 
-        [TestMethod]
+        [Test]
         public void NetworkingModule_Response_Content_UseIncremental()
         {
             var onCompleteData = default(JArray);
@@ -340,12 +379,20 @@ namespace ReactNative.Tests.Modules.Network
 
             var module = CreateNetworkingModule(new MockHttpClient(request =>
             {
+#if WINDOWS_UWP
                 var response = new HttpResponseMessage(HttpStatusCode.Ok);
+#else
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+#endif
                 response.RequestMessage = request;
 
                 var stream = new MemoryStream();
 
+#if WINDOWS_UWP
                 response.Content = new HttpStreamContent(stream.AsInputStream());
+#else
+                response.Content = new StreamContent(stream);
+#endif
                 using (var streamWriter = new StreamWriter(stream, Encoding.UTF8, 1024, true))
                 {
                     streamWriter.Write(expected);

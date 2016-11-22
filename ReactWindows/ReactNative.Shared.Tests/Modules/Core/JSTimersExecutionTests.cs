@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using ReactNative.Modules.Core;
 
 namespace ReactNative.Tests.Modules.Core
 {
-    [TestClass]
+    [TestFixture]
     public class JSTimersExecutionTests
     {
         public void JSTimersExecution_Invoke()

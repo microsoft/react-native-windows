@@ -1,14 +1,22 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using ReactNative.UIManager;
 using System;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Controls;
+#else
+using System.Threading;
+using System.Windows.Controls;
+#endif
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestClass]
+    [TestFixture]
+#if !WINDOWS_UWP
+    [Apartment(ApartmentState.STA)]
+#endif
     public class DependencyObjectExtensionsTests
     {
-        [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]
+        [Test]
         public void FrameworkElementExtensions_ArgumentChecks()
         {
             var element = new Button();
@@ -30,7 +38,7 @@ namespace ReactNative.Tests.UIManager
                 ex => Assert.AreEqual("view", ex.ParamName));
         }
 
-        [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]
+        [Test]
         public void FrameworkElementExtensions_Get_Set()
         {
             var button = new Button();
