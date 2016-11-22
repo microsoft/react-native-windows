@@ -37,14 +37,14 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        
-                        <TextBlock Grid.Row="0" 
+
+                        <TextBlock Grid.Row="0"
                                    FontFamily="Monospace"
                                    FontSize="12"
                                    Foreground="{StaticResource ForegroundBrush}"
                                    Text="{Binding Path=Method, Mode=OneTime}"/>
-                        
-                        <TextBlock Grid.Row="1" 
+
+                        <TextBlock Grid.Row="1"
                                    FontSize="10"
                                    Foreground="LightGray"
                                    TextWrapping="Wrap"
@@ -54,8 +54,8 @@
             </DataTemplate>
 
         </ResourceDictionary>
-    </Window.Resources>    
- 
+    </Window.Resources>
+
     <Border x:Name="BackgroundElement" Background="{StaticResource BackgroundBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="10,10,10,10">
         <Grid x:Name="LayoutRoot" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -66,7 +66,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" 
+            <TextBlock Grid.Row="0"
                         FontFamily="Monospace"
                         FontSize="14"
                         FontWeight="SemiBold"
@@ -75,9 +75,9 @@
                         TextWrapping="Wrap" />
 
             <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  ScrollViewer.CanContentScroll="True">
-                <ListView Background="Transparent" 
+                <ListView Background="Transparent"
                           BorderThickness="0,0,0,0"
-                          ItemsSource="{Binding Path=StackTrace, Mode=OneWay}" 
+                          ItemsSource="{Binding Path=StackTrace, Mode=OneWay}"
                           ItemTemplate="{StaticResource StackFrameTemplate}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">

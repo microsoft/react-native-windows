@@ -602,7 +602,7 @@ namespace ReactNative.DevSupport
                     if (temporaryFile != null)
                     {
                         await temporaryFile.DeleteAsync(token).ConfigureAwait(false);
-                    }   
+                    }
                 }
             }
 #endif

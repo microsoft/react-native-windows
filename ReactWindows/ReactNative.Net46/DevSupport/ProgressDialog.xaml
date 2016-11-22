@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{Binding Path=Heading, Mode=OneTime}"
-    Style="{DynamicResource ContentDialogStyle}" 
+    Style="{DynamicResource ContentDialogStyle}"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d" d:DesignHeight="125" d:DesignWidth="240">
 
@@ -21,7 +21,7 @@
             *****************************************************************
             Colors
             *****************************************************************
-            -->            
+            -->
             <SolidColorBrush x:Key="BackgroundBrush" Color="#FFF2F2F2"/>
             <SolidColorBrush x:Key="ForegroundBrush" Color="Black"/>
             <SolidColorBrush x:Key="BorderBrush" Color="Blue"/>
@@ -38,7 +38,7 @@
                 <RowDefinition Height="5" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="15" />
-                <RowDefinition Height="Auto" />                
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="HeadingTextBlock" Grid.Row="0" HorizontalAlignment="Left"

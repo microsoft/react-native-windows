@@ -62,6 +62,7 @@ namespace ReactNative.Tests.Modules.WebSocket
         {
             var waitHandle = new AutoResetEvent(false);
             var json = default(JObject);
+
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
                 if (name == "emit" && args.Length == 2)
@@ -114,7 +115,7 @@ namespace ReactNative.Tests.Modules.WebSocket
                         break;
                 }
             }));
-
+            
             var module = new WebSocketModule(context);
             try
             {
