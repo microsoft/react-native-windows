@@ -1,6 +1,6 @@
 ﻿using ReactNative.Bridge;
-using System.Collections.Generic;
 using ReactNative.UIManager.Events;
+using System.Collections.Generic;
 
 namespace ReactNative.UIManager
 {

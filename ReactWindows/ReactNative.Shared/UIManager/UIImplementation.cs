@@ -45,7 +45,9 @@ namespace ReactNative.UIManager
         private UIImplementation(ReactContext reactContext, ViewManagerRegistry viewManagers, EventDispatcher eventDispatcher)
             : this(
                   viewManagers,
-                  new UIViewOperationQueue(reactContext, new NativeViewHierarchyManager(viewManagers)), eventDispatcher)
+                  new UIViewOperationQueue(reactContext, 
+                                           new NativeViewHierarchyManager(viewManagers)), 
+                                           eventDispatcher)
         {
         }
 
@@ -57,7 +59,8 @@ namespace ReactNative.UIManager
         /// <param name="eventDispatcher">The event dispatcher.</param>
         protected UIImplementation(
             ViewManagerRegistry viewManagers,
-            UIViewOperationQueue operationsQueue, EventDispatcher eventDispatcher)
+            UIViewOperationQueue operationsQueue,
+            EventDispatcher eventDispatcher)
         {
             _viewManagers = viewManagers;
             _operationsQueue = operationsQueue;
