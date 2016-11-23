@@ -9,12 +9,22 @@
     <Import_RootNamespace>ReactNative.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\AdditionAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\AnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\AnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\DecayAnimationDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\DiffClampAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\DivisionAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\EventAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\FrameBasedAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\InterpolationAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\MultiplicationAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\NativeAnimatedModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\NativeAnimatedNodesManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\PropsAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\SpringAnimationDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\StyleAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
@@ -190,6 +200,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\FontStyleHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNodeVisitor.cs" />

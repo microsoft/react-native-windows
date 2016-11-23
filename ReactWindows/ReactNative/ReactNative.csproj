@@ -94,16 +94,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animated\AdditionAnimatedNode.cs" />
-    <Compile Include="Animated\DiffClampAnimatedNode.cs" />
-    <Compile Include="Animated\DivisionAnimatedNode.cs" />
-    <Compile Include="Animated\EventAnimationDriver.cs" />
-    <Compile Include="Animated\MultiplicationAnimatedNode.cs" />
-    <Compile Include="Animated\NativeAnimatedModule.cs" />
-    <Compile Include="Animated\NativeAnimatedNodesManager.cs" />
-    <Compile Include="Animated\PropsAnimatedNode.cs" />
-    <Compile Include="Animated\StyleAnimatedNode.cs" />
-    <Compile Include="Animated\TransformAnimatedNode.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
@@ -170,8 +160,6 @@
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Picker\ReactPickerManager.cs" />
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
-    <Compile Include="Views\Scroll\ScrollEventType.cs" />
-    <Compile Include="Views\Scroll\ScrollEventTypeExtensions.cs" />
     <Compile Include="Views\Split\Events\SplitViewOpenedEvent.cs" />
     <Compile Include="Views\Split\ReactSplitViewManager.cs" />
     <Compile Include="Views\TextInput\InputScopeHelpers.cs" />

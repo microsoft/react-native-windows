@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
-using System.Reactive.Linq;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Modules.Image
 {
@@ -23,7 +22,26 @@ namespace ReactNative.Modules.Image
         [ReactMethod]
         public void prefetchImage(string uriString, IPromise promise)
         {
-            promise.Reject(ErrorPrefetchFailure, "Prefetch is not yet implemented.");
+            if (string.IsNullOrEmpty(uriString))
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
+                return;
+            }
+
+            DispatcherHelpers.RunOnDispatcher(async () =>
+            {
+                try
+                {
+                    // TODO: enable prefetch cancellation
+                    var uri = new Uri(uriString);
+                    await ImageCache.Instance.PreCacheAsync(uri, true, true).ConfigureAwait(false);
+                    promise.Resolve(true);
+                }
+                catch (Exception ex)
+                {
+                    promise.Reject(ErrorPrefetchFailure, ex.Message);
+                }
+            });
         }
 
         [ReactMethod]
@@ -39,27 +57,12 @@ namespace ReactNative.Modules.Image
             {
                 try
                 {
-                    var bitmapImage = new BitmapImage();
-                    var loadQuery = bitmapImage.GetStreamLoadObservable()
-                        .Where(status => status.LoadStatus == ImageLoadStatus.OnLoadEnd)
-                        .FirstAsync()
-                        .Replay(1);
-
-                    using (loadQuery.Connect())
+                    var bitmapImage = await ImageCache.Instance.GetFromCacheAsync(new Uri(uriString), true);
+                    promise.Resolve(new JObject
                     {
-                        using (var stream = await BitmapImageHelpers.GetStreamAsync(uriString))
-                        {
-                            await bitmapImage.SetSourceAsync(stream);
-                        }
-
-                        await loadQuery;
-
-                        promise.Resolve(new JObject
-                        {
-                            { "width", bitmapImage.PixelWidth },
-                            { "height", bitmapImage.PixelHeight },
-                        });
-                    }
+                        { "width", bitmapImage.PixelWidth },
+                        { "height", bitmapImage.PixelHeight },
+                    });
                 }
                 catch (Exception ex)
                 {
