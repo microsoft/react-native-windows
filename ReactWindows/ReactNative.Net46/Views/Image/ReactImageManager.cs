@@ -288,6 +288,7 @@ namespace ReactNative.Views.Image
 
             var image = new BitmapImage();
             image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
             if (BitmapImageHelpers.IsBase64Uri(source))
             {
                 disposable.Disposable = image.GetStreamLoadObservable().Subscribe(
@@ -307,7 +308,7 @@ namespace ReactNative.Views.Image
 
                 image.UriSource = new Uri(source);
             }
-            
+
             image.EndInit();
             imageBrush.ImageSource = image;
         }
