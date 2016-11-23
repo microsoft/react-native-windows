@@ -2,6 +2,7 @@
   "dependencies": {
     "Facebook.CSSLayout": "2.0.1-pre",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+    "Microsoft.Toolkit.Uwp.UI": "1.2.0",
     "Newtonsoft.Json": "9.0.1",
     "PCLStorage": "1.0.2",
     "System.Reactive": "3.0.0",
