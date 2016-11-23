@@ -308,12 +308,13 @@ namespace ReactNative.Views.Image
                 try
                 {
                     var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(source), true);
-                    OnImageStatusUpdate(
-                        view, 
-                        ImageLoadStatus.OnLoad,
-                        new ImageMetadata(source, image.PixelWidth, image.PixelHeight));
+                    var imageMetadata = new ImageMetadata(
+                        source,
+                        image.PixelWidth,
+                        image.PixelHeight);
+                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, imageMetadata);
                     imageBrush.ImageSource = image;
-                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, default(ImageMetadata));
+                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, imageMetadata);
                 }
                 catch
                 {

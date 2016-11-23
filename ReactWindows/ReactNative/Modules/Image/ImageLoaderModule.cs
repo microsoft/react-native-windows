@@ -22,12 +22,6 @@ namespace ReactNative.Modules.Image
             }
         }
 
-        public override void Initialize()
-        {
-            ImageCache.Instance.MaxMemoryCacheCount = 64;
-            ImageCache.Instance.CacheDuration = TimeSpan.FromDays(1);
-        }
-
         [ReactMethod]
         public void prefetchImage(string uriString, IPromise promise)
         {
@@ -36,12 +30,13 @@ namespace ReactNative.Modules.Image
                 try
                 {
                     // TODO: enable prefetch cancellation
-                    await ImageCache.Instance.PreCacheAsync(new Uri(uriString), true, true).ConfigureAwait(false);
+                    var uri = new Uri(uriString);
+                    await ImageCache.Instance.PreCacheAsync(uri, true, true).ConfigureAwait(false);
                     promise.Resolve(true);
                 }
                 catch (Exception ex)
                 {
-                    promise.Reject(ErrorPrefetchFailure, ex);
+                    promise.Reject(ErrorPrefetchFailure, ex.Message);
                 }
             });
         }
@@ -59,16 +54,16 @@ namespace ReactNative.Modules.Image
 
                 try
                 {
-                    var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(uriString), true);
+                    var bitmapImage = await ImageCache.Instance.GetFromCacheAsync(new Uri(uriString), true);
                     promise.Resolve(new JObject
                     {
-                        { "width", image.PixelWidth },
-                        { "height", image.PixelHeight },
+                        { "width", bitmapImage.PixelWidth },
+                        { "height", bitmapImage.PixelHeight },
                     });
                 }
                 catch (Exception ex)
                 {
-                    promise.Reject(ErrorGetSizeFailure, ex);
+                    promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
             });
         }

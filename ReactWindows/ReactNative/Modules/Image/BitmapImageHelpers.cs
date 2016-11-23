@@ -92,14 +92,5 @@ namespace ReactNative.Modules.Image
                     throw new InvalidOperationException(pattern.EventArgs.ErrorMessage);
                 });
         }
-
-        private static IObservable<ImageStatusEventData> GetDownloadingObservable(this BitmapImage image)
-        {
-            return Observable.FromEventPattern<DownloadProgressEventHandler, DownloadProgressEventArgs>(
-                h => image.DownloadProgress += h,
-                h => image.DownloadProgress -= h)
-                .Take(1)
-                .Select(_ => new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
-        }
     }
 }
