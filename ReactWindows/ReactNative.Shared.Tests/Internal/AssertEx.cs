@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 

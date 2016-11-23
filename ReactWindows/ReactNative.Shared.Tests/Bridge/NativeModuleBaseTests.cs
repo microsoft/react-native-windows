@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ReactNative.Tests.Bridge
 {
-    [TestClass]
+    [TestFixture]
     public class NativeModuleBaseTests
     {
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_ReactMethod_ThrowsNotSupported()
         {
             var actions = new Action[]
@@ -31,13 +31,13 @@ namespace ReactNative.Tests.Bridge
             }
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_ReactMethod_Async_ThrowsNotImplemented()
         {
             AssertEx.Throws<NotImplementedException>(() => new AsyncNotImplementedNativeModule());
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_ArgumentNull()
         {
             var testModule = new TestNativeModule();
@@ -53,7 +53,7 @@ namespace ReactNative.Tests.Bridge
                 ex => Assert.AreEqual("jsArguments", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_ArgumentInvalidCount()
         {
             var testModule = new TestNativeModule();
@@ -66,7 +66,7 @@ namespace ReactNative.Tests.Bridge
                 ex => Assert.AreEqual("jsArguments", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_ArgumentConversionException()
         {
             var testModule = new TestNativeModule();
@@ -79,7 +79,7 @@ namespace ReactNative.Tests.Bridge
                 ex => Assert.AreEqual("arguments", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation()
         {
             var fooCount = 0;
@@ -100,7 +100,7 @@ namespace ReactNative.Tests.Bridge
             Assert.AreEqual(59, barSum);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Callbacks()
         {
             var callbackArgs = new object[] { 1, 2, 3 };
@@ -121,7 +121,7 @@ namespace ReactNative.Tests.Bridge
             Assert.IsTrue(args.Cast<object>().SequenceEqual(callbackArgs));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Callbacks_InvalidArgumentThrows()
         {
             var callbackArgs = new object[] { 1, 2, 3 };
@@ -142,7 +142,7 @@ namespace ReactNative.Tests.Bridge
                 ex => Assert.AreEqual("arguments", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Callbacks_NullCallback()
         {
             var module = new CallbackNativeModule(null);
@@ -161,7 +161,7 @@ namespace ReactNative.Tests.Bridge
             Assert.AreEqual(0, args.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_Resolve()
         {
             var module = new PromiseNativeModule(() => 17);
@@ -181,7 +181,7 @@ namespace ReactNative.Tests.Bridge
             Assert.IsTrue(args.SequenceEqual(new[] { 17 }));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_CompiledDelegateFactory_Perf()
         {
             var module = new PerfNativeModule(CompiledReactDelegateFactory.Instance);
@@ -197,7 +197,7 @@ namespace ReactNative.Tests.Bridge
             }
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_InvalidArgumentThrows()
         {
             var module = new PromiseNativeModule(() => 17);
@@ -221,7 +221,7 @@ namespace ReactNative.Tests.Bridge
                 ex => Assert.AreEqual("arguments", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_IncorrectArgumentCount()
         {
             var module = new PromiseNativeModule(() => null);
@@ -241,7 +241,7 @@ namespace ReactNative.Tests.Bridge
                 ex => Assert.AreEqual("jsArguments", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_Reject()
         {
             var expectedMessage = "Foo bar baz";
@@ -268,7 +268,7 @@ namespace ReactNative.Tests.Bridge
             Assert.AreEqual(expectedMessage, actualMessage);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_Invocation_Promises_NullCallback()
         {
             var module = new PromiseNativeModule(() => null);
@@ -288,7 +288,7 @@ namespace ReactNative.Tests.Bridge
             Assert.IsNull(args[0]);
         }
 
-        [TestMethod]
+        [Test]
         public void NativeModuleBase_ReflectionDelegateFactory_Perf()
         {
             var module = new PerfNativeModule(ReflectionReactDelegateFactory.Instance);

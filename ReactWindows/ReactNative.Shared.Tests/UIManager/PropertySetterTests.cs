@@ -1,19 +1,23 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Linq;
 using System.Reflection;
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else
+using System.Windows;
+#endif
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestClass]
+    [TestFixture]
     public class PropertySetterTests
     {
-        [TestMethod]
+        [Test]
         public void PropertySetter_ArgumentChecks()
         {
             AssertEx.Throws<ArgumentNullException>(
@@ -25,7 +29,7 @@ namespace ReactNative.Tests.UIManager
                 ex => Assert.AreEqual("method", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_Name()
         {
             var method = (MethodInfo)ReflectionHelpers.InfoOf((Test t) => t.TestString(null, null));
@@ -34,7 +38,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("TestString", setters.First().Name);
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_PropertyType_Number()
         {
             var methods = new[]
@@ -61,7 +65,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_PropertyType_Boolean()
         {
             var setters = PropertySetter.CreateViewManagerSetters(
@@ -74,7 +78,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_PropertyType_Nullable_Boolean()
         {
             var setters = PropertySetter.CreateViewManagerSetters(
@@ -87,7 +91,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_PropertyType_String()
         {
             var setters = PropertySetter.CreateViewManagerSetters(
@@ -100,7 +104,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_PropertyType_Array()
         {
             var setters = PropertySetter.CreateViewManagerSetters(
@@ -113,7 +117,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_PropertyType_Map()
         {
             var setters = PropertySetter.CreateViewManagerSetters(
@@ -126,7 +130,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ViewManager_Group()
         {
             var setters = PropertySetter.CreateViewManagerSetters(
@@ -144,7 +148,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ShadowNode_PropertyType()
         {
             var setters = PropertySetter.CreateShadowNodeSetters(
@@ -157,7 +161,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_ShadowNode_Group()
         {
             var setters = PropertySetter.CreateShadowNodeSetters(
@@ -175,7 +179,7 @@ namespace ReactNative.Tests.UIManager
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_CustomType()
         {
             var setter = PropertySetter.CreateShadowNodeSetters(
@@ -185,7 +189,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual("myInt", setter.PropertyType);
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_DefaultValue()
         {
             var methods = new[]
@@ -236,7 +240,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual(true, instance.TestBooleanValue);
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_DefaultValue_Null()
         {
             var method = (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestBoolean(null, false));
@@ -252,7 +256,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual(true, instance.TestBooleanValue);
         }
 
-        [TestMethod]
+        [Test]
         public void PropertySetter_DefaultValue_Undefined()
         {
             var method = (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestBoolean(null, false));
@@ -270,7 +274,7 @@ namespace ReactNative.Tests.UIManager
 
         class Test : MockViewManager
         {
-            #region ViewManager Test Methods
+#region ViewManager Test Methods
 
             [ReactProp("TestByte")]
             public void TestByte(FrameworkElement element, byte value)
@@ -357,12 +361,12 @@ namespace ReactNative.Tests.UIManager
             {
             }
 
-            #endregion
+#endregion
         }
 
         class TestShadowNode : ReactShadowNode
         {
-            #region ReactShadowNode Test Methods
+#region ReactShadowNode Test Methods
 
             [ReactProp("TestArray")]
             public void TestArray(int[] value)
@@ -379,12 +383,12 @@ namespace ReactNative.Tests.UIManager
             {
             }
 
-            #endregion
+#endregion
         }
 
         class DefaultTest : MockViewManager
         {
-            #region ViewManager Test Properties
+#region ViewManager Test Properties
 
             public byte TestByteValue { get; set; }
 
@@ -408,9 +412,9 @@ namespace ReactNative.Tests.UIManager
 
             public bool TestBooleanValue { get; set; }
 
-            #endregion 
+#endregion
 
-            #region ViewManager Test Methods
+#region ViewManager Test Methods
 
             [ReactProp("TestByte", DefaultByte = byte.MaxValue)]
             public void TestByte(FrameworkElement element, byte value)
@@ -478,7 +482,7 @@ namespace ReactNative.Tests.UIManager
                 TestBooleanValue = value;
             }
 
-            #endregion
+#endregion
         }
     }
 }
