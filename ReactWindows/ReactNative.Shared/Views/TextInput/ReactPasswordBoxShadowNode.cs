@@ -5,12 +5,19 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
+#if WINDOWS_UWP
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
+#endif
 
 namespace ReactNative.Views.TextInput
 {
@@ -99,7 +106,11 @@ namespace ReactNative.Views.TextInput
             var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
+#if WINDOWS_UWP
                 _fontWeight.Value.Weight != fontWeight.Value.Weight))
+#else
+                _fontWeight.Value.ToOpenTypeWeight() != fontWeight.Value.ToOpenTypeWeight()))
+#endif
             {
                 _fontWeight = fontWeight;
                 MarkUpdated();
@@ -260,7 +271,7 @@ namespace ReactNative.Views.TextInput
             if (s_passwordChar == null)
             {
                 var passwordBox = new PasswordBox();
-                s_passwordChar = passwordBox.PasswordChar;
+                s_passwordChar = passwordBox.PasswordChar.ToString();
             }
 
             return s_passwordChar;

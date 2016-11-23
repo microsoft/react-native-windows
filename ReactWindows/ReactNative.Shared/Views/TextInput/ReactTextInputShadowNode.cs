@@ -5,12 +5,19 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
+#if WINDOWS_UWP
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
+#endif
 
 namespace ReactNative.Views.TextInput
 {
@@ -41,7 +48,11 @@ namespace ReactNative.Views.TextInput
 
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
+#if WINDOWS_UWP
         private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
+#else
+        private TextAlignment _textAlignment = TextAlignment.Left;
+#endif
 
         private string _fontFamily;
         private string _text;
@@ -109,7 +120,11 @@ namespace ReactNative.Views.TextInput
             var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
+#if WINDOWS_UWP
                 _fontWeight.Value.Weight != fontWeight.Value.Weight))
+#else
+                _fontWeight.Value.ToOpenTypeWeight() != fontWeight.Value.ToOpenTypeWeight()))
+#endif
             {
                 _fontWeight = fontWeight;
                 MarkUpdated();
@@ -183,7 +198,11 @@ namespace ReactNative.Views.TextInput
         public void SetTextAlign(string textAlign)
         {
             var textAlignment = textAlign == "auto" || textAlign == null ?
+#if WINDOWS_UWP
                 TextAlignment.DetectFromContent :
+#else
+                TextAlignment.Left :
+#endif
                 EnumHelpers.Parse<TextAlignment>(textAlign);
 
             if (_textAlignment != textAlignment)
