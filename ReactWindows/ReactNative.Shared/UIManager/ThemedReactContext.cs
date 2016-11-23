@@ -12,6 +12,14 @@ namespace ReactNative.UIManager
         private readonly ReactContext _reactContext;
 
         /// <summary>
+        /// The original React context associated with the themed context.
+        /// </summary>
+        public ReactContext Context
+        {
+            get { return _reactContext;  }
+        }
+
+        /// <summary>
         /// Instantiates the <see cref="ThemedReactContext"/>.
         /// </summary>
         /// <param name="reactContext">The inner context.</param>
