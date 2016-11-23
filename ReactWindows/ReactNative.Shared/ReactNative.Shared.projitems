@@ -125,9 +125,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Dialog\DialogModuleHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\I18N\I18NModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\I18N\I18NUtil.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Modules\Image\ImageLoadStatus.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Modules\Image\ImageMetadata.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Modules\Image\ImageStatusEventData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\DefaultHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\HttpContentHeaderData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\HttpContentHelpers.cs" />
@@ -203,8 +200,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Image\ReactImageLoadEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Image\ReactImageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\FontStyleHelpers.cs" />

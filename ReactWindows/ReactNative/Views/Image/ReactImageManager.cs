@@ -6,17 +6,10 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
-#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-#else
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-#endif
 
 namespace ReactNative.Views.Image
 {
@@ -294,25 +287,16 @@ namespace ReactNative.Views.Image
             }
 
             var image = new BitmapImage();
-#if !WINDOWS_UWP
-            image.BeginInit();
-#endif
             if (BitmapImageHelpers.IsBase64Uri(source))
             {
                 disposable.Disposable = image.GetStreamLoadObservable().Subscribe(
                     status => OnImageStatusUpdate(view, status),
                     _ => OnImageFailed(view));
-#if WINDOWS_UWP
+
                 using (var stream = await BitmapImageHelpers.GetStreamAsync(source))
                 {
                     await image.SetSourceAsync(stream);
                 }
-#else
-                using (var stream = BitmapImageHelpers.GetStreamAsync(source))
-                {
-                    image.StreamSource = stream;
-                }
-#endif
             }
             else
             {
@@ -322,10 +306,6 @@ namespace ReactNative.Views.Image
 
                 image.UriSource = new Uri(source);
             }
-
-#if !WINDOWS_UWP
-            image.EndInit();
-#endif
 
             imageBrush.ImageSource = image;
         }
