@@ -25,6 +25,12 @@ namespace ReactNative.Modules.Image
         [ReactMethod]
         public void prefetchImage(string uriString, IPromise promise)
         {
+            if (string.IsNullOrEmpty(uriString))
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
+                return;
+            }
+
             DispatcherHelpers.RunOnDispatcher(async () =>
             {
                 try
@@ -44,14 +50,14 @@ namespace ReactNative.Modules.Image
         [ReactMethod]
         public void getSize(string uriString, IPromise promise)
         {
+            if (string.IsNullOrEmpty(uriString))
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot get the size of an image for an empty URI.");
+                return;
+            }
+
             DispatcherHelpers.RunOnDispatcher(async () =>
             {
-                if (string.IsNullOrEmpty(uriString))
-                {
-                    promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
-                    return;
-                }
-
                 try
                 {
                     var bitmapImage = await ImageCache.Instance.GetFromCacheAsync(new Uri(uriString), true);
