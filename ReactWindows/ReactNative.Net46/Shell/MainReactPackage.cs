@@ -9,6 +9,7 @@ using ReactNative.Modules.Network;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.Scroll;
 using ReactNative.Views.Text;
 using ReactNative.Views.View;
 using System;
@@ -77,7 +78,7 @@ namespace ReactNative.Shell
                 //new ReactPickerManager(),
                 new ReactRunManager(),
                 ////new RecyclerViewBackedScrollViewManager(),
-                //new ReactScrollViewManager(),
+                new ReactScrollViewManager(),
                 //new ReactSliderManager(),
                 //new ReactSplitViewManager(),
                 //new ReactSwitchManager(),
