@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Reactive.Linq;
+using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Modules.Image
@@ -20,50 +22,53 @@ namespace ReactNative.Modules.Image
             }
         }
 
+        public override void Initialize()
+        {
+            ImageCache.Instance.MaxMemoryCacheCount = 64;
+            ImageCache.Instance.CacheDuration = TimeSpan.FromDays(1);
+        }
+
         [ReactMethod]
         public void prefetchImage(string uriString, IPromise promise)
         {
-            promise.Reject(ErrorPrefetchFailure, "Prefetch is not yet implemented.");
+            DispatcherHelpers.RunOnDispatcher(async () =>
+            {
+                try
+                {
+                    // TODO: enable prefetch cancellation
+                    await ImageCache.Instance.PreCacheAsync(new Uri(uriString), true, true).ConfigureAwait(false);
+                    promise.Resolve(true);
+                }
+                catch (Exception ex)
+                {
+                    promise.Reject(ErrorPrefetchFailure, ex);
+                }
+            });
         }
 
         [ReactMethod]
         public void getSize(string uriString, IPromise promise)
         {
-            if (string.IsNullOrEmpty(uriString))
-            {
-                promise.Reject(ErrorInvalidUri, "Cannot get the size of an image for an empty URI.");
-                return;
-            }
-
             DispatcherHelpers.RunOnDispatcher(async () =>
             {
+                if (string.IsNullOrEmpty(uriString))
+                {
+                    promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
+                    return;
+                }
+
                 try
                 {
-                    var bitmapImage = new BitmapImage();
-                    var loadQuery = bitmapImage.GetStreamLoadObservable()
-                        .Where(status => status.LoadStatus == ImageLoadStatus.OnLoadEnd)
-                        .FirstAsync()
-                        .Replay(1);
-
-                    using (loadQuery.Connect())
+                    var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(uriString), true);
+                    promise.Resolve(new JObject
                     {
-                        using (var stream = await BitmapImageHelpers.GetStreamAsync(uriString))
-                        {
-                            await bitmapImage.SetSourceAsync(stream);
-                        }
-
-                        await loadQuery;
-
-                        promise.Resolve(new JObject
-                        {
-                            { "width", bitmapImage.PixelWidth },
-                            { "height", bitmapImage.PixelHeight },
-                        });
-                    }
+                        { "width", image.PixelWidth },
+                        { "height", image.PixelHeight },
+                    });
                 }
                 catch (Exception ex)
                 {
-                    promise.Reject(ErrorGetSizeFailure, ex.Message);
+                    promise.Reject(ErrorGetSizeFailure, ex);
                 }
             });
         }
