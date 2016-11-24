@@ -6,20 +6,10 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System.Collections.Generic;
 using System.Linq;
-#if WINDOWS_UWP
-using Windows.System;
-using Windows.UI;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-#else
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-#endif
 
 namespace ReactNative.Views.TextInput
 {
@@ -118,11 +108,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("passwordChar")]
         public void SetPasswordChar(PasswordBox view, string passwordCharString)
         {
-#if WINDOWS_UWP
-            view.PasswordChar = passwordCharString;
-#else
             view.PasswordChar = passwordCharString.ToCharArray().First();
-#endif
         }
 
         /// <summary>
@@ -133,12 +119,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("passwordRevealMode")]
         public void SetPasswordRevealMode(PasswordBox view, string revealModeString)
         {
-#if WINDOWS_UWP
-            var revealMode = EnumHelpers.ParseNullable<PasswordRevealMode>(revealModeString);
-            view.PasswordRevealMode = revealMode ?? PasswordRevealMode.Peek;
-#else
             throw new NotSupportedException("Password Reveal Mode is not supported by WPF.");
-#endif
         }
 
         /// <summary>
@@ -175,11 +156,7 @@ namespace ReactNative.Views.TextInput
         {
             view.FontFamily = familyName != null
                 ? new FontFamily(familyName)
-#if WINDOWS_UWP
-                : FontFamily.XamlAutoFontFamily;
-#else
                 : new FontFamily();
-#endif
         }
 
         /// <summary>
@@ -203,11 +180,7 @@ namespace ReactNative.Views.TextInput
         public void SetFontStyle(PasswordBox view, string fontStyleString)
         {
             var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
-#if WINDOWS_UWP
-            view.FontStyle = fontStyle ?? FontStyle.Normal;
-#else
             view.FontStyle = fontStyle ?? new FontStyle();
-#endif
         }
 
         /// <summary>
@@ -218,11 +191,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholder")]
         public void SetPlaceholder(PasswordBox view, string placeholder)
         {
-#if WINDOWS_UWP
-            view.PlaceholderText = placeholder;
-#else
             throw new NotSupportedException("Placeholder is not supported in WPF.");
-#endif
         }
 
         /// <summary>
@@ -259,11 +228,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selectionColor", CustomType = "Color")]
         public void SetSelectionColor(PasswordBox view, uint color)
         {
-#if WINDOWS_UWP
-            view.SelectionHighlightColor = new SolidColorBrush(ColorHelpers.Parse(color));
-#else
             view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
-#endif
         }
 
         /// <summary>
@@ -377,20 +342,11 @@ namespace ReactNative.Views.TextInput
         {
             if (commandId == ReactTextInputManager.FocusTextInput)
             {
-#if WINDOWS_UWP
-                view.Focus(FocusState.Programmatic);
-#else
                 view.Focus();
-#endif
             }
             else if (commandId == ReactTextInputManager.BlurTextInput)
             {
-#if WINDOWS_UWP
-                var frame = Window.Current?.Content as Frame;
-                frame?.Focus(FocusState.Programmatic);
-#else
                 Keyboard.ClearFocus();
-#endif
             }
         }
 
@@ -480,16 +436,10 @@ namespace ReactNative.Views.TextInput
                       textBox.GetTag(),
                       textBox.Password));
         }
-
-#if WINDOWS_UWP
-        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-#else
+        
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-#endif
             {
                 var textBox = (PasswordBox)sender;
                 e.Handled = true;
