@@ -4,7 +4,11 @@ using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Media;
+#else
+using System.Windows.Media;
+#endif
 
 namespace ReactNative.Animated
 {
@@ -64,7 +68,11 @@ namespace ReactNative.Animated
     {
         private readonly object _operationsGate = new object();
 
+#if WINDOWS_UWP
         private EventHandler<object> _animatedFrameCallback;
+#else
+        private EventHandler _animatedFrameCallback;
+#endif
         private List<Action<NativeAnimatedNodesManager>> _operations = 
             new List<Action<NativeAnimatedNodesManager>>();
         private List<Action<NativeAnimatedNodesManager>> _readyOperations;
