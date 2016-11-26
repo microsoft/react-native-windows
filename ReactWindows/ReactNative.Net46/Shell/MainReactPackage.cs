@@ -10,6 +10,7 @@ using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
 using ReactNative.Views.Scroll;
+using ReactNative.Views.Slider;
 using ReactNative.Views.Text;
 using ReactNative.Views.View;
 using System;
@@ -79,7 +80,7 @@ namespace ReactNative.Shell
                 new ReactRunManager(),
                 ////new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
-                //new ReactSliderManager(),
+                new ReactSliderManager(),
                 //new ReactSplitViewManager(),
                 //new ReactSwitchManager(),
                 //new ReactPasswordBoxManager(),
