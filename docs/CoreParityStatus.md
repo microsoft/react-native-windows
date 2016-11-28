@@ -4,31 +4,36 @@
 
 | Name | Status | Notes |
 |------|--------|-------------|
-| ActivityIndicatorIOS | n/a | iOS-only. |
-| Button | Not Started | Simple JavaScript wrapper. |
+| ActivityIndicator | Ready |  |
+| ARTGroup | Not Started |  |
+| ARTShape | Not Started |  |
+| ARTSurfaceView | Not Started |  |
+| ARTText | Not Started |  |
+| Button | Ready |  |
 | DatePickerIOS | n/a | iOS-only. |
 | DrawerLayoutAndroid | n/a | Android-only. See [SplitViewWindows](../ReactWindows/ReactNative/Views/Split/ReactSplitViewManager.cs). |
-| Image | Ready | [Missing prefetch (#366).](https://github.com/ReactWindows/react-native-windows/issues/366) |
-| ListView | Ready | [RecyclerBackedScrollViewManager unavailable (#186).](https://github.com/ReactWindows/react-native-windows/issues/186) |
-| MapView | Not Started |  |
-| Modal | Not Started |  |
+| Image | Partial | Missing tint color and background color ([#278](https://github.com/ReactWindows/react-native-windows/issues/278)), HTTP headers ([#689](https://github.com/ReactWindows/react-native-windows/issues/689)) |
+| KeyboardAvoidingView | Not Started | Dependent on [#159](https://github.com/ReactWindows/react-native-windows/issues/159). |
+| ListView | Ready | RecyclerBackedScrollViewManager unavailable ([#186](https://github.com/ReactWindows/react-native-windows/issues/186)). |
+| MapView | n/a | Deprecated in favor of [react-native-maps](https://github.com/airbnb/react-native-maps). |
+| Modal | Not Started | See [#618](https://github.com/ReactWindows/react-native-windows/issues/618). |
 | Navigator | Ready |  |
 | NavigatorIOS | n/a | iOS-only. |
+| Picker | Partial | Missing dialog-driven picker ([#535](https://github.com/ReactWindows/react-native-windows/issues/535)). |
 | PickerIOS | n/a | iOS-only. |
-| Picker | Partial | [Missing dialog-driven picker (#535).](https://github.com/ReactWindows/react-native-windows/issues/535) |
 | ProgressBarAndroid | n/a | Android-only. See [ProgressBarWindows](../ReactWindows/ReactNative/Views/Progress/ReactProgressBarViewManager.cs). |
 | ProgressViewIOS | n/a | iOS-only. See [ProgressBarWindows](../ReactWindows/ReactNative/Views/Progress/ReactProgressBarViewManager.cs). |
-| RefreshControl | Not Started |  |
-| ScrollView | Partial | [Missing momentum scroll events (#534).](https://github.com/ReactWindows/react-native-windows/issues/534) |
+| RefreshControl | Not Started | Consider building with [UWP Community Toolkit](https://github.com/Microsoft/UWPCommunityToolkit/tree/dev/Microsoft.Toolkit.Uwp.UI.Controls/PullToRefreshListView). |
+| ScrollView | Partial | Missing momentum scroll events ([#534](https://github.com/ReactWindows/react-native-windows/issues/534)). |
 | SegmentedControlIOS | n/a | iOS-only. |
-| Slider | Not Started |  |
-| SliderIOS | n/a | iOS-only. |
+| Slider | Ready |  |
+| SnapshotViewIOS | n/a | iOS-only. |
 | StatusBar | Ready |  |
 | Switch | Ready |  |
 | TabBarIOS | n/a | iOS-only. |
 | TabBarIOS.Item | n/a | iOS-only. |
-| Text | Ready | [Issue with measurement performance (#106).](https://github.com/ReactWindows/react-native-windows/issues/106) |
-| TextInput | Partial | [Missing rich text features (#272).](https://github.com/ReactWindows/react-native-windows/issues/272) |
+| Text | Partial | Issue with measurement performance ([#106](https://github.com/ReactWindows/react-native-windows/issues/106)). Also missing background color and borders ([#698](https://github.com/ReactWindows/react-native-windows/issues/698)) and strike-through and underlining ([#709](https://github.com/ReactWindows/react-native-windows/issues/709)). |
+| TextInput | Partial | Missing rich text features ([#272](https://github.com/ReactWindows/react-native-windows/issues/272)) and auto-capitalize ([#801](https://github.com/ReactWindows/react-native-windows/issues/801)). |
 | ToolbarAndroid | n/a | Android-only. |
 | TouchableHighlight | Ready |  |
 | TouchableNativeFeedback | Not Started | [#536](https://github.com/ReactWindows/react-native-windows/issues/536) |
@@ -36,49 +41,48 @@
 | TouchableWithoutFeedback | Ready |  |
 | View | Ready |  |
 | ViewPagerAndroid | n/a | Android-only. See [FlipViewWindows](../ReactWindows/ReactNative/Views/Flip/ReactFlipViewManager.cs). |
-| WebView | Partial | [Missing ability to set User-Agent string (#537).](https://github.com/ReactWindows/react-native-windows/issues/537) |
+| WebView | Partial | Missing ability to set User-Agent string ([#537](https://github.com/ReactWindows/react-native-windows/issues/537)). |
 
 ## Modules
 
 | Name | Status | Notes |
 |------|--------|-------------|
+| Accessibility | Partial | Only `accessibilityLiveRegion` and `accessibilityLabel` supported. See [#918](https://github.com/ReactWindows/react-native-windows/issues/918). |
 | ActionSheetIOS | n/a | iOS-only. |
+| AdSupportIOS | n/a | iOS-only. |
 | Alert | Ready | See [Source](../ReactWindows/ReactNative/Modules/Dialog/DialogModule.cs). |
 | AlertIOS | n/a | iOS-only. |
-| Animated | Ready | See [Source](../ReactWindows/ReactNative/Modules/Core/Timing.cs). |
+| Animated | Ready | See [Source](../ReactWindows/ReactNative/Modules/Core/Timing.cs). [NativeAnimated](https://github.com/ReactWindows/react-native-windows/tree/master/ReactWindows/ReactNative.Shared/Animated) also supported. |
 | AppRegistry | Ready |  |
-| AppStateIOS | n/a | iOS-only. |
 | AppState | Ready | See [Source](../ReactWindows/ReactNative/Modules/AppState/AppStateModule.cs). |
 | AsyncStorage | Ready | See [Source](../ReactWindows/ReactNative/Modules/Storage/AsyncStorageModule.cs). |
-| BackAndroid | Partial | [Working, but intent is to create a Windows-specific version (#538).](https://github.com/ReactWindows/react-native-windows/issues/538) |
-| CameraRoll | Not Started |  |
+| BackAndroid | Partial | Working, but intent is to create a Windows-specific version ([#538](https://github.com/ReactWindows/react-native-windows/issues/538)). |
+| CameraRoll | Not Started | See [#183](https://github.com/ReactWindows/react-native-windows/issues/183). |
 | Clipboard | Ready | See [Source](../ReactWindows/ReactNative/Modules/Clipboard/ClipboardModule.cs). |
 | DatePickerAndroid | n/a | Android-only. |
 | Dimensions | Ready |  |
-| IntentAndroid | n/a | Android-only. |
+| Easing | Ready |  |
+| Geolocation | Ready | See [Source](../ReactWindows/ReactNative/Modules/Location/LocationModule.cs). |
+| ImageEditor | Not Started |  |
+| ImagePickerIOS | n/a | iOS-only. |
+| ImageStore | Not Started |  |
 | InteractionManager | Ready |  |
-| LayoutAnimation | Partial | Missing [#175](https://github.com/ReactWindows/react-native-windows/issues/175), [#217](https://github.com/ReactWindows/react-native-windows/issues/217), [#508](https://github.com/ReactWindows/react-native-windows/issues/508) |
-| Linking | Partial | [Missing functionality to get initial (i.e., launch) URI (#301).](https://github.com/ReactWindows/react-native-windows/issues/301) |
-| LinkingIOS | n/a | iOS-only. |
+| Keyboard | Not Started | See [#159](https://github.com/ReactWindows/react-native-windows/issues/159). |
+| LayoutAnimation | Partial | Missing [#175](https://github.com/ReactWindows/react-native-windows/issues/175), [#217](https://github.com/ReactWindows/react-native-windows/issues/217) |
+| Layout Props | Partial | Working on integration of [facebook/css-layout](https://github.com/facebook/css-layout) |
+| Linking | Ready |  |
 | NativeMethodsMixin | Ready |  |
-| NetInfo | Partial | [Missing functionality to detect metered networks (#539).](https://github.com/ReactWindows/react-native-windows/issues/539) |
-| PanResponder | Partial | [Missing functionality to block native responders (#306).](https://github.com/ReactWindows/react-native-windows/issues/306) |
-| PixelRatio | Not Started | [#540](https://github.com/ReactWindows/react-native-windows/issues/540) |
+| NetInfo | Partial | Missing functionality to detect metered networks ([#539](https://github.com/ReactWindows/react-native-windows/issues/539)). |
+| Networking | Ready | i.e., `fetch` and XMLHttpRequest |
+| PanResponder | Partial | Missing functionality to block native responders ([#306](https://github.com/ReactWindows/react-native-windows/issues/306)). |
+| PixelRatio | Ready |  |
 | PushNotificationIOS | n/a | iOS-only. |
+| Settings | Not Started |  |
+| Shadow Props | Not Started |  |
 | StatusBarIOS | n/a | iOS-only. |
 | StyleSheet | Ready |  |
 | TimePickerAndroid | n/a | Android-only. |
 | ToastAndroid | n/a | Android-only. |
-| VibrationIOS | n/a | iOS-only. |
 | Vibration | Ready | See [Source](../ReactWindows/ReactNative/Modules/Vibration/VibrationModule.cs). |
-
-## Polyfills
-
-| Name | Status | Notes |
-|------|--------|-------------|
-| Flexbox | Ready |  |
-| ShadowPropTypesIOS | n/a | iOS-only. |
-| Geolocation | Ready |  See [Source](../ReactWindows/ReactNative/Modules/Location/LocationModule.cs). |
-| Network | Ready | See [Source](../ReactWindows/ReactNative/Modules/Network/NetworkingModule.cs).  |
-| Timers | Ready | See [Source](../ReactWindows/ReactNative/Modules/Core/Timing.cs). |
-| Colors | Ready |  |
+| VibrationIOS | n/a | iOS-only. |
+| Timers | Partial | `set[Interval|Timeout]` complete, missing `requestIdleCallback` ([#917](https://github.com/ReactWindows/react-native-windows/issues/917)) |
