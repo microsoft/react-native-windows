@@ -71,6 +71,8 @@ namespace ReactNative.Views.Picker
             // Temporarily disable selection changed event handler.
             view.SelectionChanged -= OnSelectionChanged;
 
+            view.Items.Clear();
+
             for (var index = 0; index < items.Count; index++)
             {
                 var itemData = (JObject)items[index];
