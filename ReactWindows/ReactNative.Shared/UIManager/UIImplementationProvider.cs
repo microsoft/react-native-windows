@@ -1,4 +1,5 @@
 ﻿using ReactNative.Bridge;
+using ReactNative.UIManager.Events;
 using System.Collections.Generic;
 
 namespace ReactNative.UIManager
@@ -14,12 +15,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
+        /// <param name="eventDispatcher">The event dispatcher.</param>
         /// <returns></returns>
         public UIImplementation Create(
             ReactContext reactContext, 
-            IReadOnlyList<IViewManager> viewManagers)
+            IReadOnlyList<IViewManager> viewManagers,
+            EventDispatcher eventDispatcher)
         {
-            return new UIImplementation(reactContext, viewManagers);
+            return new UIImplementation(reactContext, viewManagers, eventDispatcher);
         }
     }
 }
