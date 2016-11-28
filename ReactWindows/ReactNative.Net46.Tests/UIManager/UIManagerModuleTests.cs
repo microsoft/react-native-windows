@@ -19,15 +19,15 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementation, new FrameworkElement()));
+                () => new UIManagerModule(context, null, uiImplementationProvider, new FrameworkElement()));
             Assert.AreEqual("viewManagers", ex1.ParamName);
 
             ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
                 () => new UIManagerModule(context, viewManagers, null, new FrameworkElement()));
-            Assert.AreEqual("uiImplementation", ex2.ParamName);
+            Assert.AreEqual("uiImplementationProvider", ex2.ParamName);
         }
 
         [Test]
@@ -35,10 +35,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation, new FrameworkElement()));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider, new FrameworkElement()));
 
             var constants = module.Constants;
 
@@ -65,10 +65,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation, new FrameworkElement()));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider, new FrameworkElement()));
 
             var constants = module.Constants;
 
