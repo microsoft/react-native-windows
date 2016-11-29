@@ -141,7 +141,8 @@ namespace ReactNative.Views.Web
                         {
                             foreach (var header in headers)
                             {
-                                request.Headers.Append(header.Key, header.Value.Value<string>());
+                                if (header.Key != "Content-Type")
+                                    request.Headers.Append(header.Key, header.Value.Value<string>());
                             }
                         }
 
@@ -149,6 +150,8 @@ namespace ReactNative.Views.Web
                         if (body != null)
                         {
                             request.Content = new HttpStringContent(body);
+                            if ((headers != null) && (headers["Content-Type"].Value<string>() != ""))
+                                request.Content.Headers.ContentType = new Windows.Web.Http.Headers.HttpMediaTypeHeaderValue(headers["Content-Type"].Value<string>());
                         }
 
                         view.NavigateWithHttpRequestMessage(request);
