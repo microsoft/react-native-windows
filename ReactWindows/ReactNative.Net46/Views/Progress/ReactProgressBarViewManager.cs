@@ -24,6 +24,7 @@ namespace ReactNative.Views.Progress
         [ReactProp("progress")]
         public void SetProgress(ProgressBar view, double value)
         {
+            view.IsIndeterminate = false;
             view.Value = value;
         }
 
