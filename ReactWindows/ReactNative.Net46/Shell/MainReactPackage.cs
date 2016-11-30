@@ -9,6 +9,7 @@ using ReactNative.Modules.Network;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.Progress;
 using ReactNative.Views.Scroll;
 using ReactNative.Views.Text;
 using ReactNative.Views.View;
@@ -73,7 +74,7 @@ namespace ReactNative.Shell
             {
                 //new ReactFlipViewManager(),
                 //new ReactImageManager(),
-                //new ReactProgressBarViewManager(),
+                new ReactProgressBarViewManager(),
                 //new ReactProgressRingViewManager(),
                 //new ReactPickerManager(),
                 new ReactRunManager(),
