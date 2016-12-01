@@ -22,7 +22,7 @@ namespace ReactNative.Modules.Network
             if (headerData.ContentEncoding == "gzip")
             {
                 var content = CreateGzip(body);
-                content.Headers.ContentType = new HttpMediaTypeHeaderValue(headerData.ContentType);
+                content.Headers.ContentType = HttpMediaTypeHeaderValue.Parse(headerData.ContentType);
 #if WINDOWS_UWP
                 content.Headers.ContentEncoding.ParseAdd(headerData.ContentEncoding);
 #else
@@ -33,7 +33,7 @@ namespace ReactNative.Modules.Network
             else
             {
                 var content = CreateString(body);
-                content.Headers.ContentType = new HttpMediaTypeHeaderValue(headerData.ContentType);
+                content.Headers.ContentType = HttpMediaTypeHeaderValue.Parse(headerData.ContentType);
                 return content;
             }
         }
