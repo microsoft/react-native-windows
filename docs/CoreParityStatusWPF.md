@@ -56,13 +56,13 @@
 | AppRegistry | Ready |  |
 | AppState | Ready | See [Source](../ReactWindows/ReactNative/Modules/AppState/AppStateModule.cs). |
 | AsyncStorage | Ready | See [Source](../ReactWindows/ReactNative/Modules/Storage/AsyncStorageModule.cs). |
-| BackAndroid | Partial | Working, but intent is to create a Windows-specific version ([#538](https://github.com/ReactWindows/react-native-windows/issues/538)). |
+| BackAndroid | n/a | WPF devices typically do not have a dedicated back button. |
 | CameraRoll | Not Started | See [#183](https://github.com/ReactWindows/react-native-windows/issues/183). |
 | Clipboard | Ready | See [Source](../ReactWindows/ReactNative/Modules/Clipboard/ClipboardModule.cs). |
 | DatePickerAndroid | n/a | Android-only. |
 | Dimensions | Ready |  |
 | Easing | Ready |  |
-| Geolocation | Ready | See [Source](../ReactWindows/ReactNative/Modules/Location/LocationModule.cs). |
+| Geolocation | Not Started | See [Source](../ReactWindows/ReactNative/Modules/Location/LocationModule.cs). |
 | ImageEditor | Not Started |  |
 | ImagePickerIOS | n/a | iOS-only. |
 | ImageStore | Not Started |  |
@@ -83,6 +83,6 @@
 | StyleSheet | Ready |  |
 | TimePickerAndroid | n/a | Android-only. |
 | ToastAndroid | n/a | Android-only. |
-| Vibration | Ready | See [Source](../ReactWindows/ReactNative/Modules/Vibration/VibrationModule.cs). |
+| Vibration | Not Started | Will be no-op because most WPF devices do not have haptic feedback. |
 | VibrationIOS | n/a | iOS-only. |
 | Timers | Partial | `set[Interval|Timeout]` complete, missing `requestIdleCallback` ([#917](https://github.com/ReactWindows/react-native-windows/issues/917)) |
