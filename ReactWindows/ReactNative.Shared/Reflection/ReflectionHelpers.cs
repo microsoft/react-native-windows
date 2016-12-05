@@ -17,7 +17,9 @@ namespace ReactNative.Reflection
         /// <returns>
         /// <b>true</b> if the method is asynchronous, <b>false</b> otherwise.
         /// </returns>
+#pragma warning disable AvoidAsyncSuffix
         public static bool IsAsync(this MethodInfo methodInfo)
+#pragma warning restore AvoidAsyncSuffix
         {
             return typeof(Task).IsAssignableFrom(methodInfo.ReturnType);
         }
