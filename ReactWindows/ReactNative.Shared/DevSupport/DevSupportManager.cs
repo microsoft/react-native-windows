@@ -377,7 +377,7 @@ namespace ReactNative.DevSupport
 #endif
             if (IsRemoteDebuggingEnabled)
             {
-                await ReloadJavaScriptInProxyMode(cancel, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptInProxyModeAsync(cancel, progressDialog.Token).ConfigureAwait(false);
             }
             else if (_jsBundleFile == null)
             {
@@ -493,7 +493,7 @@ namespace ReactNative.DevSupport
             });
         }
 
-        private async Task ReloadJavaScriptInProxyMode(Action dismissProgress, CancellationToken token)
+        private async Task ReloadJavaScriptInProxyModeAsync(Action dismissProgress, CancellationToken token)
         {
             try
             {
