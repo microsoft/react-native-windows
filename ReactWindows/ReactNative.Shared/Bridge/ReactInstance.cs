@@ -94,7 +94,7 @@ namespace ReactNative.Bridge
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
             {
-                _bridge = await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+                _bridge = await QueueConfiguration.JavaScriptQueueThread.CallOnQueueAsync(() =>
                 {
                     QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
 
@@ -112,7 +112,7 @@ namespace ReactNative.Bridge
                     return bridge;
                 }).ConfigureAwait(false);
 
-                await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+                await QueueConfiguration.JavaScriptQueueThread.CallOnQueueAsync(() =>
                 {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
                     {
@@ -184,7 +184,7 @@ namespace ReactNative.Bridge
             IsDisposed = true;
             _registry.NotifyReactInstanceDispose();
 
-            await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+            await QueueConfiguration.JavaScriptQueueThread.CallOnQueueAsync(() =>
             {
                 using (_bridge) { }
                 return true;

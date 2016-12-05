@@ -66,7 +66,7 @@ namespace ReactNative.Tests.Bridge
                 using (var nativeThread = CreateNativeModulesThread())
                 {
                     var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
-                    var token = await jsQueueThread.CallOnQueue(() =>
+                    var token = await jsQueueThread.CallOnQueueAsync(() =>
                     {
                         bridge.CallFunction("module", "method", new JArray());
                         return executor.GetGlobalVariable("FunctionCalls");
@@ -95,7 +95,7 @@ namespace ReactNative.Tests.Bridge
                 using (var nativeThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("native", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); }))
                 {
                     var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
-                    var token = await jsQueueThread.CallOnQueue(() =>
+                    var token = await jsQueueThread.CallOnQueueAsync(() =>
                     {
                         bridge.InvokeCallback(1, new JArray());
                         return executor.GetGlobalVariable("CallbackCalls");

@@ -28,7 +28,7 @@ namespace ReactNative.Tests
         {
             using (var jsQueueThread = CreateJavaScriptThread())
             {
-                var executor = await jsQueueThread.CallOnQueue(() => new ChakraJavaScriptExecutor());
+                var executor = await jsQueueThread.CallOnQueueAsync(() => new ChakraJavaScriptExecutor());
                 try
                 {
                     await Initialize(executor, jsQueueThread);
@@ -36,7 +36,7 @@ namespace ReactNative.Tests
                 }
                 finally
                 {
-                    await jsQueueThread.CallOnQueue(() =>
+                    await jsQueueThread.CallOnQueueAsync(() =>
                     {
                         executor.Dispose();
                         return true;
@@ -73,7 +73,7 @@ namespace ReactNative.Tests
                 scripts[i] = new KeyValuePair<string, string>(uri, filePath);
             }
 
-            await jsQueueThread.CallOnQueue(() =>
+            await jsQueueThread.CallOnQueueAsync(() =>
             {
                 foreach (var script in scripts)
                 {
