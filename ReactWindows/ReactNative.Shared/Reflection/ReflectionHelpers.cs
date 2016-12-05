@@ -17,7 +17,7 @@ namespace ReactNative.Reflection
         /// <returns>
         /// <b>true</b> if the method is asynchronous, <b>false</b> otherwise.
         /// </returns>
-        public static bool IsAsyncMethod(this MethodInfo methodInfo)
+        public static bool IsAsync(this MethodInfo methodInfo)
         {
             return typeof(Task).IsAssignableFrom(methodInfo.ReturnType);
         }
