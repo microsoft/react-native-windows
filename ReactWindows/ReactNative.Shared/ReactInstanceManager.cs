@@ -145,7 +145,10 @@ namespace ReactNative
         /// enforced to keep developers from accidentally creating their
         /// applications multiple times.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         public async void CreateReactContextInBackground()
+#pragma warning restore AvoidAsyncVoid
         {
             await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
@@ -179,7 +182,10 @@ namespace ReactNative
         /// if configuration has changed or the developer has requested the
         /// application to be reloaded.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         public async void RecreateReactContextInBackground()
+#pragma warning restore AvoidAsyncVoid
         {
             await RecreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
