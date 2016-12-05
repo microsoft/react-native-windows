@@ -346,7 +346,10 @@ namespace ReactNative.DevSupport
             return _devServerHelper.IsPackagerRunningAsync();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         public async void HandleReloadJavaScript()
+#pragma warning restore AvoidAsyncVoid
         {
             DispatcherHelpers.AssertOnDispatcher();
 
