@@ -3,14 +3,17 @@ using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
+using ReactNative.Modules.Image;
 using ReactNative.Modules.I18N;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.Image;
 using ReactNative.Views.Scroll;
 using ReactNative.Views.Text;
+using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
 using ReactNative.Views.Web;
 using System;
@@ -38,7 +41,7 @@ namespace ReactNative.Shell
                 //new CameraRollManager(reactContext),
                 new ClipboardModule(),
                 new DialogModule(reactContext),
-                //new ImageLoaderModule(),
+                new ImageLoaderModule(),
                 new I18NModule(),
                 //new LauncherModule(reactContext),
                 //new LocationModule(reactContext),
@@ -73,7 +76,7 @@ namespace ReactNative.Shell
             return new List<IViewManager>
             {
                 //new ReactFlipViewManager(),
-                //new ReactImageManager(),
+                new ReactImageManager(),
                 //new ReactProgressBarViewManager(),
                 //new ReactProgressRingViewManager(),
                 //new ReactPickerManager(),
@@ -83,8 +86,8 @@ namespace ReactNative.Shell
                 //new ReactSliderManager(),
                 //new ReactSplitViewManager(),
                 //new ReactSwitchManager(),
-                //new ReactPasswordBoxManager(),
-                //new ReactTextInputManager(),
+                new ReactPasswordBoxManager(),
+                new ReactTextInputManager(),
                 new ReactTextViewManager(),
                 new ReactViewManager(),
                 new ReactSpanViewManager(),

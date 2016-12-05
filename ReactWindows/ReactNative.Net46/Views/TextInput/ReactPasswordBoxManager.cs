@@ -3,14 +3,13 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
+using System;
 using System.Collections.Generic;
-using Windows.System;
-using Windows.UI;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ReactNative.Views.TextInput
 {
@@ -107,7 +106,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("passwordChar")]
         public void SetPasswordChar(PasswordBox view, string passwordCharString)
         {
-            view.PasswordChar = passwordCharString;
+            view.PasswordChar = passwordCharString.ToCharArray().First();
         }
 
         /// <summary>
@@ -118,8 +117,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("passwordRevealMode")]
         public void SetPasswordRevealMode(PasswordBox view, string revealModeString)
         {
-            var revealMode = EnumHelpers.ParseNullable<PasswordRevealMode>(revealModeString);
-            view.PasswordRevealMode = revealMode ?? PasswordRevealMode.Peek;
+            throw new NotSupportedException("Password Reveal Mode is not supported by WPF.");
         }
 
         /// <summary>
@@ -156,7 +154,7 @@ namespace ReactNative.Views.TextInput
         {
             view.FontFamily = familyName != null
                 ? new FontFamily(familyName)
-                : FontFamily.XamlAutoFontFamily;
+                : new FontFamily();
         }
 
         /// <summary>
@@ -180,7 +178,7 @@ namespace ReactNative.Views.TextInput
         public void SetFontStyle(PasswordBox view, string fontStyleString)
         {
             var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
-            view.FontStyle = fontStyle ?? FontStyle.Normal;
+            view.FontStyle = fontStyle ?? new FontStyle();
         }
 
         /// <summary>
@@ -191,7 +189,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholder")]
         public void SetPlaceholder(PasswordBox view, string placeholder)
         {
-            view.PlaceholderText = placeholder;
+            throw new NotSupportedException("Placeholder is not supported in WPF.");
         }
 
         /// <summary>
@@ -228,7 +226,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selectionColor", CustomType = "Color")]
         public void SetSelectionColor(PasswordBox view, uint color)
         {
-            view.SelectionHighlightColor = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
@@ -338,12 +336,11 @@ namespace ReactNative.Views.TextInput
         {
             if (commandId == ReactTextInputManager.FocusTextInput)
             {
-                view.Focus(FocusState.Programmatic);
+                view.Focus();
             }
             else if (commandId == ReactTextInputManager.BlurTextInput)
             {
-                var frame = Window.Current?.Content as Frame;
-                frame?.Focus(FocusState.Programmatic);
+                Keyboard.ClearFocus();
             }
         }
 
@@ -430,9 +427,9 @@ namespace ReactNative.Views.TextInput
                       textBox.Password));
         }
         
-        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == VirtualKey.Enter)
+            if (e.Key == Key.Enter)
             {
                 var textBox = (PasswordBox)sender;
                 e.Handled = true;
