@@ -217,11 +217,14 @@ namespace ReactNative.Bridge
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         private void HandleException(Exception ex)
         {
             _nativeModuleCallExceptionHandler(ex);
+#pragma warning disable AvoidAsyncVoid
             QueueConfiguration.DispatcherQueueThread.RunOnQueue(async () => 
                 await DisposeAsync().ConfigureAwait(false));
+#pragma warning restore AvoidAsyncVoid
         }
 
         public sealed class Builder
