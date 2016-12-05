@@ -1,9 +1,9 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
