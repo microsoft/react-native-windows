@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
       borderRadius: 2,
     },
     windows: {
-      backgroundColor: rgba(0, 0, 0, 0.33),
+      backgroundColor: 'rgba(0, 0, 0, 0.2)',
       paddingLeft: 8,
       paddingTop: 4,
       paddingRight: 8,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
       color: '#a1a1a1',
     },
     windows: {
-      color: rgba(0, 0, 0, 0.66),
+      color: 'rgba(0, 0, 0, 0.4)',
     }
   }),
 });
