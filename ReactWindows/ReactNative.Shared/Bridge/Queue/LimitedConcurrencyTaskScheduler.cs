@@ -52,7 +52,7 @@ namespace ReactNative.Bridge.Queue
                 if (_delegatesQueuedOrRunning < _maxDegreeOfParallelism)
                 {
                     ++_delegatesQueuedOrRunning;
-                    NotifyThreadPoolOfPendingWork();
+                    NotifyThreadPoolOfPendingWorkAsync();
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// Inform the ThreadPool that there's work to be executed for this scheduler. 
         /// </summary>
-        private async void NotifyThreadPoolOfPendingWork()
+        private async Task NotifyThreadPoolOfPendingWorkAsync()
         {
             await Task.Run(() =>
             {
