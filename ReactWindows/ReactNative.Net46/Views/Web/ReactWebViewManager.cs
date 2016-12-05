@@ -6,8 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Net.Http;
-using static System.FormattableString;
 using System.Windows.Navigation;
+using static System.FormattableString;
 
 namespace ReactNative.Views.Web
 {
@@ -81,7 +81,7 @@ namespace ReactNative.Views.Web
         [ReactProp("injectedJavaScript")]
         public void SetInjectedJavaScript(WebBrowser view, string injectedJavaScript)
         {
-            _injectedJS[view.GetTag()] = injectedJavaScript;         
+            _injectedJS[view.GetTag()] = injectedJavaScript;
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace ReactNative.Views.Web
                     }
                 }
             }
-            
+
             view.Navigate(new Uri(BLANK_URL));
         }
 
         /// <summary>
-        /// Receive events/commands directly from JavaScript through the 
+        /// Receive events/commands directly from JavaScript through the
         /// <see cref="UIManagerModule"/>.
         /// </summary>
         /// <param name="view">
@@ -156,7 +156,7 @@ namespace ReactNative.Views.Web
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup by the <see cref="ReactWebViewManager"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
@@ -179,7 +179,7 @@ namespace ReactNative.Views.Web
         }
 
         /// <summary>
-        /// Subclasses can override this method to install custom event 
+        /// Subclasses can override this method to install custom event
         /// emitters on the given view.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
@@ -216,7 +216,7 @@ namespace ReactNative.Views.Web
             else
             {
                 LoadFailed(webView, "Unknown Error loading webview.", null);
-            }      
+            }
         }
 
         private static void OnNavigationStarting(object sender, NavigationEventArgs e)
@@ -229,10 +229,10 @@ namespace ReactNative.Views.Web
                     new WebViewLoadingEvent(
                          webView.GetTag(),
                          "Start",
-                         e.Uri?.ToString(), 
+                         e.Uri?.ToString(),
                          true,
-                         "Title Unavailable", 
-                         webView.CanGoBack, 
+                         "Title Unavailable",
+                         webView.CanGoBack,
                          webView.CanGoForward));
         }
 
