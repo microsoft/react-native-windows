@@ -11,6 +11,7 @@ using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
 using ReactNative.Views.Image;
+using ReactNative.Views.Picker;
 using ReactNative.Views.Scroll;
 using ReactNative.Views.Text;
 using ReactNative.Views.TextInput;
@@ -78,7 +79,7 @@ namespace ReactNative.Shell
                 new ReactImageManager(),
                 //new ReactProgressBarViewManager(),
                 //new ReactProgressRingViewManager(),
-                //new ReactPickerManager(),
+                new ReactPickerManager(),
                 new ReactRunManager(),
                 ////new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
