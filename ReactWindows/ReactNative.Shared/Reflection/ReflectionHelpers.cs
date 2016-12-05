@@ -17,6 +17,7 @@ namespace ReactNative.Reflection
         /// <returns>
         /// <b>true</b> if the method is asynchronous, <b>false</b> otherwise.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
 #pragma warning disable AvoidAsyncSuffix
         public static bool IsAsync(this MethodInfo methodInfo)
 #pragma warning restore AvoidAsyncSuffix
