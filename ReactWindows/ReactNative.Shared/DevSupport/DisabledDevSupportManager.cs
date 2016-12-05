@@ -67,7 +67,10 @@ namespace ReactNative.DevSupport
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         public async void HandleException(Exception exception)
+#pragma warning restore AvoidAsyncVoid
         {
 #if WINDOWS_UWP
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
