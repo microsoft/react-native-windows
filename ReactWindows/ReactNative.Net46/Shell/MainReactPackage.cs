@@ -11,6 +11,7 @@ using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
 using ReactNative.Views.Scroll;
 using ReactNative.Views.Text;
+using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
 using System;
 using System.Collections.Generic;
@@ -82,8 +83,8 @@ namespace ReactNative.Shell
                 //new ReactSliderManager(),
                 //new ReactSplitViewManager(),
                 //new ReactSwitchManager(),
-                //new ReactPasswordBoxManager(),
-                //new ReactTextInputManager(),
+                new ReactPasswordBoxManager(),
+                new ReactTextInputManager(),
                 new ReactTextViewManager(),
                 new ReactViewManager(),
                 new ReactSpanViewManager(),
