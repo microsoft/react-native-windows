@@ -71,16 +71,21 @@ namespace ReactNative.Views.Picker
             // Temporarily disable selection changed event handler.
             view.SelectionChanged -= OnSelectionChanged;
 
+            var selectedIndex = view.SelectedIndex;
+
             view.Items.Clear();
 
-            for (var index = 0; index < items.Count; index++)
+            foreach (var itemToken in items)
             {
-                var itemData = (JObject)items[index];
+                var itemData = (JObject)itemToken;
                 var label = itemData.Value<string>("label");
                 if (label != null)
                 {
-                    var item = new ComboBoxItem();
-                    item.Content = label;
+                    var item = new ComboBoxItem
+                    {
+                        Content = label,
+                    };
+
                     var color = itemData.GetValue("color", StringComparison.Ordinal);
                     if (color != null)
                     {
@@ -90,8 +95,13 @@ namespace ReactNative.Views.Picker
 
                     view.Items.Add(item);
                 }            
-            } 
-              
+            }
+
+            if (selectedIndex < items.Count)
+            {
+                view.SelectedIndex = selectedIndex;
+            }
+             
             view.SelectionChanged += OnSelectionChanged;
         }
 
