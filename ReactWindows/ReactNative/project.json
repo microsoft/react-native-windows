@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "AsyncUsageAnalyzers": "1.0.0-alpha003",
     "Facebook.CSSLayout": "2.0.1-pre",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Microsoft.Toolkit.Uwp.UI": "1.2.0",
