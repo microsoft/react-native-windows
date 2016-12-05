@@ -22,7 +22,9 @@ namespace ReactNative.Modules.Storage
         }
 
         [ReactMethod]
+#pragma warning disable AvoidAsyncVoid
         public async void multiGet(string[] keys, ICallback callback)
+#pragma warning restore AvoidAsyncVoid
         {
             if (keys == null)
             {
@@ -64,7 +66,9 @@ namespace ReactNative.Modules.Storage
         }
 
         [ReactMethod]
+#pragma warning disable AvoidAsyncVoid
         public async void multiSet(string[][] keyValueArray, ICallback callback)
+#pragma warning restore AvoidAsyncVoid
         {
             if (keyValueArray == null || keyValueArray.Length == 0)
             {
@@ -120,7 +124,9 @@ namespace ReactNative.Modules.Storage
         }
 
         [ReactMethod]
+#pragma warning disable AvoidAsyncVoid
         public async void multiRemove(string[] keys, ICallback callback)
+#pragma warning restore AvoidAsyncVoid
         {
             if (keys == null || keys.Length == 0)
             {
@@ -164,7 +170,9 @@ namespace ReactNative.Modules.Storage
         }
 
         [ReactMethod]
+#pragma warning disable AvoidAsyncVoid
         public async void multiMerge(string[][] keyValueArray, ICallback callback)
+#pragma warning restore AvoidAsyncVoid
         {
             if (keyValueArray == null || keyValueArray.Length == 0)
             {
@@ -220,7 +228,9 @@ namespace ReactNative.Modules.Storage
         }
 
         [ReactMethod]
+#pragma warning disable AvoidAsyncVoid
         public async void clear(ICallback callback)
+#pragma warning restore AvoidAsyncVoid
         {
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
@@ -241,7 +251,9 @@ namespace ReactNative.Modules.Storage
         }
 
         [ReactMethod]
+#pragma warning disable AvoidAsyncVoid
         public async void getAllKeys(ICallback callback)
+#pragma warning restore AvoidAsyncVoid
         {
             var keys = new JArray();
 
