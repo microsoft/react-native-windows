@@ -28,7 +28,7 @@ namespace ReactNative.Tests.UIManager
         }
 
         [TestMethod]
-        public async Task UIManagerModule_CustomEvents_Constants()
+        public async Task UIManagerModule_CustomEvents_ConstantsAsync()
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
@@ -58,7 +58,7 @@ namespace ReactNative.Tests.UIManager
         }
 
         [TestMethod]
-        public async Task UIManagerModule_Constants_ViewManagerOverrides()
+        public async Task UIManagerModule_Constants_ViewManagerOverridesAsync()
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
