@@ -14,7 +14,7 @@ namespace ReactNative.Tests.Bridge
     public class ReactBridgeTests
     {
         [Test]
-        public async Task ReactBridge_Ctor_ArgumentChecks()
+        public async Task ReactBridge_Ctor_ArgumentChecksAsync()
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
             {
