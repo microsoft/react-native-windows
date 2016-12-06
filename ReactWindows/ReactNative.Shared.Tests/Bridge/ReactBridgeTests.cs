@@ -88,7 +88,7 @@ namespace ReactNative.Tests.Bridge
         }
 
         [Test]
-        public async Task ReactBridge_InvokeCallback()
+        public async Task ReactBridge_InvokeCallbackAsync()
         {
             await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
             {
