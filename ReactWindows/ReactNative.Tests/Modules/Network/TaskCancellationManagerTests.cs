@@ -50,7 +50,7 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [TestMethod]
-        public async Task TaskCancellationManager_CleanedUpAfterComplete()
+        public async Task TaskCancellationManager_CleanedUpAfterCompleteAsync()
         {
             var enter = new AutoResetEvent(false);
             var exit = new AutoResetEvent(false);
@@ -73,7 +73,7 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [TestMethod]
-        public async Task TaskCancellationManager_CleanedUpAfterError()
+        public async Task TaskCancellationManager_CleanedUpAfterErrorAsync()
         {
             var enter = new AutoResetEvent(false);
             var mgr = new TaskCancellationManager<int>();
