@@ -14,7 +14,7 @@ namespace ReactNative.Tests.Modules.Core
     public class TimingTests
     {
         [TestMethod]
-        public async Task Timing_Create()
+        public async Task Timing_CreateAsync()
         {
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
@@ -38,7 +38,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_ManyTimers()
+        public async Task Timing_ManyTimersAsync()
         {
             var count = 1000;
             var ids = new List<int>(count);
@@ -70,7 +70,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_Create_Delete()
+        public async Task Timing_Create_DeleteAsync()
         {
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
@@ -95,7 +95,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_Suspend_Resume()
+        public async Task Timing_Suspend_ResumeAsync()
         {
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
@@ -121,7 +121,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_Repeat()
+        public async Task Timing_RepeatAsync()
         {
             var ids = new List<int>();
             var repeat = 10;
@@ -156,7 +156,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_ManOrBoy()
+        public async Task Timing_ManOrBoyAsync()
         {
             var r = new Random();
             var batchCount = 15;
@@ -199,7 +199,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_AnimationBehavior()
+        public async Task Timing_AnimationBehaviorAsync()
         {
             var id = 0;
 
@@ -249,7 +249,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_Zero_NoRepeat()
+        public async Task Timing_Zero_NoRepeatAsync()
         {
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
@@ -273,7 +273,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_Zero_Repeat()
+        public async Task Timing_Zero_RepeatAsync()
         {
             var ids = new List<int>();
             var countdown = new CountdownEvent(60);
@@ -297,7 +297,7 @@ namespace ReactNative.Tests.Modules.Core
         }
 
         [TestMethod]
-        public async Task Timing_Correct_Order()
+        public async Task Timing_Correct_OrderAsync()
         {
             var ids = new List<int>();
             var countdown = new CountdownEvent(1);
