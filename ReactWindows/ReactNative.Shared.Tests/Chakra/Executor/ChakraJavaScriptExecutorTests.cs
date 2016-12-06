@@ -8,7 +8,7 @@ namespace ReactNative.Tests.Chakra.Executor
     public class ChakraJavaScriptExecutorTests
     {
         [Test]
-        public async Task ThrowsWithCorrectParameterNameWhenGivenNull()
+        public async Task ThrowsWithCorrectParameterNameWhenGivenNullAsync()
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
             {
