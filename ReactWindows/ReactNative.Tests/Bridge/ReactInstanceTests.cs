@@ -109,7 +109,7 @@ namespace ReactNative.Tests.Bridge
         }
 
         [TestMethod]
-        public async Task ReactInstance_ExceptionHandled_Disposes()
+        public async Task ReactInstance_ExceptionHandled_DisposesAsync()
         {
             var eventHandler = new AutoResetEvent(false);
             var module = new OnDisposeNativeModule(() => eventHandler.Set());
