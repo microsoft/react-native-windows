@@ -29,7 +29,7 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public async Task MessageQueueThread_IsOnThread()
+        public async Task MessageQueueThread_IsOnThreadAsync()
         {
             var thrown = 0;
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => thrown++));
