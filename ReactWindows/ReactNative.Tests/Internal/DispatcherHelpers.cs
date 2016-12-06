@@ -25,15 +25,18 @@ namespace ReactNative.Tests
             return await tcs.Task.ConfigureAwait(false);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         public static async Task CallOnDispatcherAsync(Func<Task> asyncFunc)
         {
             var tcs = new TaskCompletionSource<bool>();
 
+#pragma warning disable AvoidAsyncVoid
             await RunOnDispatcherAsync(async () =>
             {
                 await asyncFunc();
                 await Task.Run(() => tcs.SetResult(true));
             }).ConfigureAwait(false);
+#pragma warning restore AvoidAsyncVoid
 
             await tcs.Task.ConfigureAwait(false);
         }

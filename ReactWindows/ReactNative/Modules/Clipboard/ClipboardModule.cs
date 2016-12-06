@@ -1,5 +1,6 @@
 ﻿using ReactNative.Bridge;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using DataTransfer = Windows.ApplicationModel.DataTransfer;
@@ -38,6 +39,7 @@ namespace ReactNative.Modules.Clipboard
         /// Get the clipboard content through a promise.
         /// </summary>
         /// <param name="promise">The promise.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
         public void getString(IPromise promise)
         {
@@ -46,7 +48,8 @@ namespace ReactNative.Modules.Clipboard
                 throw new ArgumentNullException(nameof(promise));
             }
 
-            RunOnDispatcher(async () =>
+#pragma warning disable AvoidAsyncVoid
+            RunOnDispatcherAsync(async () =>
             {
                 try
                 {
@@ -71,6 +74,7 @@ namespace ReactNative.Modules.Clipboard
                 }
             });
         }
+#pragma warning disable AvoidAsyncVoid
 
         /// <summary>
         /// Add text to the clipboard or clear the clipboard.
@@ -79,7 +83,7 @@ namespace ReactNative.Modules.Clipboard
         [ReactMethod]
         public void setString(string text)
         {
-            RunOnDispatcher(() =>
+            RunOnDispatcherAsync(() =>
             {
                 if (text == null)
                 {
@@ -98,7 +102,7 @@ namespace ReactNative.Modules.Clipboard
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
-        private static async void RunOnDispatcher(DispatchedHandler action)
+        private static async Task RunOnDispatcherAsync(DispatchedHandler action)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

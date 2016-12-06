@@ -20,7 +20,7 @@ namespace ReactNative.Bridge
             return CoreWindow.GetForCurrentThread()?.Dispatcher != null;
         }
 
-        public static async void RunOnDispatcher(DispatchedHandler action)
+        public static async Task RunOnDispatcherAsync(DispatchedHandler action)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
@@ -29,7 +29,7 @@ namespace ReactNative.Bridge
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
 
-            RunOnDispatcher(() =>
+            RunOnDispatcherAsync(() =>
             {
                 var result = func();
 

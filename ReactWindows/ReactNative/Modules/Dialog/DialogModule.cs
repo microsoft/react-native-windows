@@ -3,6 +3,7 @@ using ReactNative.Bridge;
 using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -67,6 +68,7 @@ namespace ReactNative.Modules.Dialog
         {
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
         public void showAlert(
             JObject config,
@@ -99,7 +101,8 @@ namespace ReactNative.Modules.Dialog
                 });
             }
 
-            RunOnDispatcher(async () =>
+#pragma warning disable AvoidAsyncVoid
+            RunOnDispatcherAsync(async () =>
             {
                 if (_isInForeground)
                 {
@@ -110,6 +113,7 @@ namespace ReactNative.Modules.Dialog
                     _pendingDialog = messageDialog;
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         private void OnInvoked(IUICommand target, ICallback callback)
@@ -117,7 +121,7 @@ namespace ReactNative.Modules.Dialog
             callback.Invoke(DialogModuleHelper.ActionButtonClicked, target.Id);
         }
 
-        private static async void RunOnDispatcher(DispatchedHandler action)
+        private static async Task RunOnDispatcherAsync(DispatchedHandler action)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

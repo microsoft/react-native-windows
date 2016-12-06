@@ -26,6 +26,7 @@ namespace ReactNative.Modules.Image
             promise.Reject(ErrorPrefetchFailure, "Prefetch is not yet implemented.");
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
         public void getSize(string uriString, IPromise promise)
         {
@@ -35,7 +36,8 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            DispatcherHelpers.RunOnDispatcher(async () =>
+#pragma warning disable AvoidAsyncVoid
+            DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 try
                 {
@@ -68,6 +70,7 @@ namespace ReactNative.Modules.Image
                     promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
     }
 }

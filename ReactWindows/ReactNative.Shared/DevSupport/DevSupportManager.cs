@@ -197,7 +197,7 @@ namespace ReactNative.DevSupport
 
         public void UpdateJavaScriptError(string message, JArray details, int errorCookie)
         {
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcherAsync(() =>
             {
                 if (_redBoxDialog == null
                     || !_redBoxDialogOpen
@@ -227,7 +227,7 @@ namespace ReactNative.DevSupport
                 return;
             }
 
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcherAsync(() =>
             {
                 var options = new[]
                 {
@@ -453,7 +453,7 @@ namespace ReactNative.DevSupport
 
         private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcherAsync(() =>
             {
                 if (_redBoxDialog == null)
                 {

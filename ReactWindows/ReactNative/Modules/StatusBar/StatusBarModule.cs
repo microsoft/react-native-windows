@@ -1,6 +1,7 @@
 ﻿using ReactNative.Bridge;
 using ReactNative.UIManager;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Metadata;
 using Windows.UI;
@@ -50,10 +51,12 @@ namespace ReactNative.Modules.StatusBar
         /// Hide or show StatusBar.
         /// </summary>
         /// <param name="hide">Hide or show StatusBar.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
         public void setHidden(bool hide)
         {
-            RunOnDispatcher(async () =>
+#pragma warning disable AvoidAsyncVoid
+            RunOnDispatcherAsync(async () =>
             {
                 if (hide)
                 {
@@ -64,6 +67,7 @@ namespace ReactNative.Modules.StatusBar
                     await _statusBar.ShowAsync().AsTask().ConfigureAwait(false);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         /// <summary>
@@ -73,7 +77,7 @@ namespace ReactNative.Modules.StatusBar
         [ReactMethod]
         public void setColor(uint? color)
         {
-            RunOnDispatcher(() =>
+            RunOnDispatcherAsync(() =>
             {
                 _statusBar.BackgroundColor = !color.HasValue
                     ? default(Color?)
@@ -88,7 +92,7 @@ namespace ReactNative.Modules.StatusBar
         [ReactMethod]
         public void setTranslucent(bool translucent)
         {
-            RunOnDispatcher(() =>
+            RunOnDispatcherAsync(() =>
             {
                 _statusBar.BackgroundOpacity = translucent ? 0.5 : 1;
             });
@@ -113,7 +117,7 @@ namespace ReactNative.Modules.StatusBar
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
-        private static async void RunOnDispatcher(DispatchedHandler action)
+        private static async Task RunOnDispatcherAsync(DispatchedHandler action)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

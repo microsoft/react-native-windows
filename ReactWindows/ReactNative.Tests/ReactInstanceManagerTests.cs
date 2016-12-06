@@ -66,6 +66,7 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [TestMethod]
         public async Task ReactInstanceManager_CreateInBackground_EnsuresOneCall()
         {
@@ -76,6 +77,7 @@ namespace ReactNative.Tests
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
             var caught = false;
+#pragma warning disable AvoidAsyncVoid
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 manager.CreateReactContextInBackground();
@@ -89,6 +91,7 @@ namespace ReactNative.Tests
                     caught = true;
                 }
             });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(caught);
 
@@ -117,6 +120,7 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [TestMethod]
         public async Task ReactInstanceManager_RecreateInBackground_EnsuresCalledOnce()
         {
@@ -124,6 +128,7 @@ namespace ReactNative.Tests
             var manager = CreateReactInstanceManager(jsBundleFile);
 
             var caught = false;
+#pragma warning disable AvoidAsyncVoid
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 try
@@ -135,6 +140,7 @@ namespace ReactNative.Tests
                     caught = true;
                 }
             });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(caught);
 
@@ -182,6 +188,7 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [TestMethod]
         public async Task ReactInstanceManager_DisposeAsync_WhileBusy()
         {
@@ -209,12 +216,14 @@ namespace ReactNative.Tests
             });
 
             var tcs = new TaskCompletionSource<bool>();
+#pragma warning disable AvoidAsyncVoid
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 e.Set();
                 await manager.DisposeAsync();
                 await Task.Run(() => tcs.SetResult(true));
             });
+#pragma warning restore AvoidAsyncVoid
 
             var completedTask = await Task.WhenAny(
                 Task.Delay(5000),
