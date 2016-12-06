@@ -29,21 +29,25 @@ namespace ReactNative.UIManager
         private readonly UIViewOperationQueue _operationsQueue;
         private readonly ShadowNodeRegistry _shadowNodeRegistry;
         private readonly NativeViewHierarchyOptimizer _nativeViewHierarchyOptimizer;
+        private readonly EventDispatcher _eventDispatcher;
 
         /// <summary>
         /// Instantiates the <see cref="UIImplementation"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
-        public UIImplementation(ReactContext reactContext, IReadOnlyList<IViewManager> viewManagers)
-            : this(reactContext, new ViewManagerRegistry(viewManagers))
+        /// <param name="eventDispatcher">The event dispatcher.</param>
+        public UIImplementation(ReactContext reactContext, IReadOnlyList<IViewManager> viewManagers, EventDispatcher eventDispatcher)
+            : this(reactContext, new ViewManagerRegistry(viewManagers), eventDispatcher)
         {
         }
 
-        private UIImplementation(ReactContext reactContext, ViewManagerRegistry viewManagers)
+        private UIImplementation(ReactContext reactContext, ViewManagerRegistry viewManagers, EventDispatcher eventDispatcher)
             : this(
                   viewManagers,
-                  new UIViewOperationQueue(reactContext, new NativeViewHierarchyManager(viewManagers)))
+                  new UIViewOperationQueue(reactContext, 
+                                           new NativeViewHierarchyManager(viewManagers)), 
+                                           eventDispatcher)
         {
         }
 
@@ -52,9 +56,11 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="operationsQueue">The operations queue.</param>
+        /// <param name="eventDispatcher">The event dispatcher.</param>
         protected UIImplementation(
             ViewManagerRegistry viewManagers,
-            UIViewOperationQueue operationsQueue)
+            UIViewOperationQueue operationsQueue,
+            EventDispatcher eventDispatcher)
         {
             _viewManagers = viewManagers;
             _operationsQueue = operationsQueue;
@@ -62,6 +68,7 @@ namespace ReactNative.UIManager
             _nativeViewHierarchyOptimizer = new NativeViewHierarchyOptimizer(
                 _operationsQueue,
                 _shadowNodeRegistry);
+            _eventDispatcher = eventDispatcher;
         }
 
         /// <summary>
@@ -107,12 +114,10 @@ namespace ReactNative.UIManager
         /// <param name="rootViewTag">The root view tag.</param>
         /// <param name="newWidth">The new width.</param>
         /// <param name="newHeight">The new height.</param>
-        /// <param name="eventDispatcher">The event dispatcher.</param>
         public void UpdateRootNodeSize(
             int rootViewTag,
             double newWidth,
-            double newHeight,
-            EventDispatcher eventDispatcher)
+            double newHeight)
         {
             var rootCssNode = _shadowNodeRegistry.GetNode(rootViewTag);
             rootCssNode.Width = (float)newWidth;
@@ -124,7 +129,7 @@ namespace ReactNative.UIManager
             // detail.
             if (_operationsQueue.IsEmpty())
             {
-                DispatchViewUpdates(eventDispatcher, -1 /* no associated batch id */);
+                DispatchViewUpdates(-1 /* no associated batch id */);
             }
         }
 
@@ -539,16 +544,15 @@ namespace ReactNative.UIManager
         /// Invoked at the end of a transaction to commit any updates to the
         /// node hierarchy.
         /// </summary>
-        /// <param name="eventDispatcher">The event dispatcher.</param>
         /// <param name="batchId">The batch identifier.</param>
-        public void DispatchViewUpdates(EventDispatcher eventDispatcher, int batchId)
+        public void DispatchViewUpdates(int batchId)
         {
             foreach (var tag in _shadowNodeRegistry.RootNodeTags)
             {
                 var cssRoot = _shadowNodeRegistry.GetNode(tag);
                 NotifyBeforeOnLayoutRecursive(cssRoot);
                 CalculateRootLayout(cssRoot);
-                ApplyUpdatesRecursive(cssRoot, eventDispatcher);
+                ApplyUpdatesRecursive(cssRoot);
             }
 
             _nativeViewHierarchyOptimizer.OnBatchComplete();
@@ -838,9 +842,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void ApplyUpdatesRecursive(
-            ReactShadowNode cssNode,
-            EventDispatcher eventDispatcher)
+        private void ApplyUpdatesRecursive(ReactShadowNode cssNode)
         {
             if (!cssNode.HasUpdates)
             {
@@ -851,9 +853,7 @@ namespace ReactNative.UIManager
             {
                 for (var i = 0; i < cssNode.ChildCount; ++i)
                 {
-                    ApplyUpdatesRecursive(
-                        cssNode.GetChildAt(i),
-                        eventDispatcher);
+                    ApplyUpdatesRecursive(cssNode.GetChildAt(i));
                 }
             }
 
@@ -866,7 +866,7 @@ namespace ReactNative.UIManager
 
                 if (cssNode.ShouldNotifyOnLayout)
                 {
-                    eventDispatcher.DispatchEvent(
+                    _eventDispatcher.DispatchEvent(
                         OnLayoutEvent.Obtain(
                             tag,
                             cssNode.LayoutX,

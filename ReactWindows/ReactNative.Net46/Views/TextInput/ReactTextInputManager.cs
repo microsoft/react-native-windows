@@ -5,13 +5,10 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
-using Windows.System;
-using Windows.UI;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ReactNative.Views.TextInput
 {
@@ -156,7 +153,7 @@ namespace ReactNative.Views.TextInput
         {
             view.FontFamily = familyName != null
                 ? new FontFamily(familyName)
-                : FontFamily.XamlAutoFontFamily;
+                : new FontFamily();
         }
 
         /// <summary>
@@ -180,7 +177,7 @@ namespace ReactNative.Views.TextInput
         public void SetFontStyle(ReactTextBox view, string fontStyleString)
         {
             var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
-            view.FontStyle = fontStyle ?? FontStyle.Normal;
+            view.FontStyle = fontStyle ?? new FontStyle();
         }
 
         /// <summary>
@@ -211,7 +208,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholder")]
         public void SetPlaceholder(ReactTextBox view, string placeholder)
         {
-            view.PlaceholderText = placeholder;
+            throw new NotSupportedException("Placeholder is not available in WPF.");
         }
 
         /// <summary>
@@ -248,7 +245,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selectionColor", CustomType = "Color")]
         public void SetSelectionColor(ReactTextBox view, uint color)
         {
-            view.SelectionHighlightColor = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
@@ -303,7 +300,8 @@ namespace ReactNative.Views.TextInput
         [ReactProp("autoCorrect")]
         public void SetAutoCorrect(ReactTextBox view, bool autoCorrect)
         {
-            view.IsSpellCheckEnabled = autoCorrect;
+            var checker = view.SpellCheck;
+            checker.IsEnabled = autoCorrect;
         }
 
         /// <summary>
@@ -393,12 +391,11 @@ namespace ReactNative.Views.TextInput
         {
             if (commandId == FocusTextInput)
             {
-                view.Focus(FocusState.Programmatic);
+                view.Focus();
             }
             else if (commandId == BlurTextInput)
             {
-                var frame = Window.Current?.Content as Frame;
-                frame?.Focus(FocusState.Programmatic);
+                Keyboard.ClearFocus();
             }
         }
 
@@ -427,7 +424,6 @@ namespace ReactNative.Views.TextInput
                     return;
                 }
                 
-                view.TextChanging -= OnTextChanging;
                 view.TextChanged -= OnTextChanged;
 
                 if (_onSelectionChange)
@@ -451,7 +447,6 @@ namespace ReactNative.Views.TextInput
                 }
 
                 view.TextChanged += OnTextChanged;
-                view.TextChanging += OnTextChanging;
             }
         }
 
@@ -469,7 +464,6 @@ namespace ReactNative.Views.TextInput
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
             view.TextChanged -= OnTextChanged;
-            view.TextChanging -= OnTextChanging;
         }
 
         public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
@@ -500,17 +494,10 @@ namespace ReactNative.Views.TextInput
         protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
         {
             base.AddEventEmitters(reactContext, view);
-            view.TextChanging += OnTextChanging;
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
-        }
-        
-        private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
-        {
-            var textBox = (ReactTextBox)sender;
-            textBox.IncrementEventCount();
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -554,9 +541,9 @@ namespace ReactNative.Views.TextInput
                       textBox.Text));
         }
         
-        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == VirtualKey.Enter)
+            if (e.Key == Key.Enter)
             {
                 var textBox = (ReactTextBox)sender;
                 if (!textBox.AcceptsReturn)
