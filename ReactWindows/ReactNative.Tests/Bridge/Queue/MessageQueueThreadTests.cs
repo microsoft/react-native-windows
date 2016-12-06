@@ -58,7 +58,7 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public async Task MessageQueueThread_HandlesException()
+        public async Task MessageQueueThread_HandlesExceptionAsync()
         {
             var exception = new Exception();
             var countdown = new CountdownEvent(1);
