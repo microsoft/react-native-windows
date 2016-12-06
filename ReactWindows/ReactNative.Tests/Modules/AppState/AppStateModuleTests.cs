@@ -13,7 +13,7 @@ namespace ReactNative.Tests.Modules.AppState
     public class AppStateModuleTests
     {
         [TestMethod]
-        public async Task AppStateModule_StateChecks()
+        public async Task AppStateModule_StateChecksAsync()
         {
             var uninitializedState = CreateExpectedState("uninitialized");
             var activeState = CreateExpectedState("active");
