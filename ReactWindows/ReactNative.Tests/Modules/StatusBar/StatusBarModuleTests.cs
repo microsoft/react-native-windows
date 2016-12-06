@@ -131,7 +131,7 @@ namespace ReactNative.Tests.Modules.StatusBar
                 _hidden = true;
                 _waitHandle.Set();
 
-                Func<Task> action = async () =>  { await DummyTask(); };
+                Func<Task> action = async () =>  { await DummyTaskAsync(); };
 
                 return action().AsAsyncAction();
 
@@ -145,15 +145,12 @@ namespace ReactNative.Tests.Modules.StatusBar
                 _hidden = false;
                 _waitHandle.Set();
 
-                Func<Task> action = async () => { await DummyTask();  };
+                Func<Task> action = async () => { await DummyTaskAsync();  };
 
                 return action().AsAsyncAction();
             }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
-#pragma warning disable AvoidAsyncSuffix
-            private static async Task DummyTask()
-#pragma warning restore AvoidAsyncSuffix
+            private static async Task DummyTaskAsync()
             {
                 try
                 {
