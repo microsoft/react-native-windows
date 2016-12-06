@@ -53,10 +53,11 @@ namespace ReactNative.Modules.StatusBar
         /// <param name="hide">Hide or show StatusBar.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
-        public void setHidden(bool hide)
-        {
 #pragma warning disable AvoidAsyncVoid
-            RunOnDispatcherAsync(async () =>
+        public async void setHidden(bool hide)
+#pragma warning restore AvoidAsyncVoid
+        {
+            await RunOnDispatcherAsync(async () =>
             {
                 if (hide)
                 {
@@ -67,17 +68,19 @@ namespace ReactNative.Modules.StatusBar
                     await _statusBar.ShowAsync().AsTask().ConfigureAwait(false);
                 }
             });
-#pragma warning restore AvoidAsyncVoid
         }
 
         /// <summary>
         /// Set StatusBar background color.
         /// </summary>
         /// <param name="color">RGB color.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
-        public void setColor(uint? color)
+#pragma warning disable AvoidAsyncVoid
+        public async void setColor(uint? color)
+#pragma warning restore AvoidAsyncVoid
         {
-            RunOnDispatcherAsync(() =>
+            await RunOnDispatcherAsync(() =>
             {
                 _statusBar.BackgroundColor = !color.HasValue
                     ? default(Color?)
@@ -89,10 +92,13 @@ namespace ReactNative.Modules.StatusBar
         /// Set StatusBar opacity.
         /// </summary>
         /// <param name="translucent">Is StatusBar translucent.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
-        public void setTranslucent(bool translucent)
+#pragma warning disable AvoidAsyncVoid
+        public async void setTranslucent(bool translucent)
+#pragma warning restore AvoidAsyncVoid
         {
-            RunOnDispatcherAsync(() =>
+            await RunOnDispatcherAsync(() =>
             {
                 _statusBar.BackgroundOpacity = translucent ? 0.5 : 1;
             });

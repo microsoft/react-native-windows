@@ -187,9 +187,9 @@ namespace ReactNative.DevSupport
                             if (response.StatusCode == HttpStatusCode.ResetContent)
                             {
 #if WINDOWS_UWP
-                                DispatcherHelpers.RunOnDispatcherAsync(new DispatchedHandler(onServerContentChanged));
+                                await DispatcherHelpers.RunOnDispatcherAsync(new DispatchedHandler(onServerContentChanged));
 #else
-                                DispatcherHelpers.RunOnDispatcherAsync(onServerContentChanged);
+                                await DispatcherHelpers.RunOnDispatcherAsync(onServerContentChanged);
 #endif
                             }
                         }

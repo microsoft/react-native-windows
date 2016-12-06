@@ -195,9 +195,13 @@ namespace ReactNative.DevSupport
             ShowNewError(title, StackTraceHelper.ConvertJavaScriptStackTrace(details), errorCookie);
         }
 
-        public void UpdateJavaScriptError(string message, JArray details, int errorCookie)
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
+        public async void UpdateJavaScriptError(string message, JArray details, int errorCookie)
+#pragma warning restore AvoidAsyncVoid
         {
-            DispatcherHelpers.RunOnDispatcherAsync(() =>
+            await DispatcherHelpers.RunOnDispatcherAsync(() =>
             {
                 if (_redBoxDialog == null
                     || !_redBoxDialogOpen
@@ -220,14 +224,17 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public void ShowDevOptionsDialog()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
+        public async void ShowDevOptionsDialog()
+#pragma warning restore AvoidAsyncVoid
         {
             if (_devOptionsDialog != null || !IsEnabled)
             {
                 return;
             }
 
-            DispatcherHelpers.RunOnDispatcherAsync(() =>
+            await DispatcherHelpers.RunOnDispatcherAsync(() =>
             {
                 var options = new[]
                 {
@@ -451,9 +458,12 @@ namespace ReactNative.DevSupport
             }
         }
 
-        private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
+        private async void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
+#pragma warning restore AvoidAsyncVoid
         {
-            DispatcherHelpers.RunOnDispatcherAsync(() =>
+            await DispatcherHelpers.RunOnDispatcherAsync(() =>
             {
                 if (_redBoxDialog == null)
                 {

@@ -21,7 +21,9 @@ namespace ReactNative.Modules.Image
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
-        public void prefetchImage(string uriString, IPromise promise)
+#pragma warning disable AvoidAsyncVoid
+        public async void prefetchImage(string uriString, IPromise promise)
+#pragma warning restore AvoidAsyncVoid
         {
             if (string.IsNullOrEmpty(uriString))
             {
@@ -29,8 +31,7 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-#pragma warning disable AvoidAsyncVoid
-            DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 try
                 {
@@ -44,12 +45,13 @@ namespace ReactNative.Modules.Image
                     promise.Reject(ErrorPrefetchFailure, ex.Message);
                 }
             });
-#pragma warning restore AvoidAsyncVoid
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [ReactMethod]
-        public void getSize(string uriString, IPromise promise)
+#pragma warning disable AvoidAsyncVoid
+        public async void getSize(string uriString, IPromise promise)
+#pragma warning restore AvoidAsyncVoid
         {
             if (string.IsNullOrEmpty(uriString))
             {
@@ -57,8 +59,7 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-#pragma warning disable AvoidAsyncVoid
-            DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 try
                 {
@@ -74,7 +75,6 @@ namespace ReactNative.Modules.Image
                     promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
             });
-#pragma warning restore AvoidAsyncVoid
         }
     }
 }
