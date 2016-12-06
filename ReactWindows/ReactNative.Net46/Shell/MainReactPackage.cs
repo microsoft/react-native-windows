@@ -13,6 +13,7 @@ using ReactNative.UIManager;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
 using ReactNative.Views.Scroll;
+using ReactNative.Views.Slider;
 using ReactNative.Views.Text;
 using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
@@ -84,7 +85,7 @@ namespace ReactNative.Shell
                 new ReactRunManager(),
                 ////new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
-                //new ReactSliderManager(),
+                new ReactSliderManager(),
                 //new ReactSplitViewManager(),
                 //new ReactSwitchManager(),
                 new ReactPasswordBoxManager(),
