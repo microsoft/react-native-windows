@@ -25,7 +25,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_ArgumentChecks()
+        public async Task ReactInstanceManager_ArgumentChecksAsync()
         {
             var manager = CreateReactInstanceManager();
 
@@ -49,7 +49,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_CreateInBackground()
+        public async Task ReactInstanceManager_CreateInBackgroundAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -66,9 +66,8 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [TestMethod]
-        public async Task ReactInstanceManager_CreateInBackground_EnsuresOneCall()
+        public async Task ReactInstanceManager_CreateInBackground_EnsuresOneCallAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -99,7 +98,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_RecreateInBackground()
+        public async Task ReactInstanceManager_RecreateInBackgroundAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -120,9 +119,8 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [TestMethod]
-        public async Task ReactInstanceManager_RecreateInBackground_EnsuresCalledOnce()
+        public async Task ReactInstanceManager_RecreateInBackground_EnsuresCalledOnceAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -148,7 +146,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_OnBackPressed_NoContext()
+        public async Task ReactInstanceManager_OnBackPressed_NoContextAsync()
         {
             var waitHandle = new AutoResetEvent(false);
             var manager = CreateReactInstanceManager();
@@ -164,7 +162,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_OnDestroy_CreateInBackground()
+        public async Task ReactInstanceManager_OnDestroy_CreateInBackgroundAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -188,9 +186,8 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         [TestMethod]
-        public async Task ReactInstanceManager_DisposeAsync_WhileBusy()
+        public async Task ReactInstanceManager_DisposeAsync_WhileBusyAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
