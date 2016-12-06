@@ -123,7 +123,10 @@ namespace ReactNative.Tests.Modules.StatusBar
                 }
             }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncSuffix
             public IAsyncAction HideAsync()
+#pragma warning restore AvoidAsyncSuffix
             {
                 _hidden = true;
                 _waitHandle.Set();
@@ -134,7 +137,10 @@ namespace ReactNative.Tests.Modules.StatusBar
 
             }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncSuffix
             public IAsyncAction ShowAsync()
+#pragma warning restore AvoidAsyncSuffix
             {
                 _hidden = false;
                 _waitHandle.Set();
@@ -144,7 +150,10 @@ namespace ReactNative.Tests.Modules.StatusBar
                 return action().AsAsyncAction();
             }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncSuffix
             private static async Task DummyTask()
+#pragma warning restore AvoidAsyncSuffix
             {
                 try
                 {
