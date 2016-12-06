@@ -31,7 +31,7 @@ namespace ReactNative.Tests
                 var executor = await jsQueueThread.CallOnQueueAsync(() => new ChakraJavaScriptExecutor());
                 try
                 {
-                    await Initialize(executor, jsQueueThread);
+                    await InitializeAsync(executor, jsQueueThread);
                     await action(executor, jsQueueThread);
                 }
                 finally
@@ -45,7 +45,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public static async Task Initialize(ChakraJavaScriptExecutor executor, IMessageQueueThread jsQueueThread)
+        public static async Task InitializeAsync(ChakraJavaScriptExecutor executor, IMessageQueueThread jsQueueThread)
         {
             var scriptUris = new[]
             {
