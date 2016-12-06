@@ -162,6 +162,8 @@
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Picker\ReactPickerManager.cs" />
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
+    <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
+    <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Scroll\ReactScrollViewManager.cs" />
     <Compile Include="Views\Slider\ReactSliderManager.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />

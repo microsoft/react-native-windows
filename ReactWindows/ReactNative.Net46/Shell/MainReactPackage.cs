@@ -12,6 +12,7 @@ using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
+using ReactNative.Views.Progress;
 using ReactNative.Views.Scroll;
 using ReactNative.Views.Slider;
 using ReactNative.Views.Text;
@@ -79,7 +80,7 @@ namespace ReactNative.Shell
             {
                 //new ReactFlipViewManager(),
                 new ReactImageManager(),
-                //new ReactProgressBarViewManager(),
+                new ReactProgressBarViewManager(),
                 //new ReactProgressRingViewManager(),
                 new ReactPickerManager(),
                 new ReactRunManager(),
