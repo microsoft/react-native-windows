@@ -224,7 +224,10 @@ namespace ReactNative.Views.Web
             view.NavigationStarting += OnNavigationStarting;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         private async void OnNavigationCompleted(object sender, WebViewNavigationCompletedEventArgs e)
+#pragma warning restore AvoidAsyncVoid
         {
             var webView = (WebView)sender;
             LoadFinished(webView, e.Uri?.ToString());

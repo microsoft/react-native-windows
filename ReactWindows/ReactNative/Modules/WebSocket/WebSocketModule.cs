@@ -108,7 +108,10 @@ namespace ReactNative.Modules.WebSocket
             SendMessageInBackground(id, dataWriter, message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         private async void InitializeInBackground(int id, string url, MessageWebSocket webSocket)
+#pragma warning restore AvoidAsyncVoid
         {
             try
             {
@@ -130,7 +133,10 @@ namespace ReactNative.Modules.WebSocket
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         private async void SendMessageInBackground(int id, DataWriter dataWriter, string message)
+#pragma warning restore AvoidAsyncVoid
         {
             try
             {
