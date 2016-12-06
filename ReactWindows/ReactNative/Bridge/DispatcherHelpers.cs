@@ -25,7 +25,7 @@ namespace ReactNative.Bridge
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
 
-        public static Task<T> CallOnDispatcher<T>(Func<T> func)
+        public static Task<T> CallOnDispatcherAsync<T>(Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
 

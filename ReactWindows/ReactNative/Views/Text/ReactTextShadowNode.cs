@@ -192,7 +192,7 @@ namespace ReactNative.Views.Text
             // the UI thread from handling other work.
             //
             // TODO: determine another way to measure text elements.
-            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            var task = DispatcherHelpers.CallOnDispatcherAsync(() =>
             {
                 var textBlock = new RichTextBlock
                 {

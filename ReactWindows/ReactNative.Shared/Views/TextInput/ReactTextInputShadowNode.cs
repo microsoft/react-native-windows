@@ -330,7 +330,7 @@ namespace ReactNative.Views.TextInput
             // the UI thread from handling other work.
             //
             // TODO: determine another way to measure text elements.
-            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            var task = DispatcherHelpers.CallOnDispatcherAsync(() =>
             {
                 var textNode = (ReactTextInputShadowNode)node;
 
