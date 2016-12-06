@@ -40,7 +40,7 @@ namespace ReactNative.Tests.Modules.AppState
         }
 
         [TestMethod]
-        public async Task AppStateModule_Events()
+        public async Task AppStateModule_EventsAsync()
         {
             var activeState = CreateExpectedState("active");
             var backgroundState = CreateExpectedState("background");
