@@ -19,12 +19,18 @@ namespace ReactNative.Modules.StatusBar
             set;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncSuffix
         public IAsyncAction HideAsync()
+#pragma warning restore AvoidAsyncSuffix
         {
             return Task.CompletedTask.AsAsyncAction();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncSuffix
         public IAsyncAction ShowAsync()
+#pragma warning restore AvoidAsyncSuffix
         {
             return Task.CompletedTask.AsAsyncAction();
         }

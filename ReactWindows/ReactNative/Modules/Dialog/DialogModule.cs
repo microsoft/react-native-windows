@@ -52,7 +52,10 @@ namespace ReactNative.Modules.Dialog
             _isInForeground = false;   
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+#pragma warning disable AvoidAsyncVoid
         public async void OnResume()
+#pragma warning restore AvoidAsyncVoid
         {
             _isInForeground = true;
 
