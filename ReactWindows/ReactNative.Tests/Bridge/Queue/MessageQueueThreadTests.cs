@@ -90,7 +90,7 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public async Task MessageQueueThread_OneAtATime()
+        public async Task MessageQueueThread_OneAtATimeAsync()
         {
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
             var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });
