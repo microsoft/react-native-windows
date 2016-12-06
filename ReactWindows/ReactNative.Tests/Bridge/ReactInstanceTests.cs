@@ -12,7 +12,7 @@ namespace ReactNative.Tests.Bridge
     public class ReactInstanceTests
     {
         [TestMethod]
-        public async Task ReactInstance_GetModules()
+        public async Task ReactInstance_GetModulesAsync()
         {
             var module = new TestNativeModule();
 
