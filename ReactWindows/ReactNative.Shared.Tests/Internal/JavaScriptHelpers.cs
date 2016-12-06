@@ -15,16 +15,16 @@ namespace ReactNative.Tests
 {
     static class JavaScriptHelpers
     {
-        public static Task Run(Action<ChakraJavaScriptExecutor, IMessageQueueThread> action)
+        public static Task RunAsync(Action<ChakraJavaScriptExecutor, IMessageQueueThread> action)
         {
-            return Run((executor, jsQueueThread) =>
+            return RunAsync((executor, jsQueueThread) =>
             {
                 action(executor, jsQueueThread);
                 return Task.CompletedTask;
             });
         }
 
-        public static async Task Run(Func<ChakraJavaScriptExecutor, IMessageQueueThread, Task> action)
+        public static async Task RunAsync(Func<ChakraJavaScriptExecutor, IMessageQueueThread, Task> action)
         {
             using (var jsQueueThread = CreateJavaScriptThread())
             {

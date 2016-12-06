@@ -16,7 +16,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public async Task ReactBridge_Ctor_ArgumentChecksAsync()
         {
-            await JavaScriptHelpers.Run((executor, jsQueueThread) =>
+            await JavaScriptHelpers.RunAsync((executor, jsQueueThread) =>
             {
                 using (var nativeThread = CreateNativeModulesThread())
                 {
@@ -43,7 +43,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public async Task ReactBridge_Method_ArgumentChecksAsync()
         {
-            await JavaScriptHelpers.Run((executor, jsQueueThread) =>
+            await JavaScriptHelpers.RunAsync((executor, jsQueueThread) =>
             {
                 using (var nativeThread = CreateNativeModulesThread())
                 {
@@ -61,7 +61,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public async Task ReactBridge_CallFunctionAsync()
         {
-            await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
+            await JavaScriptHelpers.RunAsync(async (executor, jsQueueThread) =>
             {
                 using (var nativeThread = CreateNativeModulesThread())
                 {
@@ -90,7 +90,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public async Task ReactBridge_InvokeCallbackAsync()
         {
-            await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
+            await JavaScriptHelpers.RunAsync(async (executor, jsQueueThread) =>
             {
                 using (var nativeThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("native", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); }))
                 {
