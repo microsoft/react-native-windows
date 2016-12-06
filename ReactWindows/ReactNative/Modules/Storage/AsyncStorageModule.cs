@@ -241,7 +241,7 @@ namespace ReactNative.Modules.Storage
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
             {
-                var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+                var storageFolder = await GetAsyncStorageFolderAsync(false).ConfigureAwait(false);
                 if (storageFolder != null)
                 {
                     await storageFolder.DeleteAsync().AsTask().ConfigureAwait(false);
@@ -267,7 +267,7 @@ namespace ReactNative.Modules.Storage
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
             {
-                var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+                var storageFolder = await GetAsyncStorageFolderAsync(false).ConfigureAwait(false);
                 if (storageFolder != null)
                 {
                     var items = await storageFolder.GetItemsAsync().AsTask().ConfigureAwait(false);
@@ -304,7 +304,7 @@ namespace ReactNative.Modules.Storage
 
         private async Task<string> GetAsync(string key)
         {
-            var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+            var storageFolder = await GetAsyncStorageFolderAsync(false).ConfigureAwait(false);
             if (storageFolder != null)
             {
                 var fileName = AsyncStorageHelpers.GetFileName(key);
@@ -341,7 +341,7 @@ namespace ReactNative.Modules.Storage
 
         private async Task<JObject> RemoveAsync(string key)
         {
-            var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
+            var storageFolder = await GetAsyncStorageFolderAsync(false).ConfigureAwait(false);
             if (storageFolder != null)
             {
                 var fileName = AsyncStorageHelpers.GetFileName(key);
@@ -357,13 +357,13 @@ namespace ReactNative.Modules.Storage
 
         private async Task<JObject> SetAsync(string key, string value)
         {
-            var storageFolder = await GetAsyncStorageFolder(true).ConfigureAwait(false);
+            var storageFolder = await GetAsyncStorageFolderAsync(true).ConfigureAwait(false);
             var file = await storageFolder.CreateFileAsync(AsyncStorageHelpers.GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
             await FileIO.WriteTextAsync(file, value).AsTask().ConfigureAwait(false);
             return default(JObject);
         }
 
-        private async Task<StorageFolder> GetAsyncStorageFolder(bool createIfNotExists)
+        private async Task<StorageFolder> GetAsyncStorageFolderAsync(bool createIfNotExists)
         {
             if (_cachedFolder == null)
             {
