@@ -26,6 +26,10 @@ var ComponentExamples: Array<UIExplorerExample> = [
     module: require('./ActivityIndicatorExample'),
   },
   {
+    key: 'ButtonExample',
+    module: require('./ButtonExample'),
+  },
+  {
     key: 'FlipViewWindowsExample',
     module: require('./FlipViewWindowsExample'),
   },
