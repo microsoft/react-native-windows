@@ -13,6 +13,7 @@ clone_script:
     cd $Env:APPVEYOR_BUILD_FOLDER
 
     if ($Env:APPVEYOR_PULL_REQUEST_NUMBER) { $("git fetch -qf origin +refs/pull/" + $Env:APPVEYOR_PULL_REQUEST_NUMBER + "/merge") }
+    
     if ($Env:APPVEYOR_PULL_REQUEST_NUMBER) { git checkout -qf FETCH_HEAD }
     else { $("git checkout -qf " + $Env:APPVEYOR_REPO_COMMIT); }
 
