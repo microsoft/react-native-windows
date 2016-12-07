@@ -302,7 +302,7 @@ namespace ReactNative.Views.Image
 
                 imageBrush.ImageSource = image;
             }
-            else
+            else if (BitmapImageHelpers.IsHttpUri(source))
             {
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, default(ImageMetadata));
                 try
@@ -317,6 +317,15 @@ namespace ReactNative.Views.Image
                 {
                     OnImageFailed(view);
                 }
+            }
+            else
+            {
+                var image = new BitmapImage();
+                disposable.Disposable = image.GetUriLoadObservable().Subscribe(
+                    status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
+                    _ => OnImageFailed(view));
+                image.UriSource = new Uri(source);
+                imageBrush.ImageSource = image;
             }
         }
 

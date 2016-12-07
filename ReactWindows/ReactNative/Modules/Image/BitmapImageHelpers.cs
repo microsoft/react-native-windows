@@ -24,6 +24,16 @@ namespace ReactNative.Modules.Image
             return uri.StartsWith("data:");
         }
 
+        public static bool IsHttpUri(string uri)
+        {
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
+            return uri.StartsWith("http:") || uri.StartsWith("https:");
+        }
+
         public static async Task<IRandomAccessStream> GetStreamAsync(string uri)
         {
             if (uri == null)
@@ -55,7 +65,16 @@ namespace ReactNative.Modules.Image
                 .Merge(image.GetFailedObservable(), Scheduler.Default)
                 .StartWith(new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
         }
-  
+
+        public static IObservable<ImageStatusEventData> GetUriLoadObservable(this BitmapImage image)
+        {
+            return Observable.Merge(
+                Scheduler.Default,
+                image.GetDownloadingObservable(),
+                image.GetOpenedObservable(),
+                image.GetFailedObservable());
+        }
+
         private static IObservable<ImageStatusEventData> GetOpenedObservable(this BitmapImage image)
         {
             return Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
@@ -91,6 +110,15 @@ namespace ReactNative.Modules.Image
                 {
                     throw new InvalidOperationException(pattern.EventArgs.ErrorMessage);
                 });
+        }
+
+        private static IObservable<ImageStatusEventData> GetDownloadingObservable(this BitmapImage image)
+        {
+            return Observable.FromEventPattern<DownloadProgressEventHandler, DownloadProgressEventArgs>(
+                h => image.DownloadProgress += h,
+                h => image.DownloadProgress -= h)
+                .Take(1)
+                .Select(_ => new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
         }
     }
 }
