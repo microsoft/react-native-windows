@@ -3,9 +3,9 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ReactNative.Views.Picker
 {
@@ -71,21 +71,14 @@ namespace ReactNative.Views.Picker
             // Temporarily disable selection changed event handler.
             view.SelectionChanged -= OnSelectionChanged;
 
-            var selectedIndex = view.SelectedIndex;
-
-            view.Items.Clear();
-
-            foreach (var itemToken in items)
+            for (var index = 0; index < items.Count; index++)
             {
-                var itemData = (JObject)itemToken;
+                var itemData = (JObject)items[index];
                 var label = itemData.Value<string>("label");
                 if (label != null)
                 {
-                    var item = new ComboBoxItem
-                    {
-                        Content = label,
-                    };
-
+                    var item = new ComboBoxItem();
+                    item.Content = label;
                     var color = itemData.GetValue("color", StringComparison.Ordinal);
                     if (color != null)
                     {
@@ -95,13 +88,8 @@ namespace ReactNative.Views.Picker
 
                     view.Items.Add(item);
                 }            
-            }
-
-            if (selectedIndex < items.Count)
-            {
-                view.SelectedIndex = selectedIndex;
-            }
-             
+            } 
+              
             view.SelectionChanged += OnSelectionChanged;
         }
 

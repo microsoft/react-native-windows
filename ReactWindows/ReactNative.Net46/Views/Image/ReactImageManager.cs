@@ -1,5 +1,4 @@
-﻿using Microsoft.Toolkit.Uwp.UI;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
@@ -7,10 +6,10 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ReactNative.Views.Image
 {
@@ -255,7 +254,7 @@ namespace ReactNative.Views.Image
                         ReactImageLoadEvent.OnLoadEnd));
         }
 
-        private void OnImageStatusUpdate(Border view, ImageLoadStatus status, ImageMetadata metadata)
+        private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
         {
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -264,10 +263,10 @@ namespace ReactNative.Views.Image
             eventDispatcher.DispatchEvent(
                 new ReactImageLoadEvent(
                     view.GetTag(),
-                    (int)status,
-                    metadata.Uri,
-                    metadata.Width,
-                    metadata.Height));
+                    (int)status.LoadStatus,
+                    status.Metadata.Uri,
+                    status.Metadata.Width,
+                    status.Metadata.Height));
         }
 
         /// <summary>
@@ -287,46 +286,31 @@ namespace ReactNative.Views.Image
                 _disposables.Add(tag, disposable);
             }
 
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
             if (BitmapImageHelpers.IsBase64Uri(source))
             {
-                var image = new BitmapImage();
-
                 disposable.Disposable = image.GetStreamLoadObservable().Subscribe(
-                    status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
+                    status => OnImageStatusUpdate(view, status),
                     _ => OnImageFailed(view));
 
-                using (var stream = await BitmapImageHelpers.GetStreamAsync(source))
+                using (var stream = BitmapImageHelpers.GetStreamAsync(source))
                 {
-                    await image.SetSourceAsync(stream);
-                }
-
-                imageBrush.ImageSource = image;
-            }
-            else if (BitmapImageHelpers.IsHttpUri(source))
-            {
-                OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, default(ImageMetadata));
-                try
-                {
-                    var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(source), true);
-                    var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
-                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
-                    imageBrush.ImageSource = image;
-                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
-                }
-                catch
-                {
-                    OnImageFailed(view);
+                    image.StreamSource = stream;
                 }
             }
             else
             {
-                var image = new BitmapImage();
                 disposable.Disposable = image.GetUriLoadObservable().Subscribe(
-                    status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
+                    status => OnImageStatusUpdate(view, status),
                     _ => OnImageFailed(view));
+
                 image.UriSource = new Uri(source);
-                imageBrush.ImageSource = image;
             }
+
+            image.EndInit();
+            imageBrush.ImageSource = image;
         }
 
         /// <summary>
