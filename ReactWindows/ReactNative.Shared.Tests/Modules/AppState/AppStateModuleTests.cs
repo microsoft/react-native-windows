@@ -1,18 +1,24 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Core;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+#if !WINDOWS_UWP
+using System.Windows.Threading;
+#endif
 
 namespace ReactNative.Tests.Modules.AppState
 {
-    [TestClass]
+    [TestFixture]
+#if !WINDOWS_UWP
+    [Apartment(ApartmentState.STA)]
+#endif
     public class AppStateModuleTests
     {
-        [TestMethod]
+        [Test]
         public async Task AppStateModule_StateChecks()
         {
             var uninitializedState = CreateExpectedState("uninitialized");
@@ -28,6 +34,10 @@ namespace ReactNative.Tests.Modules.AppState
             module.getCurrentAppState(callback, new MockCallback(_ => { }));
             Assert.AreEqual(uninitializedState.ToString(), args[0].ToString());
 
+#if !WINDOWS_UWP
+            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
+#endif
+
             await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
 
             module.getCurrentAppState(callback, new MockCallback(_ => { }));
@@ -39,7 +49,7 @@ namespace ReactNative.Tests.Modules.AppState
             Assert.AreEqual(backgroundState.ToString(), args[0].ToString());
         }
 
-        [TestMethod]
+        [Test]
         public async Task AppStateModule_Events()
         {
             var activeState = CreateExpectedState("active");
@@ -55,6 +65,10 @@ namespace ReactNative.Tests.Modules.AppState
                     waitHandle.Set();
                 }
             }));
+
+#if !WINDOWS_UWP
+            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
+#endif
 
             await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
 

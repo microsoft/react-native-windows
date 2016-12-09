@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.UIManager;
 using System;
 using System.Linq;
@@ -12,9 +12,9 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void ReactStylesDiffMap_ArgumentChecks()
         {
-            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ReactStylesDiffMap(null));
-            Assert.AreEqual("props", ex.ParamName);
+            AssertEx.Throws<ArgumentNullException>(
+                () => new ReactStylesDiffMap(null),
+                ex => Assert.AreEqual("props", ex.ParamName));
         }
 
         [Test]

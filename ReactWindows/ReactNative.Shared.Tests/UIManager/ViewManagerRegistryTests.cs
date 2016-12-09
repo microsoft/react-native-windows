@@ -1,14 +1,14 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 
 namespace ReactNative.Tests.UIManager
 {
-    [TestClass]
+    [TestFixture]
     public class ViewManagerRegistryTests
     {
-        [TestMethod]
+        [Test]
         public void ViewManagerRegistry_ArgumentChecks()
         {
             AssertEx.Throws<ArgumentNullException>(
@@ -26,7 +26,7 @@ namespace ReactNative.Tests.UIManager
                 ex => Assert.AreEqual("className", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void ViewManagerRegistry_Simple()
         {
             var viewManager = new TestViewManager();

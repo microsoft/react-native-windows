@@ -14,23 +14,23 @@ namespace ReactNative.Tests.UIManager
         {
             var registry = new ShadowNodeRegistry();
 
-            ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
-                () => registry.AddNode(null));
-            Assert.AreEqual("node", ex1.ParamName);
+            AssertEx.Throws<ArgumentNullException>(
+                () => registry.AddNode(null),
+                ex => Assert.AreEqual("node", ex.ParamName));
 
-            ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
-                () => registry.AddRootNode(null));
-            Assert.AreEqual("node", ex2.ParamName);
+            AssertEx.Throws<ArgumentNullException>(
+                () => registry.AddRootNode(null),
+                ex => Assert.AreEqual("node", ex.ParamName));
 
-            Assert.Throws<KeyNotFoundException>(() => registry.GetNode(1));
+            AssertEx.Throws<KeyNotFoundException>(() => registry.GetNode(1));
             registry.RemoveNode(1); /* does not throw */
-            Assert.Throws<KeyNotFoundException>(() => registry.RemoveRootNode(1));
+            AssertEx.Throws<KeyNotFoundException>(() => registry.RemoveRootNode(1));
 
             registry.AddNode(new ReactShadowNode { ReactTag = 42 });
             registry.AddRootNode(new ReactShadowNode { ReactTag = 43 });
 
-            Assert.Throws<KeyNotFoundException>(() => registry.RemoveRootNode(42));
-            Assert.Throws<KeyNotFoundException>(() => registry.RemoveNode(43));
+            AssertEx.Throws<KeyNotFoundException>(() => registry.RemoveRootNode(42));
+            AssertEx.Throws<KeyNotFoundException>(() => registry.RemoveNode(43));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace ReactNative.Tests.UIManager
             for (var i = 0; i < count; ++i)
             {
                 registry.RemoveNode(i);
-                Assert.Throws<KeyNotFoundException>(() => registry.GetNode(i));
+                AssertEx.Throws<KeyNotFoundException>(() => registry.GetNode(i));
             }
         }
     }
