@@ -11,21 +11,6 @@ namespace ReactNative.Reflection
     static class ReflectionHelpers
     {
         /// <summary>
-        /// Checks if a method is asynchronous.
-        /// </summary>
-        /// <param name="methodInfo">The method.</param>
-        /// <returns>
-        /// <b>true</b> if the method is asynchronous, <b>false</b> otherwise.
-        /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
-#pragma warning disable AvoidAsyncSuffix
-        public static bool IsAsync(this MethodInfo methodInfo)
-#pragma warning restore AvoidAsyncSuffix
-        {
-            return typeof(Task).IsAssignableFrom(methodInfo.ReturnType);
-        }
-
-        /// <summary>
         /// Gets the <see cref="MemberInfo"/> at the root of the expression.
         /// </summary>
         /// <param name="expression">The expression.</param>
