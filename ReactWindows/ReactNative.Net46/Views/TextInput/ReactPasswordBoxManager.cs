@@ -106,7 +106,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("passwordChar")]
         public void SetPasswordChar(PasswordBox view, string passwordCharString)
         {
-            view.PasswordChar = passwordCharString.ToCharArray().First();
+            view.SetCurrentValue(PasswordBox.PasswordCharProperty, passwordCharString.ToCharArray().First());
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.FontSize)]
         public void SetFontSize(PasswordBox view, double fontSize)
         {
-            view.FontSize = fontSize;
+            view.SetCurrentValue(Control.FontSizeProperty, fontSize);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(PasswordBox view, uint? color)
         {
-            view.Foreground = color.HasValue
+            view.SetCurrentValue(Control.ForegroundProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+                : null);
         }
 
         /// <summary>
@@ -152,9 +152,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.FontFamily)]
         public void SetFontFamily(PasswordBox view, string familyName)
         {
-            view.FontFamily = familyName != null
+            view.SetCurrentValue(Control.FontFamilyProperty, familyName != null
                 ? new FontFamily(familyName)
-                : new FontFamily();
+                : new FontFamily());
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace ReactNative.Views.TextInput
         public void SetFontWeight(PasswordBox view, string fontWeightString)
         {
             var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightString);
-            view.FontWeight = fontWeight ?? FontWeights.Normal;
+            view.SetCurrentValue(Control.FontWeightProperty, fontWeight ?? FontWeights.Normal);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace ReactNative.Views.TextInput
         public void SetFontStyle(PasswordBox view, string fontStyleString)
         {
             var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
-            view.FontStyle = fontStyle ?? new FontStyle();
+            view.SetCurrentValue(Control.FontStyleProperty, fontStyle ?? new FontStyle());
         }
 
         /// <summary>
@@ -200,9 +200,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(PasswordBox view, uint? color)
         {
-            view.BorderBrush = color.HasValue
+            view.SetCurrentValue(Control.BorderBrushProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(ReactTextInputManager.DefaultTextBoxBorder);
+                : new SolidColorBrush(ReactTextInputManager.DefaultTextBoxBorder));
         }
 
         /// <summary>
@@ -213,9 +213,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
         public void SetBackgroundColor(PasswordBox view, uint? color)
         {
-            view.Background = color.HasValue
+            view.SetCurrentValue(Control.BackgroundProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(Colors.White);
+                : new SolidColorBrush(Colors.White));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selectionColor", CustomType = "Color")]
         public void SetSelectionColor(PasswordBox view, uint color)
         {
-            view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.SetCurrentValue(PasswordBox.SelectionBrushProperty, new SolidColorBrush(ColorHelpers.Parse(color)));
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.TextAlignVertical)]
         public void SetTextVerticalAlign(PasswordBox view, string alignment)
         {
-            view.VerticalContentAlignment = EnumHelpers.Parse<VerticalAlignment>(alignment);
+            view.SetCurrentValue(Control.VerticalContentAlignmentProperty, EnumHelpers.Parse<VerticalAlignment>(alignment));
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("editable")]
         public void SetEditable(PasswordBox view, bool editable)
         {
-            view.IsEnabled = editable;
+            view.SetCurrentValue(UIElement.IsEnabledProperty, editable);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("maxLength")]
         public void SetMaxLength(PasswordBox view, int maxCharLength)
         {
-            view.MaxLength = maxCharLength;
+            view.SetCurrentValue(PasswordBox.MaxLengthProperty, maxCharLength);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace ReactNative.Views.TextInput
                 : InputScopeNameValue.Password;
 
             inputScope.Names.Add(new InputScopeName(nameValue));
-            view.InputScope = inputScope;
+            view.SetCurrentValue(FrameworkElement.InputScopeProperty, inputScope);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.BorderWidth)]
         public void SetBorderWidth(PasswordBox view, int width)
         {
-            view.BorderThickness = new Thickness(width);
+            view.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(width));
         }
 
         public override ReactPasswordBoxShadowNode CreateShadowNodeInstance()
@@ -305,11 +305,11 @@ namespace ReactNative.Views.TextInput
             var paddings = extraData as float[];
             if (paddings != null)
             {
-                view.Padding = new Thickness(
+                view.SetCurrentValue(Control.PaddingProperty, new Thickness(
                     paddings[0],
                     paddings[1],
                     paddings[2],
-                    paddings[3]);
+                    paddings[3]));
             }
         }
 
@@ -383,7 +383,7 @@ namespace ReactNative.Views.TextInput
         {
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
+            view.SetCurrentValue(FrameworkElement.WidthProperty, dimensions.Width);
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
