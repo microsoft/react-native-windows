@@ -277,30 +277,41 @@ namespace ReactNative.Views.TextInput
             return s_passwordChar;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "TextElement does not contain SetCurrentValue")]
         private static void FormatTextElement(ReactPasswordBoxShadowNode textNode, TextElement inline)
         {
             if (textNode._fontSize != Unset)
             {
                 var fontSize = textNode._fontSize;
+#pragma warning disable WPF0041
                 inline.FontSize = fontSize;
+#pragma warning restore WPF0041
             }
 
             if (textNode._fontStyle.HasValue)
             {
                 var fontStyle = textNode._fontStyle.Value;
+#pragma warning disable WPF0041
                 inline.FontStyle = fontStyle;
+#pragma warning restore WPF0041
             }
 
             if (textNode._fontWeight.HasValue)
             {
                 var fontWeight = textNode._fontWeight.Value;
+#pragma warning disable WPF0041
                 inline.FontWeight = fontWeight;
+#pragma warning restore WPF0041
             }
 
             if (textNode._fontFamily != null)
             {
                 var fontFamily = new FontFamily(textNode._fontFamily);
+#pragma warning disable WPF0041
                 inline.FontFamily = fontFamily;
+#pragma warning restore WPF0041
             }
         }
     }
