@@ -37,6 +37,9 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "SetCurrentValue does not exist in this context")]
         protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
         {
             var currentX = Canvas.GetLeft(view);
@@ -87,8 +90,10 @@ namespace ReactNative.UIManager.LayoutAnimation
             {
                 Canvas.SetLeft(view, dimensions.X);
                 Canvas.SetTop(view, dimensions.Y);
+#pragma warning disable WPF0041
                 view.Width = dimensions.Width;
                 view.Height = dimensions.Height;
+#pragma warning restore WPF0041
             });
         }
 
