@@ -83,15 +83,15 @@ namespace ReactNative.Views.Image
 
                 if (resizeMode.Equals("cover"))
                 {
-                    imageBrush.Stretch = Stretch.UniformToFill;
+                    imageBrush.SetCurrentValue(TileBrush.StretchProperty, Stretch.UniformToFill);
                 }
                 else if (resizeMode.Equals("contain"))
                 {
-                    imageBrush.Stretch = Stretch.Uniform;
+                    imageBrush.SetCurrentValue(TileBrush.StretchProperty, Stretch.Uniform);
                 }
                 else
                 {
-                    imageBrush.Stretch = Stretch.Fill;
+                    imageBrush.SetCurrentValue(TileBrush.StretchProperty, Stretch.Fill);
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace ReactNative.Views.Image
         [ReactProp("borderRadius")]
         public void SetBorderRadius(Border view, double radius)
         {
-            view.CornerRadius = new CornerRadius(radius);
+            view.SetCurrentValue(Border.CornerRadiusProperty, new CornerRadius(radius));
         }
 
         /// <summary>
@@ -172,9 +172,9 @@ namespace ReactNative.Views.Image
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(Border view, uint? color)
         {
-            view.BorderBrush = color.HasValue
+            view.SetCurrentValue(Border.BorderBrushProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+                : null);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace ReactNative.Views.Image
             }
 
             image.EndInit();
-            imageBrush.ImageSource = image;
+            imageBrush.SetCurrentValue(ImageBrush.ImageSourceProperty, image);
         }
 
         /// <summary>
