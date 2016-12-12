@@ -183,12 +183,17 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="dimensions">The output buffer.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "TFramworkElement does not contain SetCurrentValue")]
         public virtual void SetDimensions(TFrameworkElement view, Dimensions dimensions)
         {
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
+#pragma warning disable WPF0041
             view.Width = dimensions.Width;
             view.Height = dimensions.Height;
+#pragma warning restore WPF0041
         }
 
         /// <summary>
