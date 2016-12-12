@@ -127,7 +127,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.FontSize)]
         public void SetFontSize(ReactTextBox view, double fontSize)
         {
-            view.FontSize = fontSize;
+            view.SetCurrentValue(Control.FontSizeProperty, fontSize);
         }
 
         /// <summary>
@@ -138,9 +138,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(ReactTextBox view, uint? color)
         {
-            view.Foreground = color.HasValue
+            view.SetCurrentValue(Control.ForegroundProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+                : null);
         }
 
         /// <summary>
@@ -151,9 +151,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.FontFamily)]
         public void SetFontFamily(ReactTextBox view, string familyName)
         {
-            view.FontFamily = familyName != null
+            view.SetCurrentValue(Control.FontFamilyProperty, familyName != null
                 ? new FontFamily(familyName)
-                : new FontFamily();
+                : new FontFamily());
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace ReactNative.Views.TextInput
         public void SetFontWeight(ReactTextBox view, string fontWeightString)
         {
             var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightString);
-            view.FontWeight = fontWeight ?? FontWeights.Normal;
+            view.SetCurrentValue(Control.FontWeightProperty, fontWeight ?? FontWeights.Normal);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace ReactNative.Views.TextInput
         public void SetFontStyle(ReactTextBox view, string fontStyleString)
         {
             var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
-            view.FontStyle = fontStyle ?? new FontStyle();
+            view.SetCurrentValue(Control.FontStyleProperty, fontStyle ?? new FontStyle());
         }
 
         /// <summary>
@@ -219,9 +219,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(ReactTextBox view, uint? color)
         {
-            view.BorderBrush = color.HasValue
+            view.SetCurrentValue(Control.BorderBrushProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(DefaultTextBoxBorder);
+                : new SolidColorBrush(DefaultTextBoxBorder));
         }
 
         /// <summary>
@@ -232,9 +232,9 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
         public void SetBackgroundColor(ReactTextBox view, uint? color)
         {
-            view.Background = color.HasValue
+            view.SetCurrentValue(Control.BackgroundProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(Colors.White);
+                : new SolidColorBrush(Colors.White));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selectionColor", CustomType = "Color")]
         public void SetSelectionColor(ReactTextBox view, uint color)
         {
-            view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.SetCurrentValue(System.Windows.Controls.Primitives.TextBoxBase.SelectionBrushProperty, new SolidColorBrush(ColorHelpers.Parse(color)));
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.TextAlign)]
         public void SetTextAlign(ReactTextBox view, string alignment)
         {
-            view.TextAlignment = EnumHelpers.Parse<TextAlignment>(alignment);
+            view.SetCurrentValue(TextBox.TextAlignmentProperty, EnumHelpers.Parse<TextAlignment>(alignment));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.TextAlignVertical)]
         public void SetTextVerticalAlign(ReactTextBox view, string alignment)
         {
-            view.VerticalContentAlignment = EnumHelpers.Parse<VerticalAlignment>(alignment);
+            view.SetCurrentValue(Control.VerticalContentAlignmentProperty, EnumHelpers.Parse<VerticalAlignment>(alignment));
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("editable")]
         public void SetEditable(ReactTextBox view, bool editable)
         {
-            view.IsEnabled = editable;
+            view.SetCurrentValue(UIElement.IsEnabledProperty, editable);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("maxLength")]
         public void SetMaxLength(ReactTextBox view, int maxCharLength)
         {
-            view.MaxLength = maxCharLength;
+            view.SetCurrentValue(TextBox.MaxLengthProperty, maxCharLength);
         }
 
         /// <summary>
@@ -312,8 +312,8 @@ namespace ReactNative.Views.TextInput
         [ReactProp("multiline", DefaultBoolean = false)]
         public void SetMultiline(ReactTextBox view, bool multiline)
         {
-            view.AcceptsReturn = multiline;
-            view.TextWrapping = multiline ? TextWrapping.Wrap : TextWrapping.NoWrap;
+            view.SetCurrentValue(System.Windows.Controls.Primitives.TextBoxBase.AcceptsReturnProperty, multiline);
+            view.SetCurrentValue(TextBox.TextWrappingProperty, multiline ? TextWrapping.Wrap : TextWrapping.NoWrap);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("keyboardType")]
         public void SetKeyboardType(ReactTextBox view, string keyboardType)
         {
-            view.InputScope = null;
+            view.SetCurrentValue(FrameworkElement.InputScopeProperty, null);
             if (keyboardType != null)
             {
                 var inputScope = new InputScope();
@@ -332,7 +332,7 @@ namespace ReactNative.Views.TextInput
                     new InputScopeName(
                         InputScopeHelpers.FromString(keyboardType)));
 
-                view.InputScope = inputScope;
+                view.SetCurrentValue(FrameworkElement.InputScopeProperty, inputScope);
             }
         }
 
@@ -344,7 +344,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.BorderWidth)]
         public void SetBorderWidth(ReactTextBox view, int width)
         {
-            view.BorderThickness = new Thickness(width);
+            view.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(width));
         }
 
         /// <summary>
@@ -410,11 +410,11 @@ namespace ReactNative.Views.TextInput
             var textUpdate = default(Tuple<int, string>);
             if (paddings != null)
             {
-                view.Padding = new Thickness(
+                view.SetCurrentValue(Control.PaddingProperty, new Thickness(
                     paddings[0],
                     paddings[1],
                     paddings[2],
-                    paddings[3]);
+                    paddings[3]));
             }
             else if ((textUpdate = extraData as Tuple<int, string>) != null)
             {
@@ -437,7 +437,7 @@ namespace ReactNative.Views.TextInput
                 var textLength = text?.Length ?? 0;
                 var maxLength = textLength - selectionLength;
 
-                view.Text = text ?? "";
+                view.SetCurrentValue(TextBox.TextProperty, text ?? "");
                 view.SelectionStart = Math.Min(selectionStart, textLength);
                 view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
 
@@ -470,7 +470,7 @@ namespace ReactNative.Views.TextInput
         {
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
+            view.SetCurrentValue(FrameworkElement.WidthProperty, dimensions.Width);
         }
 
         /// <summary>
