@@ -506,6 +506,9 @@ namespace ReactNative
             OnReactContextInitialized(reactContext);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "ReactRootView does not contain SetCurrentValue")]
         private void AttachMeasuredRootViewToInstance(
             ReactRootView rootView,
             IReactInstance reactInstance)
@@ -516,7 +519,9 @@ namespace ReactNative
             // application content from JavaScript
             rootView.TouchHandler?.Dispose();
             rootView.Children.Clear();
+#pragma warning disable WPF0041
             rootView.Tag = null;
+#pragma warning restore WPF0041
 
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
