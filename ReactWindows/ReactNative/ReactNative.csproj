@@ -149,10 +149,7 @@
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />
     <Compile Include="Views\Progress\ReactProgressRingShadowNode.cs" />
-    <Compile Include="Views\Slider\ReactSliderChangeEvent.cs" />
-    <Compile Include="Views\Slider\ReactSliderCompleteEvent.cs" />
     <Compile Include="Views\Slider\ReactSliderManager.cs" />
-    <Compile Include="Views\Slider\ReactSliderShadowNode.cs" />
     <Compile Include="Views\Split\Events\SplitViewClosedEvent.cs" />
     <Compile Include="Views\Picker\ReactPickerManager.cs" />
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />

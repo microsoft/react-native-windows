@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.Reactive.Linq;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Modules.Image
 {
@@ -63,12 +65,39 @@ namespace ReactNative.Modules.Image
             {
                 try
                 {
-                    var bitmapImage = await ImageCache.Instance.GetFromCacheAsync(new Uri(uriString), true);
-                    promise.Resolve(new JObject
+                    if (BitmapImageHelpers.IsHttpUri(uriString))
                     {
-                        { "width", bitmapImage.PixelWidth },
-                        { "height", bitmapImage.PixelHeight },
-                    });
+                        var bitmapImage = await ImageCache.Instance.GetFromCacheAsync(new Uri(uriString), true);
+                        promise.Resolve(new JObject
+                        {
+                            { "width", bitmapImage.PixelWidth },
+                            { "height", bitmapImage.PixelHeight },
+                        });
+                    }
+                    else
+                    {
+                        var bitmapImage = new BitmapImage();
+                        var loadQuery = bitmapImage.GetStreamLoadObservable()
+                            .Where(status => status.LoadStatus == ImageLoadStatus.OnLoadEnd)
+                            .FirstAsync()
+                            .Replay(1);
+
+                        using (loadQuery.Connect())
+                        {
+                            using (var stream = await BitmapImageHelpers.GetStreamAsync(uriString))
+                            {
+                                await bitmapImage.SetSourceAsync(stream);
+                            }
+
+                            await loadQuery;
+
+                            promise.Resolve(new JObject
+                            {
+                                { "width", bitmapImage.PixelWidth },
+                                { "height", bitmapImage.PixelHeight },
+                            });
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

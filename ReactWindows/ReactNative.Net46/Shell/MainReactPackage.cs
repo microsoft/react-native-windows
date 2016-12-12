@@ -11,10 +11,14 @@ using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
 using ReactNative.Views.Image;
+using ReactNative.Views.Picker;
+using ReactNative.Views.Progress;
 using ReactNative.Views.Scroll;
+using ReactNative.Views.Slider;
 using ReactNative.Views.Text;
 using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
+using ReactNative.Views.Web;
 using System;
 using System.Collections.Generic;
 
@@ -76,13 +80,13 @@ namespace ReactNative.Shell
             {
                 //new ReactFlipViewManager(),
                 new ReactImageManager(),
-                //new ReactProgressBarViewManager(),
+                new ReactProgressBarViewManager(),
                 //new ReactProgressRingViewManager(),
-                //new ReactPickerManager(),
+                new ReactPickerManager(),
                 new ReactRunManager(),
                 ////new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
-                //new ReactSliderManager(),
+                new ReactSliderManager(),
                 //new ReactSplitViewManager(),
                 //new ReactSwitchManager(),
                 new ReactPasswordBoxManager(),
@@ -91,7 +95,7 @@ namespace ReactNative.Shell
                 new ReactViewManager(),
                 new ReactSpanViewManager(),
                 ////new SwipeRefreshLayoutManager(),
-                //new ReactWebViewManager(),
+                new ReactWebViewManager(),
             };
         }
     }

@@ -160,12 +160,20 @@
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\UIManagerModule.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
+    <Compile Include="Views\Picker\ReactPickerManager.cs" />
+    <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
+    <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
+    <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Scroll\ReactScrollViewManager.cs" />
-    <Compile Include="Views\TextInput\ReactPasswordBoxManager.cs" />
-    <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
+    <Compile Include="Views\Slider\ReactSliderManager.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
+    <Compile Include="Views\TextInput\ReactPasswordBoxManager.cs" />
+    <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
+    <Compile Include="Views\Web\Events\WebViewLoadingErrorEvent.cs" />
+    <Compile Include="Views\Web\Events\WebViewLoadingEvent.cs" />
+    <Compile Include="Views\Web\ReactWebViewManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
