@@ -36,7 +36,7 @@ namespace ReactNative.Views.Picker
         [ReactProp("enabled")]
         public void SetEnabled(ComboBox view, bool enabled)
         {
-            view.IsEnabled = enabled;
+            view.SetCurrentValue(UIElement.IsEnabledProperty, enabled);
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace ReactNative.Views.Picker
             // Temporarily disable selection changed event handler.
             view.SelectionChanged -= OnSelectionChanged;
 
-            view.SelectedIndex = view.Items.Count > selected ? selected : -1;
+            view.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, view.Items.Count > selected ? selected : -1);
 
             if (view.SelectedIndex != -1)
             {
-                view.Foreground = ((ComboBoxItem)(view.Items[view.SelectedIndex])).Foreground;
+                view.SetCurrentValue(Control.ForegroundProperty, ((ComboBoxItem)(view.Items[view.SelectedIndex])).Foreground);
             }
 
             view.SelectionChanged += OnSelectionChanged;
