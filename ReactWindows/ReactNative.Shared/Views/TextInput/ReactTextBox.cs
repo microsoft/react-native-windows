@@ -44,12 +44,17 @@ namespace ReactNative.Views.TextInput
             return Interlocked.Increment(ref _eventCount);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "Reviewed.")]
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
             if (ClearTextOnFocus)
             {
+#pragma warning disable WPF0041
                 Text = "";
+#pragma warning restore WPF0041
             }
 
             if (SelectTextOnFocus)
