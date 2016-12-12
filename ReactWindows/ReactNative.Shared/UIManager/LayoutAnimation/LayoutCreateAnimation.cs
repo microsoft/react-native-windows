@@ -26,7 +26,7 @@ namespace ReactNative.UIManager.LayoutAnimation
                 return false;
             }
         }
-        
+
         /// <summary>
         /// Create an observable animation to be used to animate the view, 
         /// based on the animation configuration supplied at initialization
@@ -39,12 +39,17 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// stops the animation when disposed, and that completes 
         /// simultaneously with the underlying animation.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "FrameworkElement does not contain SetCurrentValue")]
         protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
         {
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
+#pragma warning disable WPF0041
             view.Width = dimensions.Width;
             view.Height = dimensions.Height;
+#pragma warning restore WPF0041
 
             return base.CreateAnimationCore(view, dimensions);
         }
