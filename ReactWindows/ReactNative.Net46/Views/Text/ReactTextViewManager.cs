@@ -36,9 +36,9 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(TextBlock view, uint? color)
         {
-            view.Foreground = color.HasValue
+            view.SetCurrentValue(TextBlock.ForegroundProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+                : null);
         }
 
         /// <summary>
