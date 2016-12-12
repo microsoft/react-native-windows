@@ -230,20 +230,20 @@ namespace ReactNative.Views.Text
         {
             //textBlock.CharacterSpacing = _letterSpacing;
             //textBlock.MaxLines = _numberOfLines;
-            textBlock.LineHeight = _lineHeight != 0 ? _lineHeight : double.NaN;
-            textBlock.TextAlignment = _textAlignment;
-            textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
-            textBlock.FontSize = _fontSize ?? 15;
-            textBlock.FontStyle = _fontStyle ?? new FontStyle();
-            textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
+            textBlock.SetCurrentValue(TextBlock.LineHeightProperty, _lineHeight != 0 ? _lineHeight : double.NaN);
+            textBlock.SetCurrentValue(TextBlock.TextAlignmentProperty, _textAlignment);
+            textBlock.SetCurrentValue(TextBlock.FontFamilyProperty, _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily());
+            textBlock.SetCurrentValue(TextBlock.FontSizeProperty, _fontSize ?? 15);
+            textBlock.SetCurrentValue(TextBlock.FontStyleProperty, _fontStyle ?? new FontStyle());
+            textBlock.SetCurrentValue(TextBlock.FontWeightProperty, _fontWeight ?? FontWeights.Normal);
 
             if (!measureOnly)
             {
-                textBlock.Padding = new Thickness(
+                textBlock.SetCurrentValue(TextBlock.PaddingProperty, new Thickness(
                     this.GetPaddingSpace(CSSSpacingType.Left),
                     this.GetPaddingSpace(CSSSpacingType.Top),
                     0,
-                    0);
+                    0));
             }
         }
 
