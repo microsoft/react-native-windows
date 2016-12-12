@@ -26,7 +26,7 @@ namespace ReactNative.UIManager
         [ReactProp("opacity", DefaultDouble = 1.0)]
         public void SetOpacity(TFrameworkElement view, double opacity)
         {
-            view.Opacity = opacity;
+            view.SetCurrentValue(UIElement.OpacityProperty, opacity);
         }
 
         // ToDo: SetOverflow - ReactProp("overflow")
