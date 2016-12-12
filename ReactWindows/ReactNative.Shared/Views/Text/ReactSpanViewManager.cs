@@ -47,12 +47,17 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="color">The masked color value.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "Span does not contain SetCurrentValue")]
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(Span view, uint? color)
         {
+#pragma warning disable WPF0041
             view.Foreground = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
                 : null;
+#pragma warning restore WPF0041
         }
 
         /// <summary>
