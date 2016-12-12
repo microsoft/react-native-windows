@@ -38,6 +38,9 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// </summary>
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "FrameworkElement does not contain SetCurrentValue")]
         protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
         {
             var fromValue = IsReverse ? 1.0 : 0.0;
@@ -51,9 +54,13 @@ namespace ReactNative.UIManager.LayoutAnimation
                 switch (animatedProperty.Value)
                 {
                     case AnimatedPropertyType.Opacity:
+#pragma warning disable WPF0041
                         view.Opacity = fromValue;
+#pragma warning restore WPF0041
                         storyboard.Children.Add(CreateOpacityAnimation(view, fromValue, toValue));
+#pragma warning disable WPF0041
                         @finally = () => view.Opacity = toValue;
+#pragma warning restore WPF0041
                         break;
                     case AnimatedPropertyType.ScaleXY:
                         // TODO: implement this layout animation option
