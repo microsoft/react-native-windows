@@ -48,9 +48,14 @@ namespace ReactNative.Views.Text
         /// Update the properties on the inline instance.
         /// </summary>
         /// <param name="inline">The instance.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "Inline does not contain SetCurrentValue")]
         public override void UpdateInline(Inline inline)
         {
+#pragma warning disable WPF0041
             ((Run)inline).Text = _text;
+#pragma warning restore WPF0041
         }
     }
 }
