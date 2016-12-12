@@ -56,7 +56,7 @@ namespace ReactNative.Views.Slider
         [ReactProp("disabled")]
         public void SetDisabled(System.Windows.Controls.Slider view, bool disabled)
         {
-            view.IsEnabled = !disabled;
+            view.SetCurrentValue(UIElement.IsEnabledProperty, !disabled);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace ReactNative.Views.Slider
         [ReactProp("minimumValue")]
         public void SetMinimumValue(System.Windows.Controls.Slider view, double minimum)
         {
-            view.Minimum = minimum;
+            view.SetCurrentValue(System.Windows.Controls.Primitives.RangeBase.MinimumProperty, minimum);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace ReactNative.Views.Slider
         [ReactProp("maximumValue")]
         public void SetMaximumValue(System.Windows.Controls.Slider view, double maximum)
         {
-            view.Maximum = maximum;
+            view.SetCurrentValue(System.Windows.Controls.Primitives.RangeBase.MaximumProperty, maximum);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace ReactNative.Views.Slider
         public void SetValue(System.Windows.Controls.Slider view, double value)
         {
             view.ValueChanged -= OnValueChange;
-            view.Value = value;
+            view.SetCurrentValue(System.Windows.Controls.Primitives.RangeBase.ValueProperty, value);
             view.ValueChanged += OnValueChange;
         }
 
@@ -109,13 +109,13 @@ namespace ReactNative.Views.Slider
                     step = Epsilon;
                 }
 
-                view.TickFrequency = step;
-                view.IsSnapToTickEnabled = true;
+                view.SetCurrentValue(System.Windows.Controls.Slider.TickFrequencyProperty, step);
+                view.SetCurrentValue(System.Windows.Controls.Slider.IsSnapToTickEnabledProperty, true);
             }
             else
             {
-                view.TickFrequency = 1;
-                view.IsSnapToTickEnabled = false;
+                view.SetCurrentValue(System.Windows.Controls.Slider.TickFrequencyProperty, (double)1);
+                view.SetCurrentValue(System.Windows.Controls.Slider.IsSnapToTickEnabledProperty, false);
             }
         }
 
