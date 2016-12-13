@@ -29,7 +29,7 @@ namespace ReactNative.Modules.Location
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void getCurrentPosition(

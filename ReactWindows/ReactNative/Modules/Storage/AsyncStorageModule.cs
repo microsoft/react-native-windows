@@ -22,7 +22,7 @@ namespace ReactNative.Modules.Storage
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void multiGet(string[] keys, ICallback callback)
@@ -67,7 +67,7 @@ namespace ReactNative.Modules.Storage
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void multiSet(string[][] keyValueArray, ICallback callback)
@@ -126,7 +126,7 @@ namespace ReactNative.Modules.Storage
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void multiRemove(string[] keys, ICallback callback)
@@ -173,7 +173,7 @@ namespace ReactNative.Modules.Storage
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void multiMerge(string[][] keyValueArray, ICallback callback)
@@ -232,7 +232,7 @@ namespace ReactNative.Modules.Storage
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void clear(ICallback callback)
@@ -256,7 +256,7 @@ namespace ReactNative.Modules.Storage
             callback.Invoke();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void getAllKeys(ICallback callback)

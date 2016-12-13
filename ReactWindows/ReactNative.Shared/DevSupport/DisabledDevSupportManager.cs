@@ -67,7 +67,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
 #pragma warning disable AvoidAsyncVoid
         public async void HandleException(Exception exception)
 #pragma warning restore AvoidAsyncVoid

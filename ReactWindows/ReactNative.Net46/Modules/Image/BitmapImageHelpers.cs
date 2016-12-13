@@ -22,7 +22,7 @@ namespace ReactNative.Modules.Image
             return uri.StartsWith("data:");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Intended name.")]
 #pragma warning disable AvoidAsyncSuffix
         public static Stream GetStreamAsync(string uri)
 #pragma warning restore AvoidAsyncSuffix

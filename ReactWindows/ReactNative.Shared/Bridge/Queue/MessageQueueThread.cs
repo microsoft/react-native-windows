@@ -281,7 +281,7 @@ namespace ReactNative.Bridge.Queue
                 _taskFactory = new TaskFactory(_taskScheduler);
             }
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Overridden method.")]
 #pragma warning disable AvoidAsyncVoid
             protected override async void Enqueue(Action action)
 #pragma warning restore AvoidAsyncVoid

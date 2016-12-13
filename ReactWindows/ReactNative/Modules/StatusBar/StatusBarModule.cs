@@ -51,13 +51,13 @@ namespace ReactNative.Modules.StatusBar
         /// Hide or show StatusBar.
         /// </summary>
         /// <param name="hide">Hide or show StatusBar.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void setHidden(bool hide)
 #pragma warning restore AvoidAsyncVoid
         {
-            await RunOnDispatcherAsync(async () =>
+            RunOnDispatcher(async () =>
             {
                 if (hide)
                 {
@@ -74,13 +74,13 @@ namespace ReactNative.Modules.StatusBar
         /// Set StatusBar background color.
         /// </summary>
         /// <param name="color">RGB color.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void setColor(uint? color)
 #pragma warning restore AvoidAsyncVoid
         {
-            await RunOnDispatcherAsync(() =>
+            RunOnDispatcher(() =>
             {
                 _statusBar.BackgroundColor = !color.HasValue
                     ? default(Color?)
@@ -92,13 +92,13 @@ namespace ReactNative.Modules.StatusBar
         /// Set StatusBar opacity.
         /// </summary>
         /// <param name="translucent">Is StatusBar translucent.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void setTranslucent(bool translucent)
 #pragma warning restore AvoidAsyncVoid
         {
-            await RunOnDispatcherAsync(() =>
+            RunOnDispatcher(() =>
             {
                 _statusBar.BackgroundOpacity = translucent ? 0.5 : 1;
             });
@@ -123,7 +123,11 @@ namespace ReactNative.Modules.StatusBar
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
-        private static async Task RunOnDispatcherAsync(DispatchedHandler action)
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
+        private static async void RunOnDispatcher(DispatchedHandler action)
+#pragma warning restore AvoidAsyncVoid
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

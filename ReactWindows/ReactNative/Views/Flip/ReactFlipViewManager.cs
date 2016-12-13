@@ -96,7 +96,7 @@ namespace ReactNative.Views.Flip
             view.SelectionChanged -= OnSelectionChanged;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Overridden method.")]
 #pragma warning disable AvoidAsyncVoid
         public override async void ReceiveCommand(FlipView view, int commandId, JArray args)
 #pragma warning restore AvoidAsyncVoid

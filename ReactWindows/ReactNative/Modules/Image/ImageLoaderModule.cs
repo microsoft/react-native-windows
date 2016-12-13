@@ -21,7 +21,7 @@ namespace ReactNative.Modules.Image
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void prefetchImage(string uriString, IPromise promise)
@@ -33,7 +33,7 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            DispatcherHelpers.RunOnDispatcher(async () =>
             {
                 try
                 {
@@ -49,7 +49,7 @@ namespace ReactNative.Modules.Image
             });
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void getSize(string uriString, IPromise promise)
@@ -61,7 +61,7 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            DispatcherHelpers.RunOnDispatcher(async () =>
             {
                 try
                 {

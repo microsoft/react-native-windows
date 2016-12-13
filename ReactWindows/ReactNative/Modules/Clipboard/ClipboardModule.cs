@@ -39,7 +39,7 @@ namespace ReactNative.Modules.Clipboard
         /// Get the clipboard content through a promise.
         /// </summary>
         /// <param name="promise">The promise.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void getString(IPromise promise)
@@ -50,7 +50,7 @@ namespace ReactNative.Modules.Clipboard
                 throw new ArgumentNullException(nameof(promise));
             }
 
-            await RunOnDispatcherAsync(async () =>
+            RunOnDispatcher(async () =>
             {
                 try
                 {
@@ -80,13 +80,13 @@ namespace ReactNative.Modules.Clipboard
         /// Add text to the clipboard or clear the clipboard.
         /// </summary>
         /// <param name="text">The text. If null clear clipboard.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void setString(string text)
 #pragma warning restore AvoidAsyncVoid
         {
-            await RunOnDispatcherAsync(() =>
+            RunOnDispatcher(() =>
             {
                 if (text == null)
                 {
@@ -105,7 +105,10 @@ namespace ReactNative.Modules.Clipboard
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
-        private static async Task RunOnDispatcherAsync(DispatchedHandler action)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
+        private static async void RunOnDispatcher(DispatchedHandler action)
+#pragma warning restore AvoidAsyncVoid
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

@@ -6,7 +6,10 @@ namespace ReactNative.Tests
 {
     static class DispatcherHelpers
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
         public static async Task RunOnDispatcherAsync(Action action)
+#pragma warning restore AvoidAsyncVoid
         {
             await App.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action)).AsTask().ConfigureAwait(false);
         }

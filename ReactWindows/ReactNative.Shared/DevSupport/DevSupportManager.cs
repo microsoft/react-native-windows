@@ -196,12 +196,12 @@ namespace ReactNative.DevSupport
         }
 
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
 #pragma warning disable AvoidAsyncVoid
         public async void UpdateJavaScriptError(string message, JArray details, int errorCookie)
 #pragma warning restore AvoidAsyncVoid
         {
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            DispatcherHelpers.RunOnDispatcher(() =>
             {
                 if (_redBoxDialog == null
                     || !_redBoxDialogOpen
@@ -224,7 +224,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
 #pragma warning disable AvoidAsyncVoid
         public async void ShowDevOptionsDialog()
 #pragma warning restore AvoidAsyncVoid
@@ -234,7 +234,7 @@ namespace ReactNative.DevSupport
                 return;
             }
 
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            DispatcherHelpers.RunOnDispatcher(() =>
             {
                 var options = new[]
                 {
@@ -353,7 +353,7 @@ namespace ReactNative.DevSupport
             return _devServerHelper.IsPackagerRunningAsync();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented inteface member.")]
 #pragma warning disable AvoidAsyncVoid
         public async void HandleReloadJavaScript()
 #pragma warning restore AvoidAsyncVoid
@@ -458,12 +458,12 @@ namespace ReactNative.DevSupport
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
 #pragma warning disable AvoidAsyncVoid
         private async void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
 #pragma warning restore AvoidAsyncVoid
         {
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            DispatcherHelpers.RunOnDispatcher(() =>
             {
                 if (_redBoxDialog == null)
                 {

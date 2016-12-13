@@ -46,8 +46,8 @@ namespace ReactNative.Modules.Launch
         /// <param name="promise">
         /// The promise that should be resolved after the URL is opened.
         /// </param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
 #pragma warning disable AvoidAsyncVoid
         public async void openURL(string url, IPromise promise)
 #pragma warning restore AvoidAsyncVoid
@@ -84,7 +84,7 @@ namespace ReactNative.Modules.Launch
         /// <param name="promise">
         /// The promise used to return the result of the check.
         /// </param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void canOpenURL(string url, IPromise promise)

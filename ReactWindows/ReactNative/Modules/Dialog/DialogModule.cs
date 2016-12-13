@@ -52,7 +52,7 @@ namespace ReactNative.Modules.Dialog
             _isInForeground = false;   
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented inteface member.")]
 #pragma warning disable AvoidAsyncVoid
         public async void OnResume()
 #pragma warning restore AvoidAsyncVoid
@@ -71,7 +71,7 @@ namespace ReactNative.Modules.Dialog
         {
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
 #pragma warning disable AvoidAsyncVoid
         public async void showAlert(
@@ -106,7 +106,7 @@ namespace ReactNative.Modules.Dialog
                 });
             }
 
-            await RunOnDispatcherAsync(async () =>
+            RunOnDispatcher(async () =>
             {
                 if (_isInForeground)
                 {
@@ -124,7 +124,10 @@ namespace ReactNative.Modules.Dialog
             callback.Invoke(DialogModuleHelper.ActionButtonClicked, target.Id);
         }
 
-        private static async Task RunOnDispatcherAsync(DispatchedHandler action)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
+        private static async void RunOnDispatcher(DispatchedHandler action)
+#pragma warning restore AvoidAsyncVoid
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

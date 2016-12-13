@@ -60,7 +60,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// Inform the ThreadPool that there's work to be executed for this scheduler. 
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Can be called in the body of lock statement.")]
 #pragma warning disable AvoidAsyncVoid
         private async void NotifyThreadPoolOfPendingWork()
 #pragma warning restore AvoidAsyncVoid

@@ -30,7 +30,7 @@ namespace ReactNative.Modules.StatusBar
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Intended name.")]
 #pragma warning disable AvoidAsyncSuffix
         public IAsyncAction HideAsync()
 #pragma warning restore AvoidAsyncSuffix
@@ -38,7 +38,7 @@ namespace ReactNative.Modules.StatusBar
             return GetForCurrentView().HideAsync();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Intended name.")]
 #pragma warning disable AvoidAsyncSuffix
         public IAsyncAction ShowAsync()
 #pragma warning restore AvoidAsyncSuffix

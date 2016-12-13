@@ -54,7 +54,10 @@ namespace ReactNative.Bridge
             return CurrentDispatcher.CheckAccess();
         }
 
-        public static async Task RunOnDispatcherAsync(Action action)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
+        public static async void RunOnDispatcher(Action action)
+#pragma warning restore AvoidAsyncVoid
         {
             AssertDispatcherSet();
 
@@ -65,7 +68,7 @@ namespace ReactNative.Bridge
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
 
-            await RunOnDispatcherAsync(() =>
+            RunOnDispatcher(() =>
             {
                 var result = func();
 
