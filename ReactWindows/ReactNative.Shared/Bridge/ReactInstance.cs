@@ -217,7 +217,6 @@ namespace ReactNative.Bridge
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Reviewed.")]
         private void HandleException(Exception ex)
         {
             _nativeModuleCallExceptionHandler(ex);
