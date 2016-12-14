@@ -182,10 +182,10 @@ namespace ReactNative
         /// if configuration has changed or the developer has requested the
         /// application to be reloaded.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Wrapper method.")]
-#pragma warning disable AvoidAsyncVoid
-        public async void RecreateReactContextInBackground()
-#pragma warning restore AvoidAsyncVoid
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "UseAsyncSuffix", Justification = "Intended method name. (Wrapper method)")]
+#pragma warning disable UseAsyncSuffix
+        public async Task RecreateReactContextInBackground()
+#pragma warning restore UseAsyncSuffix
         {
             await RecreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
