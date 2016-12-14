@@ -145,10 +145,10 @@ namespace ReactNative
         /// enforced to keep developers from accidentally creating their
         /// applications multiple times.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
-#pragma warning disable AvoidAsyncVoid
-        public async void CreateReactContextInBackground()
-#pragma warning restore AvoidAsyncVoid
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "UseAsyncSuffix", Justification = "Intended method name. (Wrapper method)")]
+#pragma warning disable UseAsyncSuffix
+        public async Task CreateReactContextInBackground()
+#pragma warning restore UseAsyncSuffix
         {
             await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
