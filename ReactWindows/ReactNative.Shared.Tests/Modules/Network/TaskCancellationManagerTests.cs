@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using NUnit.Framework;
 using ReactNative.Modules.Network;
 using System;
 using System.Threading;
@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ReactNative.Tests.Modules.Network
 {
-    [TestClass]
+    [TestFixture]
     public class TaskCancellationManagerTests
     {
-        [TestMethod]
+        [Test]
         public void TaskCancellationManager_ArgumentChecks()
         {
             AssertEx.Throws<ArgumentNullException>(
@@ -17,7 +17,7 @@ namespace ReactNative.Tests.Modules.Network
                 ex => Assert.AreEqual("keyComparer", ex.ParamName));
         }
 
-        [TestMethod]
+        [Test]
         public void TaskCancellationManager_CancelledAfterCompleted()
         {
             var mgr = new TaskCancellationManager<int>();
@@ -27,7 +27,7 @@ namespace ReactNative.Tests.Modules.Network
             // Not throwing implies success
         }
 
-        [TestMethod]
+        [Test]
         public void TaskCancellationManager_CancelTask()
         {
             var enter = new AutoResetEvent(false);
@@ -49,7 +49,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsTrue(exit.WaitOne());
         }
 
-        [TestMethod]
+        [Test]
         public async Task TaskCancellationManager_CleanedUpAfterComplete()
         {
             var enter = new AutoResetEvent(false);
@@ -72,7 +72,7 @@ namespace ReactNative.Tests.Modules.Network
             Assert.AreEqual(0, mgr.PendingOperationCount);
         }
 
-        [TestMethod]
+        [Test]
         public async Task TaskCancellationManager_CleanedUpAfterError()
         {
             var enter = new AutoResetEvent(false);
