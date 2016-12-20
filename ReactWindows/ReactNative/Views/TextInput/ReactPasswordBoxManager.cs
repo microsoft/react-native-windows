@@ -99,8 +99,6 @@ namespace ReactNative.Views.TextInput
             }
         }
 
-        #region CSS
-
         /// <summary>
         /// Sets the password character on the <see cref="PasswordBox"/>.
         /// </summary>
@@ -294,10 +292,6 @@ namespace ReactNative.Views.TextInput
             view.BorderThickness = new Thickness(width);
         }
 
-        #endregion
-
-        #region Overrides
-
         public override ReactPasswordBoxShadowNode CreateShadowNodeInstance()
         {
             return new ReactPasswordBoxShadowNode();
@@ -395,10 +389,6 @@ namespace ReactNative.Views.TextInput
             view.Width = dimensions.Width;
         }
 
-        #endregion
-
-        #region Events
-
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             var textBox = (PasswordBox)sender;
@@ -439,7 +429,7 @@ namespace ReactNative.Views.TextInput
                       textBox.GetTag(),
                       textBox.Password));
         }
-
+        
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
@@ -455,7 +445,5 @@ namespace ReactNative.Views.TextInput
                             textBox.Password));
             }
         }
-
-        #endregion
     }
 }

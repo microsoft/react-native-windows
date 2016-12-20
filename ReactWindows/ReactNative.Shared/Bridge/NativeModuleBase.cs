@@ -34,8 +34,6 @@ namespace ReactNative.Bridge
     /// </remarks>
     public abstract class NativeModuleBase : INativeModule
     {
-        private static readonly MethodInfo s_toObjectGeneric = ((MethodInfo)ReflectionHelpers.InfoOf((JToken token) => token.ToObject<object>())).GetGenericMethodDefinition();
-
         private static readonly IReadOnlyDictionary<string, object> s_emptyConstants
             = new Dictionary<string, object>();
 

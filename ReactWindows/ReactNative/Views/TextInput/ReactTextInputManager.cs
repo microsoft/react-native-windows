@@ -426,7 +426,7 @@ namespace ReactNative.Views.TextInput
                 {
                     return;
                 }
-
+                
                 view.TextChanging -= OnTextChanging;
                 view.TextChanged -= OnTextChanged;
 
@@ -506,7 +506,7 @@ namespace ReactNative.Views.TextInput
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
         }
-
+        
         private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
             var textBox = (ReactTextBox)sender;
@@ -553,7 +553,7 @@ namespace ReactNative.Views.TextInput
                       textBox.GetTag(),
                       textBox.Text));
         }
-
+        
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
