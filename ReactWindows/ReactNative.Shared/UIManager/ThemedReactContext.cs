@@ -1,5 +1,5 @@
-﻿using System;
-using ReactNative.Bridge;
+﻿using ReactNative.Bridge;
+using System;
 
 namespace ReactNative.UIManager
 {
