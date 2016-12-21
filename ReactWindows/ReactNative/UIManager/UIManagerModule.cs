@@ -13,10 +13,6 @@ namespace ReactNative.UIManager
     /// <summary>
     /// Native module to allow JavaScript to create and update native views.
     /// </summary>
-    /// <remarks>
-    /// TODO: 
-    /// 1) Add animation support to UIManagerModule
-    /// </remarks>
     public partial class UIManagerModule : ReactContextNativeModuleBase, ILifecycleEventListener, IOnBatchCompleteListener
     {
         private const int RootViewTagIncrement = 10;
@@ -33,20 +29,20 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
-        /// <param name="uiImplementation">The UI implementation.</param>
+        /// <param name="uiImplementationProvider">The UI implementation provider.</param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
-            UIImplementation uiImplementation)
+            UIImplementationProvider uiImplementationProvider)
             : base(reactContext)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
-            if (uiImplementation == null)
-                throw new ArgumentNullException(nameof(uiImplementation));
-
+            if (uiImplementationProvider == null)
+                throw new ArgumentNullException(nameof(uiImplementationProvider));
+            
             _eventDispatcher = new EventDispatcher(reactContext);
-            _uiImplementation = uiImplementation;
+            _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
         }
@@ -128,7 +124,7 @@ namespace ReactNative.UIManager
                     if (currentCount == resizeCount)
                     {
                         Context.AssertOnNativeModulesQueueThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight, _eventDispatcher);
+                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
                     }
                 });
             });
@@ -136,7 +132,7 @@ namespace ReactNative.UIManager
             return tag;
         }
 
-        #region React Methods
+#region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -430,9 +426,9 @@ namespace ReactNative.UIManager
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
-        #endregion
+#endregion
 
-        #region ILifecycleEventListenere
+#region ILifecycleEventListenere
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -463,9 +459,9 @@ namespace ReactNative.UIManager
             _eventDispatcher.OnDestroy();
         }
 
-        #endregion
+#endregion
 
-        #region IOnBatchCompleteListener
+#region IOnBatchCompleteListener
 
         /// <summary>
         /// To implement the transactional requirement, UI changes are only
@@ -480,13 +476,13 @@ namespace ReactNative.UIManager
                 .With("BatchId", batchId)
                 .Start())
             {
-                _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
+                _uiImplementation.DispatchViewUpdates(batchId);
             }
         }
 
-        #endregion
+#endregion
 
-        #region NativeModuleBase
+#region NativeModuleBase
 
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
@@ -496,10 +492,9 @@ namespace ReactNative.UIManager
             _eventDispatcher.OnReactInstanceDispose();
         }
 
-        #endregion
+#endregion
 
-        #region Dimensions
-
+#region Dimensions
         private void OnBoundsChanged(ApplicationView sender, object args)
         {
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
@@ -510,7 +505,7 @@ namespace ReactNative.UIManager
         {
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
             var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-
+            
             return new Dictionary<string, object>
             {
                 {
@@ -525,7 +520,6 @@ namespace ReactNative.UIManager
                 },
             };
         }
-
-        #endregion
+#endregion
     }
 }

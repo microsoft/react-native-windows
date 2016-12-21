@@ -1,12 +1,19 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using static System.FormattableString;
 
 namespace ReactNative.Animated
 {
     class InterpolationAnimatedNode : ValueAnimatedNode
     {
+        public const string ExtrapolateTypeIdentity = "identity";
+        public const string ExtrapolateTypeClamp = "clamp";
+        public const string ExtrapolateTypeExtend = "extend";
+        
         private readonly double[] _inputRange;
         private readonly double[] _outputRange;
+        private readonly string _extrapolateLeft;
+        private readonly string _extrapolateRight;
 
         private ValueAnimatedNode _parent;
 
@@ -15,6 +22,8 @@ namespace ReactNative.Animated
         {
             _inputRange = config.GetValue("inputRange", StringComparison.Ordinal).ToObject<double[]>();
             _outputRange = config.GetValue("outputRange", StringComparison.Ordinal).ToObject<double[]>();
+            _extrapolateLeft = config.Value<string>("extrapolateLeft");
+            _extrapolateRight = config.Value<string>("extrapolateRight");
         }
 
         protected override void OnAttachedToNode(AnimatedNode parent)
@@ -51,7 +60,7 @@ namespace ReactNative.Animated
                     "Trying to update interpolation node that has not been attached to the parent.");
             }
 
-            Value = Interpolate(_parent.Value, _inputRange, _outputRange);
+            Value = Interpolate(_parent.Value, _inputRange, _outputRange, _extrapolateLeft, _extrapolateRight);
         }
 
         private static double Interpolate(
@@ -59,13 +68,57 @@ namespace ReactNative.Animated
             double inputMin,
             double inputMax,
             double outputMin,
-            double outputMax)
+            double outputMax,
+            string extrapolateLeft,
+            string extrapolateRight)
         {
+            var result = value;
+
+            // Extrapolate
+            if (result < inputMin)
+            {
+                switch (extrapolateLeft)
+                {
+                    case ExtrapolateTypeIdentity:
+                        return result;
+                    case ExtrapolateTypeClamp:
+                        result = inputMin;
+                        break;
+                    case ExtrapolateTypeExtend:
+                        break;
+                    default:
+                        throw new InvalidOperationException(
+                            Invariant($"Invalid extrapolation type '{extrapolateLeft}' for left extrapolation."));
+                }
+            }
+
+            if (result > inputMax)
+            {
+                switch (extrapolateRight)
+                {
+                    case ExtrapolateTypeIdentity:
+                        return result;
+                    case ExtrapolateTypeClamp:
+                        result = inputMax;
+                        break;
+                    case ExtrapolateTypeExtend:
+                        break;
+                    default:
+                        throw new InvalidOperationException(
+                            Invariant($"Invalid extrapolation type '{extrapolateRight} for right extrapolation"));
+                }
+            }
+
             return outputMin + (outputMax - outputMin) *
-                (value - inputMin) / (inputMax - inputMin);
+                (result - inputMin) / (inputMax - inputMin);
         }
 
-        private static double Interpolate(double value, double[] inputRange, double[] outputRange)
+        private static double Interpolate(
+            double value, 
+            double[] inputRange, 
+            double[] outputRange,
+            string extrapolateLeft,
+            string extrapolateRight)
         {
             var rangeIndex = FindRangeIndex(value, inputRange);
             return Interpolate(
@@ -73,13 +126,15 @@ namespace ReactNative.Animated
                 inputRange[rangeIndex],
                 inputRange[rangeIndex + 1],
                 outputRange[rangeIndex],
-                outputRange[rangeIndex + 1]);
+                outputRange[rangeIndex + 1],
+                extrapolateLeft,
+                extrapolateRight);
         }
 
         private static int FindRangeIndex(double value, double[] ranges)
         {
             var index = 1;
-            for (; index < ranges.Length; ++index)
+            for (; index < ranges.Length - 1; ++index)
             {
                 if (ranges[index] >= value)
                 {

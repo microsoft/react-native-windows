@@ -199,6 +199,7 @@ namespace ReactNative.Views.Web
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, WebView view)
         {
+            base.OnDropViewInstance(reactContext, view);
             view.NavigationCompleted -= OnNavigationCompleted;
             view.NavigationStarting -= OnNavigationStarting;
         }
@@ -221,6 +222,7 @@ namespace ReactNative.Views.Web
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, WebView view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.NavigationCompleted += OnNavigationCompleted;
             view.NavigationStarting += OnNavigationStarting;
         }

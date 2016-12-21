@@ -1,8 +1,5 @@
 ﻿namespace ReactNative.Chakra
 {
-    using System;
-    using System.Runtime.Serialization;
-
     /// <summary>
     ///     A fatal exception occurred.
     /// </summary>

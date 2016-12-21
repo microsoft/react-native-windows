@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
@@ -6,7 +7,6 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
@@ -63,7 +63,8 @@ namespace ReactNative.Views.Image
             Tuple<JArray, Color?, Color?> imageExtraData = (Tuple<JArray, Color?, Color?>)extraData;
             var imageBrush = (ImageBrush)view.Background;
 
-            OnImageStatusUpdate(view, new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
+            OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, new ImageMetadata());
+//            OnImageStatusUpdate(view, new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
 
             var sources = imageExtraData.Item1;
             var tintColor = imageExtraData.Item2;
@@ -229,6 +230,8 @@ namespace ReactNative.Views.Image
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
         {
+            base.OnDropViewInstance(reactContext, view);
+
             var tag = view.GetTag();
             var disposable = default(SerialDisposable);
             if (_disposables.TryGetValue(tag, out disposable))
@@ -280,7 +283,7 @@ namespace ReactNative.Views.Image
                         ReactImageLoadEvent.OnLoadEnd));
         }
 
-        private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
+        private void OnImageStatusUpdate(Border view, ImageLoadStatus status, ImageMetadata metadata)
         {
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -289,10 +292,10 @@ namespace ReactNative.Views.Image
             eventDispatcher.DispatchEvent(
                 new ReactImageLoadEvent(
                     view.GetTag(),
-                    (int)status.LoadStatus,
-                    status.Metadata.Uri,
-                    status.Metadata.Width,
-                    status.Metadata.Height));
+                    (int)status,
+                    metadata.Uri,
+                    metadata.Width,
+                    metadata.Height));
         }
 
         /// <summary>
@@ -312,20 +315,40 @@ namespace ReactNative.Views.Image
                 _disposables.Add(tag, disposable);
             }
 
-            var image = new BitmapImage();
             if (BitmapImageHelpers.IsBase64Uri(source))
             {
+                var image = new BitmapImage();
+
                 disposable.Disposable = image.GetStreamLoadObservable().Subscribe(
-                    status => OnImageStatusUpdate(view, status),
+                    status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
                     _ => OnImageFailed(view));
 
                 using (var stream = await BitmapImageHelpers.GetStreamAsync(source))
                 {
                     await image.SetSourceAsync(stream);
                 }
+
+                imageBrush.ImageSource = image;
+            }
+            else if (BitmapImageHelpers.IsHttpUri(source))
+            {
+                OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, default(ImageMetadata));
+                try
+                {
+                    var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(source), true);
+                    var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
+                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
+                    imageBrush.ImageSource = image;
+                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
+                }
+                catch
+                {
+                    OnImageFailed(view);
+                }
             }
             else
             {
+                var image = new BitmapImage();
                 if (tintColor != null || backgroundColor != null)
                 {
                     SetColors(view, source, tintColor, backgroundColor);
@@ -333,14 +356,12 @@ namespace ReactNative.Views.Image
                 else
                 {
                     disposable.Disposable = image.GetUriLoadObservable().Subscribe(
-                        status => OnImageStatusUpdate(view, status),
+                    status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
                         _ => OnImageFailed(view));
-
                     image.UriSource = new Uri(source);
                 }
+                imageBrush.ImageSource = image;
             }
-
-            imageBrush.ImageSource = image;
         }
 
         private async void SetColors(Border view, string source, Color? tintColor, Color? backgroundColor)

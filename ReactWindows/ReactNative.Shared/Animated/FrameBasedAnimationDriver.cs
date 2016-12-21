@@ -6,6 +6,8 @@ namespace ReactNative.Animated
 {
     class FrameBasedAnimationDriver : AnimationDriver
     {
+        private const double FrameTimeMilliseconds = 1000.0 / 60.0;
+
         private readonly double[] _frames;
         private readonly double _toValue;
 
@@ -27,10 +29,10 @@ namespace ReactNative.Animated
                 _fromValue = AnimatedValue.Value;
             }
 
-            var timeFromStartTicks = (renderingTime.Ticks - _startFrameTimeTicks);
+            var timeFromStartTicks = (renderingTime.Ticks - _startFrameTimeTicks) / 10000.0;
             // frames are calcualted at 60FPS, to get index by a given time offset from the start of the
             // animation, we take the time diff in milliseconds and divide it by 60 frames per 1000ms.
-            var frameIndex = (int)(timeFromStartTicks / 10000 * 60 / 1000);
+            var frameIndex = (int)(timeFromStartTicks / FrameTimeMilliseconds);
             if (frameIndex < 0)
             {
                 throw new InvalidOperationException("Calculated frame index should never be lower than 0.");

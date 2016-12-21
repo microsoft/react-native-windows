@@ -25,6 +25,16 @@ namespace ReactNative.Modules.Image
             return uri.StartsWith("data:");
         }
 
+        public static bool IsHttpUri(string uri)
+        {
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
+            return uri.StartsWith("http:") || uri.StartsWith("https:");
+        }
+
         public static async Task<IRandomAccessStream> GetStreamAsync(string uri)
         {
             if (uri == null)

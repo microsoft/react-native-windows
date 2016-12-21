@@ -5,7 +5,6 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Text;
@@ -427,7 +426,7 @@ namespace ReactNative.Views.TextInput
                 {
                     return;
                 }
-
+                
                 view.TextChanging -= OnTextChanging;
                 view.TextChanged -= OnTextChanged;
 
@@ -465,6 +464,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The <see cref="ReactTextBox"/>.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ReactTextBox view)
         {
+            base.OnDropViewInstance(reactContext, view);
             view.KeyDown -= OnKeyDown;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
@@ -499,13 +499,14 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.TextChanging += OnTextChanging;
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
         }
-
+        
         private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
             var textBox = (ReactTextBox)sender;
@@ -552,7 +553,7 @@ namespace ReactNative.Views.TextInput
                       textBox.GetTag(),
                       textBox.Text));
         }
-
+        
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)

@@ -2,9 +2,6 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -13,29 +10,6 @@ namespace ReactNative.Modules.Storage
 {
     class AsyncStorageModule : NativeModuleBase, ILifecycleEventListener
     {
-        private const string DirectoryName = "AsyncStorage";
-        private const string FileExtension = ".data";
-        
-        private static readonly IDictionary<char, string> s_charToString = new Dictionary<char, string>
-        {
-            { '\\', "{bsl}" },
-            { '/', "{fsl}" },
-            { ':', "{col}" },
-            { '*', "{asx}" },
-            { '?', "{q}" },
-            { '<', "{gt}" },
-            { '>', "{lt}" },
-            { '|', "{bar}" },
-            { '\"', "{quo}" },
-            { '.', "{dot}" },
-            { '{', "{ocb}" },
-            { '}', "{ccb}" },
-        };
-
-        private static readonly IDictionary<string, char> s_stringToChar = s_charToString.ToDictionary(kv => kv.Value, kv => kv.Key);
-
-        private static readonly int s_maxReplace = s_charToString.Values.Select(s => s.Length).Max();
-
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
 
         private StorageFolder _cachedFolder;
@@ -53,7 +27,7 @@ namespace ReactNative.Modules.Storage
         {
             if (keys == null)
             {
-                callback.Invoke(AsyncStorageErrorHelpers.GetInvalidKeyError(null), null);
+                callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null), null);
                 return;
             }
 
@@ -67,7 +41,7 @@ namespace ReactNative.Modules.Storage
                 {
                     if (key == null)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        error = AsyncStorageHelpers.GetInvalidKeyError(null);
                         break;
                     }
 
@@ -95,7 +69,7 @@ namespace ReactNative.Modules.Storage
         {
             if (keyValueArray == null || keyValueArray.Length == 0)
             {
-                callback.Invoke(AsyncStorageErrorHelpers.GetInvalidKeyError(null));
+                callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null));
                 return;
             }
 
@@ -108,19 +82,19 @@ namespace ReactNative.Modules.Storage
                 {
                     if (pair.Length != 2)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
+                        error = AsyncStorageHelpers.GetInvalidValueError(null);
                         break;
                     }
 
                     if (pair[0] == null)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        error = AsyncStorageHelpers.GetInvalidKeyError(null);
                         break;
                     }
 
                     if (pair[1] == null)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
+                        error = AsyncStorageHelpers.GetInvalidValueError(pair[0]);
                         break;
                     }
 
@@ -151,7 +125,7 @@ namespace ReactNative.Modules.Storage
         {
             if (keys == null || keys.Length == 0)
             {
-                callback.Invoke(AsyncStorageErrorHelpers.GetInvalidKeyError(null));
+                callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null));
                 return;
             }
 
@@ -164,7 +138,7 @@ namespace ReactNative.Modules.Storage
                 {
                     if (key == null)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        error = AsyncStorageHelpers.GetInvalidKeyError(null);
                         break;
                     }
 
@@ -195,7 +169,7 @@ namespace ReactNative.Modules.Storage
         {
             if (keyValueArray == null || keyValueArray.Length == 0)
             {
-                callback.Invoke(AsyncStorageErrorHelpers.GetInvalidKeyError(null));
+                callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null));
                 return;
             }
 
@@ -208,19 +182,19 @@ namespace ReactNative.Modules.Storage
                 {
                     if (pair.Length != 2)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidValueError(null);
+                        error = AsyncStorageHelpers.GetInvalidValueError(null);
                         break;
                     }
 
                     if (pair[0] == null)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidKeyError(null);
+                        error = AsyncStorageHelpers.GetInvalidKeyError(null);
                         break;
                     }
 
                     if (pair[1] == null)
                     {
-                        error = AsyncStorageErrorHelpers.GetInvalidValueError(pair[0]);
+                        error = AsyncStorageHelpers.GetInvalidValueError(pair[0]);
                         break;
                     }
 
@@ -282,9 +256,9 @@ namespace ReactNative.Modules.Storage
                     foreach (var item in items)
                     {
                         var itemName = item.Name;
-                        if (itemName.EndsWith(FileExtension))
+                        if (itemName.EndsWith(AsyncStorageHelpers.FileExtension))
                         {
-                            keys.Add(GetKeyName(itemName));
+                            keys.Add(AsyncStorageHelpers.GetKeyName(itemName));
                         }
                     }
                 }
@@ -315,7 +289,7 @@ namespace ReactNative.Modules.Storage
             var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
             if (storageFolder != null)
             {
-                var fileName = GetFileName(key);
+                var fileName = AsyncStorageHelpers.GetFileName(key);
                 var storageItem = await storageFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
                 if (storageItem != null)
                 {
@@ -340,7 +314,7 @@ namespace ReactNative.Modules.Storage
             {
                 var oldJson = JObject.Parse(oldValue);
                 var newJson = JObject.Parse(value);
-                DeepMergeInto(oldJson, newJson);
+                AsyncStorageHelpers.DeepMergeInto(oldJson, newJson);
                 newValue = oldJson.ToString(Formatting.None);
             }
 
@@ -352,7 +326,7 @@ namespace ReactNative.Modules.Storage
             var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
             if (storageFolder != null)
             {
-                var fileName = GetFileName(key);
+                var fileName = AsyncStorageHelpers.GetFileName(key);
                 var storageItem = await storageFolder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);
                 if (storageItem != null)
                 {
@@ -366,7 +340,7 @@ namespace ReactNative.Modules.Storage
         private async Task<JObject> SetAsync(string key, string value)
         {
             var storageFolder = await GetAsyncStorageFolder(true).ConfigureAwait(false);
-            var file = await storageFolder.CreateFileAsync(GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
+            var file = await storageFolder.CreateFileAsync(AsyncStorageHelpers.GetFileName(key), CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
             await FileIO.WriteTextAsync(file, value).AsTask().ConfigureAwait(false);
             return default(JObject);
         }
@@ -376,113 +350,13 @@ namespace ReactNative.Modules.Storage
             if (_cachedFolder == null)
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
-                var storageFolderItem = await localFolder.TryGetItemAsync(DirectoryName);
+                var storageFolderItem = await localFolder.TryGetItemAsync(AsyncStorageHelpers.DirectoryName);
                 _cachedFolder = storageFolderItem != null || createIfNotExists
-                    ? await localFolder.CreateFolderAsync(DirectoryName, CreationCollisionOption.OpenIfExists)
+                    ? await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists)
                     : null;
             }
 
             return _cachedFolder;
-        }
-
-        private static string GetFileName(string key)
-        {
-            var sb = default(StringBuilder);
-            for (var i = 0; i < key.Length; ++i)
-            {
-                var ch = key[i];
-                var replacement = default(string);
-                if (s_charToString.TryGetValue(ch, out replacement))
-                {
-                    if (sb == null)
-                    {
-                        sb = new StringBuilder();
-                        sb.Append(key, 0, i);
-                    }
-
-                    sb.Append(replacement);
-                }
-                else if (sb != null)
-                {
-                    sb.Append(ch);
-                }
-            }
-            
-            if (sb == null)
-            {
-                return string.Concat(key, FileExtension);
-            }
-            else
-            {
-                sb.Append(FileExtension);
-                return sb.ToString();
-            }
-        }
-
-        private static string GetKeyName(string fileName)
-        {
-            var length = fileName.Length - FileExtension.Length;
-            var sb = default(StringBuilder);
-            for (var i = 0; i < length; ++i)
-            {
-                var start = fileName[i];
-                if (start == '{')
-                {
-                    var j = i;
-                    while (j < length && (j - i) < s_maxReplace)
-                    {
-                        var end = fileName[++j];
-                        if (end == '}')
-                        {
-                            break;
-                        }
-                    }
-
-                    if (j < length && (j - i) < s_maxReplace)
-                    {
-                        var substring = fileName.Substring(i, j - i + 1);
-                        var replacement = default(char);
-                        if (s_stringToChar.TryGetValue(substring, out replacement))
-                        {
-                            if (sb == null)
-                            {
-                                sb = new StringBuilder();
-                                sb.Append(fileName, 0, i);
-                            }
-
-                            sb.Append(replacement);
-                            i = j;
-                        }
-                    }
-                }
-                else if (sb != null)
-                {
-                    sb.Append(start);
-                }
-            }
-
-            return sb == null
-                ? fileName.Substring(0, length)
-                : sb.ToString();
-        }
-
-        private static void DeepMergeInto(JObject oldJson, JObject newJson)
-        {
-            foreach (var property in newJson)
-            {
-                var key = property.Key;
-                var value = property.Value;
-                var newInner = value as JObject;
-                var oldInner = oldJson[key] as JObject;
-                if (newInner != null && oldInner != null)
-                {
-                    DeepMergeInto(oldInner, newInner);
-                }
-                else
-                {
-                    oldJson[key] = value;
-                }
-            }
         }
     }
 }

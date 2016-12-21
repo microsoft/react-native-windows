@@ -15,16 +15,14 @@ const ColorPropType = require('ColorPropType');
 const EdgeInsetsPropType = require('EdgeInsetsPropType');
 const Platform = require('Platform');
 const PointPropType = require('PointPropType');
-const RCTScrollViewManager = require('NativeModules').ScrollViewManager;
 const React = require('React');
-const ReactNative = require('react/lib/ReactNative');
+const ReactNative = require('ReactNative');
 const ScrollResponder = require('ScrollResponder');
 const StyleSheet = require('StyleSheet');
 const StyleSheetPropType = require('StyleSheetPropType');
 const View = require('View');
 const ViewStylePropTypes = require('ViewStylePropTypes');
 
-const deprecatedPropType = require('deprecatedPropType');
 const dismissKeyboard = require('dismissKeyboard');
 const flattenStyle = require('flattenStyle');
 const invariant = require('fbjs/lib/invariant');
@@ -180,9 +178,9 @@ const ScrollView = React.createClass({
     ]),
     /**
      * When false, tapping outside of the focused text input when the keyboard
-     * is up dismisses the keyboard. When true, the scroll view will not catch
-     * taps, and the keyboard will not dismiss automatically. The default value
-     * is false.
+     * is up dismisses the keyboard. When true, the keyboard will not dismiss
+     * automatically, and the scroll view will not catch taps, but children of
+     * the scroll view can catch taps. The default value is false.
      */
     keyboardShouldPersistTaps: PropTypes.bool,
     /**
@@ -253,10 +251,12 @@ const ScrollView = React.createClass({
     scrollsToTop: PropTypes.bool,
     /**
      * When true, shows a horizontal scroll indicator.
+     * The default value is true.
      */
     showsHorizontalScrollIndicator: PropTypes.bool,
     /**
      * When true, shows a vertical scroll indicator.
+     * The default value is true.
      */
     showsVerticalScrollIndicator: PropTypes.bool,
     /**
@@ -312,14 +312,6 @@ const ScrollView = React.createClass({
     refreshControl: PropTypes.element,
 
     /**
-     * @platform ios
-     */
-    onRefreshStart: deprecatedPropType(
-      PropTypes.func,
-      'Use the `refreshControl` prop instead.'
-    ),
-
-    /**
      * Sometimes a scrollview takes up more space than its content fills. When this is
      * the case, this prop will fill the rest of the scrollview with a color to avoid setting
      * a background and creating unnecessary overdraw. This is an advanced optimization
@@ -336,6 +328,12 @@ const ScrollView = React.createClass({
      * @platform android
      */
     scrollPerfTag: PropTypes.string,
+
+    /**
+     * Enables zoom on a scroll view for Windows.
+     * @platform windows
+     */
+    zoomEnabled: PropTypes.bool,
   },
 
   mixins: [ScrollResponder.Mixin],
@@ -346,15 +344,6 @@ const ScrollView = React.createClass({
 
   setNativeProps: function(props: Object) {
     this._scrollViewRef && this._scrollViewRef.setNativeProps(props);
-  },
-
-  /**
-   * Deprecated. Use `RefreshControl` instead.
-   */
-  endRefreshing: function() {
-    RCTScrollViewManager.endRefreshing(
-      ReactNative.findNodeHandle(this)
-    );
   },
 
   /**
@@ -409,7 +398,7 @@ const ScrollView = React.createClass({
 
   _handleScroll: function(e: Object) {
     if (__DEV__) {
-      if (this.props.onScroll && !this.props.scrollEventThrottle && Platform.OS === 'ios') {
+      if (this.props.onScroll && this.props.scrollEventThrottle == null && Platform.OS === 'ios') {
         console.log( // eslint-disable-line no-console-disallow
           'You specified `onScroll` on a <ScrollView> but not ' +
           '`scrollEventThrottle`. You will only receive one event. ' +
@@ -485,14 +474,16 @@ const ScrollView = React.createClass({
       this.props.alwaysBounceVertical !== undefined ?
         this.props.alwaysBounceVertical :
         !this.props.horizontal;
-    
-    const baseStyle = this.props.horizontal ? styles.baseHorizontal : styles.baseVertical;
 
+    const baseStyle = this.props.horizontal ? styles.baseHorizontal : styles.baseVertical;
     const props = {
       ...this.props,
       alwaysBounceHorizontal,
       alwaysBounceVertical,
       style: ([baseStyle, this.props.style]: ?Array<any>),
+      // Override the onContentSizeChange from props, since this event can
+      // bubble up from TextInputs
+      onContentSizeChange: null,
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
       onTouchEnd: this.scrollResponderHandleTouchEnd,
@@ -511,14 +502,6 @@ const ScrollView = React.createClass({
       onResponderReject: this.scrollResponderHandleResponderReject,
       sendMomentumEvents: (this.props.onMomentumScrollBegin || this.props.onMomentumScrollEnd) ? true : false,
     };
-
-    const onRefreshStart = this.props.onRefreshStart;
-    if (onRefreshStart) {
-      // this is necessary because if we set it on props, even when empty,
-      // it'll trigger the default pull-to-refresh behavior on native.
-      props.onRefreshStart =
-        function() { onRefreshStart && onRefreshStart(this.endRefreshing); }.bind(this);
-    }
 
     const { decelerationRate } = this.props;
     if (decelerationRate) {
@@ -559,7 +542,7 @@ const ScrollView = React.createClass({
         return React.cloneElement(
           refreshControl,
           {style: props.style},
-          <ScrollViewClass {...props} style={baseStyle} ref={this._setScrollViewRef}>
+          <ScrollViewClass {...props} ref={this._setScrollViewRef}>
             {contentContainer}
           </ScrollViewClass>
         );
@@ -576,10 +559,13 @@ const ScrollView = React.createClass({
 const styles = StyleSheet.create({
   baseVertical: {
     flex: 1,
+    flexDirection: 'column',
+    overflow: 'scroll',
   },
   baseHorizontal: {
     flex: 1,
     flexDirection: 'row',
+    overflow: 'scroll',
   },
   contentContainerHorizontal: {
     flexDirection: 'row',

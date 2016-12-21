@@ -4,7 +4,6 @@ using ReactNative.Bridge;
 using System;
 using System.IO;
 using Windows.Storage;
-using Windows.UI.Xaml;
 
 namespace ReactNative.Chakra.Executor
 {

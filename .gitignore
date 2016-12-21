@@ -55,6 +55,7 @@ node_modules
 *.suo
 *.tlb
 *.tlh
+*.tlog
 *.bak
 *.[Cc]ache
 *.ilk
@@ -65,12 +66,15 @@ node_modules
 *.opensdf
 *.opendb
 *.unsuccessfulbuild
+*.lastbuildstate
 ipch/
 [Oo]bj/
 [Bb]in
 [Dd]ebug*/
 [Rr]elease*/
+*.tlog/
 Ankh.NoLoad
+UpgradeLog.htm
 
 #MonoDevelop
 *.pidb

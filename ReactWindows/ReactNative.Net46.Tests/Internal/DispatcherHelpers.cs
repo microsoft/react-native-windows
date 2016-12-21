@@ -1,8 +1,9 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace ReactNative.Tests
 {
@@ -13,7 +14,7 @@ namespace ReactNative.Tests
             Dispatcher dispatcher = Application.Current != null
                 ? Application.Current.Dispatcher
                 : Dispatcher.CurrentDispatcher;
-            if (Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread)
+            if (dispatcher.CheckAccess())
             {
                 dispatcher.Invoke(action);
             }
@@ -23,6 +24,8 @@ namespace ReactNative.Tests
             }
         }
 
+        // Single thread apartment attribute for sake of being able to access UI elements on the same thread they're created from
+        [Apartment(ApartmentState.STA)]
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
         {
             var tcs = new TaskCompletionSource<T>();

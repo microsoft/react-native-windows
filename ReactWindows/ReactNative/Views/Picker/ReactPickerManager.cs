@@ -71,14 +71,21 @@ namespace ReactNative.Views.Picker
             // Temporarily disable selection changed event handler.
             view.SelectionChanged -= OnSelectionChanged;
 
-            for (var index = 0; index < items.Count; index++)
+            var selectedIndex = view.SelectedIndex;
+
+            view.Items.Clear();
+
+            foreach (var itemToken in items)
             {
-                var itemData = (JObject)items[index];
+                var itemData = (JObject)itemToken;
                 var label = itemData.Value<string>("label");
                 if (label != null)
                 {
-                    var item = new ComboBoxItem();
-                    item.Content = label;
+                    var item = new ComboBoxItem
+                    {
+                        Content = label,
+                    };
+
                     var color = itemData.GetValue("color", StringComparison.Ordinal);
                     if (color != null)
                     {
@@ -88,8 +95,13 @@ namespace ReactNative.Views.Picker
 
                     view.Items.Add(item);
                 }            
-            } 
-              
+            }
+
+            if (selectedIndex < items.Count)
+            {
+                view.SelectedIndex = selectedIndex;
+            }
+             
             view.SelectionChanged += OnSelectionChanged;
         }
 
@@ -123,6 +135,7 @@ namespace ReactNative.Views.Picker
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ComboBox view)
         {
+            base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
         }
   
@@ -144,6 +157,7 @@ namespace ReactNative.Views.Picker
         /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, ComboBox view)
         {
+            base.AddEventEmitters(reactContext, view);
             view.SelectionChanged += OnSelectionChanged;
         }
 
