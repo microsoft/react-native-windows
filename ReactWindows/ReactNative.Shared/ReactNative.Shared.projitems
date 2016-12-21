@@ -70,6 +70,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JavaScriptValueToJTokenConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\LogLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptBackgroundWorkItemCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptBeforeCollectCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptContext.cs" />
@@ -125,6 +126,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Dialog\DialogModuleHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\I18N\I18NModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\I18N\I18NUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Image\ImageLoadStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Image\ImageMetadata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Image\ImageStatusEventData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\DefaultHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\HttpContentHeaderData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\HttpContentHelpers.cs" />
@@ -200,8 +204,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Image\ReactImageLoadEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventTypeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderChangeEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderCompleteEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\FontStyleHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNodeVisitor.cs" />
@@ -210,6 +218,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactTextInlineViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\InputScopeHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactPasswordBoxShadowNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextChangedEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputBlurEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputEndEditingEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputFocusEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSelectionEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputShadowNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>

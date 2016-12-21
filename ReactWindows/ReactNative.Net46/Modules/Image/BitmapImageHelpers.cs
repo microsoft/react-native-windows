@@ -1,13 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Imaging;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using static System.FormattableString;
 
 namespace ReactNative.Modules.Image
@@ -24,17 +22,7 @@ namespace ReactNative.Modules.Image
             return uri.StartsWith("data:");
         }
 
-        public static bool IsHttpUri(string uri)
-        {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            return uri.StartsWith("http:") || uri.StartsWith("https:");
-        }
-
-        public static async Task<IRandomAccessStream> GetStreamAsync(string uri)
+        public static Stream GetStreamAsync(string uri)
         {
             if (uri == null)
             {
@@ -44,7 +32,7 @@ namespace ReactNative.Modules.Image
             if (IsBase64Uri(uri))
             {
                 var decodedData = Convert.FromBase64String(uri.Substring(uri.IndexOf(",") + 1));
-                return decodedData.AsBuffer().AsStream().AsRandomAccessStream();
+                return new MemoryStream(decodedData);
             }
             else
             {
@@ -54,8 +42,8 @@ namespace ReactNative.Modules.Image
                     throw new ArgumentOutOfRangeException(nameof(uri), Invariant($"Invalid URI '{uri}' provided."));
                 }
 
-                var streamReference = RandomAccessStreamReference.CreateFromUri(uriValue);
-                return await streamReference.OpenReadAsync();
+                var streamReference = new StreamReader(WebRequest.Create(uri).GetResponse().GetResponseStream()); //RandomAccessStreamReference.CreateFromUri(uriValue);
+                return streamReference.BaseStream;
             }
         }
 
@@ -77,9 +65,9 @@ namespace ReactNative.Modules.Image
 
         private static IObservable<ImageStatusEventData> GetOpenedObservable(this BitmapImage image)
         {
-            return Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
-                h => image.ImageOpened += h,
-                h => image.ImageOpened -= h)
+            return Observable.FromEventPattern<EventHandler, RoutedEventArgs>(
+                h => image.DownloadCompleted += h,
+                h => image.DownloadCompleted -= h)
                 .Select(args =>
                 {
                     var bitmapImage = args.Sender as BitmapImage;
@@ -103,18 +91,18 @@ namespace ReactNative.Modules.Image
 
         private static IObservable<ImageStatusEventData> GetFailedObservable(this BitmapImage image)
         {
-            return Observable.FromEventPattern<ExceptionRoutedEventHandler, ExceptionRoutedEventArgs>(
-                h => image.ImageFailed += h,
-                h => image.ImageFailed -= h)
+            return Observable.FromEventPattern<EventHandler<System.Windows.Media.ExceptionEventArgs>, ExceptionRoutedEventArgs>(
+                h => image.DownloadFailed += h,
+                h => image.DownloadFailed -= h)
                 .Select<EventPattern<ExceptionRoutedEventArgs>, ImageStatusEventData>(pattern =>
                 {
-                    throw new InvalidOperationException(pattern.EventArgs.ErrorMessage);
+                    throw new InvalidOperationException(pattern.EventArgs.ErrorException.Message);
                 });
         }
 
         private static IObservable<ImageStatusEventData> GetDownloadingObservable(this BitmapImage image)
         {
-            return Observable.FromEventPattern<DownloadProgressEventHandler, DownloadProgressEventArgs>(
+            return Observable.FromEventPattern<EventHandler<DownloadProgressEventArgs>, DownloadProgressChangedEventArgs>(
                 h => image.DownloadProgress += h,
                 h => image.DownloadProgress -= h)
                 .Take(1)
