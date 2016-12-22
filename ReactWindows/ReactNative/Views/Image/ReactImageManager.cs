@@ -6,8 +6,10 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reactive.Disposables;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI;
@@ -338,7 +340,14 @@ namespace ReactNative.Views.Image
                     var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(source), true);
                     var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
                     OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
-                    imageBrush.ImageSource = image;
+                    bool colorizePossible = true;
+#if !BUNDLE
+                    colorizePossible = false; // Image download fails often on devserver. Disabling colorizing if using one.
+#endif
+                    if (colorizePossible == false || (tintColor == null && backgroundColor == null))
+                        imageBrush.ImageSource = image;
+                    else
+                        ((Windows.UI.Xaml.Media.ImageBrush)view.Background).ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
                     OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
                 }
                 catch
@@ -351,7 +360,7 @@ namespace ReactNative.Views.Image
                 var image = new BitmapImage();
                 if (tintColor != null || backgroundColor != null)
                 {
-                    SetColors(view, source, tintColor, backgroundColor);
+                    ((Windows.UI.Xaml.Media.ImageBrush)view.Background).ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
                 }
                 else
                 {
@@ -364,23 +373,29 @@ namespace ReactNative.Views.Image
             }
         }
 
-        private async void SetColors(Border view, string source, Color? tintColor, Color? backgroundColor)
+        // Applies tintcolor and backgroundcolor for an image.        
+        private async Task<WriteableBitmap> ColorizeBitmap(string source, Color? tintColor, Color? backgroundColor)
         {
-            var loader = view.GetReactContext().GetNativeModule<ImageLoaderModule>();
-
             var randomAccessStreamReference = RandomAccessStreamReference.CreateFromUri(new Uri(source));
-            var randomAccessStream = await randomAccessStreamReference.OpenReadAsync();
-            var decoder = await BitmapDecoder.CreateAsync(randomAccessStream);
+            using (var randomAccessStream = await randomAccessStreamReference.OpenReadAsync())
+            {
+                var decoder = await BitmapDecoder.CreateAsync(randomAccessStream);
 
-            var pixelData = await decoder.GetPixelDataAsync(
-                BitmapPixelFormat.Bgra8, // WriteableBitmap uses BGRA format 
-                BitmapAlphaMode.Premultiplied,
-                new BitmapTransform(),
-                ExifOrientationMode.RespectExifOrientation,
-                ColorManagementMode.DoNotColorManage
-            );
+                var pixelData = await decoder.GetPixelDataAsync(
+                    BitmapPixelFormat.Bgra8, // WriteableBitmap uses BGRA format 
+                    BitmapAlphaMode.Premultiplied,
+                    new BitmapTransform(),
+                    ExifOrientationMode.RespectExifOrientation,
+                    ColorManagementMode.DoNotColorManage
+                );
 
-            BitmapImageHelpers.ColorizePixelData(view, decoder.PixelWidth, decoder.PixelHeight, pixelData.DetachPixelData(), tintColor, backgroundColor);
+                return await BitmapImageHelpers.ColorizePixelData(decoder.PixelWidth, decoder.PixelHeight, pixelData.DetachPixelData(), tintColor, backgroundColor);
+            }
+        }
+
+        private void Bi_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

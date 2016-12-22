@@ -133,8 +133,7 @@ namespace ReactNative.Modules.Image
             return (byte)(frontAlpha + backAlpha * (1 - (frontAlpha / 255)));
         }
 
-        public static async void ColorizePixelData(
-            Windows.UI.Xaml.Controls.Border view,
+        public static async Task<WriteableBitmap> ColorizePixelData(
             uint width,
             uint height,
             byte[] pixelData,
@@ -176,7 +175,7 @@ namespace ReactNative.Modules.Image
                 await writeStream.WriteAsync(pixels, 0, pixels.Length);
             }
 
-            ((Windows.UI.Xaml.Media.ImageBrush)view.Background).ImageSource = writableBitmap;
+            return writableBitmap;
         }
     }
 }
