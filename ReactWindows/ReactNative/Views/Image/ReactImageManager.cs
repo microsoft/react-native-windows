@@ -347,7 +347,7 @@ namespace ReactNative.Views.Image
                     if (colorizePossible == false || (tintColor == null && backgroundColor == null))
                         imageBrush.ImageSource = image;
                     else
-                        ((Windows.UI.Xaml.Media.ImageBrush)view.Background).ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
+                        imageBrush.ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
                     OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
                 }
                 catch
@@ -357,19 +357,19 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                var image = new BitmapImage();
                 if (tintColor != null || backgroundColor != null)
                 {
-                    ((Windows.UI.Xaml.Media.ImageBrush)view.Background).ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
+                    imageBrush.ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
                 }
                 else
                 {
+                    var image = new BitmapImage();
                     disposable.Disposable = image.GetUriLoadObservable().Subscribe(
                     status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
                         _ => OnImageFailed(view));
                     image.UriSource = new Uri(source);
+                    imageBrush.ImageSource = image;
                 }
-                imageBrush.ImageSource = image;
             }
         }
 
