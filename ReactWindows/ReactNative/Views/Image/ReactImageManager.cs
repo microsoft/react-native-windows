@@ -340,14 +340,15 @@ namespace ReactNative.Views.Image
                     var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(source), true);
                     var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
                     OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
-                    bool colorizePossible = true;
-#if !BUNDLE
-                    colorizePossible = false; // Image download fails often on devserver. Disabling colorizing if using one.
-#endif
-                    if (colorizePossible == false || (tintColor == null && backgroundColor == null))
+                    if (tintColor == null && backgroundColor == null)
                         imageBrush.ImageSource = image;
                     else
-                        imageBrush.ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
+                    {
+                        using (var stream = await CreateStreamFromHttpUri(source))
+                        {
+                            imageBrush.ImageSource = await ColorizeBitmap(stream, tintColor, backgroundColor);
+                        }
+                    }
                     OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
                 }
                 catch
@@ -359,7 +360,10 @@ namespace ReactNative.Views.Image
             {
                 if (tintColor != null || backgroundColor != null)
                 {
-                    imageBrush.ImageSource = await ColorizeBitmap(source, tintColor, backgroundColor);
+                    using (var stream = await CreateStreamFromAppUri(source))
+                    {
+                        imageBrush.ImageSource = await ColorizeBitmap(stream, tintColor, backgroundColor);
+                    }
                 }
                 else
                 {
@@ -373,24 +377,43 @@ namespace ReactNative.Views.Image
             }
         }
 
-        // Applies tintcolor and backgroundcolor for an image.        
-        private async Task<WriteableBitmap> ColorizeBitmap(string source, Color? tintColor, Color? backgroundColor)
+        private static async Task<IRandomAccessStream> CreateStreamFromHttpUri(string source)
         {
-            var randomAccessStreamReference = RandomAccessStreamReference.CreateFromUri(new Uri(source));
-            using (var randomAccessStream = await randomAccessStreamReference.OpenReadAsync())
+            /* We could use RandomAccessStreamReference.CreateFromUri(source).OpenReadAsync()
+             *  if it didn't mysteriously occasionally fail with dev server.
+             *  Therefore we have to climb the tree with feet first.
+             */
+            var response = await System.Net.HttpWebRequest.CreateHttp(source).GetResponseAsync();
+            using (var responseStream = response.GetResponseStream())
             {
-                var decoder = await BitmapDecoder.CreateAsync(randomAccessStream);
-
-                var pixelData = await decoder.GetPixelDataAsync(
-                    BitmapPixelFormat.Bgra8, // WriteableBitmap uses BGRA format 
-                    BitmapAlphaMode.Premultiplied,
-                    new BitmapTransform(),
-                    ExifOrientationMode.RespectExifOrientation,
-                    ColorManagementMode.DoNotColorManage
-                );
-
-                return await BitmapImageHelpers.ColorizePixelData(decoder.PixelWidth, decoder.PixelHeight, pixelData.DetachPixelData(), tintColor, backgroundColor);
+                using (var memStream = new MemoryStream())
+                {
+                    await responseStream.CopyToAsync(memStream);
+                    return memStream.AsRandomAccessStream();
+                }
             }
+        }
+
+        private static async Task<IRandomAccessStream> CreateStreamFromAppUri(string source)
+        {
+            return await RandomAccessStreamReference.CreateFromUri(new Uri(source)).OpenReadAsync();
+        }
+
+        // Applies tintcolor and backgroundcolor for an image.
+        // Cannot use the stored BitmapImage since there is no way to get raw data.
+        private static async Task<WriteableBitmap> ColorizeBitmap(IRandomAccessStream stream, Color? tintColor, Color? backgroundColor)
+        {
+            var decoder = await BitmapDecoder.CreateAsync(stream);
+
+            var pixelData = await decoder.GetPixelDataAsync(
+                BitmapPixelFormat.Bgra8, // WriteableBitmap uses BGRA format 
+                BitmapAlphaMode.Premultiplied,
+                new BitmapTransform(),
+                ExifOrientationMode.RespectExifOrientation,
+                ColorManagementMode.DoNotColorManage
+            );
+
+            return await BitmapImageHelpers.ColorizePixelData(decoder.PixelWidth, decoder.PixelHeight, pixelData.DetachPixelData(), tintColor, backgroundColor);
         }
 
         private void Bi_ImageOpened(object sender, RoutedEventArgs e)
