@@ -24,7 +24,7 @@ namespace ReactNative.Modules.Image
         [ReactMethod]
         public void prefetchImage(string uriString, IPromise promise)
         {
-           if (string.IsNullOrEmpty(uriString))
+            if (string.IsNullOrEmpty(uriString))
             {
                 promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
                 return;

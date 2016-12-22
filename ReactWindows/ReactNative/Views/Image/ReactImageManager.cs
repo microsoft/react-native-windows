@@ -31,6 +31,9 @@ namespace ReactNative.Views.Image
         private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
             new Dictionary<int, List<KeyValuePair<string, double>>>();
 
+        private Color? _tintColor;
+        private Color? _backgroundColor;
+
         /// <summary>
         /// The view manager name.
         /// </summary>
@@ -66,11 +69,10 @@ namespace ReactNative.Views.Image
             var imageBrush = (ImageBrush)view.Background;
 
             OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, new ImageMetadata());
-//            OnImageStatusUpdate(view, new ImageStatusEventData(ImageLoadStatus.OnLoadStart));
 
             var sources = imageExtraData.Item1;
-            var tintColor = imageExtraData.Item2;
-            var backgroundColor = imageExtraData.Item3;
+            _tintColor = imageExtraData.Item2;
+            _backgroundColor = imageExtraData.Item3;
 
             var count = sources.Count;
 
@@ -83,7 +85,7 @@ namespace ReactNative.Views.Image
             else if (count == 1)
             {
                 var uri = ((JObject)sources[0]).Value<string>("uri");
-                SetUriFromSingleSource(view, uri, tintColor, backgroundColor);
+                SetUriFromSingleSource(view, uri, _tintColor, _backgroundColor);
             }
             else
             {
@@ -118,7 +120,8 @@ namespace ReactNative.Views.Image
                 }
 
                 var uriToLoad = ChooseUriFromMultipleSources(view);
-                SetUriFromSingleSource(view, uriToLoad, tintColor, backgroundColor);
+                if (uriToLoad != null)
+                    SetUriFromSingleSource(view, uriToLoad, _tintColor, _backgroundColor);
             }
         }
         /// <summary>
@@ -267,13 +270,14 @@ namespace ReactNative.Views.Image
         /// <param name="view">The view.</param>
         /// <param name="dimensions">The output buffer.</param>
         ///
-        /*
         public override void SetDimensions(Border view, Dimensions dimensions)
         {
             base.SetDimensions(view, dimensions);
-            SetUriFromMultipleSources(view);
+            var uriToLoad = ChooseUriFromMultipleSources(view);
+            if (uriToLoad != null)
+                SetUriFromSingleSource(view, uriToLoad, _tintColor, _backgroundColor);
         }
-        */
+
         private void OnImageFailed(Border view)
         {
             view.GetReactContext()
@@ -386,11 +390,9 @@ namespace ReactNative.Views.Image
             var response = await System.Net.HttpWebRequest.CreateHttp(source).GetResponseAsync();
             using (var responseStream = response.GetResponseStream())
             {
-                using (var memStream = new MemoryStream())
-                {
-                    await responseStream.CopyToAsync(memStream);
-                    return memStream.AsRandomAccessStream();
-                }
+                var memStream = new MemoryStream();
+                await responseStream.CopyToAsync(memStream);
+                return memStream.AsRandomAccessStream();
             }
         }
 
@@ -436,7 +438,7 @@ namespace ReactNative.Views.Image
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));
                 return bestResult.Key;
             }
-            return "";
+            return null;
         }
     }
 }
