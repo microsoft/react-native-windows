@@ -3,6 +3,7 @@ using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -146,7 +147,7 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.TextAlign)]
         public void SetTextAlign(string textAlign)
         {
-            var textAlignment = textAlign == "auto" || textAlign == null ? 
+            var textAlignment = textAlign == "auto" || textAlign == null ?
                 TextAlignment.Left :
                 EnumHelpers.Parse<TextAlignment>(textAlign);
 
@@ -232,10 +233,24 @@ namespace ReactNative.Views.Text
             //textBlock.MaxLines = _numberOfLines;
             textBlock.LineHeight = _lineHeight != 0 ? _lineHeight : double.NaN;
             textBlock.TextAlignment = _textAlignment;
-            textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? new FontStyle();
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
+
+            if (_fontFamily != null)
+            {
+                // convert font string into something WPF can use
+                // e.g. FontFamily(new System.Uri("pack://application:,,,/"), "./Assets/#fontname")
+                string[] path = _fontFamily.Split('/');
+                path = path.Take(path.Count() - 1).ToArray();
+                string cleanPath = "./" + string.Join("/", path) + "/";
+                string[] fontParts = _fontFamily.Split('#');
+                textBlock.FontFamily = new FontFamily(new System.Uri("pack://application:,,,/"), cleanPath + "#" + fontParts.Last());
+            }
+            else
+            {
+                textBlock.FontFamily = new FontFamily();
+            }
 
             if (!measureOnly)
             {
