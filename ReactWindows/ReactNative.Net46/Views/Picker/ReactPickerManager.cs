@@ -5,6 +5,7 @@ using ReactNative.UIManager.Events;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace ReactNative.Views.Picker
@@ -50,7 +51,7 @@ namespace ReactNative.Views.Picker
             // Temporarily disable selection changed event handler.
             view.SelectionChanged -= OnSelectionChanged;
 
-            view.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, view.Items.Count > selected ? selected : -1);
+            view.SetCurrentValue(Selector.SelectedIndexProperty, view.Items.Count > selected ? selected : -1);
 
             if (view.SelectedIndex != -1)
             {

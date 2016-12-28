@@ -3,6 +3,7 @@ using ReactNative.UIManager.Annotations;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace ReactNative.Views.Slider
 {
@@ -67,7 +68,7 @@ namespace ReactNative.Views.Slider
         [ReactProp("minimumValue")]
         public void SetMinimumValue(System.Windows.Controls.Slider view, double minimum)
         {
-            view.SetCurrentValue(System.Windows.Controls.Primitives.RangeBase.MinimumProperty, minimum);
+            view.SetCurrentValue(RangeBase.MinimumProperty, minimum);
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace ReactNative.Views.Slider
         [ReactProp("maximumValue")]
         public void SetMaximumValue(System.Windows.Controls.Slider view, double maximum)
         {
-            view.SetCurrentValue(System.Windows.Controls.Primitives.RangeBase.MaximumProperty, maximum);
+            view.SetCurrentValue(RangeBase.MaximumProperty, maximum);
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace ReactNative.Views.Slider
         public void SetValue(System.Windows.Controls.Slider view, double value)
         {
             view.ValueChanged -= OnValueChange;
-            view.SetCurrentValue(System.Windows.Controls.Primitives.RangeBase.ValueProperty, value);
+            view.SetCurrentValue(RangeBase.ValueProperty, value);
             view.ValueChanged += OnValueChange;
         }
 

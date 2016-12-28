@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -245,7 +246,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selectionColor", CustomType = "Color")]
         public void SetSelectionColor(ReactTextBox view, uint color)
         {
-            view.SetCurrentValue(System.Windows.Controls.Primitives.TextBoxBase.SelectionBrushProperty, new SolidColorBrush(ColorHelpers.Parse(color)));
+            view.SetCurrentValue(TextBoxBase.SelectionBrushProperty, new SolidColorBrush(ColorHelpers.Parse(color)));
         }
 
         /// <summary>
@@ -312,7 +313,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("multiline", DefaultBoolean = false)]
         public void SetMultiline(ReactTextBox view, bool multiline)
         {
-            view.SetCurrentValue(System.Windows.Controls.Primitives.TextBoxBase.AcceptsReturnProperty, multiline);
+            view.SetCurrentValue(TextBoxBase.AcceptsReturnProperty, multiline);
             view.SetCurrentValue(TextBox.TextWrappingProperty, multiline ? TextWrapping.Wrap : TextWrapping.NoWrap);
         }
 

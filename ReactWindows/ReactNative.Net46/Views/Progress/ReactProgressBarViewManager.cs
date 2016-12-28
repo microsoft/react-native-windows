@@ -1,6 +1,7 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace ReactNative.Views.Progress
@@ -25,7 +26,7 @@ namespace ReactNative.Views.Progress
         public void SetProgress(ProgressBar view, double value)
         {
             view.SetCurrentValue(ProgressBar.IsIndeterminateProperty, false);
-            view.SetCurrentValue(System.Windows.Controls.Primitives.RangeBase.ValueProperty, value);
+            view.SetCurrentValue(RangeBase.ValueProperty, value);
         }
 
         [ReactProp(ViewProps.Color, CustomType = "Color")]
