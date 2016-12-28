@@ -196,10 +196,7 @@ namespace ReactNative.DevSupport
         }
 
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
-#pragma warning disable AvoidAsyncVoid
-        public async void UpdateJavaScriptError(string message, JArray details, int errorCookie)
-#pragma warning restore AvoidAsyncVoid
+        public void UpdateJavaScriptError(string message, JArray details, int errorCookie)
         {
             DispatcherHelpers.RunOnDispatcher(() =>
             {
@@ -224,10 +221,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
-#pragma warning disable AvoidAsyncVoid
-        public async void ShowDevOptionsDialog()
-#pragma warning restore AvoidAsyncVoid
+        public void ShowDevOptionsDialog()
         {
             if (_devOptionsDialog != null || !IsEnabled)
             {
@@ -458,10 +452,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Implemented interface member.")]
-#pragma warning disable AvoidAsyncVoid
-        private async void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
-#pragma warning restore AvoidAsyncVoid
+        private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
             DispatcherHelpers.RunOnDispatcher(() =>
             {
