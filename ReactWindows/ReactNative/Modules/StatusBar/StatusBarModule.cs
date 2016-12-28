@@ -51,12 +51,10 @@ namespace ReactNative.Modules.StatusBar
         /// Hide or show StatusBar.
         /// </summary>
         /// <param name="hide">Hide or show StatusBar.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-#pragma warning disable AvoidAsyncVoid
-        public async void setHidden(bool hide)
-#pragma warning restore AvoidAsyncVoid
+        public void setHidden(bool hide)
         {
+#pragma warning disable AvoidAsyncVoid
             RunOnDispatcher(async () =>
             {
                 if (hide)
@@ -68,17 +66,15 @@ namespace ReactNative.Modules.StatusBar
                     await _statusBar.ShowAsync().AsTask().ConfigureAwait(false);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         /// <summary>
         /// Set StatusBar background color.
         /// </summary>
         /// <param name="color">RGB color.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-#pragma warning disable AvoidAsyncVoid
-        public async void setColor(uint? color)
-#pragma warning restore AvoidAsyncVoid
+        public void setColor(uint? color)
         {
             RunOnDispatcher(() =>
             {
@@ -92,11 +88,8 @@ namespace ReactNative.Modules.StatusBar
         /// Set StatusBar opacity.
         /// </summary>
         /// <param name="translucent">Is StatusBar translucent.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-#pragma warning disable AvoidAsyncVoid
-        public async void setTranslucent(bool translucent)
-#pragma warning restore AvoidAsyncVoid
+        public void setTranslucent(bool translucent)
         {
             RunOnDispatcher(() =>
             {

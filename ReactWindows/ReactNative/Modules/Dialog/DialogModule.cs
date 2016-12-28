@@ -71,11 +71,8 @@ namespace ReactNative.Modules.Dialog
         {
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-#pragma warning disable AvoidAsyncVoid
-        public async void showAlert(
-#pragma warning restore AvoidAsyncVoid
+        public void showAlert(
             JObject config,
             ICallback errorCallback,
             ICallback actionCallback)
@@ -106,6 +103,7 @@ namespace ReactNative.Modules.Dialog
                 });
             }
 
+#pragma warning disable AvoidAsyncVoid
             RunOnDispatcher(async () =>
             {
                 if (_isInForeground)
@@ -117,6 +115,7 @@ namespace ReactNative.Modules.Dialog
                     _pendingDialog = messageDialog;
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         private void OnInvoked(IUICommand target, ICallback callback)

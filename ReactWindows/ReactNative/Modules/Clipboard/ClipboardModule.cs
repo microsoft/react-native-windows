@@ -39,17 +39,15 @@ namespace ReactNative.Modules.Clipboard
         /// Get the clipboard content through a promise.
         /// </summary>
         /// <param name="promise">The promise.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-#pragma warning disable AvoidAsyncVoid
-        public async void getString(IPromise promise)
-#pragma warning restore AvoidAsyncVoid
+        public void getString(IPromise promise)
         {
             if (promise == null)
             {
                 throw new ArgumentNullException(nameof(promise));
             }
 
+#pragma warning disable AvoidAsyncVoid
             RunOnDispatcher(async () =>
             {
                 try
@@ -74,17 +72,15 @@ namespace ReactNative.Modules.Clipboard
                     promise.Reject(ex);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         /// <summary>
         /// Add text to the clipboard or clear the clipboard.
         /// </summary>
         /// <param name="text">The text. If null clear clipboard.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-#pragma warning disable AvoidAsyncVoid
-        public async void setString(string text)
-#pragma warning restore AvoidAsyncVoid
+        public void setString(string text)
         {
             RunOnDispatcher(() =>
             {

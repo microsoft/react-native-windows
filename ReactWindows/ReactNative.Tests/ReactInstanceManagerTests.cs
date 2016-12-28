@@ -57,8 +57,12 @@ namespace ReactNative.Tests
             var waitHandle = new AutoResetEvent(false);
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            {
+                await manager.CreateReactContextInBackground();
+            });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
@@ -79,7 +83,7 @@ namespace ReactNative.Tests
 #pragma warning disable AvoidAsyncVoid
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
-                manager.CreateReactContextInBackground();
+                await manager.CreateReactContextInBackground();
 
                 try
                 {
@@ -106,11 +110,13 @@ namespace ReactNative.Tests
             var waitHandle = new AutoResetEvent(false);
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
-                manager.CreateReactContextInBackground();
-                manager.RecreateReactContextInBackground();
+                await manager.CreateReactContextInBackground();
+                await manager.RecreateReactContextInBackground();
             });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsTrue(waitHandle.WaitOne());
@@ -170,16 +176,24 @@ namespace ReactNative.Tests
             var waitHandle = new AutoResetEvent(false);
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            {
+                await manager.CreateReactContextInBackground();
+            });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            {
+                await manager.CreateReactContextInBackground();
+            });
+#pragma warning disable AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
 
