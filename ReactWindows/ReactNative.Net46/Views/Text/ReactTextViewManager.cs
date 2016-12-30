@@ -1,8 +1,7 @@
-﻿using System;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using System.Collections;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
