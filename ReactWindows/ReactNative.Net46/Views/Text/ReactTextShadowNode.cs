@@ -1,4 +1,5 @@
-﻿using Facebook.CSSLayout;
+﻿using System;
+using Facebook.CSSLayout;
 using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -195,6 +196,7 @@ namespace ReactNative.Views.Text
                 var textBlock = new TextBlock
                 {
                     TextAlignment = TextAlignment.Left,
+                    TextWrapping = TextWrapping.Wrap,
                     TextTrimming = TextTrimming.CharacterEllipsis,
                 };
 
@@ -210,8 +212,8 @@ namespace ReactNative.Views.Text
                 var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
                 return new MeasureOutput(
-                    (float)textBlock.DesiredSize.Width,
-                    (float)textBlock.DesiredSize.Height);
+                    (float)Math.Ceiling(textBlock.DesiredSize.Width),
+                    (float)Math.Ceiling(textBlock.DesiredSize.Height));
             });
 
             return task.Result;

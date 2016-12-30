@@ -158,6 +158,7 @@ namespace ReactNative.Views.Text
             var textBlock = new TextBlock
             {
                 TextAlignment = TextAlignment.Left,
+                TextWrapping = TextWrapping.Wrap,
                 TextTrimming = TextTrimming.CharacterEllipsis,
             };
 
