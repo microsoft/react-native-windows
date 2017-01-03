@@ -54,7 +54,7 @@ namespace ReactNative.Modules.Network
         /// <remarks>
         /// The task factory is invoked during this method call.
         /// </remarks>
-        public void Add(TKey key, Func<CancellationToken, Task> taskFactory)
+        public Task Add(TKey key, Func<CancellationToken, Task> taskFactory)
         {
             var disposable = new CancellationDisposable();
             lock (_gate)
@@ -62,8 +62,8 @@ namespace ReactNative.Modules.Network
                 _tokens.Add(key, disposable);
             }
 
-            taskFactory(disposable.Token).ContinueWith(
-                _ =>
+            return taskFactory(disposable.Token).ContinueWith(
+                task =>
                 {
                     var removed = false;
                     lock (_gate)
@@ -72,8 +72,9 @@ namespace ReactNative.Modules.Network
                     }
 
                     disposable.Dispose();
+                    return task;
                 },
-                TaskContinuationOptions.ExecuteSynchronously);
+                TaskContinuationOptions.ExecuteSynchronously).Unwrap();
         }
 
         /// <summary>

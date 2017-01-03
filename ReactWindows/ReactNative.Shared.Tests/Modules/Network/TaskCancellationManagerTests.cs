@@ -18,10 +18,10 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [Test]
-        public void TaskCancellationManager_CancelledAfterCompleted()
+        public async void TaskCancellationManager_CancelledAfterCompleted()
         {
             var mgr = new TaskCancellationManager<int>();
-            mgr.Add(42, _ => Task.CompletedTask);
+            await mgr.Add(42, _ => Task.CompletedTask);
             mgr.Cancel(42);
 
             // Not throwing implies success
@@ -55,10 +55,9 @@ namespace ReactNative.Tests.Modules.Network
             var enter = new AutoResetEvent(false);
             var exit = new AutoResetEvent(false);
             var mgr = new TaskCancellationManager<int>();
-            var t = default(Task);
-            mgr.Add(42, token =>
+            var t = mgr.Add(42, token =>
             {
-                return t = Task.Run(() =>
+                return Task.Run(() =>
                 {
                     enter.WaitOne();
                     return;
@@ -77,10 +76,9 @@ namespace ReactNative.Tests.Modules.Network
         {
             var enter = new AutoResetEvent(false);
             var mgr = new TaskCancellationManager<int>();
-            var t = default(Task);
-            mgr.Add(42, token =>
+            var t = mgr.Add(42, token =>
             {
-                return t = Task.Run(() =>
+                return Task.Run(() =>
                 {
                     enter.WaitOne();
                     throw new InvalidOperationException();
