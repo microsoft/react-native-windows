@@ -1,5 +1,4 @@
-﻿using Facebook.CSSLayout;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Documents;
@@ -11,16 +10,16 @@ using System.Windows.Shapes;
 
 namespace ReactNative.Views.Text
 {
-    class ReactInlineShadowNodeVisitor : CSSNodeVisitor<Inline>
+    class ReactInlineShadowNodeVisitor : ReactShadowNodeVisitor<Inline>
     {
         private static readonly ReactInlineShadowNodeVisitor s_instance = new ReactInlineShadowNodeVisitor();
 
-        public static Inline Apply(CSSNode node)
+        public static Inline Apply(ReactShadowNode node)
         {
             return s_instance.Visit(node);
         }
 
-        protected sealed override Inline Make(CSSNode node, IList<Inline> children)
+        protected sealed override Inline Make(ReactShadowNode node, IList<Inline> children)
         {
             var textNode = node as ReactInlineShadowNode;
             if (textNode != null)
@@ -30,8 +29,8 @@ namespace ReactNative.Views.Text
             else
             {
                 var rectangle = new Rectangle();
-                rectangle.Width = node.Width;
-                rectangle.Height = node.Height;
+                rectangle.Width = node.StyleWidth;
+                rectangle.Height = node.StyleHeight;
                 return new InlineUIContainer
                 {
                     Child = rectangle,                    

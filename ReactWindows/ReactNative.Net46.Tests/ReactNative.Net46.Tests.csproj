@@ -8,6 +8,8 @@
     <RootNamespace>ReactNative.Net46.Tests</RootNamespace>
     <AssemblyName>ReactNative.Net46.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -80,6 +82,10 @@
       <HintPath>..\packages\Facebook.CSSLayout.1.1.1\lib\portable-net45+dnxcore50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Facebook.CSSLayout.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Facebook.Yoga, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.Yoga.1.0.1-pre\lib\netstandard\Facebook.Yoga.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -149,5 +155,12 @@
       <ChakraCoreDll Include="$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.*" />
     </ItemGroup>
     <Copy SourceFiles="@(ChakraCoreDll)" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
+  </Target>
+  <Import Project="..\packages\Facebook.Yoga.1.0.1-pre\build\netstandard\Facebook.Yoga.targets" Condition="Exists('..\packages\Facebook.Yoga.1.0.1-pre\build\netstandard\Facebook.Yoga.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Facebook.Yoga.1.0.1-pre\build\netstandard\Facebook.Yoga.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Facebook.Yoga.1.0.1-pre\build\netstandard\Facebook.Yoga.targets'))" />
   </Target>
 </Project>
