@@ -11,7 +11,7 @@ const Version = require('./version');
 
 function buildSolution(slnFile, buildType, buildArch) {
   const minVersion = new Version(8, 1, 0, 0);
-  const allVersions = MSBuildTools.getAllAvailableUAPVersions();
+  const allVersions = MSBuildTools.getAllAvailableVersions();
   if (!allVersions.some(v => v.gte(minVersion))) {
     throw new Error('Must have a minimum Windows SDK version 8.1 installed');
   }
