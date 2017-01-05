@@ -306,7 +306,7 @@ namespace ReactNative.Views.Image
                     status => OnImageStatusUpdate(view, status),
                     _ => OnImageFailed(view));
 
-                image.UriSource = new Uri(source);
+                image.UriSource = new Uri(source.Replace("ms-appx:///", String.Empty), UriKind.RelativeOrAbsolute);
             }
 
             image.EndInit();
