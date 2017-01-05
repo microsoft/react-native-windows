@@ -241,6 +241,7 @@ namespace ReactNative.Views.Text
             if (_fontFamily != null)
             {
                 // convert font string into something WPF can use
+                // https://msdn.microsoft.com/en-us/library/ms753303(v=vs.110).aspx
                 // e.g. FontFamily(new System.Uri("pack://application:,,,/"), "./Assets/#fontname")
                 string[] path = _fontFamily.Split('/');
                 path = path.Take(path.Count() - 1).ToArray();
