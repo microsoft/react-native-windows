@@ -20,10 +20,10 @@ module.exports = function windows(config, args, options) {
   return Common.getInstallPackage(version)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
-      execSync(`npm install --save ${rnwPackage}`);
+      // execSync(`npm install --save ${rnwPackage}`);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
-      const generateWindows = require(Common.REACT_NATIVE_WINDOWS_GENERATE_PATH());
+      const generateWindows = require(Common.REACT_NATIVE_WPF_GENERATE_PATH());
       generateWindows(process.cwd(), name, ns);
     }).catch(error => console.error(chalk.red(error.message)));
 }
