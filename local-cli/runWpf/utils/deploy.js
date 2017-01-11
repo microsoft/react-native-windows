@@ -8,18 +8,12 @@ const path = require('path');
 const chalk = require('chalk');
 const glob = require('glob');
 const parse = require('xml-parser');
-const WinAppDeployTool = require('./winappdeploytool');
 
 function getAppPackage(options) {
   const configuration = options.release ? 'Release' : 'Debug';
   return glob.sync(path.join(options.root, `windows/*/AppPackages/*_${options.arch}_${configuration}_*`))[0];
 }
 
-function getWindowsStoreAppUtils(options) {
-  const appStorePath = path.join(options.root, 'node_modules/react-native-windows/local-cli/runWindows/utils/WindowsStoreAppUtils.ps1');
-  execSync(`powershell Unblock-File "${appStorePath}"`);
-  return appStorePath;
-}
 
 function getAppxManifest(options) {
   const configuration = options.release ? 'Release' : 'Debug';
@@ -33,40 +27,6 @@ function handleResponseError(e) {
   } else {
     throw new Error(`Unexpected error deploying app: ${e.message}`);
   }
-}
-
-// Errors: 0x80073d10 - bad architecture
-function deployToDevice(options) {
-  const appPackageFolder = getAppPackage(options);
-
-  const deployTarget = options.target ? options.target : (options.emulator ? 'emulator' : 'device');
-  const deployTool = new WinAppDeployTool();
-  const appxManifest = getAppxManifest(options);
-  const identity = appxManifest.root.children.filter(function (x) { return x.name === 'mp:PhoneIdentity'; })[0];
-  const appName = identity.attributes.PhoneProductId;
-
-  return new Promise(resolve => {
-    const device = deployTool.findDevice(deployTarget);
-
-    try {
-      deployTool.uninstallAppPackage(appName, device);
-    } catch (e) {
-      console.log(chalk.yellow('Failed to uninstall app from ' + device.name));
-    }
-
-    const appxFile = glob.sync(path.join(appPackageFolder, '*.appx'))[0];
-    try {
-      console.log(chalk.white(deployTool.installAppPackage(appxFile, device, true, false)));
-      resolve();
-    } catch (e) {
-      if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
-        console.log(chalk.white(deployTool.installAppPackage(appxFile, device, true, true)));
-        resolve();
-      } else {
-        handleResponseError(e);
-      }
-    }
-  });
 }
 
 function deployToDesktop(options) {
@@ -101,7 +61,7 @@ function startServerInNewWindow(options) {
         console.log(chalk.green('React-Native Server already started'));
       } else {
         console.log(chalk.red('React-Native Server not responding'));
-      }       
+      }
       resolve();
     }).on('error', () => resolve(launchServer(options)));
   });
@@ -121,6 +81,5 @@ function launchServer(options) {
 
 module.exports = {
   deployToDesktop,
-  deployToDevice,
   startServerInNewWindow
 };

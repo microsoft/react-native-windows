@@ -37,11 +37,7 @@ function runWpf(config, args, options) {
 
   return deploy.startServerInNewWindow(options)
     .then(() => {
-      if (options.device || options.emulator || options.target) {
-        return deploy.deployToDevice(options);
-      } else {
-        return deploy.deployToDesktop(options);
-      }
+      return deploy.deployToDesktop(options);
     })
     .catch(e => console.error(chalk.red(`Failed to deploy: ${e.message}`)));
 }
