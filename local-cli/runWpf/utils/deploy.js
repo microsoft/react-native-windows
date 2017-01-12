@@ -9,49 +9,15 @@ const chalk = require('chalk');
 const glob = require('glob');
 const parse = require('xml-parser');
 
-function getAppPackage(options) {
-  const configuration = options.release ? 'Release' : 'Debug';
-  return glob.sync(path.join(options.root, `windows/*/AppPackages/*_${options.arch}_${configuration}_*`))[0];
-}
-
-
-function getAppxManifest(options) {
-  const configuration = options.release ? 'Release' : 'Debug';
-  const appxPath = glob.sync(path.join(options.root, `windows/*/bin/${options.arch}/${configuration}/AppxManifest.xml`))[0];
-  return parse(fs.readFileSync(appxPath, 'utf8'));
-}
-
-function handleResponseError(e) {
-  if (e.message.indexOf('Error code -2146233088')) {
-    throw new Error(`No Windows Mobile device was detected: ${e.message}`);
-  } else {
-    throw new Error(`Unexpected error deploying app: ${e.message}`);
-  }
-}
-
 function deployToDesktop(options) {
-  const appPackageFolder = getAppPackage(options);
-  const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
-  const appxManifest = getAppxManifest(options);
-  const identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
-  const appName = identity.attributes.Name;
-  const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
+
   const args = ["remoteDebugging", options.proxy ? 'true' : 'false'];
+  const appName = 'DemoLand';
+  const launchAppScript = path.join(`./wpf/${appName}/bin/x86/Debug/${appName}`);
 
-  return new Promise(resolve => {
-    console.log(chalk.green('Removing old version of the app'));
-    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`);
+  console.log(chalk.green('Starting the app'));
+  return Promise.resolve(spawn('cmd.exe', ['/C', 'start', launchAppScript], args));
 
-    console.log(chalk.green('Installing new version of the app'));
-    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`);
-
-    const appFamilyName = execSync(`powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`);
-    execSync(`CheckNetIsolation LoopbackExempt -a -n=${appFamilyName}`);
-
-    console.log(chalk.green('Starting the app'));
-    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`);
-    resolve();
-  });
 }
 
 function startServerInNewWindow(options) {
