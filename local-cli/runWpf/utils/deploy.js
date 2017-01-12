@@ -12,7 +12,7 @@ const parse = require('xml-parser');
 function deployToDesktop(options) {
 
   const args = ["remoteDebugging", options.proxy ? 'true' : 'false'];
-  const appName = 'DemoLand';
+  const appName = process.cwd().split(path.sep).pop();
   const launchAppScript = path.join(`./wpf/${appName}/bin/x86/Debug/${appName}`);
 
   console.log(chalk.green('Starting the app'));
