@@ -99,7 +99,7 @@ module.exports = function windows(config, args, options) {
   return getInstallPackage(version)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
-      // execSync(`npm install --save ${rnwPackage}`);
+      execSync(`npm install --save ${rnwPackage}`);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
