@@ -80,17 +80,5 @@ module.exports = {
     command: '--arch [string]',
     description: 'The build architecture (ARM, x86, x64)',
     default: 'x86',
-  }, {
-    command: '--emulator',
-    description: 'Deploys the app to an emulator',
-  }, {
-    command: '--device',
-    description: 'Deploys the app to a connected device',
-  }, {
-    command: '--target [string]',
-    description: 'Deploys the app to the specified GUID for a device.',
-  }, {
-    command: '--proxy',
-    description: 'Deploys the app in remote debugging mode.',
   }]
 };
