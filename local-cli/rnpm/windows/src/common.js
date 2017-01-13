@@ -9,32 +9,10 @@
 
 'use strict';
 
-const chalk = require('chalk');
-const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
 const semver = require('semver');
 const fetch = require('node-fetch');
-
-const REACT_NATIVE_WINDOWS_GENERATE_PATH = function() {
-  return path.resolve(
-    process.cwd(),
-    'node_modules',
-    'react-native-windows',
-    'local-cli',
-    'generate-windows.js'
-  );
-};
-
-const REACT_NATIVE_WPF_GENERATE_PATH = function() {
-  return path.resolve(
-    process.cwd(),
-    'node_modules',
-    'react-native-windows',
-    'local-cli',
-    'generate-wpf.js'
-  );
-};
 
 const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
   return path.resolve(
@@ -102,8 +80,6 @@ const getReactNativeAppName = function () {
 }
 
 module.exports = {
-  REACT_NATIVE_WINDOWS_GENERATE_PATH,
-  REACT_NATIVE_WPF_GENERATE_PATH,
   getInstallPackage,
   getReactNativeVersion,
   getReactNativeAppName
