@@ -100,7 +100,7 @@ namespace ReactNative.Bridge
                 var assembly = Assembly.GetAssembly(typeof(JavaScriptBundleLoader));
                 var assemblyName = assembly.GetName();
                 var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
-                var pathToAssemblyResource = Path.Combine(pathToAssembly, SourceUrl);
+                var pathToAssemblyResource = SourceUrl;
                 var u = new Uri(pathToAssemblyResource);
                 _script = u.LocalPath;
                 return Task.CompletedTask;
