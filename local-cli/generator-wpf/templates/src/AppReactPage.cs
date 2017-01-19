@@ -11,13 +11,7 @@ namespace <%= ns %>
         public override string MainComponentName => "<%= name %>";
 
 #if BUNDLE
-        public override string JavaScriptBundleFile
-        {
-            get
-            {
-                return AppDomain.CurrentDomain.BaseDirectory + "ReactAssets/index.windows.bundle";
-            }
-        }
+        public override string JavaScriptBundleFile => AppDomain.CurrentDomain.BaseDirectory + "ReactAssets/index.windows.bundle";
 #endif
 
         public override List<IReactPackage> Packages => new List<IReactPackage>
