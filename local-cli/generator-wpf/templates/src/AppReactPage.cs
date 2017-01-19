@@ -1,6 +1,7 @@
 ﻿using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
+using System;
 using System.Collections.Generic;
 
 namespace <%= ns %>
@@ -14,7 +15,7 @@ namespace <%= ns %>
         {
             get
             {
-                return "ms-appx:///ReactAssets/index.windows.bundle";
+                return AppDomain.CurrentDomain.BaseDirectory + "ReactAssets/index.windows.bundle";
             }
         }
 #endif

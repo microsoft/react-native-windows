@@ -152,7 +152,7 @@ namespace ReactNative.Views.Image
                 SetUriFromMultipleSources(view);
             }
         }
-        
+
         /// <summary>
         /// The border radius of the <see cref="ReactRootView"/>.
         /// </summary>
@@ -196,7 +196,7 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
@@ -306,7 +306,7 @@ namespace ReactNative.Views.Image
                     status => OnImageStatusUpdate(view, status),
                     _ => OnImageFailed(view));
 
-                image.UriSource = new Uri(source.Replace("ms-appx:///", String.Empty), UriKind.RelativeOrAbsolute);
+                image.UriSource = new Uri(source, UriKind.Absolute);
             }
 
             image.EndInit();
