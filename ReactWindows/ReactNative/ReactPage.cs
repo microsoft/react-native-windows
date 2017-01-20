@@ -8,6 +8,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Newtonsoft.Json.Linq;
 
 namespace ReactNative
 {
@@ -88,10 +89,20 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string arguments)
         {
+            OnCreate(arguments, null);
+        }
+
+        /// <summary>
+        /// Called when the application is first initialized.
+        /// </summary>
+        /// <param name="arguments">The launch arguments.</param>
+        /// <param name="initialProps">The initialProps.</param>
+        public void OnCreate(string arguments, JObject initialProps)
+        {
             RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
 
             ApplyArguments(arguments);
-            RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
+            RootView.StartReactApplication(_reactInstanceManager, MainComponentName, initialProps);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) =>
             {

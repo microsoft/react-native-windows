@@ -2,6 +2,7 @@
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
+using Newtonsoft.Json.Linq;
 #if WINDOWS_UWP
 using Windows.Foundation;
 #else
@@ -22,6 +23,7 @@ namespace ReactNative
     {
         private IReactInstanceManager _reactInstanceManager;
         private string _jsModuleName;
+        private JObject _initialProps;
 
         private bool _wasMeasured;
         private bool _attachScheduled;
@@ -47,6 +49,17 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Get the initialProps
+        /// </summary>
+        internal JObject InitialProps
+        {
+            get
+            {
+                return _initialProps;
+            }
+        }
+
+        /// <summary>
         /// Schedule rendering of the React component rendered by the 
         /// JavaScript application from the given JavaScript module 
         /// <paramref name="moduleName"/> using the provided
@@ -59,6 +72,24 @@ namespace ReactNative
         /// <param name="moduleName">The module name.</param>
         public void StartReactApplication(IReactInstanceManager reactInstanceManager, string moduleName)
         {
+            StartReactApplication(reactInstanceManager, moduleName, null);
+        }
+
+        /// <summary>
+        /// Schedule rendering of the React component rendered by the 
+        /// JavaScript application from the given JavaScript module 
+        /// <paramref name="moduleName"/> using the provided
+        /// <paramref name="reactInstanceManager"/> to attach to the JavaScript context of that manager.
+        /// Extra parameter
+        /// <paramref name="initialProps"/> can be used to pass initial properties for the react component.
+        /// </summary>
+        /// <param name="reactInstanceManager">
+        /// The React instance manager.
+        /// </param>
+        /// <param name="moduleName">The module name.</param>
+        /// <param name="initialProps">The initialProps</param>
+        public void StartReactApplication(IReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
+        {
             DispatcherHelpers.AssertOnDispatcher();
 
             if (_reactInstanceManager != null)
@@ -68,6 +99,7 @@ namespace ReactNative
 
             _reactInstanceManager = reactInstanceManager;
             _jsModuleName = moduleName;
+            _initialProps = initialProps;
 
             if (!_reactInstanceManager.HasStartedCreatingInitialContext)
             {
