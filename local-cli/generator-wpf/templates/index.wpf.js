@@ -1,6 +1,7 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ * @flow
  */
 
 import React, { Component } from 'react';
@@ -8,10 +9,10 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 
-class Playground extends Component {
+class <%= name %> extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -22,10 +23,8 @@ class Playground extends Component {
           To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
-          Press Ctrl+R to reload
-        </Text>
-        <Text style={styles.instructions}>
-          Press Ctrl+D or Ctrl+M for dev menu
+          Press Ctrl+R to reload,{'\n'}
+          Shift+F10 or shake for dev menu
         </Text>
       </View>
     );
@@ -37,18 +36,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10
+    margin: 10,
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5
+    marginBottom: 5,
   },
 });
 
-AppRegistry.registerComponent('Playground.Net46', () => Playground);
+AppRegistry.registerComponent('<%= name %>', () => <%= name %>);
