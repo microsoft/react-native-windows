@@ -89,7 +89,7 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string arguments)
         {
-            OnCreate(arguments, null);
+            OnCreate(arguments, default(JObject));
         }
 
         /// <summary>

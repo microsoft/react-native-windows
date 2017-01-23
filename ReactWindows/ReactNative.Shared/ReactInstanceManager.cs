@@ -523,11 +523,10 @@ namespace ReactNative
             rootView.TouchHandler = new TouchHandler(rootView);
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
-            var initialProps = rootView.InitialProps;
             var appParameters = new Dictionary<string, object>
             {
                 { "rootTag", rootTag },
-                { "initialProps", initialProps }
+                { "initialProps", rootView.InitialProps }
             };
 
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);

@@ -72,7 +72,7 @@ namespace ReactNative
         /// <param name="moduleName">The module name.</param>
         public void StartReactApplication(IReactInstanceManager reactInstanceManager, string moduleName)
         {
-            StartReactApplication(reactInstanceManager, moduleName, null);
+            StartReactApplication(reactInstanceManager, moduleName, default(JObject));
         }
 
         /// <summary>

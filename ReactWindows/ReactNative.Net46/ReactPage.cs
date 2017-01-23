@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 
@@ -100,8 +101,18 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string[] arguments)
         {
+            OnCreate(arguments, default(JObject));
+        }
+
+        /// <summary>
+        /// Called when the application is first initialized.
+        /// </summary>
+        /// <param name="arguments">The launch arguments.</param>
+        /// <param name="initialProps">The initialProps.</param>
+        public void OnCreate(string[] arguments, JObject initialProps)
+        {
             ApplyArguments(arguments);
-            RootView.StartReactApplication(ReactInstanceManager, MainComponentName);
+            RootView.StartReactApplication(ReactInstanceManager, MainComponentName, default(JObject));
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
