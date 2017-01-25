@@ -122,7 +122,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ReactNative.Net46" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -158,12 +157,16 @@
       <Project>{22cbff9c-fe36-43e8-a246-266c7635e662}</Project>
       <Name>ReactNative.Net46</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ReactNative.Net46\ReactNative.Net46.csproj">
+      <Project>{22cbff9c-fe36-43e8-a246-266c7635e662}</Project>
+      <Name>ReactNative.Net46</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'ReleaseBundle' or '$(Configuration)' == 'DebugBundle'">
     <Content Include="ReactAssets\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>  
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <ItemGroup Condition="'$(Configuration)' == 'ReleaseBundle' or '$(Configuration)' == 'Release'">
@@ -171,7 +174,7 @@
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'DebugBundle' or '$(Configuration)' == 'Debug'">
       <ChakraCoreDll Include="$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_Debug\ChakraCore.*" />
-    </ItemGroup>    
+    </ItemGroup>
     <Copy SourceFiles="@(ChakraCoreDll)" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
   </Target>
   <PropertyGroup>
