@@ -6,6 +6,12 @@ cache:
 - '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'
 - ChakraCore\Build\VcBuild -> ChakraCore\lib\Common\*.h
 
+install:
+  - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
+  - ps: mkdir C:\winium
+  - ps: Add-Type -A 'System.IO.Compression.FileSystem'
+  - ps: '[IO.Compression.ZipFile]::ExtractToDirectory("C:\winium.zip", "C:\winium")'
+
 clone_script:
 - ps: git clone -q $("--branch=" + $Env:APPVEYOR_REPO_BRANCH) $("https://github.com/" + $Env:APPVEYOR_REPO_NAME + ".git") $Env:APPVEYOR_BUILD_FOLDER
 - ps: if (!$Env:APPVEYOR_PULL_REQUEST_NUMBER) {$("git checkout -qf " + $Env:APPVEYOR_REPO_COMMIT)}
@@ -28,6 +34,17 @@ build_script:
 
     %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
 
+# Start Winium in the background
+before_test:
+  - ps: $winium = Start-Process -PassThru C:\winium\Winium.Desktop.Driver.exe
+
 test:
   assemblies:
   - ReactWindows\ReactNative.Net46.Tests\bin\x64\**\*.Tests.dll
+
+test_script:
+  - npm test
+
+# Terminate Winium
+after_test:
+  - ps: Stop-Process -Id $winium.Id
