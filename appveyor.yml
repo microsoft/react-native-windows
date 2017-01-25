@@ -8,7 +8,7 @@ cache:
 
 install:
   - ps: $env:playgroundNet46_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
-  - ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + $($env:playgroundNet46_dir + "\ReactAssets")
+  - ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
   - npm install -g npm@latest
   - npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
