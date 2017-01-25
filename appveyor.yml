@@ -21,25 +21,33 @@ clone_script:
 - ps: git submodule update -q --init --recursive
 
 before_build:
+- ps: $env:playgroundNet46_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
+- ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
 - ps: >-
     Get-ChildItem .\ChakraCore\Build\VcBuild * -recurse | ForEach-Object{$_.LastWriteTime = get-date}
 
     nuget restore ReactWindows\ReactNative.sln
 - npm i -g react-native-cli
-- ps: mkdir $env:bundle_dir
-- ps: $env:playgroundNet46_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
-- ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
-- ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
 
 build_script:
+- ps: mkdir $env:bundle_dir
+- ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
 - cmd: >-
     set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
 
-    %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
-
     %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
 
-    %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
+#build_script:
+#- ps: mkdir $env:bundle_dir
+#- ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
+#- cmd: >-
+#    set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
+#
+#    %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
+#
+#    %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
+#
+#    %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
 
 # Start Winium in the background
 before_test:
