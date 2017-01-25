@@ -30,14 +30,14 @@ before_build:
 - npm i -g react-native-cli
 
 build_script:
- - ps: mkdir $env:bundle_dir
- - ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
- - cmd: >-
-     set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
+- ps: mkdir $env:bundle_dir
+- ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
+- cmd: >-
+    set DEVENV="%VS140COMNTOOLS%\..\IDE\devenv"
 
-     %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
+    %DEVENV% /build "Debug|x86" ReactWindows\ReactNative.sln
 
-     %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
+    %DEVENV% /build "ReleaseBundle|x64" ReactWindows\ReactNative.sln
 
     %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
 
