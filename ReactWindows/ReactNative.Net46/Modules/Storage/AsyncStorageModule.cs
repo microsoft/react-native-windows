@@ -289,11 +289,10 @@ namespace ReactNative.Modules.Storage
             if (storageFolder != null)
             {
                 var fileName = AsyncStorageHelpers.GetFileName(key);
-                var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
-                if (storageItem != null)
+                if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
                 {
-                    var file = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
-                    return await FileExtensions.ReadAllTextAsync(file).ConfigureAwait(false);
+                    var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
+                    return await FileExtensions.ReadAllTextAsync(storageItem).ConfigureAwait(false);
                 }
             }
 
@@ -326,9 +325,9 @@ namespace ReactNative.Modules.Storage
             if (storageFolder != null)
             {
                 var fileName = AsyncStorageHelpers.GetFileName(key);
-                var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
-                if (storageItem != null)
+                if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
                 {
+                    var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
                     await storageItem.DeleteAsync().ConfigureAwait(false);
                 }
             }
@@ -352,9 +351,9 @@ namespace ReactNative.Modules.Storage
 
                 if (localFolder.CheckExistsAsync(AsyncStorageHelpers.DirectoryName).Result == ExistenceCheckResult.FolderExists)
                 {
-                    _cachedFolder = localFolder;
+                    _cachedFolder = await localFolder.GetFolderAsync(AsyncStorageHelpers.DirectoryName);
                 }
-                else
+                else if (createIfNotExists)
                 {
                     _cachedFolder = await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists);
                 }
