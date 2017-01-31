@@ -4,13 +4,11 @@ using ReactNative.Shell;
 using System;
 using System.Collections.Generic;
 
-namespace Playground.Net46
+namespace <%= ns %>
 {
     internal class AppReactPage : ReactPage
     {
-        public override string MainComponentName => "Playground.Net46";
-
-        public override string JavaScriptMainModuleName => "ReactWindows/Playground.Net46/index.windows";
+        public override string MainComponentName => "<%= name %>";
 
 #if BUNDLE
         public override string JavaScriptBundleFile => AppDomain.CurrentDomain.BaseDirectory + "ReactAssets/index.windows.bundle";
