@@ -239,10 +239,10 @@ Global
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Debug|x86.Build.0 = Debug|x86
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|ARM.ActiveCfg = Debug|ARM
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|ARM.Build.0 = Debug|ARM
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x64.ActiveCfg = Debug|x64
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x64.Build.0 = Debug|x64
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x86.ActiveCfg = Debug|x86
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x86.Build.0 = Debug|x86
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x64.ActiveCfg = DebugBundle|x64
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x64.Build.0 = DebugBundle|x64
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x86.ActiveCfg = DebugBundle|x86
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.DebugBundle|x86.Build.0 = DebugBundle|x86
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Release|ARM.ActiveCfg = Release|ARM
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Release|ARM.Build.0 = Release|ARM
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Release|x64.ActiveCfg = Release|x64
@@ -251,10 +251,11 @@ Global
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Release|x86.Build.0 = Release|x86
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|ARM.Build.0 = Release|ARM
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x64.ActiveCfg = Release|x64
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x64.Build.0 = Release|x64
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.ActiveCfg = Release|x86
-		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.Build.0 = Release|x86
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x64.ActiveCfg = ReleaseBundle|x64
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x64.Build.0 = ReleaseBundle|x64
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.ActiveCfg = ReleaseBundle|x86
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.Build.0 = ReleaseBundle|x86
+		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.Deploy.0 = ReleaseBundle|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace ReactNative.UIManager
 {
-    static class ColorHelpers
+    public static class ColorHelpers
     {
         public const uint Transparent = 0x00FFFFFF;
 

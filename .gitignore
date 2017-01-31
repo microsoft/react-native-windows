@@ -85,6 +85,7 @@ _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
 *.sass-cache
+WiniumDriver/
 
 #Project files
 [Bb]uild/
