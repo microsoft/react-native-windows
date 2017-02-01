@@ -112,7 +112,7 @@ namespace ReactNative
         public void OnCreate(string[] arguments, JObject initialProps)
         {
             ApplyArguments(arguments);
-            RootView.StartReactApplication(ReactInstanceManager, MainComponentName, default(JObject));
+            RootView.StartReactApplication(ReactInstanceManager, MainComponentName, initialProps);
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
