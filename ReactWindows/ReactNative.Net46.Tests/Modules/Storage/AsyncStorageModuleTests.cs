@@ -11,21 +11,41 @@ namespace ReactNative.Tests.Modules.Storage
     [TestFixture, Apartment(ApartmentState.STA)]
     public class AsyncStorageModuleTests
     {
+        AsyncStorageModule module;
+        AutoResetEvent waitHandle;
+        JObject error;
+        JArray result;
+        MockCallback callback;
+
+        [SetUp]
+        public void Init()
+        {
+            module = new AsyncStorageModule();
+            waitHandle = new AutoResetEvent(false);
+
+            error = default(JObject);
+            result = default(JArray);
+            callback = new MockCallback(res =>
+             {
+                 error = res.Length > 0 ? (JObject)res[0] : null;
+                 result = res.Length > 1 ? (JArray)res[1] : null;
+                 waitHandle.Set();
+             });
+        }
+
+        [TearDown]
+        public void Cleanup()
+        {
+            module.clear(callback);
+            Assert.IsTrue(waitHandle.WaitOne());
+            Assert.IsNull(error);
+            Assert.IsNull(result);
+        }
+
+
         [Test]
         public void AsyncStorageModule_InvalidKeyValue_Method()
         {
-            var module = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
             var array = new[]
             {
                 new[] { "5", "5", "5" },
@@ -41,22 +61,10 @@ namespace ReactNative.Tests.Modules.Storage
             Assert.AreEqual((string)error["message"], "Invalid Value");
             Assert.IsNull(result);
         }
-       
+
         [Test]
         public void AsyncStorageModule_GetAllKeys_SpecialCharacters()
         {
-            var module = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
             module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
@@ -89,26 +97,14 @@ namespace ReactNative.Tests.Modules.Storage
             module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
-            var expectedKeys = pairs.Select(arr => arr[0]).OrderBy(s => s);
-            var actualKeys = result.ToObject<string[]>().OrderBy(s => s);
+            var expectedKeys = pairs.Select(pair => pair[0]).OrderBy(key => key);
+            var actualKeys = result.ToObject<string[]>().OrderBy(key => key);
             Assert.IsTrue(expectedKeys.SequenceEqual(actualKeys));
         }
-        
+
         [Test]
         public void AsyncStorageModule_multiGet_Method()
         {
-            var module = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
             var array = new[]
             {
                 new[] { "test1", "5" },
@@ -127,25 +123,14 @@ namespace ReactNative.Tests.Modules.Storage
             module.multiGet(new string[] { "test1", }, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
-            Assert.AreEqual(result.Count, 1);
+            Assert.That(result, Has.Count.EqualTo(1));
             Assert.AreEqual((result[0]).Last.Value<string>(), "5");
+
         }
-        
+
         [Test]
         public void AsyncStorageModule_multiRemove_Method()
         {
-            var module = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
             var array = new[]
             {
                 new[] { "test1", "1" },
@@ -184,8 +169,8 @@ namespace ReactNative.Tests.Modules.Storage
             var expected = array.OrderBy(p => p[0]).Aggregate("", (acc, p) => $"{p[0]},{p[1]};");
             var actual = result.OrderBy(p => p[0]).Aggregate("", (acc, p) => $"{p[0]},{p[1]};");
             Assert.AreEqual(expected, actual);
-          
-            var keys = new string[] 
+
+            var keys = new string[]
             {
                 "test1",
                 "test2",
@@ -199,24 +184,12 @@ namespace ReactNative.Tests.Modules.Storage
             module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
-            Assert.AreEqual(result.Count, 4);
+            Assert.That(result, Has.Count.EqualTo(4));
         }
-        
+
         [Test]
         public void AsyncStorageModule_multiSet_LargeValue()
         {
-            var module = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
             module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
@@ -226,7 +199,7 @@ namespace ReactNative.Tests.Modules.Storage
             {
                 new[] { "testKey", string.Join("", Enumerable.Repeat("a", 1024 * 16)) },
             };
-            
+
             module.multiSet(array, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
@@ -239,22 +212,10 @@ namespace ReactNative.Tests.Modules.Storage
             JArray.FromObject(array).ToString(Formatting.None),
             result.ToString(Formatting.None));
         }
-        
+
         [Test]
         public void AsyncStorageModule_multiMerge_NullValue()
         {
-            var module = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
             module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
@@ -270,23 +231,11 @@ namespace ReactNative.Tests.Modules.Storage
             Assert.IsNull(error);
             Assert.IsNull(result);
         }
-        
+
         [Test]
         public void AsyncStorageModule_testMultiSetMultiGet()
         {
-            var mStorage = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
-            mStorage.clear(callback);
+            module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -297,20 +246,24 @@ namespace ReactNative.Tests.Modules.Storage
             var value1 = "bar1";
             var value2 = "bar2";
 
-            var keyValues = new List<string[]>();
-            keyValues.Add(new[] { key1, value1 });
-            keyValues.Add(new[] { key2, value2 });
-            
-            mStorage.multiSet(keyValues.ToArray(), callback);
+            var keyValues = new List<string[]>
+            {
+                new[] { key1, value1 },
+                new[] { key2, value2 }
+            };
+
+            module.multiSet(keyValues.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            var keys = new List<string>();
-            keys.Add(key1);
-            keys.Add(key2);
+            var keys = new List<string>
+            {
+                key1,
+                key2
+            };
 
-            mStorage.multiGet(keys.ToArray(), callback);
+            module.multiGet(keys.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             var expected = JArray.FromObject(keyValues);
@@ -319,29 +272,17 @@ namespace ReactNative.Tests.Modules.Storage
             keys.Add(fakeKey);
             keyValues.Add(new[] { fakeKey, null });
 
-            mStorage.multiGet(keys.ToArray(), callback);
+            module.multiGet(keys.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             expected = JArray.FromObject(keyValues);
-            Assert.IsTrue(JToken.DeepEquals(result, expected));
+            Assert.That(result, Is.EqualTo(expected));
         }
-        
+
         [Test]
         public void AsyncStorageModule_testMultiRemove()
         {
-            var mStorage = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
-            mStorage.clear(callback);
+            module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -351,66 +292,53 @@ namespace ReactNative.Tests.Modules.Storage
             var value1 = "bar1";
             var value2 = "bar2";
 
-            var keyValues = new List<string[]>();
-            keyValues.Add(new[] { key1, value1 });
-            keyValues.Add(new[] { key2, value2 });
+            var keyValues = new List<string[]>
+            {
+                new[] { key1, value1 },
+                new[] { key2, value2 }
+            };
 
-            mStorage.multiSet(keyValues.ToArray(), callback);
+            module.multiSet(keyValues.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            var keys = new List<string>();
-            keys.Add(key1);
-            keys.Add(key2);
+            var keys = new List<string>
+            {
+                key1,
+                key2
+            };
 
-            mStorage.multiRemove(keys.ToArray(), callback);
+            module.multiRemove(keys.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            mStorage.getAllKeys(callback);
+            module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.AreEqual(result.Count, 0);
 
-            mStorage.multiSet(keyValues.ToArray(), callback);
+            module.multiSet(keyValues.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
             keys.Add("fakeKey");
-            mStorage.multiRemove(keys.ToArray(), callback);
+            module.multiRemove(keys.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            mStorage.getAllKeys(callback);
+            module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.AreEqual(result.Count, 0);
         }
-        
+
         [Test]
         public void AsyncStorageModule_testMultiMerge()
         {
-            var mStorage = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
-            mStorage.clear(callback);
-            Assert.IsTrue(waitHandle.WaitOne());
-            Assert.IsNull(error);
-            Assert.IsNull(result);
-
             var mergeKey = "mergeTest";
 
             var value = new JObject();
@@ -431,21 +359,21 @@ namespace ReactNative.Tests.Modules.Storage
 
             var array = new[]
             {
-                new[] 
+                new[]
                 {
                     mergeKey,
                     value.ToString(Formatting.None)
                 },
             };
 
-            mStorage.multiSet(array, callback);
+            module.multiSet(array, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
             var str = new string[] { mergeKey };
 
-            mStorage.multiGet(str, callback);
+            module.multiGet(str, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             var expected = JToken.FromObject(array);
@@ -461,9 +389,7 @@ namespace ReactNative.Tests.Modules.Storage
             var val2 = new JObject();
             val2.Add("key1", "val1");
             value.Add("foo2", val2);
-
             value.Add("foo3", "bar1");
-
             value.Add("foo4", new JArray
             {
                 "val1",
@@ -490,7 +416,7 @@ namespace ReactNative.Tests.Modules.Storage
                 },
             };
 
-            mStorage.multiMerge(array2, callback);
+            module.multiMerge(array2, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -504,7 +430,7 @@ namespace ReactNative.Tests.Modules.Storage
                 },
             };
 
-            mStorage.multiMerge(array3, callback);
+            module.multiMerge(array3, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -518,7 +444,7 @@ namespace ReactNative.Tests.Modules.Storage
                 },
             };
 
-            mStorage.multiMerge(array4, callback);
+            module.multiMerge(array4, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -529,29 +455,17 @@ namespace ReactNative.Tests.Modules.Storage
             val5.Add("key2", "val2");
             value.Add("foo2", val5);
 
-            mStorage.multiGet(str, callback);
+            module.multiGet(str, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             expected = JToken.FromObject(array);
             Assert.IsTrue(JToken.DeepEquals(value, JObject.Parse(result.Last.Value<JArray>().Last.Value<string>())));
         }
-        
+
         [Test]
         public void AsyncStorageModule_testGetAllKeys()
         {
-            var mStorage = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
-            mStorage.clear(callback);
+            module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -573,12 +487,12 @@ namespace ReactNative.Tests.Modules.Storage
                 },
             };
 
-            mStorage.multiSet(keyValues, callback);
+            module.multiSet(keyValues, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            mStorage.getAllKeys(callback);
+            module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
 
@@ -599,33 +513,21 @@ namespace ReactNative.Tests.Modules.Storage
             set.SymmetricExceptWith(result.Values<string>());
             Assert.AreEqual(set.Count, 0);
 
-            mStorage.multiRemove(keys, callback);
+            module.multiRemove(keys, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            mStorage.getAllKeys(callback);
+            module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.AreEqual(result.Count, 0);
         }
-        
+
         [Test]
         public void AsyncStorageModule_testClear()
         {
-            var mStorage = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
-
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
-            mStorage.clear(callback);
+            module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -647,38 +549,29 @@ namespace ReactNative.Tests.Modules.Storage
                 },
             };
 
-            mStorage.multiSet(keyValues, callback);
+            module.multiSet(keyValues, callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            mStorage.clear(callback);
+            module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            mStorage.getAllKeys(callback);
+            module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.AreEqual(result.Count, 0);
         }
-        
+
         [Test]
         public void AsyncStorageModule_testHugeMultiGetMultiGet()
         {
-            var mStorage = new AsyncStorageModule();
-            var waitHandle = new AutoResetEvent(false);
+            const string KEY_NAME = "key";
+            const string VALUE_NAME = "value";
 
-            var error = default(JObject);
-            var result = default(JArray);
-            var callback = new MockCallback(res =>
-            {
-                error = res.Length > 0 ? (JObject)res[0] : null;
-                result = res.Length > 1 ? (JArray)res[1] : null;
-                waitHandle.Set();
-            });
-
-            mStorage.clear(callback);
+            module.clear(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
@@ -691,12 +584,12 @@ namespace ReactNative.Tests.Modules.Storage
             int magicalNumber = 343;
 
             var keyValues = new List<string[]>();
-            for (int i = 0; i < keyCount; i++)
+            for (var i = 0; i < keyCount; i++)
             {
                 if (i % magicalNumber > 0)
                 {
-                    var key = "key" + i;
-                    var value = "value" + i;
+                    var key = KEY_NAME + i;
+                    var value = VALUE_NAME + i;
                     keyValues.Add(new[]
                     {
                         key,
@@ -704,112 +597,67 @@ namespace ReactNative.Tests.Modules.Storage
                     });
                 }
             }
-            mStorage.multiSet(keyValues.ToArray(), callback);
+            module.multiSet(keyValues.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
             var keys = new List<string>();
-            for (int i = 0; i < keyCount; i++)
+            for (var i = 0; i < keyCount; i++)
             {
-                keys.Add("key" + i);
+                keys.Add(KEY_NAME + i);
             }
 
-            mStorage.multiGet(keys.ToArray(), callback);
+            module.multiGet(keys.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.AreEqual(result.Count, keys.Count);
 
             var keyReceived = new bool[keyCount];
 
-            for (int i = 0; i < keyCount; i++)
+            for (var i = 0; i < keyCount; i++)
             {
                 var keyValue = result[i];
                 var key = keyValue.Value<JArray>().First.Value<string>().Substring(3);
 
-                int idx = int.Parse(key);
+                var idx = int.Parse(key);
                 Assert.IsFalse(keyReceived[idx]);
                 keyReceived[idx] = true;
 
                 if (idx % magicalNumber > 0)
                 {
-                    var value = keyValue.Value<JArray>().Last.Value<string>().Substring(5);
+                    var value = keyValue.Value<JArray>().Last.Value<string>().Replace(VALUE_NAME, string.Empty);
                     Assert.AreEqual(key, value);
                 }
                 else
                 {
-                    Assert.IsTrue(keyValue.Value<JArray>().Last.Type == JTokenType.Null);
-                }   
-            }
-
-            var keyRemoves = new List<string>();
-            for (int i = 0; i < keyCount; i++)
-            {
-                if (i % 2 > 0)
-                {
-                    keyRemoves.Add("key" + i);
+                    Assert.That(keyValue.Value<JArray>().Last.Type, Is.EqualTo(JTokenType.Null));
                 }
             }
 
-            mStorage.multiRemove(keyRemoves.ToArray(), callback);
+            var keyRemoves = new List<string>();
+            for (var i = 0; i < keyCount; i++)
+            {
+                if (i % 2 > 0)
+                {
+                    keyRemoves.Add(KEY_NAME + i);
+                }
+            }
+
+            module.multiRemove(keyRemoves.ToArray(), callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.IsNull(result);
 
-            mStorage.getAllKeys(callback);
+            module.getAllKeys(callback);
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsNull(error);
             Assert.AreEqual(result.Count, 499);
-            for (int i = 0; i < result.Count; i++)
+            for (var i = 0; i < result.Count; i++)
             {
-                var key = result[i].Value<string>().Substring(3); ;
-                int idx = int.Parse(key);
-                Assert.AreEqual(idx % 2,0);
-            }
-        }
-
-        private void AssertJArraysAreEqual(JArray a, JArray b)
-        {
-            foreach (var item in a)
-            {
-                string key = item.First.Value<string>();
-                object value = item.Last.Value<object>();
-
-                var found = false;
-                var item_ = b.First;
-
-                while (!found && item_ != null)
-                {
-                    if ((item_.First).Value<string>().CompareTo(key) == 0)
-                    {
-                        object o = item_.Last.Value<object>();
-                        if (value == null) Assert.IsNull(o);
-                        else if (o.GetType() != value.GetType()) Assert.Fail();
-                        else
-                        {
-                            if (value is bool || value is long || value is double || value is System.Guid || 
-                                value is System.TimeSpan || value is System.Uri || value is System.DateTime)
-                            {
-                                Assert.AreEqual(value, o);
-                            }
-                            else if (value is string)
-                            {
-                                Assert.IsTrue((value as string).CompareTo(o as string) == 0);
-                            }
-                            else if (value is JArray || value is JRaw || value is JConstructor)
-                            {
-                                Assert.IsTrue(value.ToString().CompareTo(o.ToString()) == 0);
-                            }
-                            else if (value is JObject)
-                            {
-                                Assert.IsTrue(JToken.DeepEquals(value as JObject, o as JObject));
-                            }
-                        }
-                        found = true;
-                    }
-                    item_ = item_.Next;
-                }
-                Assert.IsTrue(found);
+                var key = result[i].Value<string>().Replace(KEY_NAME, string.Empty);
+                var idx = int.Parse(key);
+                Assert.AreEqual(idx % 2, 0);
             }
         }
     }

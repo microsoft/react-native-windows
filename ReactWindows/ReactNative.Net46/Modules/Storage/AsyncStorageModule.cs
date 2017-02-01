@@ -286,15 +286,16 @@ namespace ReactNative.Modules.Storage
         private async Task<string> GetAsync(string key)
         {
             var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
-            if (storageFolder != null)
+            if (storageFolder == null)
+                return null;
+
+            var fileName = AsyncStorageHelpers.GetFileName(key);
+            if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
             {
-                var fileName = AsyncStorageHelpers.GetFileName(key);
-                if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
-                {
-                    var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
-                    return await FileExtensions.ReadAllTextAsync(storageItem).ConfigureAwait(false);
-                }
+                var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
+                return await FileExtensions.ReadAllTextAsync(storageItem).ConfigureAwait(false);
             }
+
 
             return null;
         }
@@ -322,14 +323,14 @@ namespace ReactNative.Modules.Storage
         private async Task<JObject> RemoveAsync(string key)
         {
             var storageFolder = await GetAsyncStorageFolder(false).ConfigureAwait(false);
-            if (storageFolder != null)
+            if (storageFolder == null)
+                return null;
+
+            var fileName = AsyncStorageHelpers.GetFileName(key);
+            if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
             {
-                var fileName = AsyncStorageHelpers.GetFileName(key);
-                if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
-                {
-                    var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
-                    await storageItem.DeleteAsync().ConfigureAwait(false);
-                }
+                var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
+                await storageItem.DeleteAsync().ConfigureAwait(false);
             }
 
             return null;
@@ -345,18 +346,18 @@ namespace ReactNative.Modules.Storage
 
         private async Task<IFolder> GetAsyncStorageFolder(bool createIfNotExists)
         {
-            if (_cachedFolder == null)
-            {
-                var localFolder = FileSystem.Current.LocalStorage;
+            if (_cachedFolder != null)
+                return _cachedFolder;
 
-                if (localFolder.CheckExistsAsync(AsyncStorageHelpers.DirectoryName).Result == ExistenceCheckResult.FolderExists)
-                {
-                    _cachedFolder = await localFolder.GetFolderAsync(AsyncStorageHelpers.DirectoryName);
-                }
-                else if (createIfNotExists)
-                {
-                    _cachedFolder = await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists);
-                }
+            var localFolder = FileSystem.Current.LocalStorage;
+
+            if (localFolder.CheckExistsAsync(AsyncStorageHelpers.DirectoryName).Result == ExistenceCheckResult.FolderExists)
+            {
+                _cachedFolder = await localFolder.GetFolderAsync(AsyncStorageHelpers.DirectoryName);
+            }
+            else if (createIfNotExists)
+            {
+                _cachedFolder = await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists);
             }
 
             return _cachedFolder;
