@@ -70,7 +70,7 @@ npm install
 
 ### Showing the Debug Menu
 
-- Press Shift+F10 to open the debug menu.
+- Press CTRL+D or CTRL+M to open the debug menu.
 
 ## Extending React Native
 
