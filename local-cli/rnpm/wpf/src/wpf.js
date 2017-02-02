@@ -15,6 +15,13 @@ const fs = require('fs');
 const path = require('path');
 const semver = require('semver');
 const fetch = require('node-fetch');
+const HttpsProxyAgent = require('https-proxy-agent');
+
+const proxyUrl = process.env.https_proxy || process.env.HTTPS_PROXY;
+const options  = {};
+if(proxyUrl) {
+  options.agent = new HttpsProxyAgent(proxyUrl);
+}
 
 const REACT_NATIVE_WINDOWS_GENERATE_PATH = function() {
   return path.resolve(
@@ -36,14 +43,14 @@ const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
 };
 
 function getLatestVersion() {
-  return fetch('https://registry.npmjs.org/react-native-windows?version=latest')
+  return fetch('https://registry.npmjs.org/react-native-windows?version=latest', options)
     .then(result => result && result.ok && result.json())
     .then(result => result.version)
 }
 
 function getMatchingVersion(version) {
   console.log(`Checking for react-native-windows version matching ${version}...`)
-  return fetch(`https://registry.npmjs.org/react-native-windows?version=${version}`)
+  return fetch(`https://registry.npmjs.org/react-native-windows?version=${version}`, options)
     .then(result => {
       if (result && result.ok) {
         return result.json().then(pkg => pkg.version);
