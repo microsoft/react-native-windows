@@ -1,10 +1,10 @@
 # Universal Windows Platform performance analysis
 
 ## Tools
-1. Windows Performance Analyzer - the only usable tool so far
+1. [Windows Performance Analyzer](https://msdn.microsoft.com/en-us/windows/desktop/hh448170.aspx) - the only usable tool so far
 2. Standard profiler - doesn't give much information, but still could be useful
-3. Dot Trace profiler from JetBrains, gives the same level of info as a previos tool
-4. Intel vTune - I expect more from this tool, but so far UWP profiling is not supported. This is the most powerful tool for native code profiling.
+3. [DotTrace](https://www.jetbrains.com/profiler/) profiler from JetBrains, gives the same level of info as Windows Performance Analyzer
+4. [Intel vTune](https://software.intel.com/en-us/vtune) - Does not support UWP or WPF-specific profiling, but gives low-level CPU and GPU breakdowns.
 
 ## Windows Performance Analyzer
 You should have all the tools downloaded as part of UWP sdk, but in case you don't - download the latest version of the Windows Performance Tools Kit, and install it on your machine. (http://www.microsoft.com/whdc/system/sysperf/perftools.mspx : Windows Performance Tools Kit, v.4.1.1 (QFE))
