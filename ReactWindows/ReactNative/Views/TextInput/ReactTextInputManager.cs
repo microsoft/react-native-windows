@@ -477,6 +477,7 @@ namespace ReactNative.Views.TextInput
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
             view.Width = dimensions.Width;
+            view.Height = dimensions.Height;
         }
 
         /// <summary>
