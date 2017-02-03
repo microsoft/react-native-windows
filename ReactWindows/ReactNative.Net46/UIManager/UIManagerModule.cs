@@ -508,7 +508,9 @@ namespace ReactNative.UIManager
 
         private static IDictionary<string, object> GetDimensions()
         {
-            var bounds = new Rect() {Height = _window.Height, Width = _window.Width};
+            double chromeHeight = (SystemParameters.ResizeFrameHorizontalBorderHeight * 4) + SystemParameters.WindowCaptionHeight;
+            double chromeWidth = SystemParameters.ResizeFrameVerticalBorderWidth * 4;
+            var bounds = new Rect() {Height = _window.ActualHeight - chromeHeight, Width = _window.ActualWidth - chromeWidth};
             double scale = 1.0;
             
             return new Dictionary<string, object>
