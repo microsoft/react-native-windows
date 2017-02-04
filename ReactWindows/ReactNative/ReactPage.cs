@@ -1,4 +1,5 @@
-﻿using ReactNative.Bridge;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Newtonsoft.Json.Linq;
 
 namespace ReactNative
 {
