@@ -31,8 +31,11 @@ namespace ReactNative.Views.Image
         private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
             new Dictionary<int, List<KeyValuePair<string, double>>>();
 
-        private Color? _tintColor;
-        private Color? _backgroundColor;
+        private readonly Dictionary<int, Color?> _tintColors =
+            new Dictionary<int, Color?>();
+
+        private readonly Dictionary<int, Color?> _backgroundColors =
+            new Dictionary<int, Color?>();
 
         /// <summary>
         /// The view manager name.
@@ -71,8 +74,9 @@ namespace ReactNative.Views.Image
             OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, new ImageMetadata());
 
             var sources = imageExtraData.Item1;
-            _tintColor = imageExtraData.Item2;
-            _backgroundColor = imageExtraData.Item3;
+            var tintColor = imageExtraData.Item2;
+            var backgroundColor = imageExtraData.Item3;
+            var tag = view.GetTag();
 
             var count = sources.Count;
 
@@ -85,12 +89,22 @@ namespace ReactNative.Views.Image
             else if (count == 1)
             {
                 var uri = ((JObject)sources[0]).Value<string>("uri");
-                SetUriFromSingleSource(view, uri, _tintColor, _backgroundColor);
+                var width = ((JObject)sources[0]).Value<double>("width");
+                var height = ((JObject)sources[0]).Value<double>("height");
+
+                var viewSources = new List<KeyValuePair<string, double>>(1);
+                viewSources.Add(
+                    new KeyValuePair<string, double>(
+                        uri,
+                        width * height));
+                _imageSources.Add(tag, viewSources);
+                _tintColors.Add(tag, tintColor);
+                _backgroundColors.Add(tag, backgroundColor);
+                SetUriFromSingleSource(view, uri, tintColor, backgroundColor);
             }
             else
             {
                 var viewSources = default(List<KeyValuePair<string, double>>);
-                var tag = view.GetTag();
 
                 if (_imageSources.TryGetValue(tag, out viewSources))
                 {
@@ -111,6 +125,9 @@ namespace ReactNative.Views.Image
                             sourceData.Value<double>("width") * sourceData.Value<double>("height")));
                 }
 
+                _tintColors.Add(tag, tintColor);
+                _backgroundColors.Add(tag, backgroundColor);
+
                 viewSources.Sort((p1, p2) => p1.Value.CompareTo(p2.Value));
 
                 if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
@@ -121,7 +138,7 @@ namespace ReactNative.Views.Image
 
                 var uriToLoad = ChooseUriFromMultipleSources(view);
                 if (uriToLoad != null)
-                    SetUriFromSingleSource(view, uriToLoad, _tintColor, _backgroundColor);
+                    SetUriFromSingleSource(view, uriToLoad, tintColor, backgroundColor);
             }
         }
         /// <summary>
@@ -274,8 +291,11 @@ namespace ReactNative.Views.Image
         {
             base.SetDimensions(view, dimensions);
             var uriToLoad = ChooseUriFromMultipleSources(view);
+            Color? tintColor = null, backgroundColor = null;
+            _tintColors.TryGetValue(view.GetTag(), out tintColor);
+            _backgroundColors.TryGetValue(view.GetTag(), out backgroundColor);
             if (uriToLoad != null)
-                SetUriFromSingleSource(view, uriToLoad, _tintColor, _backgroundColor);
+                SetUriFromSingleSource(view, uriToLoad, tintColor, backgroundColor);
         }
 
         private void OnImageFailed(Border view)
