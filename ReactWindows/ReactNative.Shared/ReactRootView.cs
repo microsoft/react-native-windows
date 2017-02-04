@@ -1,8 +1,8 @@
-﻿using ReactNative.Bridge;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
-using Newtonsoft.Json.Linq;
 #if WINDOWS_UWP
 using Windows.Foundation;
 #else
