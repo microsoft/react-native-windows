@@ -29,10 +29,11 @@
     "react": "~15.4.0-rc.4"
   },
   "devDependencies": {
+    "https-proxy-agent": "^1.0.0",
     "jasmine": "^2.5.2",
     "jasmine-reporters": "^2.2.0",
-    "react-native": "~0.39.0-rc.0",
     "react": "~15.4.0-rc.4",
+    "react-native": "~0.39.0-rc.0",
     "selenium-webdriver": "2.48.x"
   },
   "dependencies": {
