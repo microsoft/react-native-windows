@@ -71,7 +71,8 @@ npm install
 
 ### Showing the Debug Menu
 
-- Press CTRL+D or CTRL+M to open the debug menu.
+- On UWP, press Shift+F10 to open the debug menu.
+- On WPF, press CTRL+D or CTRL+M to open the debug menu.
 
 ## Extending React Native
 
