@@ -69,6 +69,11 @@ npm install
 - Open Examples.sln from the Examples submodule folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
+### Showing the Debug Menu
+
+- On UWP, press Shift+F10 to open the debug menu.
+- On WPF, press CTRL+D or CTRL+M to open the debug menu.
+
 ## Extending React Native
 
 - Looking for a component? [JS.coach](https://js.coach/react-native)
