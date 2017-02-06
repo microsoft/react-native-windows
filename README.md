@@ -32,6 +32,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
 - Initialize Windows project with `react-native windows` command in the project directory.
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
+- For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
 
 ### Requirements
 
@@ -68,13 +69,18 @@ npm install
 - Open Examples.sln from the Examples submodule folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
+### Showing the Debug Menu
+
+- On UWP, press Shift+F10 to open the debug menu.
+- On WPF, press CTRL+D or CTRL+M to open the debug menu.
+
 ## Extending React Native
 
 - Looking for a component? [JS.coach](https://js.coach/react-native)
 - Fellow developers write and publish React Native modules to npm and open source them on GitHub.
 - Many third party modules may be missing Windows support, so reach out to the project owners directly.
 - Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
-- Read the guides on [Native Modules for Windows](docs/NativeModulesWindows.md) **(Coming Soon)** and [Native UI Components for Windows](docs/NativeComponentsWindows.md) **(Coming Soon)** if you are interested in extending native functionality.
+- Read the guides on [Native Modules for Windows](docs/NativeModulesWindows.md) and [Native UI Components for Windows](docs/NativeComponentsWindows.md) if you are interested in extending native functionality.
 
 ## Opening Issues
 

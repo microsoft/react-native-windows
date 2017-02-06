@@ -13,12 +13,13 @@
   "engineStrict": true,
   "main": "Libraries/react-native-windows/react-native-windows.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "files": [
     "Libraries",
     "ReactWindows/ReactNative",
     "ReactWindows/ReactNative.Shared",
+    "ReactWindows/ReactNative.Net46",
     "ReactWindows/ChakraBridge",
     "local-cli",
     "README.md"
@@ -28,8 +29,12 @@
     "react": "~15.4.0-rc.4"
   },
   "devDependencies": {
+    "https-proxy-agent": "^1.0.0",
+    "jasmine": "^2.5.2",
+    "jasmine-reporters": "^2.2.0",
+    "react": "~15.4.0-rc.4",
     "react-native": "~0.39.0-rc.0",
-    "react": "~15.4.0-rc.4"
+    "selenium-webdriver": "2.48.x"
   },
   "dependencies": {
     "chalk": "^1.1.3",
