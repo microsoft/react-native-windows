@@ -32,6 +32,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
 - Initialize Windows project with `react-native windows` command in the project directory.
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
+- For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
 
 ### Requirements
 
