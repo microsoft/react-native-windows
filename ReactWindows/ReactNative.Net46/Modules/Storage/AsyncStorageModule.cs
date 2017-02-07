@@ -295,7 +295,6 @@ namespace ReactNative.Modules.Storage
                 return await FileExtensions.ReadAllTextAsync(storageItem).ConfigureAwait(false);
             }
 
-
             return null;
         }
 

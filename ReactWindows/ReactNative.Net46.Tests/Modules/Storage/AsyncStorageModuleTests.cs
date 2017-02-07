@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace ReactNative.Tests.Modules.Storage
 {
-    [TestFixture, Apartment(ApartmentState.STA)]
+    [TestFixture]
     public class AsyncStorageModuleTests
     {
         AsyncStorageModule module;
