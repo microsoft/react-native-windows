@@ -1,8 +1,9 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -34,7 +35,8 @@ namespace ReactNative.Views.Text
         /// </summary>
         public ReactTextShadowNode()
         {
-            MeasureFunction = MeasureText;
+            MeasureFunction = (node, width, widthMode, height, heightMode) =>
+                MeasureText(this, node, width, widthMode, height, heightMode);
         }
 
         /// <summary>
@@ -183,7 +185,7 @@ namespace ReactNative.Views.Text
             dirty();
         }
 
-        private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasureText(ReactTextShadowNode textNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
             // This is not a terribly efficient way of projecting the height of
             // the text elements. It requires that we have access to the
@@ -201,20 +203,20 @@ namespace ReactNative.Views.Text
                     TextTrimming = TextTrimming.CharacterEllipsis,
                 };
 
-                var textNode = (ReactTextShadowNode)node;
                 textNode.UpdateTextBlockCore(textBlock, true);
 
                 var block = new Paragraph();
-                foreach (var child in textNode.Children)
+                for (var i = 0; i < textNode.ChildCount; ++i)
                 {
+                    var child = textNode.GetChildAt(i);
                     block.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
                 }
                 textBlock.Blocks.Add(block);
 
-                var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
-                var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
+                var normalizedWidth = YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width;
+                var normalizedHeight = YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height;
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
-                return new MeasureOutput(
+                return MeasureOutput.Make(
                     (float)textBlock.DesiredSize.Width,
                     (float)textBlock.DesiredSize.Height);
             });
@@ -245,8 +247,8 @@ namespace ReactNative.Views.Text
             if (!measureOnly)
             {
                 textBlock.Padding = new Thickness(
-                    this.GetPaddingSpace(CSSSpacingType.Left),
-                    this.GetPaddingSpace(CSSSpacingType.Top),
+                    this.GetPaddingSpace(EdgeSpacing.Left),
+                    this.GetPaddingSpace(EdgeSpacing.Top),
                     0,
                     0);
             }
@@ -261,8 +263,9 @@ namespace ReactNative.Views.Text
         public override void OnBeforeLayout()
         {
             // Run flexbox on the children which are inline views.
-            foreach (var child in this.Children)
+            for (var i = 0; i < ChildCount; ++i)
             {
+                var child = GetChildAt(i);
                 if (!(child is ReactInlineShadowNode))
                 {
                     child.CalculateLayout();
