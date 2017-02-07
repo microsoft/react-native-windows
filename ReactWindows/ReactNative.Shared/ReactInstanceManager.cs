@@ -526,7 +526,7 @@ namespace ReactNative
             var appParameters = new Dictionary<string, object>
             {
                 { "rootTag", rootTag },
-                { "initalProps", null /* TODO: add launch options to root view */ }
+                { "initialProps", rootView.InitialProps }
             };
 
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
