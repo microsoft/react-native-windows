@@ -289,7 +289,7 @@ namespace ReactNative.Modules.Storage
             }
 
             var fileName = AsyncStorageHelpers.GetFileName(key);
-            if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
+            if (await storageFolder.CheckExistsAsync(fileName).ConfigureAwait(false) == ExistenceCheckResult.FileExists)
             {
                 var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
                 return await FileExtensions.ReadAllTextAsync(storageItem).ConfigureAwait(false);
@@ -327,7 +327,7 @@ namespace ReactNative.Modules.Storage
             }
 
             var fileName = AsyncStorageHelpers.GetFileName(key);
-            if (storageFolder.CheckExistsAsync(fileName).Result == ExistenceCheckResult.FileExists)
+            if (await storageFolder.CheckExistsAsync(fileName).ConfigureAwait(false) == ExistenceCheckResult.FileExists)
             {
                 var storageItem = await storageFolder.GetFileAsync(fileName).ConfigureAwait(false);
                 await storageItem.DeleteAsync().ConfigureAwait(false);
@@ -348,13 +348,13 @@ namespace ReactNative.Modules.Storage
         {
             var localFolder = FileSystem.Current.LocalStorage;
 
-            if (localFolder.CheckExistsAsync(AsyncStorageHelpers.DirectoryName).Result == ExistenceCheckResult.FolderExists)
+            if (await localFolder.CheckExistsAsync(AsyncStorageHelpers.DirectoryName).ConfigureAwait(false) == ExistenceCheckResult.FolderExists)
             {
-                return await localFolder.GetFolderAsync(AsyncStorageHelpers.DirectoryName);
+                return await localFolder.GetFolderAsync(AsyncStorageHelpers.DirectoryName).ConfigureAwait(false);
             }
             else if (createIfNotExists)
             {
-                return await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists);
+                return await localFolder.CreateFolderAsync(AsyncStorageHelpers.DirectoryName, CreationCollisionOption.OpenIfExists).ConfigureAwait(false);
             }
 
             return null;
