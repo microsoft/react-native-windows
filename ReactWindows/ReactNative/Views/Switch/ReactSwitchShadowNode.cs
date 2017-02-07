@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.UIManager;
 
 namespace ReactNative.Views.Switch
@@ -16,13 +16,13 @@ namespace ReactNative.Views.Switch
             MeasureFunction = MeasureSwitch;
         }
 
-        private static MeasureOutput MeasureSwitch(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasureSwitch(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
             // TODO: figure out how to properly measure the switch.
             // We are currently blocked until we switch to a UWP-specific React
             // JavaScript library as the iOS library we currently use specifies
             // an exact width and height for switch nodes.
-            return new MeasureOutput(56, 40);
+            return MeasureOutput.Make(56f, 40f);
         }
     }
 }
