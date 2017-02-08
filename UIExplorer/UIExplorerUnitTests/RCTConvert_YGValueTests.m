@@ -12,12 +12,35 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import <XCTest/XCTest.h>
 
-#import "AppDelegate.h"
+#import <React/RCTConvert.h>
+#import <React/RCTUtils.h>
 
-int main(int argc, char * argv[]) {
-  @autoreleasepool {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
+@interface RCTConvert_YGValueTests : XCTestCase
+
+@end
+
+@implementation RCTConvert_YGValueTests
+
+- (void)testUndefined
+{
+  YGValue value = [RCTConvert YGValue:nil];
+  XCTAssertEqual(value.unit, YGUnitUndefined);
 }
+
+- (void)testNumberPoints
+{
+  YGValue value = [RCTConvert YGValue:@100];
+  XCTAssertEqual(value.unit, YGUnitPixel);
+  XCTAssertEqual(value.value, 100);
+}
+
+- (void)testStringPercent
+{
+  YGValue value = [RCTConvert YGValue:@"100%"];
+  XCTAssertEqual(value.unit, YGUnitPercent);
+  XCTAssertEqual(value.value, 100);
+}
+
+@end
