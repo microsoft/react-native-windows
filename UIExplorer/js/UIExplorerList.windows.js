@@ -42,6 +42,14 @@ var ComponentExamples: Array<UIExplorerExample> = [
     module: require('./ListViewWindowsExample'),
   },
   {
+    key: 'ListViewGridLayoutExample',
+    module: require('./ListViewGridLayoutExample'),
+  },
+  {
+    key: 'ListViewPagingExample',
+    module: require('./ListViewPagingExample'),
+  },
+  {
     key: 'PickerWindowsExample',
     module: require('./PickerWindowsExample'),
   },
@@ -81,12 +89,20 @@ var ComponentExamples: Array<UIExplorerExample> = [
     key: 'ViewExample',
     module: require('./ViewExample'),
   },
+  {
+    key: 'WebViewExample',
+    module: require('./WebViewExample'),
+  },
 ];
 
 const APIExamples = [
   {
     key: 'AlertExample',
     module: require('./AlertExample').AlertExample,
+  },
+  {
+    key: 'AnimatedExample',
+    module: require('./AnimatedExample'),
   },
   {
     key: 'AppStateExample',
@@ -103,6 +119,10 @@ const APIExamples = [
   {
     key: 'GeolocationExample',
     module: require('./GeolocationExample'),
+  },
+  {
+    key: 'LayoutEventsExample',
+    module: require('./LayoutEventsExample'),
   },
   {
     key: 'LinkingExample',
@@ -137,12 +157,16 @@ const APIExamples = [
     module: require('./PointerEventsExample'),
   },
   {
-    key: 'TransformExample',
-    module: require('./TransformExample'),
+    key: 'RTLExample',
+    module: require('./RTLExample'),
   },
   {
     key: 'TimerExample',
     module: require('./TimerExample'),
+  },
+  {
+    key: 'TransformExample',
+    module: require('./TransformExample'),
   },
   {
     key: 'VibrationExample',
