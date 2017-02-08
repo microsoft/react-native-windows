@@ -508,7 +508,7 @@ namespace ReactNative.UIManager
 
         private static IDictionary<string, object> GetDimensions()
         {
-            FrameworkElement content = (FrameworkElement)_window.Content;
+            var content = (FrameworkElement)_window.Content;
             double scale = 1.0;
 
             return new Dictionary<string, object>
@@ -517,8 +517,8 @@ namespace ReactNative.UIManager
                     "window",
                     new Dictionary<string, object>
                     {
-                        { "width", content?.ActualWidth ?? new double() },
-                        { "height", content?.ActualHeight ?? new double() },
+                        { "width", content?.ActualWidth ?? 0.0 },
+                        { "height", content?.ActualHeight ?? 0.0 },
                         { "scale", scale },
                         /* TODO: density and DPI needed? */
                     }
