@@ -1,5 +1,4 @@
-﻿using Facebook.CSSLayout;
-#if WINDOWS_UWP
+﻿#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
@@ -11,24 +10,24 @@ namespace ReactNative.UIManager
 {
     static class BorderExtensions
     {
-        public static void SetBorderWidth(this Border border, CSSSpacingType kind, double width)
+        public static void SetBorderWidth(this Border border, int spacingType, double width)
         {
             var thickness = border.BorderThickness;
-            switch (kind)
+            switch (spacingType)
             {
-                case CSSSpacingType.Left:
+                case EdgeSpacing.Left:
                     thickness.Left = width;
                     break;
-                case CSSSpacingType.Top:
+                case EdgeSpacing.Top:
                     thickness.Top = width;
                     break;
-                case CSSSpacingType.Right:
+                case EdgeSpacing.Right:
                     thickness.Right = width;
                     break;
-                case CSSSpacingType.Bottom:
+                case EdgeSpacing.Bottom:
                     thickness.Bottom = width;
                     break;
-                case CSSSpacingType.All:
+                case EdgeSpacing.All:
                     thickness = new Thickness(width);
                     break;
             }

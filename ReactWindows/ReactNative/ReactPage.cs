@@ -1,4 +1,5 @@
-﻿using ReactNative.Bridge;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -88,10 +89,20 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string arguments)
         {
+            OnCreate(arguments, default(JObject));
+        }
+
+        /// <summary>
+        /// Called when the application is first initialized.
+        /// </summary>
+        /// <param name="arguments">The launch arguments.</param>
+        /// <param name="initialProps">The initialProps.</param>
+        public void OnCreate(string arguments, JObject initialProps)
+        {
             RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
 
             ApplyArguments(arguments);
-            RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
+            RootView.StartReactApplication(_reactInstanceManager, MainComponentName, initialProps);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) =>
             {
