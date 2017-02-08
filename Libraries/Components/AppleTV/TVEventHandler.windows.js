@@ -38,8 +38,4 @@ TVEventHandler.prototype.enable = function(component: ?any, callback: Function) 
 
 TVEventHandler.prototype.disable = function() {};
 
-<<<<<<< HEAD
 module.exports = TVEventHandler;
-=======
-module.exports = TVEventHandler;
->>>>>>> master
