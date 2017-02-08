@@ -510,15 +510,15 @@ namespace ReactNative.UIManager
         {
             FrameworkElement content = (FrameworkElement)_window.Content;
             double scale = 1.0;
-            
+
             return new Dictionary<string, object>
             {
                 {
                     "window",
                     new Dictionary<string, object>
                     {
-                        { "width", content.ActualWidth },
-                        { "height", content.ActualHeight },
+                        { "width", content?.ActualWidth ?? new double() },
+                        { "height", content?.ActualHeight ?? new double() },
                         { "scale", scale },
                         /* TODO: density and DPI needed? */
                     }
