@@ -217,8 +217,8 @@ namespace ReactNative.Views.Text
                 var normalizedHeight = YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height;
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
                 return MeasureOutput.Make(
-                    (float)textBlock.DesiredSize.Width,
-                    (float)textBlock.DesiredSize.Height);
+                    (float)Math.Ceiling(textBlock.DesiredSize.Width),
+                    (float)Math.Ceiling(textBlock.DesiredSize.Height));
             });
 
             return task.Result;
