@@ -15,18 +15,10 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ReactNative.Shared.Tests", "ReactNative.Shared.Tests\ReactNative.Shared.Tests.shproj", "{EEA8B852-4D07-48E1-8294-A21AB5909FE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Net46", "ReactNative.Net46\ReactNative.Net46.csproj", "{22CBFF9C-FE36-43E8-A246-266C7635E662}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368} = {E02ED054-4FB2-4EEB-8835-36A5E542E368}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Net46.Tests", "ReactNative.Net46.Tests\ReactNative.Net46.Tests.csproj", "{9249E9FD-F19A-4B90-8B74-41C151A6AB30}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraCore", "ChakraCore\ChakraCore.vcxproj", "{E02ED054-4FB2-4EEB-8835-36A5E542E368}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Net46", "Playground.Net46\Playground.Net46.csproj", "{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368} = {E02ED054-4FB2-4EEB-8835-36A5E542E368}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -212,26 +204,6 @@ Global
 		{9249E9FD-F19A-4B90-8B74-41C151A6AB30}.ReleaseBundle|x64.Build.0 = Release|x64
 		{9249E9FD-F19A-4B90-8B74-41C151A6AB30}.ReleaseBundle|x86.ActiveCfg = Release|x86
 		{9249E9FD-F19A-4B90-8B74-41C151A6AB30}.ReleaseBundle|x86.Build.0 = Release|x86
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Debug|ARM.ActiveCfg = Debug|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Debug|x64.ActiveCfg = Debug|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Debug|x64.Build.0 = Debug|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Debug|x86.ActiveCfg = Debug|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Debug|x86.Build.0 = Debug|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.DebugBundle|ARM.ActiveCfg = Release|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.DebugBundle|x64.ActiveCfg = Debug|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.DebugBundle|x64.Build.0 = Debug|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.DebugBundle|x86.ActiveCfg = Debug|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.DebugBundle|x86.Build.0 = Debug|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|ARM.ActiveCfg = Release|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|x64.ActiveCfg = Release|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|x64.Build.0 = Release|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|x86.ActiveCfg = Release|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.Release|x86.Build.0 = Release|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|ARM.ActiveCfg = Release|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|x64.ActiveCfg = Release|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|x64.Build.0 = Release|x64
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|x86.ActiveCfg = Release|Win32
-		{E02ED054-4FB2-4EEB-8835-36A5E542E368}.ReleaseBundle|x86.Build.0 = Release|Win32
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Debug|ARM.ActiveCfg = Debug|ARM
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Debug|x64.ActiveCfg = Debug|x64
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.Debug|x64.Build.0 = Debug|x64

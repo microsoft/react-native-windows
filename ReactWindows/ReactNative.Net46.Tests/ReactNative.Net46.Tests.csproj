@@ -78,10 +78,6 @@
     <PlatformTarget>ARM</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Facebook.CSSLayout, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Facebook.CSSLayout.1.1.1\lib\portable-net45+dnxcore50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Facebook.CSSLayout.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Facebook.Yoga, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.Yoga.1.0.1-pre\lib\netstandard\Facebook.Yoga.dll</HintPath>
       <Private>True</Private>
@@ -150,12 +146,6 @@
   </ItemGroup>
   <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild">
-    <ItemGroup>
-      <ChakraCoreDll Include="$(SolutionDir)..\ChakraCore\Build\VcBuild\bin\$(Platform)_$(Configuration)\ChakraCore.*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(ChakraCoreDll)" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
-  </Target>
   <Import Project="..\packages\Facebook.Yoga.1.0.1-pre\build\netstandard\Facebook.Yoga.targets" Condition="Exists('..\packages\Facebook.Yoga.1.0.1-pre\build\netstandard\Facebook.Yoga.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
