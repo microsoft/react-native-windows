@@ -120,7 +120,7 @@ namespace ReactNative.Modules.Image
             var result = new JObject();
             foreach (var url in urls)
             {
-                var file = await ImageCache.Instance.GetFileFromCacheAsync(new Uri(url));
+                var file = await ImageCache.Instance.GetFileFromCacheAsync(new Uri(url)).ConfigureAwait(false);
                 if (file != null)
                 {
                     result.Add(url, "disk");
