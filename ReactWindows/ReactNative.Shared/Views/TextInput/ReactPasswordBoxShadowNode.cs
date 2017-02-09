@@ -258,7 +258,9 @@ namespace ReactNative.Views.TextInput
                 finalizedHeight += YogaConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
                 finalizedHeight += YogaConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
 
-                return MeasureOutput.Make(width, finalizedHeight);
+                return MeasureOutput.Make(
+                    (float)Math.Ceiling(width), 
+                    (float)Math.Ceiling(finalizedHeight));
             });
 
             return task.Result;
