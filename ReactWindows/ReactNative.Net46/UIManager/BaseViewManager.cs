@@ -1,7 +1,10 @@
-﻿using ReactNative.UIManager.Annotations;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.UIManager.Annotations;
+using System;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Media.Effects;
 
 namespace ReactNative.UIManager
 {
@@ -64,6 +67,43 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
+        }
+
+        [ReactProp(ViewProps.ShadowColor, CustomType = "Color")]
+        public void SetShadowColor(TFrameworkElement view, uint? color)
+        {
+            DropShadowEffect effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            effect.Color = ColorHelpers.Parse(color.Value);
+            view.Effect = effect;
+        }
+
+        [ReactProp(ViewProps.ShadowOffset)]
+        public void SetShadowOffset(TFrameworkElement view, JObject offset)
+        {
+            DropShadowEffect effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            var deltaX = offset.Value<double>("width");
+            var deltaY = offset.Value<double>("height");
+            var angle = Math.Atan2(deltaY, deltaX) * (180 / Math.PI);
+            var distance = Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
+            effect.Direction = angle;
+            effect.ShadowDepth = distance;
+            view.Effect = effect;
+        }
+
+        [ReactProp(ViewProps.ShadowOpacity)]
+        public void SetShadowOpacity(TFrameworkElement view, double opacity)
+        {
+            DropShadowEffect effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            effect.Opacity = opacity;
+            view.Effect = effect;
+        }
+
+        [ReactProp(ViewProps.ShadowRadius)]
+        public void SetShadowRadius(TFrameworkElement view, double radius)
+        {
+            DropShadowEffect effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            effect.BlurRadius = radius;
+            view.Effect = effect;
         }
     }
 }
