@@ -274,7 +274,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="source">The source URI.</param>
-        private async void SetUriFromSingleSource(Border view, string source)
+        private void SetUriFromSingleSource(Border view, string source)
         {
             var imageBrush = (ImageBrush)view.Background;
             var tag = view.GetTag();
