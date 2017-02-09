@@ -361,6 +361,5 @@ namespace ReactNative.Modules.Storage
 
             return null;
         }
-
     }
 }
