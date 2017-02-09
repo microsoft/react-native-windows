@@ -17,7 +17,7 @@ namespace ReactNative.UIManager
         public const uint Transparent = 0x00FFFFFF;
 
         /// <summary>
-        /// Parses a color from an unisgned integer.
+        /// Parses a color from an unsigned integer.
         /// </summary>
         /// <param name="value">The unsigned integer color value.</param>
         /// <returns>The parsed color value.</returns>
