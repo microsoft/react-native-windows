@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.UI;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Modules.Network;
 using System;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Media.Imaging;
@@ -13,6 +14,8 @@ namespace ReactNative.Modules.Image
         private const string ErrorPrefetchFailure = "E_PREFETCH_FAILURE";
         private const string ErrorGetSizeFailure = "E_GET_SIZE_FAILURE";
 
+        private readonly TaskCancellationManager<int> _prefetchRequests = new TaskCancellationManager<int>();
+
         public override string Name
         {
             get
@@ -22,7 +25,7 @@ namespace ReactNative.Modules.Image
         }
 
         [ReactMethod]
-        public void prefetchImage(string uriString, IPromise promise)
+        public void prefetchImage(string uriString, int requestId, IPromise promise)
         {
             if (string.IsNullOrEmpty(uriString))
             {
@@ -34,9 +37,13 @@ namespace ReactNative.Modules.Image
             {
                 try
                 {
-                    // TODO: enable prefetch cancellation
                     var uri = new Uri(uriString);
-                    await ImageCache.Instance.PreCacheAsync(uri, true, true).ConfigureAwait(false);
+
+                    await _prefetchRequests.AddAndInvokeAsync(
+                            requestId, 
+                            async token => await ImageCache.Instance.PreCacheAsync(uri, true, true, token).ConfigureAwait(false))
+                        .ConfigureAwait(false);
+
                     promise.Resolve(true);
                 }
                 catch (Exception ex)
@@ -44,6 +51,12 @@ namespace ReactNative.Modules.Image
                     promise.Reject(ErrorPrefetchFailure, ex.Message);
                 }
             });
+        }
+
+        [ReactMethod]
+        public void abortRequest(int requestId)
+        {
+            _prefetchRequests.Cancel(requestId);
         }
 
         [ReactMethod]
@@ -98,6 +111,28 @@ namespace ReactNative.Modules.Image
                     promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
             });
+        }
+
+        [ReactMethod]
+        public async void queryCache(string[] urls, IPromise promise)
+        {
+            // TODO: support query for items in memory
+            var result = new JObject();
+            foreach (var url in urls)
+            {
+                var file = await ImageCache.Instance.GetFileFromCacheAsync(new Uri(url)).ConfigureAwait(false);
+                if (file != null)
+                {
+                    result.Add(url, "disk");
+                }
+            }
+
+            promise.Resolve(result);
+        }
+
+        public override void OnReactInstanceDispose()
+        {
+            _prefetchRequests.CancelAllTasks();
         }
     }
 }
