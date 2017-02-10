@@ -84,6 +84,11 @@ namespace ReactNative.UIManager
         public const string BorderBottomLeftRadius = "borderBottomLeftRadius";
         public const string BorderBottomRightRadius = "borderBottomRightRadius";
 
+        public const string ShadowColor = "shadowColor";
+        public const string ShadowOffset = "shadowOffset";
+        public const string ShadowOpacity = "shadowOpacity";
+        public const string ShadowRadius = "shadowRadius";
+
 #pragma warning restore CS1591
 
         /// <summary>
