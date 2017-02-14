@@ -145,6 +145,7 @@
     <Compile Include="UIManager\UIManagerModule.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
+    <Compile Include="Views\Image\ReactImageShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />
