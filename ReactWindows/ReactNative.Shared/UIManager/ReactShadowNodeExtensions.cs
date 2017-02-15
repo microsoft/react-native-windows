@@ -1,4 +1,5 @@
 ﻿using Facebook.Yoga;
+using ReactNative.Modules.I18N;
 
 namespace ReactNative.UIManager
 {
@@ -12,10 +13,21 @@ namespace ReactNative.UIManager
                 return width;
             }
 
-            width = node.GetBorder(EdgeSpacing.Horizontal);
-            if (!YogaConstants.IsUndefined(width))
+            if (!I18NUtil.IsRightToLeft)
             {
-                return width;
+                width = node.GetBorder(EdgeSpacing.Start);
+                if (!YogaConstants.IsUndefined(width))
+                {
+                    return width;
+                }
+            }
+            else
+            {
+                width = node.GetBorder(EdgeSpacing.End);
+                if (!YogaConstants.IsUndefined(width))
+                {
+                    return width;
+                }
             }
 
             width = node.GetBorder(EdgeSpacing.All);
@@ -69,12 +81,6 @@ namespace ReactNative.UIManager
         public static float GetTopBorderWidth(this ReactShadowNode node)
         {
             var width = node.GetBorder(EdgeSpacing.Top);
-            if (!YogaConstants.IsUndefined(width))
-            {
-                return width;
-            }
-
-            width = node.GetBorder(EdgeSpacing.Vertical);
             if (!YogaConstants.IsUndefined(width))
             {
                 return width;
