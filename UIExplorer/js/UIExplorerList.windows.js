@@ -149,6 +149,10 @@ const APIExamples = [
     module: require('./NetInfoExample'),
   },
   {
+    key: 'OrientationChangeExample',
+    module: require('./OrientationChangeExample'),
+  },
+  {
     key: 'PanResponderExample',
     module: require('./PanResponderExample'),
   },
