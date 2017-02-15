@@ -29,11 +29,13 @@ const npm = new Registry({registry: NPM_REGISTRY_URL})
 
 function getLatestVersion() {
   return new Promise(function (resolve, reject) {
-    npm.packages.release('react-native-windows', 'latest', (err, release) => {
+    npm.packages.release('react-native-windows', 'latest', (err, releases) => {
       if (err) {
         reject(err)
+      } else if (releases.length == 0) {
+        reject(new Error(`Could not find react-native-windows@latest.`))
       } else {
-        resolve(release.version)
+        resolve(releases[0].version)
       }
     })
   })
