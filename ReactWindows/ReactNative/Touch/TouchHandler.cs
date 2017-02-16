@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.Graphics.Display;
 using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -303,6 +304,13 @@ namespace ReactNative.Touch
 
         private static Point AdjustPointForStatusBar(Point point)
         {
+            var currentOrientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
+            if (currentOrientation == DisplayOrientations.Landscape ||
+                currentOrientation == DisplayOrientations.LandscapeFlipped)
+            {
+                return point;    
+            }
+
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 var rect = StatusBar.GetForCurrentView().OccludedRect;
