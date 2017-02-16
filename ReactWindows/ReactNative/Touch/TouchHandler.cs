@@ -305,13 +305,9 @@ namespace ReactNative.Touch
         private static Point AdjustPointForStatusBar(Point point)
         {
             var currentOrientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
-            if (currentOrientation == DisplayOrientations.Landscape ||
-                currentOrientation == DisplayOrientations.LandscapeFlipped)
-            {
-                return point;    
-            }
-
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            if (currentOrientation != DisplayOrientations.Landscape &&
+                currentOrientation != DisplayOrientations.LandscapeFlipped &&
+                ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 var rect = StatusBar.GetForCurrentView().OccludedRect;
                 point.Y += rect.Height;
