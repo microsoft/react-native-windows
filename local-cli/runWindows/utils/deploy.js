@@ -10,15 +10,23 @@ const glob = require('glob');
 const parse = require('xml-parser');
 const WinAppDeployTool = require('./winappdeploytool');
 
+function pushd(path) {
+  const cwd = process.cwd();
+  process.chdir(path);
+  return () => process.chdir(cwd);
+}
+
 function getAppPackage(options) {
   const configuration = options.release ? 'Release' : 'Debug';
-  return glob.sync(path.join(options.root, `windows/*/AppPackages/*_${options.arch}_${configuration}_*`))[0];
+  return glob.sync(`windows/*/AppPackages/*_${options.arch}_${configuration}_*`)[0];
 }
 
 function getWindowsStoreAppUtils(options) {
-  const appStorePath = path.join(options.root, 'node_modules/react-native-windows/local-cli/runWindows/utils/WindowsStoreAppUtils.ps1');
-  execSync(`powershell Unblock-File "${appStorePath}"`);
-  return appStorePath;
+  const popd = pushd(options.root);
+  const windowsStoreAppUtilsPath = './node_modules/react-native-windows/local-cli/runWindows/utils/WindowsStoreAppUtils.ps1';
+  execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
+  popd()
+  return windowsStoreAppUtilsPath;
 }
 
 function getAppxManifest(options) {
@@ -79,6 +87,8 @@ function deployToDesktop(options) {
   const args = ["remoteDebugging", options.proxy ? 'true' : 'false'];
 
   return new Promise(resolve => {
+    const popd = pushd(options.root);
+
     console.log(chalk.green('Removing old version of the app'));
     execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`);
 
@@ -90,6 +100,9 @@ function deployToDesktop(options) {
 
     console.log(chalk.green('Starting the app'));
     execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`);
+
+    popd();
+
     resolve();
   });
 }
