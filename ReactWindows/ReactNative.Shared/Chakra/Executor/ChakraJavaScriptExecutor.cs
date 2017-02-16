@@ -265,11 +265,11 @@ namespace ReactNative.Chakra.Executor
             {
                 var message = arguments[1].ToString();
                 var logLevel = (LogLevel)(int)arguments[2].ToDouble();
-                Debug.Write($"[JS {logLevel}] {message}");
+                Debug.WriteLine($"[JS {logLevel}] {message}");
             }
             catch
             {
-                Debug.Write("Unable to process JavaScript console statement");
+                Debug.WriteLine("Unable to process JavaScript console statement");
             }
 
             return JavaScriptValue.Undefined;
