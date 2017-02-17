@@ -2,8 +2,10 @@
 using Newtonsoft.Json.Linq;
 using PCLStorage;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -14,14 +16,19 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public sealed class ChakraJavaScriptExecutor : IJavaScriptExecutor
     {
+        private const string MagicFileName = "UNBUNDLE";
+        private const uint MagicFileHeader = 0xFB0BD1E5;
+
         private const string JsonName = "JSON";
         private const string FBBatchedBridgeVariableName = "__fbBatchedBridge";
 
         private readonly JavaScriptRuntime _runtime;
+        private string _unbundleModulesPath;
 
         private JavaScriptSourceContext _context;
 
         private JavaScriptNativeFunction _nativeLoggingHook;
+        private JavaScriptNativeFunction _nativeRequire;
 
         private JavaScriptValue _globalObject;
 
@@ -124,45 +131,25 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
-        /// Runs the given script.
+        /// Runs the script at the given path.
         /// </summary>
-        /// <param name="script">The script.</param>
+        /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
-        public void RunScript(string script, string sourceUrl)
+        public void RunScript(string sourcePath, string sourceUrl)
         {
-            if (script == null)
-                throw new ArgumentNullException(nameof(script));
+            if (sourcePath == null)
+                throw new ArgumentNullException(nameof(sourcePath));
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
-            var source = LoadScriptAsync(script).Result;
+            if (IsUnbundleAsync(sourcePath).Result)
+            {
+                _unbundleModulesPath = GetUnbundleModulesDirectory(sourcePath);
+                InstallNativeRequire();
+            }
 
-            try
-            {
-                _context = JavaScriptSourceContext.Increment(_context);
-                JavaScriptContext.RunScript(source, _context, sourceUrl);
-            }
-            catch (JavaScriptScriptException ex)
-            {
-                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
-                var message = jsonError.Value<string>("message");
-                var stackTrace = jsonError.Value<string>("stack");
-                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
-            }
-        }
-
-        private static async Task<string> LoadScriptAsync(string fileName)
-        {
-            try
-            {
-                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
-                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionMessage = Invariant($"File read exception for asset '{fileName}'.");
-                throw new InvalidOperationException(exceptionMessage, ex);
-            }
+            var source = LoadScriptAsync(sourcePath).Result;
+            EvaluateScript(source, sourceUrl);
         }
 
         /// <summary>
@@ -214,6 +201,22 @@ namespace ReactNative.Chakra.Executor
                 JavaScriptPropertyId.FromString("nativeLoggingHook"),
                 JavaScriptValue.CreateFunction(_nativeLoggingHook),
                 true);
+        }
+
+        private void EvaluateScript(string script, string sourceUrl)
+        {
+            try
+            {
+                _context = JavaScriptSourceContext.Increment(_context);
+                JavaScriptContext.RunScript(script, _context, sourceUrl);
+            }
+            catch (JavaScriptScriptException ex)
+            {
+                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
+                var message = jsonError.Value<string>("message");
+                var stackTrace = jsonError.Value<string>("stack");
+                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
+            }
         }
 
         #region JSON Marshaling
@@ -273,6 +276,44 @@ namespace ReactNative.Chakra.Executor
             }
 
             return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Require
+        private void InstallNativeRequire()
+        {
+            _nativeRequire = NativeRequire;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeRequire"),
+                JavaScriptValue.CreateFunction(_nativeRequire),
+                true);
+        }
+
+        private JavaScriptValue NativeRequire(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly two arguments (global and moduleId).");
+            }
+
+            var moduleId = arguments[1].ToDouble();
+            if (moduleId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(arguments),
+                    Invariant($"Received invalid module ID '{moduleId}'."));
+            }
+
+            var sourceUrl = moduleId + ".js";
+            var fileName = Path.Combine(_unbundleModulesPath, sourceUrl);
+            var source = LoadScriptAsync(fileName).Result;
+            EvaluateScript(source, sourceUrl);
+            return JavaScriptValue.Invalid;
         }
         #endregion
 
@@ -362,6 +403,52 @@ namespace ReactNative.Chakra.Executor
             return _flushedQueueFunction;
         }
 
+        #endregion
+
+        #region File IO
+        private static async Task<string> LoadScriptAsync(string fileName)
+        {
+            try
+            {
+                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
+                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = Invariant($"File read exception for asset '{fileName}'.");
+                throw new InvalidOperationException(exceptionMessage, ex);
+            }
+        }
+        #endregion
+
+        #region Unbundle
+        private static async Task<bool> IsUnbundleAsync(string sourcePath)
+        {
+            var magicFilePath = Path.Combine(GetUnbundleModulesDirectory(sourcePath), MagicFileName);
+            var magicFile = await FileSystem.Current.GetFileFromPathAsync(magicFilePath);
+            if (magicFile == null)
+            {
+                return false;
+            }
+
+            using (var stream = await magicFile.OpenAsync(PCLStorage.FileAccess.Read))
+            {
+                var header = new byte[4];
+                var read = stream.Read(header, 0, 4);
+                if (read < 4)
+                {
+                    return false;
+                }
+
+                var magicHeader = BitConverter.ToUInt32(header, 0);
+                return IntegerHelpers.LittleEndianToHost(magicHeader) == MagicFileHeader;
+            }
+        }
+
+        private static string GetUnbundleModulesDirectory(string sourcePath)
+        {
+            return Path.Combine(Path.GetDirectoryName(sourcePath), "js-modules");
+        }
         #endregion
     }
 }

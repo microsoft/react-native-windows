@@ -6,7 +6,7 @@
     <SharedGUID>eea8b852-4d07-48e1-8294-a21ab5909fe6</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>ReactNative.Shared.Tests</Import_RootNamespace>
+    <Import_RootNamespace>ReactNative.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistrySharedTests.cs" />
