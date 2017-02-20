@@ -1,11 +1,11 @@
 {
-  "name": "react-native-windows",
-  "version": "0.42.0-rc.0",
+  "name": "@bluejeans/react-native-windows",
+  "version": "0.42.0-rc.0-p.10",
   "description": "React Native platform extensions for the Universal Windows Platform.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ReactWindows/react-native-windows.git"
+    "url": "git@github.com:bluejeans/react-native-windows.git"
   },
   "engines": {
     "node": ">=4"

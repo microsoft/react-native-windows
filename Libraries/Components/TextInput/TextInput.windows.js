@@ -26,7 +26,7 @@ var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
 var View = require('View');
-var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
+var PasswordBoxWindows = require('@bluejeans/react-native-windows').PasswordBoxWindows;
 
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');

@@ -5,6 +5,7 @@ using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Image;
 using ReactNative.Modules.I18N;
+using ReactNative.Modules.Launch;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
 using ReactNative.Modules.Storage;
@@ -46,7 +47,7 @@ namespace ReactNative.Shell
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
                 new I18NModule(),
-                //new LauncherModule(reactContext),
+                new LauncherModule(reactContext),
                 //new LocationModule(reactContext),
                 //new NativeAnimatedModule(reactContext),
                 new NetworkingModule(reactContext),
