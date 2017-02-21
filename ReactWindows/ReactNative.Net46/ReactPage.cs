@@ -212,14 +212,19 @@ namespace ReactNative
                 return;
             }
 
-            if (arguments.Length % 2 != 0)
+            var index = Array.IndexOf(arguments, "remoteDebugging");
+            if (index < 0)
             {
-                throw new ArgumentException("Expected even number of arguments.", nameof(arguments));
+                return;
             }
 
-            var index = Array.IndexOf(arguments, "remoteDebugging");
-            var isRemoteDebuggingEnabled = default(bool);
-            if (index % 2 == 0 && bool.TryParse(arguments[index + 1], out isRemoteDebuggingEnabled))
+            if (arguments.Length <= index + 1)
+            {
+                throw new ArgumentException("Expected value for remoteDebugging argument.", nameof(arguments));
+            }
+
+            bool isRemoteDebuggingEnabled;
+            if (bool.TryParse(arguments[index + 1], out isRemoteDebuggingEnabled))
             {
                 ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
             }
