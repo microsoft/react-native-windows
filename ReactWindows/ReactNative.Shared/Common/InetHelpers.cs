@@ -2,7 +2,7 @@
 
 namespace ReactNative.Common
 {
-    static class IntegerHelpers
+    static class InetHelpers
     {
         public static uint LittleEndianToHost(uint value)
         {

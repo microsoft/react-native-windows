@@ -6,6 +6,7 @@ using ReactNative.Common;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -23,7 +24,8 @@ namespace ReactNative.Chakra.Executor
         private const string FBBatchedBridgeVariableName = "__fbBatchedBridge";
 
         private readonly JavaScriptRuntime _runtime;
-        private string _unbundleModulesPath;
+
+        private IJavaScriptUnbundle _unbundle;
 
         private JavaScriptSourceContext _context;
 
@@ -142,14 +144,25 @@ namespace ReactNative.Chakra.Executor
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
+            var startupCode = default(string);
             if (IsUnbundleAsync(sourcePath).Result)
             {
-                _unbundleModulesPath = GetUnbundleModulesDirectory(sourcePath);
+                _unbundle = new FileBasedJavaScriptUnbundle(sourcePath);
                 InstallNativeRequire();
+                startupCode = _unbundle.GetStartupCodeAsync().Result;
+            }
+            else if (IsIndexedUnbundleAsync(sourcePath).Result)
+            {
+                _unbundle = new IndexedJavaScriptUnbundle(sourcePath);
+                InstallNativeRequire();
+                startupCode = _unbundle.GetStartupCodeAsync().Result;
+            }
+            else
+            {
+                startupCode = LoadScriptAsync(sourcePath).Result;
             }
 
-            var source = LoadScriptAsync(sourcePath).Result;
-            EvaluateScript(source, sourceUrl);
+            EvaluateScript(startupCode, sourceUrl);
         }
 
         /// <summary>
@@ -309,10 +322,8 @@ namespace ReactNative.Chakra.Executor
                     Invariant($"Received invalid module ID '{moduleId}'."));
             }
 
-            var sourceUrl = moduleId + ".js";
-            var fileName = Path.Combine(_unbundleModulesPath, sourceUrl);
-            var source = LoadScriptAsync(fileName).Result;
-            EvaluateScript(source, sourceUrl);
+            var module = _unbundle.GetModule((int)moduleId);
+            EvaluateScript(module.Source, module.SourceUrl);
             return JavaScriptValue.Invalid;
         }
         #endregion
@@ -422,6 +433,121 @@ namespace ReactNative.Chakra.Executor
         #endregion
 
         #region Unbundle
+        class JavaScriptUnbundleModule
+        {
+            public JavaScriptUnbundleModule(string source, string sourceUrl)
+            {
+                SourceUrl = sourceUrl;
+                Source = source;
+            }
+
+            public string SourceUrl { get; }
+
+            public string Source { get; }
+        }
+
+        interface IJavaScriptUnbundle : IDisposable
+        {
+            JavaScriptUnbundleModule GetModule(int index);
+
+            Task<string> GetStartupCodeAsync();
+        }
+
+        class FileBasedJavaScriptUnbundle : IJavaScriptUnbundle
+        {
+            private readonly string _sourcePath;
+            private readonly string _modulesPath;
+
+            public FileBasedJavaScriptUnbundle(string sourcePath)
+            {
+                _sourcePath = sourcePath;
+                _modulesPath = GetUnbundleModulesDirectory(sourcePath);
+            }
+
+            public JavaScriptUnbundleModule GetModule(int index)
+            {
+                var sourceUrl = index + ".js";
+                var fileName = Path.Combine(_modulesPath, sourceUrl);
+                var source = LoadScriptAsync(fileName).Result;
+                return new JavaScriptUnbundleModule(source, sourceUrl);
+            }
+
+            public Task<string> GetStartupCodeAsync()
+            {
+                return LoadScriptAsync(_sourcePath);
+            }
+
+            public void Dispose()
+            {
+            }
+        }
+
+        class IndexedJavaScriptUnbundle : IJavaScriptUnbundle
+        {
+            private const int HeaderSize = 12;
+
+            private readonly string _sourcePath;
+
+            private Stream _stream;
+            private byte[] _moduleTable;
+            private int _baseOffset;
+
+            public IndexedJavaScriptUnbundle(string sourcePath)
+            {
+                _sourcePath = sourcePath;
+            }
+
+            public JavaScriptUnbundleModule GetModule(int index)
+            {
+                var offset = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(_moduleTable, index * 8));
+                var length = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(_moduleTable, index * 8 + 4));
+                _stream.Seek(_baseOffset + offset, SeekOrigin.Begin);
+                var moduleData = new byte[length];
+                if (_stream.Read(moduleData, 0, (int) length) < length)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of unbundle module.");
+                }
+
+                var source = Encoding.UTF8.GetString(moduleData);
+                var sourceUrl = index + ".js";
+                return new JavaScriptUnbundleModule(source, sourceUrl);
+            }
+
+            public async Task<string> GetStartupCodeAsync()
+            {
+                var bundleFile = await FileSystem.Current.GetFileFromPathAsync(_sourcePath);
+                _stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read);
+                var header = new byte[HeaderSize];
+                if (await _stream.ReadAsync(header, 0, HeaderSize) < HeaderSize)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of indexed unbundle header.");
+                }
+
+                var numberOfTableEntries = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(header, 4));
+                var startupCodeSize = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(header, 8));
+                var moduleTableSize = numberOfTableEntries * 8 /* bytes per entry */;
+                _baseOffset = HeaderSize + (int)moduleTableSize;
+                _moduleTable = new byte[moduleTableSize];
+                if (await _stream.ReadAsync(_moduleTable, 0, (int)moduleTableSize) < moduleTableSize)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of indexed unbundle module table.");
+                }
+
+                var startupCodeBuffer = new byte[startupCodeSize];
+                if (await _stream.ReadAsync(startupCodeBuffer, 0, (int)startupCodeSize) < startupCodeSize)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of startup code.");
+                }
+
+                return Encoding.UTF8.GetString(startupCodeBuffer);
+            }
+
+            public void Dispose()
+            {
+                _stream.Dispose();
+            }
+        }
+
         private static async Task<bool> IsUnbundleAsync(string sourcePath)
         {
             var magicFilePath = Path.Combine(GetUnbundleModulesDirectory(sourcePath), MagicFileName);
@@ -434,14 +560,31 @@ namespace ReactNative.Chakra.Executor
             using (var stream = await magicFile.OpenAsync(PCLStorage.FileAccess.Read))
             {
                 var header = new byte[4];
-                var read = stream.Read(header, 0, 4);
+                var read = await stream.ReadAsync(header, 0, 4);
                 if (read < 4)
                 {
                     return false;
                 }
 
                 var magicHeader = BitConverter.ToUInt32(header, 0);
-                return IntegerHelpers.LittleEndianToHost(magicHeader) == MagicFileHeader;
+                return InetHelpers.LittleEndianToHost(magicHeader) == MagicFileHeader;
+            }
+        }
+
+        private static async Task<bool> IsIndexedUnbundleAsync(string sourcePath)
+        {
+            var bundleFile = await FileSystem.Current.GetFileFromPathAsync(sourcePath);
+            using (var stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read))
+            {
+                var header = new byte[4];
+                var read = await stream.ReadAsync(header, 0, 4);
+                if (read < 4)
+                {
+                    return false;
+                }
+
+                var magic = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(header, 0));
+                return magic == MagicFileHeader;
             }
         }
 
