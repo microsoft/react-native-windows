@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Facebook.Yoga": "1.1.0.18-pre",
+    "Facebook.Yoga": "1.1.0.23-pre",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "NUnit": "3.5.0",
     "NUnit3TestAdapter": "3.5.0"

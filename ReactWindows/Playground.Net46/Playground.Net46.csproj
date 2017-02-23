@@ -125,7 +125,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook.Yoga, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Facebook.Yoga.1.1.0.18-pre\lib\net45\Facebook.Yoga.dll</HintPath>
+      <HintPath>..\packages\Facebook.Yoga.1.1.0.23-pre\lib\net45\Facebook.Yoga.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -179,12 +179,12 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\Facebook.Yoga.1.1.0.18-pre\build\net45\Facebook.Yoga.targets" Condition="Exists('..\packages\Facebook.Yoga.1.1.0.18-pre\build\net45\Facebook.Yoga.targets')" />
+  <Import Project="..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets" Condition="Exists('..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Facebook.Yoga.1.1.0.18-pre\build\net45\Facebook.Yoga.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Facebook.Yoga.1.1.0.18-pre\build\net45\Facebook.Yoga.targets'))" />
+    <Error Condition="!Exists('..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Facebook.Yoga.1.1.0.23-pre\build\net45\Facebook.Yoga.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
