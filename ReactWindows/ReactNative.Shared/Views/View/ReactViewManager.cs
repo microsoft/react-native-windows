@@ -46,7 +46,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="pointerEventsValue">The pointerEvents mode.</param>
-        [ReactProp(ViewProps.PointerEvents)]
+        [ReactProp("pointerEvents")]
         public void SetPointerEvents(Border view, string pointerEventsValue)
         {
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;

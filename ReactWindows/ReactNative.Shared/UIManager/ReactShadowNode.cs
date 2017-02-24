@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -7,27 +7,284 @@ namespace ReactNative.UIManager
 {
     /// <summary>
     /// Base node class for representing the virtual tree of React nodes.
-    /// Shadow nodes are used primarily for layout, therefore it extends
-    /// <see cref="CSSNode"/> to allow that. Instances of this class receive 
+    /// Shadow nodes are used primarily for layout, therefore it encapsulates
+    /// <see cref="YogaNode"/> to allow that. Instances of this class receive 
     /// property updates from JavaScript via the <see cref="UIManagerModule"/>.
     /// 
     /// This class allows for the native view hierarchy not to be an exact copy
     /// of the hierarchy received from JavaScript by keeping track of both
-    /// JavaScript children (e.g., <see cref="CSSNode.ChildCount"/>) and
+    /// JavaScript children (e.g., <see cref="ChildCount"/>) and
     /// separately native children (e.g., <see cref="NativeChildCount"/>). See
     /// <see cref="NativeViewHierarchyOptimizer"/> for more information.
     /// </summary>
-    public class ReactShadowNode : CSSNode
+    public class ReactShadowNode : IDisposable
     {
         private ReactShadowNode _rootNode;
         private ThemedReactContext _themedContext;
         private bool _nodeUpdated = true;
+        private IList<ReactShadowNode> _children;
+        private ReactShadowNode _parent;
+
+        private readonly EdgeSpacing _defaultPadding = new EdgeSpacing(0);
+        private readonly EdgeSpacing _padding = new EdgeSpacing(YogaConstants.Undefined);
+        private readonly YogaNode _yogaNode;
 
         private bool _isLayoutOnly;
-        private int _totalNativeChildren = 0;
+        private int _totalNativeChildren;
         private ReactShadowNode _nativeParent;
+        private IList<ReactShadowNode> _nativeChildren;
+        private float _absoluteLeft;
+        private float _absoluteTop;
+        private float _absoluteRight;
+        private float _absoluteBottom;
 
-        private List<ReactShadowNode> _nativeChildren;
+        /// <summary>
+        /// Instantiates a <see cref="ReactShadowNode"/>. 
+        /// </summary>
+        public ReactShadowNode()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="ReactShadowNode"/>.
+        /// </summary>
+        /// <param name="isVirtual">Signals if the shadow node is virtual.</param>
+        public ReactShadowNode(bool isVirtual)
+        {
+            IsVirtual = isVirtual;
+
+            if (!isVirtual)
+            {
+                // TODO: add pooling mechanism for Yoga nodes
+                _yogaNode = new YogaNode();
+            }
+            else
+            {
+                _yogaNode = null;
+            }
+        }
+
+        /// <summary>
+        /// The layout direction.
+        /// </summary>
+        public YogaDirection LayoutDirection 
+        {
+            get
+            {
+                return _yogaNode.LayoutDirection;
+            }
+            set
+            {
+                _yogaNode.StyleDirection = value;
+            }
+        }
+
+        /// <summary>
+        /// The width.
+        /// </summary>
+        public float StyleWidth
+        {
+            get
+            {
+                return _yogaNode.Width.Value;
+            }
+            set
+            {
+                _yogaNode.Width = value;
+            }
+        }
+
+        /// <summary>
+        /// The minimum width.
+        /// </summary>
+        public float StyleMinWidth
+        {
+            set
+            {
+                _yogaNode.MinWidth = value;
+            }
+        }
+
+        /// <summary>
+        /// The maximum width.
+        /// </summary>
+        public float StyleMaxWidth
+        {
+            set
+            {
+                _yogaNode.MaxWidth = value;
+            }
+        }
+
+        /// <summary>
+        /// The height.
+        /// </summary>
+        public float StyleHeight
+        {
+            get
+            {
+                return _yogaNode.Height.Value;
+            }
+            set
+            {
+                _yogaNode.Height = value;
+            }
+        }
+
+        /// <summary>
+        /// The minimum height.
+        /// </summary>
+        public float StyleMinHeight
+        {
+            set
+            {
+                _yogaNode.MinHeight = value;
+            }
+        }
+
+        /// <summary>
+        /// The maximum height.
+        /// </summary>
+        public float StyleMaxHeight
+        {
+            set
+            {
+                _yogaNode.MaxHeight = value;
+            }
+        }
+
+        /// <summary>
+        /// The flex value.
+        /// </summary>
+        public float Flex
+        {
+            set
+            {
+                _yogaNode.Flex = value;
+            }
+        }
+
+        /// <summary>
+        /// The flex grow value.
+        /// </summary>
+        public float FlexGrow
+        {
+            set
+            {
+                _yogaNode.FlexGrow = value;
+            }
+        }
+
+        /// <summary>
+        /// The flex shrink value.
+        /// </summary>
+        public float FlexShrink
+        {
+            set
+            {
+                _yogaNode.FlexShrink = value;
+            }
+        }
+
+        /// <summary>
+        /// The flex basis.
+        /// </summary>
+        public float FlexBasis
+        {
+            set
+            {
+                _yogaNode.FlexBasis = value;
+            }
+        }
+
+        /// <summary>
+        /// The aspect ratio.
+        /// </summary>
+        public float StyleAspectRatio
+        {
+            set
+            {
+                _yogaNode.StyleAspectRatio = value;
+            }
+        }
+
+        /// <summary>
+        /// The flex direction.
+        /// </summary>
+        public YogaFlexDirection FlexDirection
+        {
+            set
+            {
+                _yogaNode.FlexDirection = value;
+            }
+        }
+
+        /// <summary>
+        /// The flex wrap value.
+        /// </summary>
+        public YogaWrap FlexWrap
+        {
+            set
+            {
+                _yogaNode.Wrap = value;
+            }
+        }
+
+        /// <summary>
+        /// The self alignment.
+        /// </summary>
+        public YogaAlign AlignSelf
+        {
+            set
+            {
+                _yogaNode.AlignSelf = value;
+            }
+        }
+
+        /// <summary>
+        /// The item alignment.
+        /// </summary>
+        public YogaAlign AlignItems
+        {
+            set
+            {
+                _yogaNode.AlignItems = value;
+            }
+        }
+
+        /// <summary>
+        /// The justify content value.
+        /// </summary>
+        public YogaJustify JustifyContent
+        {
+            set
+            {
+                _yogaNode.JustifyContent = value;
+            }
+        }
+
+        /// <summary>
+        /// The overflow value.
+        /// </summary>
+        public YogaOverflow Overflow
+        {
+            set
+            {
+                _yogaNode.Overflow = value;
+            }
+        }
+
+        /// <summary>
+        /// The position type.
+        /// </summary>
+        public YogaPositionType PositionType
+        {
+            set
+            {
+                _yogaNode.PositionType = value;
+            }
+        }
 
         /// <summary>
         /// Nodes that return <code>true</code> will be treated as "virtual"
@@ -37,13 +294,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// By default this method returns <code>false</code>.
         /// </remarks>
-        public virtual bool IsVirtual
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsVirtual { get; }
 
         /// <summary>
         /// Nodes that return <code>true</code> will be treated as a root view
@@ -51,33 +302,27 @@ namespace ReactNative.UIManager
         /// <see cref="NativeViewHierarchyManager"/> will not try to perform
         /// manage children operations on such views.
         /// </summary>
-        public virtual bool IsVirtualAnchor
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Gets the view class of the node.
-        /// </summary>
-        public string ViewClass
-        {
-            get;
-            internal set;
-        }
+        public virtual bool IsVirtualAnchor => false;
 
         /// <summary>
         /// Signals that the node has updates.
         /// </summary>
-        public bool HasUpdates
-        {
-            get
-            {
-                return _nodeUpdated || HasNewLayout || IsDirty;
-            }
-        }
+        public bool HasUpdates => _nodeUpdated || HasNewLayout || IsDirty;
+
+        /// <summary>
+        /// Signals that the node has unseen updates.
+        /// </summary>
+        public bool HasUnseenUpdates => _nodeUpdated;
+
+        /// <summary>
+        /// Signals if the node is dirty.
+        /// </summary>
+        public bool IsDirty => _yogaNode != null && _yogaNode.IsDirty;
+
+        /// <summary>
+        /// The number of children.
+        /// </summary>
+        public int ChildCount => _children?.Count ?? 0;
 
         /// <summary>
         /// The tag for the node.
@@ -89,7 +334,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// The root node of the node.
+        /// The root node.
         /// </summary>
         public ReactShadowNode RootNode
         {
@@ -110,18 +355,21 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Gets the parent of the node.
+        /// The view class.
         /// </summary>
-        public new ReactShadowNode Parent
+        public string ViewClass
         {
-            get
-            {
-                return (ReactShadowNode)base.Parent;
-            }
+            get;
+            internal set;
         }
 
         /// <summary>
-        /// The themed context of the node.
+        /// The node parent.
+        /// </summary>
+        public ReactShadowNode Parent => _parent;
+
+        /// <summary>
+        /// The themed context.
         /// </summary>
         public ThemedReactContext ThemedContext
         {
@@ -151,26 +399,19 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// The number of native children for the node.
+        /// Signals if a new layout is available.
         /// </summary>
-        public int NativeChildCount
-        {
-            get
-            {
-                return _nativeChildren?.Count ?? 0;
-            }
-        }
+        public bool HasNewLayout => _yogaNode?.HasNewLayout ?? false;
 
         /// <summary>
-        /// Gets the native parent for the node.
+        /// The number of native children.
         /// </summary>
-        public ReactShadowNode NativeParent
-        {
-            get
-            {
-                return _nativeParent;
-            }
-        }
+        public int NativeChildCount => _nativeChildren?.Count ?? 0;
+
+        /// <summary>
+        /// The native parent.
+        /// </summary>
+        public ReactShadowNode NativeParent => _nativeParent;
 
         /// <summary>
         /// Signals whether the node is layout-only.
@@ -214,6 +455,271 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// The layout horizontal position.
+        /// </summary>
+        public float LayoutX => _yogaNode.LayoutX;
+
+        /// <summary>
+        /// The layout vertical position.
+        /// </summary>
+        public float LayoutY => _yogaNode.LayoutY;
+
+        /// <summary>
+        /// The layout width.
+        /// </summary>
+        public float LayoutWidth => _yogaNode.LayoutWidth;
+
+        /// <summary>
+        /// The layout height.
+        /// </summary>
+        public float LayoutHeight => _yogaNode.LayoutHeight;
+
+        /// <summary>
+        /// The screen horizontal position.
+        /// </summary>
+        public int ScreenX => (int)Math.Round(LayoutX);
+
+        /// <summary>
+        /// The screen vertical position.
+        /// </summary>
+        public int ScreenY => (int)Math.Round(LayoutY);
+
+        /// <summary>
+        /// The screen width.
+        /// </summary>
+        public int ScreenWidth => (int)Math.Round(_absoluteRight - _absoluteLeft);
+
+        /// <summary>
+        /// The screen height.
+        /// </summary>
+        public int ScreenHeight => (int)Math.Round(_absoluteBottom - _absoluteTop);
+
+        /// <summary>
+        /// The measure function.
+        /// </summary>
+        public MeasureFunction MeasureFunction
+        {
+            set
+            {
+                if ((value == null ^ _yogaNode.IsMeasureDefined) && ChildCount != 0)
+                {
+                    throw new InvalidOperationException(
+                        "Since a node with a measure function does not add any native yoga children, it's " +
+                        "not safe to transition to/from having a measure function unless a node has no children");
+                }
+
+                _yogaNode.SetMeasureFunction(value);
+            }
+        }
+
+        /// <summary>
+        /// Sets the margin for the node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="margin">The margin.</param>
+        public void SetMargin(int spacingType, float margin)
+        {
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    _yogaNode.MarginLeft = margin;
+                    break;
+                case YogaEdge.Top:
+                    _yogaNode.MarginTop = margin;
+                    break;
+                case YogaEdge.Right:
+                    _yogaNode.MarginRight = margin;
+                    break;
+                case YogaEdge.Bottom:
+                    _yogaNode.MarginBottom = margin;
+                    break;
+                case YogaEdge.Start:
+                    _yogaNode.MarginStart = margin;
+                    break;
+                case YogaEdge.End:
+                    _yogaNode.MarginEnd = margin;
+                    break;
+                case YogaEdge.Horizontal:
+                    _yogaNode.MarginHorizontal = margin;
+                    break;
+                case YogaEdge.Vertical:
+                    _yogaNode.MarginVertical = margin;
+                    break;
+                case YogaEdge.All:
+                    _yogaNode.Margin = margin;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported margin type '{yogaEdge}'."));
+            }
+        }
+
+        /// <summary>
+        /// Sets the padding for the node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <returns>The padding.</returns>
+        public float GetPadding(int spacingType)
+        {
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    return _yogaNode.PaddingLeft.Value;
+                case YogaEdge.Top:
+                    return _yogaNode.PaddingTop.Value;
+                case YogaEdge.Right:
+                    return _yogaNode.PaddingRight.Value;
+                case YogaEdge.Bottom:
+                    return _yogaNode.PaddingBottom.Value;
+                case YogaEdge.Start:
+                    return _yogaNode.PaddingStart.Value;
+                case YogaEdge.End:
+                    return _yogaNode.PaddingEnd.Value;
+                case YogaEdge.Horizontal:
+                    return _yogaNode.PaddingHorizontal.Value;
+                case YogaEdge.Vertical:
+                    return _yogaNode.PaddingVertical.Value;
+                case YogaEdge.All:
+                    return _yogaNode.Padding.Value;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported padding type '{yogaEdge}'."));
+            }
+        }
+
+        /// <summary>
+        /// Sets the default padding for the node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="padding">The padding.</param>
+        public void SetDefaultPadding(int spacingType, float padding)
+        {
+            _defaultPadding.Set(spacingType, padding);
+            UpdatePadding();
+        }
+
+        /// <summary>
+        /// Sets the padding for the node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="padding">The padding.</param>
+        public void SetPadding(int spacingType, float padding)
+        {
+            _padding.Set(spacingType, padding);
+            UpdatePadding();
+        }
+
+        /// <summary>
+        /// Gets the border for the node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        public float GetBorder(int spacingType)
+        {
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    return _yogaNode.BorderLeftWidth;
+                case YogaEdge.Top:
+                    return _yogaNode.BorderTopWidth;
+                case YogaEdge.Right:
+                    return _yogaNode.BorderRightWidth;
+                case YogaEdge.Bottom:
+                    return _yogaNode.BorderBottomWidth;
+                case YogaEdge.Start:
+                    return _yogaNode.BorderStartWidth;
+                case YogaEdge.End:
+                    return _yogaNode.BorderEndWidth;
+                case YogaEdge.All:
+                    return _yogaNode.BorderWidth;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported border type '{yogaEdge}'."));
+            }
+        }
+
+        /// <summary>
+        /// Sets the border for the node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="borderWidth">The border width.</param>
+        public void SetBorder(int spacingType, float borderWidth)
+        {
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    _yogaNode.BorderLeftWidth = borderWidth;
+                    break;
+                case YogaEdge.Top:
+                    _yogaNode.BorderTopWidth = borderWidth;
+                    break;
+                case YogaEdge.Right:
+                    _yogaNode.BorderRightWidth = borderWidth;
+                    break;
+                case YogaEdge.Bottom:
+                    _yogaNode.BorderBottomWidth = borderWidth;
+                    break;
+                case YogaEdge.Start:
+                    _yogaNode.BorderStartWidth = borderWidth;
+                    break;
+                case YogaEdge.End:
+                    _yogaNode.BorderEndWidth = borderWidth;
+                    break;
+                case YogaEdge.All:
+                    _yogaNode.BorderWidth = borderWidth;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported border type '{yogaEdge}'."));
+            }
+        }
+
+        /// <summary>
+        /// Sets the position for the node.
+        /// </summary>
+        /// <param name="spacingType">The spacing type.</param>
+        /// <param name="position">The position.</param>
+        public void SetPosition(int spacingType, float position)
+        {
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    _yogaNode.Left = position;
+                    break;
+                case YogaEdge.Top:
+                    _yogaNode.Top = position;
+                    break;
+                case YogaEdge.Right:
+                    _yogaNode.Right = position;
+                    break;
+                case YogaEdge.Bottom:
+                    _yogaNode.Bottom = position;
+                    break;
+                case YogaEdge.Start:
+                    _yogaNode.Start = position;
+                    break;
+                case YogaEdge.End:
+                    _yogaNode.End = position;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported position type '{yogaEdge}'."));
+            }
+        }
+
+        /// <summary>
+        /// Calculate layout for the node.
+        /// </summary>
+        public void CalculateLayout()
+        {
+            _yogaNode.CalculateLayout();
+        }
+
+        /// <summary>
         /// Marks that an update has been seen.
         /// </summary>
         public void MarkUpdateSeen()
@@ -227,17 +733,50 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Marks layout seen.
+        /// </summary>
+        public void MarkLayoutSeen()
+        {
+            _yogaNode?.MarkLayoutSeen();
+        }
+
+        /// <summary>
         /// Insert a child at the given index.
         /// </summary>
         /// <param name="child">The child.</param>
         /// <param name="index">The index.</param>
-        public void AddChildAt(CSSNode child, int index)
+        public void AddChildAt(ReactShadowNode child, int index)
         {
-            InsertChild(index, child);
-            MarkUpdated();
-            var node = (ReactShadowNode)child;
+            if (child._parent != null)
+            {
+                throw new InvalidOperationException(
+                  "Tried to add child that already has a parent! Remove it from its parent first.");
+            }
 
-            var increase = node.IsLayoutOnly ? node._totalNativeChildren : 1;
+            if (_children == null)
+            {
+                _children = new List<ReactShadowNode>(4);
+            }
+
+            _children.Insert(index, child);
+            child._parent = this;
+
+            // If a CSS node has measure defined, the layout algorithm will not visit its children. Even
+            // more, it asserts that you don't add children to nodes with measure functions.
+            if (_yogaNode != null && !_yogaNode.IsMeasureDefined)
+            {
+                var childYogaNode = child._yogaNode;
+                if (childYogaNode == null)
+                {
+                    throw new InvalidOperationException(
+                      "Cannot add a child that doesn't have a CSS node to a node without a measure function!");
+                }
+                _yogaNode.Insert(index, childYogaNode);
+            }
+
+            MarkUpdated();
+
+            var increase = child._isLayoutOnly ? child._totalNativeChildren : 1;
             _totalNativeChildren += increase;
 
             UpdateNativeChildrenCountInParent(increase);
@@ -247,34 +786,30 @@ namespace ReactNative.UIManager
         /// Removes the child at the given index.
         /// </summary>
         /// <param name="index">The index.</param>
-        public new ReactShadowNode RemoveChildAt(int index)
+        public ReactShadowNode RemoveChildAt(int index)
         {
-            var removed = RemoveAndReturnChildAt(index);
-
-            MarkUpdated();
-
-            var decrease = removed.IsLayoutOnly ? removed._totalNativeChildren : 1;
-            _totalNativeChildren -= decrease;
-            UpdateNativeChildrenCountInParent(decrease * -1);
-            return removed;
-        }
-
-        /// <summary>
-        /// Remove all children for the node.
-        /// </summary>
-        public void RemoveAllChildren()
-        {
-            var decrease = 0;
-            for (var i = ChildCount - 1; i >= 0; --i)
+            if (_children == null)
             {
-                var removed = RemoveAndReturnChildAt(i);
-                decrease += removed.IsLayoutOnly ? removed._totalNativeChildren : 1;
+                throw new IndexOutOfRangeException(
+                  "Index " + index + " out of bounds: node has no children");
+            }
+
+            var removed = _children[index];
+            _children.RemoveAt(index);
+            removed._parent = null;
+
+            if (_yogaNode != null && !_yogaNode.IsMeasureDefined)
+            {
+                _yogaNode.RemoveAt(index);
             }
 
             MarkUpdated();
 
+            var decrease = removed._isLayoutOnly ? removed._totalNativeChildren : 1;
             _totalNativeChildren -= decrease;
-            UpdateNativeChildrenCountInParent(decrease * -1);
+            UpdateNativeChildrenCountInParent(-decrease);
+
+            return removed;
         }
 
         /// <summary>
@@ -333,7 +868,55 @@ namespace ReactNative.UIManager
         /// <returns>The child node.</returns>
         public ReactShadowNode GetChildAt(int index)
         {
-            return (ReactShadowNode)this[index];
+            if (_children == null)
+            {
+                throw new IndexOutOfRangeException(
+                  "Index " + index + " out of bounds: node has no children");
+            }
+
+            return _children[index];
+        }
+
+        /// <summary>
+        /// Gets the index of the given child node.
+        /// </summary>
+        /// <param name="child">The child node.</param>
+        /// <returns>The index.</returns>
+        public int IndexOf(ReactShadowNode child)
+        {
+            return _children?.IndexOf(child) ?? -1;
+        }
+
+        /// <summary>
+        /// Removes and disposes all children.
+        /// </summary>
+        public void RemoveAndDisposeAllChildren()
+        {
+            if (ChildCount == 0)
+            {
+                return;
+            }
+
+            var decrease = 0;
+            for (int i = ChildCount - 1; i >= 0; i--)
+            {
+                if (_yogaNode != null && !_yogaNode.IsMeasureDefined)
+                {
+                    _yogaNode.RemoveAt(i);
+                }
+
+                var toRemove = GetChildAt(i);
+                toRemove._parent = null;
+                toRemove.Dispose();
+
+                decrease += toRemove._isLayoutOnly ? toRemove._totalNativeChildren : 1;
+            }
+
+            _children.Clear();
+            MarkUpdated();
+
+            _totalNativeChildren -= decrease;
+            UpdateNativeChildrenCountInParent(-decrease);
         }
 
         /// <summary>
@@ -362,7 +945,8 @@ namespace ReactNative.UIManager
         /// Removes the native child at the given index.
         /// </summary>
         /// <param name="index">The index.</param>
-        public void RemoveNativeChildAt(int index)
+        /// <returns>The child removed.</returns>
+        public ReactShadowNode RemoveNativeChildAt(int index)
         {
             if (_nativeChildren == null)
             {
@@ -372,6 +956,7 @@ namespace ReactNative.UIManager
             var removed = _nativeChildren[index];
             _nativeChildren.RemoveAt(index);
             removed._nativeParent = null;
+            return removed;
         }
 
         /// <summary>
@@ -395,7 +980,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="nativeChild">The native child.</param>
         /// <returns>The index, or -1 if none is found.</returns>
-        public int GetIndexOfNativeChild(ReactShadowNode nativeChild)
+        public int IndexOfNativeChild(ReactShadowNode nativeChild)
         {
             return _nativeChildren.IndexOf(nativeChild);
         }
@@ -449,15 +1034,37 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Disposes the shadow node.
+        /// </summary>
+        public void Dispose()
+        {
+            if (_yogaNode != null)
+            {
+                _yogaNode.Reset();
+            }
+        }
+
+        /// <summary>
         /// Dispatches a batch of updates.
         /// </summary>
+        /// <param name="absoluteX">
+        /// The absolute X-position of the node.
+        /// </param>
+        /// <param name="absoluteY">
+        /// The 
+        /// </param>
         /// <param name="uiViewOperationQueue">
         /// Interface for enqueueing UI operations.
         /// </param>
         /// <param name="nativeViewHierarchyOptimizer">
         /// Interface for optimizing native hierarchy calls.
         /// </param>
-        internal void DispatchUpdates(
+        /// <returns>
+        /// <code>true</code> if updates were dispatched, otherwise <code>false</code>.
+        /// </returns>
+        internal bool DispatchUpdates(
+            float absoluteX,
+            float absoluteY,
             UIViewOperationQueue uiViewOperationQueue,
             NativeViewHierarchyOptimizer nativeViewHierarchyOptimizer)
         {
@@ -468,7 +1075,27 @@ namespace ReactNative.UIManager
 
             if (HasNewLayout)
             {
+                _absoluteLeft = absoluteX + LayoutX;
+                _absoluteTop = absoluteY + LayoutY;
+                _absoluteRight = absoluteX + LayoutX + LayoutWidth;
+                _absoluteBottom = absoluteY + LayoutY + LayoutHeight;
                 nativeViewHierarchyOptimizer.HandleUpdateLayout(this);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Marks that the node is dirty.
+        /// </summary>
+        protected void dirty()
+        {
+            if (!IsVirtual)
+            {
+                _yogaNode.MarkDirty();
             }
         }
 
@@ -484,46 +1111,109 @@ namespace ReactNative.UIManager
 
             _nodeUpdated = true;
             var parent = Parent;
-            if (parent != null)
-            {
-                parent.MarkUpdated();
-            }
-        }
-        
-        /// <summary>
-        /// Marks that the node is dirty.
-        /// </summary>
-        protected sealed override void dirty()
-        {
-            if (!IsVirtual)
-            {
-                base.dirty();
-            }
+            parent?.MarkUpdated();
         }
 
         private void UpdateNativeChildrenCountInParent(int delta)
         {
-            if (IsLayoutOnly)
+            if (_isLayoutOnly)
             {
-                var parent = Parent;
+                ReactShadowNode parent = Parent;
                 while (parent != null)
                 {
                     parent._totalNativeChildren += delta;
-                    if (!parent.IsLayoutOnly)
+                    if (!parent._isLayoutOnly)
                     {
                         break;
                     }
-
                     parent = parent.Parent;
                 }
             }
         }
 
-        private ReactShadowNode RemoveAndReturnChildAt(int i)
+        private void UpdatePadding()
         {
-            var removed = this[i];
-            base.RemoveChildAt(i);
-            return (ReactShadowNode)removed;
+            for (var spacingType = EdgeSpacing.Left; spacingType <= EdgeSpacing.All; spacingType++)
+            {
+                if (spacingType == EdgeSpacing.Left ||
+                    spacingType == EdgeSpacing.Right ||
+                    spacingType == EdgeSpacing.Start ||
+                    spacingType == EdgeSpacing.End)
+                {
+                    if (YogaConstants.IsUndefined(_padding.GetRaw(spacingType)) &&
+                        YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.Horizontal)) &&
+                        YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.All)))
+                    {
+                        SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
+                    }
+                    else
+                    {
+                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
+                    }
+                }
+                else if (spacingType == EdgeSpacing.Top || spacingType == EdgeSpacing.Bottom)
+                {
+                    if (YogaConstants.IsUndefined(_padding.GetRaw(spacingType)) &&
+                        YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.Vertical)) &&
+                        YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.All)))
+                    {
+                        SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
+                    }
+                    else
+                    {
+                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
+                    }
+                }
+                else
+                {
+                    if (YogaConstants.IsUndefined(_padding.GetRaw(spacingType)))
+                    {
+                        SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
+                    }
+                    else
+                    {
+                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
+                    }
+                }
+            }
+        }
+
+        private void SetPadding(YogaNode node, int spacingType, float padding)
+        {
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    node.PaddingLeft = padding;
+                    break;
+                case YogaEdge.Top:
+                    node.PaddingTop = padding;
+                    break;
+                case YogaEdge.Right:
+                    node.PaddingRight = padding;
+                    break;
+                case YogaEdge.Bottom:
+                    node.PaddingBottom = padding;
+                    break;
+                case YogaEdge.Start:
+                    node.PaddingStart = padding;
+                    break;
+                case YogaEdge.End:
+                    node.PaddingEnd = padding;
+                    break;
+                case YogaEdge.Horizontal:
+                    node.PaddingHorizontal = padding;
+                    break;
+                case YogaEdge.Vertical:
+                    node.PaddingVertical = padding;
+                    break;
+                case YogaEdge.All:
+                    node.Padding = padding;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported padding type '{yogaEdge}'."));
+            }
         }
     }
 }

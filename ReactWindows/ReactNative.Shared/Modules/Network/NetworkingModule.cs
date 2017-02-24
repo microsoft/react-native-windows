@@ -28,7 +28,7 @@ namespace ReactNative.Modules.Network
     /// <summary>
     /// Implements the XMLHttpRequest JavaScript interface.
     /// </summary>
-    public class NetworkingModule : ReactContextNativeModuleBase, ILifecycleEventListener
+    public class NetworkingModule : ReactContextNativeModuleBase
     {
         private const int MaxChunkSizeBetweenFlushes = 8 * 1024; // 8kb
         private readonly IHttpClient _client;
@@ -142,7 +142,7 @@ namespace ReactNative.Modules.Network
                         return;
                     }
 
-                    _tasks.Add(requestId, token => ProcessRequestFromUriAsync(
+                    _tasks.AddAndInvokeAsync(requestId, token => ProcessRequestFromUriAsync(
                         requestId,
                         new Uri(uri),
                         useIncrementalUpdates,
@@ -176,7 +176,7 @@ namespace ReactNative.Modules.Network
                 }
             }
 
-            _tasks.Add(requestId, async token =>
+            _tasks.AddAndInvokeAsync(requestId, async token =>
             {
                 using (request)
                 {
@@ -218,27 +218,7 @@ namespace ReactNative.Modules.Network
         public override void OnReactInstanceDispose()
         {
             _shuttingDown = true;
-        }
-
-        /// <summary>
-        /// Called when the host receives the suspend event.
-        /// </summary>
-        public void OnSuspend()
-        {
-        }
-
-        /// <summary>
-        /// Called when the host receives the resume event.
-        /// </summary>
-        public void OnResume()
-        {
-        }
-
-        /// <summary>
-        /// Called when the host is disposed.
-        /// </summary>
-        public void OnDestroy()
-        {
+            _tasks.CancelAllTasks();
             _client.Dispose();
         }
 

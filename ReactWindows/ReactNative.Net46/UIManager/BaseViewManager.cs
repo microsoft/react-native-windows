@@ -1,7 +1,10 @@
-﻿using ReactNative.UIManager.Annotations;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.UIManager.Annotations;
+using System;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Media.Effects;
 
 namespace ReactNative.UIManager
 {
@@ -52,7 +55,7 @@ namespace ReactNative.UIManager
         {
             AutomationProperties.SetName(view, label ?? "");
         }
-        
+
         // ToDo: SetAccessibilityLiveRegion - ReactProp("accessibilityLiveRegion")
 
         /// <summary>
@@ -64,6 +67,63 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
+        }
+
+        /// <summary>
+        /// Sets the shadow color of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The shadow color.</param>
+        [ReactProp("shadowColor", CustomType = "Color")]
+        public void SetShadowColor(TFrameworkElement view, uint? color)
+        {
+            var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            effect.Color = ColorHelpers.Parse(color.Value);
+            view.Effect = effect;
+        }
+
+        /// <summary>
+        /// Sets the shadow offset of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="offset">The shadow offset.</param>
+        [ReactProp("shadowOffset")]
+        public void SetShadowOffset(TFrameworkElement view, JObject offset)
+        {
+            var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            var deltaX = offset.Value<double>("width");
+            var deltaY = offset.Value<double>("height");
+            var angle = Math.Atan2(deltaY, deltaX) * (180 / Math.PI);
+            var distance = Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
+            effect.Direction = angle;
+            effect.ShadowDepth = distance;
+            view.Effect = effect;
+        }
+
+        /// <summary>
+        /// Sets the shadow opacity of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="opacity">The shadow opacity.</param>
+        [ReactProp("shadowOpacity")]
+        public void SetShadowOpacity(TFrameworkElement view, double opacity)
+        {
+            var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            effect.Opacity = opacity;
+            view.Effect = effect;
+        }
+
+        /// <summary>
+        /// Sets the shadow radius of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="radius">The shadow radius.</param>
+        [ReactProp("shadowRadius")]
+        public void SetShadowRadius(TFrameworkElement view, double radius)
+        {
+            var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
+            effect.BlurRadius = radius;
+            view.Effect = effect;
         }
     }
 }
