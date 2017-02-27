@@ -24,6 +24,8 @@ namespace ReactNative.Views.Text
         private double? _fontSize;
         private double _lineHeight;
 
+        private bool _allowFontScaling;
+
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
         private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
@@ -162,6 +164,20 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
+        /// Set fontScaling
+        /// </summary>
+        /// <param name="allowFontScaling">Max number of lines.</param>
+        [ReactProp(ViewProps.AllowFontScaling)]
+        public virtual void SetAllowFontScaling(bool allowFontScaling)
+        {
+            if (_allowFontScaling != allowFontScaling)
+            {
+                _allowFontScaling = allowFontScaling;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
         /// Called after a layout step at the end of a UI batch from
         /// <see cref="UIManagerModule"/>. May be used to enqueue additional UI
         /// operations for the native view. Will only be called on nodes marked
@@ -243,6 +259,7 @@ namespace ReactNative.Views.Text
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? FontStyle.Normal;
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
+            textBlock.IsTextScaleFactorEnabled = _allowFontScaling;
 
             if (!measureOnly)
             {
