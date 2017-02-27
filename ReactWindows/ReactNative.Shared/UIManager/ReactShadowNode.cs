@@ -1205,7 +1205,7 @@ namespace ReactNative.UIManager
                     node.PaddingHorizontal = padding;
                     break;
                 case YogaEdge.Vertical:
-                    node.PaddingHorizontal = padding;
+                    node.PaddingVertical = padding;
                     break;
                 case YogaEdge.All:
                     node.Padding = padding;

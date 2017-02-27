@@ -72,6 +72,7 @@ namespace ReactNative.UIManager
         public const string TextAlign = "textAlign";
         public const string TextAlignVertical = "textAlignVertical";
         public const string TextDecorationLine = "textDecorationLine";
+        public const string AllowFontScaling = "allowFontScaling";
 
         public const string BorderWidth = "borderWidth";
         public const string BorderLeftWidth = "borderLeftWidth";
