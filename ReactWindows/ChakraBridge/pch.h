@@ -19,8 +19,8 @@
         if (status != JsNoError) \
         { \
             ChakraStringResult stringResult; \
-			stringResult.ErrorCode = status; \
-			return stringResult; \
+            stringResult.ErrorCode = status; \
+            return stringResult; \
         } \
     }
 
@@ -50,4 +50,12 @@
         { \
             goto cleanup; \
         } \
+    }
+
+#define IfErrnoCleanup(v) \
+    { \
+        if (v) \
+		{ \
+            goto cleanup; \
+		} \
     }
