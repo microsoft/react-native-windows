@@ -215,6 +215,17 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The placeholder text color.</param>
+        [ReactProp("placeholderTextColor", CustomType = "Color")]
+        public void SetPlaceholderTextColor(ReactTextBox view, uint? color)
+        {
+            throw new NotImplementedException("PlaceholderTextColor is not implemented in UWP");
+        }
+
+        /// <summary>
         /// Sets the border color for the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance</param>

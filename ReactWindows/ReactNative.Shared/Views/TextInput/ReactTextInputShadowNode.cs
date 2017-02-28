@@ -57,6 +57,8 @@ namespace ReactNative.Views.TextInput
         private string _fontFamily;
         private string _text;
 
+        private string _placeholderTextColor;
+
         private int _jsEventCount = Unset;
 
         /// <summary>
@@ -220,6 +222,20 @@ namespace ReactNative.Views.TextInput
         public void SetMostRecentEventCount(int mostRecentEventCount)
         {
             _jsEventCount = mostRecentEventCount;
+        }
+
+        /// <summary>
+        /// Set the placholder text color
+        /// </summary>
+        /// <param name="textColor"></param>
+        [ReactProp("placeholderTextColor", CustomType = "Color")]
+        public void SetPlaceholderTextColor(string textColor)
+        {
+            if (_placeholderTextColor != textColor)
+            {
+                _placeholderTextColor = textColor;
+                MarkUpdated();
+            }
         }
 
         /// <summary>
