@@ -230,6 +230,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSelectionEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>
