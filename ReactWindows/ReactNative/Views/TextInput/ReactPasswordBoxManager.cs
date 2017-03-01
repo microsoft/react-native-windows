@@ -201,7 +201,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The view instance.</param>
         /// <param name="color">The placeholder text color.</param>
         [ReactProp("placeholderTextColor", CustomType = "Color")]
-        public void SetPlaceholderTextColor(ReactTextBox view, uint? color)
+        public void SetPlaceholderTextColor(PasswordBox view, uint? color)
         {
             //The 'PlaceholderTextColor' is not implemented in UWP - Use of this property
             //will be ignored...
