@@ -170,20 +170,18 @@ namespace ReactNative.UIManager
 
         private static void ApplyProjection(TFrameworkElement view, Matrix3D projectionMatrix)
         {
-            if (IsSimpleTranslationOnly(projectionMatrix))
-            {
-                ResetProjectionMatrix(view);
-                var transform = new MatrixTransform();
-                var matrix = transform.Matrix;
-                matrix.OffsetX = projectionMatrix.OffsetX;
-                matrix.OffsetY = projectionMatrix.OffsetY;
-                transform.Matrix = matrix;
-                view.RenderTransform = transform;
-            }
-            else
+            if (!IsSimpleTranslationOnly(projectionMatrix))
             {
                 throw new InvalidOperationException("ReactNative.Net46 does not support 3D transformations");
             }
+
+            ResetProjectionMatrix(view);
+            var transform = new MatrixTransform();
+            var matrix = transform.Matrix;
+            matrix.OffsetX = projectionMatrix.OffsetX;
+            matrix.OffsetY = projectionMatrix.OffsetY;
+            transform.Matrix = matrix;
+            view.RenderTransform = transform;
         }
 
         private static bool IsSimpleTranslationOnly(Matrix3D matrix)
