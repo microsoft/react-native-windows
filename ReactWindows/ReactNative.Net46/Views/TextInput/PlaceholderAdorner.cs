@@ -466,7 +466,7 @@ namespace ReactNative.Views.TextInput
             "HideOnFocus",
             typeof(bool),
             typeof(PlaceholderAdorner),
-            new FrameworkPropertyMetadata(true, OnHideOnFocusChanged));
+            new FrameworkPropertyMetadata(false, OnHideOnFocusChanged));
 
         /// <summary>
         ///   Invoked whenever <see cref="T:T:ReactNative.Views.TextInput.PlaceholderAdorner" />.HideOnFocus attached property is changed.
