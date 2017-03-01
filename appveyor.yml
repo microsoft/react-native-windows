@@ -4,7 +4,6 @@ image: Visual Studio 2015
 cache:
 - ReactWindows\packages -> ReactWindows\**\packages.config
 - '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'
-- ChakraCore\Build\VcBuild -> ChakraCore\lib\Common\*.h
 
 install:
   - npm install -g npm@latest
@@ -23,10 +22,7 @@ clone_script:
 before_build:
 - ps: $env:playgroundNet46_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
 - ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
-- ps: >-
-    Get-ChildItem .\ChakraCore\Build\VcBuild * -recurse | ForEach-Object{$_.LastWriteTime = get-date}
-
-    nuget restore ReactWindows\ReactNative.sln
+- ps: nuget restore ReactWindows\ReactNative.sln
 - npm i -g react-native-cli
 
 build_script:

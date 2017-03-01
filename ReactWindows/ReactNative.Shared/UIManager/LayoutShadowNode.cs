@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.Reflection;
 using ReactNative.UIManager.Annotations;
 
@@ -10,106 +10,112 @@ namespace ReactNative.UIManager
     /// </summary>
     public class LayoutShadowNode : ReactShadowNode
     {
-        private const float Undefined = CSSConstants.Undefined;
+        /// <summary>
+        /// Instantiates a <see cref="LayoutShadowNode"/>.
+        /// </summary>
+        public LayoutShadowNode()
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="LayoutShadowNode"/>. 
+        /// </summary>
+        /// <param name="isVirtual">
+        /// <code>true</code> if the node is virtual, otherwise <code>false</code>.
+        /// </param>
+        public LayoutShadowNode(bool isVirtual)
+            : base(isVirtual)
+        {
+        }
 
         /// <summary>
         /// Set the width of the shadow node.
         /// </summary>
         /// <param name="width">The width.</param>
-        [ReactProp(ViewProps.Width, DefaultSingle = Undefined)]
+        [ReactProp(ViewProps.Width, DefaultSingle = YogaConstants.Undefined)]
         public void SetWidth(float width)
         {
-            Width = width;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            StyleWidth = width;
         }
 
         /// <summary>
         /// Sets the minimum width of the shadow node.
         /// </summary>
         /// <param name="minWidth">The minimum width.</param>
-        [ReactProp(ViewProps.MinWidth, DefaultSingle = Undefined)]
+        [ReactProp(ViewProps.MinWidth, DefaultSingle = YogaConstants.Undefined)]
         public void SetMinWidth(float minWidth)
         {
-            MinWidth = minWidth;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            StyleMinWidth = minWidth;
         }
 
         /// <summary>
         /// Sets the maximum width of the shadow node.
         /// </summary>
         /// <param name="maxWidth">The maximum width.</param>
-        [ReactProp(ViewProps.MaxWidth, DefaultSingle = Undefined)]
+        [ReactProp(ViewProps.MaxWidth, DefaultSingle = YogaConstants.Undefined)]
         public void SetMaxWidth(float maxWidth)
         {
-            MaxWidth = maxWidth;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            StyleMaxWidth = maxWidth;
         }
 
         /// <summary>
         /// Set the heigth of the shadow node.
         /// </summary>
         /// <param name="height">The height.</param>
-        [ReactProp(ViewProps.Height, DefaultSingle = Undefined)]
+        [ReactProp(ViewProps.Height, DefaultSingle = YogaConstants.Undefined)]
         public void SetHeight(float height)
         {
-            Height = height;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            StyleHeight = height;
         }
 
         /// <summary>
         /// Sets the minimum height of the shadow node.
         /// </summary>
         /// <param name="minHeight">The minimum height.</param>
-        [ReactProp(ViewProps.MinHeight, DefaultSingle = Undefined)]
+        [ReactProp(ViewProps.MinHeight, DefaultSingle = YogaConstants.Undefined)]
         public void SetMinHeight(float minHeight)
         {
-            MinHeight = minHeight;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            StyleMinHeight = minHeight;
         }
 
         /// <summary>
         /// Sets the maximum height of the shadow node.
         /// </summary>
         /// <param name="maxHeight">The maximum height.</param>
-        [ReactProp(ViewProps.MaxHeight, DefaultSingle = Undefined)]
+        [ReactProp(ViewProps.MaxHeight, DefaultSingle = YogaConstants.Undefined)]
         public void SetMaxHeight(float maxHeight)
         {
-            MaxHeight = maxHeight;
-        }
+            if (IsVirtual)
+            {
+                return;
+            }
 
-        /// <summary>
-        /// Sets the left position of the shadow node.
-        /// </summary>
-        /// <param name="left">The left position.</param>
-        [ReactProp(ViewProps.Left, DefaultSingle = Undefined)]
-        public void SetLeft(float left)
-        {
-            PositionLeft = left;
-        }
-
-        /// <summary>
-        /// Sets the top position of the shadow node.
-        /// </summary>
-        /// <param name="top">The top position.</param>
-        [ReactProp(ViewProps.Top, DefaultSingle = Undefined)]
-        public void SetTop(float top)
-        {
-            PositionTop = top;
-        }
-
-        /// <summary>
-        /// Sets the bottom position of the shadow node.
-        /// </summary>
-        /// <param name="bottom">The bottom position.</param>
-        [ReactProp(ViewProps.Bottom, DefaultSingle = Undefined)]
-        public void SetBottom(float bottom)
-        {
-            PositionBottom = bottom;
-        }
-
-        /// <summary>
-        /// Sets the right position of the shadow node.
-        /// </summary>
-        /// <param name="right">The right position.</param>
-        [ReactProp(ViewProps.Right, DefaultSingle = Undefined)]
-        public void SetRight(float right)
-        {
-            PositionRight = right;
+            StyleMaxHeight = maxHeight;
         }
 
         /// <summary>
@@ -119,7 +125,67 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Flex, DefaultSingle = 0f)]
         public void SetFlex(float flex)
         {
+            if (IsVirtual)
+            {
+                return;
+            }
+
             Flex = flex;
+        }
+
+        /// <summary>
+        /// Sets the flex grow of the shadow node.
+        /// </summary>
+        /// <param name="flexGrow">The flex grow value.</param>
+        [ReactProp(ViewProps.FlexGrow, DefaultSingle = 0f)]
+        public void SetFlexGrow(float flexGrow)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            FlexGrow = flexGrow;
+        }
+
+        /// <summary>
+        /// Sets the flex shrink of the shadow node.
+        /// </summary>
+        /// <param name="flexShrink">The flex shrink value.</param>
+        [ReactProp(ViewProps.FlexShrink, DefaultSingle = 0f)]
+        public void SetFlexShrink(float flexShrink)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            FlexShrink = flexShrink;
+        }
+
+        /// <summary>
+        /// Sets the flex basis of the shadow node.
+        /// </summary>
+        /// <param name="flexBasis">The flex basis value.</param>
+        [ReactProp(ViewProps.FlexBasis, DefaultSingle = 0f)]
+        public void SetFlexBasis(float flexBasis)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            FlexBasis = flexBasis;
+        }
+
+        /// <summary>
+        /// Sets the aspect ratio of the shadow node.
+        /// </summary>
+        /// <param name="aspectRatio">The aspect ratio.</param>
+        [ReactProp(ViewProps.AspectRatio, DefaultSingle = YogaConstants.Undefined)]
+        public void SetAspectRatio(float aspectRatio)
+        {
+            StyleAspectRatio = aspectRatio;
         }
 
         /// <summary>
@@ -129,7 +195,12 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexDirection)]
         public void SetFlexDirection(string flexDirection)
         {
-            FlexDirection = EnumHelpers.ParseNullable<CSSFlexDirection>(flexDirection) ?? CSSFlexDirection.Column;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            FlexDirection = EnumHelpers.ParseNullable<YogaFlexDirection>(flexDirection) ?? YogaFlexDirection.Column;
         }
 
         /// <summary>
@@ -139,7 +210,12 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexWrap)]
         public void SetFlexWrap(string flexWrap)
         {
-            Wrap = EnumHelpers.ParseNullable<CSSWrap>(flexWrap) ?? CSSWrap.NoWrap;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            FlexWrap = EnumHelpers.ParseNullable<YogaWrap>(flexWrap) ?? YogaWrap.NoWrap;
         }
 
         /// <summary>
@@ -149,7 +225,12 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignSelf)]
         public void SetAlignSelf(string alignSelf)
         {
-            AlignSelf = EnumHelpers.ParseNullable<CSSAlign>(alignSelf) ?? CSSAlign.Auto;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            AlignSelf = EnumHelpers.ParseNullable<YogaAlign>(alignSelf) ?? YogaAlign.Auto;
         }
 
         /// <summary>
@@ -159,7 +240,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignItems)]
         public void SetAlignItems(string alignItems)
         {
-            AlignItems = EnumHelpers.ParseNullable<CSSAlign>(alignItems) ?? CSSAlign.Stretch;
+            AlignItems = EnumHelpers.ParseNullable<YogaAlign>(alignItems) ?? YogaAlign.Stretch;
         }
 
         /// <summary>
@@ -169,7 +250,27 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.JustifyContent)]
         public void SetJustifyContent(string justifyContent)
         {
-            JustifyContent = EnumHelpers.ParseNullable<CSSJustify>(justifyContent) ?? CSSJustify.FlexStart;
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            JustifyContent = EnumHelpers.ParseNullable<YogaJustify>(justifyContent) ?? YogaJustify.FlexStart;
+        }
+
+        /// <summary>
+        /// Sets the overflow of the shadow node.
+        /// </summary>
+        /// <param name="overflow">The overflow</param>
+        [ReactProp(ViewProps.Overflow)]
+        public void SetOverflow(string overflow)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            Overflow = EnumHelpers.ParseNullable<YogaOverflow>(overflow) ?? YogaOverflow.Visible;
         }
 
         /// <summary>
@@ -185,9 +286,14 @@ namespace ReactNative.UIManager
             ViewProps.MarginRight,
             ViewProps.MarginTop,
             ViewProps.MarginBottom,
-            DefaultSingle = Undefined)]
+            DefaultSingle = YogaConstants.Undefined)]
         public void SetMargins(int index, float margin)
         {
+            if (IsVirtual)
+            {
+                return;
+            }
+
             SetMargin(ViewProps.PaddingMarginSpacingTypes[index], margin);
         }
 
@@ -204,10 +310,10 @@ namespace ReactNative.UIManager
             ViewProps.PaddingRight,
             ViewProps.PaddingTop,
             ViewProps.PaddingBottom,
-            DefaultSingle = Undefined)]
-        public void SetPaddings(int index, float padding)
+            DefaultSingle = YogaConstants.Undefined)]
+        public virtual void SetPaddings(int index, float padding)
         {
-            SetPaddingCore(ViewProps.PaddingMarginSpacingTypes[index], padding);
+            SetPadding(ViewProps.PaddingMarginSpacingTypes[index], padding);
         }
 
         /// <summary>
@@ -221,10 +327,31 @@ namespace ReactNative.UIManager
             ViewProps.BorderRightWidth,
             ViewProps.BorderTopWidth,
             ViewProps.BorderBottomWidth,
-            DefaultSingle = Undefined)]
+            DefaultSingle = YogaConstants.Undefined)]
         public void SetBorderWidth(int index, float borderWidth)
         {
             SetBorder(ViewProps.BorderSpacingTypes[index], borderWidth);
+        }
+
+        /// <summary>
+        /// Sets the position of the shadow node.
+        /// </summary>
+        /// <param name="index">The spacing type index.</param>
+        /// <param name="position">The position value.</param>
+        [ReactPropGroup(
+            ViewProps.Left,
+            ViewProps.Right,
+            ViewProps.Top,
+            ViewProps.Bottom,
+            DefaultSingle = YogaConstants.Undefined)]
+        public void SetPositionValues(int index, float position)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            SetPosition(ViewProps.PositionSpacingTypes[index], position);
         }
 
         /// <summary>
@@ -234,7 +361,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Position)]
         public void SetPosition(string position)
         {
-            PositionType = EnumHelpers.ParseNullable<CSSPositionType>(position) ?? CSSPositionType.Relative;
+            PositionType = EnumHelpers.ParseNullable<YogaPositionType>(position) ?? YogaPositionType.Relative;
         }
 
         /// <summary>
@@ -247,19 +374,6 @@ namespace ReactNative.UIManager
         public void SetShouldNotifyOnLayout(bool shouldNotifyOnLayout)
         {
             ShouldNotifyOnLayout = shouldNotifyOnLayout;
-        }
-
-        /// <summary>
-        /// Sets the padding of the shadow node.
-        /// </summary>
-        /// <param name="spacingType">The spacing type.</param>
-        /// <param name="padding">The padding value.</param>
-        /// <remarks>
-        /// Override this virtual method if the view has custom padding behavior.
-        /// </remarks>
-        protected virtual void SetPaddingCore(CSSSpacingType spacingType, float padding)
-        {
-            SetPadding(spacingType, padding);
         }
     }
 }

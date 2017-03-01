@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
+using ReactNative.Modules.Core;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ReactNative.Bridge;
-using ReactNative.Modules.Core;
 
 namespace ReactNative
 {
@@ -100,8 +101,18 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string[] arguments)
         {
+            OnCreate(arguments, default(JObject));
+        }
+
+        /// <summary>
+        /// Called when the application is first initialized.
+        /// </summary>
+        /// <param name="arguments">The launch arguments.</param>
+        /// <param name="initialProps">The initialProps.</param>
+        public void OnCreate(string[] arguments, JObject initialProps)
+        {
             ApplyArguments(arguments);
-            RootView.StartReactApplication(ReactInstanceManager, MainComponentName);
+            RootView.StartReactApplication(ReactInstanceManager, MainComponentName, initialProps);
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
@@ -134,7 +145,7 @@ namespace ReactNative
         /// </summary>
         public async Task DisposeAsync()
         {
-            RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler) OnAcceleratorKeyActivated);
+            RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
             if (_reactInstanceManager.IsValueCreated)
             {
