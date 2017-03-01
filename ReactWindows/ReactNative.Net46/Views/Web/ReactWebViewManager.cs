@@ -90,7 +90,7 @@ namespace ReactNative.Views.Web
         /// <param name="view">A webview instance.</param>
         /// <param name="source">A source for the webview (either static html or an uri).</param>
         [ReactProp("source")]
-        public async void SetSource(WebBrowser view, JObject source)
+        public void SetSource(WebBrowser view, JObject source)
         {
             if (source != null)
             {
@@ -169,7 +169,7 @@ namespace ReactNative.Views.Web
         }
 
         /// <summary>
-        /// Creates a new view instance of type <see cref="WebView"/>.
+        /// Creates a new view instance of type <see cref="WebBrowser"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>

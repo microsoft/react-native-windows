@@ -519,7 +519,40 @@ namespace ReactNative.UIManager
         /// <param name="margin">The margin.</param>
         public void SetMargin(int spacingType, float margin)
         {
-            _yogaNode.SetMargin((YogaEdge)spacingType, margin);
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    _yogaNode.MarginLeft = margin;
+                    break;
+                case YogaEdge.Top:
+                    _yogaNode.MarginTop = margin;
+                    break;
+                case YogaEdge.Right:
+                    _yogaNode.MarginRight = margin;
+                    break;
+                case YogaEdge.Bottom:
+                    _yogaNode.MarginBottom = margin;
+                    break;
+                case YogaEdge.Start:
+                    _yogaNode.MarginStart = margin;
+                    break;
+                case YogaEdge.End:
+                    _yogaNode.MarginEnd = margin;
+                    break;
+                case YogaEdge.Horizontal:
+                    _yogaNode.MarginHorizontal = margin;
+                    break;
+                case YogaEdge.Vertical:
+                    _yogaNode.MarginVertical = margin;
+                    break;
+                case YogaEdge.All:
+                    _yogaNode.Margin = margin;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported margin type '{yogaEdge}'."));
+            }
         }
 
         /// <summary>
@@ -529,7 +562,31 @@ namespace ReactNative.UIManager
         /// <returns>The padding.</returns>
         public float GetPadding(int spacingType)
         {
-            return _yogaNode.GetPadding((YogaEdge)spacingType).Value;
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    return _yogaNode.PaddingLeft.Value;
+                case YogaEdge.Top:
+                    return _yogaNode.PaddingTop.Value;
+                case YogaEdge.Right:
+                    return _yogaNode.PaddingRight.Value;
+                case YogaEdge.Bottom:
+                    return _yogaNode.PaddingBottom.Value;
+                case YogaEdge.Start:
+                    return _yogaNode.PaddingStart.Value;
+                case YogaEdge.End:
+                    return _yogaNode.PaddingEnd.Value;
+                case YogaEdge.Horizontal:
+                    return _yogaNode.PaddingHorizontal.Value;
+                case YogaEdge.Vertical:
+                    return _yogaNode.PaddingVertical.Value;
+                case YogaEdge.All:
+                    return _yogaNode.Padding.Value;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported padding type '{yogaEdge}'."));
+            }
         }
 
         /// <summary>
@@ -560,7 +617,27 @@ namespace ReactNative.UIManager
         /// <param name="spacingType">The spacing type.</param>
         public float GetBorder(int spacingType)
         {
-            return _yogaNode.GetBorder((YogaEdge)spacingType);
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    return _yogaNode.BorderLeftWidth;
+                case YogaEdge.Top:
+                    return _yogaNode.BorderTopWidth;
+                case YogaEdge.Right:
+                    return _yogaNode.BorderRightWidth;
+                case YogaEdge.Bottom:
+                    return _yogaNode.BorderBottomWidth;
+                case YogaEdge.Start:
+                    return _yogaNode.BorderStartWidth;
+                case YogaEdge.End:
+                    return _yogaNode.BorderEndWidth;
+                case YogaEdge.All:
+                    return _yogaNode.BorderWidth;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported border type '{yogaEdge}'."));
+            }
         }
 
         /// <summary>
@@ -570,7 +647,34 @@ namespace ReactNative.UIManager
         /// <param name="borderWidth">The border width.</param>
         public void SetBorder(int spacingType, float borderWidth)
         {
-            _yogaNode.SetBorder((YogaEdge)spacingType, borderWidth);
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    _yogaNode.BorderLeftWidth = borderWidth;
+                    break;
+                case YogaEdge.Top:
+                    _yogaNode.BorderTopWidth = borderWidth;
+                    break;
+                case YogaEdge.Right:
+                    _yogaNode.BorderRightWidth = borderWidth;
+                    break;
+                case YogaEdge.Bottom:
+                    _yogaNode.BorderBottomWidth = borderWidth;
+                    break;
+                case YogaEdge.Start:
+                    _yogaNode.BorderStartWidth = borderWidth;
+                    break;
+                case YogaEdge.End:
+                    _yogaNode.BorderEndWidth = borderWidth;
+                    break;
+                case YogaEdge.All:
+                    _yogaNode.BorderWidth = borderWidth;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported border type '{yogaEdge}'."));
+            }
         }
 
         /// <summary>
@@ -580,7 +684,31 @@ namespace ReactNative.UIManager
         /// <param name="position">The position.</param>
         public void SetPosition(int spacingType, float position)
         {
-            _yogaNode.SetPosition((YogaEdge)spacingType, position);
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    _yogaNode.Left = position;
+                    break;
+                case YogaEdge.Top:
+                    _yogaNode.Top = position;
+                    break;
+                case YogaEdge.Right:
+                    _yogaNode.Right = position;
+                    break;
+                case YogaEdge.Bottom:
+                    _yogaNode.Bottom = position;
+                    break;
+                case YogaEdge.Start:
+                    _yogaNode.Start = position;
+                    break;
+                case YogaEdge.End:
+                    _yogaNode.End = position;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported position type '{yogaEdge}'."));
+            }
         }
 
         /// <summary>
@@ -1016,11 +1144,11 @@ namespace ReactNative.UIManager
                         YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.Horizontal)) &&
                         YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.All)))
                     {
-                        _yogaNode.SetPadding((YogaEdge)spacingType, _defaultPadding.GetRaw(spacingType));
+                        SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
                     }
                     else
                     {
-                        _yogaNode.SetPadding((YogaEdge)spacingType, _padding.GetRaw(spacingType));
+                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
                     }
                 }
                 else if (spacingType == EdgeSpacing.Top || spacingType == EdgeSpacing.Bottom)
@@ -1029,24 +1157,62 @@ namespace ReactNative.UIManager
                         YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.Vertical)) &&
                         YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.All)))
                     {
-                        _yogaNode.SetPadding((YogaEdge)spacingType, _defaultPadding.GetRaw(spacingType));
+                        SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
                     }
                     else
                     {
-                        _yogaNode.SetPadding((YogaEdge)spacingType, _padding.GetRaw(spacingType));
+                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
                     }
                 }
                 else
                 {
                     if (YogaConstants.IsUndefined(_padding.GetRaw(spacingType)))
                     {
-                        _yogaNode.SetPadding((YogaEdge)spacingType, _defaultPadding.GetRaw(spacingType));
+                        SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
                     }
                     else
                     {
-                        _yogaNode.SetPadding((YogaEdge)spacingType, _padding.GetRaw(spacingType));
+                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
                     }
                 }
+            }
+        }
+
+        private void SetPadding(YogaNode node, int spacingType, float padding)
+        {
+            var yogaEdge = (YogaEdge)spacingType;
+            switch (yogaEdge)
+            {
+                case YogaEdge.Left:
+                    node.PaddingLeft = padding;
+                    break;
+                case YogaEdge.Top:
+                    node.PaddingTop = padding;
+                    break;
+                case YogaEdge.Right:
+                    node.PaddingRight = padding;
+                    break;
+                case YogaEdge.Bottom:
+                    node.PaddingBottom = padding;
+                    break;
+                case YogaEdge.Start:
+                    node.PaddingStart = padding;
+                    break;
+                case YogaEdge.End:
+                    node.PaddingEnd = padding;
+                    break;
+                case YogaEdge.Horizontal:
+                    node.PaddingHorizontal = padding;
+                    break;
+                case YogaEdge.Vertical:
+                    node.PaddingVertical = padding;
+                    break;
+                case YogaEdge.All:
+                    node.Padding = padding;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Invariant($"Unsupported padding type '{yogaEdge}'."));
             }
         }
     }

@@ -72,6 +72,7 @@ namespace ReactNative.UIManager
         public const string TextAlign = "textAlign";
         public const string TextAlignVertical = "textAlignVertical";
         public const string TextDecorationLine = "textDecorationLine";
+        public const string AllowFontScaling = "allowFontScaling";
 
         public const string BorderWidth = "borderWidth";
         public const string BorderLeftWidth = "borderLeftWidth";
@@ -116,6 +117,9 @@ namespace ReactNative.UIManager
                 EdgeSpacing.Bottom,
             };
 
+        /// <summary>
+        /// Ordered list of position spacing types.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "IReadOnlyList is immutable.")]
         public static readonly IReadOnlyList<int> PositionSpacingTypes =
             new List<int>
