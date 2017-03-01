@@ -44,8 +44,6 @@ namespace ReactNative.Views.TextInput
         private string _fontFamily;
         private string _text;
 
-        private string _placeholderTextColor;
-
         /// <summary>
         /// Instantiates the <see cref="ReactPasswordBoxShadowNode"/>.
         /// </summary>
@@ -161,20 +159,6 @@ namespace ReactNative.Views.TextInput
             if (_lineHeight != lineHeight)
             {
                 _lineHeight = lineHeight;
-                MarkUpdated();
-            }
-        }
-
-        /// <summary>
-        /// Set the placholder text color
-        /// </summary>
-        /// <param name="textColor"></param>
-        [ReactProp("placeholderTextColor", CustomType = "Color")]
-        public void SetPlaceholderTextColor(string textColor)
-        {
-            if (_placeholderTextColor != textColor)
-            {
-                _placeholderTextColor = textColor;
                 MarkUpdated();
             }
         }

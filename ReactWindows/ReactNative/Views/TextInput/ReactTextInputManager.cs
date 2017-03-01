@@ -222,7 +222,10 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholderTextColor", CustomType = "Color")]
         public void SetPlaceholderTextColor(ReactTextBox view, uint? color)
         {
-            throw new NotImplementedException("PlaceholderTextColor is not implemented in UWP");
+            //The 'PlaceholderTextColor' is not implemented in UWP - Use of this property
+            //will be ignored...
+
+            //TODO: #1039 #1040
         }
 
         /// <summary>
