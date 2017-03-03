@@ -575,7 +575,7 @@ namespace ReactNative.UIManager
             throw new NotImplementedException();
         }
 
-        private DependencyObject ResolveView(int tag)
+        public DependencyObject ResolveView(int tag)
         {
             var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(tag, out view))
@@ -587,7 +587,7 @@ namespace ReactNative.UIManager
             return view;
         }
 
-        private IViewManager ResolveViewManager(int tag)
+        public IViewManager ResolveViewManager(int tag)
         {
             var viewManager = default(IViewManager);
             if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
