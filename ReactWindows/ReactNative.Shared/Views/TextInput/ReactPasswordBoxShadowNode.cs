@@ -203,10 +203,10 @@ namespace ReactNative.Views.TextInput
         {
             return new float[]
             {
-                GetPadding(EdgeSpacing.Left),
-                GetPadding(EdgeSpacing.Top),
-                GetPadding(EdgeSpacing.Right),
-                GetPadding(EdgeSpacing.Bottom),
+                GetPadding(YogaEdge.Left),
+                GetPadding(YogaEdge.Top),
+                GetPadding(YogaEdge.Right),
+                GetPadding(YogaEdge.Bottom),
             };
         }
 
@@ -214,8 +214,8 @@ namespace ReactNative.Views.TextInput
         {
             textInputNode._computedPadding = textInputNode.GetComputedPadding();
 
-            var borderLeftWidth = textInputNode.GetBorder(EdgeSpacing.Left);
-            var borderRightWidth = textInputNode.GetBorder(EdgeSpacing.Right);
+            var borderLeftWidth = textInputNode.GetBorder(YogaEdge.Left);
+            var borderRightWidth = textInputNode.GetBorder(YogaEdge.Right);
 
             var normalizedWidth = Math.Max(0,
                 (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width)
@@ -249,8 +249,8 @@ namespace ReactNative.Views.TextInput
 
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-                var borderTopWidth = textInputNode.GetBorder(EdgeSpacing.Top);
-                var borderBottomWidth = textInputNode.GetBorder(EdgeSpacing.Bottom);
+                var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
+                var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
 
                 var finalizedHeight = (float)textBlock.DesiredSize.Height;
                 finalizedHeight += textInputNode._computedPadding[1];
