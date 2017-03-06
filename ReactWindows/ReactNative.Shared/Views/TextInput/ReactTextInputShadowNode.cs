@@ -1,4 +1,5 @@
 ﻿using Facebook.Yoga;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -247,7 +248,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="index">The spacing type index.</param>
         /// <param name="padding">The padding value.</param>
-        public override void SetPaddings(int index, float padding)
+        public override void SetPaddings(int index, JValue padding)
         {
             MarkUpdated();
             base.SetPaddings(index, padding);
@@ -264,12 +265,12 @@ namespace ReactNative.Views.TextInput
 
         private float[] GetComputedPadding()
         {
-            return new float[]
+            return new[]
             {
-                GetPadding(EdgeSpacing.Start),
-                GetPadding(EdgeSpacing.Top),
-                GetPadding(EdgeSpacing.End),
-                GetPadding(EdgeSpacing.Bottom),
+                GetPadding(YogaEdge.Start),
+                GetPadding(YogaEdge.Top),
+                GetPadding(YogaEdge.End),
+                GetPadding(YogaEdge.Bottom),
             };
         }
 
@@ -277,8 +278,8 @@ namespace ReactNative.Views.TextInput
         {
             textInputNode._computedPadding = textInputNode.GetComputedPadding();
 
-            var borderLeftWidth = textInputNode.GetBorder(EdgeSpacing.Left);
-            var borderRightWidth = textInputNode.GetBorder(EdgeSpacing.Right);
+            var borderLeftWidth = textInputNode.GetBorder(YogaEdge.Left);
+            var borderRightWidth = textInputNode.GetBorder(YogaEdge.Right);
 
             var normalizedWidth = Math.Max(0,
                 (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width)
@@ -310,8 +311,8 @@ namespace ReactNative.Views.TextInput
 
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-                var borderTopWidth = textInputNode.GetBorder(EdgeSpacing.Top);
-                var borderBottomWidth = textInputNode.GetBorder(EdgeSpacing.Bottom);
+                var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
+                var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
 
                 var finalizedHeight = textBlock.DesiredSize.Height;
                 finalizedHeight += textInputNode._computedPadding[1];
