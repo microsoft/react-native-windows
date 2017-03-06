@@ -112,12 +112,14 @@ We work off the latest release candidate of `react-native` on our master branch 
 
 #### Release Notes
 
-Coming soon. **TODO:** We need a process around this like [react-native](https://github.com/facebook/react-native/blob/master/Releases.md#make-sure-we-have-release-notes).
+Coming soon. **TODO:** We need a process around this like [`react-native`](https://github.com/facebook/react-native/blob/master/Releases.md#make-sure-we-have-release-notes).
 
 ## Publishing a stable release
 
-Coming soon.
+Once the corresponding `react-native` version has stable a stable release, usually at the end of the month the release candidate was dropped, we also need to publish a stable release for `react-native-windows`.
+
+Generally, we should just be able to convert the latest release candidate for `react-native-windows` to the stable release by updating the version and dependency information in `package.json`. However, if the release branch is behind on features that were added to the corresponding `react-native` release, then there may be some work to catch up with the latest from `react-native`.
 
 ## Patching a release
 
-Coming soon.
+Whether you are patching a release candidate or patching a stable release, the rule of thumb is to first submit a pull request against the master branch if the fix is still applicable to the latest source. Once that pull request is approved and merged, we will cherry-pick that merged commit onto the versions it is applicable to.
