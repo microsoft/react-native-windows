@@ -41,7 +41,7 @@ namespace ReactNative.Reflection
 
         private static Dictionary<string, object> EnumToDictionary(Type t)
         {
-            Dictionary<string, object> result = new Dictionary<string, object>();
+            var result = new Dictionary<string, object>();
 
             var names = Enum.GetNames(t);
             var values = Enum.GetValues(t);

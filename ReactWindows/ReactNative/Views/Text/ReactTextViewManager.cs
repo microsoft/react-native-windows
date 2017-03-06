@@ -80,7 +80,7 @@ namespace ReactNative.Views.Text
                         var paragraph = view.Blocks.OfType<Paragraph>().First();
                         paragraph.Inlines.Clear();
                         firstItemAsUnderline.Inlines.Clear();
-                        foreach (Inline i in inlines)
+                        foreach (var i in inlines)
                         {
                             paragraph.Inlines.Add(i);
                         }
@@ -96,8 +96,8 @@ namespace ReactNative.Views.Text
                         var paragraph = view.Blocks.OfType<Paragraph>().First();
                         paragraph.Inlines.Clear();
 
-                        Underline underline = new Underline();
-                        foreach (Inline i in inlines)
+                        var underline = new Underline();
+                        foreach (var i in inlines)
                         {
                             underline.Inlines.Add(i);
                         }

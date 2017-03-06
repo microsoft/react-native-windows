@@ -55,19 +55,22 @@ namespace ReactNative.Views.Text
             }
         }
 
-        private IEnumerable<TextDecoration> GetTextDecorationCollection()
+        private IEnumerable<TextDecoration> TextDecorationCollection
         {
-            switch (_textDecorationLine)
+            get
             {
-                case TextDecorationLine.Underline:
-                    return TextDecorations.Underline;
-                case TextDecorationLine.LineThrough:
-                    return TextDecorations.Strikethrough;
-                case TextDecorationLine.UnderlineLineThrough:
-                    return TextDecorations.Underline.Concat(TextDecorations.Strikethrough);
-                case TextDecorationLine.None:
-                default:
-                    return Enumerable.Empty<TextDecoration>();
+                switch (_textDecorationLine)
+                {
+                    case TextDecorationLine.Underline:
+                        return TextDecorations.Underline;
+                    case TextDecorationLine.LineThrough:
+                        return TextDecorations.Strikethrough;
+                    case TextDecorationLine.UnderlineLineThrough:
+                        return TextDecorations.Underline.Concat(TextDecorations.Strikethrough);
+                    case TextDecorationLine.None:
+                    default:
+                        return Enumerable.Empty<TextDecoration>();
+                }
             }
         }
 
@@ -272,7 +275,7 @@ namespace ReactNative.Views.Text
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? new FontStyle();
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
-            textBlock.TextDecorations = new TextDecorationCollection(GetTextDecorationCollection());
+            textBlock.TextDecorations = new TextDecorationCollection(TextDecorationCollection);
 
             if (_fontFamily != null)
             {
