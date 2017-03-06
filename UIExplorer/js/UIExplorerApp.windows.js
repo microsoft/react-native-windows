@@ -33,16 +33,17 @@ const React = require('react');
 const StatusBar = require('StatusBar');
 const StyleSheet = require('StyleSheet');
 const ToolbarAndroid = require('ToolbarAndroid');
+const UIExplorerActions = require('./UIExplorerActions');
 const UIExplorerExampleContainer = require('./UIExplorerExampleContainer');
 const UIExplorerExampleList = require('./UIExplorerExampleList');
 const UIExplorerList = require('./UIExplorerList');
 const UIExplorerNavigationReducer = require('./UIExplorerNavigationReducer');
-const UIExplorerStateTitleMap = require('./UIExplorerStateTitleMap');
 const UIExplorerHeaderWindows = require('./UIExplorerHeaderWindows');
+const UIManager = require('UIManager');
 const URIActionMap = require('./URIActionMap');
 const View = require('View');
 
-import type {UIExplorerNavigationState} from './UIExplorerNavigationReducer';
+import type { UIExplorerNavigationState } from './UIExplorerNavigationReducer';
 
 const DRAWER_WIDTH_LEFT = 56;
 
@@ -50,38 +51,34 @@ type Props = {
   exampleFromAppetizeParams: string,
 };
 
-type State = UIExplorerNavigationState & {
-  externalExample: ?string,
-};
+const APP_STATE_KEY = 'UIExplorerAppState.v2';
 
 class UIExplorerApp extends React.Component {
-  _handleAction: Function;
-  _renderPaneContent: Function;
-  state: State;
-  constructor(props: Props) {
-    super(props);
-    this._handleAction = this._handleAction.bind(this);
-    this._renderPaneContent = this._renderPaneContent.bind(this);
-  }
+  props: Props;
+  state: UIExplorerNavigationState;
 
   componentWillMount() {
     BackAndroid.addEventListener('hardwareBackPress', this._handleBackButtonPress.bind(this));
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('UIExplorerAppState', (err, storedString) => {
-      const exampleAction = URIActionMap(this.props.exampleFromAppetizeParams);
-      if (err || !storedString) {
-        const initialAction = exampleAction || {type: 'InitialAction'};
-        this.setState(UIExplorerNavigationReducer(null, initialAction));
-        return;
-      }
-      const storedState = JSON.parse(storedString);
-      if (exampleAction) {
-        this.setState(UIExplorerNavigationReducer(storedState, exampleAction));
-        return;
-      }
-      this.setState(storedState);
+    Linking.getInitialURL().then((url) => {
+      AsyncStorage.getItem(APP_STATE_KEY, (err, storedString) => {
+        const exampleAction = URIActionMap(this.props.exampleFromAppetizeParams);
+        const urlAction = URIActionMap(url);
+        const launchAction = exampleAction || urlAction;
+        if (err || !storedString) {
+          const initialAction = launchAction || {type: 'InitialAction'};
+          this.setState(UIExplorerNavigationReducer(null, initialAction));
+          return;
+        }
+        const storedState = JSON.parse(storedString);
+        if (launchAction) {
+          this.setState(UIExplorerNavigationReducer(storedState, launchAction));
+          return;
+        }
+        this.setState(storedState);
+      });
     });
   }
 
@@ -108,7 +105,7 @@ class UIExplorerApp extends React.Component {
     );
   }
 
-  _renderPaneContent() {
+  _renderPaneContent = () => {
     return (
       <View style={styles.paneContentWrapper}>
         <UIExplorerExampleList
@@ -119,72 +116,68 @@ class UIExplorerApp extends React.Component {
         />
       </View>
     );
-  }
+  };
 
   _renderApp() {
     const {
-      externalExample,
-      stack,
+      openExample,
     } = this.state;
-    if (externalExample) {
-      const Component = UIExplorerList.Modules[externalExample];
-      return (
-        <Component
-          onExampleExit={() => {
-            this._handleAction({ type: 'BackAction' });
-          }}
-          ref={(example) => { this._exampleRef = example; }}
-        />
-      );
-    }
-    const title = UIExplorerStateTitleMap(stack.routes[stack.index]);
-    const index = stack.routes.length <= 1 ?  1 : stack.index;
 
-    if (stack && stack.routes[index]) {
-      const {key} = stack.routes[index];
-      const ExampleModule = UIExplorerList.Modules[key];
-      return (
-        <View style={styles.container}>
-          <UIExplorerHeaderWindows
-            onPress={() => this.splitView.openPane()} 
-            title={title}
-            style={styles.header}
-          />
-          <UIExplorerExampleContainer
-            module={ExampleModule}
+    if (openExample) {
+      const ExampleModule = UIExplorerList.Modules[openExample];
+      if (ExampleModule.external) {
+        return (
+          <ExampleModule
+            onExampleExit={() => {
+              this._handleAction(UIExplorerActions.Back());
+            }}
             ref={(example) => { this._exampleRef = example; }}
           />
-        </View>
-      );
+        );
+      } else if (ExampleModule) {
+        return (
+          <View style={styles.container}>
+            <UIExplorerHeaderWindows
+              onPress={() => this.splitView.openPane()} 
+              title={ExampleModule.title}
+              style={styles.header}
+            />
+            <UIExplorerExampleContainer
+              module={ExampleModule}
+              ref={(example) => { this._exampleRef = example; }}
+            />
+          </View>
+        );
+      }
     }
+
     return (
       <View style={styles.container}>
         <UIExplorerHeaderWindows
           onPress={() => this.splitView.openPane()} 
-          title={title}
+          title="UIExplorer"
           style={styles.header}
         />
         <UIExplorerExampleList
           onNavigate={this._handleAction}
           list={UIExplorerList}
-          {...stack.routes[0]}
         />
       </View>
     );
   }
 
-  _handleAction(action: Object): boolean {
+  _handleAction = (action: Object): boolean => {
     this.splitView && this.splitView.closePane();
     const newState = UIExplorerNavigationReducer(this.state, action);
     if (this.state !== newState) {
       this.setState(
         newState,
-        () => AsyncStorage.setItem('UIExplorerAppState', JSON.stringify(this.state))
+        () => AsyncStorage.setItem(APP_STATE_KEY, JSON.stringify(this.state))
       );
       return true;
     }
     return false;
-  }
+  };
 
   _handleBackButtonPress() {
     if (this._overrideBackPressForPane) {
@@ -201,8 +194,8 @@ class UIExplorerApp extends React.Component {
     ) {
       return true;
     }
-    return this._handleAction({ type: 'BackAction' });
-  }
+    return this._handleAction(UIExplorerActions.Back());
+  };
 }
 
 const styles = StyleSheet.create({

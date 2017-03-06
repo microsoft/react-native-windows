@@ -141,10 +141,6 @@ const APIExamples = [
     module: require('./NativeAnimationsExample'),
   },
   {
-    key: 'NavigationExperimentalExample',
-    module: require('./NavigationExperimental/NavigationExperimentalExample'),
-  },
-  {
     key: 'NetInfoExample',
     module: require('./NetInfoExample'),
   },
