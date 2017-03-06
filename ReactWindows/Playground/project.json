@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Facebook.Yoga": "1.2.0.2-patch",
+    "Facebook.Yoga": "1.2.0-pre1",
     "Microsoft.ApplicationInsights": "2.2.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
