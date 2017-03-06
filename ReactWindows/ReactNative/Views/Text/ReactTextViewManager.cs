@@ -1,5 +1,7 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Reflection;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -51,6 +53,76 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
+        /// Sets the TextDecorationLine for the node.
+        /// </summary>
+        /// /// <param name="view">The view.</param>
+        /// <param name="textDecorationLineValue">The TextDecorationLine value.</param>
+        [ReactProp(ViewProps.TextDecorationLine)]
+        public void SetTextDecorationLine(RichTextBlock view, string textDecorationLineValue)
+        {
+            var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue) ?? TextDecorationLine.None;
+
+            if (textDecorationLine != TextDecorationLine.None && textDecorationLine != TextDecorationLine.Underline)
+            {
+                throw new NotSupportedException("textDecorationLine = \"Strike-through\" is not implemeted in UWP");
+            }
+
+            var firstItemAsUnderline = view.Blocks.OfType<Paragraph>().First().Inlines.FirstOrDefault() as Underline;
+
+            switch (textDecorationLine)
+            {
+                case TextDecorationLine.None:
+                    {
+                        if (firstItemAsUnderline == null)
+                            break;
+
+                        var inlines = GetInlines(view).ToArray();
+                        var paragraph = view.Blocks.OfType<Paragraph>().First();
+                        paragraph.Inlines.Clear();
+                        firstItemAsUnderline.Inlines.Clear();
+                        foreach (Inline i in inlines)
+                        {
+                            paragraph.Inlines.Add(i);
+                        }
+                        break;
+                    }
+
+                case TextDecorationLine.Underline:
+                    {
+                        if (firstItemAsUnderline != null)
+                            break;
+
+                        var inlines = GetInlines(view).ToArray();
+                        var paragraph = view.Blocks.OfType<Paragraph>().First();
+                        paragraph.Inlines.Clear();
+
+                        Underline underline = new Underline();
+                        foreach (Inline i in inlines)
+                        {
+                            underline.Inlines.Add(i);
+                        }
+
+                        paragraph.Inlines.Add(underline);
+
+                        break;
+                    }
+            }
+        }
+
+        private InlineCollection GetInlines(RichTextBlock textBlock)
+        {
+            var inlines = textBlock.Blocks.OfType<Paragraph>().First().Inlines;
+            var firstInnerUnderline = inlines.FirstOrDefault() as Underline;
+
+            if (firstInnerUnderline != null)
+            {
+                return firstInnerUnderline.Inlines;
+            }
+
+            return inlines;
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
@@ -67,7 +139,7 @@ namespace ReactNative.Views.Text
                 };
             }
 
-            parent.Blocks.OfType<Paragraph>().First().Inlines.Insert(index, inlineChild);
+            GetInlines(parent).Insert(index, inlineChild);
         }
 
         /// <summary>
@@ -87,7 +159,7 @@ namespace ReactNative.Views.Text
         /// <returns>The child view.</returns>
         public override DependencyObject GetChildAt(RichTextBlock parent, int index)
         {
-            var child = parent.Blocks.OfType<Paragraph>().First().Inlines[index];
+            var child = GetInlines(parent)[index];
             var childInlineContainer = child as InlineUIContainer;
             if (childInlineContainer != null)
             {
@@ -106,7 +178,7 @@ namespace ReactNative.Views.Text
         /// <returns>The number of children.</returns>
         public override int GetChildCount(RichTextBlock parent)
         {
-            return parent.Blocks.OfType<Paragraph>().First().Inlines.Count;
+            return GetInlines(parent).Count;
         }
 
         /// <summary>
@@ -115,7 +187,7 @@ namespace ReactNative.Views.Text
         /// <param name="parent">The view parent.</param>
         public override void RemoveAllChildren(RichTextBlock parent)
         {
-            var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
+            var inlines = GetInlines(parent);
             inlines.Clear();
         }
 
@@ -126,7 +198,7 @@ namespace ReactNative.Views.Text
         /// <param name="index">The index.</param>
         public override void RemoveChildAt(RichTextBlock parent, int index)
         {
-            var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
+            var inlines = GetInlines(parent);
             inlines.RemoveAt(index);
         }
 
