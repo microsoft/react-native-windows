@@ -39,12 +39,12 @@ namespace ReactNative.Reflection
             return Parse<T>(value);
         }
 
-        private static Dictionary<string, object> EnumToDictionary(Type t)
+        private static Dictionary<string, object> EnumToDictionary(Type type)
         {
             var result = new Dictionary<string, object>();
 
-            var names = Enum.GetNames(t);
-            var values = Enum.GetValues(t);
+            var names = Enum.GetNames(type);
+            var values = Enum.GetValues(type);
 
             for (int i = 0; i < values.Length; ++i)
             {
@@ -53,7 +53,7 @@ namespace ReactNative.Reflection
 
                 result.Add(Normalize(name), value);
 
-                var enumMemberAttribute = t.GetField(name).GetCustomAttributes(typeof(EnumMemberAttribute), true).SingleOrDefault();
+                var enumMemberAttribute = type.GetField(name).GetCustomAttributes(typeof(EnumMemberAttribute), true).SingleOrDefault();
                 if (enumMemberAttribute != null)
                 {
                     result.Add(Normalize(((EnumMemberAttribute)enumMemberAttribute).Value), value);
