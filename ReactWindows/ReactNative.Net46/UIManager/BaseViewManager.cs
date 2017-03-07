@@ -4,7 +4,9 @@ using System;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.Windows.Media.Media3D;
 
 namespace ReactNative.UIManager
 {
@@ -19,7 +21,24 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        // ToDo: SetTransform - ReactProp("transform")
+        /// <summary>
+        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
+        /// properties, based on the <see cref="JObject"/> map.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="transforms">The list of transforms.</param>
+        [ReactProp("transform")]
+        public void SetTransform(TFrameworkElement view, JArray transforms)
+        {
+            if (transforms == null)
+            {
+                ResetProjectionMatrix(view);
+            }
+            else
+            {
+                SetProjectionMatrix(view, transforms);
+            }
+        }
 
         /// <summary>
         /// Sets the opacity of the <typeparamref name="TFrameworkElement"/>.
@@ -124,6 +143,64 @@ namespace ReactNative.UIManager
             var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
             effect.BlurRadius = radius;
             view.Effect = effect;
+        }
+
+        private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
+        {
+            var transformMatrix = TransformHelper.ProcessTransform(transforms);
+
+            var translateMatrix = Matrix3D.Identity;
+            var translateBackMatrix = Matrix3D.Identity;
+            if (!double.IsNaN(view.Width))
+            {
+                translateMatrix.OffsetX = -view.Width / 2;
+                translateBackMatrix.OffsetX = view.Width / 2;
+            }
+
+            if (!double.IsNaN(view.Height))
+            {
+                translateMatrix.OffsetY = -view.Height / 2;
+                translateBackMatrix.OffsetY = view.Height / 2;
+            }
+
+            var projectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
+            ApplyProjection(view, projectionMatrix);
+        }
+
+        private static void ApplyProjection(TFrameworkElement view, Matrix3D projectionMatrix)
+        {
+            if (!IsSimpleTranslationOnly(projectionMatrix))
+            {
+                throw new InvalidOperationException("ReactNative.Net46 does not support 3D transformations");
+            }
+
+            ResetProjectionMatrix(view);
+            var transform = new MatrixTransform();
+            var matrix = transform.Matrix;
+            matrix.OffsetX = projectionMatrix.OffsetX;
+            matrix.OffsetY = projectionMatrix.OffsetY;
+            transform.Matrix = matrix;
+            view.RenderTransform = transform;
+        }
+
+        private static bool IsSimpleTranslationOnly(Matrix3D matrix)
+        {
+            // Matrix3D is a struct and passed-by-value. As such, we can modify
+            // the values in the matrix without affecting the caller.
+            matrix.OffsetX = matrix.OffsetY = 0;
+            return matrix.IsIdentity;
+        }
+
+        private static void ResetProjectionMatrix(TFrameworkElement view)
+        {
+            var transform = view.RenderTransform;
+            var matrixTransform = transform as MatrixTransform;
+            if (transform != null && matrixTransform == null)
+            {
+                throw new InvalidOperationException("Unknown projection set on framework element.");
+            }
+
+            view.RenderTransform = null;
         }
     }
 }
