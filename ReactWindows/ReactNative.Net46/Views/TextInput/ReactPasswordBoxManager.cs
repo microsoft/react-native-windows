@@ -18,6 +18,8 @@ namespace ReactNative.Views.TextInput
     /// </summary>
     class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
+        internal static readonly Color DefaultPlaceholderTextColor = Color.FromArgb(255, 0, 0, 0);
+
         /// <summary>
         /// The name of the view manager.
         /// </summary>
@@ -189,7 +191,22 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholder")]
         public void SetPlaceholder(PasswordBox view, string placeholder)
         {
-            throw new NotSupportedException("Placeholder is not supported in WPF.");
+            PlaceholderAdorner.SetText(view, placeholder);
+        }
+
+        /// <summary>
+        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The placeholder text color.</param>
+        [ReactProp("placeholderTextColor", CustomType = "Color")]
+        public void SetPlaceholderTextColor(PasswordBox view, uint? color)
+        {
+            var brush = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : new SolidColorBrush(DefaultPlaceholderTextColor);
+
+            PlaceholderAdorner.SetTextColor(view, brush);
         }
 
         /// <summary>
