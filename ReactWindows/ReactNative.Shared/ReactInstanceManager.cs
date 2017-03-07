@@ -42,6 +42,7 @@ namespace ReactNative
         private readonly IDevSupportManager _devSupportManager;
         private readonly bool _useDeveloperSupport;
         private readonly UIImplementationProvider _uiImplementationProvider;
+        private readonly Func<IJavaScriptExecutor> _javaScriptExecutorFactory;
         private readonly Action<Exception> _nativeModuleCallExceptionHandler;
 
         private LifecycleState _lifecycleState;
@@ -65,12 +66,15 @@ namespace ReactNative
             bool useDeveloperSupport,
             LifecycleState initialLifecycleState,
             UIImplementationProvider uiImplementationProvider,
+            Func<IJavaScriptExecutor> javaScriptExecutorFactory,
             Action<Exception> nativeModuleCallExceptionHandler)
         {
             if (packages == null)
                 throw new ArgumentNullException(nameof(packages));
             if (uiImplementationProvider == null)
                 throw new ArgumentNullException(nameof(uiImplementationProvider));
+            if (javaScriptExecutorFactory == null)
+                throw new ArgumentNullException(nameof(javaScriptExecutorFactory));
 
             _jsBundleFile = jsBundleFile;
             _jsMainModuleName = jsMainModuleName;
@@ -86,6 +90,7 @@ namespace ReactNative
 
             _lifecycleState = initialLifecycleState;
             _uiImplementationProvider = uiImplementationProvider;
+            _javaScriptExecutorFactory = javaScriptExecutorFactory;
             _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
         }
 
@@ -401,7 +406,7 @@ namespace ReactNative
         private void RecreateReactContextInBackgroundFromBundleFile()
         {
             RecreateReactContextInBackground(
-                () => new ChakraJavaScriptExecutor(),
+                _javaScriptExecutorFactory,
                 JavaScriptBundleLoader.CreateFileLoader(_jsBundleFile));
         }
 
@@ -423,7 +428,7 @@ namespace ReactNative
         private void OnJavaScriptBundleLoadedFromServer()
         {
             RecreateReactContextInBackground(
-                () => new ChakraJavaScriptExecutor(),
+                _javaScriptExecutorFactory,
                 JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
                     _devSupportManager.SourceUrl,
                     _devSupportManager.DownloadedJavaScriptBundleFile));
@@ -677,6 +682,7 @@ namespace ReactNative
             private string _jsMainModuleName;
             private LifecycleState? _initialLifecycleState;
             private UIImplementationProvider _uiImplementationProvider;
+            private Func<IJavaScriptExecutor> _javaScriptExecutorFactory;
             private Action<Exception> _nativeModuleCallExceptionHandler;
 
             /// <summary>
@@ -747,6 +753,17 @@ namespace ReactNative
             }
 
             /// <summary>
+            /// Instantiates the JavaScript executor.
+            /// </summary>
+            public Func<IJavaScriptExecutor> JavaScriptExecutorFactory
+            {
+                set
+                {
+                    _javaScriptExecutorFactory = value;
+                }
+            }
+
+            /// <summary>
             /// The exception handler for all native module calls.
             /// </summary>
             public Action<Exception> NativeModuleCallExceptionHandler
@@ -780,6 +797,11 @@ namespace ReactNative
                     _uiImplementationProvider = new UIImplementationProvider();
                 }
 
+                if (_javaScriptExecutorFactory == null)
+                {
+                    _javaScriptExecutorFactory = () => new ChakraJavaScriptExecutor();
+                }
+
                 return new ReactInstanceManager(
                     _jsBundleFile,
                     _jsMainModuleName,
@@ -787,6 +809,7 @@ namespace ReactNative
                     _useDeveloperSupport,
                     _initialLifecycleState.Value,
                     _uiImplementationProvider,
+                    _javaScriptExecutorFactory,
                     _nativeModuleCallExceptionHandler);
             }
 
