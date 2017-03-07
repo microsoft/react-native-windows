@@ -1,5 +1,7 @@
-﻿using ReactNative.UIManager;
+﻿using System;
+using ReactNative.UIManager;
 using System.Collections.Generic;
+using Facebook.Yoga;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Shapes;
@@ -26,16 +28,22 @@ namespace ReactNative.Views.Text
             {
                 return textNode.MakeInline(children);
             }
-            else
+
+            if (node.StyleWidth.Unit != YogaUnit.Point || node.StyleHeight.Unit != YogaUnit.Point)
             {
-                var rectangle = new Rectangle();
-                rectangle.Width = node.StyleWidth;
-                rectangle.Height = node.StyleHeight;
-                return new InlineUIContainer
-                {
-                    Child = rectangle,                    
-                };
+                throw new InvalidOperationException("Inline views embedded in text must have absolute dimensions.");
             }
+
+            var rectangle = new Rectangle
+            {
+                Width = node.StyleWidth.Value,
+                Height = node.StyleHeight.Value,
+            };
+            
+            return new InlineUIContainer
+            {
+                Child = rectangle,                    
+            };
         }
     }
 }
