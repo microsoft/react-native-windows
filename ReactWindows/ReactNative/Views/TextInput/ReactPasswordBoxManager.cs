@@ -3,6 +3,7 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
+using System;
 using System.Collections.Generic;
 using Windows.System;
 using Windows.UI;
@@ -192,6 +193,20 @@ namespace ReactNative.Views.TextInput
         public void SetPlaceholder(PasswordBox view, string placeholder)
         {
             view.PlaceholderText = placeholder;
+        }
+
+        /// <summary>
+        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The placeholder text color.</param>
+        [ReactProp("placeholderTextColor", CustomType = "Color")]
+        public void SetPlaceholderTextColor(PasswordBox view, uint? color)
+        {
+            //The 'PlaceholderTextColor' is not implemented in UWP - Use of this property
+            //will be ignored...
+
+            //TODO: #1039 #1040
         }
 
         /// <summary>
