@@ -3,6 +3,7 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Text;
+using System;
 using System.Collections.Generic;
 using Windows.System;
 using Windows.UI;
@@ -99,8 +100,6 @@ namespace ReactNative.Views.TextInput
             }
         }
 
-        #region CSS
-
         /// <summary>
         /// Sets the password character on the <see cref="PasswordBox"/>.
         /// </summary>
@@ -194,6 +193,20 @@ namespace ReactNative.Views.TextInput
         public void SetPlaceholder(PasswordBox view, string placeholder)
         {
             view.PlaceholderText = placeholder;
+        }
+
+        /// <summary>
+        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The placeholder text color.</param>
+        [ReactProp("placeholderTextColor", CustomType = "Color")]
+        public void SetPlaceholderTextColor(PasswordBox view, uint? color)
+        {
+            //The 'PlaceholderTextColor' is not implemented in UWP - Use of this property
+            //will be ignored...
+
+            //TODO: #1039 #1040
         }
 
         /// <summary>
@@ -294,10 +307,6 @@ namespace ReactNative.Views.TextInput
             view.BorderThickness = new Thickness(width);
         }
 
-        #endregion
-
-        #region Overrides
-
         public override ReactPasswordBoxShadowNode CreateShadowNodeInstance()
         {
             return new ReactPasswordBoxShadowNode();
@@ -393,11 +402,8 @@ namespace ReactNative.Views.TextInput
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
             view.Width = dimensions.Width;
+            view.Height = dimensions.Height;
         }
-
-        #endregion
-
-        #region Events
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -439,7 +445,7 @@ namespace ReactNative.Views.TextInput
                       textBox.GetTag(),
                       textBox.Password));
         }
-
+        
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
@@ -455,7 +461,5 @@ namespace ReactNative.Views.TextInput
                             textBox.Password));
             }
         }
-
-        #endregion
     }
 }

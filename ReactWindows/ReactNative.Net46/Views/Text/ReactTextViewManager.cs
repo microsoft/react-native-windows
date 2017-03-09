@@ -1,8 +1,7 @@
-﻿using System;
-using ReactNative.UIManager;
+﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using System.Collections;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -158,6 +157,7 @@ namespace ReactNative.Views.Text
             var textBlock = new TextBlock
             {
                 TextAlignment = TextAlignment.Left,
+                TextWrapping = TextWrapping.Wrap,
                 TextTrimming = TextTrimming.CharacterEllipsis,
             };
 

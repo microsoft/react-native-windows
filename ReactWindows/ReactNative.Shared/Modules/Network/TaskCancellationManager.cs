@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,7 +55,7 @@ namespace ReactNative.Modules.Network
         /// <remarks>
         /// The task factory is invoked during this method call.
         /// </remarks>
-        public void Add(TKey key, Func<CancellationToken, Task> taskFactory)
+        public Task AddAndInvokeAsync(TKey key, Func<CancellationToken, Task> taskFactory)
         {
             var disposable = new CancellationDisposable();
             lock (_gate)
@@ -62,18 +63,18 @@ namespace ReactNative.Modules.Network
                 _tokens.Add(key, disposable);
             }
 
-            taskFactory(disposable.Token).ContinueWith(
-                _ =>
+            return taskFactory(disposable.Token).ContinueWith(
+                task =>
                 {
-                    var removed = false;
                     lock (_gate)
                     {
-                        removed = _tokens.Remove(key);
+                        _tokens.Remove(key);
                     }
 
                     disposable.Dispose();
+                    return task;
                 },
-                TaskContinuationOptions.ExecuteSynchronously);
+                TaskContinuationOptions.ExecuteSynchronously).Unwrap();
         }
 
         /// <summary>
@@ -82,13 +83,32 @@ namespace ReactNative.Modules.Network
         /// <param name="key">The task key.</param>
         public void Cancel(TKey key)
         {
-            var disposable = default(IDisposable);
+            IDisposable disposable;
             lock (_gate)
             {
                 _tokens.TryGetValue(key, out disposable);
             }
 
             disposable?.Dispose();
+        }
+
+        /// <summary>
+        /// Cancels all pending tasks.
+        /// </summary>
+        public void CancelAllTasks()
+        {
+            IList<IDisposable> tokens;
+            lock (_gate)
+            {
+                // Clone the list of disposables
+                tokens = _tokens.Values.ToList();
+            }
+
+            foreach (var token in tokens)
+            {
+                // Dispose on CancellationDisposable is idempotent
+                token.Dispose();
+            }
         }
     }
 }
