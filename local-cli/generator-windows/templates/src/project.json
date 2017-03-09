@@ -1,6 +1,5 @@
 ﻿{
   "dependencies": {
-    "Facebook.Yoga": "1.0.2-pre",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
   },
   "frameworks": {

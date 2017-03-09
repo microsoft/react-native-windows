@@ -65,8 +65,8 @@ namespace ReactNative.UIManager
             256, /*All*/
         };
 
-        private readonly float[] _spacing = NewFullSpacingArray();
-        private readonly float _defaultValue;
+        private readonly YogaValue[] _spacing = NewFullSpacingArray();
+        private readonly YogaValue _defaultValue;
         private int _valueFlags = 0;
         private bool _hasAliasesSet;
 
@@ -74,7 +74,7 @@ namespace ReactNative.UIManager
         /// Instantiates a <see cref="EdgeSpacing"/>
         /// </summary>
         public EdgeSpacing()
-            : this(0)
+            : this(YogaValue.Point(0))
         {
         }
 
@@ -82,7 +82,7 @@ namespace ReactNative.UIManager
         /// Instantiates a <see cref="EdgeSpacing"/>.
         /// </summary>
         /// <param name="defaultValue">The default spacing value.</param>
-        public EdgeSpacing(float defaultValue)
+        public EdgeSpacing(YogaValue defaultValue)
         {
             _defaultValue = defaultValue;
         }
@@ -99,7 +99,7 @@ namespace ReactNative.UIManager
         /// <code>true</code> if the spacing has changed, or <code>false</code>
         /// if the same value was already set.
         /// </returns>
-        public bool Set(int spacingType, float value)
+        public bool Set(int spacingType, YogaValue value)
         {
             if (!EpsilonEqualityComparer.Instance.Equals(_spacing[spacingType], value))
             {
@@ -132,7 +132,7 @@ namespace ReactNative.UIManager
         /// One of <see cref="Left"/>, <see cref="Top" />, <see cref="Right" />, <see cref="Bottom" />.
         /// </param>
         /// <returns>The spacing value.</returns>
-        public float Get(int spacingType)
+        public YogaValue Get(int spacingType)
         {
             var defaultValue = (spacingType == Start || spacingType == End
                 ? YogaConstants.Undefined
@@ -174,7 +174,7 @@ namespace ReactNative.UIManager
         /// <see cref="All" />.
         /// </param>
         /// <returns>The raw spacing value.</returns>
-        public float GetRaw(int spacingType)
+        public YogaValue GetRaw(int spacingType)
         {
             return _spacing[spacingType];
         }
@@ -202,7 +202,7 @@ namespace ReactNative.UIManager
         /// <param name="spacingType">The preferred spacing type.</param>
         /// <param name="fallbackType">The fallback spacing type.</param>
         /// <returns>The spacing value.</returns>
-        internal float GetWithFallback(int spacingType, int fallbackType)
+        internal YogaValue GetWithFallback(int spacingType, int fallbackType)
         {
             return
                 (_valueFlags & s_flagsMap[spacingType]) != 0
@@ -210,20 +210,20 @@ namespace ReactNative.UIManager
                     : Get(fallbackType);
         }
 
-        private static float[] NewFullSpacingArray()
+        private static YogaValue[] NewFullSpacingArray()
         {
-            return new float[] {
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
+            var undefined = YogaValue.Undefined();
+            return new[] {
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
             };
         }
-
     }
 }
