@@ -25,47 +25,35 @@ JsErrorCode DefineHostCallback(JsValueRef globalObject, const wchar_t *callbackN
     return JsNoError;
 }
 
-JsValueRef InvokeConsole(const wchar_t* kind, JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+wchar_t* LogLevel(int logLevel)
+{
+	switch (logLevel)
+	{
+	case 0:
+		return L"Trace";
+	case 1:
+		return L"Info";
+	case 2:
+		return L"Warn";
+	case 3:
+		return L"Error";
+	default:
+		return L"Log";
+	}
+}
+
+JsValueRef CALLBACK NativeLoggingCallback(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
 #ifdef _DEBUG
-
-    wchar_t buff[56];
-    swprintf(buff, 56, L"[JS {%s}] ", kind);
-    OutputDebugStringW(buff);
-
-    // First argument is this-context, ignore...
-    for (USHORT i = 1; i < argumentCount; i++)
-    {
-        std::set<JsValueRef> values;
-        IfFailThrow(StringifyJsValue(arguments[i], 0, values), L"Failed to convert object to string");
-        OutputDebugStringW(L" ");
-    }
-
-    OutputDebugStringW(L"\n");
-
+	wchar_t buff[56];
+	double logLevelIndex;
+	JsNumberToDouble(arguments[2], &logLevelIndex);
+	swprintf(buff, 56, L"[JS %s] ", LogLevel((int)logLevelIndex));
+	OutputDebugStringW(buff);
+	StringifyJsString(arguments[1]);
+	OutputDebugStringW(L"\n");
 #endif
-
-    return JS_INVALID_REFERENCE;
-};
-
-JsValueRef CALLBACK ConsoleLog(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
-{
-    return InvokeConsole(L"log", callee, isConstructCall, arguments, argumentCount, callbackState);
-}
-
-JsValueRef CALLBACK ConsoleWarn(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
-{
-    return InvokeConsole(L"warn", callee, isConstructCall, arguments, argumentCount, callbackState);
-}
-
-JsValueRef CALLBACK ConsoleInfo(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
-{
-    return InvokeConsole(L"info", callee, isConstructCall, arguments, argumentCount, callbackState);
-}
-
-JsValueRef CALLBACK ConsoleError(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
-{
-    return InvokeConsole(L"error", callee, isConstructCall, arguments, argumentCount, callbackState);
+	return JS_INVALID_REFERENCE;
 }
 
 JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap)
@@ -273,17 +261,7 @@ JsErrorCode ChakraHost::InitJson()
 
 JsErrorCode ChakraHost::InitConsole()
 {
-    JsPropertyIdRef consolePropertyId;
-    IfFailRet(JsGetPropertyIdFromName(L"console", &consolePropertyId));
-
-    JsValueRef consoleObject;
-    IfFailRet(JsCreateObject(&consoleObject));
-    IfFailRet(JsSetProperty(globalObject, consolePropertyId, consoleObject, true));
-
-    IfFailRet(DefineHostCallback(consoleObject, L"info", ConsoleInfo, nullptr));
-    IfFailRet(DefineHostCallback(consoleObject, L"log", ConsoleLog, nullptr));
-    IfFailRet(DefineHostCallback(consoleObject, L"warn", ConsoleWarn, nullptr));
-    IfFailRet(DefineHostCallback(consoleObject, L"error", ConsoleError, nullptr));
+    IfFailRet(DefineHostCallback(globalObject, L"nativeLoggingHook", NativeLoggingCallback, nullptr));
 
     return JsNoError;
 }

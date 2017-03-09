@@ -152,8 +152,9 @@ namespace ReactNative.Views.Text
         public override void OnBeforeLayout()
         {
             // Run flexbox on the children which are inline views.
-            foreach (var child in this.Children)
+            for (var i = 0; i < ChildCount; ++i)
             {
+                var child = GetChildAt(i);
                 if (!(child is ReactInlineShadowNode))
                 {
                     child.CalculateLayout();

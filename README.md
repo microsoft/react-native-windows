@@ -32,6 +32,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
 - Initialize Windows project with `react-native windows` command in the project directory.
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
+- For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
 
 ### Requirements
 
@@ -68,6 +69,11 @@ npm install
 - Open Examples.sln from the Examples submodule folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
+### Showing the Debug Menu
+
+- On UWP, press Shift+F10 to open the debug menu.
+- On WPF, press CTRL+D or CTRL+M to open the debug menu.
+
 ## Extending React Native
 
 - Looking for a component? [JS.coach](https://js.coach/react-native)
@@ -81,18 +87,6 @@ npm install
 If you encounter a bug with the React Native Windows plugin, we would like to hear about it. Search the [existing issues](https://github.com/ReactWindows/react-native-windows/issues) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of React Native, React Native Windows plugin, and device family (i.e., mobile, desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
 
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed in the [Getting Help](#getting-help) section. There are limited resources available for handling issues and by keeping the list of open issues lean we can respond in a timely manner.
-
-## FAQs
-
-1. Running `react-native windows` fails with `No compatible version found: react-native-windows@0.x.*`
-
-We try to keep up-to-date with the latest version of `react-native`, but sometimes we fall a bit behind. The default behavior of the Windows init RNPM plugin is to try and install the version of `react-native-windows` that matches the version of `react-native` that you're using (from the `package.json` file of your project).  Often times, an older version of `react-native-windows` will work just fine with a later version of `react-native`, so a good first attempt is to try and select the latest (or release candidate) version of `react-native-windows` using the `--windowsVersion` flag.  E.g.,
-
-```
-react-native windows --windowsVersion 0.x.0-rc.0
-```
-
-Where `x` is the version of `react-native` you have installed.
 
 ## Contributing
 
