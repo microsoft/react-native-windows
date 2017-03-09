@@ -11,7 +11,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Executes the block.
         /// </summary>
-        /// <param name="nativeViewHierarchyManager">The Native View Hierarchy Manager.</param>
+        /// <param name="nativeViewHierarchyManager">The native view hierarchy manager.</param>
         void Execute(NativeViewHierarchyManager nativeViewHierarchyManager);
     }
 }

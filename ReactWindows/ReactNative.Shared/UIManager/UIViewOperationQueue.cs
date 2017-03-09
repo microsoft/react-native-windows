@@ -167,7 +167,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues a operation to execute a UIBlock.
         /// </summary>
-        /// <param name="block"></param>
+        /// <param name="block">The UI block.</param>
         public void EnqueueUIBlock(IUIBlock block)
         {
             EnqueueOperation(() => block.Execute(_nativeViewHierarchyManager));

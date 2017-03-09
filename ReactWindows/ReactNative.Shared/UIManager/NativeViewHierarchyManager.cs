@@ -575,6 +575,10 @@ namespace ReactNative.UIManager
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Resolves a view.
+        /// </summary>
+        /// <param name="tag">The tag of the view.</param>
         public DependencyObject ResolveView(int tag)
         {
             var view = default(DependencyObject);
@@ -587,6 +591,10 @@ namespace ReactNative.UIManager
             return view;
         }
 
+        /// <summary>
+        /// Resolves a view's view manager.
+        /// </summary>
+        /// <param name="tag">The tag of the view.</param>
         public IViewManager ResolveViewManager(int tag)
         {
             var viewManager = default(IViewManager);
