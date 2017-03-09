@@ -53,7 +53,7 @@ namespace ReactNative.Reflection
 
                 result.Add(Normalize(name), value);
 
-                var enumMemberAttribute = type.GetField(name).GetCustomAttributes(typeof(EnumMemberAttribute), true).SingleOrDefault();
+                var enumMemberAttribute = type.GetField(name).GetCustomAttribute(typeof(EnumMemberAttribute), false);
                 if (enumMemberAttribute != null)
                 {
                     result.Add(Normalize(((EnumMemberAttribute)enumMemberAttribute).Value), value);
