@@ -150,6 +150,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />

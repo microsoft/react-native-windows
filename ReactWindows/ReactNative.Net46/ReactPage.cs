@@ -145,7 +145,7 @@ namespace ReactNative
         /// </summary>
         public async Task DisposeAsync()
         {
-            RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler) OnAcceleratorKeyActivated);
+            RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
             if (_reactInstanceManager.IsValueCreated)
             {
