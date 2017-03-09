@@ -123,7 +123,7 @@ namespace ReactNative.Modules.Launch
         /// The promise used to return the initial URL.
         /// </param>
         [ReactMethod]
-        public void getInitialUrl(IPromise promise)
+        public void getInitialURL(IPromise promise)
         {
             promise.Resolve(s_activatedUrl);
         }

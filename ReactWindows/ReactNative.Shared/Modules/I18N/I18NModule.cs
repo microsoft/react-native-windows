@@ -57,7 +57,7 @@ namespace ReactNative.Modules.I18N
         [ReactMethod]
         public void forceRTL(bool value)
         {
-            I18NUtil.IsRightToLeftForced = true;
+            I18NUtil.IsRightToLeftForced = value;
         }
     }
 }

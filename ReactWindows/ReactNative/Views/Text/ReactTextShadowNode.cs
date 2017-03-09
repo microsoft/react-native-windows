@@ -1,8 +1,9 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -23,6 +24,8 @@ namespace ReactNative.Views.Text
         private double? _fontSize;
         private double _lineHeight;
 
+        private bool _allowFontScaling;
+
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
         private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
@@ -34,7 +37,8 @@ namespace ReactNative.Views.Text
         /// </summary>
         public ReactTextShadowNode()
         {
-            MeasureFunction = MeasureText;
+            MeasureFunction = (node, width, widthMode, height, heightMode) =>
+                MeasureText(this, node, width, widthMode, height, heightMode);
         }
 
         /// <summary>
@@ -160,6 +164,20 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
+        /// Set fontScaling
+        /// </summary>
+        /// <param name="allowFontScaling">Max number of lines.</param>
+        [ReactProp(ViewProps.AllowFontScaling)]
+        public virtual void SetAllowFontScaling(bool allowFontScaling)
+        {
+            if (_allowFontScaling != allowFontScaling)
+            {
+                _allowFontScaling = allowFontScaling;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
         /// Called after a layout step at the end of a UI batch from
         /// <see cref="UIManagerModule"/>. May be used to enqueue additional UI
         /// operations for the native view. Will only be called on nodes marked
@@ -183,7 +201,7 @@ namespace ReactNative.Views.Text
             dirty();
         }
 
-        private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasureText(ReactTextShadowNode textNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
             // This is not a terribly efficient way of projecting the height of
             // the text elements. It requires that we have access to the
@@ -201,22 +219,22 @@ namespace ReactNative.Views.Text
                     TextTrimming = TextTrimming.CharacterEllipsis,
                 };
 
-                var textNode = (ReactTextShadowNode)node;
                 textNode.UpdateTextBlockCore(textBlock, true);
 
                 var block = new Paragraph();
-                foreach (var child in textNode.Children)
+                for (var i = 0; i < textNode.ChildCount; ++i)
                 {
+                    var child = textNode.GetChildAt(i);
                     block.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
                 }
                 textBlock.Blocks.Add(block);
 
-                var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
-                var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
+                var normalizedWidth = YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width;
+                var normalizedHeight = YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height;
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
-                return new MeasureOutput(
-                    (float)textBlock.DesiredSize.Width,
-                    (float)textBlock.DesiredSize.Height);
+                return MeasureOutput.Make(
+                    (float)Math.Ceiling(textBlock.DesiredSize.Width),
+                    (float)Math.Ceiling(textBlock.DesiredSize.Height));
             });
 
             return task.Result;
@@ -241,12 +259,13 @@ namespace ReactNative.Views.Text
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? FontStyle.Normal;
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
+            textBlock.IsTextScaleFactorEnabled = _allowFontScaling;
 
             if (!measureOnly)
             {
                 textBlock.Padding = new Thickness(
-                    this.GetPaddingSpace(CSSSpacingType.Left),
-                    this.GetPaddingSpace(CSSSpacingType.Top),
+                    GetPadding(YogaEdge.Left),
+                    GetPadding(YogaEdge.Top),
                     0,
                     0);
             }
@@ -261,8 +280,9 @@ namespace ReactNative.Views.Text
         public override void OnBeforeLayout()
         {
             // Run flexbox on the children which are inline views.
-            foreach (var child in this.Children)
+            for (var i = 0; i < ChildCount; ++i)
             {
+                var child = GetChildAt(i);
                 if (!(child is ReactInlineShadowNode))
                 {
                     child.CalculateLayout();

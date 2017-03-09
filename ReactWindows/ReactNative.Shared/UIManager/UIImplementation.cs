@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.I18N;
@@ -29,6 +29,7 @@ namespace ReactNative.UIManager
         private readonly UIViewOperationQueue _operationsQueue;
         private readonly ShadowNodeRegistry _shadowNodeRegistry;
         private readonly NativeViewHierarchyOptimizer _nativeViewHierarchyOptimizer;
+        private readonly ReactContext _reactContext;
         private readonly EventDispatcher _eventDispatcher;
 
         /// <summary>
@@ -37,31 +38,40 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="eventDispatcher">The event dispatcher.</param>
-        public UIImplementation(ReactContext reactContext, IReadOnlyList<IViewManager> viewManagers, EventDispatcher eventDispatcher)
+        public UIImplementation(
+            ReactContext reactContext, 
+            IReadOnlyList<IViewManager> viewManagers, 
+            EventDispatcher eventDispatcher)
             : this(reactContext, new ViewManagerRegistry(viewManagers), eventDispatcher)
         {
         }
 
-        private UIImplementation(ReactContext reactContext, ViewManagerRegistry viewManagers, EventDispatcher eventDispatcher)
+        private UIImplementation(
+            ReactContext reactContext, 
+            ViewManagerRegistry viewManagers,
+            EventDispatcher eventDispatcher)
             : this(
-                  viewManagers,
-                  new UIViewOperationQueue(reactContext, 
-                                           new NativeViewHierarchyManager(viewManagers)), 
-                                           eventDispatcher)
+                reactContext,
+                viewManagers,
+                new UIViewOperationQueue(reactContext, new NativeViewHierarchyManager(viewManagers)), 
+                eventDispatcher)
         {
         }
 
         /// <summary>
         /// Instantiates the <see cref="UIImplementation"/>.
         /// </summary>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="operationsQueue">The operations queue.</param>
         /// <param name="eventDispatcher">The event dispatcher.</param>
         protected UIImplementation(
+            ReactContext reactContext,
             ViewManagerRegistry viewManagers,
             UIViewOperationQueue operationsQueue,
             EventDispatcher eventDispatcher)
         {
+            _reactContext = reactContext;
             _viewManagers = viewManagers;
             _operationsQueue = operationsQueue;
             _shadowNodeRegistry = new ShadowNodeRegistry();
@@ -89,8 +99,8 @@ namespace ReactNative.UIManager
             var rootCssNode = CreateRootShadowNode();
             rootCssNode.ReactTag = tag;
             rootCssNode.ThemedContext = context;
-            rootCssNode.Width = (float)width;
-            rootCssNode.Height = (float)height;
+            rootCssNode.StyleWidth = (float)width;
+            rootCssNode.StyleHeight = (float)height;
             _shadowNodeRegistry.AddRootNode(rootCssNode);
 
             // Register it with the NativeViewHierarchyManager.
@@ -120,8 +130,8 @@ namespace ReactNative.UIManager
             double newHeight)
         {
             var rootCssNode = _shadowNodeRegistry.GetNode(rootViewTag);
-            rootCssNode.Width = (float)newWidth;
-            rootCssNode.Height = (float)newHeight;
+            rootCssNode.StyleWidth = (float)newWidth;
+            rootCssNode.StyleHeight = (float)newHeight;
 
             // If we're in the middle of a batch, the change will be
             // automatically dispatched at the end of the batch. The event
@@ -547,14 +557,7 @@ namespace ReactNative.UIManager
         /// <param name="batchId">The batch identifier.</param>
         public void DispatchViewUpdates(int batchId)
         {
-            foreach (var tag in _shadowNodeRegistry.RootNodeTags)
-            {
-                var cssRoot = _shadowNodeRegistry.GetNode(tag);
-                NotifyBeforeOnLayoutRecursive(cssRoot);
-                CalculateRootLayout(cssRoot);
-                ApplyUpdatesRecursive(cssRoot);
-            }
-
+            UpdateViewHierarchy();
             _nativeViewHierarchyOptimizer.OnBatchComplete();
             _operationsQueue.DispatchViewUpdates(batchId);
         }
@@ -644,6 +647,17 @@ namespace ReactNative.UIManager
             _operationsQueue.OnShutdown();
         }
 
+        private void UpdateViewHierarchy()
+        {
+            foreach (var tag in _shadowNodeRegistry.RootNodeTags)
+            {
+                var cssRoot = _shadowNodeRegistry.GetNode(tag);
+                NotifyBeforeOnLayoutRecursive(cssRoot);
+                CalculateRootLayout(cssRoot);
+                ApplyUpdatesRecursive(cssRoot, 0f, 0f);
+            }
+        }
+
         private void HandleCreateView(ReactShadowNode cssNode, int rootViewTag, ReactStylesDiffMap styles)
         {
             if (!cssNode.IsVirtual)
@@ -668,7 +682,7 @@ namespace ReactNative.UIManager
             var rootCssNode = new ReactShadowNode();
             if (I18NUtil.IsRightToLeft)
             {
-                rootCssNode.Direction = CSSDirection.RTL;
+                rootCssNode.LayoutDirection = YogaDirection.RTL;
             }
 
             rootCssNode.ViewClass = "Root";
@@ -693,14 +707,20 @@ namespace ReactNative.UIManager
 
         private void RemoveShadowNode(ReactShadowNode nodeToRemove)
         {
+            RemoveShadowNodeRecursive(nodeToRemove);
+            nodeToRemove.Dispose();
+        }
+
+        private void RemoveShadowNodeRecursive(ReactShadowNode nodeToRemove)
+        {
             _nativeViewHierarchyOptimizer.HandleRemoveNode(nodeToRemove);
             _shadowNodeRegistry.RemoveNode(nodeToRemove.ReactTag);
             for (var i = nodeToRemove.ChildCount - 1; i >= 0; --i)
             {
-                RemoveShadowNode(nodeToRemove.GetChildAt(i));
+                RemoveShadowNodeRecursive(nodeToRemove.GetChildAt(i));
             }
 
-            nodeToRemove.RemoveAllChildren();
+            nodeToRemove.RemoveAndDisposeAllChildren();
         }
 
         private void MeasureLayout(int tag, int ancestorTag, double[] outputBuffer)
@@ -842,7 +862,10 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void ApplyUpdatesRecursive(ReactShadowNode cssNode)
+        private void ApplyUpdatesRecursive(
+            ReactShadowNode cssNode,
+            float absoluteX,
+            float absoluteY)
         {
             if (!cssNode.HasUpdates)
             {
@@ -853,7 +876,10 @@ namespace ReactNative.UIManager
             {
                 for (var i = 0; i < cssNode.ChildCount; ++i)
                 {
-                    ApplyUpdatesRecursive(cssNode.GetChildAt(i));
+                    ApplyUpdatesRecursive(
+                        cssNode.GetChildAt(i),
+                        absoluteX + cssNode.LayoutX,
+                        absoluteY + cssNode.LayoutY);
                 }
             }
 
@@ -861,6 +887,8 @@ namespace ReactNative.UIManager
             if (!_shadowNodeRegistry.IsRootNode(tag))
             {
                 cssNode.DispatchUpdates(
+                    absoluteX,
+                    absoluteY,
                     _operationsQueue,
                     _nativeViewHierarchyOptimizer);
 
@@ -869,10 +897,10 @@ namespace ReactNative.UIManager
                     _eventDispatcher.DispatchEvent(
                         OnLayoutEvent.Obtain(
                             tag,
-                            cssNode.LayoutX,
-                            cssNode.LayoutY,
-                            cssNode.LayoutWidth,
-                            cssNode.LayoutHeight));
+                            cssNode.ScreenX,
+                            cssNode.ScreenY,
+                            cssNode.ScreenWidth,
+                            cssNode.ScreenHeight));
                 }
             }
 

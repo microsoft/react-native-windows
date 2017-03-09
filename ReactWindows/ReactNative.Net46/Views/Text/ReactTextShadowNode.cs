@@ -1,11 +1,12 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace ReactNative.Views.Text
@@ -32,7 +33,8 @@ namespace ReactNative.Views.Text
         /// </summary>
         public ReactTextShadowNode()
         {
-            MeasureFunction = MeasureText;
+            MeasureFunction = (node, width, widthMode, height, heightMode) =>
+                MeasureText(this, node, width, widthMode, height, heightMode);
         }
 
         /// <summary>
@@ -146,7 +148,7 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.TextAlign)]
         public void SetTextAlign(string textAlign)
         {
-            var textAlignment = textAlign == "auto" || textAlign == null ? 
+            var textAlignment = textAlign == "auto" || textAlign == null ?
                 TextAlignment.Left :
                 EnumHelpers.Parse<TextAlignment>(textAlign);
 
@@ -181,7 +183,7 @@ namespace ReactNative.Views.Text
             dirty();
         }
 
-        private static MeasureOutput MeasureText(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasureText(ReactTextShadowNode textNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
             // This is not a terribly efficient way of projecting the height of
             // the text elements. It requires that we have access to the
@@ -195,23 +197,24 @@ namespace ReactNative.Views.Text
                 var textBlock = new TextBlock
                 {
                     TextAlignment = TextAlignment.Left,
+                    TextWrapping = TextWrapping.Wrap,
                     TextTrimming = TextTrimming.CharacterEllipsis,
                 };
 
-                var textNode = (ReactTextShadowNode)node;
                 textNode.UpdateTextBlockCore(textBlock, true);
 
-                foreach (var child in textNode.Children)
+                for (var i = 0; i < textNode.ChildCount; ++i)
                 {
+                    var child = textNode.GetChildAt(i);
                     textBlock.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
                 }
 
-                var normalizedWidth = CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width;
-                var normalizedHeight = CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height;
+                var normalizedWidth = YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width;
+                var normalizedHeight = YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height;
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
-                return new MeasureOutput(
-                    (float)textBlock.DesiredSize.Width,
-                    (float)textBlock.DesiredSize.Height);
+                return MeasureOutput.Make(
+                    (float)Math.Ceiling(textBlock.DesiredSize.Width),
+                    (float)Math.Ceiling(textBlock.DesiredSize.Height));
             });
 
             return task.Result;
@@ -232,16 +235,31 @@ namespace ReactNative.Views.Text
             //textBlock.MaxLines = _numberOfLines;
             textBlock.LineHeight = _lineHeight != 0 ? _lineHeight : double.NaN;
             textBlock.TextAlignment = _textAlignment;
-            textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? new FontStyle();
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
 
+            if (_fontFamily != null)
+            {
+                // convert font string into something WPF can use
+                // https://msdn.microsoft.com/en-us/library/ms753303(v=vs.110).aspx
+                // e.g. FontFamily(new System.Uri("pack://application:,,,/"), "./Assets/#fontname")
+                string[] path = _fontFamily.Split('/');
+                path = path.Take(path.Count() - 1).ToArray();
+                string cleanPath = "./" + string.Join("/", path) + "/";
+                string[] fontParts = _fontFamily.Split('#');
+                textBlock.FontFamily = new FontFamily(new System.Uri("pack://application:,,,/"), cleanPath + "#" + fontParts.Last());
+            }
+            else
+            {
+                textBlock.FontFamily = new FontFamily();
+            }
+
             if (!measureOnly)
             {
                 textBlock.Padding = new Thickness(
-                    this.GetPaddingSpace(CSSSpacingType.Left),
-                    this.GetPaddingSpace(CSSSpacingType.Top),
+                    GetPadding(YogaEdge.Left),
+                    GetPadding(YogaEdge.Top),
                     0,
                     0);
             }
@@ -256,8 +274,9 @@ namespace ReactNative.Views.Text
         public override void OnBeforeLayout()
         {
             // Run flexbox on the children which are inline views.
-            foreach (var child in this.Children)
+            for (var i = 0; i < ChildCount; ++i)
             {
+                var child = GetChildAt(i);
                 if (!(child is ReactInlineShadowNode))
                 {
                     child.CalculateLayout();

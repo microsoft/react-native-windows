@@ -275,7 +275,7 @@ namespace ReactNative.UIManager
 
             if (nativeNodeToRemoveFrom != null)
             {
-                var index = nativeNodeToRemoveFrom.GetIndexOfNativeChild(nodeToRemove);
+                var index = nativeNodeToRemoveFrom.IndexOfNativeChild(nodeToRemove);
                 nativeNodeToRemoveFrom.RemoveNativeChildAt(index);
                 _uiViewOperationQueue.EnqueueManageChildren(
                     nativeNodeToRemoveFrom.ReactTag,

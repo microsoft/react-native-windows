@@ -11,6 +11,7 @@ namespace ReactNative.Modules.Image
         private const string ErrorInvalidUri = "E_INVALID_URI";
         private const string ErrorPrefetchFailure = "E_PREFETCH_FAILURE";
         private const string ErrorGetSizeFailure = "E_GET_SIZE_FAILURE";
+        private const string ErrorQueryCacheFailure = "E_QUERY_CACHE_FAILURE";
 
         public override string Name
         {
@@ -21,9 +22,15 @@ namespace ReactNative.Modules.Image
         }
 
         [ReactMethod]
-        public void prefetchImage(string uriString, IPromise promise)
+        public void prefetchImage(string uriString, int requestId, IPromise promise)
         {
             promise.Reject(ErrorPrefetchFailure, "Prefetch is not yet implemented.");
+        }
+
+        [ReactMethod]
+        public void abortRequest(int requestId)
+        {
+            // No op as prefetch is not yet implemented.
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
@@ -72,6 +79,12 @@ namespace ReactNative.Modules.Image
                 }
             });
 #pragma warning restore AvoidAsyncVoid
+        }
+
+        [ReactMethod]
+        public void queryCache(string[] urls, IPromise promise)
+        {
+            promise.Reject(ErrorQueryCacheFailure, "Prefetch is not yet implemented.");
         }
     }
 }

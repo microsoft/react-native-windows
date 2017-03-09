@@ -368,6 +368,7 @@ var PasswordBoxWindows = React.createClass({
         passwordChar={this.props.passwordChar}
         passwordRevealMode={this.props.passwordRevealMode}
         placeholder={this.props.placeholder}
+        placeholderTextColor={this.props.placeholderTextColor}
         selectionColor={this.props.selectionColor}
         text={this._getText()}
         editable={this.props.editable}

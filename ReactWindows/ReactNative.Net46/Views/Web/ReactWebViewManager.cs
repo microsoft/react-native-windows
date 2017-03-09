@@ -169,7 +169,7 @@ namespace ReactNative.Views.Web
         }
 
         /// <summary>
-        /// Creates a new view instance of type <see cref="WebView"/>.
+        /// Creates a new view instance of type <see cref="WebBrowser"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
