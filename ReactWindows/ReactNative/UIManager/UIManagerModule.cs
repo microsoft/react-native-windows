@@ -5,6 +5,7 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using Windows.Devices.Sensors;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
@@ -112,7 +113,6 @@ namespace ReactNative.UIManager
             _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
 
             var resizeCount = 0;
-
             rootView.SetOnSizeChangedListener((sender, args) =>
             {
                 var currentCount = ++resizeCount;
@@ -437,6 +437,7 @@ namespace ReactNative.UIManager
         {
             _uiImplementation.OnSuspend();
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
         }
 
         /// <summary>
@@ -446,6 +447,8 @@ namespace ReactNative.UIManager
         {
             _uiImplementation.OnResume();
             ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
+            DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
+
         }
 
 
@@ -455,6 +458,7 @@ namespace ReactNative.UIManager
         public void OnDestroy()
         {
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
             _uiImplementation.OnShutdown();
             _eventDispatcher.OnDestroy();
         }
@@ -499,6 +503,46 @@ namespace ReactNative.UIManager
         {
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("didUpdateDimensions", GetDimensions());
+        }
+
+        private void OnOrientationChanged(DisplayInformation displayInformation, object args)
+        {
+            var name = default(string);
+            var degrees = default(double);
+            var isLandscape = false;
+
+            switch (displayInformation.CurrentOrientation)
+            {
+                case DisplayOrientations.Landscape:
+                    name = "landscape-primary";
+                    degrees = -90.0;
+                    isLandscape = true;
+                    break;
+                case DisplayOrientations.Portrait:
+                    name = "portrait-primary";
+                    degrees = 0.0;
+                    break;
+                case DisplayOrientations.LandscapeFlipped:
+                    name = "landscape-secondary";
+                    degrees = 90.0;
+                    isLandscape = true;
+                    break;
+                case DisplayOrientations.PortraitFlipped:
+                    name = "portraitSecondary";
+                    degrees = 180.0;
+                    break;
+            }
+
+            if (name != null)
+            {
+                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                    .emit("namedOrientationDidChange", new JObject
+                    {
+                        { "name", name },
+                        { "rotationDegrees", degrees },
+                        { "isLandscape", isLandscape },
+                    });
+            }
         }
 
         private static IDictionary<string, object> GetDimensions()

@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.UIManager;
 
 namespace ReactNative.Views.Progress
@@ -10,10 +10,10 @@ namespace ReactNative.Views.Progress
             MeasureFunction = MeasureProgressBar;
         }
 
-        private static MeasureOutput MeasureProgressBar(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasureProgressBar(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            var adjustedHeight = CSSConstants.IsUndefined(height) ? 4 : height; 
-            return new MeasureOutput(width, adjustedHeight);
+            var adjustedHeight = YogaConstants.IsUndefined(height) ? 4f : height; 
+            return MeasureOutput.Make(width, adjustedHeight);
         }
     }
 }

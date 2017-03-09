@@ -71,7 +71,6 @@ namespace ReactNative.Tests.UIManager.Events
         [TestMethod]
         public async Task EventDispatcher_NonCoalesced()
         {
-            // TODO: (#288) Check for non-determinism.
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -298,38 +297,6 @@ namespace ReactNative.Tests.UIManager.Events
             {
                 dispatcher.DispatchEvent(testEvent);
                 await DispatcherHelpers.RunOnDispatcherAsync(dispatcher.OnSuspend);
-            }
-
-            Assert.IsFalse(waitDispatched.WaitOne(500));
-
-            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
-        }
-
-        [TestMethod]
-        public async Task EventDispatcher_OnShutdown_EventDoesNotDispatch()
-        {
-            var waitDispatched = new AutoResetEvent(false);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (p0, p1, p2) =>
-                {
-                    waitDispatched.Set();
-                    return EmptyResponse;
-                },
-                OnFlushQueue = () => EmptyResponse,
-                OnInvokeCallbackAndReturnFlushedQueue = (_, __) => EmptyResponse
-            };
-
-            var context = await CreateContextAsync(executor);
-            var dispatcher = new EventDispatcher(context);
-            await DispatcherHelpers.RunOnDispatcherAsync(dispatcher.OnResume);
-
-            var testEvent = new MockEvent(42, TimeSpan.Zero, "Foo");
-
-            using (BlockJavaScriptThread(context))
-            {
-                dispatcher.DispatchEvent(testEvent);
-                await DispatcherHelpers.RunOnDispatcherAsync(dispatcher.OnDestroy);
             }
 
             Assert.IsFalse(waitDispatched.WaitOne(500));

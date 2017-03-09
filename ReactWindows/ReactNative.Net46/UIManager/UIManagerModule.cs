@@ -19,7 +19,7 @@ namespace ReactNative.UIManager
         private readonly UIImplementation _uiImplementation;
         private readonly IReadOnlyDictionary<string, object> _moduleConstants;
         private readonly EventDispatcher _eventDispatcher;
-        private static FrameworkElement _window;
+        private static Window _window;
 
         private int _batchId;
         private int _nextRootTag = 1;
@@ -35,7 +35,7 @@ namespace ReactNative.UIManager
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementationProvider uiImplementationProvider,
-            FrameworkElement window)
+            Window window)
             : base(reactContext)
         {
             if (viewManagers == null)
@@ -508,17 +508,17 @@ namespace ReactNative.UIManager
 
         private static IDictionary<string, object> GetDimensions()
         {
-            var bounds = new Rect() {Height = _window.Height, Width = _window.Width};
+            var content = (FrameworkElement)_window.Content;
             double scale = 1.0;
-            
+
             return new Dictionary<string, object>
             {
                 {
                     "window",
                     new Dictionary<string, object>
                     {
-                        { "width", bounds.Width },
-                        { "height", bounds.Height },
+                        { "width", content?.ActualWidth ?? 0.0 },
+                        { "height", content?.ActualHeight ?? 0.0 },
                         { "scale", scale },
                         /* TODO: density and DPI needed? */
                     }

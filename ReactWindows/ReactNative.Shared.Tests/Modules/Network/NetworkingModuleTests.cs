@@ -114,7 +114,7 @@ namespace ReactNative.Tests.Modules.Network
             var module = CreateNetworkingModule(new MockHttpClient(request =>
                 {
 #if WINDOWS_UWP
-                    var body = request.Content.ReadAsStringAsync().GetResults();
+                    var body = request.Content.ReadAsStringAsync().AsTask().Result;
 #else
                     var body = request.Content.ReadAsStringAsync().Result;
 #endif
@@ -186,7 +186,8 @@ namespace ReactNative.Tests.Modules.Network
             {
 #if WINDOWS_UWP
                 var inputStream = request.Content.ReadAsInputStreamAsync()
-                    .GetResults()
+                    .AsTask()
+                    .Result
                     .AsStreamForRead();
 #else
                 var inputStream = request.Content.ReadAsStreamAsync().Result;

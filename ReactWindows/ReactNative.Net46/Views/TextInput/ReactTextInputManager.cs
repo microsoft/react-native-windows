@@ -24,6 +24,7 @@ namespace ReactNative.Views.TextInput
         private bool _onSelectionChange;
 
         internal static readonly Color DefaultTextBoxBorder = Color.FromArgb(255, 122, 122, 122);
+        internal static readonly Color DefaultPlaceholderTextColor = Color.FromArgb(255, 0, 0, 0);
 
         /// <summary>
         /// The name of the view manager.
@@ -209,7 +210,22 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholder")]
         public void SetPlaceholder(ReactTextBox view, string placeholder)
         {
-            throw new NotSupportedException("Placeholder is not available in WPF.");
+            PlaceholderAdorner.SetText(view, placeholder);
+        }
+
+        /// <summary>
+        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The placeholder text color.</param>
+        [ReactProp("placeholderTextColor", CustomType = "Color")]
+        public void SetPlaceholderTextColor(ReactTextBox view, uint? color)
+        {
+            var brush = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : new SolidColorBrush(DefaultPlaceholderTextColor);
+
+            PlaceholderAdorner.SetTextColor(view, brush);
         }
 
         /// <summary>
@@ -472,6 +488,7 @@ namespace ReactNative.Views.TextInput
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
             view.SetCurrentValue(FrameworkElement.WidthProperty, dimensions.Width);
+            view.SetCurrentValue(FrameworkElement.HeightProperty, dimensions.Height);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -50,11 +50,12 @@ namespace ReactNative.Views.TextInput
         public ReactPasswordBoxShadowNode()
         {
             var computedPadding = GetDefaultPaddings();
-            SetPadding(CSSSpacingType.Left, computedPadding[0]);
-            SetPadding(CSSSpacingType.Top, computedPadding[1]);
-            SetPadding(CSSSpacingType.Right, computedPadding[2]);
-            SetPadding(CSSSpacingType.Bottom, computedPadding[3]);
-            MeasureFunction = MeasureTextInput;
+            SetPadding(EdgeSpacing.Left, computedPadding[0]);
+            SetPadding(EdgeSpacing.Top, computedPadding[1]);
+            SetPadding(EdgeSpacing.Right, computedPadding[2]);
+            SetPadding(EdgeSpacing.Bottom, computedPadding[3]);
+            MeasureFunction = (node, width, widthMode, height, heightMode) =>
+                MeasureTextInput(this, node, width, widthMode, height, heightMode);
         }
 
         /// <summary>
@@ -202,28 +203,27 @@ namespace ReactNative.Views.TextInput
         {
             return new float[]
             {
-                GetPadding(CSSSpacingType.Left),
-                GetPadding(CSSSpacingType.Top),
-                GetPadding(CSSSpacingType.Right),
-                GetPadding(CSSSpacingType.Bottom),
+                GetPadding(YogaEdge.Left),
+                GetPadding(YogaEdge.Top),
+                GetPadding(YogaEdge.Right),
+                GetPadding(YogaEdge.Bottom),
             };
         }
 
-        private static MeasureOutput MeasureTextInput(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasureTextInput(ReactPasswordBoxShadowNode textInputNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            var textInputNode = (ReactPasswordBoxShadowNode)node;
             textInputNode._computedPadding = textInputNode.GetComputedPadding();
 
-            var borderLeftWidth = textInputNode.GetBorder(CSSSpacingType.Left);
-            var borderRightWidth = textInputNode.GetBorder(CSSSpacingType.Right);
+            var borderLeftWidth = textInputNode.GetBorder(YogaEdge.Left);
+            var borderRightWidth = textInputNode.GetBorder(YogaEdge.Right);
 
             var normalizedWidth = Math.Max(0,
-                (CSSConstants.IsUndefined(width) ? double.PositiveInfinity : width)
+                (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width)
                 - textInputNode._computedPadding[0]
                 - textInputNode._computedPadding[2]
-                - (CSSConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth)
-                - (CSSConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
-            var normalizedHeight = Math.Max(0, CSSConstants.IsUndefined(height) ? double.PositiveInfinity : height);
+                - (YogaConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth)
+                - (YogaConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
+            var normalizedHeight = Math.Max(0, YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
             // This is not a terribly efficient way of projecting the height of
             // the text elements. It requires that we have access to the
@@ -234,33 +234,33 @@ namespace ReactNative.Views.TextInput
             // TODO: determine another way to measure text elements.
             var task = DispatcherHelpers.CallOnDispatcher(() =>
             {
-                var textNode = (ReactPasswordBoxShadowNode)node;
-
                 var textBlock = new TextBlock
                 {
                     TextWrapping = TextWrapping.Wrap,
                 };
 
                 var passwordChar = GetDefaultPasswordChar();
-                var normalizedText = !string.IsNullOrEmpty(textNode._text)
-                    ? new string(passwordChar[0], textNode._text.Length)
+                var normalizedText = !string.IsNullOrEmpty(textInputNode._text)
+                    ? new string(passwordChar[0], textInputNode._text.Length)
                     : passwordChar;
                 var inline = new Run { Text = normalizedText };
-                FormatTextElement(textNode, inline);
+                FormatTextElement(textInputNode, inline);
                 textBlock.Inlines.Add(inline);
 
                 textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-                var borderTopWidth = textInputNode.GetBorder(CSSSpacingType.Top);
-                var borderBottomWidth = textInputNode.GetBorder(CSSSpacingType.Bottom);
+                var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
+                var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
 
                 var finalizedHeight = (float)textBlock.DesiredSize.Height;
                 finalizedHeight += textInputNode._computedPadding[1];
                 finalizedHeight += textInputNode._computedPadding[3];
-                finalizedHeight += CSSConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-                finalizedHeight += CSSConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+                finalizedHeight += YogaConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+                finalizedHeight += YogaConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
 
-                return new MeasureOutput(width, finalizedHeight);
+                return MeasureOutput.Make(
+                    (float)Math.Ceiling(width), 
+                    (float)Math.Ceiling(finalizedHeight));
             });
 
             return task.Result;

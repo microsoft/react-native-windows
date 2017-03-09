@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.UIManager;
 
 namespace ReactNative.Views.Slider
@@ -16,9 +16,9 @@ namespace ReactNative.Views.Slider
             MeasureFunction = MeasurePicker;
         }
 
-        private static MeasureOutput MeasurePicker(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasurePicker(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            return new MeasureOutput(width, 40);
+            return MeasureOutput.Make(width, 40f);
         }
     }
 }

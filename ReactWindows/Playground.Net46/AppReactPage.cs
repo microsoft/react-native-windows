@@ -1,6 +1,7 @@
 ﻿using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
+using System;
 using System.Collections.Generic;
 
 namespace Playground.Net46
@@ -12,13 +13,7 @@ namespace Playground.Net46
         public override string JavaScriptMainModuleName => "ReactWindows/Playground.Net46/index.windows";
 
 #if BUNDLE
-        public override string JavaScriptBundleFile
-        {
-            get
-            {
-                return "ms-appx:///ReactAssets/index.windows.bundle";
-            }
-        }
+        public override string JavaScriptBundleFile => AppDomain.CurrentDomain.BaseDirectory + "ReactAssets/index.windows.bundle";
 #endif
 
         public override List<IReactPackage> Packages => new List<IReactPackage>
