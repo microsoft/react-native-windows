@@ -15,7 +15,7 @@ namespace ReactNative.UIManager
 
             if (!I18NUtil.IsRightToLeft)
             {
-                width = node.GetBorder(EdgeSpacing.Start);
+                width = node.GetBorder(YogaEdge.Start);
                 if (!YogaConstants.IsUndefined(width))
                 {
                     return width;
@@ -23,14 +23,14 @@ namespace ReactNative.UIManager
             }
             else
             {
-                width = node.GetBorder(EdgeSpacing.End);
+                width = node.GetBorder(YogaEdge.End);
                 if (!YogaConstants.IsUndefined(width))
                 {
                     return width;
                 }
             }
 
-            width = node.GetBorder(EdgeSpacing.All);
+            width = node.GetBorder(YogaEdge.All);
             if (!YogaConstants.IsUndefined(width))
             {
                 return width;
@@ -39,54 +39,15 @@ namespace ReactNative.UIManager
             return 0.0f;
         }
 
-        public static float GetPaddingValue(this ReactShadowNode node, int spacingType)
-        {
-            var padding = node.GetPadding(spacingType);
-            if (!YogaConstants.IsUndefined(padding))
-            {
-                return padding;
-            }
-
-            if (spacingType == EdgeSpacing.Left || spacingType == EdgeSpacing.Right)
-            {
-                padding = node.GetPadding(EdgeSpacing.Horizontal);
-            }
-
-            if (!YogaConstants.IsUndefined(padding))
-            {
-                return padding;
-            }
-
-            if (spacingType == EdgeSpacing.Top || spacingType == EdgeSpacing.Bottom)
-            {
-                padding = node.GetPadding(EdgeSpacing.Vertical);
-            }
-
-            if (!YogaConstants.IsUndefined(padding))
-            {
-                return padding;
-            }
-
-            return node.GetPadding(EdgeSpacing.All);
-        }
-
-        public static float GetPaddingSpace(this ReactShadowNode node, int spacingType)
-        {
-            var padding = node.GetPaddingValue(spacingType);
-            return YogaConstants.IsUndefined(padding)
-                ? 0.0f
-                : padding;
-        }
-
         public static float GetTopBorderWidth(this ReactShadowNode node)
         {
-            var width = node.GetBorder(EdgeSpacing.Top);
+            var width = node.GetBorder(YogaEdge.Top);
             if (!YogaConstants.IsUndefined(width))
             {
                 return width;
             }
 
-            width = node.GetBorder(EdgeSpacing.All);
+            width = node.GetBorder(YogaEdge.All);
             if (!YogaConstants.IsUndefined(width))
             {
                 return width;
