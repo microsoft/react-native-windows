@@ -61,7 +61,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook.Yoga, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Facebook.Yoga.1.2.0.2-patch\lib\netstandard\Facebook.Yoga.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Facebook.Yoga.1.2.0-pre1\lib\net45\Facebook.Yoga.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -217,9 +217,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.1.4.1\build\netstandard1.0\Microsoft.ChakraCore.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.1.4.1\build\netstandard1.0\Microsoft.ChakraCore.props'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\Facebook.Yoga.1.2.0.2-patch\build\netstandard\Facebook.Yoga.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Facebook.Yoga.1.2.0.2-patch\build\netstandard\Facebook.Yoga.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\Facebook.Yoga.1.2.0-pre1\build\net45\Facebook.Yoga.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Facebook.Yoga.1.2.0-pre1\build\net45\Facebook.Yoga.targets'))" />
   </Target>
-  <Import Project="$(SolutionDir)\packages\Facebook.Yoga.1.2.0.2-patch\build\netstandard\Facebook.Yoga.targets" Condition="Exists('$(SolutionDir)\packages\Facebook.Yoga.1.2.0.2-patch\build\netstandard\Facebook.Yoga.targets')" />
+  <Import Project="$(SolutionDir)\packages\Facebook.Yoga.1.2.0-pre1\build\net45\Facebook.Yoga.targets" Condition="Exists('$(SolutionDir)\packages\Facebook.Yoga.1.2.0-pre1\build\net45\Facebook.Yoga.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
