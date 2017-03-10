@@ -29,7 +29,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         public Timing(ReactContext reactContext)
-#if !WINDOWS_UWP
+#if WINDOWS_UWP
             : base(reactContext)
 #else
             : base(reactContext, CompiledReactDelegateFactory.Instance)
