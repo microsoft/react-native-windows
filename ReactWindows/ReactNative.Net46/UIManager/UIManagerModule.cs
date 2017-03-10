@@ -36,7 +36,7 @@ namespace ReactNative.UIManager
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementationProvider uiImplementationProvider,
             Window window)
-            : base(reactContext)
+            : base(reactContext, CompiledReactDelegateFactory.Instance)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
