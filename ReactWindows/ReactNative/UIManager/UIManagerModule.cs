@@ -132,7 +132,17 @@ namespace ReactNative.UIManager
             return tag;
         }
 
-#region React Methods
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// view logic after all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void AddUIBlock(IUIBlock block)
+        {
+            _uiImplementation.AddUIBlock(block);
+        }
+
+        #region React Methods
 
         /// <summary>
         /// Removes the root view.
