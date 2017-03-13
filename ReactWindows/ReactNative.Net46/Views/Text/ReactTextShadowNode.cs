@@ -27,8 +27,6 @@ namespace ReactNative.Views.Text
         private FontWeight? _fontWeight;
         private TextAlignment _textAlignment = TextAlignment.Left;
 
-        private TextDecorationLine _textDecorationLine = TextDecorationLine.None;
-
         private string _fontFamily;
 
         /// <summary>
@@ -40,39 +38,6 @@ namespace ReactNative.Views.Text
                 MeasureText(this, node, width, widthMode, height, heightMode);
         }
 
-        /// <summary>
-        /// Sets the TextDecorationLine for the node.
-        /// </summary>
-        /// <param name="textDecorationLineValue">The TextDecorationLine value.</param>
-        [ReactProp(ViewProps.TextDecorationLine)]
-        public void SetTextDecorationLine(string textDecorationLineValue)
-        {
-            var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue) ?? TextDecorationLine.None;
-            if (_textDecorationLine != textDecorationLine)
-            {
-                _textDecorationLine = textDecorationLine;
-                MarkUpdated();
-            }
-        }
-
-        private IEnumerable<TextDecoration> TextDecorationCollection
-        {
-            get
-            {
-                switch (_textDecorationLine)
-                {
-                    case TextDecorationLine.Underline:
-                        return TextDecorations.Underline;
-                    case TextDecorationLine.LineThrough:
-                        return TextDecorations.Strikethrough;
-                    case TextDecorationLine.UnderlineLineThrough:
-                        return TextDecorations.Underline.Concat(TextDecorations.Strikethrough);
-                    case TextDecorationLine.None:
-                    default:
-                        return Enumerable.Empty<TextDecoration>();
-                }
-            }
-        }
 
         /// <summary>
         /// Sets the font size for the node.
@@ -275,7 +240,6 @@ namespace ReactNative.Views.Text
             textBlock.FontSize = _fontSize ?? 15;
             textBlock.FontStyle = _fontStyle ?? new FontStyle();
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
-            textBlock.TextDecorations = new TextDecorationCollection(TextDecorationCollection);
 
             if (_fontFamily != null)
             {
