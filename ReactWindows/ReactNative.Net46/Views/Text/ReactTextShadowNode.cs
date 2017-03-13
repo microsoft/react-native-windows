@@ -4,7 +4,6 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +36,6 @@ namespace ReactNative.Views.Text
             MeasureFunction = (node, width, widthMode, height, heightMode) =>
                 MeasureText(this, node, width, widthMode, height, heightMode);
         }
-
 
         /// <summary>
         /// Sets the font size for the node.
