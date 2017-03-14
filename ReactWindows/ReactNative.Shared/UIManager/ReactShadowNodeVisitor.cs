@@ -1,12 +1,11 @@
-﻿using Facebook.CSSLayout;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ReactNative.UIManager
 {
-    abstract class CSSNodeVisitor<T>
+    abstract class ReactShadowNodeVisitor<T>
     {
-        public T Visit(CSSNode node)
+        public T Visit(ReactShadowNode node)
         {
             if (node == null)
             {
@@ -21,8 +20,9 @@ namespace ReactNative.UIManager
             else
             {
                 var children = new List<T>(n);
-                foreach (var child in node.Children)
+                for (var i = 0; i < node.ChildCount; ++i)
                 {
+                    var child = node.GetChildAt(i);
                     children.Add(Visit(child));
                 }
 
@@ -30,6 +30,6 @@ namespace ReactNative.UIManager
             }
         }
 
-        protected abstract T Make(CSSNode node, IList<T> children);
+        protected abstract T Make(ReactShadowNode node, IList<T> children);
     }
 }

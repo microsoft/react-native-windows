@@ -1,4 +1,4 @@
-﻿using Facebook.CSSLayout;
+﻿using Facebook.Yoga;
 using ReactNative.UIManager;
 using Windows.UI.Xaml.Controls;
 
@@ -26,11 +26,11 @@ namespace ReactNative.Views.Progress
         /// <param name="height">The parameterized native height of the control.</param>
         /// <param name="heightMode">The height measurement mode.</param>
         /// <returns>The measurement <see cref="MeasureOutput"/> for the <see cref="ProgressRing"/> component.</returns>
-        private static MeasureOutput MeasureProgressRing(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private static YogaSize MeasureProgressRing(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            var normalizedWidth = !CSSConstants.IsUndefined(width) ? width : 20;
-            var normalizedHeight = !CSSConstants.IsUndefined(height) ? height : 20;
-            return new MeasureOutput(normalizedWidth, normalizedHeight);
+            var normalizedWidth = !YogaConstants.IsUndefined(width) ? width : 20f;
+            var normalizedHeight = !YogaConstants.IsUndefined(height) ? height : 20f;
+            return MeasureOutput.Make(normalizedWidth, normalizedHeight);
         }
     }
 }
