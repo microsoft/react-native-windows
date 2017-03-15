@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = [
-  require('./runWindows/runWindows'),
-  require('./runWpf/runWpf')
+  require('./runWindows'),
+  require('./runWpf')
 ];

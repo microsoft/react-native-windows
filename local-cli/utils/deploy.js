@@ -23,7 +23,7 @@ function getAppPackage(options) {
 
 function getWindowsStoreAppUtils(options) {
   const popd = pushd(options.root);
-  const windowsStoreAppUtilsPath = './node_modules/react-native-windows/local-cli/runWindows/utils/WindowsStoreAppUtils.ps1';
+  const windowsStoreAppUtilsPath = './node_modules/react-native-windows/local-cli/utils/WindowsStoreAppUtils.ps1';
   execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
   popd()
   return windowsStoreAppUtilsPath;
