@@ -2,6 +2,7 @@
 
 const EOL = require('os').EOL;
 const path = require('path');
+const fs = require('fs');
 const child_process = require('child_process');
 const chalk = require('chalk');
 const shell = require('shelljs');
@@ -9,6 +10,11 @@ const Version = require('./version');
 const checkRequirements = require('./checkRequirements');
 
 const MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
+const VISUAL_STUDIO_EDITIONS = ['Enterprise', 'Professional', 'Community', 'Express'];
+const VISUAL_STUDIO_VERSION_TO_YEAR = {
+  '15.0': '2017'
+}
+
 
 class MSBuildTools {
   constructor(version, localPath) {
@@ -54,7 +60,13 @@ class MSBuildTools {
   }
 }
 
-function checkMSBuildVersion(version) {
+function tryGetMSBuildOfVersion(version) {
+  const vsPath = tryGetVSInstallationPath(version);
+  let toolsPath;
+  if (vsPath && fs.existsSync(toolsPath = path.join(vsPath, 'MSBuild', version, 'Bin'))) {
+    return new MSBuildTools(version, toolsPath);
+  }
+
   const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
   try {
     const output = child_process.execSync(query).toString();
@@ -73,8 +85,35 @@ function checkMSBuildVersion(version) {
   }
 }
 
+function tryGetVSInstallationPath(vsVersion) {
+  function *candidatePaths() {
+    const programFilesFolder = process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
+    if (!programFilesFolder) {
+      return;
+    }
+
+    const vsYear = VISUAL_STUDIO_VERSION_TO_YEAR[vsVersion];
+    if (vsYear) {
+      const base = path.join(programFilesFolder, 'Microsoft Visual Studio', vsYear);
+      for (const edition of VISUAL_STUDIO_EDITIONS) {
+        yield path.join(base, edition);
+      }
+    }
+
+    yield path.join(programFilesFolder, `Microsoft Visual Studio ${vsVersion}`);
+  }
+
+  for (const candidate of candidatePaths()) {
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+
+  return null;
+}
+
 module.exports.findAvailableVersion = function () {
-  const versions = MSBUILD_VERSIONS.map(checkMSBuildVersion);
+  const versions = MSBUILD_VERSIONS.map(tryGetMSBuildOfVersion);
   const msbuildTools = versions[0] || versions[1] || versions[2] || versions[3];
   if (!msbuildTools) {
     throw new Error('MSBuild tools not found');
@@ -86,7 +125,7 @@ module.exports.findAvailableVersion = function () {
 module.exports.findAllAvailableVersions = function () {
   console.log(chalk.green('Searching for available MSBuild versions...'));
   return MSBUILD_VERSIONS
-    .map(checkMSBuildVersion)
+    .map(tryGetMSBuildOfVersion)
     .filter(item => !!item);
 };
 
