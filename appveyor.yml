@@ -53,4 +53,4 @@ after_test:
   - ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.5.0\tools\nunit3-console.exe" -targetargs:"ReactWindows\ReactNative.Net46.Tests\bin\x86\Debug\ReactNative.Net46.Tests.dll" -output:ReactWindows\ReactWindows_coverage.xml
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
-  - codecov -f "ReactWindows_coverage.xml"\
+  - codecov -f "ReactWindows_coverage.xml"
