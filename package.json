@@ -13,7 +13,8 @@
   "engineStrict": true,
   "main": "Libraries/react-native-windows/react-native-windows.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "prepublish": "node scripts/download-nuget"
   },
   "files": [
     "Libraries",
