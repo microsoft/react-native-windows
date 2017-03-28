@@ -3,7 +3,7 @@
 # use by typing the following at a command prompt:
 # > PowerShell -ExecutionPolicy Bypass -File normalize_window.ps1
 
-Start-Sleep -s 1
+Start-Sleep -s 2
 
 Add-Type @"
   using System;
