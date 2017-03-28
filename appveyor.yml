@@ -5,8 +5,14 @@ cache:
 - ReactWindows\packages -> ReactWindows\**\packages.config
 - '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'
 
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 install:
+  - ps: Install-Product node ''
+  - node --version
   - npm install -g npm@latest
+  - npm --version
   - npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
   - ps: mkdir C:\winium
@@ -20,6 +26,8 @@ clone_script:
 - ps: git submodule update -q --init --recursive
 
 before_build:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/set-screenresolution.ps1'))
+- ps: Set-ScreenResolution 1280 1024
 - ps: $env:playgroundNet46_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
 - ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
 - ps: nuget restore ReactWindows\ReactNative.sln
@@ -54,3 +62,8 @@ after_test:
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
   - codecov -f "ReactWindows_coverage.xml"
+
+on_finish:
+ - ps: Get-ChildItem .\spec\screenshots\*.png | %{ Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+ # RDP for debug
+ # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
