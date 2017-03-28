@@ -5,8 +5,8 @@ cache:
 - ReactWindows\packages -> ReactWindows\**\packages.config
 - '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'
 
-# init:
-#   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
   - ps: Install-Product node ''
@@ -66,4 +66,4 @@ after_test:
 on_finish:
  - ps: Get-ChildItem .\spec\screenshots\*.png | %{ Push-AppveyorArtifact $_.FullName -FileName $_.Name }
  # RDP for debug
- #  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+ - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
