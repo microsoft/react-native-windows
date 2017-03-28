@@ -32,6 +32,7 @@
     "https-proxy-agent": "^1.0.0",
     "jasmine": "^2.5.2",
     "jasmine-reporters": "^2.2.0",
+    "jimp": "^0.2.27",
     "react": "~16.0.0-alpha.3",
     "react-native": "~0.43.0-rc.0",
     "selenium-webdriver": "2.48.x"
