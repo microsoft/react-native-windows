@@ -3,7 +3,7 @@ var diffScreenshots = require('./support/diffScreenshots')
 var selenium = require('selenium-webdriver')
 var By = selenium.By
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
 
 describe('In PlaygroundNet46 Test', () => {
     beforeAll((done) => {
