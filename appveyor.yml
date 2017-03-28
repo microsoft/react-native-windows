@@ -20,6 +20,8 @@ clone_script:
 - ps: git submodule update -q --init --recursive
 
 before_build:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/set-screenresolution.ps1'))
+- ps: Set-ScreenResolution 1280 1024
 - ps: $env:playgroundNet46_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
 - ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
 - ps: nuget restore ReactWindows\ReactNative.sln
