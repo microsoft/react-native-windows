@@ -54,3 +54,6 @@ after_test:
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
   - codecov -f "ReactWindows_coverage.xml"
+
+on_finish:
+ - ps: Get-ChildItem .\spec\screenshots\*.png | %{ Push-AppveyorArtifact $_.FullName -FileName $_.Name }  
