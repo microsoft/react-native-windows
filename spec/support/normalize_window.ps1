@@ -1,4 +1,4 @@
-# Powershell script to resize BlueJeans to 1152x648
+# Powershell script to resize Playground to 1152x648
 
 # use by typing the following at a command prompt:
 # > PowerShell -ExecutionPolicy Bypass -File normalize_window.ps1
@@ -11,8 +11,9 @@ Add-Type @"
 
   public class Win32 {
     [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
-    
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
@@ -39,7 +40,7 @@ Add-Type @"
 $rcWindow = New-Object RECT
 $rcClient = New-Object RECT
 
-$h = [Win32]::GetForegroundWindow()
+$h = (Get-Process | where {$_.MainWindowTitle -eq "Playground.Net46"}).MainWindowHandle
 
 [Win32]::GetWindowRect($h,[ref]$rcWindow)
 [Win32]::GetClientRect($h,[ref]$rcClient)
@@ -51,3 +52,4 @@ $dx = ($rcWindow.Right - $rcWindow.Left) - $rcClient.Right
 $dy = ($rcWindow.Bottom - $rcWindow.Top) - $rcClient.Bottom
 
 [Win32]::MoveWindow($h, $rct.Left, $rct.Top, $width + $dx, $height + $dy, $true)
+[Win32]::SetForegroundWindow($h)
