@@ -21,10 +21,11 @@ describe('In PlaygroundNet46 Test', () => {
     })
 
     it('has WelcomeText text', (done) => {
-        var button = this.driver.findElement(By.id('WelcomeText'))
-        button.getAttribute('AutomationId').then((id) => {
-            expect(id).toEqual('WelcomeText')
-            done()
+        this.driver.findElement(By.id('WelcomeText')).then((button) => {
+            button.getAttribute('AutomationId').then((id) => {
+                expect(id).toEqual('WelcomeText')
+                done()
+            })
         })
     })
 
