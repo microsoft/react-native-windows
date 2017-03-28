@@ -144,3 +144,7 @@ bld/
 
 # OpenCover
 *_coverage.xml
+
+# Image diffs
+spec/screenshots/*actual.png
+spec/screenshots/*diff.png
