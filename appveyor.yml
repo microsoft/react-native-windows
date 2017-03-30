@@ -1,4 +1,3 @@
-
 version: 1.0.{build}
 max_jobs: 2
 image: Visual Studio 2015
@@ -10,7 +9,7 @@ environment:
   nodejs_version: "6"
 
 install:
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node $env:nodejs_version x64
   - npm install -g npm@latest
   - npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
