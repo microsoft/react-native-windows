@@ -46,7 +46,7 @@
 .*/templates/index.wpf.js
 
 ; Ignore Example
-./Examples/.*
+.*/Examples/.*
 
 [include]
 
