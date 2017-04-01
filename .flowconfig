@@ -38,6 +38,8 @@
 
 ; Ignore odd error in experimental
 .*/Libraries/Experimental/SwipeableRow/SwipeableQuickActionButton.js
+.*/Libraries/CustomComponents/NavigationExperimental/.*
+.*/Libraries/NavigationExperimental/.*
 
 ; Ignore templates
 .*/templates/index.windows.js
