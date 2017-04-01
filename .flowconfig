@@ -45,6 +45,9 @@
 .*/templates/index.windows.js
 .*/templates/index.wpf.js
 
+; Ignore Example
+./Examples/.*
+
 [include]
 
 [libs]
