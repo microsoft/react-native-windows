@@ -5,7 +5,11 @@ cache:
 - ReactWindows\packages -> ReactWindows\**\packages.config
 - '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'
 
+environment:
+  nodejs_version: "6"
+
 install:
+  - ps: Install-Product node $env:nodejs_version x64
   - npm install -g npm@latest
   - npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
@@ -37,15 +41,17 @@ build_script:
 
     %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
 
-# Start Winium in the background
+# Start Winium in the background, give it a moment to start
 before_test:
   - ps: $winium = Start-Process -PassThru C:\winium\Winium.Desktop.Driver.exe
+  - ps: Start-Sleep -s 5
 
 test:
   assemblies:
   - ReactWindows\ReactNative.Net46.Tests\bin\x64\**\*.Tests.dll
 
 test_script:
+  - npm run flow-check
   - npm test
 
 after_test:
