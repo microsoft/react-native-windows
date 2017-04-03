@@ -41,9 +41,10 @@ build_script:
 
     %DEVENV% /build "Debug|ARM" ReactWindows\ReactNative.sln
 
-# Start Winium in the background
+# Start Winium in the background, give it a moment to start
 before_test:
   - ps: $winium = Start-Process -PassThru C:\winium\Winium.Desktop.Driver.exe
+  - ps: Start-Sleep -s 5
 
 test:
   assemblies:
