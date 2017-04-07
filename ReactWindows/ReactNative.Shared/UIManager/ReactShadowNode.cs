@@ -83,11 +83,11 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The width.
         /// </summary>
-        public float StyleWidth
+        public YogaValue StyleWidth
         {
             get
             {
-                return _yogaNode.Width.Value;
+                return _yogaNode.Width;
             }
             set
             {
@@ -98,7 +98,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The minimum width.
         /// </summary>
-        public float StyleMinWidth
+        public YogaValue StyleMinWidth
         {
             set
             {
@@ -109,7 +109,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The maximum width.
         /// </summary>
-        public float StyleMaxWidth
+        public YogaValue StyleMaxWidth
         {
             set
             {
@@ -120,11 +120,11 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The height.
         /// </summary>
-        public float StyleHeight
+        public YogaValue StyleHeight
         {
             get
             {
-                return _yogaNode.Height.Value;
+                return _yogaNode.Height;
             }
             set
             {
@@ -135,7 +135,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The minimum height.
         /// </summary>
-        public float StyleMinHeight
+        public YogaValue StyleMinHeight
         {
             set
             {
@@ -146,7 +146,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The maximum height.
         /// </summary>
-        public float StyleMaxHeight
+        public YogaValue StyleMaxHeight
         {
             set
             {
@@ -254,6 +254,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// The content alignment.
+        /// </summary>
+        public YogaAlign AlignContent
+        {
+            set
+            {
+                _yogaNode.AlignContent = value;
+            }
+        }
+
+        /// <summary>
         /// The justify content value.
         /// </summary>
         public YogaJustify JustifyContent
@@ -272,6 +283,17 @@ namespace ReactNative.UIManager
             set
             {
                 _yogaNode.Overflow = value;
+            }
+        }
+
+        /// <summary>
+        /// The display mode.
+        /// </summary>
+        public YogaDisplay Display
+        {
+            set
+            {
+                _yogaNode.Display = value;
             }
         }
 
@@ -517,7 +539,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="spacingType">The spacing type.</param>
         /// <param name="margin">The margin.</param>
-        public void SetMargin(int spacingType, float margin)
+        public void SetMargin(int spacingType, YogaValue margin)
         {
             var yogaEdge = (YogaEdge)spacingType;
             switch (yogaEdge)
@@ -560,32 +582,25 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="spacingType">The spacing type.</param>
         /// <returns>The padding.</returns>
-        public float GetPadding(int spacingType)
+        public float GetPadding(YogaEdge spacingType)
         {
-            var yogaEdge = (YogaEdge)spacingType;
-            switch (yogaEdge)
+            switch (spacingType)
             {
                 case YogaEdge.Left:
-                    return _yogaNode.PaddingLeft.Value;
+                    return _yogaNode.LayoutPaddingLeft;
                 case YogaEdge.Top:
-                    return _yogaNode.PaddingTop.Value;
+                    return _yogaNode.LayoutPaddingTop;
                 case YogaEdge.Right:
-                    return _yogaNode.PaddingRight.Value;
+                    return _yogaNode.LayoutPaddingRight;
                 case YogaEdge.Bottom:
-                    return _yogaNode.PaddingBottom.Value;
+                    return _yogaNode.LayoutPaddingBottom;
                 case YogaEdge.Start:
-                    return _yogaNode.PaddingStart.Value;
+                    return _yogaNode.LayoutPaddingStart;
                 case YogaEdge.End:
-                    return _yogaNode.PaddingEnd.Value;
-                case YogaEdge.Horizontal:
-                    return _yogaNode.PaddingHorizontal.Value;
-                case YogaEdge.Vertical:
-                    return _yogaNode.PaddingVertical.Value;
-                case YogaEdge.All:
-                    return _yogaNode.Padding.Value;
+                    return _yogaNode.LayoutPaddingEnd;
                 default:
                     throw new NotSupportedException(
-                        Invariant($"Unsupported padding type '{yogaEdge}'."));
+                        Invariant($"Unsupported padding type '{spacingType}'."));
             }
         }
 
@@ -594,7 +609,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="spacingType">The spacing type.</param>
         /// <param name="padding">The padding.</param>
-        public void SetDefaultPadding(int spacingType, float padding)
+        public void SetDefaultPadding(int spacingType, YogaValue padding)
         {
             _defaultPadding.Set(spacingType, padding);
             UpdatePadding();
@@ -605,7 +620,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="spacingType">The spacing type.</param>
         /// <param name="padding">The padding.</param>
-        public void SetPadding(int spacingType, float padding)
+        public void SetPadding(int spacingType, YogaValue padding)
         {
             _padding.Set(spacingType, padding);
             UpdatePadding();
@@ -615,10 +630,9 @@ namespace ReactNative.UIManager
         /// Gets the border for the node.
         /// </summary>
         /// <param name="spacingType">The spacing type.</param>
-        public float GetBorder(int spacingType)
+        public float GetBorder(YogaEdge spacingType)
         {
-            var yogaEdge = (YogaEdge)spacingType;
-            switch (yogaEdge)
+            switch (spacingType)
             {
                 case YogaEdge.Left:
                     return _yogaNode.BorderLeftWidth;
@@ -636,7 +650,7 @@ namespace ReactNative.UIManager
                     return _yogaNode.BorderWidth;
                 default:
                     throw new NotSupportedException(
-                        Invariant($"Unsupported border type '{yogaEdge}'."));
+                        Invariant($"Unsupported border type '{spacingType}'."));
             }
         }
 
@@ -682,7 +696,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="spacingType">The spacing type.</param>
         /// <param name="position">The position.</param>
-        public void SetPosition(int spacingType, float position)
+        public void SetPosition(int spacingType, YogaValue position)
         {
             var yogaEdge = (YogaEdge)spacingType;
             switch (yogaEdge)
@@ -1178,7 +1192,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void SetPadding(YogaNode node, int spacingType, float padding)
+        private void SetPadding(YogaNode node, int spacingType, YogaValue padding)
         {
             var yogaEdge = (YogaEdge)spacingType;
             switch (yogaEdge)

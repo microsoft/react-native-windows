@@ -624,6 +624,15 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Enqueues UIBlock to be executed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void AddUIBlock(IUIBlock block)
+        {
+            _operationsQueue.EnqueueUIBlock(block);
+        }
+
+        /// <summary>
         /// Called when the host receives the suspend event.
         /// </summary>
         public void OnSuspend()

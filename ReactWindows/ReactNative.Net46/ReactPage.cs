@@ -76,6 +76,17 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Instantiates the JavaScript executor.
+        /// </summary>
+        public virtual Func<IJavaScriptExecutor> JavaScriptExecutorFactory
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// The name of the main component registered from JavaScript.
         /// </summary>
         public abstract string MainComponentName { get; }
@@ -145,7 +156,7 @@ namespace ReactNative
         /// </summary>
         public async Task DisposeAsync()
         {
-            RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler) OnAcceleratorKeyActivated);
+            RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
             if (_reactInstanceManager.IsValueCreated)
             {
@@ -205,6 +216,7 @@ namespace ReactNative
                 InitialLifecycleState = LifecycleState.Resumed,
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
+                JavaScriptExecutorFactory = JavaScriptExecutorFactory,
             };
 
             builder.Packages.AddRange(Packages);
