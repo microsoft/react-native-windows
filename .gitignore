@@ -142,5 +142,8 @@ x86/
 bld/
 [Ll]og/
 
+# Certificates
+*.pfx
+
 # OpenCover
 *_coverage.xml
