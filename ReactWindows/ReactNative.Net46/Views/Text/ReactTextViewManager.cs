@@ -1,7 +1,10 @@
-﻿using ReactNative.UIManager;
+﻿using ReactNative.Reflection;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -38,6 +41,33 @@ namespace ReactNative.Views.Text
             view.Foreground = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
                 : null;
+        }
+
+        /// <summary>
+        /// Sets the TextDecorationLine for the node.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="textDecorationLineValue">The TextDecorationLine value.</param>
+        [ReactProp(ViewProps.TextDecorationLine)]
+        public void SetTextDecorationLine(TextBlock view, string textDecorationLineValue)
+        {
+            var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue) ?? TextDecorationLine.None;
+            switch (textDecorationLine)
+            {
+                case TextDecorationLine.Underline:
+                    view.TextDecorations = TextDecorations.Underline;
+                    break;
+                case TextDecorationLine.LineThrough:
+                    view.TextDecorations = TextDecorations.Strikethrough;
+                    break;
+                case TextDecorationLine.UnderlineLineThrough:
+                    view.TextDecorations = new TextDecorationCollection(TextDecorations.Underline.Concat(TextDecorations.Strikethrough));
+                    break;
+                case TextDecorationLine.None:
+                default:
+                    view.TextDecorations = null;
+                    break;
+            }
         }
 
         /// <summary>
