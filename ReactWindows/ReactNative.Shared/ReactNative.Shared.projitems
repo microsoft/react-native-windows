@@ -150,6 +150,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSelectionEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>
