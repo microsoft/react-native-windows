@@ -254,6 +254,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// The content alignment.
+        /// </summary>
+        public YogaAlign AlignContent
+        {
+            set
+            {
+                _yogaNode.AlignContent = value;
+            }
+        }
+
+        /// <summary>
         /// The justify content value.
         /// </summary>
         public YogaJustify JustifyContent
@@ -272,6 +283,17 @@ namespace ReactNative.UIManager
             set
             {
                 _yogaNode.Overflow = value;
+            }
+        }
+
+        /// <summary>
+        /// The display mode.
+        /// </summary>
+        public YogaDisplay Display
+        {
+            set
+            {
+                _yogaNode.Display = value;
             }
         }
 
