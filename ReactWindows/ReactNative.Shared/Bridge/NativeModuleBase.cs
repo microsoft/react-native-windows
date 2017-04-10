@@ -44,7 +44,7 @@ namespace ReactNative.Bridge
         /// Instantiates a <see cref="NativeModuleBase"/>.
         /// </summary>
         protected NativeModuleBase()
-            : this(ReflectionReactDelegateFactory.Instance)
+            : this(CompiledReactDelegateFactory.Instance)
         {
         }
 

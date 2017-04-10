@@ -239,7 +239,7 @@ var Image = React.createClass({
     this._updateViewConfig(this.props);
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps: function(nextProps: Object) {
     this._updateViewConfig(nextProps);
   },
 

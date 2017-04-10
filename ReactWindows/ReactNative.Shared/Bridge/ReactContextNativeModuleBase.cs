@@ -21,6 +21,20 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
+        /// Instantiates the <see cref="ReactContextNativeModuleBase"/>.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="delegateFactory">The React method delegate factory.</param>
+        protected ReactContextNativeModuleBase(ReactContext reactContext, IReactDelegateFactory delegateFactory)
+            : base(delegateFactory)
+        {
+            if (reactContext == null)
+                throw new ArgumentNullException(nameof(reactContext));
+
+            Context = reactContext;
+        }
+
+        /// <summary>
         /// The React context.
         /// </summary>
         public ReactContext Context { get; }
