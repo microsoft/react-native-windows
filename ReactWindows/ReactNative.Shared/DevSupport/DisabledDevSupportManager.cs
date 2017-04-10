@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 #else
+using System.Windows;
 using System.Windows.Threading;
 #endif
 
