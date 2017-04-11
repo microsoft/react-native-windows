@@ -1,6 +1,6 @@
 {
   "name": "@bluejeans/react-native-windows",
-  "version": "0.42.0-rc.0-p.13",
+  "version": "0.42.1-rc.0",
   "description": "React Native platform extensions for the Universal Windows Platform.",
   "license": "MIT",
   "repository": {
@@ -26,8 +26,8 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react-native": "~0.42.0-rc.2",
-    "react": "~15.4.0-rc.4"
+    "react-native": "~0.42.0",
+    "react": "~15.4.1"
   },
   "devDependencies": {
     "flow-bin": "^0.40.0",
