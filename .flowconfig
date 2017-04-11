@@ -48,6 +48,11 @@
 ; Ignore Example
 .*/Examples/.*
 
+; Ignore packager & local-cli due to upstream issues
+.*/node_modules/react-native/packager/.*
+.*/node_modules/react-native/local-cli/.*
+.*/node_modules/react-native/Libraries/Image/AssetSourceResolver.js
+
 [include]
 
 [libs]
