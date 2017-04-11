@@ -54,7 +54,7 @@ var PickerWindows = React.createClass({
     return this._stateFromProps(this.props);
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps: function(nextProps: Object) {
     this.setState(this._stateFromProps(nextProps));
   },
 
@@ -70,7 +70,10 @@ var PickerWindows = React.createClass({
         label: child.props.label,
       };
       if (child.props.color) {
+        // $FlowIssue: doesn't like adding properties to objects
+        /*::`*/
         childProps.color = processColor(child.props.color);
+        /*::`;*/
       }
       return childProps;
     });
