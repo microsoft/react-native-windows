@@ -40,7 +40,7 @@ Set the Platform build target to something compatible with your device OS (typic
 
 _Note:_ If you haven't already, you'll also need to enable Developer Mode on your device under Settings, Update & security, For developers, Developer Mode.
 
-_Note:_ If you see `Unexpected Error: -1988945906`, check that the `Windows Phone IP over USB Transport (IpOverUsbSvc)` service is listed and running in the Services app and if it is not follow the instructions listed in the first response to [this question](https://social.msdn.microsoft.com/Forums/windowsapps/en-US/74fafd96-50cf-4d77-9d7a-41620c5487a5/uwpsdkipoverusbsvc-service-missing-in-windows-10-rc-build-10240?forum=wpdevelop)
+_Note:_ If you see `Unexpected Error: -1988945906`, check that the `Windows Phone IP over USB Transport (IpOverUsbSvc)` service is listed and running in the Services app. If the IpOverUsbSvc is not running follow the instructions listed in the forum response to [this question](https://social.msdn.microsoft.com/Forums/windowsapps/en-US/74fafd96-50cf-4d77-9d7a-41620c5487a5/uwpsdkipoverusbsvc-service-missing-in-windows-10-rc-build-10240?forum=wpdevelop) .
 
 ### Xbox
 
