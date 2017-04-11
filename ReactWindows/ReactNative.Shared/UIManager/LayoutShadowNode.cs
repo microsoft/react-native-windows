@@ -243,7 +243,27 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignItems)]
         public void SetAlignItems(string alignItems)
         {
+            if (IsVirtual)
+            {
+                return;
+            }
+
             AlignItems = EnumHelpers.ParseNullable<YogaAlign>(alignItems) ?? YogaAlign.Stretch;
+        }
+
+        /// <summary>
+        /// Sets the content alignment.
+        /// </summary>
+        /// <param name="alignContent">The content alignment.</param>
+        [ReactProp(ViewProps.AlignContent)]
+        public void SetAlignContent(string alignContent)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            AlignContent = EnumHelpers.ParseNullable<YogaAlign>(alignContent) ?? YogaAlign.FlexStart;
         }
 
         /// <summary>
@@ -274,6 +294,21 @@ namespace ReactNative.UIManager
             }
 
             Overflow = EnumHelpers.ParseNullable<YogaOverflow>(overflow) ?? YogaOverflow.Visible;
+        }
+
+        /// <summary>
+        /// Sets the display mode.
+        /// </summary>
+        /// <param name="display">The display mode.</param>
+        [ReactProp(ViewProps.Display)]
+        public void SetDisplay(string display)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            Display = EnumHelpers.ParseNullable<YogaDisplay>(display) ?? YogaDisplay.Flex;
         }
 
         /// <summary>

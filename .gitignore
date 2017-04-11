@@ -118,6 +118,7 @@ packages/
 .vs/
 .vscode/
 *project.lock.json
+jsconfig.json
 
 #JavaScript files
 *.jsbundle
@@ -140,3 +141,9 @@ x64/
 x86/
 bld/
 [Ll]og/
+
+# Certificates
+*.pfx
+
+# OpenCover
+*_coverage.xml

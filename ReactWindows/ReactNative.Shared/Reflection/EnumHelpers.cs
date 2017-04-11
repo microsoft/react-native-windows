@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using static System.FormattableString;
 
 namespace ReactNative.Reflection
@@ -15,11 +17,7 @@ namespace ReactNative.Reflection
         {
             var lookup = s_enumCache.GetOrAdd(
                 typeof(T),
-                type => Enum.GetValues(type)
-                    .Cast<object>()
-                    .ToDictionary(
-                        e => Normalize(e.ToString()),
-                        e => e));
+                type => EnumToDictionary(type));
 
             var result = default(object);
             if (!lookup.TryGetValue(Normalize(value), out result))
@@ -39,6 +37,30 @@ namespace ReactNative.Reflection
                 return null;
 
             return Parse<T>(value);
+        }
+
+        private static Dictionary<string, object> EnumToDictionary(Type type)
+        {
+            var result = new Dictionary<string, object>();
+
+            var names = Enum.GetNames(type);
+            var values = Enum.GetValues(type);
+
+            for (int i = 0; i < values.Length; ++i)
+            {
+                string name = names[i];
+                object value = values.GetValue(i);
+
+                result.Add(Normalize(name), value);
+
+                var enumMemberAttribute = type.GetField(name).GetCustomAttribute(typeof(EnumMemberAttribute), false);
+                if (enumMemberAttribute != null)
+                {
+                    result.Add(Normalize(((EnumMemberAttribute)enumMemberAttribute).Value), value);
+                }
+            }
+
+            return result;
         }
 
         private static string Normalize(string value)
