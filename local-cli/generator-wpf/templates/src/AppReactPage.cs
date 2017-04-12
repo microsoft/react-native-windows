@@ -10,8 +10,10 @@ namespace <%= ns %>
     {
         public override string MainComponentName => "<%= name %>";
 
+        public override string JavaScriptMainModuleName => "index.wpf";
+
 #if BUNDLE
-        public override string JavaScriptBundleFile => AppDomain.CurrentDomain.BaseDirectory + "ReactAssets/index.windows.bundle";
+        public override string JavaScriptBundleFile => AppDomain.CurrentDomain.BaseDirectory + "ReactAssets/index.wpf.bundle";
 #endif
 
         public override List<IReactPackage> Packages => new List<IReactPackage>

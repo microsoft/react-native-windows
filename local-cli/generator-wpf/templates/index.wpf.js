@@ -20,7 +20,7 @@ class <%= name %> extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.windows.js
+          To get started, edit index.wpf.js
         </Text>
         <Text style={styles.instructions}>
           Press Ctrl+R to reload,{'\n'}
