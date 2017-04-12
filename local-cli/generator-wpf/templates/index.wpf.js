@@ -24,7 +24,7 @@ class <%= name %> extends Component {
         </Text>
         <Text style={styles.instructions}>
           Press Ctrl+R to reload,{'\n'}
-          Shift+F10 or shake for dev menu
+          Ctrl+D or Ctrl+M for dev menu
         </Text>
       </View>
     );
