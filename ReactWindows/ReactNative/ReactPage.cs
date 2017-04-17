@@ -1,4 +1,5 @@
-﻿using ReactNative.Bridge;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,17 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Instantiates the JavaScript executor.
+        /// </summary>
+        public virtual Func<IJavaScriptExecutor> JavaScriptExecutorFactory
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// The name of the main component registered from JavaScript.
         /// </summary>
         public abstract string MainComponentName { get; }
@@ -88,10 +100,20 @@ namespace ReactNative
         /// <param name="arguments">The launch arguments.</param>
         public void OnCreate(string arguments)
         {
+            OnCreate(arguments, default(JObject));
+        }
+
+        /// <summary>
+        /// Called when the application is first initialized.
+        /// </summary>
+        /// <param name="arguments">The launch arguments.</param>
+        /// <param name="initialProps">The initialProps.</param>
+        public void OnCreate(string arguments, JObject initialProps)
+        {
             RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
 
             ApplyArguments(arguments);
-            RootView.StartReactApplication(_reactInstanceManager, MainComponentName);
+            RootView.StartReactApplication(_reactInstanceManager, MainComponentName, initialProps);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) =>
             {
@@ -181,6 +203,7 @@ namespace ReactNative
                 InitialLifecycleState = LifecycleState.Resumed,
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
+                JavaScriptExecutorFactory = JavaScriptExecutorFactory,
             };
 
             builder.Packages.AddRange(Packages);
@@ -192,14 +215,20 @@ namespace ReactNative
             if (!string.IsNullOrEmpty(arguments))
             {
                 var args = arguments.Split(',');
-                if (args.Length % 2 != 0)
-                {
-                    throw new ArgumentException("Expected even number of arguments.", nameof(arguments));
-                }
 
                 var index = Array.IndexOf(args, "remoteDebugging");
-                var isRemoteDebuggingEnabled = default(bool);
-                if (index % 2 == 0 && bool.TryParse(args[index + 1], out isRemoteDebuggingEnabled))
+                if (index < 0)
+                {
+                    return;
+                }
+
+                if (args.Length <= index + 1)
+                {
+                    throw new ArgumentException("Expected value for remoteDebugging argument.", nameof(arguments));
+                }
+
+                bool isRemoteDebuggingEnabled;
+                if (bool.TryParse(args[index + 1], out isRemoteDebuggingEnabled))
                 {
                     _reactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
                 }

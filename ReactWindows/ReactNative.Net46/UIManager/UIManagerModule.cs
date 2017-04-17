@@ -12,10 +12,6 @@ namespace ReactNative.UIManager
     /// <summary>
     /// Native module to allow JavaScript to create and update native views.
     /// </summary>
-    /// <remarks>
-    /// TODO: 
-    /// 1) Add animation support to UIManagerModule
-    /// </remarks>
     public partial class UIManagerModule : ReactContextNativeModuleBase, ILifecycleEventListener, IOnBatchCompleteListener
     {
         private const int RootViewTagIncrement = 10;
@@ -23,7 +19,7 @@ namespace ReactNative.UIManager
         private readonly UIImplementation _uiImplementation;
         private readonly IReadOnlyDictionary<string, object> _moduleConstants;
         private readonly EventDispatcher _eventDispatcher;
-        private static FrameworkElement _window;
+        private static Window _window;
 
         private int _batchId;
         private int _nextRootTag = 1;
@@ -33,23 +29,25 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
-        /// <param name="uiImplementation">The UI implementation.</param>
+        /// <param name="uiImplementationProvider">The UI implementation provider.</param>
         /// <param name="window">The Framework Element.</param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
-            UIImplementation uiImplementation,
-            FrameworkElement window)
-            : base(reactContext)
+            UIImplementationProvider uiImplementationProvider,
+            Window window)
+            : base(reactContext, CompiledReactDelegateFactory.Instance)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
-            if (uiImplementation == null)
-                throw new ArgumentNullException(nameof(uiImplementation));
+            if (uiImplementationProvider == null)
+                throw new ArgumentNullException(nameof(uiImplementationProvider));
+            if (window == null)
+                throw new ArgumentNullException(nameof(window));
 
             _window = window;
             _eventDispatcher = new EventDispatcher(reactContext);
-            _uiImplementation = uiImplementation;
+            _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
         }
@@ -131,7 +129,7 @@ namespace ReactNative.UIManager
                     if (currentCount == resizeCount)
                     {
                         Context.AssertOnNativeModulesQueueThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight, _eventDispatcher);
+                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
                     }
                 });
             });
@@ -139,7 +137,17 @@ namespace ReactNative.UIManager
             return tag;
         }
 
-#region React Methods
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// view logic after all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void AddUIBlock(IUIBlock block)
+        {
+            _uiImplementation.AddUIBlock(block);
+        }
+
+        #region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -483,7 +491,7 @@ namespace ReactNative.UIManager
                 .With("BatchId", batchId)
                 .Start())
             {
-                _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
+                _uiImplementation.DispatchViewUpdates(batchId);
             }
         }
 
@@ -510,17 +518,17 @@ namespace ReactNative.UIManager
 
         private static IDictionary<string, object> GetDimensions()
         {
-            var bounds = new Rect() {Height = _window.Height, Width = _window.Width};
+            var content = (FrameworkElement)_window.Content;
             double scale = 1.0;
-            
+
             return new Dictionary<string, object>
             {
                 {
                     "window",
                     new Dictionary<string, object>
                     {
-                        { "width", bounds.Width },
-                        { "height", bounds.Height },
+                        { "width", content?.ActualWidth ?? 0.0 },
+                        { "height", content?.ActualHeight ?? 0.0 },
                         { "scale", scale },
                         /* TODO: density and DPI needed? */
                     }

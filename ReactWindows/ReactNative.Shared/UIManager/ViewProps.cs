@@ -1,6 +1,4 @@
-﻿using Facebook.CSSLayout;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace ReactNative.UIManager
 {
@@ -16,9 +14,15 @@ namespace ReactNative.UIManager
         // !!! Keep in sync with s_layoutOnlyProperties below !!!
         public const string AlignItems = "alignItems";
         public const string AlignSelf = "alignSelf";
+        public const string AlignContent = "alignContent";
+        public const string Overflow = "overflow";
+        public const string Display = "display";
         public const string Bottom = "bottom";
         public const string Collapsible = "collapsable";
         public const string Flex = "flex";
+        public const string FlexGrow = "flexGrow";
+        public const string FlexShrink = "flexShrink";
+        public const string FlexBasis = "flexBasis";
         public const string FlexDirection = "flexDirection";
         public const string FlexWrap = "flexWrap";
         public const string Height = "height";
@@ -41,7 +45,6 @@ namespace ReactNative.UIManager
         public const string PaddingTop = "paddingTop";
         public const string PaddingBottom = "paddingBottom";
 
-        public const string PointerEvents = "pointerEvents";
         public const string Position = "position";
         public const string Right = "right";
         public const string Top = "top";
@@ -51,7 +54,9 @@ namespace ReactNative.UIManager
         public const string MaxWidth = "maxWidth";
         public const string MinHeight = "minHeight";
         public const string MaxHeight = "maxHeight";
-      
+
+        public const string AspectRatio = "aspectRatio";
+
         // Properties that affect more than just layout
         public const string Disabled = "disabled";
         public const string BackgroundColor = "backgroundColor";
@@ -62,20 +67,19 @@ namespace ReactNative.UIManager
         public const string FontFamily = "fontFamily";
         public const string LetterSpacing = "letterSpacing";
         public const string LineHeight = "lineHeight";
-        public const string NeedsOffScreenAlphaCompositing = "needsOffscreenAlphaCompositing";
         public const string NumberOfLines = "numberOfLines";
         public const string Value = "value";
         public const string ResizeMode = "resizeMode";
         public const string TextAlign = "textAlign";
         public const string TextAlignVertical = "textAlignVertical";
         public const string TextDecorationLine = "textDecorationLine";
+        public const string AllowFontScaling = "allowFontScaling";
 
         public const string BorderWidth = "borderWidth";
         public const string BorderLeftWidth = "borderLeftWidth";
         public const string BorderTopWidth = "borderTopWidth";
         public const string BorderRightWidth = "borderRightWidth";
         public const string BorderBottomWidth = "borderBottomWidth";
-
         public const string BorderRadius = "borderRadius";
         public const string BorderTopLeftRadius = "borderTopLeftRadius";
         public const string BorderTopRightRadius = "borderTopRightRadius";
@@ -88,30 +92,43 @@ namespace ReactNative.UIManager
         /// Ordered list of margin spacing types.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "IReadOnlyList is immutable.")]
-        public static readonly IReadOnlyList<CSSSpacingType> PaddingMarginSpacingTypes = 
-            new List<CSSSpacingType>
+        public static readonly IReadOnlyList<int> PaddingMarginSpacingTypes = 
+            new List<int>
             {
-                CSSSpacingType.All,
-                CSSSpacingType.Vertical,
-                CSSSpacingType.Horizontal,
-                CSSSpacingType.Left,
-                CSSSpacingType.Right,
-                CSSSpacingType.Top,
-                CSSSpacingType.Bottom,
+                EdgeSpacing.All,
+                EdgeSpacing.Vertical,
+                EdgeSpacing.Horizontal,
+                EdgeSpacing.Start,
+                EdgeSpacing.End,
+                EdgeSpacing.Top,
+                EdgeSpacing.Bottom,
             };
 
         /// <summary>
         /// Ordered list of border spacing types.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "IReadOnlyList is immutable.")]
-        public static readonly IReadOnlyList<CSSSpacingType> BorderSpacingTypes =
-            new List<CSSSpacingType>
+        public static readonly IReadOnlyList<int> BorderSpacingTypes =
+            new List<int>
             {
-                CSSSpacingType.All,
-                CSSSpacingType.Left,
-                CSSSpacingType.Right,
-                CSSSpacingType.Top,
-                CSSSpacingType.Bottom,
+                EdgeSpacing.All,
+                EdgeSpacing.Start,
+                EdgeSpacing.End,
+                EdgeSpacing.Top,
+                EdgeSpacing.Bottom,
+            };
+
+        /// <summary>
+        /// Ordered list of position spacing types.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "IReadOnlyList is immutable.")]
+        public static readonly IReadOnlyList<int> PositionSpacingTypes =
+            new List<int>
+            {
+                EdgeSpacing.Start,
+                EdgeSpacing.End,
+                EdgeSpacing.Top,
+                EdgeSpacing.Bottom,
             };
 
         private static readonly HashSet<string> s_layoutOnlyProperties =
@@ -124,6 +141,7 @@ namespace ReactNative.UIManager
                 FlexDirection,
                 FlexWrap,
                 JustifyContent,
+                Overflow,
 
                 /* position */
                 Position,

@@ -74,6 +74,7 @@ ipch/
 [Rr]elease*/
 *.tlog/
 Ankh.NoLoad
+UpgradeLog.htm
 
 #MonoDevelop
 *.pidb
@@ -84,6 +85,7 @@ _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
 *.sass-cache
+WiniumDriver/
 
 #Project files
 [Bb]uild/
@@ -116,6 +118,7 @@ packages/
 .vs/
 .vscode/
 *project.lock.json
+jsconfig.json
 
 #JavaScript files
 *.jsbundle
@@ -138,3 +141,9 @@ x64/
 x86/
 bld/
 [Ll]og/
+
+# Certificates
+*.pfx
+
+# OpenCover
+*_coverage.xml

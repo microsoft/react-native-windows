@@ -21,10 +21,7 @@ namespace ReactNative.Chakra.Executor
 
         private JavaScriptSourceContext _context;
 
-        private JavaScriptNativeFunction _consoleInfo;
-        private JavaScriptNativeFunction _consoleLog;
-        private JavaScriptNativeFunction _consoleWarn;
-        private JavaScriptNativeFunction _consoleError;
+        private JavaScriptNativeFunction _nativeLoggingHook;
 
         private JavaScriptValue _globalObject;
 
@@ -138,7 +135,7 @@ namespace ReactNative.Chakra.Executor
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
-            string source = LoadScriptAsync(script).Result;
+            var source = LoadScriptAsync(script).Result;
 
             try
             {
@@ -212,24 +209,11 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptContext.Current = _runtime.CreateContext();
 
-            var consolePropertyId = default(JavaScriptPropertyId);
-            Native.ThrowIfError(
-                Native.JsGetPropertyIdFromName("console", out consolePropertyId));
-
-            var consoleObject = JavaScriptValue.CreateObject();
-            EnsureGlobalObject().SetProperty(consolePropertyId, consoleObject, true);
-
-            _consoleInfo = ConsoleInfo;
-            _consoleLog = ConsoleLog;
-            _consoleWarn = ConsoleWarn;
-            _consoleError = ConsoleError;
-
-            DefineHostCallback(consoleObject, "info", _consoleInfo);
-            DefineHostCallback(consoleObject, "log", _consoleLog);
-            DefineHostCallback(consoleObject, "warn", _consoleWarn);
-            DefineHostCallback(consoleObject, "error", _consoleError);
-
-            Debug.WriteLine("Chakra initialization successful.");
+            _nativeLoggingHook = NativeLoggingHook;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeLoggingHook"),
+                JavaScriptValue.CreateFunction(_nativeLoggingHook),
+                true);
         }
 
         #region JSON Marshaling
@@ -270,59 +254,7 @@ namespace ReactNative.Chakra.Executor
         #endregion
 
         #region Console Callbacks
-
-        private static void DefineHostCallback(
-            JavaScriptValue obj,
-            string callbackName,
-            JavaScriptNativeFunction callback)
-        {
-            var propertyId = JavaScriptPropertyId.FromString(callbackName);
-            var function = JavaScriptValue.CreateFunction(callback);
-            obj.SetProperty(propertyId, function, true);
-        }
-
-        private JavaScriptValue ConsoleInfo(
-            JavaScriptValue callee,
-            bool isConstructCall,
-            JavaScriptValue[] arguments,
-            ushort argumentCount,
-            IntPtr callbackData)
-        {
-            return ConsoleCallback("Info", callee, isConstructCall, arguments, argumentCount, callbackData);
-        }
-
-        private JavaScriptValue ConsoleLog(
-            JavaScriptValue callee,
-            bool isConstructCall,
-            JavaScriptValue[] arguments,
-            ushort argumentCount,
-            IntPtr callbackData)
-        {
-            return ConsoleCallback("Log", callee, isConstructCall, arguments, argumentCount, callbackData);
-        }
-
-        private JavaScriptValue ConsoleWarn(
-            JavaScriptValue callee,
-            bool isConstructCall,
-            JavaScriptValue[] arguments,
-            ushort argumentCount,
-            IntPtr callbackData)
-        {
-            return ConsoleCallback("Warn", callee, isConstructCall, arguments, argumentCount, callbackData);
-        }
-
-        private JavaScriptValue ConsoleError(
-            JavaScriptValue callee,
-            bool isConstructCall,
-            JavaScriptValue[] arguments,
-            ushort argumentCount,
-            IntPtr callbackData)
-        {
-            return ConsoleCallback("Error", callee, isConstructCall, arguments, argumentCount, callbackData);
-        }
-
-        private JavaScriptValue ConsoleCallback(
-            string kind,
+        private JavaScriptValue NativeLoggingHook(
             JavaScriptValue callee,
             bool isConstructCall,
             JavaScriptValue[] arguments,
@@ -331,45 +263,16 @@ namespace ReactNative.Chakra.Executor
         {
             try
             {
-                Debug.Write(Invariant($"[JS {kind}]"));
-
-                // First argument is this-context, ignore...
-                for (var i = 1; i < argumentCount; ++i)
-                {
-                    Debug.Write(Stringify(arguments[i]) + " ");
-                }
-
-                Debug.WriteLine("");
+                var message = arguments[1].ToString();
+                var logLevel = (LogLevel)(int)arguments[2].ToDouble();
+                Debug.WriteLine($"[JS {logLevel}] {message}");
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.WriteLine(Invariant($"Error in ChakraExecutor.ConsoleCallback: {ex.Message}"));
+                Debug.WriteLine("Unable to process JavaScript console statement");
             }
 
             return JavaScriptValue.Undefined;
-        }
-
-        private string Stringify(JavaScriptValue value)
-        {
-            switch (value.ValueType)
-            {
-                case JavaScriptValueType.Undefined:
-                case JavaScriptValueType.Null:
-                case JavaScriptValueType.Number:
-                case JavaScriptValueType.String:
-                case JavaScriptValueType.Boolean:
-                case JavaScriptValueType.Object:
-                case JavaScriptValueType.Array:
-                case JavaScriptValueType.TypedArray:
-                    return ConvertJson(value).ToString(Formatting.None);
-                case JavaScriptValueType.Function:
-                case JavaScriptValueType.Error:
-                case JavaScriptValueType.Symbol:
-                case JavaScriptValueType.ArrayBuffer:
-                    return value.ConvertToString().ToString();
-                default:
-                    throw new NotImplementedException();
-            }
         }
         #endregion
 

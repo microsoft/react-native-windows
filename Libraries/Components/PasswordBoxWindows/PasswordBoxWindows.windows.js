@@ -13,10 +13,10 @@
 
 var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
-var NativeMethodsMixin = require('react/lib/NativeMethodsMixin');
+var NativeMethodsMixin = require('NativeMethodsMixin');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
-var ReactNative = require('react/lib/ReactNative');
+var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var TextInputState = require('TextInputState');
@@ -368,6 +368,7 @@ var PasswordBoxWindows = React.createClass({
         passwordChar={this.props.passwordChar}
         passwordRevealMode={this.props.passwordRevealMode}
         placeholder={this.props.placeholder}
+        placeholderTextColor={this.props.placeholderTextColor}
         selectionColor={this.props.selectionColor}
         text={this._getText()}
         editable={this.props.editable}

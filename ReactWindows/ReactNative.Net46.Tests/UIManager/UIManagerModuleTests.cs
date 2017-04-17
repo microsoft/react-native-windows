@@ -19,15 +19,15 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementation, new FrameworkElement()));
+                () => new UIManagerModule(context, null, uiImplementationProvider, new Window()));
             Assert.AreEqual("viewManagers", ex1.ParamName);
 
             ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, viewManagers, null, new FrameworkElement()));
-            Assert.AreEqual("uiImplementation", ex2.ParamName);
+                () => new UIManagerModule(context, viewManagers, null, new Window()));
+            Assert.AreEqual("uiImplementationProvider", ex2.ParamName);
         }
 
         [Test]
@@ -35,10 +35,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation, new FrameworkElement()));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider, new Window()));
 
             var constants = module.Constants;
 
@@ -65,13 +65,12 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
-            var uiImplementation = new UIImplementation(context, viewManagers);
+            var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementation, new FrameworkElement()));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider, new Window()));
 
             var constants = module.Constants;
-
             Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetValue("otherSelectionChange"));
             Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
             Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetMap("topLoadingStart").GetValue("foo"));

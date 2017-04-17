@@ -215,6 +215,20 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The placeholder text color.</param>
+        [ReactProp("placeholderTextColor", CustomType = "Color")]
+        public void SetPlaceholderTextColor(ReactTextBox view, uint? color)
+        {
+            //The 'PlaceholderTextColor' is not implemented in UWP - Use of this property
+            //will be ignored...
+
+            //TODO: #1039 #1040
+        }
+
+        /// <summary>
         /// Sets the border color for the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance</param>
@@ -426,7 +440,7 @@ namespace ReactNative.Views.TextInput
                 {
                     return;
                 }
-
+                
                 view.TextChanging -= OnTextChanging;
                 view.TextChanged -= OnTextChanged;
 
@@ -477,6 +491,7 @@ namespace ReactNative.Views.TextInput
             Canvas.SetLeft(view, dimensions.X);
             Canvas.SetTop(view, dimensions.Y);
             view.Width = dimensions.Width;
+            view.Height = dimensions.Height;
         }
 
         /// <summary>
@@ -506,7 +521,7 @@ namespace ReactNative.Views.TextInput
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
         }
-
+        
         private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
             var textBox = (ReactTextBox)sender;
@@ -553,7 +568,7 @@ namespace ReactNative.Views.TextInput
                       textBox.GetTag(),
                       textBox.Text));
         }
-
+        
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)

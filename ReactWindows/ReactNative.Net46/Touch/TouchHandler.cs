@@ -60,7 +60,8 @@ namespace ReactNative.Touch
                 pointer.IsHorizontalMouseWheel = false;
                 pointer.IsEraser = false;
                 pointer.ReactView = reactView;
-                UpdatePointerForEvent(pointer, rootPoint.Position, viewPoint);
+                var timestamp = e.Timestamp;
+                UpdatePointerForEvent(pointer, rootPoint.Position, viewPoint, timestamp);
 
                 var pointerIndex = _pointers.Count;
                 _pointers.Add(pointer);
@@ -88,7 +89,8 @@ namespace ReactNative.Touch
                 pointer.IsHorizontalMouseWheel = false;
                 pointer.IsEraser = false;
                 pointer.ReactView = reactView;
-                UpdatePointerForEvent(pointer, rootPoint, viewPoint);
+                var timestamp = e.Timestamp;
+                UpdatePointerForEvent(pointer, rootPoint, viewPoint, timestamp);
 
                 var pointerIndex = _pointers.Count;
                 _pointers.Add(pointer);
@@ -98,19 +100,18 @@ namespace ReactNative.Touch
 
         private void OnTouchMoved(object sender, TouchEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            if (_pointers != null && _pointers.Count > 0)
             {
-                var pointer = _pointers[pointerIndex];
+                var pointer = _pointers[0];
                 UpdatePointerForEvent(pointer, e);
-                DispatchTouchEvent(TouchEventType.Move, _pointers, pointerIndex);
+                DispatchTouchEvent(TouchEventType.Move, _pointers, 0);
             }
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            var pointerIndex = IndexOfPointerWithId((uint)e.Device.GetHashCode());
+            if (_pointers != null && pointerIndex >= 0)
             {
                 var pointer = _pointers[pointerIndex];
                 UpdatePointerForEvent(pointer, e);
@@ -130,14 +131,13 @@ namespace ReactNative.Touch
 
         private void OnTouchConcluded(TouchEventType touchEventType, TouchEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            if (_pointers != null && _pointers.Count > 0)
             {
-                var pointer = _pointers[pointerIndex];
+                var pointer = _pointers[0];
                 UpdatePointerForEvent(pointer, e);
-                DispatchTouchEvent(touchEventType, _pointers, pointerIndex);
+                DispatchTouchEvent(touchEventType, _pointers, 0);
 
-                _pointers.RemoveAt(pointerIndex);
+                _pointers.RemoveAt(0);
 
                 if (_pointers.Count == 0)
                 {
@@ -150,8 +150,8 @@ namespace ReactNative.Touch
 
         private void OnPointerConcluded(TouchEventType touchEventType, MouseButtonEventArgs e)
         {
-            var pointerIndex = 1;
-            if (pointerIndex != -1)
+            var pointerIndex = IndexOfPointerWithId((uint)e.Device.GetHashCode());
+            if (_pointers != null && pointerIndex >= 0)
             {
                 var pointer = _pointers[pointerIndex];
                 UpdatePointerForEvent(pointer, e);
@@ -245,24 +245,27 @@ namespace ReactNative.Touch
         {
             var rootPoint = e.GetTouchPoint(_view);
             var viewPoint = e.GetTouchPoint(pointer.ReactView);
-            UpdatePointerForEvent(pointer, rootPoint.Position, viewPoint.Position);
+            var timestamp = e.Timestamp;
+            UpdatePointerForEvent(pointer, rootPoint.Position, viewPoint.Position, timestamp);
         }
 
         private void UpdatePointerForEvent(ReactPointer pointer, MouseButtonEventArgs e)
         {
             var rootPoint = e.GetPosition(_view);
             var viewPoint = e.GetPosition(pointer.ReactView);
-            UpdatePointerForEvent(pointer, rootPoint, viewPoint);
+            var timestamp = e.Timestamp;
+            UpdatePointerForEvent(pointer, rootPoint, viewPoint, timestamp);
         }
 
         private void UpdatePointerForEvent(ReactPointer pointer, MouseEventArgs e)
         {
             var rootPoint = e.GetPosition(_view);
             var viewPoint = e.GetPosition(pointer.ReactView);
-            UpdatePointerForEvent(pointer, rootPoint, viewPoint);
+            var timestamp = e.Timestamp;
+            UpdatePointerForEvent(pointer, rootPoint, viewPoint, timestamp);
         }
 
-        private void UpdatePointerForEvent(ReactPointer pointer, Point rootPoint, Point viewPoint)
+        private void UpdatePointerForEvent(ReactPointer pointer, Point rootPoint, Point viewPoint, int timestamp)
         {
             var positionInRoot = rootPoint;
             var positionInView = viewPoint;
@@ -271,6 +274,7 @@ namespace ReactNative.Touch
             pointer.PageY = (float)positionInRoot.Y;
             pointer.LocationX = (float)positionInView.X;
             pointer.LocationY = (float)positionInView.Y;
+            pointer.Timestamp = (ulong) timestamp;
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)

@@ -5,6 +5,7 @@ using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using Windows.Devices.Sensors;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
@@ -13,10 +14,6 @@ namespace ReactNative.UIManager
     /// <summary>
     /// Native module to allow JavaScript to create and update native views.
     /// </summary>
-    /// <remarks>
-    /// TODO: 
-    /// 1) Add animation support to UIManagerModule
-    /// </remarks>
     public partial class UIManagerModule : ReactContextNativeModuleBase, ILifecycleEventListener, IOnBatchCompleteListener
     {
         private const int RootViewTagIncrement = 10;
@@ -33,20 +30,20 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
-        /// <param name="uiImplementation">The UI implementation.</param>
+        /// <param name="uiImplementationProvider">The UI implementation provider.</param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
-            UIImplementation uiImplementation)
+            UIImplementationProvider uiImplementationProvider)
             : base(reactContext)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
-            if (uiImplementation == null)
-                throw new ArgumentNullException(nameof(uiImplementation));
+            if (uiImplementationProvider == null)
+                throw new ArgumentNullException(nameof(uiImplementationProvider));
             
             _eventDispatcher = new EventDispatcher(reactContext);
-            _uiImplementation = uiImplementation;
+            _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
             _moduleConstants = CreateConstants(viewManagers);
             reactContext.AddLifecycleEventListener(this);
         }
@@ -116,7 +113,6 @@ namespace ReactNative.UIManager
             _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
 
             var resizeCount = 0;
-
             rootView.SetOnSizeChangedListener((sender, args) =>
             {
                 var currentCount = ++resizeCount;
@@ -128,7 +124,7 @@ namespace ReactNative.UIManager
                     if (currentCount == resizeCount)
                     {
                         Context.AssertOnNativeModulesQueueThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight, _eventDispatcher);
+                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
                     }
                 });
             });
@@ -136,7 +132,17 @@ namespace ReactNative.UIManager
             return tag;
         }
 
-#region React Methods
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// view logic after all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void AddUIBlock(IUIBlock block)
+        {
+            _uiImplementation.AddUIBlock(block);
+        }
+
+        #region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -441,6 +447,7 @@ namespace ReactNative.UIManager
         {
             _uiImplementation.OnSuspend();
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
         }
 
         /// <summary>
@@ -450,6 +457,8 @@ namespace ReactNative.UIManager
         {
             _uiImplementation.OnResume();
             ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
+            DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
+
         }
 
 
@@ -459,6 +468,7 @@ namespace ReactNative.UIManager
         public void OnDestroy()
         {
             ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
             _uiImplementation.OnShutdown();
             _eventDispatcher.OnDestroy();
         }
@@ -480,7 +490,7 @@ namespace ReactNative.UIManager
                 .With("BatchId", batchId)
                 .Start())
             {
-                _uiImplementation.DispatchViewUpdates(_eventDispatcher, batchId);
+                _uiImplementation.DispatchViewUpdates(batchId);
             }
         }
 
@@ -503,6 +513,46 @@ namespace ReactNative.UIManager
         {
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("didUpdateDimensions", GetDimensions());
+        }
+
+        private void OnOrientationChanged(DisplayInformation displayInformation, object args)
+        {
+            var name = default(string);
+            var degrees = default(double);
+            var isLandscape = false;
+
+            switch (displayInformation.CurrentOrientation)
+            {
+                case DisplayOrientations.Landscape:
+                    name = "landscape-primary";
+                    degrees = -90.0;
+                    isLandscape = true;
+                    break;
+                case DisplayOrientations.Portrait:
+                    name = "portrait-primary";
+                    degrees = 0.0;
+                    break;
+                case DisplayOrientations.LandscapeFlipped:
+                    name = "landscape-secondary";
+                    degrees = 90.0;
+                    isLandscape = true;
+                    break;
+                case DisplayOrientations.PortraitFlipped:
+                    name = "portraitSecondary";
+                    degrees = 180.0;
+                    break;
+            }
+
+            if (name != null)
+            {
+                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                    .emit("namedOrientationDidChange", new JObject
+                    {
+                        { "name", name },
+                        { "rotationDegrees", degrees },
+                        { "isLandscape", isLandscape },
+                    });
+            }
         }
 
         private static IDictionary<string, object> GetDimensions()

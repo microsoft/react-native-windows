@@ -6,10 +6,21 @@ using System.Windows.Media;
 
 namespace ReactNative.UIManager
 {
-    static class ColorHelpers
+    /// <summary>
+    /// Helper class for parsing color values.
+    /// </summary>
+    public static class ColorHelpers
     {
+        /// <summary>
+        /// Unsigned integer representation of transparent color.
+        /// </summary>
         public const uint Transparent = 0x00FFFFFF;
 
+        /// <summary>
+        /// Parses a color from an unsigned integer.
+        /// </summary>
+        /// <param name="value">The unsigned integer color value.</param>
+        /// <returns>The parsed color value.</returns>
         public static Color Parse(uint value)
         {
             var color = value;

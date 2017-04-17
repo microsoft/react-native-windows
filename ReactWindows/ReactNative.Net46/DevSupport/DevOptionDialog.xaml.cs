@@ -1,14 +1,24 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ReactNative.DevSupport
 {
     sealed partial class DevOptionDialog
     {
+        #region Constructor(s)
+
+        /// <summary>
+        /// Initializes the DevOptionsDialog
+        /// </summary>
         public DevOptionDialog()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Add button to dialog
@@ -17,14 +27,28 @@ namespace ReactNative.DevSupport
         /// <param name="onSelect">Action when button is pressed</param>
         public void Add(string name, Action onSelect)
         {
-            var button = new Button
+            if (this.OptionsStackPanel != null)
             {
-                Content = name,
-            };
+                var button = new Button
+                {
+                    Content = name,
+                };
 
-            button.Click += (sender, args) => onSelect();
+                button.Click += (sender, args) => onSelect();
 
-            OptionsStackPanel.Children.Add(button);
+                this.OptionsStackPanel.Children.Add(button);
+            }
         }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void OnCancelButtonClicked(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion
     }
 }

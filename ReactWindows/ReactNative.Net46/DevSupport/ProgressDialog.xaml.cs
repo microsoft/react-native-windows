@@ -1,5 +1,7 @@
-﻿using System.Reactive.Disposables;
+﻿using System;
+using System.Reactive.Disposables;
 using System.Threading;
+using System.Windows;
 
 namespace ReactNative.DevSupport
 {
@@ -9,24 +11,15 @@ namespace ReactNative.DevSupport
     /// <remarks>
     /// This is used when awaiting the regeneration of the JavaScript bundle.
     /// </remarks>
-    sealed partial class ProgressDialog
+    sealed partial class ProgressDialog : Window, IDisposable
     {
+        #region Private Fields
+
         private readonly CancellationDisposable _cancellationDisposable;
 
-        /// <summary>
-        /// Instantiates the <see cref="ProgressDialog"/>.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="message">The message.</param>
-        public ProgressDialog(string title, string message)
-        {
-            InitializeComponent();
+        #endregion
 
-            Heading = title;
-            Message = message;
-
-            _cancellationDisposable = new CancellationDisposable();
-        }
+        #region Properties
 
         /// <summary>
         /// The title of the dialog.
@@ -41,13 +34,41 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// The cancellation token cancelled upon dialog dismissal.
         /// </summary>
-        public CancellationToken Token
+        public CancellationToken Token => _cancellationDisposable.Token;
+
+        #endregion
+
+        #region Constructor(s)
+
+        /// <summary>
+        /// Instantiates the <see cref="ProgressDialog"/>.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="message">The message.</param>
+        public ProgressDialog(string title, string message)
         {
-            get
-            {
-                return _cancellationDisposable.Token;
-            }
+            Heading = title;
+            Message = message;
+
+            InitializeComponent();
+
+            DataContext = this;
+
+            _cancellationDisposable = new CancellationDisposable();
         }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void OnDismissButtonClicked(object sender, RoutedEventArgs e)
+        {
+            _cancellationDisposable.Dispose();
+        }
+
+        #endregion
+
+        #region IDisposable Members
 
         /// <summary>
         /// Disposes the <see cref="ProgressDialog"/>. 
@@ -56,5 +77,7 @@ namespace ReactNative.DevSupport
         {
             _cancellationDisposable.Dispose();
         }
+
+        #endregion
     }
 }

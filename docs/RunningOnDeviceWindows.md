@@ -6,11 +6,17 @@ category: Guides (Windows)
 permalink: docs/running-on-device-windows.html
 ---
 
-## Running the Universal Windows App
+## Running the Universal Windows App with react-native-cli
 
-Running a React Native Universal Windows app is easy. Open your solution in Visual Studio 2015, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
+You can deploy your react-native-windows app to the Desktop using the [react-native-cli](http://npmjs.com/packages/react-native-cli):
+```
+react-native run-windows
+```
+For more information on the kinds of options and flags available for deploying to devices and emulators, use the `--help` flag to get the command usage information.
 
-We're also planning on creating a `run-windows` command. In the meantime, just use Visual Studio. 
+## Running the Universal Windows App with Visual Studio
+
+Open your solution in Visual Studio 2015, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
 
 ### Desktop
 
@@ -31,6 +37,10 @@ You may have to install the Windows 10 Mobile emulators for Visual Studio. Instr
 Set the Platform build target to something compatible with your device OS (typically ARM), and choose the Device deployment target.
 
 ![Deploy Device](img/DeployDevice.png)
+
+_Note:_ If you haven't already, you'll also need to enable Developer Mode on your device under Settings, Update & security, For developers, Developer Mode.
+
+_Note:_ If you see `Unexpected Error: -1988945906`, check that the `Windows Phone IP over USB Transport (IpOverUsbSvc)` service is listed and running in the Services app. If the IpOverUsbSvc is not running follow the instructions listed in the forum response to [this question](https://social.msdn.microsoft.com/Forums/windowsapps/en-US/74fafd96-50cf-4d77-9d7a-41620c5487a5/uwpsdkipoverusbsvc-service-missing-in-windows-10-rc-build-10240?forum=wpdevelop) .
 
 ### Xbox
 
@@ -53,15 +63,15 @@ If you generated your project using `rnpm-plugin-windows`, the solution is alrea
 Before deploying with this configuration, you'll have to generate the `index.windows.bundle` file with the following command:
 
 ```
-react-native bundle --platform windows --entry-file index.windows.js 
+react-native bundle --platform windows --entry-file index.windows.js
     --bundle-output windows\myapp\ReactAssets\index.windows.bundle
     --assets-dest windows\myapp\ReactAssets
 ```
 
-To generate the release (minified) bundle, add the `--dev false`: 
+To generate the release (minified) bundle, add the `--dev false`:
 
 ```
-react-native bundle --platform windows --entry-file index.windows.js 
+react-native bundle --platform windows --entry-file index.windows.js
     --bundle-output windows\myapp\ReactAssets\index.windows.bundle
     --assets-dest windows\myapp\ReactAssets
     --dev false

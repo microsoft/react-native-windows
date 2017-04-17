@@ -7,7 +7,7 @@
 'use strict';
 
 var React = require('React');
-var ReactNative = require('react/lib/ReactNative');
+var ReactNative = require('ReactNative');
 var ReactElement = require('react/lib/ReactElement');
 var ReactPropTypes = require('react/lib/ReactPropTypes');
 var UIManager = require('UIManager');
@@ -88,11 +88,11 @@ var FlipViewWindows = React.createClass({
     }
   },
   
-  getInnerViewNode: function(): ReactComponent {
+  getInnerViewNode: function(): ReactComponent<*,*,*> {
     return this.refs[FLIPVIEW_REF].getInnerViewNode();
   },
 
-  _childrenWithOverridenStyle: function(): Array {
+  _childrenWithOverridenStyle: function(): Array<*> {
     // Override styles so that each page will fill the parent. Native component
     // will handle positioning of elements, so it's not important to offset
     // them correctly.
