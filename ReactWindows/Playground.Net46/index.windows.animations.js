@@ -317,6 +317,7 @@ renderButton (title, action) {
           {this.renderObjectScale()}
           {this.renderObjectRotate()}
           {this.renderObjectSkew()}
+          {/*this.renderObjectPerspective()*/}
         </View>
         <View style={styles.buttonPanel}>
             {this.renderButton('translateX', this.translateX)}

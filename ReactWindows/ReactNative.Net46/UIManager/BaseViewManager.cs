@@ -194,7 +194,7 @@ namespace ReactNative.UIManager
                 }
                 else
                 {
-                    throw new InvalidOperationException("ReactNative.Net46 does not support non-affine transformations");
+                    throw new NotImplementedException("ReactNative.Net46 does not support non-affine transformations");
                 }
             }
         }
