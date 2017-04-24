@@ -112,8 +112,8 @@ namespace ReactNative.UIManager
             new List<int>
             {
                 EdgeSpacing.All,
-                EdgeSpacing.Start,
-                EdgeSpacing.End,
+                EdgeSpacing.Left,
+                EdgeSpacing.Right,
                 EdgeSpacing.Top,
                 EdgeSpacing.Bottom,
             };
