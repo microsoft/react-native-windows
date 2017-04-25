@@ -275,7 +275,7 @@ namespace ReactNative.Modules.Network
                         {
 #if WINDOWS_UWP
                             var length = response.Content.Headers.ContentLength;
-                            var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false);
+                            var inputStream = await response.Content.ReadAsInputStreamAsync().AsTask(token).ConfigureAwait(false);
                             var stream = inputStream.AsStreamForRead();
 #else
                             var length = (ulong?)response.Content.Headers.ContentLength;
@@ -297,7 +297,13 @@ namespace ReactNative.Modules.Network
                                 if (responseType == "text")
                                 {
 #if WINDOWS_UWP
-                                    var responseBody = await response.Content.ReadAsStringAsync().AsTask().ConfigureAwait(false);
+                                    string responseBody;
+                                    var responseInputStream = await response.Content.ReadAsInputStreamAsync().AsTask(token).ConfigureAwait(false);
+                                    using (var responseStream = responseInputStream.AsStreamForRead())
+                                    using (var responseStreamReader = new StreamReader(responseStream))
+                                    {
+                                        responseBody = await responseStreamReader.ReadToEndAsync().ConfigureAwait(false);
+                                    }
 #else
                                     var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 #endif
@@ -309,22 +315,20 @@ namespace ReactNative.Modules.Network
                                 else
                                 {
                                     Debug.Assert(responseType == "base64");
-                                    using (var memoryStream = new MemoryStream())
-                                    {
 #if WINDOWS_UWP
-                                        using (var outputStream = memoryStream.AsOutputStream())
-                                        {
-                                            await response.Content.WriteToStreamAsync(outputStream).AsTask().ConfigureAwait(false);
-                                        }
+                                    byte[] responseBytes;
+                                    var responseInputStream = await response.Content.ReadAsInputStreamAsync().AsTask(token).ConfigureAwait(false);
+                                    using (var memoryStream = new MemoryStream())
+                                    using (var responseStream = responseInputStream.AsStreamForRead())
+                                    {
+                                        await responseStream.CopyToAsync(memoryStream);
+                                        responseBytes = memoryStream.ToArray();
+                                    }
 #else
-                                        using (var outputStream = memoryStream)
-                                        {
-                                            await response.Content.CopyToAsync(outputStream).ConfigureAwait(false);
-                                        }
+                                    var responseBytes = await response.Content.ReadAsByteArrayAsync();
 #endif
 
-                                        OnDataReceived(requestId, Convert.ToBase64String(memoryStream.ToArray()));
-                                    }
+                                    OnDataReceived(requestId, Convert.ToBase64String(responseBytes));
                                 }
                             }
 
