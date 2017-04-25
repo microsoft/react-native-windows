@@ -2,6 +2,7 @@
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
+using System.Diagnostics;
 using System.Reactive.Subjects;
 using System.Windows;
 using static System.FormattableString;
@@ -64,8 +65,7 @@ namespace ReactNative.Modules.Launch
 
             try
             {
-                // TODO: Figure out the WPF way to do this. See also: https://msdn.microsoft.com/en-us/library/aa767914(v=vs.85).aspx
-                //await Launcher.LaunchUriAsync(uri).AsTask().ConfigureAwait(false);
+                Process.Start(url);
                 promise.Resolve(true);
             }
             catch (Exception ex)
