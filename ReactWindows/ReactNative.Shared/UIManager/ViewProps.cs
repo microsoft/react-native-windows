@@ -14,7 +14,9 @@ namespace ReactNative.UIManager
         // !!! Keep in sync with s_layoutOnlyProperties below !!!
         public const string AlignItems = "alignItems";
         public const string AlignSelf = "alignSelf";
+        public const string AlignContent = "alignContent";
         public const string Overflow = "overflow";
+        public const string Display = "display";
         public const string Bottom = "bottom";
         public const string Collapsible = "collapsable";
         public const string Flex = "flex";
@@ -54,7 +56,7 @@ namespace ReactNative.UIManager
         public const string MaxHeight = "maxHeight";
 
         public const string AspectRatio = "aspectRatio";
-      
+
         // Properties that affect more than just layout
         public const string Disabled = "disabled";
         public const string BackgroundColor = "backgroundColor";
@@ -65,7 +67,6 @@ namespace ReactNative.UIManager
         public const string FontFamily = "fontFamily";
         public const string LetterSpacing = "letterSpacing";
         public const string LineHeight = "lineHeight";
-        public const string NeedsOffScreenAlphaCompositing = "needsOffscreenAlphaCompositing";
         public const string NumberOfLines = "numberOfLines";
         public const string Value = "value";
         public const string ResizeMode = "resizeMode";
@@ -111,8 +112,8 @@ namespace ReactNative.UIManager
             new List<int>
             {
                 EdgeSpacing.All,
-                EdgeSpacing.Start,
-                EdgeSpacing.End,
+                EdgeSpacing.Left,
+                EdgeSpacing.Right,
                 EdgeSpacing.Top,
                 EdgeSpacing.Bottom,
             };
