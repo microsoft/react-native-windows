@@ -21,6 +21,7 @@ using ReactNative.Views.View;
 using ReactNative.Views.Web;
 using System;
 using System.Collections.Generic;
+using ReactNative.Animated;
 
 namespace ReactNative.Shell
 {
@@ -48,7 +49,7 @@ namespace ReactNative.Shell
                 new I18NModule(),
                 //new LauncherModule(reactContext),
                 //new LocationModule(reactContext),
-                //new NativeAnimatedModule(reactContext),
+                new NativeAnimatedModule(reactContext),
                 new NetworkingModule(reactContext),
                 new NetInfoModule(reactContext),
                 //new StatusBarModule(),
