@@ -325,6 +325,52 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [Test]
+        public void NetworkingModule_Response_NoContent()
+        {
+            var onReceived = new AutoResetEvent(false);
+            var onReceivedData = default(JArray);
+
+            var module = CreateNetworkingModule(new MockHttpClient(request =>
+            {
+#if WINDOWS_UWP
+                var response = new HttpResponseMessage(HttpStatusCode.Ok);
+#else
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+#endif
+                response.RequestMessage = request;
+
+                var stream = new MemoryStream();
+
+#if WINDOWS_UWP
+                response.Content = new HttpStreamContent(stream.AsInputStream());
+#else
+                response.Content = new StreamContent(stream);
+#endif
+
+                return response;
+            }),
+            new MockInvocationHandler((name, args) =>
+            {
+                if (name == "emit" && args.Length == 2)
+                {
+                    var eventName = args[0] as string;
+                    if (eventName == "didReceiveNetworkData")
+                    {
+                        onReceivedData = args[1] as JArray;
+                        onReceived.Set();
+                    }
+                }
+            }));
+
+            var uri = new Uri("http://example.com");
+            module.sendRequest("get", uri, 42, null, null, "text", false, 1000);
+
+            onReceived.WaitOne();
+            Assert.AreEqual(42, onReceivedData[0].Value<int>());
+            Assert.AreEqual("", onReceivedData[1].Value<string>());
+        }
+
+        [Test]
         public void NetworkingModule_Response_Content_Base64()
         {
             var onReceived = new AutoResetEvent(false);
@@ -367,6 +413,50 @@ namespace ReactNative.Tests.Modules.Network
             onReceived.WaitOne();
             Assert.AreEqual(42, onReceivedData[0].Value<int>());
             Assert.AreEqual(Convert.ToBase64String(bytes), onReceivedData[1].Value<string>());
+        }
+
+        [Test]
+        public void NetworkingModule_Response_NoContent_Base64()
+        {
+            var onReceived = new AutoResetEvent(false);
+            var onReceivedData = default(JArray);
+
+            var module = CreateNetworkingModule(new MockHttpClient(request =>
+            {
+#if WINDOWS_UWP
+                var response = new HttpResponseMessage(HttpStatusCode.Ok);
+#else
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+#endif
+                response.RequestMessage = request;
+
+                var stream = new MemoryStream();
+#if WINDOWS_UWP
+                response.Content = new HttpStreamContent(stream.AsInputStream());
+#else
+                response.Content = new StreamContent(stream);
+#endif
+                return response;
+            }),
+            new MockInvocationHandler((name, args) =>
+            {
+                if (name == "emit" && args.Length == 2)
+                {
+                    var eventName = args[0] as string;
+                    if (eventName == "didReceiveNetworkData")
+                    {
+                        onReceivedData = args[1] as JArray;
+                        onReceived.Set();
+                    }
+                }
+            }));
+
+            var uri = new Uri("http://example.com");
+            module.sendRequest("get", uri, 42, null, null, "base64", false, 1000);
+
+            onReceived.WaitOne();
+            Assert.AreEqual(42, onReceivedData[0].Value<int>());
+            Assert.AreEqual("", onReceivedData[1].Value<string>());
         }
 
         [Test]
