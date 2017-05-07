@@ -37,11 +37,16 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ### Requirements
 
 In addition to the requirements from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html):
+- [Windows 10 Professional](https://www.microsoftstore.com/store/msusa/en_US/pdp/Windows-10-Pro/productID.319935900)
+  - Windows 10 Home cannot run the Windows Phone Emulator, but you would be able to test on a Windows Phone device.
 - [NPM 3.x](https://www.npmjs.com/package/npm)
-- [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
+- Visual Studio 2015 Community
+  - [Sign up for Visual Studio Dev Essentials](https://www.visualstudio.com/vs/older-downloads/) (free), then download [Visual Studio Community 2015 with Update 3](https://my.visualstudio.com/Downloads?q=visual%20studio%20community%202015%20update%203). Please note that Visual Studio 2017 is not currently supported.
 - [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
 
 If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln) in the ReactWindows folder in Visual Studio. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
+
+If you are using Boot Camp on a Mac, make sure that your Windows partition is at least 70GB, otherwise you may run out of space.
 
 ### Setup Troubleshooting
 
@@ -69,7 +74,7 @@ npm install
 
 ### Running the examples
 
-- Start the React Native packager by running `react-native start` 
+- Start the React Native packager by running `react-native start`
 - Open Examples.sln from the Examples submodule folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
