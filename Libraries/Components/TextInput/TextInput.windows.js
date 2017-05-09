@@ -27,6 +27,7 @@ var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
 var View = require('View');
 var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
+var ViewPropTypes = require('ViewPropTypes')
 
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
@@ -94,7 +95,7 @@ var TextInput = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Can tell TextInput to automatically capitalize certain characters.
      *

@@ -11,6 +11,7 @@ var ReactPropTypes = require('react/lib/ReactPropTypes');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var View = require('View');
 var ColorPropType = require('ColorPropType');
+var ViewPropTypes = require('ViewPropTypes')
 
 var requireNativeComponent = require('requireNativeComponent');
 
@@ -20,7 +21,7 @@ var requireNativeComponent = require('requireNativeComponent');
  */
 var ProgressBarWindows = React.createClass({
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     
     /**
      * If the progress bar will show indeterminate progress.

@@ -23,6 +23,7 @@ var keyMirror = require('fbjs/lib/keyMirror');
 var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
 var resolveAssetSource = require('resolveAssetSource');
+var ViewPropTypes = require('ViewPropTypes')
 
 var PropTypes = React.PropTypes;
 
@@ -40,7 +41,7 @@ var WebViewState = keyMirror({
 var WebView = React.createClass({
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     renderError: PropTypes.func,
     renderLoading: PropTypes.func,
     onLoad: PropTypes.func,
@@ -51,7 +52,7 @@ var WebView = React.createClass({
     contentInset: EdgeInsetsPropType,
     onNavigationStateChange: PropTypes.func,
     startInLoadingState: PropTypes.bool, // force WebView to show loadingView on first load
-    style: View.propTypes.style,
+    style: ViewPropTypes.style,
 
     html: deprecatedPropType(
       PropTypes.string,

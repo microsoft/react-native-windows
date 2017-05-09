@@ -12,6 +12,7 @@ var ReactElement = require('react/lib/ReactElement');
 var ReactPropTypes = require('react/lib/ReactPropTypes');
 var UIManager = require('UIManager');
 var View = require('View');
+const ViewPropTypes = require('ViewPropTypes')
 
 var requireNativeComponent = require('requireNativeComponent');
 
@@ -61,7 +62,7 @@ type Event = Object;
 var FlipViewWindows = React.createClass({
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Index of initial page that should be selected. Use `setPage` method to
      * update the page, and `onSelectionChange` to monitor page changes

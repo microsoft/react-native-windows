@@ -18,6 +18,7 @@ const PropTypes = require('react/lib/ReactPropTypes');
 const React = require('React');
 const StyleSheet = require('StyleSheet');
 const View = require('View');
+const ViewPropTypes = require('ViewPropTypes')
 
 const requireNativeComponent = require('requireNativeComponent');
 
@@ -30,7 +31,7 @@ const ActivityIndicator = React.createClass({
   mixins: [NativeMethodsMixin],
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Whether to show the indicator (true, the default) or hide it (false).
      */

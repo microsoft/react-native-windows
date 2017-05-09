@@ -29,6 +29,7 @@ const invariant = require('fbjs/lib/invariant');
 const processDecelerationRate = require('processDecelerationRate');
 const PropTypes = React.PropTypes;
 const requireNativeComponent = require('requireNativeComponent');
+const ViewPropTypes = require('ViewPropTypes')
 
 /**
  * Component that wraps platform ScrollView while providing
@@ -62,7 +63,7 @@ const requireNativeComponent = require('requireNativeComponent');
  */
 const ScrollView = React.createClass({
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Controls whether iOS should automatically adjust the content inset
      * for scroll views that are placed behind a navigation bar or

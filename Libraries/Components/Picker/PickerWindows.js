@@ -20,6 +20,7 @@ var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
 var ViewStylePropTypes = require('ViewStylePropTypes');
+var ViewPropTypes = require('ViewPropTypes')
 
 var processColor = require('processColor');
 var requireNativeComponent = require('requireNativeComponent');
@@ -39,7 +40,7 @@ type Event = Object;
 var PickerWindows = React.createClass({
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     style: pickerStyleType,
     items: React.PropTypes.any,
     selected: React.PropTypes.number,
