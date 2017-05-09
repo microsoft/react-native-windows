@@ -17,6 +17,7 @@ const Platform = require('Platform');
 const PointPropType = require('PointPropType');
 const React = require('React');
 const ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 const ScrollResponder = require('ScrollResponder');
 const StyleSheet = require('StyleSheet');
 const StyleSheetPropType = require('StyleSheetPropType');
@@ -29,7 +30,6 @@ const invariant = require('fbjs/lib/invariant');
 const processDecelerationRate = require('processDecelerationRate');
 const PropTypes = React.PropTypes;
 const requireNativeComponent = require('requireNativeComponent');
-const ViewPropTypes = require('ViewPropTypes')
 
 /**
  * Component that wraps platform ScrollView while providing

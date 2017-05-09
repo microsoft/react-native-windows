@@ -18,7 +18,8 @@ const PropTypes = require('react/lib/ReactPropTypes');
 const React = require('React');
 const StyleSheet = require('StyleSheet');
 const View = require('View');
-const ViewPropTypes = require('ViewPropTypes')
+const ReactNative = require('ReactNative');
+const ViewPropTypes = ReactNative.ViewPropTypes;
 
 const requireNativeComponent = require('requireNativeComponent');
 

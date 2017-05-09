@@ -24,7 +24,8 @@ var TextStylePropTypes = require('TextStylePropTypes');
 var UnimplementedView = require('UnimplementedView');
 var View = require('View');
 var ViewStylePropTypes = require('ViewStylePropTypes');
-var ViewPropTypes = require('ViewPropTypes')
+var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var itemStylePropType = StyleSheetPropType(TextStylePropTypes);
 

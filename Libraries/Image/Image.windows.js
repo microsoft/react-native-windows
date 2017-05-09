@@ -21,7 +21,8 @@ var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
-var ViewPropTypes = require('ViewPropTypes')
+var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var flattenStyle = require('flattenStyle');
 var merge = require('merge');

@@ -17,13 +17,13 @@ var NativeMethodsMixin = require('NativeMethodsMixin');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var View = require('View');
-const ViewPropTypes = require('ViewPropTypes')
 
 var requireNativeComponent = require('requireNativeComponent');
 

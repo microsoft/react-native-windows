@@ -13,6 +13,7 @@
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
@@ -23,7 +24,7 @@ var keyMirror = require('fbjs/lib/keyMirror');
 var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
 var resolveAssetSource = require('resolveAssetSource');
-var ViewPropTypes = require('ViewPropTypes')
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var PropTypes = React.PropTypes;
 

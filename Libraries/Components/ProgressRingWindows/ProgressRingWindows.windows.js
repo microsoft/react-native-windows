@@ -12,7 +12,8 @@ var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var View = require('View');
 var requireNativeComponent = require('requireNativeComponent');
 var ColorPropType = require('ColorPropType');
-const ViewPropTypes = require('ViewPropTypes')
+var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var ProgressRingWindows = React.createClass({  
   propTypes: {

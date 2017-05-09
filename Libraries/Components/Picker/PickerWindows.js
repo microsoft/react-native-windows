@@ -20,7 +20,8 @@ var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
 var ViewStylePropTypes = require('ViewStylePropTypes');
-var ViewPropTypes = require('ViewPropTypes')
+var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var processColor = require('processColor');
 var requireNativeComponent = require('requireNativeComponent');

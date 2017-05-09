@@ -8,11 +8,11 @@
 
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var ReactElement = require('react/lib/ReactElement');
 var ReactPropTypes = require('react/lib/ReactPropTypes');
 var UIManager = require('UIManager');
 var View = require('View');
-const ViewPropTypes = require('ViewPropTypes')
 
 var requireNativeComponent = require('requireNativeComponent');
 

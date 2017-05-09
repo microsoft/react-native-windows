@@ -18,6 +18,7 @@ var Platform = require('Platform');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var ReactChildren = require('react/lib/ReactChildren');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
@@ -27,7 +28,6 @@ var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
 var View = require('View');
 var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
-var ViewPropTypes = require('ViewPropTypes')
 
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
