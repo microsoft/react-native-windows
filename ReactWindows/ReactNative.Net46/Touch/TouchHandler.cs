@@ -40,6 +40,30 @@ namespace ReactNative.Touch
             _view.TouchUp -= OnTouchReleased;
         }
 
+        public static void OnPointerEntered(DependencyObject view, MouseEventArgs e)
+        {
+            if (ShouldSendEnterLeaveEvent(view))
+            {
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
+            }
+        }
+
+        public static void OnPointerExited(DependencyObject view, MouseEventArgs e)
+        {
+            if (ShouldSendEnterLeaveEvent(view))
+            {
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
+            }
+        }
+
         private void OnTouchPressed(object sender, TouchEventArgs e)
         {
             var originalSource = e.OriginalSource as DependencyObject;
@@ -334,6 +358,28 @@ namespace ReactNative.Touch
             return isBoxOnly;
         }
 
+        private static bool ShouldSendEnterLeaveEvent(DependencyObject view)
+        {
+            // If the target is not a child of the root view, then this pointer
+            // event does not belong to React.
+            if (!RootViewHelper.IsReactSubview(view))
+            {
+                return false;
+            }
+
+            var viewHierarchy = RootViewHelper.GetReactViewHierarchy(view);
+            foreach (var ancestor in viewHierarchy)
+            {
+                var pointerEvents = ancestor.GetPointerEvents();
+                if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         class TouchEvent : Event
         {
             private readonly TouchEventType _touchEventType;
@@ -380,6 +426,58 @@ namespace ReactNative.Touch
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
                 eventEmitter.receiveTouches(EventName, _touches, _changedIndices);
+            }
+        }
+
+        class PointerEnterExitEvent : Event
+        {
+            private readonly TouchEventType _touchEventType;
+
+            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag)
+                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            {
+                _touchEventType = touchEventType;
+            }
+
+            public override string EventName
+            {
+                get
+                {
+                    return _touchEventType.GetJavaScriptEventName();
+                }
+            }
+
+            public override bool CanCoalesce
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                var eventData = new JObject
+                {
+                    { "target", ViewTag },
+                };
+
+                var enterLeaveEventName = default(string);
+                if (_touchEventType == TouchEventType.Entered)
+                {
+                    enterLeaveEventName = "topMouseEnter";
+                }
+                else if (_touchEventType == TouchEventType.Exited)
+                {
+                    enterLeaveEventName = "topMouseLeave";
+                }
+
+                if (enterLeaveEventName != null)
+                {
+                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
+                }
+
+                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
             }
         }
 
