@@ -28,7 +28,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ## System Requirements
 
 - You can build and deploy React Native Windows apps on Windows 7 SP1, Windows 8.1, or Windows 10 
-- You can run React Native Windows UWP apps only on Windows 10 devices, but React Native Windows WPF will run on Windows 7-10 so long as .NET 4.6 is installed on the end user's machine
+- You can run React Native Windows UWP apps only on Windows 10 devices, but React Native Windows WPF apps will run on Windows 7-10 so long as .NET 4.6 is installed on the end user's machine
 - Download [Visual Studio 2015 Community](https://www.visualstudio.com/vs/older-downloads/)
 - - You will need to start Visual Studio after it is installed to do some final setup before it can be used to build or run your React Native Windows application
 - [Windows 10 SDK Build 14393](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
@@ -48,6 +48,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - *Note:* If you are running on, or targeting, an x86 platform (like Xbox One) select "x86" instead. If you are deploying to Windows 10 Phone, select ARM.
 - Click the Run button to the right of the platform combo box control, or select the "Debug"->"Start without Debugging" menu item
 - You should now see a basic React Native app running on Windows that is ready for you to modify! :tada:
+- *Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in Visual Studio are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](#extending-react-native)
 - For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
