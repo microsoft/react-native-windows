@@ -34,7 +34,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - - You will need to start Visual Studio after it is installed to do some final setup before it can be used to build or run your React Native Windows application
 - [Windows 10 SDK Build 14393](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
 
-*Note*: Development on React Native Windows itself currently requires Visual Studio 2015. It is not supported with Visual Studio 2017 or with VS Code, but we will gladly accept pull requests to enable a great developer experience in those  environments.
+*Note*: Development on React Native Windows itself currently requires Visual Studio 2015. It is not supported with Visual Studio 2017 or with VS Code, but we will gladly accept pull requests to enable a great developer experience in those environments.
 
 ## Getting Started
 
@@ -81,7 +81,7 @@ For information on parity status with Android and iOS, including details on impl
 - Fellow developers write and publish React Native modules to npm and open source them on GitHub.
 - Third party modules may be missing Windows support, so reach out to the project owners directly.
 - Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
-- You should almost never need to modify React Native Windows itself to create custom controls
+- You should almost never need to modify or fork React Native Windows itself (the ReactNative and ReactNative.Shared project/sources) to create custom controls. The extension points should already exist to do just about anything!
 - Read the guides on [Native Modules for Windows](docs/NativeModulesWindows.md) and [Native UI Components for Windows](docs/NativeComponentsWindows.md) if you are interested in extending native functionality.
 
 ## Opening Issues
