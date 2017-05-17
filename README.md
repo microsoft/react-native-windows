@@ -45,11 +45,12 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - *Note*: You will need to install the [requirements](#system-requirements) before you can build and run your application.
 - Open the solution file in the application folder in Visual Studio (e.g., `AwesomeProject/windows/AwesomeProject.sln`) 
 - *Note*: If this is your first time doing UWP development on the computer you're using, you may be asked to install additional UWP tooling. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
-- Select the "DebugBundle" configuration and the "x64" platform from the combo box controls to the left of the Run button and underneath the Team and Tools menu itema. 
-- *Note:* If you are running on, or targeting, an x86 platform (like Xbox One) select "x86" instead. If you are deploying to Windows 10 Phone, select ARM.
-- Click the Run button to the right of the platform combo box control, or select the "Debug"->"Start without Debugging" menu item
-- You should now see a basic React Native app running on Windows that is ready for you to modify! :tada:
-- *Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in Visual Studio are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](#extending-react-native)
+- Select the "Debug" configuration and the "x64" platform from the combo box controls to the left of the Run button and underneath the Team and Tools menu item. 
+- *Note:* If you are running on, or targeting, an x86 platform select "x86" instead. If you are deploying to Windows 10 Phone, select ARM.
+- Click the Run button to the right of the platform combo box control, or select the "Debug"->"Start without Debugging" menu item.
+- You should now see a typical React Native app running on Windows that is showing an error saying it needs to contact the dev server. Almost there!
+- Run `react-native start` from your project directory, and wait for the React Native packager to report success. Then, press control+R (or click Reload button) in your running app. You now see your new app! :tada:
+- *Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](#extending-react-native)
 - For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
