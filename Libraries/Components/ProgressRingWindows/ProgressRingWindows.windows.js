@@ -12,10 +12,12 @@ var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var View = require('View');
 var requireNativeComponent = require('requireNativeComponent');
 var ColorPropType = require('ColorPropType');
+var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var ProgressRingWindows = React.createClass({  
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Color of the progress bar.
      */

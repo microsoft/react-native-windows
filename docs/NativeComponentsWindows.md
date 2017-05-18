@@ -135,7 +135,7 @@ var iface = {
     src: PropTypes.string,
     borderRadius: PropTypes.number,
     resizeMode: PropTypes.oneOf(['cover', 'contain', 'stretch']),
-    ...View.propTypes // include the default view properties
+    ...ViewPropTypes // include the default view properties
   },
 };
 

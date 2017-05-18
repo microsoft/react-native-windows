@@ -21,6 +21,8 @@ var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
+var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var flattenStyle = require('flattenStyle');
 var merge = require('merge');
@@ -76,7 +78,7 @@ var ImageSpecificStyleKeys = new Set(Object.keys(ImageStylePropTypes).filter(x =
 
 var Image = React.createClass({
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     style: StyleSheetPropType(ImageStylePropTypes),
    /**
      * `uri` is a string representing the resource identifier for the image, which

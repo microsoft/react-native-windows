@@ -17,6 +17,7 @@ const Platform = require('Platform');
 const PointPropType = require('PointPropType');
 const React = require('React');
 const ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 const ScrollResponder = require('ScrollResponder');
 const StyleSheet = require('StyleSheet');
 const StyleSheetPropType = require('StyleSheetPropType');
@@ -62,7 +63,7 @@ const requireNativeComponent = require('requireNativeComponent');
  */
 const ScrollView = React.createClass({
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Controls whether iOS should automatically adjust the content inset
      * for scroll views that are placed behind a navigation bar or

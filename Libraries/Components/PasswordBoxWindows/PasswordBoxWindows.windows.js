@@ -17,6 +17,7 @@ var NativeMethodsMixin = require('NativeMethodsMixin');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var TextInputState = require('TextInputState');
@@ -55,7 +56,7 @@ var PasswordBoxWindows = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * If false, disables auto-correct. The default value is true.
      */

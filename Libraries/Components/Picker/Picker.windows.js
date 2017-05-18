@@ -24,6 +24,8 @@ var TextStylePropTypes = require('TextStylePropTypes');
 var UnimplementedView = require('UnimplementedView');
 var View = require('View');
 var ViewStylePropTypes = require('ViewStylePropTypes');
+var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var itemStylePropType = StyleSheetPropType(TextStylePropTypes);
 
@@ -65,7 +67,7 @@ var Picker = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     style: pickerStyleType,
     /**
      * Value matching value of one of the items. Can be a string or an integer.

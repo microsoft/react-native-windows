@@ -18,6 +18,7 @@ var Platform = require('Platform');
 var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var ReactChildren = require('react/lib/ReactChildren');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
@@ -94,7 +95,7 @@ var TextInput = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Can tell TextInput to automatically capitalize certain characters.
      *

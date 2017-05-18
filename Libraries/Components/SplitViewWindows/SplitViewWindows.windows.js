@@ -13,6 +13,7 @@
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var ReactPropTypes = require('react/lib/ReactPropTypes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
@@ -68,7 +69,7 @@ var SplitViewWindows = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Determines whether the keyboard gets dismissed in response to a drag.
      *   - 'none' (the default), drags do not dismiss the keyboard.

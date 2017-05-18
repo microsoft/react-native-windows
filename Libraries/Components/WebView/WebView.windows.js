@@ -13,6 +13,7 @@
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var React = require('React');
 var ReactNative = require('ReactNative');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
@@ -23,6 +24,7 @@ var keyMirror = require('fbjs/lib/keyMirror');
 var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
 var resolveAssetSource = require('resolveAssetSource');
+var ViewPropTypes = ReactNative.ViewPropTypes;
 
 var PropTypes = React.PropTypes;
 
@@ -40,7 +42,7 @@ var WebViewState = keyMirror({
 var WebView = React.createClass({
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     renderError: PropTypes.func,
     renderLoading: PropTypes.func,
     onLoad: PropTypes.func,
@@ -51,7 +53,7 @@ var WebView = React.createClass({
     contentInset: EdgeInsetsPropType,
     onNavigationStateChange: PropTypes.func,
     startInLoadingState: PropTypes.bool, // force WebView to show loadingView on first load
-    style: View.propTypes.style,
+    style: ViewPropTypes.style,
 
     html: deprecatedPropType(
       PropTypes.string,
