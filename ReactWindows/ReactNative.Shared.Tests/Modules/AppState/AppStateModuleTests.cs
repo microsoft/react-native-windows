@@ -19,7 +19,7 @@ namespace ReactNative.Tests.Modules.AppState
     public class AppStateModuleTests
     {
         [Test]
-        public async Task AppStateModule_StateChecks()
+        public async Task AppStateModule_StateChecksAsync()
         {
             var uninitializedState = CreateExpectedState("uninitialized");
             var activeState = CreateExpectedState("active");
@@ -50,7 +50,7 @@ namespace ReactNative.Tests.Modules.AppState
         }
 
         [Test]
-        public async Task AppStateModule_Events()
+        public async Task AppStateModule_EventsAsync()
         {
             var activeState = CreateExpectedState("active");
             var backgroundState = CreateExpectedState("background");

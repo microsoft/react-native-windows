@@ -33,8 +33,11 @@ namespace ReactNative.Modules.Image
             // No op as prefetch is not yet implemented.
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "React method must return void.")]
         [ReactMethod]
-        public void getSize(string uriString, IPromise promise)
+#pragma warning disable AvoidAsyncVoid
+        public async void getSize(string uriString, IPromise promise)
+#pragma warning restore AvoidAsyncVoid
         {
             if (string.IsNullOrEmpty(uriString))
             {
@@ -75,6 +78,7 @@ namespace ReactNative.Modules.Image
                     promise.Reject(ErrorGetSizeFailure, ex.Message);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         [ReactMethod]

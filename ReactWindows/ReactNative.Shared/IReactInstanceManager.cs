@@ -4,6 +4,7 @@ using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative
 {
@@ -64,7 +65,10 @@ namespace ReactNative
         /// enforced to keep developers from accidentally creating their
         /// applications multiple times.
         /// </summary>
-        void CreateReactContextInBackground();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "UseAsyncSuffix", Justification = "Intended interface name. (Wrapper method)")]
+#pragma warning disable UseAsyncSuffix
+        Task CreateReactContextInBackground();
+#pragma warning restore UseAsyncSuffix
 
         /// <summary>
         /// Method that gives JavaScript the opportunity to consume the back

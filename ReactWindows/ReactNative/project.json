@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "AsyncUsageAnalyzers": "1.0.0-alpha003",
     "Facebook.Yoga": "1.2.0-pre1",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Microsoft.Toolkit.Uwp.UI": "1.3.1",

@@ -1,6 +1,7 @@
 ﻿using ReactNative.Bridge;
 using ReactNative.UIManager;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Metadata;
 using Windows.UI;
@@ -53,6 +54,7 @@ namespace ReactNative.Modules.StatusBar
         [ReactMethod]
         public void setHidden(bool hide)
         {
+#pragma warning disable AvoidAsyncVoid
             RunOnDispatcher(async () =>
             {
                 if (hide)
@@ -64,6 +66,7 @@ namespace ReactNative.Modules.StatusBar
                     await _statusBar.ShowAsync().AsTask().ConfigureAwait(false);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         /// <summary>
@@ -113,7 +116,11 @@ namespace ReactNative.Modules.StatusBar
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
         private static async void RunOnDispatcher(DispatchedHandler action)
+#pragma warning restore AvoidAsyncVoid
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

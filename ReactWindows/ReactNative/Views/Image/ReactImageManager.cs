@@ -275,7 +275,10 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="source">The source URI.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Partial React method.")]
+#pragma warning disable AvoidAsyncVoid
         private async void SetUriFromSingleSource(Border view, string source)
+#pragma warning restore AvoidAsyncVoid
         {
             var imageBrush = (ImageBrush)view.Background;
             var tag = view.GetTag();

@@ -24,12 +24,18 @@ namespace ReactNative.Modules.StatusBar
         /// Hides the status bar.
         /// </summary>
         /// <returns>The asynchronous results of the operation. Use this to determine when the async call is complete</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Intended name.")]
+#pragma warning disable AvoidAsyncSuffix 
         IAsyncAction HideAsync();
+#pragma warning restore AvoidAsyncSuffix
 
         /// <summary>
         /// Shows the status bar.
         /// </summary>
         /// <returns>The asynchronous results of the operation. Use this to determine when the async call is complete</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncSuffix", Justification = "Intended name.")]
+#pragma warning disable AvoidAsyncSuffix
         IAsyncAction ShowAsync();
+#pragma warning restore AvoidAsyncSuffix
     }
 }

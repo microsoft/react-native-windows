@@ -63,7 +63,7 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [Test]
-        public async Task TaskCancellationManager_CleanedUpAfterComplete()
+        public async Task TaskCancellationManager_CleanedUpAfterCompleteAsync()
         {
             using (var enter = new AutoResetEvent(false))
             {
@@ -85,7 +85,7 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [Test]
-        public async Task TaskCancellationManager_CleanedUpAfterError()
+        public async Task TaskCancellationManager_CleanedUpAfterErrorAsync()
         {
             using (var enter = new AutoResetEvent(false))
             {

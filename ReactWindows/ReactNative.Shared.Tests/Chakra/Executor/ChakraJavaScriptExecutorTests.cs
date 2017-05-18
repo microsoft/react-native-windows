@@ -8,9 +8,9 @@ namespace ReactNative.Tests.Chakra.Executor
     public class ChakraJavaScriptExecutorTests
     {
         [Test]
-        public async Task ThrowsWithCorrectParameterNameWhenGivenNull()
+        public async Task ThrowsWithCorrectParameterNameWhenGivenNullAsync()
         {
-            await JavaScriptHelpers.Run((executor, jsQueueThread) =>
+            await JavaScriptHelpers.RunAsync((executor, jsQueueThread) =>
             {
                 Assert.That(
                     () => executor.CallFunctionReturnFlushedQueue(null, "foo", new JArray()),

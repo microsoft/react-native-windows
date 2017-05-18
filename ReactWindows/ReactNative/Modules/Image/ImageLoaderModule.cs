@@ -33,6 +33,7 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
+#pragma warning disable AvoidAsyncVoid
             DispatcherHelpers.RunOnDispatcher(async () =>
             {
                 try
@@ -51,6 +52,7 @@ namespace ReactNative.Modules.Image
                     promise.Reject(ErrorPrefetchFailure, ex.Message);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         [ReactMethod]
@@ -68,6 +70,7 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
+#pragma warning disable AvoidAsyncVoid
             DispatcherHelpers.RunOnDispatcher(async () =>
             {
                 try
@@ -135,4 +138,5 @@ namespace ReactNative.Modules.Image
             _prefetchRequests.CancelAllTasks();
         }
     }
+#pragma warning restore AvoidAsyncVoid
 }

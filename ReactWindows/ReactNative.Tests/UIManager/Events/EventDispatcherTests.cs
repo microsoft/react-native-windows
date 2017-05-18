@@ -16,7 +16,7 @@ namespace ReactNative.Tests.UIManager.Events
         private static readonly JArray EmptyResponse = JArray.Parse("[[],[],[]]");
 
         [TestMethod]
-        public async Task EventDispatcher_ArgumentChecks()
+        public async Task EventDispatcher_ArgumentChecksAsync()
         {
             AssertEx.Throws<ArgumentNullException>(() => new EventDispatcher(null), ex => Assert.AreEqual("reactContext", ex.ParamName));
 
@@ -27,7 +27,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_IncorrectThreadCalls()
+        public async Task EventDispatcher_IncorrectThreadCallsAsync()
         {
             var context = new ReactContext();
             var dispatcher = new EventDispatcher(context);
@@ -41,7 +41,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_EventDispatches()
+        public async Task EventDispatcher_EventDispatchesAsync()
         {
             // TODO: (#288) Check for non-determinism.
             var waitDispatched = new AutoResetEvent(false);
@@ -69,7 +69,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_NonCoalesced()
+        public async Task EventDispatcher_NonCoalescedAsync()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -103,7 +103,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_MultipleDispatches()
+        public async Task EventDispatcher_MultipleDispatchesAsync()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -133,7 +133,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_EventsCoalesced1()
+        public async Task EventDispatcher_EventsCoalesced1Async()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -177,7 +177,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_EventsCoalesced2()
+        public async Task EventDispatcher_EventsCoalesced2Async()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -221,7 +221,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_EventsNotCoalesced()
+        public async Task EventDispatcher_EventsNotCoalescedAsync()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -273,7 +273,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_OnSuspend_EventDoesNotDispatch()
+        public async Task EventDispatcher_OnSuspend_EventDoesNotDispatchAsync()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -305,7 +305,39 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_OnReactInstanceDispose_EventDoesNotDispatch()
+        public async Task EventDispatcher_OnShutdown_EventDoesNotDispatchAsync()
+        {
+            var waitDispatched = new AutoResetEvent(false);
+            var executor = new MockJavaScriptExecutor
+            {
+                OnCallFunctionReturnFlushedQueue = (p0, p1, p2) =>
+                {
+                    waitDispatched.Set();
+                    return EmptyResponse;
+                },
+                OnFlushQueue = () => EmptyResponse,
+                OnInvokeCallbackAndReturnFlushedQueue = (_, __) => EmptyResponse
+            };
+
+            var context = await CreateContextAsync(executor);
+            var dispatcher = new EventDispatcher(context);
+            await DispatcherHelpers.RunOnDispatcherAsync(dispatcher.OnResume);
+
+            var testEvent = new MockEvent(42, TimeSpan.Zero, "Foo");
+
+            using (BlockJavaScriptThread(context))
+            {
+                dispatcher.DispatchEvent(testEvent);
+                await DispatcherHelpers.RunOnDispatcherAsync(dispatcher.OnDestroy);
+            }
+
+            Assert.IsFalse(waitDispatched.WaitOne(500));
+
+            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+        }
+
+        [TestMethod]
+        public async Task EventDispatcher_OnReactInstanceDispose_EventDoesNotDispatchAsync()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -337,7 +369,7 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_DispatchedAfterSuspend_ThenResume()
+        public async Task EventDispatcher_DispatchedAfterSuspend_ThenResumeAsync()
         {
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor

@@ -29,7 +29,7 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public async Task MessageQueueThread_IsOnThread()
+        public async Task MessageQueueThread_IsOnThreadAsync()
         {
             var thrown = 0;
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => thrown++));
@@ -58,7 +58,7 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public async Task MessageQueueThread_HandlesException()
+        public async Task MessageQueueThread_HandlesExceptionAsync()
         {
             var exception = new Exception();
             var countdown = new CountdownEvent(1);
@@ -90,7 +90,7 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public async Task MessageQueueThread_OneAtATime()
+        public async Task MessageQueueThread_OneAtATimeAsync()
         {
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
             var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });
@@ -124,7 +124,7 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public async Task MessageQueueThread_Dispose()
+        public async Task MessageQueueThread_DisposeAsync()
         {
             var uiThread = await CallOnDispatcherAsync(() => MessageQueueThread.Create(MessageQueueThreadSpec.DispatcherThreadSpec, ex => { Assert.Fail(); }));
             var backgroundThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("background", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });

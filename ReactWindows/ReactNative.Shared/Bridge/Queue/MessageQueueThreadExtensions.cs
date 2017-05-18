@@ -30,7 +30,7 @@ namespace ReactNative.Bridge.Queue
         /// <param name="actionQueue">The message queue thread.</param>
         /// <param name="func">The function.</param>
         /// <returns>A task to await the result.</returns>
-        public static Task<T> CallOnQueue<T>(this IMessageQueueThread actionQueue, Func<T> func)
+        public static Task<T> CallOnQueueAsync<T>(this IMessageQueueThread actionQueue, Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
 

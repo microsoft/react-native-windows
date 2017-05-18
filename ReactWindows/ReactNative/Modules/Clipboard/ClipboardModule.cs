@@ -1,5 +1,6 @@
 ﻿using ReactNative.Bridge;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using DataTransfer = Windows.ApplicationModel.DataTransfer;
@@ -46,6 +47,7 @@ namespace ReactNative.Modules.Clipboard
                 throw new ArgumentNullException(nameof(promise));
             }
 
+#pragma warning disable AvoidAsyncVoid
             RunOnDispatcher(async () =>
             {
                 try
@@ -70,6 +72,7 @@ namespace ReactNative.Modules.Clipboard
                     promise.Reject(ex);
                 }
             });
+#pragma warning restore AvoidAsyncVoid
         }
 
         /// <summary>
@@ -98,7 +101,10 @@ namespace ReactNative.Modules.Clipboard
         /// Run action on UI thread.
         /// </summary>
         /// <param name="action">The action.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
         private static async void RunOnDispatcher(DispatchedHandler action)
+#pragma warning restore AvoidAsyncVoid
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }

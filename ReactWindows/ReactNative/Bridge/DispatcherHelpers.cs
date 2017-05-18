@@ -20,12 +20,15 @@ namespace ReactNative.Bridge
             return CoreWindow.GetForCurrentThread()?.Dispatcher != null;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "AvoidAsyncVoid", Justification = "Fire-and-forget method.")]
+#pragma warning disable AvoidAsyncVoid
         public static async void RunOnDispatcher(DispatchedHandler action)
+#pragma warning restore AvoidAsyncVoid
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
 
-        public static Task<T> CallOnDispatcher<T>(Func<T> func)
+        public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
 
@@ -38,7 +41,7 @@ namespace ReactNative.Bridge
                 Task.Run(() => taskCompletionSource.SetResult(result));
             });
 
-            return taskCompletionSource.Task;
+            return await taskCompletionSource.Task;
         }
     }
 }

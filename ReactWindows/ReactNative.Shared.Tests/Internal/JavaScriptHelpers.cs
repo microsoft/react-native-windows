@@ -15,28 +15,28 @@ namespace ReactNative.Tests
 {
     static class JavaScriptHelpers
     {
-        public static Task Run(Action<ChakraJavaScriptExecutor, IMessageQueueThread> action)
+        public static Task RunAsync(Action<ChakraJavaScriptExecutor, IMessageQueueThread> action)
         {
-            return Run((executor, jsQueueThread) =>
+            return RunAsync((executor, jsQueueThread) =>
             {
                 action(executor, jsQueueThread);
                 return Task.CompletedTask;
             });
         }
 
-        public static async Task Run(Func<ChakraJavaScriptExecutor, IMessageQueueThread, Task> action)
+        public static async Task RunAsync(Func<ChakraJavaScriptExecutor, IMessageQueueThread, Task> action)
         {
             using (var jsQueueThread = CreateJavaScriptThread())
             {
-                var executor = await jsQueueThread.CallOnQueue(() => new ChakraJavaScriptExecutor());
+                var executor = await jsQueueThread.CallOnQueueAsync(() => new ChakraJavaScriptExecutor());
                 try
                 {
-                    await Initialize(executor, jsQueueThread);
+                    await InitializeAsync(executor, jsQueueThread);
                     await action(executor, jsQueueThread);
                 }
                 finally
                 {
-                    await jsQueueThread.CallOnQueue(() =>
+                    await jsQueueThread.CallOnQueueAsync(() =>
                     {
                         executor.Dispose();
                         return true;
@@ -45,7 +45,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public static async Task Initialize(ChakraJavaScriptExecutor executor, IMessageQueueThread jsQueueThread)
+        public static async Task InitializeAsync(ChakraJavaScriptExecutor executor, IMessageQueueThread jsQueueThread)
         {
             var scriptUris = new[]
             {
@@ -73,7 +73,7 @@ namespace ReactNative.Tests
                 scripts[i] = new KeyValuePair<string, string>(uri, filePath);
             }
 
-            await jsQueueThread.CallOnQueue(() =>
+            await jsQueueThread.CallOnQueueAsync(() =>
             {
                 foreach (var script in scripts)
                 {

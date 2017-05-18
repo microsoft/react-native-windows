@@ -25,7 +25,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_ArgumentChecks()
+        public async Task ReactInstanceManager_ArgumentChecksAsync()
         {
             var manager = CreateReactInstanceManager();
 
@@ -49,7 +49,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_CreateInBackground()
+        public async Task ReactInstanceManager_CreateInBackgroundAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -57,8 +57,12 @@ namespace ReactNative.Tests
             var waitHandle = new AutoResetEvent(false);
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            {
+                await manager.CreateReactContextInBackground();
+            });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
@@ -67,7 +71,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_CreateInBackground_EnsuresOneCall()
+        public async Task ReactInstanceManager_CreateInBackground_EnsuresOneCallAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -76,9 +80,10 @@ namespace ReactNative.Tests
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
             var caught = false;
+#pragma warning disable AvoidAsyncVoid
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
-                manager.CreateReactContextInBackground();
+                await manager.CreateReactContextInBackground();
 
                 try
                 {
@@ -89,6 +94,7 @@ namespace ReactNative.Tests
                     caught = true;
                 }
             });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(caught);
 
@@ -96,7 +102,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_RecreateInBackground()
+        public async Task ReactInstanceManager_RecreateInBackgroundAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -104,11 +110,13 @@ namespace ReactNative.Tests
             var waitHandle = new AutoResetEvent(false);
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
-                manager.CreateReactContextInBackground();
-                manager.RecreateReactContextInBackground();
+                await manager.CreateReactContextInBackground();
+                await manager.RecreateReactContextInBackground();
             });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.IsTrue(waitHandle.WaitOne());
@@ -118,12 +126,13 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_RecreateInBackground_EnsuresCalledOnce()
+        public async Task ReactInstanceManager_RecreateInBackground_EnsuresCalledOnceAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
             var caught = false;
+#pragma warning disable AvoidAsyncVoid
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 try
@@ -135,6 +144,7 @@ namespace ReactNative.Tests
                     caught = true;
                 }
             });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(caught);
 
@@ -142,7 +152,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_OnBackPressed_NoContext()
+        public async Task ReactInstanceManager_OnBackPressed_NoContextAsync()
         {
             var waitHandle = new AutoResetEvent(false);
             var manager = CreateReactInstanceManager();
@@ -158,7 +168,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_OnDestroy_CreateInBackground()
+        public async Task ReactInstanceManager_OnDestroy_CreateInBackgroundAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -166,16 +176,24 @@ namespace ReactNative.Tests
             var waitHandle = new AutoResetEvent(false);
             manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            {
+                await manager.CreateReactContextInBackground();
+            });
+#pragma warning restore AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
+#pragma warning disable AvoidAsyncVoid
+            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            {
+                await manager.CreateReactContextInBackground();
+            });
+#pragma warning disable AvoidAsyncVoid
 
             Assert.IsTrue(waitHandle.WaitOne());
 
@@ -183,7 +201,7 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_DisposeAsync_WhileBusy()
+        public async Task ReactInstanceManager_DisposeAsync_WhileBusyAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -209,12 +227,14 @@ namespace ReactNative.Tests
             });
 
             var tcs = new TaskCompletionSource<bool>();
+#pragma warning disable AvoidAsyncVoid
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
                 e.Set();
                 await manager.DisposeAsync();
                 await Task.Run(() => tcs.SetResult(true));
             });
+#pragma warning restore AvoidAsyncVoid
 
             var completedTask = await Task.WhenAny(
                 Task.Delay(5000),

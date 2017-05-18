@@ -150,7 +150,10 @@ namespace ReactNative
         /// enforced to keep developers from accidentally creating their
         /// applications multiple times.
         /// </summary>
-        public async void CreateReactContextInBackground()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "UseAsyncSuffix", Justification = "Intended method name. (Wrapper method)")]
+#pragma warning disable UseAsyncSuffix
+        public async Task CreateReactContextInBackground()
+#pragma warning restore UseAsyncSuffix
         {
             await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
@@ -184,7 +187,10 @@ namespace ReactNative
         /// if configuration has changed or the developer has requested the
         /// application to be reloaded.
         /// </summary>
-        public async void RecreateReactContextInBackground()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage.CSharp.Reliability", "UseAsyncSuffix", Justification = "Intended method name. (Wrapper method)")]
+#pragma warning disable UseAsyncSuffix
+        public async Task RecreateReactContextInBackground()
+#pragma warning restore UseAsyncSuffix
         {
             await RecreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }

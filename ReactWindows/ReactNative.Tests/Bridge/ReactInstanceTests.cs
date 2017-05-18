@@ -12,7 +12,7 @@ namespace ReactNative.Tests.Bridge
     public class ReactInstanceTests
     {
         [TestMethod]
-        public async Task ReactInstance_GetModules()
+        public async Task ReactInstance_GetModulesAsync()
         {
             var module = new TestNativeModule();
 
@@ -53,7 +53,7 @@ namespace ReactNative.Tests.Bridge
         }
 
         [TestMethod]
-        public async Task ReactInstance_Initialize_Dispose()
+        public async Task ReactInstance_Initialize_DisposeAsync()
         {
             var module = new TestNativeModule();
 
@@ -109,7 +109,7 @@ namespace ReactNative.Tests.Bridge
         }
 
         [TestMethod]
-        public async Task ReactInstance_ExceptionHandled_Disposes()
+        public async Task ReactInstance_ExceptionHandled_DisposesAsync()
         {
             var eventHandler = new AutoResetEvent(false);
             var module = new OnDisposeNativeModule(() => eventHandler.Set());
