@@ -1,6 +1,9 @@
 ﻿using Facebook.Yoga;
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager.Annotations;
+using System;
+using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -33,14 +36,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="width">The width.</param>
         [ReactProp(ViewProps.Width, DefaultSingle = YogaConstants.Undefined)]
-        public void SetWidth(float width)
+        public void SetWidth(JValue width)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            StyleWidth = width;
+            StyleWidth = ToYogaValue(width);
         }
 
         /// <summary>
@@ -48,14 +51,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="minWidth">The minimum width.</param>
         [ReactProp(ViewProps.MinWidth, DefaultSingle = YogaConstants.Undefined)]
-        public void SetMinWidth(float minWidth)
+        public void SetMinWidth(JValue minWidth)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            StyleMinWidth = minWidth;
+            StyleMinWidth = ToYogaValue(minWidth);
         }
 
         /// <summary>
@@ -63,14 +66,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="maxWidth">The maximum width.</param>
         [ReactProp(ViewProps.MaxWidth, DefaultSingle = YogaConstants.Undefined)]
-        public void SetMaxWidth(float maxWidth)
+        public void SetMaxWidth(JValue maxWidth)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            StyleMaxWidth = maxWidth;
+            StyleMaxWidth = ToYogaValue(maxWidth);
         }
 
         /// <summary>
@@ -78,14 +81,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="height">The height.</param>
         [ReactProp(ViewProps.Height, DefaultSingle = YogaConstants.Undefined)]
-        public void SetHeight(float height)
+        public void SetHeight(JValue height)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            StyleHeight = height;
+            StyleHeight = ToYogaValue(height);
         }
 
         /// <summary>
@@ -93,14 +96,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="minHeight">The minimum height.</param>
         [ReactProp(ViewProps.MinHeight, DefaultSingle = YogaConstants.Undefined)]
-        public void SetMinHeight(float minHeight)
+        public void SetMinHeight(JValue minHeight)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            StyleMinHeight = minHeight;
+            StyleMinHeight = ToYogaValue(minHeight);
         }
 
         /// <summary>
@@ -108,14 +111,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="maxHeight">The maximum height.</param>
         [ReactProp(ViewProps.MaxHeight, DefaultSingle = YogaConstants.Undefined)]
-        public void SetMaxHeight(float maxHeight)
+        public void SetMaxHeight(JValue maxHeight)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            StyleMaxHeight = maxHeight;
+            StyleMaxHeight = ToYogaValue(maxHeight);
         }
 
         /// <summary>
@@ -240,7 +243,27 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignItems)]
         public void SetAlignItems(string alignItems)
         {
+            if (IsVirtual)
+            {
+                return;
+            }
+
             AlignItems = EnumHelpers.ParseNullable<YogaAlign>(alignItems) ?? YogaAlign.Stretch;
+        }
+
+        /// <summary>
+        /// Sets the content alignment.
+        /// </summary>
+        /// <param name="alignContent">The content alignment.</param>
+        [ReactProp(ViewProps.AlignContent)]
+        public void SetAlignContent(string alignContent)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            AlignContent = EnumHelpers.ParseNullable<YogaAlign>(alignContent) ?? YogaAlign.FlexStart;
         }
 
         /// <summary>
@@ -274,6 +297,21 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets the display mode.
+        /// </summary>
+        /// <param name="display">The display mode.</param>
+        [ReactProp(ViewProps.Display)]
+        public void SetDisplay(string display)
+        {
+            if (IsVirtual)
+            {
+                return;
+            }
+
+            Display = EnumHelpers.ParseNullable<YogaDisplay>(display) ?? YogaDisplay.Flex;
+        }
+
+        /// <summary>
         /// Sets the margins of the shadow node.
         /// </summary>
         /// <param name="index">The spacing type index.</param>
@@ -287,14 +325,14 @@ namespace ReactNative.UIManager
             ViewProps.MarginTop,
             ViewProps.MarginBottom,
             DefaultSingle = YogaConstants.Undefined)]
-        public void SetMargins(int index, float margin)
+        public void SetMargins(int index, JValue margin)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            SetMargin(ViewProps.PaddingMarginSpacingTypes[index], margin);
+            SetMargin(ViewProps.PaddingMarginSpacingTypes[index], ToYogaValue(margin));
         }
 
         /// <summary>
@@ -311,9 +349,9 @@ namespace ReactNative.UIManager
             ViewProps.PaddingTop,
             ViewProps.PaddingBottom,
             DefaultSingle = YogaConstants.Undefined)]
-        public virtual void SetPaddings(int index, float padding)
+        public virtual void SetPaddings(int index, JValue padding)
         {
-            SetPadding(ViewProps.PaddingMarginSpacingTypes[index], padding);
+            SetPadding(ViewProps.PaddingMarginSpacingTypes[index], ToYogaValue(padding));
         }
 
         /// <summary>
@@ -344,14 +382,14 @@ namespace ReactNative.UIManager
             ViewProps.Top,
             ViewProps.Bottom,
             DefaultSingle = YogaConstants.Undefined)]
-        public void SetPositionValues(int index, float position)
+        public void SetPositionValues(int index, JValue position)
         {
             if (IsVirtual)
             {
                 return;
             }
 
-            SetPosition(ViewProps.PositionSpacingTypes[index], position);
+            SetPosition(ViewProps.PositionSpacingTypes[index], ToYogaValue(position));
         }
 
         /// <summary>
@@ -374,6 +412,34 @@ namespace ReactNative.UIManager
         public void SetShouldNotifyOnLayout(bool shouldNotifyOnLayout)
         {
             ShouldNotifyOnLayout = shouldNotifyOnLayout;
+        }
+
+        private static YogaValue ToYogaValue(JValue value)
+        {
+            if (value == null || value.Type == JTokenType.Null || value.Type == JTokenType.Undefined)
+            {
+                return YogaValue.Undefined();
+            }
+
+            if (value.Type == JTokenType.String)
+            {
+                var s = value.Value<string>();
+
+                if (s == "auto")
+                {
+                    return YogaValue.Auto();
+                }
+
+                if (s.EndsWith("%"))
+                {
+                    return YogaValue.Percent(float.Parse(s.Substring(0, s.Length - 1)));
+                }
+
+                throw new InvalidOperationException(
+                    Invariant($"Unknown value: '{s}'"));
+            }
+
+            return YogaValue.Point(value.Value<float>());
         }
     }
 }
