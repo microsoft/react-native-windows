@@ -134,6 +134,9 @@ namespace ReactNative.UIManager
                 });
             });
 
+            // Must recalculate dimensions after adding root view
+            UpdateDimensions();
+
             return tag;
         }
 
@@ -511,6 +514,11 @@ namespace ReactNative.UIManager
 
 #region Dimensions
         private void OnBoundsChanged(object sender, SizeChangedEventArgs args)
+        {
+            UpdateDimensions();
+        }
+
+        private void UpdateDimensions()
         {
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("didUpdateDimensions", GetDimensions());
