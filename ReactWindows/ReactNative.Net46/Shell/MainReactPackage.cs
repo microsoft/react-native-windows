@@ -1,4 +1,5 @@
-﻿using ReactNative.Bridge;
+﻿using ReactNative.Animated;
+using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
@@ -48,7 +49,7 @@ namespace ReactNative.Shell
                 new I18NModule(),
                 //new LauncherModule(reactContext),
                 //new LocationModule(reactContext),
-                //new NativeAnimatedModule(reactContext),
+                new NativeAnimatedModule(reactContext),
                 new NetworkingModule(reactContext),
                 new NetInfoModule(reactContext),
                 //new StatusBarModule(),
