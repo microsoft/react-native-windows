@@ -109,6 +109,12 @@ namespace ReactNative.Modules.WebSocket
             SendMessageInBackground(id, message);
         }
 
+        [ReactMethod]
+        public void sendBinary(string message, int id)
+        {
+            SendMessageInBackground(id, Convert.FromBase64String(message));
+        }
+
         #endregion
 
         #region Event Handlers
@@ -166,12 +172,13 @@ namespace ReactNative.Modules.WebSocket
 
         private void OnMessageReceived(int id, object sender, MessageEventArgs args)
         {
-            var message = args.Data;
+            var message = args.IsBinary ? Convert.ToBase64String(args.RawData) : args.Data;
             SendEvent("websocketMessage", new JObject
-                {
-                    { "id", id },
-                    { "data", message },
-                });
+            {
+                { "id", id },
+                { "data", message },
+                { "type", args.IsBinary ? "binary" : "text" },
+            });
         }
 
         #endregion
@@ -184,6 +191,11 @@ namespace ReactNative.Modules.WebSocket
         }
 
         private void SendMessageInBackground(int id, string message)
+        {
+            _webSocketConnections[id].SendAsync(message, null);
+        }
+
+        private void SendMessageInBackground(int id, byte[] message)
         {
             _webSocketConnections[id].SendAsync(message, null);
         }
