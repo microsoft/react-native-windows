@@ -110,6 +110,8 @@ namespace ReactNative
         /// <param name="initialProps">The initialProps.</param>
         public void OnCreate(string arguments, JObject initialProps)
         {
+            RootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+
             ApplyArguments(arguments);
             RootView.StartReactApplication(_reactInstanceManager, MainComponentName, initialProps);
 
@@ -161,9 +163,7 @@ namespace ReactNative
         /// </remarks>
         protected virtual ReactRootView CreateRootView()
         {
-            ReactRootView rootView = new ReactRootView();
-            rootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
-            return rootView;
+            return new ReactRootView();
         }
 
         /// <summary>
