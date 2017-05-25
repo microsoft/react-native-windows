@@ -169,18 +169,32 @@ namespace ReactNative.UIManager
 
         private static void ApplyProjection(TFrameworkElement view, Matrix3D projectionMatrix)
         {
-            if (!IsSimpleTranslationOnly(projectionMatrix))
+            if (!projectionMatrix.IsAffine)
             {
-                throw new InvalidOperationException("ReactNative.Net46 does not support 3D transformations");
+                throw new NotImplementedException("ReactNative.Net46 does not support non-affine transformations");
             }
 
-            ResetProjectionMatrix(view);
-            var transform = new MatrixTransform();
-            var matrix = transform.Matrix;
-            matrix.OffsetX = projectionMatrix.OffsetX;
-            matrix.OffsetY = projectionMatrix.OffsetY;
-            transform.Matrix = matrix;
-            view.RenderTransform = transform;
+            if (IsSimpleTranslationOnly(projectionMatrix))
+            {
+                ResetProjectionMatrix(view);
+                var transform = new MatrixTransform();
+                var matrix = transform.Matrix;
+                matrix.OffsetX = projectionMatrix.OffsetX;
+                matrix.OffsetY = projectionMatrix.OffsetY;
+                transform.Matrix = matrix;
+                view.RenderTransform = transform;
+            }
+            else
+            {
+                var transform = new MatrixTransform(projectionMatrix.M11,
+					projectionMatrix.M12,
+                    projectionMatrix.M21,
+                    projectionMatrix.M22,
+                    projectionMatrix.OffsetX,
+                    projectionMatrix.OffsetY);
+
+                view.RenderTransform = transform;
+            }
         }
 
         private static bool IsSimpleTranslationOnly(Matrix3D matrix)
