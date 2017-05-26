@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -48,7 +47,7 @@ namespace ReactNative.UIManager
             }
 
             throw new ArgumentException(
-                Invariant($"No view manager defined for class '{className}'."),
+                $"No view manager defined for class '{className}'.",
                 nameof(className));
         }
     }

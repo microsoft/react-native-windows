@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
 using System;
-using static System.FormattableString;
 
 namespace ReactNative.Views.Image
 {
@@ -73,8 +72,7 @@ namespace ReactNative.Views.Image
                     case OnLoadStart:
                         return "topLoadStart";
                     default:
-                        throw new InvalidOperationException(
-                            Invariant($"Invalid image event '{_eventType}'."));
+                        throw new InvalidOperationException($"Invalid image event '{_eventType}'.");
                 }
             }
         }

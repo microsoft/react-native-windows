@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Media;
 #else
 using System.Windows.Media;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.UIManager.Events
 {
@@ -318,7 +317,7 @@ namespace ReactNative.UIManager.Events
 
                 if (_rctEventEmitter == null)
                 {
-                    throw new InvalidOperationException(Invariant($"The '{nameof(RCTEventEmitter)}' must not be null."));
+                    throw new InvalidOperationException($"The '{nameof(RCTEventEmitter)}' must not be null.");
                 }
 
                 lock (_eventsToDispatchLock)

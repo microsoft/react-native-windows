@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 #else
 using System.Windows;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -97,7 +96,7 @@ namespace ReactNative.UIManager
 
         protected virtual object[] GetShadowNodeArgs(ReactStylesDiffMap props)
         {
-            throw new NotSupportedException(Invariant($"'{nameof(ReactShadowNode)}' properties cannot be changed with this setter."));
+            throw new NotSupportedException($"'{nameof(ReactShadowNode)}' properties cannot be changed with this setter.");
         }
 
         protected virtual object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
@@ -226,14 +225,12 @@ namespace ReactNative.UIManager
                 var parameters = method.GetParameters();
                 if (parameters.Length != 2)
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                    throw new InvalidOperationException($"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
                 if (!typeof(DependencyObject).IsAssignableFrom(parameters[0].ParameterType))
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"First parameter must be a dependency object for property setter '{method.DeclaringType.Name}.{Name}'."));
+                    throw new InvalidOperationException($"First parameter must be a dependency object for property setter '{method.DeclaringType.Name}.{Name}'.");
                 }
 
                 return parameters[1].ParameterType;
@@ -269,20 +266,17 @@ namespace ReactNative.UIManager
                 var parameters = method.GetParameters();
                 if (parameters.Length != 3)
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                    throw new InvalidOperationException($"Wrong number of arguments for group property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
                 if (!typeof(FrameworkElement).IsAssignableFrom(parameters[0].ParameterType))
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"First parameter must be a framework element for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                    throw new InvalidOperationException($"First parameter must be a framework element for group property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
                 if (parameters[1].ParameterType != typeof(int))
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Second parameter must be a property index for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                    throw new InvalidOperationException($"Second parameter must be a property index for group property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
 
@@ -317,8 +311,7 @@ namespace ReactNative.UIManager
                 var parameters = method.GetParameters();
                 if (parameters.Length != 1)
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                    throw new InvalidOperationException($"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
                 return  parameters[0].ParameterType;
@@ -353,14 +346,12 @@ namespace ReactNative.UIManager
                 var parameters = method.GetParameters();
                 if (parameters.Length != 2)
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                    throw new InvalidOperationException($"Wrong number of arguments for group property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
                 if (parameters[0].ParameterType != typeof(int))
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"First parameter must be a property index for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                    throw new InvalidOperationException($"First parameter must be a property index for group property setter '{method.DeclaringType.Name}.{method.Name}'.");
                 }
 
                 return parameters[1].ParameterType;

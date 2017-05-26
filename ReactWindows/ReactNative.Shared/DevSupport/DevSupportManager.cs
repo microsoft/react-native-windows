@@ -610,8 +610,7 @@ namespace ReactNative.DevSupport
 
         private Task ReloadJavaScriptFromFileAsync(CancellationToken token)
         {
-            _reactInstanceCommandsHandler.OnBundleFileReloadRequest();
-            return Task.CompletedTask;
+            return new Task(() => _reactInstanceCommandsHandler.OnBundleFileReloadRequest(), token);
         }
 
 #if WINDOWS_UWP
