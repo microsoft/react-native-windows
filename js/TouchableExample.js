@@ -121,6 +121,13 @@ exports.examples = [
   },
   platform: 'ios',
 }, {
+   title: 'Pointer Type',
+   description: '<Touchable*> gesture events have pointer type information.',
+   render: function(): ReactElement<any> {
+     return <PointerType />;
+   },
+   platform: 'windows',
+ }, {
    title: 'Touchable Hit Slop',
    description: '<Touchable*> components accept hitSlop prop which extends the touch area ' +
      'without changing the view bounds.',
@@ -246,6 +253,60 @@ class TouchableDelayEvents extends React.Component {
     var limit = 6;
     var eventLog = this.state.eventLog.slice(0, limit - 1);
     eventLog.unshift(eventName);
+    this.setState({eventLog});
+  };
+}
+
+class PointerType extends React.Component {
+  state = {
+    eventLog: [],
+  };
+
+  render() {
+    return (
+      <View testID="touchable_feedback_events">
+        <View style={[styles.row, {justifyContent: 'center'}]}>
+          <TouchableOpacity
+            style={styles.wrapper}
+            testID="touchable_feedback_events_button"
+            accessibilityLabel="touchable feedback events"
+            accessibilityTraits="button"
+            accessibilityComponentType="button"
+            onPress={e => this._appendEvent(e)}>
+            <Text style={styles.button}>
+              Press Me
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View testID="touchable_feedback_events_console" style={styles.eventLogBox}>
+          {this.state.eventLog.map((e, ii) => <Text key={ii}>{e}</Text>)}
+        </View>
+      </View>
+    );
+  }
+
+  _appendEvent = (e) => {
+    var limit = 6;
+    var eventLog = this.state.eventLog.slice(0, limit - 1);
+    if (e.nativeEvent.pointerType === 'touch') {
+      eventLog.unshift('Touch');
+    } else if (e.nativeEvent.pointerType === 'mouse') {
+      var mouseClickType = e.nativeEvent.isLeftButton 
+        ? 'left click' 
+        : e.nativeEvent.isRightButton
+          ? 'right click'
+          : e.nativeEvent.isMiddleButton
+            ? 'middle button'
+            : e.nativeEvent.isHorizontalMouseWheel
+              ? 'scroll wheel'
+              : 'unknown';
+      eventLog.unshift('Mouse - ' + mouseClickType);
+    } else if (e.nativeEvent.pointerType === 'pen') {
+      var eraser = e.nativeEvent.isEraser ? ' eraser' : '';
+      var barrelButton = e.nativeEvent.isBarrelButtonPressed ? ' with barrel button pressed' : '';
+      eventLog.unshift('Pen' + eraser + barrelButton);
+    }
+    
     this.setState({eventLog});
   };
 }

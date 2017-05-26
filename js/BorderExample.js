@@ -146,6 +146,7 @@ exports.examples = [
   {
     title: 'Equal-Width Borders',
     description: 'borderWidth & border*Color',
+    platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.box, styles.border2]} />;
     }
@@ -160,6 +161,7 @@ exports.examples = [
   {
     title: 'Custom Borders',
     description: 'border*Width & border*Color',
+    platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.box, styles.border4]} />;
     }
@@ -209,6 +211,7 @@ exports.examples = [
   {
     title: 'Corner Radii',
     description: 'borderTopLeftRadius & borderBottomRightRadius',
+    platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.box, styles.border9]} />;
     }
@@ -224,6 +227,7 @@ exports.examples = [
   {
     title: 'CSS Trick - Triangle',
     description: 'create a triangle by manipulating border colors and widths',
+    platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.border11]} />;
     }

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -593,7 +593,7 @@ exports.examples = [
         />
       );
     },
-    platform: 'ios',
+    platforms: ['ios', 'windows'],
   },
   {
     title: 'Cap Insets',
@@ -634,6 +634,7 @@ exports.examples = [
         />
       );
     },
+    platforms: ['android', 'ios'],
   },
   {
     title: 'Bundled images',

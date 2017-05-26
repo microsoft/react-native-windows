@@ -14,6 +14,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  Alert,
   AlertIOS,
   Platform,
   ToastAndroid,
@@ -149,6 +150,8 @@ var TimerTester = React.createClass({
         AlertIOS.alert(msg);
       } else if (Platform.OS === 'android') {
         ToastAndroid.show(msg, ToastAndroid.SHORT);
+      } else if (Platform.OS === 'windows') {
+        Alert.alert('Results', msg);
       }
       this._start = 0;
       this.forceUpdate(() => { this._ii = 0; });
@@ -215,6 +218,7 @@ exports.examples = [
         </View>
       );
     },
+    platforms: ['ios', 'android'],
   },
   {
     title: 'this.setImmediate(fn)',
