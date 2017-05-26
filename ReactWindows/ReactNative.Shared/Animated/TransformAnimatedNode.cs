@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using static System.FormattableString;
 
 namespace ReactNative.Animated
 {
@@ -58,8 +57,7 @@ namespace ReactNative.Animated
                     }
                     else
                     {
-                        throw new InvalidOperationException(
-                            Invariant($"Unsupported type of node used as transform child node: '{node.GetType()}'"));
+                        throw new InvalidOperationException($"Unsupported type of node used as transform child node: '{node.GetType()}'");
                     }
                 }
                 else

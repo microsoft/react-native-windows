@@ -1,7 +1,6 @@
 ﻿using Facebook.Yoga;
 using System;
 using System.Collections.Generic;
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -572,8 +571,7 @@ namespace ReactNative.UIManager
                     _yogaNode.Margin = margin;
                     break;
                 default:
-                    throw new NotSupportedException(
-                        Invariant($"Unsupported margin type '{yogaEdge}'."));
+                    throw new NotSupportedException($"Unsupported margin type '{yogaEdge}'.");
             }
         }
 
@@ -599,8 +597,7 @@ namespace ReactNative.UIManager
                 case YogaEdge.End:
                     return _yogaNode.LayoutPaddingEnd;
                 default:
-                    throw new NotSupportedException(
-                        Invariant($"Unsupported padding type '{spacingType}'."));
+                    throw new NotSupportedException($"Unsupported padding type '{spacingType}'.");
             }
         }
 
@@ -649,8 +646,7 @@ namespace ReactNative.UIManager
                 case YogaEdge.All:
                     return _yogaNode.BorderWidth;
                 default:
-                    throw new NotSupportedException(
-                        Invariant($"Unsupported border type '{spacingType}'."));
+                    throw new NotSupportedException($"Unsupported border type '{spacingType}'.");
             }
         }
 
@@ -686,8 +682,7 @@ namespace ReactNative.UIManager
                     _yogaNode.BorderWidth = borderWidth;
                     break;
                 default:
-                    throw new NotSupportedException(
-                        Invariant($"Unsupported border type '{yogaEdge}'."));
+                    throw new NotSupportedException($"Unsupported border type '{yogaEdge}'.");
             }
         }
 
@@ -720,8 +715,7 @@ namespace ReactNative.UIManager
                     _yogaNode.End = position;
                     break;
                 default:
-                    throw new NotSupportedException(
-                        Invariant($"Unsupported position type '{yogaEdge}'."));
+                    throw new NotSupportedException($"Unsupported position type '{yogaEdge}'.");
             }
         }
 
@@ -1040,8 +1034,7 @@ namespace ReactNative.UIManager
 
             if (!found)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Child '{child.ReactTag}' was not a child of '{ReactTag}'."));
+                throw new InvalidOperationException($"Child '{child.ReactTag}' was not a child of '{ReactTag}'.");
             }
 
             return index;
@@ -1225,8 +1218,7 @@ namespace ReactNative.UIManager
                     node.Padding = padding;
                     break;
                 default:
-                    throw new NotSupportedException(
-                        Invariant($"Unsupported padding type '{yogaEdge}'."));
+                    throw new NotSupportedException($"Unsupported padding type '{yogaEdge}'.");
             }
         }
     }

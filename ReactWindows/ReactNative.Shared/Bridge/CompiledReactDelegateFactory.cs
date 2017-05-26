@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -113,9 +112,7 @@ namespace ReactNative.Bridge
                         Expression.Call(
                             s_stringFormat,
                             Expression.Constant(CultureInfo.InvariantCulture),
-                            Expression.Constant(
-                                Invariant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'.")
-                            ),
+                            Expression.Constant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'."),
                             Expression.Convert(
                                 Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
                                 typeof(object)
@@ -176,9 +173,7 @@ namespace ReactNative.Bridge
                     Expression.Throw(
                         Expression.New(
                             s_newNativeArgumentParseExceptionInner,
-                            Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'.")
-                            ),
+                            Expression.Constant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'."),
                             Expression.Constant(parameterName),
                             ex
                         )
@@ -237,9 +232,7 @@ namespace ReactNative.Bridge
                     Expression.Throw(
                         Expression.New(
                             s_newNativeArgumentParseException,
-                            Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'.")
-                            ),
+                            Expression.Constant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'."),
                             Expression.Constant(parameterName)
                         ),
                         type

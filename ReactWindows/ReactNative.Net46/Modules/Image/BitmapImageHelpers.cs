@@ -6,7 +6,6 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using static System.FormattableString;
 
 namespace ReactNative.Modules.Image
 {
@@ -39,7 +38,7 @@ namespace ReactNative.Modules.Image
                 var uriValue = default(Uri);
                 if (!Uri.TryCreate(uri, UriKind.Absolute, out uriValue))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(uri), Invariant($"Invalid URI '{uri}' provided."));
+                    throw new ArgumentOutOfRangeException(nameof(uri), $"Invalid URI '{uri}' provided.");
                 }
 
                 var streamReference = new StreamReader(WebRequest.Create(uri).GetResponse().GetResponseStream()); //RandomAccessStreamReference.CreateFromUri(uriValue);

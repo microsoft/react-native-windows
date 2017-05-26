@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -196,8 +195,7 @@ namespace ReactNative.UIManager
             var cssNode = _shadowNodeRegistry.GetNode(tag);
             if (cssNode == null)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Trying to update view with invalid tag '{tag}'."));
+                throw new InvalidOperationException($"Trying to update view with invalid tag '{tag}'.");
             }
 
             if (props != null)
@@ -330,8 +328,7 @@ namespace ReactNative.UIManager
                 var indexToRemove = indicesToRemove[i];
                 if (indexToRemove == lastIndexRemoved)
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Repeated indices in removal list for view tag '{viewTag}'."));
+                    throw new InvalidOperationException($"Repeated indices in removal list for view tag '{viewTag}'.");
                 }
 
                 cssNodeToManage.RemoveChildAt(indexToRemove);
@@ -344,8 +341,7 @@ namespace ReactNative.UIManager
                 var cssNodeToAdd = _shadowNodeRegistry.GetNode(viewAtIndex.Tag);
                 if (cssNodeToAdd == null)
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Trying to add unknown view tag '{viewAtIndex.Tag}'."));
+                    throw new InvalidOperationException($"Trying to add unknown view tag '{viewAtIndex.Tag}'.");
                 }
 
                 cssNodeToManage.AddChildAt(cssNodeToAdd, viewAtIndex.Index);
@@ -384,8 +380,7 @@ namespace ReactNative.UIManager
                 var cssNodeToAdd = _shadowNodeRegistry.GetNode(childrenTags[i]);
                 if (cssNodeToAdd == null)
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Trying to add unknown view tag: {childrenTags[i]}"));
+                    throw new InvalidOperationException($"Trying to add unknown view tag: {childrenTags[i]}");
                 }
 
                 cssNodeToManage.AddChildAt(cssNodeToAdd, i);
@@ -417,8 +412,7 @@ namespace ReactNative.UIManager
             var parent = oldNode.Parent;
             if (parent == null)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Node '{oldTag}' is not attached to a parent."));
+                throw new InvalidOperationException($"Node '{oldTag}' is not attached to a parent.");
             }
 
             var oldIndex = parent.IndexOf(oldNode);
@@ -739,8 +733,7 @@ namespace ReactNative.UIManager
             if (node == null || ancestor == null)
             {
                 var targetTag = node == null ? tag : ancestorTag;
-                throw new InvalidOperationException(
-                    Invariant($"Tag '{targetTag}' does not exist."));
+                throw new InvalidOperationException($"Tag '{targetTag}' does not exist.");
             }
 
             if (node != ancestor)
@@ -750,8 +743,7 @@ namespace ReactNative.UIManager
                 {
                     if (currentParent == null)
                     {
-                        throw new InvalidOperationException(
-                            Invariant($"Tag '{ancestorTag}' is not an ancestor of tag '{tag}'."));
+                        throw new InvalidOperationException($"Tag '{ancestorTag}' is not an ancestor of tag '{tag}'.");
                     }
 
                     currentParent = currentParent.Parent;
@@ -766,15 +758,13 @@ namespace ReactNative.UIManager
             var node = _shadowNodeRegistry.GetNode(tag);
             if (node == null)
             {
-                throw new InvalidOperationException(
-                    Invariant($"No native view for tag '{tag}' exists."));
+                throw new InvalidOperationException($"No native view for tag '{tag}' exists.");
             }
 
             var parent = node.Parent;
             if (parent == null)
             {
-                throw new InvalidOperationException(
-                    Invariant($"View with tag '{tag}' does not have a parent."));
+                throw new InvalidOperationException($"View with tag '{tag}' does not have a parent.");
             }
 
             MeasureLayoutRelativeToVerifiedAncestor(node, parent, outputBuffer);
@@ -814,8 +804,7 @@ namespace ReactNative.UIManager
         {
             if (_shadowNodeRegistry.GetNode(reactTag) == null)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Unable to execute operation '{caller}' on view with non-existant tag '{reactTag}'."));
+                throw new InvalidOperationException($"Unable to execute operation '{caller}' on view with non-existant tag '{reactTag}'.");
             }
         }
 
@@ -824,15 +813,13 @@ namespace ReactNative.UIManager
             var viewManager = _viewManagers.Get(node.ViewClass);
             if (viewManager == null)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Could not find view class '{node.ViewClass}'."));
+                throw new InvalidOperationException($"Could not find view class '{node.ViewClass}'.");
             }
 
             var viewParentManager = viewManager as IViewParentManager;
             if (viewParentManager == null)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Trying to use view '{node.ViewClass}' as a parent but its manager is not a ViewParentManager."));
+                throw new InvalidOperationException($"Trying to use view '{node.ViewClass}' as a parent but its manager is not a ViewParentManager.");
             }
 
             if (viewParentManager.NeedsCustomLayoutForChildren)

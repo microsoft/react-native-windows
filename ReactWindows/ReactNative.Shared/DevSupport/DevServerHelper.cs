@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.UI.Core;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.DevSupport
 {
@@ -126,7 +125,7 @@ namespace ReactNative.DevSupport
                         var nl = Environment.NewLine;
                         exception = new DebugServerException(
                             "The development server returned response error code: " +
-                            Invariant($"{response.StatusCode}{nl}{nl}URL: {bundleUrl}{nl}{nl}Body:{nl}{body}"));
+                            $"{response.StatusCode}{nl}{nl}URL: {bundleUrl}{nl}{nl}Body:{nl}{body}");
                     }
 
                     throw exception;

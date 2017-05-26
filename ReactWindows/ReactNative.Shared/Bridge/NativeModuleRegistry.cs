@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -258,7 +257,7 @@ namespace ReactNative.Bridge
                     throw new ArgumentNullException(nameof(module));
                 if (module.Name == null)
                     throw new ArgumentException(
-                        Invariant($"Native module '{module.GetType()}' cannot have a null `Name`."),
+                        $"Native module '{module.GetType()}' cannot have a null `Name`.",
                         nameof(module));
 
                 var existing = default(INativeModule);

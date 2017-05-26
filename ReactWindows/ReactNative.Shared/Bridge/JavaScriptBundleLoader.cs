@@ -7,7 +7,6 @@ using Windows.Storage;
 using System.IO;
 using System.Reflection;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -103,7 +102,7 @@ namespace ReactNative.Bridge
                 var pathToAssemblyResource = SourceUrl;
                 var u = new Uri(pathToAssemblyResource);
                 _script = u.LocalPath;
-                return Task.CompletedTask;
+                return new Task(() => {});
             }
 #endif
 
@@ -167,7 +166,7 @@ namespace ReactNative.Bridge
 
             public override Task InitializeAsync()
             {
-                return Task.CompletedTask;
+                return new Task(() => { });
             }
 
             public override void LoadScript(IReactBridge executor)
