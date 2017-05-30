@@ -1,6 +1,8 @@
+# Releases
+
 We release `react-native-windows` in lock-step with [facebook/react-native](https://github.com/facebook/react-native). I.e., for every release of `react-native`, we create a release of `react-native-windows` with a matching major and minor version.
 
-```
+```dos
 ...
 react-native@0.38.* -> react-native-windows@0.38.*
 react-native@0.39.* -> react-native-windows@0.39.*
@@ -19,7 +21,7 @@ The `facebook/react-native` project publishes a release candidate from their mas
 
 After a new release candidate is cut, upgrade the [react](https://www.npmjs.com/package/react) and [react-native](https://www.npmjs.com/package/react-native) dependencies. Be sure to check which version of `react` is currently being used by in the [react-native package.json](https://github.com/facebook/react-native/blob/master/package.json), as we keep this peer dependency aligned as well.
 
-```
+```dos
 npm i --save react-native@<major>.<minor>.<build>-rc.<id>
 npm i --save react@<version>
 ```
@@ -92,7 +94,7 @@ After fixing all the bugs with the UIExplorer, you're ready to share your awesom
 
 Create a new branch named with the following convention: `<major>.<minor>-stable`. Using version 0.40 as an example:
 
-```
+```dos
 git checkout -b 0.40-stable
 git tag v0.40.0-rc.0
 git push origin 0.40-stable --tags
@@ -102,7 +104,7 @@ git push origin 0.40-stable --tags
 
 Assuming you have authorization to publish a new version of `react-native-windows` to NPM, this is the easy part. From the release branch you just created, run:
 
-```
+```dos
 npm publish
 ```
 

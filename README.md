@@ -5,21 +5,22 @@
 [React Native](http://facebook.github.io/react-native) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](http://facebook.github.io/react). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
 
 This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for:
+
 * Windows 10
 * Windows 10 Mobile
 * [Xbox One (UWP)](https://msdn.microsoft.com/en-us/windows/uwp/xbox-apps/index)
 
 ## Quick Links
 
-- [Getting Started](#getting-started)
-- [Getting Help](#getting-help)
-- [Documentation](#documentation)
-- [Examples](#examples)
-- [Extending React Native](#extending-react-native)
-- [Opening Issues](#opening-issues)
-- [Contributing](#contributing)
-- [License](#license)
-- [Code of Conduct](#code-of-conduct)
+* [Getting Started](#getting-started)
+* [Getting Help](#getting-help)
+* [Documentation](#documentation)
+* [Examples](#examples)
+* [Extending React Native](#extending-react-native)
+* [Opening Issues](#opening-issues)
+* [Contributing](#contributing)
+* [License](#license)
+* [Code of Conduct](#code-of-conduct)
 
 ## Introduction
 
@@ -27,19 +28,20 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 ## Getting Started
 
-- Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
-- Change your working directory to the project directory you specified in the `react-native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (e.g., `cd AwesomeProject`).
-- Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
-- Initialize Windows project with `react-native windows` command in the project directory.
-- Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
-- For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
+* Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
+* Change your working directory to the project directory you specified in the `react-native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (e.g., `cd AwesomeProject`).
+* Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows`).
+* Initialize Windows project with `react-native windows` command in the project directory.
+* Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
+* For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
 
 ### Requirements
 
 In addition to the requirements from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html):
-- [NPM 3.x](https://www.npmjs.com/package/npm)
-- [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
-- [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
+
+* [NPM 3.x](https://www.npmjs.com/package/npm)
+* [Visual Studio 2015 Community](https://msdn.microsoft.com/en-us/library/dd831853.aspx)
+* [Windows 10 SDK Build 10586](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
 
 If this is your first time using UWP, you may be able to install the SDK by opening the [solution file](ReactWindows/ReactNative.sln) in the ReactWindows folder in Visual Studio. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
 
@@ -51,17 +53,18 @@ If you happen to run into issues while setting up React Native Windows on your m
 
 Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
 
-- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-platforms
-- If it turns out that you may have found a bug, please [open an issue](#opening-issues)
+* Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-platforms
+* If it turns out that you may have found a bug, please [open an issue](#opening-issues)
 
 ## Documentation
 
 [React Native already has great documentation](http://facebook.github.io/react-native/docs), and we're working to ensure the React Native Windows plugin is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
 For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](docs/CoreParityStatus.md).
+
 ## Examples
 
-```
+```dos
 git clone --recursive https://github.com/ReactWindows/react-native-windows.git
 cd react-native-windows
 npm install
@@ -69,22 +72,22 @@ npm install
 
 ### Running the examples
 
-- Start the React Native packager by running `react-native start` 
-- Open Examples.sln from the Examples submodule folder in Visual Studio.
-- Set the StartUp project to the example you want to run, press F5.
+* Start the React Native packager by running `react-native start`
+* Open Examples.sln from the Examples submodule folder in Visual Studio.
+* Set the StartUp project to the example you want to run, press F5.
 
 ### Showing the Debug Menu
 
-- On UWP, press Shift+F10 to open the debug menu.
-- On WPF, press CTRL+D or CTRL+M to open the debug menu.
+* On UWP, press Shift+F10 to open the debug menu.
+* On WPF, press CTRL+D or CTRL+M to open the debug menu.
 
 ## Extending React Native
 
-- Looking for a component? [JS.coach](https://js.coach/react-native)
-- Fellow developers write and publish React Native modules to npm and open source them on GitHub.
-- Many third party modules may be missing Windows support, so reach out to the project owners directly.
-- Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
-- Read the guides on [Native Modules for Windows](docs/NativeModulesWindows.md) and [Native UI Components for Windows](docs/NativeComponentsWindows.md) if you are interested in extending native functionality.
+* Looking for a component? [JS.coach](https://js.coach/react-native)
+* Fellow developers write and publish React Native modules to npm and open source them on GitHub.
+* Many third party modules may be missing Windows support, so reach out to the project owners directly.
+* Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
+* Read the guides on [Native Modules for Windows](docs/NativeModulesWindows.md) and [Native UI Components for Windows](docs/NativeComponentsWindows.md) if you are interested in extending native functionality.
 
 ## Opening Issues
 
