@@ -139,6 +139,7 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
+    <Compile Include="Modules\DeviceInfo\DeviceInfoModule.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\BitmapImageHelpers.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
@@ -164,7 +165,6 @@
     <Compile Include="Tracing\NullLoggingActivityBuilder.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
-    <Compile Include="UIManager\UIManagerModule.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Picker\ReactPickerManager.cs" />
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
