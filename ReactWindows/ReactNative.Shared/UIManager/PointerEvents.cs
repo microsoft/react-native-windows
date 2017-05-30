@@ -25,6 +25,6 @@
         /// <summary>
         /// Container gets events but none of its children do.
         /// </summary>
-        BoxOnly,
+        BoxOnly,   
     }
 }
