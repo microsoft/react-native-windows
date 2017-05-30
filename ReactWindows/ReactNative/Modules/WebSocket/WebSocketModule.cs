@@ -6,6 +6,7 @@ using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using static System.FormattableString;
@@ -36,8 +37,6 @@ namespace ReactNative.Modules.WebSocket
         public void connect(string url, string[] protocols, JObject options, int id)
         {
             var webSocket = new MessageWebSocket();
-
-            webSocket.Control.MessageType = SocketMessageType.Utf8;
 
             if (protocols != null)
             {
@@ -98,6 +97,15 @@ namespace ReactNative.Modules.WebSocket
         [ReactMethod]
         public void send(string message, int id)
         {
+            var webSocket = default(MessageWebSocket);
+            if (!_webSocketConnections.TryGetValue(id, out webSocket))
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Cannot send a message. Unknown WebSocket id '{id}'."));
+            }
+
+            webSocket.Control.MessageType = SocketMessageType.Utf8;
+
             var dataWriter = default(DataWriter);
             if (!_dataWriters.TryGetValue(id, out dataWriter))
             {
@@ -106,6 +114,28 @@ namespace ReactNative.Modules.WebSocket
             }
 
             SendMessageInBackground(id, dataWriter, message);
+        }
+
+        [ReactMethod]
+        public void sendBinary(string message, int id)
+        {
+            var webSocket = default(MessageWebSocket);
+            if (!_webSocketConnections.TryGetValue(id, out webSocket))
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Cannot send a message. Unknown WebSocket id '{id}'."));
+            }
+
+            webSocket.Control.MessageType = SocketMessageType.Binary;
+
+            var dataWriter = default(DataWriter);
+            if (!_dataWriters.TryGetValue(id, out dataWriter))
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Cannot send a message. Unknown WebSocket id '{id}'."));
+            }
+
+            SendMessageInBackground(id, dataWriter, Convert.FromBase64String(message));
         }
 
         private async void InitializeInBackground(int id, string url, MessageWebSocket webSocket)
@@ -143,6 +173,19 @@ namespace ReactNative.Modules.WebSocket
             }
         }
 
+        private async void SendMessageInBackground(int id, DataWriter dataWriter, byte[] message)
+        {
+            try
+            {
+                dataWriter.WriteBytes(message);
+                await dataWriter.StoreAsync().AsTask().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                OnError(id, ex);
+            }
+        }
+
         private void OnClosed(int id, IWebSocket webSocket, WebSocketClosedEventArgs args)
         {
             SendEvent("websocketClosed", new JObject
@@ -168,11 +211,15 @@ namespace ReactNative.Modules.WebSocket
             {
                 using (var reader = args.GetDataReader())
                 {
-                    var message = reader.ReadString(reader.UnconsumedBufferLength);
+                    var message = args.MessageType == SocketMessageType.Binary
+                        ? Convert.ToBase64String(reader.ReadBuffer(reader.UnconsumedBufferLength).ToArray())
+                        : reader.ReadString(reader.UnconsumedBufferLength);
+
                     SendEvent("websocketMessage", new JObject
                     {
                         { "id", id },
                         { "data", message },
+                        { "type", args.MessageType == SocketMessageType.Binary ? "binary" : "text" },
                     });
                 }
             }

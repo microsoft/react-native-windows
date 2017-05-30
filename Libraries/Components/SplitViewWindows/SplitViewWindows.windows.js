@@ -13,7 +13,6 @@
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var React = require('React');
 var ReactNative = require('ReactNative');
-var ReactPropTypes = require('react/lib/ReactPropTypes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
 var View = require('View');
@@ -22,6 +21,8 @@ var SplitViewConsts = UIManager.WindowsSplitView.Constants;
 
 var dismissKeyboard = require('dismissKeyboard');
 var requireNativeComponent = require('requireNativeComponent');
+
+var ReactPropTypes = React.PropTypes;
 
 var RK_PANE_REF = 'paneView';
 var CONTENT_REF = 'contentView';

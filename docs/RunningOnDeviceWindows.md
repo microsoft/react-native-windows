@@ -78,3 +78,5 @@ react-native bundle --platform windows --entry-file index.windows.js
 ```
 
 Be sure to update the paths to match the path to your ReactAssets folder.
+
+To create an app package and upload your app to the Windows store, [follow these instructions](https://docs.microsoft.com/en-us/windows/uwp/packaging/packaging-uwp-apps#create-an-app-package).

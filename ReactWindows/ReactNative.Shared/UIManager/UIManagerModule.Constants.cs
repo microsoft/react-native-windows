@@ -264,10 +264,6 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
-                    "Dimensions",
-                    GetDimensions()
-                },
-                {
                     "StyleConstants",
                     new Map
                     {
