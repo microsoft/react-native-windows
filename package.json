@@ -30,7 +30,7 @@
     "react-native": "~0.44.2"
   },
   "devDependencies": {
-    "flow-bin": "^0.40.0",
+    "flow-bin": "^0.42.0",
     "https-proxy-agent": "^1.0.0",
     "jasmine": "^2.5.2",
     "jasmine-reporters": "^2.2.0",
