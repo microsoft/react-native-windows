@@ -51,7 +51,7 @@ test:
   - ReactWindows\ReactNative.Net46.Tests\bin\x64\**\*.Tests.dll
 
 test_script:
-  - npm run flow-check
+#  - npm run flow-check
   - npm test
 
 after_test:
