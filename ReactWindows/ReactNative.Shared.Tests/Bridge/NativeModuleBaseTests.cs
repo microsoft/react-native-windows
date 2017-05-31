@@ -76,7 +76,7 @@ namespace ReactNative.Tests.Bridge
             var reactInstance = new MockReactInstance();
             AssertEx.Throws<NativeArgumentsParseException>(
                 () => testModule.Methods[nameof(TestNativeModule.Bar)].Invoke(reactInstance, JArray.FromObject(new[] { default(object) })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+                ex => Assert.AreEqual("jsArguments", ex.ParamName));
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace ReactNative.Tests.Bridge
 
             AssertEx.Throws<NativeArgumentsParseException>(
                 () => module.Methods[nameof(CallbackNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { default(object) })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+                ex => Assert.AreEqual("jsArguments", ex.ParamName));
         }
 
         [Test]
@@ -214,11 +214,11 @@ namespace ReactNative.Tests.Bridge
 
             AssertEx.Throws<NativeArgumentsParseException>(
                 () => module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { default(object), 43 })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+                ex => Assert.AreEqual("jsArguments", ex.ParamName));
 
             AssertEx.Throws<NativeArgumentsParseException>(
                 () => module.Methods[nameof(PromiseNativeModule.Foo)].Invoke(reactInstance, JArray.FromObject(new[] { 42, default(object) })),
-                ex => Assert.AreEqual("arguments", ex.ParamName));
+                ex => Assert.AreEqual("jsArguments", ex.ParamName));
         }
 
         [Test]

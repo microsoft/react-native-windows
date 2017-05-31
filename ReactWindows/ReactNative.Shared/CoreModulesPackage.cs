@@ -1,6 +1,7 @@
 ﻿using ReactNative.Bridge;
 using ReactNative.DevSupport;
 using ReactNative.Modules.Core;
+using ReactNative.Modules.DeviceInfo;
 using ReactNative.Modules.DevSupport;
 using ReactNative.Tracing;
 using ReactNative.UIManager;
@@ -42,18 +43,10 @@ namespace ReactNative
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
                 var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
-#if WINDOWS_UWP
                 uiManagerModule = new UIManagerModule(
                     reactContext, 
                     viewManagerList,
                     _uiImplementationProvider);
-#else
-                uiManagerModule = new UIManagerModule(
-                    reactContext,
-                    viewManagerList,
-                    _uiImplementationProvider, 
-                    Application.Current.MainWindow);
-#endif
             }
 
             return new List<INativeModule>
@@ -63,6 +56,7 @@ namespace ReactNative
                 //    _reactInstanceManager.DevSupportManager.DevSettings),
                 //new SystemInfoModule(),
                 new DeviceEventManagerModule(reactContext, _hardwareBackButtonHandler),
+                new DeviceInfoModule(reactContext),
                 new ExceptionsManagerModule(_reactInstanceManager.DevSupportManager),
                 new Timing(reactContext),
                 new SourceCodeModule(
