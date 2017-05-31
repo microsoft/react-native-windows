@@ -43,16 +43,18 @@ namespace ReactNative.Modules.Clipboard
                 throw new ArgumentNullException(nameof(promise));
             }
 
-            if (_clipboard.ContainsText())
+            DispatcherHelpers.RunOnDispatcher(() =>
             {
-                var text = _clipboard.GetText();
-                promise.Resolve(text);
-            }
-            else
-            {
-                promise.Resolve("");
-            }
-
+                if (_clipboard.ContainsText())
+                {
+                    var text = _clipboard.GetText();
+                    promise.Resolve(text);
+                }
+                else
+                {
+                    promise.Resolve("");
+                }
+            });
         }
 
         /// <summary>
@@ -62,7 +64,10 @@ namespace ReactNative.Modules.Clipboard
         [ReactMethod]
         public void setString(string text)
         {
-            _clipboard.SetText(text);
+            DispatcherHelpers.RunOnDispatcher(new Action(() =>
+            {
+                _clipboard.SetText(text);
+            }));
         }
     }
 }

@@ -15,7 +15,6 @@
 var ColorPropType = require('ColorPropType');
 var React = require('React');
 var ReactChildren = require('react/lib/ReactChildren');
-var ReactPropTypes = require('react/lib/ReactPropTypes');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
@@ -23,6 +22,8 @@ var ViewStylePropTypes = require('ViewStylePropTypes');
 
 var processColor = require('processColor');
 var requireNativeComponent = require('requireNativeComponent');
+
+var ReactPropTypes = React.PropTypes;
 
 var REF_PICKER = 'picker';
 

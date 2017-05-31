@@ -22,11 +22,11 @@ namespace ReactNative.Tests.UIManager
             var uiImplementationProvider = new UIImplementationProvider();
 
             ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementationProvider, new Window()));
+                () => new UIManagerModule(context, null, uiImplementationProvider));
             Assert.AreEqual("viewManagers", ex1.ParamName);
 
             ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, viewManagers, null, new Window()));
+                () => new UIManagerModule(context, viewManagers, null));
             Assert.AreEqual("uiImplementationProvider", ex2.ParamName);
         }
 
@@ -38,7 +38,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementationProvider, new Window()));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider));
 
             var constants = module.Constants;
 
@@ -68,7 +68,7 @@ namespace ReactNative.Tests.UIManager
             var uiImplementationProvider = new UIImplementationProvider();
 
             var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementationProvider, new Window()));
+                () => new UIManagerModule(context, viewManagers, uiImplementationProvider));
 
             var constants = module.Constants;
             Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetValue("otherSelectionChange"));

@@ -5,7 +5,7 @@ using System.Windows.Threading;
 
 namespace ReactNative.Bridge
 {
-    static class DispatcherHelpers
+    public static class DispatcherHelpers
     {
         private static Dispatcher _dispatcher;
 

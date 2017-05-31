@@ -3,6 +3,8 @@ using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.WebSocket;
+using System;
+using System.Text;
 using System.Threading;
 
 namespace ReactNative.Tests.Modules.WebSocket
@@ -110,8 +112,6 @@ namespace ReactNative.Tests.Modules.WebSocket
                         json = (JObject)args[1];
                         waitHandle.Set();
                         break;
-                    default:
-                        break;
                 }
             }));
 
@@ -132,7 +132,144 @@ namespace ReactNative.Tests.Modules.WebSocket
             }
 
             Assert.AreEqual(1, json["id"].Value<int>());
+            Assert.AreEqual("text", json["type"].Value<string>());
             Assert.AreEqual("FooBarBaz", json["data"].Value<string>());
+        }
+
+        [Test]
+        [Category("Network")]
+        public void WebSocketModule_DataEvent_Binary()
+        {
+            var waitHandle = new AutoResetEvent(false);
+            var json = default(JObject);
+            var context = CreateReactContext(new MockInvocationHandler((name, args) =>
+            {
+                var eventName = (string)args[0];
+                switch (eventName)
+                {
+                    case "websocketOpen":
+                    case "websocketClosed":
+                        waitHandle.Set();
+                        break;
+                    case "websocketMessage":
+                        json = (JObject)args[1];
+                        waitHandle.Set();
+                        break;
+                }
+            }));
+
+            var module = new WebSocketModule(context);
+            var encodedMessage = Convert.ToBase64String(Encoding.UTF8.GetBytes("Hello World"));
+            try
+            {
+                module.connect("ws://echo.websocket.org", null, null, 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+                module.sendBinary(encodedMessage, 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+            }
+            finally
+            {
+                module.close(1000, "None", 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+
+                waitHandle.Dispose();
+            }
+
+            Assert.AreEqual(1, json["id"].Value<int>());
+            Assert.AreEqual("binary", json["type"].Value<string>());
+            Assert.AreEqual(encodedMessage, json["data"].Value<string>());
+        }
+
+        [Test]
+        [Category("Network")]
+        public void WebSocketModule_DataEvent_Binary_ThenText()
+        {
+            var waitHandle = new AutoResetEvent(false);
+            var json = default(JObject);
+            var context = CreateReactContext(new MockInvocationHandler((name, args) =>
+            {
+                var eventName = (string)args[0];
+                switch (eventName)
+                {
+                    case "websocketOpen":
+                    case "websocketClosed":
+                        waitHandle.Set();
+                        break;
+                    case "websocketMessage":
+                        json = (JObject)args[1];
+                        waitHandle.Set();
+                        break;
+                }
+            }));
+
+            var module = new WebSocketModule(context);
+            var encodedMessage = Convert.ToBase64String(Encoding.UTF8.GetBytes("Hello World"));
+            try
+            {
+                module.connect("ws://echo.websocket.org", null, null, 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+                module.sendBinary(encodedMessage, 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+                module.send("FooBarBaz", 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+            }
+            finally
+            {
+                module.close(1000, "None", 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+
+                waitHandle.Dispose();
+            }
+
+            Assert.AreEqual(1, json["id"].Value<int>());
+            Assert.AreEqual("text", json["type"].Value<string>());
+            Assert.AreEqual("FooBarBaz", json["data"].Value<string>());
+        }
+
+        [Test]
+        [Category("Network")]
+        public void WebSocketModule_DataEvent_Text_ThenBinary()
+        {
+            var waitHandle = new AutoResetEvent(false);
+            var json = default(JObject);
+            var context = CreateReactContext(new MockInvocationHandler((name, args) =>
+            {
+                var eventName = (string)args[0];
+                switch (eventName)
+                {
+                    case "websocketOpen":
+                    case "websocketClosed":
+                        waitHandle.Set();
+                        break;
+                    case "websocketMessage":
+                        json = (JObject)args[1];
+                        waitHandle.Set();
+                        break;
+                }
+            }));
+
+            var module = new WebSocketModule(context);
+            var encodedMessage = Convert.ToBase64String(Encoding.UTF8.GetBytes("Hello World"));
+            try
+            {
+                module.connect("ws://echo.websocket.org", null, null, 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+                module.send("FooBarBaz", 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+                module.sendBinary(encodedMessage, 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+            }
+            finally
+            {
+                module.close(1000, "None", 1);
+                Assert.IsTrue(waitHandle.WaitOne(WaitTimeoutInMs));
+
+                waitHandle.Dispose();
+            }
+
+            Assert.AreEqual(1, json["id"].Value<int>());
+            Assert.AreEqual("binary", json["type"].Value<string>());
+            Assert.AreEqual(encodedMessage, json["data"].Value<string>());
         }
 
         private ReactContext CreateReactContext(IInvocationHandler handler)
