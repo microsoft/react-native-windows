@@ -1,9 +1,6 @@
 version: 1.0.{build}
 max_jobs: 2
 image: Visual Studio 2015
-cache:
-- ReactWindows\packages -> ReactWindows\**\packages.config
-- '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'
 
 environment:
   nodejs_version: "6"
