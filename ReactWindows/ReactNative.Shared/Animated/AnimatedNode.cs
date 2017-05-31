@@ -4,6 +4,8 @@ namespace ReactNative.Animated
 {
     abstract class AnimatedNode
     {
+        public const int InitialBfsColor = 0;
+
         private List<AnimatedNode> _children;
 
         public AnimatedNode(int tag)

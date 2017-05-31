@@ -7,12 +7,13 @@
 'use strict';
 
 var React = require('React');
-var ReactPropTypes = require('react/lib/ReactPropTypes');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var View = require('View');
 var ColorPropType = require('ColorPropType');
 
 var requireNativeComponent = require('requireNativeComponent');
+
+var ReactPropTypes = React.PropTypes;
 
 /**
  * React component that wraps the Windows-only `ProgressBar`. This component is used to indicate
