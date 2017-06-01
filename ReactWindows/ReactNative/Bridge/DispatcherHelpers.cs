@@ -5,7 +5,7 @@ using Windows.UI.Core;
 
 namespace ReactNative.Bridge
 {
-    static class DispatcherHelpers
+    public static class DispatcherHelpers
     {
         public static void AssertOnDispatcher()
         {

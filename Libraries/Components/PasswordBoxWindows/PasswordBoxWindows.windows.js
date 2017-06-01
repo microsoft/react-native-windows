@@ -14,7 +14,6 @@
 var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
 var NativeMethodsMixin = require('NativeMethodsMixin');
-var PropTypes = require('react/lib/ReactPropTypes');
 var React = require('React');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
@@ -25,6 +24,8 @@ var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var View = require('View');
 
 var requireNativeComponent = require('requireNativeComponent');
+
+var PropTypes = React.PropTypes;
 
 var NativePasswordBox = requireNativeComponent('PasswordBoxWindows', null);
 

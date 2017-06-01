@@ -354,11 +354,12 @@ namespace ReactNative.Animated
         /// </summary>
         /// <param name="viewTag">The view tag.</param>
         /// <param name="eventName">The event name.</param>
+        /// <param name="animatedValueTag">The value tag.</param>
         [ReactMethod]
-        public void removeAnimatedEventFromView(int viewTag, string eventName)
+        public void removeAnimatedEventFromView(int viewTag, string eventName, int animatedValueTag)
         {
             _operations.Add(manager =>
-                manager.RemoveAnimatedEventFromView(viewTag, eventName));
+                manager.RemoveAnimatedEventFromView(viewTag, eventName, animatedValueTag));
         }
     }
 }

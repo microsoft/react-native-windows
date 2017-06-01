@@ -32,6 +32,11 @@ module.exports = yeoman.Base.extend({
       this.templatePath('_gitignore'),
       this.destinationPath(path.join('windows', '.gitignore'))
     );
+
+    this.fs.copy(
+      this.templatePath('ra_gitignore'),
+      this.destinationPath(path.join('windows', this.name, 'ReactAssets', '.gitignore'))
+    );
   },
 
   writing: function () {
