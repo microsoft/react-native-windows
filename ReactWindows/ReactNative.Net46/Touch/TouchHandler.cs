@@ -396,21 +396,9 @@ namespace ReactNative.Touch
                 _coalescingKey = coalescingKey;
             }
 
-            public override string EventName
-            {
-                get
-                {
-                    return _touchEventType.GetJavaScriptEventName();
-                }
-            }
+            public override string EventName => _touchEventType.GetJavaScriptEventName();
 
-            public override bool CanCoalesce
-            {
-                get
-                {
-                    return _touchEventType == TouchEventType.Move;
-                }
-            }
+            public override bool CanCoalesce => _touchEventType == TouchEventType.Move;
 
             public override short CoalescingKey
             {
@@ -439,21 +427,9 @@ namespace ReactNative.Touch
                 _touchEventType = touchEventType;
             }
 
-            public override string EventName
-            {
-                get
-                {
-                    return _touchEventType.GetJavaScriptEventName();
-                }
-            }
+            public override string EventName => _touchEventType.GetJavaScriptEventName();
 
-            public override bool CanCoalesce
-            {
-                get
-                {
-                    return false;
-                }
-            }
+            public override bool CanCoalesce => false;
 
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
@@ -463,13 +439,14 @@ namespace ReactNative.Touch
                 };
 
                 var enterLeaveEventName = default(string);
-                if (_touchEventType == TouchEventType.Entered)
+                switch (_touchEventType)
                 {
-                    enterLeaveEventName = "topMouseEnter";
-                }
-                else if (_touchEventType == TouchEventType.Exited)
-                {
-                    enterLeaveEventName = "topMouseLeave";
+                    case TouchEventType.Entered:
+                        enterLeaveEventName = "topMouseEnter";
+                        break;
+                    case TouchEventType.Exited:
+                        enterLeaveEventName = "topMouseLeave";
+                        break;
                 }
 
                 if (enterLeaveEventName != null)
