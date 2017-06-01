@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -101,6 +102,14 @@ namespace ReactNative.Bridge
             //             "Module '{module.Name}' method '{method.Name}' got '{0}' arguments, expected '{parameterCount}'."
             //             jsArguments.Count));
             //
+
+            //ConstructorInfo constructor = typeof(XPTO).MakeGenericType(typeof(int)).GetConstructor(Type.EmptyTypes);
+            //Func<IXPTO> f1 = () => (IXPTO)constructor.Invoke(new object[0]);
+            //Func<IXPTO> f2 = (Func<IXPTO>)Expression.Lambda(Expression.Convert(Expression.New(constructor), typeof(IXPTO))).Compile();
+
+            //var constructor = typeof(object[]).GetConstructor(Type.EmptyTypes);
+            //Expression.Lambda(() => )
+
             blockStatements[3] = Expression.IfThen(
                 Expression.NotEqual(
                     Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
@@ -113,15 +122,22 @@ namespace ReactNative.Bridge
                             s_stringFormat,
                             Expression.Constant(CultureInfo.InvariantCulture),
                             Expression.Constant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'."),
-                            Expression.Convert(
-                                Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
-                                typeof(object)
-                            )
+                            Expression.NewArrayInit(typeof(object), new List<Expression>() {
+                                Expression.Convert(
+                                    Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
+                                    typeof(object)
+                                )
+                            })
                         ),
                         Expression.Constant(jsArgumentsParameter.Name)
                     )
                 )
             );
+
+            int v = 0;
+            object[] o = new object[] {v};
+            
+
 
             //
             // p0 = Extract<T>(jsArguments[0]);
