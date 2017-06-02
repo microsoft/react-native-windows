@@ -489,19 +489,16 @@ namespace ReactNative.UIManager
                 }
             }
 
+            Action[] actions = Array.Empty<Action>();;
             lock (_gate)
             {
-                try
-                {
-                    foreach (var batch in _batches)
-                    {
-                        batch();
-                    }
-                }
-                finally
-                {
-                    _batches.Clear();
-                }
+                actions = _batches.ToArray();
+                _batches.Clear();
+            }
+
+            foreach (var action in actions)
+            {
+                action();
             }
         }
 
