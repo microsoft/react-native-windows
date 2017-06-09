@@ -1,9 +1,6 @@
 version: 1.0.{build}
 max_jobs: 2
 image: Visual Studio 2015
-cache:
-- ReactWindows\packages -> ReactWindows\**\packages.config
-- '%USERPROFILE%\.nuget\packages -> ReactWindows\**\project.json'
 
 environment:
   nodejs_version: "6"
@@ -51,7 +48,7 @@ test:
   - ReactWindows\ReactNative.Net46.Tests\bin\x64\**\*.Tests.dll
 
 test_script:
-  - npm run flow-check
+#  - npm run flow-check
   - npm test
 
 after_test:

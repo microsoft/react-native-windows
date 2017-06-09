@@ -110,6 +110,9 @@ namespace ReactNative.Views.Web
                 var uri = source.Value<string>("uri");
                 if (uri != null)
                 {
+                    // HTML files need to be loaded with the ms-appx-web schema.
+                    uri = uri.Replace("ms-appx:", "ms-appx-web:");
+
                     using (var request = new HttpRequestMessage())
                     {
                         request.RequestUri = new Uri(uri);
