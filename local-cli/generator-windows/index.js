@@ -53,6 +53,7 @@ module.exports = yeoman.Base.extend({
       const certGenCommand = [
         `$cert = New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject "CN=${currentUser}" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}Subject Type:End Entity") -CertStoreLocation "Cert:\\CurrentUser\\My"`,
         `$pwd = ConvertTo-SecureString -String password -Force -AsPlainText`,
+        `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join('windows', this.name)}`,
         `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join('windows', this.name, this.name)}_TemporaryKey.pfx -Password $pwd`,
         `$cert.Thumbprint`
       ];
