@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
@@ -86,6 +88,53 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        /// <remarks>
+        /// Be sure to call this base class method to register for pointer 
+        /// entered and pointer exited events.
+        /// </remarks>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            view.MouseEnter -= OnPointerEntered;
+            view.MouseLeave -= OnPointerExited;
+        }
+
+        /// <summary>
+        /// Subclasses can override this method to install custom event 
+        /// emitters on the given view.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view instance.</param>
+        /// <remarks>
+        /// Consider overriding this method if your view needs to emit events
+        /// besides basic touch events to JavaScript (e.g., scroll events).
+        /// 
+        /// Make sure you call the base implementation to ensure base pointer
+        /// event handlers are subscribed.
+        /// </remarks>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            view.MouseEnter += OnPointerEntered;
+            view.MouseLeave += OnPointerExited;
+        }
+
+        private void OnPointerEntered(object sender, MouseEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            TouchHandler.OnPointerEntered(view, e);
+        }
+
+        private void OnPointerExited(object sender, MouseEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            TouchHandler.OnPointerExited(view, e);
         }
 
         /// <summary>
