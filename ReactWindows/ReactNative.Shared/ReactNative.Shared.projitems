@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\StyleAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Callback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
@@ -36,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ILifecycleEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModuleWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IOnBatchCompleteListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
@@ -50,6 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleWrapperBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Promise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IMessageQueueThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IReactQueueConfiguration.cs" />
@@ -136,6 +139,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Wrappers\UIManagerModuleWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
@@ -235,8 +239,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Modules\DeviceInfo\" />
   </ItemGroup>
 </Project>

@@ -51,7 +51,8 @@ namespace ReactNative.Bridge
             var instance = default(INativeModule);
             if (_moduleInstances.TryGetValue(typeof(T), out instance))
             {
-                return (T)instance;
+                var wrapper = instance as INativeModuleWrapper;
+                return wrapper != null ? (T)wrapper.Module : (T)instance;
             }
 
             throw new InvalidOperationException("No module instance for type '{0}'.");
@@ -294,7 +295,9 @@ namespace ReactNative.Bridge
                     var name = NormalizeModuleName(module.Name);
                     var moduleDef = new ModuleDefinition(name, module);
                     moduleTable.Add(moduleDef);
-                    moduleInstances.Add(module.GetType(), module);
+                    var wrapper = module as INativeModuleWrapper;
+                    var type = wrapper?.ModuleType ?? module.GetType();
+                    moduleInstances.Add(type, module);
                 }
 
                 return new NativeModuleRegistry(moduleTable, moduleInstances);

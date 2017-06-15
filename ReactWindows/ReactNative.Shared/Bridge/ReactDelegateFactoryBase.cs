@@ -121,24 +121,5 @@ namespace ReactNative
             var rejectCallback = CreateCallback(rejectToken, reactInstance);
             return new Promise(resolveCallback, rejectCallback);
         }
-
-        class Callback : ICallback
-        {
-            private static readonly object[] s_empty = new object[0];
-
-            private readonly int _id;
-            private readonly IReactInstance _instance;
-
-            public Callback(int id, IReactInstance instance)
-            {
-                _id = id;
-                _instance = instance;
-            }
-
-            public void Invoke(params object[] arguments)
-            {
-                _instance.InvokeCallback(_id, JArray.FromObject(arguments ?? s_empty));
-            }
-        }
     }
 }
