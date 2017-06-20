@@ -138,10 +138,15 @@ namespace ReactNative.UIManager
                 AlignSelf,
                 Collapsible,
                 Flex,
+                FlexBasis,
                 FlexDirection,
+                FlexGrow,
+                FlexShrink,
                 FlexWrap,
                 JustifyContent,
                 Overflow,
+                AlignContent,
+                Display,
 
                 /* position */
                 Position,
