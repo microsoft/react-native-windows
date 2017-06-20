@@ -1,8 +1,9 @@
 ﻿#define ENABLED
 
-using System;
 using System.Collections.Generic;
+#if ENABLED
 using System.Linq;
+#endif
 
 namespace ReactNative.UIManager
 {
@@ -154,7 +155,7 @@ namespace ReactNative.UIManager
 #if !ENABLED
             _uiViewOperationQueue.EnqueueManageChildren(
                 nodeToManage.ReactTag,
-                indicesToRemove,
+                indexesToRemove,
                 viewsToAdd,
                 tagsToDelete);
 #else
@@ -518,7 +519,7 @@ namespace ReactNative.UIManager
 
             foreach (var key in props.Keys)
             {
-                if (!ViewProps.IsLayoutOnly(key))
+                if (!ViewProps.IsLayoutOnly(props, key))
                 {
                     return false;
                 }
