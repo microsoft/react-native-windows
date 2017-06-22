@@ -74,100 +74,100 @@ namespace ReactNative.Modules.Wrappers
 
         private void ConfigureNextAnimationLayout(IReactInstance instance, JArray arguments)
         {
-            _module.configureNextLayoutAnimation((JObject)arguments[0], new Callback(arguments[1].Value<int>(), instance), new Callback(arguments[2].Value<int>(), instance));
+            _module.configureNextLayoutAnimation((JObject)arguments[0], new Callback(ToInt32(arguments[1]), instance), new Callback(ToInt32(arguments[2]), instance));
         }
 
         private void CreateView(IReactInstance instance, JArray arguments)
         {
-            _module.createView(arguments[0].Value<int>(), arguments[1].Value<string>(), arguments[2].Value<int>(), (JObject)arguments[3]);
+            _module.createView(ToInt32(arguments[0]), ToString(arguments[1]), ToInt32(arguments[2]), (JObject)arguments[3]);
         }
 
         private void DispatchViewManagerCommand(IReactInstance instance, JArray arguments)
         {
-            _module.dispatchViewManagerCommand(arguments[0].Value<int>(), arguments[1].Value<int>(), (JArray)arguments[2]);
+            _module.dispatchViewManagerCommand(ToInt32(arguments[0]), ToInt32(arguments[1]), (JArray)arguments[2]);
         }
 
         private void FindSubviewIn(IReactInstance instance, JArray arguments)
         {
-            _module.findSubviewIn(arguments[0].Value<int>(), (JArray)arguments[1], new Callback(arguments[2].Value<int>(), instance));
+            _module.findSubviewIn(ToInt32(arguments[0]), (JArray)arguments[1], new Callback(ToInt32(arguments[2]), instance));
         }
 
         private void ManageChildren(IReactInstance instance, JArray arguments)
         {
             _module.manageChildren(
-                arguments[0].Value<int>(), 
-                ToValueArray<int>((JArray) arguments[1]),
-                ToValueArray<int>((JArray) arguments[2]), 
-                ToValueArray<int>((JArray) arguments[3]),
-                ToValueArray<int>((JArray) arguments[4]), 
-                ToValueArray<int>((JArray) arguments[5]));
+                ToInt32(arguments[0]), 
+                ToValueArray(arguments[1], ToInt32),
+                ToValueArray(arguments[2], ToInt32), 
+                ToValueArray(arguments[3], ToInt32),
+                ToValueArray(arguments[4], ToInt32), 
+                ToValueArray(arguments[5], ToInt32));
         }
 
         private void Measure(IReactInstance instance, JArray arguments)
         {
-            _module.measure(arguments[0].Value<int>(), new Callback(arguments[1].Value<int>(), instance));
+            _module.measure(ToInt32(arguments[0]), new Callback(ToInt32(arguments[1]), instance));
         }
 
         private void MeasureInWindow(IReactInstance instance, JArray arguments)
         {
-            _module.measureInWindow(arguments[0].Value<int>(), new Callback(arguments[1].Value<int>(), instance));
+            _module.measureInWindow(ToInt32(arguments[0]), new Callback(ToInt32(arguments[1]), instance));
         }
 
         private void MeasureLayout(IReactInstance instance, JArray arguments)
         {
             _module.measureLayout(
-                arguments[0].Value<int>(),
-                arguments[1].Value<int>(), 
-                new Callback(arguments[2].Value<int>(), instance),
-                new Callback(arguments[3].Value<int>(), instance));
+                ToInt32(arguments[0]),
+                ToInt32(arguments[1]), 
+                new Callback(ToInt32(arguments[2]), instance),
+                new Callback(ToInt32(arguments[3]), instance));
         }
 
         private void MeasureLayoutRelativeToParent(IReactInstance instance, JArray arguments)
         {
             _module.measureLayoutRelativeToParent(
-                arguments[0].Value<int>(),
-                new Callback(arguments[1].Value<int>(), instance),
-                new Callback(arguments[2].Value<int>(), instance));
+                ToInt32(arguments[0]),
+                new Callback(ToInt32(arguments[1]), instance),
+                new Callback(ToInt32(arguments[2]), instance));
         }
 
         private void RemoveRootView(IReactInstance instance, JArray arguments)
         {
-            _module.removeRootView(arguments[0].Value<int>());
+            _module.removeRootView(ToInt32(arguments[0]));
         }
 
         private void RemoveSubviewsFromContainerWithID(IReactInstance instance, JArray arguments)
         {
-            _module.removeSubviewsFromContainerWithID(arguments[0].Value<int>());
+            _module.removeSubviewsFromContainerWithID(ToInt32(arguments[0]));
         }
 
         private void ReplaceExistingNonRootView(IReactInstance instance, JArray arguments)
         {
-            _module.replaceExistingNonRootView(arguments[0].Value<int>(), arguments[1].Value<int>());
+            _module.replaceExistingNonRootView(ToInt32(arguments[0]), ToInt32(arguments[1]));
         }
 
         private void SetChildren(IReactInstance instance, JArray arguments)
         {
-            _module.setChildren(arguments[0].Value<int>(), ToValueArray<int>((JArray)arguments[1]));
+            _module.setChildren(ToInt32(arguments[0]), ToValueArray(arguments[1], ToInt32));
         }
 
         private void SetJSResponder(IReactInstance instance, JArray arguments)
         {
-            _module.setJSResponder(arguments[0].Value<int>(), arguments[1].Value<bool>());
+            _module.setJSResponder(ToInt32(arguments[0]), ToBoolean(arguments[1]));
         }
 
         private void ShowPopupMenu(IReactInstance instance, JArray arguments)
         {
             _module.showPopupMenu(
-                arguments[0].Value<int>(), 
-                ToValueArray<string>((JArray)arguments[1]),
-                new Callback(arguments[2].Value<int>(), instance),
-                new Callback(arguments[3].Value<int>(), instance));
+                ToInt32(arguments[0]), 
+                ToValueArray(arguments[1], ToString),
+                new Callback(ToInt32(arguments[2]), instance),
+                new Callback(ToInt32(arguments[3]), instance));
         }
 
         private void UpdateView(IReactInstance instance, JArray arguments)
         {
             _module.updateView(
-                arguments[0].Value<int>(),
+                ToInt32(arguments[0]),
                 arguments[1].Value<string>(),
                 (JObject)arguments[2]);
         }
