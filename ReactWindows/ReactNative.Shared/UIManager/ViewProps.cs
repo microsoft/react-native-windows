@@ -5,7 +5,7 @@ namespace ReactNative.UIManager
 {
     /// <summary>
     /// Property keys for React views.
-    /// </summary>C:\src\react-native-windows\ReactWindows\ReactNative.Shared\UIManager\ViewProps.cs
+    /// </summary>
     public static class ViewProps
     {
 #pragma warning disable CS1591
