@@ -1,7 +1,5 @@
-﻿#define ENABLED
-
-using System.Collections.Generic;
-#if ENABLED
+﻿using System.Collections.Generic;
+#if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
 #endif
 
@@ -81,7 +79,7 @@ namespace ReactNative.UIManager
             ThemedReactContext themedContext, 
             ReactStylesDiffMap initialProperties)
         {
-#if !ENABLED
+#if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueCreateView(
                     themedContext,
                     node.ReactTag,
@@ -116,7 +114,7 @@ namespace ReactNative.UIManager
         /// <param name="props">The properties.</param>
         public void HandleUpdateView(ReactShadowNode node, string className, ReactStylesDiffMap props)
         {
-#if !ENABLED
+#if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueUpdateProperties(node.ReactTag, className, props);
 #else
             var needsToLeaveLayoutOnly = node.IsLayoutOnly && !IsLayoutOnlyAndCollapsible(props);
@@ -152,7 +150,7 @@ namespace ReactNative.UIManager
         /// </remarks>
         public void HandleManageChildren(ReactShadowNode nodeToManage, int[] indexesToRemove, int[] tagsToRemove, ViewAtIndex[] viewsToAdd, int[] tagsToDelete)
         {
-#if !ENABLED
+#if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueManageChildren(
                 nodeToManage.ReactTag,
                 indexesToRemove,
@@ -189,7 +187,7 @@ namespace ReactNative.UIManager
         /// <param name="childrenTags">The children tags.</param>
         public void HandleSetChildren(ReactShadowNode nodeToManage, int[] childrenTags)
         {
-#if !ENABLED
+#if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueSetChildren(
                 nodeToManage.ReactTag,
                 childrenTags);
@@ -211,7 +209,7 @@ namespace ReactNative.UIManager
         /// <param name="node">The node.</param>
         public void HandleUpdateLayout(ReactShadowNode node)
         {
-#if !ENABLED
+#if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueUpdateLayout(
                 node.Parent.ReactTag,
                 node.ReactTag,
@@ -247,7 +245,7 @@ namespace ReactNative.UIManager
             node.RemoveAllNativeChildren();
         }
 
-#if ENABLED
+#if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
         private void AddNodeToNode(ReactShadowNode parent, ReactShadowNode child, int index)
         {
             var indexInNativeChildren = parent.GetNativeOffsetForChild(parent.GetChildAt(index));

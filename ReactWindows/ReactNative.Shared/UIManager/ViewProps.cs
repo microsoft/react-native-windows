@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace ReactNative.UIManager
 {
     /// <summary>
     /// Property keys for React views.
-    /// </summary>
+    /// </summary>C:\src\react-native-windows\ReactWindows\ReactNative.Shared\UIManager\ViewProps.cs
     public static class ViewProps
     {
 #pragma warning disable CS1591
@@ -190,7 +190,7 @@ namespace ReactNative.UIManager
         /// Checks if the property key is layout-only.
         /// </summary>
         /// <param name="props">The prop collection.</param>
-        /// <param name="prop">The React prop.</param>
+        /// <param name="prop">The prop name.</param>
         /// <returns>
         /// <b>true</b> if the property is layout-only, <b>false</b> otherwise.
         /// </returns>
