@@ -10,7 +10,7 @@ To start, make sure you have the react-native CLI installed globally.
 npm install -g react-native-cli
 ```
 
-Once the CLI is installed, install rnpm-plugin-windows and initialize your project.
+Once the CLI is installed, install rnpm-plugin-windows and initialize your project. Note: if you have Yarn installed, the react-native-cli will prefer to use that instead of npm, so use yarn to install `rnpm-plugin-windows`.
 
 ```
 npm install --save-dev rnpm-plugin-windows

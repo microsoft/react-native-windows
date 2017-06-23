@@ -32,7 +32,8 @@ module.exports = function windows(config, args, options) {
   return Common.getInstallPackage(version)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
-      execSync(`npm install --save ${rnwPackage}`);
+      const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
+      execSync(`${pkgmgr} ${rnwPackage}`);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WPF_GENERATE_PATH());
