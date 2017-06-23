@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace ReactNative.UIManager
 {
@@ -56,6 +57,9 @@ namespace ReactNative.UIManager
         public const string MaxHeight = "maxHeight";
 
         public const string AspectRatio = "aspectRatio";
+
+        // Props that sometimes may prevent us from collapsing views
+        public static string PointerEvents = "pointerEvents";
 
         // Properties that affect more than just layout
         public const string Disabled = "disabled";
@@ -138,10 +142,15 @@ namespace ReactNative.UIManager
                 AlignSelf,
                 Collapsible,
                 Flex,
+                FlexBasis,
                 FlexDirection,
+                FlexGrow,
+                FlexShrink,
                 FlexWrap,
                 JustifyContent,
                 Overflow,
+                AlignContent,
+                Display,
 
                 /* position */
                 Position,
@@ -180,13 +189,24 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Checks if the property key is layout-only.
         /// </summary>
-        /// <param name="key">The key.</param>
+        /// <param name="props">The prop collection.</param>
+        /// <param name="prop">The prop name.</param>
         /// <returns>
         /// <b>true</b> if the property is layout-only, <b>false</b> otherwise.
         /// </returns>
-        public static bool IsLayoutOnly(string key)
+        public static bool IsLayoutOnly(ReactStylesDiffMap props, string prop)
         {
-            return s_layoutOnlyProperties.Contains(key);
+            if (s_layoutOnlyProperties.Contains(prop))
+            {
+                return true;
+            }
+            else if (PointerEvents == prop)
+            {
+                var value = props.GetProperty(prop).Value<string>();
+                return value == "auto" || value == "box-none";
+            }
+
+            return false;
         }
     }
 }
