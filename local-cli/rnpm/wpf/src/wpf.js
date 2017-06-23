@@ -98,6 +98,10 @@ function getReactNativeAppName() {
   return JSON.parse(fs.readFileSync('package.json', 'utf8')).name;
 }
 
+function isGlobalCliUsingYarn(projectDir) {
+  return fs.existsSync(path.join(projectDir, 'yarn.lock'));
+}
+
 module.exports = function windows(config, args, options) {
   const name = args[0] ? args[0] : getReactNativeAppName();
   const ns = options.namespace ? options.namespace : name;
@@ -106,7 +110,8 @@ module.exports = function windows(config, args, options) {
   return getInstallPackage(version)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
-      execSync(`npm install --save ${rnwPackage}`);
+      const pkgmgr = isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
+      execSync(`${pkgmgr} ${rnwPackage}`);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
