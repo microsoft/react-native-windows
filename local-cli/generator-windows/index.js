@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
 const yeoman = require('yeoman-generator');
+const username = require('username');
+const os = require('os');
 
 const REACT_NATIVE_PACKAGE_JSON_PATH = function () {
   return path.resolve(
@@ -43,25 +45,32 @@ module.exports = yeoman.Base.extend({
   writing: function () {
     const projectGuid = uuid.v4();
     const packageGuid = uuid.v4();
-    const currentUser = childProcess.execSync('powershell $env:username')
+    const currentUser = username.sync(); // Gets the current username depending on the platform.
     const templateVars = { name: this.name, ns: this.options.ns, certificateThumbprint : null, projectGuid, packageGuid, currentUser };
 
-    const certGenCommand = [
-      `$cert = New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject "CN=${currentUser}" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}Subject Type:End Entity") -CertStoreLocation "Cert:\\CurrentUser\\My"`,
-      `$pwd = ConvertTo-SecureString -String password -Force -AsPlainText`,
-      `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join('windows', this.name, this.name)}_TemporaryKey.pfx -Password $pwd`,
-      `$cert.Thumbprint`
-    ];
-
     console.log(`Generating self-signed certificate...`);
-    const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
+    if (os.platform() === 'win32') {
+      const certGenCommand = [
+        `$cert = New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject "CN=${currentUser}" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}Subject Type:End Entity") -CertStoreLocation "Cert:\\CurrentUser\\My"`,
+        `$pwd = ConvertTo-SecureString -String password -Force -AsPlainText`,
+        `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join('windows', this.name, this.name)}_TemporaryKey.pfx -Password $pwd`,
+        `$cert.Thumbprint`
+      ];
+      const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
 
-    if (certGenProcess.status === 0) {
-      const certGenProcessOutput = certGenProcess.stdout.toString().trim().split('\n');
-      templateVars.certificateThumbprint = certGenProcessOutput[certGenProcessOutput.length - 1];
-      console.log(chalk.green("Self-signed certificate generated successfully."));
+      if (certGenProcess.status === 0) {
+        const certGenProcessOutput = certGenProcess.stdout.toString().trim().split('\n');
+        templateVars.certificateThumbprint = certGenProcessOutput[certGenProcessOutput.length - 1];
+        console.log(chalk.green("Self-signed certificate generated successfully."));
+      } else {
+        console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
+        this.fs.copy(
+          this.templatePath(path.join('keys', 'MyApp_TemporaryKey.pfx')),
+          this.destinationPath(path.join('windows', this.name, this.name + '_TemporaryKey.pfx'))
+        );
+      }
     } else {
-      console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
+      console.log(chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'));
       this.fs.copy(
         this.templatePath(path.join('keys', 'MyApp_TemporaryKey.pfx')),
         this.destinationPath(path.join('windows', this.name, this.name + '_TemporaryKey.pfx'))
