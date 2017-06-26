@@ -13,8 +13,11 @@ const fs = require('fs')
 const path = require('path')
 const semver = require('semver')
 const Registry = require('npm-registry')
+const child_process = require('child_process');
+const validUrl = require('valid-url');
 
-const NPM_REGISTRY_URL = 'http://registry.npmjs.org'
+let npmConfReg = child_process.execSync('npm config get registry').toString();
+let NPM_REGISTRY_URL = validUrl.is_uri(npmConfReg) ? npmConfReg: 'http://registry.npmjs.org';
 
 const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
   return path.resolve(
