@@ -42,6 +42,7 @@
     "chalk": "^1.1.3",
     "glob": "^7.0.3",
     "shelljs": "^0.7.0",
+    "username": "^3.0.0",
     "uuid": "^2.0.1",
     "xml-parser": "^1.2.1",
     "yeoman-environment": "^1.5.3",
