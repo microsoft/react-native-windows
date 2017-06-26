@@ -28,6 +28,8 @@ before_build:
 - ps: $env:bundle_dir=$Env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
 - ps: nuget restore ReactWindows\ReactNative.sln
 - npm i -g react-native-cli
+- npm run flow-check
+
 
 build_script:
 - ps: mkdir $env:bundle_dir
@@ -51,7 +53,6 @@ test:
   - ReactWindows\ReactNative.Net46.Tests\bin\x64\**\*.Tests.dll
 
 test_script:
-#  - npm run flow-check
   - npm test
 
 after_test:
