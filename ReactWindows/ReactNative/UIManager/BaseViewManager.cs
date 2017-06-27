@@ -233,6 +233,15 @@ namespace ReactNative.UIManager
             }
 
             view.Projection = null;
+
+            var transform = view.RenderTransform;
+            var matrixTransform = transform as MatrixTransform;
+            if (transform != null && matrixTransform == null)
+            {
+                throw new InvalidOperationException("Unknown transform set on framework element.");
+            }
+
+            view.RenderTransform = null;
         }
 
         private static Matrix3DProjection EnsureProjection(FrameworkElement view)
