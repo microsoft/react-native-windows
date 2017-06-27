@@ -35,6 +35,7 @@ namespace ReactNative.UIManager
             if (transforms == null)
             {
                 ResetProjectionMatrix(view);
+                ResetRenderTransform(view);
             }
             else
             {
@@ -209,6 +210,7 @@ namespace ReactNative.UIManager
             }
             else
             {
+                ResetRenderTransform(view);
                 view.RenderTransform = new MatrixTransform();
                 var projection = EnsureProjection(view);
                 projection.ProjectionMatrix = projectionMatrix;
@@ -233,6 +235,18 @@ namespace ReactNative.UIManager
             }
 
             view.Projection = null;
+        }
+
+        private static void ResetRenderTransform(TFrameworkElement view)
+        {
+            var transform = view.RenderTransform;
+            var matrixTransform = transform as MatrixTransform;
+            if (transform != null && matrixTransform == null)
+            {
+                throw new InvalidOperationException("Unknown transform set on framework element.");
+            }
+
+            view.RenderTransform = null;
         }
 
         private static Matrix3DProjection EnsureProjection(FrameworkElement view)
