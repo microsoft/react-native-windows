@@ -63,7 +63,7 @@ namespace ReactNative.UIManager
         [ReactProp("zIndex")]
         public void SetZIndex(TFrameworkElement view, int zIndex)
         {
-            Canvas.SetZIndex(view, zIndex);
+            Panel.SetZIndex(view, zIndex);
         }
 
         /// <summary>
