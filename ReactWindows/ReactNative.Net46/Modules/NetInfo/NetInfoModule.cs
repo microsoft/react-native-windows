@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System.Net.NetworkInformation;
@@ -12,6 +13,7 @@ namespace ReactNative.Modules.NetInfo
     public class NetInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private readonly INetworkInformation _networkInfo;
+        private string _connectedStatus;
 
         /// <summary>
         /// Instantiates the <see cref="NetInfoModule"/>.
@@ -67,7 +69,7 @@ namespace ReactNative.Modules.NetInfo
         public void OnResume()
         {
             _networkInfo.Start();
-            _networkInfo.NetworkAvailabilityChanged += OnAvailabilityChanged;
+            _networkInfo.NetworkAddressChanged += OnAddressChanged;
         }
 
         /// <summary>
@@ -75,7 +77,7 @@ namespace ReactNative.Modules.NetInfo
         /// </summary>
         public void OnSuspend()
         {
-            _networkInfo.NetworkAvailabilityChanged -= OnAvailabilityChanged;
+            _networkInfo.NetworkAddressChanged -= OnAddressChanged;
             _networkInfo.Stop();
         }
 
@@ -95,10 +97,15 @@ namespace ReactNative.Modules.NetInfo
             };
         }
 
-        private void OnAvailabilityChanged(object ignored, NetworkAvailabilityEventArgs e)
+        private void OnAddressChanged(object ignored, EventArgs e)
         {
-            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                .emit("networkStatusDidChange", CreateConnectivityEventMap());
+            string newStatus = _networkInfo.GetInternetStatus();
+            if (newStatus != _connectedStatus)
+            {
+                _connectedStatus = newStatus;
+                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                    .emit("networkStatusDidChange", CreateConnectivityEventMap());
+            }
         }
     }
 }

@@ -1,29 +1,31 @@
-﻿using System.Net.NetworkInformation;
+﻿using System;
+using System.Net.NetworkInformation;
 
 namespace ReactNative.Modules.NetInfo
 {
     class DefaultNetworkInformation : INetworkInformation
     {
-        public event NetworkAvailabilityChangedEventHandler NetworkAvailabilityChanged;
+        public event NetworkAddressChangedEventHandler NetworkAddressChanged;
 
         public void Start()
         {
-            NetworkChange.NetworkAvailabilityChanged += OnNetworkAvailabilityChanged;
+            NetworkChange.NetworkAddressChanged += OnNetworkAddressChanged;
         }
 
         public void Stop()
         {
-            NetworkChange.NetworkAvailabilityChanged -= OnNetworkAvailabilityChanged;
+            NetworkChange.NetworkAddressChanged -= OnNetworkAddressChanged;
         }
 
         public string GetInternetStatus()
         {
-            return NetworkInterface.GetIsNetworkAvailable() ? "InternetAccess" : "None";
+            int result;
+            return NetInfoModuleNativeMethods.InternetGetConnectedState(out result, 0) ? "InternetAccess" : "None";
         }
 
-        private void OnNetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
+        private void OnNetworkAddressChanged(object sender, EventArgs e)
         {
-            NetworkAvailabilityChanged?.Invoke(sender, e);
+            NetworkAddressChanged?.Invoke(sender, e);
         }
     }
 }
