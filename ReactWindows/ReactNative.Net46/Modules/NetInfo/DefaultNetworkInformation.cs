@@ -1,29 +1,39 @@
-﻿using System.Net.NetworkInformation;
+﻿using NETWORKLIST;
+using System;
 
 namespace ReactNative.Modules.NetInfo
 {
     class DefaultNetworkInformation : INetworkInformation
     {
-        public event NetworkAvailabilityChangedEventHandler NetworkAvailabilityChanged;
+        public event EventHandler<NetworkConnectivityChangedEventArgs> NetworkConnectivityChanged;
+        private NetworkListManager _networkListManager;
 
         public void Start()
         {
-            NetworkChange.NetworkAvailabilityChanged += OnNetworkAvailabilityChanged;
+            _networkListManager = new NetworkListManager();
+            _networkListManager.NetworkConnectivityChanged += OnNetworkConnectivityChanged;
         }
 
         public void Stop()
         {
-            NetworkChange.NetworkAvailabilityChanged -= OnNetworkAvailabilityChanged;
+            _networkListManager.NetworkConnectivityChanged -= OnNetworkConnectivityChanged;
+            _networkListManager = null;
         }
 
         public string GetInternetStatus()
         {
-            return NetworkInterface.GetIsNetworkAvailable() ? "InternetAccess" : "None";
+            return _networkListManager.IsConnectedToInternet ? "InternetAccess" : "None";
         }
 
-        private void OnNetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
+        private void OnNetworkConnectivityChanged(Guid guid, NLM_CONNECTIVITY connectivity)
         {
-            NetworkAvailabilityChanged?.Invoke(sender, e);
+            NetworkConnectivityChangedEventArgs e = new NetworkConnectivityChangedEventArgs()
+            {
+                Guid = guid,
+                Connectivity = connectivity,
+                Connected = GetInternetStatus()
+            };
+            NetworkConnectivityChanged?.Invoke(new object(), e);
         }
     }
 }
