@@ -8,12 +8,12 @@
 
 var React = require('React');
 var ReactNative = require('ReactNative');
-var ReactElement = require('react/lib/ReactElement');
-var ReactPropTypes = require('react/lib/ReactPropTypes');
 var UIManager = require('UIManager');
 var View = require('View');
 
 var requireNativeComponent = require('requireNativeComponent');
+
+var ReactPropTypes = React.PropTypes;
 
 var FLIPVIEW_REF = 'flipView';
 
@@ -119,7 +119,7 @@ var FlipViewWindows = React.createClass({
           (child.type.displayName !== 'View')) {
         console.warn('Each FlipView child must be a <View>. Was ' + child.type.displayName);
       }
-      return ReactElement.createElement(child.type, newProps);
+      return React.createElement(child.type, newProps);
     });
   },
 

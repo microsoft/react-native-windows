@@ -14,8 +14,6 @@
 
 var ColorPropType = require('ColorPropType');
 var React = require('React');
-var ReactChildren = require('react/lib/ReactChildren');
-var ReactPropTypes = require('react/lib/ReactPropTypes');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
@@ -23,6 +21,8 @@ var ViewStylePropTypes = require('ViewStylePropTypes');
 
 var processColor = require('processColor');
 var requireNativeComponent = require('requireNativeComponent');
+
+var ReactPropTypes = React.PropTypes;
 
 var REF_PICKER = 'picker';
 
@@ -61,7 +61,7 @@ var PickerWindows = React.createClass({
   // Translate prop and children into stuff that the native picker understands.
   _stateFromProps: function(props) {
     var selectedIndex = 0;
-    let items = ReactChildren.map(props.children, (child, index) => {
+    let items = React.Children.map(props.children, (child, index) => {
       if (child.props.value === props.selectedValue) {
         selectedIndex = index;
       }
