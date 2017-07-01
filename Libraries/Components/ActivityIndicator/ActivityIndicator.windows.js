@@ -15,14 +15,23 @@ const ColorPropType = require('ColorPropType');
 const NativeMethodsMixin = require('NativeMethodsMixin');
 const Platform = require('Platform');
 const React = require('React');
+const PropTypes = require('prop-types');
 const StyleSheet = require('StyleSheet');
 const View = require('View');
+const ViewPropTypes = require('ViewPropTypes');
 
 const requireNativeComponent = require('requireNativeComponent');
 
-const PropTypes = React.PropTypes;
-
 const GRAY = '#999999';
+
+type IndicatorSize = number | 'small' | 'large';
+
+type DefaultProps = {
+  animating: boolean,
+  color: any,
+  hidesWhenStopped: boolean,
+  size: IndicatorSize,
+}
 
 /**
  * Displays a circular loading indicator.
@@ -31,7 +40,7 @@ const ActivityIndicator = React.createClass({
   mixins: [NativeMethodsMixin],
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Whether to show the indicator (true, the default) or hide it (false).
      */
@@ -41,12 +50,12 @@ const ActivityIndicator = React.createClass({
      */
     color: ColorPropType,
     /**
-     * Size of the indicator. Small has a height of 20, large has a height of 36.
-     * Other sizes can be obtained using a scale transform.
+     * Size of the indicator (default is 'small').
+     * Passing a number to the size prop is only supported on Android.
      */
-    size: PropTypes.oneOf([
-      'small',
-      'large',
+    size: PropTypes.oneOfType([
+      PropTypes.oneOf([ 'small', 'large' ]),
+      PropTypes.number,
     ]),
     /**
      * Whether the indicator should hide when not animating (true by default).
@@ -56,7 +65,7 @@ const ActivityIndicator = React.createClass({
     hidesWhenStopped: PropTypes.bool,
   },
 
-  getDefaultProps() {
+  getDefaultProps(): DefaultProps {
     return {
       animating: true,
       color: Platform.OS !== 'android' ? GRAY : undefined,
@@ -68,6 +77,7 @@ const ActivityIndicator = React.createClass({
   render() {
     const {onLayout, style, ...props} = this.props;
     let sizeStyle;
+
     switch (props.size) {
       case 'small':
         sizeStyle = styles.sizeSmall;
@@ -75,7 +85,11 @@ const ActivityIndicator = React.createClass({
       case 'large':
         sizeStyle = styles.sizeLarge;
         break;
+      default:
+        sizeStyle = {height: props.size, width: props.size};
+        break;
     }
+
     return (
       <View
         onLayout={onLayout}
@@ -127,7 +141,7 @@ if (Platform.OS === 'ios') {
   var RCTActivityIndicator = requireNativeComponent(
       'WindowsProgressRing',
       ActivityIndicator
-  )
+  );
 }
 
 module.exports = ActivityIndicator;

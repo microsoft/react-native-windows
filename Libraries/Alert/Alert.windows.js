@@ -11,18 +11,22 @@
  */
 'use strict';
 
-var AlertIOS = require('AlertIOS');
-var Platform = require('Platform');
-var DialogModuleAndroid = require('NativeModules').DialogManagerAndroid;
-var DialogModuleWindows = require('NativeModules').DialogManagerWindows;
+const AlertIOS = require('AlertIOS');
+const NativeModules = require('NativeModules');
+const Platform = require('Platform');
 
 import type { AlertType, AlertButtonStyle } from 'AlertIOS';
 
 type Buttons = Array<{
-  text?: string;
-  onPress?: ?Function;
-  style?: AlertButtonStyle;
+  text?: string,
+  onPress?: ?Function,
+  style?: AlertButtonStyle,
 }>;
+
+type Options = {
+  cancelable?: ?boolean,
+  onDismiss?: ?Function,
+};
 
 /**
  * Launches an alert dialog with the specified title and message.
@@ -49,6 +53,15 @@ type Buttons = Array<{
  *   - Two buttons mean 'negative', 'positive' (such as 'Cancel', 'OK')
  *   - Three buttons mean 'neutral', 'negative', 'positive' (such as 'Later', 'Cancel', 'OK')
  *
+ * By default alerts on Android can be dismissed by tapping outside of the alert
+ * box. This event can be handled by providing an optional `options` parameter,
+ * with an `onDismiss` callback property `{ onDismiss: () => {} }`.
+ *
+ * Alternatively, the dismissing behavior can be disabled altogether by providing
+ * an optional `options` parameter with the `cancelable` property set to `false`
+ * i.e. `{ cancelable: false }`
+ *
+ * Example usage:
  * ```
  * // Works on both iOS and Android
  * Alert.alert(
@@ -58,7 +71,8 @@ type Buttons = Array<{
  *     {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
  *     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
  *     {text: 'OK', onPress: () => console.log('OK Pressed')},
- *   ]
+ *   ],
+ *   { cancelable: false }
  * )
  * ```
  * ## Windows
@@ -86,17 +100,18 @@ class Alert {
     title: ?string,
     message?: ?string,
     buttons?: Buttons,
+    options?: Options,
     type?: AlertType,
   ): void {
     if (Platform.OS === 'ios') {
       if (typeof type !== 'undefined') {
-        console.warn('Alert.alert() with a 4th "type" parameter is deprecated and will be removed. Use AlertIOS.prompt() instead.');
+        console.warn('Alert.alert() with a 5th "type" parameter is deprecated and will be removed. Use AlertIOS.prompt() instead.');
         AlertIOS.alert(title, message, buttons, type);
         return;
       }
       AlertIOS.alert(title, message, buttons);
     } else if (Platform.OS === 'android') {
-      AlertAndroid.alert(title, message, buttons);
+      AlertAndroid.alert(title, message, buttons, options);
     } else if (Platform.OS === 'windows') {
       AlertWindows.alert(title, message, buttons);
     }
@@ -112,11 +127,16 @@ class AlertAndroid {
     title: ?string,
     message?: ?string,
     buttons?: Buttons,
+    options?: Options,
   ): void {
     var config = {
       title: title || '',
       message: message || '',
     };
+
+    if (options) {
+      config = {...config, cancelable: options.cancelable};
+    }
     // At most three buttons (neutral, negative, positive). Ignore rest.
     // The text 'OK' should be probably localized. iOS Alert does that in native.
     var validButtons: Buttons = buttons ? buttons.slice(0, 3) : [{text: 'OK'}];
@@ -124,27 +144,28 @@ class AlertAndroid {
     var buttonNegative = validButtons.pop();
     var buttonNeutral = validButtons.pop();
     if (buttonNeutral) {
-      config = {...config, buttonNeutral: buttonNeutral.text || '' }
+      config = {...config, buttonNeutral: buttonNeutral.text || '' };
     }
     if (buttonNegative) {
-      config = {...config, buttonNegative: buttonNegative.text || '' }
+      config = {...config, buttonNegative: buttonNegative.text || '' };
     }
     if (buttonPositive) {
-      config = {...config, buttonPositive: buttonPositive.text || '' }
+      config = {...config, buttonPositive: buttonPositive.text || '' };
     }
-    DialogModuleAndroid.showAlert(
+    NativeModules.DialogManagerAndroid.showAlert(
       config,
-      (errorMessage) => console.warn(message),
+      (errorMessage) => console.warn(errorMessage),
       (action, buttonKey) => {
-        if (action !== DialogModuleAndroid.buttonClicked) {
-          return;
-        }
-        if (buttonKey === DialogModuleAndroid.buttonNeutral) {
-          buttonNeutral.onPress && buttonNeutral.onPress();
-        } else if (buttonKey === DialogModuleAndroid.buttonNegative) {
-          buttonNegative.onPress && buttonNegative.onPress();
-        } else if (buttonKey === DialogModuleAndroid.buttonPositive) {
-          buttonPositive.onPress && buttonPositive.onPress();
+        if (action === NativeModules.DialogManagerAndroid.buttonClicked) {
+          if (buttonKey === NativeModules.DialogManagerAndroid.buttonNeutral) {
+            buttonNeutral.onPress && buttonNeutral.onPress();
+          } else if (buttonKey === NativeModules.DialogManagerAndroid.buttonNegative) {
+            buttonNegative.onPress && buttonNegative.onPress();
+          } else if (buttonKey === NativeModules.DialogManagerAndroid.buttonPositive) {
+            buttonPositive.onPress && buttonPositive.onPress();
+          }
+        } else if (action === NativeModules.DialogManagerAndroid.dismissed) {
+          options && options.onDismiss && options.onDismiss();
         }
       }
     );
@@ -176,16 +197,16 @@ class AlertWindows {
     if (buttonPositive) {
       config = {...config, buttonPositive: buttonPositive.text || '' }
     }
-    DialogModuleWindows.showAlert(
+    NativeModules.DialogManagerWindows.showAlert(
       config,
       (errorMessage) => console.warn(message),
       (action, buttonKey) => {
-        if (action !== DialogModuleWindows.buttonClicked) {
+        if (action !== NativeModules.DialogManagerWindows.buttonClicked) {
           return;
         }
-        if (buttonKey === DialogModuleWindows.buttonNegative) {
+        if (buttonKey === NativeModules.DialogManagerWindows.buttonNegative) {
           buttonNegative.onPress && buttonNegative.onPress();
-        } else if (buttonKey === DialogModuleWindows.buttonPositive) {
+        } else if (buttonKey === NativeModules.DialogManagerWindows.buttonPositive) {
           buttonPositive.onPress && buttonPositive.onPress();
         }
       }
