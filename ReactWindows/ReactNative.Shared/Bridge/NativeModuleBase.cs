@@ -44,7 +44,11 @@ namespace ReactNative.Bridge
         /// Instantiates a <see cref="NativeModuleBase"/>.
         /// </summary>
         protected NativeModuleBase()
+#if WINDOWS_UWP
+            : this(ReflectionReactDelegateFactory.Instance)
+#else
             : this(CompiledReactDelegateFactory.Instance)
+#endif
         {
         }
 
