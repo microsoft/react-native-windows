@@ -34,8 +34,7 @@ namespace ReactNative.Modules.NetInfo
 
     public class NetworkConnectivityChangedEventArgs : EventArgs
     {
-        public Guid Guid { get; set; }
-        public NLM_CONNECTIVITY Connectivity { get; set; }
-        public string Connected { get; set; }
+        public bool IsAvailable { get; set; }
+        public string ConnectionStatus { get; set; }
     }
 }

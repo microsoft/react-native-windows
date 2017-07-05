@@ -29,9 +29,8 @@ namespace ReactNative.Modules.NetInfo
         {
             NetworkConnectivityChangedEventArgs e = new NetworkConnectivityChangedEventArgs()
             {
-                Guid = guid,
-                Connectivity = connectivity,
-                Connected = GetInternetStatus()
+                IsAvailable = _networkListManager.IsConnectedToInternet,
+                ConnectionStatus = GetInternetStatus()
             };
             NetworkConnectivityChanged?.Invoke(new object(), e);
         }

@@ -97,9 +97,9 @@ namespace ReactNative.Modules.NetInfo
 
         private void OnNetworkConnectivityChanged(object ignored, NetworkConnectivityChangedEventArgs e)
         {
-            if (e.Connected != _connected)
+            if (e.ConnectionStatus != _connected)
             {
-                _connected = e.Connected;
+                _connected = e.ConnectionStatus;
                 Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                     .emit("networkStatusDidChange", CreateConnectivityEventMap());
             }
