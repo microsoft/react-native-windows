@@ -127,7 +127,6 @@ namespace ReactNative.Views.Scroll
         [ReactProp("horizontal")]
         public void SetHorizontal(ScrollViewer view, bool horizontal)
         {
-            throw new NotImplementedException();
             var horizontalScrollMode = horizontal
                 ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Disabled;
@@ -173,7 +172,10 @@ namespace ReactNative.Views.Scroll
         [ReactProp("contentOffset")]
         public void SetContentOffset(ScrollViewer view, JObject contentOffset)
         {
-            throw new NotImplementedException();
+            view.ScrollChanged -= OnViewChanging;
+            view.ScrollToHorizontalOffset(contentOffset.Value<double>("x"));
+            view.ScrollToVerticalOffset(contentOffset.Value<double>("y"));
+            view.ScrollChanged += OnViewChanging;
         }
 
         /// <summary>
@@ -304,7 +306,7 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup by the <see cref="ReactScrollViewManager"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
@@ -321,7 +323,7 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
-        /// Receive events/commands directly from JavaScript through the 
+        /// Receive events/commands directly from JavaScript through the
         /// <see cref="UIManagerModule"/>.
         /// </summary>
         /// <param name="view">
