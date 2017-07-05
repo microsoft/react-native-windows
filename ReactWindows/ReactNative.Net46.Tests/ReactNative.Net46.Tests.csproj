@@ -146,6 +146,17 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="NETWORKLIST">
+      <Guid>{DCB00D01-570F-4A9B-8D69-199FDBA5723B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\packages\Facebook.Yoga.1.2.0-pre1\build\net45\Facebook.Yoga.targets" Condition="Exists('..\packages\Facebook.Yoga.1.2.0-pre1\build\net45\Facebook.Yoga.targets')" />
