@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -102,6 +102,14 @@ namespace ReactNative.Bridge
             //             "Module '{module.Name}' method '{method.Name}' got '{0}' arguments, expected '{parameterCount}'."
             //             jsArguments.Count));
             //
+
+            //ConstructorInfo constructor = typeof(XPTO).MakeGenericType(typeof(int)).GetConstructor(Type.EmptyTypes);
+            //Func<IXPTO> f1 = () => (IXPTO)constructor.Invoke(new object[0]);
+            //Func<IXPTO> f2 = (Func<IXPTO>)Expression.Lambda(Expression.Convert(Expression.New(constructor), typeof(IXPTO))).Compile();
+
+            //var constructor = typeof(object[]).GetConstructor(Type.EmptyTypes);
+            //Expression.Lambda(() => )
+
             blockStatements[3] = Expression.IfThen(
                 Expression.NotEqual(
                     Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
@@ -113,18 +121,23 @@ namespace ReactNative.Bridge
                         Expression.Call(
                             s_stringFormat,
                             Expression.Constant(CultureInfo.InvariantCulture),
-                            Expression.Constant(
-                                Invariant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'.")
-                            ),
-                            Expression.Convert(
-                                Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
-                                typeof(object)
-                            )
+                            Expression.Constant($"Module '{module.Name}' method '{method.Name}' got '{{0}}' arguments, expected '{argc}'."),
+                            Expression.NewArrayInit(typeof(object), new List<Expression>() {
+                                Expression.Convert(
+                                    Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
+                                    typeof(object)
+                                )
+                            })
                         ),
                         Expression.Constant(jsArgumentsParameter.Name)
                     )
                 )
             );
+
+            int v = 0;
+            object[] o = new object[] {v};
+            
+
 
             //
             // p0 = Extract<T>(jsArguments[0]);
@@ -176,9 +189,7 @@ namespace ReactNative.Bridge
                     Expression.Throw(
                         Expression.New(
                             s_newNativeArgumentParseExceptionInner,
-                            Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'.")
-                            ),
+                            Expression.Constant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}'."),
                             Expression.Constant(parameterName),
                             ex
                         )
@@ -237,9 +248,7 @@ namespace ReactNative.Bridge
                     Expression.Throw(
                         Expression.New(
                             s_newNativeArgumentParseException,
-                            Expression.Constant(
-                                Invariant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'.")
-                            ),
+                            Expression.Constant($"Error extracting argument for module '{moduleName}' method '{methodName}' at index '{argumentIndex}' and '{argumentIndex + 1}'."),
                             Expression.Constant(parameterName)
                         ),
                         type

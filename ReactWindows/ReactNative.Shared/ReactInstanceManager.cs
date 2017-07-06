@@ -10,7 +10,6 @@ using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static System.FormattableString;
 
 namespace ReactNative
 {
@@ -816,7 +815,7 @@ namespace ReactNative
             private void AssertNotNull(object value, string name)
             {
                 if (value == null)
-                    throw new InvalidOperationException(Invariant($"'{name}' has not been set."));
+                    throw new InvalidOperationException($"'{name}' has not been set.");
             }
         }
 

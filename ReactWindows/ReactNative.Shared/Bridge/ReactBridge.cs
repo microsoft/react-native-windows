@@ -3,7 +3,6 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Common;
 using ReactNative.Tracing;
 using System;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {

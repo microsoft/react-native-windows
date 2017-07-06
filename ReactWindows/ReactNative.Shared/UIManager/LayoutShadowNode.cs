@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager.Annotations;
 using System;
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -400,8 +399,7 @@ namespace ReactNative.UIManager
                     return YogaValue.Percent(float.Parse(s.Substring(0, s.Length - 1)));
                 }
 
-                throw new InvalidOperationException(
-                    Invariant($"Unknown value: '{s}'"));
+                throw new InvalidOperationException($"Unknown value: '{s}'");
             }
 
             return YogaValue.Point(value.Value<float>());

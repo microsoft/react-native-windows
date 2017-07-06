@@ -6,7 +6,6 @@ using Windows.UI.Xaml.Media.Media3D;
 #else
 using System.Windows.Media.Media3D;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -86,8 +85,7 @@ namespace ReactNative.UIManager
                             ConvertToRadians(transformMap, transformType));
                         break;
                     default:
-                        throw new InvalidOperationException(
-                            Invariant($"Unsupported transform type: '{transformType}'"));
+                        throw new InvalidOperationException($"Unsupported transform type: '{transformType}'");
                 }
 
                 MatrixMathHelper.MultiplyInto(ref result, helperMatrix);

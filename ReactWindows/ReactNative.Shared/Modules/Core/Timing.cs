@@ -123,7 +123,8 @@ namespace ReactNative.Modules.Core
             }
 
             var period = TimeSpan.FromMilliseconds(duration);
-            var scheduledTime = DateTimeOffset.FromUnixTimeMilliseconds((long)jsSchedulingTime);
+            var unixEpoch = DateTimeOffset.Parse("1970-01-01T00:00:00Z");
+            var scheduledTime = unixEpoch.AddMilliseconds((long)jsSchedulingTime);
             var initialTargetTime = (scheduledTime + period);
 
             var timer = new TimerData(callbackId, initialTargetTime, period, repeat);

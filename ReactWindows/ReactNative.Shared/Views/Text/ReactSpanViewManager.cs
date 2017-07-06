@@ -15,7 +15,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.Views.Text
 {
@@ -181,7 +180,7 @@ namespace ReactNative.Views.Text
         public override Dimensions GetDimensions(Span view)
         {
             throw new InvalidOperationException(
-                Invariant($"Dimensions are not available for a virtual text node."));
+                $"Dimensions are not available for a virtual text node.");
         }
 
         /// <summary>
