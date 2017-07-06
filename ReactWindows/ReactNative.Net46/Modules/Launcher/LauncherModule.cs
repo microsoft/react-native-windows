@@ -4,8 +4,6 @@ using ReactNative.Modules.Core;
 using System;
 using System.Diagnostics;
 using System.Reactive.Subjects;
-using System.Windows;
-using static System.FormattableString;
 
 namespace ReactNative.Modules.Launch
 {
@@ -59,7 +57,7 @@ namespace ReactNative.Modules.Launch
             var uri = default(Uri);
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                promise.Reject(new ArgumentException(Invariant($"URL argument '{uri}' is not valid.")));
+                promise.Reject(new ArgumentException($"URL argument '{uri}' is not valid."));
                 return;
             }
 
@@ -70,8 +68,7 @@ namespace ReactNative.Modules.Launch
             }
             catch (Exception ex)
             {
-                promise.Reject(new InvalidOperationException(
-                    Invariant($"Could not open URL '{url}'."), ex));
+                promise.Reject(new InvalidOperationException($"Could not open URL '{url}'.", ex));
             }
         }
 
@@ -94,7 +91,7 @@ namespace ReactNative.Modules.Launch
             var uri = default(Uri);
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                promise.Reject(new ArgumentException(Invariant($"URL argument '{uri}' is not valid.")));
+                promise.Reject(new ArgumentException($"URL argument '{uri}' is not valid."));
                 return;
             }
 
@@ -107,8 +104,7 @@ namespace ReactNative.Modules.Launch
             }
             catch (Exception ex)
             {
-                promise.Reject(new InvalidOperationException(
-                    Invariant($"Could not check if URL '{url}' can be opened."), ex));
+                promise.Reject(new InvalidOperationException($"Could not check if URL '{url}' can be opened.", ex));
             }
         }
 
