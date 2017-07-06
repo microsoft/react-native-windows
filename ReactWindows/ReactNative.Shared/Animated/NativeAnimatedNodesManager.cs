@@ -30,9 +30,14 @@ namespace ReactNative.Animated
         private readonly IDictionary<int, AnimatedNode> _animatedNodes = new Dictionary<int, AnimatedNode>();
         private readonly IList<AnimationDriver> _activeAnimations = new List<AnimationDriver>();
         private readonly IList<AnimatedNode> _updatedNodes = new List<AnimatedNode>();
-        private readonly IDictionary<Tuple<int, string>, EventAnimationDriver> _eventDrivers = new Dictionary<Tuple<int, string>, EventAnimationDriver>();
+        // Mapping of a view tag and an event name to a list of event animation drivers. 99% of the time
+        // there will be only one driver per mapping so all code should be optimized around that.
+        private readonly IDictionary<Tuple<int, string>, IList<EventAnimationDriver>> _eventDrivers =
+            new Dictionary<Tuple<int, string>, IList<EventAnimationDriver>>();
         private readonly IReadOnlyDictionary<string, object> _customEventTypes;
         private readonly UIImplementation _uiImplementation;
+        // Used to avoid allocating a new array on every frame in `RunUpdates` and `OnEventDispatch`
+        private readonly IList<AnimatedNode> _runUpdateNodeList = new List<AnimatedNode>();
 
         private int _animatedGraphBFSColor = 0;
 
@@ -273,12 +278,42 @@ namespace ReactNative.Animated
             
             var pathList = eventMapping["nativeEventPath"].ToObject<string[]>();
             var @event = new EventAnimationDriver(pathList, valueNode);
-            _eventDrivers.Add(Tuple.Create(viewTag, eventName), @event);
+            var key = Tuple.Create(viewTag, eventName);
+            if (_eventDrivers.ContainsKey(key))
+            {
+                _eventDrivers[key].Add(@event);
+            }
+            else
+            {
+                var drivers = new List<EventAnimationDriver>(1);
+                drivers.Add(@event);
+                _eventDrivers.Add(key, drivers);
+            }
         }
 
-        public void RemoveAnimatedEventFromView(int viewTag, string eventName)
+        public void RemoveAnimatedEventFromView(int viewTag, string eventName, int animatedValueTag)
         {
-            _eventDrivers.Remove(Tuple.Create(viewTag, eventName));
+            var key = Tuple.Create(viewTag, eventName);
+            if (_eventDrivers.ContainsKey(key))
+            {
+                var driversForKey = _eventDrivers[key];
+                if (driversForKey.Count == 1)
+                {
+                    _eventDrivers.Remove(key);
+                }
+                else
+                {
+                    for (var i = 0; i < driversForKey.Count; ++i)
+                    {
+                        var driver = driversForKey[i];
+                        if (driver.ValueNode.Tag == animatedValueTag)
+                        {
+                            driversForKey.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         public bool OnEventDispatch(Event @event)
@@ -298,11 +333,17 @@ namespace ReactNative.Animated
                     eventName = customEventName;
                 }
 
-                var eventDriver = default(EventAnimationDriver);
-                if (_eventDrivers.TryGetValue(Tuple.Create(@event.ViewTag, eventName), out eventDriver))
+                var driversForKey = default(IList<EventAnimationDriver>);
+                if (_eventDrivers.TryGetValue(Tuple.Create(@event.ViewTag, eventName), out driversForKey))
                 {
-                    @event.Dispatch(eventDriver);
-                    _updatedNodes.Add(eventDriver.ValueNode);
+                    foreach (var driver in driversForKey)
+                    {
+                        @event.Dispatch(driver);
+                        _runUpdateNodeList.Add(driver.ValueNode);
+                    }
+
+                    UpdateNodes(_runUpdateNodeList);
+                    _runUpdateNodeList.Clear();
                     return true;
                 }
             }
@@ -331,9 +372,64 @@ namespace ReactNative.Animated
         public void RunUpdates(TimeSpan renderingTime)
         {
             DispatcherHelpers.AssertOnDispatcher();
+            var hasFinishedAnimations = false;
+
+            for (var i = 0; i < _updatedNodes.Count; ++i)
+            {
+                var node = _updatedNodes[i];
+                _runUpdateNodeList.Add(node);
+            }
+
+            // Clean _updatedNodes queue
+            _updatedNodes.Clear();
+
+            for (var i = 0; i < _activeAnimations.Count; ++i)
+            {
+                var animation = _activeAnimations[i];
+                animation.RunAnimationStep(renderingTime);
+                var valueNode = animation.AnimatedValue;
+                _runUpdateNodeList.Add(valueNode);
+                if (animation.HasFinished)
+                {
+                    hasFinishedAnimations = true;
+                }
+            }
+
+            UpdateNodes(_runUpdateNodeList);
+            _runUpdateNodeList.Clear();
+
+            // Cleanup finished animations. Iterate over the array of animations and override ones that has
+            // finished, then resize `_activeAnimations`.
+            if (hasFinishedAnimations)
+            {
+                int dest = 0;
+                for (var i = 0; i < _activeAnimations.Count; ++i)
+                {
+                    var animation = _activeAnimations[i];
+                    if (!animation.HasFinished)
+                    {
+                        _activeAnimations[dest++] = animation;
+                    }
+                    else
+                    {
+                        animation.EndCallback.Invoke(new JObject
+                        {
+                            { "finished", true },
+                        });
+                    }
+                }
+
+                for (var i = _activeAnimations.Count - 1; i >= dest; --i)
+                {
+                    _activeAnimations.RemoveAt(i);
+                }
+            }
+        }
+
+        private void UpdateNodes(IList<AnimatedNode> nodes)
+        {
             var activeNodesCount = 0;
             var updatedNodesCount = 0;
-            var hasFinishedAnimations = false;
 
             // STEP 1.
             // BFS over graph of nodes starting from ones from `_updatedNodes` and ones that are attached to
@@ -342,32 +438,20 @@ namespace ReactNative.Animated
             // animations as a part of this step.
 
             _animatedGraphBFSColor++; /* use new color */
+            if (_animatedGraphBFSColor == AnimatedNode.InitialBfsColor)
+            {
+                // value "0" is used as an initial color for a new node, using it in BFS may cause some nodes to be skipped.
+                _animatedGraphBFSColor++;
+            }
 
             var nodesQueue = new Queue<AnimatedNode>();
-            foreach (var node in _updatedNodes)
+            foreach (var node in nodes)
             {
                 if (node.BfsColor != _animatedGraphBFSColor)
                 {
                     node.BfsColor = _animatedGraphBFSColor;
                     activeNodesCount++;
                     nodesQueue.Enqueue(node);
-                }
-            }
-
-            foreach (var animation in _activeAnimations)
-            {
-                animation.RunAnimationStep(renderingTime);
-                var valueNode = animation.AnimatedValue;
-                if (valueNode.BfsColor != _animatedGraphBFSColor)
-                {
-                    valueNode.BfsColor = _animatedGraphBFSColor;
-                    activeNodesCount++;
-                    nodesQueue.Enqueue(valueNode);
-                }
-
-                if (animation.HasFinished)
-                {
-                    hasFinishedAnimations = true;
                 }
             }
 
@@ -398,27 +482,22 @@ namespace ReactNative.Animated
             // step). We store number of visited nodes in this step in `updatedNodesCount`
 
             _animatedGraphBFSColor++;
+            if (_animatedGraphBFSColor == AnimatedNode.InitialBfsColor)
+            {
+                // see reasoning for this check a few lines above
+                _animatedGraphBFSColor++;
+            }
+
 
             // find nodes with zero "incoming nodes", those can be either nodes from `mUpdatedNodes` or
             // ones connected to active animations
-            foreach (var node in _updatedNodes)
+            foreach (var node in nodes)
             {
                 if (node.ActiveIncomingNodes == 0 && node.BfsColor != _animatedGraphBFSColor)
                 {
                     node.BfsColor = _animatedGraphBFSColor;
                     updatedNodesCount++;
                     nodesQueue.Enqueue(node);
-                }
-            }
-
-            foreach (var animation in _activeAnimations)
-            {
-                var valueNode = animation.AnimatedValue;
-                if (valueNode.ActiveIncomingNodes == 0 && valueNode.BfsColor != _animatedGraphBFSColor)
-                {
-                    valueNode.BfsColor = _animatedGraphBFSColor;
-                    updatedNodesCount++;
-                    nodesQueue.Enqueue(valueNode);
                 }
             }
 
@@ -462,36 +541,6 @@ namespace ReactNative.Animated
             if (activeNodesCount != updatedNodesCount)
             {
                 throw new InvalidOperationException($"Looks like animated nodes graph has cycles, there are {activeNodesCount} but visited only {updatedNodesCount}.");
-            }
-
-            // Clean _updatedNodes queue
-            _updatedNodes.Clear();
-
-            // Cleanup finished animations. Iterate over the array of animations and override ones that has
-            // finished, then resize `_activeAnimations`.
-            if (hasFinishedAnimations)
-            {
-                int dest = 0;
-                for (var i = 0; i < _activeAnimations.Count; ++i)
-                {
-                    var animation = _activeAnimations[i];
-                    if (!animation.HasFinished)
-                    {
-                        _activeAnimations[dest++] = animation;
-                    }
-                    else
-                    {
-                        animation.EndCallback.Invoke(new JObject
-                        {
-                            { "finished", true },
-                        });
-                    }
-                }
-
-                for (var i = _activeAnimations.Count - 1; i >= dest; --i)
-                {
-                    _activeAnimations.RemoveAt(i);
-                }
             }
         }
 

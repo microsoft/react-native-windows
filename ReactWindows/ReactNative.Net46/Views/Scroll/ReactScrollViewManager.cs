@@ -356,6 +356,7 @@ namespace ReactNative.Views.Scroll
             {
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
                 VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                Focusable = false,
             };
 
             _scrollViewerData.Add(scrollViewer, scrollViewerData);

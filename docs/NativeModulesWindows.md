@@ -366,20 +366,19 @@ private void SendEvent(string eventName, JObject parameters)
 SendEvent("toggleElementInspector", null);
 ```
 
-JavaScript modules can then register to receive events by `addListenerOn` using the `Subscribable` mixin.
+JavaScript modules can then register to receive events by `addListener` from `NativeEventEmitter` wrapped module.
 
 ```js
-var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+var NativeEventEmitter = require('NativeEventEmitter');
+var DialogModule = require('NativeModules').DialogManagerWindows;
+var DialogEventEmitter = new NativeEventEmitter(DialogModule);
 ...
 
 var AppContainer = React.createClass({
-  mixins: [Subscribable.Mixin],
-
 
   componentWillMount: function() {
     ...
-    this.addListenerOn(
-      RCTDeviceEventEmitter,
+    DialogEventEmitter.addListener(
       'toggleElementInspector',
       this.toggleElementInspector
     );
@@ -391,18 +390,6 @@ var AppContainer = React.createClass({
       rootNodeHandle: ReactNative.findNodeHandle(this.refs.main),
     });
   },
-```
-
-You can also directly use the `RCTDeviceEventEmitter` module to listen for events.
-
-```js
-...
-componentWillMount: function() {
-  RCTDeviceEventEmitter.addListener('toggleElementInspector', function(e: Event) {
-    // handle event.
-  });
-}
-...
 ```
 
 ### Listening to Life Cycle Events

@@ -201,6 +201,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIImplementation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIImplementationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIManagerModule.Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIViewOperationQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManager.cs" />
@@ -235,5 +236,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Modules\DeviceInfo\" />
   </ItemGroup>
 </Project>

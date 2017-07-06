@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule BackAndroid
+ * @providesModule BackHandler
  */
 
 'use strict';
@@ -31,7 +31,7 @@ RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, function() {
     }
   });
   if (invokeDefault) {
-    BackAndroid.exitApp();
+    BackHandler.exitApp();
   }
 });
 
@@ -42,7 +42,7 @@ RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, function() {
  * Example:
  *
  * ```js
- * BackAndroid.addEventListener('hardwareBackPress', function() {
+ * BackHandler.addEventListener('hardwareBackPress', function() {
  * 	 if (!this.onMainScreen()) {
  * 	   this.goBack();
  * 	   return true;
@@ -51,7 +51,7 @@ RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, function() {
  * });
  * ```
  */
-var BackAndroid = {
+var BackHandler = {
 
   exitApp: function() {
     DeviceEventManager.invokeDefaultBackPressHandler();
@@ -63,7 +63,7 @@ var BackAndroid = {
   ): {remove: () => void} {
     _backPressSubscriptions.add(handler);
     return {
-      remove: () => BackAndroid.removeEventListener(eventName, handler),
+      remove: () => BackHandler.removeEventListener(eventName, handler),
     };
   },
 
@@ -76,4 +76,4 @@ var BackAndroid = {
 
 };
 
-module.exports = BackAndroid;
+module.exports = BackHandler;

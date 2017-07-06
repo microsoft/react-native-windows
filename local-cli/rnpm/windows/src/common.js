@@ -13,8 +13,11 @@ const fs = require('fs')
 const path = require('path')
 const semver = require('semver')
 const Registry = require('npm-registry')
+const child_process = require('child_process');
+const validUrl = require('valid-url');
 
-const NPM_REGISTRY_URL = 'http://registry.npmjs.org'
+let npmConfReg = child_process.execSync('npm config get registry').toString();
+let NPM_REGISTRY_URL = validUrl.is_uri(npmConfReg) ? npmConfReg: 'http://registry.npmjs.org';
 
 const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
   return path.resolve(
@@ -93,8 +96,20 @@ const getReactNativeAppName = function () {
   return JSON.parse(fs.readFileSync('package.json', 'utf8')).name
 }
 
+/**
+ * Check that 'react-native init' itself used yarn to install React Native.
+ * When using an old global react-native-cli@1.0.0 (or older), we don't want
+ * to install React Native with npm, and React + Jest with yarn.
+ * Let's be safe and not mix yarn and npm in a single project.
+ * @param projectDir e.g. /Users/martin/AwesomeApp
+ */
+const isGlobalCliUsingYarn = function(projectDir) {
+  return fs.existsSync(path.join(projectDir, 'yarn.lock'));
+}
+
 module.exports = {
   getInstallPackage,
   getReactNativeVersion,
-  getReactNativeAppName
+  getReactNativeAppName,
+  isGlobalCliUsingYarn
 }

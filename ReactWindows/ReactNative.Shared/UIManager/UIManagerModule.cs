@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-using Windows.Devices.Sensors;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
 
 namespace ReactNative.UIManager
 {
@@ -438,7 +434,7 @@ namespace ReactNative.UIManager
 
 #endregion
 
-#region ILifecycleEventListenere
+        #region ILifecycleEventListenere
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -446,8 +442,6 @@ namespace ReactNative.UIManager
         public void OnSuspend()
         {
             _uiImplementation.OnSuspend();
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
         }
 
         /// <summary>
@@ -456,9 +450,6 @@ namespace ReactNative.UIManager
         public void OnResume()
         {
             _uiImplementation.OnResume();
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
-
         }
 
 
@@ -467,15 +458,13 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
             _uiImplementation.OnShutdown();
             _eventDispatcher.OnDestroy();
         }
 
-#endregion
+        #endregion
 
-#region IOnBatchCompleteListener
+        #region IOnBatchCompleteListener
 
         /// <summary>
         /// To implement the transactional requirement, UI changes are only
@@ -494,9 +483,9 @@ namespace ReactNative.UIManager
             }
         }
 
-#endregion
+        #endregion
 
-#region NativeModuleBase
+        #region NativeModuleBase
 
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
@@ -506,74 +495,6 @@ namespace ReactNative.UIManager
             _eventDispatcher.OnReactInstanceDispose();
         }
 
-#endregion
-
-#region Dimensions
-        private void OnBoundsChanged(ApplicationView sender, object args)
-        {
-            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                .emit("didUpdateDimensions", GetDimensions());
-        }
-
-        private void OnOrientationChanged(DisplayInformation displayInformation, object args)
-        {
-            var name = default(string);
-            var degrees = default(double);
-            var isLandscape = false;
-
-            switch (displayInformation.CurrentOrientation)
-            {
-                case DisplayOrientations.Landscape:
-                    name = "landscape-primary";
-                    degrees = -90.0;
-                    isLandscape = true;
-                    break;
-                case DisplayOrientations.Portrait:
-                    name = "portrait-primary";
-                    degrees = 0.0;
-                    break;
-                case DisplayOrientations.LandscapeFlipped:
-                    name = "landscape-secondary";
-                    degrees = 90.0;
-                    isLandscape = true;
-                    break;
-                case DisplayOrientations.PortraitFlipped:
-                    name = "portraitSecondary";
-                    degrees = 180.0;
-                    break;
-            }
-
-            if (name != null)
-            {
-                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                    .emit("namedOrientationDidChange", new JObject
-                    {
-                        { "name", name },
-                        { "rotationDegrees", degrees },
-                        { "isLandscape", isLandscape },
-                    });
-            }
-        }
-
-        private static IDictionary<string, object> GetDimensions()
-        {
-            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-            var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-            
-            return new Dictionary<string, object>
-            {
-                {
-                    "window",
-                    new Dictionary<string, object>
-                    {
-                        { "width", bounds.Width },
-                        { "height", bounds.Height },
-                        { "scale", scale },
-                        /* TODO: density and DPI needed? */
-                    }
-                },
-            };
-        }
-#endregion
+        #endregion
     }
 }
