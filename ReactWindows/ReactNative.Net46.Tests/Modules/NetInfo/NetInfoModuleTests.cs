@@ -159,7 +159,7 @@ namespace ReactNative.Tests.Modules.NetInfo
 
             public string GetInternetStatus()
             {
-                return networkListManager.IsConnectedToInternet();
+                return networkListManager.IsConnectedToInternet ? "InternetAccess" : "None";
             }
 
             public void Start()
@@ -176,9 +176,8 @@ namespace ReactNative.Tests.Modules.NetInfo
             {
                 NetworkConnectivityChangedEventArgs e = new NetworkConnectivityChangedEventArgs()
                 {
-                    Guid = guid,
-                    Connectivity = connectivity,
-                    Connected = GetInternetStatus()
+                    IsAvailable = networkListManager.IsConnectedToInternet,
+                    ConnectionStatus = GetInternetStatus()
                 };
                 NetworkConnectivityChanged?.Invoke(new object(), e);
             }
@@ -188,15 +187,10 @@ namespace ReactNative.Tests.Modules.NetInfo
         {
             public MockNetworkListManager(string status)
             {
-                _status = status;
+                IsConnectedToInternet = status == "InternetAccess";
             }
 
-            private string _status;
-
-            public string IsConnectedToInternet()
-            {
-                return _status;
-            }
+            public bool IsConnectedToInternet { get; set; }
         }
     }
 }
