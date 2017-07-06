@@ -7,7 +7,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.FormattableString;
 #if WINDOWS_UWP
 using Windows.UI.Core;
 #else
@@ -64,7 +63,7 @@ namespace ReactNative.Bridge.Queue
 
             if (IsDisposed)
             {
-                Tracer.Write(ReactConstants.Tag, Invariant($"Dropping enqueued action on disposed '{_name}' thread."));
+                Tracer.Write(ReactConstants.Tag, $"Dropping enqueued action on disposed '{_name}' thread.");
                 return;
             }
 
@@ -133,8 +132,7 @@ namespace ReactNative.Bridge.Queue
                 case MessageQueueThreadKind.BackgroundAnyThread:
                     return new AnyBackgroundMessageQueueThread(spec.Name, handler);
                 default:
-                    throw new InvalidOperationException(
-                        Invariant($"Unknown thread type '{spec.Kind}' with name '{spec.Name}'."));
+                    throw new InvalidOperationException($"Unknown thread type '{spec.Kind}' with name '{spec.Name}'.");
             }
         }
 

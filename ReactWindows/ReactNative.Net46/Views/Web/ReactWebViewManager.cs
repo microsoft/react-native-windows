@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Net.Http;
 using System.Windows.Navigation;
-using static System.FormattableString;
 
 namespace ReactNative.Views.Web
 {
@@ -150,8 +149,7 @@ namespace ReactNative.Views.Web
                     view.Refresh();
                     break;
                 default:
-                    throw new InvalidOperationException(
-                        Invariant($"Unsupported command '{commandId}' received by '{typeof(ReactWebViewManager)}'."));
+                    throw new InvalidOperationException($"Unsupported command '{commandId}' received by '{typeof(ReactWebViewManager)}'.");
             }
         }
 

@@ -110,6 +110,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\IStackFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackFrameExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackTraceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\Array.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactPackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LifecycleState.cs" />

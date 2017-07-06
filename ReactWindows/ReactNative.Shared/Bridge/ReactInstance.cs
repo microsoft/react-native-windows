@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -301,7 +300,7 @@ namespace ReactNative.Bridge
             private void AssertNotNull(object value, string name)
             {
                 if (value == null)
-                    throw new InvalidOperationException(Invariant($"'{name}' has not been set."));
+                    throw new InvalidOperationException($"'{name}' has not been set.");
             }
         }
 

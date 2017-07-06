@@ -5,7 +5,6 @@ using Windows.Storage;
 #else
 using System;
 using System.Configuration;
-using static System.FormattableString;
 #endif
 
 namespace ReactNative.DevSupport
@@ -156,7 +155,7 @@ namespace ReactNative.DevSupport
                 }
                 else
                 {
-                    throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));
+                    throw new NotSupportedException($"Configuration values of type '{typeof(T)}' are not supported.");
                 }
             }
 

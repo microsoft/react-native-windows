@@ -5,7 +5,6 @@ using Windows.UI.Xaml;
 #else
 using System.Windows;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -173,7 +172,7 @@ namespace ReactNative.UIManager
             var convertedView = view as T;
             if (convertedView == null)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"Child of type '{view.GetType()}' is not assignable to '{typeof(T)}'."));
+                throw new ArgumentOutOfRangeException($"Child of type '{view.GetType()}' is not assignable to '{typeof(T)}'.");
             }
             return convertedView;
         }
