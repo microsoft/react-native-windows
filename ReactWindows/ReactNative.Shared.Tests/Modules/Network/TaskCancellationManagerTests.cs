@@ -22,7 +22,9 @@ namespace ReactNative.Tests.Modules.Network
         public async Task TaskCancellationManager_CancelledAfterCompleted()
         {
             var mgr = new TaskCancellationManager<int>();
-            await mgr.AddAndInvokeAsync(42, _ => Task.CompletedTask);
+            var task = new Task(() => { });
+            task.Start();
+            await mgr.AddAndInvokeAsync(42, _ => task);
             mgr.Cancel(42);
 
             // Not throwing implies success
