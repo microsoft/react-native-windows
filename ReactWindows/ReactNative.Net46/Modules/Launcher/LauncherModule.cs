@@ -46,7 +46,7 @@ namespace ReactNative.Modules.Launch
         /// The promise that should be resolved after the URL is opened.
         /// </param>
         [ReactMethod]
-        public async void openURL(string url, IPromise promise)
+        public void openURL(string url, IPromise promise)
         {
             if (url == null)
             {
@@ -80,7 +80,7 @@ namespace ReactNative.Modules.Launch
         /// The promise used to return the result of the check.
         /// </param>
         [ReactMethod]
-        public async void canOpenURL(string url, IPromise promise)
+        public void canOpenURL(string url, IPromise promise)
         {
             if (url == null)
             {
@@ -97,9 +97,6 @@ namespace ReactNative.Modules.Launch
 
             try
             {
-                // TODO: Figure out the WPF way to launch from a URL. See also: https://msdn.microsoft.com/en-us/library/aa767914(v=vs.85).aspx
-                //var support = await Launcher.QueryUriSupportAsync(uri, LaunchQuerySupportType.Uri).AsTask().ConfigureAwait(false);
-                //promise.Resolve(support == LaunchQuerySupportStatus.Available);
                 promise.Resolve(true);
             }
             catch (Exception ex)

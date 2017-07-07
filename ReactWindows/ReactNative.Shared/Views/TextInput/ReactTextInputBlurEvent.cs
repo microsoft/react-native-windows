@@ -2,10 +2,16 @@
 using ReactNative.UIManager.Events;
 using System;
 
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Controls;
+#else
+using System.Windows.Controls;
+#endif
+
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// Event emitted by <see cref="Windows.UI.Xaml.Controls.TextBox"/> native 
+    /// Event emitted by <see cref="TextBox"/> native 
     /// view when the control gains focus.
     /// </summary>
     class ReactTextInputBlurEvent : Event

@@ -329,6 +329,8 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="source">The source URI.</param>
+        /// <param name="tintColor">The tint color</param>
+        /// <param name="backgroundColor">The background color</param>
         private async void SetUriFromSingleSource(Border view, string source, Color? tintColor, Color? backgroundColor)
         {
             var imageBrush = (ImageBrush)view.Background;

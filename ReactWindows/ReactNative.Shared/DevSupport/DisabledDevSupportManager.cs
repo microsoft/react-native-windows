@@ -75,6 +75,8 @@ namespace ReactNative.DevSupport
                 ExceptionDispatchInfo.Capture(exception).Throw();
             }).AsTask().ConfigureAwait(false);
 #else
+            await Task.Delay(0);
+
             DispatcherHelpers.RunOnDispatcher(() => ExceptionDispatchInfo.Capture(exception).Throw());
 #endif
         }
