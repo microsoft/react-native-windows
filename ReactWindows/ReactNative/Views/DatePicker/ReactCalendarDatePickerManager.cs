@@ -4,13 +4,11 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using Newtonsoft.Json.Linq;
-using Windows.Globalization;
-using System.Collections.Generic;
 
 namespace ReactNative.Views.DatePicker
 {
     /// <summary>
-    /// A view manager responsible for rendering a CalendarDatePicker
+    /// A view manager responsible for rendering a CalendarDatePicker.
     /// </summary>
     public class ReactCalendarDatePickerManager : BaseViewManager<CalendarDatePicker, ReactCalendarDatePickerShadowNode>
     {
@@ -72,7 +70,7 @@ namespace ReactNative.Views.DatePicker
         /// Sets the placeholder text for the picker.
         /// </summary>
         /// <param name="view">The picker view element.</param>
-        /// <param name="placeholderText"></param>
+        /// <param name="placeholderText">The value of the placeholder.</param>
         [ReactProp("placeholderText")]
         public void SetPlaceholderText(CalendarDatePicker view, string placeholderText)
         {
@@ -151,8 +149,8 @@ namespace ReactNative.Views.DatePicker
         /// <summary>
         /// Binds the <see cref="CalendarDatePicker.DateChanged"/> event to a handler
         /// </summary>
-        /// <param name="reactContext">The react context</param>
-        /// <param name="view">The view instance</param>
+        /// <param name="reactContext">The react context.</param>
+        /// <param name="view">The view instance.</param>
         protected override void AddEventEmitters(ThemedReactContext reactContext, CalendarDatePicker view)
         {
             base.AddEventEmitters(reactContext, view);

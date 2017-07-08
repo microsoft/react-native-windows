@@ -8,9 +8,9 @@ using Newtonsoft.Json.Linq;
 namespace ReactNative.Views.DatePicker
 {
     /// <summary>
-    /// A view manager responsible for rendering a DatePicker
+    /// A view manager responsible for rendering a DatePicker.
     /// </summary>
-    public class ReactTimePickerManager : BaseViewManager<Windows.UI.Xaml.Controls.TimePicker, ReactTimePickerShadowNode>
+    public class ReactTimePickerManager : BaseViewManager<TimePicker, ReactTimePickerShadowNode>
     {
         /// <summary>
         /// The name of the view manager.
@@ -22,14 +22,14 @@ namespace ReactNative.Views.DatePicker
                 return "RCTTimePicker";
             }
         }
-        // TODO: Review grammar
+
         /// <summary>
         /// Sets the value of the picker.
         /// </summary>
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The new value.</param>
         [ReactProp("date")]
-        public void SetDate(Windows.UI.Xaml.Controls.TimePicker view, DateTime? date)
+        public void SetDate(TimePicker view, DateTime? date)
         {
             if (date.HasValue)
             {
@@ -38,7 +38,7 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// This method returns the <see cref="ReactTimePickerShadowNode"/>
+        /// This method returns the <see cref="ReactTimePickerShadowNode"/>.
         /// which will be then used for measuring the position and size of the
         /// view.
         /// </summary>
@@ -49,24 +49,24 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// Unbind event handlers
+        /// Unbind event handlers.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.TimePicker view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, TimePicker view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.TimeChanged -= OnTimeChanged;
         }
 
         /// <summary>
-        /// Creates a new view instance of type <see cref="Windows.UI.Xaml.Controls.TimePicker"/>.
+        /// Creates a new view instance of type <see cref="TimePicker"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override Windows.UI.Xaml.Controls.TimePicker CreateViewInstance(ThemedReactContext reactContext)
+        protected override TimePicker CreateViewInstance(ThemedReactContext reactContext)
         {
-            Windows.UI.Xaml.Controls.TimePicker picker = new Windows.UI.Xaml.Controls.TimePicker();
+            TimePicker picker = new TimePicker();
             return picker;
         }
 
@@ -77,25 +77,30 @@ namespace ReactNative.Views.DatePicker
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public override void UpdateExtraData(Windows.UI.Xaml.Controls.TimePicker root, object extraData)
+        public override void UpdateExtraData(TimePicker root, object extraData)
         {
         }
 
         /// <summary>
-        /// Binds the <see cref="Windows.UI.Xaml.Controls.TimePicker.TimeChanged"/> event to a handler.
-        /// The event dispatches a <see cref="DateTime" /> instance with the time information and the date set to the current day
+        /// Binds the <see cref="TimePicker.TimeChanged"/> event to a handler.
+        /// The event dispatches a <see cref="DateTime" /> instance with the time information and the date set to the current day.
         /// </summary>
-        /// <param name="reactContext">The react context</param>
-        /// <param name="view">The view instance</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.TimePicker view)
+        /// <param name="reactContext">The react context.</param>
+        /// <param name="view">The view instance.</param>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, TimePicker view)
         {
             base.AddEventEmitters(reactContext, view);
             view.TimeChanged += OnTimeChanged;
         }
 
+        /// <summary>
+        /// Event handler for the <see cref="TimePicker.TimeChanged"/> event.
+        /// </summary>
+        /// <param name="sender">The sender instance.</param>
+        /// <param name="e">The event data.</param>
         private void OnTimeChanged(object sender, TimePickerValueChangedEventArgs e)
         {
-            var view = (Windows.UI.Xaml.Controls.TimePicker)sender;
+            var view = (TimePicker)sender;
             TimeSpan time = e.NewTime;
             DateTime now = DateTime.UtcNow;
             DateTime dateTime = new DateTime(now.Year, now.Month, now.Day, time.Hours, time.Minutes, time.Seconds);
@@ -106,13 +111,13 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// A TimePicker-specific event to communicate with JavaScript
+        /// A TimePicker-specific event to communicate with JavaScript.
         /// </summary>
         class ReactTimePickerEvent : Event
         {
             private readonly DateTime _date;
             /// <summary>
-            /// Creates an instance of the event
+            /// Creates an instance of the event.
             /// </summary>
             /// <param name="viewTag">The viewtag of the instantiating view.</param>
             /// <param name="date">Date to include in the event payload.</param>
@@ -123,7 +128,7 @@ namespace ReactNative.Views.DatePicker
             }
 
             /// <summary>
-            /// Internal name of the event
+            /// Internal name of the event.
             /// </summary>
             public override string EventName
             {
@@ -134,7 +139,7 @@ namespace ReactNative.Views.DatePicker
             }
 
             /// <summary>
-            /// Dispatches the event through the JavaScript bridge
+            /// Dispatches the event through the JavaScript bridge.
             /// </summary>
             /// <param name="eventEmitter"></param>
             public override void Dispatch(RCTEventEmitter eventEmitter)

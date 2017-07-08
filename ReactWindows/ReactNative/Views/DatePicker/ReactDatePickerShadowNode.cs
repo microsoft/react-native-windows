@@ -9,7 +9,7 @@ namespace ReactNative.Views.DatePicker
     public class ReactDatePickerShadowNode : LayoutShadowNode
     {
         /// <summary>
-        /// Instantiates the <see cref="ReactDatePickerShadowNode"/>
+        /// Instantiates the <see cref="ReactDatePickerShadowNode"/>.
         /// </summary>
         public ReactDatePickerShadowNode()
         {

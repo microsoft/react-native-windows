@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 namespace ReactNative.Views.DatePicker
 {
     /// <summary>
-    /// A view manager responsible for rendering a DatePicker
+    /// A view manager responsible for rendering a DatePicker.
     /// </summary>
     public class ReactDatePickerManager : BaseViewManager<Windows.UI.Xaml.Controls.DatePicker, ReactDatePickerShadowNode>
     {
@@ -88,7 +88,7 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// Unbind event handlers
+        /// Unbind event handlers.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
@@ -110,7 +110,7 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// Binds the <see cref="Windows.UI.Xaml.Controls.DatePicker.DateChanged"/> event to a handler
+        /// Binds the <see cref="Windows.UI.Xaml.Controls.DatePicker.DateChanged"/> event to a handler.
         /// </summary>
         /// <param name="reactContext">The react context</param>
         /// <param name="view">The view instance</param>
@@ -121,7 +121,7 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// Date changed update handler
+        /// Date changed update handler.
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event.</param>
@@ -136,13 +136,13 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// A DatePicker-specific event to communicate with JavaScript
+        /// A DatePicker-specific event to communicate with JavaScript.
         /// </summary>
         class ReactDatePickerEvent : Event
         {
             private readonly DateTime _date;
             /// <summary>
-            /// Creates an instance of the event
+            /// Creates an instance of the event.
             /// </summary>
             /// <param name="viewTag">The viewtag of the instantiating view.</param>
             /// <param name="date">Date to include in the event payload.</param>
@@ -153,7 +153,7 @@ namespace ReactNative.Views.DatePicker
             }
 
             /// <summary>
-            /// Internal name of the event
+            /// Internal name of the event.
             /// </summary>
             public override string EventName
             {
@@ -164,7 +164,7 @@ namespace ReactNative.Views.DatePicker
             }
 
             /// <summary>
-            /// Dispatches the event through the JavaScript bridge
+            /// Dispatches the event through the JavaScript bridge.
             /// </summary>
             /// <param name="eventEmitter"></param>
             public override void Dispatch(RCTEventEmitter eventEmitter)

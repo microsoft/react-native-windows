@@ -9,7 +9,7 @@ namespace ReactNative.Views.DatePicker
     public class ReactTimePickerShadowNode : LayoutShadowNode
     {
         /// <summary>
-        /// Instantiates the <see cref="ReactTimePickerShadowNode"/> 
+        /// Instantiates the <see cref="ReactTimePickerShadowNode"/> .
         /// </summary>
         public ReactTimePickerShadowNode()
         {

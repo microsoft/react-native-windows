@@ -8,13 +8,14 @@ using Newtonsoft.Json.Linq;
 namespace ReactNative.Views.DatePicker
 {
     /// <summary>
-    /// A view manager responsible for rendering a DatePicker
+    /// A view manager responsible for rendering a DatePicker.
     /// </summary>
     public class ReactDateTimePickerManager : BaseViewManager<StackPanel, ReactDateTimePickerShadowNode>
     {
         private StackPanel panel;
         private Windows.UI.Xaml.Controls.DatePicker datePicker;
         private TimePicker timePicker;
+
         /// <summary>
         /// The name of the view manager.
         /// </summary>
