@@ -145,6 +145,8 @@
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="Views\DatePicker\ReactCalendarDatePickerManager.cs" />
     <Compile Include="Views\DatePicker\ReactCalendarDatePickerShadowNode.cs" />
+    <Compile Include="Views\DatePicker\ReactDateTimePickerShadowNode.cs" />
+    <Compile Include="Views\DatePicker\ReactDateTimePickerManager.cs" />
     <Compile Include="Views\DatePicker\ReactDatePickerManager.cs" />
     <Compile Include="Views\DatePicker\ReactDatePickerShadowNode.cs" />
     <Compile Include="Views\DatePicker\ReactTimePickerManager.cs" />

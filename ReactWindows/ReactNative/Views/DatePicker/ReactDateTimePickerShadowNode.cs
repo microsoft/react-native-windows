@@ -4,21 +4,21 @@ using ReactNative.UIManager;
 namespace ReactNative.Views.DatePicker
 {
     /// <summary>
-    /// The shadow node implementation for <see cref="ReactNative.Views.DatePicker.ReactTimePickerManager" /> views.
+    /// The shadow node implementation for <see cref="ReactNative.Views.DatePicker.ReactDateTimePickerManager" /> views.
     /// </summary>
-    public class ReactTimePickerShadowNode : LayoutShadowNode
+    public class ReactDateTimePickerShadowNode : LayoutShadowNode
     {
         /// <summary>
-        /// Instantiates the <see cref="ReactTimePickerShadowNode"/> 
+        /// Instantiates the <see cref="ReactDatePickerShadowNode"/>
         /// </summary>
-        public ReactTimePickerShadowNode()
+        public ReactDateTimePickerShadowNode()
         {
             MeasureFunction = MeasurePicker;
         }
 
         private static YogaSize MeasurePicker(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            return MeasureOutput.Make(width, 40f);
+            return MeasureOutput.Make(width, 80f);
         }
     }
 }

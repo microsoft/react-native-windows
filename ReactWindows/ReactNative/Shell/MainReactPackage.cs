@@ -89,7 +89,7 @@ namespace ReactNative.Shell
             {
                 new ReactCalendarDatePickerManager(),
                 new ReactDatePickerManager(),
-                new ReactTimePickerManager(),
+                new ReactDateTimePickerManager(),
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
                 new ReactProgressBarViewManager(),
@@ -104,6 +104,7 @@ namespace ReactNative.Shell
                 new ReactPasswordBoxManager(),
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
+                new ReactTimePickerManager(),
                 new ReactViewManager(),
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),

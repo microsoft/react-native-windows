@@ -4,6 +4,8 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using Newtonsoft.Json.Linq;
+using Windows.Globalization;
+using System.Collections.Generic;
 
 namespace ReactNative.Views.DatePicker
 {
@@ -29,14 +31,17 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The new value.</param>
         [ReactProp("date")]
-        public void SetDate(Windows.UI.Xaml.Controls.CalendarDatePicker view, DateTime date)
+        public void SetDate(Windows.UI.Xaml.Controls.CalendarDatePicker view, DateTime? date)
         {
-            view.Date = date;
-            /*view.CalendarIdentifier;
+            if (date.HasValue)
+            {
+                view.Date = date.Value;
+            }
+            /*
             view.DayOfWeekFormat;
-            view.FirstDayOfWeek;*/
-            
+            view.FirstDayOfWeek;*/    
         }
+
 
         /// <summary>
         /// Sets the maximum allowed date of the picker.
@@ -44,9 +49,12 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as maximum.</param>
         [ReactProp("maxDate")]
-        public void SetMaxDate(Windows.UI.Xaml.Controls.CalendarDatePicker view, DateTime date)
+        public void SetMaxDate(Windows.UI.Xaml.Controls.CalendarDatePicker view, DateTime? date)
         {
-            view.MaxDate = date;
+            if (date.HasValue)
+            {
+                view.MaxDate = date.Value;
+            }
         }
 
         /// <summary>
@@ -55,9 +63,48 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as minimum.</param>
         [ReactProp("minDate")]
-        public void SetMinDate(Windows.UI.Xaml.Controls.CalendarDatePicker view, DateTime date)
+        public void SetMinDate(Windows.UI.Xaml.Controls.CalendarDatePicker view, DateTime? date)
         {
-            view.MinDate = date;
+            if (date.HasValue)
+            {
+                view.MinDate = date.Value;
+            }
+        }
+
+        /// <summary>
+        /// Sets the placeholder text for the picker.
+        /// </summary>
+        /// <param name="view">The picker view element.</param>
+        /// <param name="placeholderText"></param>
+        [ReactProp("placeholderText")]
+        public void SetPlaceholderText(Windows.UI.Xaml.Controls.CalendarDatePicker view, string placeholderText)
+        {
+            view.PlaceholderText = placeholderText;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Windows.Globalization.CalendarIdentifiers"/> value for the picker.
+        /// </summary>
+        /// <param name="view">The picker view element.</param>
+        /// <param name="identifier">The identifier, which must be one of the values defined in <see cref="Windows.Globalization.CalendarIdentifiers"/></param>
+        [ReactProp("calendarIdentifier")]
+        public void SetCalendarIdentifier(Windows.UI.Xaml.Controls.CalendarDatePicker view, string identifier)
+        {
+            if (identifier.Length > 0)
+            {
+                view.CalendarIdentifier = identifier;
+            }
+        }
+
+        /// <summary>
+        /// Sets the first day of the week for the picker.
+        /// </summary>
+        /// <param name="view">The picker instance.</param>
+        /// <param name="day">The day.</param>
+        [ReactProp("firstDayOfWeek")]
+        public void SetFirstDayOfWeek(Windows.UI.Xaml.Controls.CalendarDatePicker view, int day)
+        {
+            view.FirstDayOfWeek = (Windows.Globalization.DayOfWeek)day;
         }
 
         /// <summary>

@@ -29,9 +29,12 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The new value.</param>
         [ReactProp("date")]
-        public void SetDate(Windows.UI.Xaml.Controls.TimePicker view, DateTime date)
+        public void SetDate(Windows.UI.Xaml.Controls.TimePicker view, DateTime? date)
         {
-            view.Time = date.TimeOfDay;
+            if (date.HasValue)
+            {
+                view.Time = date.Value.TimeOfDay;
+            }
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ using ReactNative.UIManager;
 namespace ReactNative.Views.DatePicker
 {
     /// <summary>
-    /// The shadow node implementation for CalendarDatePicker views.
+    /// The shadow node implementation for <see cref="ReactNative.Views.DatePicker.ReactCalendarDatePickerManager" /> views.
     /// </summary>
     public class ReactCalendarDatePickerShadowNode : LayoutShadowNode
     {

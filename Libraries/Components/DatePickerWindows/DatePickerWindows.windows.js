@@ -75,11 +75,34 @@ var DatePickerWindows = React.createClass({
          * - calendar: Date selector using a calendar view
          */
         mode: React.PropTypes.oneOf(['date', 'time', 'datetime', 'calendar']),
+
+        /**
+         * A placeholder text. Works only in 'calendar' mode.
+         */
+        placeholderText: React.PropTypes.string,
+
+        /**
+         * Calendar type, defined as a string.
+         * Only works in 'calendar' mode. The supported values are defined in the Windows.Globalization.CalendarIdentifiers class.
+         * Some values require API v10.0.14393.0 or above
+         */
+        calendarIdentifier: React.PropTypes.oneOf('ChineseLunarCalendar', 'GregorianCalendar', 'HebrewCalendar',
+                                                  'HijriCalendar', 'JapaneseCalendar', 'JapaneseLunarCalendar',
+                                                  'JulianCalendar', 'KoreanCalendar', 'KoreanLunarCalendar',
+                                                  'PersianCalendar', 'TaiwanCalendar', 'TaiwanLunarCalendar',
+                                                  'ThaiCalendar', 'UmAlQuraCalendar', 'VietnameseLunarCalendar'),
+        /**
+         * First day of the week, defined as an integer with 0 being Sunday, 1 Monday, etc.
+         * Only works in calendar mode.
+         */
+        firstDayOfWeek: React.PropTypes.oneOf(0, 1, 2, 3, 4, 5, 6)
     },
     getDefaultProps: function() {
       return {
         mode: 'datetime',
         date: new Date(),
+        firstDayOfWeek: 0,
+        calendarIdentifier: 'GregorianCalendar',
       };
     },
     _onDateChange: function(event) {
@@ -102,7 +125,17 @@ var DatePickerWindows = React.createClass({
                     date={this.props.date}
                     minDate={this.props.minDate}
                     maxDate={this.props.maxDate}
-                    onChange={this._onDateChange} />
+                    onChange={this._onDateChange}
+                    placeholderText="The placeholder text"
+                    calendarIdentifier={this.props.calendarIdentifier}
+                    firstDayOfWeek={this.props.firstDayOfWeek} />
+          case 'datetime':
+            return <RCTDateTimePicker
+                    date={this.props.date}
+                    minDate={this.props.minDate}
+                    maxDate={this.props.maxDate}
+                    onChange={this._onDateChange}
+                    placeholderText="The placeholder text" />
           default:
             throw new Error("Invalid mode for DatePickerWindows. Options are 'date', 'time', 'datetime', 'calendar'")
       }
@@ -114,6 +147,7 @@ var DatePickerWindows = React.createClass({
 
 var RCTDatePicker = requireNativeComponent('RCTDatePicker', DatePickerWindows);
 var RCTTimePicker = requireNativeComponent('RCTTimePicker', DatePickerWindows);
+var RCTDateTimePicker = requireNativeComponent('RCTDateTimePicker', DatePickerWindows);
 var RCTCalendarDatePicker = requireNativeComponent('RCTCalendarDatePicker', DatePickerWindows);
 
 module.exports = DatePickerWindows;
