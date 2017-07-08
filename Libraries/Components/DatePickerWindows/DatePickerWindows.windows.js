@@ -40,6 +40,7 @@ var DatePickerWindows = React.createClass({
          * Maximum year.
          *
          * Restricts the range with an upper bound on the year.
+         * Works only in 'date', 'time' and 'datetime' modes.
          */
         maxYear: React.PropTypes.instanceOf(Date),
 
@@ -47,8 +48,23 @@ var DatePickerWindows = React.createClass({
          * Minimum year.
          *
          * Restricts the range with an lower bound on the year.
+         * Works only in 'date', 'time' and 'datetime' modes.
          */
         minYear: React.PropTypes.instanceOf(Date),
+
+        /**
+         * Minimum date
+         * Restricts the range with an lower bound.
+         * Works only in the 'calendar' mode.
+         */
+        minDate: React.PropTypes.instanceOf(Date),
+
+        /**
+         * Maximum date
+         * Restricts the range with an upper bound.
+         * Works only in the 'calendar' mode.
+         */
+        maxDate: React.PropTypes.instanceOf(Date),
 
         /**
          * The date picker mode.
@@ -81,6 +97,12 @@ var DatePickerWindows = React.createClass({
             return <RCTTimePicker
                       date={this.props.date}
                       onChange={this._onDateChange} />
+          case 'calendar':
+            return <RCTCalendarDatePicker
+                    date={this.props.date}
+                    minDate={this.props.minDate}
+                    maxDate={this.props.maxDate}
+                    onChange={this._onDateChange} />
           default:
             throw new Error("Invalid mode for DatePickerWindows. Options are 'date', 'time', 'datetime', 'calendar'")
       }
@@ -92,5 +114,6 @@ var DatePickerWindows = React.createClass({
 
 var RCTDatePicker = requireNativeComponent('RCTDatePicker', DatePickerWindows);
 var RCTTimePicker = requireNativeComponent('RCTTimePicker', DatePickerWindows);
+var RCTCalendarDatePicker = requireNativeComponent('RCTCalendarDatePicker', DatePickerWindows);
 
 module.exports = DatePickerWindows;

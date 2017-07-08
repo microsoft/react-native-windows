@@ -103,7 +103,7 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// A DatePicker-specific event to communicate with JavaScript
+        /// A TimePicker-specific event to communicate with JavaScript
         /// </summary>
         class ReactTimePickerEvent : Event
         {
