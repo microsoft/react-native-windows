@@ -24,7 +24,7 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// Sets the value of the picker
+        /// Sets the value of the picker.
         /// </summary>
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The new value.</param>
@@ -57,7 +57,7 @@ namespace ReactNative.Views.DatePicker
         }
 
         /// <summary>
-        /// This method should return the <see cref="ReactDatePickerShadowNode"/>
+        /// This method returns the <see cref="ReactDatePickerShadowNode"/>
         /// which will be then used for measuring the position and size of the
         /// view.
         /// </summary>
@@ -119,7 +119,7 @@ namespace ReactNative.Views.DatePicker
         private void OnDateChanged(object sender, DatePickerValueChangedEventArgs e)
         {
             var datePicker = (Windows.UI.Xaml.Controls.DatePicker)sender;
-            DateTimeOffset newDate = e.NewDate;
+            DateTime newDate = e.NewDate.DateTime;
 
             datePicker.GetReactContext().GetNativeModule<UIManagerModule>()
                 .EventDispatcher
@@ -131,13 +131,13 @@ namespace ReactNative.Views.DatePicker
         /// </summary>
         class ReactDatePickerEvent : Event
         {
-            private readonly DateTimeOffset _date;
+            private readonly DateTime _date;
             /// <summary>
             /// Creates an instance of the event
             /// </summary>
             /// <param name="viewTag">The viewtag of the instantiating view.</param>
-            /// <param name="date">Date to include in the notification payload.</param>
-            public ReactDatePickerEvent(int viewTag, DateTimeOffset date) :
+            /// <param name="date">Date to include in the event payload.</param>
+            public ReactDatePickerEvent(int viewTag, DateTime date) :
                 base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
             {
                 _date = date;

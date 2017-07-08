@@ -4,14 +4,14 @@ using ReactNative.UIManager;
 namespace ReactNative.Views.DatePicker
 {
     /// <summary>
-    /// The shadow node implementation for DatePicker views.
+    /// The shadow node implementation for TimePicker views.
     /// </summary>
-    public class ReactDatePickerShadowNode : LayoutShadowNode
+    public class ReactTimePickerShadowNode : LayoutShadowNode
     {
         /// <summary>
-        /// Instantiates the <see cref="ReactDatePickerShadowNode"/>
+        /// Instantiates the <see cref="ReactTimePickerShadowNode"/> 
         /// </summary>
-        public ReactDatePickerShadowNode()
+        public ReactTimePickerShadowNode()
         {
             MeasureFunction = MeasurePicker;
         }

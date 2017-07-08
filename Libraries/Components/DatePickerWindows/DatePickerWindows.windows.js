@@ -70,8 +70,20 @@ var DatePickerWindows = React.createClass({
       this.props.onDateChange && this.props.onDateChange(new Date(event.nativeEvent.date));
     },
     renderPicker: function() {
-      return <RCTDatePicker date={this.props.date} minYear={this.props.minYear}
-      maxYear={this.props.maxYear} onChange={this._onDateChange} />
+      switch(this.props.mode){
+        case 'date':
+          return <RCTDatePicker 
+                    date={this.props.date}
+                    minYear={this.props.minYear}
+                    maxYear={this.props.maxYear}
+                    onChange={this._onDateChange} />
+          case 'time':
+            return <RCTTimePicker
+                      date={this.props.date}
+                      onChange={this._onDateChange} />
+          default:
+            throw new Error("Invalid mode for DatePickerWindows. Options are 'date', 'time', 'datetime', 'calendar'")
+      }
     },
     render: function() {
       return this.renderPicker();
@@ -79,5 +91,6 @@ var DatePickerWindows = React.createClass({
 })
 
 var RCTDatePicker = requireNativeComponent('RCTDatePicker', DatePickerWindows);
+var RCTTimePicker = requireNativeComponent('RCTTimePicker', DatePickerWindows);
 
 module.exports = DatePickerWindows;

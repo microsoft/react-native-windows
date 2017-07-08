@@ -145,6 +145,8 @@
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="Views\DatePicker\ReactDatePickerManager.cs" />
     <Compile Include="Views\DatePicker\ReactDatePickerShadowNode.cs" />
+    <Compile Include="Views\DatePicker\ReactTimePickerManager.cs" />
+    <Compile Include="Views\DatePicker\ReactTimePickerShadowNode.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
