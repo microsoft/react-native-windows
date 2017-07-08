@@ -41,7 +41,7 @@ var DatePickerWindows = React.createClass({
          * Maximum year.
          *
          * Restricts the range with an upper bound on the year.
-         * Works only in 'date', 'time' and 'datetime' modes.
+         * Works only in 'date' and 'datetime' modes.
          */
         maxYear: React.PropTypes.instanceOf(Date),
 
@@ -49,7 +49,7 @@ var DatePickerWindows = React.createClass({
          * Minimum year.
          *
          * Restricts the range with an lower bound on the year.
-         * Works only in 'date', 'time' and 'datetime' modes.
+         * Works only in 'date' and 'datetime' modes.
          */
         minYear: React.PropTypes.instanceOf(Date),
 
