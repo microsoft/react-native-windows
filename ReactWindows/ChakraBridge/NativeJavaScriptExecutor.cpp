@@ -39,7 +39,7 @@ ChakraStringResult NativeJavaScriptExecutor::GetGlobalVariable(String^ variableN
     size_t bufLen;
     IfFailRetNullPtr(JsStringToPointer(globalVariableJson, &szBuf, &bufLen));
 
-    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
+    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, (unsigned int)bufLen) };
     return finalResult;
 }
 
@@ -92,7 +92,7 @@ ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(S
     size_t bufLen;
     IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szBuf, &bufLen));
 
-    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
+    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, (unsigned int)bufLen) };
     return finalResult;
 }
 
@@ -130,7 +130,7 @@ ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue
     size_t bufLen;
     IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szBuf, &bufLen));
 
-    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
+    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, (unsigned int)bufLen) };
     return finalResult;
 }
 
@@ -159,6 +159,6 @@ ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
     size_t bufLen;
     IfFailRetNullPtr(JsStringToPointer(stringifiedResult, &szBuf, &bufLen));
 
-    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
+    ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, (unsigned int)bufLen) };
     return finalResult;
 }
