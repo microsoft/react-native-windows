@@ -89,9 +89,14 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.FontStyle)]
         public void SetFontStyle(string fontStyleValue)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleValue);
-            if (_fontStyle != fontStyle)
-            {
+            FontStyle fontStyle;
+            if (fontStyleValue == "italic") {
+                fontStyle = FontStyles.Italic;
+            } else {
+                fontStyle = FontStyles.Normal;
+            }
+
+            if (_fontStyle != fontStyle) {
                 _fontStyle = fontStyle;
                 MarkUpdated();
             }
