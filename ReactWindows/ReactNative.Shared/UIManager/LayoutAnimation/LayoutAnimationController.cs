@@ -93,6 +93,9 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// </summary>
         /// <param name="view">The native view to animate.</param>
         /// <param name="dimensions">The new view dimensions to animate to.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "FrameworkElement does not contain SetCurrentValue")]
         public void ApplyLayoutUpdate(FrameworkElement view, Dimensions dimensions)
         {
             DispatcherHelpers.AssertOnDispatcher();
@@ -106,8 +109,10 @@ namespace ReactNative.UIManager.LayoutAnimation
             {
                 Canvas.SetLeft(view, dimensions.X);
                 Canvas.SetTop(view, dimensions.Y);
+#pragma warning disable WPF0041
                 view.Width = dimensions.Width;
                 view.Height = dimensions.Height;
+#pragma warning restore WPF0041
             }
             else
             {
@@ -124,6 +129,9 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// Called once the animation is finished, should be used to completely
         /// remove the view.
         /// </param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "FrameworkElement does not contain SetCurrentValue")]
         public void DeleteView(FrameworkElement view, Action @finally)
         {
             DispatcherHelpers.AssertOnDispatcher();
@@ -141,7 +149,9 @@ namespace ReactNative.UIManager.LayoutAnimation
 
             if (animation != null)
             {
+#pragma warning disable WPF0041
                 view.IsHitTestVisible = false;
+#pragma warning restore WPF0041
                 StartAnimation(view, animation.Finally(@finally));
             }
             else

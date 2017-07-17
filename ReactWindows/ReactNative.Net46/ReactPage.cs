@@ -36,7 +36,7 @@ namespace ReactNative
             {
                 var rootview = CreateRootView();
 
-                base.Content = rootview;
+                base.SetCurrentValue(ContentProperty, rootview);
 
                 return rootview;
             });
@@ -127,9 +127,9 @@ namespace ReactNative
 
             RootView.AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
-            RootView.Focusable = true;
+            RootView.SetCurrentValue(FocusableProperty, true);
             RootView.Focus();
-            RootView.FocusVisualStyle = null;
+            RootView.SetCurrentValue(FocusVisualStyleProperty, null);
         }
 
         /// <summary>

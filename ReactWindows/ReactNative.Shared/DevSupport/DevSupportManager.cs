@@ -220,6 +220,9 @@ namespace ReactNative.DevSupport
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "DevOptionsDialog does not contain SetCurrentValue")]
         public void ShowDevOptionsDialog()
         {
             if (_devOptionsDialog != null || !IsEnabled)
@@ -304,7 +307,9 @@ namespace ReactNative.DevSupport
                 }
                 else
                 {
+#pragma warning disable WPF0041
                     _devOptionsDialog.Topmost = true;
+#pragma warning restore WPF0041
                     _devOptionsDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 }
 
@@ -448,6 +453,9 @@ namespace ReactNative.DevSupport
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "RedBoxDialog does not contain SetCurrentValue")]
         private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
             DispatcherHelpers.RunOnDispatcher(() =>
@@ -483,7 +491,9 @@ namespace ReactNative.DevSupport
                 }
                 else
                 {
+#pragma warning disable WPF0041
                     _redBoxDialog.Topmost = true;
+#pragma warning restore WPF0041
                     _redBoxDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 }
 

@@ -1,6 +1,7 @@
 ﻿using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace ReactNative.Views.Progress
@@ -18,22 +19,22 @@ namespace ReactNative.Views.Progress
         [ReactProp("indeterminate")]
         public void SetIndeterminate(ProgressBar view, bool value)
         {
-            view.IsIndeterminate = value;
+            view.SetCurrentValue(ProgressBar.IsIndeterminateProperty, value);
         }
 
         [ReactProp("progress")]
         public void SetProgress(ProgressBar view, double value)
         {
-            view.IsIndeterminate = false;
-            view.Value = value;
+            view.SetCurrentValue(ProgressBar.IsIndeterminateProperty, false);
+            view.SetCurrentValue(RangeBase.ValueProperty, value);
         }
 
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(ProgressBar view, uint? color)
         {
-            view.Foreground = color.HasValue
+            view.SetCurrentValue(Control.ForegroundProperty, color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+                : null);
         }
 
         public override ProgressBarShadowNode CreateShadowNodeInstance()

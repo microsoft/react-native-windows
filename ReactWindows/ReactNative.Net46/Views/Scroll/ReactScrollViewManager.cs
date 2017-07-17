@@ -92,7 +92,7 @@ namespace ReactNative.Views.Scroll
             DefaultUInt32 = ColorHelpers.Transparent)]
         public void SetBackgroundColor(ScrollViewer view, uint color)
         {
-            view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.SetCurrentValue(Control.BackgroundProperty, new SolidColorBrush(ColorHelpers.Parse(color)));
         }
 
         /// <summary>
@@ -105,15 +105,15 @@ namespace ReactNative.Views.Scroll
         {
             if (enabled)
             {
-                view.CanContentScroll = true;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                view.HorizontalScrollBarVisibility = _scrollViewerData[view].HorizontalScrollBarVisibility;
+                view.SetCurrentValue(ScrollViewer.CanContentScrollProperty, true);
+                view.SetCurrentValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Auto);
+                view.SetCurrentValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, _scrollViewerData[view].HorizontalScrollBarVisibility);
             }
             else
             {
-                view.CanContentScroll = false;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                view.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+                view.SetCurrentValue(ScrollViewer.CanContentScrollProperty, false);
+                view.SetCurrentValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
+                view.SetCurrentValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
             }
         }
 
@@ -132,7 +132,7 @@ namespace ReactNative.Views.Scroll
                 ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Disabled;
 
-            view.HorizontalScrollBarVisibility = _scrollViewerData[view].HorizontalScrollBarVisibility = horizontalScrollMode;
+            view.SetCurrentValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, _scrollViewerData[view].HorizontalScrollBarVisibility = horizontalScrollMode);
         }
 
         /// <summary>
@@ -145,9 +145,9 @@ namespace ReactNative.Views.Scroll
         [ReactProp("showsHorizontalScrollIndicator")]
         public void SetShowsHorizontalScrollIndicator(ScrollViewer view, bool showIndicator)
         {
-            view.HorizontalScrollBarVisibility = showIndicator
+            view.SetCurrentValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, showIndicator
                 ? ScrollBarVisibility.Auto
-                : ScrollBarVisibility.Hidden;
+                : ScrollBarVisibility.Hidden);
         }
 
         /// <summary>
@@ -160,9 +160,9 @@ namespace ReactNative.Views.Scroll
         [ReactProp("showsVerticalScrollIndicator")]
         public void SetShowsVerticalScrollIndicator(ScrollViewer view, bool showIndicator)
         {
-            view.VerticalScrollBarVisibility = showIndicator
+            view.SetCurrentValue(ScrollViewer.VerticalScrollBarVisibilityProperty, showIndicator
                 ? ScrollBarVisibility.Visible
-                : ScrollBarVisibility.Hidden;
+                : ScrollBarVisibility.Hidden);
         }
 
         /// <summary>
@@ -241,9 +241,9 @@ namespace ReactNative.Views.Scroll
                 throw new InvalidOperationException(Invariant($"{nameof(ScrollViewer)} already has a child element."));
             }
 
-            child.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
-            child.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
-            parent.Content = child;
+            child.SetCurrentValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
+            child.SetCurrentValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
+            parent.SetCurrentValue(ContentControl.ContentProperty, child);
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace ReactNative.Views.Scroll
         /// <param name="parent">The view parent.</param>
         public override void RemoveAllChildren(ScrollViewer parent)
         {
-            parent.Content = null;
+            parent.SetCurrentValue(ContentControl.ContentProperty, null);
         }
 
         /// <summary>

@@ -129,6 +129,9 @@ namespace ReactNative.Views.Text
         /// Update the properties on the inline instance.
         /// </summary>
         /// <param name="inline">The instance.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "Inline does not contain SetCurrentValue")]
         public override void UpdateInline(Inline inline)
         {
 #if WINDOWS_UWP
@@ -136,8 +139,10 @@ namespace ReactNative.Views.Text
             inline.FontStyle = _fontStyle ?? FontStyle.Normal;
             inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : FontFamily.XamlAutoFontFamily;
 #else
+#pragma warning disable WPF0041
             inline.FontStyle = _fontStyle ?? new FontStyle();
             inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
+#pragma warning restore WPF0041
 #endif
             inline.FontSize = _fontSize ?? 15;
             inline.FontWeight = _fontWeight ?? FontWeights.Normal;

@@ -53,12 +53,12 @@ namespace ReactNative.DevSupport.Controls
                 if ((bool)e.NewValue == false)
                 {
                     VisualStateManager.GoToElementState(li.PART_Border, "Inactive", false);
-                    li.PART_Border.Visibility = Visibility.Collapsed;
+                    li.PART_Border.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
                 }
                 else
                 {
                     VisualStateManager.GoToElementState(li.PART_Border, "Active", false);
-                    li.PART_Border.Visibility = Visibility.Visible;
+                    li.PART_Border.SetCurrentValue(VisibilityProperty, Visibility.Visible);
 
                     foreach (VisualStateGroup group in VisualStateManager.GetVisualStateGroups(li.PART_Border))
                     {
@@ -126,7 +126,7 @@ namespace ReactNative.DevSupport.Controls
                     }
                 }
 
-                PART_Border.Visibility = (this.IsActive ? Visibility.Visible : Visibility.Collapsed);
+                PART_Border.SetCurrentValue(VisibilityProperty, (this.IsActive ? Visibility.Visible : Visibility.Collapsed));
             }
         }
 

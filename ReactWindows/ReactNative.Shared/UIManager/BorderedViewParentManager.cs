@@ -36,6 +36,9 @@ namespace ReactNative.UIManager
         /// <param name="view">The view panel.</param>
         /// <param name="index">The property index.</param>
         /// <param name="radius">The border radius value.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "Border does not contain SetCurrentValue")]
         [ReactPropGroup(
             ViewProps.BorderRadius,
             ViewProps.BorderTopLeftRadius,
@@ -65,7 +68,9 @@ namespace ReactNative.UIManager
                     break;
             }
 
+#pragma warning disable WPF0041
             view.CornerRadius = cornerRadius;
+#pragma warning restore WPF0041
         }
 
         /// <summary>
@@ -73,13 +78,18 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="color">The masked color value.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "Border does not contain SetCurrentValue")]
         [ReactProp(
             ViewProps.BackgroundColor,
             CustomType = "Color",
             DefaultUInt32 = ColorHelpers.Transparent)]
         public void SetBackgroundColor(Border view, uint color)
         {
+#pragma warning disable WPF0041
             view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+#pragma warning restore WPF0041
         }
 
         /// <summary>
@@ -87,12 +97,17 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="color">The color hex code.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("WpfAnalyzers.DependencyProperties",
+        "WPF0041:Set mutable dependency properties using SetCurrentValue.",
+        Justification = "Border does not contain SetCurrentValue")]
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(Border view, uint? color)
         {
+#pragma warning disable WPF0041
             view.BorderBrush = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
                 : s_defaultBorderBrush;
+#pragma warning restore WPF0041
         }
 
         /// <summary>
