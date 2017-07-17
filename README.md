@@ -50,8 +50,16 @@ Run the following commands from the react-native folder:
 
 _Note: The native libs are still built using gradle. Full build with buck is coming soon(tm)._
 
+### Running on Windows
+
+Visual Studio 2015 or higher is required, with Windows 10 SDK 10.0.10586 or higher.
+
+- Open `RNTester\RNTester.sln` in Visual Studio
+- Set the StartUp project to `RNTesterApp`
+- Press F5 or Start from Visual Studio
+
 ## Built from source
 
-Building the app on both iOS and Android means building the React Native framework from source. This way you're running the latest native and JS code the way you see it in your clone of the github repo.
+Building the app on iOS, Android and Windows means building the React Native framework from source. This way you're running the latest native and JS code the way you see it in your clone of the github repo.
 
 This is different from apps created using `react-native init` which have a dependency on a specific version of React Native JS and native code, declared in a `package.json` file (and `build.gradle` for Android apps).
