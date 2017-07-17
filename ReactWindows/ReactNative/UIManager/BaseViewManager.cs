@@ -211,7 +211,6 @@ namespace ReactNative.UIManager
             else
             {
                 ResetRenderTransform(view);
-                view.RenderTransform = new MatrixTransform();
                 var projection = EnsureProjection(view);
                 projection.ProjectionMatrix = projectionMatrix;
             }
