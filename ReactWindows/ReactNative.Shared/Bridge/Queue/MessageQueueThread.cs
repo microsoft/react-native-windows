@@ -143,7 +143,7 @@ namespace ReactNative.Bridge.Queue
         class DispatcherMessageQueueThread : MessageQueueThread
         {
 #if WINDOWS_UWP && CREATE_LAYOUT_THREAD
-            private static readonly CoreApplicationView s_secondaryView = CoreApplication.CreateNewView();
+            private static readonly CoreApplicationView s_layoutApplicationView = CoreApplication.CreateNewView();
 #endif
             private static readonly IObserver<Action> s_nop = Observer.Create<Action>(_ => { });
 
@@ -154,28 +154,11 @@ namespace ReactNative.Bridge.Queue
 #if WINDOWS_UWP
             private readonly CoreApplicationView _currentApplicationView;
 #else
+            private readonly DispatcherManager _layoutDispatcherManager;
             private readonly Thread _currentDispatcherThread;
 #endif
 
             private IObserver<Action> _actionObserver;
-
-#if !WINDOWS_UWP
-            private static readonly ManualResetEvent s_layoutDispatcherReady = new ManualResetEvent(false);
-            private static readonly Thread s_layoutDispatcherThread;
-            private static Dispatcher s_layoutDispatcher;
-
-            static DispatcherMessageQueueThread()
-            {
-                s_layoutDispatcherThread = new Thread(new ThreadStart(() => {
-                    s_layoutDispatcher = Dispatcher.CurrentDispatcher;
-                    s_layoutDispatcherReady.Set();
-                    Dispatcher.Run();
-                }));
-
-                s_layoutDispatcherThread.SetApartmentState(ApartmentState.STA);
-                s_layoutDispatcherThread.Start();
-            }
-#endif
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             public DispatcherMessageQueueThread(string name, Action<Exception> handler, bool isSecondary)
@@ -186,9 +169,9 @@ namespace ReactNative.Bridge.Queue
                 _actionObserver = _actionSubject;
 
 #if WINDOWS_UWP
-#if CREATE_LAYOUT_THREAD
+#if CREATE_LAYOUT_THREAD                
                 _currentApplicationView = isSecondary
-                    ? s_secondaryView
+                    ? s_layoutApplicationView
                     : CoreApplication.GetCurrentView();
 #else
                 // For DEBUG builds, we use the main UI dispatcher fors both
@@ -198,18 +181,16 @@ namespace ReactNative.Bridge.Queue
 #endif
                 var dispatcher = _currentApplicationView.Dispatcher;
 #else
+                if (_isSecondary)
+                {
+                    _layoutDispatcherManager = new DispatcherManager();
+                }
+
                 var dispatcher = isSecondary
-                    ? s_layoutDispatcher
+                    ? _layoutDispatcherManager.DispatcherInstance
                     : Dispatcher.CurrentDispatcher;
 
-                _currentDispatcherThread = isSecondary
-                    ? s_layoutDispatcherThread
-                    : Dispatcher.CurrentDispatcher.Thread;
-
-                if (isSecondary)
-                {
-                    s_layoutDispatcherReady.WaitOne();
-                }
+                _currentDispatcherThread = dispatcher.Thread;
 #endif
 
                 _subscription = _actionSubject
@@ -247,15 +228,21 @@ namespace ReactNative.Bridge.Queue
                 Interlocked.Exchange(ref _actionObserver, s_nop);
                 _actionSubject.Dispose();
                 _subscription.Dispose();
+#if !WINDOWS_UWP
+                if (_isSecondary)
+                {
+                    _layoutDispatcherManager.Dispose();
+                }
+#endif
             }
 
 #if WINDOWS_UWP
             private CoreApplicationView GetApplicationView()
             {
 #if CREATE_LAYOUT_THREAD
-                if (_isSecondary && s_secondaryView.Dispatcher.HasThreadAccess)
+                if (_isSecondary && s_layoutApplicationView.Dispatcher.HasThreadAccess)
                 {
-                    return s_secondaryView;
+                    return s_layoutApplicationView;
                 }
                 else if (!_isSecondary)
                 {
@@ -266,6 +253,42 @@ namespace ReactNative.Bridge.Queue
 #else
                 return CoreApplication.GetCurrentView();
 #endif
+            }
+#endif
+
+#if !WINDOWS_UWP
+            class DispatcherManager : IDisposable
+            {
+                public DispatcherManager()
+                {
+                    var ready = new ManualResetEvent(false);
+                    ThreadInstance = new Thread(new ThreadStart(() => {
+                        DispatcherInstance = Dispatcher.CurrentDispatcher;
+                        ready.Set();
+                        Dispatcher.Run();
+                    }));
+
+                    ThreadInstance.SetApartmentState(ApartmentState.STA);
+                    ThreadInstance.Start();
+                    ready.WaitOne();
+                }
+
+                public Dispatcher DispatcherInstance
+                {
+                    get;
+                    private set;
+                }
+
+                public Thread ThreadInstance
+                {
+                    get;
+                }
+
+                public void Dispose()
+                {
+                    DispatcherInstance.InvokeShutdown();
+                    ThreadInstance.Join();
+                }
             }
 #endif
         }
