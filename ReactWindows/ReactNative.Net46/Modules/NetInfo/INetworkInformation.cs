@@ -11,7 +11,7 @@ namespace ReactNative.Modules.NetInfo
         /// An event that occurs whenever the network status changes.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly", Justification = "API matches Windows.Networking.Connectivity.NetworkingInformation.")]
-        event NetworkAvailabilityChangedEventHandler NetworkAvailabilityChanged;
+        event NetworkAddressChangedEventHandler NetworkAddressChanged;
 
         /// <summary>
         /// Gets the internet status
