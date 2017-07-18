@@ -8,6 +8,8 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using ReactNative.Modules.Wrappers;
+
 #if !WINDOWS_UWP
 using System.Windows;
 #endif
@@ -39,7 +41,7 @@ namespace ReactNative
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller manages scope of returned list of disposables.")]
         public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
         {
-            var uiManagerModule = default(INativeModule);
+            var uiManagerModule = default(UIManagerModule);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
                 var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
@@ -62,7 +64,7 @@ namespace ReactNative
                 new SourceCodeModule(
                     _reactInstanceManager.SourceUrl,
                     _reactInstanceManager.DevSupportManager.SourceMapUrl),
-                uiManagerModule,
+                new UIManagerModuleWrapper(uiManagerModule),
                 //new DebugComponentOwnershipModule(reactContext),
             };
         }
