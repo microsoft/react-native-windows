@@ -42,6 +42,18 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
+        /// Sets whether the view is collapsible.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="collapsible">The flag.</param>
+        [ReactProp(ViewProps.Collapsible)]
+        public void SetCollapsible(Border view, bool collapsible)
+        {
+            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
+            // handled in NativeViewHierarchyOptimizer
+        }
+
+        /// <summary>
         /// Set the pointer events handling mode for the view.
         /// </summary>
         /// <param name="view">The view.</param>
