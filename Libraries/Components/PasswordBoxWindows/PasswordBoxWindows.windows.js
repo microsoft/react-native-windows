@@ -14,6 +14,7 @@
 var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
 var NativeMethodsMixin = require('NativeMethodsMixin');
+var PropTypes = require('prop-types');
 var React = require('React');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
@@ -21,11 +22,10 @@ var Text = require('Text');
 var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
+
 var View = require('View');
 
 var requireNativeComponent = require('requireNativeComponent');
-
-var PropTypes = React.PropTypes;
 
 var NativePasswordBox = requireNativeComponent('PasswordBoxWindows', null);
 
@@ -293,8 +293,8 @@ var PasswordBoxWindows = React.createClass({
   },
 
   contextTypes: {
-    onFocusRequested: React.PropTypes.func,
-    focusEmitter: React.PropTypes.instanceOf(EventEmitter),
+    onFocusRequested: PropTypes.func,
+    focusEmitter: PropTypes.instanceOf(EventEmitter),
   },
 
   _focusSubscription: (undefined: ?Function),
@@ -335,7 +335,7 @@ var PasswordBoxWindows = React.createClass({
   },
 
   childContextTypes: {
-    isInAParentText: React.PropTypes.bool
+    isInAParentText: PropTypes.bool
   },
 
   /**

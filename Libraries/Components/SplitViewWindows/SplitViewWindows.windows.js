@@ -11,18 +11,18 @@
 'use strict';
 
 var NativeMethodsMixin = require('NativeMethodsMixin');
+var PropTypes = require('prop-types');
 var React = require('React');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
+
 var View = require('View');
 
 var SplitViewConsts = UIManager.WindowsSplitView.Constants;
-
 var dismissKeyboard = require('dismissKeyboard');
-var requireNativeComponent = require('requireNativeComponent');
 
-var ReactPropTypes = React.PropTypes;
+var requireNativeComponent = require('requireNativeComponent');
 
 var RK_PANE_REF = 'paneView';
 var CONTENT_REF = 'contentView';
@@ -75,14 +75,14 @@ var SplitViewWindows = React.createClass({
      *   - 'none' (the default), drags do not dismiss the keyboard.
      *   - 'on-drag', the keyboard is dismissed when a drag begins.
      */
-    keyboardDismissMode: ReactPropTypes.oneOf([
+    keyboardDismissMode: PropTypes.oneOf([
       'none', // default
       'on-drag',
     ]),
     /**
      * Specifies the side of the screen from which the pane will slide in.
      */
-    panePosition: ReactPropTypes.oneOf([
+    panePosition: PropTypes.oneOf([
       SplitViewConsts.PanePositions.Left,
       SplitViewConsts.PanePositions.Right
     ]),
@@ -90,19 +90,19 @@ var SplitViewWindows = React.createClass({
      * Specifies the width of the pane, more precisely the width of the view that be pulled in
      * from the edge of the window.
      */
-    paneWidth: ReactPropTypes.number,
+    paneWidth: PropTypes.number,
     /**
      * Function called whenever the pane view has been opened.
      */
-    onPaneOpen: ReactPropTypes.func,
+    onPaneOpen: PropTypes.func,
     /**
      * Function called whenever the pane view has been closed.
      */
-    onPaneClose: ReactPropTypes.func,
+    onPaneClose: PropTypes.func,
     /**
      * The pane view that will be rendered to the side of the screen and can be pulled in.
      */
-    renderPaneView: ReactPropTypes.func.isRequired,
+    renderPaneView: PropTypes.func.isRequired,
   },
 
   mixins: [NativeMethodsMixin],
