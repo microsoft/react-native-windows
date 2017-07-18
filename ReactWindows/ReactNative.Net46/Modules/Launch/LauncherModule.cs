@@ -30,7 +30,8 @@ namespace ReactNative.Modules.Launch
         /// <summary>
         /// The name of the module.
         /// </summary>
-        public override string Name {
+        public override string Name
+        {
             get
             {
                 return "LinkingManager";
@@ -47,13 +48,15 @@ namespace ReactNative.Modules.Launch
         [ReactMethod]
         public async void openURL(string url, IPromise promise)
         {
-            if (url == null) {
+            if (url == null)
+            {
                 promise.Reject(new ArgumentNullException(nameof(url)));
                 return;
             }
 
             var uri = default(Uri);
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri)) {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
                 promise.Reject(new ArgumentException(Invariant($"URL argument '{uri}' is not valid.")));
                 return;
             }
@@ -72,13 +75,15 @@ namespace ReactNative.Modules.Launch
         [ReactMethod]
         public async void canOpenURL(string url, IPromise promise)
         {
-            if (url == null) {
+            if (url == null)
+            {
                 promise.Reject(new ArgumentNullException(nameof(url)));
                 return;
             }
 
             var uri = default(Uri);
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri)) {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
                 promise.Reject(new ArgumentException(Invariant($"URL argument '{uri}' is not valid.")));
                 return;
             }
@@ -123,7 +128,8 @@ namespace ReactNative.Modules.Launch
         {
             // Wait for initialization to subscribe to protect against sending
             // events to a context that has not been fully initialized.
-            if (_initialized) {
+            if (_initialized)
+            {
                 _subscription = CreateUrlSubscription();
             }
         }
