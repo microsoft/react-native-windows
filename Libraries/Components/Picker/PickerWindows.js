@@ -13,16 +13,16 @@
 'use strict';
 
 var ColorPropType = require('ColorPropType');
+var PropTypes = require('prop-types');
 var React = require('React');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
+
 var ViewStylePropTypes = require('ViewStylePropTypes');
-
 var processColor = require('processColor');
-var requireNativeComponent = require('requireNativeComponent');
 
-var ReactPropTypes = React.PropTypes;
+var requireNativeComponent = require('requireNativeComponent');
 
 var REF_PICKER = 'picker';
 
@@ -41,9 +41,9 @@ var PickerWindows = React.createClass({
   propTypes: {
     ...View.propTypes,
     style: pickerStyleType,
-    items: React.PropTypes.any,
-    selected: React.PropTypes.number,
-    selectedValue: React.PropTypes.any,
+    items: PropTypes.any,
+    selected: PropTypes.number,
+    selectedValue: PropTypes.any,
     enabled: ReactPropTypes.bool,
     onValueChange: ReactPropTypes.func,
     prompt: ReactPropTypes.string,

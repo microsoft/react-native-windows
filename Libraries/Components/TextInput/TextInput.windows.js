@@ -15,6 +15,7 @@ var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var Platform = require('Platform');
+var PropTypes = require('prop-types');
 var React = require('React');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
@@ -24,13 +25,12 @@ var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
 var View = require('View');
-var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
 
+var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
-var requireNativeComponent = require('requireNativeComponent');
 
-var PropTypes = React.PropTypes;
+var requireNativeComponent = require('requireNativeComponent');
 
 var onlyMultiline = {
   onTextInput: true, // not supported in Open Source yet
@@ -369,8 +369,8 @@ var TextInput = React.createClass({
   },
 
   contextTypes: {
-    onFocusRequested: React.PropTypes.func,
-    focusEmitter: React.PropTypes.instanceOf(EventEmitter),
+    onFocusRequested: PropTypes.func,
+    focusEmitter: PropTypes.instanceOf(EventEmitter),
   },
 
   _focusSubscription: (undefined: ?Function),
@@ -411,7 +411,7 @@ var TextInput = React.createClass({
   },
 
   childContextTypes: {
-    isInAParentText: React.PropTypes.bool
+    isInAParentText: PropTypes.bool
   },
 
   /**
