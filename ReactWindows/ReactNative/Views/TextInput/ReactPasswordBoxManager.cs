@@ -180,7 +180,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.FontStyle)]
         public void SetFontStyle(PasswordBox view, string fontStyleString)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
+            var fontStyle = FontStyleHelpers.ParseFontStyle(fontStyleString);
             view.FontStyle = fontStyle ?? FontStyle.Normal;
         }
 
