@@ -106,14 +106,14 @@ For more information about contributing PRs and issues, see our [Contribution Gu
 
 [Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
-Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to run the unit tests in Visual Studio and verify they are passing before submitting pull requests. For extra credit, verify some of the [Examples](#examples), like UI Explorer, continue to work properly.
+Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to run the unit tests in Visual Studio and verify they are passing before submitting pull requests. For extra credit, verify the examples in RNTester continue to work properly.
 
 ### Examples
 
-- If you're looking for sample code, just browse the Examples folder in the GitHub web UI
+- If you're looking for sample code, just browse the RNTester folder in the GitHub web UI
 - From your recursive clone of the react-native-windows repo, run ``git pull --recurse-submodules`` to make sure you're up to date with latest code
 - Start the React Native packager by running `react-native start` 
-- Open Examples.sln from the Examples submodule folder in Visual Studio.
+- Open RNTester.sln from the RNTester submodule folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
 ## License
