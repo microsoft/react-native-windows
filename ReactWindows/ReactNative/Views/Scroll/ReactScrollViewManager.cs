@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Pooling;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -462,7 +463,7 @@ namespace ReactNative.Views.Scroll
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ScrollEvent(
+                    ScrollEvent.Obtain(
                         reactTag,
                         eventType,
                         new JObject
@@ -501,15 +502,13 @@ namespace ReactNative.Views.Scroll
 
         class ScrollEvent : Event
         {
-            private readonly ScrollEventType _type;
-            private readonly JObject _data;
+            private static readonly ObjectPool<ScrollEvent> s_eventsPool =
+                new ObjectPool<ScrollEvent>(() => new ScrollEvent(), 3);
 
-            public ScrollEvent(int viewTag, ScrollEventType type, JObject data)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
-            {
-                _type = type;
-                _data = data;
-            }
+            private ScrollEventType _type;
+            private JObject _data;
+
+            private ScrollEvent() { }
 
             public override string EventName
             {
@@ -519,9 +518,37 @@ namespace ReactNative.Views.Scroll
                 }
             }
 
+            public override bool CanCoalesce
+            {
+                get
+                {
+                    return _type == ScrollEventType.Scroll;
+                }
+            }
+
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
                 eventEmitter.receiveEvent(ViewTag, EventName, _data);
+            }
+
+            protected override void OnDispose()
+            {
+                base.OnDispose();
+                s_eventsPool.Free(this);
+            }
+
+            private void Init(int viewTag, ScrollEventType type, JObject data)
+            {
+                Init(viewTag);
+                _type = type;
+                _data = data;
+            }
+
+            public static ScrollEvent Obtain(int viewTag, ScrollEventType type, JObject data)
+            {
+                var @event = s_eventsPool.Allocate();
+                @event.Init(viewTag, type, data);
+                return @event;
             }
         }
 

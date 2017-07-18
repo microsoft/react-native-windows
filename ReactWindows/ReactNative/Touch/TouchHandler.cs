@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ReactNative.Pooling;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
@@ -51,7 +52,7 @@ namespace ReactNative.Touch
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
                     .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
+                        PointerEnterExitEvent.Obtain(view.GetTag(), TouchEventType.Entered));
             }
         }
 
@@ -63,7 +64,7 @@ namespace ReactNative.Touch
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
                     .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
+                        PointerEnterExitEvent.Obtain(view.GetTag(), TouchEventType.Exited));
             }
         }
 
@@ -232,11 +233,11 @@ namespace ReactNative.Touch
             }
 
             var changedIndices = new JArray();
-            changedIndices.Add(JToken.FromObject(pointerIndex));
+            changedIndices.Add(pointerIndex);
 
             var coalescingKey = activePointers[pointerIndex].PointerId;
 
-            var touchEvent = new TouchEvent(touchEventType, touches, changedIndices, coalescingKey);
+            var touchEvent = TouchEvent.Obtain(touchEventType, touches, changedIndices, coalescingKey);
 
             _view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -318,19 +319,15 @@ namespace ReactNative.Touch
 
         class TouchEvent : Event
         {
-            private readonly TouchEventType _touchEventType;
-            private readonly JArray _touches;
-            private readonly JArray _changedIndices;
-            private readonly uint _coalescingKey;
+            private static readonly ObjectPool<TouchEvent> s_eventsPool =
+                new ObjectPool<TouchEvent>(() => new TouchEvent(), 3);
 
-            public TouchEvent(TouchEventType touchEventType, JArray touches, JArray changedIndices, uint coalescingKey)
-                : base(-1, TimeSpan.FromTicks(Environment.TickCount))
-            {
-                _touchEventType = touchEventType;
-                _touches = touches;
-                _changedIndices = changedIndices;
-                _coalescingKey = coalescingKey;
-            }
+            private TouchEventType _touchEventType;
+            private JArray _touches;
+            private JArray _changedIndices;
+            private uint _coalescingKey;
+
+            private TouchEvent() { }
 
             public override string EventName
             {
@@ -363,17 +360,38 @@ namespace ReactNative.Touch
             {
                 eventEmitter.receiveTouches(EventName, _touches, _changedIndices);
             }
+
+            protected override void OnDispose()
+            {
+                base.OnDispose();
+                s_eventsPool.Free(this);
+            }
+
+            private void Init(TouchEventType touchEventType, JArray touches, JArray changedIndices, uint coalescingKey)
+            {
+                _touchEventType = touchEventType;
+                _touches = touches;
+                _changedIndices = changedIndices;
+                _coalescingKey = coalescingKey;
+                Init(-1);
+            }
+
+            public static TouchEvent Obtain(TouchEventType touchEventType, JArray touches, JArray changedIndices, uint coalescingKey)
+            {
+                var @event = s_eventsPool.Allocate();
+                @event.Init(touchEventType, touches, changedIndices, coalescingKey);
+                return @event;
+            }
         }
 
         class PointerEnterExitEvent : Event
         {
-            private readonly TouchEventType _touchEventType;
+            private static readonly ObjectPool<PointerEnterExitEvent> s_eventsPool =
+                new ObjectPool<PointerEnterExitEvent>(() => new PointerEnterExitEvent(), 3);
 
-            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag) 
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
-            {
-                _touchEventType = touchEventType;
-            }
+            private TouchEventType _touchEventType;
+
+            private PointerEnterExitEvent() { }
 
             public override string EventName
             {
@@ -414,6 +432,25 @@ namespace ReactNative.Touch
                 }
 
                 eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+            }
+
+            protected override void OnDispose()
+            {
+                base.OnDispose();
+                s_eventsPool.Free(this);
+            }
+
+            private void Init(int viewTag, TouchEventType touchEventType)
+            {
+                Init(viewTag);
+                _touchEventType = touchEventType;
+            }
+
+            public static PointerEnterExitEvent Obtain(int viewTag, TouchEventType touchEventType)
+            {
+                var @event = s_eventsPool.Allocate();
+                @event.Init(viewTag, touchEventType);
+                return @event;
             }
         }
 

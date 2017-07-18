@@ -44,10 +44,10 @@ var PickerWindows = React.createClass({
     items: PropTypes.any,
     selected: PropTypes.number,
     selectedValue: PropTypes.any,
-    enabled: ReactPropTypes.bool,
-    onValueChange: ReactPropTypes.func,
-    prompt: ReactPropTypes.string,
-    testID: ReactPropTypes.string,
+    enabled: PropTypes.bool,
+    onValueChange: PropTypes.func,
+    prompt: PropTypes.string,
+    testID: PropTypes.string,
   },
 
   getInitialState: function() {
