@@ -319,8 +319,8 @@ namespace ReactNative.Touch
 
         class TouchEvent : Event
         {
-            private static readonly ObjectPool<TouchEvent> s_eventsPool =
-                new ObjectPool<TouchEvent>(() => new TouchEvent(), 3);
+            private static readonly ConcurrentObjectPool<TouchEvent> s_eventsPool =
+                new ConcurrentObjectPool<TouchEvent>(() => new TouchEvent(), 3);
 
             private TouchEventType _touchEventType;
             private JArray _touches;
@@ -386,8 +386,8 @@ namespace ReactNative.Touch
 
         class PointerEnterExitEvent : Event
         {
-            private static readonly ObjectPool<PointerEnterExitEvent> s_eventsPool =
-                new ObjectPool<PointerEnterExitEvent>(() => new PointerEnterExitEvent(), 3);
+            private static readonly ConcurrentObjectPool<PointerEnterExitEvent> s_eventsPool =
+                new ConcurrentObjectPool<PointerEnterExitEvent>(() => new PointerEnterExitEvent(), 3);
 
             private TouchEventType _touchEventType;
 

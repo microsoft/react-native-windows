@@ -6,8 +6,8 @@ namespace ReactNative.UIManager
 {
     class OnLayoutEvent : Event
     {
-        private static readonly ObjectPool<OnLayoutEvent> s_eventsPool =
-            new ObjectPool<OnLayoutEvent>(() => new OnLayoutEvent(), 20);
+        private static readonly ConcurrentObjectPool<OnLayoutEvent> s_eventsPool =
+            new ConcurrentObjectPool<OnLayoutEvent>(() => new OnLayoutEvent(), 20);
 
         private double _x;
         private double _y;
@@ -61,6 +61,7 @@ namespace ReactNative.UIManager
 
         public static OnLayoutEvent Obtain(int viewTag, double x, double y, double width, double height)
         {
+            //var @event = new OnLayoutEvent();
             var @event = s_eventsPool.Allocate();
             @event.Init(viewTag, x, y, width, height);
             return @event;

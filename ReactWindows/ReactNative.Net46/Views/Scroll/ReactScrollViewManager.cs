@@ -497,8 +497,8 @@ namespace ReactNative.Views.Scroll
 
         class ScrollEvent : Event
         {
-            private static readonly ObjectPool<ScrollEvent> s_eventsPool =
-                new ObjectPool<ScrollEvent>(() => new ScrollEvent(), 3);
+            private static readonly ConcurrentObjectPool<ScrollEvent> s_eventsPool =
+                new ConcurrentObjectPool<ScrollEvent>(() => new ScrollEvent(), 3);
 
             private ScrollEventType _type;
             private JObject _data;
