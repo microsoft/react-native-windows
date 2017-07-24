@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -104,6 +105,32 @@ namespace ReactNative.UIManager
             Canvas.SetZIndex(view, zIndex);
         }
 
+        /// <summary>
+        /// Sets the manipulation mode for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="manipulationModes">The manipulation modes.</param>
+        [ReactProp("manipulationModes")]
+        public void SetManipulationMode(TFrameworkElement view, JArray manipulationModes)
+        {
+            if (manipulationModes == null || manipulationModes.Count == 0)
+            {
+                view.ManipulationMode = ManipulationModes.System;
+            }
+
+            var manipulationMode = ManipulationModes.System;
+            foreach (var modeString in manipulationModes)
+            {
+                if (modeString.Type == JTokenType.String)
+                {
+                    var mode = EnumHelpers.Parse<ManipulationModes>(modeString.Value<string>());
+                    manipulationMode |= mode;
+                }
+            }
+
+            view.ManipulationMode = manipulationMode;
+        }
+        
         /// <summary>
         /// Sets the accessibility label of the element.
         /// </summary>
