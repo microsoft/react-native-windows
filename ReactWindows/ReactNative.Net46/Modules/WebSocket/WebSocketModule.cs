@@ -14,6 +14,8 @@ namespace ReactNative.Modules.WebSocket
     {
         private readonly IDictionary<int, WebSocketSharp.WebSocket> _webSocketConnections = new Dictionary<int, WebSocketSharp.WebSocket>();
 
+        private readonly object locker = new object();
+
         #region Constructor(s)
 
         public WebSocketModule(ReactContext reactContext)
@@ -75,13 +77,16 @@ namespace ReactNative.Modules.WebSocket
         {
             WebSocketSharp.WebSocket webSocket;
 
-            if (!_webSocketConnections.TryGetValue(id, out webSocket))
+            lock (this.locker)
             {
-                Tracer.Write(
-                    ReactConstants.Tag,
-                    $"Cannot close WebSocket. Unknown WebSocket id {id}.");
+                if (!_webSocketConnections.TryGetValue(id, out webSocket))
+                {
+                    Tracer.Write(
+                        ReactConstants.Tag,
+                        $"Cannot close WebSocket. Unknown WebSocket id {id}.");
 
-                return;
+                    return;
+                }
             }
 
             try
@@ -90,15 +95,18 @@ namespace ReactNative.Modules.WebSocket
             }
             catch (Exception ex)
             {
-                if (_webSocketConnections.ContainsKey(id))
+                lock (this.locker)
                 {
-                    _webSocketConnections.Remove(id);
-                }
+                    if (_webSocketConnections.ContainsKey(id))
+                    {
+                        _webSocketConnections.Remove(id);
+                    }
 
-                Tracer.Error(
-                    ReactConstants.Tag,
-                    $"Could not close WebSocket connection for id '{id}'.",
-                    ex);
+                    Tracer.Error(
+                        ReactConstants.Tag,
+                        $"Could not close WebSocket connection for id '{id}'.",
+                        ex);
+                }
             }
         }
 
@@ -116,44 +124,53 @@ namespace ReactNative.Modules.WebSocket
         {
             if (webSocket != null)
             {
-                _webSocketConnections.Add(id, webSocket);
-
-                SendEvent("websocketOpen", new JObject
+                lock (this.locker)
                 {
-                    {"id", id},
-                });
+                    _webSocketConnections.Add(id, webSocket);
+
+                    SendEvent("websocketOpen", new JObject
+                    {
+                        {"id", id},
+                    });
+                }
             }
         }
 
         private void OnClosed(int id, object webSocket, CloseEventArgs args)
         {
-            if (_webSocketConnections.ContainsKey(id))
+            lock (this.locker)
             {
-                _webSocketConnections.Remove(id);
+                if (_webSocketConnections.ContainsKey(id))
+                {
+                    _webSocketConnections.Remove(id);
 
-                SendEvent("websocketClosed", new JObject
+                    SendEvent("websocketClosed", new JObject
+                    {
+                        {"id", id},
+                        {"code", args.Code},
+                        {"reason", args.Reason},
+                    });
+                }
+                else
                 {
-                    {"id", id},
-                    {"code", args.Code},
-                    {"reason", args.Reason},
-                });
-            }
-            else
-            {
-                SendEvent("websocketFailed", new JObject
-                {
-                    { "id", id },
-                    {"code", args.Code},
-                    { "message", args.Reason },
-                });
+                    SendEvent("websocketFailed", new JObject
+                    {
+                        { "id", id },
+                        {"code", args.Code},
+                        { "message", args.Reason },
+                    });
+                }
             }
         }
 
         private void OnError(int id, WebSocketSharp.ErrorEventArgs args)
         {
-            if (_webSocketConnections.ContainsKey(id))
+            lock (this.locker)
             {
-                _webSocketConnections.Remove(id);
+                if (_webSocketConnections.ContainsKey(id))
+                {
+                    _webSocketConnections.Remove(id);
+                }
             }
 
             SendEvent("websocketFailed", new JObject
@@ -184,7 +201,40 @@ namespace ReactNative.Modules.WebSocket
 
         private void SendMessageInBackground(int id, string message)
         {
-            _webSocketConnections[id].SendAsync(message, null);
+            WebSocketSharp.WebSocket webSocket;
+
+            lock (this.locker)
+            {
+                if (!_webSocketConnections.TryGetValue(id, out webSocket))
+                {
+                    SendEvent("websocketFailed", new JObject
+                    {
+                        { "id", id },
+                        { "message", $"Unknown WebSocket id {id}." },
+                    });
+                }
+            }
+
+            webSocket?.SendAsync(message, null);
+        }
+
+        private void SendMessageInBackground(int id, byte[] message)
+        {
+            WebSocketSharp.WebSocket webSocket;
+
+            lock (this.locker)
+            {
+                if (!_webSocketConnections.TryGetValue(id, out webSocket))
+                {
+                    SendEvent("websocketFailed", new JObject
+                    {
+                        { "id", id },
+                        { "message", $"Unknown WebSocket id {id}." },
+                    });
+                }
+            }
+
+            webSocket?.SendAsync(message, null);
         }
 
         private void SendEvent(string eventName, JObject parameters)
