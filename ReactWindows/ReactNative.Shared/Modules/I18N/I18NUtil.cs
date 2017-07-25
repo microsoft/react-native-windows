@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
-using static System.FormattableString;
 #endif
 
 namespace ReactNative.Modules.I18N
@@ -116,7 +115,7 @@ namespace ReactNative.Modules.I18N
                 }
                 else
                 {
-                    throw new NotSupportedException(Invariant($"Configuration values of type '{typeof(T)}' are not supported."));
+                    throw new NotSupportedException($"Configuration values of type '{typeof(T)}' are not supported.");
                 }
             }
 

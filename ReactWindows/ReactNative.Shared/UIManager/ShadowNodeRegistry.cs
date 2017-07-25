@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
@@ -49,8 +48,7 @@ namespace ReactNative.UIManager
         {
             if (!_rootTags.ContainsKey(tag))
             {
-                throw new KeyNotFoundException(
-                    Invariant($"View with tag '{tag}' is not registered as a root view."));
+                throw new KeyNotFoundException($"View with tag '{tag}' is not registered as a root view.");
             }
 
             _tagsToCssNodes.Remove(tag);
@@ -78,8 +76,7 @@ namespace ReactNative.UIManager
             var isRoot = default(bool);
             if (_rootTags.TryGetValue(tag, out isRoot) && isRoot)
             {
-                throw new KeyNotFoundException(
-                    Invariant($"Trying to remove root node '{tag}' without using RemoveRootNode."));
+                throw new KeyNotFoundException($"Trying to remove root node '{tag}' without using RemoveRootNode.");
             }
 
             _tagsToCssNodes.Remove(tag);
@@ -98,8 +95,7 @@ namespace ReactNative.UIManager
                 return result;
             }
 
-            throw new KeyNotFoundException(
-                Invariant($"Shadow node for tag '{tag}' does not exist."));
+            throw new KeyNotFoundException($"Shadow node for tag '{tag}' does not exist.");
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using static System.FormattableString;
 
 namespace ReactNative.Animated
 {
@@ -40,8 +39,7 @@ namespace ReactNative.Animated
                 }
                 else
                 {
-                    throw new InvalidOperationException(
-                        Invariant($"Unsupported type of node used in property node: '{node.GetType()}'"));
+                    throw new InvalidOperationException($"Unsupported type of node used in property node: '{node.GetType()}'");
                 }
             }
         }

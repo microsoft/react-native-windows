@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using static System.FormattableString;
 
 namespace ReactNative.Reflection
 {
@@ -24,7 +23,7 @@ namespace ReactNative.Reflection
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),
-                    Invariant($"Invalid value '{value}' for type '{typeof(T)}'."));
+                    $"Invalid value '{value}' for type '{typeof(T)}'.");
             }
 
             return (T)result;

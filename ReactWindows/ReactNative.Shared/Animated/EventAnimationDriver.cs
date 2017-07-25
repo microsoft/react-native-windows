@@ -2,7 +2,6 @@
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-using static System.FormattableString;
 
 namespace ReactNative.Animated
 {
@@ -40,8 +39,7 @@ namespace ReactNative.Animated
 
         public override void receiveTouches(string eventName, JArray touches, JArray changedIndexes)
         {
-            throw new NotSupportedException(
-                Invariant($"Method '{nameof(receiveTouches)}' is not support by native animated events."));
+            throw new NotSupportedException($"Method '{nameof(receiveTouches)}' is not support by native animated events.");
         }
     }
 }
