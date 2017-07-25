@@ -20,7 +20,7 @@ namespace ReactNative.Tests.Modules.Core
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 ids.AddRange((IList<int>)args[0]);
                 waitHandle.Set();
             }));
@@ -45,7 +45,7 @@ namespace ReactNative.Tests.Modules.Core
             var countdown = new CountdownEvent(count);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 var currentIds = (IList<int>)args[0];
                 ids.AddRange(currentIds);
                 for (var i = 0; i < currentIds.Count; ++i)
@@ -76,7 +76,7 @@ namespace ReactNative.Tests.Modules.Core
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 ids.AddRange((IList<int>)args[0]);
                 waitHandle.Set();
             }));
@@ -101,7 +101,7 @@ namespace ReactNative.Tests.Modules.Core
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 ids.AddRange((IList<int>)args[0]);
                 waitHandle.Set();
             }));
@@ -129,7 +129,7 @@ namespace ReactNative.Tests.Modules.Core
             var countdown = new CountdownEvent(repeat);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 ids.AddRange((IList<int>)args[0]);
                 if (countdown.CurrentCount > 0)
                 {
@@ -168,7 +168,7 @@ namespace ReactNative.Tests.Modules.Core
             var countdown = new CountdownEvent(1);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 var firedTimers = (IList<int>)args[0];
                 ids.AddRange((IList<int>)args[0]);
                 countdown.Signal(firedTimers.Count);
@@ -255,7 +255,7 @@ namespace ReactNative.Tests.Modules.Core
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 ids.AddRange((IList<int>)args[0]);
                 waitHandle.Set();
             }));
@@ -279,7 +279,7 @@ namespace ReactNative.Tests.Modules.Core
             var countdown = new CountdownEvent(60);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 ids.AddRange((IList<int>)args[0]);
                 countdown.Signal();
             }));
@@ -303,7 +303,7 @@ namespace ReactNative.Tests.Modules.Core
             var countdown = new CountdownEvent(1);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
             {
-                Assert.AreEqual(name, nameof(JSTimersExecution.callTimers));
+                Assert.AreEqual(name, nameof(JSTimers.callTimers));
                 ids.AddRange((IList<int>)args[0]);
                 countdown.Signal();
             }));
@@ -326,7 +326,7 @@ namespace ReactNative.Tests.Modules.Core
         private static ReactContext CreateReactContext(IInvocationHandler handler)
         {
             var context = new ReactContext();
-            var jsTimers = new JSTimersExecution
+            var jsTimers = new JSTimers
             {
                 InvocationHandler = handler,
             };
@@ -340,7 +340,7 @@ namespace ReactNative.Tests.Modules.Core
         {
             private readonly object _jsTimers;
 
-            public TestReactInstance(JSTimersExecution jsTimers)
+            public TestReactInstance(JSTimers jsTimers)
                 : base()
             {
                 _jsTimers = jsTimers;
@@ -348,7 +348,7 @@ namespace ReactNative.Tests.Modules.Core
 
             public override T GetJavaScriptModule<T>()
             {
-                if (typeof(JSTimersExecution) == typeof(T))
+                if (typeof(JSTimers) == typeof(T))
                 {
                     return (T)_jsTimers;
                 }
