@@ -269,11 +269,14 @@ namespace ReactNative.UIManager
             if (IsSimpleTranslationOnly(projectionMatrix))
             {
                 ResetProjectionMatrix(view);
-                var transform = EnsureMatrixTransform(view);
+                // We need to use a new instance of MatrixTransform because matrix
+                // updates to an existing MatrixTransform don't seem to take effect.
+                var transform = new MatrixTransform();
                 var matrix = transform.Matrix;
                 matrix.OffsetX = projectionMatrix.OffsetX;
                 matrix.OffsetY = projectionMatrix.OffsetY;
                 transform.Matrix = matrix;
+                view.RenderTransform = transform;
             }
             else
             {
@@ -313,24 +316,6 @@ namespace ReactNative.UIManager
             }
 
             view.RenderTransform = null;
-        }
-
-        private static MatrixTransform EnsureMatrixTransform(FrameworkElement view)
-        {
-            var transform = view.RenderTransform;
-            var matrixTransform = transform as MatrixTransform;
-            if (transform != null && matrixTransform == null)
-            {
-                throw new InvalidOperationException("Unknown transform set on framework element.");
-            }
-
-            if (matrixTransform == null)
-            {
-                matrixTransform = new MatrixTransform();
-                view.RenderTransform = matrixTransform;
-            }
-
-            return matrixTransform;
         }
 
         private static Matrix3DProjection EnsureProjection(FrameworkElement view)
