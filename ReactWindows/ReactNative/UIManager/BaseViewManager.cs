@@ -4,6 +4,7 @@ using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -111,21 +112,20 @@ namespace ReactNative.UIManager
         /// <param name="view">The view instance.</param>
         /// <param name="manipulationModes">The manipulation modes.</param>
         [ReactProp("manipulationModes")]
-        public void SetManipulationMode(TFrameworkElement view, JArray manipulationModes)
+        public void SetManipulationModes(TFrameworkElement view, JArray manipulationModes)
         {
-            if (manipulationModes == null || manipulationModes.Count == 0)
+            if (manipulationModes == null)
             {
                 view.ManipulationMode = ManipulationModes.System;
+                return;
             }
 
             var manipulationMode = ManipulationModes.System;
             foreach (var modeString in manipulationModes)
             {
-                if (modeString.Type == JTokenType.String)
-                {
-                    var mode = EnumHelpers.Parse<ManipulationModes>(modeString.Value<string>());
-                    manipulationMode |= mode;
-                }
+                Debug.Assert(modeString.Type == JTokenType.String);
+                var mode = EnumHelpers.Parse<ManipulationModes>(modeString.Value<string>());
+                manipulationMode |= mode;
             }
 
             view.ManipulationMode = manipulationMode;
