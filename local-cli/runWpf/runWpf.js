@@ -29,7 +29,7 @@ function runWpf(config, args, options) {
   const buildType = options.release ? 'Release' : 'Debug';
 
   try {
-    build.buildSolution(slnFile, buildType, options.arch);
+    build.buildSolution(slnFile, buildType, options.arch, options.verbose);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
@@ -80,5 +80,9 @@ module.exports = {
     command: '--arch [string]',
     description: 'The build architecture (ARM, x86, x64)',
     default: 'x86',
+  }, {
+    command: '--verbose',
+    description: 'Enables logging',
+    default: false,
   }]
 };
