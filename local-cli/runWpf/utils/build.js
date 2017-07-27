@@ -9,7 +9,7 @@ const shell = require('shelljs');
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
 
-function buildSolution(slnFile, buildType, buildArch) {
+function buildSolution(slnFile, buildType, buildArch, verbose) {
   const minVersion = new Version(8, 1, 0, 0);
   const allVersions = MSBuildTools.getAllAvailableVersions();
   if (!allVersions.some(v => v.gte(minVersion))) {
@@ -18,13 +18,15 @@ function buildSolution(slnFile, buildType, buildArch) {
 
   console.log(chalk.green(`Building ${slnFile}`));
   const msBuildTools = MSBuildTools.findAvailableVersion();
-  msBuildTools.buildProject(slnFile, buildType, buildArch, null);
+  msBuildTools.buildProject(slnFile, buildType, buildArch, null, verbose);
 }
 
 function restoreNuGetPackages(options, slnFile) {
   console.log(chalk.green('Restoring NuGet packages'));
   const nugetPath = options.nugetPath || path.join(options.root, 'node_modules/react-native-windows/local-cli/runWpf/.nuget/nuget.exe');
-  const results = execSync(`"${nugetPath}" restore "${slnFile}" -NonInteractive`).toString().split(EOL);
+  const verboseOption = options.verbose ? 'normal' : 'quiet';
+  // Always inherit from stdio as we're controlling verbosity output above.
+  const results = execSync(`"${nugetPath}" restore "${slnFile}" -NonInteractive -Verbosity ${verboseOption}`, { stdio: 'inherit' }).toString().split(EOL);
   results.forEach(result => console.log(chalk.white(result)));
 }
 

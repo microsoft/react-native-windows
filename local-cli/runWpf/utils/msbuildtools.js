@@ -22,13 +22,14 @@ class MSBuildTools {
     results.forEach(result => console.log(chalk.white(result)));
   }
 
-  buildProject(slnFile, buildType, buildArch, config) {
+  buildProject(slnFile, buildType, buildArch, config, verbose) {
     console.log(chalk.green(`Building Solution: ${slnFile}`));
     console.log(chalk.green(`Build configuration: ${buildType}`));
     console.log(chalk.green(`Build platform: ${buildArch}`));
 
+    const verbosityOption = verbose ? 'normal' : 'quiet';
     const args = [
-      '/clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal',
+      `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
@@ -49,7 +50,8 @@ class MSBuildTools {
     }
 
     const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + ['"' + slnFile + '"'].concat(args).join(' ');
-    const results = child_process.execSync(cmd).toString().split(EOL);
+    const execOptions = verbose ? { stdio: 'inherit' }: {};
+    const results = child_process.execSync(cmd, execOptions).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
 }

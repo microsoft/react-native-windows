@@ -28,6 +28,12 @@ module.exports = yeoman.Base.extend({
       type: String,
       defaults: this.name
     });
+
+    this.option('verbose', {
+      desc: 'Enables logging',
+      type: Boolean,
+      defaults: false
+    });
   },
 
   configuring: function () {
@@ -57,7 +63,7 @@ module.exports = yeoman.Base.extend({
         `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join('windows', this.name, this.name)}_TemporaryKey.pfx -Password $pwd`,
         `$cert.Thumbprint`
       ];
-      const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
+      const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')], this.options.verbose ? { stdio: 'inherit' }: {});
 
       if (certGenProcess.status === 0) {
         const certGenProcessOutput = certGenProcess.stdout.toString().trim().split('\n');
@@ -129,8 +135,9 @@ module.exports = yeoman.Base.extend({
       return;
     }
 
+    const spawnOptions = this.options.verbose ? { stdio: 'inherit' } : {};
     console.log(`Installing react-native@${reactNativeVersion}...`);
-    this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true });
+    this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true }, null, spawnOptions);
 
     const reactVersion = peerDependencies.react;
     if (!reactVersion) {
@@ -138,7 +145,7 @@ module.exports = yeoman.Base.extend({
     }
 
     console.log(`Installing react@${reactVersion}...`);
-    this.npmInstall(`react@${reactVersion}`, { '--save': true });
+    this.npmInstall(`react@${reactVersion}`, { '--save': true }, null, spawnOptions);
   },
 
   end: function () {
