@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static System.FormattableString;
 #if WINDOWS_UWP
-using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
 #else
 using System.Windows.Threading;
 #endif
@@ -127,7 +127,9 @@ namespace ReactNative.Bridge.Queue
             switch (spec.Kind)
             {
                 case MessageQueueThreadKind.DispatcherThread:
-                    return new DispatcherMessageQueueThread(spec.Name, handler);
+                case MessageQueueThreadKind.LayoutThread:
+                    var isSecondary = spec.Kind == MessageQueueThreadKind.LayoutThread;
+                    return new DispatcherMessageQueueThread(spec.Name, handler, isSecondary);
                 case MessageQueueThreadKind.BackgroundSingleThread:
                     return new SingleBackgroundMessageQueueThread(spec.Name, handler);
                 case MessageQueueThreadKind.BackgroundAnyThread:
@@ -140,25 +142,59 @@ namespace ReactNative.Bridge.Queue
 
         class DispatcherMessageQueueThread : MessageQueueThread
         {
+#if WINDOWS_UWP && CREATE_LAYOUT_THREAD
+            private static readonly CoreApplicationView s_layoutApplicationView = CoreApplication.CreateNewView();
+#endif
             private static readonly IObserver<Action> s_nop = Observer.Create<Action>(_ => { });
 
+            private readonly bool _isSecondary;
             private readonly Subject<Action> _actionSubject;
             private readonly IDisposable _subscription;
+
+#if WINDOWS_UWP
+            private readonly CoreApplicationView _currentApplicationView;
+#else
+            private readonly DispatcherManager _layoutDispatcherManager;
+            private readonly Thread _currentDispatcherThread;
+#endif
 
             private IObserver<Action> _actionObserver;
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-            public DispatcherMessageQueueThread(string name, Action<Exception> handler)
+            public DispatcherMessageQueueThread(string name, Action<Exception> handler, bool isSecondary)
                 : base(name)
             {
+                _isSecondary = isSecondary;
                 _actionSubject = new Subject<Action>();
                 _actionObserver = _actionSubject;
-                _subscription = _actionSubject
+
 #if WINDOWS_UWP
-                    .ObserveOnDispatcher()
+#if CREATE_LAYOUT_THREAD                
+                _currentApplicationView = isSecondary
+                    ? s_layoutApplicationView
+                    : CoreApplication.GetCurrentView();
 #else
-                    .ObserveOn(Dispatcher.CurrentDispatcher)
+                // For DEBUG builds, we use the main UI dispatcher fors both
+                // layout and dispatcher queue threads because of a limitation
+                // with the native debugging capabilities.
+                _currentApplicationView = CoreApplication.GetCurrentView();
 #endif
+                var dispatcher = _currentApplicationView.Dispatcher;
+#else
+                if (_isSecondary)
+                {
+                    _layoutDispatcherManager = new DispatcherManager();
+                }
+
+                var dispatcher = isSecondary
+                    ? _layoutDispatcherManager.DispatcherInstance
+                    : Dispatcher.CurrentDispatcher;
+
+                _currentDispatcherThread = dispatcher.Thread;
+#endif
+
+                _subscription = _actionSubject
+                    .ObserveOn(dispatcher)
                     .Subscribe(action =>
                     {
                         try
@@ -180,9 +216,9 @@ namespace ReactNative.Bridge.Queue
             protected override bool IsOnThreadCore()
             {
 #if WINDOWS_UWP
-                return CoreWindow.GetForCurrentThread().Dispatcher != null;
+                return GetApplicationView() == _currentApplicationView;
 #else
-                return Thread.CurrentThread == Dispatcher.CurrentDispatcher.Thread;
+                return Thread.CurrentThread == _currentDispatcherThread;
 #endif
             }
 
@@ -192,7 +228,69 @@ namespace ReactNative.Bridge.Queue
                 Interlocked.Exchange(ref _actionObserver, s_nop);
                 _actionSubject.Dispose();
                 _subscription.Dispose();
+#if !WINDOWS_UWP
+                if (_isSecondary)
+                {
+                    _layoutDispatcherManager.Dispose();
+                }
+#endif
             }
+
+#if WINDOWS_UWP
+            private CoreApplicationView GetApplicationView()
+            {
+#if CREATE_LAYOUT_THREAD
+                if (_isSecondary && s_layoutApplicationView.Dispatcher.HasThreadAccess)
+                {
+                    return s_layoutApplicationView;
+                }
+                else if (!_isSecondary)
+                {
+                    return CoreApplication.GetCurrentView();
+                }
+
+                return null;
+#else
+                return CoreApplication.GetCurrentView();
+#endif
+            }
+#endif
+
+#if !WINDOWS_UWP
+            class DispatcherManager : IDisposable
+            {
+                public DispatcherManager()
+                {
+                    var ready = new ManualResetEvent(false);
+                    ThreadInstance = new Thread(new ThreadStart(() => {
+                        DispatcherInstance = Dispatcher.CurrentDispatcher;
+                        ready.Set();
+                        Dispatcher.Run();
+                    }));
+
+                    ThreadInstance.SetApartmentState(ApartmentState.STA);
+                    ThreadInstance.Start();
+                    ready.WaitOne();
+                }
+
+                public Dispatcher DispatcherInstance
+                {
+                    get;
+                    private set;
+                }
+
+                public Thread ThreadInstance
+                {
+                    get;
+                }
+
+                public void Dispose()
+                {
+                    DispatcherInstance.InvokeShutdown();
+                    ThreadInstance.Join();
+                }
+            }
+#endif
         }
 
         class SingleBackgroundMessageQueueThread : MessageQueueThread
