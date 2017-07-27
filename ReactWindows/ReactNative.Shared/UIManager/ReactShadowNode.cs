@@ -204,7 +204,7 @@ namespace ReactNative.UIManager
         {
             set
             {
-                _yogaNode.StyleAspectRatio = value;
+                _yogaNode.AspectRatio = value;
             }
         }
 
