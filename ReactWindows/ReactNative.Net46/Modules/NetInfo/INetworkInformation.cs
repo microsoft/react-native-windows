@@ -1,4 +1,5 @@
-﻿using System.Net.NetworkInformation;
+﻿using NETWORKLIST;
+using System;
 
 namespace ReactNative.Modules.NetInfo
 {
@@ -8,10 +9,9 @@ namespace ReactNative.Modules.NetInfo
     public interface INetworkInformation
     {
         /// <summary>
-        /// An event that occurs whenever the network status changes.
+        /// An event that occurs whenever the network connectivity changes.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly", Justification = "API matches Windows.Networking.Connectivity.NetworkingInformation.")]
-        event NetworkAvailabilityChangedEventHandler NetworkAvailabilityChanged;
+        event EventHandler<NetworkConnectivityChangedEventArgs> NetworkConnectivityChanged;
 
         /// <summary>
         /// Gets the internet status
@@ -30,5 +30,11 @@ namespace ReactNative.Modules.NetInfo
         /// Stops observing network status changes.
         /// </summary>
         void Stop();
+    }
+
+    public class NetworkConnectivityChangedEventArgs : EventArgs
+    {
+        public bool IsAvailable { get; set; }
+        public string ConnectionStatus { get; set; }
     }
 }

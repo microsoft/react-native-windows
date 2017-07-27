@@ -136,6 +136,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\YogaNodePool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Image\ReactImageLoadEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventTypeExtensions.cs" />

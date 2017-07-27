@@ -7,7 +7,6 @@
     "OpenCover": "4.6.519",
     "PCLStorage": "1.0.2",
     "System.Reactive": "3.1.1",
-    "WinRTXamlToolkit": "2.2.0"
   },
   "frameworks": {
     "uap10.0": {}

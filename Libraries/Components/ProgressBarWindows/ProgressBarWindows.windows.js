@@ -6,14 +6,14 @@
  */
 'use strict';
 
+var PropTypes = require('prop-types');
 var React = require('React');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
-var View = require('View');
+var ViewPropTypes = require('ViewPropTypes');
+
 var ColorPropType = require('ColorPropType');
 
 var requireNativeComponent = require('requireNativeComponent');
-
-var ReactPropTypes = React.PropTypes;
 
 /**
  * React component that wraps the Windows-only `ProgressBar`. This component is used to indicate
@@ -21,16 +21,16 @@ var ReactPropTypes = React.PropTypes;
  */
 var ProgressBarWindows = React.createClass({
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     
     /**
      * If the progress bar will show indeterminate progress.
      */
-    indeterminate: ReactPropTypes.bool,
+    indeterminate: PropTypes.bool,
     /**
      * The progress value (between 0 and 100).
      */
-    progress: ReactPropTypes.number,
+    progress: PropTypes.number,
     /**
      * Color of the progress bar.
      */

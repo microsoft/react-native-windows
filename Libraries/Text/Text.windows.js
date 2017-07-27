@@ -14,6 +14,7 @@
 const EdgeInsetsPropType = require('EdgeInsetsPropType');
 const NativeMethodsMixin = require('NativeMethodsMixin');
 const Platform = require('Platform');
+const PropTypes = require('prop-types');
 const React = require('React');
 const ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 const StyleSheetPropType = require('StyleSheetPropType');
@@ -75,27 +76,27 @@ const Text = React.createClass({
      * Line Break mode. Works only with numberOfLines.
      * clip is working only for iOS
      */
-    lineBreakMode: React.PropTypes.oneOf(['head', 'middle', 'tail', 'clip']),
+    lineBreakMode: PropTypes.oneOf(['head', 'middle', 'tail', 'clip']),
     /**
      * Used to truncate the text with an ellipsis after computing the text
      * layout, including line wrapping, such that the total number of lines
      * does not exceed this number.
      */
-    numberOfLines: React.PropTypes.number,
+    numberOfLines: PropTypes.number,
     /**
      * Invoked on mount and layout changes with
      *
      *   `{nativeEvent: {layout: {x, y, width, height}}}`
      */
-    onLayout: React.PropTypes.func,
+    onLayout: PropTypes.func,
     /**
      * This function is called on press.
      */
-    onPress: React.PropTypes.func,
+    onPress: PropTypes.func,
     /**
      * This function is called on long press.
      */
-    onLongPress: React.PropTypes.func,
+    onLongPress: PropTypes.func,
       /**
        * When the scroll view is disabled, this defines how far your touch may
        * move off of the button, before deactivating the button. Once deactivated,
@@ -110,23 +111,23 @@ const Text = React.createClass({
      * @platform android
      * @platform windows
      */
-    selectable: React.PropTypes.bool,
+    selectable: PropTypes.bool,
     /**
      * When true, no visual change is made when text is pressed down. By
      * default, a gray oval highlights the text on press down.
      * @platform ios
      */
-    suppressHighlighting: React.PropTypes.bool,
+    suppressHighlighting: PropTypes.bool,
     style: stylePropType,
     /**
      * Used to locate this view in end-to-end tests.
      */
-    testID: React.PropTypes.string,
+    testID: PropTypes.string,
     /**
      * Specifies should fonts scale to respect Text Size accessibility setting on iOS.
      * @platform ios
      */
-    allowFontScaling: React.PropTypes.bool,
+    allowFontScaling: PropTypes.bool,
   },
   getDefaultProps(): Object {
     return {
@@ -146,10 +147,10 @@ const Text = React.createClass({
     return {isInAParentText: true};
   },
   childContextTypes: {
-    isInAParentText: React.PropTypes.bool
+    isInAParentText: PropTypes.bool
   },
   contextTypes: {
-    isInAParentText: React.PropTypes.bool
+    isInAParentText: PropTypes.bool
   },
   /**
    * Only assigned if touch is needed.

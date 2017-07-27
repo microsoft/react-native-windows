@@ -6,14 +6,13 @@
  */
 'use strict';
 
+var PropTypes = require('prop-types');
 var React = require('React');
 var ReactNative = require('ReactNative');
 var UIManager = require('UIManager');
-var View = require('View');
+var ViewPropTypes = require('ViewPropTypes');
 
 var requireNativeComponent = require('requireNativeComponent');
-
-var ReactPropTypes = React.PropTypes;
 
 var FLIPVIEW_REF = 'flipView';
 
@@ -61,17 +60,17 @@ type Event = Object;
 var FlipViewWindows = React.createClass({
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Index of initial page that should be selected. Use `setPage` method to
      * update the page, and `onSelectionChange` to monitor page changes
      */
-    initialPage: ReactPropTypes.number,
+    initialPage: PropTypes.number,
 
     /**
      * Indicates whether `setPage` calls should be animated.
      */
-    alwaysAnimate: ReactPropTypes.bool,
+    alwaysAnimate: PropTypes.bool,
     
     /**
      * This callback when FlipView selection is changed (when user swipes between
@@ -79,7 +78,7 @@ var FlipViewWindows = React.createClass({
      * following fields:
      *  - position - index of page that has been selected
      */
-    onSelectionChange: ReactPropTypes.func,
+    onSelectionChange: PropTypes.func,
   },
 
   componentDidMount: function() {
