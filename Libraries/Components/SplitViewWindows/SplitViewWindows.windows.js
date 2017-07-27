@@ -18,6 +18,7 @@ var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
 
 var View = require('View');
+var ViewPropTypes = require('ViewPropTypes');
 
 var SplitViewConsts = UIManager.WindowsSplitView.Constants;
 var dismissKeyboard = require('dismissKeyboard');
@@ -69,7 +70,7 @@ var SplitViewWindows = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Determines whether the keyboard gets dismissed in response to a drag.
      *   - 'none' (the default), drags do not dismiss the keyboard.

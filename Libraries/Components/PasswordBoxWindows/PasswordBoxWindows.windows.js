@@ -23,7 +23,7 @@ var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 
-var View = require('View');
+var ViewPropTypes = require('ViewPropTypes');
 
 var requireNativeComponent = require('requireNativeComponent');
 
@@ -56,7 +56,7 @@ var PasswordBoxWindows = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * If false, disables auto-correct. The default value is true.
      */

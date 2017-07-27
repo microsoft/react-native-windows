@@ -24,7 +24,7 @@ var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
-var View = require('View');
+var ViewPropTypes = require('ViewPropTypes');
 
 var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
 var emptyFunction = require('fbjs/lib/emptyFunction');
@@ -94,7 +94,7 @@ var TextInput = React.createClass({
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Can tell TextInput to automatically capitalize certain characters.
      *
