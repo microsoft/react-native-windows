@@ -2,9 +2,11 @@
 using System.Reactive;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 #else
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 #endif
 
@@ -40,9 +42,6 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="dimensions">The view dimensions.</param>
         protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
         {
-            var fromValue = IsReverse ? 1.0 : 0.0;
-            var toValue = IsReverse ? 0.0 : 1.0;
-
             var animatedProperty = AnimatedProperty;
             if (animatedProperty.HasValue)
             {
@@ -51,13 +50,33 @@ namespace ReactNative.UIManager.LayoutAnimation
                 switch (animatedProperty.Value)
                 {
                     case AnimatedPropertyType.Opacity:
-                        view.Opacity = fromValue;
-                        storyboard.Children.Add(CreateOpacityAnimation(view, fromValue, toValue));
-                        @finally = () => view.Opacity = toValue;
+                        var opacity = view.Opacity;
+                        var fromOpacity = IsReverse ? opacity : 0.0;
+                        var toOpacity = IsReverse ? 0.0 : opacity;
+                        view.Opacity = fromOpacity;
+                        storyboard.Children.Add(CreateDoubleAnimation(view, "Opacity", fromOpacity, toOpacity));
+                        @finally = () => view.Opacity = toOpacity;
                         break;
                     case AnimatedPropertyType.ScaleXY:
-                        // TODO: implement this layout animation option
-                        throw new NotImplementedException();
+                        var fromScale = IsReverse ? 1.0 : 0.0;
+                        var toScale = IsReverse ? 0.0 : 1.0;
+                        var scaleTransform = new ScaleTransform
+                        {
+                            CenterX = dimensions.X + dimensions.Width / 2,
+                            CenterY = dimensions.Y + dimensions.Height / 2,
+                            ScaleX = fromScale,
+                            ScaleY = fromScale,
+                        };
+
+                        var originalTransform = view.RenderTransform;
+                        var transformGroup = new TransformGroup();
+                        transformGroup.Children.Add(originalTransform);
+                        transformGroup.Children.Add(scaleTransform);
+                        view.RenderTransform = transformGroup;
+                        storyboard.Children.Add(CreateDoubleAnimation(scaleTransform, "ScaleX", fromScale, toScale));
+                        storyboard.Children.Add(CreateDoubleAnimation(scaleTransform, "ScaleY", fromScale, toScale));
+                        @finally = () => view.RenderTransform = originalTransform;
+                        break;
                     default:
                         throw new InvalidOperationException(
                             "Missing animation for property: " + animatedProperty.Value);
@@ -70,7 +89,7 @@ namespace ReactNative.UIManager.LayoutAnimation
                 "Missing animated property from the animation configuration.");
         }
 
-        private Timeline CreateOpacityAnimation(FrameworkElement view, double from, double to)
+        private Timeline CreateDoubleAnimation(DependencyObject target, string path, double from, double to)
         {
             var timeline = new DoubleAnimation
             {
@@ -81,11 +100,11 @@ namespace ReactNative.UIManager.LayoutAnimation
                 BeginTime = Delay,
             };
 
-            Storyboard.SetTarget(timeline, view);
+            Storyboard.SetTarget(timeline, target);
 #if WINDOWS_UWP
-            Storyboard.SetTargetProperty(timeline, "Opacity");
+            Storyboard.SetTargetProperty(timeline, path);
 #else
-            Storyboard.SetTargetProperty(timeline, new PropertyPath("Opacity"));
+            Storyboard.SetTargetProperty(timeline, new PropertyPath(path));
 #endif
 
             return timeline;
