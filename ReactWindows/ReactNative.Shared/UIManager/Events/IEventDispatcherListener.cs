@@ -11,10 +11,6 @@
         /// dispatched from.
         /// </summary>
         /// <param name="event">Event that was dispatched.</param>
-        /// <returns>
-        /// If the event was handled. If true the event won't be sent to 
-        /// JavaScript.
-        /// </returns>
-        bool OnEventDispatch(Event @event);
+        void OnEventDispatch(Event @event);
     }
 }

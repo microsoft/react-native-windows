@@ -327,12 +327,12 @@ namespace ReactNative.Animated
             }
         }
 
-        public bool OnEventDispatch(Event @event)
+        public void OnEventDispatch(Event @event)
         {
             // Only support events dispatched from the dispatcher thread.
             if (!DispatcherHelpers.IsOnDispatcher())
             {
-                return false;
+                return;
             }
 
             if (_eventDrivers.Count > 0)
@@ -355,11 +355,8 @@ namespace ReactNative.Animated
 
                     UpdateNodes(_runUpdateNodeList);
                     _runUpdateNodeList.Clear();
-                    return true;
                 }
             }
-
-            return false;
         }
 
         /// <summary>
