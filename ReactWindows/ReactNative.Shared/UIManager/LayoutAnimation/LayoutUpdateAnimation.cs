@@ -34,18 +34,16 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// based on the animation configuration supplied at initialization
         /// time and the new view position and size.
         /// </summary>
+        /// <param name="viewManager">The view manager for the view.</param>
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
-        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
+        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
         {
-            var currentX = Canvas.GetLeft(view);
-            var currentY = Canvas.GetTop(view);
-            var currentWidth = view.Width;
-            var currentHeight = view.Height;
+            var currentDimensions = viewManager.GetDimensions(view);
 
-            var animateLocation = dimensions.X != currentX || dimensions.Y != currentY;
-            var animateSize = dimensions.Width != currentWidth || dimensions.Height != currentHeight;
+            var animateLocation = dimensions.X != currentDimensions.X || dimensions.Y != currentDimensions.Y;
+            var animateSize = dimensions.Width != currentDimensions.Width || dimensions.Height != currentDimensions.Height;
 
             if (!animateLocation && !animateSize)
             {
@@ -53,30 +51,30 @@ namespace ReactNative.UIManager.LayoutAnimation
             }
 
             var storyboard = new Storyboard();
-            if (currentX != dimensions.X)
+            if (currentDimensions.X != dimensions.X)
             {
                 storyboard.Children.Add(
-                    CreateTimeline(view, "(Canvas.Left)", currentX, dimensions.X));
+                    CreateTimeline(view, "(Canvas.Left)", currentDimensions.X, dimensions.X));
             }
 
-            if (currentY != dimensions.Y)
+            if (currentDimensions.Y != dimensions.Y)
             {
                 storyboard.Children.Add(
-                    CreateTimeline(view, "(Canvas.Top)", currentY, dimensions.Y));
+                    CreateTimeline(view, "(Canvas.Top)", currentDimensions.Y, dimensions.Y));
             }
 
-            if (currentWidth != dimensions.Width)
+            if (currentDimensions.Width != dimensions.Width)
             {
-                var timeline = CreateTimeline(view, "Width", currentWidth, dimensions.Width);
+                var timeline = CreateTimeline(view, "Width", currentDimensions.Width, dimensions.Width);
 #if WINDOWS_UWP
                 timeline.EnableDependentAnimation = true;
 #endif
                 storyboard.Children.Add(timeline);
             }
 
-            if (currentHeight != dimensions.Height)
+            if (currentDimensions.Height != dimensions.Height)
             {
-                var timeline = CreateTimeline(view, "Height", currentHeight, dimensions.Height);
+                var timeline = CreateTimeline(view, "Height", currentDimensions.Height, dimensions.Height);
 #if WINDOWS_UWP
                 timeline.EnableDependentAnimation = true;
 #endif
@@ -85,10 +83,7 @@ namespace ReactNative.UIManager.LayoutAnimation
 
             return new StoryboardObservable(storyboard, () =>
             {
-                Canvas.SetLeft(view, dimensions.X);
-                Canvas.SetTop(view, dimensions.Y);
-                view.Width = dimensions.Width;
-                view.Height = dimensions.Height;
+                viewManager.SetDimensions(view, dimensions);
             });
         }
 

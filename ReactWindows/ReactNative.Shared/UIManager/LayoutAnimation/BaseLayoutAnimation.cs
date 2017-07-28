@@ -38,9 +38,10 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// based on the animation configuration supplied at initialization
         /// time and the new view position and size.
         /// </summary>
+        /// <param name="viewManager">The view manager for the view.</param>
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
-        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
+        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
         {
             var animatedProperty = AnimatedProperty;
             if (animatedProperty.HasValue)
