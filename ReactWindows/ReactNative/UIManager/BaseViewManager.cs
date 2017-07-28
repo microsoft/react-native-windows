@@ -83,9 +83,11 @@ namespace ReactNative.UIManager
                 dimensionBoundProperties.OverflowHidden = true;
                 var dimensions = GetDimensions(view);
                 SetOverflowHidden(view, dimensions);
+                view.SizeChanged += OnSizeChanged;
             }
             else
             {
+                view.SizeChanged -= OnSizeChanged;
                 var dimensionBoundProperties = GetDimensionBoundProperties(view);
                 if (dimensionBoundProperties != null && dimensionBoundProperties.OverflowHidden)
                 {
@@ -210,9 +212,15 @@ namespace ReactNative.UIManager
             if (overflowHidden)
             {
                 SetOverflowHidden(view, dimensions);
+                view.SizeChanged -= OnSizeChanged;
             }
 
             base.SetDimensions(view, dimensions);
+
+            if (overflowHidden)
+            {
+                view.SizeChanged += OnSizeChanged;
+            }
         }
 
         /// <summary>
@@ -232,6 +240,15 @@ namespace ReactNative.UIManager
         {
             view.PointerEntered += OnPointerEntered;
             view.PointerExited += OnPointerExited;
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            view.Clip = new RectangleGeometry
+            {
+                Rect = new Rect(0, 0, e.NewSize.Width, e.NewSize.Height),
+            };
         }
 
         private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
@@ -373,13 +390,7 @@ namespace ReactNative.UIManager
             {
                 element.Clip = new RectangleGeometry
                 {
-                    Rect = new Rect
-                    {
-                        X = 0,
-                        Y = 0,
-                        Width = dimensions.Width,
-                        Height = dimensions.Height,
-                    },
+                    Rect = new Rect(0, 0, dimensions.Width, dimensions.Height),
                 };
             }
         }
