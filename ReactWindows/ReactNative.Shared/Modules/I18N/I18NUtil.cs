@@ -19,6 +19,10 @@ namespace ReactNative.Modules.I18N
         private const string AllowRTL = "RCTI18nUtil_allowRTL";
         private const string ForceRTL = "RCTI18nUtil_forceRTL";
 
+        private static bool? _isRightToLeftAllowed;
+        private static bool? _isRightToLeftForced;
+        private static bool? _isDeviceLeftToRight;
+
 #if !WINDOWS_UWP
         private static IDictionary<string, object> _localSettings = new Dictionary<string, object>();
 #endif
@@ -43,19 +47,22 @@ namespace ReactNative.Modules.I18N
         {
             get
             {
+                if (!_isRightToLeftAllowed.HasValue)
+                {
+                    _isRightToLeftAllowed =
 #if WINDOWS_UWP
-                return (bool?)ApplicationData.Current.LocalSettings.Values[AllowRTL] ?? false;
+                        (bool?)ApplicationData.Current.LocalSettings.Values[AllowRTL] ?? false;
 #else
-                return GetSetting(AllowRTL, false);
+                        GetSetting(AllowRTL, false);
 #endif
+                }
+
+                return _isRightToLeftAllowed.Value;
             }
             set
             {
-#if WINDOWS_UWP
-                ApplicationData.Current.LocalSettings.Values[AllowRTL] = value;
-#else
+                _isRightToLeftAllowed = value;
                 SetSetting(AllowRTL, value);
-#endif
             }
         }
 
@@ -66,14 +73,21 @@ namespace ReactNative.Modules.I18N
         {
             get
             {
+                if (!_isRightToLeftForced.HasValue)
+                {
+                    _isRightToLeftForced =
 #if WINDOWS_UWP
-                return (bool?)ApplicationData.Current.LocalSettings.Values[ForceRTL] ?? false;
+                        (bool?)ApplicationData.Current.LocalSettings.Values[ForceRTL] ?? false;
 #else
-                return GetSetting(ForceRTL, false);
+                        GetSetting(ForceRTL, false);
 #endif
+                }
+
+                return _isRightToLeftForced.Value;
             }
             set
             {
+                _isRightToLeftForced = value;
                 SetSetting(ForceRTL, value);
             }
         }
@@ -82,30 +96,23 @@ namespace ReactNative.Modules.I18N
         {
             get
             {
+                if (!_isDeviceLeftToRight.HasValue)
+                {
+                    _isDeviceLeftToRight =
 #if WINDOWS_UWP
-                return ResourceContext.GetForCurrentView().QualifierValues["LayoutDirection"] == "RTL";
+                        ResourceContext.GetForCurrentView().QualifierValues["LayoutDirection"] == "RTL";
 #else
-                return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+                        CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
 #endif
+                }
+
+                return _isDeviceLeftToRight.Value;
             }
         }
 
-        //TODO: Git Issue #878
+#if !WINDOWS_UWP
         private static T GetSetting<T>(string key, T defaultValue)
         {
-#if WINDOWS_UWP
-            var values = ApplicationData.Current.LocalSettings.Values;
-            if (values.ContainsKey(key))
-            {
-                var data = values[key];
-                if (data is T)
-                {
-                    return (T)data;
-                }
-            }
-
-            return defaultValue;
-#else
             if (_localSettings.ContainsKey(key))
             {
                 var data = _localSettings[key];
@@ -121,8 +128,8 @@ namespace ReactNative.Modules.I18N
             }
 
             return defaultValue;
-#endif
         }
+#endif
 
         private static void SetSetting<T>(string key, T value)
         {
