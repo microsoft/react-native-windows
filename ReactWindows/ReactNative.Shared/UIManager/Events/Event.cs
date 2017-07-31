@@ -18,10 +18,24 @@ namespace ReactNative.UIManager.Events
         private TimeSpan _timestamp;
 
         /// <summary>
+        /// Base constructor for <see cref="Event"/> to support pooling.
+        /// </summary>
+        protected Event() { }
+
+        /// <summary>
         /// Base constructor for <see cref="Event"/>.
         /// </summary>
         /// <param name="viewTag">The view tag.</param>
-        /// <param name="timestamp">The event timestamp.</param>
+        protected Event(int viewTag)
+        {
+            Init(viewTag);
+        }
+
+        /// <summary>
+        /// Base constructor for <see cref="Event"/>.
+        /// </summary>
+        /// <param name="viewTag">The view tag.</param>
+        /// <param name="timestamp">The timestamp.</param>
         protected Event(int viewTag, TimeSpan timestamp)
         {
             Init(viewTag, timestamp);
@@ -122,6 +136,19 @@ namespace ReactNative.UIManager.Events
         {
             _initialized = false;
             OnDispose();
+        }
+
+        /// <summary>
+        /// Initializes the event.
+        /// </summary>
+        /// <param name="viewTag">The view tag.</param>
+        /// <remarks>
+        /// This method must be called before the event is sent to the event
+        /// dispatcher.
+        /// </remarks>
+        protected void Init(int viewTag)
+        {
+            Init(viewTag, TimeSpan.FromTicks(Environment.TickCount));
         }
 
         /// <summary>

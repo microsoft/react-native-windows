@@ -49,7 +49,7 @@ namespace ReactNative.Views.Image
         /// <param name="width">The image width.</param>
         /// <param name="height">The image height.</param>
         public ReactImageLoadEvent(int viewId, int eventType, string imageUri, int width, int height) 
-            : base(viewId, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewId)
         {
             _eventType = eventType;
             _imageUri = imageUri;

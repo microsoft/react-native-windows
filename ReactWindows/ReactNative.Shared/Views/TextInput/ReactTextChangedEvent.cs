@@ -24,7 +24,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="contentHeight">The content height.</param>
         /// <param name="eventCount">The event count.</param>
         public ReactTextChangedEvent(int viewTag, string text, double contentWidth, double contentHeight, int eventCount) 
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
             _text = text;
             _contextWidth = contentWidth;
