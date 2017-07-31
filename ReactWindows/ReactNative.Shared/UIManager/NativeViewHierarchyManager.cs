@@ -286,7 +286,8 @@ namespace ReactNative.UIManager
                     if (elementToDestroy != null &&
                         _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
                     {
-                        _layoutAnimator.DeleteView(viewManager, elementToDestroy, () =>
+                        var viewToDestroyManager = ResolveViewManager(tagToDelete);
+                        _layoutAnimator.DeleteView(viewToDestroyManager, elementToDestroy, () =>
                         {
                             if (viewParentManager.TryRemoveView(viewToManage, viewToDestroy))
                             {
