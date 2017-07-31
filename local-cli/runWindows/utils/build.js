@@ -26,8 +26,7 @@ function restoreNuGetPackages(options, slnFile, verbose) {
   const nugetPath = options.nugetPath || path.join(options.root, 'node_modules/react-native-windows/local-cli/runWindows/.nuget/nuget.exe');
   const verboseOption = verbose ? 'normal' : 'quiet';
   // Always inherit from stdio as we're controlling verbosity output above.
-  const results = execSync(`"${nugetPath}" restore "${slnFile}" -NonInteractive -Verbosity ${verboseOption}`, { stdio: 'inherit' }).toString().split(EOL);
-  results.forEach(result => console.log(chalk.white(result)));
+  execSync(`"${nugetPath}" restore "${slnFile}" -NonInteractive -Verbosity ${verboseOption}`, { stdio: 'inherit' });
 }
 
 function getSolutionFile(options) {
