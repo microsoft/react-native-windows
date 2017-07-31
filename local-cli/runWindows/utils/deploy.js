@@ -123,7 +123,7 @@ function startServerInNewWindow(options) {
 
 function launchServer(options) {
   console.log(chalk.green('Starting the React-Native Server'));
-  const launchPackagerScript = path.join('node_modules/react-native/packager/launchPackager.bat');
+  const launchPackagerScript = path.join('node_modules/react-native/scripts/launchPackager.bat');
   const opts = {
     cwd: options.root,
     detached: true,
