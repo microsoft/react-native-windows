@@ -51,8 +51,7 @@ class MSBuildTools {
 
     const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + ['"' + slnFile + '"'].concat(args).join(' ');
     // Always inherit from stdio as we're controlling verbosity output above.
-    const results = child_process.execSync(cmd, { stdio: 'inherit' }).toString().split(EOL);
-    results.forEach(result => console.log(chalk.white(result)));
+    child_process.execSync(cmd, { stdio: 'inherit' });
   }
 }
 
