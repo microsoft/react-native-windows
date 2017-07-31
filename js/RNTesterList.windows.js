@@ -47,7 +47,7 @@ var ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'ListViewExample',
-    module: require('./ListViewWindowsExample'),
+    module: require('./ListViewExample'),
   },
   {
     key: 'ListViewGridLayoutExample',
@@ -76,6 +76,10 @@ var ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'StatusBarExample',
     module: require('./StatusBarExample'),
+  },
+  {
+    key: 'SwipeableListViewExample',
+    module: require('./SwipeableListViewExample')
   },
   {
     key: 'SwitchExample',
