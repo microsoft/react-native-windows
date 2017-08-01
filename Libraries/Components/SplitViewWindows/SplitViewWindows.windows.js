@@ -13,6 +13,7 @@
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var PropTypes = require('prop-types');
 var React = require('React');
+var createReactClass = require('create-react-class');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
@@ -64,7 +65,9 @@ var SplitViewValidAttributes = {
  * },
  * ```
  */
-var SplitViewWindows = React.createClass({
+var SplitViewWindows = createReactClass({
+  displayName: 'SplitViewWindows',
+
   statics: {
     positions: SplitViewConsts.PanePositions,
   },

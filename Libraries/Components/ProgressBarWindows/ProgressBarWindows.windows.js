@@ -19,34 +19,38 @@ var requireNativeComponent = require('requireNativeComponent');
  * React component that wraps the Windows-only `ProgressBar`. This component is used to indicate
  * that the app is loading or there is some activity in the app.
  */
-var ProgressBarWindows = React.createClass({
-  propTypes: {
-    ...ViewPropTypes,
-    
-    /**
-     * If the progress bar will show indeterminate progress.
-     */
-    indeterminate: PropTypes.bool,
-    /**
-     * The progress value (between 0 and 100).
-     */
-    progress: PropTypes.number,
-    /**
-     * Color of the progress bar.
-     */
-    color: ColorPropType,
-  },
-  
-  getDefaultProps: function() {
-    return {
-      indeterminate: true
-    };
-  },
-  
-  render: function() {
-    return <WindowsProgressBar {...this.props}/> ;
-  },
-});
+class ProgressBarWindows extends React.Component {
+ props: {
+  indeterminate?: boolean,
+  progress?: number,
+  color?: $FlowFixMe,
+ };
+
+ static propTypes = {
+   ...ViewPropTypes,
+   
+   /**
+    * If the progress bar will show indeterminate progress.
+    */
+   indeterminate: PropTypes.bool,
+   /**
+    * The progress value (between 0 and 100).
+    */
+   progress: PropTypes.number,
+   /**
+    * Color of the progress bar.
+    */
+   color: ColorPropType,
+ };
+
+ static defaultProps = {
+   indeterminate: true
+ };
+
+ render() {
+   return <WindowsProgressBar {...this.props}/> ;
+ }
+}
 
 var WindowsProgressBar = requireNativeComponent('WindowsProgressBar', ProgressBarWindows);
 

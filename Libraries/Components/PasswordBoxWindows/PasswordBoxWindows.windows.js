@@ -16,6 +16,7 @@ var EventEmitter = require('EventEmitter');
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var PropTypes = require('prop-types');
 var React = require('React');
+var createReactClass = require('create-react-class');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
@@ -49,7 +50,9 @@ type Event = Object;
  *   />
  * ```
  */
-var PasswordBoxWindows = React.createClass({
+var PasswordBoxWindows = createReactClass({
+  displayName: 'PasswordBoxWindows',
+
   statics: {
     /* TODO(brentvatne) docs are needed for this */
     State: TextInputState,
@@ -387,7 +390,6 @@ var PasswordBoxWindows = React.createClass({
       </TouchableWithoutFeedback>
     );
   },
-
 
   _onFocus: function(event: Event) {
     if (this.props.onFocus) {
