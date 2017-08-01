@@ -315,11 +315,9 @@ namespace ReactNative.UIManager
                 ResetProjectionMatrix(view);
                 // We need to use a new instance of MatrixTransform because matrix
                 // updates to an existing MatrixTransform don't seem to take effect.
-                var transform = new MatrixTransform();
-                var matrix = transform.Matrix;
-                matrix.OffsetX = projectionMatrix.OffsetX;
-                matrix.OffsetY = projectionMatrix.OffsetY;
-                transform.Matrix = matrix;
+                var transform = new TranslateTransform();
+                transform.X = projectionMatrix.OffsetX;
+                transform.Y = projectionMatrix.OffsetY;
                 view.RenderTransform = transform;
             }
             else
@@ -353,7 +351,7 @@ namespace ReactNative.UIManager
         private static void ResetRenderTransform(TFrameworkElement view)
         {
             var transform = view.RenderTransform;
-            var matrixTransform = transform as MatrixTransform;
+            var matrixTransform = transform as TranslateTransform;
             if (transform != null && matrixTransform == null)
             {
                 throw new InvalidOperationException("Unknown transform set on framework element.");
