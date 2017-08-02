@@ -36,9 +36,19 @@ type Event = Object;
 /**
  * Not exposed as a public API - use <Picker> instead.
  */
-var PickerWindows = React.createClass({
+class PickerWindows extends React.Component {
+  props: {
+    style?: $FlowFixMe,
+    items?: any,
+    selected?: number,
+    selectedValue?: any,
+    enabled?: boolean,
+    onValueChange?: Function,
+    prompt?: string,
+    testID?: string,
+  };
 
-  propTypes: {
+  static propTypes = {
     ...ViewPropTypes,
     style: pickerStyleType,
     items: PropTypes.any,
@@ -48,18 +58,14 @@ var PickerWindows = React.createClass({
     onValueChange: PropTypes.func,
     prompt: PropTypes.string,
     testID: PropTypes.string,
-  },
+  };
 
-  getInitialState: function() {
-    return this._stateFromProps(this.props);
-  },
-
-  componentWillReceiveProps: function(nextProps: Object) {
+  componentWillReceiveProps(nextProps: Object) {
     this.setState(this._stateFromProps(nextProps));
-  },
+  }
 
   // Translate prop and children into stuff that the native picker understands.
-  _stateFromProps: function(props) {
+  _stateFromProps = (props) => {
     var selectedIndex = 0;
     let items = React.Children.map(props.children, (child, index) => {
       if (child.props.value === props.selectedValue) {
@@ -78,9 +84,9 @@ var PickerWindows = React.createClass({
       return childProps;
     });
     return {selectedIndex, items};
-  },
-  
-  render: function() {
+  };
+
+  render() {
     var Picker = ComboBoxPicker;
 
     var nativeProps = {
@@ -94,9 +100,9 @@ var PickerWindows = React.createClass({
     };
 
     return <Picker ref={REF_PICKER} {...nativeProps} />;
-  },
+  }
 
-  _onChange: function(event: Object) {
+  _onChange = (event: Object) => {
     if (this.props.onValueChange) {
       var position = event.nativeEvent.position;
       if (position >= 0) {
@@ -116,8 +122,10 @@ var PickerWindows = React.createClass({
     if (this.refs[REF_PICKER] && this.state.selectedIndex !== event.nativeEvent.position) {
       this.refs[REF_PICKER].setNativeProps({selected: this.state.selectedIndex});
     }
-  },
-});
+  };
+
+  state = this._stateFromProps(this.props);
+}
 
 var cfg = {
   nativeOnly: {

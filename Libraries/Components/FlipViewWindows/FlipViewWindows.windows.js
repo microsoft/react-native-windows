@@ -57,9 +57,14 @@ type Event = Object;
  * }
  * ```
  */
-var FlipViewWindows = React.createClass({
+class FlipViewWindows extends React.Component {
+  props: {
+    initialPage?: number,
+    alwaysAnimate?: boolean,
+    onSelectionChange?: Function,
+  };
 
-  propTypes: {
+  static propTypes = {
     ...ViewPropTypes,
     /**
      * Index of initial page that should be selected. Use `setPage` method to
@@ -79,19 +84,19 @@ var FlipViewWindows = React.createClass({
      *  - position - index of page that has been selected
      */
     onSelectionChange: PropTypes.func,
-  },
+  };
 
-  componentDidMount: function() {
+  componentDidMount() {
     if (this.props.initialPage) {
       this.setPage(this.props.initialPage);
     }
-  },
-  
-  getInnerViewNode: function(): ReactComponent<*,*,*> {
-    return this.refs[FLIPVIEW_REF].getInnerViewNode();
-  },
+  }
 
-  _childrenWithOverridenStyle: function(): Array<*> {
+  getInnerViewNode = (): ReactComponent<*,*,*> => {
+    return this.refs[FLIPVIEW_REF].getInnerViewNode();
+  };
+
+  _childrenWithOverridenStyle = (): Array<*> => {
     // Override styles so that each page will fill the parent. Native component
     // will handle positioning of elements, so it's not important to offset
     // them correctly.
@@ -120,26 +125,26 @@ var FlipViewWindows = React.createClass({
       }
       return React.createElement(child.type, newProps);
     });
-  },
+  };
 
-  _onSelectionChange: function(e: Event) {
+  _onSelectionChange = (e: Event) => {
     if (this.props.onSelectionChange) {
       this.props.onSelectionChange(e);
     }
-  },
+  };
 
   /**
    * A helper function to switch to a specific page in the FlipView.
    */
-  setPage: function(selectedPage: number) {
+  setPage = (selectedPage: number) => {
     UIManager.dispatchViewManagerCommand(
       ReactNative.findNodeHandle(this),
       UIManager.WindowsFlipView.Commands.setPage,
       [selectedPage],
     );
-  },
+  };
 
-  render: function() {
+  render() {
     return (
       <NativeWindowsFlipView
         ref={FLIPVIEW_REF}
@@ -150,8 +155,8 @@ var FlipViewWindows = React.createClass({
         children={this._childrenWithOverridenStyle()}
       />
     );
-  },
-});
+  }
+}
 
 var NativeWindowsFlipView = requireNativeComponent('WindowsFlipView', FlipViewWindows);
 

@@ -16,6 +16,7 @@ const NativeMethodsMixin = require('NativeMethodsMixin');
 const Platform = require('Platform');
 const PropTypes = require('prop-types');
 const React = require('React');
+const createReactClass = require('create-react-class');
 const ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 const StyleSheetPropType = require('StyleSheetPropType');
 const TextStylePropTypes = require('TextStylePropTypes');
@@ -70,7 +71,9 @@ const viewConfig = {
  * ```
  */
 
-const Text = React.createClass({
+const Text = createReactClass({
+  displayName: 'Text',
+
   propTypes: {
     /**
      * Line Break mode. Works only with numberOfLines.
@@ -129,6 +132,7 @@ const Text = React.createClass({
      */
     allowFontScaling: PropTypes.bool,
   },
+
   getDefaultProps(): Object {
     return {
       accessible: true,
@@ -136,38 +140,48 @@ const Text = React.createClass({
       lineBreakMode: 'tail',
     };
   },
+
   getInitialState: function(): Object {
     return merge(Touchable.Mixin.touchableGetInitialState(), {
       isHighlighted: false,
     });
   },
+
   mixins: [NativeMethodsMixin],
   viewConfig: viewConfig,
+
   getChildContext(): Object {
     return {isInAParentText: true};
   },
+
   childContextTypes: {
     isInAParentText: PropTypes.bool
   },
+
   contextTypes: {
     isInAParentText: PropTypes.bool
   },
+
   /**
    * Only assigned if touch is needed.
    */
   _handlers: (null: ?Object),
+
   _hasPressHandler(): boolean {
     return !!this.props.onPress || !!this.props.onLongPress;
   },
+
   /**
    * These are assigned lazily the first time the responder is set to make plain
    * text nodes as cheap as possible.
    */
   touchableHandleActivePressIn: (null: ?Function),
+
   touchableHandleActivePressOut: (null: ?Function),
   touchableHandlePress: (null: ?Function),
   touchableHandleLongPress: (null: ?Function),
   touchableGetPressRectOffset: (null: ?Function),
+
   render(): ReactElement<any> {
     let newProps = this.props;
     if (this.props.onStartShouldSetResponder || this._hasPressHandler()) {

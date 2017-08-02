@@ -17,6 +17,7 @@ var NativeMethodsMixin = require('NativeMethodsMixin');
 var Platform = require('Platform');
 var PropTypes = require('prop-types');
 var React = require('React');
+var createReactClass = require('create-react-class');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
@@ -87,7 +88,9 @@ function notSupported(prop) {
  *  </View>
  * ```
  */
-var TextInput = React.createClass({
+var TextInput = createReactClass({
+  displayName: 'TextInput',
+
   statics: {
     /* TODO(brentvatne) docs are needed for this */
     State: TextInputState,
@@ -693,7 +696,6 @@ var TextInput = React.createClass({
       </TouchableWithoutFeedback>
     );
   },
-
 
   _onFocus: function(event: Event) {
     if (this.props.onFocus) {
