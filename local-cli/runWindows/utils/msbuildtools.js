@@ -1,6 +1,7 @@
 'use strict';
 
 const EOL = require('os').EOL;
+const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 const chalk = require('chalk');
@@ -9,6 +10,7 @@ const Version = require('./version');
 const checkRequirements = require('./checkRequirements');
 
 const MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
+const VS_EDITIONS = ['Enterprise', 'Professional', 'Community', 'Express'];
 
 class MSBuildTools {
   constructor(version, localPath) {
@@ -36,6 +38,11 @@ class MSBuildTools {
       '/p:AppxBundle=Never'
     ];
 
+    // Set platform toolset for VS2017 (this way we can keep the base sln file working for vs2015)
+    if (this.version === '15.0') {
+      args.push('/p:PlatformToolset=v141');
+    }
+
     if (config) {
       Object.keys(config).forEach(function (key) {
         args.push(`/p:${key}=${config[key]}`);
@@ -57,19 +64,38 @@ class MSBuildTools {
 
 function checkMSBuildVersion(version) {
   const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
+  let toolsPath = null;
+  // Try to get the MSBuild path using registry
   try {
     const output = child_process.execSync(query).toString();
-    let toolsPath = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
-    if (toolsPath) {
-      toolsPath = toolsPath[1];
+    let toolsPathOutput = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
+    if (toolsPathOutput) {
+      toolsPathOutput = toolsPathOutput[1];
       // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
       if ((version === '15.0' || version === '14.0' && toolsPath.indexOf('amd64') > -1)) {
-        toolsPath = path.resolve(toolsPath, '..');
+        toolsPathOutput = path.resolve(toolsPathOutput, '..');
       }
-      console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
-      return new MSBuildTools(version, toolsPath);
+      toolsPath = toolsPathOutput;
     }
   } catch (e) {
+    toolsPath = null;
+  }
+  // Try to get the MSBuild Path by checking file system (for VS2017)
+  if (!toolsPath) {
+    for (let i = 0; i < VS_EDITIONS.length; i++) {
+      let p = `C:/Program Files (x86)/Microsoft Visual Studio/2017/${VS_EDITIONS[i]}/MSBuild/${version}/Bin/MSBuild.exe`;
+      if(fs.existsSync(p)){
+        toolsPath = path.dirname(p);
+        break;
+      }
+    }
+  }
+  // We found something so return MSBuild Tools.
+  if(toolsPath){
+    console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
+    return new MSBuildTools(version, toolsPath);
+  }
+  else {
     return null;
   }
 }
