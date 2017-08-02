@@ -14,25 +14,25 @@ var requireNativeComponent = require('requireNativeComponent');
 
 var ColorPropType = require('ColorPropType');
 
-var ProgressRingWindows = React.createClass({  
-  propTypes: {
+class ProgressRingWindows extends React.Component {
+  props: {color?: $FlowFixMe};
+
+  static propTypes = {
     ...ViewPropTypes,
     /**
      * Color of the progress bar.
      */
     color: ColorPropType,
-  },
-  
-  getDefaultProps: function() {
-    return {
-      animating: true
-    };
-  },
-  
-  render: function() {
+  };
+
+  static defaultProps = {
+    animating: true
+  };
+
+  render() {
     return <WindowsProgressRing {...this.props}/> ;
-  },
-});
+  }
+}
 
 var WindowsProgressRing = requireNativeComponent(
     'WindowsProgressRing', 

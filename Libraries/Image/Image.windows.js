@@ -18,6 +18,7 @@ var ImageStylePropTypes = require('ImageStylePropTypes');
 var ViewStylePropTypes = require('ViewStylePropTypes');
 const PropTypes = require('prop-types');
 var React = require('React');
+var createReactClass = require('create-react-class');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
@@ -75,7 +76,9 @@ var ImageViewAttributes = merge(ReactNativeViewAttributes.UIView, {
 var ViewStyleKeys = new Set(Object.keys(ViewStylePropTypes));
 var ImageSpecificStyleKeys = new Set(Object.keys(ImageStylePropTypes).filter(x => !ViewStyleKeys.has(x)));
 
-var Image = React.createClass({
+var Image = createReactClass({
+  displayName: 'Image',
+
   propTypes: {
     ...ViewPropTypes,
     style: StyleSheetPropType(ImageStylePropTypes),
@@ -303,7 +306,7 @@ var Image = React.createClass({
       }
     }
     return null;
-  }
+  },
 });
 
 var styles = StyleSheet.create({
