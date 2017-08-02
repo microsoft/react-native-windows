@@ -96,7 +96,7 @@ function deployToDesktop(options) {
     console.log(chalk.green('Installing new version of the app'));
     execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`, execOptions);
 
-    const appFamilyName = execSync(`powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`, execOptions);
+    const appFamilyName = execSync(`powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`);
     execSync(`CheckNetIsolation LoopbackExempt -a -n=${appFamilyName}`, execOptions);
 
     console.log(chalk.green('Starting the app'));

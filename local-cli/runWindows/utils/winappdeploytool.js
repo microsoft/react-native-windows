@@ -106,14 +106,12 @@ class WinAppDeployTool {
     if (pin) {
       args.push('-pin', pin);
     }
-    const execOptions = verbose ? { stdio: 'inherit' }: {};
-    return execSync(args.join(' '), execOptions).toString();
+    return execSync(args.join(' ')).toString();
   }
 
   uninstallAppPackage(packageInfo, targetDevice, verbose) {
     console.log(chalk.green(`Uninstalling app from ${targetDevice.name}`))
-    const execOptions = verbose ? { stdio: 'inherit' }: {};
-    return execSync(`"${this.path}" uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`, execOptions).toString();
+    return execSync(`"${this.path}" uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`).toString();
   }
 }
 
