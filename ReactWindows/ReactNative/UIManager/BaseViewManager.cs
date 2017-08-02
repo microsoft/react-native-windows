@@ -1,7 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
@@ -23,6 +27,9 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
+        private readonly IDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
+            new Dictionary<TFrameworkElement, DimensionBoundProperties>();
+
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
         /// properties, based on the <see cref="JObject"/> map.
@@ -34,11 +41,20 @@ namespace ReactNative.UIManager
         {
             if (transforms == null)
             {
-                ResetProjectionMatrix(view);
+                var dimensionBoundProperties = GetDimensionBoundProperties(view);
+                if (dimensionBoundProperties?.MatrixTransform != null)
+                {
+                    dimensionBoundProperties.MatrixTransform = null;
+                    ResetProjectionMatrix(view);
+                    ResetRenderTransform(view);
+                }
             }
             else
             {
-                SetProjectionMatrix(view, transforms);
+                var dimensionBoundProperties = GetOrCreateDimensionBoundProperties(view);
+                dimensionBoundProperties.MatrixTransform = transforms;
+                var dimensions = GetDimensions(view);
+                SetProjectionMatrix(view, dimensions, transforms);
             }
         }
 
@@ -63,11 +79,21 @@ namespace ReactNative.UIManager
         {
             if (overflow == "hidden")
             {
-                WinRTXamlToolkit.Controls.Extensions.FrameworkElementExtensions.SetClipToBounds(view, true);
+                var dimensionBoundProperties = GetOrCreateDimensionBoundProperties(view);
+                dimensionBoundProperties.OverflowHidden = true;
+                var dimensions = GetDimensions(view);
+                SetOverflowHidden(view, dimensions);
+                view.SizeChanged += OnSizeChanged;
             }
             else
             {
-                WinRTXamlToolkit.Controls.Extensions.FrameworkElementExtensions.SetClipToBounds(view, false);
+                view.SizeChanged -= OnSizeChanged;
+                var dimensionBoundProperties = GetDimensionBoundProperties(view);
+                if (dimensionBoundProperties != null && dimensionBoundProperties.OverflowHidden)
+                {
+                    dimensionBoundProperties.OverflowHidden = false;
+                    SetOverflowVisible(view);
+                }
             }
         }
 
@@ -82,6 +108,31 @@ namespace ReactNative.UIManager
             Canvas.SetZIndex(view, zIndex);
         }
 
+        /// <summary>
+        /// Sets the manipulation mode for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="manipulationModes">The manipulation modes.</param>
+        [ReactProp("manipulationModes")]
+        public void SetManipulationModes(TFrameworkElement view, JArray manipulationModes)
+        {
+            if (manipulationModes == null)
+            {
+                view.ManipulationMode = ManipulationModes.System;
+                return;
+            }
+
+            var manipulationMode = ManipulationModes.System;
+            foreach (var modeString in manipulationModes)
+            {
+                Debug.Assert(modeString.Type == JTokenType.String);
+                var mode = EnumHelpers.Parse<ManipulationModes>(modeString.Value<string>());
+                manipulationMode |= mode;
+            }
+
+            view.ManipulationMode = manipulationMode;
+        }
+        
         /// <summary>
         /// Sets the accessibility label of the element.
         /// </summary>
@@ -140,6 +191,36 @@ namespace ReactNative.UIManager
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
+            _dimensionBoundProperties.Remove(view);
+        }
+
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        public override void SetDimensions(TFrameworkElement view, Dimensions dimensions)
+        {
+            var dimensionBoundProperties = GetDimensionBoundProperties(view);
+            var matrixTransform = dimensionBoundProperties?.MatrixTransform;
+            var overflowHidden = dimensionBoundProperties?.OverflowHidden ?? false;
+            if (matrixTransform != null)
+            {
+                SetProjectionMatrix(view, dimensions, matrixTransform);
+            }
+
+            if (overflowHidden)
+            {
+                SetOverflowHidden(view, dimensions);
+                view.SizeChanged -= OnSizeChanged;
+            }
+
+            base.SetDimensions(view, dimensions);
+
+            if (overflowHidden)
+            {
+                view.SizeChanged += OnSizeChanged;
+            }
         }
 
         /// <summary>
@@ -161,6 +242,15 @@ namespace ReactNative.UIManager
             view.PointerExited += OnPointerExited;
         }
 
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            view.Clip = new RectangleGeometry
+            {
+                Rect = new Rect(0, 0, e.NewSize.Width, e.NewSize.Height),
+            };
+        }
+
         private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
         {
             var view = (TFrameworkElement)sender;
@@ -173,22 +263,45 @@ namespace ReactNative.UIManager
             TouchHandler.OnPointerExited(view, e);
         }
 
-        private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
+        private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
+        {
+            DimensionBoundProperties properties;
+            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            {
+                properties = null;
+            }
+
+            return properties;
+        }
+
+        private DimensionBoundProperties GetOrCreateDimensionBoundProperties(TFrameworkElement view)
+        {
+            DimensionBoundProperties properties;
+            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            {
+                properties = new DimensionBoundProperties();
+                _dimensionBoundProperties.Add(view, properties);
+            }
+
+            return properties;
+        }
+
+        private static void SetProjectionMatrix(TFrameworkElement view, Dimensions dimensions, JArray transforms)
         {
             var transformMatrix = TransformHelper.ProcessTransform(transforms);
 
             var translateMatrix = Matrix3D.Identity;
             var translateBackMatrix = Matrix3D.Identity;
-            if (!double.IsNaN(view.Width))
+            if (!double.IsNaN(dimensions.Width))
             {
-                translateMatrix.OffsetX = -view.Width / 2;
-                translateBackMatrix.OffsetX = view.Width / 2;
+                translateMatrix.OffsetX = -dimensions.Width / 2;
+                translateBackMatrix.OffsetX = dimensions.Width / 2;
             }
 
-            if (!double.IsNaN(view.Height))
+            if (!double.IsNaN(dimensions.Height))
             {
-                translateMatrix.OffsetY = -view.Height / 2;
-                translateBackMatrix.OffsetY = view.Height / 2;
+                translateMatrix.OffsetY = -dimensions.Height / 2;
+                translateBackMatrix.OffsetY = dimensions.Height / 2;
             }
 
             var projectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
@@ -200,6 +313,8 @@ namespace ReactNative.UIManager
             if (IsSimpleTranslationOnly(projectionMatrix))
             {
                 ResetProjectionMatrix(view);
+                // We need to use a new instance of MatrixTransform because matrix
+                // updates to an existing MatrixTransform don't seem to take effect.
                 var transform = new MatrixTransform();
                 var matrix = transform.Matrix;
                 matrix.OffsetX = projectionMatrix.OffsetX;
@@ -209,7 +324,7 @@ namespace ReactNative.UIManager
             }
             else
             {
-                view.RenderTransform = new MatrixTransform();
+                ResetRenderTransform(view);
                 var projection = EnsureProjection(view);
                 projection.ProjectionMatrix = projectionMatrix;
             }
@@ -235,6 +350,18 @@ namespace ReactNative.UIManager
             view.Projection = null;
         }
 
+        private static void ResetRenderTransform(TFrameworkElement view)
+        {
+            var transform = view.RenderTransform;
+            var matrixTransform = transform as MatrixTransform;
+            if (transform != null && matrixTransform == null)
+            {
+                throw new InvalidOperationException("Unknown transform set on framework element.");
+            }
+
+            view.RenderTransform = null;
+        }
+
         private static Matrix3DProjection EnsureProjection(FrameworkElement view)
         {
             var projection = view.Projection;
@@ -251,6 +378,33 @@ namespace ReactNative.UIManager
             }
 
             return matrixProjection;
+        }
+
+        private static void SetOverflowHidden(TFrameworkElement element, Dimensions dimensions)
+        {
+            if (double.IsNaN(dimensions.Width) || double.IsNaN(dimensions.Height))
+            {
+                element.Clip = null;
+            }
+            else
+            {
+                element.Clip = new RectangleGeometry
+                {
+                    Rect = new Rect(0, 0, dimensions.Width, dimensions.Height),
+                };
+            }
+        }
+
+        private static void SetOverflowVisible(TFrameworkElement element)
+        {
+            element.Clip = null;
+        }
+
+        class DimensionBoundProperties
+        {
+            public bool OverflowHidden { get; set; }
+
+            public JArray MatrixTransform { get; set; }
         }
     }
 }

@@ -40,7 +40,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 - Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
 - Change your working directory to the project directory you specified in the `react-native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (e.g., `cd AwesomeProject`).
-- Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows` or `yarn add rnpm-plugin-windows` if you have Yarn installed).
+- Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows` or `yarn add rnpm-plugin-windows --dev` if you have Yarn installed).
 - Initialize Windows project with `react-native windows` command in the project directory.
 - *Note*: You will need to install the [requirements](#system-requirements) before you can build and run your application.
 - Open the solution file in the application folder in Visual Studio (e.g., `AwesomeProject/windows/AwesomeProject.sln`) 
@@ -106,14 +106,14 @@ For more information about contributing PRs and issues, see our [Contribution Gu
 
 [Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
-Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to run the unit tests in Visual Studio and verify they are passing before submitting pull requests. For extra credit, verify some of the [Examples](#examples), like UI Explorer, continue to work properly.
+Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to run the unit tests in Visual Studio and verify they are passing before submitting pull requests. For extra credit, verify the examples in RNTester continue to work properly.
 
 ### Examples
 
-- If you're looking for sample code, just browse the Examples folder in the GitHub web UI
+- If you're looking for sample code, just browse the RNTester folder in the GitHub web UI
 - From your recursive clone of the react-native-windows repo, run ``git pull --recurse-submodules`` to make sure you're up to date with latest code
 - Start the React Native packager by running `react-native start` 
-- Open Examples.sln from the Examples submodule folder in Visual Studio.
+- Open RNTester.sln from the RNTester submodule folder in Visual Studio.
 - Set the StartUp project to the example you want to run, press F5.
 
 ## License

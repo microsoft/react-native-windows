@@ -6,7 +6,7 @@
     <SharedGUID>eea8b852-4d07-48e1-8294-a21ab5909fe6</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>ReactNative.Shared.Tests</Import_RootNamespace>
+    <Import_RootNamespace>ReactNative.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistrySharedTests.cs" />
@@ -26,7 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersExecutionTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTNativeAppEventEmitterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModuleTests.cs" />

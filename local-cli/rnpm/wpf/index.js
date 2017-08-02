@@ -8,5 +8,9 @@ module.exports = {
   }, {
     command: '--namespace [namespace]',
     description: 'The native project namespace.'
+  }, {
+    command: '--verbose',
+    description: 'Enables logging',
+    default: false,
   }]
 };

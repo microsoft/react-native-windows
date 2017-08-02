@@ -88,7 +88,7 @@ class WinAppDeployTool {
     return devices;
   }
 
-  installAppPackage(pathToAppxPackage, targetDevice, shouldLaunch, shouldUpdate, pin) {
+  installAppPackage(pathToAppxPackage, targetDevice, shouldLaunch, shouldUpdate, pin, verbose) {
     console.log(chalk.green(`Installing app to ${targetDevice.name}`));
 
     if (shouldLaunch) {
@@ -106,11 +106,10 @@ class WinAppDeployTool {
     if (pin) {
       args.push('-pin', pin);
     }
-
     return execSync(args.join(' ')).toString();
   }
 
-  uninstallAppPackage(packageInfo, targetDevice) {
+  uninstallAppPackage(packageInfo, targetDevice, verbose) {
     console.log(chalk.green(`Uninstalling app from ${targetDevice.name}`))
     return execSync(`"${this.path}" uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`).toString();
   }

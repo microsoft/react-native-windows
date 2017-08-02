@@ -56,8 +56,7 @@ namespace ReactNative.UIManager
 
             if (!isVirtual)
             {
-                // TODO: add pooling mechanism for Yoga nodes
-                _yogaNode = new YogaNode();
+                _yogaNode = YogaNodePool.Instance.Allocate();
             }
             else
             {
@@ -205,7 +204,7 @@ namespace ReactNative.UIManager
         {
             set
             {
-                _yogaNode.StyleAspectRatio = value;
+                _yogaNode.AspectRatio = value;
             }
         }
 
@@ -1055,6 +1054,7 @@ namespace ReactNative.UIManager
             if (_yogaNode != null)
             {
                 _yogaNode.Reset();
+                YogaNodePool.Instance.Free(_yogaNode);
             }
         }
 

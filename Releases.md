@@ -32,17 +32,19 @@ Make sure you also update the `react-native-windows` version in [package.json](h
 
 #### Testing the upgrade
 
-Before moving on to the next step, you'll want to test the package upgrades on the [Playground app](https://github.com/ReactWindows/react-native-windows/tree/master/ReactWindows/Playground). The Playground app is a very low bar for testing, as it only uses basic `react-native` components. However, it will catch the majority of breaking changes to the `react-native-windows` bridge, which typically include props that have been changes or removed for common components like `View` and `Text`, changes to the batched bridge protocol, and new core components and modules that have been added upstream, but have not been added for `react-native-windows`.
+Before moving on to the next step, you'll want to test the package upgrades on the [Playground app](https://github.com/ReactWindows/react-native-windows/tree/master/ReactWindows/Playground) in the ReactWindows folder. The Playground app is a very low bar for testing, as it only uses basic `react-native` components. However, it will catch the majority of breaking changes to the `react-native-windows` bridge, which typically include props that have been changes or removed for common components like `View` and `Text`, changes to the batched bridge protocol, and new core components and modules that have been added upstream, but have not been added for `react-native-windows`.
 
-### Update the `examples` branch
+If there is a bug or issue, fix it and create a specific commit for it in the stable branch you're working on. Once the branch is working and you complete the release (as described below), don't forget to rebase and merge back into the master branch to bring that fix back.
 
-The same example apps from `react-native` are also available for `react-native-windows`, including the [UIExplorer](https://github.com/facebook/react-native/tree/master/Examples/UIExplorer).
+### Update the `RNTester` branch
 
-We maintain a fork of the `Examples` folder from `react-native` as a submodule of `react-native-windows`. The fork uses `git filter-branch` to produce a branch of `react-native` that includes only the content of the Examples folder. We then merge all the changes specific to `react-native-windows` with that filtered branch.
+The same example apps from `react-native` are also available for `react-native-windows`, including the [RNTester](https://github.com/facebook/react-native/tree/master/Examples/UIExplorer).
+
+We maintain a fork of the `RNTester` folder from `react-native` as a submodule of `react-native-windows`. The fork uses `git filter-branch` to produce a branch of `react-native` that includes only the content of the Examples folder. We then merge all the changes specific to `react-native-windows` with that filtered branch.
 
 ```bash
 # Be sure that you have all submodules initialized and up-to-date for react-native-windows.
-cd Examples
+cd RNTester
 
 # If you don't already have facebook/react-native set up as a Git remote...
 git remote add facebook git@github.com:facebook/react-native
@@ -55,25 +57,27 @@ git checkout -b fbmaster facebook/master
 
 # Filter the react-native master branch for Examples only, this will take some time
 # You may have to use `-f` if you've previously run a `filter-branch` command
-git filter-branch --prune-empty --subdirectory-filter Examples fbmaster
+git filter-branch --prune-empty --subdirectory-filter RNTester fbmaster
 
-# Fetch the latest from ReactWindows/react-native-windows
+# Fetch the latest from react-native-windows
 git fetch origin
 
 # Create a new staging branch to perform a merge onto the react-native-windows `examples` branch
-git checkout -b staging examples
+git checkout -b staging origin/rntester
 
-# Merge the latest from react-native Examples and resolve any merge conflicts
+# Merge the latest from facebook/react-native RNTester and resolve any merge conflicts
 git merge fbmaster
 
-# Fast-forward the `examples` branch from the `staging` branch
+# Fast-forward the `rntester` branch from the `staging` branch
 # Before doing this, it's probably a good idea to test that the examples are working by running them
 # If anything has broken (it's common), fix it
-git checkout examples
+git checkout rntester
 git merge staging
 
+# Use the RNTester to test changes before pushing to react-native-windows
+
 # Push (or PR) your changes to react-native-windows
-git push origin examples
+git push origin rntester
 
 # Cleanup your staging branches
 git branch -D fbmaster

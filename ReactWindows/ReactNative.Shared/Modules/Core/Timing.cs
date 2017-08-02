@@ -20,7 +20,7 @@ namespace ReactNative.Modules.Core
 
         private readonly HeapBasedPriorityQueue<TimerData> _timers;
 
-        private JSTimersExecution _jsTimersModule;
+        private JSTimers _jsTimersModule;
         private bool _suspended;
         private bool _renderingHandled;
 
@@ -29,11 +29,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         public Timing(ReactContext reactContext)
-#if WINDOWS_UWP
             : base(reactContext)
-#else
-            : base(reactContext, CompiledReactDelegateFactory.Instance)
-#endif
         {
             _timers = new HeapBasedPriorityQueue<TimerData>(
                 Comparer<TimerData>.Create((x, y) => 
@@ -56,7 +52,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         public override void Initialize()
         {
-            _jsTimersModule = Context.GetJavaScriptModule<JSTimersExecution>();
+            _jsTimersModule = Context.GetJavaScriptModule<JSTimers>();
             Context.AddLifecycleEventListener(this);
         }
 

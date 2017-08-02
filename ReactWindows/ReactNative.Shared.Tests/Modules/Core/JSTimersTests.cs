@@ -4,11 +4,11 @@ using ReactNative.Modules.Core;
 namespace ReactNative.Tests.Modules.Core
 {
     [TestFixture]
-    public class JSTimersExecutionTests
+    public class JSTimersTests
     {
-        public void JSTimersExecution_Invoke()
+        public void JSTimers_Invoke()
         {
-            var module = new JSTimersExecution();
+            var module = new JSTimers();
 
             var name = default(string);
             var args = default(object[]);
@@ -20,7 +20,7 @@ namespace ReactNative.Tests.Modules.Core
 
             var ids = new[] { 42 };
             module.callTimers(ids);
-            Assert.AreEqual(nameof(JSTimersExecution.callTimers), name);
+            Assert.AreEqual(nameof(JSTimers.callTimers), name);
             Assert.AreEqual(1, args.Length);
             Assert.AreSame(ids, args[0]);
         }

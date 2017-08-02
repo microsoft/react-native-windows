@@ -34,7 +34,7 @@ namespace ReactNative.Tests.Chakra.Executor
 
                 Assert.That(
                     () => executor.RunScript(null, "foo"),
-                    Throws.ArgumentNullException.With.Property("ParamName").EqualTo("script")
+                    Throws.ArgumentNullException.With.Property("ParamName").EqualTo("sourcePath")
                 );
 
                 Assert.That(
