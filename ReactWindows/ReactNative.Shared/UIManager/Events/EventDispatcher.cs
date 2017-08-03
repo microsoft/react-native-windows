@@ -116,21 +116,11 @@ namespace ReactNative.UIManager.Events
             if (@event == null)
                 throw new ArgumentNullException(nameof(@event));
 
-            var eventHandled = false;
             foreach (var listener in _listeners)
             {
-                if (listener.OnEventDispatch(@event))
-                {
-                    eventHandled = true;
-                }
+                listener.OnEventDispatch(@event);
             }
             
-            // If the event was handled by one of the event listeners, don't send it to JavaScript.
-            if (eventHandled)
-            {
-                return;
-            }
-
             lock (_eventsStagingLock)
             {
                 _eventStaging.Add(@event);

@@ -12,6 +12,11 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(node));
             }
 
+            return VisitCore(node);
+        }
+
+        protected virtual T VisitCore(ReactShadowNode node)
+        {
             var n = node.ChildCount;
             if (n == 0)
             {

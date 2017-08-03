@@ -11,20 +11,21 @@
 'use strict';
 
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
+var PropTypes = require('prop-types');
 var React = require('React');
 var ReactNative = require('ReactNative');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
-var View = require('View');
 
+var ViewPropTypes = require('ViewPropTypes');
+var View = require('View');
 var deprecatedPropType = require('deprecatedPropType');
 var keyMirror = require('fbjs/lib/keyMirror');
 var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
-var resolveAssetSource = require('resolveAssetSource');
 
-var PropTypes = React.PropTypes;
+var resolveAssetSource = require('resolveAssetSource');
 
 var RCT_WEBVIEW_REF = 'webview';
 
@@ -37,10 +38,9 @@ var WebViewState = keyMirror({
 /**
  * Renders a native WebView.
  */
-var WebView = React.createClass({
-
-  propTypes: {
-    ...View.propTypes,
+class WebView extends React.Component {
+  static propTypes = {
+    ...ViewPropTypes,
     renderError: PropTypes.func,
     renderLoading: PropTypes.func,
     onLoad: PropTypes.func,
@@ -51,7 +51,7 @@ var WebView = React.createClass({
     contentInset: EdgeInsetsPropType,
     onNavigationStateChange: PropTypes.func,
     startInLoadingState: PropTypes.bool, // force WebView to show loadingView on first load
-    style: View.propTypes.style,
+    style: ViewPropTypes.style,
 
     html: deprecatedPropType(
       PropTypes.string,
@@ -133,29 +133,25 @@ var WebView = React.createClass({
      * start playing. The default value is `false`.
      */
     mediaPlaybackRequiresUserAction: PropTypes.bool,
-  },
+  };
 
-  getInitialState: function() {
-    return {
-      viewState: WebViewState.IDLE,
-      lastErrorEvent: null,
-      startInLoadingState: true,
-    };
-  },
+  static defaultProps = {
+    javaScriptEnabled : true,
+  };
 
-  getDefaultProps: function() {
-    return {
-      javaScriptEnabled : true,
-    };
-  },
+  state = {
+    viewState: WebViewState.IDLE,
+    lastErrorEvent: null,
+    startInLoadingState: true,
+  };
 
-  componentWillMount: function() {
+  componentWillMount() {
     if (this.props.startInLoadingState) {
       this.setState({viewState: WebViewState.LOADING});
     }
-  },
+  }
 
-  render: function() {
+  render() {
     var otherView = null;
 
     if (this.state.viewState === WebViewState.LOADING) {
@@ -207,53 +203,53 @@ var WebView = React.createClass({
         {otherView}
       </View>
     );
-  },
+  }
 
-  goForward: function() {
+  goForward = () => {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.goForward,
       null
     );
-  },
+  };
 
-  goBack: function() {
+  goBack = () => {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.goBack,
       null
     );
-  },
+  };
 
-  reload: function() {
+  reload = () => {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.reload,
       null
     );
-  },
+  };
 
   /**
    * We return an event with a bunch of fields including:
    *  url, title, loading, canGoBack, canGoForward
    */
-  updateNavigationState: function(event) {
+  updateNavigationState = (event) => {
     if (this.props.onNavigationStateChange) {
       this.props.onNavigationStateChange(event.nativeEvent);
     }
-  },
+  };
 
-  getWebViewHandle: function() {
+  getWebViewHandle = () => {
     return ReactNative.findNodeHandle(this.refs[RCT_WEBVIEW_REF]);
-  },
+  };
 
-  onLoadingStart: function(event) {
+  onLoadingStart = (event) => {
     var onLoadStart = this.props.onLoadStart;
     onLoadStart && onLoadStart(event);
     this.updateNavigationState(event);
-  },
+  };
 
-  onLoadingError: function(event) {
+  onLoadingError = (event) => {
     event.persist(); // persist this event because we need to store it
     var {onError, onLoadEnd} = this.props;
     onError && onError(event);
@@ -264,9 +260,9 @@ var WebView = React.createClass({
       lastErrorEvent: event.nativeEvent,
       viewState: WebViewState.ERROR
     });
-  },
+  };
 
-  onLoadingFinish: function(event) {
+  onLoadingFinish = (event) => {
     var {onLoad, onLoadEnd} = this.props;
     onLoad && onLoad(event);
     onLoadEnd && onLoadEnd(event);
@@ -274,8 +270,8 @@ var WebView = React.createClass({
       viewState: WebViewState.IDLE,
     });
     this.updateNavigationState(event);
-  },
-});
+  };
+}
 
 var RCTWebView = requireNativeComponent('RCTWebView', WebView);
 

@@ -5,6 +5,9 @@ image: Visual Studio 2015
 environment:
   nodejs_version: "6"
 
+hosts:
+  api.nuget.org: 93.184.221.200
+
 install:
   - ps: Install-Product node $env:nodejs_version x64
   - npm install -g npm@latest

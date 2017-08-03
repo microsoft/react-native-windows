@@ -113,18 +113,6 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets whether the view is collapsible.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="collapsible">The flag.</param>
-        [ReactProp(ViewProps.Collapsible)]
-        public void SetCollapsible(Border view, bool collapsible)
-        {
-            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
-            // handled in NativeViewHierarchyOptimizer
-        }
-
-        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>

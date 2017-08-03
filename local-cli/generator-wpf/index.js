@@ -26,6 +26,12 @@ module.exports = yeoman.Base.extend({
       type: String,
       defaults: this.name
     })
+
+    this.option('verbose', {
+      desc: 'Enables logging',
+      type: Boolean,
+      defaults: false
+    });
   },
 
   configuring: function () {
@@ -106,16 +112,17 @@ module.exports = yeoman.Base.extend({
       return
     }
 
-    console.log(`Installing react-native@${reactNativeVersion}...`)
-    this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true })
+    const spawnOptions = this.options.verbose ? { stdio: 'inherit' } : {};
+    console.log(`Installing react-native@${reactNativeVersion}...`);
+    this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true }, null, spawnOptions);
 
     const reactVersion = peerDependencies.react
     if (!reactVersion) {
       return
     }
 
-    console.log(`Installing react@${reactVersion}...`)
-    this.npmInstall(`react@${reactVersion}`, { '--save': true })
+    console.log(`Installing react@${reactVersion}...`);
+    this.npmInstall(`react@${reactVersion}`, { '--save': true }, null, spawnOptions);
   },
 
   end: function () {

@@ -1,6 +1,5 @@
 ﻿using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -289,43 +288,31 @@ namespace ReactNative.Views.TextInput
                 - (YogaConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
             var normalizedHeight = Math.Max(0, YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
-            // This is not a terribly efficient way of projecting the height of
-            // the text elements. It requires that we have access to the
-            // dispatcher in order to do measurement, which, for obvious
-            // reasons, can cause perceived performance issues as it will block
-            // the UI thread from handling other work.
-            //
-            // TODO: determine another way to measure text elements.
-            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            var textBlock = new TextBlock
             {
-                var textBlock = new TextBlock
-                {
-                    TextWrapping = TextWrapping.Wrap,
-                };
+                TextWrapping = TextWrapping.Wrap,
+            };
 
-                var normalizedText = string.IsNullOrEmpty(textInputNode._text) ? " " : textInputNode._text;
-                var inline = new Run { Text = normalizedText };
-                FormatInline(textInputNode, inline);
+            var normalizedText = string.IsNullOrEmpty(textInputNode._text) ? " " : textInputNode._text;
+            var inline = new Run { Text = normalizedText };
+            FormatInline(textInputNode, inline);
 
-                textBlock.Inlines.Add(inline);
+            textBlock.Inlines.Add(inline);
 
-                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
+            textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-                var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
-                var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
+            var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
+            var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
 
-                var finalizedHeight = textBlock.DesiredSize.Height;
-                finalizedHeight += textInputNode._computedPadding[1];
-                finalizedHeight += textInputNode._computedPadding[3];
-                finalizedHeight += YogaConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-                finalizedHeight += YogaConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+            var finalizedHeight = (float)textBlock.DesiredSize.Height;
+            finalizedHeight += textInputNode._computedPadding[1];
+            finalizedHeight += textInputNode._computedPadding[3];
+            finalizedHeight += YogaConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+            finalizedHeight += YogaConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
 
-                return MeasureOutput.Make(
-                    (float)Math.Ceiling(width), 
-                    (float)Math.Ceiling(finalizedHeight));
-            });
-
-            return task.Result;
+            return MeasureOutput.Make(
+                (float)Math.Ceiling(width),
+                (float)Math.Ceiling(finalizedHeight));
         }
 
         /// <summary>

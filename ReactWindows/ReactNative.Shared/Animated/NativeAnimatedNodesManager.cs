@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
+using ReactNative.Tracing;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
@@ -327,12 +329,12 @@ namespace ReactNative.Animated
             }
         }
 
-        public bool OnEventDispatch(Event @event)
+        public void OnEventDispatch(Event @event)
         {
             // Only support events dispatched from the dispatcher thread.
             if (!DispatcherHelpers.IsOnDispatcher())
             {
-                return false;
+                return;
             }
 
             if (_eventDrivers.Count > 0)
@@ -355,11 +357,8 @@ namespace ReactNative.Animated
 
                     UpdateNodes(_runUpdateNodeList);
                     _runUpdateNodeList.Clear();
-                    return true;
                 }
             }
-
-            return false;
         }
 
         /// <summary>
@@ -522,7 +521,20 @@ namespace ReactNative.Animated
                 var valueNode = default(ValueAnimatedNode);
                 if (propsNode != null)
                 {
-                    propsNode.UpdateView(_uiImplementation);
+                    try
+                    {
+                        propsNode.UpdateView(_uiImplementation);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        // An exception is thrown if the view hasn't been created yet. This can happen because views are
+                        // created in batches. If this particular view didn't make it into a batch yet, the view won't
+                        // exist and an exception will be thrown when attempting to start an animation on it.
+                        //
+                        // Eat the exception rather than crashing. The impact is that we may drop one or more frames of the
+                        // animation.
+                        Tracer.Error(ReactConstants.Tag, "Native animation workaround, frame lost as result of race condition", e);
+                    }
                 }
                 else if ((valueNode = nextNode as ValueAnimatedNode) != null)
                 {

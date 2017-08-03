@@ -16,20 +16,22 @@ var NativeModules = require('NativeModules');
 var ImageResizeMode = require('ImageResizeMode');
 var ImageStylePropTypes = require('ImageStylePropTypes');
 var ViewStylePropTypes = require('ViewStylePropTypes');
+const PropTypes = require('prop-types');
 var React = require('React');
+var createReactClass = require('create-react-class');
 var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
-var View = require('View');
 
+var ViewPropTypes = require('ViewPropTypes');
+var View = require('View');
 var flattenStyle = require('flattenStyle');
 var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
 var resolveAssetSource = require('resolveAssetSource');
 var Set = require('Set');
-var filterObject = require('fbjs/lib/filterObject');
 
-var PropTypes = React.PropTypes;
+var filterObject = require('fbjs/lib/filterObject');
 var {
   ImageLoader,
 } = NativeModules;
@@ -74,9 +76,11 @@ var ImageViewAttributes = merge(ReactNativeViewAttributes.UIView, {
 var ViewStyleKeys = new Set(Object.keys(ViewStylePropTypes));
 var ImageSpecificStyleKeys = new Set(Object.keys(ImageStylePropTypes).filter(x => !ViewStyleKeys.has(x)));
 
-var Image = React.createClass({
+var Image = createReactClass({
+  displayName: 'Image',
+
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     style: StyleSheetPropType(ImageStylePropTypes),
    /**
      * `uri` is a string representing the resource identifier for the image, which
@@ -244,7 +248,7 @@ var Image = React.createClass({
   },
 
   contextTypes: {
-    isInAParentText: React.PropTypes.bool
+    isInAParentText: PropTypes.bool
   },
 
   render: function() {
@@ -302,7 +306,7 @@ var Image = React.createClass({
       }
     }
     return null;
-  }
+  },
 });
 
 var styles = StyleSheet.create({

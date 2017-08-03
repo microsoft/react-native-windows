@@ -2,8 +2,11 @@
 using Newtonsoft.Json.Linq;
 using PCLStorage;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -14,14 +17,20 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public sealed class ChakraJavaScriptExecutor : IJavaScriptExecutor
     {
+        private const string MagicFileName = "UNBUNDLE";
+        private const uint MagicFileHeader = 0xFB0BD1E5;
+
         private const string JsonName = "JSON";
         private const string FBBatchedBridgeVariableName = "__fbBatchedBridge";
 
         private readonly JavaScriptRuntime _runtime;
 
+        private IJavaScriptUnbundle _unbundle;
+
         private JavaScriptSourceContext _context;
 
         private JavaScriptNativeFunction _nativeLoggingHook;
+        private JavaScriptNativeFunction _nativeRequire;
 
         private JavaScriptValue _globalObject;
 
@@ -124,45 +133,36 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
-        /// Runs the given script.
+        /// Runs the script at the given path.
         /// </summary>
-        /// <param name="script">The script.</param>
+        /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
-        public void RunScript(string script, string sourceUrl)
+        public void RunScript(string sourcePath, string sourceUrl)
         {
-            if (script == null)
-                throw new ArgumentNullException(nameof(script));
+            if (sourcePath == null)
+                throw new ArgumentNullException(nameof(sourcePath));
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
-            var source = LoadScriptAsync(script).Result;
+            var startupCode = default(string);
+            if (IsUnbundleAsync(sourcePath).Result)
+            {
+                _unbundle = new FileBasedJavaScriptUnbundle(sourcePath);
+                InstallNativeRequire();
+                startupCode = _unbundle.GetStartupCodeAsync().Result;
+            }
+            else if (IsIndexedUnbundleAsync(sourcePath).Result)
+            {
+                _unbundle = new IndexedJavaScriptUnbundle(sourcePath);
+                InstallNativeRequire();
+                startupCode = _unbundle.GetStartupCodeAsync().Result;
+            }
+            else
+            {
+                startupCode = LoadScriptAsync(sourcePath).Result;
+            }
 
-            try
-            {
-                _context = JavaScriptSourceContext.Increment(_context);
-                JavaScriptContext.RunScript(source, _context, sourceUrl);
-            }
-            catch (JavaScriptScriptException ex)
-            {
-                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
-                var message = jsonError.Value<string>("message");
-                var stackTrace = jsonError.Value<string>("stack");
-                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
-            }
-        }
-
-        private static async Task<string> LoadScriptAsync(string fileName)
-        {
-            try
-            {
-                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
-                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionMessage = Invariant($"File read exception for asset '{fileName}'.");
-                throw new InvalidOperationException(exceptionMessage, ex);
-            }
+            EvaluateScript(startupCode, sourceUrl);
         }
 
         /// <summary>
@@ -214,6 +214,22 @@ namespace ReactNative.Chakra.Executor
                 JavaScriptPropertyId.FromString("nativeLoggingHook"),
                 JavaScriptValue.CreateFunction(_nativeLoggingHook),
                 true);
+        }
+
+        private void EvaluateScript(string script, string sourceUrl)
+        {
+            try
+            {
+                _context = JavaScriptSourceContext.Increment(_context);
+                JavaScriptContext.RunScript(script, _context, sourceUrl);
+            }
+            catch (JavaScriptScriptException ex)
+            {
+                var jsonError = JavaScriptValueToJTokenConverter.Convert(ex.Error);
+                var message = jsonError.Value<string>("message");
+                var stackTrace = jsonError.Value<string>("stack");
+                throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
+            }
         }
 
         #region JSON Marshaling
@@ -273,6 +289,42 @@ namespace ReactNative.Chakra.Executor
             }
 
             return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Require
+        private void InstallNativeRequire()
+        {
+            _nativeRequire = NativeRequire;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeRequire"),
+                JavaScriptValue.CreateFunction(_nativeRequire),
+                true);
+        }
+
+        private JavaScriptValue NativeRequire(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly two arguments (global and moduleId).");
+            }
+
+            var moduleId = arguments[1].ToDouble();
+            if (moduleId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(arguments),
+                    Invariant($"Received invalid module ID '{moduleId}'."));
+            }
+
+            var module = _unbundle.GetModule((int)moduleId);
+            EvaluateScript(module.Source, module.SourceUrl);
+            return JavaScriptValue.Invalid;
         }
         #endregion
 
@@ -362,6 +414,184 @@ namespace ReactNative.Chakra.Executor
             return _flushedQueueFunction;
         }
 
+        #endregion
+
+        #region File IO
+        private static async Task<string> LoadScriptAsync(string fileName)
+        {
+            try
+            {
+                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
+                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = Invariant($"File read exception for asset '{fileName}'.");
+                throw new InvalidOperationException(exceptionMessage, ex);
+            }
+        }
+        #endregion
+
+        #region Unbundle
+        class JavaScriptUnbundleModule
+        {
+            public JavaScriptUnbundleModule(string source, string sourceUrl)
+            {
+                SourceUrl = sourceUrl;
+                Source = source;
+            }
+
+            public string SourceUrl { get; }
+
+            public string Source { get; }
+        }
+
+        interface IJavaScriptUnbundle : IDisposable
+        {
+            JavaScriptUnbundleModule GetModule(int index);
+
+            Task<string> GetStartupCodeAsync();
+        }
+
+        class FileBasedJavaScriptUnbundle : IJavaScriptUnbundle
+        {
+            private readonly string _sourcePath;
+            private readonly string _modulesPath;
+
+            public FileBasedJavaScriptUnbundle(string sourcePath)
+            {
+                _sourcePath = sourcePath;
+                _modulesPath = GetUnbundleModulesDirectory(sourcePath);
+            }
+
+            public JavaScriptUnbundleModule GetModule(int index)
+            {
+                var sourceUrl = index + ".js";
+                var fileName = Path.Combine(_modulesPath, sourceUrl);
+                var source = LoadScriptAsync(fileName).Result;
+                return new JavaScriptUnbundleModule(source, sourceUrl);
+            }
+
+            public Task<string> GetStartupCodeAsync()
+            {
+                return LoadScriptAsync(_sourcePath);
+            }
+
+            public void Dispose()
+            {
+            }
+        }
+
+        class IndexedJavaScriptUnbundle : IJavaScriptUnbundle
+        {
+            private const int HeaderSize = 12;
+
+            private readonly string _sourcePath;
+
+            private Stream _stream;
+            private byte[] _moduleTable;
+            private int _baseOffset;
+
+            public IndexedJavaScriptUnbundle(string sourcePath)
+            {
+                _sourcePath = sourcePath;
+            }
+
+            public JavaScriptUnbundleModule GetModule(int index)
+            {
+                var offset = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(_moduleTable, index * 8));
+                var length = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(_moduleTable, index * 8 + 4));
+                _stream.Seek(_baseOffset + offset, SeekOrigin.Begin);
+                var moduleData = new byte[length];
+                if (_stream.Read(moduleData, 0, (int) length) < length)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of unbundle module.");
+                }
+
+                var source = Encoding.UTF8.GetString(moduleData);
+                var sourceUrl = index + ".js";
+                return new JavaScriptUnbundleModule(source, sourceUrl);
+            }
+
+            public async Task<string> GetStartupCodeAsync()
+            {
+                var bundleFile = await FileSystem.Current.GetFileFromPathAsync(_sourcePath);
+                _stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read);
+                var header = new byte[HeaderSize];
+                if (await _stream.ReadAsync(header, 0, HeaderSize) < HeaderSize)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of indexed unbundle header.");
+                }
+
+                var numberOfTableEntries = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(header, 4));
+                var startupCodeSize = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(header, 8));
+                var moduleTableSize = numberOfTableEntries * 8 /* bytes per entry */;
+                _baseOffset = HeaderSize + (int)moduleTableSize;
+                _moduleTable = new byte[moduleTableSize];
+                if (await _stream.ReadAsync(_moduleTable, 0, (int)moduleTableSize) < moduleTableSize)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of indexed unbundle module table.");
+                }
+
+                var startupCodeBuffer = new byte[startupCodeSize];
+                if (await _stream.ReadAsync(startupCodeBuffer, 0, (int)startupCodeSize) < startupCodeSize)
+                {
+                    throw new InvalidOperationException("Reached end of file before end of startup code.");
+                }
+
+                return Encoding.UTF8.GetString(startupCodeBuffer);
+            }
+
+            public void Dispose()
+            {
+                _stream.Dispose();
+            }
+        }
+
+        private static async Task<bool> IsUnbundleAsync(string sourcePath)
+        {
+            var magicFilePath = Path.Combine(GetUnbundleModulesDirectory(sourcePath), MagicFileName);
+            var magicFile = await FileSystem.Current.GetFileFromPathAsync(magicFilePath);
+            if (magicFile == null)
+            {
+                return false;
+            }
+
+            using (var stream = await magicFile.OpenAsync(PCLStorage.FileAccess.Read))
+            {
+                var header = new byte[4];
+                var read = await stream.ReadAsync(header, 0, 4);
+                if (read < 4)
+                {
+                    return false;
+                }
+
+                var magicHeader = BitConverter.ToUInt32(header, 0);
+                return InetHelpers.LittleEndianToHost(magicHeader) == MagicFileHeader;
+            }
+        }
+
+        private static async Task<bool> IsIndexedUnbundleAsync(string sourcePath)
+        {
+            var bundleFile = await FileSystem.Current.GetFileFromPathAsync(sourcePath);
+            using (var stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read))
+            {
+                var header = new byte[4];
+                var read = await stream.ReadAsync(header, 0, 4);
+                if (read < 4)
+                {
+                    return false;
+                }
+
+                var magic = InetHelpers.LittleEndianToHost(BitConverter.ToUInt32(header, 0));
+                return magic == MagicFileHeader;
+            }
+        }
+
+        private static string GetUnbundleModulesDirectory(string sourcePath)
+        {
+            return Path.Combine(Path.GetDirectoryName(sourcePath), "js-modules");
+        }
         #endregion
     }
 }

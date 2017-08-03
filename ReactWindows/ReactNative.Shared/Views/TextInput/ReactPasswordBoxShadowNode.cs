@@ -225,45 +225,37 @@ namespace ReactNative.Views.TextInput
                 - (YogaConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
             var normalizedHeight = Math.Max(0, YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height);
 
-            // This is not a terribly efficient way of projecting the height of
-            // the text elements. It requires that we have access to the
-            // dispatcher in order to do measurement, which, for obvious
-            // reasons, can cause perceived performance issues as it will block
-            // the UI thread from handling other work.
-            //
-            // TODO: determine another way to measure text elements.
-            var task = DispatcherHelpers.CallOnDispatcher(() =>
+            // TODO: Measure text with DirectWrite or other API that does not
+            // require dispatcher access. Currently, we're instantiating a
+            // second CoreApplicationView (that is never activated) and using
+            // its Dispatcher thread to calculate layout.
+            var textBlock = new TextBlock
             {
-                var textBlock = new TextBlock
-                {
-                    TextWrapping = TextWrapping.Wrap,
-                };
+                TextWrapping = TextWrapping.Wrap,
+            };
 
-                var passwordChar = GetDefaultPasswordChar();
-                var normalizedText = !string.IsNullOrEmpty(textInputNode._text)
-                    ? new string(passwordChar[0], textInputNode._text.Length)
-                    : passwordChar;
-                var inline = new Run { Text = normalizedText };
-                FormatTextElement(textInputNode, inline);
-                textBlock.Inlines.Add(inline);
+            var passwordChar = GetDefaultPasswordChar();
+            var normalizedText = !string.IsNullOrEmpty(textInputNode._text)
+                ? new string(passwordChar[0], textInputNode._text.Length)
+                : passwordChar;
+            var inline = new Run { Text = normalizedText };
+            FormatTextElement(textInputNode, inline);
+            textBlock.Inlines.Add(inline);
 
-                textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
+            textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-                var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
-                var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
+            var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
+            var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
 
-                var finalizedHeight = (float)textBlock.DesiredSize.Height;
-                finalizedHeight += textInputNode._computedPadding[1];
-                finalizedHeight += textInputNode._computedPadding[3];
-                finalizedHeight += YogaConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-                finalizedHeight += YogaConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
+            var finalizedHeight = (float)textBlock.DesiredSize.Height;
+            finalizedHeight += textInputNode._computedPadding[1];
+            finalizedHeight += textInputNode._computedPadding[3];
+            finalizedHeight += YogaConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
+            finalizedHeight += YogaConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
 
-                return MeasureOutput.Make(
-                    (float)Math.Ceiling(width), 
-                    (float)Math.Ceiling(finalizedHeight));
-            });
-
-            return task.Result;
+            return MeasureOutput.Make(
+                (float)Math.Ceiling(width), 
+                (float)Math.Ceiling(finalizedHeight));
         }
 
         private static string GetDefaultPasswordChar()

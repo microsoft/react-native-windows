@@ -6,7 +6,7 @@
     <SharedGUID>eea8b852-4d07-48e1-8294-a21ab5909fe5</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>ReactNative.Shared</Import_RootNamespace>
+    <Import_RootNamespace>ReactNative</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Animated\AdditionAnimatedNode.cs" />
@@ -96,6 +96,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackage.cs" />
@@ -117,7 +118,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersExecution.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTNativeAppEventEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\Timing.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\YogaNodePool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Image\ReactImageLoadEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventTypeExtensions.cs" />

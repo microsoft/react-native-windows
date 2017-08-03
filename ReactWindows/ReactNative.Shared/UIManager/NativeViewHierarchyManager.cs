@@ -286,7 +286,8 @@ namespace ReactNative.UIManager
                     if (elementToDestroy != null &&
                         _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
                     {
-                        _layoutAnimator.DeleteView(elementToDestroy, () =>
+                        var viewToDestroyManager = ResolveViewManager(tagToDelete);
+                        _layoutAnimator.DeleteView(viewToDestroyManager, elementToDestroy, () =>
                         {
                             if (viewParentManager.TryRemoveView(viewToManage, viewToDestroy))
                             {
@@ -657,7 +658,7 @@ namespace ReactNative.UIManager
             var frameworkElement = viewToUpdate as FrameworkElement;
             if (frameworkElement != null && _layoutAnimator.ShouldAnimateLayout(frameworkElement))
             {
-                _layoutAnimator.ApplyLayoutUpdate(frameworkElement, dimensions);
+                _layoutAnimator.ApplyLayoutUpdate(viewManager, frameworkElement, dimensions);
             }
             else
             {;
