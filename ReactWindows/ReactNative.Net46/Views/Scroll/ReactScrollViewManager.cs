@@ -127,7 +127,6 @@ namespace ReactNative.Views.Scroll
         [ReactProp("horizontal")]
         public void SetHorizontal(ScrollViewer view, bool horizontal)
         {
-            throw new NotImplementedException();
             var horizontalScrollMode = horizontal
                 ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Disabled;
