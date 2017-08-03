@@ -346,21 +346,36 @@ namespace ReactNative.DevSupport
             return _devServerHelper.IsPackagerRunningAsync();
         }
 
+#if WINDOWS_UWP
+        static ProgressDialog _currentprogressDialog = null; // UWP can only have one
+#endif
+
         public async void HandleReloadJavaScript()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             HideRedboxDialog();
-            HideDevOptionsDialog();
 
             var message = !IsRemoteDebuggingEnabled
                 ? "Fetching JavaScript bundle."
                 : "Connecting to remote debugger.";
 
-            var progressDialog = new ProgressDialog("Please wait...", message);
+            ProgressDialog progressDialog = new ProgressDialog("Please wait...", message);
+
 #if WINDOWS_UWP
-            var dialogOperation = progressDialog.ShowAsync();
-            Action cancel = dialogOperation.Cancel;
+            Action cancel;
+
+            // there can only be one progress dialog visible at one time in UWP so we must limit it
+            if (Interlocked.CompareExchange<ProgressDialog>(ref _currentprogressDialog, progressDialog, null) == null)
+            {
+                var dialogOperation = progressDialog.ShowAsync();
+                cancel = dialogOperation.Cancel;
+            }
+            else
+            {
+                // Do nothing
+                cancel = () => { };
+            }
 #else
             if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
             {
@@ -388,6 +403,12 @@ namespace ReactNative.DevSupport
                 await ReloadJavaScriptFromFileAsync(progressDialog.Token);
                 cancel();
             }
+
+#if WINDOWS_UWP
+            // release our dialog
+            if (_currentprogressDialog == progressDialog)
+                _currentprogressDialog = null;
+#endif
         }
 
         public void ReloadSettings()
