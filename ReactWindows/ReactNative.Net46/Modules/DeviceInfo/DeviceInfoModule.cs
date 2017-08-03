@@ -81,7 +81,6 @@ namespace ReactNative.Modules.DeviceInfo
 
         private IDictionary<string, object> GetDimensions()
         {
-            var content = (FrameworkElement)_window.Content;
             double scale = 1.0;
 
             return new Dictionary<string, object>
@@ -90,8 +89,8 @@ namespace ReactNative.Modules.DeviceInfo
                     "window",
                     new Dictionary<string, object>
                     {
-                        { "width", content?.ActualWidth ?? 0.0 },
-                        { "height", content?.ActualHeight ?? 0.0 },
+                        { "width", _window?.ActualWidth ?? 0.0 },
+                        { "height", _window?.ActualHeight ?? 0.0 },
                         { "scale", scale },
                         /* TODO: density and DPI needed? */
                     }
