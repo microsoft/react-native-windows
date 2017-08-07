@@ -355,6 +355,7 @@ namespace ReactNative.DevSupport
             DispatcherHelpers.AssertOnDispatcher();
 
             HideRedboxDialog();
+            HideDevOptionsDialog();
 
             var message = !IsRemoteDebuggingEnabled
                 ? "Fetching JavaScript bundle."
