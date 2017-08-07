@@ -148,12 +148,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvasManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedViewParentManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectViewManager.cs" />
