@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Data;
 #endif
 
 namespace ReactNative.Views.View
