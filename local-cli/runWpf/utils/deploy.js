@@ -1,7 +1,7 @@
 'use strict';
 
 const child_process = require('child_process');
-const spawn = child_process.spawn, execSync = child_process.execSync;
+const spawn = child_process.spawn;
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
