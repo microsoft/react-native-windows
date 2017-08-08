@@ -16,7 +16,7 @@ const Registry = require('npm-registry')
 const child_process = require('child_process');
 const validUrl = require('valid-url');
 
-let npmConfReg = child_process.execSync('npm config get registry').toString();
+let npmConfReg = child_process.execSync('npm config get registry').toString().trim();
 let NPM_REGISTRY_URL = validUrl.is_uri(npmConfReg) ? npmConfReg: 'http://registry.npmjs.org';
 
 const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
