@@ -34,6 +34,11 @@ namespace ReactNative.DevSupport
         bool IsRemoteDebuggingEnabled { get; set; }
 
         /// <summary>
+        /// Enables or disables the progress dialog.
+        /// </summary>
+        bool IsProgressDialogEnabled { get; set; }
+
+        /// <summary>
         /// The source map URL.
         /// </summary>
         string SourceMapUrl { get; }

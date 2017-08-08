@@ -99,6 +99,12 @@ namespace ReactNative.DevSupport
             set;
         }
 
+        public bool IsProgressDialogEnabled
+        {
+            get;
+            set;
+        } = true;
+
         public string SourceMapUrl
         {
             get
@@ -346,10 +352,6 @@ namespace ReactNative.DevSupport
             return _devServerHelper.IsPackagerRunningAsync();
         }
 
-#if WINDOWS_UWP
-        static ProgressDialog _currentprogressDialog = null; // UWP can only have one
-#endif
-
         public async void HandleReloadJavaScript()
         {
             DispatcherHelpers.AssertOnDispatcher();
@@ -357,59 +359,56 @@ namespace ReactNative.DevSupport
             HideRedboxDialog();
             HideDevOptionsDialog();
 
-            var message = !IsRemoteDebuggingEnabled
+            Action cancel;
+            CancellationToken token;
+
+            if (IsProgressDialogEnabled)
+            {
+                var message = !IsRemoteDebuggingEnabled
                 ? "Fetching JavaScript bundle."
                 : "Connecting to remote debugger.";
 
-            ProgressDialog progressDialog = new ProgressDialog("Please wait...", message);
+                ProgressDialog progressDialog = new ProgressDialog("Please wait...", message);
 
 #if WINDOWS_UWP
-            Action cancel;
-
-            // there can only be one progress dialog visible at one time in UWP so we must limit it
-            if (Interlocked.CompareExchange<ProgressDialog>(ref _currentprogressDialog, progressDialog, null) == null)
-            {
                 var dialogOperation = progressDialog.ShowAsync();
                 cancel = dialogOperation.Cancel;
-            }
-            else
-            {
-                // Do nothing
-                cancel = () => { };
-            }
 #else
-            if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
-            {
-                progressDialog.Owner = Application.Current.MainWindow;
+                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
+                {
+                    progressDialog.Owner = Application.Current.MainWindow;
+                }
+                else
+                {
+                    progressDialog.Topmost = true;
+                    progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                }
+
+                cancel = progressDialog.Close;
+                progressDialog.Show();
+#endif
+                token = progressDialog.Token;
             }
             else
             {
-                progressDialog.Topmost = true;
-                progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                // Progress not enabled - provide empty implementations
+                cancel = () => { };
+                token = default(CancellationToken);
             }
-            
-            Action cancel = progressDialog.Close;
-            progressDialog.Show();
-#endif
+
             if (IsRemoteDebuggingEnabled)
             {
-                await ReloadJavaScriptInProxyMode(cancel, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptInProxyMode(cancel, token).ConfigureAwait(false);
             }
             else if (_jsBundleFile == null)
             {
-                await ReloadJavaScriptFromServerAsync(cancel, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptFromServerAsync(cancel, token).ConfigureAwait(false);
             }
             else
             {
-                await ReloadJavaScriptFromFileAsync(progressDialog.Token);
+                await ReloadJavaScriptFromFileAsync(token);
                 cancel();
             }
-
-#if WINDOWS_UWP
-            // release our dialog
-            if (_currentprogressDialog == progressDialog)
-                _currentprogressDialog = null;
-#endif
         }
 
         public void ReloadSettings()

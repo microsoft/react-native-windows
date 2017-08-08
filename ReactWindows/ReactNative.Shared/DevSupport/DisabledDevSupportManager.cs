@@ -43,6 +43,12 @@ namespace ReactNative.DevSupport
             set;
         }
 
+        public bool IsProgressDialogEnabled
+        {
+            get;
+            set;
+        }
+
         public string SourceMapUrl
         {
             get
