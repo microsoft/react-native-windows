@@ -76,7 +76,7 @@ class FlipViewWindows extends React.Component {
      * Indicates whether `setPage` calls should be animated.
      */
     alwaysAnimate: PropTypes.bool,
-    
+
     /**
      * This callback when FlipView selection is changed (when user swipes between
      * pages). The `event.nativeEvent` object passed to this callback will have

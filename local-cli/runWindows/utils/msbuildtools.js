@@ -10,7 +10,6 @@ const Version = require('./version');
 const checkRequirements = require('./checkRequirements');
 
 const MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
-const VS_EDITIONS = ['Enterprise', 'Professional', 'Community', 'Express'];
 
 class MSBuildTools {
   constructor(version, localPath) {
@@ -65,7 +64,7 @@ class MSBuildTools {
 function checkMSBuildVersion(version) {
   let toolsPath = null;
   // This path is maintained and VS has promised to keep it valid.
-  const vsWherePath = path.join(process.env["ProgramFiles(x86)"], "/Microsoft Visual Studio/Installer/vswhere.exe");
+  const vsWherePath = path.join(process.env['ProgramFiles(x86)'], '/Microsoft Visual Studio/Installer/vswhere.exe');
   // Check if VS 2017 is installed and if true, go there to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
     const vsPath = child_process.execSync(`"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath`).toString().split(EOL)[0];
@@ -92,7 +91,7 @@ function checkMSBuildVersion(version) {
   }
 
   // We found something so return MSBuild Tools.
-  if(toolsPath){
+  if (toolsPath){
     console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
     return new MSBuildTools(version, toolsPath);
   }

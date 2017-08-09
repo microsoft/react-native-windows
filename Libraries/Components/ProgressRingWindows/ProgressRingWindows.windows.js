@@ -30,12 +30,12 @@ class ProgressRingWindows extends React.Component {
   };
 
   render() {
-    return <WindowsProgressRing {...this.props}/> ;
+    return <WindowsProgressRing {...this.props}/>;
   }
 }
 
 var WindowsProgressRing = requireNativeComponent(
-    'WindowsProgressRing', 
+    'WindowsProgressRing',
     ProgressRingWindows,
     {nativeOnly: {animating: true}}
 );

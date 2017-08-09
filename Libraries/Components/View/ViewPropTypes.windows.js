@@ -471,12 +471,12 @@ module.exports = {
   needsOffscreenAlphaCompositing: PropTypes.bool,
 
   /**
-   * Controls how view can be manipulated using gestures. We have not yet added 
+   * Controls how view can be manipulated using gestures. We have not yet added
    * support for inertia or rails manipulation modes.
    *
    * Possible values:
    *
-   *  - `'system'` - (default) The view responds in the way designated by the 
+   *  - `'system'` - (default) The view responds in the way designated by the
    *    native system
    *  - `'none'` - The view does not respond to any touch.
    *  - `'translateX'` - The view responds to X-dimension gestures.
