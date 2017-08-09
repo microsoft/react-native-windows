@@ -103,18 +103,7 @@ namespace ReactNative.Views.Scroll
         [ReactProp("scrollEnabled", DefaultBoolean = true)]
         public void SetEnabled(ScrollViewer view, bool enabled)
         {
-            if (enabled)
-            {
-                view.CanContentScroll = true;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                view.HorizontalScrollBarVisibility = _scrollViewerData[view].HorizontalScrollBarVisibility;
-            }
-            else
-            {
-                view.CanContentScroll = false;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                view.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-            }
+            view.CanContentScroll = enabled;
         }
 
         /// <summary>
@@ -358,8 +347,8 @@ namespace ReactNative.Views.Scroll
 
             var scrollViewer = new ScrollViewer
             {
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 Focusable = false,
             };
 
