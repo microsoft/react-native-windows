@@ -3,3 +3,9 @@
 **/staticBundle.js
 **/main.js
 Libraries/vendor/**/*
+RNTester/**/*
+# Ignore files copied by builds
+**/bin/**/*
+# Ignore template files
+**/templates/index.*.js
+

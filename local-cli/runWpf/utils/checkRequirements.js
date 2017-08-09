@@ -63,4 +63,4 @@ function checkWinSdk (windowsTargetVersion) {
 
 module.exports.isWinSdkPresent = function isWinSdkPresent(target) {
   return checkWinSdk(target);
-}
+};

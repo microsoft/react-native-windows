@@ -53,6 +53,7 @@ test:
 test_script:
 #  - npm run flow-check
   - npm test
+  - npm run lint
 
 after_test:
   - ps: Stop-Process -Id $winium.Id

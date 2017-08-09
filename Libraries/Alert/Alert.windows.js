@@ -76,7 +76,7 @@ type Options = {
  * )
  * ```
  * ## Windows
- * 
+ *
  * On Windows at most two buttons can be specified.
  *
  *   - If you specify one button, it will be the 'positive' one (such as 'OK')
@@ -186,16 +186,16 @@ class AlertWindows {
       title: title || '',
       message: message || '',
     };
-    // At most two buttons (negative, positive). Ignore rest. The text 
+    // At most two buttons (negative, positive). Ignore rest. The text
     // 'OK' should be probably localized. iOS Alert does that in native.
     var validButtons: Buttons = buttons ? buttons.slice(0, 2) : [{text: 'OK'}];
     var buttonPositive = validButtons.pop();
     var buttonNegative = validButtons.pop();
     if (buttonNegative) {
-      config = {...config, buttonNegative: buttonNegative.text || '' }
+      config = {...config, buttonNegative: buttonNegative.text || '' };
     }
     if (buttonPositive) {
-      config = {...config, buttonPositive: buttonPositive.text || '' }
+      config = {...config, buttonPositive: buttonPositive.text || '' };
     }
     NativeModules.DialogManagerWindows.showAlert(
       config,

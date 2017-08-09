@@ -1,7 +1,7 @@
-var selenium = require('selenium-webdriver')
-var By = selenium.By
+var selenium = require('selenium-webdriver');
+var By = selenium.By;
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
 
 describe('In PlaygroundNet46 Test', () => {
     beforeAll((done) => {
@@ -12,19 +12,19 @@ describe('In PlaygroundNet46 Test', () => {
               'launchDelay': '1000'
           })
           .forBrowser('desktop')
-          .build()
-        done()
-    })
+          .build();
+        done();
+    });
 
     it('has WelcomeText text', (done) => {
-        var button = this.driver.findElement(By.id('WelcomeText'))
+        var button = this.driver.findElement(By.id('WelcomeText'));
         button.getAttribute('AutomationId').then((id) => {
-            expect(id).toEqual('WelcomeText')
-            done()
-        })
-    })
+            expect(id).toEqual('WelcomeText');
+            done();
+        });
+    });
 
     afterAll((done) => {
-        this.driver.quit().then(done)
-    })
-})
+        this.driver.quit().then(done);
+    });
+});

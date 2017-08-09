@@ -19,7 +19,7 @@ const HttpsProxyAgent = require('https-proxy-agent');
 
 const proxyUrl = process.env.https_proxy || process.env.HTTPS_PROXY;
 const options  = {};
-if(proxyUrl) {
+if (proxyUrl) {
   options.agent = new HttpsProxyAgent(proxyUrl);
 }
 
@@ -45,11 +45,11 @@ const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
 function getLatestVersion() {
   return fetch('https://registry.npmjs.org/react-native-windows?version=latest', options)
     .then(result => result && result.ok && result.json())
-    .then(result => result.version)
+    .then(result => result.version);
 }
 
 function getMatchingVersion(version) {
-  console.log(`Checking for react-native-windows version matching ${version}...`)
+  console.log(`Checking for react-native-windows version matching ${version}...`);
   return fetch(`https://registry.npmjs.org/react-native-windows?version=${version}`, options)
     .then(result => {
       if (result && result.ok) {
@@ -102,21 +102,21 @@ function isGlobalCliUsingYarn(projectDir) {
   return fs.existsSync(path.join(projectDir, 'yarn.lock'));
 }
 
-module.exports = function windows(config, args, options) {
+module.exports = function windows(config, args, opts) {
   const name = args[0] ? args[0] : getReactNativeAppName();
-  const ns = options.namespace ? options.namespace : name;
-  const version = options.windowsVersion ? options.windowsVersion : getReactNativeVersion();
+  const ns = opts.namespace ? opts.namespace : name;
+  const version = opts.windowsVersion ? opts.windowsVersion : getReactNativeVersion();
 
   return getInstallPackage(version)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
       const pkgmgr = isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
 
-      const execOptions = options.verbose ? { stdio: 'inherit' }: {};
+      const execOptions = opts.verbose ? { stdio: 'inherit' } : {};
       execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
       generateWindows(process.cwd(), name, ns);
     }).catch(error => console.error(chalk.red(error.message)));
-}
+};
