@@ -4,6 +4,8 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -490,8 +492,96 @@ namespace ReactNative.Views.Scroll
 
         private static void ScrollTo(ScrollViewer scrollView, double x, double y, bool animated)
         {
-            scrollView.ScrollToHorizontalOffset(x);
-            scrollView.ScrollToVerticalOffset(y);
+            if (animated)
+            {
+                Task.Run(() => ScrollToAnimated(new WeakReference<ScrollViewer>(scrollView), x, y));
+            }
+            else
+            {
+                scrollView.ScrollToHorizontalOffset(x);
+                scrollView.ScrollToVerticalOffset(y);
+            }
+        }
+
+        /// <summary>
+        /// As the <see cref="ScrollToAnimated"/> method is reentrant,
+        /// _scollViewCancelMap is a Dictionary to map scrollView and <see cref="CancellationTokenSource"/>.
+        /// </summary>
+        private static readonly Dictionary<int, CancellationTokenSource> _scollViewCancelMap = new Dictionary<int, CancellationTokenSource>();
+
+        /// <summary>
+        /// ScrollViewer does not support ScrollToSomeWhere animated, this is custom animated work.
+        /// </summary>
+        /// <param name="weakScrollView">WeakRefernce ScrollViewer</param>
+        /// <param name="x">Scroll to x</param>
+        /// <param name="y">Scroll to y</param>
+        /// <returns>Async task once scrolling is done</returns>
+        private static async Task ScrollToAnimated(WeakReference<ScrollViewer> weakScrollView, double x, double y)
+        {
+            double currentScrollOffsetX = 0;
+            double currentScrollOffsetY = 0;
+
+            // Will do animation in this period
+            const int ANIMATED_TIME_INTERVAL = 300;
+
+            // Progressively scroll time unit
+            const int ANIMATED_TIME_UNIT = 100;
+
+            // Total times to do progressive scroll
+            const int ANIMATED_TIME_SLOT = ANIMATED_TIME_INTERVAL / ANIMATED_TIME_UNIT;
+
+            // Threshold to check equalness for double value
+            const double DOUBLE_EQUAL_THRESHOLD = 0.001;
+
+            ScrollViewer scrollView;
+            if (weakScrollView.TryGetTarget(out scrollView))
+            {
+                // Check to cancel previous scrolling
+                var hashCode = scrollView.GetHashCode();
+                if (_scollViewCancelMap.ContainsKey(hashCode))
+                {
+                    _scollViewCancelMap[hashCode].Cancel();
+                } else
+                {
+                    _scollViewCancelMap.Add(hashCode, new CancellationTokenSource());
+                }
+
+                // Setup progressive scrolling settings
+                currentScrollOffsetX = scrollView.HorizontalOffset;
+                currentScrollOffsetY = scrollView.VerticalOffset;
+                var biasX = (x - currentScrollOffsetX) / ANIMATED_TIME_SLOT;
+                var biasY = (y - currentScrollOffsetY) / ANIMATED_TIME_SLOT;
+
+                var isHorizontalScroll = Math.Abs(x - currentScrollOffsetX) >= DOUBLE_EQUAL_THRESHOLD;
+                var isVerticalScroll = Math.Abs(y - currentScrollOffsetY) >= DOUBLE_EQUAL_THRESHOLD;
+
+                while ((isHorizontalScroll || isVerticalScroll) && !_scollViewCancelMap[hashCode].IsCancellationRequested)
+                {
+                    if (isHorizontalScroll)
+                    {
+                        scrollView.ScrollToHorizontalOffset(currentScrollOffsetX + biasX);
+                    }
+
+                    if (isVerticalScroll)
+                    {
+                        scrollView.ScrollToVerticalOffset(currentScrollOffsetY + biasY);
+                    }
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(ANIMATED_TIME_UNIT), _scollViewCancelMap[hashCode].Token);
+
+                    // Setup next run's progressive scrolling settings
+                    if (!weakScrollView.TryGetTarget(out scrollView))
+                    {
+                        break;
+                    }
+                    currentScrollOffsetX = scrollView.HorizontalOffset;
+                    currentScrollOffsetY = scrollView.VerticalOffset;
+                    isHorizontalScroll = Math.Abs(x - currentScrollOffsetX) >= DOUBLE_EQUAL_THRESHOLD;
+                    isVerticalScroll = Math.Abs(y - currentScrollOffsetY) >= DOUBLE_EQUAL_THRESHOLD;
+                }
+
+                _scollViewCancelMap.Remove(hashCode);
+            }
         }
 
         class ScrollEvent : Event
