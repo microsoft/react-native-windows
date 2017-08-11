@@ -170,7 +170,9 @@
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
+    <Compile Include="Views\Scroll\IScrollView.cs" />
     <Compile Include="Views\Scroll\ReactScrollViewManager.cs" />
+    <Compile Include="Views\Scroll\ScrollView.cs" />
     <Compile Include="Views\Slider\ReactSliderManager.cs" />
     <Compile Include="Views\TextInput\PlaceholderAdorner.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
