@@ -17,7 +17,7 @@ namespace ReactNative
     /// </summary>
     public abstract class ReactPage : Page, IAsyncDisposable
     {
-        private readonly IReactInstanceManager _reactInstanceManager;
+        private readonly ReactInstanceManager _reactInstanceManager;
 
         private bool _isShiftKeyDown;
         private bool _isControlKeyDown;
@@ -195,9 +195,9 @@ namespace ReactNative
             }
         }
 
-        private IReactInstanceManager CreateReactInstanceManager()
+        private ReactInstanceManager CreateReactInstanceManager()
         {
-            var builder = new ReactInstanceManager.Builder
+            var builder = new ReactInstanceManagerBuilder
             {
                 UseDeveloperSupport = UseDeveloperSupport,
                 InitialLifecycleState = LifecycleState.Resumed,

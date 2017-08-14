@@ -4,7 +4,7 @@ using System;
 namespace ReactNative
 {
     /// <summary>
-    /// Event arguments for the <see cref="IReactInstanceManager.ReactContextInitialized"/>
+    /// Event arguments for the <see cref="ReactInstanceManager.ReactContextInitialized"/>
     /// event.
     /// </summary>
     public sealed class ReactContextInitializedEventArgs : EventArgs

@@ -110,7 +110,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\IStackFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackFrameExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackTraceHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactPackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModule.cs" />
@@ -139,6 +138,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />

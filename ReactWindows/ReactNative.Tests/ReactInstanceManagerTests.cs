@@ -12,13 +12,13 @@ namespace ReactNative.Tests
         public void ReactInstanceManager_Builder_SetterChecks()
         {
             AssertEx.Throws<InvalidOperationException>(
-                () => new ReactInstanceManager.Builder
+                () => new ReactInstanceManagerBuilder
                     {
                         JavaScriptBundleFile = "ms-appx:///Resources/main.jsbundle",
                     }.Build());
 
             AssertEx.Throws<InvalidOperationException>(
-                () => new ReactInstanceManager.Builder
+                () => new ReactInstanceManagerBuilder
                     {
                         InitialLifecycleState = LifecycleState.Resumed,
                     }.Build());
@@ -230,7 +230,7 @@ namespace ReactNative.Tests
 
         private static ReactInstanceManager CreateReactInstanceManager(string jsBundleFile)
         {
-            return new ReactInstanceManager.Builder
+            return new ReactInstanceManagerBuilder
             {
                 InitialLifecycleState = LifecycleState.Resumed,
                 JavaScriptBundleFile = jsBundleFile,
