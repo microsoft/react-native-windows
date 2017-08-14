@@ -45,7 +45,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.Generated.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />

@@ -9,7 +9,6 @@
     <Import_RootNamespace>ReactNative.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistrySharedTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\PromiseTests.cs" />
@@ -18,7 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\AssertEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptModuleRegistryExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockInvocationHandler.cs" />

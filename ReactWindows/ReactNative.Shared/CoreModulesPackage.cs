@@ -67,21 +67,6 @@ namespace ReactNative
             };
         }
 
-        public IReadOnlyList<Type> CreateJavaScriptModulesConfig()
-        {
-            return new List<Type>
-            {
-                typeof(RCTDeviceEventEmitter),
-                typeof(JSTimers),
-                typeof(RCTEventEmitter),
-                typeof(RCTNativeAppEventEmitter),
-                typeof(AppRegistry),
-                // TODO: some tracing module
-                typeof(HMRClient),
-                //typeof(RCTDebugComponentOwnership),
-            };
-        }
-
         public IReadOnlyList<IViewManager> CreateViewManagers(
             ReactContext reactContext)
         {
