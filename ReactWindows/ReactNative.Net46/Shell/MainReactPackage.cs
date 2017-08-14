@@ -59,16 +59,6 @@ namespace ReactNative.Shell
         }
 
         /// <summary>
-        /// Creates the list of JavaScript modules to register with the
-        /// React instance.
-        /// </summary>
-        /// <returns>The list of JavaScript modules.</returns>
-        public IReadOnlyList<Type> CreateJavaScriptModulesConfig()
-        {
-            return new List<Type>(0);
-        }
-
-        /// <summary>
         /// Creates the list of view managers that should be registered with
         /// the <see cref="UIManagerModule"/>.
         /// </summary>

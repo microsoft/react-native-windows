@@ -59,7 +59,7 @@ namespace ReactNative.Bridge
         /// <typeparam name="T">Type of JavaScript module.</typeparam>
         /// <returns>The JavaScript module instance.</returns>
         public T GetJavaScriptModule<T>() 
-            where T : IJavaScriptModule
+            where T : IJavaScriptModule, new()
         {
             AssertReactInstance();
             return _reactInstance.GetJavaScriptModule<T>();

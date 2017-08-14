@@ -571,7 +571,6 @@ namespace ReactNative
             _sourceUrl = jsBundleLoader.SourceUrl;
 
             var nativeRegistryBuilder = new NativeModuleRegistry.Builder();
-            var jsModulesBuilder = new JavaScriptModuleRegistry.Builder();
 
             var reactContext = new ReactContext();
             if (_useDeveloperSupport)
@@ -584,14 +583,14 @@ namespace ReactNative
                 var coreModulesPackage =
                     new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
 
-                ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);
+                ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }
 
             foreach (var reactPackage in _packages)
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCustomReactPackage").Start())
                 {
-                    ProcessPackage(reactPackage, reactContext, nativeRegistryBuilder, jsModulesBuilder);
+                    ProcessPackage(reactPackage, reactContext, nativeRegistryBuilder);
                 }
             }
 
@@ -607,7 +606,6 @@ namespace ReactNative
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
                 JavaScriptExecutorFactory = jsExecutorFactory,
                 Registry = nativeModuleRegistry,
-                JavaScriptModuleRegistry = jsModulesBuilder.Build(),
                 BundleLoader = jsBundleLoader,
                 NativeModuleCallExceptionHandler = exceptionHandler,
             };
@@ -635,17 +633,11 @@ namespace ReactNative
         private void ProcessPackage(
             IReactPackage reactPackage,
             ReactContext reactContext,
-            NativeModuleRegistry.Builder nativeRegistryBuilder,
-            JavaScriptModuleRegistry.Builder jsModulesBuilder)
+            NativeModuleRegistry.Builder nativeRegistryBuilder)
         {
             foreach (var nativeModule in reactPackage.CreateNativeModules(reactContext))
             {
                 nativeRegistryBuilder.Add(nativeModule);
-            }
-
-            foreach (var type in reactPackage.CreateJavaScriptModulesConfig())
-            {
-                jsModulesBuilder.Add(type);
             }
         }
 
