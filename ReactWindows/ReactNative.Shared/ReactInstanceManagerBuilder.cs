@@ -17,7 +17,7 @@ namespace ReactNative
         private string _jsBundleFile;
         private string _jsMainModuleName;
         private bool _useDeveloperSupport;
-        private LifecycleState _initialLifecycleState;
+        private LifecycleState? _initialLifecycleState;
         private UIImplementationProvider _uiImplementationProvider;
         private Action<Exception> _nativeModuleCallExceptionHandler;
         private Func<IJavaScriptExecutor> _jsExecutorFactory;
@@ -130,6 +130,11 @@ namespace ReactNative
         /// <returns>The instance.</returns>
         public ReactInstanceManager Build()
         {
+            if (!_initialLifecycleState.HasValue)
+            {
+                throw new InvalidOperationException("Initial lifecycle state was not set.");
+            }
+
             if (!_useDeveloperSupport && _jsBundleFile == null)
             {
                 throw new InvalidOperationException(
@@ -156,7 +161,7 @@ namespace ReactNative
                 _jsMainModuleName,
                 _packages,
                 _useDeveloperSupport,
-                _initialLifecycleState,
+                _initialLifecycleState.Value,
                 _uiImplementationProvider,
                 _jsExecutorFactory,
                 _nativeModuleCallExceptionHandler);
