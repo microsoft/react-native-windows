@@ -1,4 +1,5 @@
 ﻿using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Chakra.Executor;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
