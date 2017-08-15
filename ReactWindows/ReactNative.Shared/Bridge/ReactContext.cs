@@ -133,7 +133,14 @@ namespace ReactNative.Bridge
 
             foreach (var listener in clone)
             {
-                listener.OnSuspend();
+                try
+                {
+                    listener.OnSuspend();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
             }
         }
 
@@ -158,14 +165,21 @@ namespace ReactNative.Bridge
 
             foreach (var listener in clone)
             {
-                listener.OnResume();
+                try
+                {
+                    listener.OnResume();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
             }
         }
 
         /// <summary>
-        /// Called by the host when the application shuts down.
+        /// Called by the host when the application is destroyed.
         /// </summary>
-        public async Task DisposeAsync()
+        public void OnDestroy()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -183,8 +197,23 @@ namespace ReactNative.Bridge
 
             foreach (var listener in clone)
             {
-                listener.OnDestroy();
+                try
+                {
+                    listener.OnDestroy();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
             }
+        }
+
+        /// <summary>
+        /// Called by the host when the application shuts down.
+        /// </summary>
+        public async Task DisposeAsync()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
 
             var reactInstance = _reactInstance;
             if (reactInstance != null)

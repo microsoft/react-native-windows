@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using ReactNative.Common;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace ReactNative.Tests
             AssertEx.Throws<InvalidOperationException>(
                 () => new ReactInstanceManager.Builder
                     {
-                        InitialLifecycleState = LifecycleState.Resumed,
+                        InitialLifecycleState = LifecycleState.BeforeCreate,
                     }.Build());
         }
 
