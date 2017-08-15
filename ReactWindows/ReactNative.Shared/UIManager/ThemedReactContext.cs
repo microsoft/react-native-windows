@@ -44,7 +44,7 @@ namespace ReactNative.UIManager
         /// <typeparam name="T">Type of JavaScript module.</typeparam>
         /// <returns>The JavaScript module instance.</returns>
         public T GetJavaScriptModule<T>()
-            where T : IJavaScriptModule
+            where T : IJavaScriptModule, new()
         {
             return _reactContext.GetJavaScriptModule<T>();
         }
