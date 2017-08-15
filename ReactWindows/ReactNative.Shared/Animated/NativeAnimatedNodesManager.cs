@@ -92,6 +92,9 @@ namespace ReactNative.Animated
                 case "multiplication":
                     node = new MultiplicationAnimatedNode(tag, config, this);
                     break;
+                case "modulus":
+                    node = new ModulusAnimatedNode(tag, config, this);
+                    break;
                 case "diffclamp":
                     node = new DiffClampAnimatedNode(tag, config, this);
                     break;
