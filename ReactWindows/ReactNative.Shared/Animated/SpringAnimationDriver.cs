@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Collections;
 using System;
 
 namespace ReactNative.Animated
@@ -34,6 +35,10 @@ namespace ReactNative.Animated
         private double _restSpeedThreshold;
         private double _displacementFromRestThreshold;
         private double _timeAccumulator = 0;
+        // for controlling loop
+        private int _iterations;
+        private int _currentLoop = 0;
+        private double _originalValue;
         
         public SpringAnimationDriver(int id, ValueAnimatedNode animatedValue, ICallback endCallback, JObject config)
             : base(id, animatedValue, endCallback)
@@ -45,6 +50,8 @@ namespace ReactNative.Animated
             _restSpeedThreshold = config.Value<double>("restSpeedThreshold");
             _displacementFromRestThreshold = config.Value<double>("restDisplacementThreshold");
             _overshootClampingEnabled = config.Value<bool>("overshootClamping");
+            _iterations = config.ContainsKey("iterations") ? config.Value<int>("iterations") : 1;
+            HasFinished = _iterations == 0;
         }
 
         public override void RunAnimationStep(TimeSpan renderingTime)
@@ -52,6 +59,11 @@ namespace ReactNative.Animated
             var frameTimeMillis = renderingTime.Ticks / 10000;
             if (!_springStarted)
             {
+                if (_currentLoop == 0)
+                {
+                    _originalValue = AnimatedValue.RawValue;
+                    _currentLoop = 1;
+                }
                 _startValue = _currentState.Position = AnimatedValue.RawValue;
                 _lastTime = frameTimeMillis;
                 _springStarted = true;
@@ -60,8 +72,21 @@ namespace ReactNative.Animated
             Advance((frameTimeMillis - _lastTime) / 1000.0);
             _lastTime = frameTimeMillis;
             AnimatedValue.RawValue = _currentState.Position;
-
-            HasFinished = IsAtRest();
+            if (IsAtRest())
+            {
+                if (_iterations == -1 || _currentLoop < _iterations)
+                {
+                    // looping animation, return to start
+                    _springStarted = false;
+                    AnimatedValue.RawValue = _originalValue;
+                    _currentLoop++;
+                }
+                else
+                {
+                    // animation has completed
+                    HasFinished = IsAtRest();
+                }
+            }
         }
 
         /// <summary>

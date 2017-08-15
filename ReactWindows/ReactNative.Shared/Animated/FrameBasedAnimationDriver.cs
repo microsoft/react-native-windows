@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Collections;
 using System;
 
 namespace ReactNative.Animated
@@ -13,12 +14,17 @@ namespace ReactNative.Animated
 
         private long _startFrameTimeTicks = -1;
         private double _fromValue;
+        private int _iterations;
+        private int _currentLoop;
 
         public FrameBasedAnimationDriver(int id, ValueAnimatedNode animatedValue, ICallback endCallback, JObject config)
             : base(id, animatedValue, endCallback)
         {
             _frames = config.GetValue("frames", StringComparison.Ordinal).ToObject<double[]>();
             _toValue = config.Value<double>("toValue");
+            _iterations = config.ContainsKey("iterations") ? config.Value<int>("iterations") : 1;
+            _currentLoop = 1;
+            HasFinished = _iterations == 0;
         }
 
         public override void RunAnimationStep(TimeSpan renderingTime)
@@ -46,8 +52,18 @@ namespace ReactNative.Animated
             var nextValue = default(double);
             if (frameIndex >= _frames.Length - 1)
             {
-                HasFinished = true;
                 nextValue = _toValue;
+                if (_iterations == -1 || _currentLoop < _iterations)
+                {
+                    // looping animation, return to start
+                    _startFrameTimeTicks = renderingTime.Ticks;
+                    _currentLoop++;
+                }
+                else
+                {
+                    // animation has completed, no more frames left
+                    HasFinished = true;
+                }
             }
             else
             {
