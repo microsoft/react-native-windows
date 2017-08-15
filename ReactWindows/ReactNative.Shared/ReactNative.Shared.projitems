@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\EventAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\FrameBasedAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\InterpolationAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\ModulusAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\MultiplicationAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\NativeAnimatedModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\NativeAnimatedNodesManager.cs" />
