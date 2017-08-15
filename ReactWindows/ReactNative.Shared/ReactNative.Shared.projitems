@@ -237,7 +237,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Modules\DeviceInfo\" />
-  </ItemGroup>
 </Project>

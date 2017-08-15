@@ -5,8 +5,14 @@ using Windows.UI.Core;
 
 namespace ReactNative.Bridge
 {
+    /// <summary>
+    /// A set of helpers for dispatcher access.
+    /// </summary>
     public static class DispatcherHelpers
     {
+        /// <summary>
+        /// Asserts that the current thread has dispatcher access.
+        /// </summary>
         public static void AssertOnDispatcher()
         {
             if (!IsOnDispatcher())
@@ -15,16 +21,34 @@ namespace ReactNative.Bridge
             }
         }
 
+        /// <summary>
+        /// Checks if the current thread has dispatcher access.
+        /// </summary>
+        /// <returns>
+        /// <code>true</code> if the current thread has dispatcher access,
+        /// otherwise <code>false</code>.
+        /// </returns>
         public static bool IsOnDispatcher()
         {
             return CoreWindow.GetForCurrentThread()?.Dispatcher != null;
         }
 
+        /// <summary>
+        /// Invokes an action on the dispatcher.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
         public static async void RunOnDispatcher(DispatchedHandler action)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Invokes a function on the dispatcher and asynchronously returns the
+        /// result.
+        /// </summary>
+        /// <typeparam name="T">Function return type.</typeparam>
+        /// <param name="func">The function to invoke.</param>
+        /// <returns>A task to await the result.</returns>
         public static Task<T> CallOnDispatcher<T>(Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
