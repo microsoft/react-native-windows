@@ -52,6 +52,7 @@ namespace ReactNative.Modules.DeviceInfo
 
         /// <summary>
         /// Called when the application is suspended.
+        /// </summary>
         public void OnSuspend()
         {
             _window.SizeChanged -= OnBoundsChanged;
