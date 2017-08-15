@@ -27,8 +27,8 @@ namespace ReactNative.Animated
             {
                 // since this is the first animation step, consider the start to be on the previous frame
                 _startFrameTimeMillis = frameTimeMillis - 16;
-                _fromValue = AnimatedValue.Value;
-                _lastValue = AnimatedValue.Value;
+                _fromValue = AnimatedValue.RawValue;
+                _lastValue = AnimatedValue.RawValue;
             }
 
             var value = _fromValue +
@@ -42,7 +42,7 @@ namespace ReactNative.Animated
             }
 
             _lastValue = value;
-            AnimatedValue.Value = value;
+            AnimatedValue.RawValue = value;
         }
     }
 }

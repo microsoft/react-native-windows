@@ -35,7 +35,7 @@ namespace ReactNative.Animated
                 current = (JObject)current[_eventPath[i]];
             }
 
-            ValueNode.Value = current.Value<double>(_eventPath[_eventPath.Count - 1]);
+            ValueNode.RawValue = current.Value<double>(_eventPath[_eventPath.Count - 1]);
         }
 
         public override void receiveTouches(string eventName, JArray touches, JArray changedIndexes)

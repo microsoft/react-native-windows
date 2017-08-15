@@ -6,7 +6,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using static System.FormattableString;
 
 namespace ReactNative.Animated
@@ -155,8 +154,48 @@ namespace ReactNative.Animated
                     Invariant($"Animated node with tag '{tag}' is not a value node."));
             }
 
-            valueNode.Value = value;
+            valueNode.RawValue = value;
             _updatedNodes.Add(node);
+        }
+
+        public void SetAnimatedNodeOffset(int tag, double offset)
+        {
+            var node = GetNode(tag);
+            var valueNode = node as ValueAnimatedNode;
+            if (valueNode == null)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Animated node with tag '{tag}' is not a value node"));
+            }
+
+            valueNode.Offset = offset;
+            _updatedNodes.Add(node);
+        }
+
+        public void FlattenAnimatedNodeOffset(int tag)
+        {
+            var node = GetNode(tag);
+            var valueNode = node as ValueAnimatedNode;
+            if (valueNode == null)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Animated node with tag '{tag}' is not a value node"));
+            }
+
+            valueNode.FlattenOffset();
+        }
+
+        public void ExtractAnimatedNodeOffset(int tag)
+        {
+            var node = GetNode(tag);
+            var valueNode = node as ValueAnimatedNode;
+            if (valueNode == null)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Animated node with tag '{tag}' is not a value node"));
+            }
+
+            valueNode.ExtractOffset();
         }
 
         public void StartAnimatingNode(int animationId, int animatedNodeTag, JObject animationConfig, ICallback endCallback)

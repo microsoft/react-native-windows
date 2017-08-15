@@ -26,7 +26,7 @@ namespace ReactNative.Animated
             if (_startFrameTimeTicks < 0)
             {
                 _startFrameTimeTicks = renderingTime.Ticks;
-                _fromValue = AnimatedValue.Value;
+                _fromValue = AnimatedValue.RawValue;
             }
 
             var timeFromStartTicks = (renderingTime.Ticks - _startFrameTimeTicks) / 10000.0;
@@ -54,7 +54,7 @@ namespace ReactNative.Animated
                 nextValue = _fromValue + _frames[frameIndex] * (_toValue - _fromValue);
             }
 
-            AnimatedValue.Value = nextValue;
+            AnimatedValue.RawValue = nextValue;
         }
     }
 }

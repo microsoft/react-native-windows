@@ -29,7 +29,7 @@ namespace ReactNative.Animated
                 var value = valueNode.Value;
                 if (i == 0)
                 {
-                    Value = value;
+                    RawValue = value;
                     continue;
                 }
 
@@ -39,7 +39,7 @@ namespace ReactNative.Animated
                         "Detected a division by zero in Animated.divide node.");
                 }
 
-                Value /= value;
+                RawValue /= value;
             }
         }
     }
