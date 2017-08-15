@@ -256,6 +256,40 @@ namespace ReactNative.Animated
         }
 
         /// <summary>
+        /// Sets the offset of the animated node.
+        /// </summary>
+        /// <param name="tag">Tag of the animated node.</param>
+        /// <param name="value">Animated node offset.</param>
+        [ReactMethod]
+        public void setAnimatedNodeOffset(int tag, double value)
+        {
+            _operations.Add(manager =>
+                manager.SetAnimatedNodeOffset(tag, value));
+        }
+
+        /// <summary>
+        /// Flattens the animated node offset.
+        /// </summary>
+        /// <param name="tag">Tag of the animated node.</param>
+        [ReactMethod]
+        public void flattenAnimatedNodeOffset(int tag)
+        {
+            _operations.Add(manager =>
+                manager.FlattenAnimatedNodeOffset(tag));
+        }
+
+        /// <summary>
+        /// Extracts the animated node offset.
+        /// </summary>
+        /// <param name="tag">Tag of the animated node.</param>
+        [ReactMethod]
+        public void extractAnimatedNodeOffset(int tag)
+        {
+            _operations.Add(manager =>
+                manager.ExtractAnimatedNodeOffset(tag));
+        }
+
+        /// <summary>
         /// Starts an animation on the given node with the given identifier.
         /// </summary>
         /// <param name="animationId">Anmation identifier.</param>

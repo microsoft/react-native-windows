@@ -52,14 +52,14 @@ namespace ReactNative.Animated
             var frameTimeMillis = renderingTime.Ticks / 10000;
             if (!_springStarted)
             {
-                _startValue = _currentState.Position = AnimatedValue.Value;
+                _startValue = _currentState.Position = AnimatedValue.RawValue;
                 _lastTime = frameTimeMillis;
                 _springStarted = true;
             }
 
             Advance((frameTimeMillis - _lastTime) / 1000.0);
             _lastTime = frameTimeMillis;
-            AnimatedValue.Value = _currentState.Position;
+            AnimatedValue.RawValue = _currentState.Position;
 
             HasFinished = IsAtRest();
         }
