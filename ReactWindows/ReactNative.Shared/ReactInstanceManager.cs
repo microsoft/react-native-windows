@@ -23,16 +23,16 @@ namespace ReactNative
     ///
     /// An instance of this manager is required to start the JavaScript
     /// application in <see cref="ReactRootView"/>
-    /// (<see cref="ReactRootView.StartReactApplication(IReactInstanceManager, string)"/>).
+    /// (<see cref="ReactRootView.StartReactApplication(ReactInstanceManager, string)"/>).
     ///
-    /// The lifecycle of the instance of <see cref="IReactInstanceManager"/>
+    /// The lifecycle of the instance of <see cref="ReactInstanceManager"/>
     /// should be bound to the application that owns the
     /// <see cref="ReactRootView"/> that is used to render the React
     /// application using this instance manager. It is required to pass
     /// lifecycle events to the instance manager (i.e., <see cref="OnSuspend"/>,
     /// <see cref="IAsyncDisposable.DisposeAsync"/>, and <see cref="OnResume(Action)"/>).
     /// </summary>
-    public class ReactInstanceManager : IReactInstanceManager
+    public class ReactInstanceManager
     {
         private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
 
@@ -61,7 +61,7 @@ namespace ReactNative
         /// </summary>
         public event EventHandler<ReactContextInitializedEventArgs> ReactContextInitialized;
 
-        private ReactInstanceManager(
+        internal ReactInstanceManager(
             string jsBundleFile,
             string jsMainModuleName,
             IReadOnlyList<IReactPackage> packages,
@@ -86,7 +86,7 @@ namespace ReactNative
             _devSupportManager = _useDeveloperSupport
                 ? (IDevSupportManager)new DevSupportManager(
                     new ReactInstanceDevCommandsHandler(this),
-                    _jsBundleFile,
+                    _jsBundleFile == null,
                     _jsMainModuleName)
                 : new DisabledDevSupportManager();
 
@@ -269,7 +269,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Destroy the <see cref="IReactInstanceManager"/>.
+        /// Destroy the <see cref="ReactInstanceManager"/>.
         /// </summary>
         public async Task DisposeAsync()
         {
@@ -389,11 +389,11 @@ namespace ReactNative
             }
             else
             {
-                RecreateReactContextInBackgroundFromBundleFile();
+                RecreateReactContextInBackgroundFromBundleLoader();
             }
         }
 
-        private void RecreateReactContextInBackgroundFromBundleFile()
+        private void RecreateReactContextInBackgroundFromBundleLoader()
         {
             RecreateReactContextInBackground(
                 _javaScriptExecutorFactory,
@@ -709,156 +709,6 @@ namespace ReactNative
             _currentReactContext?
                 .GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("toggleElementInspector", null);
-        }
-
-        /// <summary>
-        /// A Builder responsible for creating a React Instance Manager.
-        /// </summary>
-        public sealed class Builder
-        {
-            private List<IReactPackage> _packages = new List<IReactPackage>();
-
-            private bool _useDeveloperSupport;
-            private string _jsBundleFile;
-            private string _jsMainModuleName;
-            private LifecycleState? _initialLifecycleState;
-            private UIImplementationProvider _uiImplementationProvider;
-            private Func<IJavaScriptExecutor> _javaScriptExecutorFactory;
-            private Action<Exception> _nativeModuleCallExceptionHandler;
-
-            /// <summary>
-            /// A provider of <see cref="UIImplementation" />.
-            /// </summary>
-            public UIImplementationProvider UIImplementationProvider
-            {
-                set
-                {
-                    _uiImplementationProvider = value;
-                }
-            }
-
-            /// <summary>
-            /// Path to the JavaScript bundle file to be loaded from the file
-            /// system.
-            /// </summary>
-            public string JavaScriptBundleFile
-            {
-                set
-                {
-                    _jsBundleFile = value;
-                }
-            }
-
-            /// <summary>
-            /// Path to the applications main module on the packager server.
-            /// </summary>
-            public string JavaScriptMainModuleName
-            {
-                set
-                {
-                    _jsMainModuleName = value;
-                }
-            }
-
-            /// <summary>
-            /// The mutable list of React packages.
-            /// </summary>
-            public List<IReactPackage> Packages
-            {
-                get
-                {
-                    return _packages;
-                }
-            }
-
-            /// <summary>
-            /// Signals whether the application should enable developer support.
-            /// </summary>
-            public bool UseDeveloperSupport
-            {
-                set
-                {
-                    _useDeveloperSupport = value;
-                }
-            }
-
-            /// <summary>
-            /// The initial lifecycle state of the host.
-            /// </summary>
-            public LifecycleState InitialLifecycleState
-            {
-                set
-                {
-                    _initialLifecycleState = value;
-                }
-            }
-
-            /// <summary>
-            /// Instantiates the JavaScript executor.
-            /// </summary>
-            public Func<IJavaScriptExecutor> JavaScriptExecutorFactory
-            {
-                set
-                {
-                    _javaScriptExecutorFactory = value;
-                }
-            }
-
-            /// <summary>
-            /// The exception handler for all native module calls.
-            /// </summary>
-            public Action<Exception> NativeModuleCallExceptionHandler
-            {
-                set
-                {
-                    _nativeModuleCallExceptionHandler = value;
-                }
-            }
-
-            /// <summary>
-            /// Instantiates a new <see cref="ReactInstanceManager"/>.
-            /// </summary>
-            /// <returns>A React instance manager.</returns>
-            public ReactInstanceManager Build()
-            {
-                AssertNotNull(_initialLifecycleState, nameof(InitialLifecycleState));
-
-                if (!_useDeveloperSupport && _jsBundleFile == null)
-                {
-                    throw new InvalidOperationException("JavaScript bundle file has to be provided when dev support is disabled.");
-                }
-
-                if (_jsBundleFile == null && _jsMainModuleName == null)
-                {
-                    throw new InvalidOperationException("Either the main module name or the JavaScript bundle file must be provided.");
-                }
-
-                if (_uiImplementationProvider == null)
-                {
-                    _uiImplementationProvider = new UIImplementationProvider();
-                }
-
-                if (_javaScriptExecutorFactory == null)
-                {
-                    _javaScriptExecutorFactory = () => new ChakraJavaScriptExecutor();
-                }
-
-                return new ReactInstanceManager(
-                    _jsBundleFile,
-                    _jsMainModuleName,
-                    _packages,
-                    _useDeveloperSupport,
-                    _initialLifecycleState.Value,
-                    _uiImplementationProvider,
-                    _javaScriptExecutorFactory,
-                    _nativeModuleCallExceptionHandler);
-            }
-
-            private void AssertNotNull(object value, string name)
-            {
-                if (value == null)
-                    throw new InvalidOperationException(Invariant($"'{name}' has not been set."));
-            }
         }
 
         class ReactInstanceDevCommandsHandler : IReactInstanceDevCommandsHandler
