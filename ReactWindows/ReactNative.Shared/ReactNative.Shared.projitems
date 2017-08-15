@@ -96,6 +96,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackage.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackTraceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactPackage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\ExceptionsManagerModule.cs" />

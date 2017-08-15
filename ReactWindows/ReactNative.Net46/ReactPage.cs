@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -213,7 +214,7 @@ namespace ReactNative
             var builder = new ReactInstanceManager.Builder
             {
                 UseDeveloperSupport = UseDeveloperSupport,
-                InitialLifecycleState = LifecycleState.Resumed,
+                InitialLifecycleState = LifecycleState.BeforeCreate,
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
                 JavaScriptExecutorFactory = JavaScriptExecutorFactory,
