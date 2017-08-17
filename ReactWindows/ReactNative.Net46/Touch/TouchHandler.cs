@@ -388,7 +388,7 @@ namespace ReactNative.Touch
             private readonly uint _coalescingKey;
 
             public TouchEvent(TouchEventType touchEventType, JArray touches, JArray changedIndices, uint coalescingKey)
-                : base(-1, TimeSpan.FromTicks(Environment.TickCount))
+                : base(-1)
             {
                 _touchEventType = touchEventType;
                 _touches = touches;
@@ -422,7 +422,7 @@ namespace ReactNative.Touch
             private readonly TouchEventType _touchEventType;
 
             public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+                : base(viewTag)
             {
                 _touchEventType = touchEventType;
             }

@@ -63,19 +63,13 @@ namespace ReactNative.UIManager.Events
                 return 1;
             }
 
-            var diff = x.Timestamp - y.Timestamp;
-            if (diff == TimeSpan.Zero)
+            var value = x.Timestamp.CompareTo(y.Timestamp);
+            if (value == 0)
             {
-                return 0;
+                return x.SortingKey.CompareTo(y.SortingKey);
             }
-            else if (diff < TimeSpan.Zero)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
+
+            return value;
         });
 
         private readonly object _eventsStagingLock = new object();
