@@ -42,10 +42,6 @@ namespace ReactNative.Tests
                 () => manager.DetachRootView(null),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.OnResume(null),
-                ex => Assert.AreEqual("onBackPressed", ex.ParamName));
-
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 

@@ -91,6 +91,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// Applies a layout animation for the given view on the transition to
         /// the given coordinates and dimensions.
         /// </summary>
+        /// <param name="viewManager">The view manager for the native view.</param>
         /// <param name="view">The native view to animate.</param>
         /// <param name="dimensions">The new view dimensions to animate to.</param>
         public void ApplyLayoutUpdate(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
@@ -116,7 +117,8 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// Animate a view deletion using the layout animation configuration
         /// supplied during initialization.
         /// </summary>
-        /// <param name="view">The view to animation.</param>
+        /// <param name="viewManager">The view manager for the native view.</param>
+        /// <param name="view">The view to animate.</param>
         /// <param name="finally">
         /// Called once the animation is finished, should be used to completely
         /// remove the view.

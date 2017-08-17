@@ -20,7 +20,7 @@ namespace ReactNative.Animated
             _min = config.Value<double>("min");
             _max = config.Value<double>("max");
 
-            Value = _lastValue = GetInputNodeValue();
+            RawValue = _lastValue = 0;
         }
 
         public override void Update()
@@ -29,7 +29,7 @@ namespace ReactNative.Animated
 
             var diff = value - _lastValue;
             _lastValue = value;
-            Value = Math.Min(Math.Max(Value + diff, _min), _max);
+            RawValue = Math.Min(Math.Max(Value + diff, _min), _max);
         }
 
         private double GetInputNodeValue()
