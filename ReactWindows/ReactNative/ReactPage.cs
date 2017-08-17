@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace ReactNative
     /// </summary>
     public abstract class ReactPage : Page, IAsyncDisposable
     {
-        private readonly IReactInstanceManager _reactInstanceManager;
+        private readonly ReactInstanceManager _reactInstanceManager;
 
         private bool _isShiftKeyDown;
         private bool _isControlKeyDown;
@@ -195,12 +196,12 @@ namespace ReactNative
             }
         }
 
-        private IReactInstanceManager CreateReactInstanceManager()
+        private ReactInstanceManager CreateReactInstanceManager()
         {
-            var builder = new ReactInstanceManager.Builder
+            var builder = new ReactInstanceManagerBuilder
             {
                 UseDeveloperSupport = UseDeveloperSupport,
-                InitialLifecycleState = LifecycleState.Resumed,
+                InitialLifecycleState = LifecycleState.BeforeCreate,
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
                 JavaScriptExecutorFactory = JavaScriptExecutorFactory,

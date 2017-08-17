@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\EventAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\FrameBasedAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\InterpolationAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\ModulusAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\MultiplicationAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\NativeAnimatedModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\NativeAnimatedNodesManager.cs" />
@@ -45,7 +46,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptBundleLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.Generated.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />
@@ -97,6 +97,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackage.cs" />
@@ -111,9 +112,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\IStackFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackFrameExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackTraceHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactPackage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\ExceptionsManagerModule.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
@@ -236,8 +236,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Modules\DeviceInfo\" />
   </ItemGroup>
 </Project>
