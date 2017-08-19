@@ -75,15 +75,7 @@ namespace ReactNative.Modules.AppState
         [ReactMethod]
         public void getCurrentAppState(ICallback success, ICallback error)
         {
-            // Accessing the `_appState` field from the dispatcher thread.
-            // This ensures that any calls to `getCurrentAppState` are queued
-            // behind any pending calls to `OnResume`. This is especially
-            // important at app start, where there is a race condition where
-            // the `AppState` JavaScript module makes an initial call to
-            // `getCurrentAppState`, which could return an `uninitialized`
-            // value after the `OnResume` call delivers the `active` state.
-            DispatcherHelpers.RunOnDispatcher(() =>
-                success.Invoke(CreateAppStateEventMap()));
+            success.Invoke(CreateAppStateEventMap());
         }
 
         private JObject CreateAppStateEventMap()
