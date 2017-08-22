@@ -155,7 +155,10 @@
     <Compile Include="Accessibility\DynamicAutomationPeer.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
+    <Compile Include="Views\Image\Composition\BlurEffect.cs" />
+    <Compile Include="Views\Image\Composition\EffectManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
+    <Compile Include="Views\Image\Composition\TintColorEffect.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />
@@ -232,6 +235,9 @@
     </PackageReference>
     <PackageReference Include="System.Reactive">
       <Version>4.0.0-preview00001</Version>
+    </PackageReference>
+    <PackageReference Include="Win2D.uwp">
+      <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -12,6 +12,7 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
@@ -25,8 +26,8 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly ConcurrentDictionary<Border, List<KeyValuePair<string, double>>> _imageSources =
-            new ConcurrentDictionary<Border, List<KeyValuePair<string, double>>>();
+        private readonly ConcurrentDictionary<Border, ReactImageData> _imageData =
+            new ConcurrentDictionary<Border, ReactImageData>();
 
         /// <summary>
         /// The view manager name.
@@ -130,30 +131,12 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                if (_imageSources.TryGetValue(view, out var viewSources))
-                {
-                    viewSources.Clear();
-                }
-                else
-                {
-                    viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.AddOrUpdate(view, viewSources, (k, v) => viewSources);
-                }
-
-                foreach (var source in sources)
-                {
-                    var sourceData = (JObject)source;
-                    viewSources.Add(
-                        new KeyValuePair<string, double>(
-                            sourceData.Value<string>("uri"),
-                            sourceData.Value<double>("width") * sourceData.Value<double>("height")));
-                }
-
-                viewSources.Sort((p1, p2) => p1.Value.CompareTo(p2.Value));
+                GetImageData(view).SetSources(sources);
 
                 if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
                 {
-                    // If we need to choose from multiple URIs but the size is not yet set, wait for layout pass
+                    // If we need to choose from multiple URIs but the size is not yet set,
+                    // wait for layout pass
                     return;
                 }
 
@@ -175,7 +158,7 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
-        /// The border radius of the <see cref="ReactRootView"/>.
+        /// Set the border radius of the <see cref="ReactRootView"/>.
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="index">The prop index.</param>
@@ -207,7 +190,54 @@ namespace ReactNative.Views.Image
                     cornerRadius.BottomRight = radius;
                     break;
             }
+
             view.CornerRadius = cornerRadius;
+        }
+
+        /// <summary>
+        /// Set the blur radius of the image view.
+        /// </summary>
+        /// <param name="view">The image view instance.</param>
+        /// <param name="blurRadius">The blur radius value.</param>
+        [ReactProp("blurRadius")]
+        public void SetBlurRadius(Border view, double blurRadius)
+        {
+            var data = GetImageData(view);
+            if (data.BlurRadius != blurRadius)
+            {
+                data.BlurRadius = blurRadius;
+                if (EffectManager.IsCompositionSupported)
+                {
+                    data.EffectManager.SetBlurRadius(blurRadius);
+                }
+                else
+                {
+                    Debug.WriteLine("Blur radius isn't supported.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the tint color of the image view.
+        /// </summary>
+        /// <param name="view">The image view instance.</param>
+        /// <param name="color">The tint color value.</param>
+        [ReactProp("tintColor")]
+        public void SetTintColor(Border view, uint? color)
+        {
+            var data = GetImageData(view);
+            if (data.TintColor != color)
+            {
+                data.TintColor = color;
+                if (EffectManager.IsCompositionSupported)
+                {
+                    data.EffectManager.SetTintColor(color.Value);
+                }
+                else
+                {
+                    Debug.WriteLine("Tint color isn't supported.");
+                }
+            }
         }
 
         /// <summary>
@@ -251,7 +281,8 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _imageSources.TryRemove(view, out _);
+            _imageData[view].Dispose();
+            _imageData.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -340,11 +371,13 @@ namespace ReactNative.Views.Image
                 var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
                 var dispatcher = CoreApplication.GetCurrentView().Dispatcher;
                 var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source), default(CancellationToken), dispatcher);
+                var imageData = GetImageData(view);
                 var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
 
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
                 imageBrush.ImageSource = image;
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
+                imageData.SourceUri = source;
             }
             catch (Exception e)
             {
@@ -360,11 +393,81 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         private void SetUriFromMultipleSources(Border view)
         {
-            if (_imageSources.TryGetValue(view, out var sources))
+            var sources = GetImageData(view).Sources;
+            if (sources != default(List<KeyValuePair<string, double>>))
             {
                 var targetImageSize = view.Width * view.Height;
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));
                 SetUriFromSingleSource(view, bestResult.Key);
+            }
+        }
+
+        private ReactImageData GetImageData(Border view)
+        {
+            var data = default(ReactImageData);
+            if (!_imageData.TryGetValue(view, out data))
+            {
+                data = new ReactImageData(view);
+                _imageData.AddOrUpdate(view, data, (k, v) => data);
+            }
+
+            return data;
+        }
+
+        class ReactImageData : IDisposable
+        {
+            private List<KeyValuePair<string, double>> _sources;
+
+            public List<KeyValuePair<string, double>> Sources
+            {
+                get
+                {
+                    return _sources;
+                }
+            }
+
+            public string SourceUri { get; set; }
+
+            public EffectManager EffectManager { get; private set; }
+
+            public uint? TintColor { get; set; }
+
+            public double? BlurRadius { get; set; }
+
+            public ReactImageData(FrameworkElement element)
+            {
+                EffectManager = new EffectManager(element);
+            }
+
+            public void SetSources(JArray sources)
+            {
+                if (_sources != default(List<KeyValuePair<string, double>>))
+                {
+                    _sources.Clear();
+                }
+                else
+                {
+                    _sources = new List<KeyValuePair<string, double>>(sources.Count);
+                }
+
+                foreach (var source in sources)
+                {
+                    var sourceData = (JObject)source;
+                    _sources.Add(
+                        new KeyValuePair<string, double>(
+                            sourceData.Value<string>("uri"),
+                            sourceData.Value<double>("width") * sourceData.Value<double>("height")));
+                }
+
+                _sources.Sort((p1, p2) => p1.Value.CompareTo(p2.Value));
+            }
+
+            /// <summary>
+            /// Disposes the <see cref="EffectManager"/>.
+            /// </summary>
+            public void Dispose()
+            {
+                EffectManager.Dispose();
             }
         }
     }
