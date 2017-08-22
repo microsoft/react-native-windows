@@ -3,7 +3,7 @@ max_jobs: 2
 
 # Reducing build load and CI time by specifying the exact test matrix.
 environment:
-  nodejs_version: "LTS"
+  nodejs_version: "8"
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       PLATFORM_TOOLSET: v140
@@ -40,8 +40,8 @@ hosts:
   api.nuget.org: 93.184.221.200
 
 install:
-  - ps: Install-Product node $env:nodejs_version x64
-  - npm install -g npm@latest
+  - ps: Install-Product node $env:nodejs_version
+  - npm i -g npm@latest
   - npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
   - ps: mkdir C:\winium
