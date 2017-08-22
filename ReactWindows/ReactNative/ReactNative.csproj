@@ -11,7 +11,7 @@
     <AssemblyName>ReactNative</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -143,7 +143,12 @@
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
+    <Compile Include="Views\Image\Composition\BlurEffect.cs" />
+    <Compile Include="Views\Image\ColorFilterPostprocessor.cs" />
+    <Compile Include="Views\Image\Composition\EffectManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
+    <Compile Include="Views\Image\ReactImageData.cs" />
+    <Compile Include="Views\Image\Composition\TintColorEffect.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />
@@ -191,17 +196,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ChakraBridge\ChakraBridge.vcxproj">
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
