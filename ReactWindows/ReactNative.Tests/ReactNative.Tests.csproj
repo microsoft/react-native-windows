@@ -104,6 +104,7 @@
     <Compile Include="Modules\Clipboard\ClipboardModuleTests.cs" />
     <Compile Include="Modules\Clipboard\MockClipboardInstance.cs" />
     <Compile Include="Modules\Core\TimingTests.cs" />
+    <Compile Include="Modules\Image\ImageLoaderModuleTests.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModuleTests.cs" />
     <Compile Include="Modules\StatusBar\StatusBarModuleTests.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModuleTests.cs" />
