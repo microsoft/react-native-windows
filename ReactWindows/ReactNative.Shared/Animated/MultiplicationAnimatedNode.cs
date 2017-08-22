@@ -17,7 +17,7 @@ namespace ReactNative.Animated
 
         public override void Update()
         {
-            Value = 1;
+            RawValue = 1;
             foreach (var tag in _inputNodes)
             {
                 var valueNode = _manager.GetNodeById(tag) as ValueAnimatedNode;
@@ -27,7 +27,7 @@ namespace ReactNative.Animated
                         "Illegal node ID set as an input for Animated.Add node.");
                 }
 
-                Value *= valueNode.Value;
+                RawValue *= valueNode.Value;
             }
         }
     }

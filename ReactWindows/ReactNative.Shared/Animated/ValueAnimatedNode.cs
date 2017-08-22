@@ -10,7 +10,8 @@ namespace ReactNative.Animated
         public ValueAnimatedNode(int tag, JObject config)
             : this(tag)
         {
-            Value = config.Value<double>("value");
+            RawValue = config.Value<double>("value");
+            Offset = config.Value<double>("offset");
         }
 
         public ValueAnimatedNode(int tag)
@@ -18,10 +19,36 @@ namespace ReactNative.Animated
         {
         }
 
-        public double Value
+        public double RawValue
         {
             get;
             set;
+        }
+
+        public double Value
+        {
+            get
+            {
+                return Offset + RawValue;
+            }
+        }
+
+        public double Offset
+        {
+            get;
+            set;
+        }
+
+        public void ExtractOffset()
+        {
+            Offset += RawValue;
+            RawValue = 0;
+        }
+
+        public void FlattenOffset()
+        {
+            RawValue += Offset;
+            Offset = 0;
         }
 
         public void OnValueUpdate()

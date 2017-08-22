@@ -16,7 +16,7 @@ For more information on the kinds of options and flags available for deploying t
 
 ## Running the Universal Windows App with Visual Studio
 
-Open your solution in Visual Studio 2015, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
+Open your solution in Visual Studio, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
 
 ### Desktop
 

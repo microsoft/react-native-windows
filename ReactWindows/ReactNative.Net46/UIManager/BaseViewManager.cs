@@ -53,7 +53,23 @@ namespace ReactNative.UIManager
             view.Opacity = opacity;
         }
 
-        // ToDo: SetOverflow - ReactProp("overflow")
+        /// <summary>
+        /// Sets the overflow property for the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="overflow">The overflow value.</param>
+        [ReactProp("overflow")]
+        public void SetOverflow(TFrameworkElement view, string overflow)
+        {
+            if (overflow == "hidden")
+            {
+                view.ClipToBounds = true;
+            }
+            else
+            {
+                view.ClipToBounds = false;
+            }
+        }
 
         /// <summary>
         /// Sets the z-index of the element.

@@ -111,7 +111,7 @@ class WebView extends React.Component {
      * @platform android, windows
      */
     javaScriptEnabled: PropTypes.bool,
-    
+
     /**
      * Used on Windows only, controls whether Indexed DB is enabled or not
      * @platform windows

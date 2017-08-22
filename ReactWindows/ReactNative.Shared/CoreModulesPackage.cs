@@ -22,12 +22,12 @@ namespace ReactNative
     /// </summary>
     class CoreModulesPackage : IReactPackage
     {
-        private readonly IReactInstanceManager _reactInstanceManager;
+        private readonly ReactInstanceManager _reactInstanceManager;
         private readonly Action _hardwareBackButtonHandler;
         private readonly UIImplementationProvider _uiImplementationProvider;
 
         public CoreModulesPackage(
-            IReactInstanceManager reactInstanceManager,
+            ReactInstanceManager reactInstanceManager,
             Action hardwareBackButtonHandler,
             UIImplementationProvider uiImplementationProvider)
         {
@@ -64,21 +64,6 @@ namespace ReactNative
                     _reactInstanceManager.DevSupportManager.SourceMapUrl),
                 uiManagerModule,
                 //new DebugComponentOwnershipModule(reactContext),
-            };
-        }
-
-        public IReadOnlyList<Type> CreateJavaScriptModulesConfig()
-        {
-            return new List<Type>
-            {
-                typeof(RCTDeviceEventEmitter),
-                typeof(JSTimers),
-                typeof(RCTEventEmitter),
-                typeof(RCTNativeAppEventEmitter),
-                typeof(AppRegistry),
-                // TODO: some tracing module
-                typeof(HMRClient),
-                //typeof(RCTDebugComponentOwnership),
             };
         }
 

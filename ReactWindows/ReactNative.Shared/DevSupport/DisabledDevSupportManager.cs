@@ -4,12 +4,6 @@ using ReactNative.Modules.DevSupport;
 using System;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
-#if WINDOWS_UWP
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
-#else
-using System.Windows.Threading;
-#endif
 
 namespace ReactNative.DevSupport
 {
@@ -67,16 +61,9 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public async void HandleException(Exception exception)
+        public void HandleException(Exception exception)
         {
-#if WINDOWS_UWP
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
-            {
-                ExceptionDispatchInfo.Capture(exception).Throw();
-            }).AsTask().ConfigureAwait(false);
-#else
             DispatcherHelpers.RunOnDispatcher(() => ExceptionDispatchInfo.Capture(exception).Throw());
-#endif
         }
 
         public void HandleReloadJavaScript()
