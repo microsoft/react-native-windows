@@ -36,6 +36,9 @@ matrix:
   # Fail everything immediately if one build fails.
   fast_finish: true
 
+cache:
+  - node_modules
+
 hosts:
   api.nuget.org: 93.184.221.200
 
