@@ -1,5 +1,6 @@
 ﻿using ReactNative.Bridge;
 using System;
+using System.Runtime.InteropServices;
 
 namespace ReactNative.Modules.Clipboard
 {
@@ -45,14 +46,21 @@ namespace ReactNative.Modules.Clipboard
 
             DispatcherHelpers.RunOnDispatcher(() =>
             {
-                if (_clipboard.ContainsText())
+                try
                 {
-                    var text = _clipboard.GetText();
-                    promise.Resolve(text);
+                    if (_clipboard.ContainsText())
+                    {
+                        var text = _clipboard.GetText();
+                        promise.Resolve(text);
+                    }
+                    else
+                    {
+                        promise.Resolve("");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    promise.Resolve("");
+                    promise.Reject(ex);
                 }
             });
         }
@@ -66,7 +74,14 @@ namespace ReactNative.Modules.Clipboard
         {
             DispatcherHelpers.RunOnDispatcher(new Action(() =>
             {
-                _clipboard.SetText(text);
+                try
+                {
+                    _clipboard.SetText(text);
+                }
+                catch (Exception)
+                {
+                    // Ignored
+                }
             }));
         }
     }
