@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace ReactNative.UIManager.Events
 {
@@ -13,20 +14,21 @@ namespace ReactNative.UIManager.Events
     /// </remarks>
     public abstract class Event : IDisposable
     {
+        private static Stopwatch s_stopwatch = Stopwatch.StartNew();
+
         private bool _initialized;
         private int _viewTag;
-        private TimeSpan _timestamp;
+        private long _timestamp;
 
         /// <summary>
         /// Base constructor for <see cref="Event"/>.
         /// </summary>
         /// <param name="viewTag">The view tag.</param>
-        /// <param name="timestamp">The event timestamp.</param>
-        protected Event(int viewTag, TimeSpan timestamp)
+        protected Event(int viewTag)
         {
-            Init(viewTag, timestamp);
+            Init(viewTag, s_stopwatch.ElapsedTicks);
         }
-        
+
         /// <summary>
         /// The name of the event as registered in JavaScript.
         /// </summary>
@@ -46,7 +48,7 @@ namespace ReactNative.UIManager.Events
         /// <summary>
         /// The time at which the event happened in the 
         /// </summary>
-        public TimeSpan Timestamp
+        public long Timestamp
         {
             get
             {
@@ -94,6 +96,18 @@ namespace ReactNative.UIManager.Events
         }
 
         /// <summary>
+        /// A key used to guarantee that two events with relative sequencing
+        /// requirements are dispatched in order.
+        /// </summary>
+        public virtual int SortingKey
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
         /// Given two events, coalesce them into a single event that will be
         /// sent to JavaScript instead of two separate events.
         /// </summary>
@@ -133,7 +147,7 @@ namespace ReactNative.UIManager.Events
         /// This method must be called before the event is sent to the event
         /// dispatcher.
         /// </remarks>
-        protected void Init(int viewTag, TimeSpan timestamp)
+        protected void Init(int viewTag, long timestamp)
         {
             _viewTag = viewTag;
             _timestamp = timestamp;
