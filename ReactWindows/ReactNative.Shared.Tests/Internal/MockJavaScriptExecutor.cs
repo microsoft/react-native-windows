@@ -23,9 +23,9 @@ namespace ReactNative.Tests
 
         public void Initialize() { }
 
-        public void RunScript(string script, string sourceUrl)
+        public void RunScript(string sourcePath, string sourceUrl)
         {
-            OnRunScript(script, sourceUrl);
+            OnRunScript(sourcePath, sourceUrl);
         }
 
         public void SetGlobalVariable(string propertyName, JToken value)

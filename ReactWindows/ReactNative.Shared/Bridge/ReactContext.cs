@@ -59,7 +59,7 @@ namespace ReactNative.Bridge
         /// <typeparam name="T">Type of JavaScript module.</typeparam>
         /// <returns>The JavaScript module instance.</returns>
         public T GetJavaScriptModule<T>() 
-            where T : IJavaScriptModule
+            where T : IJavaScriptModule, new()
         {
             AssertReactInstance();
             return _reactInstance.GetJavaScriptModule<T>();
@@ -133,7 +133,14 @@ namespace ReactNative.Bridge
 
             foreach (var listener in clone)
             {
-                listener.OnSuspend();
+                try
+                {
+                    listener.OnSuspend();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
             }
         }
 
@@ -158,14 +165,21 @@ namespace ReactNative.Bridge
 
             foreach (var listener in clone)
             {
-                listener.OnResume();
+                try
+                {
+                    listener.OnResume();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
             }
         }
 
         /// <summary>
-        /// Called by the host when the application shuts down.
+        /// Called by the host when the application is destroyed.
         /// </summary>
-        public async Task DisposeAsync()
+        public void OnDestroy()
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -183,8 +197,23 @@ namespace ReactNative.Bridge
 
             foreach (var listener in clone)
             {
-                listener.OnDestroy();
+                try
+                {
+                    listener.OnDestroy();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
             }
+        }
+
+        /// <summary>
+        /// Called by the host when the application shuts down.
+        /// </summary>
+        public async Task DisposeAsync()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
 
             var reactInstance = _reactInstance;
             if (reactInstance != null)
@@ -227,6 +256,40 @@ namespace ReactNative.Bridge
         {
             AssertReactInstance();
             _reactInstance.QueueConfiguration.DispatcherQueueThread.RunOnQueue(action);
+        }
+
+        /// <summary>
+        /// Checks if the current thread is on the React instance layout
+        /// queue thread.
+        /// </summary>
+        /// <returns>
+        /// <b>true</b> if the call is from the layout queue thread,
+        ///  <b>false</b> otherwise.
+        /// </returns>
+        public bool IsOnLayoutQueueThread()
+        {
+            AssertReactInstance();
+            return _reactInstance.QueueConfiguration.LayoutQueueThread.IsOnThread();
+        }
+
+        /// <summary>
+        /// Asserts that the current thread is on the React instance layout
+        /// queue thread.
+        /// </summary>
+        public void AssertOnLayoutQueueThread()
+        {
+            AssertReactInstance();
+            _reactInstance.QueueConfiguration.LayoutQueueThread.AssertOnThread();
+        }
+
+        /// <summary>
+        /// Enqueues an action on the layout queue thread.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        public void RunOnLayoutQueueThread(Action action)
+        {
+            AssertReactInstance();
+            _reactInstance.QueueConfiguration.LayoutQueueThread.RunOnQueue(action);
         }
 
         /// <summary>

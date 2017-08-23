@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace ReactNative
     /// </summary>
     public abstract class ReactPage : Page, IAsyncDisposable
     {
-        private readonly Lazy<IReactInstanceManager> _reactInstanceManager;
+        private readonly Lazy<ReactInstanceManager> _reactInstanceManager;
         private readonly Lazy<ReactRootView> _rootView;
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace ReactNative
         /// </summary>
         protected ReactPage()
         {
-            _reactInstanceManager = new Lazy<IReactInstanceManager>(() =>
+            _reactInstanceManager = new Lazy<ReactInstanceManager>(() =>
             {
                 DispatcherHelpers.CurrentDispatcher = base.Dispatcher;
 
@@ -42,7 +43,7 @@ namespace ReactNative
             });
         }
 
-        private IReactInstanceManager ReactInstanceManager => _reactInstanceManager.Value;
+        private ReactInstanceManager ReactInstanceManager => _reactInstanceManager.Value;
 
         /// <summary>
         /// The custom path of the bundle file.
@@ -208,12 +209,12 @@ namespace ReactNative
             }
         }
 
-        private IReactInstanceManager CreateReactInstanceManager()
+        private ReactInstanceManager CreateReactInstanceManager()
         {
-            var builder = new ReactInstanceManager.Builder
+            var builder = new ReactInstanceManagerBuilder
             {
                 UseDeveloperSupport = UseDeveloperSupport,
-                InitialLifecycleState = LifecycleState.Resumed,
+                InitialLifecycleState = LifecycleState.BeforeCreate,
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
                 JavaScriptExecutorFactory = JavaScriptExecutorFactory,

@@ -19,6 +19,11 @@
         /// Any background thread type.
         /// </summary>
         BackgroundAnyThread,
+
+        /// <summary>
+        /// Layout thread type.
+        /// </summary>
+        LayoutThread,
     }
 
 }

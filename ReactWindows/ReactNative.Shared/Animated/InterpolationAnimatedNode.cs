@@ -60,7 +60,7 @@ namespace ReactNative.Animated
                     "Trying to update interpolation node that has not been attached to the parent.");
             }
 
-            Value = Interpolate(_parent.Value, _inputRange, _outputRange, _extrapolateLeft, _extrapolateRight);
+            RawValue = Interpolate(_parent.Value, _inputRange, _outputRange, _extrapolateLeft, _extrapolateRight);
         }
 
         private static double Interpolate(
