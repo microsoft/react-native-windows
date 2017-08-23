@@ -138,7 +138,7 @@ namespace ReactNative.Views.Flip
             private readonly int _position;
 
             public SelectionChangedEvent(int viewTag, int position)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+                : base(viewTag)
             {
                 _position = position;
             }
