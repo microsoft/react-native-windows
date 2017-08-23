@@ -1,5 +1,6 @@
 ﻿using ReactNative.Bridge;
 using System;
+using System.Runtime.InteropServices;
 
 namespace ReactNative.Modules.Clipboard
 {
@@ -43,16 +44,25 @@ namespace ReactNative.Modules.Clipboard
                 throw new ArgumentNullException(nameof(promise));
             }
 
-            if (_clipboard.ContainsText())
+            DispatcherHelpers.RunOnDispatcher(() =>
             {
-                var text = _clipboard.GetText();
-                promise.Resolve(text);
-            }
-            else
-            {
-                promise.Resolve("");
-            }
-
+                try
+                {
+                    if (_clipboard.ContainsText())
+                    {
+                        var text = _clipboard.GetText();
+                        promise.Resolve(text);
+                    }
+                    else
+                    {
+                        promise.Resolve("");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    promise.Reject(ex);
+                }
+            });
         }
 
         /// <summary>
@@ -62,7 +72,17 @@ namespace ReactNative.Modules.Clipboard
         [ReactMethod]
         public void setString(string text)
         {
-            _clipboard.SetText(text);
+            DispatcherHelpers.RunOnDispatcher(new Action(() =>
+            {
+                try
+                {
+                    _clipboard.SetText(text);
+                }
+                catch (Exception)
+                {
+                    // Ignored
+                }
+            }));
         }
     }
 }
