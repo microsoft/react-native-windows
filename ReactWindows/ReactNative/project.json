@@ -6,7 +6,8 @@
     "Newtonsoft.Json": "9.0.1",
     "OpenCover": "4.6.519",
     "PCLStorage": "1.0.2",
-    "System.Reactive": "3.1.1"
+    "System.Reactive": "3.1.1",
+    "Win2D.uwp": "1.21.0"
   },
   "frameworks": {
     "uap10.0": {}

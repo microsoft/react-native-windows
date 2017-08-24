@@ -85,12 +85,12 @@ namespace ReactNative.Modules.Image
                         return Task.CompletedTask;
                     }
 
-                    CloseableReference<CloseableImage> reference = response.GetResult();
+                    var reference = response.GetResult();
                     if (reference != null)
                     {
                         try
                         {
-                            CloseableImage image = reference.Get();
+                            var image = reference.Get();
                             promise.Resolve(new JObject
                             {
                                 { "width", image.Width },

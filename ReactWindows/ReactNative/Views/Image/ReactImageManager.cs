@@ -1,12 +1,14 @@
 ﻿using ImagePipeline.Core;
 using ImagePipeline.Request;
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -19,8 +21,8 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
-            new Dictionary<int, List<KeyValuePair<string, double>>>();
+        private readonly Dictionary<int, ReactImageData> _imageData =
+            new Dictionary<int, ReactImageData>();
 
         /// <summary>
         /// The view manager name.
@@ -117,29 +119,7 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                var viewSources = default(List<KeyValuePair<string, double>>);
-                var tag = view.GetTag();
-
-                if (_imageSources.TryGetValue(tag, out viewSources))
-                {
-                    viewSources.Clear();
-                }
-                else
-                {
-                    viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.Add(tag, viewSources);
-                }
-
-                foreach (var source in sources)
-                {
-                    var sourceData = (JObject)source;
-                    viewSources.Add(
-                        new KeyValuePair<string, double>(
-                            sourceData.Value<string>("uri"),
-                            sourceData.Value<double>("width") * sourceData.Value<double>("height")));
-                }
-
-                viewSources.Sort((p1, p2) => p1.Value.CompareTo(p2.Value));
+                GetImageData(view).SetSources(sources);
 
                 if (double.IsNaN(view.Width) || double.IsNaN(view.Height))
                 {
@@ -150,9 +130,32 @@ namespace ReactNative.Views.Image
                 SetUriFromMultipleSources(view);
             }
         }
-        
+
         /// <summary>
-        /// The border radius of the <see cref="ReactRootView"/>.
+        /// Set the blur radius of the image view.
+        /// </summary>
+        /// <param name="view">The image view instance.</param>
+        /// <param name="blurRadius">The blur radius value.</param>
+        [ReactProp("blurRadius")]
+        public void SetBlurRadius(Border view, double blurRadius)
+        {
+            var data = GetImageData(view);
+            if (data.BlurRadius != blurRadius)
+            {
+                data.BlurRadius = blurRadius;
+                if (EffectManager.IsCompositionSupported)
+                {
+                    data.EffectManager.SetBlurRadius(blurRadius);
+                }
+                else
+                {
+                    Debug.WriteLine("Blur radius isn't supported.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the border radius of the <see cref="ReactRootView"/>.
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="radius">The border radius value.</param>
@@ -160,6 +163,48 @@ namespace ReactNative.Views.Image
         public void SetBorderRadius(Border view, double radius)
         {
             view.CornerRadius = new CornerRadius(radius);
+        }
+
+        /// <summary>
+        /// Set the tint color of the image view.
+        /// </summary>
+        /// <param name="view">The image view instance.</param>
+        /// <param name="color">The tint color value.</param>
+        [ReactProp("tintColor")]
+        public void SetTintColor(Border view, uint? color)
+        {
+            var data = GetImageData(view);
+            if (data.TintColor != color)
+            {
+                data.TintColor = color;
+                if (EffectManager.IsCompositionSupported)
+                {
+                    data.EffectManager.SetTintColor(color.Value);
+                }
+                else if (data.SourceUri != null)
+                {
+                    UpdateImage(view);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the background color of the image view.
+        /// </summary>
+        /// <param name="view">The image view instance.</param>
+        /// <param name="color">The background color value.</param>
+        [ReactProp("backgroundColor")]
+        public void SetBackgroundColor(Border view, uint? color)
+        {
+            var data = GetImageData(view);
+            if (data.BackgroundColor != color)
+            {
+                data.BackgroundColor = color;
+                if (data.SourceUri != null)
+                {
+                    UpdateImage(view);
+                }
+            }
         }
 
         /// <summary>
@@ -203,7 +248,9 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _imageSources.Remove(view.GetTag());
+            var tag = view.GetTag();
+            _imageData[tag].Dispose();
+            _imageData.Remove(tag);
         }
 
         /// <summary>
@@ -273,21 +320,36 @@ namespace ReactNative.Views.Image
                 var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
                 var image = default(BitmapSource);
                 var uri = new Uri(source);
+                var builder = ImageRequestBuilder.NewBuilderWithSource(uri);
+                var imageData = GetImageData(view);
 
-                // Remote images
-                if (source.StartsWith("http:") || source.StartsWith("https:"))
+                // Apply postprocessor if Composition isn't supported.
+                if (imageData.BackgroundColor != null || 
+                    (imageData.TintColor != null && !EffectManager.IsCompositionSupported))
                 {
-                    image = await imagePipeline.FetchEncodedBitmapImageAsync(uri);                   
+                    builder.SetPostprocessor(new ColorFilterPostprocessor(
+                        imageData.TintColor, imageData.BackgroundColor));
+
+                    image = await imagePipeline.FetchDecodedBitmapImageAsync(builder.Build());
                 }
-                else // Base64 or local images
+                else
                 {
-                    image = await imagePipeline.FetchDecodedBitmapImageAsync(ImageRequest.FromUri(uri));
+                    // Remote images
+                    if (source.StartsWith("http:") || source.StartsWith("https:"))
+                    {
+                        image = await imagePipeline.FetchEncodedBitmapImageAsync(uri);                   
+                    }
+                    else // Base64 or local images
+                    {
+                        image = await imagePipeline.FetchDecodedBitmapImageAsync(ImageRequest.FromUri(uri));
+                    }
                 }
 
                 var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
                 imageBrush.ImageSource = image;
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
+                imageData.SourceUri = source;
             }
             catch
             {
@@ -303,13 +365,45 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         private void SetUriFromMultipleSources(Border view)
         {
-            var sources = default(List<KeyValuePair<string, double>>);
-            if (_imageSources.TryGetValue(view.GetTag(), out sources))
+            var sources = GetImageData(view).Sources;
+            if (sources != default(List<KeyValuePair<string, double>>))
             {
                 var targetImageSize = view.Width * view.Height;
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));
                 SetUriFromSingleSource(view, bestResult.Key);
             }
+        }
+
+        private ReactImageData GetImageData(Border view)
+        {
+            var tag = view.GetTag();
+            var data = default(ReactImageData);
+            if (!_imageData.TryGetValue(tag, out data))
+            {
+                data = new ReactImageData(view);
+                _imageData.Add(tag, data);
+            }
+
+            return data;
+        }
+
+        private async void UpdateImage(Border view)
+        {
+            var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
+            var imageData = GetImageData(view);
+            var builder = ImageRequestBuilder.NewBuilderWithSource(new Uri(imageData.SourceUri));
+            var tintColor = EffectManager.IsCompositionSupported ? null : imageData.TintColor;
+            builder.SetPostprocessor(new ColorFilterPostprocessor(
+                tintColor, imageData.BackgroundColor));
+
+            var image = await imagePipeline.FetchDecodedBitmapImageAsync(builder.Build())
+                .ConfigureAwait(false);
+
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                var imageBrush = (ImageBrush)view.Background;
+                imageBrush.ImageSource = image;
+            });
         }
     }
 }
