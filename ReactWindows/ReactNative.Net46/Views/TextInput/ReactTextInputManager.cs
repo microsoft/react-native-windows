@@ -262,6 +262,7 @@ namespace ReactNative.Views.TextInput
         public void SetSelectionColor(ReactTextBox view, uint color)
         {
             view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.CaretBrush = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
