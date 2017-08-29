@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReactNative.Views.Scroll
+﻿namespace ReactNative.Views.Scroll
 {
     /// <summary>
     /// An interface of ScrollView for mock to do unit tests.
