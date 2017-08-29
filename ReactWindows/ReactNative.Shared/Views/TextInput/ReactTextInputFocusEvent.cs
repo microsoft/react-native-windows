@@ -15,7 +15,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="viewTag">The view tag.</param>
         public ReactTextInputFocusEvent(int viewTag) 
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
         }
 
