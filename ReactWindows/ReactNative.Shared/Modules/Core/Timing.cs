@@ -2,6 +2,7 @@ using ReactNative.Bridge;
 using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace ReactNative.Modules.Core
@@ -11,12 +12,18 @@ namespace ReactNative.Modules.Core
     /// </summary>
     public class Timing : ReactContextNativeModuleBase, ILifecycleEventListener
     {
+        private const string IdleChoreographerKey = nameof(Timing) + "_Idle";
+
+        private static readonly TimeSpan FrameDuration = TimeSpan.FromTicks(166666);
+        private static readonly TimeSpan IdleCallbackFrameDeadline = TimeSpan.FromMilliseconds(1);
+
         private readonly object _gate = new object();
 
         private readonly HeapBasedPriorityQueue<TimerData> _timers;
 
         private JSTimers _jsTimersModule;
         private bool _suspended;
+        private bool _sendIdleEvents;
 
         /// <summary>
         /// Instantiates the <see cref="Timing"/> module.
@@ -57,6 +64,11 @@ namespace ReactNative.Modules.Core
         {
             _suspended = true;
             ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
+
+            if (_sendIdleEvents)
+            {
+                ReactChoreographer.Instance.IdleCallback -= DoIdleCallbackSafe;
+            }
         }
 
         /// <summary>
@@ -66,6 +78,11 @@ namespace ReactNative.Modules.Core
         {
             _suspended = false;
             ReactChoreographer.Instance.JavaScriptEventsCallback += DoFrameSafe;
+
+            if (_sendIdleEvents)
+            {
+                ReactChoreographer.Instance.IdleCallback += DoIdleCallbackSafe;
+            }
         }
 
         /// <summary>
@@ -74,6 +91,11 @@ namespace ReactNative.Modules.Core
         public void OnDestroy()
         {
             ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
+
+            if (_sendIdleEvents)
+            {
+                ReactChoreographer.Instance.IdleCallback -= DoIdleCallbackSafe;
+            }
         }
 
         /// <summary>
@@ -130,6 +152,29 @@ namespace ReactNative.Modules.Core
             }
         }
 
+        /// <summary>
+        /// Enable or disable idle events.
+        /// </summary>
+        /// <param name="sendIdleEvents">
+        /// <code>true</code> if idle events should be enabled, otherwise
+        /// <code>false</code>.
+        /// </param>
+        [ReactMethod]
+        public void setSendIdleEvents(bool sendIdleEvents)
+        {
+            _sendIdleEvents = sendIdleEvents;
+            if (_sendIdleEvents)
+            {
+                ReactChoreographer.Instance.IdleCallback += DoIdleCallbackSafe;
+                ReactChoreographer.Instance.ActivateCallback(IdleChoreographerKey);
+            }
+            else
+            {
+                ReactChoreographer.Instance.IdleCallback -= DoIdleCallbackSafe;
+                ReactChoreographer.Instance.DeactivateCallback(IdleChoreographerKey);
+            }
+        }
+
         private void DoFrameSafe(object sender, object e)
         {
             try
@@ -175,6 +220,33 @@ namespace ReactNative.Modules.Core
             if (ready.Count > 0)
             {
                 _jsTimersModule.callTimers(ready);
+            }
+        }
+
+        private void DoIdleCallbackSafe(object sender, FrameEventArgs e)
+        {
+            try
+            {
+                DoIdleCallback(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Context.HandleException(ex);
+            }
+        }
+
+        private void DoIdleCallback(object sender, FrameEventArgs e)
+        {
+            if (_sendIdleEvents)
+            {
+                var frameTime = e.FrameTime;
+                var utcNow = DateTimeOffset.UtcNow;
+                var remainingFrameTime = frameTime - utcNow;
+                if (remainingFrameTime > IdleCallbackFrameDeadline)
+                {
+                    Context.GetJavaScriptModule<JSTimers>()
+                        .callIdleCallbacks(frameTime.ToUnixTimeMilliseconds());
+                }
             }
         }
 
