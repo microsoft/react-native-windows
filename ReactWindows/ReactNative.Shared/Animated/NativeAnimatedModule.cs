@@ -68,11 +68,8 @@ namespace ReactNative.Animated
     {
         private readonly object _operationsGate = new object();
 
-#if WINDOWS_UWP
         private EventHandler<object> _animatedFrameCallback;
-#else
-        private EventHandler _animatedFrameCallback;
-#endif
+
         private List<Action<NativeAnimatedNodesManager>> _operations = 
             new List<Action<NativeAnimatedNodesManager>>();
         private List<Action<NativeAnimatedNodesManager>> _readyOperations;
@@ -181,7 +178,7 @@ namespace ReactNative.Animated
         /// </summary>
         public void OnResume()
         {
-            CompositionTarget.Rendering += _animatedFrameCallback;
+            ReactChoreographer.Instance.NativeAnimatedCallback += _animatedFrameCallback;
         }
 
         /// <summary>
@@ -189,7 +186,7 @@ namespace ReactNative.Animated
         /// </summary>
         public void OnSuspend()
         {
-            CompositionTarget.Rendering -= _animatedFrameCallback;
+            ReactChoreographer.Instance.NativeAnimatedCallback -= _animatedFrameCallback;
         }
 
         /// <summary>

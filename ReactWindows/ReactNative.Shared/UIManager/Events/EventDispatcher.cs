@@ -1,4 +1,5 @@
 ﻿using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
@@ -144,14 +145,12 @@ namespace ReactNative.UIManager.Events
         /// </summary>
         public void OnResume()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-
             if (_rctEventEmitter == null)
             {
                 _rctEventEmitter = _reactContext.GetJavaScriptModule<RCTEventEmitter>();
             }
 
-            CompositionTarget.Rendering += ScheduleDispatcherSafe;
+            ReactChoreographer.Instance.JavaScriptEventsCallback += ScheduleDispatcherSafe;
         }
 
         /// <summary>
@@ -180,8 +179,7 @@ namespace ReactNative.UIManager.Events
 
         private void ClearCallback()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-            CompositionTarget.Rendering -= ScheduleDispatcherSafe;
+            ReactChoreographer.Instance.JavaScriptEventsCallback -= ScheduleDispatcherSafe;
         }
 
         private void MoveStagedEventsToDispatchQueue()

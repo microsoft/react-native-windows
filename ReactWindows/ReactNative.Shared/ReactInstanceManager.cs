@@ -154,6 +154,7 @@ namespace ReactNative
         /// </summary>
         public async void CreateReactContextInBackground()
         {
+            ReactChoreographer.Initialize();
             await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
 
@@ -290,6 +291,8 @@ namespace ReactNative
                 _currentReactContext = null;
                 _hasStartedCreatingInitialContext = false;
             }
+
+            ReactChoreographer.Dispose();
         }
 
         /// <summary>
