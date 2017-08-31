@@ -895,13 +895,13 @@ namespace ReactNative.UIManager
             var tag = cssNode.ReactTag;
             if (!_shadowNodeRegistry.IsRootNode(tag))
             {
-                cssNode.DispatchUpdates(
+                var frameDidChange = cssNode.DispatchUpdates(
                     absoluteX,
                     absoluteY,
                     _operationsQueue,
                     _nativeViewHierarchyOptimizer);
 
-                if (cssNode.ShouldNotifyOnLayout)
+                if (frameDidChange && cssNode.ShouldNotifyOnLayout)
                 {
                     _eventDispatcher.DispatchEvent(
                         OnLayoutEvent.Obtain(
