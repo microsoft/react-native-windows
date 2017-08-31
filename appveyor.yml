@@ -84,7 +84,7 @@ test_script:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if($platform -ne "ARM") { nunit3-console "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
+      if($platform -ne "ARM") { nunit3-console --where "cat != Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
       if ($platform -eq "ReleaseBundle" -Or $platform -eq "DebugBundle") { npm test }
 
