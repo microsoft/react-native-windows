@@ -9,7 +9,7 @@ namespace ReactNative.Views.Split.Events
         public const string EventNameValue = "topSplitViewOpened";
 
         public SplitViewOpenedEvent(int viewTag)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
         }
 

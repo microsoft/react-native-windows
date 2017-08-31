@@ -10,7 +10,7 @@ namespace ReactNative.Views.TextInput
         private readonly int _start;
 
         public ReactTextInputSelectionEvent(int viewTag, int start, int end)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
             _start = start;
             _end = end;

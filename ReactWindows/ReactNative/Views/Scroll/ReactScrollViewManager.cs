@@ -505,7 +505,7 @@ namespace ReactNative.Views.Scroll
             private readonly JObject _data;
 
             public ScrollEvent(int viewTag, ScrollEventType type, JObject data)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+                : base(viewTag)
             {
                 _type = type;
                 _data = data;

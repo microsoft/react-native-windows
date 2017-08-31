@@ -10,7 +10,7 @@ namespace ReactNative.Views.Web.Events
         private readonly string _description;
 
         public WebViewLoadingErrorEvent(int viewTag, string error, string description)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
             if (description == null)
             {

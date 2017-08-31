@@ -22,7 +22,7 @@ namespace ReactNative.Views.Web.Events
             string title, 
             bool canGoBack, 
             bool canGoForward)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
             _type = type;
             _url = url;
