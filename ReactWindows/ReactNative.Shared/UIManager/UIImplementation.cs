@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using static System.FormattableString;
 
@@ -658,7 +659,9 @@ namespace ReactNative.UIManager
 
         private void UpdateViewHierarchy()
         {
-            foreach (var tag in _shadowNodeRegistry.RootNodeTags)
+            var rootNodeTags = new List<int>(_shadowNodeRegistry.RootNodeTags.ToList());
+
+            foreach (var tag in rootNodeTags)
             {
                 var cssRoot = _shadowNodeRegistry.GetNode(tag);
                 NotifyBeforeOnLayoutRecursive(cssRoot);
