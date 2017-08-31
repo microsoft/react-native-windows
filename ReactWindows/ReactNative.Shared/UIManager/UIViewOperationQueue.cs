@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
@@ -384,7 +385,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnSuspend()
         {
-            CompositionTarget.Rendering -= OnRenderingSafe;
+            ReactChoreographer.Instance.DispatchUICallback -= OnRenderingSafe;
         }
 
         /// <summary>
@@ -392,7 +393,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnResume()
         {
-            CompositionTarget.Rendering += OnRenderingSafe;
+            ReactChoreographer.Instance.DispatchUICallback += OnRenderingSafe;
         }
 
         /// <summary>
