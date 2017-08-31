@@ -68,7 +68,7 @@ namespace ReactNative.Animated
     {
         private readonly object _operationsGate = new object();
 
-        private EventHandler<object> _animatedFrameCallback;
+        private EventHandler<FrameEventArgs> _animatedFrameCallback;
 
         private List<Action<NativeAnimatedNodesManager>> _operations = 
             new List<Action<NativeAnimatedNodesManager>>();
@@ -108,12 +108,6 @@ namespace ReactNative.Animated
             {
                 try
                 {
-                    var renderingArgs = args as RenderingEventArgs;
-                    if (renderingArgs == null)
-                    {
-                        return;
-                    }
-
                     var operations = default(List<Action<NativeAnimatedNodesManager>>);
                     lock (_operationsGate)
                     {
@@ -131,7 +125,7 @@ namespace ReactNative.Animated
 
                     if (nodesManager.HasActiveAnimations)
                     {
-                        nodesManager.RunUpdates(renderingArgs.RenderingTime);
+                        nodesManager.RunUpdates(args.RenderingTime);
                     }
                 }
                 catch (Exception ex)

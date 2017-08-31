@@ -467,7 +467,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void OnRenderingSafe(object sender, object e)
+        private void OnRenderingSafe(object sender, FrameEventArgs e)
         {
             try
             {
@@ -479,15 +479,11 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void OnRendering(object sender, object e)
+        private void OnRendering(object sender, FrameEventArgs e)
         {
-            var renderingArgs = e as RenderingEventArgs;
-            if (renderingArgs != null)
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
             {
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
-                {
-                    DispatchPendingNonBatchedOperations(renderingArgs.RenderingTime);
-                }
+                DispatchPendingNonBatchedOperations(e.RenderingTime);
             }
 
             lock (_gate)

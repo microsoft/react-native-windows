@@ -16,6 +16,9 @@ namespace ReactNative.Modules.Core
     {
         private static ReactChoreographer s_instance;
 
+        private FrameEventArgs _frameEventArgs;
+        private IMutableFrameEventArgs _mutableReference;
+
         private ReactChoreographer()
         {
             CompositionTarget.Rendering += OnRendering;
@@ -24,17 +27,17 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// For use by <see cref="UIManager.UIManagerModule"/>. 
         /// </summary>
-        public event EventHandler<object> DispatchUICallback;
+        public event EventHandler<FrameEventArgs> DispatchUICallback;
 
         /// <summary>
         /// For use by <see cref="Animated.NativeAnimatedModule"/>. 
         /// </summary>
-        public event EventHandler<object> NativeAnimatedCallback;
+        public event EventHandler<FrameEventArgs> NativeAnimatedCallback;
 
         /// <summary>
         /// For events that make JavaScript do things.
         /// </summary>
-        public event EventHandler<object> JavaScriptEventsCallback;
+        public event EventHandler<FrameEventArgs> JavaScriptEventsCallback;
 
         /// <summary>
         /// The choreographer instance.
@@ -84,9 +87,25 @@ namespace ReactNative.Modules.Core
 
         private void OnRendering(object sender, object e)
         {
-            DispatchUICallback?.Invoke(sender, e);
-            NativeAnimatedCallback?.Invoke(sender, e);
-            JavaScriptEventsCallback?.Invoke(sender, e);
+            var renderingArgs = e as RenderingEventArgs;
+            if (renderingArgs == null)
+            {
+                throw new InvalidOperationException("Expected rendering event arguments.");
+            }
+
+            var renderingTime = renderingArgs.RenderingTime;
+            if (_frameEventArgs == null)
+            {
+                _mutableReference = _frameEventArgs = new FrameEventArgs(renderingTime);
+            }
+            else
+            {
+                _mutableReference.Update(renderingTime);
+            }
+
+            DispatchUICallback?.Invoke(sender, _frameEventArgs);
+            NativeAnimatedCallback?.Invoke(sender, _frameEventArgs);
+            JavaScriptEventsCallback?.Invoke(sender, _frameEventArgs);
         }
     }
 }
