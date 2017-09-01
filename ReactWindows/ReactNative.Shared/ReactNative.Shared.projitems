@@ -38,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IOnBatchCompleteListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPerformanceNow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactCallback.cs" />

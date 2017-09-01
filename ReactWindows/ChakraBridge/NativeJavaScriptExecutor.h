@@ -98,6 +98,14 @@ public:
     /// A compount result with the JSON stringified value and an error code if any occurred.
     /// </returns>
     ChakraStringResult FlushedQueue();
+
+	/// <summary>
+	/// Gets the current value of `performanceNow` callback.
+	/// </summary>
+	/// <returns>
+	/// The performance clock time.
+	/// </returns>
+	LONGLONG PerformanceNow();
 private:
     ChakraHost host;
 };

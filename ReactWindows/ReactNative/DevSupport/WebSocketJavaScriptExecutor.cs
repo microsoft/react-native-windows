@@ -132,6 +132,11 @@ namespace ReactNative.DevSupport
             _injectedObjects.Add(propertyName, value.ToString(Formatting.None));
         }
 
+        public long PerformanceNow()
+        {
+            return DateTimeOffset.UtcNow.Ticks;
+        }
+
         public void Dispose()
         {
             _isDisposed = true;

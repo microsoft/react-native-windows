@@ -6,7 +6,7 @@ namespace ReactNative.Bridge
     /// <summary>
     /// Interface for making JavaScript calls from native code.
     /// </summary>
-    public interface IJavaScriptExecutor : IDisposable
+    public interface IJavaScriptExecutor : IPerformanceNow, IDisposable
     {
         /// <summary>
         /// Call the JavaScript method from the given module.
