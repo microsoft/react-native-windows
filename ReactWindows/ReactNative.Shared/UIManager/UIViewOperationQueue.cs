@@ -24,10 +24,8 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
-        private const long TicksPerFrame = 166666;
-        private const long MaxNonBatchedTicksPerFrame = 83333;
-
-        private static Stopwatch s_stopwatch = Stopwatch.StartNew();
+        private static readonly TimeSpan s_frameDuration = TimeSpan.FromTicks(166666);
+        private static readonly TimeSpan s_minTimeLeftInFrameForNonBatchedOperation = TimeSpan.FromTicks(83333);
 
         private readonly object _gate = new object();
         private readonly object _nonBatchedGate = new object();
@@ -483,7 +481,7 @@ namespace ReactNative.UIManager
         {
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
             {
-                DispatchPendingNonBatchedOperations(e.RenderingTime);
+                DispatchPendingNonBatchedOperations(e.FrameTime);
             }
 
             lock (_gate)
@@ -502,24 +500,12 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void DispatchPendingNonBatchedOperations(TimeSpan renderingTime)
+        private void DispatchPendingNonBatchedOperations(DateTimeOffset frameTime)
         {
-            if (_lastRenderingTicks < 0)
-            {
-                _lastRenderingTicks = renderingTime.Ticks;
-            }
-
-            var ticksSinceLastFrame = renderingTime.Ticks - _lastRenderingTicks;
-            _lastRenderingTicks = renderingTime.Ticks;
-            var lastFrameTicksOverage = Math.Max(0, ticksSinceLastFrame - TicksPerFrame);
-            var allowedTicks = MaxNonBatchedTicksPerFrame - lastFrameTicksOverage;
-
-            var frameStartTicks = s_stopwatch.ElapsedTicks;
             while (true)
             {
-                // Use up to `MaxNonBatchedTicksPerFrame` minus the delay in the last frame
-                var elapsedTicks = s_stopwatch.ElapsedTicks - frameStartTicks;
-                if (elapsedTicks > allowedTicks)
+                var timeLeftInFrame = frameTime - DateTimeOffset.UtcNow;
+                if (timeLeftInFrame < s_minTimeLeftInFrameForNonBatchedOperation)
                 {
                     break;
                 }
