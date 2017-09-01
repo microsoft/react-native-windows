@@ -17,6 +17,8 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public sealed class ChakraJavaScriptExecutor : IJavaScriptExecutor
     {
+        private static readonly Stopwatch s_stopwatch = Stopwatch.StartNew();
+
         private const string MagicFileName = "UNBUNDLE";
         private const uint MagicFileHeader = 0xFB0BD1E5;
 
@@ -31,6 +33,7 @@ namespace ReactNative.Chakra.Executor
 
         private JavaScriptNativeFunction _nativeLoggingHook;
         private JavaScriptNativeFunction _nativeRequire;
+        private JavaScriptNativeFunction _nativePerformanceNow;
 
         private JavaScriptValue _globalObject;
 
@@ -197,6 +200,15 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Returns performance counter.
+        /// </summary>
+        /// <returns>The current performance counter value.</returns>
+        public long PerformanceNow()
+        {
+            return s_stopwatch.ElapsedTicks;
+        }
+
+        /// <summary>
         /// Disposes the <see cref="ChakraJavaScriptExecutor"/> instance.
         /// </summary>
         public void Dispose()
@@ -209,10 +221,17 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptContext.Current = _runtime.CreateContext();
 
+            var globalObject = EnsureGlobalObject();
             _nativeLoggingHook = NativeLoggingHook;
-            EnsureGlobalObject().SetProperty(
+            globalObject.SetProperty(
                 JavaScriptPropertyId.FromString("nativeLoggingHook"),
                 JavaScriptValue.CreateFunction(_nativeLoggingHook),
+                true);
+
+            _nativePerformanceNow = NativePerformanceNow;
+            globalObject.SetProperty(
+                JavaScriptPropertyId.FromString("nativePerformanceNow"),
+                JavaScriptValue.CreateFunction(_nativePerformanceNow),
                 true);
         }
 
@@ -326,6 +345,21 @@ namespace ReactNative.Chakra.Executor
             EvaluateScript(module.Source, module.SourceUrl);
             return JavaScriptValue.Invalid;
         }
+        #endregion
+
+        #region PerformanceNow Callback
+
+        private JavaScriptValue NativePerformanceNow(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            var now = (double)PerformanceNow();
+            return JavaScriptValue.FromDouble(now);
+        }
+
         #endregion
 
         #region Global Helpers

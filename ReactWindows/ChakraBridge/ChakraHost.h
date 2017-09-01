@@ -125,6 +125,14 @@ public:
 	/// </returns>
 	JsErrorCode EvaluateScript(const wchar_t* szScript, const wchar_t* szSourceUri, JsValueRef* result);
 
+	/// <summary>
+	/// Gets the current value of `performanceNow` callback.
+	/// </summary>
+	/// <returns>
+	/// The performance clock time.
+	/// </returns>
+	LARGE_INTEGER PerformanceNow();
+
     /// <summary>
     /// The JSRT global object for the session.
     /// </summary>
@@ -138,10 +146,12 @@ private:
     JsErrorCode InitJson();
     JsErrorCode InitConsole();
 	JsErrorCode InitNativeRequire();
+	JsErrorCode InitPerformanceNow();
 
     unsigned currentSourceContext;
     JsRuntimeHandle runtime;
     JsContextRef context;
     JsValueRef jsonParseObject;
     JsValueRef jsonStringifyObject;
+	bool isHighResolution;
 };

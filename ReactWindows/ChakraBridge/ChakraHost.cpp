@@ -60,6 +60,16 @@ JsValueRef CALLBACK NativeLoggingCallback(JsValueRef callee, bool isConstructCal
     return JS_INVALID_REFERENCE;
 }
 
+JsValueRef CALLBACK NativePerformanceNow(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+{
+	// cast the callback state to the ChakraHost instance
+	auto host = (ChakraHost*)callbackState;
+	auto now = host->PerformanceNow();
+	JsValueRef result;
+	IfFailThrow(JsDoubleToNumber((double)now.QuadPart, &result), L"Failed to convert double to JSValueRef");
+	return result;
+}
+
 JsErrorCode ChakraHost::LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap, bool bIsReadOnly)
 {
 	*pData = nullptr;
@@ -322,6 +332,23 @@ JsErrorCode ChakraHost::EvaluateScript(const wchar_t* szScript, const wchar_t* s
 	return JsRunScript(szScript, currentSourceContext++, szSourceUri, result);
 }
 
+LARGE_INTEGER ChakraHost::PerformanceNow()
+{
+	LARGE_INTEGER now;
+	if (isHighResolution)
+	{
+		QueryPerformanceCounter(&now);
+	}
+	else
+	{
+		LPFILETIME filetime = LPFILETIME();
+		GetSystemTimeAsFileTime(filetime);
+		now.LowPart = filetime->dwLowDateTime;
+		now.HighPart = filetime->dwHighDateTime;
+	}
+	return now;
+}
+
 JsErrorCode ChakraHost::JsonStringify(JsValueRef argument, JsValueRef* result)
 {
     JsValueRef args[2] = { globalObject, argument };
@@ -384,9 +411,19 @@ JsErrorCode ChakraHost::InitNativeRequire()
 	return JsNoError;
 }
 
+JsErrorCode ChakraHost::InitPerformanceNow()
+{
+	IfFailRet(DefineHostCallback(globalObject, L"nativePerformanceNow", NativePerformanceNow, this));
+
+	return JsNoError;
+}
+
 JsErrorCode ChakraHost::Init()
 {
     currentSourceContext = 0;
+
+	LARGE_INTEGER ignored;
+	isHighResolution = QueryPerformanceFrequency(&ignored);
 
     IfFailRet(JsCreateRuntime(JsRuntimeAttributeNone, nullptr, &runtime));
     IfFailRet(JsCreateContext(runtime, &context));
@@ -396,6 +433,7 @@ JsErrorCode ChakraHost::Init()
 
     IfFailRet(InitJson());
     IfFailRet(InitConsole());
+	IfFailRet(InitPerformanceNow());
 
     return JsNoError;
 }

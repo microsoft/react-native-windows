@@ -12,6 +12,7 @@ namespace ReactNative.Tests
 
         public Action<string, string> OnRunScript { get; set; } = EmptyRunScript;
         public Action<string, JToken> OnSetGlobalVariable { get; set; } = EmptySetGlobalVariable;
+        public Func<long> OnPerformanceNow { get; set; } = EmptyPerformanceNow;
         public Action OnDispose { get; set; } = EmptyAction;
 
         private static readonly Action EmptyAction = () => { };
@@ -20,6 +21,7 @@ namespace ReactNative.Tests
         private static readonly Func<string, string, JArray, JToken> EmptyCallFunctionReturnFlushedQueue = (_, __, ___) => { throw new NotImplementedException(); };
         private static readonly Func<int, JArray, JToken> EmptyInvokeCallbackAndReturnFlushedQueue = (_, __) => { throw new NotImplementedException(); };
         private static readonly Func<JToken> EmptyFlushQueue = () => { throw new NotImplementedException(); };
+        private static readonly Func<long> EmptyPerformanceNow = () => { throw new NotImplementedException(); };
 
         public void Initialize() { }
 
@@ -51,6 +53,11 @@ namespace ReactNative.Tests
         public JToken FlushedQueue()
         {
             return OnFlushQueue();
+        }
+
+        public long PerformanceNow()
+        {
+            return OnPerformanceNow();
         }
     }
 }

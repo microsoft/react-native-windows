@@ -139,5 +139,14 @@ namespace ReactNative.Chakra.Executor
             Native.ThrowIfError(
                 (JavaScriptErrorCode)_executor.SetGlobalVariable(propertyName, value.ToString(Formatting.None)));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public long PerformanceNow()
+        {
+            return _executor.PerformanceNow();
+        }
     }
 }
