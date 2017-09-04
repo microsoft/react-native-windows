@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using ReactNative.UIManager;
 using System.Collections.Generic;
 using Facebook.Yoga;
@@ -29,7 +30,7 @@ namespace ReactNative.Views.Text
                 return base.VisitCore(node);
             }
 
-            return Make(node, Array.Empty<Inline>());
+            return Make(node, Array<Inline>.Empty);
         }
 
         protected sealed override Inline Make(ReactShadowNode node, IList<Inline> children)

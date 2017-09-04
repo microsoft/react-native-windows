@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace ReactNative.UIManager
@@ -20,7 +21,7 @@ namespace ReactNative.UIManager
             var n = node.ChildCount;
             if (n == 0)
             {
-                return Make(node, Array.Empty<T>());
+                return Make(node, Array<T>.Empty);
             }
             else
             {

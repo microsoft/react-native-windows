@@ -103,7 +103,9 @@ namespace ReactNative.Bridge
                 var pathToAssemblyResource = SourceUrl;
                 var u = new Uri(pathToAssemblyResource);
                 _script = u.LocalPath;
-                return Task.CompletedTask;
+                var task = new Task(() => {});
+                task.Start();
+                return task;
             }
 #endif
 
@@ -167,7 +169,9 @@ namespace ReactNative.Bridge
 
             public override Task InitializeAsync()
             {
-                return Task.CompletedTask;
+                var task = new Task(() => {});
+                task.Start();
+                return task;
             }
 
             public override void LoadScript(IReactBridge executor)
