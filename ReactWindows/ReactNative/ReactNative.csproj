@@ -162,8 +162,9 @@
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
+    <Compile Include="Views\Web\Events\MessageEvent.cs" />
     <Compile Include="Views\Web\Events\WebViewLoadingErrorEvent.cs" />
-    <Compile Include="Views\Web\Events\WebViewLoadingEvent.cs" />
+    <Compile Include="Views\Web\Events\WebViewLoadEvent.cs" />
     <Compile Include="Views\Web\ReactWebViewManager.cs" />
     <EmbeddedResource Include="Properties\ReactNative.rd.xml" />
   </ItemGroup>
@@ -199,6 +200,10 @@
     <ProjectReference Include="..\ChakraBridge\ChakraBridge.vcxproj">
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj">
+      <Project>{7596216b-669c-41f8-86da-f3637f6545c0}</Project>
+      <Name>ReactNativeWebViewBridge</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

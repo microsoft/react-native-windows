@@ -32,9 +32,6 @@ namespace ReactNative.Tests.UIManager.Events
             var context = new ReactContext();
             var dispatcher = new EventDispatcher(context);
 
-            AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnResume());
-            AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnSuspend());
-            AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnSuspend());
             AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnReactInstanceDispose());
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);

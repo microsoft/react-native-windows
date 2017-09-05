@@ -64,7 +64,7 @@ namespace ReactNative.Modules.Core
             _suspended = true;
             if (_renderingHandled)
             {
-                CompositionTarget.Rendering -= DoFrameSafe;
+                ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
                 _renderingHandled = false;
             }
         }
@@ -77,7 +77,7 @@ namespace ReactNative.Modules.Core
             _suspended = false;
             if (!_renderingHandled)
             {
-                CompositionTarget.Rendering += DoFrameSafe;
+                ReactChoreographer.Instance.JavaScriptEventsCallback += DoFrameSafe;
                 _renderingHandled = true;
             }
         }
@@ -89,7 +89,7 @@ namespace ReactNative.Modules.Core
         {
             if (_renderingHandled)
             {
-                CompositionTarget.Rendering -= DoFrameSafe;
+                ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
                 _renderingHandled = false;
             }
         }

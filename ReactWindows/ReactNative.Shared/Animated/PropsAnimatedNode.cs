@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Common;
+using ReactNative.Tracing;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
@@ -64,9 +66,14 @@ namespace ReactNative.Animated
             // values). We can take advantage on that and optimize the way we
             // allocate property maps (we also know that updating view props
             // doesn't retain a reference to the styles object).
-            uiImplementation.SynchronouslyUpdateViewOnDispatcherThread(
+            var updated = uiImplementation.SynchronouslyUpdateViewOnDispatcherThread(
                 ConnectedViewTag,
                 new ReactStylesDiffMap(propsMap));
+
+            if (!updated)
+            {
+                Tracer.Error(ReactConstants.Tag, "Native animation workaround, frame lost as result of race condition.", null);
+            }
         }
     }
 }
