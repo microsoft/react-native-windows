@@ -219,10 +219,23 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public void SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+
+            // First check if the view exists, as the views are created in
+            // batches, and native modules attempting to synchronously interact
+            // with views may attempt to update properties before the batch has
+            // been processed.
+            if (_operationsQueue.NativeViewHierarchyManager.ViewExists(tag))
+            {
+                _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
