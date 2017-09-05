@@ -36,15 +36,12 @@ matrix:
   # Fail everything immediately if one build fails.
   fast_finish: true
 
-cache:
-  - node_modules
-
 hosts:
   api.nuget.org: 93.184.221.200
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
-  - npm install -g npm@latest
+  - npm install -g npm@lts
   - npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
   - ps: mkdir C:\winium
@@ -84,7 +81,7 @@ test_script:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if($platform -ne "ARM") { nunit3-console "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
+      if($platform -ne "ARM") { nunit3-console --where "cat != Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
       if ($platform -eq "ReleaseBundle" -Or $platform -eq "DebugBundle") { npm test }
 

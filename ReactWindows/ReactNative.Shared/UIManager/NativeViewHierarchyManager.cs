@@ -577,6 +577,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Checks whether a view exists.
+        /// </summary>
+        /// <param name="tag">The tag of the view.</param>
+        /// <returns>
+        /// <code>true</code> if the view still exists, otherwise <code>false</code>.
+        /// </returns>
+        public bool ViewExists(int tag)
+        {
+            return _tagsToViews.ContainsKey(tag);
+        }
+
+        /// <summary>
         /// Resolves a view.
         /// </summary>
         /// <param name="tag">The tag of the view.</param>

@@ -3,6 +3,8 @@ using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ReactNative.Tests.UIManager
 {
@@ -81,6 +83,37 @@ namespace ReactNative.Tests.UIManager
                 registry.RemoveNode(i);
                 AssertEx.Throws<KeyNotFoundException>(() => registry.GetNode(i));
             }
+        }
+
+        [Test]
+        public async Task ShadowRegistryNode_AddRootNode_WhileEnumerating()
+        {
+            var n1 = new ReactShadowNode { ReactTag = 1 };
+            var n2 = new ReactShadowNode { ReactTag = 2 };
+
+            var enter = new AutoResetEvent(false);
+            var exit = new AutoResetEvent(false);
+
+            var registry = new ShadowNodeRegistry();
+
+            var task = Task.Run(() =>
+            {
+                enter.WaitOne();
+                registry.AddRootNode(n2);
+                exit.Set();
+            });
+
+            registry.AddRootNode(n1);
+
+            foreach (var tag in registry.RootNodeTags)
+            {
+                enter.Set();
+                exit.WaitOne();
+            }
+
+            await task;
+
+            Assert.AreEqual(2, registry.RootNodeTags.Count);
         }
     }
 }
