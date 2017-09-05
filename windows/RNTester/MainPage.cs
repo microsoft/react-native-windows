@@ -48,7 +48,7 @@ namespace RNTesterApp
         {
             get
             {
-#if DEBUG
+#if DEBUG || !BUNDLE
                 return true;
 #else
                 return false;
