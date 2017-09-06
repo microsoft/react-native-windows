@@ -525,9 +525,6 @@ namespace ReactNative.Views.Scroll
         /// <returns>Async task once scrolling is done</returns>
         internal async Task ScrollToAnimated(WeakReference<IScrollView> weakScrollView, double x, double y)
         {
-            double currentScrollOffsetX = 0;
-            double currentScrollOffsetY = 0;
-
             // Will do animation in this period
             const int ANIMATED_TIME_INTERVAL = 300;
 
@@ -540,7 +537,10 @@ namespace ReactNative.Views.Scroll
             // Threshold to check equalness for double value
             const double DOUBLE_EQUAL_THRESHOLD = 0.001;
 
+            double currentScrollOffsetX = 0;
+            double currentScrollOffsetY = 0;
             IScrollView scrollView;
+
             if (weakScrollView.TryGetTarget(out scrollView))
             {
                 // Check to cancel previous scrolling
