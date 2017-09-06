@@ -119,7 +119,7 @@ namespace ReactNative.Tests.Views.Scroll
                 new WeakReference<IScrollView>(_testScrollView), 0, 30);
 
             // Assert
-            Assert.That(async () => await task1ExpectToBeCancelled, Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await task1ExpectToBeCancelled, Throws.InstanceOf<OperationCanceledException>());
             await task2ReentrantExpectToFinish;
 
             Assert.That(_testScrollView.HorizontalOffset, NUnit.Framework.Is.EqualTo(0));
@@ -149,8 +149,8 @@ namespace ReactNative.Tests.Views.Scroll
                 new WeakReference<IScrollView>(_testScrollView), 0, 300);
 
             // Assert
-            Assert.That(async () => await task1ExpectToBeCancelled, Throws.InstanceOf<TaskCanceledException>());
-            Assert.That(async () => await task2ReentrantExpectToBeCancelled, Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await task1ExpectToBeCancelled, Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(async () => await task2ReentrantExpectToBeCancelled, Throws.InstanceOf<OperationCanceledException>());
             await task3ReentrantExpectToFinish;
 
             Assert.That(_testScrollView.HorizontalOffset, NUnit.Framework.Is.EqualTo(0));
@@ -186,7 +186,7 @@ namespace ReactNative.Tests.Views.Scroll
                 new WeakReference<IScrollView>(_testScrollView), 0, 10);
 
             // Assert
-            Assert.That(async () => await task1WithLargeTargetOffset, Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await task1WithLargeTargetOffset, Throws.InstanceOf<OperationCanceledException>());
             await task2ReentrantWithSmallOffset;
 
             Assert.That(_testScrollView.HorizontalOffset, NUnit.Framework.Is.EqualTo(0));

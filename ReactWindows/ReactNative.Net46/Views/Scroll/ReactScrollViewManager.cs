@@ -563,8 +563,9 @@ namespace ReactNative.Views.Scroll
                 var isHorizontalScroll = Math.Abs(x - currentScrollOffsetX) >= DOUBLE_EQUAL_THRESHOLD;
                 var isVerticalScroll = Math.Abs(y - currentScrollOffsetY) >= DOUBLE_EQUAL_THRESHOLD;
 
-                while ((isHorizontalScroll || isVerticalScroll) && !cancellationTokenSource.IsCancellationRequested)
+                while ((isHorizontalScroll || isVerticalScroll))
                 {
+                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
                     if (isHorizontalScroll)
                     {
                         scrollView.ScrollToHorizontalOffset(currentScrollOffsetX + biasX);
