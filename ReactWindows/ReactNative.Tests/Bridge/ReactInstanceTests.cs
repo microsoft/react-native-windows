@@ -20,10 +20,6 @@ namespace ReactNative.Tests.Bridge
                 .Add(module)
                 .Build();
 
-            var jsRegistry = new JavaScriptModuleRegistry.Builder()
-                .Add<TestJavaScriptModule>()
-                .Build();
-
             var executor = new MockJavaScriptExecutor
             {
                 OnCallFunctionReturnFlushedQueue = (_, __, ___) => JValue.CreateNull(),
@@ -34,7 +30,6 @@ namespace ReactNative.Tests.Bridge
             {
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
                 Registry = registry,
-                JavaScriptModuleRegistry = jsRegistry,
                 JavaScriptExecutorFactory = () => executor,
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
                 NativeModuleCallExceptionHandler = _ => { }
@@ -61,8 +56,6 @@ namespace ReactNative.Tests.Bridge
                 .Add(module)
                 .Build();
 
-            var jsRegistry = new JavaScriptModuleRegistry.Builder().Build();
-
             var executor = new MockJavaScriptExecutor
             {
                 OnCallFunctionReturnFlushedQueue = (_, __, ___) => JValue.CreateNull(),
@@ -73,7 +66,6 @@ namespace ReactNative.Tests.Bridge
             {
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
                 Registry = registry,
-                JavaScriptModuleRegistry = jsRegistry,
                 JavaScriptExecutorFactory = () => executor,
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
                 NativeModuleCallExceptionHandler = _ => { },
@@ -117,7 +109,6 @@ namespace ReactNative.Tests.Bridge
                 .Add(module)
                 .Build();
 
-            var jsRegistry = new JavaScriptModuleRegistry.Builder().Build();
             var executor = new MockJavaScriptExecutor
             {
                 OnCallFunctionReturnFlushedQueue = (_, __, ___) => JValue.CreateNull(),
@@ -136,7 +127,6 @@ namespace ReactNative.Tests.Bridge
             {
                 QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
                 Registry = registry,
-                JavaScriptModuleRegistry = jsRegistry,
                 JavaScriptExecutorFactory = () => executor,
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
                 NativeModuleCallExceptionHandler = handler,

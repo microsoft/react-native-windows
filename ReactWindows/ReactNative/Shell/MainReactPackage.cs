@@ -28,7 +28,6 @@ using ReactNative.Views.Text;
 using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
 using ReactNative.Views.Web;
-using System;
 using System.Collections.Generic;
 
 namespace ReactNative.Shell
@@ -67,16 +66,6 @@ namespace ReactNative.Shell
         }
 
         /// <summary>
-        /// Creates the list of JavaScript modules to register with the
-        /// React instance.
-        /// </summary>
-        /// <returns>The list of JavaScript modules.</returns>
-        public IReadOnlyList<Type> CreateJavaScriptModulesConfig()
-        {
-            return new List<Type>(0);
-        }
-
-        /// <summary>
         /// Creates the list of view managers that should be registered with
         /// the <see cref="UIManagerModule"/>.
         /// </summary>
@@ -108,7 +97,7 @@ namespace ReactNative.Shell
                 new ReactViewManager(),
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),
-                new ReactWebViewManager(),
+                new ReactWebViewManager(reactContext),
             };
         }
     }

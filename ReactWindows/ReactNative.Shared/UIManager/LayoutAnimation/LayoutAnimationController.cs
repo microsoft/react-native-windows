@@ -91,9 +91,10 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// Applies a layout animation for the given view on the transition to
         /// the given coordinates and dimensions.
         /// </summary>
+        /// <param name="viewManager">The view manager for the native view.</param>
         /// <param name="view">The native view to animate.</param>
         /// <param name="dimensions">The new view dimensions to animate to.</param>
-        public void ApplyLayoutUpdate(FrameworkElement view, Dimensions dimensions)
+        public void ApplyLayoutUpdate(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -101,13 +102,10 @@ namespace ReactNative.UIManager.LayoutAnimation
                 ? _layoutCreateAnimation
                 : _layoutUpdateAnimation;
 
-            var animation = layoutAnimation.CreateAnimation(view, dimensions);
+            var animation = layoutAnimation.CreateAnimation(viewManager, view, dimensions);
             if (animation == null)
             {
-                Canvas.SetLeft(view, dimensions.X);
-                Canvas.SetTop(view, dimensions.Y);
-                view.Width = dimensions.Width;
-                view.Height = dimensions.Height;
+                viewManager.SetDimensions(view, dimensions);
             }
             else
             {
@@ -119,25 +117,19 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// Animate a view deletion using the layout animation configuration
         /// supplied during initialization.
         /// </summary>
-        /// <param name="view">The view to animation.</param>
+        /// <param name="viewManager">The view manager for the native view.</param>
+        /// <param name="view">The view to animate.</param>
         /// <param name="finally">
         /// Called once the animation is finished, should be used to completely
         /// remove the view.
         /// </param>
-        public void DeleteView(FrameworkElement view, Action @finally)
+        public void DeleteView(IViewManager viewManager, FrameworkElement view, Action @finally)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             var layoutAnimation = _layoutDeleteAnimation;
 
-            var animation = layoutAnimation.CreateAnimation(
-                view, new Dimensions
-                {
-                    X = Canvas.GetLeft(view),
-                    Y = Canvas.GetTop(view),
-                    Width = view.Width,
-                    Height = view.Height,
-                });
+            var animation = layoutAnimation.CreateAnimation(viewManager, view, viewManager.GetDimensions(view));
 
             if (animation != null)
             {

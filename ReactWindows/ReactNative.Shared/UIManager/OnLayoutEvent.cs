@@ -12,7 +12,7 @@ namespace ReactNative.UIManager
         private double _height;
 
         private OnLayoutEvent(int viewTag, double x, double y, double width, double height)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
             _x = x;
             _y = y;

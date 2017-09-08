@@ -32,14 +32,13 @@ namespace ReactNative.Bridge
             ReactQueueConfigurationSpec reactQueueConfigurationSpec,
             Func<IJavaScriptExecutor> jsExecutorFactory,
             NativeModuleRegistry registry,
-            JavaScriptModuleRegistry jsModuleRegistry,
             JavaScriptBundleLoader bundleLoader,
             Action<Exception> nativeModuleCallExceptionHandler)
         {
             _registry = registry;
             _jsExecutorFactory = jsExecutorFactory;
             _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
-            _jsRegistry = jsModuleRegistry;
+            _jsRegistry = new JavaScriptModuleRegistry();
             _bundleLoader = bundleLoader;
 
             QueueConfiguration = ReactQueueConfiguration.Create(
@@ -66,7 +65,7 @@ namespace ReactNative.Bridge
             get;
         } 
 
-        public T GetJavaScriptModule<T>() where T : IJavaScriptModule
+        public T GetJavaScriptModule<T>() where T : IJavaScriptModule, new()
         {
             return _jsRegistry.GetJavaScriptModule<T>(this);
         }
@@ -228,7 +227,6 @@ namespace ReactNative.Bridge
         {
             private ReactQueueConfigurationSpec _reactQueueConfigurationSpec;
             private NativeModuleRegistry _registry;
-            private JavaScriptModuleRegistry _jsModuleRegistry;
             private Func<IJavaScriptExecutor> _jsExecutorFactory;
             private JavaScriptBundleLoader _bundleLoader;
             private Action<Exception> _nativeModuleCallExceptionHandler;
@@ -246,14 +244,6 @@ namespace ReactNative.Bridge
                 set
                 {
                     _registry = value;
-                }
-            }
-
-            public JavaScriptModuleRegistry JavaScriptModuleRegistry
-            {
-                set
-                {
-                    _jsModuleRegistry = value;
                 }
             }
 
@@ -293,7 +283,6 @@ namespace ReactNative.Bridge
                     _reactQueueConfigurationSpec,
                     _jsExecutorFactory,
                     _registry,
-                    _jsModuleRegistry,
                     _bundleLoader,
                     _nativeModuleCallExceptionHandler);
             }

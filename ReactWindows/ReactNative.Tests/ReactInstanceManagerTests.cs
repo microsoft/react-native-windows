@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using ReactNative.Common;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,15 +13,15 @@ namespace ReactNative.Tests
         public void ReactInstanceManager_Builder_SetterChecks()
         {
             AssertEx.Throws<InvalidOperationException>(
-                () => new ReactInstanceManager.Builder
+                () => new ReactInstanceManagerBuilder
                     {
                         JavaScriptBundleFile = "ms-appx:///Resources/main.jsbundle",
                     }.Build());
 
             AssertEx.Throws<InvalidOperationException>(
-                () => new ReactInstanceManager.Builder
+                () => new ReactInstanceManagerBuilder
                     {
-                        InitialLifecycleState = LifecycleState.Resumed,
+                        InitialLifecycleState = LifecycleState.BeforeCreate,
                     }.Build());
         }
 
@@ -40,10 +41,6 @@ namespace ReactNative.Tests
             AssertEx.Throws<ArgumentNullException>(
                 () => manager.DetachRootView(null),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
-
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.OnResume(null),
-                ex => Assert.AreEqual("onBackPressed", ex.ParamName));
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
@@ -230,7 +227,7 @@ namespace ReactNative.Tests
 
         private static ReactInstanceManager CreateReactInstanceManager(string jsBundleFile)
         {
-            return new ReactInstanceManager.Builder
+            return new ReactInstanceManagerBuilder
             {
                 InitialLifecycleState = LifecycleState.Resumed,
                 JavaScriptBundleFile = jsBundleFile,

@@ -286,7 +286,8 @@ namespace ReactNative.UIManager
                     if (elementToDestroy != null &&
                         _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
                     {
-                        _layoutAnimator.DeleteView(elementToDestroy, () =>
+                        var viewToDestroyManager = ResolveViewManager(tagToDelete);
+                        _layoutAnimator.DeleteView(viewToDestroyManager, elementToDestroy, () =>
                         {
                             if (viewParentManager.TryRemoveView(viewToManage, viewToDestroy))
                             {
@@ -576,6 +577,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Checks whether a view exists.
+        /// </summary>
+        /// <param name="tag">The tag of the view.</param>
+        /// <returns>
+        /// <code>true</code> if the view still exists, otherwise <code>false</code>.
+        /// </returns>
+        public bool ViewExists(int tag)
+        {
+            return _tagsToViews.ContainsKey(tag);
+        }
+
+        /// <summary>
         /// Resolves a view.
         /// </summary>
         /// <param name="tag">The tag of the view.</param>
@@ -657,7 +670,7 @@ namespace ReactNative.UIManager
             var frameworkElement = viewToUpdate as FrameworkElement;
             if (frameworkElement != null && _layoutAnimator.ShouldAnimateLayout(frameworkElement))
             {
-                _layoutAnimator.ApplyLayoutUpdate(frameworkElement, dimensions);
+                _layoutAnimator.ApplyLayoutUpdate(viewManager, frameworkElement, dimensions);
             }
             else
             {;

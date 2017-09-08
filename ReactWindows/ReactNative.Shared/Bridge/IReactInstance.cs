@@ -47,7 +47,7 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <typeparam name="T">Type of JavaScript module.</typeparam>
         /// <returns>The JavaScript module instance.</returns>
-        T GetJavaScriptModule<T>() where T : IJavaScriptModule;
+        T GetJavaScriptModule<T>() where T : IJavaScriptModule, new();
 
         /// <summary>
         /// Gets a native module instance.

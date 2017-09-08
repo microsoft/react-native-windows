@@ -10,20 +10,40 @@ namespace ReactNative.UIManager
     /// </summary>
     public class ShadowNodeRegistry
     {
+        private readonly object _gate = new object();
+
         private readonly IDictionary<int, ReactShadowNode> _tagsToCssNodes =
             new Dictionary<int, ReactShadowNode>();
 
         private readonly IDictionary<int, bool> _rootTags =
             new Dictionary<int, bool>();
 
+        // The RootNodeTags API is called from UI thread instead of the
+        // layout thread. Occasionally, we would get an exception related to
+        // the enumeration of the Keys collection being disrupted by an
+        // AddRootNode operation. This was especially likely in Debug mode, but
+        // also could occur during a reload of the application from CodePush.
+        // To get around this, we copy the key collection into this list.
+        private List<int> _rootNodeTags = new List<int>();
+
         /// <summary>
         /// The collection of root node tags.
         /// </summary>
-        public ICollection<int> RootNodeTags
+        public IReadOnlyList<int> RootNodeTags
         {
             get
             {
-                return _rootTags.Keys;
+                _rootNodeTags.Clear();
+
+                lock (_gate)
+                {
+                    foreach (var tag in _rootTags.Keys)
+                    {
+                        _rootNodeTags.Add(tag);
+                    }
+                }
+
+                return _rootNodeTags;
             }
         }  
 
@@ -38,7 +58,11 @@ namespace ReactNative.UIManager
 
             var tag = node.ReactTag;
             _tagsToCssNodes[tag] = node;
-            _rootTags[tag] = true;
+
+            lock (_gate)
+            {
+                _rootTags[tag] = true;
+            }
         }
 
         /// <summary>
@@ -54,7 +78,11 @@ namespace ReactNative.UIManager
             }
 
             _tagsToCssNodes.Remove(tag);
-            _rootTags.Remove(tag);
+
+            lock (_gate)
+            {
+                _rootTags.Remove(tag);
+            }
         }
 
         /// <summary>

@@ -1,27 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
-using System;
 using Windows.Web;
 
 namespace ReactNative.Views.Web.Events
 {
     class WebViewLoadingErrorEvent : Event
     {
-        private readonly double _code;
-        private readonly string _description;
+        private readonly WebErrorStatus _errorStatus;
 
-        public WebViewLoadingErrorEvent(int viewTag, WebErrorStatus error, string description)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+        public WebViewLoadingErrorEvent(int viewTag, WebErrorStatus error)
+            : base(viewTag)
         {
-            _code = (double)error;
-            if (description == null)
-            {
-                _description = ErrorString(error);
-            }
-            else
-            {
-                _description = description;
-            }
+            _errorStatus = error;
         }
 
         public override string EventName
@@ -37,14 +27,14 @@ namespace ReactNative.Views.Web.Events
             var eventData = new JObject
             {
                 { "target", ViewTag },
-                { "code", _code },
-                { "description", _description },
+                { "code", (int)_errorStatus },
+                { "description", ErrorString(_errorStatus) },
             };
 
             eventEmitter.receiveEvent(ViewTag, EventName, eventData);
         }
 
-        private string ErrorString(WebErrorStatus status)
+        private static string ErrorString(WebErrorStatus status)
         {
             switch (status)
             {

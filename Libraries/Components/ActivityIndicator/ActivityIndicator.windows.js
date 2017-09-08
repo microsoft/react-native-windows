@@ -15,6 +15,7 @@ const ColorPropType = require('ColorPropType');
 const NativeMethodsMixin = require('NativeMethodsMixin');
 const Platform = require('Platform');
 const React = require('React');
+const createReactClass = require('create-react-class');
 const PropTypes = require('prop-types');
 const StyleSheet = require('StyleSheet');
 const View = require('View');
@@ -36,7 +37,8 @@ type DefaultProps = {
 /**
  * Displays a circular loading indicator.
  */
-const ActivityIndicator = React.createClass({
+const ActivityIndicator = createReactClass({
+  displayName: 'ActivityIndicator',
   mixins: [NativeMethodsMixin],
 
   propTypes: {
@@ -102,7 +104,7 @@ const ActivityIndicator = React.createClass({
         />
       </View>
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({

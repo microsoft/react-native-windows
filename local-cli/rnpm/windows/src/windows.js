@@ -33,10 +33,12 @@ module.exports = function windows(config, args, options) {
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
       const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
-      execSync(`${pkgmgr} ${rnwPackage}`);
+
+      const execOptions = options.verbose ? { stdio: 'inherit' } : {};
+      execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
       generateWindows(process.cwd(), name, ns);
     }).catch(error => console.error(chalk.red(error.message)));
-}
+};

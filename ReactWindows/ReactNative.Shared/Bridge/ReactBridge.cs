@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
-using ReactNative.Common;
-using ReactNative.Tracing;
 using System;
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
@@ -81,16 +78,16 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Evaluates JavaScript.
         /// </summary>
-        /// <param name="script">The script.</param>
+        /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
-        public void RunScript(string script, string sourceUrl)
+        public void RunScript(string sourcePath, string sourceUrl)
         {
-            if (script == null)
-                throw new ArgumentNullException(nameof(script));
+            if (sourcePath == null)
+                throw new ArgumentNullException(nameof(sourcePath));
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
-            _jsExecutor.RunScript(script, sourceUrl);
+            _jsExecutor.RunScript(sourcePath, sourceUrl);
             var response = _jsExecutor.FlushedQueue();
             ProcessResponse(response);
         }

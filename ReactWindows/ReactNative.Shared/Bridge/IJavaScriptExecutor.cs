@@ -39,10 +39,10 @@ namespace ReactNative.Bridge
         void SetGlobalVariable(string propertyName, JToken value);
 
         /// <summary>
-        /// Runs the given script.
+        /// Runs the JavaScript at the given path.
         /// </summary>
-        /// <param name="script">The script.</param>
+        /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
-        void RunScript(string script, string sourceUrl);
+        void RunScript(string sourcePath, string sourceUrl);
     }
 }

@@ -9,6 +9,10 @@ module.exports = [
     }, {
       command: '--namespace [namespace]',
       description: 'The native project namespace.'
+    }, {
+      command: '--verbose',
+      description: 'Enables logging',
+      default: false,
     }]
   },{
     func: require('./src/wpf'),
@@ -20,6 +24,10 @@ module.exports = [
     }, {
       command: '--namespace [namespace]',
       description: 'The native project namespace.'
+    }, {
+      command: '--verbose',
+      description: 'Enables logging',
+      default: false,
     }]
   }
 ];
