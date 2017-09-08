@@ -28,6 +28,12 @@ module.exports = yeoman.Base.extend({
       type: String,
       defaults: this.name
     });
+
+    this.option('verbose', {
+      desc: 'Enables logging',
+      type: Boolean,
+      defaults: false
+    });
   },
 
   configuring: function () {
@@ -48,21 +54,21 @@ module.exports = yeoman.Base.extend({
     const currentUser = username.sync(); // Gets the current username depending on the platform.
     const templateVars = { name: this.name, ns: this.options.ns, certificateThumbprint : null, projectGuid, packageGuid, currentUser };
 
-    console.log(`Generating self-signed certificate...`);
+    console.log('Generating self-signed certificate...');
     if (os.platform() === 'win32') {
       const certGenCommand = [
         `$cert = New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject "CN=${currentUser}" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}Subject Type:End Entity") -CertStoreLocation "Cert:\\CurrentUser\\My"`,
-        `$pwd = ConvertTo-SecureString -String password -Force -AsPlainText`,
+        '$pwd = ConvertTo-SecureString -String password -Force -AsPlainText',
         `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join('windows', this.name)}`,
         `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join('windows', this.name, this.name)}_TemporaryKey.pfx -Password $pwd`,
-        `$cert.Thumbprint`
+        '$cert.Thumbprint'
       ];
-      const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
+      const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')], this.options.verbose ? { stdio: 'inherit' } : {});
 
       if (certGenProcess.status === 0) {
         const certGenProcessOutput = certGenProcess.stdout.toString().trim().split('\n');
         templateVars.certificateThumbprint = certGenProcessOutput[certGenProcessOutput.length - 1];
-        console.log(chalk.green("Self-signed certificate generated successfully."));
+        console.log(chalk.green('Self-signed certificate generated successfully.'));
       } else {
         console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
         this.fs.copy(
@@ -129,8 +135,9 @@ module.exports = yeoman.Base.extend({
       return;
     }
 
+    const spawnOptions = this.options.verbose ? { stdio: 'inherit' } : {};
     console.log(`Installing react-native@${reactNativeVersion}...`);
-    this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true });
+    this.npmInstall(`react-native@${reactNativeVersion}`, { '--save': true }, null, spawnOptions);
 
     const reactVersion = peerDependencies.react;
     if (!reactVersion) {
@@ -138,11 +145,11 @@ module.exports = yeoman.Base.extend({
     }
 
     console.log(`Installing react@${reactVersion}...`);
-    this.npmInstall(`react@${reactVersion}`, { '--save': true });
+    this.npmInstall(`react@${reactVersion}`, { '--save': true }, null, spawnOptions);
   },
 
   end: function () {
-    const projectPath = path.resolve(this.destinationRoot(), 'windows', this.name);
+    //const projectPath = path.resolve(this.destinationRoot(), 'windows', this.name);
     this.log(chalk.white.bold('To run your app on UWP:'));
     this.log(chalk.white('   react-native run-windows'));
   }

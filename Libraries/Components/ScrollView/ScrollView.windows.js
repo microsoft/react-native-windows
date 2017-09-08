@@ -18,6 +18,7 @@ const Platform = require('Platform');
 const PointPropType = require('PointPropType');
 const PropTypes = require('prop-types');
 const React = require('React');
+const createReactClass = require('create-react-class');
 const ReactNative = require('ReactNative');
 const ScrollResponder = require('ScrollResponder');
 const ScrollViewStickyHeader = require('ScrollViewStickyHeader');
@@ -72,7 +73,9 @@ import type {NativeMethodsMixinType} from 'ReactNativeTypes';
  * supports out of the box.
  */
 // $FlowFixMe(>=0.41.0)
-const ScrollView = React.createClass({
+const ScrollView = createReactClass({
+  displayName: 'ScrollView',
+
   propTypes: {
     ...ViewPropTypes,
     /**
@@ -410,11 +413,11 @@ const ScrollView = React.createClass({
   },
 
   mixins: [ScrollResponder.Mixin],
-
   _scrollAnimatedValue: (new Animated.Value(0): Animated.Value),
   _scrollAnimatedValueAttachment: (null: ?{detach: () => void}),
   _stickyHeaderRefs: (new Map(): Map<number, ScrollViewStickyHeader>),
   _headerLayoutYs: (new Map(): Map<string, number>),
+
   getInitialState: function() {
     return this.scrollResponderMixinGetInitialState();
   },
@@ -598,11 +601,13 @@ const ScrollView = React.createClass({
   },
 
   _scrollViewRef: (null: ?ScrollView),
+
   _setScrollViewRef: function(ref: ?ScrollView) {
     this._scrollViewRef = ref;
   },
 
   _innerViewRef: (null: ?NativeMethodsMixinType),
+
   _setInnerViewRef: function(ref: ?NativeMethodsMixinType) {
     this._innerViewRef = ref;
   },
@@ -786,7 +791,7 @@ const ScrollView = React.createClass({
         {contentContainer}
       </ScrollViewClass>
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({

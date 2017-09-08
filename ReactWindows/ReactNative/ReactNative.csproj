@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;NO_REFLECTION</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;CREATE_LAYOUT_THREAD</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -56,7 +56,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
     <OutputPath>bin\ARM\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;NO_REFLECTION</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;CREATE_LAYOUT_THREAD</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -80,7 +80,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;NO_REFLECTION</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;CREATE_LAYOUT_THREAD</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -113,7 +113,6 @@
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
     <Compile Include="Modules\DeviceInfo\DeviceInfoModule.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
-    <Compile Include="Modules\Image\BitmapImageHelpers.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
     <Compile Include="Modules\Location\LocationModule.cs" />
@@ -171,8 +170,9 @@
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
+    <Compile Include="Views\Web\Events\MessageEvent.cs" />
     <Compile Include="Views\Web\Events\WebViewLoadingErrorEvent.cs" />
-    <Compile Include="Views\Web\Events\WebViewLoadingEvent.cs" />
+    <Compile Include="Views\Web\Events\WebViewLoadEvent.cs" />
     <Compile Include="Views\Web\ReactWebViewManager.cs" />
     <EmbeddedResource Include="Properties\ReactNative.rd.xml" />
   </ItemGroup>
@@ -208,6 +208,10 @@
     <ProjectReference Include="..\ChakraBridge\ChakraBridge.vcxproj">
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj">
+      <Project>{7596216b-669c-41f8-86da-f3637f6545c0}</Project>
+      <Name>ReactNativeWebViewBridge</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

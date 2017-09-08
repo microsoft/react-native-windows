@@ -68,11 +68,8 @@ namespace ReactNative.Animated
     {
         private readonly object _operationsGate = new object();
 
-#if WINDOWS_UWP
-        private EventHandler<object> _animatedFrameCallback;
-#else
-        private EventHandler _animatedFrameCallback;
-#endif
+        private EventHandler<FrameEventArgs> _animatedFrameCallback;
+
         private List<Action<NativeAnimatedNodesManager>> _operations = 
             new List<Action<NativeAnimatedNodesManager>>();
         private List<Action<NativeAnimatedNodesManager>> _readyOperations;
@@ -111,12 +108,6 @@ namespace ReactNative.Animated
             {
                 try
                 {
-                    var renderingArgs = args as RenderingEventArgs;
-                    if (renderingArgs == null)
-                    {
-                        return;
-                    }
-
                     var operations = default(List<Action<NativeAnimatedNodesManager>>);
                     lock (_operationsGate)
                     {
@@ -134,7 +125,7 @@ namespace ReactNative.Animated
 
                     if (nodesManager.HasActiveAnimations)
                     {
-                        nodesManager.RunUpdates(renderingArgs.RenderingTime);
+                        nodesManager.RunUpdates(args.RenderingTime);
                     }
                 }
                 catch (Exception ex)
@@ -181,7 +172,7 @@ namespace ReactNative.Animated
         /// </summary>
         public void OnResume()
         {
-            CompositionTarget.Rendering += _animatedFrameCallback;
+            ReactChoreographer.Instance.NativeAnimatedCallback += _animatedFrameCallback;
         }
 
         /// <summary>
@@ -189,7 +180,7 @@ namespace ReactNative.Animated
         /// </summary>
         public void OnSuspend()
         {
-            CompositionTarget.Rendering -= _animatedFrameCallback;
+            ReactChoreographer.Instance.NativeAnimatedCallback -= _animatedFrameCallback;
         }
 
         /// <summary>
@@ -253,6 +244,40 @@ namespace ReactNative.Animated
         {
             _operations.Add(manager =>
                 manager.SetAnimatedNodeValue(tag, value));
+        }
+
+        /// <summary>
+        /// Sets the offset of the animated node.
+        /// </summary>
+        /// <param name="tag">Tag of the animated node.</param>
+        /// <param name="value">Animated node offset.</param>
+        [ReactMethod]
+        public void setAnimatedNodeOffset(int tag, double value)
+        {
+            _operations.Add(manager =>
+                manager.SetAnimatedNodeOffset(tag, value));
+        }
+
+        /// <summary>
+        /// Flattens the animated node offset.
+        /// </summary>
+        /// <param name="tag">Tag of the animated node.</param>
+        [ReactMethod]
+        public void flattenAnimatedNodeOffset(int tag)
+        {
+            _operations.Add(manager =>
+                manager.FlattenAnimatedNodeOffset(tag));
+        }
+
+        /// <summary>
+        /// Extracts the animated node offset.
+        /// </summary>
+        /// <param name="tag">Tag of the animated node.</param>
+        [ReactMethod]
+        public void extractAnimatedNodeOffset(int tag)
+        {
+            _operations.Add(manager =>
+                manager.ExtractAnimatedNodeOffset(tag));
         }
 
         /// <summary>

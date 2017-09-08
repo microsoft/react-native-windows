@@ -16,7 +16,7 @@ For more information on the kinds of options and flags available for deploying t
 
 ## Running the Universal Windows App with Visual Studio
 
-Open your solution in Visual Studio 2015, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
+Open your solution in Visual Studio, follow the instructions below for the device family you want to deploy to, and press F5. Visual Studio will pull in the NuGet dependencies, build, deploy, and launch the application.
 
 ### Desktop
 
@@ -52,7 +52,7 @@ Assuming you have already [enabled Developer Mode on your Xbox](https://msdn.mic
 
 If you are running the Universal Windows app on a device or Xbox, you'll need to configure the IP address of the `DevSupportManager` to match your machine's IP address.
 
-We're working on creating a settings page to manage the debug server host address, but for now you can statically configure it in [`DevInternalSettings`](https://github.com/ReactWindows/react-native-windows/blob/master/ReactWindows/ReactNative/DevSupport/DevInternalSettings.cs#L52)
+We're working on creating a settings page to manage the debug server host address, but for now you can statically configure it in [`DevServerHelper`](https://github.com/Microsoft/react-native-windows/blob/master/ReactWindows/ReactNative.Shared/DevSupport/DevServerHelper.cs#L22)
 
 ## Using offline bundle
 

@@ -230,6 +230,13 @@ namespace ReactNative.UIManager
                         { "registrationName", "onMouseLeave" },
                     }
                 },
+                {
+                    "topMessage",
+                    new Map
+                    {
+                        { "registrationName", "onMessage" },
+                    }
+                },
             };
         }
 

@@ -36,6 +36,8 @@ namespace Playground.Net46
         /// <param name="arguments"></param>
         private void OnCreate(string[] arguments)
         {
+            _reactPage.OnResume(Shutdown);
+
             var shellWindow = Application.Current.MainWindow;
 
             if (shellWindow == null)

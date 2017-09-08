@@ -20,7 +20,7 @@ namespace ReactNative.Modules.Core
 
         private readonly HeapBasedPriorityQueue<TimerData> _timers;
 
-        private JSTimersExecution _jsTimersModule;
+        private JSTimers _jsTimersModule;
         private bool _suspended;
         private bool _renderingHandled;
 
@@ -52,7 +52,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         public override void Initialize()
         {
-            _jsTimersModule = Context.GetJavaScriptModule<JSTimersExecution>();
+            _jsTimersModule = Context.GetJavaScriptModule<JSTimers>();
             Context.AddLifecycleEventListener(this);
         }
 
@@ -64,7 +64,7 @@ namespace ReactNative.Modules.Core
             _suspended = true;
             if (_renderingHandled)
             {
-                CompositionTarget.Rendering -= DoFrameSafe;
+                ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
                 _renderingHandled = false;
             }
         }
@@ -77,7 +77,7 @@ namespace ReactNative.Modules.Core
             _suspended = false;
             if (!_renderingHandled)
             {
-                CompositionTarget.Rendering += DoFrameSafe;
+                ReactChoreographer.Instance.JavaScriptEventsCallback += DoFrameSafe;
                 _renderingHandled = true;
             }
         }
@@ -89,7 +89,7 @@ namespace ReactNative.Modules.Core
         {
             if (_renderingHandled)
             {
-                CompositionTarget.Rendering -= DoFrameSafe;
+                ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
                 _renderingHandled = false;
             }
         }

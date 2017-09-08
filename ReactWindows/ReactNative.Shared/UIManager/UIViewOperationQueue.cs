@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,8 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
-        private const long TicksPerFrame = 166666;
-        private const long MaxNonBatchedTicksPerFrame = 83333;
-
-        private static Stopwatch s_stopwatch = Stopwatch.StartNew();
+        private static readonly TimeSpan s_frameDuration = TimeSpan.FromTicks(166666);
+        private static readonly TimeSpan s_minTimeLeftInFrameForNonBatchedOperation = TimeSpan.FromTicks(83333);
 
         private readonly object _gate = new object();
         private readonly object _nonBatchedGate = new object();
@@ -384,7 +383,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnSuspend()
         {
-            CompositionTarget.Rendering -= OnRenderingSafe;
+            ReactChoreographer.Instance.DispatchUICallback -= OnRenderingSafe;
         }
 
         /// <summary>
@@ -392,7 +391,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnResume()
         {
-            CompositionTarget.Rendering += OnRenderingSafe;
+            ReactChoreographer.Instance.DispatchUICallback += OnRenderingSafe;
         }
 
         /// <summary>
@@ -408,12 +407,6 @@ namespace ReactNative.UIManager
         /// <param name="batchId">The batch identifier.</param>
         internal void DispatchViewUpdates(int batchId)
         {
-            var operations = _operations.Count == 0 ? null : _operations;
-            if (operations != null)
-            {
-                _operations = new List<Action>();
-            }
-
             var nonBatchedOperations = default(Action[]);
             lock (_nonBatchedGate)
             {
@@ -430,6 +423,12 @@ namespace ReactNative.UIManager
 
             lock (_gate)
             {
+                var operations = _operations.Count == 0 ? null : _operations;
+                if (operations != null)
+                {
+                    _operations = new List<Action>();
+                }
+
                 _batches.Add(() =>
                 {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchUI")
@@ -466,7 +465,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void OnRenderingSafe(object sender, object e)
+        private void OnRenderingSafe(object sender, FrameEventArgs e)
         {
             try
             {
@@ -478,15 +477,11 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void OnRendering(object sender, object e)
+        private void OnRendering(object sender, FrameEventArgs e)
         {
-            var renderingArgs = e as RenderingEventArgs;
-            if (renderingArgs != null)
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
             {
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
-                {
-                    DispatchPendingNonBatchedOperations(renderingArgs.RenderingTime);
-                }
+                DispatchPendingNonBatchedOperations(e.FrameTime);
             }
 
             lock (_gate)
@@ -505,24 +500,12 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void DispatchPendingNonBatchedOperations(TimeSpan renderingTime)
+        private void DispatchPendingNonBatchedOperations(DateTimeOffset frameTime)
         {
-            if (_lastRenderingTicks < 0)
-            {
-                _lastRenderingTicks = renderingTime.Ticks;
-            }
-
-            var ticksSinceLastFrame = renderingTime.Ticks - _lastRenderingTicks;
-            _lastRenderingTicks = renderingTime.Ticks;
-            var lastFrameTicksOverage = Math.Max(0, ticksSinceLastFrame - TicksPerFrame);
-            var allowedTicks = MaxNonBatchedTicksPerFrame - lastFrameTicksOverage;
-
-            var frameStartTicks = s_stopwatch.ElapsedTicks;
             while (true)
             {
-                // Use up to `MaxNonBatchedTicksPerFrame` minus the delay in the last frame
-                var elapsedTicks = s_stopwatch.ElapsedTicks - frameStartTicks;
-                if (elapsedTicks > allowedTicks)
+                var timeLeftInFrame = frameTime - DateTimeOffset.UtcNow;
+                if (timeLeftInFrame < s_minTimeLeftInFrameForNonBatchedOperation)
                 {
                     break;
                 }

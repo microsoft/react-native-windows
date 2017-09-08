@@ -5,8 +5,8 @@ using System;
 namespace ReactNative.Views.TextInput
 {
     /// <summary>
-    /// Event emitted by <see cref="Windows.UI.Xaml.Controls.TextBox"/> native 
-    /// view when the control gains focus.
+    /// Event emitted by <see cref="ReactTextInputManager"/> native view when 
+    /// focus is lost.
     /// </summary>
     class ReactTextInputBlurEvent : Event
     {
@@ -15,7 +15,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="viewTag">The view tag.</param>
         public ReactTextInputBlurEvent(int viewTag) 
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
         }
 

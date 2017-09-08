@@ -6,7 +6,7 @@ namespace ReactNative.Modules.Core
     /// <summary>
     /// JavaScript module for invoking timers by identifier.
     /// </summary>
-    public sealed class JSTimersExecution : JavaScriptModuleBase
+    public sealed class JSTimers : JavaScriptModuleBase
     {
         /// <summary>
         /// Calls a batch of timers with the given identifiers.

@@ -18,9 +18,9 @@ namespace ReactNative.Chakra.Executor
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
-        public NativeJavaScriptExecutor() : this(false)
+        public NativeJavaScriptExecutor()
+            : this(false)
         {
-
         }
 
         /// <summary>
@@ -92,27 +92,27 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
-        /// Runs the given script.
+        /// Runs the JavaScript at the given path.
         /// </summary>
-        /// <param name="script">The script.</param>
+        /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
-        public void RunScript(string script, string sourceUrl)
+        public void RunScript(string sourcePath, string sourceUrl)
         {
-            if (script == null)
-                throw new ArgumentNullException(nameof(script));
+            if (sourcePath == null)
+                throw new ArgumentNullException(nameof(sourcePath));
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
             try
             {
-                if(_useSerialization)
+                if (_useSerialization)
                 {
                     var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(script, binPath, sourceUrl));
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
                 }
                 else
                 {
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(script, sourceUrl));
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
                 }
             }
             catch (JavaScriptScriptException ex)

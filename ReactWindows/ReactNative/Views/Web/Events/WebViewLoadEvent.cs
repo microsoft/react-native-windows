@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
-using System;
 
 namespace ReactNative.Views.Web.Events
 {
-    class WebViewLoadingEvent : Event
+    class WebViewLoadEvent : Event
     {
-        private readonly string _type;
+        public const string TopLoadStart = "topLoadStart";
+        public const string TopLoadingFinish = "topLoadingFinish";
 
         private readonly string _url;
         private readonly bool _loading;
@@ -14,17 +14,17 @@ namespace ReactNative.Views.Web.Events
         private readonly bool _canGoBack;
         private readonly bool _canGoForward;
 
-        public WebViewLoadingEvent(
-            int viewTag, 
-            string type, 
-            string url, 
-            bool loading, 
-            string title, 
-            bool canGoBack, 
+        public WebViewLoadEvent(
+            int viewTag,
+            string eventName,
+            string url,
+            bool loading,
+            string title,
+            bool canGoBack,
             bool canGoForward)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
-            _type = type;
+            EventName = eventName;
             _url = url;
             _loading = loading;
             _title = title;
@@ -34,18 +34,7 @@ namespace ReactNative.Views.Web.Events
 
         public override string EventName
         {
-            get
-            {
-                if (_type.Equals("Start"))
-                {
-                    return "topLoadingStart";
-                }
-                else
-                {
-                    return "topLoadingFinish";
-                }
-                
-            }
+            get;
         }
 
         public override void Dispatch(RCTEventEmitter eventEmitter)
