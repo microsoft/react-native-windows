@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule DatePickerWindows
+ * @providesModule TimePickerWindows
  * @flow
  */
 'use strict';
@@ -17,12 +17,11 @@ var requireNativeComponent = require('requireNativeComponent');
 
 var ReactNative = require("react-native");
 
-var DatePickerWindows = React.createClass({
-    name: 'DatePickerWindows',
+var TimePickerWindows = React.createClass({
+    name: 'TimePickerWindows',
     propTypes: {
         ...View.PropTypes,
         ...ReactNative.ViewPropTypes,
-
         /**
          * The currently selected date.
          */
@@ -36,37 +35,20 @@ var DatePickerWindows = React.createClass({
          * date and time.
          */
         onChange: React.PropTypes.func,
-
-        /**
-         * Maximum year.
-         *
-         * Restricts the range with an upper bound on the year.
-         */
-        maxYear: React.PropTypes.instanceOf(Date),
-
-        /**
-         * Minimum year.
-         *
-         * Restricts the range with an lower bound on the year.
-         */
-        minYear: React.PropTypes.instanceOf(Date),
     },
-    getDefaultProps: function() {
-      return {
-          date: new Date(),
-      };
+    getDefaultProps: function(){
+        return {
+            date: new Date(),
+        }
     },
     _onChange: function(event) {
       this.props.onChange && this.props.onChange(new Date(event.nativeEvent.date));
     },
     render: function(){
-        return <RCTDatePicker date={this.props.date}
-                    minYear={this.props.minYear}
-                    maxYear={this.props.maxYear}
-                    onChange={this._onChange} />
+        return <RCTTimePicker date={this.props.date} onChange={this._onChange} />
     },
-});
+})
 
-var RCTDatePicker = requireNativeComponent('RCTDatePicker', DatePickerWindows);
+var RCTTimePicker = requireNativeComponent('RCTTimePicker', TimePickerWindows);
 
-module.exports = DatePickerWindows;
+module.exports = TimePickerWindows;

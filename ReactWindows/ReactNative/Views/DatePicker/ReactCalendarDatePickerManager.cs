@@ -34,6 +34,9 @@ namespace ReactNative.Views.DatePicker
             if (date.HasValue)
             {
                 view.Date = date.Value;
+            }else
+            {
+                view.Date = null;
             }
         }
 
@@ -165,11 +168,13 @@ namespace ReactNative.Views.DatePicker
         private void OnDateChanged(object sender, CalendarDatePickerDateChangedEventArgs e)
         {
             var datePicker = (CalendarDatePicker)sender;
+            DateTime? newDate;
             if (!e.NewDate.HasValue)
             {
                 return;
             }
-            DateTime newDate = e.NewDate.Value.DateTime;
+            else
+                newDate = e.NewDate.Value.DateTime;
 
             datePicker.GetReactContext().GetNativeModule<UIManagerModule>()
                 .EventDispatcher
@@ -181,13 +186,13 @@ namespace ReactNative.Views.DatePicker
         /// </summary>
         class ReactCalendarDatePickerEvent : Event
         {
-            private readonly DateTime _date;
+            private readonly DateTime? _date;
             /// <summary>
             /// Creates an instance of the event
             /// </summary>
             /// <param name="viewTag">The viewtag of the instantiating view.</param>
             /// <param name="date">Date to include in the event payload.</param>
-            public ReactCalendarDatePickerEvent(int viewTag, DateTime date) :
+            public ReactCalendarDatePickerEvent(int viewTag, DateTime? date) :
                 base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
             {
                 _date = date;
@@ -210,10 +215,20 @@ namespace ReactNative.Views.DatePicker
             /// <param name="eventEmitter"></param>
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
-                JObject eventData = new JObject
+                JObject eventData;
+                if (_date.HasValue)
                 {
-                    {"date", _date },
-                };
+                    eventData = new JObject
+                    {
+                        {"date", _date.Value },
+                    };
+                }else
+                {
+                    eventData = new JObject
+                    {
+                        {"date", null },
+                    };
+                }
                 eventEmitter.receiveEvent(ViewTag, EventName, eventData);
             }
         }

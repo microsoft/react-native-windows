@@ -18,7 +18,7 @@ namespace ReactNative.Views.DatePicker
 
         private static YogaSize MeasurePicker(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            return MeasureOutput.Make(width, 40f);
+            return MeasureOutput.Make(width, 32f);
         }
     }
 }
