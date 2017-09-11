@@ -22,8 +22,14 @@ var {
   Text,
   View,
 } = ReactNative;
+/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
+ * found when Flow v0.54 was deployed. To see the error delete this comment and
+ * run Flow. */
 var TimerMixin = require('react-timer-mixin');
 var RNTesterButton = require('./RNTesterButton');
+/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
+ * found when Flow v0.54 was deployed. To see the error delete this comment and
+ * run Flow. */
 var performanceNow = require('fbjs/lib/performanceNow');
 
 function burnCPU(milliseconds) {
@@ -31,7 +37,7 @@ function burnCPU(milliseconds) {
   while (performanceNow() < (start + milliseconds)) {}
 }
 
-class RequestIdleCallbackTester extends React.Component {
+class RequestIdleCallbackTester extends React.Component<{}, $FlowFixMeState> {
   state = {
     message: '-',
   };
@@ -252,7 +258,7 @@ exports.examples = [
     description: 'Execute function fn every t milliseconds until cancelled ' +
       'or component is unmounted.',
     render: function(): React.Element<any> {
-      class IntervalExample extends React.Component {
+      class IntervalExample extends React.Component<{}, $FlowFixMeState> {
         state = {
           showTimer: true,
         };
