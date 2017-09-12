@@ -109,12 +109,24 @@ namespace ReactNative.Views.View
             view.DragOver += async (sender, args) =>
             {
                 var dfd = args.GetDeferral();
+
+                // TODO: Send this event to JS, get response (how?) and
+                // set the AcceptedOperation value. The JS handler in
+                // MessagePanel merely does this:
+                //
+                //      e.dataTransfer.effectAllowed = 'copy';
+                //      e.dataTransfer.dropEffect = 'copy';
+                //
+                // so a simple `allowDrop` flag may be sufficient.
                 await Task.Delay(100);
+
                 args.AcceptedOperation = DataPackageOperation.Copy;
+
                 args.DragUIOverride.Caption = "12345";
                 args.DragUIOverride.IsCaptionVisible = true;
                 args.DragUIOverride.IsContentVisible = true;
                 args.DragUIOverride.IsGlyphVisible = true;
+
                 dfd.Complete();
             };
 
