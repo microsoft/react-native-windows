@@ -1,6 +1,13 @@
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -90,6 +97,81 @@ namespace ReactNative.Views.View
         protected override BorderedCanvas CreateViewInstance(ThemedReactContext reactContext)
         {
             return new BorderedCanvas();
+        }
+
+        /// A new property on RX.View
+        [ReactProp("allowDrop")]
+        public void SetAllowDrop(BorderedCanvas view, bool allowDrop)
+        {
+            Debug.WriteLine($"ReactViewManager::SetAllowDrop {allowDrop}");
+            view.AllowDrop = allowDrop;
+
+            view.DragOver += async (sender, args) =>
+            {
+                var dfd = args.GetDeferral();
+                await Task.Delay(100);
+                args.AcceptedOperation = DataPackageOperation.Copy;
+                args.DragUIOverride.Caption = "12345";
+                args.DragUIOverride.IsCaptionVisible = true;
+                args.DragUIOverride.IsContentVisible = true;
+                args.DragUIOverride.IsGlyphVisible = true;
+                dfd.Complete();
+            };
+
+            view.Drop += async (sender, args) =>
+            {
+                var files = new JArray();
+
+                if (args.DataView.Contains(StandardDataFormats.StorageItems))
+                {
+                    var items = await args.DataView.GetStorageItemsAsync();
+
+                    foreach (var item in items)
+                    {
+                        var file = item as StorageFile;
+                        var guid = Guid.NewGuid();
+                        var props = await file.GetBasicPropertiesAsync();
+
+                        files.Add(new JObject
+                        {
+                            { "name", file.Name },
+                            { "size", props.Size },
+                            { "uri", "blob:" + guid },
+                        });
+                    }
+                }
+
+                var data = new JObject
+                {
+                    { "target", view.GetTag() },
+                    { "dataTransfer", new JObject { { "files", files } } }
+                };
+
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
+            };
+        }
+
+        class DragDropEvent : Event
+        {
+            private readonly string _name;
+            private readonly JObject _data;
+
+            public DragDropEvent(int viewTag, string name, JObject data)
+                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            {
+                _name = name;
+                _data = data;
+            }
+
+            public override string EventName => _name;
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                eventEmitter.receiveEvent(ViewTag, EventName, _data);
+            }
         }
 
         /// <summary>

@@ -134,6 +134,13 @@ namespace ReactNative.UIManager
             return new Map
             {
                 {
+                    "topDrop",
+                    new Map
+                    {
+                        { "registrationName", "onDrop" },
+                    }
+                },
+                {
                     "topChange",
                     new Map
                     {
