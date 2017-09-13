@@ -30,7 +30,7 @@ namespace ReactNative.Bridge
         /// </returns>
         public static bool IsOnDispatcher()
         {
-            return CoreWindow.GetForCurrentThread()?.Dispatcher != null;
+            return CoreWindow.GetForCurrentThread()?.Dispatcher == CoreApplication.MainView.CoreWindow.Dispatcher;
         }
 
         /// <summary>
