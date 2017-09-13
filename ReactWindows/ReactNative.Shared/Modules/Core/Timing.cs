@@ -3,6 +3,7 @@ using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reactive.Disposables;
 using System.Threading;
 
 namespace ReactNative.Modules.Core
@@ -14,15 +15,20 @@ namespace ReactNative.Modules.Core
     {
         private const string IdleChoreographerKey = nameof(Timing) + "_Idle";
 
-        private static readonly TimeSpan FrameDuration = TimeSpan.FromTicks(166666);
-        private static readonly TimeSpan IdleCallbackFrameDeadline = TimeSpan.FromMilliseconds(1);
+        private static readonly TimeSpan s_frameDuration = TimeSpan.FromTicks(166666);
+        private static readonly TimeSpan s_idleCallbackFrameDeadline = TimeSpan.FromMilliseconds(1);
 
         private readonly object _gate = new object();
+        private readonly object _idleGate = new object();
+        private readonly object _idleCallbackGate = new object();
 
         private readonly HeapBasedPriorityQueue<TimerData> _timers;
 
+        private readonly SerialDisposable _idleCancellationDisposable = new SerialDisposable();
+
         private JSTimers _jsTimersModule;
         private bool _suspended;
+
         private bool _sendIdleEvents;
 
         /// <summary>
@@ -65,10 +71,13 @@ namespace ReactNative.Modules.Core
             _suspended = true;
             ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
 
-            if (_sendIdleEvents)
+            lock (_idleGate)
             {
-                ReactChoreographer.Instance.IdleCallback -= DoIdleCallbackSafe;
-            }
+                if (_sendIdleEvents)
+                {
+                    ReactChoreographer.Instance.IdleCallback -= DoFrameIdleCallbackSafe;
+                }
+            }  
         }
 
         /// <summary>
@@ -79,9 +88,12 @@ namespace ReactNative.Modules.Core
             _suspended = false;
             ReactChoreographer.Instance.JavaScriptEventsCallback += DoFrameSafe;
 
-            if (_sendIdleEvents)
+            lock (_idleGate)
             {
-                ReactChoreographer.Instance.IdleCallback += DoIdleCallbackSafe;
+                if (_sendIdleEvents)
+                {
+                    ReactChoreographer.Instance.IdleCallback += DoFrameIdleCallbackSafe;
+                }
             }
         }
 
@@ -92,9 +104,12 @@ namespace ReactNative.Modules.Core
         {
             ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
 
-            if (_sendIdleEvents)
+            lock (_idleGate)
             {
-                ReactChoreographer.Instance.IdleCallback -= DoIdleCallbackSafe;
+                if (_sendIdleEvents)
+                {
+                    ReactChoreographer.Instance.IdleCallback -= DoFrameIdleCallbackSafe;
+                }
             }
         }
 
@@ -162,17 +177,28 @@ namespace ReactNative.Modules.Core
         [ReactMethod]
         public void setSendIdleEvents(bool sendIdleEvents)
         {
-            _sendIdleEvents = sendIdleEvents;
-            if (_sendIdleEvents)
+            lock (_idleGate)
             {
-                ReactChoreographer.Instance.IdleCallback += DoIdleCallbackSafe;
-                ReactChoreographer.Instance.ActivateCallback(IdleChoreographerKey);
+                _sendIdleEvents = sendIdleEvents;
+                if (_sendIdleEvents)
+                {
+                    ReactChoreographer.Instance.IdleCallback += DoFrameIdleCallbackSafe;
+                    ReactChoreographer.Instance.ActivateCallback(IdleChoreographerKey);
+                }
+                else
+                {
+                    ReactChoreographer.Instance.IdleCallback -= DoFrameIdleCallbackSafe;
+                    ReactChoreographer.Instance.DeactivateCallback(IdleChoreographerKey);
+                }
             }
-            else
-            {
-                ReactChoreographer.Instance.IdleCallback -= DoIdleCallbackSafe;
-                ReactChoreographer.Instance.DeactivateCallback(IdleChoreographerKey);
-            }
+        }
+
+        /// <summary>
+        /// Called before a <see cref="IReactInstance"/> is disposed.
+        /// </summary>
+        public override void OnReactInstanceDispose()
+        {
+            _idleCancellationDisposable.Dispose();
         }
 
         private void DoFrameSafe(object sender, object e)
@@ -223,11 +249,11 @@ namespace ReactNative.Modules.Core
             }
         }
 
-        private void DoIdleCallbackSafe(object sender, FrameEventArgs e)
+        private void DoFrameIdleCallbackSafe(object sender, FrameEventArgs e)
         {
             try
             {
-                DoIdleCallback(sender, e);
+                DoFrameIdleCallback(sender, e);
             }
             catch (Exception ex)
             {
@@ -235,18 +261,42 @@ namespace ReactNative.Modules.Core
             }
         }
 
-        private void DoIdleCallback(object sender, FrameEventArgs e)
+        private void DoFrameIdleCallback(object sender, FrameEventArgs e)
         {
-            if (_sendIdleEvents)
+            if (Volatile.Read(ref _suspended))
             {
-                var frameTime = e.FrameTime;
-                var utcNow = DateTimeOffset.UtcNow;
-                var remainingFrameTime = frameTime - utcNow;
-                if (remainingFrameTime > IdleCallbackFrameDeadline)
-                {
-                    Context.GetJavaScriptModule<JSTimers>()
-                        .callIdleCallbacks(frameTime.ToUnixTimeMilliseconds());
-                }
+                return;
+            }
+
+            var cancellationDisposable = new CancellationDisposable();
+            _idleCancellationDisposable.Disposable = cancellationDisposable;
+            Context.RunOnJavaScriptQueueThread(() => DoIdleCallback(e.FrameTime, cancellationDisposable.Token));
+        }
+
+        private void DoIdleCallback(DateTimeOffset frameTime, CancellationToken token)
+        {
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            var remainingFrameTime = frameTime - DateTimeOffset.UtcNow;
+            if (remainingFrameTime < s_idleCallbackFrameDeadline)
+            {
+                return;
+            }
+
+            bool sendIdleEvents;
+            lock (_idleGate)
+            {
+                sendIdleEvents = _sendIdleEvents;
+            }
+
+            if (sendIdleEvents)
+            {
+                var frameStartTime = frameTime - s_frameDuration;
+                Context.GetJavaScriptModule<JSTimers>()
+                    .callIdleCallbacks(frameStartTime.ToUnixTimeMilliseconds());
             }
         }
 
