@@ -2,7 +2,6 @@ using ReactNative.Bridge;
 using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reactive.Disposables;
 using System.Threading;
 
@@ -20,7 +19,6 @@ namespace ReactNative.Modules.Core
 
         private readonly object _gate = new object();
         private readonly object _idleGate = new object();
-        private readonly object _idleCallbackGate = new object();
 
         private readonly HeapBasedPriorityQueue<TimerData> _timers;
 
