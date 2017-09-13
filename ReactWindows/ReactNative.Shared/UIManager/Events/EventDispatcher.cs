@@ -283,7 +283,13 @@ namespace ReactNative.UIManager.Events
 
             MoveStagedEventsToDispatchQueue();
 
-            if (!Volatile.Read(ref _hasDispatchScheduled))
+            bool shouldDispatch;
+            lock (_eventsToDispatchLock)
+            {
+                shouldDispatch = _eventsToDispatchSize > 0;
+            }
+
+            if (shouldDispatch && !Volatile.Read(ref _hasDispatchScheduled))
             {
                 _hasDispatchScheduled = true;
                 _reactContext.RunOnJavaScriptQueueThread(() => DispatchEvents(activity));
