@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using ReactNative.Common;
@@ -154,7 +154,6 @@ namespace ReactNative
         /// </summary>
         public async void CreateReactContextInBackground()
         {
-            ReactChoreographer.Initialize();
             await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
 
@@ -178,6 +177,7 @@ namespace ReactNative
                     "a new file, explicitly, use the re-create method.");
             }
 
+            ReactChoreographer.Initialize();
             _hasStartedCreatingInitialContext = true;
             await RecreateReactContextInBackgroundInnerAsync().ConfigureAwait(false);
         }
@@ -287,7 +287,7 @@ namespace ReactNative
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
-                await currentReactContext.DisposeAsync().ConfigureAwait(false);
+                await currentReactContext.DisposeAsync();
                 _currentReactContext = null;
                 _hasStartedCreatingInitialContext = false;
             }
