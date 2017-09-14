@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.UIManager
@@ -916,13 +917,16 @@ namespace ReactNative.UIManager
 
                 if (frameDidChange && cssNode.ShouldNotifyOnLayout)
                 {
-                    _eventDispatcher.DispatchEvent(
-                        OnLayoutEvent.Obtain(
-                            tag,
-                            cssNode.ScreenX,
-                            cssNode.ScreenY,
-                            cssNode.ScreenWidth,
-                            cssNode.ScreenHeight));
+                    // Dispatch event from non-layout thread to avoid queueing
+                    // main dispatcher callbacks from the layout thread
+                    var task = Task.Run(() =>
+                        _eventDispatcher.DispatchEvent(
+                            OnLayoutEvent.Obtain(
+                                tag,
+                                cssNode.ScreenX,
+                                cssNode.ScreenY,
+                                cssNode.ScreenWidth,
+                                cssNode.ScreenHeight)));
                 }
             }
 

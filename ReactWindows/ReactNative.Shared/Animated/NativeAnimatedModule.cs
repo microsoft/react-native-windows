@@ -122,6 +122,10 @@ namespace ReactNative.Animated
                     {
                         nodesManager.RunUpdates(args.RenderingTime);
                     }
+                    else
+                    {
+                        ReactChoreographer.Instance.DeactivateCallback(nameof(NativeAnimatedModule));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -152,6 +156,8 @@ namespace ReactNative.Animated
                         _readyOperations.AddRange(operations);
                     }
                 }
+
+                ReactChoreographer.Instance.ActivateCallback(nameof(NativeAnimatedModule));
             }
         }
 

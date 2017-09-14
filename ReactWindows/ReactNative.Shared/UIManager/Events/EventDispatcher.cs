@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
@@ -115,6 +115,8 @@ namespace ReactNative.UIManager.Events
             {
                 _eventStaging.Add(@event);
             }
+
+            ReactChoreographer.Instance.ActivateCallback(nameof(EventDispatcher));
         }
 
         /// <summary>
@@ -231,6 +233,7 @@ namespace ReactNative.UIManager.Events
                 }
 
                 _eventStaging.Clear();
+                ReactChoreographer.Instance.DeactivateCallback(nameof(EventDispatcher));
             }
         }
 

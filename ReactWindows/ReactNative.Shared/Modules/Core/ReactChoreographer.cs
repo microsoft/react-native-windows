@@ -1,9 +1,13 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using System;
+using System.Collections.Generic;
+using System.Threading;
 #if WINDOWS_UWP
+using Windows.UI.Core;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows.Media;
+using System.Windows.Threading;
 #endif
 
 namespace ReactNative.Modules.Core
@@ -14,15 +18,25 @@ namespace ReactNative.Modules.Core
     /// </summary>
     public class ReactChoreographer : IDisposable
     {
+#if WINDOWS_UWP
+        private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
+#else
+        private const DispatcherPriority ActivatePriority = DispatcherPriority.Send;
+#endif
+        private const int InactiveFrameCount = 120;
+
         private static ReactChoreographer s_instance;
+
+        private readonly object _gate = new object();
+        private readonly HashSet<string> _callbackKeys = new HashSet<string>();
 
         private FrameEventArgs _frameEventArgs;
         private IMutableFrameEventArgs _mutableReference;
+        private bool _isSubscribed;
+        private bool _isSubscribing;
+        private int _currentInactiveCount;
 
-        private ReactChoreographer()
-        {
-            CompositionTarget.Rendering += OnRendering;
-        }
+        private ReactChoreographer() { }
 
         /// <summary>
         /// For use by <see cref="UIManager.UIManagerModule"/>. 
@@ -80,6 +94,52 @@ namespace ReactNative.Modules.Core
             }
         }
 
+        /// <summary>
+        /// Activate the callback for the given key.
+        /// </summary>
+        /// <param name="callbackKey">The callback key.</param>
+        public void ActivateCallback(string callbackKey)
+        {
+            bool subscribe;
+            lock (_gate)
+            {
+                var isSubscribed = Volatile.Read(ref _isSubscribed);
+                var isSubscribing = Volatile.Read(ref _isSubscribing);
+                subscribe = _isSubscribing =
+                    _callbackKeys.Add(callbackKey)
+                    && _callbackKeys.Count == 1
+                    && !isSubscribed
+                    && !isSubscribing;
+            }
+
+            if (subscribe)
+            {
+                DispatcherHelpers.RunOnDispatcher(
+                    ActivatePriority,
+                    () =>
+                    {
+                        lock (_gate)
+                        {
+                            CompositionTarget.Rendering += OnRendering;
+                            _isSubscribed = true;
+                            _isSubscribing = false;
+                        }
+                    });
+            }
+        }
+
+        /// <summary>
+        /// Deactivate the callback for the given key.
+        /// </summary>
+        /// <param name="callbackKey">The callback key.</param>
+        public void DeactivateCallback(string callbackKey)
+        {
+            lock (_gate)
+            {
+                _callbackKeys.Remove(callbackKey);
+            }
+        }
+
         void IDisposable.Dispose()
         {
             CompositionTarget.Rendering -= OnRendering;
@@ -106,6 +166,22 @@ namespace ReactNative.Modules.Core
             DispatchUICallback?.Invoke(sender, _frameEventArgs);
             NativeAnimatedCallback?.Invoke(sender, _frameEventArgs);
             JavaScriptEventsCallback?.Invoke(sender, _frameEventArgs);
+
+            lock (_gate)
+            {
+                if (_callbackKeys.Count == 0)
+                {
+                    if (++_currentInactiveCount >= InactiveFrameCount)
+                    {
+                        CompositionTarget.Rendering -= OnRendering;
+                        _isSubscribed = false;
+                    }
+                }
+                else
+                {
+                    _currentInactiveCount = 0;
+                }
+            }
         }
     }
 }

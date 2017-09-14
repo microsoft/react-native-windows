@@ -109,6 +109,8 @@ namespace ReactNative.Modules.Core
             {
                 _timers.Enqueue(timer);
             }
+
+            ReactChoreographer.Instance.ActivateCallback(nameof(Timing));
         }
 
         /// <summary>
@@ -121,6 +123,10 @@ namespace ReactNative.Modules.Core
             lock (_gate)
             {
                 _timers.Remove(new TimerData(timerId));
+                if (_timers.Count == 0)
+                {
+                    ReactChoreographer.Instance.DeactivateCallback(nameof(Timing));
+                }
             }
         }
 
@@ -158,6 +164,11 @@ namespace ReactNative.Modules.Core
                     {
                         _timers.Enqueue(nextInterval);
                     }
+                }
+
+                if (_timers.Count == 0)
+                {
+                    ReactChoreographer.Instance.DeactivateCallback(nameof(Timing));
                 }
             }
 
