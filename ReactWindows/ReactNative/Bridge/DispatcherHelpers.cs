@@ -54,9 +54,19 @@ namespace ReactNative.Bridge
         /// Invokes an action on the dispatcher.
         /// </summary>
         /// <param name="action">The action to invoke.</param>
-        public static async void RunOnDispatcher(DispatchedHandler action)
+        public static void RunOnDispatcher(DispatchedHandler action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
+            RunOnDispatcher(CoreDispatcherPriority.Normal, action);
+        }
+
+        /// <summary>
+        /// Invokes an action on the dispatcher.
+        /// </summary>
+        /// <param name="priority">The priority.</param>
+        /// <param name="action">The action to invoke.</param>
+        public static async void RunOnDispatcher(CoreDispatcherPriority priority, DispatchedHandler action)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(priority, action).AsTask().ConfigureAwait(false);
         }
 
         /// <summary>

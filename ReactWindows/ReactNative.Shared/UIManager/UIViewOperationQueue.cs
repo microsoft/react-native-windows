@@ -5,6 +5,7 @@ using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -18,6 +19,8 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
+        private const string NonBatchedChoreographerKey = nameof(UIViewOperationQueue) + "_NonBatched";
+
         private static readonly TimeSpan s_frameDuration = TimeSpan.FromTicks(166666);
         private static readonly TimeSpan s_minTimeLeftInFrameForNonBatchedOperation = TimeSpan.FromTicks(83333);
 
@@ -185,6 +188,10 @@ namespace ReactNative.UIManager
                    viewClassName,
                    initialProps));
             }
+
+            // Dispatch event from non-layout thread to avoid queueing
+            // main dispatcher callbacks from the layout thread
+            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(NonBatchedChoreographerKey));
         }
 
         /// <summary>
@@ -399,10 +406,7 @@ namespace ReactNative.UIManager
                 {
                     nonBatchedOperations = _nonBatchedOperations.ToArray();
                     _nonBatchedOperations.Clear();
-                }
-                else
-                {
-                    nonBatchedOperations = null;
+                    ReactChoreographer.Instance.DeactivateCallback(NonBatchedChoreographerKey);
                 }
             }
 
@@ -440,6 +444,10 @@ namespace ReactNative.UIManager
                     }
                 });
             }
+
+            // Dispatch event from non-layout thread to avoid queueing
+            // main dispatcher callbacks from the layout thread
+            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(nameof(UIViewOperationQueue)));
         }
 
         private void EnqueueOperation(Action action)
@@ -481,6 +489,7 @@ namespace ReactNative.UIManager
                 finally
                 {
                     _batches.Clear();
+                    ReactChoreographer.Instance.DeactivateCallback(nameof(UIViewOperationQueue));
                 }
             }
         }
@@ -500,6 +509,7 @@ namespace ReactNative.UIManager
                 {
                     if (_nonBatchedOperations.Count == 0)
                     {
+                        ReactChoreographer.Instance.DeactivateCallback(NonBatchedChoreographerKey);
                         break;
                     }
 

@@ -61,6 +61,13 @@ namespace ReactNative.Bridge
             await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
+        public static async void RunOnDispatcher(DispatcherPriority priority, Action action)
+        {
+            AssertDispatcherSet();
+
+            await CurrentDispatcher.InvokeAsync(action, priority).Task.ConfigureAwait(false);
+        }
+
         public static Task<T> CallOnDispatcher<T>(Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
