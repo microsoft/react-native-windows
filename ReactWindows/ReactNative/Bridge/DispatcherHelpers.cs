@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
@@ -10,6 +11,8 @@ namespace ReactNative.Bridge
     /// </summary>
     public static class DispatcherHelpers
     {
+        private static ThreadLocal<bool> s_isOnDispatcherThread;
+
         /// <summary>
         /// Asserts that the current thread has dispatcher access.
         /// </summary>
@@ -30,7 +33,21 @@ namespace ReactNative.Bridge
         /// </returns>
         public static bool IsOnDispatcher()
         {
-            return CoreWindow.GetForCurrentThread()?.Dispatcher == CoreApplication.MainView.CoreWindow.Dispatcher;
+            if (s_isOnDispatcherThread == null)
+            {
+                if (CoreWindow.GetForCurrentThread()?.Dispatcher == CoreApplication.MainView.CoreWindow.Dispatcher)
+                {
+                    s_isOnDispatcherThread = new ThreadLocal<bool>();
+                    s_isOnDispatcherThread.Value = true;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return s_isOnDispatcherThread.Value;
         }
 
         /// <summary>
@@ -63,6 +80,15 @@ namespace ReactNative.Bridge
             });
 
             return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Cleans up the dispatcher helpers.
+        /// </summary>
+        public static void Reset()
+        {
+            s_isOnDispatcherThread.Dispose();
+            s_isOnDispatcherThread = null;
         }
     }
 }
