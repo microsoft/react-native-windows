@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Common;
 using System;
 using System.Threading;
@@ -205,19 +205,17 @@ namespace ReactNative.Tests
                 }).Result;
             });
 
-            var tcs = new TaskCompletionSource<bool>();
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            var task = DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 e.Set();
                 await manager.DisposeAsync();
-                await Task.Run(() => tcs.SetResult(true));
             });
 
             var completedTask = await Task.WhenAny(
                 Task.Delay(5000),
-                tcs.Task);
+                task);
 
-            Assert.IsTrue(tcs.Task.IsCompleted);
+            Assert.IsTrue(task.IsCompleted);
         }
 
         private static ReactInstanceManager CreateReactInstanceManager()
