@@ -246,6 +246,8 @@ namespace ReactNative
             }
 
             MoveToBeforeResumeLifecycleState();
+
+            DispatcherHelpers.Reset();
         }
 
         /// <summary>

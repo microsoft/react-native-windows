@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -75,6 +75,11 @@ namespace ReactNative.Bridge
             });
 
             return taskCompletionSource.Task;
+        }
+
+        public static void Reset()
+        {
+            // No-op on WPF
         }
 
         private static void AssertDispatcherSet()
