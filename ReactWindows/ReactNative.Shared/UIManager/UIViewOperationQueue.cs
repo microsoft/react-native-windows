@@ -1,16 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
 
 namespace ReactNative.UIManager
 {
@@ -39,8 +33,6 @@ namespace ReactNative.UIManager
         private IList<Action> _operations = new List<Action>();
         private IList<Action> _batches = new List<Action>();
 
-        private long _lastRenderingTicks = -1;
-
         /// <summary>
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
         /// </summary>
@@ -63,7 +55,7 @@ namespace ReactNative.UIManager
             {
                 return _nativeViewHierarchyManager;
             }
-        } 
+        }
 
         /// <summary>
         /// Checks if the operation queue is empty.
@@ -193,14 +185,6 @@ namespace ReactNative.UIManager
                    viewClassName,
                    initialProps));
             }
-        }
-
-        /// <summary>
-        /// Clears the animation layout updates.
-        /// </summary>
-        public void ClearAnimationLayout()
-        {
-            _nativeViewHierarchyManager.ClearLayoutAnimation();
         }
 
         /// <summary>
@@ -397,8 +381,9 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Called when the host is shutting down.
         /// </summary>
-        public void OnShutdown()
+        public void OnDestroy()
         {
+            ReactChoreographer.Instance.DispatchUICallback -= OnRenderingSafe;
         }
 
         /// <summary>

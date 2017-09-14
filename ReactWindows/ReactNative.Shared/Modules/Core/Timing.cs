@@ -1,13 +1,8 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
 
 namespace ReactNative.Modules.Core
 {
@@ -22,7 +17,6 @@ namespace ReactNative.Modules.Core
 
         private JSTimers _jsTimersModule;
         private bool _suspended;
-        private bool _renderingHandled;
 
         /// <summary>
         /// Instantiates the <see cref="Timing"/> module.
@@ -62,11 +56,7 @@ namespace ReactNative.Modules.Core
         public void OnSuspend()
         {
             _suspended = true;
-            if (_renderingHandled)
-            {
-                ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
-                _renderingHandled = false;
-            }
+            ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
         }
 
         /// <summary>
@@ -75,11 +65,7 @@ namespace ReactNative.Modules.Core
         public void OnResume()
         {
             _suspended = false;
-            if (!_renderingHandled)
-            {
-                ReactChoreographer.Instance.JavaScriptEventsCallback += DoFrameSafe;
-                _renderingHandled = true;
-            }
+            ReactChoreographer.Instance.JavaScriptEventsCallback += DoFrameSafe;
         }
 
         /// <summary>
@@ -87,11 +73,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         public void OnDestroy()
         {
-            if (_renderingHandled)
-            {
-                ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
-                _renderingHandled = false;
-            }
+            ReactChoreographer.Instance.JavaScriptEventsCallback -= DoFrameSafe;
         }
 
         /// <summary>

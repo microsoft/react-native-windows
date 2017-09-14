@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System.Collections.Generic;
@@ -70,8 +70,6 @@ namespace ReactNative.Modules.DeviceInfo
         /// </summary>
         public void OnDestroy()
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
         }
 
         private void OnBoundsChanged(ApplicationView sender, object args)
