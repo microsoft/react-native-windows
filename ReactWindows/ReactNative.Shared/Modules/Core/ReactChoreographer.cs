@@ -54,6 +54,12 @@ namespace ReactNative.Modules.Core
         public event EventHandler<FrameEventArgs> JavaScriptEventsCallback;
 
         /// <summary>
+        /// Event used to trigger the idle callback. Called after all UI work has been
+        /// dispatched to JavaScript.
+        /// </summary>
+        public event EventHandler<FrameEventArgs> IdleCallback;
+
+        /// <summary>
         /// The choreographer instance.
         /// </summary>
         public static ReactChoreographer Instance
@@ -166,6 +172,7 @@ namespace ReactNative.Modules.Core
             DispatchUICallback?.Invoke(sender, _frameEventArgs);
             NativeAnimatedCallback?.Invoke(sender, _frameEventArgs);
             JavaScriptEventsCallback?.Invoke(sender, _frameEventArgs);
+            IdleCallback?.Invoke(sender, _frameEventArgs);
 
             lock (_gate)
             {

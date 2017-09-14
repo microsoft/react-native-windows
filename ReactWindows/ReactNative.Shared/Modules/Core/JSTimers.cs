@@ -16,5 +16,14 @@ namespace ReactNative.Modules.Core
         {
             Invoke(timerIds);
         }
+        
+        /// <summary>
+        /// Calls the idle callbacks with the current frame time.
+        /// </summary>
+        /// <param name="frameTime">The frame time.</param>
+        public void callIdleCallbacks(long frameTime)
+        {
+            Invoke(frameTime);
+        }
     }
 }
