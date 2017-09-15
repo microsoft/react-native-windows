@@ -202,7 +202,7 @@ namespace ReactNative.Views.Web
         /// <returns>The view instance.</returns>
         protected override WebView CreateViewInstance(ThemedReactContext reactContext)
         {
-            var view = new WebView();
+            var view = new WebView(WebViewExecutionMode.SeparateThread);
             _webViewData.Add(view, new WebViewData());
             return view;
         }
