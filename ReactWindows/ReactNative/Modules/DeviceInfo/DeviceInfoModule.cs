@@ -10,18 +10,17 @@ namespace ReactNative.Modules.DeviceInfo
     /// <summary>
     /// Native module that manages window dimension updates to JavaScript.
     /// </summary>
-    public class DeviceInfoModule : NativeModuleBase, ILifecycleEventListener
+    public class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
-        private readonly ReactContext _reactContext;
         private readonly IReadOnlyDictionary<string, object> _constants;
 
         /// <summary>
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
         /// </summary>
-        /// <param name="context">The React context.</param>
-        public DeviceInfoModule(ReactContext context)
+        /// <param name="reactContext">The React context.</param>
+        public DeviceInfoModule(ReactContext reactContext)
+            : base(reactContext)
         {
-            _reactContext = context;
             _constants = new Dictionary<string, object>
             {
                 { "Dimensions", GetDimensions() },
@@ -48,11 +47,19 @@ namespace ReactNative.Modules.DeviceInfo
         }
 
         /// <summary>
+        /// Called after the creation of a <see cref="IReactInstance"/>,
+        /// </summary>
+        public override void Initialize()
+        {
+            Context.AddLifecycleEventListener(this);
+        }
+
+        /// <summary>
         /// Called when the application is suspended.
         /// </summary>
         public void OnSuspend()
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
+            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnVisibleBoundsChanged;
             DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
         }
 
@@ -61,7 +68,7 @@ namespace ReactNative.Modules.DeviceInfo
         /// </summary>
         public void OnResume()
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
+            ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnVisibleBoundsChanged;
             DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
         }
 
@@ -72,9 +79,9 @@ namespace ReactNative.Modules.DeviceInfo
         {
         }
 
-        private void OnBoundsChanged(ApplicationView sender, object args)
+        private void OnVisibleBoundsChanged(ApplicationView sender, object args)
         {
-            _reactContext.GetJavaScriptModule<RCTDeviceEventEmitter>()
+            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("didUpdateDimensions", GetDimensions());
         }
 
@@ -108,7 +115,7 @@ namespace ReactNative.Modules.DeviceInfo
 
             if (name != null)
             {
-                _reactContext.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                     .emit("namedOrientationDidChange", new JObject
                     {
                         { "name", name },
@@ -122,7 +129,6 @@ namespace ReactNative.Modules.DeviceInfo
         {
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
             var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-
             return new Dictionary<string, object>
             {
                 {
