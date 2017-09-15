@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
@@ -10,6 +11,8 @@ namespace ReactNative.Bridge
     /// </summary>
     public static class DispatcherHelpers
     {
+        private static ThreadLocal<bool> s_isOnDispatcherThread;
+
         /// <summary>
         /// Asserts that the current thread has dispatcher access.
         /// </summary>
@@ -30,16 +33,40 @@ namespace ReactNative.Bridge
         /// </returns>
         public static bool IsOnDispatcher()
         {
-            return CoreWindow.GetForCurrentThread()?.Dispatcher != null;
+            if (s_isOnDispatcherThread == null)
+            {
+                if (CoreWindow.GetForCurrentThread()?.Dispatcher == CoreApplication.MainView.CoreWindow.Dispatcher)
+                {
+                    s_isOnDispatcherThread = new ThreadLocal<bool>();
+                    s_isOnDispatcherThread.Value = true;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return s_isOnDispatcherThread.Value;
         }
 
         /// <summary>
         /// Invokes an action on the dispatcher.
         /// </summary>
         /// <param name="action">The action to invoke.</param>
-        public static async void RunOnDispatcher(DispatchedHandler action)
+        public static void RunOnDispatcher(DispatchedHandler action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action).AsTask().ConfigureAwait(false);
+            RunOnDispatcher(CoreDispatcherPriority.Normal, action);
+        }
+
+        /// <summary>
+        /// Invokes an action on the dispatcher.
+        /// </summary>
+        /// <param name="priority">The priority.</param>
+        /// <param name="action">The action to invoke.</param>
+        public static async void RunOnDispatcher(CoreDispatcherPriority priority, DispatchedHandler action)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(priority, action).AsTask().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -63,6 +90,15 @@ namespace ReactNative.Bridge
             });
 
             return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Cleans up the dispatcher helpers.
+        /// </summary>
+        public static void Reset()
+        {
+            s_isOnDispatcherThread.Dispose();
+            s_isOnDispatcherThread = null;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -61,6 +61,13 @@ namespace ReactNative.Bridge
             await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
+        public static async void RunOnDispatcher(DispatcherPriority priority, Action action)
+        {
+            AssertDispatcherSet();
+
+            await CurrentDispatcher.InvokeAsync(action, priority).Task.ConfigureAwait(false);
+        }
+
         public static Task<T> CallOnDispatcher<T>(Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
@@ -75,6 +82,11 @@ namespace ReactNative.Bridge
             });
 
             return taskCompletionSource.Task;
+        }
+
+        public static void Reset()
+        {
+            // No-op on WPF
         }
 
         private static void AssertDispatcherSet()

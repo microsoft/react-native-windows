@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.UIManager;
@@ -202,7 +202,7 @@ namespace ReactNative.Views.Web
         /// <returns>The view instance.</returns>
         protected override WebView CreateViewInstance(ThemedReactContext reactContext)
         {
-            var view = new WebView();
+            var view = new WebView(WebViewExecutionMode.SeparateThread);
             _webViewData.Add(view, new WebViewData());
             return view;
         }
@@ -392,7 +392,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                         webView.GetTag(),
                         WebViewLoadEvent.TopLoadingFinish,
-                        e.Uri.ToString(),
+                        e.Uri?.ToString(),
                         false,
                         webView.DocumentTitle,
                         webView.CanGoBack,

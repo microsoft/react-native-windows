@@ -1,14 +1,9 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
 using static System.FormattableString;
 
 namespace ReactNative.UIManager.Events
@@ -120,6 +115,8 @@ namespace ReactNative.UIManager.Events
             {
                 _eventStaging.Add(@event);
             }
+
+            ReactChoreographer.Instance.ActivateCallback(nameof(EventDispatcher));
         }
 
         /// <summary>
@@ -236,6 +233,7 @@ namespace ReactNative.UIManager.Events
                 }
 
                 _eventStaging.Clear();
+                ReactChoreographer.Instance.DeactivateCallback(nameof(EventDispatcher));
             }
         }
 
@@ -283,7 +281,13 @@ namespace ReactNative.UIManager.Events
 
             MoveStagedEventsToDispatchQueue();
 
-            if (!Volatile.Read(ref _hasDispatchScheduled))
+            bool shouldDispatch;
+            lock (_eventsToDispatchLock)
+            {
+                shouldDispatch = _eventsToDispatchSize > 0;
+            }
+
+            if (shouldDispatch && !Volatile.Read(ref _hasDispatchScheduled))
             {
                 _hasDispatchScheduled = true;
                 _reactContext.RunOnJavaScriptQueueThread(() => DispatchEvents(activity));

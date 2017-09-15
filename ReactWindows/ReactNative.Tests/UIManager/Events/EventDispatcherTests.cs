@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Modules.Core;
 using ReactNative.UIManager.Events;
 using System;
 using System.Reactive.Disposables;
@@ -40,6 +41,8 @@ namespace ReactNative.Tests.UIManager.Events
         [TestMethod]
         public async Task EventDispatcher_EventDispatches()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             // TODO: (#288) Check for non-determinism.
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
@@ -63,11 +66,15 @@ namespace ReactNative.Tests.UIManager.Events
             Assert.IsTrue(waitDispatched.WaitOne());
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task EventDispatcher_NonCoalesced()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -97,11 +104,15 @@ namespace ReactNative.Tests.UIManager.Events
             Assert.IsTrue(waitDispatched.WaitOne());
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task EventDispatcher_MultipleDispatches()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -127,11 +138,15 @@ namespace ReactNative.Tests.UIManager.Events
             }
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task EventDispatcher_EventsCoalesced1()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -172,11 +187,15 @@ namespace ReactNative.Tests.UIManager.Events
             Assert.IsTrue(disposed.WaitOne());
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task EventDispatcher_EventsNotCoalesced()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -224,11 +243,15 @@ namespace ReactNative.Tests.UIManager.Events
             }
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task EventDispatcher_OnSuspend_EventDoesNotDispatch()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -256,11 +279,15 @@ namespace ReactNative.Tests.UIManager.Events
             Assert.IsFalse(waitDispatched.WaitOne(500));
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task EventDispatcher_OnReactInstanceDispose_EventDoesNotDispatch()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -288,11 +315,15 @@ namespace ReactNative.Tests.UIManager.Events
             Assert.IsFalse(waitDispatched.WaitOne(500));
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task EventDispatcher_DispatchedAfterSuspend_ThenResume()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var waitDispatched = new AutoResetEvent(false);
             var executor = new MockJavaScriptExecutor
             {
@@ -320,6 +351,8 @@ namespace ReactNative.Tests.UIManager.Events
             Assert.IsTrue(waitDispatched.WaitOne());
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         private static async Task<ReactContext> CreateContextAsync(IJavaScriptExecutor executor)

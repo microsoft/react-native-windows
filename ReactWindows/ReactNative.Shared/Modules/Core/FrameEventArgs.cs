@@ -7,8 +7,10 @@ namespace ReactNative.Modules.Core
     /// </summary>
     public class FrameEventArgs : IMutableFrameEventArgs
     {
+        private static readonly TimeSpan s_frameDuration = TimeSpan.FromTicks(166666);
+
         private readonly TimeSpan _initialRenderingTime;
-        private readonly DateTimeOffset _initialAbsoluteTime;
+        private DateTimeOffset _initialAbsoluteTime;
 
         internal FrameEventArgs(TimeSpan renderingTime)
         {
@@ -38,6 +40,9 @@ namespace ReactNative.Modules.Core
         {
             RenderingTime = renderingTime;
             FrameTime = _initialAbsoluteTime + renderingTime - _initialRenderingTime;
+
+            // Self-adjust initial absolute time to better approximate CompositionTarget frame boundary
+            _initialAbsoluteTime -= FrameTime - DateTimeOffset.UtcNow - s_frameDuration;
         }
     }
 }
