@@ -1,6 +1,10 @@
-﻿using ReactNative.Reflection;
+using Newtonsoft.Json.Linq;
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
+using System.Collections.Generic;
+using System.Diagnostics;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -10,8 +14,9 @@ using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 #endif
 
 namespace ReactNative.Views.View
@@ -19,8 +24,11 @@ namespace ReactNative.Views.View
     /// <summary>
     /// View manager for React view instances.
     /// </summary>
-    public class ReactViewManager : ViewParentManager<BorderedCanvas>
+    public class ReactViewManager : ViewParentManager<ReactViewControl>
     {
+        private const int FocusCommand = 1;
+        private const int BlurCommand = 2;
+
         private enum Radius
         {
             All,
@@ -48,9 +56,65 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
+        /// The commands.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> CommandsMap
+        {
+            get
+            {
+                return new Dictionary<string, object>
+                {
+                    { "focus", FocusCommand },
+                    { "blur", BlurCommand },
+                };
+            }
+        }
+
+        /// <summary>
+        /// Exported set of bubbling events.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+        {
+            get
+            {
+                return new Dictionary<string, object>
+                {
+                    {
+                        "topFocus",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onFocus" },
+                                    { "captured" , "onFocusCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topBlur",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onBlur" },
+                                    { "captured" , "onBlurCapture" }
+                                }
+                            }
+                        }
+                    },
+                };
+            }
+        }
+
+        /// <summary>
         /// Checks if the Canvas has a Border already.
         /// </summary>
-        protected bool HasBorder(BorderedCanvas view)
+        protected bool HasBorder(ReactViewControl view)
         {
             return view.Border != null;
         }
@@ -58,7 +122,7 @@ namespace ReactNative.Views.View
         /// <summary>
         /// Adds a Border to a Canvas if it hasn't been added already.
         /// </summary>
-        protected Border GetOrCreateBorder(BorderedCanvas view)
+        protected Border GetOrCreateBorder(ReactViewControl view)
         {
             if (view.Border == null)
             {
@@ -87,9 +151,9 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override BorderedCanvas CreateViewInstance(ThemedReactContext reactContext)
+        protected override ReactViewControl CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new BorderedCanvas();
+            return new ReactViewControl();
         }
 
         /// <summary>
@@ -98,7 +162,7 @@ namespace ReactNative.Views.View
         /// <param name="view">The view.</param>
         /// <param name="accessible">A flag indicating whether or not the view is an accessibility element.</param>
         [ReactProp("accessible")]
-        public void SetAccessible(BorderedCanvas view, bool accessible)
+        public void SetAccessible(ReactViewControl view, bool accessible)
         {
             // TODO: #557 Provide implementation for View's accessible prop
 
@@ -113,7 +177,7 @@ namespace ReactNative.Views.View
         /// <param name="view">The view.</param>
         /// <param name="pointerEventsValue">The pointerEvents mode.</param>
         [ReactProp("pointerEvents")]
-        public void SetPointerEvents(BorderedCanvas view, string pointerEventsValue)
+        public void SetPointerEvents(ReactViewControl view, string pointerEventsValue)
         {
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
             view.SetPointerEvents(pointerEvents);
@@ -131,7 +195,7 @@ namespace ReactNative.Views.View
             ViewProps.BorderTopRightRadius,
             ViewProps.BorderBottomLeftRadius,
             ViewProps.BorderBottomRightRadius)]
-        public void SetBorderRadius(BorderedCanvas view, int index, double radius)
+        public void SetBorderRadius(ReactViewControl view, int index, double radius)
         {
             var border = GetOrCreateBorder(view);
             var cornerRadius = border.CornerRadius == null ? new CornerRadius() : border.CornerRadius;
@@ -167,7 +231,7 @@ namespace ReactNative.Views.View
             ViewProps.BackgroundColor,
             CustomType = "Color",
             DefaultUInt32 = ColorHelpers.Transparent)]
-        public void SetBackgroundColor(BorderedCanvas view, uint color)
+        public void SetBackgroundColor(ReactViewControl view, uint color)
         {
             var border = GetOrCreateBorder(view);
             border.Background = new SolidColorBrush(ColorHelpers.Parse(color));
@@ -179,7 +243,7 @@ namespace ReactNative.Views.View
         /// <param name="view">The view panel.</param>
         /// <param name="color">The color hex code.</param>
         [ReactProp("borderColor", CustomType = "Color")]
-        public void SetBorderColor(BorderedCanvas view, uint? color)
+        public void SetBorderColor(ReactViewControl view, uint? color)
         {
             var border = GetOrCreateBorder(view);
             border.BorderBrush = color.HasValue
@@ -199,7 +263,7 @@ namespace ReactNative.Views.View
             ViewProps.BorderRightWidth,
             ViewProps.BorderTopWidth,
             ViewProps.BorderBottomWidth)]
-        public void SetBorderWidth(BorderedCanvas view, int index, double width)
+        public void SetBorderWidth(ReactViewControl view, int index, double width)
         {
             var border = GetOrCreateBorder(view);
             border.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
@@ -211,10 +275,28 @@ namespace ReactNative.Views.View
         /// <param name="view">The view instance.</param>
         /// <param name="collapsible">The flag.</param>
         [ReactProp(ViewProps.Collapsible)]
-        public void SetCollapsible(BorderedCanvas view, bool collapsible)
+        public void SetCollapsible(ReactViewControl view, bool collapsible)
         {
             // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
             // handled in NativeViewHierarchyOptimizer
+        }
+
+        /// <summary>
+        /// Sets whether the view is a tab stop.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code>.
+        /// </param>
+        [ReactProp(ViewProps.IsTabStop)]
+        public void SetIsTabStop(ReactViewControl view, bool isTabStop)
+        {
+            view.IsTabStop = isTabStop;
+            if (isTabStop)
+            {
+                view.GotFocus += OnGotFocus;
+                view.LostFocus += OnLostFocus;
+            }
         }
 
         /// <summary>
@@ -223,7 +305,7 @@ namespace ReactNative.Views.View
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        public override void AddView(BorderedCanvas parent, DependencyObject child, int index)
+        public override void AddView(ReactViewControl parent, DependencyObject child, int index)
         {
             if (HasBorder(parent))
             {
@@ -240,7 +322,7 @@ namespace ReactNative.Views.View
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        public override DependencyObject GetChildAt(BorderedCanvas parent, int index)
+        public override DependencyObject GetChildAt(ReactViewControl parent, int index)
         {
             if (HasBorder(parent))
             {
@@ -255,7 +337,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <returns>The number of children.</returns>
-        public override int GetChildCount(BorderedCanvas parent)
+        public override int GetChildCount(ReactViewControl parent)
         {
             var count = parent.Children.Count;
 
@@ -271,7 +353,7 @@ namespace ReactNative.Views.View
         /// Removes all children from the view parent.
         /// </summary>
         /// <param name="parent">The view parent.</param>
-        public override void RemoveAllChildren(BorderedCanvas parent)
+        public override void RemoveAllChildren(ReactViewControl parent)
         {
             if (HasBorder(parent))
             {
@@ -291,7 +373,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <param name="index">The index.</param>
-        public override void RemoveChildAt(BorderedCanvas parent, int index)
+        public override void RemoveChildAt(ReactViewControl parent, int index)
         {
             if (HasBorder(parent))
             {
@@ -299,6 +381,147 @@ namespace ReactNative.Views.View
             }
 
             parent.Children.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Receive a command from JavaScript.
+        /// </summary>
+        /// <param name="view">
+        /// The view instance that should receive the command.
+        /// </param>
+        /// <param name="commandId">Identifer for the command.</param>
+        /// <param name="args">Optional arguments for the command.</param>
+        public override void ReceiveCommand(ReactViewControl view, int commandId, JArray args)
+        {
+            if (commandId == FocusCommand)
+            {
+#if WINDOWS_UWP
+                view.Focus(FocusState.Programmatic);
+#else
+                view.Focus();
+#endif
+            }
+            else if (commandId == BlurCommand)
+            {
+#if WINDOWS_UWP
+                var frame = Window.Current?.Content as Frame;
+                frame?.Focus(FocusState.Programmatic);
+#else
+                Keyboard.ClearFocus();
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        /// <remarks>
+        /// Be sure to call this base class method to register for pointer 
+        /// entered and pointer exited events.
+        /// </remarks>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, ReactViewControl view)
+        {
+            base.OnDropViewInstance(reactContext, view);
+            if (view.IsTabStop)
+            {
+                view.GotFocus -= OnGotFocus;
+                view.LostFocus -= OnLostFocus;
+            }
+        }
+
+        private void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource == sender)
+            {
+                var view = (ReactViewControl)sender;
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(new FocusEvent(view.GetTag()));
+            }
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource == sender)
+            {
+                var view = (ReactViewControl)sender;
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(new BlurEvent(view.GetTag()));
+            }
+        }
+
+        class FocusEvent : Event
+        {
+            public FocusEvent(int viewTag) 
+                : base(viewTag)
+            {
+            }
+
+            public override string EventName
+            {
+                get
+                {
+                    return "topFocus";
+                }
+            }
+
+            public override bool CanCoalesce
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                var eventData = new JObject
+                {
+                    { "target", ViewTag },
+                };
+
+                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+            }
+        }
+
+        class BlurEvent : Event
+        {
+            public BlurEvent(int viewTag)
+                : base(viewTag)
+            {
+            }
+
+            public override string EventName
+            {
+                get
+                {
+                    return "topBlur";
+                }
+            }
+
+            public override bool CanCoalesce
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                var eventData = new JObject
+                {
+                    { "target", ViewTag },
+                };
+
+                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+            }
         }
     }
 }

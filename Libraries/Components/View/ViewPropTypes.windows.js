@@ -497,4 +497,26 @@ module.exports = {
         'scale',
         'all',
     ])),
+
+    /**
+     * Controls whether the view is a tab stop. Useful for buttons and other
+     * controls that can be focused.
+     * 
+     * @platform windows
+     */
+    isTabStop: PropTypes.bool,
+
+    /**
+     * Called when the view receives focus.
+     * 
+     * @platform windows
+     */
+    onFocus: PropTypes.func,
+
+    /**
+     * Called when the view focus is lost.
+     * 
+     * @platform windows
+     */
+    onBlur: PropTypes.func,
 };

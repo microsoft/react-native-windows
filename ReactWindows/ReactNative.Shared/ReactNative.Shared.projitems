@@ -151,7 +151,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
@@ -238,6 +237,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>
 </Project>

@@ -1,22 +1,35 @@
-﻿using System;
+using System;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 #else
 using System.Windows;
 using System.Windows.Controls;
 #endif
 
-namespace ReactNative.UIManager
+namespace ReactNative.Views.View
 {
     /// <summary>
-    /// Represents a Canvas with an optional Border inside.
+    /// Native control for React view.
     /// </summary>
-    public class BorderedCanvas : Canvas
+    public class ReactViewControl : UserControl
     {
+        private readonly Canvas _canvas;
+
         private Border _border = null;
+
+        /// <summary>
+        /// Instantiates the <see cref="ReactViewControl"/>. 
+        /// </summary>
+        public ReactViewControl()
+        {
+            Content = _canvas = new Canvas
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
+            };
+        }
 
         /// <summary>
         /// The Border associated with this Canvas or null if it doesn't have a border.
@@ -38,6 +51,17 @@ namespace ReactNative.UIManager
                 _border = value;
 
                 Children.Insert(0, _border);
+            }
+        }
+
+        /// <summary>
+        /// The view children.
+        /// </summary>
+        public UIElementCollection Children
+        {
+            get
+            {
+                return _canvas.Children;
             }
         }
     }
