@@ -105,18 +105,7 @@ namespace ReactNative.Views.Scroll
         [ReactProp("scrollEnabled", DefaultBoolean = true)]
         public void SetEnabled(ScrollView view, bool enabled)
         {
-            if (enabled)
-            {
-                view.CanContentScroll = true;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                view.HorizontalScrollBarVisibility = _scrollViewerData[view].HorizontalScrollBarVisibility;
-            }
-            else
-            {
-                view.CanContentScroll = false;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                view.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-            }
+            view.CanContentScroll = enabled;
         }
 
         /// <summary>
@@ -129,7 +118,6 @@ namespace ReactNative.Views.Scroll
         [ReactProp("horizontal")]
         public void SetHorizontal(ScrollView view, bool horizontal)
         {
-            throw new NotImplementedException();
             var horizontalScrollMode = horizontal
                 ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Disabled;
@@ -175,7 +163,10 @@ namespace ReactNative.Views.Scroll
         [ReactProp("contentOffset")]
         public void SetContentOffset(ScrollView view, JObject contentOffset)
         {
-            throw new NotImplementedException();
+            view.ScrollChanged -= OnViewChanging;
+            view.ScrollToHorizontalOffset(contentOffset.Value<double>("x"));
+            view.ScrollToVerticalOffset(contentOffset.Value<double>("y"));
+            view.ScrollChanged += OnViewChanging;
         }
 
         /// <summary>
@@ -365,8 +356,8 @@ namespace ReactNative.Views.Scroll
 
             var scrollViewer = new ScrollView
             {
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 Focusable = false,
             };
 
