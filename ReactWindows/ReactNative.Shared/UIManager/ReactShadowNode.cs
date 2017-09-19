@@ -33,10 +33,6 @@ namespace ReactNative.UIManager
         private int _totalNativeChildren;
         private ReactShadowNode _nativeParent;
         private IList<ReactShadowNode> _nativeChildren;
-        private float _absoluteLeft;
-        private float _absoluteTop;
-        private float _absoluteRight;
-        private float _absoluteBottom;
 
         /// <summary>
         /// Instantiates a <see cref="ReactShadowNode"/>. 
@@ -498,22 +494,22 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The screen horizontal position.
         /// </summary>
-        public int ScreenX => (int)Math.Round(LayoutX);
+        public int ScreenX { get; private set; }
 
         /// <summary>
         /// The screen vertical position.
         /// </summary>
-        public int ScreenY => (int)Math.Round(LayoutY);
+        public int ScreenY { get; private set; }
 
         /// <summary>
         /// The screen width.
         /// </summary>
-        public int ScreenWidth => (int)Math.Round(_absoluteRight - _absoluteLeft);
+        public int ScreenWidth { get; private set; }
 
         /// <summary>
         /// The screen height.
         /// </summary>
-        public int ScreenHeight => (int)Math.Round(_absoluteBottom - _absoluteTop);
+        public int ScreenHeight { get; private set; }
 
         /// <summary>
         /// The measure function.
@@ -1089,12 +1085,35 @@ namespace ReactNative.UIManager
 
             if (HasNewLayout)
             {
-                _absoluteLeft = absoluteX + LayoutX;
-                _absoluteTop = absoluteY + LayoutY;
-                _absoluteRight = absoluteX + LayoutX + LayoutWidth;
-                _absoluteBottom = absoluteY + LayoutY + LayoutHeight;
-                nativeViewHierarchyOptimizer.HandleUpdateLayout(this);
-                return true;
+                var layoutX = LayoutX;
+                var layoutY = LayoutY;
+                var newAbsoluteLeft = (int)Math.Round(absoluteX + layoutX);
+                var newAbsoluteTop = (int)Math.Round(absoluteY + layoutY);
+                var newAbsoluteRight = (int)Math.Round(absoluteX + layoutX + LayoutWidth);
+                var newAbsoluteBottom = (int)Math.Round(absoluteY + layoutY + LayoutHeight);
+
+                var newScreenX = (int)Math.Round(layoutX);
+                var newScreenY = (int)Math.Round(layoutY);
+                var newScreenWidth = newAbsoluteRight - newAbsoluteLeft;
+                var newScreenHeight = newAbsoluteBottom - newAbsoluteTop;
+
+                var layoutHasChanged =
+                    newScreenX != ScreenX ||
+                    newScreenY != ScreenY ||
+                    newScreenWidth != ScreenWidth ||
+                    newScreenHeight != ScreenHeight;
+
+                ScreenX = newScreenX;
+                ScreenY = newScreenY;
+                ScreenWidth = newScreenWidth;
+                ScreenHeight = newScreenHeight;
+                
+                if (layoutHasChanged)
+                {
+                    nativeViewHierarchyOptimizer.HandleUpdateLayout(this);
+                }
+
+                return layoutHasChanged;
             }
             else
             {

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using ReactNative.Common;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,15 +13,15 @@ namespace ReactNative.Tests
         public void ReactInstanceManager_Builder_SetterChecks()
         {
             AssertEx.Throws<InvalidOperationException>(
-                () => new ReactInstanceManager.Builder
+                () => new ReactInstanceManagerBuilder
                     {
                         JavaScriptBundleFile = "ms-appx:///Resources/main.jsbundle",
                     }.Build());
 
             AssertEx.Throws<InvalidOperationException>(
-                () => new ReactInstanceManager.Builder
+                () => new ReactInstanceManagerBuilder
                     {
-                        InitialLifecycleState = LifecycleState.Resumed,
+                        InitialLifecycleState = LifecycleState.BeforeCreate,
                     }.Build());
         }
 
@@ -40,10 +41,6 @@ namespace ReactNative.Tests
             AssertEx.Throws<ArgumentNullException>(
                 () => manager.DetachRootView(null),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
-
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.OnResume(null),
-                ex => Assert.AreEqual("onBackPressed", ex.ParamName));
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
@@ -208,19 +205,17 @@ namespace ReactNative.Tests
                 }).Result;
             });
 
-            var tcs = new TaskCompletionSource<bool>();
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            var task = DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 e.Set();
                 await manager.DisposeAsync();
-                await Task.Run(() => tcs.SetResult(true));
             });
 
             var completedTask = await Task.WhenAny(
                 Task.Delay(5000),
-                tcs.Task);
+                task);
 
-            Assert.IsTrue(tcs.Task.IsCompleted);
+            Assert.IsTrue(task.IsCompleted);
         }
 
         private static ReactInstanceManager CreateReactInstanceManager()
@@ -230,7 +225,7 @@ namespace ReactNative.Tests
 
         private static ReactInstanceManager CreateReactInstanceManager(string jsBundleFile)
         {
-            return new ReactInstanceManager.Builder
+            return new ReactInstanceManagerBuilder
             {
                 InitialLifecycleState = LifecycleState.Resumed,
                 JavaScriptBundleFile = jsBundleFile,

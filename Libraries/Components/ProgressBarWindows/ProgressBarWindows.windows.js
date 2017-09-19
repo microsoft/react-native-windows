@@ -28,7 +28,7 @@ class ProgressBarWindows extends React.Component {
 
  static propTypes = {
    ...ViewPropTypes,
-   
+
    /**
     * If the progress bar will show indeterminate progress.
     */
@@ -48,7 +48,7 @@ class ProgressBarWindows extends React.Component {
  };
 
  render() {
-   return <WindowsProgressBar {...this.props}/> ;
+   return <WindowsProgressBar {...this.props}/>;
  }
 }
 

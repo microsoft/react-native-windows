@@ -82,7 +82,7 @@ if (Platform.OS === 'ios') {
       connectionType: ConnectivityStateWindows,
     ): bool {
     return connectionType !== 'None' && connectionType !== 'LocalAccess';
-  }
+  };
 }
 
 const _isConnectedSubscriptions = new Map();
@@ -143,9 +143,9 @@ const _isConnectedSubscriptions = new Map();
  * The rest ConnectivityStates are hidden by the Android API, but can be used if necessary.
  *
  * ### Windows
- * 
+ *
  * Asynchronously determine if the device is connected and details about that connection.
- * 
+ *
  * Windows Connectivity Types.
  *
  * - `None` - No connectivity.

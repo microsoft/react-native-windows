@@ -1,22 +1,19 @@
 'use strict';
 
 const child_process = require('child_process');
-const spawn = child_process.spawn, execSync = child_process.execSync;
-const fs = require('fs');
+const spawn = child_process.spawn;
 const http = require('http');
 const path = require('path');
 const chalk = require('chalk');
-const glob = require('glob');
-const parse = require('xml-parser');
 
 function deployToDesktop(options) {
   const appName = process.cwd().split(path.sep).pop();
   const launchAppScript = path.join(`./wpf/${appName}/bin/x86/Debug/${appName}`);
 
   console.log(chalk.green('Starting the app'));
-  const spawnOptions = options.verbose ? { stdio: 'inherit' }: {};
+  const spawnOptions = options.verbose ? { stdio: 'inherit' } : {};
   return Promise.resolve(spawn('cmd.exe', ['/C', 'start', launchAppScript,
-    "remoteDebugging", options.proxy ? 'true' : 'false'], spawnOptions));
+    'remoteDebugging', options.proxy ? 'true' : 'false'], spawnOptions));
 
 }
 

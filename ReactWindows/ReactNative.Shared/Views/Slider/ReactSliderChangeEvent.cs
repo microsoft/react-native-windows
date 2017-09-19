@@ -18,7 +18,7 @@ namespace ReactNative.Views.Slider
         /// <param name="viewTag">The view tag.</param>
         /// <param name="value">Slider value.</param>
         public ReactSliderChangeEvent(int viewTag, double value)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
             _value = value;
         }

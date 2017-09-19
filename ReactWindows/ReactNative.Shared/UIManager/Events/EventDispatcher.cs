@@ -1,13 +1,9 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
 using static System.FormattableString;
 
 namespace ReactNative.UIManager.Events
@@ -63,19 +59,13 @@ namespace ReactNative.UIManager.Events
                 return 1;
             }
 
-            var diff = x.Timestamp - y.Timestamp;
-            if (diff == TimeSpan.Zero)
+            var value = x.Timestamp.CompareTo(y.Timestamp);
+            if (value == 0)
             {
-                return 0;
+                return x.SortingKey.CompareTo(y.SortingKey);
             }
-            else if (diff < TimeSpan.Zero)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
+
+            return value;
         });
 
         private readonly object _eventsStagingLock = new object();
@@ -125,6 +115,8 @@ namespace ReactNative.UIManager.Events
             {
                 _eventStaging.Add(@event);
             }
+
+            ReactChoreographer.Instance.ActivateCallback(nameof(EventDispatcher));
         }
 
         /// <summary>
@@ -150,14 +142,12 @@ namespace ReactNative.UIManager.Events
         /// </summary>
         public void OnResume()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-
             if (_rctEventEmitter == null)
             {
                 _rctEventEmitter = _reactContext.GetJavaScriptModule<RCTEventEmitter>();
             }
 
-            CompositionTarget.Rendering += ScheduleDispatcherSafe;
+            ReactChoreographer.Instance.JavaScriptEventsCallback += ScheduleDispatcherSafe;
         }
 
         /// <summary>
@@ -186,8 +176,7 @@ namespace ReactNative.UIManager.Events
 
         private void ClearCallback()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-            CompositionTarget.Rendering -= ScheduleDispatcherSafe;
+            ReactChoreographer.Instance.JavaScriptEventsCallback -= ScheduleDispatcherSafe;
         }
 
         private void MoveStagedEventsToDispatchQueue()
@@ -244,6 +233,7 @@ namespace ReactNative.UIManager.Events
                 }
 
                 _eventStaging.Clear();
+                ReactChoreographer.Instance.DeactivateCallback(nameof(EventDispatcher));
             }
         }
 
@@ -291,7 +281,13 @@ namespace ReactNative.UIManager.Events
 
             MoveStagedEventsToDispatchQueue();
 
-            if (!Volatile.Read(ref _hasDispatchScheduled))
+            bool shouldDispatch;
+            lock (_eventsToDispatchLock)
+            {
+                shouldDispatch = _eventsToDispatchSize > 0;
+            }
+
+            if (shouldDispatch && !Volatile.Read(ref _hasDispatchScheduled))
             {
                 _hasDispatchScheduled = true;
                 _reactContext.RunOnJavaScriptQueueThread(() => DispatchEvents(activity));

@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using ReactNative.UIManager;
-using ReactNative.UIManager.Events;
+using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,16 +9,12 @@ using System.Threading;
 namespace ReactNative.Tests.Bridge
 {
     [TestFixture]
-    public class JavaScriptModuleRegistryTests : JavaScriptModuleRegistrySharedTests
+    public class JavaScriptModuleRegistryTests
     {
         [Test]
         public void InvokesReactInstanceWhenFetchedModuleIsCalled()
         {
-            _registry = _registryBuilder
-                .Add(typeof(RCTEventEmitter))
-                .Add(typeof(AppRegistry))
-                .Add(typeof(TestJavaScriptModule))
-                .Build();
+            var registry = new JavaScriptModuleRegistry();
 
             var are = new AutoResetEvent(false);
             var modules = new List<string>();
@@ -34,7 +29,7 @@ namespace ReactNative.Tests.Bridge
                 are.Set();
             });
 
-            var module = _registry.GetJavaScriptModule<TestJavaScriptModule>(reactInstance);
+            var module = registry.GetJavaScriptModule<TestJavaScriptModule>(reactInstance);
 
             module.Foo(42);
 
@@ -51,13 +46,22 @@ namespace ReactNative.Tests.Bridge
                 argsList[0].ToString(Formatting.None));
         }
 
-        [Test]
-        public void ThrowsWhenUnknownModuleRequested()
+        class TestJavaScriptModule : JavaScriptModuleBase
         {
-            _registry = _registryBuilder.Build();
+            public void Bar()
+            {
+                Invoke();
+            }
 
-            var reactInstance = new MockReactInstance();
-            AssertEx.Throws<InvalidOperationException>(() => _registry.GetJavaScriptModule<TestJavaScriptModule>(reactInstance));
+            public void Baz()
+            {
+                Invoke();
+            }
+
+            public void Foo(int x)
+            {
+                Invoke(x);
+            }
         }
     }
 }

@@ -10,9 +10,9 @@ const glob = require('glob');
 const parse = require('xml-parser');
 const WinAppDeployTool = require('./winappdeploytool');
 
-function pushd(path) {
+function pushd(pathArg) {
   const cwd = process.cwd();
-  process.chdir(path);
+  process.chdir(pathArg);
   return () => process.chdir(cwd);
 }
 
@@ -25,7 +25,7 @@ function getWindowsStoreAppUtils(options) {
   const popd = pushd(options.root);
   const windowsStoreAppUtilsPath = './node_modules/react-native-windows/local-cli/runWindows/utils/WindowsStoreAppUtils.ps1';
   execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
-  popd()
+  popd();
   return windowsStoreAppUtilsPath;
 }
 
@@ -84,8 +84,8 @@ function deployToDesktop(options) {
   const identity = appxManifest.root.children.filter(function (x) { return x.name === 'Identity'; })[0];
   const appName = identity.attributes.Name;
   const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
-  const args = ["remoteDebugging", options.proxy ? 'true' : 'false'];
-  const execOptions = options.verbose ? { stdio: 'inherit' }: {};
+  const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
+  const execOptions = options.verbose ? { stdio: 'inherit' } : {};
 
   return new Promise(resolve => {
     const popd = pushd(options.root);
@@ -96,7 +96,7 @@ function deployToDesktop(options) {
     console.log(chalk.green('Installing new version of the app'));
     execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`, execOptions);
 
-    const appFamilyName = execSync(`powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`);
+    const appFamilyName = execSync(`powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`).toString().trim();
     execSync(`CheckNetIsolation LoopbackExempt -a -n=${appFamilyName}`, execOptions);
 
     console.log(chalk.green('Starting the app'));

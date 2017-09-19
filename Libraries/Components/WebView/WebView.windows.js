@@ -11,20 +11,18 @@
 'use strict';
 
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
-var PropTypes = require('prop-types');
+var ActivityIndicator = require('ActivityIndicator');
 var React = require('React');
+var PropTypes = require('prop-types');
 var ReactNative = require('ReactNative');
-var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
-
-var ViewPropTypes = require('ViewPropTypes');
 var View = require('View');
+var ViewPropTypes = require('ViewPropTypes');
+
 var deprecatedPropType = require('deprecatedPropType');
 var keyMirror = require('fbjs/lib/keyMirror');
-var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
-
 var resolveAssetSource = require('resolveAssetSource');
 
 var RCT_WEBVIEW_REF = 'webview';
@@ -34,6 +32,14 @@ var WebViewState = keyMirror({
   LOADING: null,
   ERROR: null,
 });
+
+var defaultRenderLoading = () => (
+  <View style={styles.loadingView}>
+    <ActivityIndicator
+      style={styles.loadingProgressBar}
+    />
+  </View>
+);
 
 /**
  * Renders a native WebView.
@@ -50,6 +56,7 @@ class WebView extends React.Component {
     automaticallyAdjustContentInsets: PropTypes.bool,
     contentInset: EdgeInsetsPropType,
     onNavigationStateChange: PropTypes.func,
+    onMessage: PropTypes.func,
     startInLoadingState: PropTypes.bool, // force WebView to show loadingView on first load
     style: ViewPropTypes.style,
 
@@ -111,13 +118,13 @@ class WebView extends React.Component {
      * @platform android, windows
      */
     javaScriptEnabled: PropTypes.bool,
-    
+
     /**
      * Used on Windows only, controls whether Indexed DB is enabled or not
      * @platform windows
      */
     indexedDbEnabled: PropTypes.bool,
-
+    
     /**
      * Sets the JS to be injected when the webpage loads.
      */
@@ -133,6 +140,12 @@ class WebView extends React.Component {
      * start playing. The default value is `false`.
      */
     mediaPlaybackRequiresUserAction: PropTypes.bool,
+
+    /**
+     * Function that accepts a string that will be passed to the WebView and
+     * executed immediately as JavaScript.
+     */
+    injectJavaScript: PropTypes.func,
   };
 
   static defaultProps = {
@@ -154,8 +167,8 @@ class WebView extends React.Component {
   render() {
     var otherView = null;
 
-    if (this.state.viewState === WebViewState.LOADING) {
-      otherView = this.props.renderLoading && this.props.renderLoading();
+   if (this.state.viewState === WebViewState.LOADING) {
+      otherView = (this.props.renderLoading || defaultRenderLoading)();
     } else if (this.state.viewState === WebViewState.ERROR) {
       var errorEvent = this.state.lastErrorEvent;
       otherView = this.props.renderError && this.props.renderError(
@@ -188,7 +201,9 @@ class WebView extends React.Component {
         source={resolveAssetSource(source)}
         injectedJavaScript={this.props.injectedJavaScript}
         javaScriptEnabled={this.props.javaScriptEnabled}
-        indexedDbEnabled={this.props.indexedDbEnabled}
+        indexedDbEnabled={this.props.indexedDbEnabled}        
+        messagingEnabled={typeof this.props.onMessage === 'function'}
+        onMessage={this.onMessage}
         contentInset={this.props.contentInset}
         automaticallyAdjustContentInsets={this.props.automaticallyAdjustContentInsets}
         onLoadingStart={this.onLoadingStart}
@@ -222,10 +237,43 @@ class WebView extends React.Component {
   };
 
   reload = () => {
+    this.setState({
+      viewState: WebViewState.LOADING
+    });
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.reload,
       null
+    );
+  };
+
+  stopLoading = () => {
+    UIManager.dispatchViewManagerCommand(
+      this.getWebViewHandle(),
+      UIManager.RCTWebView.Commands.stopLoading,
+      null
+    );
+  };
+
+  postMessage = (data) => {
+    UIManager.dispatchViewManagerCommand(
+      this.getWebViewHandle(),
+      UIManager.RCTWebView.Commands.postMessage,
+      [String(data)]
+    );
+  };
+
+  /**
+  * Injects a javascript string into the referenced WebView. Deliberately does not
+  * return a response because using eval() to return a response breaks this method
+  * on pages with a Content Security Policy that disallows eval(). If you need that
+  * functionality, look into postMessage/onMessage.
+  */
+  injectJavaScript = (data) => {
+    UIManager.dispatchViewManagerCommand(
+      this.getWebViewHandle(),
+      UIManager.RCTWebView.Commands.injectJavaScript,
+      [data]
     );
   };
 
@@ -254,7 +302,7 @@ class WebView extends React.Component {
     var {onError, onLoadEnd} = this.props;
     onError && onError(event);
     onLoadEnd && onLoadEnd(event);
-    console.error('Encountered an error loading page', event.nativeEvent);
+    console.warn('Encountered an error loading page', event.nativeEvent);
 
     this.setState({
       lastErrorEvent: event.nativeEvent,
@@ -271,9 +319,18 @@ class WebView extends React.Component {
     });
     this.updateNavigationState(event);
   };
+
+  onMessage = (event: Event) => {
+    var {onMessage} = this.props;
+    onMessage && onMessage(event);
+  }
 }
 
-var RCTWebView = requireNativeComponent('RCTWebView', WebView);
+var RCTWebView = requireNativeComponent('RCTWebView', WebView, {
+  nativeOnly: {
+    messagingEnabled: PropTypes.bool,
+  },
+});
 
 var styles = StyleSheet.create({
   container: {

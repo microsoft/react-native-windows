@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
@@ -452,7 +451,7 @@ namespace ReactNative.UIManager
 
         #endregion
 
-        #region ILifecycleEventListenere
+        #region ILifecycleEventListener
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -476,8 +475,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            _uiImplementation.OnShutdown();
-            _eventDispatcher.OnDestroy();
+            _uiImplementation.OnDestroy();
         }
 
         #endregion

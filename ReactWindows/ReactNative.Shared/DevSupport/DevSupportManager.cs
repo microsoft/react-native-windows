@@ -33,7 +33,7 @@ namespace ReactNative.DevSupport
         private readonly SerialDisposable _pollingDisposable = new SerialDisposable();
 
         private readonly IReactInstanceDevCommandsHandler _reactInstanceCommandsHandler;
-        private readonly string _jsBundleFile;
+        private readonly bool _shouldLoadFromPackagerServer;
         private readonly string _jsAppBundleName;
         private readonly DevInternalSettings _devSettings;
         private readonly DevServerHelper _devServerHelper;
@@ -50,11 +50,11 @@ namespace ReactNative.DevSupport
 
         public DevSupportManager(
             IReactInstanceDevCommandsHandler reactInstanceCommandsHandler,
-            string jsBundleFile,
+            bool shouldLoadFromPackagerServer,
             string jsAppBundleName)
         {
             _reactInstanceCommandsHandler = reactInstanceCommandsHandler;
-            _jsBundleFile = jsBundleFile;
+            _shouldLoadFromPackagerServer = shouldLoadFromPackagerServer;
             _jsAppBundleName = jsAppBundleName;
             _devSettings = new DevInternalSettings(this);
             _devServerHelper = new DevServerHelper(_devSettings);
@@ -400,7 +400,7 @@ namespace ReactNative.DevSupport
             {
                 await ReloadJavaScriptInProxyMode(cancel, token).ConfigureAwait(false);
             }
-            else if (_jsBundleFile == null)
+            else if (_shouldLoadFromPackagerServer)
             {
                 await ReloadJavaScriptFromServerAsync(cancel, token).ConfigureAwait(false);
             }

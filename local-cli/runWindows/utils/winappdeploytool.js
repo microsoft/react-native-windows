@@ -39,7 +39,7 @@ class WinAppDeployTool {
 
     if (target === 'emulator') {
       const sortedList = devices.sort(sortDevices);
-      for (const i = 0; i < sortedList.length; i++) {
+      for (let i = 0; i < sortedList.length; i++) {
         const sortedItem = sortedList[i];
         if (sortedItem.toString().indexOf(target) > -1) {
           return sortedItem;
@@ -110,7 +110,7 @@ class WinAppDeployTool {
   }
 
   uninstallAppPackage(packageInfo, targetDevice, verbose) {
-    console.log(chalk.green(`Uninstalling app from ${targetDevice.name}`))
+    console.log(chalk.green(`Uninstalling app from ${targetDevice.name}`));
     return execSync(`"${this.path}" uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`).toString();
   }
 }

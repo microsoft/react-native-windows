@@ -1,4 +1,4 @@
-﻿using Facebook.Yoga;
+using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.I18N;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.UIManager
@@ -219,10 +220,23 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public void SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+
+            // First check if the view exists, as the views are created in
+            // batches, and native modules attempting to synchronously interact
+            // with views may attempt to update properties before the batch has
+            // been processed.
+            if (_operationsQueue.NativeViewHierarchyManager.ViewExists(tag))
+            {
+                _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -651,9 +665,9 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Called when the host is shutting down.
         /// </summary>
-        public void OnShutdown()
+        public void OnDestroy()
         {
-            _operationsQueue.OnShutdown();
+            _operationsQueue.OnDestroy();
         }
 
         private void UpdateViewHierarchy()
@@ -895,21 +909,24 @@ namespace ReactNative.UIManager
             var tag = cssNode.ReactTag;
             if (!_shadowNodeRegistry.IsRootNode(tag))
             {
-                cssNode.DispatchUpdates(
+                var frameDidChange = cssNode.DispatchUpdates(
                     absoluteX,
                     absoluteY,
                     _operationsQueue,
                     _nativeViewHierarchyOptimizer);
 
-                if (cssNode.ShouldNotifyOnLayout)
+                if (frameDidChange && cssNode.ShouldNotifyOnLayout)
                 {
-                    _eventDispatcher.DispatchEvent(
-                        OnLayoutEvent.Obtain(
-                            tag,
-                            cssNode.ScreenX,
-                            cssNode.ScreenY,
-                            cssNode.ScreenWidth,
-                            cssNode.ScreenHeight));
+                    // Dispatch event from non-layout thread to avoid queueing
+                    // main dispatcher callbacks from the layout thread
+                    var task = Task.Run(() =>
+                        _eventDispatcher.DispatchEvent(
+                            OnLayoutEvent.Obtain(
+                                tag,
+                                cssNode.ScreenX,
+                                cssNode.ScreenY,
+                                cssNode.ScreenWidth,
+                                cssNode.ScreenHeight)));
                 }
             }
 

@@ -38,6 +38,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Gets the instance of the <see cref="IJavaScriptModule"/> associated
+        /// with the <see cref="IReactInstance"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of JavaScript module.</typeparam>
+        /// <returns>The JavaScript module instance.</returns>
+        public T GetJavaScriptModule<T>()
+            where T : IJavaScriptModule, new()
+        {
+            return _reactContext.GetJavaScriptModule<T>();
+        }
+
+        /// <summary>
         /// Adds a lifecycle event listener to the context.
         /// </summary>
         /// <param name="listener">The listener.</param>

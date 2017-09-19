@@ -1,6 +1,7 @@
 'use strict';
 
 const EOL = require('os').EOL;
+const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 const chalk = require('chalk');
@@ -36,6 +37,11 @@ class MSBuildTools {
       '/p:AppxBundle=Never'
     ];
 
+    // Set platform toolset for VS2017 (this way we can keep the base sln file working for vs2015)
+    if (this.version === '15.0') {
+      args.push('/p:PlatformToolset=v141');
+    }
+
     if (config) {
       Object.keys(config).forEach(function (key) {
         args.push(`/p:${key}=${config[key]}`);
@@ -50,27 +56,47 @@ class MSBuildTools {
     }
 
     const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + ['"' + slnFile + '"'].concat(args).join(' ');
-    const execOptions = verbose ? { stdio: 'inherit' }: {};
+    const execOptions = verbose ? { stdio: 'inherit' } : {};
     const results = child_process.execSync(cmd, execOptions).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
 }
 
 function checkMSBuildVersion(version) {
-  const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
-  try {
-    const output = child_process.execSync(query).toString();
-    let toolsPath = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
-    if (toolsPath) {
-      toolsPath = toolsPath[1];
-      // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
-      if ((version === '15.0' || version === '14.0' && toolsPath.indexOf('amd64') > -1)) {
-        toolsPath = path.resolve(toolsPath, '..');
+  let toolsPath = null;
+  // This path is maintained and VS has promised to keep it valid.
+  const vsWherePath = path.join(process.env['ProgramFiles(x86)'], '/Microsoft Visual Studio/Installer/vswhere.exe');
+  // Check if VS 2017 is installed and if true, go there to find MSBuild.
+  if (fs.existsSync(vsWherePath)) {
+    const vsPath = child_process.execSync(`"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath`).toString().split(EOL)[0];
+    // look for the specified version of msbuild
+    const msBuildPath = path.join(vsPath, 'MSBuild', version, 'Bin/MSBuild.exe');
+    toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
+  } else {
+    const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
+    toolsPath = null;
+    // Try to get the MSBuild path using registry
+    try {
+      const output = child_process.execSync(query).toString();
+      let toolsPathOutput = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
+      if (toolsPathOutput) {
+        toolsPathOutput = toolsPathOutput[1];
+        // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
+        if ((version === '15.0' || version === '14.0' && toolsPath.indexOf('amd64') > -1)) {
+          toolsPathOutput = path.resolve(toolsPathOutput, '..');
+        }
+        toolsPath = toolsPathOutput;
       }
-      console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
-      return new MSBuildTools(version, toolsPath);
+    } catch (e) {
+      toolsPath = null;
     }
-  } catch (e) {
+  }
+  // We found something so return MSBuild Tools.
+  if (toolsPath) {
+    console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
+    return new MSBuildTools(version, toolsPath);
+  }
+  else {
     return null;
   }
 }

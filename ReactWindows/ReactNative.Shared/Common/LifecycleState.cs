@@ -1,4 +1,4 @@
-﻿namespace ReactNative
+﻿namespace ReactNative.Common
 {
     /// <summary>
     /// An enumeration to signify the current lifecycle state for a 
@@ -6,6 +6,11 @@
     /// </summary>
     public enum LifecycleState
     {
+        /// <summary>
+        /// Lifecycle state before an application is initially created.
+        /// </summary>
+        BeforeCreate,
+
         /// <summary>
         /// Lifecycle state before an application is resumed.
         /// </summary>

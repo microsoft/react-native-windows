@@ -32,19 +32,6 @@ namespace ReactNative.Modules.Core
         IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext);
 
         /// <summary>
-        /// Creates the list of JavaScript modules to register with the 
-        /// React instance. 
-        /// </summary>
-        /// <returns>The list of JavaScript modules.</returns>
-        /// <remarks>
-        /// C# lacks the ability to restrict which types this method is called
-        /// with at compile time, so adding types that either do not have a 
-        /// default constructor or do not derive from 
-        /// <see cref="IJavaScriptModule"/> will result in a runtime exception.
-        /// </remarks>
-        IReadOnlyList<Type> CreateJavaScriptModulesConfig();
-
-        /// <summary>
         /// Creates the list of view managers that should be registered with
         /// the <see cref="UIManagerModule"/>.
         /// </summary>

@@ -191,7 +191,7 @@ class StatusBar extends React.Component {
     }
     else if (Platform.OS === 'windows') {
       StatusBar._defaultProps.backgroundColor.value = color;
-      StatusBarManager.setColor(processColor(color));    
+      StatusBarManager.setColor(processColor(color));
     }
   }
 

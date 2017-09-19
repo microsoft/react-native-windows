@@ -186,7 +186,7 @@ namespace ReactNative.Views.Picker
             private readonly int _selectedIndex;
 
             public ReactPickerEvent(int viewTag, int selectedIndex)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+                : base(viewTag)
             {
                 _selectedIndex = selectedIndex;
             }

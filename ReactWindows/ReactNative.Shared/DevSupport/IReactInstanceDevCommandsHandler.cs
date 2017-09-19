@@ -11,7 +11,7 @@ namespace ReactNative.DevSupport
     public interface IReactInstanceDevCommandsHandler
     {
         /// <summary>
-        /// Action to notify the <see cref="IReactInstanceManager"/> about the
+        /// Action to notify the <see cref="ReactInstanceManager"/> about the
         /// availability of a new JavaScript bundle downloaded from the server.
         /// </summary>
         void OnJavaScriptBundleLoadedFromServer();
