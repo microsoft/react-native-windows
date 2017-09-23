@@ -14,7 +14,7 @@
 
 var Platform = {
   OS: 'windows',
-  select: (obj: Object) => obj.windows,
+  select: (obj: Object) => 'windows' in obj ? obj.windows : obj.default,
 };
 
 module.exports = Platform;
