@@ -8,19 +8,18 @@ namespace ReactNative.Modules.DeviceInfo
     /// <summary>
     /// Native module that manages window dimension updates to JavaScript.
     /// </summary>
-    public class DeviceInfoModule : NativeModuleBase, ILifecycleEventListener
+    public class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
-        private readonly ReactContext _reactContext;
         private readonly Window _window;
         private readonly IReadOnlyDictionary<string, object> _constants;
 
         /// <summary>
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
         /// </summary>
-        /// <param name="context">The React context.</param>
-        public DeviceInfoModule(ReactContext context)
+        /// <param name="reactContext">The React context.</param>
+        public DeviceInfoModule(ReactContext reactContext)
+            : base(reactContext)
         {
-            _reactContext = context;
             _window = Application.Current.MainWindow;
             _constants = new Dictionary<string, object>
             {
@@ -51,6 +50,14 @@ namespace ReactNative.Modules.DeviceInfo
         }
 
         /// <summary>
+        /// Called after the creation of a <see cref="IReactInstance"/>,
+        /// </summary>
+        public override void Initialize()
+        {
+            Context.AddLifecycleEventListener(this);
+        }
+
+        /// <summary>
         /// Called when the application is suspended.
         /// </summary>
         public void OnSuspend()
@@ -76,7 +83,7 @@ namespace ReactNative.Modules.DeviceInfo
 
         private void OnBoundsChanged(object sender, SizeChangedEventArgs args)
         {
-            _reactContext.GetJavaScriptModule<RCTDeviceEventEmitter>()
+            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("didUpdateDimensions", GetDimensions());
         }
 
