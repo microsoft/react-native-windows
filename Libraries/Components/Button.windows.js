@@ -19,6 +19,7 @@ const StyleSheet = require('StyleSheet');
 const Text = require('Text');
 const TouchableNativeFeedback = require('TouchableNativeFeedback');
 const TouchableOpacity = require('TouchableOpacity');
+const TouchableButtonFeedback = require('TouchableButtonFeedback');
 const View = require('View');
 
 const invariant = require('fbjs/lib/invariant');
@@ -80,6 +81,7 @@ class Button extends React.Component {
      * Handler to be called when the user taps the button
      */
     onPress: PropTypes.func.isRequired,
+
     /**
      * Used to locate this view in end-to-end tests.
      */
@@ -115,7 +117,20 @@ class Button extends React.Component {
       'The title prop of a Button must be a string',
     );
     const formattedTitle = Platform.OS === 'android' ? title.toUpperCase() : title;
-    const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+    const Touchable = Platform.OS === 'android' 
+      ? TouchableNativeFeedback 
+      : Platform.OS === 'windows'
+        ? TouchableButtonFeedback
+        : TouchableOpacity;
+
+    const touchableProps = Platform.select({
+      ios: {},
+      android: {},
+      windows: {
+        underlayColor: 'rgba(0, 0, 0, 0.3)',
+      }
+    });
+
     return (
       <Touchable
         accessibilityComponentType="button"
@@ -123,7 +138,8 @@ class Button extends React.Component {
         accessibilityTraits={accessibilityTraits}
         testID={testID}
         disabled={disabled}
-        onPress={onPress}>
+        onPress={onPress}
+        {...touchableProps}>
         <View style={buttonStyles}>
           <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
         </View>

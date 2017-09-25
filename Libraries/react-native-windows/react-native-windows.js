@@ -17,6 +17,7 @@ var ReactWindows = {
   get ProgressBarWindows() {return require('ProgressBarWindows');},
   get ProgressRingWindows() {return require('ProgressRingWindows');},
   get SplitViewWindows() { return require('SplitViewWindows'); },
+  get TouchableButtonFeedback() { return require('TouchableButtonFeedback'); },
 };
 
 module.exports = ReactWindows;
