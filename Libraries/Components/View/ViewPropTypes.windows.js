@@ -519,4 +519,32 @@ module.exports = {
      * @platform windows
      */
     onBlur: PropTypes.func,
+
+    /**
+     * Set of keys that should be handled on key down by this component.
+     * 
+     * @platform windows
+     */
+    handledKeyDownKeys: PropTypes.arrayOf(PropTypes.number),
+
+    /**
+     * Set of keys that should be handled on key up by this component.
+     * 
+     * @platform windows
+     */
+    handledKeyUpKeys: PropTypes.arrayOf(PropTypes.number),
+
+    /**
+     * Called when key down while component has focus.
+     * 
+     * @platform windows
+     */
+    onKeyDown: PropTypes.func,
+
+    /**
+     * Called when key up while component has focus.
+     * 
+     * @platform windows
+     */
+    onKeyUp: PropTypes.func,
 };

@@ -4,12 +4,13 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
@@ -71,6 +72,20 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
+        /// Exported view constants.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> ExportedViewConstants
+        {
+            get
+            {
+                return new Dictionary<string, object>
+                {
+                    { "Keys", KeyHelpers.GetKeyConstants() },
+                };
+            }
+        }
+
+        /// <summary>
         /// Exported set of bubbling events.
         /// </summary>
         public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
@@ -103,6 +118,34 @@ namespace ReactNative.Views.View
                                 {
                                     { "bubbled" , "onBlur" },
                                     { "captured" , "onBlurCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topKeyDown",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onKeyDown" },
+                                    { "captured" , "onKeyDownCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topKeyUp",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onKeyUp" },
+                                    { "captured" , "onKeyUpCapture" }
                                 }
                             }
                         }
@@ -296,7 +339,31 @@ namespace ReactNative.Views.View
             {
                 view.GotFocus += OnGotFocus;
                 view.LostFocus += OnLostFocus;
+                view.KeyUp += OnKeyUp;
+                view.KeyDown += OnKeyDown;
             }
+        }
+
+        /// <summary>
+        /// Sets the keys to handle during the <see cref="UIElement.KeyDownEvent"/>. 
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="keys">The keys.</param>
+        [ReactProp("handledKeyDownKeys")]
+        public void SetHandledKeyDownKeys(ReactViewControl view, int[] keys)
+        {
+            view.HandledKeyDownKeys = keys;
+        }
+
+        /// <summary>
+        /// Sets the keys to handle during the <see cref="UIElement.KeyUpEvent"/>. 
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="keys">The keys.</param>
+        [ReactProp("handledKeyUpKeys")]
+        public void SetHandledKeyUpKeys(ReactViewControl view, int[] keys)
+        {
+            view.HandledKeyUpKeys = keys;
         }
 
         /// <summary>
@@ -429,6 +496,8 @@ namespace ReactNative.Views.View
             {
                 view.GotFocus -= OnGotFocus;
                 view.LostFocus -= OnLostFocus;
+                view.KeyDown -= OnKeyDown;
+                view.KeyUp -= OnKeyUp;
             }
         }
 
@@ -453,6 +522,50 @@ namespace ReactNative.Views.View
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
                     .DispatchEvent(new BlurEvent(view.GetTag()));
+            }
+        }
+
+#if WINDOWS_UWP
+        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
+#else
+        private void OnKeyDown(object sender, KeyEventArgs e)
+#endif
+        {
+            if (sender == e.OriginalSource)
+            {
+                var view = (ReactViewControl)sender;
+                var keyCode = e.Key.GetKeyCode();
+                e.Handled = view.HandledKeyDownKeys?.Contains(keyCode) ?? false;
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyDownEventString,
+                            view.GetTag(),
+                            keyCode));
+            }
+        }
+
+#if WINDOWS_UWP
+        private void OnKeyUp(object sender, KeyRoutedEventArgs e)
+#else
+        private void OnKeyUp(object sender, KeyEventArgs e)
+#endif
+        {
+            if (sender == e.OriginalSource)
+            {
+                var view = (ReactViewControl)sender;
+                var keyCode = e.Key.GetKeyCode();
+                e.Handled = view.HandledKeyUpKeys?.Contains(keyCode) ?? false;
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyUpEventString,
+                            view.GetTag(),
+                            keyCode));
             }
         }
 
@@ -518,6 +631,45 @@ namespace ReactNative.Views.View
                 var eventData = new JObject
                 {
                     { "target", ViewTag },
+                };
+
+                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+            }
+        }
+
+        class KeyEvent : Event
+        {
+            public const string KeyDownEventString = "topKeyDown";
+            public const string KeyUpEventString = "topKeyUp";
+
+            private readonly int _key;
+
+            public KeyEvent(string eventName, int viewTag, int key)
+                : base(viewTag)
+            {
+                EventName = eventName;
+                _key = key;
+            }
+
+            public override string EventName
+            {
+                get;
+            }
+
+            public override bool CanCoalesce
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                var eventData = new JObject
+                {
+                    { "target", ViewTag },
+                    { "key", _key },
                 };
 
                 eventEmitter.receiveEvent(ViewTag, EventName, eventData);

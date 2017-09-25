@@ -239,5 +239,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\View\KeyHelpers.cs" />
   </ItemGroup>
 </Project>

@@ -64,5 +64,23 @@ namespace ReactNative.Views.View
                 return _canvas.Children;
             }
         }
+
+        /// <summary>
+        /// Keys that should be handled during <see cref="UIElement.KeyDownEvent"/>. 
+        /// </summary>
+        public int[] HandledKeyDownKeys
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Keys that should be handled during <see cref="UIElement.KeyUpEvent"/>. 
+        /// </summary>
+        public int[] HandledKeyUpKeys
+        {
+            get;
+            set;
+        }
     }
 }
