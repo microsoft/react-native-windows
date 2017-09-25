@@ -170,7 +170,6 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsTrue(passed);
         }
 
-
         [Test]
         public void NetworkingModule_Request_Content_String_NoContentType()
         {
