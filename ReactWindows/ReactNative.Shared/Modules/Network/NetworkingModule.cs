@@ -121,10 +121,11 @@ namespace ReactNative.Modules.Network
 
             if (data != null)
             {
-                var body = data.Value<string>("string");
+                var stringBody = data.Value<string>("string");
+                var base64Body = default(string);
                 var uri = default(string);
                 var formData = default(JArray);
-                if (body != null)
+                if (stringBody != null)
                 {
                     if (headerData.ContentType == null)
                     {
@@ -132,7 +133,17 @@ namespace ReactNative.Modules.Network
                         return;
                     }
 
-                    request.Content = HttpContentHelpers.CreateFromBody(headerData, body);
+                    request.Content = HttpContentHelpers.CreateFromBody(headerData, stringBody);
+                }
+                else if ((base64Body = data.Value<string>("base64")) != null)
+                {
+                    if (headerData.ContentType == null)
+                    {
+                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
+                        return;
+                    }
+
+                    request.Content = HttpContentHelpers.CreateFromBase64(headerData, base64Body);
                 }
                 else if ((uri = data.Value<string>("uri")) != null)
                 {
