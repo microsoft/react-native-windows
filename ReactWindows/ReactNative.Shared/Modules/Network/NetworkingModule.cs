@@ -124,35 +124,29 @@ namespace ReactNative.Modules.Network
                 var stringBody = data.Value<string>("string");
                 var base64Body = default(string);
                 var uri = default(string);
-                var formData = default(JArray);
+                var formData = (JArray)data.GetValue("formData", StringComparison.Ordinal);
+
+                if (stringBody == null && formData != null && headerData.ContentType == null)
+                {
+                    headerData.ContentType = "multipart/form-data";
+                }
+
+                if (headerData.ContentType == null)
+                {
+                    OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
+                    return;
+                }
+
                 if (stringBody != null)
                 {
-                    if (headerData.ContentType == null)
-                    {
-                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
-                        return;
-                    }
-
                     request.Content = HttpContentHelpers.CreateFromBody(headerData, stringBody);
                 }
                 else if ((base64Body = data.Value<string>("base64")) != null)
                 {
-                    if (headerData.ContentType == null)
-                    {
-                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
-                        return;
-                    }
-
                     request.Content = HttpContentHelpers.CreateFromBase64(headerData, base64Body);
                 }
                 else if ((uri = data.Value<string>("uri")) != null)
                 {
-                    if (headerData.ContentType == null)
-                    {
-                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
-                        return;
-                    }
-
                     _tasks.AddAndInvokeAsync(requestId, token => ProcessRequestFromUriAsync(
                         requestId,
                         new Uri(uri),
@@ -164,13 +158,8 @@ namespace ReactNative.Modules.Network
 
                     return;
                 }
-                else if ((formData = (JArray)data.GetValue("formData", StringComparison.Ordinal)) != null)
+                else if (formData != null)
                 {
-                    if (headerData.ContentType == null)
-                    {
-                        headerData.ContentType = "multipart/form-data";
-                    }
-
                     var formDataContent = new HttpMultipartFormDataContent();
                     foreach (var content in formData)
                     {
