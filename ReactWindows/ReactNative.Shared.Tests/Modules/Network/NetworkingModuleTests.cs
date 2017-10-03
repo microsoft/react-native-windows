@@ -134,6 +134,43 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [Test]
+        public void NetworkingModule_Request_Content_Base64()
+        {
+            var data = new JObject
+            {
+                { "base64", Convert.ToBase64String(Encoding.UTF8.GetBytes("Hello World")) },
+            };
+
+            var headers = new[]
+            {
+                new[] { "Content-Type", "text/plain" },
+            };
+
+            var passed = true;
+            var waitHandle = new AutoResetEvent(false);
+            var module = CreateNetworkingModule(new MockHttpClient(request =>
+            {
+#if WINDOWS_UWP
+                var body = request.Content.ReadAsStringAsync().AsTask().Result;
+#else
+                var body = request.Content.ReadAsStringAsync().Result;
+#endif
+                var mediaType = request.Content.Headers.ContentType.ToString();
+                passed &= body == "Hello World";
+                passed &= mediaType == "text/plain";
+
+                waitHandle.Set();
+                return null;
+            }),
+                new MockInvocationHandler());
+
+            module.sendRequest("post", new Uri("http://example.com"), 1, headers, data, "text", false, 1000);
+            waitHandle.WaitOne();
+
+            Assert.IsTrue(passed);
+        }
+
+        [Test]
         public void NetworkingModule_Request_Content_String_NoContentType()
         {
             var data = new JObject
