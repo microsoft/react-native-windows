@@ -16,7 +16,7 @@ namespace ReactNative.Bridge
     /// A higher level API on top of the <see cref="IJavaScriptExecutor" /> and module registries. This provides an
     /// environment allowing the invocation of JavaScript methods.
     /// </summary>
-    class ReactInstance : IReactInstance, IAsyncDisposable
+    class ReactInstance : IReactInstance
     {
         private readonly NativeModuleRegistry _registry;
         private readonly JavaScriptModuleRegistry _jsRegistry;
@@ -93,7 +93,7 @@ namespace ReactNative.Bridge
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
             {
-                _bridge = await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+                _bridge = await QueueConfiguration.JavaScriptQueueThread.RunAsync(() =>
                 {
                     QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
 
@@ -111,7 +111,7 @@ namespace ReactNative.Bridge
                     return bridge;
                 }).ConfigureAwait(false);
 
-                await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+                await QueueConfiguration.JavaScriptQueueThread.RunAsync(() =>
                 {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
                     {
@@ -133,7 +133,7 @@ namespace ReactNative.Bridge
                 return;
             }
 
-            QueueConfiguration.JavaScriptQueueThread.RunOnQueue(() =>
+            QueueConfiguration.JavaScriptQueueThread.Dispatch(() =>
             {
                 QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
                 if (IsDisposed)
@@ -150,7 +150,7 @@ namespace ReactNative.Bridge
 
         public /* TODO: internal? */ void InvokeFunction(string module, string method, JArray arguments, string tracingName)
         {
-            QueueConfiguration.JavaScriptQueueThread.RunOnQueue(() =>
+            QueueConfiguration.JavaScriptQueueThread.Dispatch(() =>
             {
                 QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
 
@@ -183,7 +183,7 @@ namespace ReactNative.Bridge
             IsDisposed = true;
             _registry.NotifyReactInstanceDispose();
 
-            await QueueConfiguration.JavaScriptQueueThread.CallOnQueue(() =>
+            await QueueConfiguration.JavaScriptQueueThread.RunAsync(() =>
             {
                 using (_bridge) { }
                 return true;
@@ -219,7 +219,7 @@ namespace ReactNative.Bridge
         private void HandleException(Exception ex)
         {
             _nativeModuleCallExceptionHandler(ex);
-            QueueConfiguration.DispatcherQueueThread.RunOnQueue(async () => 
+            QueueConfiguration.DispatcherQueueThread.Dispatch(async () => 
                 await DisposeAsync().ConfigureAwait(false));
         }
 

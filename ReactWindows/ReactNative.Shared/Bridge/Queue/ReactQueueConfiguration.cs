@@ -1,25 +1,27 @@
 ﻿using System;
+using System.Reactive.Concurrency;
+using static System.FormattableString;
 
 namespace ReactNative.Bridge.Queue
 {
     /// <summary>
-    /// Specifies which <see cref="IMessageQueueThread"/>s must be used to run
+    /// Specifies which <see cref="IActionQueue"/>s must be used to run
     /// the various contexts of execution within React (dispatcher, native
     /// modules, and JS). Some of these queue *may* be the same but should be
     /// coded against as if they are different.
     /// </summary>
     class ReactQueueConfiguration : IReactQueueConfiguration
     {
-        private readonly MessageQueueThread _dispatcherQueueThread;
-        private readonly MessageQueueThread _layoutQueueThread;
-        private readonly MessageQueueThread _nativeModulesQueueThread;
-        private readonly MessageQueueThread _jsQueueThread;
+        private readonly IActionQueue _dispatcherQueueThread;
+        private readonly IActionQueue _layoutQueueThread;
+        private readonly IActionQueue _nativeModulesQueueThread;
+        private readonly IActionQueue _jsQueueThread;
 
         private ReactQueueConfiguration(
-            MessageQueueThread dispatcherQueueThread,
-            MessageQueueThread layoutQueueThread,
-            MessageQueueThread nativeModulesQueueThread,
-            MessageQueueThread jsQueueThread)
+            IActionQueue dispatcherQueueThread,
+            IActionQueue layoutQueueThread,
+            IActionQueue nativeModulesQueueThread,
+            IActionQueue jsQueueThread)
         {
             _dispatcherQueueThread = dispatcherQueueThread;
             _layoutQueueThread = layoutQueueThread;
@@ -30,7 +32,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// The main UI thread.
         /// </summary>
-        public IMessageQueueThread DispatcherQueueThread
+        public IActionQueue DispatcherQueueThread
         {
             get
             {
@@ -41,7 +43,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// The layout queue thread.
         /// </summary>
-        public IMessageQueueThread LayoutQueueThread
+        public IActionQueue LayoutQueueThread
         {
             get
             {
@@ -52,7 +54,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// The native modules thread.
         /// </summary>
-        public IMessageQueueThread NativeModulesQueueThread
+        public IActionQueue NativeModulesQueueThread
         {
             get
             {
@@ -63,7 +65,7 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// The JavaScript thread.
         /// </summary>
-        public IMessageQueueThread JavaScriptQueueThread
+        public IActionQueue JavaScriptQueueThread
         {
             get
             {
@@ -97,25 +99,43 @@ namespace ReactNative.Bridge.Queue
             ReactQueueConfigurationSpec spec,
             Action<Exception> exceptionHandler)
         {
-            var dispatcherThreadSpec = MessageQueueThreadSpec.DispatcherThreadSpec;
-            var dispatcherThread = MessageQueueThread.Create(dispatcherThreadSpec, exceptionHandler);
+            var dispatcherThreadSpec = ActionQueueSpec.DispatcherThreadSpec;
+            var dispatcherThread = Create(dispatcherThreadSpec, exceptionHandler);
 
-            var layoutThreadSpec = MessageQueueThreadSpec.LayoutThreadSpec;
-            var layoutThread = MessageQueueThread.Create(layoutThreadSpec, exceptionHandler);
+            var layoutThreadSpec = ActionQueueSpec.LayoutThreadSpec;
+            var layoutThread = Create(layoutThreadSpec, exceptionHandler);
 
             var jsThread = spec.JSQueueThreadSpec != dispatcherThreadSpec
-                ? MessageQueueThread.Create(spec.JSQueueThreadSpec, exceptionHandler)
+                ? Create(spec.JSQueueThreadSpec, exceptionHandler)
                 : dispatcherThread;
 
             var nativeModulesThread = spec.NativeModulesQueueThreadSpec != dispatcherThreadSpec
-                ? MessageQueueThread.Create(spec.NativeModulesQueueThreadSpec, exceptionHandler)
+                ? Create(spec.NativeModulesQueueThreadSpec, exceptionHandler)
                 : dispatcherThread;
 
             return new ReactQueueConfiguration(
                 dispatcherThread,
-                layoutThread, 
-                nativeModulesThread, 
+                layoutThread,
+                nativeModulesThread,
                 jsThread);
+        }
+
+        private static IActionQueue Create(ActionQueueSpec spec, Action<Exception> onError)
+        {
+            switch (spec.Kind)
+            {
+                case ActionQueueKind.Dispatcher:
+                    return new DispatcherActionQueue(onError);
+                case ActionQueueKind.Layout:
+                    return new LayoutActionQueue(onError);
+                case ActionQueueKind.NewThread:
+                    return new ActionQueue(onError, NewThreadScheduler.Default);
+                case ActionQueueKind.TaskPool:
+                    return new ActionQueue(onError);
+                default:
+                    throw new InvalidOperationException(
+                        Invariant($"Unknown thread type '{spec.Kind}' with name '{spec.Name}'."));
+            }
         }
     }
 }

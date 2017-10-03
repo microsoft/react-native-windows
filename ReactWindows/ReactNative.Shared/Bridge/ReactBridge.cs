@@ -12,7 +12,7 @@ namespace ReactNative.Bridge
     {
         private readonly IJavaScriptExecutor _jsExecutor;
         private readonly IReactCallback _reactCallback;
-        private readonly IMessageQueueThread _nativeModulesQueueThread;
+        private readonly IActionQueue _nativeModulesQueueThread;
 
         /// <summary>
         /// Instantiates the <see cref="IReactBridge"/>.
@@ -25,7 +25,7 @@ namespace ReactNative.Bridge
         public ReactBridge(
             IJavaScriptExecutor executor,
             IReactCallback reactCallback,
-            IMessageQueueThread nativeModulesQueueThread)
+            IActionQueue nativeModulesQueueThread)
         {
             if (executor == null)
                 throw new ArgumentNullException(nameof(executor));
@@ -130,7 +130,7 @@ namespace ReactNative.Bridge
                     "Did not get valid calls back from JavaScript. JSON: " + response);
             }
 
-            _nativeModulesQueueThread.RunOnQueue(() =>
+            _nativeModulesQueueThread.Dispatch(() =>
             {
                 for (var i = 0; i < moduleIds.Count; ++i)
                 {

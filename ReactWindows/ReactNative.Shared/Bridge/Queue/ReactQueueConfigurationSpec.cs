@@ -5,30 +5,30 @@ namespace ReactNative.Bridge.Queue
     /// <summary>
     /// Specification for creating a <see cref="IReactQueueConfiguration"/>.
     /// This exists so the <see cref="IReactInstance"/> is able to set
-    /// exception handlers on the <see cref="IMessageQueueThread"/>s it uses.
+    /// exception handlers on the <see cref="IActionQueue"/>s it uses.
     /// </summary>
     public sealed class ReactQueueConfigurationSpec
     {
         private ReactQueueConfigurationSpec(
-            MessageQueueThreadSpec nativeModulesQueueThreadSpec,
-            MessageQueueThreadSpec jsQueueThreadSpec)
+            ActionQueueSpec nativeModulesQueueThreadSpec,
+            ActionQueueSpec jsQueueThreadSpec)
         {
             NativeModulesQueueThreadSpec = nativeModulesQueueThreadSpec;
             JSQueueThreadSpec = jsQueueThreadSpec;
         }
 
         /// <summary>
-        /// The native modules <see cref="IMessageQueueThread"/> specification.
+        /// The native modules <see cref="IActionQueue"/> specification.
         /// </summary>
-        public MessageQueueThreadSpec NativeModulesQueueThreadSpec
+        public ActionQueueSpec NativeModulesQueueThreadSpec
         {
             get;
         }
 
         /// <summary>
-        /// The JavaScript <see cref="IMessageQueueThread"/> specification.
+        /// The JavaScript <see cref="IActionQueue"/> specification.
         /// </summary>
-        public MessageQueueThreadSpec JSQueueThreadSpec
+        public ActionQueueSpec JSQueueThreadSpec
         {
             get;
         }
@@ -42,8 +42,8 @@ namespace ReactNative.Bridge.Queue
         {
             return new Builder()
             {
-                JSQueueThreadSpec = MessageQueueThreadSpec.Create("js", MessageQueueThreadKind.BackgroundSingleThread),
-                NativeModulesQueueThreadSpec = MessageQueueThreadSpec.Create("native_modules", MessageQueueThreadKind.BackgroundAnyThread),
+                JSQueueThreadSpec = ActionQueueSpec.Create("js", ActionQueueKind.NewThread),
+                NativeModulesQueueThreadSpec = ActionQueueSpec.Create("native_modules", ActionQueueKind.TaskPool),
             }
             .Build();
         }
@@ -53,13 +53,13 @@ namespace ReactNative.Bridge.Queue
         /// </summary>
         public sealed class Builder
         {
-            private MessageQueueThreadSpec _nativeModulesQueueThreadSpec;
-            private MessageQueueThreadSpec _jsQueueThreadSpec;
+            private ActionQueueSpec _nativeModulesQueueThreadSpec;
+            private ActionQueueSpec _jsQueueThreadSpec;
 
             /// <summary>
-            /// Set the native modules <see cref="MessageQueueThreadSpec"/>.
+            /// Set the native modules <see cref="ActionQueueSpec"/>.
             /// </summary>
-            public MessageQueueThreadSpec NativeModulesQueueThreadSpec
+            public ActionQueueSpec NativeModulesQueueThreadSpec
             {
                 set
                 {
@@ -73,9 +73,9 @@ namespace ReactNative.Bridge.Queue
             }
 
             /// <summary>
-            /// Set the JavaScript <see cref="MessageQueueThreadSpec"/>.
+            /// Set the JavaScript <see cref="ActionQueueSpec"/>.
             /// </summary>
-            public MessageQueueThreadSpec JSQueueThreadSpec
+            public ActionQueueSpec JSQueueThreadSpec
             {
                 set
                 {

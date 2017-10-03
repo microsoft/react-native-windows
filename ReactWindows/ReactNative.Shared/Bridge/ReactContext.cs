@@ -255,7 +255,7 @@ namespace ReactNative.Bridge
         public void RunOnDispatcherQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.DispatcherQueueThread.RunOnQueue(action);
+            _reactInstance.QueueConfiguration.DispatcherQueueThread.Dispatch(action);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace ReactNative.Bridge
         public void RunOnLayoutQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.LayoutQueueThread.RunOnQueue(action);
+            _reactInstance.QueueConfiguration.LayoutQueueThread.Dispatch(action);
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace ReactNative.Bridge
         public void RunOnJavaScriptQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.JavaScriptQueueThread.RunOnQueue(action);
+            _reactInstance.QueueConfiguration.JavaScriptQueueThread.Dispatch(action);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace ReactNative.Bridge
         public void RunOnNativeModulesQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.NativeModulesQueueThread.RunOnQueue(action);
+            _reactInstance.QueueConfiguration.NativeModulesQueueThread.Dispatch(action);
         }
 
         /// <summary>

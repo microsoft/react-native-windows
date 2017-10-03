@@ -3,7 +3,7 @@
 namespace ReactNative.Bridge.Queue
 {
     /// <summary>
-    /// Specifies which <see cref="IMessageQueueThread"/>s must be used to run
+    /// Specifies which <see cref="IActionQueue"/>s must be used to run
     /// the various contexts of execution within React (dispatcher, native
     /// modules, and JS). Some of these queue *may* be the same but should be
     /// coded against as if they are different.
@@ -13,21 +13,21 @@ namespace ReactNative.Bridge.Queue
         /// <summary>
         /// The main UI thread.
         /// </summary>
-        IMessageQueueThread DispatcherQueueThread { get; }
+        IActionQueue DispatcherQueueThread { get; }
 
         /// <summary>
         /// The layout thread.
         /// </summary>
-        IMessageQueueThread LayoutQueueThread { get; }
+        IActionQueue LayoutQueueThread { get; }
 
         /// <summary>
         /// The native modules thread.
         /// </summary>
-        IMessageQueueThread NativeModulesQueueThread { get; }
+        IActionQueue NativeModulesQueueThread { get; }
 
         /// <summary>
         /// The JavaScript thread.
         /// </summary>
-        IMessageQueueThread JavaScriptQueueThread { get; }
+        IActionQueue JavaScriptQueueThread { get; }
     }
 }
