@@ -103,7 +103,15 @@ namespace ReactNative.Bridge
             if (_moduleTable.Count < moduleId)
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
 
-            _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            var actionQueue = _moduleTable[moduleId].Target.ActionQueue;
+            if (actionQueue != null)
+            {
+                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
+            }
+            else
+            {
+                _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            }
         }
 
         /// <summary>

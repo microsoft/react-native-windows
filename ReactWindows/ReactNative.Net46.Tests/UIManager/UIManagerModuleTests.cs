@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using ReactNative.Bridge;
+using ReactNative.Bridge.Queue;
 using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
@@ -21,13 +22,20 @@ namespace ReactNative.Tests.UIManager
             var viewManagers = new List<IViewManager>();
             var uiImplementationProvider = new UIImplementationProvider();
 
-            ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, null, uiImplementationProvider));
-            Assert.AreEqual("viewManagers", ex1.ParamName);
+            using (var actionQueue = new ActionQueue(ex => { }))
+            {
+                ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
+                    () => new UIManagerModule(context, null, uiImplementationProvider, actionQueue));
+                Assert.AreEqual("viewManagers", ex1.ParamName);
 
-            ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
-                () => new UIManagerModule(context, viewManagers, null));
-            Assert.AreEqual("uiImplementationProvider", ex2.ParamName);
+                ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
+                    () => new UIManagerModule(context, viewManagers, null, actionQueue));
+                Assert.AreEqual("uiImplementationProvider", ex2.ParamName);
+
+                ArgumentNullException ex3 = Assert.Throws<ArgumentNullException>(
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, null));
+                Assert.AreEqual("layoutActionQueue", ex3.ParamName);
+            }
         }
 
         [Test]
@@ -36,28 +44,30 @@ namespace ReactNative.Tests.UIManager
             var context = new ReactContext();
             var viewManagers = new List<IViewManager>();
             var uiImplementationProvider = new UIImplementationProvider();
+            using (var actionQueue = new ActionQueue(ex => { }))
+            {
+                var module = await DispatcherHelpers.CallOnDispatcherAsync(
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
 
-            var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementationProvider));
+                var constants = module.Constants;
 
-            var constants = module.Constants;
+                Assert.AreEqual("onSelect", constants.GetMap("customBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("bubbled"));
+                Assert.AreEqual("onSelectCapture", constants.GetMap("customBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("captured"));
+                Assert.AreEqual("onChange", constants.GetMap("customBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("bubbled"));
+                Assert.AreEqual("onChangeCapture", constants.GetMap("customBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("captured"));
+                Assert.AreEqual("onTouchStart", constants.GetMap("customBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("bubbled"));
+                Assert.AreEqual("onTouchStartCapture", constants.GetMap("customBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("captured"));
+                Assert.AreEqual("onTouchMove", constants.GetMap("customBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("bubbled"));
+                Assert.AreEqual("onTouchMoveCapture", constants.GetMap("customBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("captured"));
+                Assert.AreEqual("onTouchEnd", constants.GetMap("customBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("bubbled"));
+                Assert.AreEqual("onTouchEndCapture", constants.GetMap("customBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("captured"));
 
-            Assert.AreEqual("onSelect", constants.GetMap("customBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-            Assert.AreEqual("onSelectCapture", constants.GetMap("customBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("captured"));
-            Assert.AreEqual("onChange", constants.GetMap("customBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-            Assert.AreEqual("onChangeCapture", constants.GetMap("customBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("captured"));
-            Assert.AreEqual("onTouchStart", constants.GetMap("customBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-            Assert.AreEqual("onTouchStartCapture", constants.GetMap("customBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("captured"));
-            Assert.AreEqual("onTouchMove", constants.GetMap("customBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-            Assert.AreEqual("onTouchMoveCapture", constants.GetMap("customBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("captured"));
-            Assert.AreEqual("onTouchEnd", constants.GetMap("customBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-            Assert.AreEqual("onTouchEndCapture", constants.GetMap("customBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("captured"));
-
-            Assert.AreEqual("onSelectionChange", constants.GetMap("customDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
-            Assert.AreEqual("onLoadingStart", constants.GetMap("customDirectEventTypes").GetMap("topLoadingStart").GetValue("registrationName"));
-            Assert.AreEqual("onLoadingFinish", constants.GetMap("customDirectEventTypes").GetMap("topLoadingFinish").GetValue("registrationName"));
-            Assert.AreEqual("onLoadingError", constants.GetMap("customDirectEventTypes").GetMap("topLoadingError").GetValue("registrationName"));
-            Assert.AreEqual("onLayout", constants.GetMap("customDirectEventTypes").GetMap("topLayout").GetValue("registrationName"));
+                Assert.AreEqual("onSelectionChange", constants.GetMap("customDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
+                Assert.AreEqual("onLoadingStart", constants.GetMap("customDirectEventTypes").GetMap("topLoadingStart").GetValue("registrationName"));
+                Assert.AreEqual("onLoadingFinish", constants.GetMap("customDirectEventTypes").GetMap("topLoadingFinish").GetValue("registrationName"));
+                Assert.AreEqual("onLoadingError", constants.GetMap("customDirectEventTypes").GetMap("topLoadingError").GetValue("registrationName"));
+                Assert.AreEqual("onLayout", constants.GetMap("customDirectEventTypes").GetMap("topLayout").GetValue("registrationName"));
+            }
         }
 
         [Test]
@@ -66,15 +76,17 @@ namespace ReactNative.Tests.UIManager
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
             var uiImplementationProvider = new UIImplementationProvider();
+            using (var actionQueue = new ActionQueue(ex => { }))
+            {
+                var module = await DispatcherHelpers.CallOnDispatcherAsync(
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
 
-            var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => new UIManagerModule(context, viewManagers, uiImplementationProvider));
-
-            var constants = module.Constants;
-            Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetValue("otherSelectionChange"));
-            Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
-            Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetMap("topLoadingStart").GetValue("foo"));
-            Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetValue("topLoadingError"));
+                var constants = module.Constants;
+                Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetValue("otherSelectionChange"));
+                Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
+                Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetMap("topLoadingStart").GetValue("foo"));
+                Assert.AreEqual(42, constants.GetMap("customDirectEventTypes").GetValue("topLoadingError"));
+            }
         }
 
         class TestViewManager : MockViewManager

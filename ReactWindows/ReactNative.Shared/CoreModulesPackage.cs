@@ -1,11 +1,10 @@
 ﻿using ReactNative.Bridge;
-using ReactNative.DevSupport;
+using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.DeviceInfo;
 using ReactNative.Modules.DevSupport;
 using ReactNative.Tracing;
 using ReactNative.UIManager;
-using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
 #if !WINDOWS_UWP
@@ -43,10 +42,12 @@ namespace ReactNative
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
                 var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
+                var layoutActionQueue = new LayoutActionQueue(reactContext.HandleException);
                 uiManagerModule = new UIManagerModule(
                     reactContext, 
                     viewManagerList,
-                    _uiImplementationProvider);
+                    _uiImplementationProvider,
+                    layoutActionQueue);
             }
 
             return new List<INativeModule>

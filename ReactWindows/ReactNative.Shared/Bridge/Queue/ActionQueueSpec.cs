@@ -30,11 +30,6 @@ namespace ReactNative.Bridge.Queue
         public static ActionQueueSpec DispatcherThreadSpec { get; } = new ActionQueueSpec(ActionQueueKind.Dispatcher, "main_ui");
 
         /// <summary>
-        /// Singleton layout <see cref="IActionQueue"/> specification. 
-        /// </summary>
-        public static ActionQueueSpec LayoutThreadSpec { get; } = new ActionQueueSpec(ActionQueueKind.Layout, "layout");
-
-        /// <summary>
         /// Factory for creating <see cref="ActionQueueSpec"/>s.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -45,11 +40,6 @@ namespace ReactNative.Bridge.Queue
             if (kind == ActionQueueKind.Dispatcher)
             {
                 throw new NotSupportedException(Invariant($"Use the singleton {nameof(DispatcherThreadSpec)} instance."));
-            }
-
-            if (kind == ActionQueueKind.Layout)
-            {
-                throw new NotSupportedException(Invariant($"Use the singleton {nameof(LayoutThreadSpec)} instance."));
             }
 
             return new ActionQueueSpec(kind, name);
