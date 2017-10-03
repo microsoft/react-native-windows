@@ -126,7 +126,7 @@ namespace ReactNative.Modules.Network
                 var uri = default(string);
                 var formData = (JArray)data.GetValue("formData", StringComparison.Ordinal);
 
-                if (stringBody == null && formData != null && headerData.ContentType == null)
+                if (formData != null && headerData.ContentType == null)
                 {
                     headerData.ContentType = "multipart/form-data";
                 }
