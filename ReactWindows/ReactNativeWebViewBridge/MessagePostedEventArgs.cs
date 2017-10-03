@@ -3,7 +3,7 @@
     /// <summary>
     /// Arguments for <see cref="WebViewBridge.MessagePosted"/> event.
     /// </summary>
-    public class MessagePostedEventArgs
+    public sealed class MessagePostedEventArgs
     {
         internal MessagePostedEventArgs(int tag, string message)
         {
