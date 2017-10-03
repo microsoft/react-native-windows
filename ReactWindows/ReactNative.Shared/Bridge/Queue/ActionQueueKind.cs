@@ -19,11 +19,6 @@
         /// Task pool queue type.
         /// </summary>
         TaskPool,
-
-        /// <summary>
-        /// Layout queue type.
-        /// </summary>
-        Layout,
     }
 
 }

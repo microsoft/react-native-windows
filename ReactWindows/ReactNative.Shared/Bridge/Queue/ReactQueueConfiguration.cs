@@ -13,18 +13,15 @@ namespace ReactNative.Bridge.Queue
     class ReactQueueConfiguration : IReactQueueConfiguration
     {
         private readonly IActionQueue _dispatcherQueueThread;
-        private readonly IActionQueue _layoutQueueThread;
         private readonly IActionQueue _nativeModulesQueueThread;
         private readonly IActionQueue _jsQueueThread;
 
         private ReactQueueConfiguration(
             IActionQueue dispatcherQueueThread,
-            IActionQueue layoutQueueThread,
             IActionQueue nativeModulesQueueThread,
             IActionQueue jsQueueThread)
         {
             _dispatcherQueueThread = dispatcherQueueThread;
-            _layoutQueueThread = layoutQueueThread;
             _nativeModulesQueueThread = nativeModulesQueueThread;
             _jsQueueThread = jsQueueThread;
         }
@@ -37,17 +34,6 @@ namespace ReactNative.Bridge.Queue
             get
             {
                 return _dispatcherQueueThread;
-            }
-        }
-
-        /// <summary>
-        /// The layout queue thread.
-        /// </summary>
-        public IActionQueue LayoutQueueThread
-        {
-            get
-            {
-                return _layoutQueueThread;
             }
         }
 
@@ -83,7 +69,6 @@ namespace ReactNative.Bridge.Queue
         public void Dispose()
         {
             _dispatcherQueueThread.Dispose();
-            _layoutQueueThread.Dispose();
             _nativeModulesQueueThread.Dispose();
             _jsQueueThread.Dispose();
         }
@@ -102,9 +87,6 @@ namespace ReactNative.Bridge.Queue
             var dispatcherThreadSpec = ActionQueueSpec.DispatcherThreadSpec;
             var dispatcherThread = Create(dispatcherThreadSpec, exceptionHandler);
 
-            var layoutThreadSpec = ActionQueueSpec.LayoutThreadSpec;
-            var layoutThread = Create(layoutThreadSpec, exceptionHandler);
-
             var jsThread = spec.JSQueueThreadSpec != dispatcherThreadSpec
                 ? Create(spec.JSQueueThreadSpec, exceptionHandler)
                 : dispatcherThread;
@@ -115,7 +97,6 @@ namespace ReactNative.Bridge.Queue
 
             return new ReactQueueConfiguration(
                 dispatcherThread,
-                layoutThread,
                 nativeModulesThread,
                 jsThread);
         }
@@ -126,8 +107,6 @@ namespace ReactNative.Bridge.Queue
             {
                 case ActionQueueKind.Dispatcher:
                     return new DispatcherActionQueue(onError);
-                case ActionQueueKind.Layout:
-                    return new LayoutActionQueue(onError);
                 case ActionQueueKind.NewThread:
                     return new ActionQueue(onError, NewThreadScheduler.Default);
                 case ActionQueueKind.TaskPool:

@@ -37,7 +37,6 @@ namespace ReactNative.Tests.Bridge.Queue
         public void ActionQueue_CreateUiThread_ThrowsNotSupported()
         {
             AssertEx.Throws<NotSupportedException>(() => ActionQueueSpec.Create("ui", ActionQueueKind.Dispatcher));
-            AssertEx.Throws<NotSupportedException>(() => ActionQueueSpec.Create("layout", ActionQueueKind.Layout));
         }
 
         [TestMethod]
