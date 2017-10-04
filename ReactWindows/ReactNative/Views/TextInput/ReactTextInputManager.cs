@@ -288,6 +288,17 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the padding for the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="padding">Padding value, applies for all four directions.</param>
+        [ReactProp(ViewProps.Padding)]
+        public void SetPadding(ReactTextBox view, float padding)
+        {
+            view.Padding = new Thickness(padding);
+        }
+
+        /// <summary>
         /// Sets the editablity property on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
