@@ -57,7 +57,7 @@ namespace ReactNative.Tests.Modules.Image
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
-                                          (code, message, e) => { result = message; waitHandle.Set(); });
+                                          (code, message, e) => Assert.Inconclusive("Network request failed."));
 
             module.getSize(NetworkUri, promise);
 
