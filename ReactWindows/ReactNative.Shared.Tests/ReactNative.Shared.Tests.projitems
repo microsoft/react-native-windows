@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\TestReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitterTests.cs" />

@@ -22,28 +22,22 @@ namespace ReactNative.Bridge
         private readonly JavaScriptModuleRegistry _jsRegistry;
         private readonly Func<IJavaScriptExecutor> _jsExecutorFactory;
         private readonly JavaScriptBundleLoader _bundleLoader;
-        private readonly Action<Exception> _nativeModuleCallExceptionHandler;
 
         private IReactBridge _bridge;
 
         private bool _initialized;
 
         private ReactInstance(
-            ReactQueueConfigurationSpec reactQueueConfigurationSpec,
+            IReactQueueConfiguration queueConfiguration,
             Func<IJavaScriptExecutor> jsExecutorFactory,
             NativeModuleRegistry registry,
-            JavaScriptBundleLoader bundleLoader,
-            Action<Exception> nativeModuleCallExceptionHandler)
+            JavaScriptBundleLoader bundleLoader)
         {
             _registry = registry;
             _jsExecutorFactory = jsExecutorFactory;
-            _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
             _jsRegistry = new JavaScriptModuleRegistry();
             _bundleLoader = bundleLoader;
-
-            QueueConfiguration = ReactQueueConfiguration.Create(
-                reactQueueConfigurationSpec,
-                HandleException);
+            QueueConfiguration = queueConfiguration;
         }
 
         public bool IsDisposed
@@ -93,9 +87,9 @@ namespace ReactNative.Bridge
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
             {
-                _bridge = await QueueConfiguration.JavaScriptQueueThread.RunAsync(() =>
+                _bridge = await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
                 {
-                    QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
+                    QueueConfiguration.JavaScriptQueue.AssertOnThread();
 
                     var jsExecutor = _jsExecutorFactory();
 
@@ -105,13 +99,13 @@ namespace ReactNative.Bridge
                         bridge = new ReactBridge(
                             jsExecutor,
                             new NativeModulesReactCallback(this),
-                            QueueConfiguration.NativeModulesQueueThread);
+                            QueueConfiguration.NativeModulesQueue);
                     }
 
                     return bridge;
                 }).ConfigureAwait(false);
 
-                await QueueConfiguration.JavaScriptQueueThread.RunAsync(() =>
+                await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
                 {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
                     {
@@ -133,9 +127,9 @@ namespace ReactNative.Bridge
                 return;
             }
 
-            QueueConfiguration.JavaScriptQueueThread.Dispatch(() =>
+            QueueConfiguration.JavaScriptQueue.Dispatch(() =>
             {
-                QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
+                QueueConfiguration.JavaScriptQueue.AssertOnThread();
                 if (IsDisposed)
                 {
                     return;
@@ -150,9 +144,9 @@ namespace ReactNative.Bridge
 
         public /* TODO: internal? */ void InvokeFunction(string module, string method, JArray arguments, string tracingName)
         {
-            QueueConfiguration.JavaScriptQueueThread.Dispatch(() =>
+            QueueConfiguration.JavaScriptQueue.Dispatch(() =>
             {
-                QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
+                QueueConfiguration.JavaScriptQueue.AssertOnThread();
 
                 if (IsDisposed)
                 {
@@ -183,13 +177,13 @@ namespace ReactNative.Bridge
             IsDisposed = true;
             _registry.NotifyReactInstanceDispose();
 
-            await QueueConfiguration.JavaScriptQueueThread.RunAsync(() =>
+            await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
             {
                 using (_bridge) { }
                 return true;
             }).ConfigureAwait(false);
 
-            await Task.Run(new Action(QueueConfiguration.Dispose)).ConfigureAwait(false);
+            QueueConfiguration.Dispose();
         }
 
         private string BuildModulesConfig()
@@ -216,26 +210,18 @@ namespace ReactNative.Bridge
             }
         }
 
-        private void HandleException(Exception ex)
-        {
-            _nativeModuleCallExceptionHandler(ex);
-            QueueConfiguration.DispatcherQueueThread.Dispatch(async () => 
-                await DisposeAsync().ConfigureAwait(false));
-        }
-
         public sealed class Builder
         {
-            private ReactQueueConfigurationSpec _reactQueueConfigurationSpec;
+            private IReactQueueConfiguration _reactQueueConfiguration;
             private NativeModuleRegistry _registry;
             private Func<IJavaScriptExecutor> _jsExecutorFactory;
             private JavaScriptBundleLoader _bundleLoader;
-            private Action<Exception> _nativeModuleCallExceptionHandler;
 
-            public ReactQueueConfigurationSpec QueueConfigurationSpec
+            public IReactQueueConfiguration QueueConfiguration
             {
                 set
                 {
-                    _reactQueueConfigurationSpec = value;
+                    _reactQueueConfiguration = value;
                 }
             }
 
@@ -263,28 +249,18 @@ namespace ReactNative.Bridge
                 }
             }
 
-            public Action<Exception> NativeModuleCallExceptionHandler
-            {
-                set
-                {
-                    _nativeModuleCallExceptionHandler = value;
-                }
-            }
-
             public ReactInstance Build()
             {
-                AssertNotNull(_reactQueueConfigurationSpec, nameof(QueueConfigurationSpec));
+                AssertNotNull(_reactQueueConfiguration, nameof(QueueConfiguration));
                 AssertNotNull(_jsExecutorFactory, nameof(JavaScriptExecutorFactory));
                 AssertNotNull(_registry, nameof(Registry));
                 AssertNotNull(_bundleLoader, nameof(BundleLoader));
-                AssertNotNull(_nativeModuleCallExceptionHandler, nameof(NativeModuleCallExceptionHandler));
                  
                 return new ReactInstance(
-                    _reactQueueConfigurationSpec,
+                    _reactQueueConfiguration,
                     _jsExecutorFactory,
                     _registry,
-                    _bundleLoader,
-                    _nativeModuleCallExceptionHandler);
+                    _bundleLoader);
             }
 
             private void AssertNotNull(object value, string name)
@@ -305,7 +281,7 @@ namespace ReactNative.Bridge
 
             public void Invoke(int moduleId, int methodId, JArray parameters)
             {
-                _parent.QueueConfiguration.NativeModulesQueueThread.AssertOnThread();
+                _parent.QueueConfiguration.NativeModulesQueue.AssertOnThread();
 
                 if (_parent.IsDisposed)
                 {
@@ -317,7 +293,7 @@ namespace ReactNative.Bridge
 
             public void OnBatchComplete()
             {
-                _parent.QueueConfiguration.NativeModulesQueueThread.AssertOnThread();
+                _parent.QueueConfiguration.NativeModulesQueue.AssertOnThread();
 
                 // The bridge may have been destroyed due to an exception
                 // during the batch. In that case native modules could be in a

@@ -11,18 +11,18 @@ namespace ReactNative.Bridge.Queue
     public interface IReactQueueConfiguration : IDisposable
     {
         /// <summary>
-        /// The main UI thread.
+        /// The main UI queue.
         /// </summary>
-        IActionQueue DispatcherQueueThread { get; }
+        IActionQueue DispatcherQueue { get; }
 
         /// <summary>
-        /// The native modules thread.
+        /// The native modules queue.
         /// </summary>
-        IActionQueue NativeModulesQueueThread { get; }
+        IActionQueue NativeModulesQueue { get; }
 
         /// <summary>
-        /// The JavaScript thread.
+        /// The JavaScript queue.
         /// </summary>
-        IActionQueue JavaScriptQueueThread { get; }
+        IActionQueue JavaScriptQueue { get; }
     }
 }

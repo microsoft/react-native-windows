@@ -133,7 +133,10 @@ namespace ReactNative.Bridge.Queue
             {
                 _onError(ex);
             }
-            _threadLocal.Value = false;
+            finally
+            {
+                _threadLocal.Value = false;
+            }
         }
     }
 }
