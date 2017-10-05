@@ -4,8 +4,8 @@ using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
-using ReactNative.Modules.Image;
 using ReactNative.Modules.I18N;
+using ReactNative.Modules.Image;
 using ReactNative.Modules.Launch;
 using ReactNative.Modules.Location;
 using ReactNative.Modules.NetInfo;
@@ -15,6 +15,7 @@ using ReactNative.Modules.Storage;
 using ReactNative.Modules.Vibration;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.Control;
 using ReactNative.Views.Flip;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
@@ -75,13 +76,13 @@ namespace ReactNative.Shell
         {
             return new List<IViewManager>
             {
+                new ReactControlManager(),
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
                 new ReactProgressBarViewManager(),
                 new ReactProgressRingViewManager(),
                 new ReactPickerManager(),
                 new ReactRunManager(),
-                //new RecyclerViewBackedScrollViewManager(),
                 new ReactScrollViewManager(),
                 new ReactSliderManager(),
                 new ReactSplitViewManager(),

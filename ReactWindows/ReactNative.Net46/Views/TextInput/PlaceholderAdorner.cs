@@ -9,6 +9,8 @@ using System.Windows.Media;
 
 namespace ReactNative.Views.TextInput
 {
+    using Control = System.Windows.Controls.Control;
+
     /// <summary>
     ///   Represents an adorner that adds placeholder text to a <see cref="T:System.Windows.Controls.TextBox"/>,
     ///   <see cref="T:System.Windows.Controls.RichTextBox"/> or <see cref="T:System.Windows.Controls.PasswordBox"/>.

@@ -12,6 +12,7 @@
 
 var ReactWindows = {
   // Components
+  get ControlWindows() { return require('ControlWindows'); },
   get FlipViewWindows() { return require('FlipViewWindows'); },
   get PasswordBoxWindows() { return require('PasswordBoxWindows'); },
   get ProgressBarWindows() {return require('ProgressBarWindows');},
