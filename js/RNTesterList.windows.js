@@ -58,8 +58,8 @@ var ComponentExamples: Array<RNTesterExample> = [
     module: require('./ListViewPagingExample'),
   },
   {
-    key: 'PickerWindowsExample',
-    module: require('./PickerWindowsExample'),
+    key: 'PickerExample',
+    module: require('./PickerExample'),
   },
   {
     key: 'ProgressBarWindowsExample',
