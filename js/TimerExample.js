@@ -240,7 +240,6 @@ exports.examples = [
         </View>
       );
     },
-    platforms: ['ios', 'android'],
   },
   {
     title: 'this.setImmediate(fn)',
