@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace ReactNative.UIManager
@@ -59,7 +59,8 @@ namespace ReactNative.UIManager
         public const string AspectRatio = "aspectRatio";
 
         // Props that sometimes may prevent us from collapsing views
-        public static string PointerEvents = "pointerEvents";
+        public const string PointerEvents = "pointerEvents";
+        public const string IsTabStop = "isTabStop";
 
         // Properties that affect more than just layout
         public const string Disabled = "disabled";
@@ -204,6 +205,11 @@ namespace ReactNative.UIManager
             {
                 var value = props.GetProperty(prop).Value<string>();
                 return value == "auto" || value == "box-none";
+            }
+            else if (IsTabStop == prop)
+            {
+                var value = props.GetProperty(prop).Value<bool>();
+                return !value;
             }
 
             return false;
