@@ -32,31 +32,32 @@ var {
   View,
 } = ReactNative;
 
-var Entity = React.createClass({
-  render: function() {
+class Entity extends React.Component {
+  render() {
     return (
       <Text style={{fontWeight: '500', color: '#527fe4'}}>
         {this.props.children}
       </Text>
     );
   }
-});
+}
 
-var AttributeToggler = React.createClass({
-  getInitialState: function() {
-    return {fontWeight: 'bold', fontSize: 15};
-  },
-  toggleWeight: function() {
+class AttributeToggler extends React.Component {
+  state = {fontWeight: 'bold', fontSize: 15};
+
+  toggleWeight = () => {
     this.setState({
       fontWeight: this.state.fontWeight === 'bold' ? 'normal' : 'bold'
     });
-  },
-  increaseSize: function() {
+  };
+
+  increaseSize = () => {
     this.setState({
       fontSize: this.state.fontSize + 1
     });
-  },
-  render: function() {
+  };
+
+  render() {
     var curStyle = {fontWeight: this.state.fontWeight, fontSize: this.state.fontSize};
     return (
       <View>
@@ -79,7 +80,7 @@ var AttributeToggler = React.createClass({
       </View>
     );
   }
-});
+}
 
 exports.title = '<Text>';
 exports.description = 'Base component for rendering styled text.';
@@ -451,6 +452,18 @@ exports.examples = [
       </View>
     );
   },  
+}, {
+  title: 'Inline views',
+  render: function() {
+    return (
+      <View>
+        <Text>
+          This text contains an inline blue view <View style={{width: 25, height: 25, backgroundColor: 'steelblue'}} /> and
+          an inline image <Image source={require('./flux.png')} style={{width: 30, height: 11, resizeMode: 'cover'}}/>. Neat, huh?
+        </Text>
+      </View>
+    );
+  },
 }, {
   title: 'Toggling Attributes',
   render: function(): ReactElement {
