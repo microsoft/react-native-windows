@@ -243,14 +243,58 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Computes paddings and sets <see cref="_computedPadding"/> variable so that
+        /// <see cref="ReactTextInputManager.UpdateExtraData"/> can be triggered.
+        /// </summary>
+        /// <param name="index">The spacing type index.</param>
+        /// <param name="padding">The padding value.</param>
+        private void ComputePaddings(int index, JValue padding)
+        {
+            var edgeSpacing = ViewProps.PaddingMarginSpacingTypes[index];
+            var padVal = padding.ToObject<float>();
+
+            if (_computedPadding == null)
+            {
+                _computedPadding = new float[4];
+            }
+
+            switch (edgeSpacing)
+            {
+                case EdgeSpacing.All:
+                    _computedPadding = new[] { padVal, padVal, padVal, padVal };
+                    break;
+
+                case EdgeSpacing.Start: // paddingLeft
+                    _computedPadding[0] = padVal;
+                    break;
+
+                case EdgeSpacing.Top: // paddingTop
+                    _computedPadding[1] = padVal;
+                    break;
+
+                case EdgeSpacing.End: // paddingRight
+                    _computedPadding[2] = padVal;
+                    break;
+
+                case EdgeSpacing.Bottom: // paddingBottom
+                    _computedPadding[3] = padVal;
+                    break;
+
+                default:
+                    throw new NotSupportedException($"Unsupported padding type '{edgeSpacing}'.");
+            }
+        }
+
+        /// <summary>
         /// Sets the paddings of the shadow node.
         /// </summary>
         /// <param name="index">The spacing type index.</param>
         /// <param name="padding">The padding value.</param>
         public override void SetPaddings(int index, JValue padding)
         {
-            MarkUpdated();
+            ComputePaddings(index, padding);
             base.SetPaddings(index, padding);
+            MarkUpdated();
         }
 
         /// <summary>
