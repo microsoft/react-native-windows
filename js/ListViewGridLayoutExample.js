@@ -15,6 +15,7 @@ var React = require('react');
 var createReactClass = require('create-react-class');
 var ReactNative = require('react-native');
 var {
+  Dimensions,
   Image,
   ListView,
   TouchableHighlight,
@@ -38,6 +39,12 @@ var THUMB_URLS = [
   require('./Thumbnails/victory.png'),
 ];
 
+const ITEM_WIDTH = 100;
+const ITEM_HEIGHT = 100;
+const ITEM_MARGIN = 3;
+const ITEM_TOTAL_WIDTH = ITEM_WIDTH + ITEM_MARGIN * 2;
+const ITEM_TOTAL_HEIGHT = ITEM_HEIGHT + ITEM_MARGIN * 2;
+
 var ListViewGridLayoutExample = createReactClass({
   displayName: 'ListViewGridLayoutExample',
 
@@ -48,8 +55,11 @@ var ListViewGridLayoutExample = createReactClass({
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var dims = Dimensions.get("window");
     return {
       dataSource: ds.cloneWithRows(this._genRows({})),
+      windowWidth: dims.width,
+      windowHeight: dims.height,
     };
   },
 
@@ -57,17 +67,26 @@ var ListViewGridLayoutExample = createReactClass({
 
   componentWillMount: function() {
     this._pressData = {};
+    Dimensions.addEventListener("change", dims => {
+      this.setState({
+        windowWidth: dims.window.width,
+        windowHeight: dims.window.height
+      });
+    });
   },
 
   render: function() {
+    const pageSize = Math.floor(this.state.windowWidth / ITEM_TOTAL_WIDTH);
+    const initialListSize = Math.ceil(this.state.windowHeight / ITEM_TOTAL_HEIGHT) * pageSize;
+
     return (
       // ListView wraps ScrollView and so takes on its properties.
       // With that in mind you can use the ScrollView's contentContainerStyle prop to style the items.
       <ListView
         contentContainerStyle={styles.list}
         dataSource={this.state.dataSource}
-        initialListSize={21}
-        pageSize={3} // should be a multiple of the no. of visible cells per row
+        initialListSize={initialListSize}
+        pageSize={pageSize} // should be a multiple of the no. of visible cells per row
         scrollRenderAheadDistance={500}
         renderRow={this._renderRow}
       />
@@ -127,9 +146,9 @@ var styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
     padding: 5,
-    margin: 3,
-    width: 100,
-    height: 100,
+    margin: ITEM_MARGIN,
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
     backgroundColor: '#F6F6F6',
     alignItems: 'center',
     borderWidth: 1,
