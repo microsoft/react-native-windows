@@ -26,13 +26,13 @@ namespace ReactNative.Tests.Bridge
                 OnFlushQueue = () => JValue.CreateNull(),
                 OnInvokeCallbackAndReturnFlushedQueue = (_, __) => JValue.CreateNull()
             };
+
             var builder = new ReactInstance.Builder()
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = TestReactQueueConfiguration.Create(_ => { }),
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
-                NativeModuleCallExceptionHandler = _ => { }
             };
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
@@ -64,11 +64,10 @@ namespace ReactNative.Tests.Bridge
             };
             var builder = new ReactInstance.Builder()
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = TestReactQueueConfiguration.Create(_ => { }),
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
-                NativeModuleCallExceptionHandler = _ => { },
             };
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
@@ -101,7 +100,7 @@ namespace ReactNative.Tests.Bridge
         }
 
         [TestMethod]
-        public async Task ReactInstance_ExceptionHandled_Disposes()
+        public async Task ReactInstance_ExceptionHandled_DoesNotDispose()
         {
             var eventHandler = new AutoResetEvent(false);
             var module = new OnDisposeNativeModule(() => eventHandler.Set());
@@ -125,15 +124,14 @@ namespace ReactNative.Tests.Bridge
 
             var builder = new ReactInstance.Builder()
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = TestReactQueueConfiguration.Create(handler),
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
-                NativeModuleCallExceptionHandler = handler,
             };
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
-            instance.QueueConfiguration.JavaScriptQueueThread.Dispatch(() =>
+            instance.QueueConfiguration.JavaScriptQueue.Dispatch(() =>
             {
                 throw exception;
             });
@@ -141,8 +139,8 @@ namespace ReactNative.Tests.Bridge
             var actualException = await tcs.Task;
             Assert.AreSame(exception, actualException);
 
-            Assert.IsTrue(eventHandler.WaitOne());
-            Assert.IsTrue(instance.IsDisposed);
+            Assert.IsFalse(eventHandler.WaitOne(500));
+            Assert.IsFalse(instance.IsDisposed);
         }
 
         class TestNativeModule : NativeModuleBase

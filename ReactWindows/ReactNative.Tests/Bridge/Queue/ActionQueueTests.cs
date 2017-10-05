@@ -34,12 +34,6 @@ namespace ReactNative.Tests.Bridge.Queue
         }
 
         [TestMethod]
-        public void ActionQueue_CreateUiThread_ThrowsNotSupported()
-        {
-            AssertEx.Throws<NotSupportedException>(() => ActionQueueSpec.Create("ui", ActionQueueKind.Dispatcher));
-        }
-
-        [TestMethod]
         public async Task ActionQueue_IsOnThread()
         {
             var thrown = 0;

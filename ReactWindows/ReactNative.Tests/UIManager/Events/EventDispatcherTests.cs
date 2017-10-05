@@ -370,11 +370,10 @@ namespace ReactNative.Tests.UIManager.Events
 
             var instance = new ReactInstance.Builder
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = TestReactQueueConfiguration.Create(ex => Assert.Fail(ex.ToString())),
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
-                NativeModuleCallExceptionHandler = ex => Assert.Fail(ex.ToString()),
             }.Build();
 
             instance.Initialize();

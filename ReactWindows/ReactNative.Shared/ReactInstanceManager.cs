@@ -9,6 +9,7 @@ using ReactNative.Tracing;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -570,7 +571,8 @@ namespace ReactNative
             var reactContext = new ReactContext();
             if (_useDeveloperSupport)
             {
-                reactContext.NativeModuleCallExceptionHandler = _devSupportManager.HandleException;
+                reactContext.NativeModuleCallExceptionHandler = 
+                    _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
             }
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
@@ -595,14 +597,17 @@ namespace ReactNative
                 nativeModuleRegistry = nativeRegistryBuilder.Build();
             }
 
-            var exceptionHandler = _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
+            var queueConfiguration = new ReactQueueConfiguration(
+                new DispatcherActionQueue(reactContext.HandleException),
+                new ActionQueue(reactContext.HandleException, NewThreadScheduler.Default),
+                new ActionQueue(reactContext.HandleException));
+
             var reactInstanceBuilder = new ReactInstance.Builder
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = queueConfiguration,
                 JavaScriptExecutorFactory = jsExecutorFactory,
                 Registry = nativeModuleRegistry,
                 BundleLoader = jsBundleLoader,
-                NativeModuleCallExceptionHandler = exceptionHandler,
             };
 
             var reactInstance = default(ReactInstance);

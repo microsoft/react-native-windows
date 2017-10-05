@@ -28,14 +28,6 @@ namespace ReactNative.Tests.Bridge.Queue
             Assert.AreEqual("scheduler", ex3.ParamName);
         }
 
-        [Test]
-        public void ActionQueue_CreateUiThread_ThrowsNotSupported()
-        {
-            Assert.Throws<NotSupportedException>(
-                () => { ActionQueueSpec.Create("ui", ActionQueueKind.Dispatcher); }
-            );
-        }
-
         // ToDo: Conflicts with UIManagerModule tests [SetUp]
         public void SetUp()
         {
