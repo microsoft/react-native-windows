@@ -51,10 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Promise.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ActionQueue.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IActionQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IReactQueueConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ActionQueueExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContext.cs" />

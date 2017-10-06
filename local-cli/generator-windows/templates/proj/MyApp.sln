@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "..\node_mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNativeWebViewBridge", "..\node_modules\react-native-windows\ReactWindows\ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj", "{7596216B-669C-41F8-86DA-F3637F6545C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Core", "..\node_modules\react-native-windows\ReactWindows\ReactNative.Core\ReactNative.Core.csproj", "{9C5545C3-77E7-429E-B3D9-D588855D2268}"
+EndProject
 Global
 GlobalSection(SharedMSBuildProjectFiles) = preSolution
 	ReactNative.Shared\ReactNative.Shared.projitems*{98efa5d4-a185-4971-ae77-3845e31b84ce}*SharedItemsImports = 4
@@ -142,6 +144,30 @@ EndGlobalSection
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x64.Build.0 = Release|x64
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.ActiveCfg = Release|x86
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.Build.0 = Release|x86
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Debug|x64.Build.0 = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Debug|x86.Build.0 = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.DebugBundle|ARM.ActiveCfg = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.DebugBundle|ARM.Build.0 = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.DebugBundle|x64.ActiveCfg = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.DebugBundle|x64.Build.0 = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.DebugBundle|x86.ActiveCfg = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.DebugBundle|x86.Build.0 = Debug|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Release|ARM.Build.0 = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Release|x64.ActiveCfg = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Release|x64.Build.0 = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Release|x86.ActiveCfg = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.Release|x86.Build.0 = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|ARM.ActiveCfg = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|ARM.Build.0 = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|x64.ActiveCfg = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|x64.Build.0 = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|x86.ActiveCfg = Release|Any CPU
+		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

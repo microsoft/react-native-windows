@@ -203,6 +203,10 @@
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ReactNative.Core\ReactNative.Core.csproj">
+      <Project>{9c5545c3-77e7-429e-b3d9-d588855d2268}</Project>
+      <Name>ReactNative.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj">
       <Project>{7596216b-669c-41f8-86da-f3637f6545c0}</Project>
       <Name>ReactNativeWebViewBridge</Name>
