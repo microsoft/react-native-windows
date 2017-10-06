@@ -21,6 +21,7 @@ const {
   echo,
   exec,
   exit,
+  ShellString,
 } = require('shelljs');
 
 const minimist = require('minimist');
@@ -57,33 +58,23 @@ if (!match) {
 }
 let [, major, minor, patch, prerelease] = match;
 
-cat('scripts/versiontemplates/ReactNativeVersion.cs.template')
+ShellString(cat('scripts/versiontemplates/ReactNativeVersion.cs.template')
   .replace('${major}', major)
   .replace('${minor}', minor)
   .replace('${patch}', patch)
-  .replace('${prerelease}', prerelease ? `"${prerelease}"` : 'null')
+  .replace('${prerelease}', prerelease ? `"${prerelease}"` : 'null'))
   .to('ReactWindows/ReactNative.Shared/Modules/SystemInfo/ReactNativeVersion.cs');
 
-cat('scripts/versiontemplates/ReactNativeVersion.windows.js.template')
+ShellString(cat('scripts/versiontemplates/ReactNativeVersion.windows.js.template')
   .replace('${major}', major)
   .replace('${minor}', minor)
   .replace('${patch}', patch)
-  .replace('${prerelease}', prerelease !== undefined ? `'${prerelease}'` : 'null')
+  .replace('${prerelease}', prerelease !== undefined ? `'${prerelease}'` : 'null'))
   .to('Libraries/Core/ReactNativeVersion.windows.js');
 
 let packageJson = JSON.parse(cat(`package.json`));
 packageJson.version = version;
-JSON.stringify(packageJson, null, 2).to(`package.json`);
-
-// verify that files changed, we just do a git diff and check how many times version is added across files
-let numberOfChangedLinesWithNewVersion = exec(`git diff -U0 | grep '^[+]' | grep -c ${version} `, {silent: true})
-  .stdout.trim();
-if (+numberOfChangedLinesWithNewVersion !== 1) {
-  echo(`Failed to update all the files. package.json and gradle.properties must have versions in them`);
-  echo(`Fix the issue, revert and try again`);
-  exec(`git diff`);
-  exit(1);
-}
+ShellString(JSON.stringify(packageJson, null, 2)).to(`package.json`);
 
 // - make commit chore(NPM): [${version}] Bump version numbers
 if (exec(`git commit -a -m "chore(NPM): [${version}] Bump version numbers"`).code) {
