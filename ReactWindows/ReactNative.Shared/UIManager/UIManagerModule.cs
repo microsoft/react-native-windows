@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.UIManager.Events;
@@ -57,7 +57,7 @@ namespace ReactNative.UIManager
         {
             get
             {
-                return "RKUIManager";
+                return "UIManager";
             }
         }
 
