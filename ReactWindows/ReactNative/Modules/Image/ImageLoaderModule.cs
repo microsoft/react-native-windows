@@ -1,4 +1,4 @@
-﻿using FBCore.Common.References;
+using FBCore.Common.References;
 using FBCore.DataSource;
 using ImagePipeline.Core;
 using ImagePipeline.Image;
@@ -29,7 +29,7 @@ namespace ReactNative.Modules.Image
         }
 
         [ReactMethod]
-        public void prefetchImage(string uriString, int requestId, IPromise promise)
+        public async void prefetchImage(string uriString, int requestId, IPromise promise)
         {
             if (string.IsNullOrEmpty(uriString))
             {
@@ -37,25 +37,22 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            DispatcherHelpers.RunOnDispatcher(async () =>
+            try
             {
-                try
-                {
-                    var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
-                    var uri = new Uri(uriString);
+                var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
+                var uri = new Uri(uriString);
 
-                    await _prefetchRequests.AddAndInvokeAsync(
-                            requestId, 
-                            async token => await imagePipeline.PrefetchToDiskCacheAsync(uri, token).ConfigureAwait(false))
-                        .ConfigureAwait(false);
+                await _prefetchRequests.AddAndInvokeAsync(
+                        requestId, 
+                        async token => await imagePipeline.PrefetchToDiskCacheAsync(uri, token).ConfigureAwait(false))
+                    .ConfigureAwait(false);
 
-                    promise.Resolve(true);
-                }
-                catch (Exception ex)
-                {
-                    promise.Reject(ErrorPrefetchFailure, ex.Message);
-                }
-            });
+                promise.Resolve(true);
+            }
+            catch (Exception ex)
+            {
+                promise.Reject(ErrorPrefetchFailure, ex.Message);
+            }
         }
 
         [ReactMethod]
