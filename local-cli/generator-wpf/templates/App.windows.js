@@ -6,13 +6,17 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
+  Platform,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
-class <%= name %> extends Component {
+const instructions =
+  'Press Ctrl+R to reload,\n' +
+  'Ctrl+D or Ctrl+M for dev menu';
+
+export default class App extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
@@ -20,11 +24,10 @@ class <%= name %> extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.windows.js
+          To get started, edit App.windows.js
         </Text>
         <Text style={styles.instructions}>
-          Press Ctrl+R to reload,{'\n'}
-          Shift+F10 or shake for dev menu
+          {instructions}
         </Text>
       </View>
     );
@@ -49,5 +52,3 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
-AppRegistry.registerComponent('<%= name %>', () => <%= name %>);
