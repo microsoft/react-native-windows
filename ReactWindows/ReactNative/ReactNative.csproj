@@ -144,6 +144,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
+    <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
