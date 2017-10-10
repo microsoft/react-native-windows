@@ -20,15 +20,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Net46", "ReactNative.Net46\ReactNative.Net46.csproj", "{22CBFF9C-FE36-43E8-A246-266C7635E662}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Net46.Tests", "ReactNative.Net46.Tests\ReactNative.Net46.Tests.csproj", "{9249E9FD-F19A-4B90-8B74-41C151A6AB30}"
-	ProjectSection(ProjectDependencies) = postProject
-		{22CBFF9C-FE36-43E8-A246-266C7635E662} = {22CBFF9C-FE36-43E8-A246-266C7635E662}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Net46", "Playground.Net46\Playground.Net46.csproj", "{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNativeWebViewBridge", "ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj", "{7596216B-669C-41F8-86DA-F3637F6545C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Core", "ReactNative.Core\ReactNative.Core.csproj", "{9C5545C3-77E7-429E-B3D9-D588855D2268}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Core.Tests", "ReactNative.Core.Tests\ReactNative.Core.Tests.csproj", "{79007F00-3A5A-4C36-8F1A-114BFD06266A}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -330,6 +329,38 @@ Global
 		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|x64.Build.0 = Release|Any CPU
 		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|x86.ActiveCfg = Release|Any CPU
 		{9C5545C3-77E7-429E-B3D9-D588855D2268}.ReleaseBundle|x86.Build.0 = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|x64.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Debug|x86.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|Any CPU.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|Any CPU.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|ARM.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|ARM.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|x64.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|x64.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|x86.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.DebugBundle|x86.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|ARM.Build.0 = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|x64.ActiveCfg = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|x64.Build.0 = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|x86.ActiveCfg = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.Release|x86.Build.0 = Release|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|Any CPU.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|Any CPU.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|ARM.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|ARM.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|x64.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|x64.Build.0 = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|x86.ActiveCfg = Debug|Any CPU
+		{79007F00-3A5A-4C36-8F1A-114BFD06266A}.ReleaseBundle|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

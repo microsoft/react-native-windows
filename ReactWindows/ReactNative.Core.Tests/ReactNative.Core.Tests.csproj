@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.8.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20171009-10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReactNative.Core\ReactNative.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bridge\" />
+    <Folder Include="Bridge\Queue\" />
+  </ItemGroup>
+</Project>
