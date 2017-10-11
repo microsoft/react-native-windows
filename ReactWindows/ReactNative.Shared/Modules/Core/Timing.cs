@@ -48,7 +48,7 @@ namespace ReactNative.Modules.Core
         {
             get
             {
-                return "RCTTiming";
+                return "Timing";
             }
         }
 
