@@ -15,6 +15,7 @@ using ReactNative.Modules.Storage;
 using ReactNative.Modules.Vibration;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.DatePicker;
 using ReactNative.Views.Flip;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
@@ -75,6 +76,9 @@ namespace ReactNative.Shell
         {
             return new List<IViewManager>
             {
+                new ReactCalendarDatePickerManager(),
+                new ReactDatePickerManager(),
+                new ReactDateTimePickerManager(),
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
                 new ReactProgressBarViewManager(),
@@ -89,6 +93,7 @@ namespace ReactNative.Shell
                 new ReactPasswordBoxManager(),
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
+                new ReactTimePickerManager(),
                 new ReactViewManager(),
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),

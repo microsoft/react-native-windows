@@ -12,11 +12,14 @@
 
 var ReactWindows = {
   // Components
+  get CalendarPickerWindows() { return require('CalendarPickerWindows'); },
+  get DatePickerWindows() { return require('DatePickerWindows'); },
   get FlipViewWindows() { return require('FlipViewWindows'); },
   get PasswordBoxWindows() { return require('PasswordBoxWindows'); },
   get ProgressBarWindows() {return require('ProgressBarWindows');},
   get ProgressRingWindows() {return require('ProgressRingWindows');},
   get SplitViewWindows() { return require('SplitViewWindows'); },
+  get TimePickerWindows() { return require('TimePickerWindows'); },
 };
 
 module.exports = ReactWindows;
