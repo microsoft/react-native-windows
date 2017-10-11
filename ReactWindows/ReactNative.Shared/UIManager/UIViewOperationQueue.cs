@@ -85,7 +85,6 @@ namespace ReactNative.UIManager
             SizeMonitoringCanvas rootView,
             ThemedReactContext themedRootContext)
         {
-            DispatcherHelpers.AssertOnDispatcher();
             _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
         }
 
@@ -96,33 +95,6 @@ namespace ReactNative.UIManager
         public void EnqueueRemoveRootView(int rootViewTag)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.RemoveRootView(rootViewTag));
-        }
-
-        /// <summary>
-        /// Enqueues an operation to set the JavaScript responder.
-        /// </summary>
-        /// <param name="tag">The view tag.</param>
-        /// <param name="initialTag">The initial tag.</param>
-        /// <param name="blockNativeResponder">
-        /// Signal to block the native responder.
-        /// </param>
-        public void EnqueueSetJavaScriptResponder(
-            int tag,
-            int initialTag,
-            bool blockNativeResponder)
-        {
-            EnqueueOperation(() => _nativeViewHierarchyManager.SetJavaScriptResponder(
-                tag,
-                initialTag,
-                blockNativeResponder));
-        }
-
-        /// <summary>
-        /// Enqueues an operation to clear the JavaScript responder.
-        /// </summary>
-        public void EnqueueClearJavaScriptResponder()
-        {
-            EnqueueOperation(() => _nativeViewHierarchyManager.ClearJavaScriptResponder());
         }
 
         /// <summary>
