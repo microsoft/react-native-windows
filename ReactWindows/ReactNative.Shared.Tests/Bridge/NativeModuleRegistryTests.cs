@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
@@ -14,7 +14,11 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public void NativeModuleRegistry_ArgumentChecks()
         {
-            var builder = new NativeModuleRegistry.Builder();
+            AssertEx.Throws<ArgumentNullException>(
+                () => new NativeModuleRegistry.Builder(null),
+                ex => Assert.AreEqual("reactContext", ex.ParamName));
+
+            var builder = new NativeModuleRegistry.Builder(new ReactContext());
             AssertEx.Throws<ArgumentNullException>(
                 () => builder.Add(null),
                 ex => Assert.AreEqual("module", ex.ParamName));
@@ -23,7 +27,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public void NativeModuleRegistry_Override_Disallowed()
         {
-            var builder = new NativeModuleRegistry.Builder();
+            var builder = new NativeModuleRegistry.Builder(new ReactContext());
             builder.Add(new OverrideDisallowedModule());
             AssertEx.Throws<InvalidOperationException>(() => builder.Add(new OverrideDisallowedModule()));
         }
@@ -31,7 +35,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public void NativeModuleRegistry_Override_Allowed()
         {
-            var registry = new NativeModuleRegistry.Builder()
+            var registry = new NativeModuleRegistry.Builder(new ReactContext())
                 .Add(new OverrideAllowedModule())
                 .Add(new OverrideAllowedModule())
                 .Build();
@@ -42,7 +46,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public void NativeModuleRegistry_ModuleWithNullName_Throws()
         {
-            var builder = new NativeModuleRegistry.Builder();
+            var builder = new NativeModuleRegistry.Builder(new ReactContext());
             AssertEx.Throws<ArgumentException>(
                 () => builder.Add(new NullNameModule()),
                 ex => Assert.AreEqual("module", ex.ParamName));
@@ -51,7 +55,7 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public void NativeModuleRegistry_WriteModuleDefinitions()
         {
-            var registry = new NativeModuleRegistry.Builder()
+            var registry = new NativeModuleRegistry.Builder(new ReactContext())
                 .Add(new TestNativeModule())
                 .Build();
 

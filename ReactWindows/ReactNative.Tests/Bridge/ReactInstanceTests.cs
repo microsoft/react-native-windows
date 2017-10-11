@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
@@ -15,8 +15,9 @@ namespace ReactNative.Tests.Bridge
         public async Task ReactInstance_GetModules()
         {
             var module = new TestNativeModule();
+            var reactContext = new ReactContext();
 
-            var registry = new NativeModuleRegistry.Builder()
+            var registry = new NativeModuleRegistry.Builder(reactContext)
                 .Add(module)
                 .Build();
 
@@ -36,6 +37,7 @@ namespace ReactNative.Tests.Bridge
             };
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
+            reactContext.InitializeWithInstance(instance);
 
             var actualModule = instance.GetNativeModule<TestNativeModule>();
             Assert.AreSame(module, actualModule);
@@ -50,9 +52,14 @@ namespace ReactNative.Tests.Bridge
         [TestMethod]
         public async Task ReactInstance_Initialize_Dispose()
         {
-            var module = new TestNativeModule();
+            var mre = new ManualResetEvent(false);
+            var module = new TestNativeModule
+            {
+                OnInitialized = () => mre.Set(),
+            };
 
-            var registry = new NativeModuleRegistry.Builder()
+            var reactContext = new ReactContext();
+            var registry = new NativeModuleRegistry.Builder(reactContext)
                 .Add(module)
                 .Build();
 
@@ -71,6 +78,7 @@ namespace ReactNative.Tests.Bridge
             };
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
+            reactContext.InitializeWithInstance(instance);
             await DispatcherHelpers.RunOnDispatcherAsync(() => instance.Initialize());
 
             var caught = false;
@@ -87,6 +95,7 @@ namespace ReactNative.Tests.Bridge
             });
 
             Assert.IsTrue(caught);
+            mre.WaitOne();
             Assert.AreEqual(1, module.InitializeCalls);
 
             await DispatcherHelpers.CallOnDispatcherAsync(instance.DisposeAsync);
@@ -104,7 +113,7 @@ namespace ReactNative.Tests.Bridge
         {
             var eventHandler = new AutoResetEvent(false);
             var module = new OnDisposeNativeModule(() => eventHandler.Set());
-            var registry = new NativeModuleRegistry.Builder()
+            var registry = new NativeModuleRegistry.Builder(new ReactContext())
                 .Add(module)
                 .Build();
 
@@ -145,6 +154,12 @@ namespace ReactNative.Tests.Bridge
 
         class TestNativeModule : NativeModuleBase
         {
+            public Action OnInitialized
+            {
+                get;
+                set;
+            }
+
             public int InitializeCalls
             {
                 get;
@@ -168,6 +183,7 @@ namespace ReactNative.Tests.Bridge
             public override void Initialize()
             {
                 InitializeCalls++;
+                OnInitialized?.Invoke();
             }
 
             public override void OnReactInstanceDispose()

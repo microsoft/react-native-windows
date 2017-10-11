@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.UIManager.Events;
@@ -57,7 +57,7 @@ namespace ReactNative.UIManager
         {
             get
             {
-                return "RKUIManager";
+                return "UIManager";
             }
         }
 
@@ -480,11 +480,7 @@ namespace ReactNative.UIManager
         public void OnBatchComplete()
         {
             var batchId = _batchId++;
-
-            _layoutActionQueue.Dispatch(() =>
-            {
-                _uiImplementation.DispatchViewUpdates(batchId);
-            });
+            _uiImplementation.DispatchViewUpdates(batchId);
         }
 
         #endregion
@@ -497,7 +493,6 @@ namespace ReactNative.UIManager
         public override void OnReactInstanceDispose()
         {
             _eventDispatcher.OnReactInstanceDispose();
-            _layoutActionQueue.Dispose();
         }
 
         #endregion
