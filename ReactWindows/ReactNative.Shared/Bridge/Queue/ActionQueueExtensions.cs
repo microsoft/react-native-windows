@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace ReactNative.Bridge.Queue
@@ -44,6 +44,21 @@ namespace ReactNative.Bridge.Queue
             });
 
             return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Calls a function on a message queue and returns a task to await the response.
+        /// </summary>
+        /// <param name="actionQueue">The message queue thread.</param>
+        /// <param name="action">The action.</param>
+        /// <returns>A task to await the result.</returns>
+        public static Task RunAsync(this IActionQueue actionQueue, Action action)
+        {
+            return RunAsync(actionQueue, () =>
+            {
+                action();
+                return true;
+            });
         }
     }
 }
