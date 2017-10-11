@@ -296,12 +296,8 @@ namespace ReactNative.Views.Image
                     status => OnImageStatusUpdate(view, status),
                     _ => OnImageFailed(view));
 
-                using (Stream stream = BitmapImageHelpers.GetStreamAsync(source))
-                {
-                    image.StreamSource = stream;
-                    image.EndInit();
-                    imageBrush.ImageSource = image;
-                }
+                var stream = BitmapImageHelpers.GetStreamAsync(source);
+                image.StreamSource = stream;
             }
             else
             {
@@ -310,9 +306,10 @@ namespace ReactNative.Views.Image
                     _ => OnImageFailed(view));
 
                 image.UriSource = new Uri(source);
-                image.EndInit();
-                imageBrush.ImageSource = image;
             }
+
+            image.EndInit();
+            imageBrush.ImageSource = image;
         }
 
         /// <summary>
