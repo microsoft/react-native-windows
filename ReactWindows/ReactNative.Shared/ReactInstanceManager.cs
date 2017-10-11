@@ -566,8 +566,6 @@ namespace ReactNative
 
             _sourceUrl = jsBundleLoader.SourceUrl;
 
-            var nativeRegistryBuilder = new NativeModuleRegistry.Builder();
-
             var reactContext = new ReactContext();
             if (_useDeveloperSupport)
             {
@@ -575,6 +573,7 @@ namespace ReactNative
                     _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
             }
 
+            var nativeRegistryBuilder = new NativeModuleRegistry.Builder(reactContext);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
             {
                 var coreModulesPackage = new CoreModulesPackage(
