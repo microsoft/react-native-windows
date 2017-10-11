@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.DeviceInfo;
@@ -22,15 +22,18 @@ namespace ReactNative
         private readonly ReactInstanceManager _reactInstanceManager;
         private readonly Action _hardwareBackButtonHandler;
         private readonly UIImplementationProvider _uiImplementationProvider;
+        private readonly DisplayMetrics _initialDisplayMetrics;
 
         public CoreModulesPackage(
             ReactInstanceManager reactInstanceManager,
             Action hardwareBackButtonHandler,
-            UIImplementationProvider uiImplementationProvider)
+            UIImplementationProvider uiImplementationProvider,
+            DisplayMetrics initialDisplayMetrics)
         {
             _reactInstanceManager = reactInstanceManager;
             _hardwareBackButtonHandler = hardwareBackButtonHandler;
             _uiImplementationProvider = uiImplementationProvider;
+            _initialDisplayMetrics = initialDisplayMetrics;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller manages scope of returned list of disposables.")]
@@ -54,7 +57,7 @@ namespace ReactNative
                 //    reactContext,
                 //    _reactInstanceManager.DevSupportManager.DevSettings),
                 new DeviceEventManagerModule(reactContext, _hardwareBackButtonHandler),
-                new DeviceInfoModule(reactContext),
+                new DeviceInfoModule(reactContext, _initialDisplayMetrics),
                 new ExceptionsManagerModule(_reactInstanceManager.DevSupportManager),
                 new PlatformConstantsModule(),
                 new SourceCodeModule(

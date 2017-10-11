@@ -577,8 +577,11 @@ namespace ReactNative
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
             {
-                var coreModulesPackage =
-                    new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
+                var coreModulesPackage = new CoreModulesPackage(
+                    this,
+                    InvokeDefaultOnBackPressed,
+                    _uiImplementationProvider,
+                    DisplayMetrics.GetForCurrentView());
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }
@@ -597,11 +600,7 @@ namespace ReactNative
                 nativeModuleRegistry = nativeRegistryBuilder.Build();
             }
 
-            var queueConfiguration = new ReactQueueConfiguration(
-                new DispatcherActionQueue(reactContext.HandleException),
-                new ActionQueue(reactContext.HandleException, NewThreadScheduler.Default),
-                new ActionQueue(reactContext.HandleException));
-
+            var queueConfiguration = ReactQueueConfigurationFactory.Default.Create(reactContext.HandleException);
             var reactInstanceBuilder = new ReactInstance.Builder
             {
                 QueueConfiguration = queueConfiguration,
