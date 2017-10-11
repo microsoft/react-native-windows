@@ -78,7 +78,7 @@ namespace ReactNative.Bridge
             }
 
             _initialized = true;
-            _registry.NotifyReactInstanceInitialize();
+            QueueConfiguration.NativeModulesQueue.Dispatch(_registry.NotifyReactInstanceInitialize);
         }
 
         public async Task InitializeBridgeAsync()
@@ -87,34 +87,26 @@ namespace ReactNative.Bridge
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
             {
-                _bridge = await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
+                await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
                 {
                     QueueConfiguration.JavaScriptQueue.AssertOnThread();
 
                     var jsExecutor = _jsExecutorFactory();
 
-                    var bridge = default(ReactBridge);
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor").Start())
                     {
-                        bridge = new ReactBridge(
+                        _bridge = new ReactBridge(
                             jsExecutor,
                             new NativeModulesReactCallback(this),
                             QueueConfiguration.NativeModulesQueue);
                     }
 
-                    return bridge;
-                }).ConfigureAwait(false);
-
-                await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
-                {
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
                     {
                         _bridge.SetGlobalVariable("__fbBatchedBridgeConfig", BuildModulesConfig());
                     }
 
                     _bundleLoader.LoadScript(_bridge);
-
-                    return default(object);
                 }).ConfigureAwait(false);
             }
         }
@@ -175,14 +167,9 @@ namespace ReactNative.Bridge
             }
 
             IsDisposed = true;
-            _registry.NotifyReactInstanceDispose();
 
-            await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
-            {
-                using (_bridge) { }
-                return true;
-            }).ConfigureAwait(false);
-
+            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDispose).ConfigureAwait(false);
+            await QueueConfiguration.JavaScriptQueue.RunAsync(() => _bridge?.Dispose()).ConfigureAwait(false);
             QueueConfiguration.Dispose();
         }
 

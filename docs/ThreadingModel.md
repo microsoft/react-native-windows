@@ -46,7 +46,7 @@ As a React Native Windows user, the best way to interact with the native modules
 
 ### Custom Action Queue for Native Modules
 
-In general, native methods only need to be executed in order inside the scope of a single native module. In some cases, it could be a bottleneck for all native modules to use the same action queue, especially if the native module is doing something that is computation heavy (although arguably you should be triggering your own background thread to do the work rather than hanging up the action queue in these cases). To make things easier, React Native Windows allows you to create a custom action queue per native module. Both `NativeModuleBase` and `ReactContextNativeModuleBase` provide a constructor that takes in an `IActionQueue`. The catch here is that you must dispose this action queue yourself, likely in the `OnReactInstanceDisposed` lifecycle event.
+In general, native methods only need to be executed in order inside the scope of a single native module. In some cases, it could be a bottleneck for all native modules to use the same action queue, especially if the native module is doing something that is computation heavy (although arguably you should be triggering your own background thread to do the work rather than hanging up the action queue in these cases). To make things easier, React Native Windows allows you to create a custom action queue per native module. Both `NativeModuleBase` and `ReactContextNativeModuleBase` provide a constructor that takes in an `IActionQueue`. The action queue is disposed by the framework after the `OnReactInstanceDisposed` lifecycle event.
 
 ```c#
 public class MyNativeModule : NativeModuleBase
@@ -91,3 +91,27 @@ These events will each fire (in the order given above) from the main window's di
 The way batching is implemented using the `ReactChoreographer` goes as follows. First, the component responsible for batching subscribes to one of the four callbacks above. When an action needs to be taken that should be batched (e.g., a timer is scheduled or an event is dispatched), we call `ActivateCallback` and store the action in some way to be acted on later. When we receive the callback from the `ReactChoreographer`, we process any pending actions, and, no future callbacks are needed, we call `DeactivateCallback`.
 
 The `ReactChoreographer` is also used by the UIManager to queue operations on the view hierarchy.
+
+## Native Module Lifecycle Events
+
+As noted above, native modules can either run on the primary native module action queue or a custom action queue. Here are more details about the threading assumptions for each native module event.
+
+### Native Methods
+
+As stated above, the native methods are called either from the primary native modules action queue, or the custom action queue for the native module.
+
+#### Native Method Callbacks and Promises
+
+Each native method is initially invoked from the assigned action queue, but there are no requirements that the method is synchronous, this is generally left up to the module developer. React Native provides two options to get data back from native methods, `ICallback` and `IPromise`. The native module may mark native methods as `async`, `await` some asynchronous function and call the `ICallback` or `IPromise` function parameter from *any* thread (the callback or promise resolution does not have to occur on the assigned action queue). This means you can and should use `ConfigureAwait(false)` for asynchronous calls in your native methods.
+
+### ReactInstance Lifecycle Events
+
+Each native module is notified when the React instance is initialized (the `Initialize` method) and when the React instance is disposed (the `OnReactInstanceDispose` method). Similar to the native methods, these methods are also called on the action queue assigned to the native module (either the primary native modules action queue or the custom action queue).
+
+### IOnBatchCompleteListener Events
+
+After a JavaScript function or callback is invoked in React, there may be a batch of native operations to perform. By implementing the `IOnBatchCompleteListener`, a native module can receive a callback when all native methods have been queued and executed for that batch on that module. *Note*, because each module can have a custom action queue, there are no guarantees that all native methods have been executed across all modules for that batch, only that the given modules batch is complete. This function is also evaluated on the action queue assigned to the native module (either the primary native modules action queue or the custom action queue).
+
+### ILifecycleEventListener Events
+
+An app may be suspended and resumed at any point in time. It is sometimes useful to know when the app is being suspended and resumed so activities can be stopped while the app is suspended. Native modules can implement the `ILifecycleEventListener` interface to get these lifecycle events. These events always occur on the main window dispatcher thread.
