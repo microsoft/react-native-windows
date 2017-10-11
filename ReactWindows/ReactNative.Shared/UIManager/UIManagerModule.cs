@@ -372,7 +372,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void setJSResponder(int reactTag, bool blockNativeResponder)
         {
-           _uiImplementation.SetJavaScriptResponder(reactTag, blockNativeResponder);
+            // TODO: (#306) implement JS responder handler
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void clearJSResponder()
         {
-            _uiImplementation.ClearJavaScriptResponder();
+            // TODO: (#306) implement JS responder handler
         }
 
         /// <summary>
