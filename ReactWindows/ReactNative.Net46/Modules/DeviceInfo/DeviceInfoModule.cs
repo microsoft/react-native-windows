@@ -92,6 +92,12 @@ namespace ReactNative.Modules.DeviceInfo
             var content = (FrameworkElement)_window.Content;
             double scale = 1.0;
 
+            var hwnd = new System.Windows.Interop.WindowInteropHelper(_window).Handle;
+            using (var g = System.Drawing.Graphics.FromHwnd(hwnd))
+            {
+                scale = g.DpiX / 96;
+            }
+
             return new Dictionary<string, object>
             {
                 {
