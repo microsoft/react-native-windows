@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Bridge.Queue;
 using System;
 using System.Reactive.Concurrency;
@@ -176,6 +176,29 @@ namespace ReactNative.Tests.Bridge.Queue
                     Assert.IsFalse(waitHandle.WaitOne(500));
                 }
             }
+        }
+
+        [TestMethod]
+        public async Task ActionQueue_DisposeSelf()
+        {
+            var aq = new ActionQueue(_ => { });
+
+            var disposeTask = aq.RunAsync(() =>
+            {
+                aq.Dispose();
+                return true;
+            });
+
+            var task = await Task.WhenAny(disposeTask, Task.Delay(5000));
+            Assert.AreSame(disposeTask, task);
+
+            var wontRunTask = aq.RunAsync(() =>
+            {
+                return true;
+            });
+
+            task = await Task.WhenAny(wontRunTask, Task.Delay(500));
+            Assert.AreNotSame(wontRunTask, task);
         }
     }
 }
