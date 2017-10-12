@@ -16,6 +16,7 @@ namespace ReactNative.Modules.Accessibilityinfo
             return "rgba(" + color.R + "," + color.G + "," + color.B + "," + color.A + ")";
         }
 
+        // TODO: These are the 8 high contrast colors in Windows. Eventually they will be exposed to JS.
         private IDictionary<string, string> GetHighContrastColors()
         {
             return new Dictionary<string, string>
