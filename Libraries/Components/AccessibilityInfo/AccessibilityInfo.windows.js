@@ -28,7 +28,7 @@ var AccessibilityInfo = {
   
   fetch: function(): Promise {
     return new Promise((resolve, reject) => {
-      resolve(false);
+      resolve(false); // UWP does not have API to check if screen reader is being used
     });
   },
 
