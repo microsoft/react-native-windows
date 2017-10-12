@@ -315,7 +315,8 @@ namespace ReactNative
                 throw new ArgumentNullException(nameof(rootView));
 
             DispatcherHelpers.AssertOnDispatcher();
-
+            rootView.Children.Clear();
+            rootView.ClearData();
             _attachedRootViews.Add(rootView);
 
             // If the React context is being created in the background, the
@@ -513,15 +514,8 @@ namespace ReactNative
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            // Reset view content as it's going to be populated by the
-            // application content from JavaScript
-            rootView.TouchHandler?.Dispose();
-            rootView.Children.Clear();
-            rootView.Tag = null;
-
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
-            rootView.TouchHandler = new TouchHandler(rootView);
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>
@@ -550,7 +544,8 @@ namespace ReactNative
 
             foreach (var rootView in _attachedRootViews)
             {
-                DetachViewFromInstance(rootView, reactContext.ReactInstance);
+                rootView.Children.Clear();
+                rootView.ClearData();
             }
 
             await reactContext.DisposeAsync();
