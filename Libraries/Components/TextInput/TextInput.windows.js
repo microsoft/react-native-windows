@@ -681,6 +681,7 @@ var TextInput = createReactClass({
           selectionColor={this.props.selectionColor}
           text={this._getText()}
           editable={this.props.editable}
+          blurOnSubmit={this.props.blurOnSubmit}
         />;
     }
 
