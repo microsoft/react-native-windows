@@ -9,8 +9,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Alert
 } from 'react-native';
 
 class Playground extends Component {
@@ -29,7 +27,6 @@ class Playground extends Component {
         <Text style={styles.instructions}>
           Press Ctrl+D or Ctrl+M for dev menu
         </Text>
-        <TextInput multiline onSubmitEditing={(e) => Alert.alert('TextInput Submission', e.nativeEvent.text)} style={{width: 200, height: 200, backgroundColor: '#ffffff'}} />
       </View>
     );
   }
