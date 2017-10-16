@@ -66,7 +66,7 @@ namespace ReactNative.Tests.Bridge
                 using (var nativeThread = CreateNativeModulesThread())
                 {
                     var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
-                    var token = await jsQueueThread.CallOnQueue(() =>
+                    var token = await jsQueueThread.RunAsync(() =>
                     {
                         bridge.CallFunction("module", "method", new JArray());
                         return executor.GetGlobalVariable("FunctionCalls");
@@ -92,10 +92,10 @@ namespace ReactNative.Tests.Bridge
         {
             await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
             {
-                using (var nativeThread = MessageQueueThread.Create(MessageQueueThreadSpec.Create("native", MessageQueueThreadKind.BackgroundAnyThread), ex => { Assert.Fail(); }))
+                using (var nativeThread = new ActionQueue(ex => { Assert.Fail(); }))
                 {
                     var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
-                    var token = await jsQueueThread.CallOnQueue(() =>
+                    var token = await jsQueueThread.RunAsync(() =>
                     {
                         bridge.InvokeCallback(1, new JArray());
                         return executor.GetGlobalVariable("CallbackCalls");
@@ -237,15 +237,14 @@ namespace ReactNative.Tests.Bridge
             }
         }
 
-        private static MessageQueueThread CreateNativeModulesThread()
+        private static IActionQueue CreateNativeModulesThread()
         {
             return CreateNativeModulesThread(ex => Assert.Fail(ex.ToString()));
         }
 
-        private static MessageQueueThread CreateNativeModulesThread(Action<Exception> exceptionHandler)
+        private static IActionQueue CreateNativeModulesThread(Action<Exception> exceptionHandler)
         {
-            return MessageQueueThread.Create(
-                MessageQueueThreadSpec.Create("native", MessageQueueThreadKind.BackgroundAnyThread), exceptionHandler);
+            return new ActionQueue(exceptionHandler);
         }
 
         class MockReactCallback : IReactCallback

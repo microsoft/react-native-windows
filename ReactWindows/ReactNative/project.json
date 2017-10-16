@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "Facebook.Yoga": "1.5.0-pre1",
-    "fresco.imagepipeline": "0.0.4",
+    "fresco.imagepipeline": "0.0.8",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Newtonsoft.Json": "9.0.1",
     "OpenCover": "4.6.519",

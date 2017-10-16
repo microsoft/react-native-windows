@@ -577,33 +577,6 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets a JavaScript responder for a view.
-        /// </summary>
-        /// <param name="reactTag">The view ID.</param>
-        /// <param name="blockNativeResponder">
-        /// Flag to signal if the native responder should be blocked.
-        /// </param>
-        public void SetJavaScriptResponder(int reactTag, bool blockNativeResponder)
-        {
-            AssertViewExists(reactTag);
-            var node = _shadowNodeRegistry.GetNode(reactTag);
-            while (node.IsVirtual || node.IsLayoutOnly)
-            {
-                node = node.Parent;
-            }
-
-            _operationsQueue.EnqueueSetJavaScriptResponder(node.ReactTag, reactTag, blockNativeResponder);
-        }
-
-        /// <summary>
-        /// Clears the JavaScript responder.
-        /// </summary>
-        public void ClearJavaScriptResponder()
-        {
-            _operationsQueue.EnqueueClearJavaScriptResponder();
-        }
-
-        /// <summary>
         /// Dispatches a command to the view manager.
         /// </summary>
         /// <param name="reactTag">The tag of the view manager.</param>

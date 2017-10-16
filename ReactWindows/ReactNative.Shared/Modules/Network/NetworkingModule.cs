@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Core;
@@ -65,7 +65,7 @@ namespace ReactNative.Modules.Network
         {
             get
             {
-                return "RCTNetworking";
+                return "Networking";
             }
         }
 
@@ -124,14 +124,9 @@ namespace ReactNative.Modules.Network
                 var stringBody = data.Value<string>("string");
                 var base64Body = default(string);
                 var uri = default(string);
-                var formData = (JArray)data.GetValue("formData", StringComparison.Ordinal);
+                var formData = default(JArray);
 
-                if (formData != null && headerData.ContentType == null)
-                {
-                    headerData.ContentType = "multipart/form-data";
-                }
-
-                if (headerData.ContentType == null)
+                if (HasRequestContent(data) && headerData.ContentType == null)
                 {
                     OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
                     return;
@@ -158,8 +153,13 @@ namespace ReactNative.Modules.Network
 
                     return;
                 }
-                else if (formData != null)
+                else if ((formData = (JArray)data.GetValue("formData", StringComparison.Ordinal)) != null)
                 {
+                    if (headerData.ContentType == null)
+                    {
+                        headerData.ContentType = "multipart/form-data";
+                    }
+
                     var formDataContent = new HttpMultipartFormDataContent();
                     foreach (var content in formData)
                     {
@@ -445,6 +445,13 @@ namespace ReactNative.Modules.Network
                 requestId,
                 null,
             });
+        }
+
+        private static bool HasRequestContent(JObject data)
+        {
+            return data.ContainsKey("string")
+                || data.ContainsKey("base64")
+                || data.ContainsKey("uri");
         }
 
         private static void ApplyHeaders(HttpRequestMessage request, string[][] headers)

@@ -1,16 +1,13 @@
-﻿using ReactNative.Bridge;
-using ReactNative.DevSupport;
+using ReactNative.Bridge;
+using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.DeviceInfo;
 using ReactNative.Modules.DevSupport;
+using ReactNative.Modules.SystemInfo;
 using ReactNative.Tracing;
 using ReactNative.UIManager;
-using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-#if !WINDOWS_UWP
-using System.Windows;
-#endif
 
 namespace ReactNative
 {
@@ -25,15 +22,18 @@ namespace ReactNative
         private readonly ReactInstanceManager _reactInstanceManager;
         private readonly Action _hardwareBackButtonHandler;
         private readonly UIImplementationProvider _uiImplementationProvider;
+        private readonly DisplayMetrics _initialDisplayMetrics;
 
         public CoreModulesPackage(
             ReactInstanceManager reactInstanceManager,
             Action hardwareBackButtonHandler,
-            UIImplementationProvider uiImplementationProvider)
+            UIImplementationProvider uiImplementationProvider,
+            DisplayMetrics initialDisplayMetrics)
         {
             _reactInstanceManager = reactInstanceManager;
             _hardwareBackButtonHandler = hardwareBackButtonHandler;
             _uiImplementationProvider = uiImplementationProvider;
+            _initialDisplayMetrics = initialDisplayMetrics;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller manages scope of returned list of disposables.")]
@@ -43,10 +43,12 @@ namespace ReactNative
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
                 var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
+                var layoutActionQueue = new LayoutActionQueue(reactContext.HandleException);
                 uiManagerModule = new UIManagerModule(
                     reactContext, 
                     viewManagerList,
-                    _uiImplementationProvider);
+                    _uiImplementationProvider,
+                    layoutActionQueue);
             }
 
             return new List<INativeModule>
@@ -54,14 +56,14 @@ namespace ReactNative
                 //new AnimationsDebugModule(
                 //    reactContext,
                 //    _reactInstanceManager.DevSupportManager.DevSettings),
-                //new SystemInfoModule(),
                 new DeviceEventManagerModule(reactContext, _hardwareBackButtonHandler),
-                new DeviceInfoModule(reactContext),
+                new DeviceInfoModule(reactContext, _initialDisplayMetrics),
                 new ExceptionsManagerModule(_reactInstanceManager.DevSupportManager),
-                new Timing(reactContext),
+                new PlatformConstantsModule(),
                 new SourceCodeModule(
                     _reactInstanceManager.SourceUrl,
                     _reactInstanceManager.DevSupportManager.SourceMapUrl),
+                new Timing(reactContext),
                 uiManagerModule,
                 //new DebugComponentOwnershipModule(reactContext),
             };

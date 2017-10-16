@@ -1,4 +1,4 @@
-# React Native plugin for Universal Windows Platform (UWP)
+﻿# React Native plugin for Universal Windows Platform (UWP)
 
 ![Hero Image with Logo](./.github/hero.png)
 
@@ -45,7 +45,14 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - *Note*: You will need to install the [requirements](#system-requirements) before you can build and run your application.
 - Open the solution file in the application folder in Visual Studio (e.g., `AwesomeProject/windows/AwesomeProject.sln`)
 - *Note*: If this is your first time doing UWP development on the computer you're using, you may be asked to install additional UWP tooling. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
-- *Note*: If you are using Visual Studio 2017, you will need to retarget the ChakraBridge project by right clicking on the project in the Solution Explorer and selecting "Retarget Projects" and pressing okay on the popup dialog (Platform Toolset should say "Upgrade to v141" in the dialog).
+- *Note*: If you are using Visual Studio 2017, you will need to retarget the ChakraBridge project. Right click the ChakraBridge project:
+    - If there is not a retarget option:
+        - Select "Reload", and the Visual Studio installer will open.
+        - Make sure to close Visual Studio before installing
+        - Make sure the 10.0.10586.0 Windows 10 SDK is selected along with any other preselected components, and click "Modify" in the installer to install the components
+        - Retargeting the ChakraBridge project should be possible, so proceed to the next instructions regarding if there is a retarget option
+    - If there is a retarget option:
+        - Retarget by right clicking on the ChakraBridge project in the Solution Explorer and selecting "Retarget Projects" and pressing okay on the popup dialog (Platform Toolset should say "Upgrade to v141" in the dialog).
 - Select the "Debug" configuration and the "x64" platform from the combo box controls to the left of the Run button and underneath the Team and Tools menu item.
 - *Note:* If you are running on, or targeting, an x86 platform select "x86" instead. If you are deploying to Windows 10 Phone, select ARM.
 - Click the Run button to the right of the platform combo box control, or select the "Debug"->"Start without Debugging" menu item.

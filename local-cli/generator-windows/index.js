@@ -85,8 +85,8 @@ module.exports = yeoman.Base.extend({
     }
 
     this.fs.copyTpl(
-      this.templatePath('index.windows.js'),
-      this.destinationPath('index.windows.js'),
+      this.templatePath('App.windows.js'),
+      this.destinationPath('App.windows.js'),
       templateVars
     );
 

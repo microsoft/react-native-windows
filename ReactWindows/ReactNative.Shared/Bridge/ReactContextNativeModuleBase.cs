@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactNative.Bridge.Queue;
+using System;
 
 namespace ReactNative.Bridge
 {
@@ -24,9 +25,38 @@ namespace ReactNative.Bridge
         /// Instantiates the <see cref="ReactContextNativeModuleBase"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
+        /// <param name="actionQueue">The action queue.</param>
+        protected ReactContextNativeModuleBase(ReactContext reactContext, IActionQueue actionQueue)
+            : base(actionQueue)
+        {
+            if (reactContext == null)
+                throw new ArgumentNullException(nameof(reactContext));
+
+            Context = reactContext;
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="ReactContextNativeModuleBase"/>.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="delegateFactory">The React method delegate factory.</param>
         protected ReactContextNativeModuleBase(ReactContext reactContext, IReactDelegateFactory delegateFactory)
             : base(delegateFactory)
+        {
+            if (reactContext == null)
+                throw new ArgumentNullException(nameof(reactContext));
+
+            Context = reactContext;
+        }
+
+        /// <summary>
+        /// Instantiates the <see cref="ReactContextNativeModuleBase"/>.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="delegateFactory">The React method delegate factory.</param>
+        /// <param name="actionQueue">The action queue.</param>
+        protected ReactContextNativeModuleBase(ReactContext reactContext, IReactDelegateFactory delegateFactory, IActionQueue actionQueue)
+            : base(delegateFactory, actionQueue)
         {
             if (reactContext == null)
                 throw new ArgumentNullException(nameof(reactContext));

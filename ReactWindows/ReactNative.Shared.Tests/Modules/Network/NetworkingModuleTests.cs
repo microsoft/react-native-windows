@@ -65,6 +65,46 @@ namespace ReactNative.Tests.Modules.Network
         }
 
         [Test]
+        public void NetworkingModule_Request_NoContent_Null()
+        {
+            var method = "GET";
+
+            var passed = false;
+            var waitHandle = new AutoResetEvent(false);
+            var httpClient = new MockHttpClient(request =>
+            {
+                passed = request.Method.ToString() == method;
+                waitHandle.Set();
+                return new HttpResponseMessage(HttpStatusCode.NoContent);
+            });
+
+            var module = CreateNetworkingModule(httpClient, new MockInvocationHandler());
+            module.sendRequest(method, new Uri("http://example.com"), 1, null, null, "text", false, 1000);
+            waitHandle.WaitOne();
+            Assert.IsTrue(passed);
+        }
+
+        [Test]
+        public void NetworkingModule_Request_NoContent_NonNull()
+        {
+            var method = "GET";
+
+            var passed = false;
+            var waitHandle = new AutoResetEvent(false);
+            var httpClient = new MockHttpClient(request =>
+            {
+                passed = request.Method.ToString() == method;
+                waitHandle.Set();
+                return new HttpResponseMessage(HttpStatusCode.NoContent);
+            });
+
+            var module = CreateNetworkingModule(httpClient, new MockInvocationHandler());
+            module.sendRequest(method, new Uri("http://example.com"), 1, null, new JObject(), "text", false, 1000);
+            waitHandle.WaitOne();
+            Assert.IsTrue(passed);
+        }
+
+        [Test]
         public void NetworkingModule_Request_Headers()
         {
             var headers = new[]
