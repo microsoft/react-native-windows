@@ -110,11 +110,11 @@ npm install
 ```
 - - *Note:* If you just want to get started with developing your own app, read [Getting Started with App Development](#GettingStarted). You only need to interact with `npm` to use for your app development.
 
-For more information about contributing PRs and issues, see our [Contribution Guidelines](https://github.com/ReactWindows/react-native-windows/blob/master/CONTRIBUTING.md) **(Coming Soon)**.
+For more information about contributing PRs and issues, see our [Contribution Guidelines](https://github.com/ReactWindows/react-native-windows/blob/master/CONTRIBUTING.md)
 
 [Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
-Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to run the unit tests in Visual Studio and verify they are passing before submitting pull requests. For extra credit, verify the examples in RNTester continue to work properly.
+Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to [run the unit tests in Visual Studio](https://github.com/ReactWindows/react-native-windows/blob/master/CONTRIBUTING.md#running-unit-tests-in-visual-studio) and verify they are passing before submitting pull requests. For extra credit, verify the examples in RNTester continue to work properly.
 
 ### Examples
 
