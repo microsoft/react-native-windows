@@ -179,12 +179,6 @@ namespace ReactNative.Views.TextInput
             }
         }
 
-        /// <summary>
-        /// Computes paddings and sets <see cref="_computedPadding"/> variable so that
-        /// <see cref="ReactPasswordBoxManager.UpdateExtraData"/> can be triggered.
-        /// </summary>
-        /// <param name="index">The spacing type index.</param>
-        /// <param name="padding">The padding value.</param>
         private void ComputePaddings(int index, JValue padding)
         {
             var edgeSpacing = ViewProps.PaddingMarginSpacingTypes[index];
