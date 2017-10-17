@@ -1,4 +1,4 @@
-﻿namespace ReactNative.Common
+namespace ReactNative.Common
 {
     /// <summary>
     /// An enumeration to signify the current lifecycle state for a 
@@ -20,5 +20,10 @@
         /// Lifecycle state of a resumed application.
         /// </summary>
         Resumed,
+
+        /// <summary>
+        /// Lifecycle state when the application is in the background.
+        /// </summary>
+        Background,
     }
 }

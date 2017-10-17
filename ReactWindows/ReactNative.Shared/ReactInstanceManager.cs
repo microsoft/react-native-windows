@@ -252,6 +252,24 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Called when the host entered background mode.
+        /// </summary>
+        public void OnEnteredBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            MoveToBackgroundLifecycleState();
+        }
+
+        /// <summary>
+        /// Called when the host is leaving background mode.
+        /// </summary>
+        public void OnLeavingBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            MoveToResumedLifecycleState(false);
+        }
+
+        /// <summary>
         /// Used when the application resumes to reset the back button handling
         /// in JavaScript.
         /// </summary>
@@ -574,8 +592,7 @@ namespace ReactNative
                 var coreModulesPackage = new CoreModulesPackage(
                     this,
                     InvokeDefaultOnBackPressed,
-                    _uiImplementationProvider,
-                    DisplayMetrics.GetForCurrentView());
+                    _uiImplementationProvider);
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }
@@ -676,6 +693,10 @@ namespace ReactNative
                     {
                         _currentReactContext.OnResume();
                     }
+                    else if (_lifecycleState == LifecycleState.Background)
+                    {
+                        _currentReactContext.OnLeavingBackground();
+                    }
                 }
 
                 _lifecycleState = LifecycleState.Resumed;
@@ -696,6 +717,21 @@ namespace ReactNative
                     if (_lifecycleState == LifecycleState.BeforeResume)
                     {
                         _currentReactContext.OnDestroy();
+                    }
+                }
+            }
+        }
+
+        private void MoveToBackgroundLifecycleState()
+        {
+            lock (_lifecycleStateLock)
+            {
+                if (_currentReactContext != null)
+                {
+                    if (_lifecycleState == LifecycleState.Resumed)
+                    {
+                        _currentReactContext.OnEnteredBackground();
+                        _lifecycleState = LifecycleState.Background;
                     }
                 }
             }

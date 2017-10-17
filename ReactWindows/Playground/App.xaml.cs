@@ -29,6 +29,8 @@ namespace Playground
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
+            this.EnteredBackground += OnEnteredBackground;
+            this.LeavingBackground += OnLeavingBackground;
         }
 
         /// <summary>
@@ -145,6 +147,26 @@ namespace Playground
         private void OnResuming(object sender, object e)
         {
             _host.OnResume(Exit);
+        }
+
+        /// <summary>
+        /// Invoked when application entered the background.
+        /// </summary>
+        /// <param name="sender">The source of the entered background request.</param>
+        /// <param name="e">Details about the entered background request.</param>
+        private void OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
+        {
+            _host.OnEnteredBackground();
+        }
+
+        /// <summary>
+        /// Invoked when application leaving the background.
+        /// </summary>
+        /// <param name="sender">The source of the leaving background request.</param>
+        /// <param name="e">Details about the leaving background request.</param>
+        private void OnLeavingBackground(object sender, LeavingBackgroundEventArgs e)
+        {
+            _host.OnLeavingBackground();
         }
     }
 }

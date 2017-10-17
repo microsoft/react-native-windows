@@ -12,21 +12,26 @@ namespace ReactNative.Modules.DeviceInfo
     /// <summary>
     /// Native module that manages window dimension updates to JavaScript.
     /// </summary>
-    class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
+    class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener, IBackgroundEventListener
     {
         private readonly IReadOnlyDictionary<string, object> _constants;
+
+        private bool _isSubscribed;
 
         /// <summary>
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        /// <param name="initialDisplayMetrics">The initial display metrics.</param>
-        public DeviceInfoModule(ReactContext reactContext, DisplayMetrics initialDisplayMetrics)
+        public DeviceInfoModule(ReactContext reactContext)
             : base(reactContext)
         {
+            var displayMetrics = HasCoreWindow
+                ? DisplayMetrics.GetForCurrentView()
+                : DisplayMetrics.Empty;
+
             _constants = new Dictionary<string, object>
             {
-                { "Dimensions", GetDimensions(initialDisplayMetrics) },
+                { "Dimensions", GetDimensions(displayMetrics) },
             };
         }
 
@@ -49,12 +54,21 @@ namespace ReactNative.Modules.DeviceInfo
             }
         }
 
+        private static bool HasCoreWindow
+        {
+            get
+            {
+                return CoreApplication.MainView.CoreWindow != null;
+            }
+        }
+
         /// <summary>
         /// Called after the creation of a <see cref="IReactInstance"/>,
         /// </summary>
         public override void Initialize()
         {
             Context.AddLifecycleEventListener(this);
+            Context.AddBackgroundEventListener(this);
         }
 
         /// <summary>
@@ -62,8 +76,7 @@ namespace ReactNative.Modules.DeviceInfo
         /// </summary>
         public void OnSuspend()
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnVisibleBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
+            Unsubscribe();
         }
 
         /// <summary>
@@ -71,8 +84,44 @@ namespace ReactNative.Modules.DeviceInfo
         /// </summary>
         public void OnResume()
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnVisibleBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
+            Subscribe();
+        }
+
+        /// <summary>
+        /// Called when the host entered background mode.
+        /// </summary>
+        public void OnEnteredBackground()
+        {
+            Unsubscribe();
+        }
+
+        /// <summary>
+        /// Called when the host is leaving background mode.
+        /// </summary>
+        public void OnLeavingBackground()
+        {
+            Subscribe();
+        }
+
+        private void Subscribe()
+        {
+            if (!_isSubscribed && HasCoreWindow)
+            {
+                _isSubscribed = true;
+                ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnVisibleBoundsChanged;
+                DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
+                SendUpdateDimensionsEvent();
+            }
+        }
+
+        private void Unsubscribe()
+        {
+            if (_isSubscribed && HasCoreWindow)
+            {
+                _isSubscribed = false;
+                ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnVisibleBoundsChanged;
+                DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
+            }
         }
 
         /// <summary>
@@ -84,8 +133,7 @@ namespace ReactNative.Modules.DeviceInfo
 
         private void OnVisibleBoundsChanged(ApplicationView sender, object args)
         {
-            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                .emit("didUpdateDimensions", GetDimensions());
+            SendUpdateDimensionsEvent();
         }
 
         private void OnOrientationChanged(DisplayInformation displayInformation, object args)
@@ -126,6 +174,12 @@ namespace ReactNative.Modules.DeviceInfo
                         { "isLandscape", isLandscape },
                     });
             }
+        }
+
+        private void SendUpdateDimensionsEvent()
+        {
+            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                .emit("didUpdateDimensions", GetDimensions());
         }
 
         private static IDictionary<string, object> GetDimensions()
