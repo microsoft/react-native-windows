@@ -15,7 +15,7 @@ namespace <%= ns %>
     /// </summary>
     sealed partial class App : Application
     {
-        private readonly ReactPage _reactPage;
+        private readonly ReactNativeHost _host = new MainReactNativeHost();
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -26,8 +26,6 @@ namespace <%= ns %>
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
-
-            _reactPage = new MainPage();
         }
 
         /// <summary>
@@ -71,7 +69,8 @@ namespace <%= ns %>
         /// <param name="arguments"></param>
         private void OnCreate(string arguments)
         {
-            _reactPage.OnResume(Exit);
+            _host.OnResume(Exit);
+            _host.ApplyArguments(arguments);
 
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -89,8 +88,6 @@ namespace <%= ns %>
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                _reactPage.OnCreate(arguments);
-
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
@@ -105,7 +102,10 @@ namespace <%= ns %>
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Content = _reactPage;
+                rootFrame.Content = new Page
+                {
+                    Content = _host.OnCreate(),
+                };
             }
 
             // Ensure the current window is active
@@ -131,7 +131,7 @@ namespace <%= ns %>
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            _reactPage.OnSuspend();
+            _host.OnSuspend();
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace <%= ns %>
         /// <param name="e">Details about the resume request.</param>
         private void OnResuming(object sender, object e)
         {
-            _reactPage.OnResume(Exit);
+            _host.OnResume(Exit);
         }
     }
 }
