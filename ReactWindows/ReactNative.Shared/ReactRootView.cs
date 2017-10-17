@@ -29,6 +29,14 @@ namespace ReactNative
         private bool _attachScheduled;
 
         /// <summary>
+        /// Instantiates the <see cref="ReactRootView"/>.
+        /// </summary>
+        public ReactRootView()
+        {
+            TouchHandler = new TouchHandler(this);
+        }
+
+        /// <summary>
         /// Gets the JavaScript module name.
         /// </summary>
         internal string JavaScriptModuleName
@@ -45,7 +53,6 @@ namespace ReactNative
         internal TouchHandler TouchHandler
         {
             get;
-            set;
         }
 
         /// <summary>

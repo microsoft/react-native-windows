@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using ReactNative.Bridge.Queue;
+using System.Collections.Generic;
 
 namespace ReactNative.Bridge
 {
@@ -13,6 +14,15 @@ namespace ReactNative.Bridge
     /// </remarks>
     public interface INativeModule
     {
+        /// <summary>
+        /// The action queue used by the native module.
+        /// </summary>
+        /// <remarks>
+        /// Can be <code>null</code>, in which case, the call is evaluated
+        /// inline on the native modules action queue.
+        /// </remarks>
+        IActionQueue ActionQueue { get; }
+
         /// <summary>
         /// Return true if you intend to override some other native module that
         /// was registered, e.g., as part of a different package (such as the

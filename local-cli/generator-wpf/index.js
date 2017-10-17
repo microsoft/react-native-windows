@@ -47,8 +47,8 @@ module.exports = yeoman.Base.extend({
     const templateVars = { name: this.name, ns: this.options.ns, projectGuid, packageGuid };
 
     this.fs.copyTpl(
-      this.templatePath('index.wpf.js'),
-      this.destinationPath('index.wpf.js'),
+      this.templatePath('App.windows.js'),
+      this.destinationPath('App.windows.js'),
       templateVars
     );
 

@@ -35,7 +35,7 @@ namespace ReactNative.Bridge
         {
             if (s_isOnDispatcherThread == null)
             {
-                if (CoreWindow.GetForCurrentThread()?.Dispatcher == CoreApplication.MainView.CoreWindow.Dispatcher)
+                if (CoreWindow.GetForCurrentThread()?.Dispatcher == CoreApplication.MainView.Dispatcher)
                 {
                     s_isOnDispatcherThread = new ThreadLocal<bool>();
                     s_isOnDispatcherThread.Value = true;
@@ -66,7 +66,7 @@ namespace ReactNative.Bridge
         /// <param name="action">The action to invoke.</param>
         public static async void RunOnDispatcher(CoreDispatcherPriority priority, DispatchedHandler action)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(priority, action).AsTask().ConfigureAwait(false);
+            await CoreApplication.MainView.Dispatcher.RunAsync(priority, action).AsTask().ConfigureAwait(false);
         }
 
         /// <summary>

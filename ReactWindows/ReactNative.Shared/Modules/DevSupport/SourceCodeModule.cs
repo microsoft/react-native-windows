@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System.Collections.Generic;
 
@@ -31,7 +31,7 @@ namespace ReactNative.Modules.DevSupport
         {
             get
             {
-                return "RCTSourceCode";
+                return "SourceCode";
             }
         }
 
