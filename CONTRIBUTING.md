@@ -21,3 +21,25 @@ The build tools for v140 (Platform Toolset = 'v140') cannot be found. To build u
 Retarget the solution to v141:
 1. Right click the ReactNative solution and click "Retarget Solution"
 2. Make sure the Platform Toolset has Upgrade to v141 selected, and click "OK."
+
+
+## Using RNTester
+RNTester is a React Native Windows App that demonstrates the implemented views and modules of React Native Windows.
+
+You can use it to test your changes to react-native-windows by making sure your changes haven't broken the views and modules.
+
+#### But How?
+Before starting make sure you have run `npm install` in the react-native-windows directory. Additionally, make sure the RNTester submodule is up to date by running `git pull --recursive-submodules` from the react-native-windows directory.
+
+Use Visual Studio 2015 or higher, with the Windows 10 SDK 10.0.10586 or higher.
+
+1. Open the RNTester solution file (react-native-windows/RNTester.sln) in Visual Studio
+2. Set RNTesterApp as the StartUp project
+3. Set the Solution Configuration to "Debug" and the Solution Platforms to "x86"
+4. Run the project on the local machine by clicking the run button or by pressing F5
+
+A Windows app will open with a red error screen stating `Unable to download JS bundle. Did you forget to start the development server or connect your device?` We still need to start the dev server!
+5. In your command line, make sure that you are in the react-native-windows directory and run then `react-native start`
+6. Reload the bundle in the app by clicking "Reload JavaScript" or by pressing Ctrl+R
+
+The dev server will send over a bundle, and you can now use RNTester to test your changes to the repository.
