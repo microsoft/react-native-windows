@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
@@ -26,8 +26,6 @@ namespace ReactNative
         {
             _reactInstanceManager = new Lazy<ReactInstanceManager>(() =>
             {
-                DispatcherHelpers.CurrentDispatcher = base.Dispatcher;
-
                 var reactInstanceManager = CreateReactInstanceManager();
 
                 return reactInstanceManager;

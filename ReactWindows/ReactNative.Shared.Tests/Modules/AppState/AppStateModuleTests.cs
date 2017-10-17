@@ -35,7 +35,7 @@ namespace ReactNative.Tests.Modules.AppState
             Assert.AreEqual(uninitializedState.ToString(), args[0].ToString());
 
 #if !WINDOWS_UWP
-            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
 #endif
 
             await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
@@ -67,7 +67,7 @@ namespace ReactNative.Tests.Modules.AppState
             }));
 
 #if !WINDOWS_UWP
-            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
 #endif
 
             await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
