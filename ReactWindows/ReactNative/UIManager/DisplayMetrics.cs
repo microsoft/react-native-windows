@@ -18,6 +18,8 @@ namespace ReactNative.UIManager
 
         public double Scale { get; }
 
+        public static DisplayMetrics Empty { get; } = new DisplayMetrics(0, 0, 0);
+
         public static DisplayMetrics GetForCurrentView()
         {
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;

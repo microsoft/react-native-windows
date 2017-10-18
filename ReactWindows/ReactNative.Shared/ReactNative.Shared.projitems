@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IBackgroundEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptExecutor.cs" />

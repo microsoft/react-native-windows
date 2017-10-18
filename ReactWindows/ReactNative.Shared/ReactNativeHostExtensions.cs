@@ -58,6 +58,32 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Informs the React instance manager that the application entered
+        /// background mode.
+        /// </summary>
+        /// <param name="host">The React Native host.</param>
+        public static void OnEnteredBackground(this ReactNativeHost host)
+        {
+            if (host.HasInstance)
+            {
+                host.ReactInstanceManager.OnEnteredBackground();
+            }
+        }
+
+        /// <summary>
+        /// Informs the React instance manager that the application is leaving
+        /// background mode.
+        /// </summary>
+        /// <param name="host">The React Native host.</param>
+        public static void OnLeavingBackground(this ReactNativeHost host)
+        {
+            if (host.HasInstance)
+            {
+                host.ReactInstanceManager.OnLeavingBackground();
+            }
+        }
+
+        /// <summary>
         /// Applies the activation arguments.
         /// </summary>
         /// <param name="host">The React Native host.</param>
