@@ -14,7 +14,7 @@ Before submitting a PR to React Native Windows, make sure the unit tests pass lo
 #### Troubleshooting:
 ##### Error:
 ```
-The build tools for v140 (Platform Toolset = 'v140') cannot be found. To build using the v140 build tools, please install v140 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".		
+The build tools for v140 (Platform Toolset = 'v140') cannot be found. To build using the v140 build tools, please install v140 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".	
 
 ```
 ##### Solution:
@@ -24,22 +24,22 @@ Retarget the solution to v141:
 
 
 ## Using RNTester
-RNTester is a React Native Windows App that demonstrates the implemented views and modules of React Native Windows.
+RNTester is a React Native Windows app that demonstrates the implemented views and modules of React Native Windows.
 
-You can use it to test your changes to react-native-windows by making sure your changes haven't broken the views and modules.
+You can use it to test your changes to React Native Windows by making sure your changes haven't broken the views and modules.
 
 #### But How?
 Before starting make sure you have run `npm install` in the react-native-windows directory. Additionally, make sure the RNTester submodule is up to date by running `git pull --recursive-submodules` from the react-native-windows directory.
 
-Use Visual Studio 2015 or higher, with the Windows 10 SDK 10.0.10586 or higher.
+Use Visual Studio 2015 or higher, with the Windows 10 SDK 10.0.14393 or higher.
 
-1. Open the RNTester solution file (react-native-windows/RNTester.sln) in Visual Studio
+1. Open the RNTester solution file (react-native-windows/RNTester/RNTester.sln) in Visual Studio
 2. Set RNTesterApp as the StartUp project
 3. Set the Solution Configuration to "Debug" and the Solution Platforms to "x86"
 4. Run the project on the local machine by clicking the run button or by pressing F5
 
-A Windows app will open with a red error screen stating `Unable to download JS bundle. Did you forget to start the development server or connect your device?` We still need to start the dev server!
+A Windows app will open, and it may have a red box dialogue stating `Unable to download JS bundle. Did you forget to start the development server or connect your device?` We still need to start the dev server!
 5. In your command line, make sure that you are in the react-native-windows directory and run then `react-native start`
 6. Reload the bundle in the app by clicking "Reload JavaScript" or by pressing Ctrl+R
 
-The dev server will send over a bundle, and you can now use RNTester to test your changes to the repository.
+The packager server will bundle the application JavaScript, and you can now use RNTester to test your changes to the repository.
