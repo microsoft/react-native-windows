@@ -1,9 +1,9 @@
-﻿using PCLStorage;
 using System;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Storage;
 #else
+using PCLStorage;
 using System.IO;
 using System.Reflection;
 #endif
@@ -136,8 +136,13 @@ namespace ReactNative.Bridge
 
             public override async Task InitializeAsync()
             {
+#if WINDOWS_UWP
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).AsTask().ConfigureAwait(false);
+#else
                 var localFolder = FileSystem.Current.LocalStorage;
                 var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).ConfigureAwait(false);
+#endif
                 _script = storageFile.Path;
             }
 
