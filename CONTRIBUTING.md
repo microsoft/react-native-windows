@@ -38,7 +38,7 @@ Use Visual Studio 2015 or higher, with the Windows 10 SDK 10.0.14393 or higher.
 3. Set the Solution Configuration to "Debug" and the Solution Platforms to "x86"
 4. Run the project on the local machine by clicking the run button or by pressing F5
 
-A Windows app will open, and it may have a red box dialogue stating `Unable to download JS bundle. Did you forget to start the development server or connect your device?` We still need to start the dev server!
+A Windows app will open, and it may have a red box dialog stating `Unable to download JS bundle. Did you forget to start the development server or connect your device?` We still need to start the dev server!
 5. In your command line, make sure that you are in the react-native-windows directory and run then `react-native start`
 6. Reload the bundle in the app by clicking "Reload JavaScript" or by pressing Ctrl+R
 
