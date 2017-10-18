@@ -149,6 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
+    <Compile Include="Bridge\Queue\DispatcherActionQueue.cs" />
+    <Compile Include="Bridge\Queue\LayoutActionQueue.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
@@ -175,9 +177,9 @@
     <Compile Include="Extensions\FormattableString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactPage.cs" />
+    <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
-    <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\NullLoggingActivityBuilderExtensions.generated.cs">
       <DependentUpon>NullLoggingActivityBuilderExtensions.tt</DependentUpon>
@@ -187,12 +189,15 @@
     <Compile Include="Tracing\NullLoggingActivityBuilder.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
+    <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Picker\ReactPickerManager.cs" />
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
+    <Compile Include="Views\Scroll\IScrollView.cs" />
     <Compile Include="Views\Scroll\ReactScrollViewManager.cs" />
+    <Compile Include="Views\Scroll\ScrollView.cs" />
     <Compile Include="Views\Slider\ReactSliderManager.cs" />
     <Compile Include="Views\TextInput\PlaceholderAdorner.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
@@ -244,6 +249,7 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

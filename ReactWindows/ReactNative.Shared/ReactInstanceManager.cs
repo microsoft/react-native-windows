@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using ReactNative.Common;
@@ -9,6 +9,7 @@ using ReactNative.Tracing;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -154,7 +155,6 @@ namespace ReactNative
         /// </summary>
         public async void CreateReactContextInBackground()
         {
-            ReactChoreographer.Initialize();
             await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
         }
 
@@ -178,6 +178,7 @@ namespace ReactNative
                     "a new file, explicitly, use the re-create method.");
             }
 
+            ReactChoreographer.Initialize();
             _hasStartedCreatingInitialContext = true;
             await RecreateReactContextInBackgroundInnerAsync().ConfigureAwait(false);
         }
@@ -246,6 +247,26 @@ namespace ReactNative
             }
 
             MoveToBeforeResumeLifecycleState();
+
+            DispatcherHelpers.Reset();
+        }
+
+        /// <summary>
+        /// Called when the host entered background mode.
+        /// </summary>
+        public void OnEnteredBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            MoveToBackgroundLifecycleState();
+        }
+
+        /// <summary>
+        /// Called when the host is leaving background mode.
+        /// </summary>
+        public void OnLeavingBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            MoveToResumedLifecycleState(false);
         }
 
         /// <summary>
@@ -257,6 +278,7 @@ namespace ReactNative
         /// </param>
         public void OnResume(Action onBackPressed)
         {
+            DispatcherHelpers.Initialize();
             DispatcherHelpers.AssertOnDispatcher();
 
             _defaultBackButtonHandler = onBackPressed;
@@ -287,7 +309,7 @@ namespace ReactNative
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
-                await currentReactContext.DisposeAsync().ConfigureAwait(false);
+                await currentReactContext.DisposeAsync();
                 _currentReactContext = null;
                 _hasStartedCreatingInitialContext = false;
             }
@@ -312,7 +334,8 @@ namespace ReactNative
                 throw new ArgumentNullException(nameof(rootView));
 
             DispatcherHelpers.AssertOnDispatcher();
-
+            rootView.Children.Clear();
+            rootView.ClearData();
             _attachedRootViews.Add(rootView);
 
             // If the React context is being created in the background, the
@@ -510,15 +533,8 @@ namespace ReactNative
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            // Reset view content as it's going to be populated by the
-            // application content from JavaScript
-            rootView.TouchHandler?.Dispose();
-            rootView.Children.Clear();
-            rootView.Tag = null;
-
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
-            rootView.TouchHandler = new TouchHandler(rootView);
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>
@@ -547,7 +563,8 @@ namespace ReactNative
 
             foreach (var rootView in _attachedRootViews)
             {
-                DetachViewFromInstance(rootView, reactContext.ReactInstance);
+                rootView.Children.Clear();
+                rootView.ClearData();
             }
 
             await reactContext.DisposeAsync();
@@ -563,18 +580,20 @@ namespace ReactNative
 
             _sourceUrl = jsBundleLoader.SourceUrl;
 
-            var nativeRegistryBuilder = new NativeModuleRegistry.Builder();
-
             var reactContext = new ReactContext();
             if (_useDeveloperSupport)
             {
-                reactContext.NativeModuleCallExceptionHandler = _devSupportManager.HandleException;
+                reactContext.NativeModuleCallExceptionHandler = 
+                    _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
             }
 
+            var nativeRegistryBuilder = new NativeModuleRegistry.Builder(reactContext);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
             {
-                var coreModulesPackage =
-                    new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
+                var coreModulesPackage = new CoreModulesPackage(
+                    this,
+                    InvokeDefaultOnBackPressed,
+                    _uiImplementationProvider);
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }
@@ -593,14 +612,13 @@ namespace ReactNative
                 nativeModuleRegistry = nativeRegistryBuilder.Build();
             }
 
-            var exceptionHandler = _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
+            var queueConfiguration = ReactQueueConfigurationFactory.Default.Create(reactContext.HandleException);
             var reactInstanceBuilder = new ReactInstance.Builder
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = queueConfiguration,
                 JavaScriptExecutorFactory = jsExecutorFactory,
                 Registry = nativeModuleRegistry,
                 BundleLoader = jsBundleLoader,
-                NativeModuleCallExceptionHandler = exceptionHandler,
             };
 
             var reactInstance = default(ReactInstance);
@@ -676,6 +694,10 @@ namespace ReactNative
                     {
                         _currentReactContext.OnResume();
                     }
+                    else if (_lifecycleState == LifecycleState.Background)
+                    {
+                        _currentReactContext.OnLeavingBackground();
+                    }
                 }
 
                 _lifecycleState = LifecycleState.Resumed;
@@ -696,6 +718,21 @@ namespace ReactNative
                     if (_lifecycleState == LifecycleState.BeforeResume)
                     {
                         _currentReactContext.OnDestroy();
+                    }
+                }
+            }
+        }
+
+        private void MoveToBackgroundLifecycleState()
+        {
+            lock (_lifecycleStateLock)
+            {
+                if (_currentReactContext != null)
+                {
+                    if (_lifecycleState == LifecycleState.Resumed)
+                    {
+                        _currentReactContext.OnEnteredBackground();
+                        _lifecycleState = LifecycleState.Background;
                     }
                 }
             }

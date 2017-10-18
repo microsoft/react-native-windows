@@ -1,21 +1,21 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace ReactNative.Bridge.Queue
 {
     /// <summary>
-    /// Extension methods for <see cref="IMessageQueueThread"/>s.
+    /// Extension methods for <see cref="IActionQueue"/>s.
     /// </summary>
-    public static class MessageQueueThreadExtensions
+    public static class ActionQueueExtensions
     {
         /// <summary>
-        /// Asserts <see cref="IMessageQueueThread.IsOnThread"/>, throwing if the <b>false</b>.
+        /// Asserts <see cref="IActionQueue.IsOnThread"/>, throwing if the <b>false</b>.
         /// </summary>
         /// <param name="actionQueue">The message queue thread.</param>
         /// <exception cref="InvalidOperationException">
         /// Thrown if the assertion fails.
         /// </exception>
-        public static void AssertOnThread(this IMessageQueueThread actionQueue)
+        public static void AssertOnThread(this IActionQueue actionQueue)
         {
             if (!actionQueue.IsOnThread())
             {
@@ -30,11 +30,11 @@ namespace ReactNative.Bridge.Queue
         /// <param name="actionQueue">The message queue thread.</param>
         /// <param name="func">The function.</param>
         /// <returns>A task to await the result.</returns>
-        public static Task<T> CallOnQueue<T>(this IMessageQueueThread actionQueue, Func<T> func)
+        public static Task<T> RunAsync<T>(this IActionQueue actionQueue, Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
 
-            actionQueue.RunOnQueue(() =>
+            actionQueue.Dispatch(() =>
             {
                 var result = func();
 
@@ -44,6 +44,21 @@ namespace ReactNative.Bridge.Queue
             });
 
             return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Calls a function on a message queue and returns a task to await the response.
+        /// </summary>
+        /// <param name="actionQueue">The message queue thread.</param>
+        /// <param name="action">The action.</param>
+        /// <returns>A task to await the result.</returns>
+        public static Task RunAsync(this IActionQueue actionQueue, Action action)
+        {
+            return RunAsync(actionQueue, () =>
+            {
+                action();
+                return true;
+            });
         }
     }
 }

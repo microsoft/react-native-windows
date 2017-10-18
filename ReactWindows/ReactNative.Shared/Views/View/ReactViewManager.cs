@@ -1,4 +1,4 @@
-﻿using ReactNative.Reflection;
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 #if WINDOWS_UWP
@@ -43,7 +43,7 @@ namespace ReactNative.Views.View
         {
             get
             {
-                return "RCTView";
+                return ViewProps.ViewClassName;
             }
         }
 

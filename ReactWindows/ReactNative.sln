@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{D52267B5-396F-424A-BB26-C9E750032846}"
 EndProject
@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative.Net46.Tests", "
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Net46", "Playground.Net46\Playground.Net46.csproj", "{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNativeWebViewBridge", "ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj", "{7596216B-669C-41F8-86DA-F3637F6545C0}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -234,8 +236,35 @@ Global
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.ActiveCfg = ReleaseBundle|x86
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.Build.0 = ReleaseBundle|x86
 		{7AB3A24A-D5D9-479F-8E12-22213DD40D3F}.ReleaseBundle|x86.Deploy.0 = ReleaseBundle|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|ARM.ActiveCfg = Debug|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|ARM.Build.0 = Debug|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x64.ActiveCfg = Debug|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x64.Build.0 = Debug|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x86.ActiveCfg = Debug|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x86.Build.0 = Debug|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.DebugBundle|x64.Build.0 = Debug|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.DebugBundle|x86.ActiveCfg = Debug|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.DebugBundle|x86.Build.0 = Debug|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|ARM.ActiveCfg = Release|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|ARM.Build.0 = Release|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x64.ActiveCfg = Release|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x64.Build.0 = Release|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x86.ActiveCfg = Release|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x86.Build.0 = Release|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x64.Build.0 = Release|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.ActiveCfg = Release|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7839097F-DB11-48A8-98B2-0570B1F86648}
 	EndGlobalSection
 EndGlobal

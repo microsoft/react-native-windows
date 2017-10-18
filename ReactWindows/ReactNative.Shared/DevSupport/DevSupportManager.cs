@@ -99,6 +99,12 @@ namespace ReactNative.DevSupport
             set;
         }
 
+        public bool IsProgressDialogEnabled
+        {
+            get;
+            set;
+        } = true;
+
         public string SourceMapUrl
         {
             get
@@ -353,39 +359,54 @@ namespace ReactNative.DevSupport
             HideRedboxDialog();
             HideDevOptionsDialog();
 
-            var message = !IsRemoteDebuggingEnabled
+            Action cancel;
+            CancellationToken token;
+
+            if (IsProgressDialogEnabled)
+            {
+                var message = !IsRemoteDebuggingEnabled
                 ? "Fetching JavaScript bundle."
                 : "Connecting to remote debugger.";
 
-            var progressDialog = new ProgressDialog("Please wait...", message);
+                ProgressDialog progressDialog = new ProgressDialog("Please wait...", message);
+
 #if WINDOWS_UWP
-            var dialogOperation = progressDialog.ShowAsync();
-            Action cancel = dialogOperation.Cancel;
+                var dialogOperation = progressDialog.ShowAsync();
+                cancel = dialogOperation.Cancel;
 #else
-            if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
-            {
-                progressDialog.Owner = Application.Current.MainWindow;
+                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
+                {
+                    progressDialog.Owner = Application.Current.MainWindow;
+                }
+                else
+                {
+                    progressDialog.Topmost = true;
+                    progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                }
+
+                cancel = progressDialog.Close;
+                progressDialog.Show();
+#endif
+                token = progressDialog.Token;
             }
             else
             {
-                progressDialog.Topmost = true;
-                progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                // Progress not enabled - provide empty implementations
+                cancel = () => { };
+                token = default(CancellationToken);
             }
-            
-            Action cancel = progressDialog.Close;
-            progressDialog.Show();
-#endif
+
             if (IsRemoteDebuggingEnabled)
             {
-                await ReloadJavaScriptInProxyMode(cancel, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptInProxyMode(cancel, token).ConfigureAwait(false);
             }
             else if (_shouldLoadFromPackagerServer)
             {
-                await ReloadJavaScriptFromServerAsync(cancel, progressDialog.Token).ConfigureAwait(false);
+                await ReloadJavaScriptFromServerAsync(cancel, token).ConfigureAwait(false);
             }
             else
             {
-                await ReloadJavaScriptFromFileAsync(progressDialog.Token);
+                await ReloadJavaScriptFromFileAsync(token);
                 cancel();
             }
         }

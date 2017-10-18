@@ -1,73 +1,63 @@
-﻿using System;
-
-namespace ReactNative.Bridge.Queue
+﻿namespace ReactNative.Bridge.Queue
 {
     /// <summary>
-    /// Specifies which <see cref="IMessageQueueThread"/>s must be used to run
+    /// Specifies which <see cref="IActionQueue"/>s must be used to run
     /// the various contexts of execution within React (dispatcher, native
     /// modules, and JS). Some of these queue *may* be the same but should be
     /// coded against as if they are different.
     /// </summary>
     class ReactQueueConfiguration : IReactQueueConfiguration
     {
-        private readonly MessageQueueThread _dispatcherQueueThread;
-        private readonly MessageQueueThread _layoutQueueThread;
-        private readonly MessageQueueThread _nativeModulesQueueThread;
-        private readonly MessageQueueThread _jsQueueThread;
+        private readonly IActionQueue _dispatcherQueue;
+        private readonly IActionQueue _nativeModulesQueue;
+        private readonly IActionQueue _javaScriptQueue;
 
-        private ReactQueueConfiguration(
-            MessageQueueThread dispatcherQueueThread,
-            MessageQueueThread layoutQueueThread,
-            MessageQueueThread nativeModulesQueueThread,
-            MessageQueueThread jsQueueThread)
+        /// <summary>
+        /// Instantiates the queue configuration.
+        /// </summary>
+        /// <param name="dispatcherQueue"></param>
+        /// <param name="javaScriptQueue"></param>
+        /// <param name="nativeModulesQueue"></param>
+        public ReactQueueConfiguration(
+            IActionQueue dispatcherQueue,
+            IActionQueue javaScriptQueue,
+            IActionQueue nativeModulesQueue)
         {
-            _dispatcherQueueThread = dispatcherQueueThread;
-            _layoutQueueThread = layoutQueueThread;
-            _nativeModulesQueueThread = nativeModulesQueueThread;
-            _jsQueueThread = jsQueueThread;
+            _dispatcherQueue = dispatcherQueue;
+            _nativeModulesQueue = nativeModulesQueue;
+            _javaScriptQueue = javaScriptQueue;
         }
 
         /// <summary>
         /// The main UI thread.
         /// </summary>
-        public IMessageQueueThread DispatcherQueueThread
+        public IActionQueue DispatcherQueue
         {
             get
             {
-                return _dispatcherQueueThread;
-            }
-        }
-
-        /// <summary>
-        /// The layout queue thread.
-        /// </summary>
-        public IMessageQueueThread LayoutQueueThread
-        {
-            get
-            {
-                return _layoutQueueThread;
-            }
-        }
-
-        /// <summary>
-        /// The native modules thread.
-        /// </summary>
-        public IMessageQueueThread NativeModulesQueueThread
-        {
-            get
-            {
-                return _nativeModulesQueueThread;
+                return _dispatcherQueue;
             }
         }
 
         /// <summary>
         /// The JavaScript thread.
         /// </summary>
-        public IMessageQueueThread JavaScriptQueueThread
+        public IActionQueue JavaScriptQueue
         {
             get
             {
-                return _jsQueueThread;
+                return _javaScriptQueue;
+            }
+        }
+
+        /// <summary>
+        /// The native modules thread.
+        /// </summary>
+        public IActionQueue NativeModulesQueue
+        {
+            get
+            {
+                return _nativeModulesQueue;
             }
         }
 
@@ -80,42 +70,9 @@ namespace ReactNative.Bridge.Queue
         /// </remarks>
         public void Dispose()
         {
-            _dispatcherQueueThread.Dispose();
-            _layoutQueueThread.Dispose();
-            _nativeModulesQueueThread.Dispose();
-            _jsQueueThread.Dispose();
-        }
-
-        /// <summary>
-        /// Factory for the configuration.
-        /// </summary>
-        /// <param name="spec">The configuration specification.</param>
-        /// <param name="exceptionHandler">The exception handler.</param>
-        /// <returns>The queue configuration.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "ReactQueueConfiguration is disposable wrapper.")]
-        public static ReactQueueConfiguration Create(
-            ReactQueueConfigurationSpec spec,
-            Action<Exception> exceptionHandler)
-        {
-            var dispatcherThreadSpec = MessageQueueThreadSpec.DispatcherThreadSpec;
-            var dispatcherThread = MessageQueueThread.Create(dispatcherThreadSpec, exceptionHandler);
-
-            var layoutThreadSpec = MessageQueueThreadSpec.LayoutThreadSpec;
-            var layoutThread = MessageQueueThread.Create(layoutThreadSpec, exceptionHandler);
-
-            var jsThread = spec.JSQueueThreadSpec != dispatcherThreadSpec
-                ? MessageQueueThread.Create(spec.JSQueueThreadSpec, exceptionHandler)
-                : dispatcherThread;
-
-            var nativeModulesThread = spec.NativeModulesQueueThreadSpec != dispatcherThreadSpec
-                ? MessageQueueThread.Create(spec.NativeModulesQueueThreadSpec, exceptionHandler)
-                : dispatcherThread;
-
-            return new ReactQueueConfiguration(
-                dispatcherThread,
-                layoutThread, 
-                nativeModulesThread, 
-                jsThread);
+            _dispatcherQueue.Dispose();
+            _nativeModulesQueue.Dispose();
+            _javaScriptQueue.Dispose();
         }
     }
 }

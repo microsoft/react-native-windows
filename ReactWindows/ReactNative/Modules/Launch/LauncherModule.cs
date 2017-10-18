@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
@@ -157,7 +157,6 @@ namespace ReactNative.Modules.Launch
         /// </summary>
         public void OnDestroy()
         {
-            _subscription.Dispose();
         }
 
         /// <summary>

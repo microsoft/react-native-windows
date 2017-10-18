@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
@@ -16,6 +16,7 @@ namespace ReactNative
     /// <summary>
     /// Base page for React Native applications.
     /// </summary>
+    [Obsolete("Please use ReactNativeHost instead of ReactPage.")]
     public abstract class ReactPage : Page, IAsyncDisposable
     {
         private readonly ReactInstanceManager _reactInstanceManager;

@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge.Queue;
+using ReactNative.Bridge.Queue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +14,12 @@ namespace ReactNative.Bridge
     /// </summary>
     public class ReactContext : IAsyncDisposable
     {
-        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+        private readonly ReaderWriterLockSlim _lifecycleLock = new ReaderWriterLockSlim();
+        private readonly ReaderWriterLockSlim _backgroundLock = new ReaderWriterLockSlim();
         private readonly List<ILifecycleEventListener> _lifecycleEventListeners =
             new List<ILifecycleEventListener>();
+        private readonly List<IBackgroundEventListener> _backgroundEventListeners =
+            new List<IBackgroundEventListener>();
 
         private IReactInstance _reactInstance;
 
@@ -84,14 +87,14 @@ namespace ReactNative.Bridge
         /// <param name="listener">The listener.</param>
         public void AddLifecycleEventListener(ILifecycleEventListener listener)
         {
-            _lock.EnterWriteLock();
+            _lifecycleLock.EnterWriteLock();
             try
             {
                 _lifecycleEventListeners.Add(listener);
             }
             finally
             {
-                _lock.ExitWriteLock();
+                _lifecycleLock.ExitWriteLock();
             }
         }
 
@@ -101,16 +104,51 @@ namespace ReactNative.Bridge
         /// <param name="listener">The listener.</param>
         public void RemoveLifecycleEventListener(ILifecycleEventListener listener)
         {
-            _lock.EnterWriteLock();
+            _lifecycleLock.EnterWriteLock();
             try
             {
                 _lifecycleEventListeners.Remove(listener);
             }
             finally
             {
-                _lock.ExitWriteLock();
+                _lifecycleLock.ExitWriteLock();
             }
         }
+
+        /// <summary>
+        /// Adds a background event listener to the context.
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public void AddBackgroundEventListener(IBackgroundEventListener listener)
+        {
+            _backgroundLock.EnterWriteLock();
+            try
+            {
+                _backgroundEventListeners.Add(listener);
+            }
+            finally
+            {
+                _backgroundLock.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// Removes a background event listener from the context.
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public void RemoveBackgroundEventListener(IBackgroundEventListener listener)
+        {
+            _backgroundLock.EnterWriteLock();
+            try
+            {
+                _backgroundEventListeners.Remove(listener);
+            }
+            finally
+            {
+                _backgroundLock.ExitWriteLock();
+            }
+        }
+
 
         /// <summary>
         /// Called by the host when the application suspends.
@@ -121,14 +159,14 @@ namespace ReactNative.Bridge
 
             var clone = default(List<ILifecycleEventListener>);
 
-            _lock.EnterReadLock();
+            _lifecycleLock.EnterReadLock();
             try
             {
                 clone = _lifecycleEventListeners.ToList(/* clone */);
             }
             finally
             {
-                _lock.ExitReadLock();
+                _lifecycleLock.ExitReadLock();
             }
 
             foreach (var listener in clone)
@@ -153,14 +191,14 @@ namespace ReactNative.Bridge
 
             var clone = default(List<ILifecycleEventListener>);
 
-            _lock.EnterReadLock();
+            _lifecycleLock.EnterReadLock();
             try
             {
                 clone = _lifecycleEventListeners.ToList(/* clone */);
             }
             finally
             {
-                _lock.ExitReadLock();
+                _lifecycleLock.ExitReadLock();
             }
 
             foreach (var listener in clone)
@@ -185,14 +223,14 @@ namespace ReactNative.Bridge
 
             var clone = default(List<ILifecycleEventListener>);
 
-            _lock.EnterReadLock();
+            _lifecycleLock.EnterReadLock();
             try
             {
                 clone = _lifecycleEventListeners.ToList(/* clone */);
             }
             finally
             {
-                _lock.ExitReadLock();
+                _lifecycleLock.ExitReadLock();
             }
 
             foreach (var listener in clone)
@@ -200,6 +238,70 @@ namespace ReactNative.Bridge
                 try
                 {
                     listener.OnDestroy();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when the host is entering the background.
+        /// </summary>
+        public void OnEnteredBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+
+            var clone = default(List<IBackgroundEventListener>);
+
+            _backgroundLock.EnterReadLock();
+            try
+            {
+                clone = _backgroundEventListeners.ToList(/* clone */);
+            }
+            finally
+            {
+                _backgroundLock.ExitReadLock();
+            }
+
+            foreach (var listener in clone)
+            {
+                try
+                {
+                    listener.OnEnteredBackground();
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when the host is leaving the background.
+        /// </summary>
+        public void OnLeavingBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+
+            var clone = default(List<IBackgroundEventListener>);
+
+            _backgroundLock.EnterReadLock();
+            try
+            {
+                clone = _backgroundEventListeners.ToList(/* clone */);
+            }
+            finally
+            {
+                _backgroundLock.ExitReadLock();
+            }
+
+            foreach (var listener in clone)
+            {
+                try
+                {
+                    listener.OnLeavingBackground();
                 }
                 catch (Exception e)
                 {
@@ -221,7 +323,7 @@ namespace ReactNative.Bridge
                 await reactInstance.DisposeAsync().ConfigureAwait(false);
             }
 
-            _lock.Dispose();
+            _lifecycleLock.Dispose();
         }
 
         /// <summary>
@@ -235,7 +337,7 @@ namespace ReactNative.Bridge
         public bool IsOnDispatcherQueueThread()
         {
             AssertReactInstance();
-            return _reactInstance.QueueConfiguration.DispatcherQueueThread.IsOnThread();
+            return _reactInstance.QueueConfiguration.DispatcherQueue.IsOnThread();
         }
 
         /// <summary>
@@ -245,7 +347,7 @@ namespace ReactNative.Bridge
         public void AssertOnDispatcherQueueThread()
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.DispatcherQueueThread.AssertOnThread();
+            _reactInstance.QueueConfiguration.DispatcherQueue.AssertOnThread();
         }
 
         /// <summary>
@@ -255,41 +357,7 @@ namespace ReactNative.Bridge
         public void RunOnDispatcherQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.DispatcherQueueThread.RunOnQueue(action);
-        }
-
-        /// <summary>
-        /// Checks if the current thread is on the React instance layout
-        /// queue thread.
-        /// </summary>
-        /// <returns>
-        /// <b>true</b> if the call is from the layout queue thread,
-        ///  <b>false</b> otherwise.
-        /// </returns>
-        public bool IsOnLayoutQueueThread()
-        {
-            AssertReactInstance();
-            return _reactInstance.QueueConfiguration.LayoutQueueThread.IsOnThread();
-        }
-
-        /// <summary>
-        /// Asserts that the current thread is on the React instance layout
-        /// queue thread.
-        /// </summary>
-        public void AssertOnLayoutQueueThread()
-        {
-            AssertReactInstance();
-            _reactInstance.QueueConfiguration.LayoutQueueThread.AssertOnThread();
-        }
-
-        /// <summary>
-        /// Enqueues an action on the layout queue thread.
-        /// </summary>
-        /// <param name="action">The action.</param>
-        public void RunOnLayoutQueueThread(Action action)
-        {
-            AssertReactInstance();
-            _reactInstance.QueueConfiguration.LayoutQueueThread.RunOnQueue(action);
+            _reactInstance.QueueConfiguration.DispatcherQueue.Dispatch(action);
         }
 
         /// <summary>
@@ -303,7 +371,7 @@ namespace ReactNative.Bridge
         public bool IsOnJavaScriptQueueThread()
         {
             AssertReactInstance();
-            return _reactInstance.QueueConfiguration.JavaScriptQueueThread.IsOnThread();
+            return _reactInstance.QueueConfiguration.JavaScriptQueue.IsOnThread();
         }
 
         /// <summary>
@@ -313,7 +381,7 @@ namespace ReactNative.Bridge
         public void AssertOnJavaScriptQueueThread()
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.JavaScriptQueueThread.AssertOnThread();
+            _reactInstance.QueueConfiguration.JavaScriptQueue.AssertOnThread();
         }
 
         /// <summary>
@@ -323,7 +391,7 @@ namespace ReactNative.Bridge
         public void RunOnJavaScriptQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.JavaScriptQueueThread.RunOnQueue(action);
+            _reactInstance.QueueConfiguration.JavaScriptQueue.Dispatch(action);
         }
 
         /// <summary>
@@ -337,7 +405,7 @@ namespace ReactNative.Bridge
         public bool IsOnNativeModulesQueueThread()
         {
             AssertReactInstance();
-            return _reactInstance.QueueConfiguration.NativeModulesQueueThread.IsOnThread();
+            return _reactInstance.QueueConfiguration.NativeModulesQueue.IsOnThread();
         }
 
         /// <summary>
@@ -347,7 +415,7 @@ namespace ReactNative.Bridge
         public void AssertOnNativeModulesQueueThread()
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.NativeModulesQueueThread.AssertOnThread();
+            _reactInstance.QueueConfiguration.NativeModulesQueue.AssertOnThread();
         }
 
         /// <summary>
@@ -357,7 +425,7 @@ namespace ReactNative.Bridge
         public void RunOnNativeModulesQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.NativeModulesQueueThread.RunOnQueue(action);
+            _reactInstance.QueueConfiguration.NativeModulesQueue.Dispatch(action);
         }
 
         /// <summary>

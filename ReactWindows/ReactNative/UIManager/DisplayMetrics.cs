@@ -1,0 +1,30 @@
+using Windows.Graphics.Display;
+using Windows.UI.ViewManagement;
+
+namespace ReactNative.UIManager
+{
+    class DisplayMetrics
+    {
+        private DisplayMetrics(double width, double height, double scale)
+        {
+            Width = width;
+            Height = height;
+            Scale = scale;
+        }
+
+        public double Width { get; }
+
+        public double Height { get; }
+
+        public double Scale { get; }
+
+        public static DisplayMetrics Empty { get; } = new DisplayMetrics(0, 0, 0);
+
+        public static DisplayMetrics GetForCurrentView()
+        {
+            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+            var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+            return new DisplayMetrics(bounds.Width, bounds.Height, scale);
+        }
+    }
+}

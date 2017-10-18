@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
@@ -8,7 +8,7 @@ using Windows.Storage;
 
 namespace ReactNative.Modules.Storage
 {
-    class AsyncStorageModule : NativeModuleBase, ILifecycleEventListener
+    class AsyncStorageModule : NativeModuleBase
     {
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
 
@@ -271,15 +271,7 @@ namespace ReactNative.Modules.Storage
             callback.Invoke(null, keys);
         }
 
-        public void OnSuspend()
-        {
-        }
-
-        public void OnResume()
-        {
-        }
-
-        public void OnDestroy()
+        public override void OnReactInstanceDispose()
         {
             _mutex.Dispose();
         }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
 using System;
@@ -14,14 +14,17 @@ namespace ReactNative.Bridge
     /// </summary>
     public sealed class NativeModuleRegistry
     {
+        private readonly ReactContext _reactContext;
         private readonly IReadOnlyList<ModuleDefinition> _moduleTable;
         private readonly IReadOnlyDictionary<Type, INativeModule> _moduleInstances;
         private readonly IList<IOnBatchCompleteListener> _batchCompleteListenerModules;
 
         private NativeModuleRegistry(
+            ReactContext reactContext,
             IReadOnlyList<ModuleDefinition> moduleTable,
             IReadOnlyDictionary<Type, INativeModule> moduleInstances)
         {
+            _reactContext = reactContext;
             _moduleTable = moduleTable;
             _moduleInstances = moduleInstances;
             _batchCompleteListenerModules = _moduleTable
@@ -64,7 +67,7 @@ namespace ReactNative.Bridge
         {
             foreach (var module in _batchCompleteListenerModules)
             {
-                module.OnBatchComplete();
+                Dispatch((INativeModule)module, module.OnBatchComplete);
             }
         }
 
@@ -103,7 +106,15 @@ namespace ReactNative.Bridge
             if (_moduleTable.Count < moduleId)
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
 
-            _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            var actionQueue = _moduleTable[moduleId].Target.ActionQueue;
+            if (actionQueue != null)
+            {
+                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
+            }
+            else
+            {
+                _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            }
         }
 
         /// <summary>
@@ -112,12 +123,12 @@ namespace ReactNative.Bridge
         /// </summary>
         internal void NotifyReactInstanceInitialize()
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            _reactContext.AssertOnNativeModulesQueueThread();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize").Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {
-                    module.Initialize();
+                    Dispatch(module, module.Initialize);
                 }
             }
         }
@@ -128,13 +139,28 @@ namespace ReactNative.Bridge
         /// </summary>
         internal void NotifyReactInstanceDispose()
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            _reactContext.AssertOnNativeModulesQueueThread();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy").Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {
-                    module.OnReactInstanceDispose();
+                    Dispatch(module, module.OnReactInstanceDispose);
+                    module.ActionQueue?.Dispose();
                 }
+            }
+        }
+
+        private static void Dispatch(INativeModule module, Action action)
+        {
+            // If the module has an action queue, dispatch there;
+            // otherwise execute inline.
+            if (module.ActionQueue != null)
+            {
+                module.ActionQueue.Dispatch(action);
+            }
+            else
+            {
+                action();
             }
         }
 
@@ -247,6 +273,20 @@ namespace ReactNative.Bridge
             private readonly IDictionary<string, INativeModule> _modules = 
                 new Dictionary<string, INativeModule>();
 
+            private readonly ReactContext _reactContext;
+
+            /// <summary>
+            /// Instantiates the <see cref="Builder"/>.
+            /// </summary>
+            /// <param name="reactContext">The React context.</param>
+            public Builder(ReactContext reactContext)
+            {
+                if (reactContext == null)
+                    throw new ArgumentNullException(nameof(reactContext));
+
+                _reactContext = reactContext;
+            }
+
             /// <summary>
             /// Add a native module to the builder.
             /// </summary>
@@ -291,29 +331,13 @@ namespace ReactNative.Bridge
 
                 foreach (var module in _modules.Values)
                 {
-                    var name = NormalizeModuleName(module.Name);
+                    var name = module.Name;
                     var moduleDef = new ModuleDefinition(name, module);
                     moduleTable.Add(moduleDef);
                     moduleInstances.Add(module.GetType(), module);
                 }
 
-                return new NativeModuleRegistry(moduleTable, moduleInstances);
-            }
-
-            private static string NormalizeModuleName(string name)
-            {
-                if (name.StartsWith("RCT"))
-                {
-                    return name.Substring(3);
-                }
-                else if (name.StartsWith("RK"))
-                {
-                    return name.Substring(2);
-                }
-                else
-                {
-                    return name;
-                }
+                return new NativeModuleRegistry(_reactContext, moduleTable, moduleInstances);
             }
         }
     }

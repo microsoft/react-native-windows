@@ -1,14 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
 
 namespace ReactNative.Animated
 {
@@ -127,6 +122,10 @@ namespace ReactNative.Animated
                     {
                         nodesManager.RunUpdates(args.RenderingTime);
                     }
+                    else
+                    {
+                        ReactChoreographer.Instance.DeactivateCallback(nameof(NativeAnimatedModule));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -157,6 +156,8 @@ namespace ReactNative.Animated
                         _readyOperations.AddRange(operations);
                     }
                 }
+
+                ReactChoreographer.Instance.ActivateCallback(nameof(NativeAnimatedModule));
             }
         }
 
@@ -165,6 +166,7 @@ namespace ReactNative.Animated
         /// </summary>
         public void OnDestroy()
         {
+            ReactChoreographer.Instance.NativeAnimatedCallback -= _animatedFrameCallback;
         }
 
         /// <summary>

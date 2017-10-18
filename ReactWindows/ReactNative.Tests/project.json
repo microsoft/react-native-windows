@@ -4,7 +4,8 @@
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "NUnit": "3.5.0",
     "NUnit.ConsoleRunner": "3.5.0",
-    "NUnit3TestAdapter": "3.5.0"
+    "NUnit3TestAdapter": "3.5.0",
+    "System.Reactive": "3.1.1"
   },
   "frameworks": {
     "uap10.0": {}
