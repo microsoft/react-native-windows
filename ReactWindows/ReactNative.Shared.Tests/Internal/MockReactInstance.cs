@@ -88,7 +88,9 @@ namespace ReactNative.Tests
         public Task DisposeAsync()
         {
             Interlocked.Increment(ref _isDisposed);
-            return Task.CompletedTask;
+            var task = new Task(() => { });
+            task.Start();
+            return task;
         }
     }
 }

@@ -21,7 +21,9 @@ namespace ReactNative.Tests
             return Run((executor, jsQueueThread) =>
             {
                 action(executor, jsQueueThread);
-                return Task.CompletedTask;
+                var task = new Task(() => { });
+                task.Start();
+                return task;
             });
         }
 
