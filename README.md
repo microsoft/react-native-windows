@@ -38,13 +38,59 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 ## Getting Started
 
-- Follow the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) to install React Native and its dependencies.
-- Change your working directory to the project directory you specified in the `react-native init` command from the [Getting Started guide](http://facebook.github.io/react-native/docs/getting-started.html) (e.g., `cd AwesomeProject`).
-- Install [rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows) from NPM (i.e., `npm install --save-dev rnpm-plugin-windows` or `yarn add rnpm-plugin-windows --dev` if you have Yarn installed).
-- Initialize Windows project with `react-native windows` command in the project directory.
-- *Note*: You will need to install the [requirements](#system-requirements) before you can build and run your application.
+### Installing React Native and its dependencies
+This is a targeted summary of setup React Native setup for specifically React Native Windows. See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for full details.
+
+#### Dependencies: Node, Python, JDK
+Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of Node, Python2, and a recent version of the Java SE Development Kit (JDK) are installed.
+
+[Chocolatey](https://chocolatey.org/) is the React Native recommended installation method. On an elevated Command Prompt, run:
+```
+choco install -y nodejs.install python2 jdk8
+```
+
+#### React Native CLI
+Next, we need the React Native command line interface. Install using NPM:
+```
+npm install -g react-native-cli
+```
+
+#### Initialize your project
+Next, [generate a React Native project](http://facebook.github.io/react-native/docs/getting-started.html#creating-a-new-application). In the directory you would like your React Native Windows project directory, run:
+```
+react-native init <project name>
+```
+Navigate into this newly created directory:
+```
+cd <project name>
+```
+
+### Installing React Native Windows
+#### React Native Windows CLI
+Now we need to install the React Native Windows command line interface ([rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows)).
+
+If you are using NPM, run
+```
+npm install --save-dev rnpm-plugin-windows
+```
+
+If you are using Yarn, run
+```
+yarn add rnpm-plugin-windows --dev
+```
+#### Initialize your project
+Initialize your React Native Windows project in the project directy by running:
+```
+react-native windows
+```
+
+*Note*:  You will need to install the [requirements](#system-requirements) before you can build and run your application.
+
+### Running a React Native Windows App
+
+#### With Visual Studio
 - Open the solution file in the application folder in Visual Studio (e.g., `AwesomeProject/windows/AwesomeProject.sln`)
-- *Note*: If this is your first time doing UWP development on the computer you're using, you may be asked to install additional UWP tooling. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
+	- *Note*: If this is your first time doing UWP development on the computer you're using, you may be asked to install additional UWP tooling. After opening the solution, right click the Solution in the Solution Explorer and select the option labeled "Install Missing Components". You may have to shutdown Visual Studio to continue the installation.
 - *Note*: If you are using Visual Studio 2017, you will need to retarget the ChakraBridge project. Right click the ChakraBridge project:
     - If there is not a retarget option:
         - Select "Reload", and the Visual Studio installer will open.
@@ -54,11 +100,22 @@ See the official [React Native website](https://facebook.github.io/react-native/
     - If there is a retarget option:
         - Retarget by right clicking on the ChakraBridge project in the Solution Explorer and selecting "Retarget Projects" and pressing okay on the popup dialog (Platform Toolset should say "Upgrade to v141" in the dialog).
 - Select the "Debug" configuration and the "x64" platform from the combo box controls to the left of the Run button and underneath the Team and Tools menu item.
-- *Note:* If you are running on, or targeting, an x86 platform select "x86" instead. If you are deploying to Windows 10 Phone, select ARM.
+	- *Note:* If you are running on, or targeting, an x86 platform select "x86" instead. If you are deploying to Windows 10 Phone, select ARM.
 - Click the Run button to the right of the platform combo box control, or select the "Debug"->"Start without Debugging" menu item.
 - You should now see a typical React Native app running on Windows that is showing an error saying it needs to contact the dev server. Almost there!
 - Run `react-native start` from your project directory, and wait for the React Native packager to report success. Then, press control+R (or click Reload button) in your running app. You now see your new app! :tada:
-- *Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](#extending-react-native)
+
+*Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](#extending-react-native)
+
+#### Without Visual Studio
+In your React Native Windows project directory, run:
+```
+react-native run-windows
+```
+
+A new Command Prompt window will open with the React packager as well as a React Native Windows app. You can now start developing! :tada:
+
+### Additional Resources
 - For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
