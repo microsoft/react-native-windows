@@ -364,7 +364,7 @@ namespace ReactNative.Tests.UIManager.Events
                 var instance = CreateReactInstance(context, executor);
                 context.InitializeWithInstance(instance);
                 instance.Initialize();
-                await instance.InitializeBridgeAsync();
+                await instance.InitializeBridgeAsync(CancellationToken.None);
                 return instance;
             });
 

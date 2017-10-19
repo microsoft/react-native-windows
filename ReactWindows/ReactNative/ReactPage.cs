@@ -4,6 +4,7 @@ using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;
@@ -173,7 +174,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        private async void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (_reactInstanceManager.DevSupportManager.IsEnabled)
             {
@@ -192,7 +193,7 @@ namespace ReactNative
                 }
                 else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && _isControlKeyDown && e.VirtualKey == VirtualKey.R)
                 {
-                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                    await _reactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
         }

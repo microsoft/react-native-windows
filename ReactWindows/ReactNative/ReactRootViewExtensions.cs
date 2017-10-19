@@ -1,3 +1,4 @@
+using System.Threading;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -26,7 +27,7 @@ namespace ReactNative
             }
         }
 
-        private static void OnAcceleratorKeyActivated(ReactNativeHost host, CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        private static async void OnAcceleratorKeyActivated(ReactNativeHost host, CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (host.HasInstance)
             {
@@ -48,7 +49,7 @@ namespace ReactNative
                     }
                     else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && s_isControlKeyDown && e.VirtualKey == VirtualKey.R)
                     {
-                        reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                        await reactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None).ConfigureAwait(false);
                     }
                 }
             }

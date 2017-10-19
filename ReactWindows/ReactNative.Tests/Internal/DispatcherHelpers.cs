@@ -50,5 +50,26 @@ namespace ReactNative.Tests
 
             await tcs.Task.ConfigureAwait(false);
         }
+
+        public static async Task<T> CallOnDispatcherAsync<T>(Func<Task<T>> asyncFunc)
+        {
+            var tcs = new TaskCompletionSource<T>();
+
+            await RunOnDispatcherAsync(async () =>
+            {
+                try
+                {
+                    var result = await asyncFunc();
+                    await Task.Run(() => tcs.SetResult(result));
+                }
+                catch (Exception ex)
+                {
+                    await Task.Run(() => tcs.SetException(ex));
+                }
+            }).ConfigureAwait(false);
+
+            return await tcs.Task.ConfigureAwait(false);
+        }
+
     }
 }
