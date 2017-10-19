@@ -1,8 +1,15 @@
+using Playground.Modules;
 using ReactNative;
+using ReactNative.Bridge;
 using ReactNative.Modules.Launch;
+using ReactNative.UIManager;
 using System;
+using System.Diagnostics;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -115,6 +122,27 @@ namespace Playground
 
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+            UnhandledException += App_UnhandledException;
+            var deferral = args.TaskInstance.GetDeferral();
+            _host.ReactInstanceManager.OnResume(Exit);
+            var reactContext = await _host.ReactInstanceManager.CreateReactContextAsync(CancellationToken.None);
+            var taskId = args.TaskInstance.Task.TaskId.ToString();
+            reactContext.GetJavaScriptModule<BackgroundRegistrationModule>().unregister(taskId);
+            //reactContext.RunOnNativeModulesQueueThread(() => reactContext.GetNativeModule<BackgroundModule>().unregister(taskId));
+            DispatcherHelpers.RunOnDispatcher(async () =>
+            {
+                await _host.DisposeAsync();
+                deferral.Complete();
+            });
+        }
+
+        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Debug.WriteLine($"[ReactNative] {e.Message} {e.Exception}");
         }
 
         /// <summary>

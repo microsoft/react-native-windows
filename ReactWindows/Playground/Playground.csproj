@@ -173,6 +173,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainReactNativeHost.cs" />
+    <Compile Include="Modules\BackgroundModule.cs" />
+    <Compile Include="Modules\BackgroundPackage.cs" />
+    <Compile Include="Modules\BackgroundRegistrationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

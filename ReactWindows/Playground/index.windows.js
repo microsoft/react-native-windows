@@ -6,12 +6,19 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  NativeModules,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
+var BackgroundModule = require('BackgroundRegistrationModule');
+
 class Playground extends Component {
+  componentWillMount() {
+    NativeModules.Background.registerSystemTrigger("test");
+  }
+
   render() {
     return (
       <View style={styles.container}>
