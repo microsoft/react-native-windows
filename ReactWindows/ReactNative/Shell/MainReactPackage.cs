@@ -1,6 +1,7 @@
 ﻿using ReactNative.Animated;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
+using ReactNative.Modules.CameraRoll;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
@@ -48,7 +49,7 @@ namespace ReactNative.Shell
             {
                 new AppStateModule(reactContext),
                 new AsyncStorageModule(),
-                //new CameraRollManager(reactContext),
+                new CameraRollModule(reactContext),
                 new ClipboardModule(),
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
