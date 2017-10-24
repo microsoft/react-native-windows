@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const shell = require('shelljs');
 const Version = require('./version');
 const checkRequirements = require('./checkRequirements');
+const CONSTANTS = require('../constants')
 
 const MSBUILD_VERSIONS = ['15.0', '14.0', '12.0', '4.0'];
 
@@ -40,7 +41,7 @@ class MSBuildTools {
     // Set platform toolset for VS2017 (this way we can keep the base sln file working for vs2015)
     if (this.version === '15.0') {
       args.push('/p:PlatformToolset=v141');
-      args.push('/p:VisualStudioVersion=15.0');
+      // args.push('/p:VisualStudioVersion=15.0');
     }
 
     if (config) {
@@ -118,23 +119,28 @@ module.exports.findAllAvailableVersions = function () {
     .filter(item => !!item);
 };
 
-module.exports.getAllAvailableUAPVersions = function () {
+module.exports.getAllAvailableVersions = function (windowsOrWpf) {
+  
   const results = [];
 
   const programFilesFolder = process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
-  // No Program Files folder found, so we won't be able to find UAP SDK
+  // No Program Files folder found, so we won't be able to find versions
   if (!programFilesFolder) {
     return results;
   }
 
-  const uapFolderPath = path.join(programFilesFolder, 'Windows Kits', '10', 'Platforms', 'UAP');
-  // No UAP SDK exists on this machine
-  if (!shell.test('-e', uapFolderPath)) {
+  var folderPath;
+  if (windowsOrWpf === CONSTANTS.windows) {
+    folderPath = path.join(programFilesFolder, 'Windows Kits', '10', 'Platforms', 'UAP');
+  } else {
+    folderPath = path.join(programFilesFolder, 'Windows Kits');
+  }
+  if (!shell.test('-e', folderPath)) {
     return results;
   }
 
-  shell.ls(uapFolderPath)
-    .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
+  shell.ls(folderPath)
+    .filter(uapDir => shell.test('-d', path.join(folderPath, uapDir)))
     .map(Version.tryParse)
     .forEach(version => version && results.push(version));
 

@@ -4,14 +4,26 @@ const execSync = require('child_process').execSync;
 const path = require('path');
 const shell = require('shelljs');
 const Version = require('./version');
+const CONSTANTS = require('../constants')
 
 const REQUIRED_VERSIONS = {
-  '10.0': {
-    os: '6.3',
-    msbuild: '14.0',
-    visualstudio: '14.0',
-    windowssdk: '8.1',
-    phonesdk: '10.0'
+  'windows': {
+    '10.0': {
+      os: '6.3',
+      msbuild: '14.0',
+      visualstudio: '14.0',
+      windowssdk: '10.0',
+      phonesdk: '10.0'
+    }
+  },
+  'wpf': {
+    '10.0': {
+      os: '6.3',
+      msbuild: '14.0',
+      visualstudio: '14.0',
+      windowssdk: '8.1',
+      phonesdk: '10.0'
+    }
   }
 };
 
@@ -19,8 +31,12 @@ function shortenVersion (version) {
   return /^(\d+(?:\.\d+)?)/.exec(version.toString())[1];
 }
 
-function getMinimalRequiredVersionFor (requirement, windowsTargetVersion) {
-  return Version.tryParse(REQUIRED_VERSIONS[windowsTargetVersion][requirement]);
+function getMinimalRequiredVersionFor (requirement, windowsTargetVersion, windowsOrWpf) {
+    if (windowsOrWpf === CONSTANTS.windows) {
+      return Version.tryParse(REQUIRED_VERSIONS['windows'][windowsTargetVersion][requirement]);
+    } else {
+      return Version.tryParse(REQUIRED_VERSIONS['wpf'][windowsTargetVersion][requirement]);
+    }
 }
 
 function getInstalledWindowsSdks () {

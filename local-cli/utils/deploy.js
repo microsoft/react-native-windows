@@ -23,7 +23,7 @@ function getAppPackage(options) {
 
 function getWindowsStoreAppUtils(options) {
   const popd = pushd(options.root);
-  const windowsStoreAppUtilsPath = './node_modules/react-native-windows/local-cli/runWindows/utils/WindowsStoreAppUtils.ps1';
+  const windowsStoreAppUtilsPath = './node_modules/react-native-windows/local-cli/utils/WindowsStoreAppUtils.ps1';
   execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
   popd();
   return windowsStoreAppUtilsPath;
@@ -77,7 +77,18 @@ function deployToDevice(options) {
   });
 }
 
-function deployToDesktop(options) {
+function deployWpfToDesktop(options) {
+  const appName = process.cwd().split(path.sep).pop();
+  const launchAppScript = path.join(`./wpf/${appName}/bin/x86/Debug/${appName}`);
+
+  console.log(chalk.green('Starting the app'));
+  const spawnOptions = options.verbose ? { stdio: 'inherit' } : {};
+  return Promise.resolve(spawn('cmd.exe', ['/C', 'start', launchAppScript,
+    'remoteDebugging', options.proxy ? 'true' : 'false'], spawnOptions));
+
+}
+
+function deployWindowsToDesktop(options) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifest = getAppxManifest(options);
@@ -134,7 +145,8 @@ function launchServer(options) {
 }
 
 module.exports = {
-  deployToDesktop,
+  deployWindowsToDesktop,
+  deployWpfToDesktop,
   deployToDevice,
   startServerInNewWindow
 };

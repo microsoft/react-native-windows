@@ -1,49 +1,10 @@
 'use strict';
 
-const chalk = require('chalk');
-const build = require('./utils/build');
-const deploy = require('./utils/deploy');
+const CONSTANTS = require('../constants');
+const common = require('../runCommon');
 
 function runWindows(config, args, options) {
-  // Fix up options
-  options.root = options.root || process.cwd();
-  if (options.debug && options.release) {
-    console.log(chalk.red('Only one of "debug"/"release" options should be specified'));
-    return;
-  }
-
-  const slnFile = build.getSolutionFile(options);
-  if (!slnFile) {
-    console.error(chalk.red('Visual Studio Solution file not found. Maybe run "react-native windows" first?'));
-    return;
-  }
-
-  try {
-    build.restoreNuGetPackages(options, slnFile, options.verbose);
-  } catch (e) {
-    console.error(chalk.red('Failed to restore the NuGet packages'));
-    return;
-  }
-
-  // Get build/deploy options
-  const buildType = options.release ? 'Release' : 'Debug';
-
-  try {
-    build.buildSolution(slnFile, buildType, options.arch, options.verbose);
-  } catch (e) {
-    console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
-    return;
-  }
-
-  return deploy.startServerInNewWindow(options)
-    .then(() => {
-      if (options.device || options.emulator || options.target) {
-        return deploy.deployToDevice(options);
-      } else {
-        return deploy.deployToDesktop(options);
-      }
-    })
-    .catch(e => console.error(chalk.red(`Failed to deploy: ${e.message}`)));
+  return common.runRNWApp(config, args, options, CONSTANTS.windows);
 }
 
 /*
@@ -60,15 +21,14 @@ runWindows({
 /**
  * Starts the app on a connected Windows emulator or mobile device.
  * Options are the following:
- *    root: String - The root of the application
- *    debug: Boolean - Specifies debug build
  *    release: Boolean - Specifies release build
+ *    root: String - The root of the application
  *    arch: String - The build architecture (x86, x64, ARM, Any CPU)
- *    desktop: Boolean - Deploy to the desktop
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
  *    proxy: Boolean - Run using remote JS proxy
+ *    verbose: Boolean - Enables logging
  */
 module.exports = {
   name: 'run-windows',
