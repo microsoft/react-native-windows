@@ -1,12 +1,14 @@
-﻿using ReactNative.Reflection;
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System.Runtime.CompilerServices;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
+using Windows.Foundation.Metadata;
 #else
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +32,24 @@ namespace ReactNative.Views.View
             BottomRight,
         }
 
+        private class BackgrouindBrushProperties
+        {
+            public uint? BackgroundColor;
+            public double? AcrylicOpacity;
+            public uint? AcrylicTintColor;
+            public string AcrylicSource;
+        }
+
+        private readonly bool _isAcrylicSupported =
+#if WINDOWS_UWP
+            ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush");
+#else
+            false;
+#endif
+
+        private readonly ConditionalWeakTable<DependencyObject, BackgrouindBrushProperties> _backgroundBrushProperties =
+            new ConditionalWeakTable<DependencyObject, BackgrouindBrushProperties>();
+
         /// <summary>
         /// Default brush for the view borders.
         /// </summary>
@@ -44,6 +64,40 @@ namespace ReactNative.Views.View
             get
             {
                 return "RCTView";
+            }
+        }
+
+        /// <summary>
+        /// Once any of the background-brush-related properties are changed,
+        /// this method is invoked to update the XAML brush. If acrylic-related
+        /// properties are set on the React view, they arrive here first, but
+        /// the brush can be created only when backgroundColor is set.
+        /// </summary>
+        private void UpdateBackgroundBrush(BorderedCanvas view)
+        {
+            var border = GetOrCreateBorder(view);
+            var props = _backgroundBrushProperties.GetOrCreateValue(view);
+
+            if (props.BackgroundColor != null)
+            {
+                if (!_isAcrylicSupported || props.AcrylicOpacity == null && props.AcrylicTintColor == null)
+                {
+                    border.Background = new SolidColorBrush(ColorHelpers.Parse(props.BackgroundColor.Value));
+                }
+                else
+                {
+#if WINDOWS_UWP
+                    border.Background = new AcrylicBrush
+                    {
+                        BackgroundSource = props.AcrylicSource == "app" ?
+                            AcrylicBackgroundSource.Backdrop :
+                            AcrylicBackgroundSource.HostBackdrop,
+                        TintColor = ColorHelpers.Parse(props.AcrylicTintColor ?? props.BackgroundColor.Value),
+                        FallbackColor = ColorHelpers.Parse(props.BackgroundColor.Value),
+                        TintOpacity = props.AcrylicOpacity ?? 1.0,
+                    };
+#endif
+                }
             }
         }
 
@@ -169,8 +223,29 @@ namespace ReactNative.Views.View
             DefaultUInt32 = ColorHelpers.Transparent)]
         public void SetBackgroundColor(BorderedCanvas view, uint color)
         {
-            var border = GetOrCreateBorder(view);
-            border.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            _backgroundBrushProperties.GetOrCreateValue(view).BackgroundColor = color;
+            UpdateBackgroundBrush(view);
+        }
+
+        [ReactProp(ViewProps.AcrylicOpacity)]
+        public void SetAcrylicOpacity(BorderedCanvas view, double value)
+        {
+            _backgroundBrushProperties.GetOrCreateValue(view).AcrylicOpacity = value;
+            UpdateBackgroundBrush(view);
+        }
+
+        [ReactProp(ViewProps.AcrylicSource)]
+        public void SetAcrylicSource(BorderedCanvas view, string value)
+        {
+            _backgroundBrushProperties.GetOrCreateValue(view).AcrylicSource = value;
+            UpdateBackgroundBrush(view);
+        }
+
+        [ReactProp(ViewProps.AcrylicTintColor)]
+        public void SetAcrylicTintColor(BorderedCanvas view, uint? value)
+        {
+            _backgroundBrushProperties.GetOrCreateValue(view).AcrylicTintColor = value;
+            UpdateBackgroundBrush(view);
         }
 
         /// <summary>

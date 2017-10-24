@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace ReactNative.UIManager
@@ -63,6 +63,9 @@ namespace ReactNative.UIManager
 
         // Properties that affect more than just layout
         public const string Disabled = "disabled";
+        public const string AcrylicOpacity = "acrylicOpacity";
+        public const string AcrylicSource = "acrylicSource";
+        public const string AcrylicTintColor = "acrylicTintColor";
         public const string BackgroundColor = "backgroundColor";
         public const string Color = "color";
         public const string FontSize = "fontSize";
