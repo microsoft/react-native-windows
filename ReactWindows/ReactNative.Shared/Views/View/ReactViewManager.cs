@@ -32,7 +32,7 @@ namespace ReactNative.Views.View
             BottomRight,
         }
 
-        private class BackgrouindBrushProperties
+        private class BackgrouundBrushProperties
         {
             public uint? BackgroundColor;
             public double? AcrylicOpacity;
@@ -47,8 +47,8 @@ namespace ReactNative.Views.View
             false;
 #endif
 
-        private readonly ConditionalWeakTable<DependencyObject, BackgrouindBrushProperties> _backgroundBrushProperties =
-            new ConditionalWeakTable<DependencyObject, BackgrouindBrushProperties>();
+        private readonly ConditionalWeakTable<DependencyObject, BackgrouundBrushProperties> _backgroundBrushProperties =
+            new ConditionalWeakTable<DependencyObject, BackgrouundBrushProperties>();
 
         /// <summary>
         /// Default brush for the view borders.
