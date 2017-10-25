@@ -63,9 +63,9 @@ namespace ReactNative.UIManager
 
         // Properties that affect more than just layout
         public const string Disabled = "disabled";
-        public const string AcrylicOpacity = "acrylicOpacity";
-        public const string AcrylicSource = "acrylicSource";
-        public const string AcrylicTintColor = "acrylicTintColor";
+        public const string AcrylicOpacity = "acrylicOpacityUWP";
+        public const string AcrylicSource = "acrylicSourceUWP";
+        public const string AcrylicTintColor = "acrylicTintColorUWP";
         public const string BackgroundColor = "backgroundColor";
         public const string Color = "color";
         public const string FontSize = "fontSize";

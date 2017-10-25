@@ -31,7 +31,7 @@ ReactNativeStyleAttributes.transform = { process: processTransform };
 ReactNativeStyleAttributes.shadowOffset = { diff: sizesDiffer };
 
 var colorAttributes = { process: processColor };
-ReactNativeStyleAttributes.acrylicTintColor = colorAttributes;
+ReactNativeStyleAttributes.acrylicTintColorUWP = colorAttributes;
 ReactNativeStyleAttributes.backgroundColor = colorAttributes;
 ReactNativeStyleAttributes.borderBottomColor = colorAttributes;
 ReactNativeStyleAttributes.borderColor = colorAttributes;
