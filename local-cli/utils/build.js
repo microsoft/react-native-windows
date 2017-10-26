@@ -4,9 +4,10 @@ const execSync = require('child_process').execSync;
 const path = require('path');
 const chalk = require('chalk');
 const glob = require('glob');
+const nuget = require('nuget-exe');
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
-const CONSTANTS = require('../constants')
+const CONSTANTS = require('../constants');
 
 function buildSolution(slnFile, buildType, buildArch, verbose, windowsOrWpf) {
   const minVersion = createMinVersion(windowsOrWpf);
@@ -35,9 +36,8 @@ function buildSolution(slnFile, buildType, buildArch, verbose, windowsOrWpf) {
   }
 }
 
-function restoreNuGetPackages(options, slnFile, verbose, windowsOrWpf) {
-  const runWhich = windowsOrWpf === CONSTANTS.windows? 'runWindows' : 'runWpf';
-  let nugetPath = options.nugetPath || path.join(options.root, 'node_modules/react-native-windows/local-cli/' + runWhich + '/.nuget/nuget.exe');
+function restoreNuGetPackages(options, slnFile, verbose) {
+  let nugetPath = path.join(options.root, nuget.getNuGetPath());
 
   console.log(chalk.green('Restoring NuGet packages'));
   const verboseOption = verbose ? 'normal' : 'quiet';

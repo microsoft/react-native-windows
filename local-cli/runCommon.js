@@ -21,7 +21,7 @@ function runRNWApp(config, args, options, wpfOrWindows) {
   }
 
   try {
-    build.restoreNuGetPackages(options, slnFile, options.verbose, wpfOrWindows);
+    build.restoreNuGetPackages(options, slnFile, options.verbose);
   } catch (e) {
     console.error(chalk.red('Failed to restore the NuGet packages'));
     return;
