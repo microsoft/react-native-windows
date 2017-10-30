@@ -1,6 +1,7 @@
 using Playground.Modules;
 using ReactNative;
 using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Modules.Launch;
 using ReactNative.UIManager;
 using System;
@@ -128,16 +129,14 @@ namespace Playground
         {
             UnhandledException += App_UnhandledException;
             var deferral = args.TaskInstance.GetDeferral();
-            _host.ReactInstanceManager.OnResume(Exit);
-            var reactContext = await _host.ReactInstanceManager.CreateReactContextAsync(CancellationToken.None);
             var taskId = args.TaskInstance.Task.TaskId.ToString();
-            reactContext.GetJavaScriptModule<BackgroundRegistrationModule>().unregister(taskId);
-            //reactContext.RunOnNativeModulesQueueThread(() => reactContext.GetNativeModule<BackgroundModule>().unregister(taskId));
-            DispatcherHelpers.RunOnDispatcher(async () =>
-            {
-                await _host.DisposeAsync();
-                deferral.Complete();
-            });
+            Debug.WriteLine($"[ReactNative] Background task {taskId} started.");
+            _host.ReactInstanceManager.OnResume(Exit);
+            var reactContext = await _host.ReactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None);
+            var backgroundModule = reactContext.GetNativeModule<BackgroundModule>();
+            var deferralId = Guid.NewGuid().ToString();
+            reactContext.RunOnNativeModulesQueueThread(() => backgroundModule.RegisterDeferral(deferralId, deferral));
+            reactContext.GetJavaScriptModule<AppBackgroundModule>().doWork(taskId, deferralId);
         }
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)

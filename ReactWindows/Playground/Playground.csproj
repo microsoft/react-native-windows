@@ -175,7 +175,7 @@
     <Compile Include="MainReactNativeHost.cs" />
     <Compile Include="Modules\BackgroundModule.cs" />
     <Compile Include="Modules\BackgroundPackage.cs" />
-    <Compile Include="Modules\BackgroundRegistrationModule.cs" />
+    <Compile Include="Modules\AppBackgroundModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
