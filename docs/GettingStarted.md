@@ -4,14 +4,16 @@
 
 This is a targeted summary of setup React Native setup for specifically React Native Windows. See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for full details.
 
-#### Dependencies: Node, Python, JDK
+*Note*: The Linux commands in the offical React Native Getting Started Guide should work on the Windows Subsytem for Linux bash shell, but this scenario is not currently officially supported. PowerShell or the Visual Studio Developer Command Prompt are recommended.
 
-Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of Node, Python2, and a recent version of the Java SE Development Kit (JDK) are installed.
+#### Dependencies: Node
+
+Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of Node is installed.
 
 [Chocolatey](https://chocolatey.org/) is the React Native recommended installation method. On an elevated Command Prompt, run:
 
 ```
-choco install -y nodejs.install python2 jdk8
+choco install nodejs
 ```
 
 #### React Native CLI
@@ -49,6 +51,7 @@ If you are using Yarn, run
 ```
 yarn add rnpm-plugin-windows --dev
 ```
+
 #### Initialize your project
 
 Initialize your React Native Windows project in the project directory by running:
@@ -56,7 +59,9 @@ Initialize your React Native Windows project in the project directory by running
 react-native windows
 ```
 
-*Note*:  You will need to install the [requirements](#system-requirements) before you can build and run your application.
+#### *Note on Requirements*
+
+Make sure you have installed all [requirements](https://github.com/Microsoft/react-native-windows#system-requirements) for React Native Windows. These requirements are necessary to build and run your application.
 
 #### *Note On Expo*
 
@@ -82,7 +87,7 @@ React Native Windows is not currently supported by Expo. If you have a React Nat
 - You should now see a typical React Native app running on Windows that is showing an error saying it needs to contact the dev server. Almost there!
 - Run `react-native start` from your project directory, and wait for the React Native packager to report success. Then, press control+R (or click Reload button) in your running app. You now see your new app! :tada:
 
-*Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](#extending-react-native)
+*Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](http://github.com/Microsoft/react-native-windows#extending-react-native)
 
 #### Without Visual Studio
 
@@ -95,9 +100,9 @@ A new Command Prompt window will open with the React packager as well as a React
 
 ## Additional Resources
 
-- For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](docs/RunningOnDeviceWindows.md)
+- For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](RunningOnDeviceWindows.md)
 - Learn more about various [tools for debugging React Native](http://facebook.github.io/react-native/docs/debugging.html).
 
 ## Setup Troubleshooting
 
-If you happen to run into issues while setting up React Native Windows on your machine, check out the [Setup Troubleshooting](docs/SetupTroubleshooting.md) documentation.
+If you happen to run into issues while setting up React Native Windows on your machine, check out the [Setup Troubleshooting](SetupTroubleshooting.md) documentation.
