@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.DevSupport;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ReactNative.DevSupport
@@ -62,13 +63,16 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Handles reloading the JavaScript bundle.
         /// </summary>
-        void HandleReloadJavaScript();
+        /// <param name="token">A token to cancel the operation.</param>
+        /// <returns>A task to await the result.</returns>
+        Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token);
 
         /// <summary>
         /// Checks if an up-to-date JavaScript bundle is ready.
         /// </summary>
+        /// <param name="token">A token to cancel the check.</param>
         /// <returns>A task to await the result.</returns>
-        Task<bool> HasUpToDateBundleInCacheAsync();
+        Task<bool> HasUpToDateBundleInCacheAsync(CancellationToken token);
 
         /// <summary>
         /// Dismisses the red box exception dialog.
@@ -78,10 +82,11 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Checks if the packager is running.
         /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
         /// <returns>
         /// <code>true</code> if the packager is running, otherwise <code>false</code>.
         /// </returns>
-        Task<bool> IsPackagerRunningAsync();
+        Task<bool> IsPackagerRunningAsync(CancellationToken token);
 
         /// <summary>
         /// Notify when a new React context is created.

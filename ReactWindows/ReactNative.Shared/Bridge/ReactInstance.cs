@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -81,9 +82,9 @@ namespace ReactNative.Bridge
             QueueConfiguration.NativeModulesQueue.Dispatch(_registry.NotifyReactInstanceInitialize);
         }
 
-        public async Task InitializeBridgeAsync()
+        public async Task InitializeBridgeAsync(CancellationToken token)
         {
-            await _bundleLoader.InitializeAsync().ConfigureAwait(false);
+            await _bundleLoader.InitializeAsync(token).ConfigureAwait(false);
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
             {
