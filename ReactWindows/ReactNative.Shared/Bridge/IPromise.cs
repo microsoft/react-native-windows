@@ -1,4 +1,5 @@
-﻿using System;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace ReactNative.Bridge
 {
@@ -56,5 +57,14 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="exception">The exception.</param>
         void Reject(Exception exception);
+
+        /// <summary>
+        /// Report an error by explicitly specifying all of the fields of the error.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="stack">A string representing the frames on the call stack. Usually you get this off of an Exception object.</param>
+        /// <param name="userInfo">User-defined information about the error. This is usually a collection of key-value pairs that provides additional error details.</param>
+        void Reject(string code, string message, string stack, JToken userInfo);
     }
 }
