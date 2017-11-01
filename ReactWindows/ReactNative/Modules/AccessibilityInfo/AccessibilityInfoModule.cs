@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System.Collections.Generic;
 using Windows.UI.ViewManagement;
@@ -55,12 +55,18 @@ namespace ReactNative.Modules.Accessibilityinfo
 
         public override void Initialize()
         {
-            _accessibility.HighContrastChanged += OnHighContrastChanged;
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                _accessibility.HighContrastChanged += OnHighContrastChanged;
+            });
         }
 
         public override void OnReactInstanceDispose()
         {
-            _accessibility.HighContrastChanged -= OnHighContrastChanged;
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                _accessibility.HighContrastChanged -= OnHighContrastChanged;
+            });
         }
 
         private void OnHighContrastChanged(AccessibilitySettings sender, object args)
