@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Bridge;
 using ReactNative.Common;
+using ReactNative.Modules.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -208,10 +209,10 @@ namespace ReactNative.Tests
 
             var cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.Cancel();
-            var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(
-                () => manager.CreateReactContextAsync(cancellationTokenSource.Token));
-
-            Assert.IsNull(reactContext);
+            await AssertEx.ThrowsAsync<OperationCanceledException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.CreateReactContextAsync(cancellationTokenSource.Token)),
+                ex => Assert.AreEqual(cancellationTokenSource.Token, ex.CancellationToken));
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
@@ -305,7 +306,6 @@ namespace ReactNative.Tests
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
-
 
         private static ReactInstanceManager CreateReactInstanceManager()
         {
