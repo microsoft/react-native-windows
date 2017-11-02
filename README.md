@@ -30,7 +30,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 - You can build and deploy React Native Windows apps on the Pro or Enterprise versions of Windows 7 SP1, Windows 8.1, or Windows 10
 	- You cannot run the emulators and some other developer tooling on the "Starter" or "Home" versions of these operating systems
 	- You can run React Native Windows UWP apps only on Windows 10 devices, but React Native Windows WPF apps will run on Windows 7-10 so long as .NET 4.6 is installed on the end user's machine
-- Download [Visual Studio 2017 Community or Greater](https://www.visualstudio.com/downloads/). (Visual Studio 2015 support is being deprecated.)
+- Download [Visual Studio 2017 Community or Greater](https://www.visualstudio.com/downloads/). (Visual Studio 2015 support has been deprecated.)
 	- You will need to start Visual Studio after it is installed to do some final setup before it can be used to build or run your React Native Windows application
 - [Windows 10 SDK Build 14393](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
 
