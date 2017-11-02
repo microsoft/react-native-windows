@@ -102,6 +102,8 @@ WiniumDriver/
 #NuGet
 packages/
 *.nupkg
+*.nuget.props
+*.nuget.targets
 
 #ncrunch
 *ncrunch*
