@@ -77,7 +77,7 @@ React Native Windows is not currently supported by Expo. If you have a React Nat
     - If there is not a retarget option:
         - Select "Reload", and the Visual Studio installer will open.
         - Make sure to close Visual Studio before installing
-        - Make sure the 10.0.10586.0 Windows 10 SDK is selected along with any other preselected components, and click "Modify" in the installer to install the components
+        - Make sure the 10.0.14393.0 Windows 10 SDK is selected along with any other preselected components, and click "Modify" in the installer to install the components
         - Retargeting the ChakraBridge project should be possible, so proceed to the next instructions regarding if there is a retarget option
     - If there is a retarget option:
         - Retarget by right clicking on the ChakraBridge project in the Solution Explorer and selecting "Retarget Projects" and pressing okay on the popup dialog (Platform Toolset should say "Upgrade to v141" in the dialog).
