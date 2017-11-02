@@ -31,7 +31,7 @@ You can use it to test your changes to React Native Windows by making sure your 
 #### But How?
 Before starting make sure you have run `npm install` in the react-native-windows directory. Additionally, make sure the RNTester submodule is up to date by running `git pull --recursive-submodules` from the react-native-windows directory.
 
-Use Visual Studio 2015 or higher, with the Windows 10 SDK 10.0.14393 or higher.
+Use Visual Studio 2017 or higher, with the Windows 10 SDK 10.0.14393 or higher.
 
 1. Open the RNTester solution file (react-native-windows/RNTester/RNTester.sln) in Visual Studio
 2. Set RNTesterApp as the StartUp project

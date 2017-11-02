@@ -112,7 +112,7 @@ namespace ReactNative.Tests.Modules.NetInfo
 
         private static void SetDispatcherForTest()
         {
-            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
+            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
         }
 
         class TestReactInstance : MockReactInstance
