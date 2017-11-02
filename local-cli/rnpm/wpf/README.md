@@ -1,8 +1,8 @@
 # RNPM Plugin for Universal Windows WPF
 
-- This is an intermediate until WPF is supported by `rnpm-plugin-windows`
+# THIS IS DEPRECATED, PLEASE USE NODE MODULE: rnpm-plugin-windows.
 
-To bootstrap the creation of Windows projects for React Native, we've published `rnpm-plugin-wpf`. The purpose of this plugin is to provide project init functionality comparable to `react-native init` and `react-native android`, and to allow users to build and run React Windows applications from the command line.
+To bootstrap the creation of WPF projects for React Native, we've published `rnpm-plugin-wpf`. The purpose of this plugin is to provide project init functionality comparable to `react-native init` and `react-native android`, and to allow users to build and run React Windows applications from the command line.
 
 ## Project Initialization
 
@@ -12,7 +12,7 @@ To start, make sure you have the react-native CLI installed globally.
 npm install -g react-native-cli
 ```
 
-Once the CLI is installed, install rnpm-plugin-wpf and initialize your project. Note: if you have Yarn installed, the react-native-cli will prefer to use that instead of npm, so use yarn to install `rnpm-plugin-windows`.
+Once the CLI is installed, install rnpm-plugin-wpf and initialize your project. Note: if you have Yarn installed, the react-native-cli will prefer to use that instead of npm, so use yarn to install `rnpm-plugin-wpf`.
 
 ```
 npm install --save-dev rnpm-plugin-wpf
