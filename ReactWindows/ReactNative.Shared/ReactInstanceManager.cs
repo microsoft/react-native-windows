@@ -275,7 +275,6 @@ namespace ReactNative
         /// </param>
         public void OnResume(Action onBackPressed)
         {
-            DispatcherHelpers.Initialize();
             DispatcherHelpers.AssertOnDispatcher();
 
             _defaultBackButtonHandler = onBackPressed;
