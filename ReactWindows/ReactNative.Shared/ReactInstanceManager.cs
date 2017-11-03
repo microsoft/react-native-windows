@@ -245,6 +245,7 @@ namespace ReactNative
 
             MoveToBeforeResumeLifecycleState();
 
+            ReactChoreographer.Dispose();
             DispatcherHelpers.Reset();
         }
 
@@ -277,6 +278,7 @@ namespace ReactNative
         {
             DispatcherHelpers.Initialize();
             DispatcherHelpers.AssertOnDispatcher();
+            ReactChoreographer.Initialize();
 
             _defaultBackButtonHandler = onBackPressed;
 
