@@ -58,6 +58,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IActionQueueFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ActionQueueExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\LimitedConcurrencyActionQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfigurationFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridge.cs" />
