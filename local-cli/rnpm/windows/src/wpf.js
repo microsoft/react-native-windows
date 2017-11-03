@@ -38,7 +38,7 @@ module.exports = function windows(config, args, options) {
       execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
-      const generateWindows = require(REACT_NATIVE_WPF_GENERATE_PATH());
-      generateWindows(process.cwd(), name, ns);
+      const generateWPF = require(REACT_NATIVE_WPF_GENERATE_PATH());
+      generateWPF(process.cwd(), name, ns);
     }).catch(error => console.error(chalk.red(error.message)));
 };

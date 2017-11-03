@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.DevSupport;
 using System;
 using System.Runtime.ExceptionServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ReactNative.DevSupport
@@ -76,7 +77,12 @@ namespace ReactNative.DevSupport
         {
         }
 
-        public Task<bool> HasUpToDateBundleInCacheAsync()
+        public Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
+        {
+            return Task.FromResult(default(ReactContext));
+        }
+
+        public Task<bool> HasUpToDateBundleInCacheAsync(CancellationToken token)
         {
             return Task.FromResult(false);
         }
@@ -85,7 +91,7 @@ namespace ReactNative.DevSupport
         {
         }
 
-        public Task<bool> IsPackagerRunningAsync()
+        public Task<bool> IsPackagerRunningAsync(CancellationToken token)
         {
             return Task.FromResult(false);
         }

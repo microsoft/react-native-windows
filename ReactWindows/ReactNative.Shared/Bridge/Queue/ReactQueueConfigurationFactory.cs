@@ -43,29 +43,11 @@ namespace ReactNative.Bridge.Queue
             get
             {
                 return new ReactQueueConfigurationFactory(
-                    new ActionQueueFactory(onError => new DispatcherActionQueue(onError, Dispatcher)),
+                    new ActionQueueFactory(onError => new DispatcherActionQueue(onError, DispatcherHelpers.MainDispatcher)),
                     new ActionQueueFactory(onError => new ActionQueue(onError, NewThreadScheduler.Default)),
                     new ActionQueueFactory(onError => new ActionQueue(onError)));
             }
         }
-
-#if WINDOWS_UWP
-        private static CoreDispatcher Dispatcher
-        {
-            get
-            {
-                return CoreApplication.MainView.Dispatcher;
-            }
-        }
-#else
-        private static Dispatcher Dispatcher
-        {
-            get
-            {
-                return Application.Current.MainWindow.Dispatcher;
-            }
-        }
-#endif
 
         /// <summary>
         /// Creates the React queue configuration.

@@ -18,14 +18,13 @@ namespace ReactNative.Modules.DeviceInfo
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        /// <param name="initialDisplayMetrics">The initial display metrics.</param>
-        public DeviceInfoModule(ReactContext reactContext, DisplayMetrics initialDisplayMetrics)
+        public DeviceInfoModule(ReactContext reactContext)
             : base(reactContext)
         {
             _window = Application.Current.MainWindow;
             _constants = new Dictionary<string, object>
             {
-                { "Dimensions", GetDimensions(initialDisplayMetrics) },
+                { "Dimensions", GetDimensions() },
             };
         }
 

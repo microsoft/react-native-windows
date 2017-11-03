@@ -1,5 +1,7 @@
 using System;
+#if CREATE_LAYOUT_THREAD
 using Windows.ApplicationModel.Core;
+#endif
 
 namespace ReactNative.Bridge.Queue
 {
@@ -13,7 +15,7 @@ namespace ReactNative.Bridge.Queue
 #if CREATE_LAYOUT_THREAD
             : base(onError, s_layoutApplicationView.Dispatcher)
 #else
-            : base(onError, CoreApplication.MainView.Dispatcher)
+            : base(onError, DispatcherHelpers.MainDispatcher)
 #endif
         {
         }

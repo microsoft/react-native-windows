@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PCLStorage;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using System;
@@ -145,21 +144,21 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(sourceUrl));
 
             var startupCode = default(string);
-            if (IsUnbundleAsync(sourcePath).Result)
+            if (IsUnbundle(sourcePath))
             {
                 _unbundle = new FileBasedJavaScriptUnbundle(sourcePath);
                 InstallNativeRequire();
-                startupCode = _unbundle.GetStartupCodeAsync().Result;
+                startupCode = _unbundle.GetStartupCode();
             }
-            else if (IsIndexedUnbundleAsync(sourcePath).Result)
+            else if (IsIndexedUnbundle(sourcePath))
             {
                 _unbundle = new IndexedJavaScriptUnbundle(sourcePath);
                 InstallNativeRequire();
-                startupCode = _unbundle.GetStartupCodeAsync().Result;
+                startupCode = _unbundle.GetStartupCode();
             }
             else
             {
-                startupCode = LoadScriptAsync(sourcePath).Result;
+                startupCode = LoadScript(sourcePath);
             }
 
             EvaluateScript(startupCode, sourceUrl);
@@ -417,12 +416,11 @@ namespace ReactNative.Chakra.Executor
         #endregion
 
         #region File IO
-        private static async Task<string> LoadScriptAsync(string fileName)
+        private static string LoadScript(string fileName)
         {
             try
             {
-                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
-                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+                return File.ReadAllText(fileName);
             }
             catch (Exception ex)
             {
@@ -450,7 +448,7 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptUnbundleModule GetModule(int index);
 
-            Task<string> GetStartupCodeAsync();
+            string GetStartupCode();
         }
 
         class FileBasedJavaScriptUnbundle : IJavaScriptUnbundle
@@ -468,13 +466,13 @@ namespace ReactNative.Chakra.Executor
             {
                 var sourceUrl = index + ".js";
                 var fileName = Path.Combine(_modulesPath, sourceUrl);
-                var source = LoadScriptAsync(fileName).Result;
+                var source = LoadScript(fileName);
                 return new JavaScriptUnbundleModule(source, sourceUrl);
             }
 
-            public Task<string> GetStartupCodeAsync()
+            public string GetStartupCode()
             {
-                return LoadScriptAsync(_sourcePath);
+                return LoadScript(_sourcePath);
             }
 
             public void Dispose()
@@ -513,12 +511,11 @@ namespace ReactNative.Chakra.Executor
                 return new JavaScriptUnbundleModule(source, sourceUrl);
             }
 
-            public async Task<string> GetStartupCodeAsync()
+            public string GetStartupCode()
             {
-                var bundleFile = await FileSystem.Current.GetFileFromPathAsync(_sourcePath);
-                _stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read);
+                _stream = File.OpenRead(_sourcePath);
                 var header = new byte[HeaderSize];
-                if (await _stream.ReadAsync(header, 0, HeaderSize) < HeaderSize)
+                if (_stream.Read(header, 0, HeaderSize) < HeaderSize)
                 {
                     throw new InvalidOperationException("Reached end of file before end of indexed unbundle header.");
                 }
@@ -528,13 +525,13 @@ namespace ReactNative.Chakra.Executor
                 var moduleTableSize = numberOfTableEntries * 8 /* bytes per entry */;
                 _baseOffset = HeaderSize + (int)moduleTableSize;
                 _moduleTable = new byte[moduleTableSize];
-                if (await _stream.ReadAsync(_moduleTable, 0, (int)moduleTableSize) < moduleTableSize)
+                if (_stream.Read(_moduleTable, 0, (int)moduleTableSize) < moduleTableSize)
                 {
                     throw new InvalidOperationException("Reached end of file before end of indexed unbundle module table.");
                 }
 
                 var startupCodeBuffer = new byte[startupCodeSize];
-                if (await _stream.ReadAsync(startupCodeBuffer, 0, (int)startupCodeSize) < startupCodeSize)
+                if (_stream.Read(startupCodeBuffer, 0, (int)startupCodeSize) < startupCodeSize)
                 {
                     throw new InvalidOperationException("Reached end of file before end of startup code.");
                 }
@@ -548,19 +545,18 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<bool> IsUnbundleAsync(string sourcePath)
+        private static bool IsUnbundle(string sourcePath)
         {
             var magicFilePath = Path.Combine(GetUnbundleModulesDirectory(sourcePath), MagicFileName);
-            var magicFile = await FileSystem.Current.GetFileFromPathAsync(magicFilePath);
-            if (magicFile == null)
+            if (!File.Exists(magicFilePath))
             {
                 return false;
             }
 
-            using (var stream = await magicFile.OpenAsync(PCLStorage.FileAccess.Read))
+            using (var stream = File.OpenRead(magicFilePath))
             {
                 var header = new byte[4];
-                var read = await stream.ReadAsync(header, 0, 4);
+                var read = stream.Read(header, 0, 4);
                 if (read < 4)
                 {
                     return false;
@@ -571,13 +567,12 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<bool> IsIndexedUnbundleAsync(string sourcePath)
+        private static bool IsIndexedUnbundle(string sourcePath)
         {
-            var bundleFile = await FileSystem.Current.GetFileFromPathAsync(sourcePath);
-            using (var stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read))
+            using (var stream = File.OpenRead(sourcePath))
             {
                 var header = new byte[4];
-                var read = await stream.ReadAsync(header, 0, 4);
+                var read = stream.Read(header, 0, 4);
                 if (read < 4)
                 {
                     return false;
