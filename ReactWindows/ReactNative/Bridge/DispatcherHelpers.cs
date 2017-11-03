@@ -52,10 +52,12 @@ namespace ReactNative.Bridge
         /// </summary>
         public static void AssertOnDispatcher()
         {
+#if DEBUG
             if (!IsOnDispatcher())
             {
                 throw new InvalidOperationException("Thread does not have dispatcher access.");
             }
+#endif
         }
 
         /// <summary>
