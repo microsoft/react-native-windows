@@ -13,7 +13,8 @@ namespace ReactNative.Bridge.Queue
     /// </summary>
     public class ActionQueue : IActionQueue
     {
-        private readonly object _disposeGate = new object();
+        private readonly object _actionGate = new object();
+        private readonly object _observerGate = new object();
         private readonly CompositeDisposable _disposable = new CompositeDisposable(2);
         private readonly ThreadLocal<bool> _threadLocal = new ThreadLocal<bool>();
         private readonly Action<Exception> _onError;
@@ -59,7 +60,7 @@ namespace ReactNative.Bridge.Queue
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
-            lock (_disposeGate)
+            lock (_observerGate)
             {
                 if (!_isDisposed)
                 {
@@ -100,15 +101,15 @@ namespace ReactNative.Bridge.Queue
         {
             if (!_isDisposed)
             {
-                if (disposing)
+                lock (_observerGate)
+                lock (_actionGate)
                 {
-                    lock (_disposeGate)
+                    if (!_isDisposed)
                     {
                         _disposable.Dispose();
+                        _isDisposed = true;
                     }
                 }
-
-                _isDisposed = true;
             }
         }
 
@@ -127,7 +128,13 @@ namespace ReactNative.Bridge.Queue
             _threadLocal.Value = true;
             try
             {
-                action();
+                lock (_actionGate)
+                {
+                    if (!_isDisposed)
+                    {
+                        action();
+                    }
+                }
             }
             catch (Exception ex)
             {
