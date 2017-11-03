@@ -48,6 +48,7 @@ namespace ReactNative
         private readonly Action<Exception> _nativeModuleCallExceptionHandler;
 
         private LifecycleState _lifecycleState;
+        private CancellationDisposable _suspendCancellation;
         private bool _hasStartedCreatingInitialContext;
         private Task<ReactContext> _contextInitializationTask;
         private int _pendingInitializationTasks;
@@ -237,6 +238,7 @@ namespace ReactNative
             DispatcherHelpers.AssertOnDispatcher();
 
             _defaultBackButtonHandler = null;
+            _suspendCancellation?.Dispose();
 
             if (_useDeveloperSupport)
             {
@@ -275,9 +277,11 @@ namespace ReactNative
         /// </param>
         public void OnResume(Action onBackPressed)
         {
+            DispatcherHelpers.Initialize();
             DispatcherHelpers.AssertOnDispatcher();
 
             _defaultBackButtonHandler = onBackPressed;
+            _suspendCancellation = new CancellationDisposable();
 
             if (_useDeveloperSupport)
             {
@@ -454,6 +458,7 @@ namespace ReactNative
             var cancellationDisposable = new CancellationDisposable();
             _currentInitializationToken.Disposable = cancellationDisposable;
             using (token.Register(cancellationDisposable.Dispose))
+            using (_suspendCancellation?.Token.Register(cancellationDisposable.Dispose))
             {
                 _pendingInitializationTasks++;
                 var contextInitializationTask = _contextInitializationTask ?? Task.CompletedTask;
@@ -487,7 +492,7 @@ namespace ReactNative
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
-                await TearDownReactContextAsync(currentReactContext);
+                await TearDownReactContextAsync(currentReactContext, token);
                 _currentReactContext = null;
             }
 
@@ -496,6 +501,11 @@ namespace ReactNative
                 var reactContext = await CreateReactContextCoreAsync(jsExecutorFactory, jsBundleLoader, token);
                 SetupReactContext(reactContext);
                 return reactContext;
+            }
+            catch (OperationCanceledException)
+            when (token.IsCancellationRequested)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -564,8 +574,10 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
         }
 
-        private async Task TearDownReactContextAsync(ReactContext reactContext)
+        private async Task TearDownReactContextAsync(ReactContext reactContext, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
+
             DispatcherHelpers.AssertOnDispatcher();
 
             if (_lifecycleState == LifecycleState.Resumed)
@@ -596,7 +608,7 @@ namespace ReactNative
             var reactContext = new ReactContext();
             if (_useDeveloperSupport)
             {
-                reactContext.NativeModuleCallExceptionHandler = 
+                reactContext.NativeModuleCallExceptionHandler =
                     _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
             }
 

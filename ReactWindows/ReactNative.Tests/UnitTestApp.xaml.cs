@@ -60,6 +60,8 @@ namespace ReactNative.Tests
 
             Dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
 
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+
             Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(e.Arguments);
         }
 
