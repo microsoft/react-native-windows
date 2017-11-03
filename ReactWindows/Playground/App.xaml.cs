@@ -139,7 +139,7 @@ namespace Playground
             reactContext.GetJavaScriptModule<AppBackgroundModule>().doWork(taskId, deferralId);
         }
 
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             Debug.WriteLine($"[ReactNative] {e.Message} {e.Exception}");
         }
@@ -163,6 +163,7 @@ namespace Playground
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            Debug.WriteLine($"[ReactNative] OnSuspend");
             _host.OnSuspend();
         }
 
