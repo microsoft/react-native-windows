@@ -45,7 +45,7 @@ namespace ReactNative.Bridge.Queue
                 return new ReactQueueConfigurationFactory(
                     new ActionQueueFactory(onError => new DispatcherActionQueue(onError, DispatcherHelpers.MainDispatcher)),
                     new ActionQueueFactory(onError => new ActionQueue(onError, NewThreadScheduler.Default)),
-                    new ActionQueueFactory(onError => new ActionQueue(onError)));
+                    new ActionQueueFactory(onError => new LimitedConcurrencyActionQueue(onError)));
             }
         }
 
