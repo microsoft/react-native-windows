@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
@@ -35,7 +35,7 @@ namespace ReactNative.Animated
         // there will be only one driver per mapping so all code should be optimized around that.
         private readonly IDictionary<Tuple<int, string>, IList<EventAnimationDriver>> _eventDrivers =
             new Dictionary<Tuple<int, string>, IList<EventAnimationDriver>>();
-        private readonly IReadOnlyDictionary<string, object> _customEventTypes;
+        private readonly Func<string, string> _customEventNamesResolver;
         private readonly UIImplementation _uiImplementation;
         // Used to avoid allocating a new array on every frame in `RunUpdates` and `OnEventDispatch`
         private readonly List<AnimatedNode> _runUpdateNodeList = new List<AnimatedNode>();
@@ -48,7 +48,7 @@ namespace ReactNative.Animated
         {
             _uiImplementation = uiManager.UIImplementation;
             uiManager.EventDispatcher.AddListener(this);
-            _customEventTypes = GetEventTypes(uiManager);
+            _customEventNamesResolver = uiManager.ResolveCustomEventName;
         }
 
         public bool HasActiveAnimations
@@ -377,13 +377,7 @@ namespace ReactNative.Animated
 
             if (_eventDrivers.Count > 0)
             {
-                var eventName = @event.EventName;
-                var customEventName = default(string);
-                if (TryGetRegistrationName(eventName, out customEventName))
-                {
-                    eventName = customEventName;
-                }
-
+                var eventName = _customEventNamesResolver(@event.EventName);
                 var driversForKey = default(IList<EventAnimationDriver>);
                 if (_eventDrivers.TryGetValue(Tuple.Create(@event.ViewTag, eventName), out driversForKey))
                 {
@@ -621,33 +615,6 @@ namespace ReactNative.Animated
             }
 
             return node;
-        }
-
-        private bool TryGetRegistrationName(string eventName, out string customEventName)
-        {
-            var customEvent = default(object);
-            if (!_customEventTypes.TryGetValue(eventName, out customEvent))
-            {
-                customEventName = default(string);
-                return false;
-            }
-
-            var customEventMap = customEvent as IReadOnlyDictionary<string, object>;
-            if (customEventMap == null)
-            {
-                customEventName = default(string);
-                return false;
-            }
-
-            var customEventRegistrationName = default(object);
-            if (!customEventMap.TryGetValue("registrationName", out customEventRegistrationName))
-            {
-                customEventName = default(string);
-                return false;
-            }
-
-            customEventName = customEventRegistrationName as string;
-            return customEventName != null;
         }
 
         private void UpdateActiveAnimationIds()
