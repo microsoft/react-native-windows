@@ -52,7 +52,7 @@ _Note: The native libs are still built using gradle. Full build with buck is com
 
 ### Running on Windows
 
-Visual Studio 2015 or higher is required, with Windows 10 SDK 10.0.10586 or higher.
+Visual Studio 2017 or higher is required, with Windows 10 SDK 10.0.14393 or higher.
 
 - Open `RNTester\RNTester.sln` in Visual Studio
 - Set the StartUp project to `RNTesterApp`
