@@ -131,12 +131,21 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues a operation to execute a UIBlock.
+        /// Enqueues an operation to execute a UI block.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void EnqueueUIBlock(IUIBlock block)
         {
             EnqueueOperation(() => block.Execute(_nativeViewHierarchyManager));
+        }
+
+        /// <summary>
+        /// Prepends an operation to execute a UI block.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            PrependOperation(() => block.Execute(_nativeViewHierarchyManager));
         }
 
         /// <summary>
@@ -427,6 +436,14 @@ namespace ReactNative.UIManager
             lock (_gate)
             {
                 _operations.Add(action);
+            }
+        }
+
+        private void PrependOperation(Action action)
+        {
+            lock (_gate)
+            {
+                _operations.Insert(0, action);
             }
         }
 

@@ -78,7 +78,7 @@ namespace ReactNative.Animated
                     node = new ValueAnimatedNode(tag, config);
                     break;
                 case "props":
-                    node = new PropsAnimatedNode(tag, config, this);
+                    node = new PropsAnimatedNode(tag, config, this, _uiImplementation);
                     break;
                 case "interpolation":
                     node = new InterpolationAnimatedNode(tag, config);
@@ -281,13 +281,7 @@ namespace ReactNative.Animated
                 throw new InvalidOperationException("Animated node connected to view should be props node.");
             }
 
-            if (propsAnimatedNode.ConnectedViewTag != -1)
-            {
-                throw new InvalidOperationException(
-                    Invariant($"Animated node '{animatedNodeTag}' is already attached to a view."));
-            }
-
-            propsAnimatedNode.ConnectedViewTag = viewTag;
+            propsAnimatedNode.ConnectToView(viewTag);
             _updatedNodes[animatedNodeTag] = node;
         }
 
@@ -301,13 +295,29 @@ namespace ReactNative.Animated
                 throw new InvalidOperationException("Animated node connected to view should be props node.");
             }
 
-            if (propsAnimatedNode.ConnectedViewTag != viewTag)
+            propsAnimatedNode.DisconnectFromView(viewTag);
+        }
+
+        public void RestoreDefaultValues(int animatedNodeTag, int viewTag)
+        {
+            var node = default(AnimatedNode);
+            if (!_animatedNodes.TryGetValue(animatedNodeTag, out node))
             {
-                throw new InvalidOperationException(
-                    "Attempting to disconnect view that has not been connected with the given animated node.");
+                // Restoring default values needs to happen before UIManager
+                // operations so it is possible the node hasn't been created yet if
+                // it is being connected and disconnected in the same batch. In
+                // that case we don't need to restore default values since it will
+                // never actually update the view.
+                return;
             }
 
-            propsAnimatedNode.ConnectedViewTag = -1;
+            var propsAnimatedNode = node as PropsAnimatedNode;
+            if (propsAnimatedNode == null)
+            {
+                throw new InvalidOperationException("Animated node connected to view should be props node.");
+            }
+
+            propsAnimatedNode.RestoreDefaultValues();
         }
 
         public void AddAnimatedEventToView(int viewTag, string eventName, JObject eventMapping)
@@ -576,7 +586,7 @@ namespace ReactNative.Animated
                 var valueNode = default(ValueAnimatedNode);
                 if (propsNode != null)
                 {
-                    propsNode.UpdateView(_uiImplementation);
+                    propsNode.UpdateView();
                 }
                 else if ((valueNode = nextNode as ValueAnimatedNode) != null)
                 {
