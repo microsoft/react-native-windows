@@ -611,12 +611,21 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues UIBlock to be executed.
+        /// Enqueues UI block to be executed.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void AddUIBlock(IUIBlock block)
         {
             _operationsQueue.EnqueueUIBlock(block);
+        }
+
+        /// <summary>
+        /// Prepens the UI block to be executed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            _operationsQueue.PrependUIBlock(block);
         }
 
         /// <summary>

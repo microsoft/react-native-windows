@@ -54,6 +54,11 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// An event fired before the UIManager dispatches view updates.
+        /// </summary>
+        public event EventHandler DispatchingViewUpdates;
+
+        /// <summary>
         /// The name of the module.
         /// </summary>
         public override string Name
@@ -144,8 +149,17 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void AddUIBlock(IUIBlock block)
         {
-            _layoutActionQueue.Dispatch(() =>
-                _uiImplementation.AddUIBlock(block));
+            _uiImplementation.AddUIBlock(block);
+        }
+
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// need view logic before all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            _uiImplementation.PrependUIBlock(block);
         }
 
         /// <summary>
@@ -508,6 +522,7 @@ namespace ReactNative.UIManager
         public void OnBatchComplete()
         {
             var batchId = _batchId++;
+            DispatchingViewUpdates?.Invoke(this, new EventArgs());
             _uiImplementation.DispatchViewUpdates(batchId);
         }
 
