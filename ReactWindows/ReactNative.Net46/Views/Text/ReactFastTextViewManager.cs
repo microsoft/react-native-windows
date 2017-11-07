@@ -1,11 +1,14 @@
-﻿using System.Windows.Controls;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Windows.Controls;
 
 namespace ReactNative.Views.Text
 {
     /// <summary>
     /// The view manager for simple text views.
     /// </summary>
-    public class ReactFastTextViewManager : ReactTextViewManager
+    public class ReactSimpleTextViewManager : ReactTextViewManager
     {
         /// <summary>
         /// Name of the view manager.
@@ -14,7 +17,7 @@ namespace ReactNative.Views.Text
         {
             get
             {
-                return "RCTFastText";
+                return "RCTSimpleText";
             }
         }
 

@@ -1,4 +1,7 @@
-﻿using ReactNative.UIManager;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,7 +12,7 @@ namespace ReactNative.Views.Text
     /// <summary>
     /// The view manager for text views.
     /// </summary>
-    public class ReactFastTextViewManager : BaseViewManager<TextBlock, ReactFastTextShadowNode>
+    public class ReactSimpleTextViewManager : BaseViewManager<TextBlock, ReactSimpleTextShadowNode>
     {
         /// <summary>
         /// The name of the view manager.
@@ -18,7 +21,7 @@ namespace ReactNative.Views.Text
         {
             get
             {
-                return "RCTFastText";
+                return "RCTSimpleText";
             }
         }
 
@@ -26,9 +29,9 @@ namespace ReactNative.Views.Text
         /// Creates the shadow node instance.
         /// </summary>
         /// <returns>The shadow node instance.</returns>
-        public override ReactFastTextShadowNode CreateShadowNodeInstance()
+        public override ReactSimpleTextShadowNode CreateShadowNodeInstance()
         {
-            return new ReactFastTextShadowNode();
+            return new ReactSimpleTextShadowNode();
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace ReactNative.Views.Text
         /// <param name="extraData">The extra data.</param>
         public override void UpdateExtraData(TextBlock root, object extraData)
         {
-            var textNode = extraData as ReactFastTextShadowNode;
+            var textNode = extraData as ReactSimpleTextShadowNode;
             if (textNode != null)
             {
                 textNode.UpdateTextBlock(root);

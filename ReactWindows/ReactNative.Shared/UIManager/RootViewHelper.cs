@@ -118,6 +118,8 @@ namespace ReactNative.UIManager
                     return frameworkContentElement.Parent;
                 }
 #endif
+
+                return null;
             }
 
             return VisualTreeHelper.GetParent(view);

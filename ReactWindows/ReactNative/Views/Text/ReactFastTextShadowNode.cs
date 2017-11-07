@@ -1,4 +1,7 @@
-﻿using Facebook.Yoga;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Facebook.Yoga;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -14,7 +17,7 @@ namespace ReactNative.Views.Text
     /// <summary>
     /// The shadow node implementation for text views.
     /// </summary>
-    public class ReactFastTextShadowNode : LayoutShadowNode
+    public class ReactSimpleTextShadowNode : LayoutShadowNode
     {
         private int _letterSpacing;
         private int _numberOfLines;
@@ -30,26 +33,15 @@ namespace ReactNative.Views.Text
 
         private string _fontFamily;
 
-        private string _text;
+        private string _text = "";
 
         /// <summary>
         /// Instantiates a <see cref="ReactTextShadowNode"/>.
         /// </summary>
-        public ReactFastTextShadowNode()
+        public ReactSimpleTextShadowNode()
         {
             MeasureFunction = (node, width, widthMode, height, heightMode) =>
                 MeasureText(this, node, width, widthMode, height, heightMode);
-        }
-
-        /// <summary>
-        /// The view text.
-        /// </summary>
-        public string Text
-        {
-            get
-            {
-                return _text;
-            }
         }
 
         /// <summary>
@@ -223,7 +215,7 @@ namespace ReactNative.Views.Text
             dirty();
         }
 
-        private static YogaSize MeasureText(ReactFastTextShadowNode textNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
+        private static YogaSize MeasureText(ReactSimpleTextShadowNode textNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
             // TODO: Measure text with DirectWrite or other API that does not
             // require dispatcher access. Currently, we're instantiating a
