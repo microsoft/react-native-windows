@@ -162,11 +162,12 @@ namespace ReactNative.DevSupport
 #if WINDOWS_UWP
                 var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate;
                 var localFolder = ApplicationData.Current.LocalFolder;
-                var bundleItem = await localFolder.TryGetItemAsync(JSBundleFileName).AsTask(token);
+                var bundleItem = await localFolder.TryGetItemAsync(JSBundleFileName);
                 if (bundleItem != null)
                 {
-                    var bundleProperties = await bundleItem.GetBasicPropertiesAsync().AsTask(token);
-                    return bundleProperties.DateModified > lastUpdateTime;
+                    // bundleItem.GetBasicPropertiesAsync() is occasionally hanging
+                    var fileInfo = new FileInfo(bundleItem.Path);
+                    return fileInfo.CreationTimeUtc > lastUpdateTime.UtcDateTime;
                 }
 #else
                 var lastUpdateTime = File.GetCreationTime(Assembly.GetExecutingAssembly().Location);
