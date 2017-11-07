@@ -416,7 +416,7 @@ namespace ReactNative
 
         private async Task<ReactContext> CreateReactContextFromDevManagerAsync(CancellationToken token)
         {
-            if (await _devSupportManager.HasUpToDateBundleInCacheAsync(token))
+            if (_devSupportManager.HasUpToDateBundleInCache())
             {
                 return await CreateReactContextFromCachedPackagerBundleAsync(token);
             }

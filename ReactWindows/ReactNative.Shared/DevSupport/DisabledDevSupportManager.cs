@@ -82,9 +82,9 @@ namespace ReactNative.DevSupport
             return Task.FromResult(default(ReactContext));
         }
 
-        public Task<bool> HasUpToDateBundleInCacheAsync(CancellationToken token)
+        public bool HasUpToDateBundleInCache()
         {
-            return Task.FromResult(false);
+            return false;
         }
 
         public void HideRedboxDialog()
