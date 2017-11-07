@@ -369,12 +369,22 @@ namespace ReactNative.Animated
 
         public void OnEventDispatch(Event @event)
         {
-            // Only support events dispatched from the dispatcher thread.
-            if (!DispatcherHelpers.IsOnDispatcher())
+            if (DispatcherHelpers.IsOnDispatcher())
             {
-                return;
+                HandleEvent(@event);
             }
+            else
+            {
+                DispatcherHelpers.RunOnDispatcher(() =>
+                {
+                    HandleEvent(@event);
+                });
+            }
+        }
 
+
+        private void HandleEvent(Event @event)
+        {
             if (_eventDrivers.Count > 0)
             {
                 var eventName = _customEventNamesResolver(@event.EventName);
