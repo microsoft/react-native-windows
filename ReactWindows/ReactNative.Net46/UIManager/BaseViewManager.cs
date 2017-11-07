@@ -2,6 +2,7 @@
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
@@ -23,6 +24,9 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
+        private readonly IDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
+            new Dictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
+
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
         /// properties, based on the <see cref="JObject"/> map.
@@ -32,13 +36,15 @@ namespace ReactNative.UIManager
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            if (transforms == null)
+            if (transforms == null && _transforms.Remove(view))
             {
                 ResetProjectionMatrix(view);
             }
             else
             {
-                SetProjectionMatrix(view, transforms);
+                _transforms[view] = (v, d) => SetProjectionMatrix(v, d, transforms);
+                var dimensions = GetDimensions(view);
+                SetProjectionMatrix(view, dimensions, transforms);
             }
         }
 
@@ -120,6 +126,7 @@ namespace ReactNative.UIManager
         {
             view.MouseEnter -= OnPointerEntered;
             view.MouseLeave -= OnPointerExited;
+            _transforms.Remove(view);
         }
 
         /// <summary>
@@ -151,6 +158,21 @@ namespace ReactNative.UIManager
         {
             var view = (TFrameworkElement)sender;
             TouchHandler.OnPointerExited(view, e);
+        }
+
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        public override void SetDimensions(TFrameworkElement view, Dimensions dimensions)
+        {
+            Action<TFrameworkElement, Dimensions> applyTransform;
+            if (_transforms.TryGetValue(view, out applyTransform))
+            {
+                applyTransform(view, dimensions);
+            }
+            base.SetDimensions(view, dimensions);
         }
 
         /// <summary>
@@ -210,22 +232,22 @@ namespace ReactNative.UIManager
             view.Effect = effect;
         }
 
-        private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
+        private static void SetProjectionMatrix(TFrameworkElement view, Dimensions dimensions, JArray transforms)
         {
             var transformMatrix = TransformHelper.ProcessTransform(transforms);
 
             var translateMatrix = Matrix3D.Identity;
             var translateBackMatrix = Matrix3D.Identity;
-            if (!double.IsNaN(view.Width))
+            if (!double.IsNaN(dimensions.Width))
             {
-                translateMatrix.OffsetX = -view.Width / 2;
-                translateBackMatrix.OffsetX = view.Width / 2;
+                translateMatrix.OffsetX = -dimensions.Width / 2;
+                translateBackMatrix.OffsetX = dimensions.Width / 2;
             }
 
-            if (!double.IsNaN(view.Height))
+            if (!double.IsNaN(dimensions.Height))
             {
-                translateMatrix.OffsetY = -view.Height / 2;
-                translateBackMatrix.OffsetY = view.Height / 2;
+                translateMatrix.OffsetY = -dimensions.Height / 2;
+                translateBackMatrix.OffsetY = dimensions.Height / 2;
             }
 
             var projectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;
