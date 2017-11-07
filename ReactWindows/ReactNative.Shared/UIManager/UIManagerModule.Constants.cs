@@ -206,6 +206,20 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
+                    TouchEventType.Cancel.GetJavaScriptEventName(),
+                    new Map
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Map
+                            {
+                                { "bubbled", "onTouchCancel" },
+                                { "captured", "onTouchCancelCapture" },
+                            }
+                        }
+                    }
+                },
+                {
                     TouchEventType.Entered.GetJavaScriptEventName(),
                     new Map
                     {
