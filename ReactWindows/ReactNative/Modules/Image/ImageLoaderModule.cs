@@ -126,7 +126,7 @@ namespace ReactNative.Modules.Image
             foreach (var url in urls)
             {
                 var uri = new Uri(url);
-                if (imagePipeline.IsInBitmapMemoryCache(uri))
+                if (imagePipeline.IsInEncodedMemoryCache(uri))
                 {
                     result.Add(url, "memory");
                 }

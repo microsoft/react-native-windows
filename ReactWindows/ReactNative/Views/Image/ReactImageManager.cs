@@ -271,19 +271,7 @@ namespace ReactNative.Views.Image
             try
             {
                 var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
-                var image = default(BitmapSource);
-                var uri = new Uri(source);
-
-                // Remote images
-                if (source.StartsWith("http:") || source.StartsWith("https:"))
-                {
-                    image = await imagePipeline.FetchEncodedBitmapImageAsync(uri);                   
-                }
-                else // Base64 or local images
-                {
-                    image = await imagePipeline.FetchDecodedBitmapImageAsync(ImageRequest.FromUri(uri));
-                }
-
+                var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source));
                 var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
                 imageBrush.ImageSource = image;
