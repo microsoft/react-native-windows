@@ -5,16 +5,13 @@ max_jobs: 2
 environment:
   nodejs_version: "LTS"
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      PLATFORM_TOOLSET: v140
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       CONFIGURATION: Debug
       PLATFORM: x64
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      PLATFORM_TOOLSET: v140
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       CONFIGURATION: Debug
       PLATFORM: ARM
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      PLATFORM_TOOLSET: v141
       CONFIGURATION: ReleaseBundle
       PLATFORM: x86
 
@@ -63,7 +60,7 @@ before_build:
 build_script:
 - ps: mkdir $env:bundle_dir
 - ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
-- ps: msbuild /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM /p:PlatformToolset=$env:PLATFORM_TOOLSET /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "ReactWindows\ReactNative.sln"
+- ps: msbuild /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "ReactWindows\ReactNative.sln"
 
 # Start Winium in the background, give it a moment to start
 before_test:
