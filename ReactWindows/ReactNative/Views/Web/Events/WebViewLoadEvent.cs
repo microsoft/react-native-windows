@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
 
 namespace ReactNative.Views.Web.Events
 {
     class WebViewLoadEvent : Event
     {
-        public const string TopLoadStart = "topLoadStart";
+        public const string TopLoadingStart = "topLoadingStart";
         public const string TopLoadingFinish = "topLoadingFinish";
 
         private readonly string _url;
