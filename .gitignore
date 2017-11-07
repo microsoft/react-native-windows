@@ -61,6 +61,8 @@ _ReSharper*/
 #NuGet
 packages/
 *.nupkg
+*.nuget.props
+*.nuget.targets
 
 #ncrunch
 *ncrunch*

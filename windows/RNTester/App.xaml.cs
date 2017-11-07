@@ -1,4 +1,4 @@
-﻿using ReactNative;
+using ReactNative;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -14,7 +14,7 @@ namespace RNTesterApp
     /// </summary>
     sealed partial class App : Application
     {
-        private readonly ReactPage _reactPage;
+        private readonly ReactNativeHost _host = new MainReactNativeHost();
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -25,8 +25,6 @@ namespace RNTesterApp
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
-
-            _reactPage = new MainPage();
         }
 
         /// <summary>
@@ -36,7 +34,8 @@ namespace RNTesterApp
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            _reactPage.OnResume(Exit);
+            _host.OnResume(Exit);
+            _host.ApplyArguments(e.Arguments);
 
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -54,8 +53,6 @@ namespace RNTesterApp
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                _reactPage.OnCreate(e.Arguments);
-
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
@@ -70,7 +67,7 @@ namespace RNTesterApp
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Content = _reactPage;
+                rootFrame.Content = _host.OnCreate();
             }
 
             // Ensure the current window is active
@@ -96,7 +93,7 @@ namespace RNTesterApp
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            _reactPage.OnSuspend();
+            _host.OnSuspend();
         }
 
         /// <summary>
@@ -106,7 +103,7 @@ namespace RNTesterApp
         /// <param name="e">Details about the resume request.</param>
         private void OnResuming(object sender, object e)
         {
-            _reactPage.OnResume(Exit);
+            _host.OnResume(Exit);
         }
     }
 }
