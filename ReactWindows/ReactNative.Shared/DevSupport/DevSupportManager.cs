@@ -155,28 +155,22 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public async Task<bool> HasUpToDateBundleInCacheAsync(CancellationToken token)
+        public bool HasUpToDateBundleInCache()
         {
             if (_isDevSupportEnabled)
             {
 #if WINDOWS_UWP
-                var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate;
-                var localFolder = ApplicationData.Current.LocalFolder;
-                var bundleItem = await localFolder.TryGetItemAsync(JSBundleFileName);
-                if (bundleItem != null)
-                {
-                    // bundleItem.GetBasicPropertiesAsync() is occasionally hanging
-                    var fileInfo = new FileInfo(bundleItem.Path);
-                    return fileInfo.CreationTimeUtc > lastUpdateTime.UtcDateTime;
-                }
+                var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate.UtcDateTime;
+                var localFolder = ApplicationData.Current.LocalFolder.Path;
 #else
                 var lastUpdateTime = File.GetCreationTime(Assembly.GetExecutingAssembly().Location);
-                var localFolder = FileSystem.Current.LocalStorage;
-                if (await localFolder.CheckExistsAsync(JSBundleFileName) == ExistenceCheckResult.FileExists)
-                {
-                    return File.GetLastWriteTime(JSBundleFileName) > lastUpdateTime;
-                }
+                var localFolder = FileSystem.Current.LocalStorage.Path;
 #endif
+                var localFileName = Path.Combine(localFolder, JSBundleFileName);
+                if (File.Exists(localFileName))
+                {
+                    return File.GetLastWriteTimeUtc(localFileName) > lastUpdateTime;
+                }
             }
 
             return false;
@@ -523,72 +517,40 @@ namespace ReactNative.DevSupport
 
         private async Task DownloadBundleFromPackagerAsync(CancellationToken token)
         {
-            var moved = false;
+            var deleteTemporaryFile = false;
 #if WINDOWS_UWP
-            var temporaryFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(
-                    JSBundleFileName,
-                    CreationCollisionOption.GenerateUniqueName)
-                .AsTask(token).ConfigureAwait(false);
-
-            try
-            {
-                using (var stream = await temporaryFile.OpenStreamForWriteAsync().ConfigureAwait(false))
-                {
-                    await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token).ConfigureAwait(false);
-                }
-
-                // CancellationToken not used because we don't want to
-                // interrupt the move operation (or else the delete operation
-                // below may throw a FileNotFoundException
-                await temporaryFile.MoveAsync(
-                    ApplicationData.Current.LocalFolder,
-                    JSBundleFileName,
-                    NameCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
-                moved = true;
-            }
-            finally
-            {
-                if (!moved)
-                {
-                    // CancellationToken not used because we should always
-                    // clean up the temporary file regardless of cancellation.
-                    await temporaryFile.DeleteAsync().AsTask().ConfigureAwait(false);
-                }
-            }
+            var temporaryFolder = ApplicationData.Current.TemporaryFolder.Path;
+            var localFolder = ApplicationData.Current.LocalFolder.Path;
 #else
-            var temporaryFilePath = Path.GetTempPath() + JSBundleFileName;
+            var temporaryFolder = Path.GetTempPath();
+            var localFolder = FileSystem.Current.LocalStorage.Path;
+#endif
+            var temporaryFilePath = Path.Combine(temporaryFolder, JSBundleFileName);
+
             try
             {
-                using (var stream = new FileStream(temporaryFilePath, FileMode.Create))
+                using (var stream = File.OpenWrite(temporaryFilePath))
                 {
+                    deleteTemporaryFile = true;
                     await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token).ConfigureAwait(false);
                 }
 
-                var temporaryFile = await FileSystem.Current.GetFileFromPathAsync(temporaryFilePath, token).ConfigureAwait(false);
-                var localStorage = FileSystem.Current.LocalStorage;
-                string newPath = PortablePath.Combine(localStorage.Path, JSBundleFileName);
+                var localFilePath = Path.Combine(localFolder, JSBundleFileName);
+                if (File.Exists(localFilePath))
+                {
+                    File.Delete(localFilePath);
+                }
 
-                // CancellationToken not used because we don't want to
-                // interrupt the move operation (or else the delete operation
-                // below may throw a FileNotFoundException
-                await temporaryFile.MoveAsync(newPath, NameCollisionOption.ReplaceExisting).ConfigureAwait(false);
-                moved = true;
+                File.Move(temporaryFilePath, localFilePath);
+                deleteTemporaryFile = false;
             }
             finally
             {
-                if (!moved)
+                if (deleteTemporaryFile)
                 {
-                    var temporaryFile = await FileSystem.Current.GetFileFromPathAsync(temporaryFilePath).ConfigureAwait(false);
-
-                    if (temporaryFile != null)
-                    {
-                        // CancellationToken not used because we should always
-                        // clean up the temporary file regardless of cancellation.
-                        await temporaryFile.DeleteAsync().ConfigureAwait(false);
-                    }   
+                    File.Delete(temporaryFilePath);
                 }
             }
-#endif
         }
 
         private async Task<ReactContext> ReloadJavaScriptInProxyModeAsync(CancellationToken token)
