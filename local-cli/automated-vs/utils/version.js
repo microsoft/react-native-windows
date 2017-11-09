@@ -6,7 +6,7 @@ function zeroIfUndefined(val) {
   return typeof val === 'undefined' ? 0 : val;
 }
 
-class Version {
+module.exports = class Version {
   constructor(major, minor, build, qfe) {
     this.major = major;
     this.minor = zeroIfUndefined(minor);
@@ -86,6 +86,4 @@ class Version {
     }
     return null;
   }
-}
-
-module.exports = Version;
+};

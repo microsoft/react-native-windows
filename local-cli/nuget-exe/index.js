@@ -1,9 +1,7 @@
 'use-strict';
 
-const path = require('path');
-
 function getNuGetPath() {
-    return 'node_modules/nuget-exe/.nuget/nuget.exe';
+    return 'node_modules/react-native-windows/local-cli/nuget-exe/.nuget/nuget.exe';
 }
 
 module.exports = {getNuGetPath};

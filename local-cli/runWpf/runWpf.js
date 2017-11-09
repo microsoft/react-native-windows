@@ -1,10 +1,33 @@
 'use strict';
 
-const CONSTANTS = require('../constants');
-const common = require('../runCommon');
+const chalk = require('chalk');
+const automatedVS = require('../automated-vs/index');
+const WPFSolution = automatedVS.WPFSolution;
+const buildAndDeployUtils = require('../utils/buildAndDeployUtils');
+
+const minWinSDK = '8.1.0.0';
 
 function runWpf(config, args, options) {
-  return common.runRNWApp(config, args, options, CONSTANTS.wpf);
+
+  options.root = options.root || process.cwd();
+
+  const slnFile = buildAndDeployUtils.getSolutionFile(options, 'wpf');
+  if (!slnFile) {
+    console.error(chalk.red('Visual Studio Solution file not found. Make sure your root directory contains the wpf folder.'));
+    return;
+  }
+
+  const wpfSol = new WPFSolution(slnFile, options.root, minWinSDK);
+
+  try {
+    wpfSol.build(options);
+  } catch (e) {
+    console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
+    return;
+  }
+
+
+  return buildAndDeployUtils.startServerInNewWindow(options).then(() => wpfSol.deploy(options, `wpf/${wpfSol.name}`));
 }
 
 /*

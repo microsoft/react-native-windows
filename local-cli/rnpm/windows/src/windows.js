@@ -25,7 +25,7 @@ const REACT_NATIVE_WINDOWS_GENERATE_PATH = function() {
 };
 
 module.exports = function windows(config, args, options) {
-  const name = args[0] ? args[0] : Common.getReactNativeAppName();
+  const name = config[0] ? config[0] : Common.getReactNativeAppName();
   const ns = options.namespace ? options.namespace : name;
   const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
 
