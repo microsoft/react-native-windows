@@ -55,9 +55,8 @@ namespace ReactNative.UIManager
         IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
 
         /// <summary>
-        /// Creates a shadow node for the view manager.
+        /// The native props for the view manager.
         /// </summary>
-        /// <returns>The shadow node instance.</returns>
         IReadOnlyDictionary<string, string> NativeProperties { get; }
 
         /// <summary>

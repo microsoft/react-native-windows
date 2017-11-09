@@ -70,9 +70,11 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Checks if an up-to-date JavaScript bundle is ready.
         /// </summary>
-        /// <param name="token">A token to cancel the check.</param>
-        /// <returns>A task to await the result.</returns>
-        Task<bool> HasUpToDateBundleInCacheAsync(CancellationToken token);
+        /// <returns>
+        /// <code>true</code> if the cached bundle is newer than the date the
+        /// application was installed, otherwise <code>false</code>.
+        /// </returns>
+        bool HasUpToDateBundleInCache();
 
         /// <summary>
         /// Dismisses the red box exception dialog.

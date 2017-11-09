@@ -16,6 +16,7 @@ namespace ReactNative.UIManager
 
         private readonly UIImplementation _uiImplementation;
         private readonly IReadOnlyDictionary<string, object> _moduleConstants;
+        private readonly IReadOnlyDictionary<string, object> _customDirectEvents;
         private readonly EventDispatcher _eventDispatcher;
         private readonly IActionQueue _layoutActionQueue;
 
@@ -45,10 +46,17 @@ namespace ReactNative.UIManager
 
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
-            _moduleConstants = CreateConstants(viewManagers);
+            var customDirectEvents = new Dictionary<string, object>();
+            _customDirectEvents = customDirectEvents;
+            _moduleConstants = CreateConstants(viewManagers, null, customDirectEvents);
             _layoutActionQueue = layoutActionQueue;
             reactContext.AddLifecycleEventListener(this);
         }
+
+        /// <summary>
+        /// An event fired before the UIManager dispatches view updates.
+        /// </summary>
+        public event EventHandler DispatchingViewUpdates;
 
         /// <summary>
         /// The name of the module.
@@ -141,8 +149,42 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void AddUIBlock(IUIBlock block)
         {
-            _layoutActionQueue.Dispatch(() =>
-                _uiImplementation.AddUIBlock(block));
+            _uiImplementation.AddUIBlock(block);
+        }
+
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// need view logic before all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            _uiImplementation.PrependUIBlock(block);
+        }
+
+        /// <summary>
+        /// Resolves direct event name exposed to JavaScript from the one known
+        /// to the native implementation.
+        /// </summary>
+        /// <param name="eventName">The native event name.</param>
+        /// <returns>The direct event name.</returns>
+        public string ResolveCustomEventName(string eventName)
+        {
+            var value = default(object);
+            if (!_customDirectEvents.TryGetValue(eventName, out value))
+            {
+                return eventName;
+            }
+
+            var customEventType = value as IDictionary<string, object>;
+            if (customEventType == null ||
+                !customEventType.TryGetValue("registrationName", out value))
+            {
+                return eventName;
+            }
+
+            var registrationName = value as string;
+            return registrationName ?? eventName;
         }
 
         #region React Methods
@@ -480,6 +522,7 @@ namespace ReactNative.UIManager
         public void OnBatchComplete()
         {
             var batchId = _batchId++;
+            DispatchingViewUpdates?.Invoke(this, new EventArgs());
             _uiImplementation.DispatchViewUpdates(batchId);
         }
 
