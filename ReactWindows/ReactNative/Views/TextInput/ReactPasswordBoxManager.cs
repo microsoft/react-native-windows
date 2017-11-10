@@ -399,10 +399,9 @@ namespace ReactNative.Views.TextInput
         /// <param name="dimensions">The output buffer.</param>
         public override void SetDimensions(PasswordBox view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
+            base.SetDimensions(view, dimensions);
+            view.MinWidth = dimensions.Width;
+            view.MinHeight = dimensions.Height;
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
