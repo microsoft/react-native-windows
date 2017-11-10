@@ -1,4 +1,4 @@
-﻿using NMock;
+using NMock;
 using NUnit.Framework;
 using ReactNative.Views.Scroll;
 using System;
@@ -15,13 +15,13 @@ namespace ReactNative.Tests.Views.Scroll
         private ReactScrollViewManager _scrollViewManager;
 
         [SetUp]
+        [DefaultFloatingPointTolerance(0.01)]
         public void SetUp()
         {
             _mockFactory = new MockFactory();
             _mockScrollViewScroller = _mockFactory.CreateMock<IScrollViewScroller>();
             _testScrollView = new TestScrollView(_mockScrollViewScroller.MockObject);
             _scrollViewManager = new ReactScrollViewManager();
-            GlobalSettings.DefaultFloatingPointTolerance = 0.01;
         }
 
         [Test]

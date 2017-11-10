@@ -64,6 +64,11 @@
       <HintPath>$(SolutionDir)\packages\Facebook.Yoga.1.5.0-pre1\lib\net45\Facebook.Yoga.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Interop.NETWORKLIST, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Interop.NetworkList.1.0.0\lib\net452\Interop.NETWORKLIST.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -214,17 +219,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="NETWORKLIST">
-      <Guid>{DCB00D01-570F-4A9B-8D69-199FDBA5723B}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReactNative.Core\ReactNative.Core.csproj">
