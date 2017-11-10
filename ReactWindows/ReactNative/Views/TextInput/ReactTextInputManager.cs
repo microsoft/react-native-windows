@@ -486,12 +486,16 @@ namespace ReactNative.Views.TextInput
             view.TextChanging -= OnTextChanging;
         }
 
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The dimensions.</param>
         public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
+            base.SetDimensions(view, dimensions);
+            view.MinWidth = dimensions.Width;
+            view.MinHeight = dimensions.Height;
         }
 
         /// <summary>
@@ -521,7 +525,7 @@ namespace ReactNative.Views.TextInput
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
         }
-        
+
         private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
             var textBox = (ReactTextBox)sender;
