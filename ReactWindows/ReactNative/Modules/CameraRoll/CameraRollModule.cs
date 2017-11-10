@@ -159,3 +159,4 @@ namespace ReactNative.Modules.CameraRoll
         }
     }
 }
+
