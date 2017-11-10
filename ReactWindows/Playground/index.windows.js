@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
+  TextInput,
   View,
 } from 'react-native';
 
@@ -15,15 +15,7 @@ class Playground extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.windows.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press Shift+F10 for dev menu
-        </Text>
+        <TextInput style={{paddingLeft: 25 }} text={"hello"} />
       </View>
     );
   }
