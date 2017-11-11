@@ -3,6 +3,7 @@ using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
+using ReactNative.Modules.Cursor;
 using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Image;
 using ReactNative.Modules.I18N;
@@ -44,6 +45,7 @@ namespace ReactNative.Shell
                 new AsyncStorageModule(),
                 //new CameraRollManager(reactContext),
                 new ClipboardModule(),
+                new CursorModule(),
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
                 new I18NModule(),
