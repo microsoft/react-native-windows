@@ -18,7 +18,7 @@ namespace ReactNative.Modules.Cursor
         /// Set a mouse cursor
         /// </summary>
         /// <param name="cursor">The name of a system cursor (listed here: https://msdn.microsoft.com/en-us/library/system.windows.input.cursors(v=vs.110).aspx
-        ///   ) or a file path to a custom cursor.</param>
+        ///   ) or an absolute file path to a custom cursor.</param>
         [ReactMethod]
         public void setCursor(string cursor)
         {
