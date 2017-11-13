@@ -224,7 +224,13 @@
       <Version>1.0.2</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive">
-      <Version>3.1.1</Version>
+      <Version>4.0.0-preview00001</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reactive.Compatibility">
+      <Version>4.0.0-preview00001</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reactive.Interfaces">
+      <Version>4.0.0-preview00001</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
