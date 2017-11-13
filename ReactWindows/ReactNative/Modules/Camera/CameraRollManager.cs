@@ -1,29 +1,29 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Windows.Storage;
 using Windows.Storage.Search;
-using System.Linq;
 using Windows.Storage.FileProperties;
 
-namespace ReactNative.Modules.CameraRoll
+namespace ReactNative.Modules.Camera
 {
     /// <summary>
     /// Native module CameraRoll.
     /// CameraRoll provides access to the local camera roll / gallery.
     /// </summary>
-    public class CameraRollModule : ReactContextNativeModuleBase
+    public class CameraRollManager : ReactContextNativeModuleBase
     {
         // Supported media file types
         private static readonly List<string> SupportedVideoFileTypes = new List<string> { ".mp4", ".wmv", ".avi" };
         private static readonly List<string> SupportedImageFileTypes = new List<string> { ".jpeg", ".jpg", ".png", ".gif", ".bmp" };
-        
+
         /// <summary>
-        /// Instantiates the <see cref="CameraRollModule"/>. 
+        /// Instantiates the <see cref="CameraRollManager"/>. 
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        public CameraRollModule(ReactContext reactContext) : base(reactContext)
+        public CameraRollManager(ReactContext reactContext) : base(reactContext)
         {
         }
 
@@ -32,7 +32,7 @@ namespace ReactNative.Modules.CameraRoll
         /// </summary>
         public override string Name
         {
-            get { return "CameraRoll"; }    
+            get { return "CameraRollManager"; }    
         }
 
         /// <summary>
@@ -81,10 +81,7 @@ namespace ReactNative.Modules.CameraRoll
                 switch ((string)(options["assetType"]))
                 {
                     case "All":
-                        queryOption = new QueryOptions(CommonFileQuery.OrderByDate, SupportedVideoFileTypes
-                          .Concat(SupportedImageFileTypes)
-                          .ToList()
-                         );
+                        queryOption = new QueryOptions(CommonFileQuery.OrderByDate, SupportedVideoFileTypes.Concat(SupportedImageFileTypes).ToList());
                         break;
                     case "Videos":
                         queryOption = new QueryOptions(CommonFileQuery.OrderByDate, SupportedVideoFileTypes);
@@ -98,9 +95,7 @@ namespace ReactNative.Modules.CameraRoll
                 StorageFolder picturesFolder = KnownFolders.CameraRoll;
                 queryOption.FolderDepth = FolderDepth.Deep;
 
-                IReadOnlyList<StorageFile> sortedItems = await picturesFolder
-                  .CreateFileQueryWithOptions(queryOption)
-                  .GetFilesAsync(0, limit);
+                IReadOnlyList<StorageFile> sortedItems = await picturesFolder.CreateFileQueryWithOptions(queryOption).GetFilesAsync(0, limit);
                 
                 var result = new JObject();
                 var edges = new JArray();
