@@ -1,4 +1,4 @@
-﻿using ReactNative.Animated;
+using ReactNative.Animated;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.CameraRoll;
