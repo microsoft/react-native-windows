@@ -15,7 +15,7 @@ const NativeModules = require('NativeModules');
 
 var Cursor = {
   setCursor: function(
-    cursor: ?string
+    cursor: string | number
   ): void {
     NativeModules.Cursor.setCursor(cursor)
   }

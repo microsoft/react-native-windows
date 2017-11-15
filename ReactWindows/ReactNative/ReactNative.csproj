@@ -114,6 +114,7 @@
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
+    <Compile Include="Modules\Cursor\CursorModule.cs" />
     <Compile Include="Modules\DeviceInfo\DeviceInfoModule.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
