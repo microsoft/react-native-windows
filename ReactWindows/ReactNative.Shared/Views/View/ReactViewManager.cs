@@ -1,6 +1,7 @@
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -92,6 +93,20 @@ namespace ReactNative.Views.View
             return new BorderedCanvas();
         }
 
+        #region misc RN props
+
+        /// <summary>
+        /// Sets whether the view is collapsible.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="collapsible">The flag.</param>
+        [ReactProp(ViewProps.Collapsible)]
+        public void SetCollapsible(BorderedCanvas view, bool collapsible)
+        {
+            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
+            // handled in NativeViewHierarchyOptimizer
+        }
+
         /// <summary>
         /// Sets whether or not the view is an accessibility element.
         /// </summary>
@@ -117,6 +132,43 @@ namespace ReactNative.Views.View
         {
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
             view.SetPointerEvents(pointerEvents);
+        }
+
+        #endregion
+
+        #region borders and background
+
+        private class BorderProps
+        {
+            public uint? Color;
+            public double[] Width = new double[4] { 0, 0, 0, 0 };
+        }
+
+        private Dictionary<BorderedCanvas, BorderProps> _borderProps = new Dictionary<BorderedCanvas, BorderProps>();
+
+        private BorderProps GetBorderProps(BorderedCanvas view)
+        {
+            BorderProps props;
+
+            if (!_borderProps.TryGetValue(view, out props))
+            {
+                props = new BorderProps();
+                _borderProps[view] = props;
+            }
+
+            return props;
+        }
+
+        /// Canvas.Background supports flat backgrounds. Border.Background supports
+        /// backgrounds with customizations, such as rounded corners. If the background
+        /// is flat, it's set on Canvas. If it has cutomizations, it's transferred to Border.
+        private void TransferBackgroundBrush(BorderedCanvas view)
+        {
+            if (view.Background != null && view.Border != null)
+            {
+                view.Border.Background = view.Background;
+                view.Background = null;
+            }
         }
 
         /// <summary>
@@ -156,6 +208,7 @@ namespace ReactNative.Views.View
             }
 
             border.CornerRadius = cornerRadius;
+            TransferBackgroundBrush(view);
         }
 
         /// <summary>
@@ -169,8 +222,17 @@ namespace ReactNative.Views.View
             DefaultUInt32 = ColorHelpers.Transparent)]
         public void SetBackgroundColor(BorderedCanvas view, uint color)
         {
-            var border = GetOrCreateBorder(view);
-            border.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            var brush = new SolidColorBrush(ColorHelpers.Parse(color));
+
+            if (view.Border == null)
+            {
+                view.Background = brush;
+            }
+            else
+            {
+                var border = GetOrCreateBorder(view);
+                border.Background = brush;
+            }
         }
 
         /// <summary>
@@ -181,10 +243,18 @@ namespace ReactNative.Views.View
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(BorderedCanvas view, uint? color)
         {
-            var border = GetOrCreateBorder(view);
-            border.BorderBrush = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : s_defaultBorderBrush;
+            if (view.Border == null)
+            {
+                GetBorderProps(view).Color = color;
+            }
+            else
+            {
+                var border = GetOrCreateBorder(view);
+                border.BorderBrush = color.HasValue
+                    ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                    : s_defaultBorderBrush;
+                TransferBackgroundBrush(view);
+            }
         }
 
         /// <summary>
@@ -203,19 +273,19 @@ namespace ReactNative.Views.View
         {
             var border = GetOrCreateBorder(view);
             border.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
+
+            if (border.BorderBrush == null)
+            {
+                var color = GetBorderProps(view).Color;
+                SetBorderColor(view, color);
+            }
+
+            TransferBackgroundBrush(view);
         }
 
-        /// <summary>
-        /// Sets whether the view is collapsible.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="collapsible">The flag.</param>
-        [ReactProp(ViewProps.Collapsible)]
-        public void SetCollapsible(BorderedCanvas view, bool collapsible)
-        {
-            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
-            // handled in NativeViewHierarchyOptimizer
-        }
+        #endregion
+
+        #region children collection management
 
         /// <summary>
         /// Adds a child at the given index.
@@ -300,5 +370,7 @@ namespace ReactNative.Views.View
 
             parent.Children.RemoveAt(index);
         }
+
+        #endregion
     }
 }
