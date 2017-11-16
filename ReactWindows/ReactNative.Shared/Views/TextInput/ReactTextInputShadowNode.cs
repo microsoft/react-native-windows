@@ -28,6 +28,7 @@ namespace ReactNative.Views.TextInput
     public class ReactTextInputShadowNode : LayoutShadowNode
     {
         private const int Unset = -1;
+        private const int DefaultBorderWidth = 2;
 
         private static readonly float[] s_defaultPaddings =
         {
@@ -39,6 +40,7 @@ namespace ReactNative.Views.TextInput
 
         private float[] _computedPadding;
 
+        private bool _multiline;
         private int _letterSpacing;
         private int _numberOfLines;
 
@@ -67,6 +69,7 @@ namespace ReactNative.Views.TextInput
             SetDefaultPadding(EdgeSpacing.Top, s_defaultPaddings[1]);
             SetDefaultPadding(EdgeSpacing.Right, s_defaultPaddings[2]);
             SetDefaultPadding(EdgeSpacing.Bottom, s_defaultPaddings[3]);
+            SetBorder(EdgeSpacing.All, DefaultBorderWidth);
             MeasureFunction = (node, width, widthMode, height, heightMode) => 
                 MeasureTextInput(this, node, width, widthMode, height, heightMode);
         }
@@ -191,6 +194,20 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets whether to enable multiline input on the text input.
+        /// </summary>
+        /// <param name="multiline">The multiline flag.</param>
+        [ReactProp("multiline")]
+        public void SetMultiline(bool multiline)
+        {
+            if (_multiline != multiline)
+            {
+                _multiline = multiline;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
         /// Sets the text alignment.
         /// </summary>
         /// <param name="textAlign">The text alignment string.</param>
@@ -277,73 +294,53 @@ namespace ReactNative.Views.TextInput
         {
             textInputNode._computedPadding = textInputNode.GetComputedPadding();
 
-            var borderLeftWidth = textInputNode.GetBorder(YogaEdge.Left);
-            var borderRightWidth = textInputNode.GetBorder(YogaEdge.Right);
-
             var normalizedWidth = Math.Max(0,
-                (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width)
-                - textInputNode._computedPadding[0]
-                - textInputNode._computedPadding[2]
-                - (YogaConstants.IsUndefined(borderLeftWidth) ? 0 : borderLeftWidth)
-                - (YogaConstants.IsUndefined(borderRightWidth) ? 0 : borderRightWidth));
-            var normalizedHeight = Math.Max(0, YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height);
+                (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width));
+
+            var normalizedHeight = Math.Max(0,
+                (YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height));
+
+            var normalizedText = string.IsNullOrEmpty(textInputNode._text) ? " " : textInputNode._text;
 
             var textBlock = new TextBlock
             {
-                TextWrapping = TextWrapping.Wrap,
+                Text = normalizedText,
+                TextWrapping = textInputNode._multiline ? TextWrapping.Wrap : TextWrapping.NoWrap,
             };
 
-            var normalizedText = string.IsNullOrEmpty(textInputNode._text) ? " " : textInputNode._text;
-            var inline = new Run { Text = normalizedText };
-            FormatInline(textInputNode, inline);
-
-            textBlock.Inlines.Add(inline);
+            ApplyStyles(textInputNode, textBlock);
 
             textBlock.Measure(new Size(normalizedWidth, normalizedHeight));
 
-            var borderTopWidth = textInputNode.GetBorder(YogaEdge.Top);
-            var borderBottomWidth = textInputNode.GetBorder(YogaEdge.Bottom);
-
-            var finalizedHeight = (float)textBlock.DesiredSize.Height;
-            finalizedHeight += textInputNode._computedPadding[1];
-            finalizedHeight += textInputNode._computedPadding[3];
-            finalizedHeight += YogaConstants.IsUndefined(borderTopWidth) ? 0 : borderTopWidth;
-            finalizedHeight += YogaConstants.IsUndefined(borderBottomWidth) ? 0 : borderBottomWidth;
-
             return MeasureOutput.Make(
                 (float)Math.Ceiling(width),
-                (float)Math.Ceiling(finalizedHeight));
+                (float)Math.Ceiling(textBlock.ActualHeight));
         }
 
-        /// <summary>
-        /// Formats an inline instance with shadow properties.
-        /// </summary>
-        /// <param name="textNode">The text shadow node.</param>
-        /// <param name="inline">The inline.</param>
-        protected static void FormatInline(ReactTextInputShadowNode textNode, TextElement inline)
+        private static void ApplyStyles(ReactTextInputShadowNode textNode, TextBlock textBlock)
         {
             if (textNode._fontSize != Unset)
             {
                 var fontSize = textNode._fontSize;
-                inline.FontSize = fontSize;
+                textBlock.FontSize = fontSize;
             }
 
             if (textNode._fontStyle.HasValue)
             {
                 var fontStyle = textNode._fontStyle.Value;
-                inline.FontStyle = fontStyle;
+                textBlock.FontStyle = fontStyle;
             }
 
             if (textNode._fontWeight.HasValue)
             {
                 var fontWeight = textNode._fontWeight.Value;
-                inline.FontWeight = fontWeight;
+                textBlock.FontWeight = fontWeight;
             }
 
             if (textNode._fontFamily != null)
             {
                 var fontFamily = new FontFamily(textNode._fontFamily);
-                inline.FontFamily = fontFamily;
+                textBlock.FontFamily = fontFamily;
             }
         }
     }

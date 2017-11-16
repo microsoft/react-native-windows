@@ -1,7 +1,4 @@
-﻿using Facebook.Yoga;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Facebook.Yoga;
 
 namespace ReactNative.UIManager
 {
