@@ -34,7 +34,6 @@ namespace ReactNative.Views.View
         private class BorderProps
         {
             public uint? Color;
-            public double[] Width = new double[4] { 0, 0, 0, 0 };
         }
 
         private readonly Dictionary<BorderedCanvas, BorderProps> _borderProps =
