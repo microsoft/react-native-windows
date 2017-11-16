@@ -31,6 +31,40 @@ namespace ReactNative.Views.View
             BottomRight,
         }
 
+        private class BorderProps
+        {
+            public uint? Color;
+            public double[] Width = new double[4] { 0, 0, 0, 0 };
+        }
+
+        private readonly Dictionary<BorderedCanvas, BorderProps> _borderProps =
+            new Dictionary<BorderedCanvas, BorderProps>();
+
+        private BorderProps GetBorderProps(BorderedCanvas view)
+        {
+            BorderProps props;
+
+            if (!_borderProps.TryGetValue(view, out props))
+            {
+                props = new BorderProps();
+                _borderProps[view] = props;
+            }
+
+            return props;
+        }
+
+        /// Canvas.Background supports flat backgrounds. Border.Background supports
+        /// backgrounds with customizations, such as rounded corners. If the background
+        /// is flat, it's set on Canvas. If it has cutomizations, it's transferred to Border.
+        private void TransferBackgroundBrush(BorderedCanvas view)
+        {
+            if (view.Background != null && view.Border != null)
+            {
+                view.Border.Background = view.Background;
+                view.Background = null;
+            }
+        }
+
         /// <summary>
         /// Default brush for the view borders.
         /// </summary>
@@ -137,39 +171,6 @@ namespace ReactNative.Views.View
         #endregion
 
         #region borders and background
-
-        private class BorderProps
-        {
-            public uint? Color;
-            public double[] Width = new double[4] { 0, 0, 0, 0 };
-        }
-
-        private Dictionary<BorderedCanvas, BorderProps> _borderProps = new Dictionary<BorderedCanvas, BorderProps>();
-
-        private BorderProps GetBorderProps(BorderedCanvas view)
-        {
-            BorderProps props;
-
-            if (!_borderProps.TryGetValue(view, out props))
-            {
-                props = new BorderProps();
-                _borderProps[view] = props;
-            }
-
-            return props;
-        }
-
-        /// Canvas.Background supports flat backgrounds. Border.Background supports
-        /// backgrounds with customizations, such as rounded corners. If the background
-        /// is flat, it's set on Canvas. If it has cutomizations, it's transferred to Border.
-        private void TransferBackgroundBrush(BorderedCanvas view)
-        {
-            if (view.Background != null && view.Border != null)
-            {
-                view.Border.Background = view.Background;
-                view.Background = null;
-            }
-        }
 
         /// <summary>
         /// Sets the border radius of the view.
