@@ -47,8 +47,6 @@ namespace ReactNative.Views.TextInput
         private const uint DefaultTextControlBorderBrushFocused = 0xFF298FCC;
         private const uint DefaultTextControlBorderBrushDisabled = 0x33000000;
 
-        private bool _onSelectionChange;
-
         /// <summary>
         /// The name of the view manager.
         /// </summary>
@@ -223,18 +221,9 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The view instance.</param>
         /// <param name="onSelectionChange">The indicator.</param>
         [ReactProp("onSelectionChange", DefaultBoolean = false)]
-        public void SetSelectionChange(ReactTextBox view, bool onSelectionChange)
+        public void SetOnSelectionChange(ReactTextBox view, bool onSelectionChange)
         {
-            if (onSelectionChange)
-            {
-                _onSelectionChange = true;
-                view.SelectionChanged += OnSelectionChanged;
-            }
-            else
-            {
-                _onSelectionChange = false;
-                view.SelectionChanged -= OnSelectionChanged;
-            }
+            view.OnSelectionChange = onSelectionChange;
         }
 
         /// <summary>
@@ -513,9 +502,10 @@ namespace ReactNative.Views.TextInput
                 view.TextChanging -= OnTextChanging;
                 view.TextChanged -= OnTextChanged;
 
-                if (_onSelectionChange)
+                var removeOnSelectionChange = view.OnSelectionChange;
+                if (removeOnSelectionChange)
                 {
-                    view.SelectionChanged -= OnSelectionChanged;
+                    view.OnSelectionChange = false;
                 }
 
                 var text = textUpdate.Item2;
@@ -528,9 +518,9 @@ namespace ReactNative.Views.TextInput
                 view.SelectionStart = Math.Min(selectionStart, textLength);
                 view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
 
-                if (_onSelectionChange)
+                if (removeOnSelectionChange)
                 {
-                    view.SelectionChanged += OnSelectionChanged;
+                    view.OnSelectionChange = true;
                 }
 
                 view.TextChanged += OnTextChanged;
@@ -659,21 +649,6 @@ namespace ReactNative.Views.TextInput
                                 textBox.Text));
                 }
             }
-        }
-
-        private void OnSelectionChanged(object sender, RoutedEventArgs e)
-        {
-            var textBox = (ReactTextBox)sender;
-            var start = textBox.SelectionStart;
-            var length = textBox.SelectionLength;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactTextInputSelectionEvent(
-                        textBox.GetTag(),
-                        start,
-                        start + length));
         }
     }
 }
