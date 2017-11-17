@@ -281,6 +281,13 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
+                    "topContentSizeChange",
+                    new Map
+                    {
+                        { "registrationName", "onContentSizeChange" },
+                    }
+                },
+                {
                     "topLayout",
                     new Map
                     {

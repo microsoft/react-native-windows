@@ -1,4 +1,4 @@
-﻿using Facebook.Yoga;
+using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager.Annotations;
@@ -111,7 +111,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="maxHeight">The maximum height.</param>
         [ReactProp(ViewProps.MaxHeight, DefaultSingle = YogaConstants.Undefined)]
-        public void SetMaxHeight(JValue maxHeight)
+        public virtual void SetMaxHeight(JValue maxHeight)
         {
             if (IsVirtual)
             {
