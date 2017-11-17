@@ -512,15 +512,22 @@ namespace ReactNative.Views.TextInput
                 }
 
                 var text = textUpdate.Item2;
+                var previousText = view.Text;
                 var selectionStart = view.SelectionStart;
                 var selectionLength = view.SelectionLength;
                 var textLength = text?.Length ?? 0;
                 var maxLength = textLength - selectionLength;
 
                 view.Text = text ?? "";
-
-                view.SelectionStart = Math.Min(selectionStart, textLength);
-                view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
+                if (selectionStart == previousText.Length)
+                {
+                    view.SelectionStart = textLength;
+                }
+                else
+                {
+                    view.SelectionStart = Math.Min(selectionStart, textLength);
+                    view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
+                }
 
                 if (removeOnSelectionChange)
                 {
