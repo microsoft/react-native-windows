@@ -621,17 +621,13 @@ namespace ReactNative.Views.TextInput
         /// <param name="dimensions">The dimensions.</param>
         public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
         {
-            var removeContentSizeChange = view.OnContentSizeChange;
-            if (removeContentSizeChange)
-            {
-                view.OnContentSizeChange = false;
-            }
-
             view.MinWidth = dimensions.Width;
             view.MinHeight = dimensions.Height;
 
             if (view.AutoGrow)
             {
+                // TODO: investigate Yoga bug that rounds up height 1px
+                view.DimensionsUpdated = true;
                 Canvas.SetLeft(view, dimensions.X);
                 Canvas.SetTop(view, dimensions.Y);
                 view.Width = dimensions.Width;
@@ -639,11 +635,6 @@ namespace ReactNative.Views.TextInput
             else
             {
                 base.SetDimensions(view, dimensions);
-            }
-
-            if (removeContentSizeChange)
-            {
-                view.OnContentSizeChange = true;
             }
         }
 
