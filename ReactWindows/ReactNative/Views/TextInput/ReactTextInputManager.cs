@@ -238,6 +238,25 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the selected text on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="selection">The selection.</param>
+        [ReactProp("selection")]
+        public void SetSelection(ReactTextBox view, JObject selection)
+        {
+            var start = selection.Value<int>("start");
+            var textLength = view.Text?.Length ?? 0;
+            var normalizedStart = Math.Min(start, textLength);
+            var end = selection.Value<int>("end");
+            var selectionLength = end - start;
+            var normalizedSelectionLength = Math.Max(selectionLength, 0);
+            var maxLength = textLength - normalizedStart;
+            view.SelectionStart = normalizedStart;
+            view.SelectionLength = Math.Min(normalizedSelectionLength, maxLength);
+        }
+
+        /// <summary>
         /// Sets the default text placeholder property on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -550,10 +569,12 @@ namespace ReactNative.Views.TextInput
 
                 var text = textUpdate.Item2;
                 var previousText = view.Text;
+
                 var selectionStart = view.SelectionStart;
-                var selectionLength = view.SelectionLength;
                 var textLength = text?.Length ?? 0;
-                var maxLength = textLength - selectionLength;
+                var normalizedStart = Math.Min(selectionStart, textLength);
+                var selectionLength = view.SelectionLength;
+                var maxLength = textLength - normalizedStart;
 
                 view.Text = text ?? "";
                 if (selectionStart == previousText.Length)
@@ -562,8 +583,8 @@ namespace ReactNative.Views.TextInput
                 }
                 else
                 {
-                    view.SelectionStart = Math.Min(selectionStart, textLength);
-                    view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
+                    view.SelectionStart = normalizedStart;
+                    view.SelectionLength = Math.Min(selectionLength, maxLength);
                 }
 
                 if (removeOnSelectionChange)
