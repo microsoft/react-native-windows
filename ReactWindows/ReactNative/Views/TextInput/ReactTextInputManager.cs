@@ -227,6 +227,17 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets whether to track size changes on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="onContentSizeChange">The indicator.</param>
+        [ReactProp("onContentSizeChange", DefaultBoolean = false)]
+        public void setOnContentSizeChange(ReactTextBox view, bool onContentSizeChange)
+        {
+            view.OnContentSizeChange = onContentSizeChange;
+        }
+
+        /// <summary>
         /// Sets the default text placeholder property on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -391,6 +402,21 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets whether to enable the <see cref="ReactTextBox"/> to autogrow.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="autoGrow">The auto-grow flag.</param>
+        [ReactProp("autoGrow", DefaultBoolean = false)]
+        public void SetAutoGrow(ReactTextBox view, bool autoGrow)
+        {
+            view.AutoGrow = autoGrow;
+            if (autoGrow)
+            {
+                view.Height = double.NaN;
+            }
+        }
+
+        /// <summary>
         /// Sets the keyboard type on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -441,6 +467,17 @@ namespace ReactNative.Views.TextInput
         public void SetSelectTextOnFocus(ReactTextBox view, bool selectTextOnFocus)
         {
             view.SelectTextOnFocus = selectTextOnFocus;
+        }
+
+        /// <summary>
+        /// Sets the max height of the text box.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="height">The max height.</param>
+        [ReactProp("maxHeight")]
+        public void SetMaxHeight(ReactTextBox view, double height)
+        {
+            view.MaxHeight = height;
         }
 
         /// <summary>
@@ -563,9 +600,30 @@ namespace ReactNative.Views.TextInput
         /// <param name="dimensions">The dimensions.</param>
         public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
         {
-            base.SetDimensions(view, dimensions);
+            var removeContentSizeChange = view.OnContentSizeChange;
+            if (removeContentSizeChange)
+            {
+                view.OnContentSizeChange = false;
+            }
+
             view.MinWidth = dimensions.Width;
             view.MinHeight = dimensions.Height;
+
+            if (view.AutoGrow)
+            {
+                Canvas.SetLeft(view, dimensions.X);
+                Canvas.SetTop(view, dimensions.Y);
+                view.Width = dimensions.Width;
+            }
+            else
+            {
+                base.SetDimensions(view, dimensions);
+            }
+
+            if (removeContentSizeChange)
+            {
+                view.OnContentSizeChange = true;
+            }
         }
 
         /// <summary>
@@ -612,8 +670,6 @@ namespace ReactNative.Views.TextInput
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
                         textBox.Text,
-                        textBox.ActualWidth,
-                        textBox.ActualHeight,
                         textBox.CurrentEventCount));
         }
 

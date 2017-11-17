@@ -41,11 +41,13 @@ namespace ReactNative.Views.TextInput
         private float[] _computedPadding;
 
         private bool _multiline;
+        private bool _autoGrow;
         private int _letterSpacing;
         private int _numberOfLines;
 
         private double _fontSize = Unset;
         private double _lineHeight;
+        private double? _maxHeight;
 
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
@@ -170,7 +172,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="lineHeight">The line height.</param>
         [ReactProp(ViewProps.LineHeight)]
-        public virtual void SetLineHeight(double lineHeight)
+        public void SetLineHeight(double lineHeight)
         {
             if (_lineHeight != lineHeight)
             {
@@ -180,11 +182,26 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the max height.
+        /// </summary>
+        /// <param name="maxHeight">The max height.</param>
+        [ReactProp(ViewProps.MaxHeight)]
+        public override void SetMaxHeight(JValue maxHeight)
+        {
+            var maxHeightValue = maxHeight.Value<double?>();
+            if (_maxHeight != maxHeightValue)
+            {
+                _maxHeight = maxHeightValue;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
         /// Sets the maximum number of lines.
         /// </summary>
         /// <param name="numberOfLines">Max number of lines.</param>
         [ReactProp(ViewProps.NumberOfLines)]
-        public virtual void SetNumberOfLines(int numberOfLines)
+        public void SetNumberOfLines(int numberOfLines)
         {
             if (_numberOfLines != numberOfLines)
             {
@@ -204,6 +221,23 @@ namespace ReactNative.Views.TextInput
             {
                 _multiline = multiline;
                 MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Sets whether to enable auto-grow on the text input.
+        /// </summary>
+        /// <param name="autoGrow">The auto-grow flag.</param>
+        [ReactProp("autoGrow")]
+        public void SetAutoGrow(bool autoGrow)
+        {
+            if (_autoGrow != autoGrow)
+            {
+                _autoGrow = autoGrow;
+                if (!_autoGrow)
+                {
+                    MarkUpdated();
+                }
             }
         }
 
@@ -341,6 +375,11 @@ namespace ReactNative.Views.TextInput
             {
                 var fontFamily = new FontFamily(textNode._fontFamily);
                 textBlock.FontFamily = fontFamily;
+            }
+
+            if (textNode._maxHeight.HasValue)
+            {
+                textBlock.MaxHeight = textNode._maxHeight.Value;
             }
         }
     }
