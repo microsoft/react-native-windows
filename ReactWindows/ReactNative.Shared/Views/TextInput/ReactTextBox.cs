@@ -15,11 +15,6 @@ namespace ReactNative.Views.TextInput
         private int _eventCount;
         private bool _selectionChangedSubscribed;
 
-        public ReactTextBox()
-        {
-            SizeChanged += OnSizeChanged;
-        }
-
         public int CurrentEventCount
         {
             get
@@ -71,6 +66,8 @@ namespace ReactNative.Views.TextInput
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
+            SizeChanged += OnSizeChanged;
+
             if (ClearTextOnFocus)
             {
                 Text = "";
@@ -81,6 +78,12 @@ namespace ReactNative.Views.TextInput
                 SelectionStart = 0;
                 SelectionLength = Text.Length;
             }
+        }
+
+        protected override void OnLostFocus(RoutedEventArgs e)
+        {
+            base.OnLostFocus(e);
+            SizeChanged -= OnSizeChanged;
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
