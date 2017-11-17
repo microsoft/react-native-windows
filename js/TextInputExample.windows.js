@@ -32,6 +32,19 @@ var {
   StyleSheet,
 } = ReactNative;
 
+class WithLabel extends React.Component<$FlowFixMeProps> {
+  render() {
+    return (
+      <View style={styles.labelContainer}>
+        <View style={styles.label}>
+          <Text>{this.props.label}</Text>
+        </View>
+        {this.props.children}
+      </View>
+    );
+  }
+}
+
 class TextEventsExample extends React.Component {
   state = {
     curText: '<No Event>',
@@ -80,23 +93,12 @@ class TextEventsExample extends React.Component {
 }
 
 class AutoExpandingTextInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {text: '', height: 0};
-  }
   render() {
     return (
       <TextInput
         {...this.props}
         multiline={true}
-        onChange={(event) => {
-          this.setState({
-            text: event.nativeEvent.text,
-            height: event.nativeEvent.contentSize.height,
-          });
-        }}
-        style={[styles.default, {height: Math.max(35, this.state.height)}]}
-        value={this.state.text}
+        autoGrow={true}
       />
     );
   }
@@ -162,10 +164,87 @@ class ToggleDefaultPaddingExample extends React.Component {
   render() {
     return (
       <View>
-        <TextInput style={this.state.hasPadding ? { padding: 10 } : null}/>
+        <TextInput style={this.state.hasPadding ? { padding: 0 } : null}/>
         <Text onPress={() => this.setState({hasPadding: !this.state.hasPadding})}>
           Toggle padding
         </Text>
+      </View>
+    );
+  }
+}
+
+class SelectionExample extends React.Component<$FlowFixMeProps, SelectionExampleState> {
+  _textInput: any;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selection: {start: 0, end: 0},
+      value: props.value
+    };
+  }
+
+  onSelectionChange({nativeEvent: {selection}}) {
+    this.setState({selection});
+  }
+
+  getRandomPosition() {
+    var length = this.state.value.length;
+    return Math.round(Math.random() * length);
+  }
+
+  select(start, end) {
+    this._textInput.focus();
+    this.setState({selection: {start, end}});
+  }
+
+  selectRandom() {
+    var positions = [this.getRandomPosition(), this.getRandomPosition()].sort((a, b) => a - b);
+    this.select(...positions);
+  }
+
+  placeAt(position) {
+    this.select(position, position);
+  }
+
+  placeAtRandom() {
+    this.placeAt(this.getRandomPosition());
+  }
+
+  render() {
+    var length = this.state.value.length;
+
+    return (
+      <View>
+        <TextInput
+          multiline={this.props.multiline}
+          onChangeText={(value) => this.setState({value})}
+          onSelectionChange={this.onSelectionChange.bind(this)}
+          ref={textInput => (this._textInput = textInput)}
+          selection={this.state.selection}
+          style={this.props.style}
+          value={this.state.value}
+        />
+        <View>
+          <Text>
+            selection = {JSON.stringify(this.state.selection)}
+          </Text>
+          <Text onPress={this.placeAt.bind(this, 0)}>
+            Place at Start (0, 0)
+          </Text>
+          <Text onPress={this.placeAt.bind(this, length)}>
+            Place at End ({length}, {length})
+          </Text>
+          <Text onPress={this.placeAtRandom.bind(this)}>
+            Place at Random
+          </Text>
+          <Text onPress={this.select.bind(this, 0, length)}>
+            Select All
+          </Text>
+          <Text onPress={this.selectRandom.bind(this)}>
+            Select Random
+          </Text>
+        </View>
       </View>
     );
   }
@@ -306,7 +385,7 @@ exports.examples = [
       );
     }
   },
-    {
+  {
     title: 'Clear and select',
     render: function() {
       return (
@@ -328,6 +407,92 @@ exports.examples = [
     }
   },
   {
+    title: 'Colors and text inputs',
+    render: function() {
+      return (
+        <View>
+          <TextInput
+            style={[styles.singleLine]}
+            defaultValue="Default color text"
+          />
+          <TextInput
+            style={[styles.singleLine, {color: 'green'}]}
+            defaultValue="Green Text"
+          />
+          <TextInput
+            placeholder="Default placeholder text color"
+            style={styles.singleLine}
+          />
+          <TextInput
+            placeholder="Red placeholder text color"
+            placeholderTextColor="red"
+            style={styles.singleLine}
+          />
+          <TextInput
+            defaultValue="Highlight Color is red"
+            selectionColor={'red'}
+            style={styles.singleLine} />
+        </View>
+      );
+    }
+  },
+  {
+    title: 'Text input, themes and heights',
+    render: function() {
+      return (
+        <TextInput
+          placeholder="If you set height, beware of padding set from themes"
+          style={[styles.singleLineWithHeightTextInput]}
+        />
+      );
+    }
+  },
+  {
+    title: 'fontFamily, fontWeight and fontStyle',
+    render: function() {
+      return (
+        <View>
+          <TextInput
+            style={[styles.singleLine, {fontFamily: 'Consolas'}]}
+            placeholder="Custom fonts like Consolas are supported"
+          />
+          <TextInput
+            style={[styles.singleLine, {fontFamily: 'Verdana', fontWeight: 'bold'}]}
+            placeholder="Verdana bold"
+          />
+          <TextInput
+            style={[styles.singleLine, {fontFamily: 'Verdana', fontStyle: 'italic'}]}
+            placeholder="Verdana italic"
+          />
+          <TextInput
+            style={[styles.singleLine, {fontFamily: 'Georgia'}]}
+            placeholder="Georgia"
+          />
+        </View>
+      );
+    }
+  },  
+  {
+    title: 'Passwords',
+    render: function() {
+      return (
+        <View>
+          <TextInput
+            defaultValue="iloveturtles"
+            secureTextEntry={true}
+            style={styles.singleLine}
+          />
+          <TextInput
+            secureTextEntry={true}
+            style={[styles.singleLine, {color: 'red'}]}
+            placeholder="color is supported too"
+            placeholderTextColor="red"
+          />
+        </View>
+      );
+    }
+  },
+  {
     title: 'Editable',
     render: function() {
       return (
@@ -340,14 +505,48 @@ exports.examples = [
     }
   },
   {
+    title: 'Multiline',
+    render: function() {
+      return (
+        <View>
+          <TextInput
+            placeholder="multiline text input"
+            multiline={true}
+            style={styles.multiline}
+          />
+          <TextInput
+            placeholder="multiline text input with font styles and placeholder"
+            multiline={true}
+            clearTextOnFocus={true}
+            autoCorrect={true}
+            autoCapitalize="words"
+            placeholderTextColor="red"
+            keyboardType="url"
+            style={[styles.multiline, styles.multilineWithFontStyles]}
+          />
+          <TextInput
+            placeholder="multiline text input with max length"
+            maxLength={5}
+            multiline={true}
+            style={styles.multiline}
+          />
+          <TextInput
+            placeholder="uneditable multiline text input"
+            editable={false}
+            multiline={true}
+            style={styles.multiline}
+          />
+        </View>
+      );
+    }
+  },
+  {
     title: 'Auto-expanding',
     render: function() {
       return (
         <View>
           <AutoExpandingTextInput
             placeholder="height increases with content"
-            enablesReturnKeyAutomatically={true}
-            returnKeyType="done"
           />
         </View>
       );
@@ -355,6 +554,60 @@ exports.examples = [
   },
   {
     title: 'Toggle Default Padding',
-    render: function(): ReactElement { return <ToggleDefaultPaddingExample />; },
+    render: function(): React.Element<any> { return <ToggleDefaultPaddingExample />; },
+  },
+  {
+    title: 'Text selection & cursor placement',
+    render: function() {
+      return (
+        <View>
+          <SelectionExample
+            style={styles.default}
+            value="text selection can be changed"
+          />
+          <SelectionExample
+            multiline
+            style={styles.multiline}
+            value={'multiline text selection\ncan also be changed'}
+          />
+        </View>
+      );
+    }
+  },
+  {
+    title: 'TextInput maxLength',
+    render: function() {
+      return (
+        <View>
+          <WithLabel label="maxLength: 5">
+            <TextInput
+              maxLength={5}
+              style={styles.default}
+            />
+          </WithLabel>
+          <WithLabel label="maxLength: 5 with placeholder">
+            <TextInput
+              maxLength={5}
+              placeholder="ZIP code entry"
+              style={styles.default}
+            />
+          </WithLabel>
+          <WithLabel label="maxLength: 5 with default value already set">
+            <TextInput
+              maxLength={5}
+              defaultValue="94025"
+              style={styles.default}
+            />
+          </WithLabel>
+          <WithLabel label="maxLength: 5 with very long default value already set">
+            <TextInput
+              maxLength={5}
+              defaultValue="9402512345"
+              style={styles.default}
+            />
+          </WithLabel>
+        </View>
+      );
+    }
   },
 ];
