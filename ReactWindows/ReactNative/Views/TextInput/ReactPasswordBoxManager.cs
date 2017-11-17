@@ -424,8 +424,11 @@ namespace ReactNative.Views.TextInput
             }
             else if (commandId == ReactTextInputManager.BlurTextInput)
             {
-                var frame = Window.Current?.Content as Frame;
-                frame?.Focus(FocusState.Programmatic);
+                if (FocusManager.GetFocusedElement() == view)
+                {
+                    var frame = Window.Current?.Content as Frame;
+                    frame?.Focus(FocusState.Programmatic);
+                }
             }
         }
 
