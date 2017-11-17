@@ -1,4 +1,4 @@
-﻿using ReactNative.UIManager;
+using ReactNative.UIManager;
 using System.Threading;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -13,6 +13,7 @@ namespace ReactNative.Views.TextInput
     class ReactTextBox : TextBox
     {
         private int _eventCount;
+        private bool _selectionChangedSubscribed;
 
         public ReactTextBox()
         {
@@ -37,6 +38,29 @@ namespace ReactNative.Views.TextInput
         {
             get;
             set;
+        }
+
+        public bool OnSelectionChange
+        {
+            get
+            {
+                return _selectionChangedSubscribed;
+            }
+            set
+            {
+                if (value != _selectionChangedSubscribed)
+                {
+                    _selectionChangedSubscribed = value;
+                    if (_selectionChangedSubscribed)
+                    {
+                        this.SelectionChanged += OnSelectionChanged;
+                    }
+                    else
+                    {
+                        this.SelectionChanged -= OnSelectionChanged;
+                    }
+                }
+            }
         }
 
         public int IncrementEventCount()
@@ -71,6 +95,20 @@ namespace ReactNative.Views.TextInput
                         e.NewSize.Width,
                         e.NewSize.Height,
                         IncrementEventCount()));
+        }
+
+        private void OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var start = this.SelectionStart;
+            var length = this.SelectionLength;
+            this.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactTextInputSelectionEvent(
+                        this.GetTag(),
+                        start,
+                        start + length));
         }
     }
 }
