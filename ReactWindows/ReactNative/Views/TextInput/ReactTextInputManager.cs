@@ -469,8 +469,11 @@ namespace ReactNative.Views.TextInput
             }
             else if (commandId == BlurTextInput)
             {
-                var frame = Window.Current?.Content as Frame;
-                frame?.Focus(FocusState.Programmatic);
+                if (FocusManager.GetFocusedElement() == view)
+                {
+                    var frame = Window.Current?.Content as Frame;
+                    frame?.Focus(FocusState.Programmatic);
+                }
             }
         }
 
@@ -515,6 +518,7 @@ namespace ReactNative.Views.TextInput
                 var maxLength = textLength - selectionLength;
 
                 view.Text = text ?? "";
+
                 view.SelectionStart = Math.Min(selectionStart, textLength);
                 view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
 
