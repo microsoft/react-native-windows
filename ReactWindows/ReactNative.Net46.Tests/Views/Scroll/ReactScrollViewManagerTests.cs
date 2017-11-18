@@ -1,4 +1,4 @@
-﻿using NMock;
+using NMock;
 using NUnit.Framework;
 using ReactNative.Views.Scroll;
 using System;
@@ -21,7 +21,6 @@ namespace ReactNative.Tests.Views.Scroll
             _mockScrollViewScroller = _mockFactory.CreateMock<IScrollViewScroller>();
             _testScrollView = new TestScrollView(_mockScrollViewScroller.MockObject);
             _scrollViewManager = new ReactScrollViewManager();
-            GlobalSettings.DefaultFloatingPointTolerance = 0.01;
         }
 
         [Test]
@@ -100,6 +99,7 @@ namespace ReactNative.Tests.Views.Scroll
         }
 
         [Test]
+        [DefaultFloatingPointTolerance(0.01)]
         public async Task ReactScrollViewManager_ScrollAnimated_Reentrant()
         {
             // Arrange
@@ -128,6 +128,7 @@ namespace ReactNative.Tests.Views.Scroll
         }
 
         [Test]
+        [DefaultFloatingPointTolerance(0.01)]
         public async Task ReactScrollViewManager_ScrollAnimated_ReentrantTwice()
         {
             // Arrange
@@ -159,6 +160,7 @@ namespace ReactNative.Tests.Views.Scroll
         }
 
         [Test]
+        [DefaultFloatingPointTolerance(0.01)]
         public async Task ReactScrollViewManager_ScrollAnimated_ReentrantForthAndBack()
         {
             // Arrange
