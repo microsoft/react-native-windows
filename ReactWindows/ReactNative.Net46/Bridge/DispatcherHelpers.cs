@@ -5,7 +5,8 @@ using System.Windows.Threading;
 
 namespace ReactNative.Bridge
 {
-    static class DispatcherHelpers
+    // Made DispatcherHelpers public for use in CursorModule. Once we upgrade to 0.49 all of this changes anyways.
+    public static class DispatcherHelpers
     {
         private static Dispatcher _dispatcher;
 
