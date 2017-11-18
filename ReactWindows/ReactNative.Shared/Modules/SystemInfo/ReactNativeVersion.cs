@@ -17,7 +17,7 @@ namespace ReactNative.Modules.SystemInfo
                 return new JObject
                 {
                     { "major", 0 },
-                    { "minor", 49 },
+                    { "minor", 0 },
                     { "patch", 0 },
                     { "prerelease", null }
                 };

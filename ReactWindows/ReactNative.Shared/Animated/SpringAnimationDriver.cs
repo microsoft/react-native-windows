@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
 using System;
@@ -21,14 +21,14 @@ namespace ReactNative.Animated
         private bool _springStarted;
 
         // configuration
-        private double _springFriction;
-        private double _springTension;
+        private double _springStiffness;
+        private double _springDamping;
+        private double _springMass;
+        private double _initialVelocity;
         private bool _overshootClampingEnabled;
 
         // all physics simulation objects are reused in each processing pass
         private PhysicsState _currentState = new PhysicsState();
-        private PhysicsState _previousState = new PhysicsState();
-        private PhysicsState _tempState = new PhysicsState();
         private double _startValue;
         private double _endValue;
         // thresholds for determining when the spring is at rest
@@ -43,9 +43,11 @@ namespace ReactNative.Animated
         public SpringAnimationDriver(int id, ValueAnimatedNode animatedValue, ICallback endCallback, JObject config)
             : base(id, animatedValue, endCallback)
         {
-            _springFriction = config.Value<double>("friction");
-            _springTension = config.Value<double>("tension");
-            _currentState.Velocity = config.Value<double>("initialVelocity");
+            _springStiffness = config.Value<double>("stiffness");
+            _springDamping = config.Value<double>("damping");
+            _springMass = config.Value<double>("mass");
+            _initialVelocity = config.Value<double>("initialVelocity");
+            _currentState.Velocity = _initialVelocity;
             _endValue = config.Value<double>("toValue");
             _restSpeedThreshold = config.Value<double>("restSpeedThreshold");
             _displacementFromRestThreshold = config.Value<double>("restDisplacementThreshold");
@@ -66,6 +68,7 @@ namespace ReactNative.Animated
                 }
                 _startValue = _currentState.Position = AnimatedValue.RawValue;
                 _lastTime = frameTimeMillis;
+                _timeAccumulator = 0.0;
                 _springStarted = true;
             }
 
@@ -109,7 +112,7 @@ namespace ReactNative.Animated
         {
             return Math.Abs(_currentState.Velocity) <= _restSpeedThreshold &&
                 (GetDisplacementDistanceForState(_currentState) <= _displacementFromRestThreshold ||
-                    _springTension == 0);
+                    _springStiffness == 0);
         }
 
         /// <summary>
@@ -121,30 +124,11 @@ namespace ReactNative.Animated
         /// </returns>
         private bool IsOvershooting()
         {
-            return _springTension > 0 &&
+            return _springStiffness > 0 &&
                 ((_startValue < _endValue && _currentState.Position > _endValue) ||
                     (_startValue > _endValue && _currentState.Position < _endValue));
         }
 
-        /// <summary>
-        /// Linear interpolation between the previous and current physics state
-        /// based on the amount of timestep remaining after processing the
-        /// rendering delta time in timestep sized chunks.
-        /// </summary>
-        /// <param name="alpha">
-        /// Value from 0 to 1, where 0 is the previous state, 1 is the current state.
-        /// </param>
-        private void Interpolate(double alpha)
-        {
-            _currentState.Position = _currentState.Position * alpha + _currentState.Position * (1 - alpha);
-            _currentState.Velocity = _currentState.Velocity * alpha + _currentState.Velocity * (1 - alpha);
-        }
-
-        /// <summary>
-        /// Advance the physics simulation in <see cref="SolverTimestepSec"/>
-        /// sized chunks to fulfill the required <paramref name="realDeltaTime"/>.
-        /// </summary>
-        /// <param name="realDeltaTime">Clock drift.</param>
         private void Advance(double realDeltaTime)
         {
             if (IsAtRest())
@@ -162,80 +146,51 @@ namespace ReactNative.Animated
 
             _timeAccumulator += adjustedDeltaTime;
 
-            var tension = _springTension;
-            var friction =_springFriction;
+            var c = _springDamping;
+            var m = _springMass;
+            var k = _springStiffness;
+            var v0 = -_initialVelocity;
 
-            var position = _currentState.Position;
-            var velocity = _currentState.Velocity;
-            var tempPosition = _tempState.Position;
-            var tempVelocity = _tempState.Velocity;
+            var zeta = c / (2 * Math.Sqrt(k * m));
+            var omega0 = Math.Sqrt(k / m);
+            var omega1 = omega0 * Math.Sqrt(1.0 - (zeta * zeta));
+            var x0 = _endValue - _startValue;
 
-            double aVelocity, aAcceleration;
-            double bVelocity, bAcceleration;
-            double cVelocity, cAcceleration;
-            double dVelocity, dAcceleration;
-
-            double dxdt, dvdt;
-
-            // iterate over the true time
-            while (_timeAccumulator >= SolverTimestepSec)
+            double velocity;
+            double position;
+            var t = _timeAccumulator;
+            if (zeta < 1)
             {
-                _timeAccumulator -= SolverTimestepSec;
-
-                if (_timeAccumulator < SolverTimestepSec)
-                {
-                    // This will be the last iteration. Remember the previous state in case we need to
-                    // interpolate
-                    _previousState.Position = position;
-                    _previousState.Velocity = velocity;
-                }
-
-                // Perform an RK4 integration to provide better detection of the acceleration curve via
-                // sampling of Euler integrations at 4 intervals feeding each derivative into the calculation
-                // of the next and taking a weighted sum of the 4 derivatives as the final output.
-
-                // This math was inlined since it made for big performance improvements when advancing several
-                // springs in one pass of the BaseSpringSystem.
-
-                // The initial derivative is based on the current velocity and the calculated acceleration
-                aVelocity = velocity;
-                aAcceleration = (tension * (_endValue - tempPosition)) - friction * velocity;
-
-                // Calculate the next derivatives starting with the last derivative and integrating over the
-                // timestep
-                tempPosition = position + aVelocity * SolverTimestepSec * 0.5;
-                tempVelocity = velocity + aAcceleration * SolverTimestepSec * 0.5;
-                bVelocity = tempVelocity;
-                bAcceleration = (tension * (_endValue - tempPosition)) - friction * tempVelocity;
-
-                tempPosition = position + bVelocity * SolverTimestepSec * 0.5;
-                tempVelocity = velocity + bAcceleration * SolverTimestepSec * 0.5;
-                cVelocity = tempVelocity;
-                cAcceleration = (tension * (_endValue - tempPosition)) - friction * tempVelocity;
-
-                tempPosition = position + cVelocity * SolverTimestepSec;
-                tempVelocity = velocity + cAcceleration * SolverTimestepSec;
-                dVelocity = tempVelocity;
-                dAcceleration = (tension * (_endValue - tempPosition)) - friction * tempVelocity;
-
-                // Take the weighted sum of the 4 derivatives as the final output.
-                dxdt = 1.0 / 6.0 * (aVelocity + 2.0 * (bVelocity + cVelocity) + dVelocity);
-                dvdt = 1.0 / 6.0 * (aAcceleration + 2.0 * (bAcceleration + cAcceleration) + dAcceleration);
-
-                position += dxdt * SolverTimestepSec;
-                velocity += dvdt * SolverTimestepSec;
+                // Under damped
+                double envelope = Math.Exp(-zeta * omega0 * t);
+                position =
+                  _endValue -
+                    envelope *
+                      ((v0 + zeta * omega0 * x0) / omega1 * Math.Sin(omega1 * t) +
+                        x0 * Math.Cos(omega1 * t));
+                // This looks crazy -- it's actually just the derivative of the
+                // oscillation function
+                velocity =
+                  zeta *
+                    omega0 *
+                    envelope *
+                    (Math.Sin(omega1 * t) * (v0 + zeta * omega0 * x0) / omega1 +
+                      x0 * Math.Cos(omega1 * t)) -
+                    envelope *
+                      (Math.Cos(omega1 * t) * (v0 + zeta * omega0 * x0) -
+                        omega1 * x0 * Math.Sin(omega1 * t));
             }
-
-            _tempState.Position = tempPosition;
-            _tempState.Velocity = tempVelocity;
+            else
+            {
+                // Critically damped spring
+                double envelope = Math.Exp(-omega0 * t);
+                position = _endValue - envelope * (x0 + (v0 + omega0 * x0) * t);
+                velocity =
+                  envelope * (v0 * (t * omega0 - 1) + t * x0 * (omega0 * omega0));
+            }
 
             _currentState.Position = position;
             _currentState.Velocity = velocity;
-
-            if (_timeAccumulator > 0)
-            {
-                Interpolate(_timeAccumulator / SolverTimestepSec);
-            }
 
             // End the spring immediately if it is overshooting and overshoot clamping is enabled.
             // Also make sure that if the spring was considered within a resting threshold that it's now
@@ -243,7 +198,7 @@ namespace ReactNative.Animated
             if (IsAtRest() || (_overshootClampingEnabled && IsOvershooting()))
             {
                 // Don't call setCurrentValue because that forces a call to onSpringUpdate
-                if (tension > 0)
+                if (_springStiffness > 0)
                 {
                     _startValue = _endValue;
                     _currentState.Position = _endValue;
@@ -253,7 +208,6 @@ namespace ReactNative.Animated
                     _endValue = _currentState.Position;
                     _startValue = _endValue;
                 }
-
                 _currentState.Velocity = 0;
             }
         }

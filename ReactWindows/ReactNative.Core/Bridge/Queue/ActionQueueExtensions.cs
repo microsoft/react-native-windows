@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace ReactNative.Bridge.Queue
@@ -36,14 +36,42 @@ namespace ReactNative.Bridge.Queue
 
             actionQueue.Dispatch(() =>
             {
-                var result = func();
+                try
+                {
+                    var result = func();
 
-                // TaskCompletionSource<T>.SetResult can call continuations
-                // on the awaiter of the task completion source.
-                Task.Run(() => taskCompletionSource.SetResult(result));
+                    // TaskCompletionSource<T>.SetResult can call continuations
+                    // on the awaiter of the task completion source. We want to
+                    // prevent the action queue thread from executing these
+                    // continuations.
+                    Task.Run(() => taskCompletionSource.SetResult(result));
+                }
+                catch (Exception ex)
+                {
+                    // TaskCompletionSource<T>.SetException can call continuations
+                    // on the awaiter of the task completion source. We want to
+                    // prevent the action queue thread from executing these
+                    // continuations.
+                    Task.Run(() => taskCompletionSource.SetException(ex));
+                }
             });
 
             return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Calls a function on a message queue and returns a task to await the response.
+        /// </summary>
+        /// <param name="actionQueue">The message queue thread.</param>
+        /// <param name="action">The action.</param>
+        /// <returns>A task to await the result.</returns>
+        public static Task RunAsync(this IActionQueue actionQueue, Action action)
+        {
+            return RunAsync(actionQueue, () =>
+            {
+                action();
+                return true;
+            });
         }
     }
 }

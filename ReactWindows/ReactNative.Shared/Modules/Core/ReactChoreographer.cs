@@ -1,8 +1,10 @@
 using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 #if WINDOWS_UWP
+using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Media;
 #else
@@ -25,6 +27,7 @@ namespace ReactNative.Modules.Core
 #endif
         private const int InactiveFrameCount = 120;
 
+        private static readonly Stopwatch s_stopwatch = Stopwatch.StartNew();
         private static ReactChoreographer s_instance;
 
         private readonly object _gate = new object();
@@ -32,6 +35,7 @@ namespace ReactNative.Modules.Core
 
         private FrameEventArgs _frameEventArgs;
         private IMutableFrameEventArgs _mutableReference;
+        private Timer _timer;
         private bool _isSubscribed;
         private bool _isSubscribing;
         private int _currentInactiveCount;
@@ -72,6 +76,29 @@ namespace ReactNative.Modules.Core
                 }
 
                 return s_instance;
+            }
+        }
+
+        private static bool HasCoreWindow
+        {
+            get
+            {
+#if WINDOWS_UWP
+                return CoreApplication.MainView.CoreWindow != null;
+#else
+                return true;
+#endif
+            }
+        }
+
+        private bool IsSimulated
+        {
+            get
+            {
+                lock (_gate)
+                {
+                    return _timer != null;
+                }
             }
         }
 
@@ -126,8 +153,7 @@ namespace ReactNative.Modules.Core
                     {
                         lock (_gate)
                         {
-                            CompositionTarget.Rendering += OnRendering;
-                            _isSubscribed = true;
+                            Subscribe();
                             _isSubscribing = false;
                         }
                     });
@@ -148,7 +174,40 @@ namespace ReactNative.Modules.Core
 
         void IDisposable.Dispose()
         {
-            CompositionTarget.Rendering -= OnRendering;
+            if (_isSubscribed)
+            {
+                Unsubscribe();
+            }
+        }
+
+        private void Subscribe()
+        {
+            if (!HasCoreWindow)
+            {
+                _timer = new Timer(OnTick, null, TimeSpan.Zero, TimeSpan.FromTicks(166666));
+            }
+            else
+            {
+                CompositionTarget.Rendering += OnRendering;
+            }
+
+            _isSubscribed = true;
+        }
+
+        private void Unsubscribe()
+        {
+            if (IsSimulated)
+            {
+                _timer.Dispose();
+                _timer = null;
+            }
+            else
+            {
+                CompositionTarget.Rendering -= OnRendering;
+            }
+
+            _isSubscribed = false;
+            _mutableReference = _frameEventArgs = null;
         }
 
         private void OnRendering(object sender, object e)
@@ -159,7 +218,29 @@ namespace ReactNative.Modules.Core
                 throw new InvalidOperationException("Expected rendering event arguments.");
             }
 
-            var renderingTime = renderingArgs.RenderingTime;
+            OnRendering(sender, renderingArgs.RenderingTime);
+        }
+
+        private void OnTick(object state)
+        {
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                bool isSubscribed;
+                lock (_gate)
+                {
+                    isSubscribed = _isSubscribed;
+                }
+
+                if (isSubscribed)
+                {
+                    OnRendering(null, s_stopwatch.Elapsed);
+                }
+            });
+        }
+
+        private void OnRendering(object sender, TimeSpan e)
+        {
+            var renderingTime = s_stopwatch.Elapsed;
             if (_frameEventArgs == null)
             {
                 _mutableReference = _frameEventArgs = new FrameEventArgs(renderingTime);
@@ -169,10 +250,10 @@ namespace ReactNative.Modules.Core
                 _mutableReference.Update(renderingTime);
             }
 
-            DispatchUICallback?.Invoke(sender, _frameEventArgs);
-            NativeAnimatedCallback?.Invoke(sender, _frameEventArgs);
-            JavaScriptEventsCallback?.Invoke(sender, _frameEventArgs);
-            IdleCallback?.Invoke(sender, _frameEventArgs);
+            DispatchUICallback?.Invoke(this, _frameEventArgs);
+            NativeAnimatedCallback?.Invoke(this, _frameEventArgs);
+            JavaScriptEventsCallback?.Invoke(this, _frameEventArgs);
+            IdleCallback?.Invoke(this , _frameEventArgs);
 
             lock (_gate)
             {
@@ -180,8 +261,7 @@ namespace ReactNative.Modules.Core
                 {
                     if (++_currentInactiveCount >= InactiveFrameCount)
                     {
-                        CompositionTarget.Rendering -= OnRendering;
-                        _isSubscribed = false;
+                        Unsubscribe();
                     }
                 }
                 else

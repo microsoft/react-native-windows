@@ -1,4 +1,3 @@
-using NMock;
 using NUnit.Framework;
 using ReactNative.Bridge.Queue;
 using System;

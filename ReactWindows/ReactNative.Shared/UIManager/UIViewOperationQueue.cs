@@ -85,7 +85,6 @@ namespace ReactNative.UIManager
             SizeMonitoringCanvas rootView,
             ThemedReactContext themedRootContext)
         {
-            DispatcherHelpers.AssertOnDispatcher();
             _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
         }
 
@@ -96,33 +95,6 @@ namespace ReactNative.UIManager
         public void EnqueueRemoveRootView(int rootViewTag)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.RemoveRootView(rootViewTag));
-        }
-
-        /// <summary>
-        /// Enqueues an operation to set the JavaScript responder.
-        /// </summary>
-        /// <param name="tag">The view tag.</param>
-        /// <param name="initialTag">The initial tag.</param>
-        /// <param name="blockNativeResponder">
-        /// Signal to block the native responder.
-        /// </param>
-        public void EnqueueSetJavaScriptResponder(
-            int tag,
-            int initialTag,
-            bool blockNativeResponder)
-        {
-            EnqueueOperation(() => _nativeViewHierarchyManager.SetJavaScriptResponder(
-                tag,
-                initialTag,
-                blockNativeResponder));
-        }
-
-        /// <summary>
-        /// Enqueues an operation to clear the JavaScript responder.
-        /// </summary>
-        public void EnqueueClearJavaScriptResponder()
-        {
-            EnqueueOperation(() => _nativeViewHierarchyManager.ClearJavaScriptResponder());
         }
 
         /// <summary>
@@ -159,12 +131,21 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues a operation to execute a UIBlock.
+        /// Enqueues an operation to execute a UI block.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void EnqueueUIBlock(IUIBlock block)
         {
             EnqueueOperation(() => block.Execute(_nativeViewHierarchyManager));
+        }
+
+        /// <summary>
+        /// Prepends an operation to execute a UI block.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            PrependOperation(() => block.Execute(_nativeViewHierarchyManager));
         }
 
         /// <summary>
@@ -455,6 +436,14 @@ namespace ReactNative.UIManager
             lock (_gate)
             {
                 _operations.Add(action);
+            }
+        }
+
+        private void PrependOperation(Action action)
+        {
+            lock (_gate)
+            {
+                _operations.Insert(0, action);
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Core;
@@ -65,7 +65,7 @@ namespace ReactNative.Modules.Network
         {
             get
             {
-                return "RCTNetworking";
+                return "Networking";
             }
         }
 

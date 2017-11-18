@@ -1,5 +1,7 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ReactNative.DevSupport
 {
@@ -14,13 +16,17 @@ namespace ReactNative.DevSupport
         /// Action to notify the <see cref="ReactInstanceManager"/> about the
         /// availability of a new JavaScript bundle downloaded from the server.
         /// </summary>
-        void OnJavaScriptBundleLoadedFromServer();
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>A task to await the React context.</returns>
+        Task<ReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token);
 
         /// <summary>
         /// Action triggered when the user requests that the application be
         /// reloaded from the initially specified bundle file.
         /// </summary>
-        void OnBundleFileReloadRequest();
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>A task to await the React context.</returns>
+        Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token);
 
         /// <summary>
         /// Action triggered when the user requests that the application be
@@ -29,11 +35,10 @@ namespace ReactNative.DevSupport
         /// <param name="javaScriptExecutorFactory">
         /// The JavaScript executor factory.
         /// </param>
-        void OnReloadWithJavaScriptDebugger(Func<IJavaScriptExecutor> javaScriptExecutorFactory);
-
-        /// <summary>
-        /// Toggles the element inspector.
-        /// </summary>
-        void ToggleElementInspector();
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>A task to await the React context.</returns>
+        Task<ReactContext> CreateReactContextWithRemoteDebuggerAsync(
+            Func<IJavaScriptExecutor> javaScriptExecutorFactory,
+            CancellationToken token);
     }
 }

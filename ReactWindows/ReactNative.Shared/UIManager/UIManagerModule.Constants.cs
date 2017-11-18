@@ -1,4 +1,5 @@
-﻿using ReactNative.UIManager.Events;
+using ReactNative.Tracing;
+using ReactNative.UIManager.Events;
 using System.Collections.Generic;
 using Map = System.Collections.Generic.Dictionary<string, object>;
 
@@ -9,70 +10,126 @@ namespace ReactNative.UIManager
     /// </summary>
     public partial class UIManagerModule
     {
-        private const string CUSTOM_BUBBLING_EVENT_TYPES_KEY = "customBubblingEventTypes";
-        private const string CUSTOM_DIRECT_EVENT_TYPES_KEY = "customDirectEventTypes";
+        private const string BUBBLING_EVENTS_KEY = "bubblingEventTypes";
+        private const string DIRECT_EVENTS_KEY = "directEventTypes";
 
         private const string ACTION_DISMISSED = "dismissed";
         private const string ACTION_ITEM_SELECTED = "itemSelected";
 
-        /// <summary>
-        /// Create the declared constants for the module.
-        /// </summary>
-        /// <param name="viewManagers">
-        /// The view managers exported by the module.
-        /// </param>
-        /// <returns>The constants map.</returns>
-        public static Dictionary<string, object> CreateConstants(IReadOnlyList<IViewManager> viewManagers)
+        private static Dictionary<string, object> CreateConstants(
+            IReadOnlyList<IViewManager> viewManagers,
+            IDictionary<string, object> allBubblingEventTypes,
+            IDictionary<string, object> allDirectEventTypes)
         {
             var constants = GetConstants();
-            var bubblingEventTypesConstants = GetBubblingEventTypeConstants();
-            var directEventTypesConstants = GetDirectEventTypeConstants();
 
-            foreach (var viewManager in viewManagers)
+            // Generic/default event types:
+            // All view managers are capable of dispatching these events.
+            // They will be automatically registered with React Fiber.
+            var genericBubblingEventTypes = GetBubblingEventTypeConstants();
+            var genericDirectEventTypes = GetDirectEventTypeConstants();
+
+            // Cumulative event types:
+            // View manager specific event types are collected as views are loaded.
+            // This information is used later when events are dispatched.
+            if (allBubblingEventTypes != null)
             {
-                var viewManagerBubblingEvents = viewManager.ExportedCustomBubblingEventTypeConstants;
-                if (viewManagerBubblingEvents != null)
+                foreach (var entry in genericBubblingEventTypes)
                 {
-                    RecursiveMerge(bubblingEventTypesConstants, viewManagerBubblingEvents);
+                    allBubblingEventTypes.Add(entry);
                 }
-
-                var viewManagerDirectEvents = viewManager.ExportedCustomDirectEventTypeConstants;
-                if (viewManagerDirectEvents != null)
+            }
+            if (allDirectEventTypes != null)
+            {
+                foreach (var entry in genericDirectEventTypes)
                 {
-                    RecursiveMerge(directEventTypesConstants, viewManagerDirectEvents);
-                }
-
-                var viewManagerConstants = new Dictionary<string, object>();
-                var customViewConstants = viewManager.ExportedViewConstants;
-                if (customViewConstants != null)
-                {
-                    viewManagerConstants.Add("Constants", customViewConstants);
-                }
-
-                var viewManagerCommands = viewManager.CommandsMap;
-                if (viewManagerCommands != null)
-                {
-                    viewManagerConstants.Add("Commands", viewManagerCommands);
-                }
-
-                var viewManagerNativeProps = viewManager.NativeProperties;
-                if (viewManagerNativeProps != null && viewManagerNativeProps.Count > 0)
-                {
-                    viewManagerConstants.Add("NativeProps", viewManagerNativeProps);
-                }
-
-                if (viewManagerConstants.Count > 0)
-                {
-                    constants.Add(viewManager.Name, viewManagerConstants);
+                    allDirectEventTypes.Add(entry);
                 }
             }
 
-            constants.Add(CUSTOM_BUBBLING_EVENT_TYPES_KEY, bubblingEventTypesConstants);
-            constants.Add(CUSTOM_DIRECT_EVENT_TYPES_KEY, directEventTypesConstants);
+            foreach (var viewManager in viewManagers)
+            {
+                var viewManagerName = viewManager.Name;
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "UIManagerModuleConstantsHelper.createConstants")
+                    .With("ViewManager", viewManagerName)
+                    .Start())
+                {
+                    var viewManagerConstants = CreateConstantsForViewManager(
+                        viewManager,
+                        genericBubblingEventTypes,
+                        genericDirectEventTypes,
+                        allBubblingEventTypes,
+                        allDirectEventTypes);
+
+                    if (viewManagerConstants.Count > 0)
+                    {
+                        constants.Add(viewManagerName, viewManagerConstants);
+                    }
+                }
+            }
+
             return constants;
         }
 
-        private static IDictionary<string, object> GetBubblingEventTypeConstants()
+        private static IDictionary<string, object> CreateConstantsForViewManager(
+            IViewManager viewManager,
+            IReadOnlyDictionary<string, object> defaultBubblingEvents,
+            IReadOnlyDictionary<string, object> defaultDirectEvents,
+            IDictionary<string, object> cumulativeBubblingEventTypes,
+            IDictionary<string, object> cumulativeDirectEventTypes)
+        {
+            var viewManagerConstants = new Dictionary<string, object>();
+
+            var viewManagerBubblingEvents = viewManager.ExportedCustomBubblingEventTypeConstants;
+            if (viewManagerBubblingEvents != null)
+            {
+                var mergedViewManagerBubblingEvents = new Dictionary<string, object>();
+                RecursiveMerge(cumulativeBubblingEventTypes, viewManagerBubblingEvents);
+                RecursiveMerge(mergedViewManagerBubblingEvents, defaultBubblingEvents);
+                RecursiveMerge(mergedViewManagerBubblingEvents, viewManagerBubblingEvents);
+                viewManagerConstants.Add("bubblingEventTypes", mergedViewManagerBubblingEvents);
+            }
+            else if (defaultBubblingEvents != null)
+            {
+                viewManagerConstants.Add("bubblingEventTypes", defaultBubblingEvents);
+            }
+
+            var viewManagerDirectEvents = viewManager.ExportedCustomDirectEventTypeConstants;
+            if (viewManagerDirectEvents != null)
+            {
+                var mergedViewManagerDirectEvents = new Dictionary<string, object>();
+                RecursiveMerge(cumulativeDirectEventTypes, viewManagerDirectEvents);
+                RecursiveMerge(mergedViewManagerDirectEvents, defaultDirectEvents);
+                RecursiveMerge(mergedViewManagerDirectEvents, viewManagerDirectEvents);
+                viewManagerConstants.Add("directEventTypes", mergedViewManagerDirectEvents);
+            }
+            else if (defaultDirectEvents != null)
+            {
+                viewManagerConstants.Add("directEventTypes", defaultDirectEvents);
+            }
+
+            var customViewConstants = viewManager.ExportedViewConstants;
+            if (customViewConstants != null)
+            {
+                viewManagerConstants.Add("Constants", customViewConstants);
+            }
+
+            var viewManagerCommands = viewManager.CommandsMap;
+            if (viewManagerCommands != null)
+            {
+                viewManagerConstants.Add("Commands", viewManagerCommands);
+            }
+
+            var viewManagerNativeProps = viewManager.NativeProperties;
+            if (viewManagerNativeProps != null && viewManagerNativeProps.Count > 0)
+            {
+                viewManagerConstants.Add("NativeProps", viewManagerNativeProps);
+            }
+
+            return viewManagerConstants;
+        }
+
+        private static Dictionary<string, object> GetBubblingEventTypeConstants()
         {
             return new Map
             {
@@ -147,6 +204,20 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
+                    TouchEventType.Cancel.GetJavaScriptEventName(),
+                    new Map
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Map
+                            {
+                                { "bubbled", "onTouchCancel" },
+                                { "captured", "onTouchCancelCapture" },
+                            }
+                        }
+                    }
+                },
+                {
                     TouchEventType.Entered.GetJavaScriptEventName(),
                     new Map
                     {
@@ -207,6 +278,13 @@ namespace ReactNative.UIManager
                     new Map
                     {
                         { "registrationName", "onLoadingError" },
+                    }
+                },
+                {
+                    "topContentSizeChange",
+                    new Map
+                    {
+                        { "registrationName", "onContentSizeChange" },
                     }
                 },
                 {
@@ -306,6 +384,11 @@ namespace ReactNative.UIManager
 
         private static void RecursiveMerge(IDictionary<string, object> sink, IReadOnlyDictionary<string, object> source)
         {
+            if (sink == null || source == null || source.Count == 0)
+            {
+                return;
+            }
+
             foreach (var pair in source)
             {
                 var existing = default(object);

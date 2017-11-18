@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.DeviceInfo;

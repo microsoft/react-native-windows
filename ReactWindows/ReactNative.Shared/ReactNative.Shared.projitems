@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IBackgroundEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptExecutor.cs" />
@@ -51,8 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Promise.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IReactQueueConfiguration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfigurationFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBase.cs" />
@@ -135,9 +135,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\PlatformConstantsModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\ReactNativeVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHostExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderChangeEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderCompleteEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderShadowNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputContentSizeChangedEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\FontStyleHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNodeVisitor.cs" />

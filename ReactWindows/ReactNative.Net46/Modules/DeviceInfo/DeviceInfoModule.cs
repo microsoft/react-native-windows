@@ -1,5 +1,6 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
+using ReactNative.UIManager;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -8,7 +9,7 @@ namespace ReactNative.Modules.DeviceInfo
     /// <summary>
     /// Native module that manages window dimension updates to JavaScript.
     /// </summary>
-    public class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
+    class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private readonly Window _window;
         private readonly IReadOnlyDictionary<string, object> _constants;
@@ -89,18 +90,20 @@ namespace ReactNative.Modules.DeviceInfo
 
         private IDictionary<string, object> GetDimensions()
         {
-            var content = (FrameworkElement)_window.Content;
-            double scale = 1.0;
+            return GetDimensions(DisplayMetrics.GetForCurrentView());
+        }
 
+        private IDictionary<string, object> GetDimensions(DisplayMetrics displayMetrics)
+        {
             return new Dictionary<string, object>
             {
                 {
                     "window",
                     new Dictionary<string, object>
                     {
-                        { "width", content?.ActualWidth ?? 0.0 },
-                        { "height", content?.ActualHeight ?? 0.0 },
-                        { "scale", scale },
+                        { "width", displayMetrics.Width },
+                        { "height", displayMetrics.Height },
+                        { "scale", displayMetrics.Scale },
                         /* TODO: density and DPI needed? */
                     }
                 },

@@ -1,4 +1,4 @@
-﻿using ReactNative.UIManager;
+using ReactNative.UIManager;
 using System.Threading;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -13,11 +13,8 @@ namespace ReactNative.Views.TextInput
     class ReactTextBox : TextBox
     {
         private int _eventCount;
-
-        public ReactTextBox()
-        {
-            SizeChanged += OnSizeChanged;
-        }
+        private bool _selectionChangedSubscribed;
+        private bool _sizeChangedSubscribed;
 
         public int CurrentEventCount
         {
@@ -39,6 +36,64 @@ namespace ReactNative.Views.TextInput
             set;
         }
 
+        public bool OnSelectionChange
+        {
+            get
+            {
+                return _selectionChangedSubscribed;
+            }
+            set
+            {
+                if (value != _selectionChangedSubscribed)
+                {
+                    _selectionChangedSubscribed = value;
+                    if (_selectionChangedSubscribed)
+                    {
+                        SelectionChanged += OnSelectionChanged;
+                    }
+                    else
+                    {
+                        SelectionChanged -= OnSelectionChanged;
+                    }
+                }
+            }
+        }
+
+        public bool OnContentSizeChange
+        {
+            get
+            {
+                return _sizeChangedSubscribed;
+            }
+            set
+            {
+                if (value != _sizeChangedSubscribed)
+                {
+                    _sizeChangedSubscribed = value;
+                    if (_sizeChangedSubscribed)
+                    {
+                        SizeChanged += OnSizeChanged;
+                    }
+                    else
+                    {
+                        SizeChanged -= OnSizeChanged;
+                    }
+                }
+            }
+        }
+
+        public bool AutoGrow
+        {
+            get;
+            set;
+        }
+
+        public bool DimensionsUpdated
+        {
+            get;
+            set;
+        }
+
         public int IncrementEventCount()
         {
             return Interlocked.Increment(ref _eventCount);
@@ -47,6 +102,7 @@ namespace ReactNative.Views.TextInput
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
+
             if (ClearTextOnFocus)
             {
                 Text = "";
@@ -61,16 +117,34 @@ namespace ReactNative.Views.TextInput
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (DimensionsUpdated)
+            {
+                DimensionsUpdated = false;
+                return;
+            }
+
             this.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ReactTextChangedEvent(
+                    new ReactTextInputContentSizeChangedEvent(
                         this.GetTag(),
-                        Text,
                         e.NewSize.Width,
-                        e.NewSize.Height,
-                        IncrementEventCount()));
+                        e.NewSize.Height));
+        }
+
+        private void OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var start = this.SelectionStart;
+            var length = this.SelectionLength;
+            this.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactTextInputSelectionEvent(
+                        this.GetTag(),
+                        start,
+                        start + length));
         }
     }
 }

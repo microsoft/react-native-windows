@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -36,7 +36,7 @@ namespace ReactNative.Animated
                 }
                 else if ((valueNode = node as ValueAnimatedNode) != null)
                 {
-                    propsMap.Add(entry.Key, valueNode.Value);
+                    propsMap[entry.Key] = valueNode.Value;
                 }
                 else
                 {

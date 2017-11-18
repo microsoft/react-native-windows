@@ -1,4 +1,4 @@
-﻿namespace ReactNative.Bridge.Queue
+namespace ReactNative.Bridge.Queue
 {
     /// <summary>
     /// Specifies which <see cref="IActionQueue"/>s must be used to run
@@ -6,7 +6,7 @@
     /// modules, and JS). Some of these queue *may* be the same but should be
     /// coded against as if they are different.
     /// </summary>
-    class ReactQueueConfiguration : IReactQueueConfiguration
+    public class ReactQueueConfiguration : IReactQueueConfiguration
     {
         private readonly IActionQueue _dispatcherQueue;
         private readonly IActionQueue _nativeModulesQueue;

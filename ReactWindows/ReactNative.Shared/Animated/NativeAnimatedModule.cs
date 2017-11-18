@@ -59,7 +59,7 @@ namespace ReactNative.Animated
     /// may be caused by concurrent updates of animated graph while UI thread 
     /// is "executing" the animation loop.
     /// </remarks>
-    public class NativeAnimatedModule : ReactContextNativeModuleBase, IOnBatchCompleteListener, ILifecycleEventListener
+    public class NativeAnimatedModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private readonly object _operationsGate = new object();
 
@@ -67,7 +67,10 @@ namespace ReactNative.Animated
 
         private List<Action<NativeAnimatedNodesManager>> _operations = 
             new List<Action<NativeAnimatedNodesManager>>();
-        private List<Action<NativeAnimatedNodesManager>> _readyOperations;
+        private List<Action<NativeAnimatedNodesManager>> _preOperations =
+            new List<Action<NativeAnimatedNodesManager>>();
+
+        private NativeAnimatedNodesManager _nodesManager;
 
         /// <summary>
         /// Instantiates the <see cref="NativeAnimatedModule"/>. 
@@ -89,6 +92,20 @@ namespace ReactNative.Animated
             }
         }
 
+        private NativeAnimatedNodesManager NodesManager
+        {
+            get
+            {
+                if (_nodesManager == null)
+                {
+                    var uiManager = Context.GetNativeModule<UIManagerModule>();
+                    _nodesManager = new NativeAnimatedNodesManager(uiManager);
+                }
+
+                return _nodesManager;
+            }
+        }
+
         /// <summary>
         /// Called after the creation of a <see cref="IReactInstance"/>, in
         /// order to initialize native modules that require the React or
@@ -98,26 +115,12 @@ namespace ReactNative.Animated
         {
             var ctx = Context;
             var uiManager = ctx.GetNativeModule<UIManagerModule>();
-            var nodesManager = new NativeAnimatedNodesManager(uiManager);
+            uiManager.DispatchingViewUpdates += OnDispatchingViewUpdates;
             _animatedFrameCallback = (sender, args) =>
             {
                 try
                 {
-                    var operations = default(List<Action<NativeAnimatedNodesManager>>);
-                    lock (_operationsGate)
-                    {
-                        operations = _readyOperations;
-                        _readyOperations = null;
-                    }
-
-                    if (operations != null)
-                    {
-                        foreach (var operation in operations)
-                        {
-                            operation(nodesManager);
-                        }
-                    }
-
+                    var nodesManager = NodesManager;
                     if (nodesManager.HasActiveAnimations)
                     {
                         nodesManager.RunUpdates(args.RenderingTime);
@@ -136,29 +139,41 @@ namespace ReactNative.Animated
             ctx.AddLifecycleEventListener(this);
         }
 
-        /// <summary>
-        /// Invoked when a batch of JavaScript to native calls has finished.
-        /// </summary>
-        public void OnBatchComplete()
+        private void OnDispatchingViewUpdates(object sender, EventArgs e)
         {
-            var operations = _operations.Count == 0 ? null : _operations;
-            _operations = new List<Action<NativeAnimatedNodesManager>>();
-            if (operations != null)
+            if (_operations.Count == 0 && _preOperations.Count == 0)
             {
-                lock (_operationsGate)
-                {
-                    if (_readyOperations == null)
-                    {
-                        _readyOperations = operations;
-                    }
-                    else
-                    {
-                        _readyOperations.AddRange(operations);
-                    }
-                }
-
-                ReactChoreographer.Instance.ActivateCallback(nameof(NativeAnimatedModule));
+                return;
             }
+
+            var uiManager = (UIManagerModule)sender;
+            List<Action<NativeAnimatedNodesManager>> preOperations;
+            List<Action<NativeAnimatedNodesManager>> operations;
+            lock (_operationsGate)
+            {
+                preOperations = _preOperations;
+                operations = _operations;
+                _preOperations = new List<Action<NativeAnimatedNodesManager>>();
+                _operations = new List<Action<NativeAnimatedNodesManager>>();
+            }
+
+            uiManager.PrependUIBlock(new UIBlock(() =>
+            {
+                var nodesManager = NodesManager;
+                foreach (var operation in preOperations)
+                {
+                    operation(nodesManager);
+                }
+            }));
+
+            uiManager.AddUIBlock(new UIBlock(() =>
+            {
+                var nodesManager = NodesManager;
+                foreach (var operation in operations)
+                {
+                    operation(nodesManager);
+                }
+            }));
         }
 
         /// <summary>
@@ -193,7 +208,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void createAnimatedNode(int tag, JObject config)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.CreateAnimatedNode(tag, config));
         }
 
@@ -204,7 +219,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void startListeningToAnimatedNodeValue(int tag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.StartListeningToAnimatedNodeValue(tag, value =>
                     Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                         .emit("onAnimatedValueUpdate", new JObject
@@ -221,7 +236,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void stopListeningToAnimatedNodeValue(int tag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.StopListeningToAnimatedNodeValue(tag));
         }
 
@@ -232,7 +247,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void dropAnimatedNode(int tag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.DropAnimatedNode(tag));
         }
 
@@ -244,7 +259,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void setAnimatedNodeValue(int tag, double value)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.SetAnimatedNodeValue(tag, value));
         }
 
@@ -256,7 +271,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void setAnimatedNodeOffset(int tag, double value)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.SetAnimatedNodeOffset(tag, value));
         }
 
@@ -267,7 +282,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void flattenAnimatedNodeOffset(int tag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.FlattenAnimatedNodeOffset(tag));
         }
 
@@ -278,7 +293,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void extractAnimatedNodeOffset(int tag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.ExtractAnimatedNodeOffset(tag));
         }
 
@@ -296,7 +311,7 @@ namespace ReactNative.Animated
             JObject animationConfig,
             ICallback endCallback)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.StartAnimatingNode(
                     animationId,
                     animatedNodeTag,
@@ -311,7 +326,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void stopAnimation(int animationId)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.StopAnimation(animationId));
         }
 
@@ -323,7 +338,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void connectAnimatedNodes(int parentNodeTag, int childNodeTag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.ConnectAnimatedNodes(parentNodeTag, childNodeTag));
         }
 
@@ -335,7 +350,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void disconnectAnimatedNodes(int parentNodeTag, int childNodeTag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.DisconnectAnimatedNodes(parentNodeTag, childNodeTag));
         }
 
@@ -347,7 +362,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void connectAnimatedNodeToView(int animatedNodeTag, int viewTag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.ConnectAnimatedNodeToView(animatedNodeTag, viewTag));
         }
 
@@ -355,12 +370,17 @@ namespace ReactNative.Animated
         /// Disconnects animated node from view.
         /// </summary>
         /// <param name="animatedNodeTag">Animated node tag.</param>
-        /// <param name="viewTag">React view tag.s</param>
+        /// <param name="viewTag">React view tag.</param>
         [ReactMethod]
         public void disconnectAnimatedNodeFromView(int animatedNodeTag, int viewTag)
         {
-            _operations.Add(manager =>
-                manager.DisconnectAnimatedNodeFromView(animatedNodeTag, viewTag));
+            lock (_operationsGate)
+            {
+                _preOperations.Add(manager =>
+                    manager.RestoreDefaultValues(animatedNodeTag, viewTag));
+                _operations.Add(manager =>
+                    manager.DisconnectAnimatedNodeFromView(animatedNodeTag, viewTag));
+            }
         }
 
         /// <summary>
@@ -372,7 +392,7 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void addAnimatedEventToView(int viewTag, string eventName, JObject eventMapping)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.AddAnimatedEventToView(viewTag, eventName, eventMapping));
         }
 
@@ -385,8 +405,39 @@ namespace ReactNative.Animated
         [ReactMethod]
         public void removeAnimatedEventFromView(int viewTag, string eventName, int animatedValueTag)
         {
-            _operations.Add(manager =>
+            AddOperation(manager =>
                 manager.RemoveAnimatedEventFromView(viewTag, eventName, animatedValueTag));
+        }
+
+        private void AddOperation(Action<NativeAnimatedNodesManager> action)
+        {
+            lock (_operationsGate)
+            {
+                _operations.Add(action);
+            }
+        }
+
+        private void AddPreOperation(Action<NativeAnimatedNodesManager> action)
+        {
+            lock (_operationsGate)
+            {
+                _preOperations.Add(action);
+            }
+        }
+
+        class UIBlock : IUIBlock
+        {
+            private readonly Action _action;
+
+            public UIBlock(Action action)
+            {
+                _action = action;
+            }
+
+            public void Execute(NativeViewHierarchyManager nativeViewHierarchyManager)
+            {
+                _action();
+            }
         }
     }
 }

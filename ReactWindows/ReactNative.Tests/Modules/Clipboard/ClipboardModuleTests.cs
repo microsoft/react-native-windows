@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Modules.Clipboard;
 using System;
 using System.Threading;
@@ -30,7 +30,7 @@ namespace ReactNative.Tests.Modules.Clipboard
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
-                                          (code, message, e) => { result = message; waitHandle.Set(); });
+                                          (code, message, stack, userInfo) => { result = message; waitHandle.Set(); });
 
             module.setString(str);
             module.getString(promise);
@@ -49,7 +49,7 @@ namespace ReactNative.Tests.Modules.Clipboard
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
-                                          (code, message, e) => { result = message; waitHandle.Set(); });
+                                          (code, message, stack, userInfo) => { result = message; waitHandle.Set(); });
 
             module.setString(null);
             module.getString(promise);

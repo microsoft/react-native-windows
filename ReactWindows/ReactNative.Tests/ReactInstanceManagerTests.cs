@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using ReactNative.Bridge;
 using ReactNative.Common;
+using ReactNative.Modules.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,40 +48,33 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_CreateInBackground()
+        public async Task ReactInstanceManager_CreateReactContextAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
-            var waitHandle = new AutoResetEvent(false);
-            manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
+            var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(
+                () => manager.CreateReactContextAsync(CancellationToken.None));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
-
-            Assert.IsTrue(waitHandle.WaitOne());
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_CreateInBackground_EnsuresOneCall()
+        public async Task ReactInstanceManager_CreateReactContextAsync_EnsuresOneCall()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
-            var waitHandle = new AutoResetEvent(false);
-            manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
-
             var caught = false;
             await DispatcherHelpers.RunOnDispatcherAsync(async () =>
             {
-                manager.CreateReactContextInBackground();
+                var task = manager.CreateReactContextAsync(CancellationToken.None);
 
                 try
                 {
-                    await manager.CreateReactContextInBackgroundAsync();
+                    await manager.CreateReactContextAsync(CancellationToken.None);
                 }
                 catch (InvalidOperationException)
                 {
@@ -93,29 +88,28 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_RecreateInBackground()
+        public async Task ReactInstanceManager_RecreateReactContextAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
-            var waitHandle = new AutoResetEvent(false);
-            manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
-
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            var task = default(Task<ReactContext>);
+            var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
-                manager.CreateReactContextInBackground();
-                manager.RecreateReactContextInBackground();
+                task = manager.CreateReactContextAsync(CancellationToken.None);
+                return await manager.RecreateReactContextAsync(CancellationToken.None);
             });
 
-            Assert.IsTrue(waitHandle.WaitOne());
-            Assert.IsTrue(waitHandle.WaitOne());
+            var initialReactContext = await task;
+            Assert.IsNotNull(reactContext);
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
+            Assert.AreNotEqual(initialReactContext, reactContext);
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_RecreateInBackground_EnsuresCalledOnce()
+        public async Task ReactInstanceManager_RecreateReactContextAsync_EnsuresCalledOnce()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
@@ -125,7 +119,7 @@ namespace ReactNative.Tests
             {
                 try
                 {
-                    await manager.RecreateReactContextInBackgroundAsync();
+                    await manager.RecreateReactContextAsync(CancellationToken.None);
                 }
                 catch (InvalidOperationException)
                 {
@@ -155,27 +149,23 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
-        public async Task ReactInstanceManager_OnDestroy_CreateInBackground()
+        public async Task ReactInstanceManager_OnDestroy_CreateReactContextAsync()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
-            var waitHandle = new AutoResetEvent(false);
-            manager.ReactContextInitialized += (sender, args) => waitHandle.Set();
+            var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(
+                () => manager.CreateReactContextAsync(CancellationToken.None));
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
-
-            Assert.IsTrue(waitHandle.WaitOne());
+            Assert.IsNotNull(reactContext);
             Assert.AreEqual(jsBundleFile, manager.SourceUrl);
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
 
-            await DispatcherHelpers.RunOnDispatcherAsync(
-                () => manager.CreateReactContextInBackground());
+            reactContext = await DispatcherHelpers.CallOnDispatcherAsync(
+                () => manager.CreateReactContextAsync(CancellationToken.None));
 
-            Assert.IsTrue(waitHandle.WaitOne());
-
+            Assert.IsNotNull(reactContext);
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
@@ -185,18 +175,11 @@ namespace ReactNative.Tests
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
-            var initializedEvent = new AutoResetEvent(false);
-            manager.ReactContextInitialized += (sender, args) => initializedEvent.Set();
-
-            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
-            {
-                await manager.CreateReactContextInBackgroundAsync();
-            });
+            var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(
+                () => manager.CreateReactContextAsync(CancellationToken.None));
 
             var e = new AutoResetEvent(false);
-
-            initializedEvent.WaitOne();
-            manager.CurrentReactContext.RunOnNativeModulesQueueThread(() =>
+            reactContext.RunOnNativeModulesQueueThread(() =>
             {
                 e.WaitOne();
                 var x = DispatcherHelpers.CallOnDispatcherAsync(() =>
@@ -216,6 +199,112 @@ namespace ReactNative.Tests
                 task);
 
             Assert.IsTrue(task.IsCompleted);
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_CreateReactContextAsync_Canceled()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.Cancel();
+            await AssertEx.ThrowsAsync<OperationCanceledException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.CreateReactContextAsync(cancellationTokenSource.Token)),
+                ex => Assert.AreEqual(cancellationTokenSource.Token, ex.CancellationToken));
+
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_GetReactContextAsync_Unfinished()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile);
+
+            var initialContextTask = DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.CreateReactContextAsync(CancellationToken.None));
+            var context = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.GetReactContextAsync(CancellationToken.None));
+            var initialContext = await initialContextTask;
+
+            Assert.AreSame(initialContext, context);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
+        }
+
+
+        [TestMethod]
+        public async Task ReactInstanceManager_GetReactContextAsync_Finished()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile);
+
+            var initialContext = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.CreateReactContextAsync(CancellationToken.None));
+            var context = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.GetReactContextAsync(CancellationToken.None));
+
+            Assert.AreSame(initialContext, context);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_GetReactContextAsync_Fail()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile);
+
+            var caught = false;
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                try
+                {
+                    await manager.GetReactContextAsync(CancellationToken.None);
+                }
+                catch (InvalidOperationException)
+                {
+                    caught = true;
+                }
+            });
+
+            Assert.IsTrue(caught);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_GetOrCreateReactContextAsync_Create()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile);
+
+            var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(() => manager.GetOrCreateReactContextAsync(CancellationToken.None));
+            Assert.IsNotNull(reactContext);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_GetOrCreateReactContextAsync_Get()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile);
+
+            var initialContext = default(ReactContext);
+            var context = default(ReactContext);
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var initialContextTask = manager.CreateReactContextAsync(CancellationToken.None);
+                context = await manager.GetOrCreateReactContextAsync(CancellationToken.None);
+                initialContext = await initialContextTask;
+            });
+
+            Assert.AreSame(initialContext, context);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
         private static ReactInstanceManager CreateReactInstanceManager()
