@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -20,6 +20,26 @@ namespace ReactNative.Views.TextInput
     /// </summary>
     class ReactPasswordBoxManager : BaseViewManager<PasswordBox, ReactPasswordBoxShadowNode>
     {
+        private const uint DefaultTextControlForeground = 0xFF000000;
+        private const uint DefaultTextControlForegroundPointerOver = 0xFF000000;
+        private const uint DefaultTextControlForegroundFocused = 0xFF000000;
+        private const uint DefaultTextControlForegroundDisabled = 0xFF7A7A7A;
+
+        private const uint DefaultTextControlBackground = 0x66FFFFFF;
+        private const uint DefaultTextControlBackgroundPointerOver = 0xFFFFFFFF;
+        private const uint DefaultTextControlBackgroundFocused = 0xFFFFFFFF;
+        private const uint DefaultTextControlBackgroundDisabled = 0x33000000;
+
+        private const uint DefaultTextControlPlaceholderForeground = 0x99000000;
+        private const uint DefaultTextControlPlaceholderForegroundPointerOver = 0x99000000;
+        private const uint DefaultTextControlPlaceholderForegroundFocused = 0x66000000;
+        private const uint DefaultTextControlPlaceholderForegroundDisabled = 0xFF7A7A7A;
+
+        private const uint DefaultTextControlBorderBrush = 0xFF7A7A7A;
+        private const uint DefaultTextControlBorderBrushPointerOver = 0xFF171717;
+        private const uint DefaultTextControlBorderBrushFocused = 0xFF298FCC;
+        private const uint DefaultTextControlBorderBrushDisabled = 0x33000000;
+
         /// <summary>
         /// The name of the view manager.
         /// </summary>
@@ -142,9 +162,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(PasswordBox view, uint? color)
         {
-            view.Foreground = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlForeground"] = brush;
+                view.Resources["TextControlForegroundPointerOver"] = brush;
+                view.Resources["TextControlForegroundFocused"] = brush;
+                view.Resources["TextControlForegroundDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlForeground"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForeground));
+                view.Resources["TextControlForegroundPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForegroundPointerOver));
+                view.Resources["TextControlForegroundFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForegroundFocused));
+                view.Resources["TextControlForegroundDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForegroundDisabled));
+            }
         }
 
         /// <summary>
@@ -203,10 +235,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholderTextColor", CustomType = "Color")]
         public void SetPlaceholderTextColor(PasswordBox view, uint? color)
         {
-            //The 'PlaceholderTextColor' is not implemented in UWP - Use of this property
-            //will be ignored...
-
-            //TODO: #1039 #1040
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlPlaceholderForeground"] = brush;
+                view.Resources["TextControlPlaceholderForegroundPointerOver"] = brush;
+                view.Resources["TextControlPlaceholderForegroundFocused"] = brush;
+                view.Resources["TextControlPlaceholderForegroundDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlPlaceholderForeground"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForeground));
+                view.Resources["TextControlPlaceholderForegroundPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForegroundPointerOver));
+                view.Resources["TextControlPlaceholderForegroundFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForegroundFocused));
+                view.Resources["TextControlPlaceholderForegroundDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForegroundDisabled));
+            }
         }
 
         /// <summary>
@@ -217,9 +260,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(PasswordBox view, uint? color)
         {
-            view.BorderBrush = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(ReactTextInputManager.DefaultTextBoxBorder);
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlBorderBrush"] = brush;
+                view.Resources["TextControlBorderBrushPointerOver"] = brush;
+                view.Resources["TextControlBorderBrushFocused"] = brush;
+                view.Resources["TextControlBorderBrushDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlBorderBrush"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrush));
+                view.Resources["TextControlBorderBrushPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrushPointerOver));
+                view.Resources["TextControlBorderBrushFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrushFocused));
+                view.Resources["TextControlBorderBrushDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrushDisabled));
+            }
         }
 
         /// <summary>
@@ -230,9 +285,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
         public void SetBackgroundColor(PasswordBox view, uint? color)
         {
-            view.Background = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(Colors.White);
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlBackground"] = brush;
+                view.Resources["TextControlBackgroundPointerOver"] = brush;
+                view.Resources["TextControlBackgroundFocused"] = brush;
+                view.Resources["TextControlBackgroundDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlBackground"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackground));
+                view.Resources["TextControlBackgroundPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackgroundPointerOver));
+                view.Resources["TextControlBackgroundFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackgroundFocused));
+                view.Resources["TextControlBackgroundDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackgroundDisabled));
+            }
         }
 
         /// <summary>
@@ -357,8 +424,11 @@ namespace ReactNative.Views.TextInput
             }
             else if (commandId == ReactTextInputManager.BlurTextInput)
             {
-                var frame = Window.Current?.Content as Frame;
-                frame?.Focus(FocusState.Programmatic);
+                if (FocusManager.GetFocusedElement() == view)
+                {
+                    var frame = Window.Current?.Content as Frame;
+                    frame?.Focus(FocusState.Programmatic);
+                }
             }
         }
 
@@ -399,10 +469,9 @@ namespace ReactNative.Views.TextInput
         /// <param name="dimensions">The output buffer.</param>
         public override void SetDimensions(PasswordBox view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
+            base.SetDimensions(view, dimensions);
+            view.MinWidth = dimensions.Width;
+            view.MinHeight = dimensions.Height;
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
@@ -415,8 +484,6 @@ namespace ReactNative.Views.TextInput
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
                         textBox.Password,
-                        textBox.ActualWidth,
-                        textBox.ActualHeight,
                         0));
         }
 
