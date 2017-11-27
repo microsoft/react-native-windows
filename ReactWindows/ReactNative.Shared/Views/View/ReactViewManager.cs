@@ -1,7 +1,7 @@
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -36,9 +36,14 @@ namespace ReactNative.Views.View
             public uint? Color;
         }
 
-        private readonly Dictionary<BorderedCanvas, BorderProps> _borderProps =
-            new Dictionary<BorderedCanvas, BorderProps>();
+        private readonly ConditionalWeakTable<BorderedCanvas, BorderProps> _borderProps =
+            new ConditionalWeakTable<BorderedCanvas, BorderProps>();
 
+        /// <summary>
+        /// Some border props do not affect appearance unless they are combined
+        /// with other props. Such props are saved in the dictionary and applied
+        /// later. This allows to not create the inner Border if it's not visible.
+        /// </summary>
         private BorderProps GetBorderProps(BorderedCanvas view)
         {
             BorderProps props;
@@ -46,28 +51,37 @@ namespace ReactNative.Views.View
             if (!_borderProps.TryGetValue(view, out props))
             {
                 props = new BorderProps();
-                _borderProps[view] = props;
+                _borderProps.Add(view, props);
             }
 
             return props;
         }
 
+        /// <summary>
         /// Canvas.Background supports flat backgrounds. Border.Background supports
         /// backgrounds with customizations, such as rounded corners. If the background
         /// is flat, it's set on Canvas. If it has cutomizations, it's transferred to Border.
+        /// /// </summary>
         private void TransferBackgroundBrush(BorderedCanvas view)
         {
-            if (view.Background != null && view.Border != null)
+            if (view.Background != null && view.Background != _defaultBackgroundBrush && view.Border != null)
             {
                 view.Border.Background = view.Background;
-                view.Background = null;
+                view.Background = _defaultBackgroundBrush;
             }
         }
 
         /// <summary>
         /// Default brush for the view borders.
         /// </summary>
-        protected static readonly Brush s_defaultBorderBrush = new SolidColorBrush(Colors.Black);
+        protected readonly Brush _defaultBorderBrush = new SolidColorBrush(Colors.Black);
+
+        /// <summary>
+        /// In WPF in order ot be clickable (hit-test visible) the element needs to have background brush.
+        /// This is why when the background and border brushes are set on the inner Border, the Canvas gets
+        /// a transparent background brush.
+        /// </summary>
+        protected readonly Brush _defaultBackgroundBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
         /// <summary>
         /// The name of this view manager. This will be the name used to 
@@ -96,7 +110,7 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                view.Border = new Border { BorderBrush = s_defaultBorderBrush };
+                view.Border = new Border { BorderBrush = _defaultBorderBrush };
 
                 // Layout animations bypass SetDimensions, hence using XAML bindings.
 
@@ -252,7 +266,7 @@ namespace ReactNative.Views.View
                 var border = GetOrCreateBorder(view);
                 border.BorderBrush = color.HasValue
                     ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                    : s_defaultBorderBrush;
+                    : _defaultBorderBrush;
                 TransferBackgroundBrush(view);
             }
         }
