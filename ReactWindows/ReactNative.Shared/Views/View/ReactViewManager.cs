@@ -61,7 +61,7 @@ namespace ReactNative.Views.View
         /// Canvas.Background supports flat backgrounds. Border.Background supports
         /// backgrounds with customizations, such as rounded corners. If the background
         /// is flat, it's set on Canvas. If it has cutomizations, it's transferred to Border.
-        /// /// </summary>
+        /// </summary>
         private void TransferBackgroundBrush(BorderedCanvas view)
         {
             if (view.Background != null && view.Background != _defaultBackgroundBrush && view.Border != null)
@@ -77,7 +77,7 @@ namespace ReactNative.Views.View
         protected readonly Brush _defaultBorderBrush = new SolidColorBrush(Colors.Black);
 
         /// <summary>
-        /// In WPF in order ot be clickable (hit-test visible) the element needs to have background brush.
+        /// In WPF in order to be clickable (hit-test visible) the element needs to have background brush.
         /// This is why when the background and border brushes are set on the inner Border, the Canvas gets
         /// a transparent background brush.
         /// </summary>
