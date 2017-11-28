@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace ReactNative.Bridge
 {
-    class Promise : IPromise
+    public class Promise : IPromise
     {
         private const string DefaultError = "EUNSPECIFIED";
 

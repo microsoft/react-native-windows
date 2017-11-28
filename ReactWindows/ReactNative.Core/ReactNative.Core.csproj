@@ -8,14 +8,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_3</DefineConstants>
     <DocumentationFile>bin\Debug\netstandard1.3\ReactNative.Core.xml</DocumentationFile>
+    <LangVersion>Default</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_3</DefineConstants>
     <DocumentationFile>bin\Release\netstandard1.2\ReactNative.Core.xml</DocumentationFile>
+    <LangVersion>Default</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="4.0.0-preview00001" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
 </Project>

@@ -27,39 +27,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\StyleAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IBackgroundEventListener.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IInvocationHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptExecutor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptModule.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ILifecycleEventListener.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeMethod.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModule.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IOnBatchCompleteListener.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactCallback.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactDelegateFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptBundleLoader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleBase.Generated.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptModuleRegistry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\Promise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfigurationFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactDelegateFactoryBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactInstance.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactMethodAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReflectionReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JavaScriptValueToJTokenConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\JTokenToJavaScriptValueConverter.cs" />
@@ -141,9 +115,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
@@ -237,5 +208,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
   </ItemGroup>
 </Project>
