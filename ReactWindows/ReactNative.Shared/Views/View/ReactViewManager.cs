@@ -99,89 +99,116 @@ namespace ReactNative.Views.View
             return new BorderedCanvas();
         }
 
+        #region drag and drop
+
+        /// <summary>
+        /// Enables the Canvas as a drop target.
+        /// </summary>
         [ReactProp("allowDrop")]
         public void SetAllowDrop(BorderedCanvas view, bool allowDrop)
         {
             Debug.WriteLine("[DnD] AllowDrop=" + allowDrop);
             view.AllowDrop = allowDrop;
 
-            view.DragEnter += async (sender, args) =>
+            if (allowDrop)
             {
-                Debug.WriteLine("[DnD] DragEnter");
-            };
-
-            view.DragLeave += async (sender, args) =>
+                view.DragEnter += OnDragEnter;
+                view.DragOver += OnDragOver;
+                view.Drop += OnDrop;
+                view.DragLeave += OnDragLeave;
+                view.DragStarting += OnDragStarting;
+                view.DropCompleted += OnDropCompleted;
+                
+            }
+            else
             {
-                Debug.WriteLine("[DnD] DragLeave");
-            };
+                view.DragEnter -= OnDragEnter;
+                view.DragOver -= OnDragOver;
+                view.Drop -= OnDrop;
+                view.DragLeave -= OnDragLeave;
+                view.DragStarting -= OnDragStarting;
+                view.DropCompleted -= OnDropCompleted;
+            }
+        }
 
-            view.DragStarting += async (sender, args) =>
+        private void OnDragEnter(object sender, DragEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] DragEnter");
+        }
+
+        private void OnDragOver(object sender, DragEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] DragOver");
+
+            // TODO: Send this event to JS, get response (how?) and
+            // set the AcceptedOperation value. The JS handler in
+            // MessagePanel merely does this:
+            //
+            //      e.dataTransfer.effectAllowed = 'copy';
+            //      e.dataTransfer.dropEffect = 'copy';
+            //
+            // so a simple `allowDrop` flag may be sufficient.            
+            args.AcceptedOperation = DataPackageOperation.Copy;
+        }
+
+        private async void OnDrop(object sender, DragEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] Drop");
+
+            var files = new JArray();
+
+            if (args.DataView.Contains(StandardDataFormats.StorageItems))
             {
-                Debug.WriteLine("[DnD] DragStarting");
-            };
+                var items = await args.DataView.GetStorageItemsAsync();
 
-            view.DropCompleted += async (sender, args) =>
-            {
-                Debug.WriteLine("[DnD] DropCompleted");
-            };
-
-            view.DragOver += async (sender, args) =>
-            {
-                Debug.WriteLine("[DnD] DragOver");
-                var dfd = args.GetDeferral();
-
-                // TODO: Send this event to JS, get response (how?) and
-                // set the AcceptedOperation value. The JS handler in
-                // MessagePanel merely does this:
-                //
-                //      e.dataTransfer.effectAllowed = 'copy';
-                //      e.dataTransfer.dropEffect = 'copy';
-                //
-                // so a simple `allowDrop` flag may be sufficient.
-                await Task.Delay(100);
-
-                args.AcceptedOperation = DataPackageOperation.Copy;
-
-                dfd.Complete();
-            };
-
-            view.Drop += async (sender, args) =>
-            {
-                Debug.WriteLine("[DnD] Drop");
-                var files = new JArray();
-
-                if (args.DataView.Contains(StandardDataFormats.StorageItems))
+                foreach (var item in items)
                 {
-                    var items = await args.DataView.GetStorageItemsAsync();
+                    var file = item as StorageFile;
+                    var guid = Guid.NewGuid();
+                    var props = await file.GetBasicPropertiesAsync();
 
-                    foreach (var item in items)
-                    {
-                        var file = item as StorageFile;
-                        var guid = Guid.NewGuid();
-                        var props = await file.GetBasicPropertiesAsync();
-
-                        files.Add(new JObject
+                    files.Add(new JObject
                         {
                             { "name", file.Name },
                             { "size", props.Size },
                             { "uri", "blob:" + guid },
                         });
-                    }
                 }
+            }
 
-                var data = new JObject
+            var data = new JObject
                 {
                     { "target", view.GetTag() },
                     { "dataTransfer", new JObject { { "files", files } } }
                 };
 
-                Debug.WriteLine("[DnD] Event " + data.ToString());
+            Debug.WriteLine("[DnD] Event " + data.ToString());
 
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
-            };
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
+        }
+
+        private void OnDragLeave(object sender, DragEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] DragLeave");
+        }
+
+        private void OnDragStarting(object sender, DragStartingEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] DragStarting");
+        }
+
+        private void OnDropCompleted(object sender, DropCompletedEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] DropCompleted");
         }
 
         class DragDropEvent : Event
@@ -203,6 +230,8 @@ namespace ReactNative.Views.View
                 eventEmitter.receiveEvent(ViewTag, EventName, _data);
             }
         }
+
+        #endregion
 
         /// <summary>
         /// Sets whether or not the view is an accessibility element.
