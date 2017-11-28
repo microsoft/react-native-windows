@@ -87,6 +87,8 @@ export type ViewProps = {
 module.exports = {
   ...TVViewPropTypes,
 
+  allowDrop: PropTypes.bool,
+
   /**
    * When `true`, indicates that the view is an accessibility element. By default,
    * all the touchable elements are accessible.
