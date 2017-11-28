@@ -4,6 +4,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -101,10 +102,32 @@ namespace ReactNative.Views.View
         [ReactProp("allowDrop")]
         public void SetAllowDrop(BorderedCanvas view, bool allowDrop)
         {
+            Debug.WriteLine("[DnD] AllowDrop=" + allowDrop);
             view.AllowDrop = allowDrop;
+
+            view.DragEnter += async (sender, args) =>
+            {
+                Debug.WriteLine("[DnD] DragEnter");
+            };
+
+            view.DragLeave += async (sender, args) =>
+            {
+                Debug.WriteLine("[DnD] DragLeave");
+            };
+
+            view.DragStarting += async (sender, args) =>
+            {
+                Debug.WriteLine("[DnD] DragStarting");
+            };
+
+            view.DropCompleted += async (sender, args) =>
+            {
+                Debug.WriteLine("[DnD] DropCompleted");
+            };
 
             view.DragOver += async (sender, args) =>
             {
+                Debug.WriteLine("[DnD] DragOver");
                 var dfd = args.GetDeferral();
 
                 // TODO: Send this event to JS, get response (how?) and
@@ -124,6 +147,7 @@ namespace ReactNative.Views.View
 
             view.Drop += async (sender, args) =>
             {
+                Debug.WriteLine("[DnD] Drop");
                 var files = new JArray();
 
                 if (args.DataView.Contains(StandardDataFormats.StorageItems))
