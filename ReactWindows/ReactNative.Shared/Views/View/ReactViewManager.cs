@@ -4,7 +4,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -99,11 +98,9 @@ namespace ReactNative.Views.View
             return new BorderedCanvas();
         }
 
-        /// A new property on RX.View
         [ReactProp("allowDrop")]
         public void SetAllowDrop(BorderedCanvas view, bool allowDrop)
         {
-            Debug.WriteLine($"ReactViewManager::SetAllowDrop {allowDrop}");
             view.AllowDrop = allowDrop;
 
             view.DragOver += async (sender, args) =>
@@ -121,11 +118,6 @@ namespace ReactNative.Views.View
                 await Task.Delay(100);
 
                 args.AcceptedOperation = DataPackageOperation.Copy;
-
-                args.DragUIOverride.Caption = "12345";
-                args.DragUIOverride.IsCaptionVisible = true;
-                args.DragUIOverride.IsContentVisible = true;
-                args.DragUIOverride.IsGlyphVisible = true;
 
                 dfd.Complete();
             };
