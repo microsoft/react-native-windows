@@ -31,10 +31,10 @@ class Playground extends Component {
           Shake or press Shift+F10 for dev menu
         </Text>
         <View style={styles.droptarget} allowDrop={true}
-          onDragEnter={e => console.log('onDragEnter', Object.keys(e))}
-          onDragOver={e => console.log('onDragOver', Object.keys(e))}
-          onDrop={e => console.log('onDrop', Object.keys(e))}
-          onDragLeave={e => console.log('onDragLeave', Object.keys(e))}
+          onDragEnter={e => console.log('onDragEnter', e.nativeEvent)}
+          onDragOver={e => console.log('onDragOver', e.nativeEvent)}
+          onDrop={e => console.log('onDrop', e.nativeEvent)}
+          onDragLeave={e => console.log('onDragLeave', e.nativeEvent)}
         >
           <Text>drop files here</Text>
         </View>
