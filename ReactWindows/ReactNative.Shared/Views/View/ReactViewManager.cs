@@ -164,7 +164,7 @@ namespace ReactNative.Views.View
             private readonly JObject _data;
 
             public DragDropEvent(int viewTag, string name, JObject data)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+                : base(viewTag)
             {
                 _name = name;
                 _data = data;
