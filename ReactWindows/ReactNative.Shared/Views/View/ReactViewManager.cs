@@ -246,6 +246,7 @@ namespace ReactNative.Views.View
             {
                 var border = GetOrCreateBorder(view);
                 border.Background = brush;
+                view.Background = view.Background ?? _defaultBackgroundBrush;
             }
         }
 
