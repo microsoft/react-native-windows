@@ -175,6 +175,8 @@ namespace ReactNative.Views.View
                     { "dataTransfer", new JObject { { "files", files } } }
                 };
 
+                Debug.WriteLine("[DnD] Event " + data.ToString());
+
                 view.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
