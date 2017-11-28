@@ -11,6 +11,12 @@ import {
   View,
 } from 'react-native';
 
+require('react-native/Libraries/BatchedBridge/MessageQueue').spy(info => {
+  console.log(`${!info.type ? 'N->JS' : 'JS->N'} : `
+    + `${info.module ? info.module + '.' : ''}${info.method}`
+    + `(${JSON.stringify(info.args)})`);
+});
+
 class Playground extends Component {
   render() {
     return (
@@ -24,7 +30,12 @@ class Playground extends Component {
         <Text style={styles.instructions}>
           Shake or press Shift+F10 for dev menu
         </Text>
-        <View style={styles.droptarget} allowDrop={true}>
+        <View style={styles.droptarget} allowDrop={true}
+          onDragEnter={e => console.log('onDragEnter', Object.keys(e))}
+          onDragOver={e => console.log('onDragOver', Object.keys(e))}
+          onDrop={e => console.log('onDrop', Object.keys(e))}
+          onDragLeave={e => console.log('onDragLeave', Object.keys(e))}
+        >
           <Text>drop files here</Text>
         </View>
       </View>
