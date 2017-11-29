@@ -134,29 +134,41 @@ namespace ReactNative.Views.View
         private async Task<JObject> GetDataTransferInfo(DataPackageView data)
         {
             var files = new JArray();
+            var items = new JArray();
+            var types = new JArray();
 
             if (data.Contains(StandardDataFormats.StorageItems))
             {
-                var items = await data.GetStorageItemsAsync();
-
-                foreach (var item in items)
+                foreach (var item in await data.GetStorageItemsAsync())
                 {
                     var file = item as StorageFile;
                     var guid = Guid.NewGuid();
                     var props = await file.GetBasicPropertiesAsync();
+                    var type = file.ContentType;
 
                     files.Add(new JObject
                     {
                         { "name", file.Name },
                         { "size", props.Size },
+                        { "type", type },
                         { "uri", "blob:" + guid },
                     });
+
+                    items.Add(new JObject
+                    {
+                        { "kind", "file" },
+                        { "type", type }
+                    });
+
+                    types.Add(type);
                 }
             }
 
             return new JObject
             {
-                { "files", files }
+                { "files", files },
+                { "items", items },
+                { "types", types }
             };
         }
 
