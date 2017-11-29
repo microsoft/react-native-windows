@@ -131,7 +131,7 @@ namespace ReactNative.Views.View
             }
         }
 
-        private async Task<JArray> GetDragDropFileDescriptors(DataPackageView data)
+        private async Task<JObject> GetDataTransferInfo(DataPackageView data)
         {
             var files = new JArray();
 
@@ -154,7 +154,10 @@ namespace ReactNative.Views.View
                 }
             }
 
-            return files;
+            return new JObject
+            {
+                { "files", files }
+            };
         }
 
         private async void OnDragEnter(object sender, DragEventArgs args)
@@ -162,12 +165,12 @@ namespace ReactNative.Views.View
             var view = sender as BorderedCanvas;
             Debug.WriteLine("[DnD] DragEnter");
 
-            var files = await GetDragDropFileDescriptors(args.DataView);
+            var data = await GetDataTransferInfo(args.DataView);
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
-                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", files));
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", data));
         }
 
         private async void OnDragOver(object sender, DragEventArgs args)
@@ -185,12 +188,12 @@ namespace ReactNative.Views.View
             // so a simple `allowDrop` flag may be sufficient.            
             args.AcceptedOperation = DataPackageOperation.Copy;
 
-            var files = await GetDragDropFileDescriptors(args.DataView);
+            var data = await GetDataTransferInfo(args.DataView);
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
-                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", files));
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", data));
         }
 
         private async void OnDrop(object sender, DragEventArgs args)
@@ -198,12 +201,12 @@ namespace ReactNative.Views.View
             var view = sender as BorderedCanvas;
             Debug.WriteLine("[DnD] Drop");
 
-            var files = await GetDragDropFileDescriptors(args.DataView);
-            
+            var data = await GetDataTransferInfo(args.DataView);
+
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
-                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", files));
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
         }
 
         private async void OnDragLeave(object sender, DragEventArgs args)
@@ -211,12 +214,12 @@ namespace ReactNative.Views.View
             var view = sender as BorderedCanvas;
             Debug.WriteLine("[DnD] DragLeave");
 
-            var files = await GetDragDropFileDescriptors(args.DataView);
+            var data = await GetDataTransferInfo(args.DataView);
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
-                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragLeave", files));
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragLeave", data));
         }
 
         private void OnDragStarting(object sender, DragStartingEventArgs args)
@@ -234,27 +237,25 @@ namespace ReactNative.Views.View
         class DragDropEvent : Event
         {
             private readonly string _name;
-            private readonly JArray _files;
+            private readonly JObject _data;
 
             public override string EventName => _name;
 
-            public DragDropEvent(int viewTag, string name, JArray files)
+            public DragDropEvent(int viewTag, string name, JObject data)
                 : base(viewTag)
             {
                 _name = name;
-                _files = files;
+                _data = data;
             }
 
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
-                var data = new JObject
+                Debug.WriteLine("[DnD] " + _name + ": " + _data.ToString());
+                eventEmitter.receiveEvent(ViewTag, EventName, new JObject
                 {
                     { "target", ViewTag },
-                    { "dataTransfer", new JObject { { "files", _files } } }
-                };
-
-                Debug.WriteLine("[DnD] " + _name + ": " + data.ToString());
-                eventEmitter.receiveEvent(ViewTag, EventName, data);
+                    { "dataTransfer", _data }
+                });
             }
         }
 
