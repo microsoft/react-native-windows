@@ -175,8 +175,6 @@ namespace ReactNative.Views.View
         private async void OnDragEnter(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] DragEnter");
-
             var data = await GetDataTransferInfo(args.DataView);
 
             view.GetReactContext()
@@ -188,7 +186,6 @@ namespace ReactNative.Views.View
         private async void OnDragOver(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] DragOver");
 
             // TODO: Send this event to JS, get response (how?) and
             // set the AcceptedOperation value. The JS handler in
@@ -211,8 +208,6 @@ namespace ReactNative.Views.View
         private async void OnDrop(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] Drop");
-
             var data = await GetDataTransferInfo(args.DataView);
 
             view.GetReactContext()
@@ -224,8 +219,6 @@ namespace ReactNative.Views.View
         private async void OnDragLeave(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] DragLeave");
-
             var data = await GetDataTransferInfo(args.DataView);
 
             view.GetReactContext()
@@ -262,7 +255,6 @@ namespace ReactNative.Views.View
 
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
-                Debug.WriteLine("[DnD] " + _name + ": " + _data.ToString());
                 eventEmitter.receiveEvent(ViewTag, EventName, new JObject
                 {
                     { "target", ViewTag },
