@@ -131,52 +131,13 @@ namespace ReactNative.Views.View
             }
         }
 
-        private void OnDragEnter(object sender, DragEventArgs args)
+        private async Task<JArray> GetDragDropFileDescriptors(DataPackageView data)
         {
-            var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] DragEnter");
-
-            var files = new JArray { };
-
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", files));
-        }
-
-        private void OnDragOver(object sender, DragEventArgs args)
-        {
-            var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] DragOver");
-
-            // TODO: Send this event to JS, get response (how?) and
-            // set the AcceptedOperation value. The JS handler in
-            // MessagePanel merely does this:
-            //
-            //      e.dataTransfer.effectAllowed = 'copy';
-            //      e.dataTransfer.dropEffect = 'copy';
-            //
-            // so a simple `allowDrop` flag may be sufficient.            
-            args.AcceptedOperation = DataPackageOperation.Copy;
-
-            var files = new JArray { };
-
-            view.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", files));
-        }
-
-        private async void OnDrop(object sender, DragEventArgs args)
-        {
-            var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] Drop");
-
             var files = new JArray();
 
-            if (args.DataView.Contains(StandardDataFormats.StorageItems))
+            if (data.Contains(StandardDataFormats.StorageItems))
             {
-                var items = await args.DataView.GetStorageItemsAsync();
+                var items = await data.GetStorageItemsAsync();
 
                 foreach (var item in items)
                 {
@@ -192,6 +153,52 @@ namespace ReactNative.Views.View
                     });
                 }
             }
+
+            return files;
+        }
+
+        private async void OnDragEnter(object sender, DragEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] DragEnter");
+
+            var files = await GetDragDropFileDescriptors(args.DataView);
+
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", files));
+        }
+
+        private async void OnDragOver(object sender, DragEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] DragOver");
+
+            // TODO: Send this event to JS, get response (how?) and
+            // set the AcceptedOperation value. The JS handler in
+            // MessagePanel merely does this:
+            //
+            //      e.dataTransfer.effectAllowed = 'copy';
+            //      e.dataTransfer.dropEffect = 'copy';
+            //
+            // so a simple `allowDrop` flag may be sufficient.            
+            args.AcceptedOperation = DataPackageOperation.Copy;
+
+            var files = await GetDragDropFileDescriptors(args.DataView);
+
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", files));
+        }
+
+        private async void OnDrop(object sender, DragEventArgs args)
+        {
+            var view = sender as BorderedCanvas;
+            Debug.WriteLine("[DnD] Drop");
+
+            var files = await GetDragDropFileDescriptors(args.DataView);
             
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
@@ -199,12 +206,12 @@ namespace ReactNative.Views.View
                 .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", files));
         }
 
-        private void OnDragLeave(object sender, DragEventArgs args)
+        private async void OnDragLeave(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
             Debug.WriteLine("[DnD] DragLeave");
 
-            var files = new JArray { };
+            var files = await GetDragDropFileDescriptors(args.DataView);
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
