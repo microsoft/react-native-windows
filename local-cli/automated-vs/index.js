@@ -1,13 +1,17 @@
 'use-strict';
 
-const WPFSolution = require('./solutions/wpfSolution');
-const UWPSolution = require('./solutions/uwpSolution');
-const getConfiguration = require('./utils/utility').getConfiguration;
-const getVerboseCLP = require('./utils/utility').getVerboseCLP;
+const WPFProject = require('./projects/wpfProject');
+const UWPProject = require('./projects/uwpProject');
+const VS2017 = require('./visualStudios/vs2017');
+const VS2015OrEarlier = require('./visualStudios/vs2015OrEarlier');
+const getConfiguration = require('./utils/cliOptions').getConfiguration;
+const getVerboseCLP = require('./utils/cliOptions').getVerboseCLP;
 
 module.exports = {
-    WPFSolution,
-    UWPSolution,
+    WPFProject,
+    UWPProject,
+    VS2017,
+    VS2015OrEarlier,
     getConfiguration,
     getVerboseCLP
 };

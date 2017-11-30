@@ -7,10 +7,16 @@ const child_process = require('child_process');
 const execSync = child_process.execSync;
 const parse = require('xml-parser');
 const fs = require('fs');
-const WindowsSolution = require('./windowsSolution');
+const WindowsProject = require('./windowsProject');
 const WinAppDeployTool = require('../utils/winappdeploytool');
 
-module.exports = class UWPSolution extends WindowsSolution {
+module.exports = class UWPProject extends WindowsProject {
+
+    constructor(slnFile, root, visualStudio, minWinSDK) {
+        super(slnFile, root, visualStudio, minWinSDK);
+
+        this.defaultMSBuildArgs.push('/p:AppxBundle=Never');
+    }
 
     //build
     getWindowsSDKFolderPath(programFilesFolder) {

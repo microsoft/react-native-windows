@@ -4,9 +4,9 @@ const path = require('path');
 const chalk = require('chalk');
 const child_process = require('child_process');
 const spawn = child_process.spawn;
-const WindowsSolution = require('./windowsSolution');
+const WindowsProject = require('./windowsProject');
 
-module.exports = class WPFSolution extends WindowsSolution {
+module.exports = class WPFProject extends WindowsProject {
 
     //build
     getWindowsSDKFolderPath(programFilesFolder) {

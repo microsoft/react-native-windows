@@ -2,7 +2,7 @@
 
 const chalk = require('chalk');
 const automatedVS = require('../automated-vs/index');
-const WPFSolution = automatedVS.WPFSolution;
+const WPFProject = automatedVS.WPFProject;
 const buildAndDeployUtils = require('../utils/buildAndDeployUtils');
 
 const minWinSDK = '8.1.0.0';
@@ -17,17 +17,17 @@ function runWpf(config, args, options) {
     return;
   }
 
-  const wpfSol = new WPFSolution(slnFile, options.root, minWinSDK);
+  const wpfProj = new WPFProject(slnFile, options.root, null, minWinSDK);
 
   try {
-    wpfSol.build(options);
+    wpfProj.build(options);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
   }
 
 
-  return buildAndDeployUtils.startServerInNewWindow(options).then(() => wpfSol.deploy(options, `wpf/${wpfSol.name}`));
+  return buildAndDeployUtils.startServerInNewWindow(options).then(() => wpfProj.deploy(options, `wpf/${wpfProj.name}`));
 }
 
 /*

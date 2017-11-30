@@ -9,12 +9,11 @@ const execSync = require('child_process').execSync;
 const shell = require('shelljs');
 const path = require('path');
 const Version = require('../utils/version');
-const VSSolution = require('./vsSolution');
+const VSProject = require('./vsProject');
 
-module.exports = class WindowsSolution extends VSSolution {
-    constructor(slnFile, root, minWinSDK) {
-        super(slnFile, root);
-
+module.exports = class WindowsProject extends VSProject {
+    constructor(slnFile, root, visualStudio, minWinSDK) {
+        super(slnFile, root, visualStudio);
         this.minWinSDK = minWinSDK;
     }
 

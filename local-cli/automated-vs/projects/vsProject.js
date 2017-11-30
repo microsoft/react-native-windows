@@ -8,31 +8,29 @@
 const execSync = require('child_process').execSync;
 const path = require('path');
 const chalk = require('chalk');
-const fs = require('fs');
 const shell = require('shelljs');
 const child_process = require('child_process');
 const EOL = require('os').EOL;
 const nuget = require('../../nuget-exe/index');
-const MSBuild = require('../utils/msbuild');
-const MSBuildTools = MSBuild.MSBuildTools;
+const MSBuildTools = require('../utils/msbuild');
 const VS2017 = require('../visualStudios/vs2017');
 const VS2015OrEarlier = require('../visualStudios/vs2015OrEarlier');
-const utils = require('../utils/utility');
+const VS = require('../visualStudios/vs');
+const utils = require('../utils/cliOptions');
 
-module.exports = class VSSolution {
-    constructor(slnFile, root) {
+module.exports = class VSProject {
+    constructor(slnFile, root, visualStudio) {
         this.slnFile = slnFile;
         this.root = root;
         this.name = this.getName(slnFile);
-        this.visualStudio = this.createVSVersion();
+        this.visualStudio = this.createVSVersion(visualStudio);
         this.defaultMSBuildArgs = [
             '/clp:NoSummary;NoItemAndPropertyList',
-            '/nologo',
-            '/p:AppxBundle=Never'
+            '/nologo'
         ];
     }
 
-    getName(slnFile) { //get project name from sln file name
+    getName(slnFile) { //get solution name from sln file name
         if (!/.sln$/.test(slnFile) || !shell.test('-e', slnFile)) {
             throw new Error('Solution file (.sln) not found.');
         }
@@ -41,15 +39,22 @@ module.exports = class VSSolution {
     }
 
     //CONSTRUCTING STEPS
-    createVSVersion() {
-        //if vswhere.exe exists, using Visual Studio 2017
-        const vsWherePath = path.join(process.env['ProgramFiles(x86)'], '/Microsoft Visual Studio/Installer/vswhere.exe');
-        if (fs.existsSync(vsWherePath)) {
-            return new VS2017();
+    createVSVersion(visualStudio) {
+        if (visualStudio === null) {
+            return makeVS(VS.findWhichVersionOfVSIsInstalled());
+        } else if (typeof visualStudio === 'string') {
+            return makeVS(visualStudio);
         } else {
-            return new VS2015OrEarlier();
+            return visualStudio;
         }
 
+        function makeVS(version) {
+            if (version === '2017') {
+                return new VS2017();
+            } else {
+                return new VS2015OrEarlier();
+            }
+        }
     }
 
     getVSVersion() {
@@ -78,17 +83,19 @@ module.exports = class VSSolution {
     }
 
     checkAndGetRequirements() {
-        this.visualStudio.msBuild = this.hasMSBuild();
+        this.visualStudio.msBuild = this.getMSBuild();
     }
 
-    hasMSBuild() {
-        const versions = MSBuild.MSBUILD_VERSIONS.map(this.checkMSBuildVersion, this);
-        const msbuildTools = versions[0] || versions[1] || versions[2] || versions[3];
-        if (!msbuildTools) {
-          throw new Error('MSBuild tools not found');
+    getMSBuild() { //will get the most recent MSBuild Tools version, as this.visualStudio.msBuildVersions is ordered in descending version order
+        const numOfVersions = this.visualStudio.msBuildVersions.length;
+        for (let i = 0; i < numOfVersions; i++) {
+            let msbuildTools = this.checkMSBuildVersion(this.visualStudio.msBuildVersions[i]);
+            if (msbuildTools) {
+                return msbuildTools;
+            }
         }
 
-        return msbuildTools;
+        throw new Error('MSBuild tools not found');
     }
 
     checkMSBuildVersion(version) {

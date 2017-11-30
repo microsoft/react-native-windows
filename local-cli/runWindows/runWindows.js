@@ -2,31 +2,30 @@
 
 const chalk = require('chalk');
 const automatedVS = require('../automated-vs/index');
-const UWPSolution = automatedVS.UWPSolution;
+const UWPProject = automatedVS.UWPProject;
 const buildAndDeployUtils = require('../utils/buildAndDeployUtils');
 
 const minWinSDK = '10.0.14393.0';
 
 function runWindows(config, args, options) {
-
   options.root = options.root || process.cwd();
 
   const slnFile = buildAndDeployUtils.getSolutionFile(options, 'windows');
   if (!slnFile) {
-    console.error(chalk.red('Visual Studio Solution file not found. Make sure your root directory contains the wpf folder.'));
+    console.error(chalk.red('Visual Studio Solution file not found. Make sure your root directory contains the windows folder.'));
     return;
   }
 
-  const uwpSol = new UWPSolution(slnFile, options.root, minWinSDK);
+  const uwpProj = new UWPProject(slnFile, options.root, null, minWinSDK);
 
   try {
-    uwpSol.build(options);
+    uwpProj.build(options);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
   }
 
-  return buildAndDeployUtils.startServerInNewWindow(options).then(() => uwpSol.deploy(options, `windows/${uwpSol.name}`));
+  return buildAndDeployUtils.startServerInNewWindow(options).then(() => uwpProj.deploy(options, `windows/${uwpProj.name}`));
 }
 
 /*
