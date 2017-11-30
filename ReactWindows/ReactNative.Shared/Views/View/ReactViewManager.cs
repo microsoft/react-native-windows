@@ -142,7 +142,6 @@ namespace ReactNative.Views.View
                 foreach (var item in await data.GetStorageItemsAsync())
                 {
                     var file = item as StorageFile;
-                    var guid = Guid.NewGuid();
                     var props = await file.GetBasicPropertiesAsync();
                     var type = file.ContentType;
 
@@ -151,7 +150,7 @@ namespace ReactNative.Views.View
                         { "name", file.Name },
                         { "size", props.Size },
                         { "type", type },
-                        { "uri", "blob:" + guid },
+                        { "uri", new Uri(file.Path).AbsoluteUri },
                     });
 
                     items.Add(new JObject
