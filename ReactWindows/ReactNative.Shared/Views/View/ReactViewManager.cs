@@ -4,7 +4,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -107,7 +106,6 @@ namespace ReactNative.Views.View
         [ReactProp("allowDrop")]
         public void SetAllowDrop(BorderedCanvas view, bool allowDrop)
         {
-            Debug.WriteLine("[DnD] AllowDrop=" + allowDrop);
             view.AllowDrop = allowDrop;
 
             if (allowDrop)
@@ -116,8 +114,6 @@ namespace ReactNative.Views.View
                 view.DragOver += OnDragOver;
                 view.Drop += OnDrop;
                 view.DragLeave += OnDragLeave;
-                view.DragStarting += OnDragStarting;
-                view.DropCompleted += OnDropCompleted;
 
             }
             else
@@ -126,8 +122,6 @@ namespace ReactNative.Views.View
                 view.DragOver -= OnDragOver;
                 view.Drop -= OnDrop;
                 view.DragLeave -= OnDragLeave;
-                view.DragStarting -= OnDragStarting;
-                view.DropCompleted -= OnDropCompleted;
             }
         }
 
@@ -235,18 +229,6 @@ namespace ReactNative.Views.View
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragLeave", data));
-        }
-
-        private void OnDragStarting(object sender, DragStartingEventArgs args)
-        {
-            var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] DragStarting");
-        }
-
-        private void OnDropCompleted(object sender, DropCompletedEventArgs args)
-        {
-            var view = sender as BorderedCanvas;
-            Debug.WriteLine("[DnD] DropCompleted");
         }
 
         class DragDropEvent : Event
