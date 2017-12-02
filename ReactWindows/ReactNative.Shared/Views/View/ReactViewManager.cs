@@ -131,7 +131,7 @@ namespace ReactNative.Views.View
             }
         }
 
-        private async Task<JObject> GetDataTransferInfo(DataPackageView data)
+        private async Task<JObject> GetDataTransferInfo(DataPackageView data, bool withFileData = false)
         {
             var files = new JArray();
             var items = new JArray();
@@ -144,13 +144,24 @@ namespace ReactNative.Views.View
                     var file = item as StorageFile;
                     var props = await file.GetBasicPropertiesAsync();
                     var type = file.ContentType;
+                    var path = null as string;
+
+                    if (withFileData)
+                    {
+                        var copy = await file.CopyAsync(
+                            ApplicationData.Current.TemporaryFolder,
+                            file.Name, // TODO: use GUID instead?
+                            NameCollisionOption.ReplaceExisting);
+
+                        path = copy.Path;
+                    }
 
                     files.Add(new JObject
                     {
                         { "name", file.Name },
                         { "size", props.Size },
                         { "type", type },
-                        { "uri", new Uri(file.Path).AbsoluteUri },
+                        { "uri", path != null ? new Uri(path).AbsoluteUri : "" }
                     });
 
                     items.Add(new JObject
@@ -207,7 +218,7 @@ namespace ReactNative.Views.View
         private async void OnDrop(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
-            var data = await GetDataTransferInfo(args.DataView);
+            var data = await GetDataTransferInfo(args.DataView, true);
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
