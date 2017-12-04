@@ -80,8 +80,13 @@ namespace ReactNative.Views.View
         /// In WPF in order to be clickable (hit-test visible) the element needs to have background brush.
         /// This is why when the background and border brushes are set on the inner Border, the Canvas gets
         /// a transparent background brush.
-        /// </summary>
-        protected readonly Brush _defaultBackgroundBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+        /// </summary>                
+        protected readonly Brush _defaultBackgroundBrush
+#if WINDOWS_UWP
+            = null;
+#else
+            = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+#endif
 
         /// <summary>
         /// The name of this view manager. This will be the name used to 
