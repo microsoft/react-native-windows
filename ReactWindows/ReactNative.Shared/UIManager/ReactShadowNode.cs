@@ -1,4 +1,4 @@
-﻿using Facebook.Yoga;
+using Facebook.Yoga;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -47,6 +47,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Instantiates a <see cref="ReactShadowNode"/>.
         /// </summary>
+        /// <param name="isVirtual">Signals if the shadow node is virtual.</param>
         /// <param name="isDelegatedLayout">Signals if the shadow node is delegating the layouting to its child.</param>
         public ReactShadowNode(bool isVirtual, bool isDelegatedLayout = false)
         {

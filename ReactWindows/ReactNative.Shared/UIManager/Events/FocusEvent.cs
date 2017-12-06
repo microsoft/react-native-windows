@@ -6,7 +6,7 @@ namespace ReactNative.UIManager.Events
     class FocusEvent : Event
     {
         public FocusEvent(int viewTag)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
         }
 

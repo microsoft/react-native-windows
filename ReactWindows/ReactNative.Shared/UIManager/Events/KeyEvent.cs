@@ -11,7 +11,7 @@ namespace ReactNative.UIManager.Events
         private readonly int _key;
 
         public KeyEvent(string eventName, int viewTag, int key)
-            : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewTag)
         {
             EventName = eventName;
             _key = key;
