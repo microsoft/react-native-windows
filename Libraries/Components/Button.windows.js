@@ -20,8 +20,15 @@ const Text = require('Text');
 const TouchableNativeFeedback = require('TouchableNativeFeedback');
 const TouchableOpacity = require('TouchableOpacity');
 const View = require('View');
+const FocusableViewWindows = require('FocusableViewWindows');
 
 const invariant = require('fbjs/lib/invariant');
+
+const KEY_CODE_ENTER = FocusableViewWindows.keys.Enter || FocusableViewWindows.keys.Return;
+const KEY_CODE_SPACE = FocusableViewWindows.keys.Space;
+
+const DOWN_KEYCODES = [KEY_CODE_SPACE, KEY_CODE_ENTER];
+const UP_KEYCODES = [KEY_CODE_SPACE];
 
 /**
  * A basic button component that should render nicely on any platform. Supports
@@ -84,7 +91,27 @@ class Button extends React.Component {
      * Used to locate this view in end-to-end tests.
      */
     testID: PropTypes.string,
-  };
+    /**
+     * (Windows only) tabIndex (default is 0 rather than undefined)
+     * @platform windows
+     */
+    tabIndex: PropTypes.number,
+    /**
+     * Controls whether control should use system default provided focus rects
+     * @platform windows
+     */
+    useSystemFocusVisuals: PropTypes.bool,
+    /**
+     * (Windows only) Callback that is called when the text input is blurred
+     * @platform windows
+     */
+    onBlur: PropTypes.func,
+    /**
+     * (Windows only) Callback that is called when the text input is focused
+     * @platform windows
+     */
+    onFocus: PropTypes.func,
+};
 
   render() {
     const {
@@ -116,6 +143,32 @@ class Button extends React.Component {
     );
     const formattedTitle = Platform.OS === 'android' ? title.toUpperCase() : title;
     const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+    var content =
+        <View style={buttonStyles}>
+          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
+        </View>;
+
+    if (Platform.OS === "windows") {
+      var tabIndex = this.props.tabIndex || 0;
+      var windowsTabFocusable = !disabled && tabIndex >= 0;
+      content =
+        <FocusableViewWindows
+          ref="focusable"
+          disabled={disabled}
+          isTabStop={windowsTabFocusable}
+          tabIndex={tabIndex}
+          useSystemFocusVisuals={this.props.useSystemFocusVisuals}
+          handledKeyDownKeys={DOWN_KEYCODES}
+          handledKeyUpKeys={UP_KEYCODES}
+          onKeyDown={this._onKeyDown}
+          onKeyUp={this._onKeyUp}
+          onFocus = {this._onFocus}
+          onBlur = {this._onBlur}
+        >
+          {content}
+      </FocusableViewWindows> ;
+    }
+
     return (
       <Touchable
         accessibilityComponentType="button"
@@ -124,11 +177,62 @@ class Button extends React.Component {
         testID={testID}
         disabled={disabled}
         onPress={onPress}>
-        <View style={buttonStyles}>
-          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
-        </View>
+          {content}
       </Touchable>
     );
+  }
+
+  _onKeyDown = (e): void => {
+    if (!this.props.disabled) {
+      if (this.props.onPress) {
+        var key = e.nativeEvent.key;
+        // ENTER triggers press on key down
+        if (key === KEY_CODE_ENTER) {
+          this.props.onPress(e);
+          return;
+        }
+      }
+    }
+  }
+
+  _onKeyUp = (e): void => {
+    if (!this.props.disabled) {
+      if (this.props.onPress) {
+        var key = e.nativeEvent.key;
+        // SPACE triggers press on key up
+        if (key === KEY_CODE_SPACE) {
+          this.props.onPress(e);
+          return;
+        }
+      }
+    }
+  }
+
+  _onFocus = (e): void => {
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
+  }
+
+  _onBlur = (e): void => {
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  }
+
+  focus() {
+    if (!this.props.disabled &&
+        this.refs.focusable &&
+        this.refs.focusable.focus) {
+          this.refs.focusable.focus();
+    }
+  }
+
+  blur() {
+    if (this.refs.focusable &&
+        this.refs.focusable.blur) {
+        this.refs.focusable.blur();
+    }
   }
 }
 

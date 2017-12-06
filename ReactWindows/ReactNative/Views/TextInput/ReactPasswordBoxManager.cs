@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,20 @@ namespace ReactNative.Views.TextInput
                                 {
                                     { "bubbled" , "onEndEditing" },
                                     { "captured" , "onEndEditingCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topKeyDown",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onKeyDown" },
+                                    { "captured" , "onKeyDownCapture" }
                                 }
                             }
                         }
@@ -336,6 +351,31 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets whether the view is a tab stop.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code>.
+        /// </param>
+        /// 
+        [ReactProp("isTabStop")]
+        public void SetIsTabStop(PasswordBox view, bool isTabStop)
+        {
+            view.IsTabStop = isTabStop;
+        }
+
+        /// <summary>
+        /// Sets the tab index for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabIndex">The tab index.</param>
+        [ReactProp("tabIndex")]
+        public void SetTabIndex(PasswordBox view, int tabIndex)
+        {
+            view.TabIndex = tabIndex;
+        }
+
+        /// <summary>
         /// Sets the max character length property on the <see cref="PasswordBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -494,7 +534,7 @@ namespace ReactNative.Views.TextInput
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ReactTextInputFocusEvent(textBox.GetTag()));
+                    new FocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
@@ -505,7 +545,7 @@ namespace ReactNative.Views.TextInput
                 .EventDispatcher;
 
             eventDispatcher.DispatchEvent(
-                new ReactTextInputBlurEvent(textBox.GetTag()));
+                new BlurEvent(textBox.GetTag()));
 
             eventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
@@ -515,9 +555,9 @@ namespace ReactNative.Views.TextInput
         
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
+            var textBox = (PasswordBox)sender;
             if (e.Key == VirtualKey.Enter)
             {
-                var textBox = (PasswordBox)sender;
                 e.Handled = true;
                 textBox.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
@@ -526,6 +566,19 @@ namespace ReactNative.Views.TextInput
                         new ReactTextInputSubmitEditingEvent(
                             textBox.GetTag(),
                             textBox.Password));
+            }
+
+            if (!e.Handled)
+            {
+                var keyCode = e.Key.GetKeyCode();
+                textBox.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyDownEventString,
+                            textBox.GetTag(),
+                            keyCode));
             }
         }
     }

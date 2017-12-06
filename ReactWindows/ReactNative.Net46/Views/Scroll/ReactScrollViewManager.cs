@@ -214,6 +214,17 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
+        /// Disables keyboaed based arrow scrolling.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="disabled">Signals whether keyboard based scrolling is disabled.</param>
+        [ReactProp("disableKeyboardBasedScrolling")]
+        public void SetDisableKeyboardBasedScrolling(ScrollViewer view, bool? disabled)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>

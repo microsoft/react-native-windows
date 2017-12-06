@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
@@ -91,6 +92,20 @@ namespace ReactNative.Views.TextInput
                                 {
                                     { "bubbled" , "onEndEditing" },
                                     { "captured" , "onEndEditingCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topKeyDown",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onKeyDown" },
+                                    { "captured" , "onKeyDownCapture" }
                                 }
                             }
                         }
@@ -363,7 +378,7 @@ namespace ReactNative.Views.TextInput
         {
             view.TextAlignment = EnumHelpers.Parse<TextAlignment>(alignment);
         }
-
+ 
         /// <summary>
         /// Sets the text alignment property on the <see cref="ReactTextBox"/>.
         /// </summary>
@@ -384,6 +399,31 @@ namespace ReactNative.Views.TextInput
         public void SetEditable(ReactTextBox view, bool editable)
         {
             view.IsEnabled = editable;
+        }
+
+        /// <summary>
+        /// Sets whether the view is a tab stop.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code>.
+        /// </param>
+        /// 
+        [ReactProp("isTabStop")]
+        public void SetIsTabStop(ReactTextBox view, bool isTabStop)
+        {
+            view.IsTabStop = isTabStop;
+        }
+
+        /// <summary>
+        /// Sets the tab index for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabIndex">The tab index.</param>
+        [ReactProp("tabIndex")]
+        public void SetTabIndex(ReactTextBox view, int tabIndex)
+        {
+            view.TabIndex = tabIndex;
         }
 
         /// <summary>
@@ -692,7 +732,7 @@ namespace ReactNative.Views.TextInput
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ReactTextInputFocusEvent(textBox.GetTag()));
+                    new FocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
@@ -703,7 +743,7 @@ namespace ReactNative.Views.TextInput
                 .EventDispatcher;
 
             eventDispatcher.DispatchEvent(
-                new ReactTextInputBlurEvent(textBox.GetTag()));
+                new BlurEvent(textBox.GetTag()));
 
             eventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
@@ -713,9 +753,9 @@ namespace ReactNative.Views.TextInput
         
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
+            var textBox = (ReactTextBox)sender;
             if (e.Key == VirtualKey.Enter)
             {
-                var textBox = (ReactTextBox)sender;
                 if (!textBox.AcceptsReturn)
                 {
                     e.Handled = true;
@@ -727,6 +767,19 @@ namespace ReactNative.Views.TextInput
                                 textBox.GetTag(),
                                 textBox.Text));
                 }
+            }
+
+            if (!e.Handled)
+            {
+                var keyCode = e.Key.GetKeyCode();
+                textBox.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyDownEventString,
+                            textBox.GetTag(),
+                            keyCode));
             }
         }
     }

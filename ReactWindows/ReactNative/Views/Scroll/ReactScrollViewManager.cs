@@ -4,8 +4,11 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using static System.FormattableString;
 
@@ -225,6 +228,28 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
+        /// Disables keyboaed based arrow scrolling.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="disabled">Signals whether keyboard based scrolling is disabled.</param>
+        [ReactProp("disableKeyboardBasedScrolling")]
+        public void SetDisableKeyboardBasedScrolling(ScrollViewer view, bool? disabled)
+        {
+            var disabledValue = disabled ?? false;
+            if (_scrollViewerData[view].DisableArrowNavigation != disabledValue)
+            {
+                if (_scrollViewerData[view].IsControlLoaded)
+                {
+                    UpdateDisableKeyboardBasedScrolling(view, disabledValue);
+                }
+                else
+                {
+                    _scrollViewerData[view].DisableArrowNavigation = disabledValue;
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
@@ -319,6 +344,7 @@ namespace ReactNative.Views.Scroll
 
             _scrollViewerData.Remove(view);
 
+            view.Loaded -= OnLoaded;
             view.ViewChanging -= OnViewChanging;
             view.DirectManipulationStarted -= OnDirectManipulationStarted;
             view.DirectManipulationCompleted -= OnDirectManipulationCompleted;
@@ -382,6 +408,7 @@ namespace ReactNative.Views.Scroll
             view.DirectManipulationCompleted += OnDirectManipulationCompleted;
             view.DirectManipulationStarted += OnDirectManipulationStarted;
             view.ViewChanging += OnViewChanging;
+            view.Loaded += OnLoaded;
         }
 
         private void OnDirectManipulationCompleted(object sender, object e)
@@ -477,6 +504,71 @@ namespace ReactNative.Views.Scroll
                         }));
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = (ScrollViewer)sender;
+            _scrollViewerData[scrollViewer].IsControlLoaded = true;
+
+            UpdateDisableKeyboardBasedScrolling(scrollViewer, _scrollViewerData[scrollViewer].DisableArrowNavigation);
+        }
+
+        private void UpdateDisableKeyboardBasedScrolling(ScrollViewer view, bool disable)
+        {
+            ScrollContentPresenter contentPresenter = _scrollViewerData[view].ContentPresenter;
+            if (disable)
+            {
+                if (contentPresenter == null)
+                {
+                    contentPresenter = FindChild<ScrollContentPresenter>(view);
+                    if (contentPresenter == null)
+                    {
+                        throw new InvalidOperationException("ScrollViewer doesn't seem to contain a ScrollContentPresenter");
+                    }
+                    _scrollViewerData[view].ContentPresenter = contentPresenter;
+                }
+
+                contentPresenter.KeyDown += OnPresenterKeyDown;
+            }
+            else
+            {
+                if (contentPresenter != null)
+                {
+                    contentPresenter.KeyDown -= OnPresenterKeyDown;
+                }
+            }
+
+            _scrollViewerData[view].DisableArrowNavigation = disable;
+        }
+
+        internal static T FindChild<T>(DependencyObject startNode)
+          where T : DependencyObject
+        {
+            int count = VisualTreeHelper.GetChildrenCount(startNode);
+            for (int i = 0; i < count; i++)
+            {
+                DependencyObject current = VisualTreeHelper.GetChild(startNode, i);
+                if ((current.GetType()).Equals(typeof(T)) || (current.GetType().GetTypeInfo().IsSubclassOf(typeof(T))))
+                {
+                    T asType = (T)current;
+                    return asType;
+                }
+                var result = FindChild<T>(current);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
+
+        private void OnPresenterKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Left || e.Key == VirtualKey.Right)
+            {
+                e.Handled = true;
+            }
+        }
+
         private static DependencyObject EnsureChild(ScrollViewer view)
         {
             var child = view.Content;
@@ -528,6 +620,10 @@ namespace ReactNative.Views.Scroll
         class ScrollViewerData
         {
             public ScrollMode HorizontalScrollMode = ScrollMode.Disabled;
+
+            public bool IsControlLoaded = false;
+            public bool DisableArrowNavigation = false;
+            public ScrollContentPresenter ContentPresenter;
         }
     }
 }

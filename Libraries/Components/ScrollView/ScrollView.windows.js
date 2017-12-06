@@ -410,6 +410,27 @@ const ScrollView = createReactClass({
      * @platform ios
      */
     DEPRECATED_sendUpdatedChildFrames: PropTypes.bool,
+  
+    /**
+     * Called when key down bubbles from a component that has focus.
+     *
+     * @platform windows
+     */
+    onKeyDown: PropTypes.func,
+    
+    /**
+     * Called when key up bubbles from a component that has focus.
+     *
+     * @platform windows
+     */
+    onKeyUp: PropTypes.func,
+    
+    /**
+     * Disables default keyboard arrow-based scrolling.
+     * 
+     * @platform windows
+     */
+    disableKeyboardBasedScrolling: PropTypes.bool,
   },
 
   mixins: [ScrollResponder.Mixin],

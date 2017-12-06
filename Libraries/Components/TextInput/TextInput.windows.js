@@ -616,6 +616,11 @@ const TextInput = createReactClass({
      * If `true`, caret is hidden. The default value is `false`.
      */
     caretHidden: PropTypes.bool,
+    /**
+     * tabIndex (default is 0 rather than undefined)
+     * @platform windows
+     */
+    tabIndex: PropTypes.number,
   },
   getDefaultProps(): Object {
     return {
@@ -887,6 +892,9 @@ const TextInput = createReactClass({
         'TextInput children are not supported on Windows.'
     );
 
+    var tabIndex = this.props.tabIndex || 0;
+    var windowsTabFocusable = this.props.editable && tabIndex >= 0;
+
     let textContainer;
     if (props.secureTextEntry) {
       textContainer =
@@ -897,6 +905,8 @@ const TextInput = createReactClass({
           onBlur={this._onBlur}
           onChange={this._onChange}
           text={this._getText()}
+          isTabStop={windowsTabFocusable}
+          tabIndex={tabIndex}          
         />;
     } else {
       textContainer =
@@ -912,6 +922,8 @@ const TextInput = createReactClass({
           onTextInput={this._onTextInput}
           text={this._getText()}
           onScroll={this._onScroll}
+          isTabStop={windowsTabFocusable}
+          tabIndex={tabIndex}
         />;
     }
 
