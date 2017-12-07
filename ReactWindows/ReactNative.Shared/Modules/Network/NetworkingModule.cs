@@ -41,7 +41,7 @@ namespace ReactNative.Modules.Network
         /// </summary>
         /// <param name="reactContext">The context.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "HttpClient disposed by module.")]
-        internal NetworkingModule(ReactContext reactContext)
+        internal NetworkingModule(IReactContext reactContext)
             : this(CreateDefaultHttpClient(), reactContext)
         {
         }
@@ -51,7 +51,7 @@ namespace ReactNative.Modules.Network
         /// </summary>
         /// <param name="client">The HTTP client.</param>
         /// <param name="reactContext">The context.</param>
-        internal NetworkingModule(IHttpClient client, ReactContext reactContext)
+        internal NetworkingModule(IHttpClient client, IReactContext reactContext)
             : base(reactContext)
         {
             _client = client;

@@ -34,7 +34,7 @@ namespace ReactNative
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller manages scope of returned list of disposables.")]
-        public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
+        public IReadOnlyList<INativeModule> CreateNativeModules(IReactContext reactContext)
         {
             var uiManagerModule = default(INativeModule);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
@@ -67,7 +67,7 @@ namespace ReactNative
         }
 
         public IReadOnlyList<IViewManager> CreateViewManagers(
-            ReactContext reactContext)
+            IReactContext reactContext)
         {
             return new List<IViewManager>(0);
         }

@@ -93,7 +93,7 @@ namespace ReactNative.Tests
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
-            var task = default(Task<ReactContext>);
+            var task = default(Task<IReactContext>);
             var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 task = manager.CreateReactContextAsync(CancellationToken.None);
@@ -293,8 +293,8 @@ namespace ReactNative.Tests
             var jsBundleFile = "ms-appx:///Resources/test.js";
             var manager = CreateReactInstanceManager(jsBundleFile);
 
-            var initialContext = default(ReactContext);
-            var context = default(ReactContext);
+            var initialContext = default(IReactContext);
+            var context = default(IReactContext);
             await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 var initialContextTask = manager.CreateReactContextAsync(CancellationToken.None);

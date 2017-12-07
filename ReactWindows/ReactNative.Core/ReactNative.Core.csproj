@@ -21,6 +21,8 @@
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="4.0.0-preview00001" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.StackTrace" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

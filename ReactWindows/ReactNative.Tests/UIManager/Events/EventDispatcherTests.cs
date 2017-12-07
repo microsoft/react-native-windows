@@ -355,7 +355,7 @@ namespace ReactNative.Tests.UIManager.Events
             await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
-        private static async Task<ReactContext> CreateContextAsync(IJavaScriptExecutor executor)
+        private static async Task<IReactContext> CreateContextAsync(IJavaScriptExecutor executor)
         {
             var context = new ReactContext();
 
@@ -386,7 +386,7 @@ namespace ReactNative.Tests.UIManager.Events
             return instance;
         }
 
-        private static IDisposable BlockJavaScriptThread(ReactContext reactContext)
+        private static IDisposable BlockJavaScriptThread(IReactContext reactContext)
         {
             var enter = new AutoResetEvent(false);
             var exit = new AutoResetEvent(false);

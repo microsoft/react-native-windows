@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace ReactNative.Modules.Core
 {
@@ -12,7 +12,7 @@ namespace ReactNative.Modules.Core
         private readonly TimeSpan _initialRenderingTime;
         private DateTimeOffset _initialAbsoluteTime;
 
-        internal FrameEventArgs(TimeSpan renderingTime)
+        public FrameEventArgs(TimeSpan renderingTime)
         {
             RenderingTime = _initialRenderingTime = renderingTime;
             FrameTime = _initialAbsoluteTime = DateTimeOffset.UtcNow;

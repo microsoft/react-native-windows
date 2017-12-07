@@ -6,7 +6,7 @@ using static System.FormattableString;
 
 namespace ReactNative.DevSupport
 {
-    static class StackTraceHelper
+    public static class StackTraceHelper
     {
         public static IStackFrame[] ConvertChakraStackTrace(string stackTrace)
         {

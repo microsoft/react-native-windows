@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace ReactNative.Collections
 {
-    static class ListExtensions
+    public static class ListExtensions
     {
         public static T LocalMin<T>(this IList<T> list, Func<T, double> f)
         {

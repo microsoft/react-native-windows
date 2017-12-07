@@ -1,4 +1,4 @@
-﻿namespace ReactNative.Chakra
+namespace ReactNative.Chakra
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -270,7 +270,7 @@
         /// Throws if a native method returns an error code.
         /// </summary>
         /// <param name="error">The error.</param>
-        internal static void ThrowIfError(JavaScriptErrorCode error)
+        public static void ThrowIfError(JavaScriptErrorCode error)
         {
             if (error != JavaScriptErrorCode.NoError)
             {

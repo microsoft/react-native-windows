@@ -65,7 +65,7 @@ namespace ReactNative.DevSupport
         /// </summary>
         /// <param name="token">A token to cancel the operation.</param>
         /// <returns>A task to await the result.</returns>
-        Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token);
+        Task<IReactContext> CreateReactContextFromPackagerAsync(CancellationToken token);
 
         /// <summary>
         /// Checks if an up-to-date JavaScript bundle is ready.
@@ -94,13 +94,13 @@ namespace ReactNative.DevSupport
         /// Notify when a new React context is created.
         /// </summary>
         /// <param name="context">The React context.</param>
-        void OnNewReactContextCreated(ReactContext context);
+        void OnNewReactContextCreated(IReactContext context);
 
         /// <summary>
         /// Notify when a new React context is destroyed.
         /// </summary>
         /// <param name="context">The React context.</param>
-        void OnReactContextDestroyed(ReactContext context);
+        void OnReactContextDestroyed(IReactContext context);
 
         /// <summary>
         /// Reload developer settings.
