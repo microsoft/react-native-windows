@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -125,7 +126,7 @@ namespace ReactNative.Views.View
             }
         }
 
-        private async Task<JObject> GetDataTransferInfo(DataPackageView data, bool withFileData = false)
+        private async Task<JObject> GetDataTransferInfo(DataPackageView data)
         {
             var files = new JArray();
             var items = new JArray();
@@ -138,27 +139,14 @@ namespace ReactNative.Views.View
                     var file = item as StorageFile;
                     var props = await file.GetBasicPropertiesAsync();
                     var type = file.ContentType;
-                    var path = null as string;
-
-                    if (withFileData)
-                    {
-                        var folder = await ApplicationData.Current.TemporaryFolder
-                            .CreateFolderAsync("DragDrop", CreationCollisionOption.OpenIfExists);
-
-                        var copy = await file.CopyAsync(
-                            folder,
-                            Guid.NewGuid().ToString(),
-                            NameCollisionOption.ReplaceExisting);
-
-                        path = copy.Path;
-                    }
+                    var path = "file://MRU/" + StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
 
                     files.Add(new JObject
                     {
                         { "name", file.Name },
                         { "size", props.Size },
                         { "type", type },
-                        { "uri", path != null ? new Uri(path).AbsoluteUri : "" }
+                        { "uri", path }
                     });
 
                     items.Add(new JObject
@@ -215,7 +203,7 @@ namespace ReactNative.Views.View
         private async void OnDrop(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
-            var data = await GetDataTransferInfo(args.DataView, true);
+            var data = await GetDataTransferInfo(args.DataView);
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
