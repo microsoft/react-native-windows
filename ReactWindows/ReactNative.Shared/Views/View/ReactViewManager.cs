@@ -5,15 +5,15 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage;
-using Windows.Storage.AccessCache;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.ApplicationModel.DataTransfer;
 #else
 using System.Windows;
 using System.Windows.Controls;
@@ -100,6 +100,7 @@ namespace ReactNative.Views.View
         }
 
         #region drag and drop
+#if WINDOWS_UWP
 
         /// <summary>
         /// Enables the Canvas as a drop target.
@@ -246,6 +247,7 @@ namespace ReactNative.Views.View
             }
         }
 
+#endif
         #endregion
 
         /// <summary>
