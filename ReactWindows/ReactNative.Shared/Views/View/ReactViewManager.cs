@@ -142,9 +142,12 @@ namespace ReactNative.Views.View
 
                     if (withFileData)
                     {
+                        var folder = await ApplicationData.Current.TemporaryFolder
+                            .CreateFolderAsync("DragDrop", CreationCollisionOption.OpenIfExists);
+
                         var copy = await file.CopyAsync(
-                            ApplicationData.Current.TemporaryFolder,
-                            file.Name, // TODO: use GUID instead?
+                            folder,
+                            Guid.NewGuid().ToString(),
                             NameCollisionOption.ReplaceExisting);
 
                         path = copy.Path;
