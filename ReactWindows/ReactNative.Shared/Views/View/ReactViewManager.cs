@@ -127,7 +127,7 @@ namespace ReactNative.Views.View
             }
         }
 
-        private async Task<JObject> GetDataTransferInfo(DataPackageView data)
+        private async Task<JObject> GetDataTransferInfo(DataPackageView data, bool drop = false)
         {
             var files = new JArray();
             var items = new JArray();
@@ -140,7 +140,7 @@ namespace ReactNative.Views.View
                     var file = item as StorageFile;
                     var props = await file.GetBasicPropertiesAsync();
                     var type = file.ContentType;
-                    var path = "file://MRU/" + StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
+                    var path = drop ? "file://cache/" + GetAccessToken(file) : "";
 
                     files.Add(new JObject
                     {
@@ -166,6 +166,30 @@ namespace ReactNative.Views.View
                 { "items", items },
                 { "types", types }
             };
+        }
+
+        private string GetAccessToken(StorageFile file)
+        {
+            var futureAccessList = StorageApplicationPermissions.FutureAccessList;
+            var existingEntries = futureAccessList.Entries;
+            var capacity = futureAccessList.MaximumItemsAllowed;
+            var now = DateTime.Now;
+
+            // Use more aggresive timeout when number of items exceed 100 or half of the capacity
+            // Note: 100 is an arbitary limit in case that OS reduces the capacity (it is 1000 in RS1). 
+            var expiry = existingEntries.Count >= capacity / 2 || existingEntries.Count >= 100 ?
+                now.AddDays(-1) :
+                now.AddDays(-7);
+
+            foreach (var entry in existingEntries)
+            {
+                if (DateTime.TryParse(entry.Metadata, out DateTime time) && time < expiry)
+                {
+                    futureAccessList.Remove(entry.Token);
+                }
+            }
+
+            return futureAccessList.Add(file, now.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
         private async void OnDragEnter(object sender, DragEventArgs args)
@@ -204,7 +228,7 @@ namespace ReactNative.Views.View
         private async void OnDrop(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
-            var data = await GetDataTransferInfo(args.DataView);
+            var data = await GetDataTransferInfo(args.DataView, true);
 
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
