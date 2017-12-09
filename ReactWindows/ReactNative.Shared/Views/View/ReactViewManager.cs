@@ -137,26 +137,37 @@ namespace ReactNative.Views.View
             {
                 foreach (var item in await data.GetStorageItemsAsync())
                 {
-                    var file = item as StorageFile;
-                    var props = await file.GetBasicPropertiesAsync();
-                    var type = file.ContentType;
-                    var path = drop ? "file://cache/" + GetAccessToken(file) : "";
-
-                    files.Add(new JObject
+                    try
                     {
-                        { "name", file.Name },
-                        { "size", props.Size },
-                        { "type", type },
-                        { "uri", path }
-                    });
+                        var file = item as StorageFile;
 
-                    items.Add(new JObject
+                        if (file != null)
+                        {
+                            var props = await file.GetBasicPropertiesAsync();
+                            var type = file.ContentType;
+                            var path = drop ? "file://cache/" + GetAccessToken(file) : "";
+
+                            files.Add(new JObject
+                            {
+                                { "name", file.Name },
+                                { "size", props.Size },
+                                { "type", type },
+                                { "uri", path }
+                            });
+
+                            items.Add(new JObject
+                            {
+                                { "kind", "file" },
+                                { "type", type }
+                            });
+
+                            types.Add(type);
+                        }
+                    }
+                    catch (Exception ex)
                     {
-                        { "kind", "file" },
-                        { "type", type }
-                    });
-
-                    types.Add(type);
+                        System.Diagnostics.Debug.WriteLine("GetDataTransferInfo: " + ex);
+                    }
                 }
             }
 
