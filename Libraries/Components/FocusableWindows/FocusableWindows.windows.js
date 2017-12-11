@@ -43,7 +43,6 @@
  *      }
  *   }
  *
- *
  * @providesModule FocusableWindows
  */
 'use strict';
