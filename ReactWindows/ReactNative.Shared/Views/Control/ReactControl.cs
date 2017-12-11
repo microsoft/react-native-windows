@@ -25,6 +25,9 @@ namespace ReactNative.Views.ControlView
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
             };
+#if WINDOWS_UWP
+            UseSystemFocusVisuals = true;
+#endif
         }
 
         /// <summary>

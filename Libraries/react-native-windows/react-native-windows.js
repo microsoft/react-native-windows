@@ -17,7 +17,7 @@ var ReactWindows = {
   get ProgressBarWindows() {return require('ProgressBarWindows');},
   get ProgressRingWindows() {return require('ProgressRingWindows');},
   get SplitViewWindows() { return require('SplitViewWindows'); },
-  get FocusableViewWindows() { return require('FocusableViewWindows'); },
+  get FocusableWindows() { return require('FocusableWindows'); },
 };
 
 module.exports = ReactWindows;

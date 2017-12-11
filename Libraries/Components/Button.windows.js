@@ -20,12 +20,12 @@ const Text = require('Text');
 const TouchableNativeFeedback = require('TouchableNativeFeedback');
 const TouchableOpacity = require('TouchableOpacity');
 const View = require('View');
-const FocusableViewWindows = require('FocusableViewWindows');
+const FocusableWindows = require('FocusableWindows');
 
 const invariant = require('fbjs/lib/invariant');
 
-const KEY_CODE_ENTER = FocusableViewWindows.keys.Enter || FocusableViewWindows.keys.Return;
-const KEY_CODE_SPACE = FocusableViewWindows.keys.Space;
+const KEY_CODE_ENTER = FocusableWindows.keys.Enter || FocusableWindows.keys.Return;
+const KEY_CODE_SPACE = FocusableWindows.keys.Space;
 
 const DOWN_KEYCODES = [KEY_CODE_SPACE, KEY_CODE_ENTER];
 const UP_KEYCODES = [KEY_CODE_SPACE];
@@ -100,7 +100,7 @@ class Button extends React.Component {
      * Controls whether control should use system default provided focus rects
      * @platform windows
      */
-    useSystemFocusVisuals: PropTypes.bool,
+    disableSystemFocusVisuals: PropTypes.bool,
     /**
      * (Windows only) Callback that is called when the text input is blurred
      * @platform windows
@@ -152,12 +152,12 @@ class Button extends React.Component {
       var tabIndex = this.props.tabIndex || 0;
       var windowsTabFocusable = !disabled && tabIndex >= 0;
       content =
-        <FocusableViewWindows
+        <FocusableWindows
           ref="focusable"
           disabled={disabled}
           isTabStop={windowsTabFocusable}
           tabIndex={tabIndex}
-          useSystemFocusVisuals={this.props.useSystemFocusVisuals}
+          disableSystemFocusVisuals={this.props.disableSystemFocusVisuals}
           handledKeyDownKeys={DOWN_KEYCODES}
           handledKeyUpKeys={UP_KEYCODES}
           onKeyDown={this._onKeyDown}
@@ -166,7 +166,7 @@ class Button extends React.Component {
           onBlur = {this._onBlur}
         >
           {content}
-      </FocusableViewWindows> ;
+      </FocusableWindows> ;
     }
 
     return (

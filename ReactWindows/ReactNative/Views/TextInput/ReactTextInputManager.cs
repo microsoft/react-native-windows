@@ -96,48 +96,6 @@ namespace ReactNative.Views.TextInput
                             }
                         }
                     },
-                    {
-                        "topKeyDown",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onKeyDown" },
-                                    { "captured" , "onKeyDownCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topFocus",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onFocus" },
-                                    { "captured" , "onFocusCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topBlur",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onBlur" },
-                                    { "captured" , "onBlurCapture" }
-                                }
-                            }
-                        }
-                    },
                 };
             }
         }

@@ -70,75 +70,6 @@ namespace ReactNative.Views.ControlView
         }
 
         /// <summary>
-        /// Exported set of bubbling events.
-        /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
-        {
-            get
-            {
-                return new Dictionary<string, object>
-                {
-                    {
-                        "topFocus",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onFocus" },
-                                    { "captured" , "onFocusCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topBlur",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onBlur" },
-                                    { "captured" , "onBlurCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topKeyDown",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onKeyDown" },
-                                    { "captured" , "onKeyDownCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topKeyUp",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onKeyUp" },
-                                    { "captured" , "onKeyUpCapture" }
-                                }
-                            }
-                        }
-                    },
-                };
-            }
-        }
-
-        /// <summary>
         /// Sets whether the view is a tab stop.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -195,13 +126,13 @@ namespace ReactNative.Views.ControlView
         /// Sets the visuals to be used for focus rectangle.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <param name="useSystemFocusVisuals">
-        /// <code>true</code> if the view should show the system provided focus rect, otherwise <code>false</code>.
+        /// <param name="disableSystemFocusVisuals">
+        /// <code>true</code> if the view should not show the system provided focus rect, otherwise <code>false</code>.
         /// </param>
-        [ReactProp("useSystemFocusVisuals")]
-        public void SetUseSystemFocusVisuals(ReactControl view, bool useSystemFocusVisuals)
+        [ReactProp("disableSystemFocusVisuals")]
+        public void SetDisableSystemFocusVisuals(ReactControl view, bool disableSystemFocusVisuals)
         {
-            view.UseSystemFocusVisuals = useSystemFocusVisuals;
+            view.UseSystemFocusVisuals = !disableSystemFocusVisuals;
         }
 #endif
 

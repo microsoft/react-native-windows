@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -540,7 +540,7 @@ namespace ReactNative.Views.Scroll
             _scrollViewerData[view].DisableArrowNavigation = disable;
         }
 
-        internal static T FindChild<T>(DependencyObject startNode)
+        private static T FindChild<T>(DependencyObject startNode)
           where T : DependencyObject
         {
             int count = VisualTreeHelper.GetChildrenCount(startNode);
@@ -621,8 +621,8 @@ namespace ReactNative.Views.Scroll
         {
             public ScrollMode HorizontalScrollMode = ScrollMode.Disabled;
 
-            public bool IsControlLoaded = false;
-            public bool DisableArrowNavigation = false;
+            public bool IsControlLoaded;
+            public bool DisableArrowNavigation;
             public ScrollContentPresenter ContentPresenter;
         }
     }
