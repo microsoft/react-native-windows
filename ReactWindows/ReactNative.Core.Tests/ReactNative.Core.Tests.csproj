@@ -23,5 +23,6 @@
   <ItemGroup>
     <Folder Include="Bridge\" />
     <Folder Include="Bridge\Queue\" />
+    <Folder Include="Internal\" />
   </ItemGroup>
 </Project>
