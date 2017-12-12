@@ -431,6 +431,16 @@ const ScrollView = createReactClass({
      * @platform windows
      */
     disableKeyboardBasedScrolling: PropTypes.bool,
+
+    /**
+     * Sets the keyboard navigation mode for the view.
+     * @platform windows
+     */
+    tabNavigation: PropTypes.oneOf([
+      'local',
+      'cycle',
+      'once'
+    ]),
   },
 
   mixins: [ScrollResponder.Mixin],

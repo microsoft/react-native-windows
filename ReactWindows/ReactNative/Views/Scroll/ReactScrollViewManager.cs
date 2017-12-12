@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -225,6 +226,17 @@ namespace ReactNative.Views.Scroll
             view.ZoomMode = (enabled ?? false) 
                 ? ZoomMode.Enabled 
                 : ZoomMode.Disabled;
+        }
+
+        /// <summary>
+        /// Sets the tab navigation for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabNavigation">The tab navigation.</param>
+        [ReactProp("tabNavigation")]
+        public void SetTabNavigation(ScrollViewer view, string tabNavigation)
+        {
+            view.TabNavigation = EnumHelpers.ParseNullable<KeyboardNavigationMode>(tabNavigation) ?? KeyboardNavigationMode.Local;
         }
 
         /// <summary>
