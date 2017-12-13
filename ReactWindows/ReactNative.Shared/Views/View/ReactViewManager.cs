@@ -99,7 +99,6 @@ namespace ReactNative.Views.View
             return new BorderedCanvas();
         }
 
-        #region drag and drop
 #if WINDOWS_UWP
 
         /// <summary>
@@ -127,7 +126,7 @@ namespace ReactNative.Views.View
             }
         }
 
-        private async Task<JObject> GetDataTransferInfo(DataPackageView data, bool drop = false)
+        private static async Task<JObject> GetDataTransferInfo(DataPackageView data, bool drop = false)
         {
             var files = new JArray();
             var items = new JArray();
@@ -179,7 +178,7 @@ namespace ReactNative.Views.View
             };
         }
 
-        private string GetAccessToken(StorageFile file)
+        private static string GetAccessToken(StorageFile file)
         {
             var futureAccessList = StorageApplicationPermissions.FutureAccessList;
             var existingEntries = futureAccessList.Entries;
@@ -203,7 +202,7 @@ namespace ReactNative.Views.View
             return futureAccessList.Add(file, now.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
-        private async void OnDragEnter(object sender, DragEventArgs args)
+        private static async void OnDragEnter(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
             var data = await GetDataTransferInfo(args.DataView);
@@ -214,7 +213,7 @@ namespace ReactNative.Views.View
                 .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", data));
         }
 
-        private async void OnDragOver(object sender, DragEventArgs args)
+        private static async void OnDragOver(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
 
@@ -236,7 +235,7 @@ namespace ReactNative.Views.View
                 .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", data));
         }
 
-        private async void OnDrop(object sender, DragEventArgs args)
+        private static async void OnDrop(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
             var data = await GetDataTransferInfo(args.DataView, true);
@@ -247,7 +246,7 @@ namespace ReactNative.Views.View
                 .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
         }
 
-        private async void OnDragLeave(object sender, DragEventArgs args)
+        private static async void OnDragLeave(object sender, DragEventArgs args)
         {
             var view = sender as BorderedCanvas;
             var data = await GetDataTransferInfo(args.DataView);
@@ -283,7 +282,6 @@ namespace ReactNative.Views.View
         }
 
 #endif
-        #endregion
 
         /// <summary>
         /// Sets whether or not the view is an accessibility element.
