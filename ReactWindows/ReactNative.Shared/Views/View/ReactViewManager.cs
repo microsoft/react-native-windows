@@ -185,7 +185,6 @@ namespace ReactNative.Views.View
                 view.DragOver += OnDragOver;
                 view.Drop += OnDrop;
                 view.DragLeave += OnDragLeave;
-
             }
             else
             {
@@ -287,14 +286,15 @@ namespace ReactNative.Views.View
         {
             var view = sender as BorderedCanvas;
 
-            // TODO: Send this event to JS, get response (how?) and
-            // set the AcceptedOperation value. The JS handler in
-            // MessagePanel merely does this:
+            // In web when JS gets a "drag over" event, it modifies the event
+            // object to tell if the DOM element supports dropping items:
             //
             //      e.dataTransfer.effectAllowed = 'copy';
             //      e.dataTransfer.dropEffect = 'copy';
             //
-            // so a simple `allowDrop` flag may be sufficient.            
+            // However in RN this approach doesn't work, so we use a simpler
+            // solution: JS sets allowDrop=true which implies that the RN element
+            // always allows dropping items.
             args.AcceptedOperation = DataPackageOperation.Copy;
 
             var data = await GetDataTransferInfo(args.DataView);
