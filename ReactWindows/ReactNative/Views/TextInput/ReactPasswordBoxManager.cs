@@ -313,7 +313,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="isTabStop">
-        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code>.
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
         /// </param>
         /// 
         [ReactProp("isTabStop")]
@@ -442,6 +442,7 @@ namespace ReactNative.Views.TextInput
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
+            view.KeyUp += OnKeyUp;
         }
 
         /// <summary>
@@ -455,6 +456,7 @@ namespace ReactNative.Views.TextInput
         {
             base.OnDropViewInstance(reactContext, view);
             view.KeyDown -= OnKeyDown;
+            view.KeyUp -= OnKeyUp;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
             view.PasswordChanged -= OnPasswordChanged;
@@ -538,6 +540,20 @@ namespace ReactNative.Views.TextInput
                             textBox.GetTag(),
                             keyCode));
             }
+        }
+
+        private void OnKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            var textBox = (PasswordBox)sender;
+            var keyCode = e.Key.GetKeyCode();
+            textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new KeyEvent(
+                        KeyEvent.KeyUpEventString,
+                        textBox.GetTag(),
+                        keyCode));
         }
     }
 }

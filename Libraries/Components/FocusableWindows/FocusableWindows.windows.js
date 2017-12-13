@@ -152,7 +152,7 @@ class FocusableWindows extends React.Component {
         var flattenedStyles = flattenStyle(styles);
 
         for (var styleName in flattenedStyles) {
-          if (styleName == 'transform') {
+          if (styleName === 'transform') {
             sets.focusableStyle[styleName] = flattenedStyles[styleName];
           } else {
             sets.childStyle[styleName] = flattenedStyles[styleName];
@@ -183,7 +183,7 @@ class FocusableWindows extends React.Component {
       var atLeastOneChildProp = false;
       // There is no need to flatten the styles
       for (var styleName in nativeProps.style) {
-        if (styleName == 'transform') {
+        if (styleName === 'transform') {
           sets.focusableProps.style[styleName] = nativeProps.style[styleName];
         } else {
           childStyle[styleName] = nativeProps.style[styleName];
@@ -196,7 +196,7 @@ class FocusableWindows extends React.Component {
       if (!atLeastOneChildProp) {
         // Check presence of any other prop
         for (var propName in sets.childProps) {
-          if (propName != 'style') {
+          if (propName !== 'style') {
             atLeastOneChildProp = true;
             break;
           }
@@ -212,12 +212,13 @@ class FocusableWindows extends React.Component {
 }
 
   render() {
-    return <WindowsControl
-              {...this.props}
-              onFocus = {this._onFocus}
-              onBlur = {this._onBlur}
-              ref = {(ref) => this._setControlRef(ref)}
-            />;
+    return (
+      <WindowsControl
+        {...this.props}
+        onFocus = {this._onFocus}
+        onBlur = {this._onBlur}
+        ref = {(ref) => this._setControlRef(ref)}
+      />);
   }
 
   _setControlRef(ref) {

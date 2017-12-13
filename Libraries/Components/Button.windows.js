@@ -24,7 +24,7 @@ const FocusableWindows = require('FocusableWindows');
 
 const invariant = require('fbjs/lib/invariant');
 
-const KEY_CODE_ENTER = FocusableWindows.keys.Enter || FocusableWindows.keys.Return;
+const KEY_CODE_ENTER = FocusableWindows.keys.Enter;
 const KEY_CODE_SPACE = FocusableWindows.keys.Space;
 
 const DOWN_KEYCODES = [KEY_CODE_SPACE, KEY_CODE_ENTER];
@@ -92,7 +92,12 @@ class Button extends React.Component {
      */
     testID: PropTypes.string,
     /**
-     * (Windows only) tabIndex (default is 0 rather than undefined)
+     * tabIndex:
+     * -1: Control is not keyboard focusable in any way
+     * 0: Control is keyboard focusable in the normal order
+     * >0: Control is keyboard focusable in a priority order (starting with 1)
+     * (default is 0 rather than undefined)
+     *
      * @platform windows
      */
     tabIndex: PropTypes.number,
@@ -102,12 +107,12 @@ class Button extends React.Component {
      */
     disableSystemFocusVisuals: PropTypes.bool,
     /**
-     * (Windows only) Callback that is called when the text input is blurred
+     * Callback that is called when the text input is blurred
      * @platform windows
      */
     onBlur: PropTypes.func,
     /**
-     * (Windows only) Callback that is called when the text input is focused
+     * Callback that is called when the text input is focused
      * @platform windows
      */
     onFocus: PropTypes.func,
@@ -143,17 +148,17 @@ class Button extends React.Component {
     );
     const formattedTitle = Platform.OS === 'android' ? title.toUpperCase() : title;
     const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-    var content =
+    let content =
         <View style={buttonStyles}>
           <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
         </View>;
 
     if (Platform.OS === "windows") {
-      var tabIndex = this.props.tabIndex || 0;
-      var windowsTabFocusable = !disabled && tabIndex >= 0;
+      const tabIndex = this.props.tabIndex || 0;
+      const windowsTabFocusable = !disabled && tabIndex >= 0;
       content =
         <FocusableWindows
-          ref="focusable"
+          ref = {(ref) => this._setFocusableRef(ref)}
           disabled={disabled}
           isTabStop={windowsTabFocusable}
           tabIndex={tabIndex}
@@ -162,8 +167,8 @@ class Button extends React.Component {
           handledKeyUpKeys={UP_KEYCODES}
           onKeyDown={this._onKeyDown}
           onKeyUp={this._onKeyUp}
-          onFocus = {this._onFocus}
-          onBlur = {this._onBlur}
+          onFocus={this._onFocus}
+          onBlur={this._onBlur}
         >
           {content}
       </FocusableWindows> ;
@@ -182,14 +187,17 @@ class Button extends React.Component {
     );
   }
 
+  _setFocusableRef(ref) {
+    this._focusableRef = ref;
+  }
+
   _onKeyDown = (e): void => {
     if (!this.props.disabled) {
       if (this.props.onPress) {
-        var key = e.nativeEvent.key;
+        const key = e.nativeEvent.key;
         // ENTER triggers press on key down
         if (key === KEY_CODE_ENTER) {
           this.props.onPress(e);
-          return;
         }
       }
     }
@@ -198,11 +206,10 @@ class Button extends React.Component {
   _onKeyUp = (e): void => {
     if (!this.props.disabled) {
       if (this.props.onPress) {
-        var key = e.nativeEvent.key;
+        const key = e.nativeEvent.key;
         // SPACE triggers press on key up
         if (key === KEY_CODE_SPACE) {
           this.props.onPress(e);
-          return;
         }
       }
     }
@@ -222,16 +229,16 @@ class Button extends React.Component {
 
   focus() {
     if (!this.props.disabled &&
-        this.refs.focusable &&
-        this.refs.focusable.focus) {
-          this.refs.focusable.focus();
+        this._focusableRef &&
+        this._focusableRef.focus) {
+          this._focusableRef.focus();
     }
   }
 
   blur() {
-    if (this.refs.focusable &&
-        this.refs.focusable.blur) {
-        this.refs.focusable.blur();
+    if (this._focusableRef &&
+        this._focusableRef.blur) {
+        this._focusableRef.blur();
     }
   }
 }

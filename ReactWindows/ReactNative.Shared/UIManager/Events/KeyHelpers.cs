@@ -22,14 +22,11 @@ namespace ReactNative.UIManager.Events
 
         public static IReadOnlyDictionary<string, int> GetKeyConstants()
         {
-            return Enum.GetValues(typeof(Key))
-                .OfType<Key>()
-                .Distinct() // Distinct() required*
+            return Enum.GetNames(typeof(Key))
+                .Cast<string>()
                 .ToDictionary(
-                    key => key.ToString(),
-                    key => GetKeyCode(key));
-            // *The following keys are duplicated in Enum.GetValues(Type):
-            // `Hangul`, `Kanji`
+                    key => key,
+                    key => (int)Enum.Parse(typeof(Key), key));
         }
     }
 }

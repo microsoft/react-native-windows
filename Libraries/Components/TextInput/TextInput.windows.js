@@ -617,10 +617,27 @@ const TextInput = createReactClass({
      */
     caretHidden: PropTypes.bool,
     /**
-     * tabIndex (default is 0 rather than undefined)
-     * @platform windows
+     * tabIndex:
+     * -1: Control is not keyboard focusable in any way
+     * 0: Control is keyboard focusable in the normal order
+     * >0: Control is keyboard focusable in a priority order (starting with 1)
+     * (default is 0 rather than undefined)
+     *
+     *  @platform windows
      */
     tabIndex: PropTypes.number,
+    /**
+     * Called when key down while component has focus.
+     *
+     * @platform windows
+     */
+    onKeyDown: PropTypes.func,
+    /**
+     * Called when key up while component has focus.
+     *
+     * @platform windows
+     */
+    onKeyUp: PropTypes.func,
   },
   getDefaultProps(): Object {
     return {
@@ -892,11 +909,13 @@ const TextInput = createReactClass({
         'TextInput children are not supported on Windows.'
     );
 
-    var tabIndex = this.props.tabIndex || 0;
-    var windowsTabFocusable = this.props.editable && tabIndex >= 0;
+    const tabIndex = this.props.tabIndex || 0;
+    const windowsTabFocusable = this.props.editable && tabIndex >= 0;
 
-    let textContainer;
-    if (props.secureTextEntry) {
+    var textContainer;
+    if (this.props.secureTextEntry) {
+      // Note: PasswordBoxWindows is not the native component, but a JS one fronting that native one.
+      // onKeyDown/Up are not supported, we just pass them here until it's decided how this should work.
       textContainer =
         <PasswordBoxWindows
           ref={this._setNativeRef}
@@ -906,8 +925,10 @@ const TextInput = createReactClass({
           onChange={this._onChange}
           text={this._getText()}
           isTabStop={windowsTabFocusable}
-          tabIndex={tabIndex}          
-        />;
+          tabIndex={tabIndex}
+          onKeyDown={this.props.onKeyDown}
+          onKeyUp={this.props.onKeyUp}
+          />;
     } else {
       textContainer =
         <RCTTextBox
@@ -924,6 +945,8 @@ const TextInput = createReactClass({
           onScroll={this._onScroll}
           isTabStop={windowsTabFocusable}
           tabIndex={tabIndex}
+          onKeyDown={this.props.onKeyDown}
+          onKeyUp={this.props.onKeyUp}
         />;
     }
 

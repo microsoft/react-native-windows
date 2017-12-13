@@ -74,7 +74,7 @@ namespace ReactNative.Views.ControlView
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="isTabStop">
-        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code>.
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
         /// </param>
         [ReactProp("isTabStop")]
         public void SetIsTabStop(ReactControl view, bool isTabStop)

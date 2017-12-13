@@ -360,31 +360,6 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets whether the view is a tab stop.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="isTabStop">
-        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code>.
-        /// </param>
-        /// 
-        [ReactProp("isTabStop")]
-        public void SetIsTabStop(ReactTextBox view, bool isTabStop)
-        {
-            view.IsTabStop = isTabStop;
-        }
-
-        /// <summary>
-        /// Sets the tab index for the view.
-        /// </summary>
-        /// <param name="view">The view.</param>
-        /// <param name="tabIndex">The tab index.</param>
-        [ReactProp("tabIndex")]
-        public void SetTabIndex(ReactTextBox view, int tabIndex)
-        {
-            view.TabIndex = tabIndex;
-        }
-
-        /// <summary>
         /// Sets the max character length property on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -487,14 +462,28 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the max height of the text box.
+        /// Sets whether the view is a tab stop.
         /// </summary>
         /// <param name="view">The view instance.</param>
-        /// <param name="height">The max height.</param>
-        [ReactProp("maxHeight")]
-        public void SetMaxHeight(ReactTextBox view, double height)
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
+        /// </param>
+        /// 
+        [ReactProp("isTabStop")]
+        public void SetIsTabStop(ReactTextBox view, bool isTabStop)
         {
-            view.MaxHeight = height;
+            view.IsTabStop = isTabStop;
+        }
+
+        /// <summary>
+        /// Sets the tab index for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabIndex">The tab index.</param>
+        [ReactProp("tabIndex")]
+        public void SetTabIndex(ReactTextBox view, int tabIndex)
+        {
+            view.TabIndex = tabIndex;
         }
 
         /// <summary>
@@ -606,6 +595,7 @@ namespace ReactNative.Views.TextInput
         {
             base.OnDropViewInstance(reactContext, view);
             view.KeyDown -= OnKeyDown;
+            view.KeyUp -= OnKeyUp;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
             view.TextChanged -= OnTextChanged;
@@ -662,6 +652,7 @@ namespace ReactNative.Views.TextInput
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
+            view.KeyUp += OnKeyUp;
         }
 
         private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -739,6 +730,20 @@ namespace ReactNative.Views.TextInput
                             textBox.GetTag(),
                             keyCode));
             }
+        }
+
+        private void OnKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            var textBox = (ReactTextBox)sender;
+            var keyCode = e.Key.GetKeyCode();
+            textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new KeyEvent(
+                        KeyEvent.KeyUpEventString,
+                        textBox.GetTag(),
+                        keyCode));
         }
     }
 }
