@@ -102,6 +102,75 @@ namespace ReactNative.Views.View
 #if WINDOWS_UWP
 
         /// <summary>
+        /// The exported custom bubbling event types.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+        {
+            get
+            {
+                return new Dictionary<string, object>()
+                {
+                    {
+                        "topDragEnter",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onDragEnter" },
+                                    { "captured" , "onDragEnterCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topDragOver",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onDragOver" },
+                                    { "captured" , "onDragOverCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topDrop",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onDrop" },
+                                    { "captured" , "onDropCapture" }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "topDragLeave",
+                        new Dictionary<string, object>()
+                        {
+                            {
+                                "phasedRegistrationNames",
+                                new Dictionary<string, string>()
+                                {
+                                    { "bubbled" , "onDragLeave" },
+                                    { "captured" , "onDragLeaveCapture" }
+                                }
+                            }
+                        }
+                    },
+                };
+            }
+        }
+
+        /// <summary>
         /// Enables the Canvas as a drop target.
         /// </summary>
         [ReactProp("allowDrop")]
@@ -263,6 +332,7 @@ namespace ReactNative.Views.View
             private readonly JObject _data;
 
             public override string EventName => _name;
+            public override bool CanCoalesce => false;
 
             public DragDropEvent(int viewTag, string name, JObject data)
                 : base(viewTag)
