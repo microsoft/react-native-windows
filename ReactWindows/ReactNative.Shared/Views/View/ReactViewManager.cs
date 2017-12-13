@@ -5,6 +5,7 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
