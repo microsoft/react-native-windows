@@ -100,7 +100,18 @@ namespace ReactNative.Views.View
             return new BorderedCanvas();
         }
 
-#if WINDOWS_UWP
+#if !WINDOWS_UWP
+
+        /// <summary>
+        /// Enables the Canvas as a drop target.
+        /// </summary>
+        [ReactProp("allowDrop")]
+        public void SetAllowDrop(BorderedCanvas view, bool allowDrop)
+        {
+            throw new NotImplementedException("The allowDrop property is not available on this platform");
+        }
+
+#else
 
         /// <summary>
         /// The exported custom bubbling event types.
