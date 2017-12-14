@@ -224,7 +224,7 @@ namespace ReactNative.Views.View
                         {
                             var props = await file.GetBasicPropertiesAsync();
                             var type = file.ContentType;
-                            var path = drop ? "file://cache/" + GetAccessToken(file) : "";
+                            var path = drop ? "blob:" + GetAccessToken(file) : "";
 
                             files.Add(new JObject
                             {
