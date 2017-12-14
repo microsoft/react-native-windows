@@ -619,9 +619,8 @@ const TextInput = createReactClass({
     /**
      * tabIndex:
      * -1: Control is not keyboard focusable in any way
-     * 0: Control is keyboard focusable in the normal order
+     * 0 (default): Control is keyboard focusable in the normal order
      * >0: Control is keyboard focusable in a priority order (starting with 1)
-     * (default is 0 rather than undefined)
      *
      *  @platform windows
      */
