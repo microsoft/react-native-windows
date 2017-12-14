@@ -17,6 +17,31 @@ namespace ReactNative.Views.View
     /// </summary>
     public class ReactViewManager: BaseViewManager
     {
+        private class DragDropEvent : Event
+        {
+            private readonly string _name;
+            private readonly JObject _data;
+
+            public override string EventName => _name;
+            public override bool CanCoalesce => false;
+
+            public DragDropEvent(int viewTag, string name, JObject data)
+                : base(viewTag)
+            {
+                _name = name;
+                _data = data;
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                eventEmitter.receiveEvent(ViewTag, EventName, new JObject
+                {
+                    { "target", ViewTag },
+                    { "dataTransfer", _data }
+                });
+            }
+        }
+
         /// <summary>
         /// The exported custom bubbling event types.
         /// </summary>
@@ -128,7 +153,7 @@ namespace ReactNative.Views.View
                         {
                             var props = await file.GetBasicPropertiesAsync();
                             var type = file.ContentType;
-                            var path = drop ? "blob:" + GetAccessToken(file) : "";
+                            var path = drop ? "urn:future-access-list:" + GetAccessToken(file) : "";
 
                             files.Add(new JObject
                             {
@@ -240,31 +265,6 @@ namespace ReactNative.Views.View
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragLeave", data));
-        }
-
-        class DragDropEvent : Event
-        {
-            private readonly string _name;
-            private readonly JObject _data;
-
-            public override string EventName => _name;
-            public override bool CanCoalesce => false;
-
-            public DragDropEvent(int viewTag, string name, JObject data)
-                : base(viewTag)
-            {
-                _name = name;
-                _data = data;
-            }
-
-            public override void Dispatch(RCTEventEmitter eventEmitter)
-            {
-                eventEmitter.receiveEvent(ViewTag, EventName, new JObject
-                {
-                    { "target", ViewTag },
-                    { "dataTransfer", _data }
-                });
-            }
         }
     }
 }
