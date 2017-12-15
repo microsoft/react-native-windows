@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  cache_directories:
+    - ~/.nuget
+
+  build:
+    macos:
+      xcode: "8.3.3"
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dotnet (core) sdk
+          command: brew install caskroom/cask/dotnet-sdk
+
+      - run:
+          name: Build and run tests
+          command: dotnet restore ReactWindows
+          command: dotnet build ReactWindows
+          command: dotnet test ReactWindows
