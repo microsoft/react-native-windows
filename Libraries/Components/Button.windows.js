@@ -157,7 +157,7 @@ class Button extends React.Component {
       const windowsTabFocusable = !disabled && tabIndex >= 0;
       content =
         <FocusableWindows
-          ref = {(ref) => this._setFocusableRef(ref)}
+          ref={this._setFocusableRef}
           disabled={disabled}
           isTabStop={windowsTabFocusable}
           tabIndex={tabIndex}
@@ -170,7 +170,7 @@ class Button extends React.Component {
           onBlur={this._onBlur}
         >
           {content}
-      </FocusableWindows> ;
+      </FocusableWindows>;
     }
 
     return (
@@ -186,7 +186,7 @@ class Button extends React.Component {
     );
   }
 
-  _setFocusableRef(ref) {
+  _setFocusableRef = (ref): void => {
     this._focusableRef = ref;
   }
 

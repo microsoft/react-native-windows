@@ -462,6 +462,17 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the max height of the text box.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="height">The max height.</param>
+        [ReactProp("maxHeight")]
+        public void SetMaxHeight(ReactTextBox view, double height)
+        {
+            view.MaxHeight = height;
+        }
+    
+        /// <summary>
         /// Sets whether the view is a tab stop.
         /// </summary>
         /// <param name="view">The view instance.</param>

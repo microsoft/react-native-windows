@@ -17,7 +17,7 @@
  *
  *         return (
  *            <FocusableWindows
- *               ref = {(f) => this._focusable = v}
+ *               ref = {(f) => this._focusable = f}
  *               style = {styleSet.focusableStyle}
  *               onKeyDown = {...}
  *               handledKeyDownKeys: {[FocusableWindows.keys.Enter]}
@@ -215,13 +215,14 @@ class FocusableWindows extends React.Component {
     return (
       <WindowsControl
         {...this.props}
-        onFocus = {this._onFocus}
-        onBlur = {this._onBlur}
-        ref = {(ref) => this._setControlRef(ref)}
-      />);
+        onFocus={this._onFocus}
+        onBlur={this._onBlur}
+        ref={this._setControlRef}
+      />
+    );
   }
 
-  _setControlRef(ref) {
+  _setControlRef = (ref): void => {
     this._controlRef = ref;
   }
 
