@@ -19,3 +19,4 @@ jobs:
           command: dotnet restore ReactWindows
           command: dotnet build ReactWindows
           command: dotnet test ReactWindows
+
