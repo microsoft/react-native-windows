@@ -16,6 +16,8 @@ jobs:
             echo node version':' $NODE_V
             NPM_V=$(npm -v)
             echo npm version':' $NPM_V
+            MONO_V=$(mono --version)
+            echo mono version':' $MONO_V
             DOTNET_CLI_V=$(dotnet --version)
             echo dotnet cli version':' $DOTNET_CLI_V
       - checkout
