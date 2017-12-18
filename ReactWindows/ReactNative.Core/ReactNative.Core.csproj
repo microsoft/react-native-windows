@@ -14,7 +14,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>TRACE;RELEASE;NETSTANDARD1_3</DefineConstants>
-    <DocumentationFile>bin\Release\netstandard1.2\ReactNative.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard1.3\ReactNative.Core.xml</DocumentationFile>
     <LangVersion>Default</LangVersion>
   </PropertyGroup>
 
