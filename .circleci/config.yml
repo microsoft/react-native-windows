@@ -27,9 +27,9 @@ jobs:
           command: dotnet build ReactWindows
       - run:
           name: dotnet test
-          command: dotnet test ReactWindows/ReactNative.Core.Tests --logger "trx;LogFileName=test-results.xml"
+          command: dotnet test ReactWindows/ReactNative.Core.Tests --logger "trx;LogFileName=/tmp/test-results.xml"
       - store_test_results:
-           path: test-results.xml
+           path: /tmp/test-results.xml
       - save_cache:
           key: reactnativewindows-{{ .Branch }}-{{ checksum "ReactWindows/ReactNative.Core/ReactNative.Core.csproj" }}
           paths:
