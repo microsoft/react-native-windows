@@ -1,6 +1,5 @@
 version: 2
 jobs:
-
   build:
     working_directory: ~/build
     docker:
