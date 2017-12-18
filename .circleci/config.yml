@@ -31,7 +31,7 @@ jobs:
           name: Check Test
           command: if [[ -e test-results.xml ]]; then cp test-results.xml $CIRCLE_TEST_REPORTS/test-results.xml; fi
       - save_cache:
-          key: reactnativewindows-{{ .Branch }}-{{ checksum "react-native-windows/ReactWindows/ReactNative/ReactNative.csproj" }}
+          key: reactnativewindows-{{ .Branch }}-{{ checksum "ReactWindows/ReactNative.Core/ReactNative.Core.csproj" }}
           paths:
             - ~/.nuget
 
