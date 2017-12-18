@@ -11,6 +11,8 @@ jobs:
       - run:
           name: Print environment versions
           command: |
+            NODE_V=$(node -v)
+            echo node version':' $NODE_V
             NPM_V=$(npm -v)
             echo npm version':' $NPM_V
             DOTNET_CLI_V=$(dotnet --version)
@@ -24,7 +26,7 @@ jobs:
           command: dotnet build ReactWindows
       - run:
           name: dotnet test
-          command: dotnet test ReactWindows --logger \"trx;LogFileName=test-results.xml\"
+          command: dotnet test ReactWindows/ReactNative.Core.Tests --logger \"trx;LogFileName=test-results.xml\"
       - run:
           name: Check Test
           command: if [[ -e test-results.xml ]]; then cp test-results.xml $CIRCLE_TEST_REPORTS/test-results.xml; fi
