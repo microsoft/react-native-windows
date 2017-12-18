@@ -40,7 +40,7 @@ namespace ReactNative.Bridge.Queue
         public ActionQueue(Action<Exception> onError, IScheduler scheduler)
         {
             if (onError == null)
-                throw new NotImplementedException(nameof(onError));
+                throw new ArgumentNullException(nameof(onError));
             if (scheduler == null)
                 throw new ArgumentNullException(nameof(scheduler));
 
