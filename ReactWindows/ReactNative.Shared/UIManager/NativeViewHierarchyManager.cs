@@ -164,6 +164,7 @@ namespace ReactNative.UIManager
                 // DependencyObject to store the tag of the view.
                 view.SetTag(tag);
                 view.SetReactContext(themedContext);
+                view.SetViewManager(viewManager);
 
                 if (initialProperties != null)
                 {
@@ -591,6 +592,7 @@ namespace ReactNative.UIManager
             _rootTags.Add(tag, true);
             view.SetTag(tag);
             view.SetReactContext(themedContext);
+            view.SetViewManager(_rootViewManager);
         }
 
         private void DropView(DependencyObject view)
@@ -627,6 +629,7 @@ namespace ReactNative.UIManager
 
             _tagsToViews.Remove(tag);
             _tagsToViewManagers.Remove(tag);
+            view.ClearData();
         }
 
         private void UpdateLayout(DependencyObject viewToUpdate, IViewManager viewManager, Dimensions dimensions)

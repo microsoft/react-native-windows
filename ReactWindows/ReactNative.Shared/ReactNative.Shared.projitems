@@ -162,6 +162,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\BlurEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\FocusEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\KeyEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ITransformControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />

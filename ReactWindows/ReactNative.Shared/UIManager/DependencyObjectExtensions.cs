@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -167,6 +167,79 @@ namespace ReactNative.UIManager
             return elementData.Context;
         }
 
+        /// <summary>
+        /// Set the view manager for the view instance. 
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="viewManager">The view manager.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if view parameter is null.
+        /// </exception>
+        public static void SetViewManager(this DependencyObject view, IViewManager viewManager)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            s_properties.GetOrCreateValue(view).ViewManager = viewManager;
+        }
+
+        /// <summary>
+        /// Get the view manager for the view instance. 
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>The  implementation of IViewManager.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if view manager is not available for the view.
+        /// </exception>
+        public static IViewManager GetViewManager(this DependencyObject view)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            var elementData = default(DependencyObjectData);
+            if (!s_properties.TryGetValue(view, out elementData) || elementData.ViewManager == null)
+            {
+                throw new InvalidOperationException("Could not get view manager for view.");
+            }
+
+            return elementData.ViewManager;
+        }
+
+        /// <summary>
+        /// Set the transform delegate for the view instance. 
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="transformDelegate">The implementation of ITransformDelegate.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if view parameter is null.
+        /// </exception>
+        public static void SetTransformDelegate(this DependencyObject view, ITransformControl transformDelegate)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            s_properties.GetOrCreateValue(view).TransformDelegate = transformDelegate;
+        }
+
+        /// <summary>
+        /// Get the transform delegate for the view instance. 
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>The  implementation of ITransformDelegate, or null if it doesn't exist</returns>
+        public static ITransformControl GetTransformDelegate(this DependencyObject view)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            var elementData = default(DependencyObjectData);
+            if (s_properties.TryGetValue(view, out elementData))
+            {
+                return elementData.TransformDelegate;
+            }
+
+            return null;
+        }
+
         internal static void ClearData(this DependencyObject view)
         {
             s_properties.Remove(view);
@@ -191,7 +264,11 @@ namespace ReactNative.UIManager
 
             public int? Tag { get; set; }
 
+            public IViewManager ViewManager { get; set; }
+
             public IReactCompoundView CompoundView { get; set; }
+
+            public ITransformControl TransformDelegate { get; set; }
         }
     }
 }

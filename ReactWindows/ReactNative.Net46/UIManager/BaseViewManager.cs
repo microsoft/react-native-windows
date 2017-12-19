@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -20,32 +20,50 @@ namespace ReactNative.UIManager
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>
     /// <typeparam name="TLayoutShadowNode">Type of shadow node.</typeparam>
     public abstract class BaseViewManager<TFrameworkElement, TLayoutShadowNode> :
-            ViewManager<TFrameworkElement, TLayoutShadowNode>
+            ViewManager<TFrameworkElement, TLayoutShadowNode>,
+            ITransformControl
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly IDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
-            new Dictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
+        private readonly IDictionary<TFrameworkElement, Tuple<Action<TFrameworkElement, Dimensions>, JArray>> _transforms =
+            new Dictionary<TFrameworkElement, Tuple<Action<TFrameworkElement, Dimensions>, JArray>>();
 
         /// <summary>
-        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
-        /// properties, based on the <see cref="JObject"/> map.
+        /// Sets the  <typeparamref name="TFrameworkElement"/> transform 
+        /// properties, based on the <see cref="JArray"/> object.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="transforms">The list of transforms.</param>
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            if (transforms == null && _transforms.Remove(view))
+            // Check whether we have to defer to a delegate
+            var transformDelegate = view.GetTransformDelegate();
+            if (transformDelegate != null)
             {
-                ResetProjectionMatrix(view);
+                transformDelegate.SetTransform(view, transforms);
             }
             else
             {
-                _transforms[view] = (v, d) => SetProjectionMatrix(v, d, transforms);
-                var dimensions = GetDimensions(view);
-                SetProjectionMatrix(view, dimensions, transforms);
+                SetTransformInternal(view, transforms);
             }
+        }
+
+        /// <summary>
+        /// Gets the <typeparamref name="TFrameworkElement"/> transform 
+        /// properties, based on the <see cref="JObject"/> map.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <returns>Returns a <see cref="JArray"/> object</returns>
+        public JArray GetTransform(TFrameworkElement view)
+        {
+            Tuple<Action<TFrameworkElement, Dimensions>, JArray> transform;
+            if (_transforms.TryGetValue(view, out transform))
+            {
+                return transform.Item2;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -160,6 +178,20 @@ namespace ReactNative.UIManager
             TouchHandler.OnPointerExited(view, e);
         }
 
+        private void SetTransformInternal(TFrameworkElement view, JArray transforms)
+        {
+            if (transforms == null && _transforms.Remove(view))
+            {
+                ResetProjectionMatrix(view);
+            }
+            else
+            {
+                _transforms[view] = Tuple.Create<Action<TFrameworkElement, Dimensions>, JArray>((v, d) => SetProjectionMatrix(v, d, transforms), transforms);
+                var dimensions = GetDimensions(view);
+                SetProjectionMatrix(view, dimensions, transforms);
+            }
+        }
+
         /// <summary>
         /// Sets the dimensions of the view.
         /// </summary>
@@ -167,10 +199,10 @@ namespace ReactNative.UIManager
         /// <param name="dimensions">The dimensions.</param>
         public override void SetDimensions(TFrameworkElement view, Dimensions dimensions)
         {
-            Action<TFrameworkElement, Dimensions> applyTransform;
-            if (_transforms.TryGetValue(view, out applyTransform))
+            Tuple<Action<TFrameworkElement, Dimensions>,JArray> transform;
+            if (_transforms.TryGetValue(view, out transform))
             {
-                applyTransform(view, dimensions);
+                transform.Item1(view, dimensions);
             }
             base.SetDimensions(view, dimensions);
         }
@@ -303,5 +335,17 @@ namespace ReactNative.UIManager
 
             view.RenderTransform = null;
         }
+
+#region ITransformControl
+        void ITransformControl.SetTransform(FrameworkElement view, JArray transforms)
+        {
+            SetTransformInternal((TFrameworkElement)view, transforms);
+        }
+
+        JArray ITransformControl.GetTransform(FrameworkElement view)
+        {
+            return GetTransform((TFrameworkElement)view);
+        }
+#endregion
     }
 }

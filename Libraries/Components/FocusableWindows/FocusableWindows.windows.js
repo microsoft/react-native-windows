@@ -7,41 +7,8 @@
  *
  * Helper component for building keyboard focusable custom controls when the original native one has no such support
  *
- * For example, assuming a SomeComponent already exists, a custom KeyboardSupportingComponent can
- * be built this way (at the minimum):
- *
- *   class KeyboardSupportingComponent extends React.Component {
- *     render () {
- *
- *         styleSet = FocusableWindows.splitStyle(this.prop.styles);
- *
- *         return (
- *            <FocusableWindows
- *               ref = {(f) => this._focusable = f}
- *               style = {styleSet.focusableStyle}
- *               onKeyDown = {...}
- *               handledKeyDownKeys: {[FocusableWindows.keys.Enter]}
- *            >
- *              <SomeComponent
- *                  {...this.props}
- *                  ref = {(c) => this._child = c}
- *                  style = {styleSet.childStyle}
- *              />
- *            </FocusableWindows>
- *         );
- *      }
- *
- *      // important for animations
- *      setNativeProps (props) {
- *          var splitProps = FocusableWindows.splitNativeProps(props);
- *          if (splitProps.focusableProps !== undefined) {
- *             this._focusable.setNativeProps(splitProps.focusableProps)
- *          }
- *          if (splitProps.childProps !== undefined) {
- *             this._child.setNativeProps(splitProps.childProps);
- *          }
- *      }
- *   }
+ * The native implementation has special handling of this component with regard to layout/position: it mimicks the child's 
+ * position/size. So all properties (other than the keyboard/focus related ones) should be passed to the child.
  *
  * @providesModule FocusableWindows
  */
@@ -53,7 +20,6 @@ var ReactNative = require('ReactNative');
 var ViewPropTypes = require('ViewPropTypes');
 var requireNativeComponent = require('requireNativeComponent');
 var UIManager = require('UIManager');
-const flattenStyle = require('flattenStyle');
 
 class FocusableWindows extends React.Component {
 
@@ -137,79 +103,6 @@ class FocusableWindows extends React.Component {
   };
 
   static keys = UIManager.WindowsControl.Constants.Keys;
-
-  /**
-   * Splits styles into two sets: one applying to focusable view, and the other one to the embedded child
-   * The only style we care about is "transform"
-   */
-  static splitStyle(styles) {
-      var sets = {};
-
-      sets.focusableStyle = {};
-      sets.childStyle = {};
-
-      if (styles) {
-        var flattenedStyles = flattenStyle(styles);
-
-        for (var styleName in flattenedStyles) {
-          if (styleName === 'transform') {
-            sets.focusableStyle[styleName] = flattenedStyles[styleName];
-          } else {
-            sets.childStyle[styleName] = flattenedStyles[styleName];
-          }
-        }
-      }
-
-      return sets;
-  }
-
-  /**
-   * Splits native properties used in setNativeProps into two sets: one applying to focusable view, and the other one to
-   * the embedded child
-   * The only style we care about is "transform"
-   */
-  static splitNativeProps(nativeProps) {
-    var sets = {};
-
-    sets.focusableProps = undefined;
-    sets.childProps = nativeProps;
-
-    if (nativeProps && nativeProps.style && 'transform' in nativeProps.style) {
-
-      sets.focusableProps = {};
-      sets.focusableProps.style = {};
-      var childStyle = {};
-
-      var atLeastOneChildProp = false;
-      // There is no need to flatten the styles
-      for (var styleName in nativeProps.style) {
-        if (styleName === 'transform') {
-          sets.focusableProps.style[styleName] = nativeProps.style[styleName];
-        } else {
-          childStyle[styleName] = nativeProps.style[styleName];
-          atLeastOneChildProp = true;
-        }
-      }
-
-      sets.childProps.style = childStyle;
-
-      if (!atLeastOneChildProp) {
-        // Check presence of any other prop
-        for (var propName in sets.childProps) {
-          if (propName !== 'style') {
-            atLeastOneChildProp = true;
-            break;
-          }
-        }
-      }
-
-      if (!atLeastOneChildProp) {
-        sets.childProps = undefined;
-      }
-    }
-
-    return sets;
-}
 
   render() {
     return (

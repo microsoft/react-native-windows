@@ -28,6 +28,32 @@ namespace ReactNative.Views.ControlView
         private const int FocusCommand = 1;
         private const int BlurCommand = 2;
 
+        private class TransformDelegateImpl : ITransformControl
+        {
+            private ReactControlManager _manager;
+
+            private ReactControl _control;
+
+            private JArray _transforms;
+
+            public TransformDelegateImpl(ReactControlManager manager, ReactControl control)
+            {
+                _manager = manager;
+                _control = control;
+            }
+
+            public void SetTransform(FrameworkElement view, JArray transforms)
+            {
+                _manager.SetTransform(_control, transforms);
+                _transforms = transforms;
+            }
+
+            public JArray GetTransform(FrameworkElement view)
+            {
+                return _transforms;
+            }
+        }
+
         /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
@@ -176,8 +202,36 @@ namespace ReactNative.Views.ControlView
                 throw new ArgumentOutOfRangeException(nameof(index), "WindowsControl already has a child element.");
             }
 
-            var uiElementChild = child.As<UIElement>();
-            parent.Children.Insert(index, uiElementChild);
+            var frameworkElementChild = child.As<FrameworkElement>();
+
+            //
+            // The control has to act as a "transform delegate", i.e. to obey the transfomrs set on child
+            // and make sure the child is kept at an "identity" transform.
+            // Take into account the case when the new child already has a transform
+            //
+
+            // Extract view manager of the child
+            var childViewManager = frameworkElementChild.GetViewManager() as ITransformControl;
+            if (childViewManager == null)
+            {
+                throw new InvalidOperationException("View manager of the child doesn't implement ITransformControl.");
+            }
+
+            // Check the existence of a prior transform
+            var childTransform = childViewManager.GetTransform(frameworkElementChild);
+            if (childTransform != null)
+            {
+                // Transform exists. Reset it on the child and transfer it to parent
+                childViewManager.SetTransform(frameworkElementChild, null);
+                SetTransform(parent, childTransform);
+            }
+
+            // Create a transform delegate object and set it on the child. Further SetTransform calls on child will be
+            // redirected to the object, and then forwarded to the parent
+            var transformDelegateImpl = new TransformDelegateImpl(this, parent);
+            child.SetTransformDelegate(transformDelegateImpl);
+
+            parent.Children.Insert(index, frameworkElementChild);
         }
 
         /// <summary>
@@ -225,6 +279,35 @@ namespace ReactNative.Views.ControlView
             if (index != 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "WindowsControl only supports one child.");
+            }
+
+            if (parent.Children.Count == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "WindowsControl has no child element.");
+            }
+
+            //
+            // Revert the transform delegate wiring
+            //
+
+            var frameworkElementChild = parent.Children[0] as FrameworkElement;
+
+            // Reset transform delegate on child
+            frameworkElementChild.SetTransformDelegate(null);
+
+            // Check if parent has any transform set
+            var parentTransform = GetTransform(parent);
+            if (parentTransform != null)
+            {
+                // Transform has to be set back on child
+                var childViewManager = frameworkElementChild.GetViewManager() as ITransformControl;
+                if (childViewManager == null)
+                {
+                    throw new InvalidOperationException("View manager of the child doesn't implement ITransformControl.");
+                }
+
+                childViewManager.SetTransform(frameworkElementChild, parentTransform);
+                SetTransform(parent, null);
             }
 
             parent.Children.RemoveAt(index);
