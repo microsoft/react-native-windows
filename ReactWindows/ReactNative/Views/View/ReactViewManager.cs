@@ -153,7 +153,7 @@ namespace ReactNative.Views.View
                         {
                             var props = await file.GetBasicPropertiesAsync();
                             var type = file.ContentType;
-                            var path = drop ? "urn:future-access-list:" + GetAccessToken(file) : "";
+                            var path = drop ? "urn:future-access-list:" + Uri.EscapeUriString(GetAccessToken(file)) : "";
 
                             files.Add(new JObject
                             {
