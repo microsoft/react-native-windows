@@ -425,7 +425,7 @@ namespace ReactNative.Views.ControlView
                         new KeyEvent(
                             KeyEvent.KeyDownEventString,
                             view.GetTag(),
-                            keyCode));
+                            e.Key));
             }
         }
 
@@ -447,7 +447,7 @@ namespace ReactNative.Views.ControlView
                         new KeyEvent(
                             KeyEvent.KeyUpEventString,
                             view.GetTag(),
-                            keyCode));
+                            e.Key));
             }
         }
     }

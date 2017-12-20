@@ -193,7 +193,7 @@ class Button extends React.Component {
   _onKeyDown = (e): void => {
     if (!this.props.disabled) {
       if (this.props.onPress) {
-        const key = e.nativeEvent.key;
+        const key = e.nativeEvent.keyCode;
         // ENTER triggers press on key down
         if (key === KEY_CODE_ENTER) {
           this.props.onPress(e);
@@ -205,7 +205,7 @@ class Button extends React.Component {
   _onKeyUp = (e): void => {
     if (!this.props.disabled) {
       if (this.props.onPress) {
-        const key = e.nativeEvent.key;
+        const key = e.nativeEvent.keyCode;
         // SPACE triggers press on key up
         if (key === KEY_CODE_SPACE) {
           this.props.onPress(e);

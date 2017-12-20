@@ -566,7 +566,6 @@ namespace ReactNative.Views.TextInput
 
             if (!e.Handled)
             {
-                var keyCode = e.Key.GetKeyCode();
                 textBox.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
@@ -574,7 +573,7 @@ namespace ReactNative.Views.TextInput
                         new KeyEvent(
                             KeyEvent.KeyDownEventString,
                             textBox.GetTag(),
-                            keyCode));
+                            e.Key));
             }
         }
 
@@ -589,7 +588,7 @@ namespace ReactNative.Views.TextInput
                     new KeyEvent(
                         KeyEvent.KeyUpEventString,
                         textBox.GetTag(),
-                        keyCode));
+                        e.Key));
         }
     }
 }
