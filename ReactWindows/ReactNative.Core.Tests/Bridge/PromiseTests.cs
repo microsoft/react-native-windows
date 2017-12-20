@@ -4,7 +4,7 @@ using ReactNative.Bridge;
 using System;
 using System.Threading;
 
-namespace ReactNative.Core.Tests.Bridge
+namespace ReactNative.Core.Bridge.Tests
 {
     [TestFixture]
     public class PromiseTests
