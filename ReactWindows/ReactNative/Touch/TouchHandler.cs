@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
@@ -76,7 +76,16 @@ namespace ReactNative.Touch
             }
 
             var originalSource = e.OriginalSource as DependencyObject;
-            var rootPoint = e.GetCurrentPoint(_view);
+
+            DependencyObject tmp = _view;
+            DependencyObject topParent = null;
+            while (tmp != null)
+            {
+                topParent = tmp;
+                tmp = VisualTreeHelper.GetParent(tmp);
+            }
+            var rootPoint = e.GetCurrentPoint(topParent as UIElement);
+
             var reactView = GetReactViewTarget(originalSource, rootPoint.Position);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
