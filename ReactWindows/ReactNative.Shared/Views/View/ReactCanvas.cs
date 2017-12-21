@@ -1,20 +1,17 @@
 ﻿using System;
-
 #if WINDOWS_UWP
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 #else
 using System.Windows;
 using System.Windows.Controls;
 #endif
 
-namespace ReactNative.UIManager
+namespace ReactNative.Views.View
 {
     /// <summary>
     /// Represents a Canvas with an optional Border inside.
     /// </summary>
-    public class BorderedCanvas : Canvas
+    public class ReactCanvas : Canvas
     {
         private Border _border = null;
 

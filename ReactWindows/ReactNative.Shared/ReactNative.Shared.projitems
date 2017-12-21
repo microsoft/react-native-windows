@@ -156,7 +156,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
@@ -217,6 +216,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\YogaNodePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Control\KeyHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Control\ReactControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Control\ReactControlManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Image\ReactImageLoadEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventTypeExtensions.cs" />
@@ -244,6 +246,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>
 </Project>
