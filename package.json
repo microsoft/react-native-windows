@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "1000.0.0",
+  "version": "0.51.0-rc.0",
   "description": "React Native platform extensions for the Universal Windows Platform.",
   "license": "MIT",
   "repository": {
@@ -44,7 +44,7 @@
     "https-proxy-agent": "^1.0.0",
     "jasmine": "^2.6.0",
     "jasmine-reporters": "^2.2.1",
-    "minimist": "^1.2.0",    
+    "minimist": "^1.2.0",
     "prettier": "^1.7.0",
     "react": "16.0.0",
     "react-devtools-core": "^2.5.0",

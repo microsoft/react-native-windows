@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace ReactNative.Modules.SystemInfo
 {
@@ -17,9 +17,9 @@ namespace ReactNative.Modules.SystemInfo
                 return new JObject
                 {
                     { "major", 0 },
-                    { "minor", 0 },
+                    { "minor", 51 },
                     { "patch", 0 },
-                    { "prerelease", null }
+                    { "prerelease", "rc.0" },
                 };
             }
         }
