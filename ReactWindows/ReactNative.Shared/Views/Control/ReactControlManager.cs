@@ -109,18 +109,19 @@ namespace ReactNative.Views.ControlView
             view.Focusable = true;
 #endif
             view.IsTabStop = isTabStop;
-
-            view.GotFocus -= OnGotFocus;
-            view.LostFocus -= OnLostFocus;
-            view.KeyDown -= OnKeyDown;
-            view.KeyUp -= OnKeyUp;
-
             if (isTabStop)
             {
                 view.GotFocus += OnGotFocus;
                 view.LostFocus += OnLostFocus;
                 view.KeyUp += OnKeyUp;
                 view.KeyDown += OnKeyDown;
+            }
+            else
+            {
+                view.GotFocus -= OnGotFocus;
+                view.LostFocus -= OnLostFocus;
+                view.KeyDown -= OnKeyDown;
+                view.KeyUp -= OnKeyUp;
             }
         }
 
