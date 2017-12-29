@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace ReactNative.Collections
 {
-    static class JObjectExtensions
+    public static class JObjectExtensions
     {
         public static bool ContainsKey(this JObject obj, string key)
         {

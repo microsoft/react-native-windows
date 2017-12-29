@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.UIManager.Events;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ namespace ReactNative.UIManager
         /// <param name="eventDispatcher">The event dispatcher.</param>
         /// <returns></returns>
         public UIImplementation Create(
-            ReactContext reactContext, 
+            IReactContext reactContext, 
             IReadOnlyList<IViewManager> viewManagers,
             EventDispatcher eventDispatcher)
         {

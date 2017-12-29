@@ -40,7 +40,7 @@ namespace ReactNative.DevSupport
 
         private bool _isDevSupportEnabled = true;
 
-        private ReactContext _currentReactContext;
+        private IReactContext _currentReactContext;
         private RedBoxDialog _redBoxDialog;
         private Action _dismissRedBoxDialog;
         private bool _redBoxDialogOpen;
@@ -331,12 +331,12 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public void OnNewReactContextCreated(ReactContext context)
+        public void OnNewReactContextCreated(IReactContext context)
         {
             ResetCurrentContext(context);
         }
 
-        public void OnReactContextDestroyed(ReactContext context)
+        public void OnReactContextDestroyed(IReactContext context)
         {
             if (context == _currentReactContext)
             {
@@ -349,7 +349,7 @@ namespace ReactNative.DevSupport
             return _devServerHelper.IsPackagerRunningAsync(token);
         }
 
-        public Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
+        public Task<IReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -451,7 +451,7 @@ namespace ReactNative.DevSupport
 #endif
         }
 
-        private void ResetCurrentContext(ReactContext context)
+        private void ResetCurrentContext(IReactContext context)
         {
             if (_currentReactContext == context)
             {
@@ -553,7 +553,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        private async Task<ReactContext> ReloadJavaScriptInProxyModeAsync(CancellationToken token)
+        private async Task<IReactContext> ReloadJavaScriptInProxyModeAsync(CancellationToken token)
         {
             var webSocketExecutor = default(WebSocketJavaScriptExecutor);
             try
@@ -591,7 +591,7 @@ namespace ReactNative.DevSupport
             return await _reactInstanceCommandsHandler.CreateReactContextWithRemoteDebuggerAsync(() => webSocketExecutor, token);
         }
 
-        private async Task<ReactContext> ReloadJavaScriptFromServerAsync(CancellationToken token)
+        private async Task<IReactContext> ReloadJavaScriptFromServerAsync(CancellationToken token)
         {
             try
             {

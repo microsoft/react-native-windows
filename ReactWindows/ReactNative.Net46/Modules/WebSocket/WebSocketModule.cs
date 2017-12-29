@@ -19,7 +19,7 @@ namespace ReactNative.Modules.WebSocket
 
         #region Constructor(s)
 
-        public WebSocketModule(ReactContext reactContext)
+        public WebSocketModule(IReactContext reactContext)
             : base(reactContext)
         {
         }

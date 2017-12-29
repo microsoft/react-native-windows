@@ -30,7 +30,7 @@ namespace ReactNative.UIManager
         private readonly UIViewOperationQueue _operationsQueue;
         private readonly ShadowNodeRegistry _shadowNodeRegistry;
         private readonly NativeViewHierarchyOptimizer _nativeViewHierarchyOptimizer;
-        private readonly ReactContext _reactContext;
+        private readonly IReactContext _reactContext;
         private readonly EventDispatcher _eventDispatcher;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="eventDispatcher">The event dispatcher.</param>
         public UIImplementation(
-            ReactContext reactContext, 
+            IReactContext reactContext, 
             IReadOnlyList<IViewManager> viewManagers, 
             EventDispatcher eventDispatcher)
             : this(reactContext, new ViewManagerRegistry(viewManagers), eventDispatcher)
@@ -48,7 +48,7 @@ namespace ReactNative.UIManager
         }
 
         private UIImplementation(
-            ReactContext reactContext, 
+            IReactContext reactContext, 
             ViewManagerRegistry viewManagers,
             EventDispatcher eventDispatcher)
             : this(
@@ -67,7 +67,7 @@ namespace ReactNative.UIManager
         /// <param name="operationsQueue">The operations queue.</param>
         /// <param name="eventDispatcher">The event dispatcher.</param>
         protected UIImplementation(
-            ReactContext reactContext,
+            IReactContext reactContext,
             ViewManagerRegistry viewManagers,
             UIViewOperationQueue operationsQueue,
             EventDispatcher eventDispatcher)

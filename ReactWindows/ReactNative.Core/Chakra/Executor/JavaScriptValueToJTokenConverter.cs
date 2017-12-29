@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 
 namespace ReactNative.Chakra.Executor
 {
-    sealed class JavaScriptValueToJTokenConverter
+    public sealed class JavaScriptValueToJTokenConverter
     {
         private static readonly JToken s_true = new JValue(true);
         private static readonly JToken s_false = new JValue(false);

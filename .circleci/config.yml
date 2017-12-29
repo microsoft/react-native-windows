@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/build
+    docker:
+      # only image that includes dotnet sdk and nodejs, even though we don't use aspnet
+      - image: microsoft/aspnetcore-build:2.0
+    environment:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - run:
+          name: Print environment versions
+          command: |
+            NODE_V=$(node -v)
+            echo node version':' $NODE_V
+            NPM_V=$(npm -v)
+            echo npm version':' $NPM_V
+            DOTNET_CLI_V=$(dotnet --version)
+            echo dotnet cli version':' $DOTNET_CLI_V
+      - checkout
+      - run:
+          name: dotnet restore
+          command: dotnet restore ReactWindows
+      - run:
+          name: dotnet build 
+          command: dotnet build ReactWindows
+      - run:
+          name: dotnet test
+          command: dotnet test ReactWindows/ReactNative.Core.Tests --logger "trx;LogFileName=/tmp/test-results.xml"
+      - store_test_results:
+           path: /tmp/test-results.xml
+      - save_cache:
+          key: reactnativewindows-{{ .Branch }}-{{ checksum "ReactWindows/ReactNative.Core/ReactNative.Core.csproj" }}
+          paths:
+            - ~/.nuget
+
+# uncomment when Microsoft github org adds CircleCI Mac support
+#    macos:
+#      xcode: "8.3.3"
+
+#      - run:
+#          name: Install dotnet (core) sdk
+#          command: brew install caskroom/cask/dotnet-sdk
+

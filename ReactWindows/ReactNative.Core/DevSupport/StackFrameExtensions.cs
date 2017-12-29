@@ -1,8 +1,8 @@
-﻿using System.Text;
+using System.Text;
 
 namespace ReactNative.DevSupport
 {
-    static class StackFrameExtensions
+    public static class StackFrameExtensions
     {
         public static string PrettyPrint(this IStackFrame[] stackTrace)
         {

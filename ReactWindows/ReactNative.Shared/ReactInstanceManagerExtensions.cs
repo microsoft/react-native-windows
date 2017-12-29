@@ -17,7 +17,7 @@ namespace ReactNative
         /// <returns>
         /// A task to await the React context.
         /// </returns>
-        public static Task<ReactContext> GetOrCreateReactContextAsync(this ReactInstanceManager manager, CancellationToken token)
+        public static Task<IReactContext> GetOrCreateReactContextAsync(this ReactInstanceManager manager, CancellationToken token)
         {
             if (manager.HasStartedCreatingInitialContext)
             {

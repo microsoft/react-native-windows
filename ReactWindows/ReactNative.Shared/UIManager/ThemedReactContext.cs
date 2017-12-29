@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using System;
 
 namespace ReactNative.UIManager
@@ -9,13 +9,13 @@ namespace ReactNative.UIManager
     /// </summary>
     public class ThemedReactContext
     {
-        private readonly ReactContext _reactContext;
+        private readonly IReactContext _reactContext;
 
         /// <summary>
         /// Instantiates the <see cref="ThemedReactContext"/>.
         /// </summary>
         /// <param name="reactContext">The inner context.</param>
-        public ThemedReactContext(ReactContext reactContext)
+        public ThemedReactContext(IReactContext reactContext)
         {
             if (reactContext == null)
             {

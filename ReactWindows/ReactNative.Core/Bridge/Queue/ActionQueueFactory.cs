@@ -5,7 +5,7 @@ namespace ReactNative.Bridge.Queue
     /// <summary>
     /// Anonymous action queue factory implementation.
     /// </summary>
-    class ActionQueueFactory : IActionQueueFactory
+    public class ActionQueueFactory : IActionQueueFactory
     {
         private readonly Func<Action<Exception>, IActionQueue> _factory;
 

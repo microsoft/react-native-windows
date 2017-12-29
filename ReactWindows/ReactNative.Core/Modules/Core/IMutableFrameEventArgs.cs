@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
 namespace ReactNative.Modules.Core
 {
-    interface IMutableFrameEventArgs
+    public interface IMutableFrameEventArgs
     {
         void Update(TimeSpan renderingTime);
     }

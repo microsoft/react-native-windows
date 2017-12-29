@@ -18,7 +18,7 @@ namespace ReactNative.DevSupport
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the React context.</returns>
-        Task<ReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token);
+        Task<IReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token);
 
         /// <summary>
         /// Action triggered when the user requests that the application be
@@ -26,7 +26,7 @@ namespace ReactNative.DevSupport
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the React context.</returns>
-        Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token);
+        Task<IReactContext> CreateReactContextFromBundleAsync(CancellationToken token);
 
         /// <summary>
         /// Action triggered when the user requests that the application be
@@ -37,7 +37,7 @@ namespace ReactNative.DevSupport
         /// </param>
         /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the React context.</returns>
-        Task<ReactContext> CreateReactContextWithRemoteDebuggerAsync(
+        Task<IReactContext> CreateReactContextWithRemoteDebuggerAsync(
             Func<IJavaScriptExecutor> javaScriptExecutorFactory,
             CancellationToken token);
     }
