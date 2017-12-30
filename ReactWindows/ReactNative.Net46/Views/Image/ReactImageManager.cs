@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
@@ -246,6 +246,12 @@ namespace ReactNative.Views.Image
 
         private void OnImageFailed(Border view)
         {
+            if (!view.HasTag())
+            {
+                // View may have been unmounted, ignore.
+                return;
+            }
+
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
@@ -257,6 +263,12 @@ namespace ReactNative.Views.Image
 
         private void OnImageStatusUpdate(Border view, ImageStatusEventData status)
         {
+            if (!view.HasTag())
+            {
+                // View may have been unmounted, ignore.
+                return;
+            }
+
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher;
