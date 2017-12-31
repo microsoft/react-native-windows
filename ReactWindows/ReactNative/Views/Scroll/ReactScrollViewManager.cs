@@ -402,6 +402,9 @@ namespace ReactNative.Views.Scroll
                 HorizontalScrollMode = ScrollMode.Disabled,
                 VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
                 VerticalScrollMode = ScrollMode.Auto,
+                // The default tab index keeps the ScrollViewer (and its children) outside the normal flow of tabIndex==0 controls.
+                // We force a bettwer default, at least until we start supporting TabIndex/IsTabStop properties on RCTScrollView.
+                TabIndex = 0,
             };
 
             _scrollViewerData.Add(scrollViewer, scrollViewerData);
