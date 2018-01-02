@@ -59,6 +59,8 @@ public:
     /// </returns>
     int RunScript(String^ source, String^ sourceUri);
 
+    int SerializeScript(String^ source, String^ serialized);
+
     /// <summary>
     /// Runs the given serialized script with the source URI and returns the result.
     /// </summary>

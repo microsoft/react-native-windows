@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "ChakraHost.h"
 #include "JsIndexedModulesUnbundle.h"
 #include "JsStringify.h"
@@ -243,6 +243,28 @@ bool IsUnbundle(const wchar_t* szSourcePath)
 bool IsIndexedUnbundle(const wchar_t* szSourcePath)
 {
 	return HasMagicFileHeader(szSourcePath);
+}
+
+JsErrorCode ChakraHost::SerializeScript(const wchar_t* szPath, const wchar_t* szSerializedPath)
+{
+    ULONG bufferSize = 0L;
+    BYTE* buffer = nullptr;
+    wchar_t* szScriptBuffer = nullptr;
+    IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
+
+    if (!CompareLastWrite(szSerializedPath, szPath))
+    {
+        IfFailRet(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
+        buffer = new BYTE[bufferSize];
+        IfFailRet(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
+
+        FILE* file;
+        _wfopen_s(&file, szSerializedPath, L"wb");
+        fwrite(buffer, sizeof(BYTE), bufferSize, file);
+        fclose(file);
+    }
+
+    return JsNoError;
 }
 
 JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)

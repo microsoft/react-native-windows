@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "pch.h"
 #include "JsModulesUnbundle.h"
@@ -61,6 +61,11 @@ public:
     /// JsNoError is no error, else a JsErrorCode with the appropriate error.
     /// </returns>
     JsErrorCode RunScript(const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
+
+    /// <summary>
+    /// Serializes the script and writes the bytecode to the specified file.
+    /// </summary>
+    JsErrorCode SerializeScript(const wchar_t* szPath, const wchar_t* szSerializedPath);
 
     /// <summary>
     /// Runs the serialized script from the serialized file location with source file path, source URI and returns the <see cref="JsValueRef" /> result.

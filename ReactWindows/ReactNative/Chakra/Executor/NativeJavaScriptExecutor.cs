@@ -1,33 +1,51 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace ReactNative.Chakra.Executor
 {
+    public enum SerializationMode
+    {
+        None,
+        Foreground,
+        Background
+    }
+
     /// <summary>
     /// Uses the native C++ interface to the JSRT for Chakra.
     /// </summary>
     public class NativeJavaScriptExecutor : IJavaScriptExecutor
     {
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
-        private readonly bool _useSerialization;
+        private readonly SerializationMode _useSerialization;
+        private readonly int _started = Environment.TickCount;
+
+        private int TS => Environment.TickCount - _started;
+
+        private void Log(string text)
+        {
+            Debug.WriteLine("(" + TS + " ms) " + text);
+        }
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
         public NativeJavaScriptExecutor()
-            : this(false)
+            : this(SerializationMode.None)
         {
+
         }
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
         /// <param name="useSerialization">true to use serialization, else false.</param>
-        public NativeJavaScriptExecutor(bool useSerialization)
+        public NativeJavaScriptExecutor(SerializationMode useSerialization)
         {
             _executor = new ChakraBridge.NativeJavaScriptExecutor();
             Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
@@ -105,14 +123,35 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                if (_useSerialization)
+                var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
+
+                switch (_useSerialization)
                 {
-                    var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
-                }
-                else
-                {
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
+                    case SerializationMode.Foreground:
+                        Log("Serializing the script and then running bytecode: " + sourcePath + " -> " + binPath);
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                        Log("Done serializing the script and then running bytecode");
+                        break;
+
+                    case SerializationMode.Background:
+                        Task.Run(() =>
+                        {
+                            Log("Serializing the script: " + sourcePath + " -> " + binPath);
+                            var _executor = new ChakraBridge.NativeJavaScriptExecutor();
+                            Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
+                            Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScript(sourcePath, binPath));
+                            Native.ThrowIfError((JavaScriptErrorCode)_executor.DisposeHost());
+                            Log("Done serializing the script");
+                        });
+
+                        Log("Loading the script: " + sourcePath);
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
+                        Log("Done loading the script");
+                        break;
+
+                    case SerializationMode.None:
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
+                        break;
                 }
             }
             catch (JavaScriptScriptException ex)
