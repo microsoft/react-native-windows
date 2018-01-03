@@ -2,18 +2,34 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace ReactNative.Chakra.Executor
 {
+    /// <summary>
+    /// Tells how to serialize the JS bundle to bytecode when the app starts.
+    /// </summary>
     public enum SerializationMode
     {
+        /// <summary>
+        /// Load the JS bundle without serialization.
+        /// </summary>
         None,
+
+        /// <summary>
+        /// Serialize the bundle to bytecode first, then load the bundle.
+        /// Next time the app starts it will load the existing bytecode.
+        /// </summary>
         Foreground,
-        Background
+
+        /// <summary>
+        /// Load the JS bundle and at the same time generate bytecode on
+        /// a background thread. Next time the app starts, it will load the
+        /// bytecode and won't need to create the 2nd thread.
+        /// </summary>
+        Background,
     }
 
     /// <summary>
@@ -21,16 +37,10 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public class NativeJavaScriptExecutor : IJavaScriptExecutor
     {
+        private const string BytecodeFileName = "ReactNativeBundle.bin";
+
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
-        private readonly SerializationMode _useSerialization;
-        private readonly int _started = Environment.TickCount;
-
-        private int TS => Environment.TickCount - _started;
-
-        private void Log(string text)
-        {
-            Debug.WriteLine("(" + TS + " ms) " + text);
-        }
+        private readonly SerializationMode _serializationMode;
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
@@ -44,12 +54,12 @@ namespace ReactNative.Chakra.Executor
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
-        /// <param name="useSerialization">true to use serialization, else false.</param>
-        public NativeJavaScriptExecutor(SerializationMode useSerialization)
+        /// <param name="serializationMode">true to use serialization, else false.</param>
+        public NativeJavaScriptExecutor(SerializationMode serializationMode)
         {
             _executor = new ChakraBridge.NativeJavaScriptExecutor();
             Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
-            _useSerialization = useSerialization;
+            _serializationMode = serializationMode;
         }
 
         /// <summary>
@@ -123,35 +133,57 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
-                var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
+                var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, BytecodeFileName);
 
-                switch (_useSerialization)
+                switch (_serializationMode)
                 {
                     case SerializationMode.Foreground:
-                        Log("Serializing the script and then running bytecode: " + sourcePath + " -> " + binPath);
                         Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
-                        Log("Done serializing the script and then running bytecode");
                         break;
 
                     case SerializationMode.Background:
-                        Task.Run(() =>
-                        {
-                            Log("Serializing the script: " + sourcePath + " -> " + binPath);
-                            var _executor = new ChakraBridge.NativeJavaScriptExecutor();
-                            Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
-                            Native.ThrowIfError((JavaScriptErrorCode)_executor.SerializeScript(sourcePath, binPath));
-                            Native.ThrowIfError((JavaScriptErrorCode)_executor.DisposeHost());
-                            Log("Done serializing the script");
-                        });
+                        var binFileInfo = new FileInfo(binPath);
 
-                        Log("Loading the script: " + sourcePath);
-                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
-                        Log("Done loading the script");
+                        if (binFileInfo.Exists)
+                        {
+                            // This function checks if the bytecode file matches the JS bundle and makes
+                            // a new bytecode file if necessary, but it does this on the same thread.
+                            Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                        }
+                        else
+                        {
+                            // If the bytecode file doesn't exist yet, create it on a background thread,
+                            // while loading the JS bundle on the current thread.
+                            Task.Run(() =>
+                            {
+                                try
+                                {
+                                    // In Chakra JS engine, only one runtime can be active on a particular thread at a time,
+                                    // and a runtime can only be active on one thread at a time. However it's possible to
+                                    // create two runtimes and let them run on different threads.
+                                    var rt = new ChakraBridge.NativeJavaScriptExecutor();
+
+                                    Native.ThrowIfError((JavaScriptErrorCode)rt.InitializeHost());
+                                    Native.ThrowIfError((JavaScriptErrorCode)rt.SerializeScript(sourcePath, binPath));
+                                    Native.ThrowIfError((JavaScriptErrorCode)rt.DisposeHost());
+                                }
+                                catch (Exception)
+                                {
+                                    // It's fine if the bytecode couldn't be generated: RN can still use the JS bundle.
+                                }
+                            });
+
+                            Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
+                        }
+
                         break;
 
                     case SerializationMode.None:
                         Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
                         break;
+
+                    default:
+                        throw new Exception("Invalid serialization mode: " + _serializationMode);
                 }
             }
             catch (JavaScriptScriptException ex)
