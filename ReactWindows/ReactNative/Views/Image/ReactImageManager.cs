@@ -1,4 +1,4 @@
-using ImagePipeline.Core;
+﻿using ImagePipeline.Core;
 using ImagePipeline.Request;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
@@ -235,12 +235,6 @@ namespace ReactNative.Views.Image
 
         private void OnImageFailed(Border view)
         {
-            if (!view.HasTag())
-            {
-                // View may have been unmounted, ignore.
-                return;
-            }
-
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
@@ -252,12 +246,6 @@ namespace ReactNative.Views.Image
 
         private void OnImageStatusUpdate(Border view, ImageLoadStatus status, ImageMetadata metadata)
         {
-            if (!view.HasTag())
-            {
-                // View may have been unmounted, ignore.
-                return;
-            }
-
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher;
