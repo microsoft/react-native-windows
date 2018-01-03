@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
@@ -23,8 +23,7 @@ namespace ReactNative.UIManager
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>
     /// <typeparam name="TLayoutShadowNode">Type of shadow node.</typeparam>
     public abstract class BaseViewManager<TFrameworkElement, TLayoutShadowNode> :
-            ViewManager<TFrameworkElement, TLayoutShadowNode>,
-            ITransformControl
+            ViewManager<TFrameworkElement, TLayoutShadowNode>
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
@@ -32,41 +31,31 @@ namespace ReactNative.UIManager
             new Dictionary<TFrameworkElement, DimensionBoundProperties>();
 
         /// <summary>
-        /// Sets the  <typeparamref name="TFrameworkElement"/> transform 
-        /// properties, based on the <see cref="JArray"/> object.
+        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
+        /// properties, based on the <see cref="JObject"/> map.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="transforms">The list of transforms.</param>
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            // Check whether we have to defer to a delegate
-            var transformDelegate = view.GetTransformDelegate();
-            if (transformDelegate != null)
+            if (transforms == null)
             {
-                transformDelegate.SetTransform(view, transforms);
+                var dimensionBoundProperties = GetDimensionBoundProperties(view);
+                if (dimensionBoundProperties?.MatrixTransform != null)
+                {
+                    dimensionBoundProperties.MatrixTransform = null;
+                    ResetProjectionMatrix(view);
+                    ResetRenderTransform(view);
+                }
             }
             else
             {
-                SetTransformInternal(view, transforms);
+                var dimensionBoundProperties = GetOrCreateDimensionBoundProperties(view);
+                dimensionBoundProperties.MatrixTransform = transforms;
+                var dimensions = GetDimensions(view);
+                SetProjectionMatrix(view, dimensions, transforms);
             }
-        }
-
-        /// <summary>
-        /// Gets the <typeparamref name="TFrameworkElement"/> transform 
-        /// properties, based on the <see cref="JObject"/> map.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <returns>Returns a <see cref="JArray"/> object</returns>
-        public JArray GetTransform(TFrameworkElement view)
-        {
-            var dimensionBoundProperties = GetDimensionBoundProperties(view);
-            if (dimensionBoundProperties?.MatrixTransform != null)
-            {
-                return dimensionBoundProperties.MatrixTransform;
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -253,27 +242,6 @@ namespace ReactNative.UIManager
             view.PointerExited += OnPointerExited;
         }
 
-        private void SetTransformInternal(TFrameworkElement view, JArray transforms)
-        {
-            if (transforms == null)
-            {
-                var dimensionBoundProperties = GetDimensionBoundProperties(view);
-                if (dimensionBoundProperties?.MatrixTransform != null)
-                {
-                    dimensionBoundProperties.MatrixTransform = null;
-                    ResetProjectionMatrix(view);
-                    ResetRenderTransform(view);
-                }
-            }
-            else
-            {
-                var dimensionBoundProperties = GetOrCreateDimensionBoundProperties(view);
-                dimensionBoundProperties.MatrixTransform = transforms;
-                var dimensions = GetDimensions(view);
-                SetProjectionMatrix(view, dimensions, transforms);
-            }
-        }
-
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var view = (TFrameworkElement)sender;
@@ -438,17 +406,5 @@ namespace ReactNative.UIManager
 
             public JArray MatrixTransform { get; set; }
         }
-
-#region ITransformControl
-        void ITransformControl.SetTransform(FrameworkElement view, JArray transforms)
-        {
-            SetTransformInternal((TFrameworkElement)view, transforms);
-        }
-
-        JArray ITransformControl.GetTransform(FrameworkElement view)
-        {
-            return GetTransform((TFrameworkElement)view);
-        }
-#endregion
     }
 }
