@@ -183,7 +183,6 @@
     <Compile Include="Views\Text\ReactTextViewManager.cs" />
     <Compile Include="Views\TextInput\ReactPasswordBoxManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
-    <Compile Include="Views\View\ReactViewManager.cs" />
     <Compile Include="Views\Web\Events\WebViewLoadingErrorEvent.cs" />
     <Compile Include="Views\Web\Events\WebViewLoadingEvent.cs" />
     <Compile Include="Views\Web\ReactWebViewManager.cs" />

@@ -20,9 +20,9 @@ using System.Windows.Data;
 namespace ReactNative.Views.View
 {
     /// <summary>
-    /// RCTView implementation shared between WPF and UWP.
+    /// The RCTView implementation.
     /// </summary>
-    public class ReactViewManagerBase : ViewParentManager<BorderedCanvas>
+    public class ReactViewManager : ViewParentManager<BorderedCanvas>
     {
         private enum Radius
         {

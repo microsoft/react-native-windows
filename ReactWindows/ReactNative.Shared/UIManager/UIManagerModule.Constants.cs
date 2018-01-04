@@ -315,6 +315,34 @@ namespace ReactNative.UIManager
                         { "registrationName", "onMessage" },
                     }
                 },
+                {
+                    "topDragEnter",
+                    new Dictionary<string, object>()
+                    {
+                        { "registrationName", "onDragEnter" }
+                    }
+                },
+                {
+                    "topDragOver",
+                    new Dictionary<string, object>()
+                    {
+                        { "registrationName", "onDragOver" }
+                    }
+                },
+                {
+                    "topDrop",
+                    new Dictionary<string, object>()
+                    {
+                        { "registrationName", "onDrop" }
+                    }
+                },
+                {
+                    "topDragLeave",
+                    new Dictionary<string, object>()
+                    {
+                        { "registrationName", "onDragLeave" }
+                    }
+                },
             };
         }
 

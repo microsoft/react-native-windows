@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -110,6 +110,15 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
+        }
+
+        /// <summary>
+        /// Enables the view as a drop target.
+        /// </summary>
+        [ReactProp("allowDrop")]
+        public void SetAllowDrop(TFrameworkElement view, bool allowDrop)
+        {
+            // not implemented for WPF
         }
 
         /// <summary>
