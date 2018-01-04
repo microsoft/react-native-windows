@@ -2,7 +2,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
-using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -307,7 +306,7 @@ namespace ReactNative.UIManager
                 view.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), DragDropEvent.DragEnterEventName, data));
+                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", data));
             }
         }
 
@@ -333,7 +332,7 @@ namespace ReactNative.UIManager
                 view.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), DragDropEvent.DragOverEventName, data));
+                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", data));
             }
         }
 
@@ -348,7 +347,7 @@ namespace ReactNative.UIManager
                 view.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), DragDropEvent.DragDropEventName, data));
+                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
             }
         }
 
@@ -363,7 +362,7 @@ namespace ReactNative.UIManager
                 view.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), DragDropEvent.DragLeaveEventName, data));
+                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragLeave", data));
             }
         }
 
@@ -585,35 +584,6 @@ namespace ReactNative.UIManager
             public bool OverflowHidden { get; set; }
 
             public JArray MatrixTransform { get; set; }
-        }
-
-        class DragDropEvent : Event
-        {
-            public const string DragEnterEventName = "topDragEnter";
-            public const string DragOverEventName = "topDragOver";
-            public const string DragDropEventName = "topDrop";
-            public const string DragLeaveEventName = "topDragLeave";
-
-            private readonly string _name;
-            private readonly JObject _data;
-
-            public override string EventName => _name;
-
-            public DragDropEvent(int viewTag, string name, JObject data)
-                : base(viewTag)
-            {
-                _name = name;
-                _data = data;
-            }
-
-            public override void Dispatch(RCTEventEmitter eventEmitter)
-            {
-                eventEmitter.receiveEvent(ViewTag, EventName, new JObject
-                {
-                    { "target", ViewTag },
-                    { "dataTransfer", _data }
-                });
-            }
         }
     }
 }
