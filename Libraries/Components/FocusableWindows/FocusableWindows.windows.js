@@ -7,41 +7,28 @@
  *
  * Helper component for building keyboard focusable custom controls when the original native one has no such support
  *
- * For example, assuming a SomeComponent already exists, a custom KeyboardSupportingComponent can
- * be built this way (at the minimum):
+ * For example, assuming a SomeComponent already exists, a custom KeyboardSupporting Component can
+ * be created by using createFocusableComponent:
  *
- *   class KeyboardSupportingComponent extends React.Component {
+ *   const FocusableSomeComponent = createFocusableComponent(SomeComponent);
+ * 
+ *   class Whatever extends React.Component {
  *     render () {
- *
- *         styleSet = FocusableWindows.splitStyle(this.prop.styles);
- *
  *         return (
- *            <FocusableWindows
- *               ref = {(f) => this._focusable = f}
- *               style = {styleSet.focusableStyle}
- *               onKeyDown = {...}
- *               handledKeyDownKeys: {[FocusableWindows.keys.Enter]}
+ *            <FocusableSomeComponent
+ *               {...this.props }
+ *               onKeyDown={ ... }
+ *               onFocus={ ... }
+ *               handledKeyDownKeys: {[FocusableSomeComponent.keys.Enter]}
  *            >
- *              <SomeComponent
- *                  {...this.props}
- *                  ref = {(c) => this._child = c}
- *                  style = {styleSet.childStyle}
- *              />
- *            </FocusableWindows>
+ *               ... .
+ *            </FocusableSomeComponent>
  *         );
  *      }
- *
- *      // important for animations
- *      setNativeProps (props) {
- *          var splitProps = FocusableWindows.splitNativeProps(props);
- *          if (splitProps.focusableProps !== undefined) {
- *             this._focusable.setNativeProps(splitProps.focusableProps)
- *          }
- *          if (splitProps.childProps !== undefined) {
- *             this._child.setNativeProps(splitProps.childProps);
- *          }
- *      }
  *   }
+ * 
+ * The generated component uses a helper FocusableWindow component that relies on WindowsControl native view.
+ * Implementation allows for splitting the property/styles (setNativeProps included )between WindowsControl and the original Component appropriately.
  *
  * @providesModule FocusableWindows
  */
@@ -55,11 +42,9 @@ var requireNativeComponent = require('requireNativeComponent');
 var UIManager = require('UIManager');
 const flattenStyle = require('flattenStyle');
 
-class FocusableWindows extends React.Component {
-
-  static propTypes = {
-    ...ViewPropTypes,
-
+// This describes the propType based interface for WindowsControl
+class FocusableWindowsTemplate {
+  static focusablePropTypes = {
     /**
      * Controls whether the view is a tab stop. Useful for buttons and other
      * controls that can be focused.
@@ -134,138 +119,175 @@ class FocusableWindows extends React.Component {
      * @platform windows
      */
     onKeyUp: PropTypes.func,
-  };
+  };  
+}
 
-  static keys = UIManager.WindowsControl.Constants.Keys;
+// Creates a decorated component class
+function createFocusableComponent(Component: any) {
+  class FocusableWindows extends React.Component {
 
-  /**
-   * Splits styles into two sets: one applying to focusable view, and the other one to the embedded child
-   * The only style we care about is "transform"
-   */
-  static splitStyle(styles) {
-      var sets = {};
+    static keys = UIManager.WindowsControl.Constants.Keys;
 
-      sets.focusableStyle = {};
-      sets.childStyle = {};
+    _focusable: any;
+    _component: any;
 
-      if (styles) {
-        var flattenedStyles = flattenStyle(styles);
+    _focusableProps: Object;
+    _componentProps: Object;
+ 
+    constructor(props: Object) {
+      super(props);
+      this._splitProps(props);
+    }
 
-        for (var styleName in flattenedStyles) {
-          if (styleName === 'transform') {
-            sets.focusableStyle[styleName] = flattenedStyles[styleName];
-          } else {
-            sets.childStyle[styleName] = flattenedStyles[styleName];
-          }
-        }
-      }
+    componentWillReceiveProps(nextProps: Object) {
+      this._splitProps(nextProps);      
+    }
 
-      return sets;
-  }
-
-  /**
-   * Splits native properties used in setNativeProps into two sets: one applying to focusable view, and the other one to
-   * the embedded child
-   * The only style we care about is "transform"
-   */
-  static splitNativeProps(nativeProps) {
-    var sets = {};
-
-    sets.focusableProps = undefined;
-    sets.childProps = nativeProps;
-
-    if (nativeProps && nativeProps.style && 'transform' in nativeProps.style) {
-
-      sets.focusableProps = {};
-      sets.focusableProps.style = {};
-      var childStyle = {};
-
-      var atLeastOneChildProp = false;
-      // There is no need to flatten the styles
-      for (var styleName in nativeProps.style) {
-        if (styleName === 'transform') {
-          sets.focusableProps.style[styleName] = nativeProps.style[styleName];
+    _splitProps(props: Object) {
+      this._focusableProps = {};
+      this._componentProps = {};
+  
+      for (const key in props) {
+        if (key in FocusableWindowsTemplate.focusablePropTypes) {
+          // Property supported by WindowsControl
+          this._focusableProps[key] = props[key];
+        } else if (key !== 'style') {
+          // Property supported by Component 
+          this._componentProps[key] = props[key];
         } else {
-          childStyle[styleName] = nativeProps.style[styleName];
-          atLeastOneChildProp = true;
-        }
-      }
-
-      sets.childProps.style = childStyle;
-
-      if (!atLeastOneChildProp) {
-        // Check presence of any other prop
-        for (var propName in sets.childProps) {
-          if (propName !== 'style') {
-            atLeastOneChildProp = true;
-            break;
+          // Style case is special because it has to be split:
+          // - "transform" should go to WindowsControl
+          // - everything else goes to Component
+          const styles = props['style'];
+          if (styles) {
+            let focusableStyle = {};
+            let componentStyle = {};
+            const flattenedStyles = flattenStyle(styles);
+            for (const styleName in flattenedStyles) {
+              if (styleName === 'transform') {
+                focusableStyle[styleName] = flattenedStyles[styleName];
+              } else {
+                componentStyle[styleName] = flattenedStyles[styleName];
+              }
+            }
+            this._focusableProps['style'] = focusableStyle;
+            this._componentProps['style'] = componentStyle;
           }
         }
-      }
+      } 
+    }
 
-      if (!atLeastOneChildProp) {
-        sets.childProps = undefined;
+    render() {
+      return (
+        <WindowsControl
+          { ...this._focusableProps }
+          ref={ this._setFocusableRef }
+        >
+          <Component
+            { ...this._componentProps }
+            ref={ this._setComponentRef }
+          />
+        </WindowsControl>
+      );
+    }
+
+    _setComponentRef = (ref): void => {
+      this._component = ref;
+    }
+
+    _setFocusableRef = (ref): void => {
+      this._focusable = ref;
+    }
+
+    getComponent() {
+      return this._component;
+    }
+
+    focus() {
+      if (this._focusable) {
+        UIManager.dispatchViewManagerCommand(
+          ReactNative.findNodeHandle(this._focusable),
+          UIManager.WindowsControl.Commands.focus,
+          null);
       }
     }
 
-    return sets;
+    blur() {
+      if (this._focusable) {
+        UIManager.dispatchViewManagerCommand(
+          ReactNative.findNodeHandle(this._focusable),
+          UIManager.WindowsControl.Commands.blur,
+          null);
+      }
+    }
+
+    setNativeProps(nativeProps) {
+      let focusableProps = {};
+      let componentProps = {};
+
+      let atLeastOneFocusableProp = false;
+      let atLeastOneComponentProp = false;
+
+      if (nativeProps) {
+        for (const key in nativeProps) {
+          if (key in FocusableWindowsTemplate.focusablePropTypes) {
+            // Property supported by WindowsControl
+            focusableProps[key] = nativeProps[key];
+            atLeastOneFocusableProp = true;
+          } else if (key !== 'style') {
+            // Property supported by Component 
+            componentProps[key] = nativeProps[key];
+            atLeastOneComponentProp = true;
+          } else {
+            // Style case is special because it has to be split:
+            // - "transform" should go to WindowsControl
+            // - everything else goes to Component
+            // The difference (compared with normal property processing) is that no flattening/style id resolution is needed
+            const styles = nativeProps['style'];
+            if (styles) {
+              let focusableStyle = {};
+              let childStyle = {};
+              for (const styleName in styles) {
+                if (styleName === 'transform') {
+                  focusableStyle[styleName] = styles[styleName];
+                  atLeastOneFocusableProp = true;
+                } else {
+                  childStyle[styleName] = styles[styleName];
+                  atLeastOneComponentProp = true;
+                }
+              }
+              focusableProps['style'] = focusableStyle;
+              componentProps['style'] = childStyle;
+            }
+          }
+        }
+        
+        if (this._focusable && atLeastOneFocusableProp) {
+          this._focusable.setNativeProps(focusableProps);
+        }
+
+        if (this._component && atLeastOneComponentProp && this._component.setNativeProps) {
+          this._component.setNativeProps(componentProps);
+        }
+      }
+    }
+  }
+
+  // Prop types are a combination of what Component and WindowsControl expose
+  FocusableWindows.propTypes = Object.assign({}, Component.propTypes, FocusableWindowsTemplate.focusablePropTypes);
+
+  return FocusableWindows;
 }
 
-  render() {
-    return (
-      <WindowsControl
-        {...this.props}
-        onFocus={this._onFocus}
-        onBlur={this._onBlur}
-        ref={this._setControlRef}
-      />
-    );
-  }
+// WindowsControl implementation peculiarities make it check for presence of RCTView like properties in propTypes,
+// even though those are not really supported/implemented.
+// We add those properties for the sake of the native component property validation.
+FocusableWindowsTemplate.propTypes = Object.assign({}, ViewPropTypes, FocusableWindowsTemplate.focusablePropTypes);
 
-  _setControlRef = (ref): void => {
-    this._controlRef = ref;
-  }
-
-  _onFocus = (e): void => {
-    if (this.props.onFocus) {
-      this.props.onFocus(e);
-    }
-  }
-
-  _onBlur = (e): void => {
-    if (this.props.onBlur) {
-      this.props.onBlur(e);
-    }
-  }
-
-  focus() {
-    if (this._controlRef) {
-      UIManager.dispatchViewManagerCommand(
-        ReactNative.findNodeHandle(this._controlRef),
-        UIManager.WindowsControl.Commands.focus,
-        null);
-    }
-  }
-
-  blur() {
-    if (this._controlRef) {
-      UIManager.dispatchViewManagerCommand(
-        ReactNative.findNodeHandle(this._controlRef),
-        UIManager.WindowsControl.Commands.blur,
-        null);
-    }
-  }
-
-  setNativeProps(nativeProps) {
-    if (this._controlRef) {
-        this._controlRef.setNativeProps(nativeProps);
-    }
-  }
-}
-
-var WindowsControl = requireNativeComponent(
+// This Component registration is shared by all decorated components.
+const WindowsControl = requireNativeComponent(
   'WindowsControl',
-  FocusableWindows
+  FocusableWindowsTemplate
 );
 
-module.exports = FocusableWindows;
+module.exports = createFocusableComponent;

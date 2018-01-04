@@ -20,15 +20,18 @@ const Text = require('Text');
 const TouchableNativeFeedback = require('TouchableNativeFeedback');
 const TouchableOpacity = require('TouchableOpacity');
 const View = require('View');
-const FocusableWindows = require('FocusableWindows');
+const createFocusableComponent = require('FocusableWindows');
 
 const invariant = require('fbjs/lib/invariant');
 
-const KEY_CODE_ENTER = FocusableWindows.keys.Enter;
-const KEY_CODE_SPACE = FocusableWindows.keys.Space;
+const FocusableView = createFocusableComponent(View);
+
+const KEY_CODE_ENTER = FocusableView.keys.Enter;
+const KEY_CODE_SPACE = FocusableView.keys.Space;
 
 const DOWN_KEYCODES = [KEY_CODE_SPACE, KEY_CODE_ENTER];
 const UP_KEYCODES = [KEY_CODE_SPACE];
+
 
 /**
  * A basic button component that should render nicely on any platform. Supports
@@ -147,16 +150,12 @@ class Button extends React.Component {
     );
     const formattedTitle = Platform.OS === 'android' ? title.toUpperCase() : title;
     const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-    let content =
-        <View style={buttonStyles}>
-          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
-        </View>;
-
+    let content;
     if (Platform.OS === "windows") {
       const tabIndex = this.props.tabIndex || 0;
       const windowsTabFocusable = !disabled && tabIndex >= 0;
       content =
-        <FocusableWindows
+        <FocusableView
           ref={this._setFocusableRef}
           disabled={disabled}
           isTabStop={windowsTabFocusable}
@@ -168,9 +167,15 @@ class Button extends React.Component {
           onKeyUp={this._onKeyUp}
           onFocus={this._onFocus}
           onBlur={this._onBlur}
+          style={buttonStyles}
         >
-          {content}
-      </FocusableWindows>;
+          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
+      </FocusableView>;
+    } else {
+      content =
+      <View style={buttonStyles}>
+        <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
+      </View>;      
     }
 
     return (
