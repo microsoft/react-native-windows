@@ -22,7 +22,6 @@ using ReactNative.Views.View;
 using ReactNative.Views.Web;
 using System;
 using System.Collections.Generic;
-using ReactNative.Net46.Views.View;
 
 namespace ReactNative.Shell
 {

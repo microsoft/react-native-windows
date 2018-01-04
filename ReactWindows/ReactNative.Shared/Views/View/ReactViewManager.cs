@@ -1,11 +1,6 @@
-using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using ReactNative.UIManager.Events;
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -27,7 +22,7 @@ namespace ReactNative.Views.View
     /// <summary>
     /// RCTView implementation shared between WPF and UWP.
     /// </summary>
-    public class BaseViewManager : ViewParentManager<BorderedCanvas>
+    public class ReactViewManagerBase : ViewParentManager<BorderedCanvas>
     {
         private enum Radius
         {

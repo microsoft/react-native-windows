@@ -1,18 +1,12 @@
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Data;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using ReactNative.Views.View;
 
-namespace ReactNative.Net46.Views.View
+namespace ReactNative.Views.View
 {
     /// <summary>
     /// WPF-specifics of the RCTView implementation.
     /// </summary>
-    public class ReactViewManager: BaseViewManager
+    public class ReactViewManager: ReactViewManagerBase
     {
         /// <summary>
         /// Enables the Canvas as a drop target.
@@ -20,7 +14,7 @@ namespace ReactNative.Net46.Views.View
         [ReactProp("allowDrop")]
         public void SetAllowDrop(BorderedCanvas view, bool allowDrop)
         {
-            throw new NotImplementedException("The allowDrop property is not available on this platform");
+            // not implemented for WPF
         }
     }
 }

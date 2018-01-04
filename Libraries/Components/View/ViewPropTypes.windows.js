@@ -87,8 +87,6 @@ export type ViewProps = {
 module.exports = {
   ...TVViewPropTypes,
 
-  allowDrop: PropTypes.bool,
-
   /**
    * When `true`, indicates that the view is an accessibility element. By default,
    * all the touchable elements are accessible.
@@ -499,4 +497,20 @@ module.exports = {
         'scale',
         'all',
     ])),
+
+  /**
+   * Enables the view as a drop target. If this is set, the user will be able
+   * to drag and drop files to the view and it will emit the four events:
+   *
+   *    `onDragEnter`
+   *    `onDragOver`
+   *    `onDrop` - contains the list of dropped files (their URIs to be precise)
+   *    `onDragLeave`
+   *
+   * The native event in these callbacks contains the `dataTransfer` field that
+   * implements the DataTransfer JS interface. Note, that unlike in the web, here
+   * the event is readonly and thus changing `effectAllowed` and `dropEffect` fields
+   * will do nothing.
+   */
+  allowDrop: PropTypes.bool,
 };
