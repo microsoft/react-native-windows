@@ -511,6 +511,8 @@ module.exports = {
    * implements the DataTransfer JS interface. Note, that unlike in the web, here
    * the event is readonly and thus changing `effectAllowed` and `dropEffect` fields
    * will do nothing.
+   *
+   * @platform windows
    */
   allowDrop: PropTypes.bool,
 };
