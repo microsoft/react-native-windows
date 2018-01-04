@@ -7,9 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
-using Windows.Storage;
-using Windows.Storage.AccessCache;
-using Windows.ApplicationModel.DataTransfer;
 #else
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +17,7 @@ using System.Windows.Data;
 namespace ReactNative.Views.View
 {
     /// <summary>
-    /// The RCTView implementation.
+    /// View manager for React view instances.
     /// </summary>
     public class ReactViewManager : ViewParentManager<BorderedCanvas>
     {
@@ -94,8 +91,6 @@ namespace ReactNative.Views.View
         {
             return new BorderedCanvas();
         }
-
-        
 
         /// <summary>
         /// Sets whether or not the view is an accessibility element.
