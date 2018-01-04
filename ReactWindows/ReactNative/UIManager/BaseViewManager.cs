@@ -521,7 +521,7 @@ namespace ReactNative.UIManager
                         {
                             var props = await file.GetBasicPropertiesAsync();
                             var type = file.ContentType;
-                            var path = drop ? "urn:future-access-list:" + Uri.EscapeUriString(GetAccessToken(file)) : "";
+                            var path = drop ? FutureAccessList.Add(file).ToString() : "";
 
                             files.Add(new JObject
                             {
@@ -553,30 +553,6 @@ namespace ReactNative.UIManager
                 { "items", items },
                 { "types", types }
             };
-        }
-
-        private static string GetAccessToken(StorageFile file)
-        {
-            var futureAccessList = StorageApplicationPermissions.FutureAccessList;
-            var existingEntries = futureAccessList.Entries;
-            var capacity = futureAccessList.MaximumItemsAllowed;
-            var now = DateTime.Now;
-
-            // Use more aggresive timeout when number of items exceed 100 or half of the capacity
-            // Note: 100 is an arbitary limit in case that OS reduces the capacity (it is 1000 in RS1). 
-            var expiry = existingEntries.Count >= capacity / 2 || existingEntries.Count >= 100 ?
-                now.AddDays(-1) :
-                now.AddDays(-7);
-
-            foreach (var entry in existingEntries)
-            {
-                if (DateTime.TryParse(entry.Metadata, out DateTime time) && time < expiry)
-                {
-                    futureAccessList.Remove(entry.Token);
-                }
-            }
-
-            return futureAccessList.Add(file, now.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
         class DimensionBoundProperties
