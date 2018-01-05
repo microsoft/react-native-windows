@@ -119,12 +119,6 @@ class FocusableWindowsTemplate {
      * @platform windows
      */
     onKeyUp: PropTypes.func,
-    /**
-     * A callback based "ref"-like property for the embedded Component
-     *
-     * @platform windows
-     */
-    componentRef: PropTypes.func,  
   };  
 }
 
@@ -137,44 +131,16 @@ function createFocusableComponent(Component: any) {
     _focusable: any;
     _component: any;
 
-    _isMounted: boolean;
-
     _focusableProps: Object;
     _componentProps: Object;
  
     constructor(props: Object) {
       super(props);
-      this._isMounted = false;
       this._splitProps(props);
     }
 
     componentWillReceiveProps(nextProps: Object) {
       this._splitProps(nextProps);      
-    }
-
-    componentDidMount() {
-      this._isMounted = true;
-      if (this.props.componentRef) {
-        this.props.componentRef(this._component);
-      }
-    }
-
-    componentDidUpdate(prevProps: Object) {
-      if (prevProps.componentRef !== this.props.componentRef) {
-        if (prevProps.componentRef) {
-          prevProps.componentRef(null);
-        }
-        if (this.props.componentRef) {
-          this.props.componentRef(this._component);
-        }
-      }
-    }
-
-    componentWillUnmount() {
-      if (this.props.componentRef) {
-        this.props.componentRef(null);
-      }
-      this._isMounted = false;      
     }
 
     _splitProps(props: Object) {
@@ -226,11 +192,7 @@ function createFocusableComponent(Component: any) {
     }
 
     _setComponentRef = (ref): void => {
-      let previousComponent = this._component;
       this._component = ref;
-      if (this._isMounted && this.props.componentRef && this._component !== previousComponent) {
-        this.props.componentRef(this._component);
-      }
     }
 
     _setFocusableRef = (ref): void => {
