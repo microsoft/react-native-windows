@@ -113,18 +113,18 @@ namespace ReactNative.Chakra.Executor
 
                 if (_useSerialization)
                 {
+                    var srcFileInfo = new FileInfo(sourcePath);
                     var binFileInfo = new FileInfo(binPath);
 
-                    if (binFileInfo.Exists)
+                    // The idea is to run the JS bundle and generate bytecode for it on a background thread.
+                    // This eliminates the need to delay the first start when the app doesn't have bytecode.
+                    // Next time the app starts, it checks if bytecode is still good and  runs it directly.
+                    if (binFileInfo.Exists && binFileInfo.LastWriteTime > srcFileInfo.LastWriteTime)
                     {
-                        // This function checks if the bytecode file matches the JS bundle and makes
-                        // a new bytecode file if necessary, but it does this on the same thread.
                         Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
                     }
                     else
                     {
-                        // If the bytecode file doesn't exist yet, create it on a background thread,
-                        // while loading the JS bundle on the current thread.
                         Task.Run(() =>
                         {
                             try

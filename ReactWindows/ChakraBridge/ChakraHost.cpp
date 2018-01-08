@@ -271,22 +271,13 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
 {
     HANDLE hFile = NULL;
     HANDLE hMap = NULL;
-    JsErrorCode status = JsNoError;
-    ULONG bufferSize = 0L;
     BYTE* buffer = nullptr;
     wchar_t* szScriptBuffer = nullptr;
     IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
 
     if (!CompareLastWrite(szSerializedPath, szPath))
     {
-        IfFailRet(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
-        buffer = new BYTE[bufferSize];
-        IfFailRet(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
-
-        FILE* file;
-        _wfopen_s(&file, szSerializedPath, L"wb");
-        fwrite(buffer, sizeof(BYTE), bufferSize, file);
-        fclose(file);
+        return JsErrorBadSerializedScript;
     }
     else
     {
@@ -300,7 +291,7 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     context->mapHandle = hMap;
 
     IfFailRet(JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result));
-    return status;
+    return JsNoError;
 }
 
 JsErrorCode ChakraHost::RunScript(const wchar_t* szFileName, const wchar_t* szSourceUri, JsValueRef* result)
