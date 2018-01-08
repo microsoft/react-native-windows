@@ -1,9 +1,6 @@
 using ReactNative;
-using ReactNative.Bridge;
-using ReactNative.Chakra.Executor;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
-using System;
 using System.Collections.Generic;
 
 namespace Playground
@@ -11,9 +8,6 @@ namespace Playground
     class MainReactNativeHost : ReactNativeHost
     {
         public override string MainComponentName => "Playground";
-
-        protected override Func<IJavaScriptExecutor> JavaScriptExecutorFactory =>
-            () => new NativeJavaScriptExecutor(SerializationMode.Background);
 
 #if !BUNDLE || DEBUG
         public override bool UseDeveloperSupport => true;
