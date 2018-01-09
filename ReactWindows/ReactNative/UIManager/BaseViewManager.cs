@@ -178,6 +178,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets a tooltip for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="tooltip">String to display in the tooltip.</param>
+        [ReactProp("tooltip")]
+        public void SetTooltip(TFrameworkElement view, string tooltip)
+        {
+            ToolTipService.SetToolTip(view, tooltip);
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
