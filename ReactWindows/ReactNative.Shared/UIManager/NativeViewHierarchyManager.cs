@@ -627,6 +627,7 @@ namespace ReactNative.UIManager
 
             _tagsToViews.Remove(tag);
             _tagsToViewManagers.Remove(tag);
+            view.ClearData();
         }
 
         private void UpdateLayout(DependencyObject viewToUpdate, IViewManager viewManager, Dimensions dimensions)
