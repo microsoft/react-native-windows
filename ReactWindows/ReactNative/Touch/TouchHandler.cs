@@ -76,17 +76,10 @@ namespace ReactNative.Touch
             }
 
             var originalSource = e.OriginalSource as DependencyObject;
-
-            DependencyObject tmp = _view;
-            DependencyObject topParent = null;
-            while (tmp != null)
-            {
-                topParent = tmp;
-                tmp = VisualTreeHelper.GetParent(tmp);
-            }
-            var rootPoint = e.GetCurrentPoint(topParent as UIElement);
-
-            var reactView = GetReactViewTarget(originalSource, rootPoint.Position);
+            var rootPoint = e.GetCurrentPoint(_view);
+            var transform = (sender as UIElement).TransformToVisual(Window.Current.Content);
+            Point p = transform.TransformPoint(rootPoint.Position);
+            var reactView = GetReactViewTarget(originalSource, p);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
                 var viewPoint = e.GetCurrentPoint(reactView);
