@@ -121,12 +121,19 @@ class FocusableWindowsTemplate {
     onKeyUp: PropTypes.func,
     /**
      * A callback based "ref"-like property for the embedded Component
+     * Care must be taken not to call setNativeProps on this object directly, or, if not possible, at least to avoid
+     * properties that are meant to be intercepted by the implementation of the focusable component ("style/transform" currently).
      *
      * @platform windows
      */
     componentRef: PropTypes.func,  
   };  
 }
+
+// WindowsControl implementation peculiarities make it check for presence of RCTView like properties in propTypes,
+// even though those are not really supported/implemented.
+// We add those properties for the sake of the native component property validation.
+FocusableWindowsTemplate.propTypes = Object.assign({}, ViewPropTypes, FocusableWindowsTemplate.focusablePropTypes);
 
 // Creates a decorated component class
 function createFocusableComponent(Component: any) {
@@ -316,11 +323,6 @@ function createFocusableComponent(Component: any) {
 
   return FocusableWindows;
 }
-
-// WindowsControl implementation peculiarities make it check for presence of RCTView like properties in propTypes,
-// even though those are not really supported/implemented.
-// We add those properties for the sake of the native component property validation.
-FocusableWindowsTemplate.propTypes = Object.assign({}, ViewPropTypes, FocusableWindowsTemplate.focusablePropTypes);
 
 // This Component registration is shared by all decorated components.
 const WindowsControl = requireNativeComponent(

@@ -173,9 +173,9 @@ class Button extends React.Component {
       </FocusableView>;
     } else {
       content =
-      <View style={buttonStyles}>
-        <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
-      </View>;      
+        <View style={buttonStyles}>
+          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
+        </View>;      
     }
 
     return (
