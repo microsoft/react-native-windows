@@ -207,6 +207,7 @@ namespace ReactNative.Bridge
         {
             private readonly NativeModuleBase _instance;
             private readonly Lazy<Action<INativeModule, IReactInstance, JArray>> _invokeDelegate;
+            private readonly IGenericDelegate _genericDelegate;
 
             public NativeMethod(NativeModuleBase instance, MethodInfo method)
             {
@@ -214,7 +215,8 @@ namespace ReactNative.Bridge
 
                 var delegateFactory = instance._delegateFactory;
                 delegateFactory.Validate(method);
-                _invokeDelegate = new Lazy<Action<INativeModule, IReactInstance, JArray>>(() => delegateFactory.Create(instance, method));
+                _genericDelegate = GenericDelegateFactory.CreateGenericDelegate(instance, method);
+                _invokeDelegate = new Lazy<Action<INativeModule, IReactInstance, JArray>>(() => delegateFactory.Create(instance, method, _genericDelegate));
                 Type = delegateFactory.GetMethodType(method);
             }
 
