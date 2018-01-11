@@ -1,7 +1,7 @@
 using ReactNative.Bridge;
 using System;
 
-namespace ReactNative.Net46.Tests
+namespace ReactNative.Tests
 {
     class MockCallback : ICallback
     {

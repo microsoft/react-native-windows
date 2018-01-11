@@ -5,7 +5,6 @@ using ReactNative.Modules.Storage;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using ReactNative.Net46.Tests;
 
 namespace ReactNative.Tests.Modules.Storage
 {

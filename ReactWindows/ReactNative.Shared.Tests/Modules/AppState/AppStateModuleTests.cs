@@ -3,7 +3,6 @@ using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Core;
-using ReactNative.Net46.Tests;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
