@@ -159,12 +159,17 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(view));
 
             var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
+            if (!s_properties.TryGetValue(view, out elementData))
             {
-                throw new InvalidOperationException("Could not get tag for view.");
+                throw new InvalidOperationException("Could not get React context for view.");
             }
 
             return elementData.Context;
+        }
+
+        internal static void ClearData(this DependencyObject view)
+        {
+            s_properties.Remove(view);
         }
 
         internal static T As<T>(this DependencyObject view)

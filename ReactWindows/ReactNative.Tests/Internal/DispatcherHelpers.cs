@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Windows.UI.Core;
 
@@ -15,11 +15,17 @@ namespace ReactNative.Tests
         {
             var tcs = new TaskCompletionSource<T>();
 
-            await RunOnDispatcherAsync(() =>
+            await RunOnDispatcherAsync(async () =>
             {
-                var result = func();
-
-                Task.Run(() => tcs.SetResult(result));
+                try
+                {
+                    var result = func();
+                    await Task.Run(() => tcs.SetResult(result));
+                }
+                catch (Exception ex)
+                {
+                    await Task.Run(() => tcs.SetException(ex));
+                }
             }).ConfigureAwait(false);
 
             return await tcs.Task.ConfigureAwait(false);
@@ -31,11 +37,39 @@ namespace ReactNative.Tests
 
             await RunOnDispatcherAsync(async () =>
             {
-                await asyncFunc();
-                await Task.Run(() => tcs.SetResult(true));
+                try
+                {
+                    await asyncFunc();
+                    await Task.Run(() => tcs.SetResult(true));
+                }
+                catch (Exception ex)
+                {
+                    await Task.Run(() => tcs.SetException(ex));
+                }
             }).ConfigureAwait(false);
 
             await tcs.Task.ConfigureAwait(false);
         }
+
+        public static async Task<T> CallOnDispatcherAsync<T>(Func<Task<T>> asyncFunc)
+        {
+            var tcs = new TaskCompletionSource<T>();
+
+            await RunOnDispatcherAsync(async () =>
+            {
+                try
+                {
+                    var result = await asyncFunc();
+                    await Task.Run(() => tcs.SetResult(result));
+                }
+                catch (Exception ex)
+                {
+                    await Task.Run(() => tcs.SetException(ex));
+                }
+            }).ConfigureAwait(false);
+
+            return await tcs.Task.ConfigureAwait(false);
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using static System.FormattableString;
 
@@ -56,8 +56,9 @@ namespace ReactNative.Animated
         {
             if (_parent == null)
             {
-                throw new InvalidOperationException(
-                    "Trying to update interpolation node that has not been attached to the parent.");
+                // The graph is in the middle of being created, just skip this
+                // unattached node.
+                return;
             }
 
             RawValue = Interpolate(_parent.Value, _inputRange, _outputRange, _extrapolateLeft, _extrapolateRight);

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
@@ -18,6 +18,7 @@ namespace ReactNative.DevSupport
         private const int ConnectTimeoutMilliseconds = 5000;
         private const int ConnectRetryCount = 3;
 
+        private readonly object _gate = new object();
         private readonly MessageWebSocket _webSocket;
         private readonly JObject _injectedObjects;
         private readonly IDictionary<int, TaskCompletionSource<JToken>> _callbacks;
@@ -101,7 +102,10 @@ namespace ReactNative.DevSupport
         {
             var requestId = Interlocked.Increment(ref _requestId);
             var callback = new TaskCompletionSource<JToken>();
-            _callbacks.Add(requestId, callback);
+            lock (_gate)
+            {
+                _callbacks.Add(requestId, callback);
+            }
 
             try
             {
@@ -123,7 +127,10 @@ namespace ReactNative.DevSupport
             }
             finally
             {
-                _callbacks.Remove(requestId);
+                lock (_gate)
+                {
+                    _callbacks.Remove(requestId);
+                }
             }
         }
 
@@ -137,13 +144,25 @@ namespace ReactNative.DevSupport
             _isDisposed = true;
             _messageWriter.Dispose();
             _webSocket.Dispose();
+
+            lock (_gate)
+            {
+                foreach (var callback in _callbacks)
+                {
+                    // Set null rather than cancelling to prevent exception
+                    callback.Value.TrySetResult(null);
+                }
+            }
         }
 
         private JToken Call(string methodName, JArray arguments)
         {
             var requestId = Interlocked.Increment(ref _requestId);
             var callback = new TaskCompletionSource<JToken>();
-            _callbacks.Add(requestId, callback);
+            lock (_gate)
+            {
+                _callbacks.Add(requestId, callback);
+            }
 
             try
             {
@@ -166,7 +185,10 @@ namespace ReactNative.DevSupport
             }
             finally
             {
-                _callbacks.Remove(requestId);
+                lock (_gate)
+                {
+                    _callbacks.Remove(requestId);
+                }
             }
         }
 
@@ -194,7 +216,10 @@ namespace ReactNative.DevSupport
             {
                 var requestId = Interlocked.Increment(ref _requestId);
                 var callback = new TaskCompletionSource<JToken>();
-                _callbacks.Add(requestId, callback);
+                lock (_gate)
+                {
+                    _callbacks.Add(requestId, callback);
+                }
 
                 try
                 {
@@ -211,7 +236,10 @@ namespace ReactNative.DevSupport
                 }
                 finally
                 {
-                    _callbacks.Remove(requestId);
+                    lock (_gate)
+                    {
+                        _callbacks.Remove(requestId);
+                    }
                 }
             }
         }

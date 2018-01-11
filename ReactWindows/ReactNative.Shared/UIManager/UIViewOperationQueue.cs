@@ -1,16 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -24,6 +19,8 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
+        private const string NonBatchedChoreographerKey = nameof(UIViewOperationQueue) + "_NonBatched";
+
         private static readonly TimeSpan s_frameDuration = TimeSpan.FromTicks(166666);
         private static readonly TimeSpan s_minTimeLeftInFrameForNonBatchedOperation = TimeSpan.FromTicks(83333);
 
@@ -38,8 +35,6 @@ namespace ReactNative.UIManager
 
         private IList<Action> _operations = new List<Action>();
         private IList<Action> _batches = new List<Action>();
-
-        private long _lastRenderingTicks = -1;
 
         /// <summary>
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
@@ -63,7 +58,7 @@ namespace ReactNative.UIManager
             {
                 return _nativeViewHierarchyManager;
             }
-        } 
+        }
 
         /// <summary>
         /// Checks if the operation queue is empty.
@@ -90,7 +85,6 @@ namespace ReactNative.UIManager
             SizeMonitoringCanvas rootView,
             ThemedReactContext themedRootContext)
         {
-            DispatcherHelpers.AssertOnDispatcher();
             _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
         }
 
@@ -101,33 +95,6 @@ namespace ReactNative.UIManager
         public void EnqueueRemoveRootView(int rootViewTag)
         {
             EnqueueOperation(() => _nativeViewHierarchyManager.RemoveRootView(rootViewTag));
-        }
-
-        /// <summary>
-        /// Enqueues an operation to set the JavaScript responder.
-        /// </summary>
-        /// <param name="tag">The view tag.</param>
-        /// <param name="initialTag">The initial tag.</param>
-        /// <param name="blockNativeResponder">
-        /// Signal to block the native responder.
-        /// </param>
-        public void EnqueueSetJavaScriptResponder(
-            int tag,
-            int initialTag,
-            bool blockNativeResponder)
-        {
-            EnqueueOperation(() => _nativeViewHierarchyManager.SetJavaScriptResponder(
-                tag,
-                initialTag,
-                blockNativeResponder));
-        }
-
-        /// <summary>
-        /// Enqueues an operation to clear the JavaScript responder.
-        /// </summary>
-        public void EnqueueClearJavaScriptResponder()
-        {
-            EnqueueOperation(() => _nativeViewHierarchyManager.ClearJavaScriptResponder());
         }
 
         /// <summary>
@@ -164,12 +131,21 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues a operation to execute a UIBlock.
+        /// Enqueues an operation to execute a UI block.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void EnqueueUIBlock(IUIBlock block)
         {
             EnqueueOperation(() => block.Execute(_nativeViewHierarchyManager));
+        }
+
+        /// <summary>
+        /// Prepends an operation to execute a UI block.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            PrependOperation(() => block.Execute(_nativeViewHierarchyManager));
         }
 
         /// <summary>
@@ -193,14 +169,10 @@ namespace ReactNative.UIManager
                    viewClassName,
                    initialProps));
             }
-        }
 
-        /// <summary>
-        /// Clears the animation layout updates.
-        /// </summary>
-        public void ClearAnimationLayout()
-        {
-            _nativeViewHierarchyManager.ClearLayoutAnimation();
+            // Dispatch event from non-layout thread to avoid queueing
+            // main dispatcher callbacks from the layout thread
+            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(NonBatchedChoreographerKey));
         }
 
         /// <summary>
@@ -397,8 +369,9 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Called when the host is shutting down.
         /// </summary>
-        public void OnShutdown()
+        public void OnDestroy()
         {
+            ReactChoreographer.Instance.DispatchUICallback -= OnRenderingSafe;
         }
 
         /// <summary>
@@ -414,10 +387,7 @@ namespace ReactNative.UIManager
                 {
                     nonBatchedOperations = _nonBatchedOperations.ToArray();
                     _nonBatchedOperations.Clear();
-                }
-                else
-                {
-                    nonBatchedOperations = null;
+                    ReactChoreographer.Instance.DeactivateCallback(NonBatchedChoreographerKey);
                 }
             }
 
@@ -455,6 +425,10 @@ namespace ReactNative.UIManager
                     }
                 });
             }
+
+            // Dispatch event from non-layout thread to avoid queueing
+            // main dispatcher callbacks from the layout thread
+            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(nameof(UIViewOperationQueue)));
         }
 
         private void EnqueueOperation(Action action)
@@ -462,6 +436,14 @@ namespace ReactNative.UIManager
             lock (_gate)
             {
                 _operations.Add(action);
+            }
+        }
+
+        private void PrependOperation(Action action)
+        {
+            lock (_gate)
+            {
+                _operations.Insert(0, action);
             }
         }
 
@@ -496,6 +478,7 @@ namespace ReactNative.UIManager
                 finally
                 {
                     _batches.Clear();
+                    ReactChoreographer.Instance.DeactivateCallback(nameof(UIViewOperationQueue));
                 }
             }
         }
@@ -515,6 +498,7 @@ namespace ReactNative.UIManager
                 {
                     if (_nonBatchedOperations.Count == 0)
                     {
+                        ReactChoreographer.Instance.DeactivateCallback(NonBatchedChoreographerKey);
                         break;
                     }
 

@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Foundation;
 #else
@@ -29,6 +31,14 @@ namespace ReactNative
         private bool _attachScheduled;
 
         /// <summary>
+        /// Instantiates the <see cref="ReactRootView"/>.
+        /// </summary>
+        public ReactRootView()
+        {
+            TouchHandler = new TouchHandler(this);
+        }
+
+        /// <summary>
         /// Gets the JavaScript module name.
         /// </summary>
         internal string JavaScriptModuleName
@@ -45,7 +55,6 @@ namespace ReactNative
         internal TouchHandler TouchHandler
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -88,7 +97,7 @@ namespace ReactNative
         /// </param>
         /// <param name="moduleName">The module name.</param>
         /// <param name="initialProps">The initialProps</param>
-        public void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
+        public async void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -101,9 +110,10 @@ namespace ReactNative
             _jsModuleName = moduleName;
             _initialProps = initialProps;
 
+            var getReactContextTask = default(Task);
             if (!_reactInstanceManager.HasStartedCreatingInitialContext)
             {
-                _reactInstanceManager.CreateReactContextInBackground();
+                getReactContextTask = _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None);
             }
 
             // We need to wait for the initial `Measure` call, if this view has
@@ -116,6 +126,11 @@ namespace ReactNative
             else
             {
                 _attachScheduled = true;
+            }
+
+            if (getReactContextTask != null)
+            {
+                await getReactContextTask.ConfigureAwait(false);
             }
         }
 

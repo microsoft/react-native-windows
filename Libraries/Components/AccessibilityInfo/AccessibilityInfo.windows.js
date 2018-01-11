@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -11,32 +11,55 @@
  */
 'use strict';
 
-type ChangeEventName = $Enum<{
-  change: string,
-}>;
+var NativeModules = require('NativeModules');
+var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 
-var warning = require('fbjs/lib/warning');
+var RCTAccessibilityInfo = NativeModules.AccessibilityInfo;
+var HIGH_CONTRAST_EVENT = 'highContrastDidChange';
+var _subscriptions = new Map();
+
+type AccessibilityEventName = $Enum<{
+  [HIGH_CONTRAST_EVENT]: string,
+}>;
 
 var AccessibilityInfo = {
 
-  fetch: function(): Promise<*> {
+  initialHighContrast: RCTAccessibilityInfo.initialHighContrast,
+  
+  fetch: function(): Promise {
     return new Promise((resolve, reject) => {
-      reject('AccessibilityInfo is not supported on this platform.');
+      resolve(false); // UWP does not have API to check if screen reader is being used
     });
   },
 
+  fetchIsHighContrast: function (): Promise {
+    return RCTAccessibilityInfo.fetchIsHighContrast();
+  },  
+
   addEventListener: function (
-    eventName: ChangeEventName,
+    eventName: AccessibilityEventName,
     handler: Function
-  ): void {
-    warning(false, 'AccessibilityInfo is not supported on this platform.');
+  ): Object {
+    if (eventName !== HIGH_CONTRAST_EVENT) {
+      return {
+        remove() { }
+      };      
+    }
+
+    var listener = RCTDeviceEventEmitter.addListener(eventName, enabled => handler(enabled));
+
+    _subscriptions.set(handler, listener);
+
+    return listener;
   },
 
   removeEventListener: function(
-    eventName: ChangeEventName,
+    eventName: AccessibilityEventName,
     handler: Function
   ): void {
-    warning(false, 'AccessibilityInfo is not supported on this platform.');
+    var listener = _subscriptions.get(handler);
+    listener && listener.remove();
+    _subscriptions.delete(handler);  
   },
 
 };

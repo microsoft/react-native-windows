@@ -1,4 +1,4 @@
-﻿using Facebook.Yoga;
+using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.I18N;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.UIManager
@@ -576,33 +577,6 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets a JavaScript responder for a view.
-        /// </summary>
-        /// <param name="reactTag">The view ID.</param>
-        /// <param name="blockNativeResponder">
-        /// Flag to signal if the native responder should be blocked.
-        /// </param>
-        public void SetJavaScriptResponder(int reactTag, bool blockNativeResponder)
-        {
-            AssertViewExists(reactTag);
-            var node = _shadowNodeRegistry.GetNode(reactTag);
-            while (node.IsVirtual || node.IsLayoutOnly)
-            {
-                node = node.Parent;
-            }
-
-            _operationsQueue.EnqueueSetJavaScriptResponder(node.ReactTag, reactTag, blockNativeResponder);
-        }
-
-        /// <summary>
-        /// Clears the JavaScript responder.
-        /// </summary>
-        public void ClearJavaScriptResponder()
-        {
-            _operationsQueue.EnqueueClearJavaScriptResponder();
-        }
-
-        /// <summary>
         /// Dispatches a command to the view manager.
         /// </summary>
         /// <param name="reactTag">The tag of the view manager.</param>
@@ -637,12 +611,21 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues UIBlock to be executed.
+        /// Enqueues UI block to be executed.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void AddUIBlock(IUIBlock block)
         {
             _operationsQueue.EnqueueUIBlock(block);
+        }
+
+        /// <summary>
+        /// Prepens the UI block to be executed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            _operationsQueue.PrependUIBlock(block);
         }
 
         /// <summary>
@@ -664,9 +647,9 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Called when the host is shutting down.
         /// </summary>
-        public void OnShutdown()
+        public void OnDestroy()
         {
-            _operationsQueue.OnShutdown();
+            _operationsQueue.OnDestroy();
         }
 
         private void UpdateViewHierarchy()
@@ -916,13 +899,16 @@ namespace ReactNative.UIManager
 
                 if (frameDidChange && cssNode.ShouldNotifyOnLayout)
                 {
-                    _eventDispatcher.DispatchEvent(
-                        OnLayoutEvent.Obtain(
-                            tag,
-                            cssNode.ScreenX,
-                            cssNode.ScreenY,
-                            cssNode.ScreenWidth,
-                            cssNode.ScreenHeight));
+                    // Dispatch event from non-layout thread to avoid queueing
+                    // main dispatcher callbacks from the layout thread
+                    var task = Task.Run(() =>
+                        _eventDispatcher.DispatchEvent(
+                            OnLayoutEvent.Obtain(
+                                tag,
+                                cssNode.ScreenX,
+                                cssNode.ScreenY,
+                                cssNode.ScreenWidth,
+                                cssNode.ScreenHeight)));
                 }
             }
 

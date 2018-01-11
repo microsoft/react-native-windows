@@ -11,7 +11,7 @@
     <AssemblyName>ReactNative</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -95,6 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
+    <Compile Include="Bridge\Queue\DispatcherActionQueue.cs" />
+    <Compile Include="Bridge\Queue\LayoutActionQueue.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
@@ -108,6 +110,7 @@
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
@@ -127,6 +130,7 @@
     <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
     <Compile Include="ReactPage.cs" />
+    <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
@@ -138,10 +142,10 @@
     </Compile>
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
-    <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
+    <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
@@ -192,11 +196,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ChakraBridge\ChakraBridge.vcxproj">
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
@@ -206,7 +205,11 @@
       <Name>ReactNativeWebViewBridge</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

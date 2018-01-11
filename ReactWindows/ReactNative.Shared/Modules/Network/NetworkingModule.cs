@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Core;
@@ -65,7 +65,7 @@ namespace ReactNative.Modules.Network
         {
             get
             {
-                return "RCTNetworking";
+                return "Networking";
             }
         }
 
@@ -121,27 +121,27 @@ namespace ReactNative.Modules.Network
 
             if (data != null)
             {
-                var body = data.Value<string>("string");
+                var stringBody = data.Value<string>("string");
+                var base64Body = default(string);
                 var uri = default(string);
                 var formData = default(JArray);
-                if (body != null)
-                {
-                    if (headerData.ContentType == null)
-                    {
-                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
-                        return;
-                    }
 
-                    request.Content = HttpContentHelpers.CreateFromBody(headerData, body);
+                if (HasRequestContent(data) && headerData.ContentType == null)
+                {
+                    OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
+                    return;
+                }
+
+                if (stringBody != null)
+                {
+                    request.Content = HttpContentHelpers.CreateFromBody(headerData, stringBody);
+                }
+                else if ((base64Body = data.Value<string>("base64")) != null)
+                {
+                    request.Content = HttpContentHelpers.CreateFromBase64(headerData, base64Body);
                 }
                 else if ((uri = data.Value<string>("uri")) != null)
                 {
-                    if (headerData.ContentType == null)
-                    {
-                        OnRequestError(requestId, "Payload is set but no 'content-type' header specified.", false);
-                        return;
-                    }
-
                     _tasks.AddAndInvokeAsync(requestId, token => ProcessRequestFromUriAsync(
                         requestId,
                         new Uri(uri),
@@ -445,6 +445,13 @@ namespace ReactNative.Modules.Network
                 requestId,
                 null,
             });
+        }
+
+        private static bool HasRequestContent(JObject data)
+        {
+            return data.ContainsKey("string")
+                || data.ContainsKey("base64")
+                || data.ContainsKey("uri");
         }
 
         private static void ApplyHeaders(HttpRequestMessage request, string[][] headers)

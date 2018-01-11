@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using ReactNative.Touch;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
@@ -104,17 +103,12 @@ namespace ReactNative.UIManager
         /// Creates a view and installs event emitters on it.
         /// </summary>
         /// <param name="reactContext">The context.</param>
-        /// <param name="responderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        public TFrameworkElement CreateView(
-            ThemedReactContext reactContext,
-            JavaScriptResponderHandler responderHandler)
+        public TFrameworkElement CreateView(ThemedReactContext reactContext)
         {
             var view = CreateViewInstance(reactContext);
             AddEventEmitters(reactContext, view);
-
             // TODO: enable touch intercepting view parents
-
             return view;
         }
 
@@ -229,9 +223,9 @@ namespace ReactNative.UIManager
             UpdateProperties((TFrameworkElement)viewToUpdate, props);
         }
 
-        DependencyObject IViewManager.CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        DependencyObject IViewManager.CreateView(ThemedReactContext reactContext)
         {
-            return CreateView(reactContext, jsResponderHandler);
+            return CreateView(reactContext);
         }
 
         void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)

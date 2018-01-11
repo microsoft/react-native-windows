@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 
 namespace ReactNative.Bridge
 {
@@ -49,17 +50,22 @@ namespace ReactNative.Bridge
 
         public void Reject(string code, string message, Exception e)
         {
+            var errorData = e?.Data;
+            var userInfo = errorData != null
+                ? JToken.FromObject(errorData) 
+                : null;
+            Reject(code, message, e?.StackTrace, userInfo);
+        }
+
+        public void Reject(string code, string message, string stack, JToken userInfo)
+        {
             if (_reject != null)
             {
-                var errorData = e?.Data;
-                var userInfo = errorData != null
-                    ? JToken.FromObject(errorData) 
-                    : null;
                 _reject.Invoke(new JObject
                 {
                     { "code", code ?? DefaultError },
                     { "message", message },
-                    { "stack", e?.StackTrace },
+                    { "stack", stack },
                     { "userInfo", userInfo },
                 });
             }

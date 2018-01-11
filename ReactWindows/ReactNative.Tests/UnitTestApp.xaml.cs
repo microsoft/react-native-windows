@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -59,6 +59,8 @@ namespace ReactNative.Tests
             Window.Current.Activate();
 
             Dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
 
             Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(e.Arguments);
         }

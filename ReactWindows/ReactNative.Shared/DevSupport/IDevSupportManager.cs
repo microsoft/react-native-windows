@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.DevSupport;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ReactNative.DevSupport
@@ -34,6 +35,11 @@ namespace ReactNative.DevSupport
         bool IsRemoteDebuggingEnabled { get; set; }
 
         /// <summary>
+        /// Enables or disables the progress dialog.
+        /// </summary>
+        bool IsProgressDialogEnabled { get; set; }
+
+        /// <summary>
         /// The source map URL.
         /// </summary>
         string SourceMapUrl { get; }
@@ -57,13 +63,18 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Handles reloading the JavaScript bundle.
         /// </summary>
-        void HandleReloadJavaScript();
+        /// <param name="token">A token to cancel the operation.</param>
+        /// <returns>A task to await the result.</returns>
+        Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token);
 
         /// <summary>
         /// Checks if an up-to-date JavaScript bundle is ready.
         /// </summary>
-        /// <returns>A task to await the result.</returns>
-        Task<bool> HasUpToDateBundleInCacheAsync();
+        /// <returns>
+        /// <code>true</code> if the cached bundle is newer than the date the
+        /// application was installed, otherwise <code>false</code>.
+        /// </returns>
+        bool HasUpToDateBundleInCache();
 
         /// <summary>
         /// Dismisses the red box exception dialog.
@@ -73,10 +84,11 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Checks if the packager is running.
         /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
         /// <returns>
         /// <code>true</code> if the packager is running, otherwise <code>false</code>.
         /// </returns>
-        Task<bool> IsPackagerRunningAsync();
+        Task<bool> IsPackagerRunningAsync(CancellationToken token);
 
         /// <summary>
         /// Notify when a new React context is created.
