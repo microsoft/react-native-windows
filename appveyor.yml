@@ -86,7 +86,7 @@ test_script:
   #- npm run flow-check
   # Spec test only works when there is a bundle
 
-  - npm run lint
+  #- npm run lint
 
 after_test:
   - ps: >-

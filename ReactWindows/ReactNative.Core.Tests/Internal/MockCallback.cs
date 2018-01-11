@@ -1,7 +1,7 @@
-using ReactNative.Bridge;
+﻿using ReactNative.Bridge;
 using System;
 
-namespace ReactNative.Tests
+namespace ReactNative.Core.Tests
 {
     class MockCallback : ICallback
     {
