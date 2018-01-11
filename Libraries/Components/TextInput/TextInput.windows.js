@@ -15,7 +15,9 @@ var DocumentSelectionState = require('DocumentSelectionState');
 var EventEmitter = require('EventEmitter');
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var Platform = require('Platform');
+var PropTypes = require('prop-types');
 var React = require('React');
+var createReactClass = require('create-react-class');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
@@ -23,14 +25,13 @@ var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 var UIManager = require('UIManager');
-var View = require('View');
-var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
+var ViewPropTypes = require('ViewPropTypes');
 
+var PasswordBoxWindows = require('react-native-windows').PasswordBoxWindows;
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
-var requireNativeComponent = require('requireNativeComponent');
 
-var PropTypes = React.PropTypes;
+var requireNativeComponent = require('requireNativeComponent');
 
 var onlyMultiline = {
   onTextInput: true, // not supported in Open Source yet
@@ -87,14 +88,16 @@ function notSupported(prop) {
  *  </View>
  * ```
  */
-var TextInput = React.createClass({
+var TextInput = createReactClass({
+  displayName: 'TextInput',
+
   statics: {
     /* TODO(brentvatne) docs are needed for this */
     State: TextInputState,
   },
 
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     /**
      * Can tell TextInput to automatically capitalize certain characters.
      *
@@ -369,8 +372,8 @@ var TextInput = React.createClass({
   },
 
   contextTypes: {
-    onFocusRequested: React.PropTypes.func,
-    focusEmitter: React.PropTypes.instanceOf(EventEmitter),
+    onFocusRequested: PropTypes.func,
+    focusEmitter: PropTypes.instanceOf(EventEmitter),
   },
 
   _focusSubscription: (undefined: ?Function),
@@ -411,7 +414,7 @@ var TextInput = React.createClass({
   },
 
   childContextTypes: {
-    isInAParentText: React.PropTypes.bool
+    isInAParentText: PropTypes.bool
   },
 
   /**
@@ -693,7 +696,6 @@ var TextInput = React.createClass({
       </TouchableWithoutFeedback>
     );
   },
-
 
   _onFocus: function(event: Event) {
     if (this.props.onFocus) {
