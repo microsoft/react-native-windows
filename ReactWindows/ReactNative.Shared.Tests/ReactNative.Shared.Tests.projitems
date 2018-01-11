@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\AssertEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
