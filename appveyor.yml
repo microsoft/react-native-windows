@@ -38,8 +38,8 @@ hosts:
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
-  - npm install -g npm@lts
-  - npm i
+  - appveyor-retry npm install -g npm@lts
+  - appveyor-retry npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
   - ps: mkdir C:\winium
   - ps: Add-Type -A 'System.IO.Compression.FileSystem'
