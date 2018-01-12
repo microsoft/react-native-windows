@@ -4,7 +4,7 @@ using ReactNative.Bridge;
 using System;
 using System.Threading;
 
-namespace ReactNative.Tests.Bridge
+namespace ReactNative.Core.Tests.Bridge
 {
     [TestFixture]
     public class PromiseTests
@@ -26,9 +26,9 @@ namespace ReactNative.Tests.Bridge
             promise.Resolve(o);
             are.WaitOne();
 
-            Assert.IsNotNull(args);
-            Assert.AreEqual(1, args.Length);
-            Assert.AreSame(o, args[0]);
+            Assert.That(args, Is.Not.Null);
+            Assert.That(args.Length, Is.EqualTo(1));
+            Assert.That(args[0], Is.SameAs(o));
         }
 
         [Test]
@@ -48,13 +48,13 @@ namespace ReactNative.Tests.Bridge
             var message = "foo";
             promise.Reject(code, message);
             are.WaitOne();
-            Assert.IsNotNull(args);
-            Assert.AreEqual(1, args.Length);
+            Assert.That(args, Is.Not.Null);
+            Assert.That(args.Length, Is.EqualTo(1));
 
             var json = args[0] as JObject;
-            Assert.IsNotNull(json);
-            Assert.AreEqual(code, json["code"].ToString());
-            Assert.AreEqual(message, json["message"].ToString());
+            Assert.That(json, Is.Not.Null);
+            Assert.That(json["code"].ToString(), Is.EqualTo(code));
+            Assert.That(json["message"].ToString(), Is.EqualTo(message));
         }
 
         [Test]
@@ -77,13 +77,13 @@ namespace ReactNative.Tests.Bridge
             promise.Reject(code, message, e);
             are.WaitOne();
 
-            Assert.IsNotNull(args);
-            Assert.AreEqual(1, args.Length);
+            Assert.That(args, Is.Not.Null);
+            Assert.That(args.Length, Is.EqualTo(1));
             var json = args[0] as JObject;
-            Assert.IsNotNull(json);
+            Assert.That(json, Is.Not.Null);
             var userInfo = json["userInfo"] as JObject;
-            Assert.IsNotNull(userInfo);
-            Assert.AreEqual("baz", userInfo["qux"].ToString());
+            Assert.That(userInfo, Is.Not.Null);
+            Assert.That(userInfo["qux"].ToString(), Is.EqualTo("baz"));
         }
     }
 }
