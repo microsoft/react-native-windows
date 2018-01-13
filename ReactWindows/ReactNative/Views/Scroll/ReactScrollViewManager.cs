@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -16,6 +17,10 @@ namespace ReactNative.Views.Scroll
     /// </summary>
     public class ReactScrollViewManager : ViewParentManager<ScrollViewer>
     {
+        private bool PagingEnabled = false;
+        private double PageIndex = 0;
+        private Stopwatch stopwatch;
+        
         private const int CommandScrollTo = 1;
 
         private readonly IDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
@@ -225,6 +230,22 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
+        /// Enables or disables scroll view paging mode.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="enabled">Signals whether paging is enabled.</param>
+        [ReactProp("pagingEnabled")]
+        public void SetPagingEnabled(ScrollViewer view, bool? enabled)
+        {
+            PagingEnabled = (enabled ?? false);
+            if (PagingEnabled && view.HorizontalScrollMode != ScrollMode.Disabled)
+            {
+                stopwatch = new Stopwatch();
+                view.IsScrollInertiaEnabled = false;
+            }
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
@@ -356,6 +377,8 @@ namespace ReactNative.Views.Scroll
         /// <returns>The view instance.</returns>
         protected override ScrollViewer CreateViewInstance(ThemedReactContext reactContext)
         {
+            PageIndex = 0;
+            
             var scrollViewerData = new ScrollViewerData();
 
             var scrollViewer = new ScrollViewer
@@ -387,23 +410,52 @@ namespace ReactNative.Views.Scroll
         private void OnDirectManipulationCompleted(object sender, object e)
         {
             var scrollViewer = (ScrollViewer)sender;
+
             EmitScrollEvent(
                 scrollViewer,
                 ScrollEventType.EndDrag,
                 scrollViewer.HorizontalOffset,
                 scrollViewer.VerticalOffset,
                 scrollViewer.ZoomFactor);
+            
+            var pageWidth = scrollViewer.Width;
+
+            if (PagingEnabled && scrollViewer.HorizontalScrollMode != ScrollMode.Disabled) {
+                const uint MAX_FLING_TIME = 300;
+                const uint MIN_X_OFFSET = 2;
+
+                stopwatch.Stop();
+
+                var flingTime = stopwatch.ElapsedMilliseconds;
+                
+                var offsetX = flingTime < MAX_FLING_TIME ? MIN_X_OFFSET : pageWidth / 2;
+
+                if (scrollViewer.HorizontalOffset - PageIndex * pageWidth > offsetX)                   
+                    PageIndex = PageIndex + 1;
+                else if (PageIndex * pageWidth - scrollViewer.HorizontalOffset > offsetX)
+                    PageIndex = PageIndex - 1;
+                
+                scrollViewer.ChangeView(PageIndex * pageWidth, 0, null, false);
+            }
+            
         }
 
         private void OnDirectManipulationStarted(object sender, object e)
         {
             var scrollViewer = (ScrollViewer)sender;
+
             EmitScrollEvent(
                 scrollViewer,
                 ScrollEventType.BeginDrag,
                 scrollViewer.HorizontalOffset,
                 scrollViewer.VerticalOffset,
                 scrollViewer.ZoomFactor);
+
+            if (PagingEnabled && scrollViewer.HorizontalScrollMode != ScrollMode.Disabled)
+            {
+                stopwatch.Reset();
+                stopwatch.Start();
+            }            
         }
 
         private void OnViewChanging(object sender, ScrollViewerViewChangingEventArgs args)
