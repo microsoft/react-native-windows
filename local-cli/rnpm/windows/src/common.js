@@ -35,7 +35,7 @@ function getLatestVersion() {
     npm.packages.release('react-native-windows', 'latest', (err, releases) => {
       if (err) {
         reject(err);
-      } else if (releases.length === 0) {
+      } else if (!releases || releases.length === 0) {
         reject(new Error('Could not find react-native-windows@latest.'));
       } else {
         resolve(releases[0].version);
@@ -48,7 +48,7 @@ function getMatchingVersion(version) {
   console.log(`Checking for react-native-windows version matching ${version}...`);
   return new Promise(function (resolve, reject) {
     npm.packages.range('react-native-windows', version, (err, release) => {
-      if (err) {
+      if (err || !release) {
         return getLatestVersion()
           .then(latestVersion => {
             reject(new Error(`Could not find react-native-windows@${version}. ` +

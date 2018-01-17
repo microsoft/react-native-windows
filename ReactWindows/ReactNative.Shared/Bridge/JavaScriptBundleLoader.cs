@@ -1,9 +1,10 @@
-﻿using PCLStorage;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Storage;
 #else
+using PCLStorage;
 using System.IO;
 using System.Reflection;
 #endif
@@ -27,8 +28,9 @@ namespace ReactNative.Bridge
         /// Initializes the JavaScript bundle loader, typically making an
         /// asynchronous call to cache the bundle in memory.
         /// </summary>
+        /// <param name="token">A token to cancel the initialization.</param>
         /// <returns>A task to await initialization.</returns>
-        public abstract Task InitializeAsync();
+        public abstract Task InitializeAsync(CancellationToken token);
 
         /// <summary>
         /// Loads the bundle into a JavaScript executor.
@@ -89,13 +91,13 @@ namespace ReactNative.Bridge
             }
 
 #if WINDOWS_UWP
-            public override async Task InitializeAsync()
+            public override async Task InitializeAsync(CancellationToken token)
             {
-                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask().ConfigureAwait(false);
+                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(SourceUrl)).AsTask(token).ConfigureAwait(false);
                 _script = storageFile.Path;
             }
 #else
-            public override Task InitializeAsync()
+            public override Task InitializeAsync(CancellationToken token)
             {
                 var assembly = Assembly.GetAssembly(typeof(JavaScriptBundleLoader));
                 var assemblyName = assembly.GetName();
@@ -134,10 +136,15 @@ namespace ReactNative.Bridge
 
             public override string SourceUrl { get; }
 
-            public override async Task InitializeAsync()
+            public override async Task InitializeAsync(CancellationToken token)
             {
+#if WINDOWS_UWP
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).AsTask(token).ConfigureAwait(false);
+#else
                 var localFolder = FileSystem.Current.LocalStorage;
                 var storageFile = await localFolder.GetFileAsync(_cachedFileLocation).ConfigureAwait(false);
+#endif
                 _script = storageFile.Path;
             }
 
@@ -165,7 +172,7 @@ namespace ReactNative.Bridge
                 get;
             }
 
-            public override Task InitializeAsync()
+            public override Task InitializeAsync(CancellationToken token)
             {
                 return Task.CompletedTask;
             }

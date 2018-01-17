@@ -11,6 +11,7 @@ using ReactNative.Modules.Network;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.ControlView;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
 using ReactNative.Views.Progress;
@@ -83,6 +84,7 @@ namespace ReactNative.Shell
                 new ReactPasswordBoxManager(),
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
+                new ReactControlManager(),
                 new ReactViewManager(),
                 new ReactSpanViewManager(),
                 ////new SwipeRefreshLayoutManager(),

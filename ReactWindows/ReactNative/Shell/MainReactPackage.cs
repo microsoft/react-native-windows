@@ -1,5 +1,6 @@
 ﻿using ReactNative.Animated;
 using ReactNative.Bridge;
+using ReactNative.Modules.Accessibilityinfo;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
@@ -15,6 +16,7 @@ using ReactNative.Modules.Storage;
 using ReactNative.Modules.Vibration;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.ControlView;
 using ReactNative.Views.Flip;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
@@ -46,6 +48,7 @@ namespace ReactNative.Shell
         {
             return new List<INativeModule>
             {
+                new AccessibilityInfoModule(reactContext),
                 new AppStateModule(reactContext),
                 new AsyncStorageModule(),
                 //new CameraRollManager(reactContext),
@@ -90,6 +93,7 @@ namespace ReactNative.Shell
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
                 new ReactViewManager(),
+                new ReactControlManager(),
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),
                 new ReactWebViewManager(reactContext),

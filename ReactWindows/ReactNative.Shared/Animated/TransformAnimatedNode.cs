@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -73,7 +73,7 @@ namespace ReactNative.Animated
                 });
             }
 
-            propsMap.Add("transform", transforms);
+            propsMap["transform"] = transforms;
         }
 
         class TransformConfig

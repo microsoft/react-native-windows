@@ -7,18 +7,18 @@ namespace ReactNative.Bridge
 {
     public static class DispatcherHelpers
     {
-        private static Dispatcher _dispatcher;
+        private static Dispatcher s_mainDispatcher;
 
-        internal static Dispatcher CurrentDispatcher
+        public static Dispatcher MainDispatcher
         {
             get
             {
                 AssertDispatcherSet();
 
-                return _dispatcher;
+                return s_mainDispatcher;
             }
 
-            set
+            internal set
             {
                 if (value == null)
                 {
@@ -30,13 +30,21 @@ namespace ReactNative.Bridge
                     throw new ArgumentException("Dispatcher must be an STA thread");
                 }
 
-                _dispatcher = value;
+                s_mainDispatcher = value;
             }
+        }
+
+        /// <summary>
+        /// Sets the main dispatcher.
+        /// </summary>
+        public static void Initialize()
+        {
+            s_mainDispatcher = Dispatcher.CurrentDispatcher;
         }
 
         public static bool IsDispatcherSet()
         {
-            return _dispatcher != null;
+            return s_mainDispatcher != null;
         }
 
         public static void AssertOnDispatcher()
@@ -51,21 +59,21 @@ namespace ReactNative.Bridge
         {
             AssertDispatcherSet();
 
-            return CurrentDispatcher.CheckAccess();
+            return MainDispatcher.CheckAccess();
         }
 
         public static async void RunOnDispatcher(Action action)
         {
             AssertDispatcherSet();
 
-            await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+            await MainDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
         public static async void RunOnDispatcher(DispatcherPriority priority, Action action)
         {
             AssertDispatcherSet();
 
-            await CurrentDispatcher.InvokeAsync(action, priority).Task.ConfigureAwait(false);
+            await MainDispatcher.InvokeAsync(action, priority).Task.ConfigureAwait(false);
         }
 
         public static Task<T> CallOnDispatcher<T>(Func<T> func)
@@ -91,7 +99,7 @@ namespace ReactNative.Bridge
 
         private static void AssertDispatcherSet()
         {
-            if (_dispatcher == null)
+            if (s_mainDispatcher == null)
             {
                 throw new InvalidOperationException("Dispatcher has not been set");
             }

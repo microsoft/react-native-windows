@@ -347,7 +347,7 @@ namespace ReactNative.Views.Web
                 .DispatchEvent(
                     new WebViewLoadEvent(
                          tag,
-                         WebViewLoadEvent.TopLoadStart,
+                         WebViewLoadEvent.TopLoadingStart,
                          e.Uri?.ToString(),
                          true,
                          webView.DocumentTitle,

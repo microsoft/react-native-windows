@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "ChakraHost.h"
 #include "JsIndexedModulesUnbundle.h"
 #include "JsStringify.h"
@@ -245,11 +245,8 @@ bool IsIndexedUnbundle(const wchar_t* szSourcePath)
 	return HasMagicFileHeader(szSourcePath);
 }
 
-JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
+JsErrorCode ChakraHost::SerializeScript(const wchar_t* szPath, const wchar_t* szSerializedPath)
 {
-    HANDLE hFile = NULL;
-    HANDLE hMap = NULL;
-    JsErrorCode status = JsNoError;
     ULONG bufferSize = 0L;
     BYTE* buffer = nullptr;
     wchar_t* szScriptBuffer = nullptr;
@@ -266,6 +263,22 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
         fwrite(buffer, sizeof(BYTE), bufferSize, file);
         fclose(file);
     }
+
+    return JsNoError;
+}
+
+JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
+{
+    HANDLE hFile = NULL;
+    HANDLE hMap = NULL;
+    BYTE* buffer = nullptr;
+    wchar_t* szScriptBuffer = nullptr;
+    IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
+
+    if (!CompareLastWrite(szSerializedPath, szPath))
+    {
+        return JsErrorBadSerializedScript;
+    }
     else
     {
         IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, false));
@@ -278,7 +291,7 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     context->mapHandle = hMap;
 
     IfFailRet(JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result));
-    return status;
+    return JsNoError;
 }
 
 JsErrorCode ChakraHost::RunScript(const wchar_t* szFileName, const wchar_t* szSourceUri, JsValueRef* result)

@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
@@ -357,34 +357,33 @@ namespace ReactNative.Tests.UIManager.Events
 
         private static async Task<ReactContext> CreateContextAsync(IJavaScriptExecutor executor)
         {
-            var reactInstance = await DispatcherHelpers.CallOnDispatcherAsync(() => CreateReactInstance(executor));
-            await InitializeReactInstanceAsync(reactInstance);
             var context = new ReactContext();
-            context.InitializeWithInstance(reactInstance);
+
+            var reactInstance = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var instance = CreateReactInstance(context, executor);
+                context.InitializeWithInstance(instance);
+                instance.Initialize();
+                await instance.InitializeBridgeAsync(CancellationToken.None);
+                return instance;
+            });
+
             return context;
         }
 
-        private static ReactInstance CreateReactInstance(IJavaScriptExecutor executor)
+        private static ReactInstance CreateReactInstance(ReactContext reactContext, IJavaScriptExecutor executor)
         {
-            var registry = new NativeModuleRegistry.Builder().Build();
+            var registry = new NativeModuleRegistry.Builder(reactContext).Build();
 
             var instance = new ReactInstance.Builder
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = TestReactQueueConfiguration.Create(ex => Assert.Fail(ex.ToString())),
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
-                NativeModuleCallExceptionHandler = ex => Assert.Fail(ex.ToString()),
             }.Build();
 
-            instance.Initialize();
-
             return instance;
-        }
-
-        private static Task InitializeReactInstanceAsync(ReactInstance reactInstance)
-        {
-            return reactInstance.InitializeBridgeAsync();
         }
 
         private static IDisposable BlockJavaScriptThread(ReactContext reactContext)

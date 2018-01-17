@@ -62,3 +62,22 @@ error APPX0002: Task 'GenerateAppxPackageRecipe' failed. 0x7F - Failed to load M
 #### Solution:
 
 Re-run the standalone installer for Windows 10 SDK version 10.0.14393.x as listed in the [Requirements](https://github.com/Microsoft/react-native-windows#requirements). It appears that sometimes a partial install occurs when the SDK is installed via the Visual Studio installer. 
+
+#### Error:
+(After trying to run the project)
+```
+The project '___' cannot be started directly. In order to debug this project, you must consume it from an application project that creates a package and is marked as the startup project
+```
+
+#### Solution:
+
+Right click your react-native-windows project name (i.e. AwesomeProject) and select "Set as StartUp Project"
+
+#### Error:
+(After trying to 'install missing features' on ReactNativeWebViewBridge when it is unavailable)
+```
+Object reference not set to an instance of an object
+```
+
+#### Solution:
+Install the 10.0.14393.0 Windows 10 SDK in the Visual Studio Installer

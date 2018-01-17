@@ -3,6 +3,7 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Storage;
@@ -15,7 +16,7 @@ namespace ReactNative.Tests
 {
     static class JavaScriptHelpers
     {
-        public static Task Run(Action<ChakraJavaScriptExecutor, IMessageQueueThread> action)
+        public static Task Run(Action<ChakraJavaScriptExecutor, IActionQueue> action)
         {
             return Run((executor, jsQueueThread) =>
             {
@@ -24,11 +25,11 @@ namespace ReactNative.Tests
             });
         }
 
-        public static async Task Run(Func<ChakraJavaScriptExecutor, IMessageQueueThread, Task> action)
+        public static async Task Run(Func<ChakraJavaScriptExecutor, IActionQueue, Task> action)
         {
-            using (var jsQueueThread = CreateJavaScriptThread())
+            using (var jsQueueThread = CreateJavaScriptQueue())
             {
-                var executor = await jsQueueThread.CallOnQueue(() => new ChakraJavaScriptExecutor());
+                var executor = await jsQueueThread.RunAsync(() => new ChakraJavaScriptExecutor());
                 try
                 {
                     await Initialize(executor, jsQueueThread);
@@ -36,7 +37,7 @@ namespace ReactNative.Tests
                 }
                 finally
                 {
-                    await jsQueueThread.CallOnQueue(() =>
+                    await jsQueueThread.RunAsync(() =>
                     {
                         executor.Dispose();
                         return true;
@@ -45,7 +46,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public static async Task Initialize(ChakraJavaScriptExecutor executor, IMessageQueueThread jsQueueThread)
+        public static async Task Initialize(ChakraJavaScriptExecutor executor, IActionQueue jsQueueThread)
         {
             var scriptUris = new[]
             {
@@ -73,7 +74,7 @@ namespace ReactNative.Tests
                 scripts[i] = new KeyValuePair<string, string>(uri, filePath);
             }
 
-            await jsQueueThread.CallOnQueue(() =>
+            await jsQueueThread.RunAsync(() =>
             {
                 foreach (var script in scripts)
                 {
@@ -84,9 +85,9 @@ namespace ReactNative.Tests
             });
         }
 
-        private static MessageQueueThread CreateJavaScriptThread()
+        private static IActionQueue CreateJavaScriptQueue()
         {
-            return MessageQueueThread.Create(MessageQueueThreadSpec.Create("js", MessageQueueThreadKind.BackgroundSingleThread), ex => { Assert.Fail(); });
+            return new ActionQueue(ex => { Assert.Fail(); }, NewThreadScheduler.Default);
         }
     }
 }

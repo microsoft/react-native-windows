@@ -128,6 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
+    <Compile Include="Bridge\Queue\DispatcherActionQueue.cs" />
+    <Compile Include="Bridge\Queue\LayoutActionQueue.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
@@ -153,9 +155,9 @@
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactPage.cs" />
+    <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
-    <Compile Include="Touch\JavaScriptResponderHandler.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\NullLoggingActivityBuilderExtensions.generated.cs">
       <DependentUpon>NullLoggingActivityBuilderExtensions.tt</DependentUpon>
@@ -165,6 +167,7 @@
     <Compile Include="Tracing\NullLoggingActivityBuilder.cs" />
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
+    <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Picker\ReactPickerManager.cs" />
     <Compile Include="Views\Picker\ReactPickerShadowNode.cs" />
@@ -224,6 +227,7 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

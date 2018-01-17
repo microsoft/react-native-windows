@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Modules.Image;
 using System.Threading;
 
@@ -21,7 +21,7 @@ namespace ReactNative.Tests.Modules.Image
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
-                                          (code, message, e) => { result = message; waitHandle.Set(); });
+                                          (code, message, stack, userInfo) => { result = message; waitHandle.Set(); });
 
             module.getSize(Base64Uri, promise);
 
@@ -39,7 +39,7 @@ namespace ReactNative.Tests.Modules.Image
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
-                                          (code, message, e) => { result = message; waitHandle.Set(); });
+                                          (code, message, stack, userInfo) => { result = message; waitHandle.Set(); });
 
             module.getSize(LocalUri, promise);
 
@@ -57,7 +57,7 @@ namespace ReactNative.Tests.Modules.Image
             var waitHandle = new AutoResetEvent(false);
 
             var promise = new MockPromise(resolve => { result = resolve.ToString(); waitHandle.Set(); },
-                                          (code, message, e) => { result = message; waitHandle.Set(); });
+                                          (code, message, stack, userInfo) => Assert.Inconclusive("Network request failed."));
 
             module.getSize(NetworkUri, promise);
 

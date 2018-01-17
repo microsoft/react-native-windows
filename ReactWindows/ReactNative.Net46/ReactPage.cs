@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,8 +27,6 @@ namespace ReactNative
         {
             _reactInstanceManager = new Lazy<ReactInstanceManager>(() =>
             {
-                DispatcherHelpers.CurrentDispatcher = base.Dispatcher;
-
                 var reactInstanceManager = CreateReactInstanceManager();
 
                 return reactInstanceManager;
@@ -183,7 +182,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
+        private async void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
         {
             if (ReactInstanceManager.DevSupportManager.IsEnabled)
             {
@@ -198,7 +197,7 @@ namespace ReactNative
                 // Ctrl+R
                 if (isCtrlKeyDown && e.Key == Key.R)
                 {
-                    ReactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                    await ReactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None);
                 }
             }
 

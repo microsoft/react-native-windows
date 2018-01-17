@@ -1,16 +1,15 @@
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
-using ReactNative.Chakra.Executor;
 using ReactNative.Common;
 using ReactNative.DevSupport;
 using ReactNative.Modules.Core;
-using ReactNative.Touch;
 using ReactNative.Tracing;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Disposables;
+using System.Threading;
 using System.Threading.Tasks;
-using static System.FormattableString;
 
 namespace ReactNative
 {
@@ -37,6 +36,7 @@ namespace ReactNative
         private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
 
         private readonly object _lifecycleStateLock = new object();
+        private readonly SerialDisposable _currentInitializationToken = new SerialDisposable();
 
         private readonly string _jsBundleFile;
         private readonly string _jsMainModuleName;
@@ -48,18 +48,13 @@ namespace ReactNative
         private readonly Action<Exception> _nativeModuleCallExceptionHandler;
 
         private LifecycleState _lifecycleState;
+        private CancellationDisposable _suspendCancellation;
         private bool _hasStartedCreatingInitialContext;
-        private Task _contextInitializationTask;
-        private Func<IJavaScriptExecutor> _pendingJsExecutorFactory;
-        private JavaScriptBundleLoader _pendingJsBundleLoader;
+        private Task<ReactContext> _contextInitializationTask;
+        private int _pendingInitializationTasks;
         private string _sourceUrl;
         private ReactContext _currentReactContext;
         private Action _defaultBackButtonHandler;
-
-        /// <summary>
-        /// Event triggered when a React context has been initialized.
-        /// </summary>
-        public event EventHandler<ReactContextInitializedEventArgs> ReactContextInitialized;
 
         internal ReactInstanceManager(
             string jsBundleFile,
@@ -108,7 +103,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Signals whether <see cref="CreateReactContextInBackground"/> has
+        /// Signals whether <see cref="CreateReactContextAsync(CancellationToken)"/> has
         /// been called. Will return <code>false</code> after 
         /// <see cref="IAsyncDisposable.DisposeAsync"/>  until a new initial
         /// context has been created.
@@ -152,22 +147,9 @@ namespace ReactNative
         /// enforced to keep developers from accidentally creating their
         /// applications multiple times.
         /// </summary>
-        public async void CreateReactContextInBackground()
-        {
-            await CreateReactContextInBackgroundAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Trigger the React context initialization asynchronously in a
-        /// background task. This enables applications to pre-load the
-        /// application JavaScript, and execute global core code before the
-        /// <see cref="ReactRootView"/> is available and measure. This should
-        /// only be called the first time the application is set up, which is
-        /// enforced to keep developers from accidentally creating their
-        /// applications multiple times.
-        /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the result.</returns>
-        internal async Task CreateReactContextInBackgroundAsync()
+        public Task<ReactContext> CreateReactContextAsync(CancellationToken token)
         {
             if (_hasStartedCreatingInitialContext)
             {
@@ -179,17 +161,33 @@ namespace ReactNative
 
             ReactChoreographer.Initialize();
             _hasStartedCreatingInitialContext = true;
-            await RecreateReactContextInBackgroundInnerAsync().ConfigureAwait(false);
+            return CreateReactContextCoreAsync(token);
         }
 
         /// <summary>
-        /// Recreate the React application and context. This should be called
-        /// if configuration has changed or the developer has requested the
-        /// application to be reloaded.
+        /// Awaits the currently initializing React context.
         /// </summary>
-        public async void RecreateReactContextInBackground()
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>
+        /// A task to await the React context.
+        /// </returns>
+        public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
         {
-            await RecreateReactContextInBackgroundAsync().ConfigureAwait(false);
+            if (!_hasStartedCreatingInitialContext)
+            {
+                throw new InvalidOperationException(
+                    "Use the create method to start initializing the React context.");
+            }
+
+            var contextInitializationTask = _contextInitializationTask;
+            if (contextInitializationTask != null)
+            {
+                return await contextInitializationTask;
+            }
+            else
+            {
+                return _currentReactContext;
+            }
         }
 
         /// <summary>
@@ -197,8 +195,9 @@ namespace ReactNative
         /// if configuration has changed or the developer has requested the
         /// application to be reloaded.
         /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the result.</returns>
-        internal async Task RecreateReactContextInBackgroundAsync()
+        public Task<ReactContext> RecreateReactContextAsync(CancellationToken token)
         {
             if (!_hasStartedCreatingInitialContext)
             {
@@ -207,7 +206,7 @@ namespace ReactNative
                     "create context background call.");
             }
 
-            await RecreateReactContextInBackgroundInnerAsync().ConfigureAwait(false);
+            return CreateReactContextCoreAsync(token);
         }
 
         /// <summary>
@@ -239,6 +238,7 @@ namespace ReactNative
             DispatcherHelpers.AssertOnDispatcher();
 
             _defaultBackButtonHandler = null;
+            _suspendCancellation?.Dispose();
 
             if (_useDeveloperSupport)
             {
@@ -247,7 +247,26 @@ namespace ReactNative
 
             MoveToBeforeResumeLifecycleState();
 
+            ReactChoreographer.Dispose();
             DispatcherHelpers.Reset();
+        }
+
+        /// <summary>
+        /// Called when the host entered background mode.
+        /// </summary>
+        public void OnEnteredBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            MoveToBackgroundLifecycleState();
+        }
+
+        /// <summary>
+        /// Called when the host is leaving background mode.
+        /// </summary>
+        public void OnLeavingBackground()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            MoveToResumedLifecycleState(false);
         }
 
         /// <summary>
@@ -259,9 +278,12 @@ namespace ReactNative
         /// </param>
         public void OnResume(Action onBackPressed)
         {
+            DispatcherHelpers.Initialize();
             DispatcherHelpers.AssertOnDispatcher();
+            ReactChoreographer.Initialize();
 
             _defaultBackButtonHandler = onBackPressed;
+            _suspendCancellation = new CancellationDisposable();
 
             if (_useDeveloperSupport)
             {
@@ -314,7 +336,8 @@ namespace ReactNative
                 throw new ArgumentNullException(nameof(rootView));
 
             DispatcherHelpers.AssertOnDispatcher();
-
+            rootView.Children.Clear();
+            rootView.ClearData();
             _attachedRootViews.Add(rootView);
 
             // If the React context is being created in the background, the
@@ -377,88 +400,114 @@ namespace ReactNative
             }
         }
 
-        private async Task RecreateReactContextInBackgroundInnerAsync()
+        private Task<ReactContext> CreateReactContextCoreAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            if (_useDeveloperSupport && _jsBundleFile == null && _jsMainModuleName != null)
+            if (_useDeveloperSupport && _jsBundleFile == null)
             {
-                if (await _devSupportManager.HasUpToDateBundleInCacheAsync())
-                {
-                    OnJavaScriptBundleLoadedFromServer();
-                }
-                else
-                {
-                    _devSupportManager.HandleReloadJavaScript();
-                }
+                return CreateReactContextFromDevManagerAsync(token);
             }
             else
             {
-                RecreateReactContextInBackgroundFromBundleLoader();
+                return CreateReactContextFromBundleAsync(token);
             }
         }
 
-        private void RecreateReactContextInBackgroundFromBundleLoader()
+        private async Task<ReactContext> CreateReactContextFromDevManagerAsync(CancellationToken token)
         {
-            RecreateReactContextInBackground(
-                _javaScriptExecutorFactory,
-                JavaScriptBundleLoader.CreateFileLoader(_jsBundleFile));
-        }
-
-        private void InvokeDefaultOnBackPressed()
-        {
-            DispatcherHelpers.AssertOnDispatcher();
-            _defaultBackButtonHandler?.Invoke();
-        }
-
-        private void OnReloadWithJavaScriptDebugger(Func<IJavaScriptExecutor> javaScriptExecutorFactory)
-        {
-            RecreateReactContextInBackground(
-                javaScriptExecutorFactory,
-                JavaScriptBundleLoader.CreateRemoteDebuggerLoader(
-                    _devSupportManager.JavaScriptBundleUrlForRemoteDebugging,
-                    _devSupportManager.SourceUrl));
-        }
-
-        private void OnJavaScriptBundleLoadedFromServer()
-        {
-            RecreateReactContextInBackground(
-                _javaScriptExecutorFactory,
-                JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
-                    _devSupportManager.SourceUrl,
-                    _devSupportManager.DownloadedJavaScriptBundleFile));
-        }
-
-        private void RecreateReactContextInBackground(
-            Func<IJavaScriptExecutor> jsExecutorFactory,
-            JavaScriptBundleLoader jsBundleLoader)
-        {
-            if (_contextInitializationTask == null)
+            if (_devSupportManager.HasUpToDateBundleInCache())
             {
-                _contextInitializationTask = InitializeReactContextAsync(jsExecutorFactory, jsBundleLoader);
+                return await CreateReactContextFromCachedPackagerBundleAsync(token);
             }
             else
             {
-                _pendingJsExecutorFactory = jsExecutorFactory;
-                _pendingJsBundleLoader = jsBundleLoader;
+                return await _devSupportManager.CreateReactContextFromPackagerAsync(token);
             }
         }
 
-        private async Task InitializeReactContextAsync(
+        private Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
+        {
+            return CreateReactContextAsync(
+                _javaScriptExecutorFactory,
+                JavaScriptBundleLoader.CreateFileLoader(_jsBundleFile),
+                token);
+        }
+
+        private Task<ReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token)
+        {
+            var bundleLoader = JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
+                _devSupportManager.SourceUrl,
+                _devSupportManager.DownloadedJavaScriptBundleFile);
+            return CreateReactContextAsync(_javaScriptExecutorFactory, bundleLoader, token);
+        }
+
+        private Task<ReactContext> CreateReactContextWithRemoteDebuggerAsync(
+            Func<IJavaScriptExecutor> javaScriptExecutorFactory,
+            CancellationToken token)
+        {
+            var bundleLoader = JavaScriptBundleLoader.CreateRemoteDebuggerLoader(
+                _devSupportManager.JavaScriptBundleUrlForRemoteDebugging,
+                _devSupportManager.SourceUrl);
+            return CreateReactContextAsync(javaScriptExecutorFactory, bundleLoader, token);
+        }
+
+        private async Task<ReactContext> CreateReactContextAsync(
             Func<IJavaScriptExecutor> jsExecutorFactory,
-            JavaScriptBundleLoader jsBundleLoader)
+            JavaScriptBundleLoader jsBundleLoader,
+            CancellationToken token)
+        {
+            var cancellationDisposable = new CancellationDisposable();
+            _currentInitializationToken.Disposable = cancellationDisposable;
+            using (token.Register(cancellationDisposable.Dispose))
+            using (_suspendCancellation?.Token.Register(cancellationDisposable.Dispose))
+            {
+                _pendingInitializationTasks++;
+                var contextInitializationTask = _contextInitializationTask ?? Task.CompletedTask;
+                _contextInitializationTask = contextInitializationTask.ContinueWith(async task =>
+                {
+                    try
+                    {
+                        cancellationDisposable.Token.ThrowIfCancellationRequested();
+                        return await InitializeReactContextAsync(
+                            jsExecutorFactory,
+                            jsBundleLoader,
+                            cancellationDisposable.Token);
+                    }
+                    catch (OperationCanceledException)
+                    when (cancellationDisposable.Token.IsCancellationRequested)
+                    {
+                        token.ThrowIfCancellationRequested();
+                        return null;
+                    }
+                },
+                TaskContinuationOptions.ExecuteSynchronously).Unwrap();
+                return await _contextInitializationTask;
+            }
+        }
+
+        private async Task<ReactContext> InitializeReactContextAsync(
+            Func<IJavaScriptExecutor> jsExecutorFactory,
+            JavaScriptBundleLoader jsBundleLoader,
+            CancellationToken token)
         {
             var currentReactContext = _currentReactContext;
             if (currentReactContext != null)
             {
-                await TearDownReactContextAsync(currentReactContext);
+                await TearDownReactContextAsync(currentReactContext, token);
                 _currentReactContext = null;
             }
 
             try
             {
-                var reactContext = await CreateReactContextAsync(jsExecutorFactory, jsBundleLoader);
+                var reactContext = await CreateReactContextCoreAsync(jsExecutorFactory, jsBundleLoader, token);
                 SetupReactContext(reactContext);
+                return reactContext;
+            }
+            catch (OperationCanceledException)
+            when (token.IsCancellationRequested)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -466,21 +515,13 @@ namespace ReactNative
             }
             finally
             {
-                _contextInitializationTask = null;
+                if (--_pendingInitializationTasks == 0)
+                {
+                    _contextInitializationTask = null;
+                }
             }
 
-            if (_pendingJsExecutorFactory != null)
-            {
-                var pendingJsExecutorFactory = _pendingJsExecutorFactory;
-                var pendingJsBundleLoader = _pendingJsBundleLoader;
-
-                _pendingJsExecutorFactory = null;
-                _pendingJsBundleLoader = null;
-
-                RecreateReactContextInBackground(
-                    pendingJsExecutorFactory,
-                    pendingJsBundleLoader);
-            }
+            return null;
         }
 
         private void SetupReactContext(ReactContext reactContext)
@@ -502,8 +543,12 @@ namespace ReactNative
             {
                 AttachMeasuredRootViewToInstance(rootView, reactInstance);
             }
+        }
 
-            OnReactContextInitialized(reactContext);
+        private void InvokeDefaultOnBackPressed()
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            _defaultBackButtonHandler?.Invoke();
         }
 
         private void AttachMeasuredRootViewToInstance(
@@ -512,15 +557,8 @@ namespace ReactNative
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            // Reset view content as it's going to be populated by the
-            // application content from JavaScript
-            rootView.TouchHandler?.Dispose();
-            rootView.Children.Clear();
-            rootView.Tag = null;
-
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
-            rootView.TouchHandler = new TouchHandler(rootView);
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>
@@ -538,8 +576,10 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
         }
 
-        private async Task TearDownReactContextAsync(ReactContext reactContext)
+        private async Task TearDownReactContextAsync(ReactContext reactContext, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
+
             DispatcherHelpers.AssertOnDispatcher();
 
             if (_lifecycleState == LifecycleState.Resumed)
@@ -549,7 +589,8 @@ namespace ReactNative
 
             foreach (var rootView in _attachedRootViews)
             {
-                DetachViewFromInstance(rootView, reactContext.ReactInstance);
+                rootView.Children.Clear();
+                rootView.ClearData();
             }
 
             await reactContext.DisposeAsync();
@@ -557,26 +598,29 @@ namespace ReactNative
             // TODO: add memory pressure hooks
         }
 
-        private async Task<ReactContext> CreateReactContextAsync(
+        private async Task<ReactContext> CreateReactContextCoreAsync(
             Func<IJavaScriptExecutor> jsExecutorFactory,
-            JavaScriptBundleLoader jsBundleLoader)
+            JavaScriptBundleLoader jsBundleLoader,
+            CancellationToken token)
         {
             Tracer.Write(ReactConstants.Tag, "Creating React context.");
 
             _sourceUrl = jsBundleLoader.SourceUrl;
 
-            var nativeRegistryBuilder = new NativeModuleRegistry.Builder();
-
             var reactContext = new ReactContext();
             if (_useDeveloperSupport)
             {
-                reactContext.NativeModuleCallExceptionHandler = _devSupportManager.HandleException;
+                reactContext.NativeModuleCallExceptionHandler =
+                    _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
             }
 
+            var nativeRegistryBuilder = new NativeModuleRegistry.Builder(reactContext);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
             {
-                var coreModulesPackage =
-                    new CoreModulesPackage(this, InvokeDefaultOnBackPressed, _uiImplementationProvider);
+                var coreModulesPackage = new CoreModulesPackage(
+                    this,
+                    InvokeDefaultOnBackPressed,
+                    _uiImplementationProvider);
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }
@@ -595,14 +639,13 @@ namespace ReactNative
                 nativeModuleRegistry = nativeRegistryBuilder.Build();
             }
 
-            var exceptionHandler = _nativeModuleCallExceptionHandler ?? _devSupportManager.HandleException;
+            var queueConfiguration = ReactQueueConfigurationFactory.Default.Create(reactContext.HandleException);
             var reactInstanceBuilder = new ReactInstance.Builder
             {
-                QueueConfigurationSpec = ReactQueueConfigurationSpec.Default,
+                QueueConfiguration = queueConfiguration,
                 JavaScriptExecutorFactory = jsExecutorFactory,
                 Registry = nativeModuleRegistry,
                 BundleLoader = jsBundleLoader,
-                NativeModuleCallExceptionHandler = exceptionHandler,
             };
 
             var reactInstance = default(ReactInstance);
@@ -619,7 +662,7 @@ namespace ReactNative
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "RunJavaScriptBundle").Start())
             {
-                await reactInstance.InitializeBridgeAsync().ConfigureAwait(false);
+                await reactInstance.InitializeBridgeAsync(token).ConfigureAwait(false);
             }
 
             return reactContext;
@@ -678,6 +721,10 @@ namespace ReactNative
                     {
                         _currentReactContext.OnResume();
                     }
+                    else if (_lifecycleState == LifecycleState.Background)
+                    {
+                        _currentReactContext.OnLeavingBackground();
+                    }
                 }
 
                 _lifecycleState = LifecycleState.Resumed;
@@ -703,17 +750,19 @@ namespace ReactNative
             }
         }
 
-        private void OnReactContextInitialized(ReactContext reactContext)
+        private void MoveToBackgroundLifecycleState()
         {
-            ReactContextInitialized?
-                .Invoke(this, new ReactContextInitializedEventArgs(reactContext));
-        }
-
-        private void ToggleElementInspector()
-        {
-            _currentReactContext?
-                .GetJavaScriptModule<RCTDeviceEventEmitter>()
-                .emit("toggleElementInspector", null);
+            lock (_lifecycleStateLock)
+            {
+                if (_currentReactContext != null)
+                {
+                    if (_lifecycleState == LifecycleState.Resumed)
+                    {
+                        _currentReactContext.OnEnteredBackground();
+                        _lifecycleState = LifecycleState.Background;
+                    }
+                }
+            }
         }
 
         class ReactInstanceDevCommandsHandler : IReactInstanceDevCommandsHandler
@@ -725,24 +774,19 @@ namespace ReactNative
                 _parent = parent;
             }
 
-            public void OnBundleFileReloadRequest()
+            public Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
             {
-                _parent.RecreateReactContextInBackground();
+                return _parent.CreateReactContextFromBundleAsync(token);
             }
 
-            public void OnJavaScriptBundleLoadedFromServer()
+            public Task<ReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token)
             {
-                _parent.OnJavaScriptBundleLoadedFromServer();
+                return _parent.CreateReactContextFromCachedPackagerBundleAsync(token);
             }
 
-            public void OnReloadWithJavaScriptDebugger(Func<IJavaScriptExecutor> javaScriptExecutorFactory)
+            public Task<ReactContext> CreateReactContextWithRemoteDebuggerAsync(Func<IJavaScriptExecutor> javaScriptExecutorFactory, CancellationToken token)
             {
-                _parent.OnReloadWithJavaScriptDebugger(javaScriptExecutorFactory);
-            }
-
-            public void ToggleElementInspector()
-            {
-                _parent.ToggleElementInspector();
+                return _parent.CreateReactContextWithRemoteDebuggerAsync(javaScriptExecutorFactory, token);
             }
         }
     }
