@@ -159,6 +159,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\BlurEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\FocusEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\KeyEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
@@ -217,6 +220,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewParentManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewProps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\YogaNodePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\KeyHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Control\ReactControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Control\ReactControlManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Control\ReactControlShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Image\ReactImageLoadEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scroll\ScrollEventTypeExtensions.cs" />
@@ -236,9 +243,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactPasswordBoxShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextChangedEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputBlurEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputEndEditingEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputFocusEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSelectionEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
