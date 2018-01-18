@@ -89,10 +89,9 @@
     <ErrorReport>prompt</ErrorReport>
     <DocumentationFile>bin\x64\Release\ReactNative.XML</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\Queue\DispatcherActionQueue.cs" />
@@ -211,6 +210,23 @@
     </SDKReference>
   </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <PackageReference Include="Facebook.Yoga">
+      <Version>1.5.0-pre1</Version>
+    </PackageReference>
+    <PackageReference Include="fresco.imagepipeline">
+      <Version>0.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>9.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reactive">
+      <Version>3.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
