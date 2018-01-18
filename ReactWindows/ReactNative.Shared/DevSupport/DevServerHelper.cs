@@ -19,7 +19,7 @@ namespace ReactNative.DevSupport
     /// </summary> 
     sealed class DevServerHelper : IDisposable
     {
-        private const string DeviceLocalhost = "localhost:8081";
+        private const string DeviceLocalhost = "43.138.12.184:8081";
         private const string BundleUrlFormat = "http://{0}/{1}.bundle?platform=windows&dev={2}&hot={3}";
         private const string SourceMapUrlFormat = "http://{0}/{1}.map?platform=windows&dev={2}&hot={3}";
         private const string LaunchDevToolsCommandUrlFormat = "http://{0}/launch-js-devtools";

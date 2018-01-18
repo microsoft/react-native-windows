@@ -157,7 +157,7 @@
   <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.4</Version>
+      <Version>6.0.6</Version>
     </PackageReference>
     <PackageReference Include="NUnit">
       <Version>3.9.0</Version>
