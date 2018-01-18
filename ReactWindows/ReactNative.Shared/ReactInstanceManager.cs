@@ -501,7 +501,7 @@ namespace ReactNative
             try
             {
                 var reactContext = await CreateReactContextCoreAsync(jsExecutorFactory, jsBundleLoader, token);
-                SetupReactContext(reactContext);
+                RunOrInlineOnDispatcher(() => SetupReactContext(reactContext));
                 return reactContext;
             }
             catch (OperationCanceledException)
@@ -762,6 +762,18 @@ namespace ReactNative
                         _lifecycleState = LifecycleState.Background;
                     }
                 }
+            }
+        }
+
+        private static void RunOrInlineOnDispatcher(Action action)
+        {
+            if (DispatcherHelpers.IsOnDispatcher())
+            {
+                action();
+            }
+            else
+            {
+                DispatcherHelpers.RunOnDispatcher(() => action());
             }
         }
 
