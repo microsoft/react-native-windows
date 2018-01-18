@@ -6,24 +6,36 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Button,
+  NativeModules,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
+let _ = require('AppBackgroundModule');
+
 class Playground extends Component {
+  state = {
+    registrationKey: false,
+  }
+
+  onPress() {
+    if (this.state.registrationKey) {
+      NativeModules.Background.unregister(this.state.registrationKey);
+      this.setState({registrationKey: null});   
+    } else {
+      NativeModules.Background.registerSystemTrigger("test").then(key => {
+        this.setState({registrationKey: key});
+      });      
+    }
+  }
+
   render() {
+    let buttonTitle = this.state.registrationKey ? "Unregister" : "Register";
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.windows.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press Shift+F10 for dev menu
-        </Text>
+        <Button title={buttonTitle} onPress={this.onPress.bind(this)} />
       </View>
     );
   }
@@ -35,16 +47,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
 

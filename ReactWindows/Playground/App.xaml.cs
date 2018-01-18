@@ -1,8 +1,16 @@
+using Playground.Modules;
 using ReactNative;
+using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Modules.Launch;
+using ReactNative.UIManager;
 using System;
+using System.Diagnostics;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -117,6 +125,25 @@ namespace Playground
             Window.Current.Activate();
         }
 
+        protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+            UnhandledException += App_UnhandledException;
+            var deferral = args.TaskInstance.GetDeferral();
+            var taskId = args.TaskInstance.Task.TaskId.ToString();
+            Debug.WriteLine($"[ReactNative] Background task {taskId} started.");
+            _host.ReactInstanceManager.OnResume(Exit);
+            var reactContext = await _host.ReactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None);
+            var backgroundModule = reactContext.GetNativeModule<BackgroundModule>();
+            var deferralId = Guid.NewGuid().ToString();
+            reactContext.RunOnNativeModulesQueueThread(() => backgroundModule.RegisterDeferral(deferralId, deferral));
+            reactContext.GetJavaScriptModule<AppBackgroundModule>().doWork(taskId, deferralId);
+        }
+
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            Debug.WriteLine($"[ReactNative] {e.Message} {e.Exception}");
+        }
+
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
@@ -136,6 +163,7 @@ namespace Playground
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            Debug.WriteLine($"[ReactNative] OnSuspend");
             _host.OnSuspend();
         }
 
