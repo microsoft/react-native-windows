@@ -97,7 +97,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\AccessibilityHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
