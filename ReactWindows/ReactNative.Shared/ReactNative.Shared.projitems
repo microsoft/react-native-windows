@@ -147,6 +147,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\ReactNativeVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactNativeAppHost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactNativeAppHostExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHostExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />

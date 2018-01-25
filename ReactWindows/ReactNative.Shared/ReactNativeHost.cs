@@ -8,94 +8,15 @@ using System.Threading.Tasks;
 namespace ReactNative
 {
     /// <summary>
-    /// Simple class that holds the <see cref="ReactInstanceManager"/>. 
+    /// Simple class that is responsible for the creation of one <see cref="ReactRootView"/>. 
     /// </summary>
-    public abstract class ReactNativeHost : IAsyncDisposable
+    public abstract class ReactNativeHost : ReactNativeAppHost
     {
-        private ReactInstanceManager _reactInstanceManager;
-
-        /// <summary>
-        /// Get the current <see cref="ReactInstanceManager"/> instance, or create one.
-        /// </summary>
-        public ReactInstanceManager ReactInstanceManager
-        {
-            get
-            {
-                if (_reactInstanceManager == null)
-                {
-                    _reactInstanceManager = CreateReactInstanceManager();
-                }
-
-                return _reactInstanceManager;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether this host contains a Re
-        /// </summary>
-        public bool HasInstance
-        {
-            get
-            {
-                return _reactInstanceManager != null;
-            }
-        }
-
         /// <summary>
         /// The main component name.
         /// </summary>
         public abstract string MainComponentName { get; }
 
-        /// <summary>
-        /// Signals whether developer mode should be enabled.
-        /// </summary>
-        public abstract bool UseDeveloperSupport { get; }
-
-        /// <summary>
-        /// Instantiates the JavaScript executor.
-        /// </summary>
-        protected virtual Func<IJavaScriptExecutor> JavaScriptExecutorFactory
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// The name of the main module.
-        /// </summary>
-        /// <remarks>
-        /// Determines the URL to fetch the JavaScript bundle from the packager
-        /// server. It is only used when dev support is enabled.
-        /// </remarks>
-        protected virtual string JavaScriptMainModuleName
-        {
-            get
-            {
-                return "index.windows";
-            }
-        }
-
-        /// <summary>
-        /// The custom path of the bundle file.
-        /// </summary>
-        /// <remarks>
-        /// This is used in cases where the bundle should be loaded from a
-        /// custom path.
-        /// </remarks>
-        protected virtual string JavaScriptBundleFile
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// The list of <see cref="IReactPackage"/>s used by the application.
-        /// </summary>
-        protected abstract List<IReactPackage> Packages { get; }
 
         /// <summary>
         /// Creates a new root view.
@@ -104,36 +25,6 @@ namespace ReactNative
         public virtual ReactRootView CreateRootView()
         {
             return new ReactRootView();
-        }
-
-        /// <summary>
-        /// Dispose the current instance and release the reference to it.
-        /// </summary>
-        /// <returns>
-        /// A task to await the dispose operation.
-        /// </returns>
-        public async Task DisposeAsync()
-        {
-            if (_reactInstanceManager != null)
-            {
-                await _reactInstanceManager.DisposeAsync();
-                _reactInstanceManager = null;
-            }
-        }
-
-        private ReactInstanceManager CreateReactInstanceManager()
-        {
-            var builder = new ReactInstanceManagerBuilder
-            {
-                UseDeveloperSupport = UseDeveloperSupport,
-                InitialLifecycleState = LifecycleState.BeforeCreate,
-                JavaScriptBundleFile = JavaScriptBundleFile,
-                JavaScriptMainModuleName = JavaScriptMainModuleName,
-                JavaScriptExecutorFactory = JavaScriptExecutorFactory,
-            };
-
-            builder.Packages.AddRange(Packages);
-            return builder.Build();
         }
     }
 }
