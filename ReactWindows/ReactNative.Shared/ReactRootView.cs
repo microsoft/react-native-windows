@@ -117,7 +117,7 @@ namespace ReactNative
             // will enable deferred attachment of the root node.
             if (_wasMeasured)
             {
-                _reactInstanceManager.AttachMeasuredRootView(this);
+                await _reactInstanceManager.AttachMeasuredRootViewAsync(this);
             }
             else
             {
@@ -148,10 +148,26 @@ namespace ReactNative
             if (_attachScheduled && reactInstanceManager != null)
             {
                 _attachScheduled = false;
-                reactInstanceManager.AttachMeasuredRootView(this);
+
+                // MeasureOverride is not async, so we have to wait here.
+                reactInstanceManager.AttachMeasuredRootViewAsync(this).Wait();
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Frees resources assocxiated with this root view.
+        /// </summary>
+        public async Task StopReactApplication()
+        {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
+            var reactInstanceManager = _reactInstanceManager;
+            if (!_attachScheduled && reactInstanceManager != null)
+            {
+                await reactInstanceManager.DetachRootViewAsync(this);
+            }
         }
     }
 }

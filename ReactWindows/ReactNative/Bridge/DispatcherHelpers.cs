@@ -155,6 +155,25 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
+        /// Invokes a function on the dispatcher and asynchronously returns the
+        /// result. Tries to inline the call if thread has dispatcher access.
+        /// </summary>
+        /// <typeparam name="T">Function return type.</typeparam>
+        /// <param name="func">The function to invoke.</param>
+        /// <returns>A task to await the result.</returns>
+        public static Task<T> CallOnDispatcherOptimized<T>(Func<T> func)
+        {
+            if (MainDispatcher.HasThreadAccess)
+            {
+                return Task.FromResult(func());
+            }
+            else
+            {
+                return CallOnDispatcher(func);
+            }
+        }
+
+        /// <summary>
         /// Cleans up the dispatcher helpers.
         /// </summary>
         public static void Reset()

@@ -351,9 +351,10 @@ namespace ReactNative
         /// associated with the provided root view will be started
         /// asynchronously. This view will then be tracked by this manager and
         /// in case of React instance restart, it will be re-attached.
+        /// WARNING! Has to be called by the thread assocviated with the view.
         /// </summary>
         /// <param name="rootView">The root view.</param>
-        public void AttachMeasuredRootView(ReactRootView rootView)
+        public async Task AttachMeasuredRootViewAsync(ReactRootView rootView)
         {
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
@@ -361,40 +362,52 @@ namespace ReactNative
             DispatcherHelpers.AssertOnDispatcher(rootView);
             rootView.Children.Clear();
             rootView.ClearData();
-            _attachedRootViews.Add(rootView);
 
-            // If the React context is being created in the background, the
-            // JavaScript application will be started automatically when
-            // creation completes, as root view is part of the attached root
-            // view list.
-            var currentReactContext = _currentReactContext;
-            if (currentReactContext != null)
+            await DispatcherHelpers.CallOnDispatcherOptimized(() =>
             {
-                AttachMeasuredRootViewToInstance(rootView, currentReactContext.ReactInstance);
-            }
+                _attachedRootViews.Add(rootView);
+
+                // If the React context is being created in the background, the
+                // JavaScript application will be started automatically when
+                // creation completes, as root view is part of the attached root
+                // view list.
+                var currentReactContext = _currentReactContext;
+                if (currentReactContext != null)
+                {
+                    AttachMeasuredRootViewToInstance(rootView, currentReactContext.ReactInstance);
+                }
+
+                return true;
+           });
         }
 
         /// <summary>
         /// Detach given <paramref name="rootView"/> from the current react
         /// instance. This method is idempotent and can be called multiple
         /// times on the same <see cref="ReactRootView"/> instance.
+        /// WARNING! Has to be called by the thread assocviated with the view.
         /// </summary>
         /// <param name="rootView">The root view.</param>
-        public void DetachRootView(ReactRootView rootView)
+        public async Task DetachRootViewAsync(ReactRootView rootView)
         {
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
 
-            if (_attachedRootViews.Remove(rootView))
+            await DispatcherHelpers.CallOnDispatcherOptimized(() =>
             {
-                var currentReactContext = _currentReactContext;
-                if (currentReactContext != null && currentReactContext.HasActiveReactInstance)
+                if (_attachedRootViews.Remove(rootView))
                 {
-                    DetachViewFromInstance(rootView, currentReactContext.ReactInstance);
+                    var currentReactContext = _currentReactContext;
+                    if (currentReactContext != null && currentReactContext.HasActiveReactInstance)
+                    {
+                        DetachViewFromInstance(rootView, currentReactContext.ReactInstance);
+                    }
                 }
-            }
+
+                return true;
+            });
         }
 
         /// <summary>
@@ -564,7 +577,7 @@ namespace ReactNative
             ReactRootView rootView,
             IReactInstance reactInstance)
         {
-            DispatcherHelpers.AssertOnDispatcher(rootView);
+            DispatcherHelpers.AssertOnDispatcher();
 
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             var rootTag = uiManagerModule.AddMeasuredRootView(rootView);

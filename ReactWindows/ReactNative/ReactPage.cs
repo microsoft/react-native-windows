@@ -149,11 +149,13 @@ namespace ReactNative
         /// <summary>
         /// Called before the application shuts down.
         /// </summary>
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
 
-            return _reactInstanceManager.DisposeAsync();            
+            await RootView.StopReactApplication();
+
+            await _reactInstanceManager.DisposeAsync();            
         }
 
         /// <summary>

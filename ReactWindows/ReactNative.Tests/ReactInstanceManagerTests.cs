@@ -99,16 +99,18 @@ namespace ReactNative.Tests
         {
             var manager = CreateReactInstanceManager();
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.AttachMeasuredRootView(null),
+            await AssertEx.ThrowsAsync<ArgumentNullException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.AttachMeasuredRootViewAsync(null)),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
                 () => manager.CreateAllViewManagers(null),
                 ex => Assert.AreEqual("reactContext", ex.ParamName));
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.DetachRootView(null),
+            await AssertEx.ThrowsAsync<ArgumentNullException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.DetachRootViewAsync(null)),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
