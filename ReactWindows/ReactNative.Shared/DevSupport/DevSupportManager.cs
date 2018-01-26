@@ -409,9 +409,12 @@ namespace ReactNative.DevSupport
             _devServerHelper.Dispose();
         }
 
-        private async void HandleReloadJavaScript()
+        public async void HandleReloadJavaScript()
         {
-            await CreateReactContextFromPackagerAsync(CancellationToken.None);
+            using (await _reactInstanceCommandsHandler.LockAsync())
+            {
+                await CreateReactContextFromPackagerAsync(CancellationToken.None);
+            }
         }
 
         private ProgressDialog CreateProgressDialog(string message)

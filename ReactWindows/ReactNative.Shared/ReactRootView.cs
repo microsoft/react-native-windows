@@ -99,7 +99,7 @@ namespace ReactNative
         /// <param name="initialProps">The initialProps</param>
         public async void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             if (_reactInstanceManager != null)
             {
@@ -110,12 +110,8 @@ namespace ReactNative
             _jsModuleName = moduleName;
             _initialProps = initialProps;
 
-            var getReactContextTask = default(Task);
-            if (!_reactInstanceManager.HasStartedCreatingInitialContext)
-            {
-                getReactContextTask = _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None);
-            }
-
+            var getReactContextTask = _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None);
+ 
             // We need to wait for the initial `Measure` call, if this view has
             // not yet been measured, we set the `_attachScheduled` flag, which
             // will enable deferred attachment of the root node.
@@ -142,7 +138,7 @@ namespace ReactNative
         /// <returns>The desired size.</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             var result = base.MeasureOverride(availableSize);
 

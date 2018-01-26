@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace ReactNative.Bridge
@@ -47,15 +48,25 @@ namespace ReactNative.Bridge
             return s_mainDispatcher != null;
         }
 
-        public static void AssertOnDispatcher()
+        public static void AssertOnDispatcher(DependencyObject dependencyObject = null)
         {
-            if (!IsOnDispatcher())
+            if (dependencyObject != null)
+            {
+                AssertDispatcherSet();
+
+                if (dependencyObject.Dispatcher != s_mainDispatcher)
+                {
+                    throw new InvalidOperationException("Thread does not have dispatcher access (only main dispatcher is supported).");
+                }
+            }
+
+            if (!IsOnDispatcher(dependencyObject))
             {
                 throw new InvalidOperationException("Thread does not have dispatcher access.");
             }
         }
 
-        public static bool IsOnDispatcher()
+        public static bool IsOnDispatcher(DependencyObject dependencyObject = null)
         {
             AssertDispatcherSet();
 

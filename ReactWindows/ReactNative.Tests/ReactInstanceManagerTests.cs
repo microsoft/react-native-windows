@@ -135,7 +135,7 @@ namespace ReactNative.Tests
             var manager = CreateReactInstanceManager(jsBundleFile);
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 var task = manager.CreateReactContextAsync(CancellationToken.None);
 
@@ -182,7 +182,7 @@ namespace ReactNative.Tests
             var manager = CreateReactInstanceManager(jsBundleFile);
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 try
                 {

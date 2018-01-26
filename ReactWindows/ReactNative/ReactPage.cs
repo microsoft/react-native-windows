@@ -174,7 +174,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (_reactInstanceManager.DevSupportManager.IsEnabled)
             {
@@ -193,7 +193,7 @@ namespace ReactNative
                 }
                 else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && _isControlKeyDown && e.VirtualKey == VirtualKey.R)
                 {
-                    await _reactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None).ConfigureAwait(false);
+                   _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
             }
         }

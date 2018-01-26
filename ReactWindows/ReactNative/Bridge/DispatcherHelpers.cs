@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace ReactNative.Bridge
 {
@@ -55,7 +56,7 @@ namespace ReactNative.Bridge
 #if DEBUG
             if (!IsOnDispatcher())
             {
-                throw new InvalidOperationException("Thread does not have dispatcher access.");
+                throw new InvalidOperationException("Thread does not have main dispatcher access.");
             }
 #endif
         }
@@ -64,7 +65,7 @@ namespace ReactNative.Bridge
         /// Checks if the current thread has dispatcher access.
         /// </summary>
         /// <returns>
-        /// <code>true</code> if the current thread has dispatcher access,
+        /// <code>true</code> if the current thread has main dispatcher access,
         /// otherwise <code>false</code>.
         /// </returns>
         public static bool IsOnDispatcher()
@@ -84,6 +85,31 @@ namespace ReactNative.Bridge
             }
 
             return s_isOnDispatcherThread.Value;
+        }
+
+        /// <summary>
+        /// Asserts that the current thread has access to a DependencyObject.
+        /// </summary>
+        public static void AssertOnDispatcher(DependencyObject dependencyObject)
+        {
+#if DEBUG
+            if (!IsOnDispatcher(dependencyObject))
+            {
+                throw new InvalidOperationException("Thread does not have dispatcher access.");
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Checks if the current thread has access to a DependencyObject.
+        /// </summary>
+        /// <returns>
+        /// <code>true</code> if the current thread has dispatcher access,
+        /// otherwise <code>false</code>.
+        /// </returns>
+        public static bool IsOnDispatcher(DependencyObject dependencyObject)
+        {
+            return CoreApplication.GetCurrentView().Dispatcher == dependencyObject.Dispatcher;
         }
 
         /// <summary>

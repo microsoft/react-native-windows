@@ -33,9 +33,17 @@ namespace ReactNative
     /// </summary>
     public class ReactInstanceManager
     {
+        // Awaitable lock syncronizing the entire initialization of ReactContext
+        private readonly AsyncLock _lock = new AsyncLock();
+
+        // State:
+        // - _hasStartedCreatingInitialContext == false:                                    Not initialized
+        // - _hasStartedCreatingInitialContext == true && _currentReactContext == null:     Initializing (always by main dispatcher thread)
+        // - _hasStartedCreatingInitialContext == true && _currentReactContext != null:     Initialized (any dispatcher thread can use the context)
+        private bool _hasStartedCreatingInitialContext;
+        private ReactContext _currentReactContext;
         private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
 
-        private readonly object _lifecycleStateLock = new object();
         private readonly SerialDisposable _currentInitializationToken = new SerialDisposable();
 
         private readonly string _jsBundleFile;
@@ -49,11 +57,7 @@ namespace ReactNative
 
         private LifecycleStateMachine _lifecycleStateMachine;
         private CancellationDisposable _suspendCancellation;
-        private bool _hasStartedCreatingInitialContext;
-        private Task<ReactContext> _contextInitializationTask;
-        private int _pendingInitializationTasks;
         private string _sourceUrl;
-        private ReactContext _currentReactContext;
         private Action _defaultBackButtonHandler;
 
         internal ReactInstanceManager(
@@ -103,20 +107,6 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Signals whether <see cref="CreateReactContextAsync(CancellationToken)"/> has
-        /// been called. Will return <code>false</code> after 
-        /// <see cref="IAsyncDisposable.DisposeAsync"/>  until a new initial
-        /// context has been created.
-        /// </summary>
-        public bool HasStartedCreatingInitialContext
-        {
-            get
-            {
-                return _hasStartedCreatingInitialContext;
-            }
-        }
-
-        /// <summary>
         /// The URL where the last bundle was loaded from.
         /// </summary>
         public string SourceUrl
@@ -149,19 +139,22 @@ namespace ReactNative
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the result.</returns>
-        public Task<ReactContext> CreateReactContextAsync(CancellationToken token)
+        public async Task<ReactContext> CreateReactContextAsync(CancellationToken token)
         {
-            if (_hasStartedCreatingInitialContext)
+            using (await _lock.LockAsync())
             {
-                throw new InvalidOperationException(
-                    "React context creation should only be called when creating the React " +
-                    "application for the first time. When reloading JavaScript, e.g., from " +
-                    "a new file, explicitly, use the re-create method.");
+                if (_hasStartedCreatingInitialContext)
+                {
+                    throw new InvalidOperationException(
+                            "React context creation should only be called when creating the React " +
+                            "application for the first time. When reloading JavaScript, e.g., from " +
+                            "a new file, explicitly, use the re-create method.");
+                }
+                _hasStartedCreatingInitialContext = true;
+ 
+                ReactChoreographer.Initialize();
+                return await CreateReactContextCoreAsync(token);
             }
-
-            ReactChoreographer.Initialize();
-            _hasStartedCreatingInitialContext = true;
-            return CreateReactContextCoreAsync(token);
         }
 
         /// <summary>
@@ -173,22 +166,46 @@ namespace ReactNative
         /// </returns>
         public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
         {
-            if (!_hasStartedCreatingInitialContext)
+            using (await _lock.LockAsync())
             {
-                throw new InvalidOperationException(
-                    "Use the create method to start initializing the React context.");
-            }
+                if (!_hasStartedCreatingInitialContext)
+                {
+                    throw new InvalidOperationException(
+                        "Use the create method to start initializing the React context.");
+                }
 
-            var contextInitializationTask = _contextInitializationTask;
-            if (contextInitializationTask != null)
-            {
-                return await contextInitializationTask;
-            }
-            else
-            {
+                // By this point context has already been created due to the serialized aspect of context initialization.
                 return _currentReactContext;
             }
         }
+
+
+        /// <summary>
+        /// Awaits the currently initializing React context, or creates a new one.
+        /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>
+        /// A task to await the React context.
+        /// </returns>
+        public async Task<ReactContext> GetOrCreateReactContextAsync(CancellationToken token)
+        {
+            using (await _lock.LockAsync())
+            {
+                if (_hasStartedCreatingInitialContext)
+                {
+                    // By this point context has already been created due to the serialized aspect of context initialization.
+                    return _currentReactContext;
+                }
+                else
+                {
+                    _hasStartedCreatingInitialContext = true;
+
+                    ReactChoreographer.Initialize();
+                    return await CreateReactContextCoreAsync(token);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Recreate the React application and context. This should be called
@@ -197,16 +214,19 @@ namespace ReactNative
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the result.</returns>
-        public Task<ReactContext> RecreateReactContextAsync(CancellationToken token)
+        public async Task<ReactContext> RecreateReactContextAsync(CancellationToken token)
         {
-            if (!_hasStartedCreatingInitialContext)
+            using (await _lock.LockAsync())
             {
-                throw new InvalidOperationException(
-                    "React context re-creation should only be called after the initial " +
-                    "create context background call.");
-            }
+                if (!_hasStartedCreatingInitialContext)
+                {
+                    throw new InvalidOperationException(
+                        "React context re-creation should only be called after the initial " +
+                        "create context background call.");
+                }
 
-            return CreateReactContextCoreAsync(token);
+                return await CreateReactContextCoreAsync(token);
+            }
         }
 
         /// <summary>
@@ -299,25 +319,27 @@ namespace ReactNative
         public async Task DisposeAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
-
-            // TODO: memory pressure hooks
-            if (_useDeveloperSupport)
+            using (await _lock.LockAsync())
             {
-                _devSupportManager.IsEnabled = false;
+                // TODO: memory pressure hooks
+                if (_useDeveloperSupport)
+                {
+                    _devSupportManager.IsEnabled = false;
+                }
+
+                _lifecycleStateMachine.OnDestroy();
+                _lifecycleStateMachine.SetContext(null);
+
+                var currentReactContext = _currentReactContext;
+                if (currentReactContext != null)
+                {
+                    await currentReactContext.DisposeAsync();
+                    _currentReactContext = null;
+                    _hasStartedCreatingInitialContext = false;
+                }
+
+                ReactChoreographer.Dispose();
             }
-
-            _lifecycleStateMachine.OnDestroy();
-            _lifecycleStateMachine.SetContext(null);
-
-            var currentReactContext = _currentReactContext;
-            if (currentReactContext != null)
-            {
-                await currentReactContext.DisposeAsync();
-                _currentReactContext = null;
-                _hasStartedCreatingInitialContext = false;
-            }
-
-            ReactChoreographer.Dispose();
         }
 
         /// <summary>
@@ -336,7 +358,7 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnDispatcher();
+            DispatcherHelpers.AssertOnDispatcher(rootView);
             rootView.Children.Clear();
             rootView.ClearData();
             _attachedRootViews.Add(rootView);
@@ -346,7 +368,7 @@ namespace ReactNative
             // creation completes, as root view is part of the attached root
             // view list.
             var currentReactContext = _currentReactContext;
-            if (_contextInitializationTask == null && currentReactContext != null)
+            if (currentReactContext != null)
             {
                 AttachMeasuredRootViewToInstance(rootView, currentReactContext.ReactInstance);
             }
@@ -363,7 +385,7 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnDispatcher();
+            DispatcherHelpers.AssertOnDispatcher(rootView);
 
             if (_attachedRootViews.Remove(rootView))
             {
@@ -401,17 +423,17 @@ namespace ReactNative
             }
         }
 
-        private Task<ReactContext> CreateReactContextCoreAsync(CancellationToken token)
+        private async Task<ReactContext> CreateReactContextCoreAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             if (_useDeveloperSupport && _jsBundleFile == null)
             {
-                return CreateReactContextFromDevManagerAsync(token);
+                return await CreateReactContextFromDevManagerAsync(token);
             }
             else
             {
-                return CreateReactContextFromBundleAsync(token);
+                return await CreateReactContextFromBundleAsync(token);
             }
         }
 
@@ -430,9 +452,9 @@ namespace ReactNative
         private Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
         {
             return CreateReactContextAsync(
-                _javaScriptExecutorFactory,
-                JavaScriptBundleLoader.CreateFileLoader(_jsBundleFile),
-                token);
+                    _javaScriptExecutorFactory,
+                    JavaScriptBundleLoader.CreateFileLoader(_jsBundleFile),
+                    token);
         }
 
         private Task<ReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token)
@@ -441,7 +463,7 @@ namespace ReactNative
                 _devSupportManager.SourceUrl,
                 _devSupportManager.DownloadedJavaScriptBundleFile);
             return CreateReactContextAsync(_javaScriptExecutorFactory, bundleLoader, token);
-        }
+       }
 
         private Task<ReactContext> CreateReactContextWithRemoteDebuggerAsync(
             Func<IJavaScriptExecutor> javaScriptExecutorFactory,
@@ -463,27 +485,20 @@ namespace ReactNative
             using (token.Register(cancellationDisposable.Dispose))
             using (_suspendCancellation?.Token.Register(cancellationDisposable.Dispose))
             {
-                _pendingInitializationTasks++;
-                var contextInitializationTask = _contextInitializationTask ?? Task.CompletedTask;
-                _contextInitializationTask = contextInitializationTask.ContinueWith(async task =>
+                try
                 {
-                    try
-                    {
-                        cancellationDisposable.Token.ThrowIfCancellationRequested();
-                        return await InitializeReactContextAsync(
-                            jsExecutorFactory,
-                            jsBundleLoader,
-                            cancellationDisposable.Token);
-                    }
-                    catch (OperationCanceledException)
-                    when (cancellationDisposable.Token.IsCancellationRequested)
-                    {
-                        token.ThrowIfCancellationRequested();
-                        return null;
-                    }
-                },
-                TaskContinuationOptions.ExecuteSynchronously).Unwrap();
-                return await _contextInitializationTask;
+                    cancellationDisposable.Token.ThrowIfCancellationRequested();
+                    return await InitializeReactContextAsync(
+                        jsExecutorFactory,
+                        jsBundleLoader,
+                        cancellationDisposable.Token);
+                }
+                catch (OperationCanceledException)
+                when (cancellationDisposable.Token.IsCancellationRequested)
+                {
+                    token.ThrowIfCancellationRequested();
+                    return null;
+                }
             }
         }
 
@@ -513,13 +528,6 @@ namespace ReactNative
             catch (Exception ex)
             {
                 _devSupportManager.HandleException(ex);
-            }
-            finally
-            {
-                if (--_pendingInitializationTasks == 0)
-                {
-                    _contextInitializationTask = null;
-                }
             }
 
             return null;
@@ -556,7 +564,7 @@ namespace ReactNative
             ReactRootView rootView,
             IReactInstance reactInstance)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            DispatcherHelpers.AssertOnDispatcher(rootView);
 
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
@@ -684,6 +692,11 @@ namespace ReactNative
             public ReactInstanceDevCommandsHandler(ReactInstanceManager parent)
             {
                 _parent = parent;
+            }
+
+            public Task<IDisposable> LockAsync()
+            {
+                return _parent._lock.LockAsync();
             }
 
             public Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
