@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace ReactNative.Bridge
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
+        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method, IGenericDelegate genericDelegate)
         {
             var extractors = CreateExtractors(module, method);
             var expectedArguments = extractors.Sum(e => e.ExpectedArguments);
@@ -37,6 +37,7 @@ namespace ReactNative.Bridge
                     method, 
                     expectedArguments,
                     extractFunctions,
+                    genericDelegate,
                     moduleInstance,
                     reactInstance,
                     arguments);
@@ -136,6 +137,7 @@ namespace ReactNative.Bridge
             MethodInfo method,
             int expectedArguments,
             IList<Func<IReactInstance, JArray, int, Result>> extractors,
+            IGenericDelegate genericDelegate,
             INativeModule moduleInstance,
             IReactInstance reactInstance,
             JArray jsArguments)
@@ -165,7 +167,15 @@ namespace ReactNative.Bridge
                 idx = result.NextIndex;
             }
 
-            method.Invoke(moduleInstance, args);
+            bool hasDelegate = (genericDelegate != null) && ReferenceEquals(moduleInstance, genericDelegate.DelegateTarget);
+            if (hasDelegate)
+            {
+                genericDelegate.Invoke(args);
+            }
+            else
+            {
+                method.Invoke(moduleInstance, args);
+            }
         }
 
         private struct Result

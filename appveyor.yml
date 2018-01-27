@@ -88,6 +88,7 @@ test_script:
 
   #- npm run lint
 
+
 after_test:
   - ps: >-
       Stop-Process -Id $winium.Id
