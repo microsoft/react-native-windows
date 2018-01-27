@@ -120,7 +120,11 @@ namespace ReactNative.UIManager
             var height = rootView.ActualHeight;
 
             var context = new ThemedReactContext(Context);
-            _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
+
+            _layoutActionQueue.Dispatch(() =>
+            {
+                _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
+            });
 
             var resizeCount = 0;
             rootView.SetOnSizeChangedListener((sender, args) =>
