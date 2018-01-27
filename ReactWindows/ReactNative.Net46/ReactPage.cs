@@ -158,7 +158,7 @@ namespace ReactNative
         {
             RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
-            await RootView?.StopReactApplication();
+            await RootView?.StopReactApplicationAsync();
 
             if (_reactInstanceManager.IsValueCreated)
             {

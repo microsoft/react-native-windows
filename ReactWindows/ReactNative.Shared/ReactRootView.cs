@@ -1,8 +1,10 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
@@ -97,7 +99,14 @@ namespace ReactNative
         /// </param>
         /// <param name="moduleName">The module name.</param>
         /// <param name="initialProps">The initialProps</param>
-        public async void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
+        ///
+        public void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
+        {
+            // Fire and forget async
+            Forget(StartReactApplicationAsync(reactInstanceManager, moduleName, initialProps));
+        }
+
+        private async Task StartReactApplicationAsync(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
             DispatcherHelpers.AssertOnDispatcher(this);
 
@@ -131,6 +140,28 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Frees resources associated with this root view (fire and forget version)
+        /// </summary>
+        public void StopReactApplication()
+        {
+            Forget(StopReactApplicationAsync());
+        }
+
+        /// <summary>
+        /// Frees resources associated with this root view.
+        /// </summary>
+        public async Task StopReactApplicationAsync()
+        {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
+            var reactInstanceManager = _reactInstanceManager;
+            if (!_attachScheduled && reactInstanceManager != null)
+            {
+                await reactInstanceManager.DetachRootViewAsync(this);
+            }
+        }
+
+        /// <summary>
         /// Hooks into the measurement event to potentially attach the React 
         /// root view.
         /// </summary>
@@ -142,6 +173,16 @@ namespace ReactNative
 
             var result = base.MeasureOverride(availableSize);
 
+            // Fire and forget async
+            Forget(MeasureOverrideHelperAsync());
+
+            return result;
+        }
+
+        private async Task MeasureOverrideHelperAsync()
+        {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
             _wasMeasured = true;
 
             var reactInstanceManager = _reactInstanceManager;
@@ -149,25 +190,18 @@ namespace ReactNative
             {
                 _attachScheduled = false;
 
-                // MeasureOverride is not async, so we have to wait here.
-                reactInstanceManager.AttachMeasuredRootViewAsync(this).Wait();
+                await reactInstanceManager.AttachMeasuredRootViewAsync(this);
             }
-
-            return result;
         }
 
-        /// <summary>
-        /// Frees resources assocxiated with this root view.
-        /// </summary>
-        public async Task StopReactApplication()
+        private static void Forget(Task task)
         {
-            DispatcherHelpers.AssertOnDispatcher(this);
-
-            var reactInstanceManager = _reactInstanceManager;
-            if (!_attachScheduled && reactInstanceManager != null)
-            {
-                await reactInstanceManager.DetachRootViewAsync(this);
-            }
+            task.ContinueWith(
+                t =>
+                {
+                    Debug.Fail("Exception in fire and forget asynchronous function", t.Exception.ToString());
+                },
+                TaskContinuationOptions.OnlyOnFaulted);
         }
     }
 }

@@ -153,7 +153,7 @@ namespace ReactNative
         {
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
 
-            await RootView.StopReactApplication();
+            await RootView.StopReactApplicationAsync();
 
             await _reactInstanceManager.DisposeAsync();            
         }
