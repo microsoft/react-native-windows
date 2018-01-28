@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using System;
 using System.Globalization;
@@ -37,8 +37,9 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
+        /// <param name="genericDelegate">The delegate used to avoid expensive reflection invocation.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
+        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method, IGenericDelegate genericDelegate)
         {
             return GenerateExpression(module, method).Compile();
         }

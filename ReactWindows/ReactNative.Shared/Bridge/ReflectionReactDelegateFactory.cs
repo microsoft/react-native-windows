@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +25,9 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
+        /// <param name="genericDelegate">The delegate used to avoid expensive reflection invocation.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
+        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method, IGenericDelegate genericDelegate)
         {
             var extractors = CreateExtractors(module, method);
             var expectedArguments = extractors.Sum(e => e.ExpectedArguments);
@@ -37,6 +38,7 @@ namespace ReactNative.Bridge
                     method, 
                     expectedArguments,
                     extractFunctions,
+                    genericDelegate,
                     moduleInstance,
                     reactInstance,
                     arguments);
@@ -136,6 +138,7 @@ namespace ReactNative.Bridge
             MethodInfo method,
             int expectedArguments,
             IList<Func<IReactInstance, JArray, int, Result>> extractors,
+            IGenericDelegate genericDelegate,
             INativeModule moduleInstance,
             IReactInstance reactInstance,
             JArray jsArguments)
@@ -163,6 +166,13 @@ namespace ReactNative.Bridge
                 var result = extractors[j](reactInstance, jsArguments, idx);
                 args[j] = result.Value;
                 idx = result.NextIndex;
+            }
+
+            bool hasDelegate = (genericDelegate != null) && ReferenceEquals(moduleInstance, genericDelegate.DelegateTarget);
+            if (hasDelegate)
+            {
+                genericDelegate.Invoke(args);
+                return;
             }
 
             method.Invoke(moduleInstance, args);
