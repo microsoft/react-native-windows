@@ -6,12 +6,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
-#if WINDOWS_UWP
 using Windows.UI.Core;
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
 
 namespace ReactNative.UIManager
 {
@@ -22,6 +17,8 @@ namespace ReactNative.UIManager
     /// enqueues those operations in a queue that is then flushed from 
     /// <see cref="UIManagerModule"/> once a JavaScript batch of UI operations
     /// is finished.
+    /// There is one queue instance created for each top level window since
+    /// each of these windows run on a different thread.
     /// </summary>
     public class UIViewOperationQueue
     {
@@ -63,6 +60,18 @@ namespace ReactNative.UIManager
             {
                 // TODO MW: fixing this stuff
                 return _mainUiViewOperationsQueueInstance;
+            }
+        }
+
+        /// <summary>
+        /// The native view hierarchy manager.
+        /// </summary>
+        internal NativeViewHierarchyManager NativeViewHierarchyManager
+        {
+            get
+            {
+                // TODO MW: fixing this stuff
+                return FirstUIViewOperationQueue.NativeViewHierarchyManager;
             }
         }
 

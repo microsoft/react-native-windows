@@ -228,9 +228,9 @@ namespace ReactNative.UIManager
             // batches, and native modules attempting to synchronously interact
             // with views may attempt to update properties before the batch has
             // been processed.
-            if (_operationsQueue.FirstUIViewOperationQueue.NativeViewHierarchyManager.ViewExists(tag))
+            if (_operationsQueue.NativeViewHierarchyManager.ViewExists(tag))
             {
-                _operationsQueue.FirstUIViewOperationQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+                _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
                 return true;
             }
             else

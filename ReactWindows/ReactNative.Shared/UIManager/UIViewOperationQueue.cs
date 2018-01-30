@@ -89,7 +89,7 @@ namespace ReactNative.UIManager
             SizeMonitoringCanvas rootView,
             ThemedReactContext themedRootContext)
         {
-            _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext);
+            EnqueueOperation(() => _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext));
         }
 
         /// <summary>

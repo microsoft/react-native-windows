@@ -113,7 +113,7 @@ namespace ReactNative
 
         private async Task StartReactApplicationAsync(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
-            DispatcherHelpers.AssertOnSpecificDispatcher(this);
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             if (_reactInstanceManager != null)
             {
@@ -163,7 +163,7 @@ namespace ReactNative
         /// </summary>
         public async Task StopReactApplicationAsync()
         {
-            DispatcherHelpers.AssertOnSpecificDispatcher(this);
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             SizeChanged -= OnSizeChanged;
 
@@ -182,7 +182,7 @@ namespace ReactNative
         /// <returns>The desired size.</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            DispatcherHelpers.AssertOnSpecificDispatcher(this);
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             var result = base.MeasureOverride(availableSize);
 
@@ -194,7 +194,7 @@ namespace ReactNative
 
         private async Task MeasureOverrideHelperAsync()
         {
-            DispatcherHelpers.AssertOnSpecificDispatcher(this);
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             _wasMeasured = true;
 

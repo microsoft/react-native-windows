@@ -27,7 +27,7 @@ namespace ReactNative.Modules.Core
 #endif
         private const int InactiveFrameCount = 120;
 
-        private static readonly Stopwatch s_stopwatch = Stopwatch.StartNew();
+        private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
         private static ReactChoreographer s_instance;
 
         private readonly object _gate = new object();
@@ -233,14 +233,14 @@ namespace ReactNative.Modules.Core
 
                 if (isSubscribed)
                 {
-                    OnRendering(null, s_stopwatch.Elapsed);
+                    OnRendering(null, _stopwatch.Elapsed);
                 }
             });
         }
 
         private void OnRendering(object sender, TimeSpan e)
         {
-            var renderingTime = s_stopwatch.Elapsed;
+            var renderingTime = _stopwatch.Elapsed;
             if (_frameEventArgs == null)
             {
                 _mutableReference = _frameEventArgs = new FrameEventArgs(renderingTime);

@@ -63,7 +63,7 @@ namespace ReactNative.Bridge
             return MainDispatcher.CheckAccess();
         }
 
-        public static void AssertOnSpecificDispatcher(DependencyObject dependencyObject)
+        public static void AssertOnDispatcher(DependencyObject dependencyObject)
         {
             AssertDispatcherSet();
 
@@ -85,6 +85,17 @@ namespace ReactNative.Bridge
             AssertDispatcherSet();
 
             await MainDispatcher.InvokeAsync(action, priority).Task.ConfigureAwait(false);
+        }
+        public static async void RunOnDispatcher(Dispatcher dispatcher, DispatcherPriority priority, Action action)
+        {
+            AssertDispatcherSet();
+
+            if (dispatcher != s_mainDispatcher)
+            {
+                throw new InvalidOperationException("Only main dispatcher is supported.");
+            }
+
+            RunOnDispatcher(priority, action);
         }
 
         public static Task<T> CallOnDispatcher<T>(Func<T> func)

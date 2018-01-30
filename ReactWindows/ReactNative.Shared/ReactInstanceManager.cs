@@ -359,7 +359,7 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnSpecificDispatcher(rootView);
+            DispatcherHelpers.AssertOnDispatcher(rootView);
             rootView.Children.Clear();
             rootView.ClearData();
 
@@ -393,7 +393,7 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnSpecificDispatcher(rootView);
+            DispatcherHelpers.AssertOnDispatcher(rootView);
 
             await DispatcherHelpers.CallOnDispatcherWithInlining(() =>
             {

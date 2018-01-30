@@ -90,10 +90,10 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Asserts that the current thread has access to a DependencyObject.
         /// </summary>
-        public static void AssertOnSpecificDispatcher(DependencyObject dependencyObject)
+        public static void AssertOnDispatcher(DependencyObject dependencyObject)
         {
 #if DEBUG
-            if (!IsOnSpecificDispatcher(dependencyObject))
+            if (!IsOnDispatcher(dependencyObject))
             {
                 throw new InvalidOperationException("Thread does not have dispatcher access.");
             }
@@ -107,7 +107,7 @@ namespace ReactNative.Bridge
         /// <code>true</code> if the current thread has dispatcher access,
         /// otherwise <code>false</code>.
         /// </returns>
-        public static bool IsOnSpecificDispatcher(DependencyObject dependencyObject)
+        public static bool IsOnDispatcher(DependencyObject dependencyObject)
         {
             return CoreApplication.GetCurrentView().Dispatcher == dependencyObject.Dispatcher;
         }
@@ -126,9 +126,20 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="priority">The priority.</param>
         /// <param name="action">The action to invoke.</param>
-        public static async void RunOnDispatcher(CoreDispatcherPriority priority, DispatchedHandler action)
+        public static void RunOnDispatcher(CoreDispatcherPriority priority, DispatchedHandler action)
         {
-            await MainDispatcher.RunAsync(priority, action).AsTask().ConfigureAwait(false);
+            RunOnDispatcher(MainDispatcher, priority, action);
+        }
+
+        /// <summary>
+        /// Invokes an action on the dispatcher specified as parameter.
+        /// </summary>
+        /// <param name="dispatcher">The dispatcher.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="action">The action to invoke.</param>
+        public static async void RunOnDispatcher(CoreDispatcher dispatcher, CoreDispatcherPriority priority, DispatchedHandler action)
+        {
+            await dispatcher.RunAsync(priority, action).AsTask().ConfigureAwait(false);
         }
 
         /// <summary>
