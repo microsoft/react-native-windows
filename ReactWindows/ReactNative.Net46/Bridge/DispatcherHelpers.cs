@@ -48,29 +48,29 @@ namespace ReactNative.Bridge
             return s_mainDispatcher != null;
         }
 
-        public static void AssertOnDispatcher(DependencyObject dependencyObject = null)
+        public static void AssertOnDispatcher()
         {
-            if (dependencyObject != null)
-            {
-                AssertDispatcherSet();
-
-                if (dependencyObject.Dispatcher != s_mainDispatcher)
-                {
-                    throw new InvalidOperationException("Thread does not have dispatcher access (only main dispatcher is supported).");
-                }
-            }
-
-            if (!IsOnDispatcher(dependencyObject))
+            if (!IsOnDispatcher())
             {
                 throw new InvalidOperationException("Thread does not have dispatcher access.");
             }
         }
 
-        public static bool IsOnDispatcher(DependencyObject dependencyObject = null)
+        public static bool IsOnDispatcher()
         {
             AssertDispatcherSet();
 
             return MainDispatcher.CheckAccess();
+        }
+
+        public static void AssertOnSpecificDispatcher(DependencyObject dependencyObject)
+        {
+            AssertDispatcherSet();
+
+            if (dependencyObject.Dispatcher != s_mainDispatcher)
+            {
+                throw new InvalidOperationException("Thread does not have dispatcher access (only main dispatcher is supported).");
+            }
         }
 
         public static async void RunOnDispatcher(Action action)
@@ -110,7 +110,7 @@ namespace ReactNative.Bridge
         /// <typeparam name="T">Function return type.</typeparam>
         /// <param name="func">The function to invoke.</param>
         /// <returns>A task to await the result.</returns>
-        public static Task<T> CallOnDispatcherOptimized<T>(Func<T> func)
+        public static Task<T> CallOnDispatcherWithInlining<T>(Func<T> func)
         {
             if (MainDispatcher.CheckAccess())
             {

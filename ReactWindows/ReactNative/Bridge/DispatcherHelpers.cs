@@ -90,10 +90,10 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Asserts that the current thread has access to a DependencyObject.
         /// </summary>
-        public static void AssertOnDispatcher(DependencyObject dependencyObject)
+        public static void AssertOnSpecificDispatcher(DependencyObject dependencyObject)
         {
 #if DEBUG
-            if (!IsOnDispatcher(dependencyObject))
+            if (!IsOnSpecificDispatcher(dependencyObject))
             {
                 throw new InvalidOperationException("Thread does not have dispatcher access.");
             }
@@ -107,7 +107,7 @@ namespace ReactNative.Bridge
         /// <code>true</code> if the current thread has dispatcher access,
         /// otherwise <code>false</code>.
         /// </returns>
-        public static bool IsOnDispatcher(DependencyObject dependencyObject)
+        public static bool IsOnSpecificDispatcher(DependencyObject dependencyObject)
         {
             return CoreApplication.GetCurrentView().Dispatcher == dependencyObject.Dispatcher;
         }
@@ -161,7 +161,7 @@ namespace ReactNative.Bridge
         /// <typeparam name="T">Function return type.</typeparam>
         /// <param name="func">The function to invoke.</param>
         /// <returns>A task to await the result.</returns>
-        public static Task<T> CallOnDispatcherOptimized<T>(Func<T> func)
+        public static Task<T> CallOnDispatcherWithInlining<T>(Func<T> func)
         {
             if (MainDispatcher.HasThreadAccess)
             {

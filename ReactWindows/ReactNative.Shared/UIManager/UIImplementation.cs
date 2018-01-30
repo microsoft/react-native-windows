@@ -54,7 +54,7 @@ namespace ReactNative.UIManager
             : this(
                 reactContext,
                 viewManagers,
-                new UIViewOperationQueue(reactContext, new NativeViewHierarchyManager(viewManagers)), 
+                new UIViewOperationQueue(reactContext, viewManagers), 
                 eventDispatcher)
         {
         }
@@ -228,9 +228,9 @@ namespace ReactNative.UIManager
             // batches, and native modules attempting to synchronously interact
             // with views may attempt to update properties before the batch has
             // been processed.
-            if (_operationsQueue.NativeViewHierarchyManager.ViewExists(tag))
+            if (_operationsQueue.FirstUIViewOperationQueue.NativeViewHierarchyManager.ViewExists(tag))
             {
-                _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+                _operationsQueue.FirstUIViewOperationQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
                 return true;
             }
             else

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Foundation;
+using Windows.UI.Xaml;
 #else
 using System.Windows;
 #endif
@@ -70,6 +71,10 @@ namespace ReactNative
             }
         }
 
+        internal double ActualWidthSafe { get; private set; }
+
+        internal double ActualHeightSafe { get; private set; }
+
         /// <summary>
         /// Schedule rendering of the React component rendered by the 
         /// JavaScript application from the given JavaScript module 
@@ -108,7 +113,7 @@ namespace ReactNative
 
         private async Task StartReactApplicationAsync(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
-            DispatcherHelpers.AssertOnDispatcher(this);
+            DispatcherHelpers.AssertOnSpecificDispatcher(this);
 
             if (_reactInstanceManager != null)
             {
@@ -133,6 +138,12 @@ namespace ReactNative
                 _attachScheduled = true;
             }
 
+
+            ActualWidthSafe = ActualWidth;
+            ActualHeightSafe = ActualHeight;
+
+            SizeChanged += OnSizeChanged;
+
             if (getReactContextTask != null)
             {
                 await getReactContextTask.ConfigureAwait(false);
@@ -152,7 +163,9 @@ namespace ReactNative
         /// </summary>
         public async Task StopReactApplicationAsync()
         {
-            DispatcherHelpers.AssertOnDispatcher(this);
+            DispatcherHelpers.AssertOnSpecificDispatcher(this);
+
+            SizeChanged -= OnSizeChanged;
 
             var reactInstanceManager = _reactInstanceManager;
             if (!_attachScheduled && reactInstanceManager != null)
@@ -169,7 +182,7 @@ namespace ReactNative
         /// <returns>The desired size.</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            DispatcherHelpers.AssertOnDispatcher(this);
+            DispatcherHelpers.AssertOnSpecificDispatcher(this);
 
             var result = base.MeasureOverride(availableSize);
 
@@ -181,7 +194,7 @@ namespace ReactNative
 
         private async Task MeasureOverrideHelperAsync()
         {
-            DispatcherHelpers.AssertOnDispatcher(this);
+            DispatcherHelpers.AssertOnSpecificDispatcher(this);
 
             _wasMeasured = true;
 
@@ -194,11 +207,18 @@ namespace ReactNative
             }
         }
 
+        private void OnSizeChanged(Object sender, SizeChangedEventArgs e)
+        {
+            ActualWidthSafe = e.NewSize.Width;
+            ActualHeightSafe = e.NewSize.Height;
+        }
+
         private static void Forget(Task task)
         {
             task.ContinueWith(
                 t =>
                 {
+                    // TODO MW: maybe Trace?
                     Debug.Fail("Exception in fire and forget asynchronous function", t.Exception.ToString());
                 },
                 TaskContinuationOptions.OnlyOnFaulted);

@@ -1,3 +1,7 @@
+/// <summary>
+/// NOTE: This file will be renamed to UIViewOperationsQueueInstance.cs after code review.
+/// </summary>
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
@@ -17,9 +21,9 @@ namespace ReactNative.UIManager
     /// <see cref="UIManagerModule"/> once a JavaScript batch of UI operations
     /// is finished.
     /// </summary>
-    public class UIViewOperationQueue
+    public class UIViewOperationQueueInstance
     {
-        private const string NonBatchedChoreographerKey = nameof(UIViewOperationQueue) + "_NonBatched";
+        private const string NonBatchedChoreographerKey = nameof(UIViewOperationQueueInstance) + "_NonBatched";
 
         private static readonly TimeSpan s_frameDuration = TimeSpan.FromTicks(166666);
         private static readonly TimeSpan s_minTimeLeftInFrameForNonBatchedOperation = TimeSpan.FromTicks(83333);
@@ -37,13 +41,13 @@ namespace ReactNative.UIManager
         private IList<Action> _batches = new List<Action>();
 
         /// <summary>
-        /// Instantiates the <see cref="UIViewOperationQueue"/>.
+        /// Instantiates the <see cref="UIViewOperationQueueInstance"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="nativeViewHierarchyManager">
         /// The native view hierarchy manager.
         /// </param>
-        public UIViewOperationQueue(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager)
+        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;
@@ -428,7 +432,7 @@ namespace ReactNative.UIManager
 
             // Dispatch event from non-layout thread to avoid queueing
             // main dispatcher callbacks from the layout thread
-            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(nameof(UIViewOperationQueue)));
+            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(nameof(UIViewOperationQueueInstance)));
         }
 
         private void EnqueueOperation(Action action)
@@ -478,7 +482,7 @@ namespace ReactNative.UIManager
                 finally
                 {
                     _batches.Clear();
-                    ReactChoreographer.Instance.DeactivateCallback(nameof(UIViewOperationQueue));
+                    ReactChoreographer.Instance.DeactivateCallback(nameof(UIViewOperationQueueInstance));
                 }
             }
         }

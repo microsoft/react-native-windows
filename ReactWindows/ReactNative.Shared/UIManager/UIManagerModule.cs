@@ -111,13 +111,13 @@ namespace ReactNative.UIManager
         /// JavaScript can use the returned tag with to add or remove children 
         /// to this view through <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>.
         /// </remarks>
-        public int AddMeasuredRootView(SizeMonitoringCanvas rootView)
+        public int AddMeasuredRootView(ReactRootView rootView)
         {
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
-            var width = rootView.ActualWidth;
-            var height = rootView.ActualHeight;
+            var width = rootView.ActualWidthSafe;
+            var height = rootView.ActualHeightSafe;
 
             var context = new ThemedReactContext(Context);
 

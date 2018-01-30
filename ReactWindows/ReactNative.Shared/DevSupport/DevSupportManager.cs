@@ -632,6 +632,7 @@ namespace ReactNative.DevSupport
 
         private async Task<bool> RunWithProgressAsync(Func<CancellationToken, Task> asyncAction, ProgressDialog progressDialog, CancellationToken token)
         {
+            DispatcherHelpers.AssertOnDispatcher();
             var hideProgress = ShowProgressDialog(progressDialog);
             using (var cancellationDisposable = new CancellationDisposable())
             using (token.Register(cancellationDisposable.Dispose))

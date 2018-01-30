@@ -359,11 +359,11 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnDispatcher(rootView);
+            DispatcherHelpers.AssertOnSpecificDispatcher(rootView);
             rootView.Children.Clear();
             rootView.ClearData();
 
-            await DispatcherHelpers.CallOnDispatcherOptimized(() =>
+            await DispatcherHelpers.CallOnDispatcherWithInlining(() =>
             {
                 _attachedRootViews.Add(rootView);
 
@@ -393,9 +393,9 @@ namespace ReactNative
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
 
-            DispatcherHelpers.AssertOnDispatcher(rootView);
+            DispatcherHelpers.AssertOnSpecificDispatcher(rootView);
 
-            await DispatcherHelpers.CallOnDispatcherOptimized(() =>
+            await DispatcherHelpers.CallOnDispatcherWithInlining(() =>
             {
                 if (_attachedRootViews.Remove(rootView))
                 {
@@ -608,6 +608,7 @@ namespace ReactNative
 
             foreach (var rootView in _attachedRootViews)
             {
+                // TODO MW: oops
                 rootView.Children.Clear();
                 rootView.ClearData();
             }

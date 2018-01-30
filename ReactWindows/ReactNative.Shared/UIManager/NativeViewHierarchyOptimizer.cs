@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 #if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
 #endif
@@ -84,7 +84,8 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProperties,
+                    node.RootNode.ReactTag);
 #else
             var isLayoutOnly = node.ViewClass == ViewProps.ViewClassName
                 && IsLayoutOnlyAndCollapsible(initialProperties);
@@ -97,7 +98,8 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProperties,
+                    node.RootNode.ReactTag);
             }
 #endif
         }
@@ -462,7 +464,8 @@ namespace ReactNative.UIManager
                 node.RootNode.ThemedContext,
                 node.ReactTag,
                 node.ViewClass,
-                props);
+                props,
+                node.RootNode.ReactTag);
 
             // Add the node and all its children as if adding new nodes.
             parent.AddChildAt(node, childIndex);
