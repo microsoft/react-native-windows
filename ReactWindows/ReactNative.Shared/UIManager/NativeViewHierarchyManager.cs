@@ -83,7 +83,7 @@ namespace ReactNative.UIManager
             _rootTags = new Dictionary<int, bool>();
             _rootViewManager = new RootViewManager();
 #if WINDOWS_UWP
-            _dispatcher = dispatcher;
+            Dispatcher = dispatcher;
 #endif
         }
 
@@ -598,6 +598,9 @@ namespace ReactNative.UIManager
             return viewManager;
         }
 
+#if WINDOWS_UWP
+        internal CoreDispatcher Dispatcher { get; private set; }
+#endif
         private void AddRootViewParent(int tag, FrameworkElement view, ThemedReactContext themedContext)
         {
             AssertOnCorrectDispatcher();
@@ -662,7 +665,7 @@ namespace ReactNative.UIManager
         {
 #if WINDOWS_UWP
 #if DEBUG
-            if (!DispatcherHelpers.IsOnDispatcher(_dispatcher))
+            if (!DispatcherHelpers.IsOnDispatcher(Dispatcher))
             {
                 throw new InvalidOperationException("Thread does not have correct dispatcher access.");
             }

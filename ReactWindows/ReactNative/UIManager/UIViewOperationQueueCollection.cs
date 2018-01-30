@@ -252,6 +252,9 @@ namespace ReactNative.UIManager
         public void EnqueueUIBlock(IUIBlock block)
         {
             // TODO MW
+            // Native animation module is synchronized to the main dispatcher thread.
+            // Always forward to the main queue
+            FirstUIViewOperationQueue.EnqueueUIBlock(block);
         }
 
         /// <summary>
@@ -261,6 +264,9 @@ namespace ReactNative.UIManager
         public void PrependUIBlock(IUIBlock block)
         {
             // TODO MW
+            // Native animation module is synchronized to the main dispatcher thread.
+            // Always forward to the main queue
+            FirstUIViewOperationQueue.PrependUIBlock(block);
         }
 
         /// <summary>
@@ -468,6 +474,46 @@ namespace ReactNative.UIManager
         public void OnDestroy()
         {
             // TODO MW
+        }
+
+        /// <summary>
+        /// Used by the native animated module to bypass the process of
+        /// updating the values through the shadow view hierarchy. This method
+        /// will directly update the native views, which means that updates for
+        /// layout-related properties won't be handled properly.
+        /// </summary>
+        /// <param name="tag">The view tag.</param>
+        /// <param name="props">The properties</param>
+        /// <remarks>
+        /// Make sure you know what you're doing before calling this method :)
+        /// </remarks>
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        {
+            // The native animations module is a single threaded implementation affinitized to the "main" dispatcher thread.
+            // As a result all calls of this method are on main dispatcher thread.
+            // Yet, for secondary views we have to dispatch to correct dispatcher as fast as possible
+            DispatcherHelpers.AssertOnDispatcher();
+
+            UIViewOperationQueueInstance queue;
+            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
+            {
+                // Returns false as per the caller's expectation
+                return false;
+            }
+
+            if (queue == FirstUIViewOperationQueue)
+            {
+                // Main queue case. Just forward.
+                NativeViewHierarchyManager.UpdateProperties(tag, props);
+            }
+            else
+            {
+                // Dispatch to the correct thread. We don't need to wait for the result since the "view doesn't exist" case
+                // is already taken care of at the beginning of the method
+                queue.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                 queue.NativeViewHierarchyManager.UpdateProperties(tag, props)).AsTask();
+            }
+            return true;
         }
 
         /// <summary>

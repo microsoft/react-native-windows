@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 
 namespace ReactNative.UIManager
 {
@@ -65,6 +66,16 @@ namespace ReactNative.UIManager
                 return _nativeViewHierarchyManager;
             }
         }
+
+#if WINDOWS_UWP
+        internal CoreDispatcher Dispatcher
+        {
+            get
+            {
+                return _nativeViewHierarchyManager.Dispatcher;
+            }
+        }
+#endif
 
         /// <summary>
         /// Checks if the operation queue is empty.
