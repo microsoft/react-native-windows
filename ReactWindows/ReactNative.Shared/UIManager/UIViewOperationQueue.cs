@@ -34,6 +34,7 @@ namespace ReactNative.UIManager
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
+        private readonly ReactChoreographer _reactChoreographer;
 
         private readonly IList<Action> _nonBatchedOperations = new List<Action>();
 
@@ -47,10 +48,11 @@ namespace ReactNative.UIManager
         /// <param name="nativeViewHierarchyManager">
         /// The native view hierarchy manager.
         /// </param>
-        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager)
+        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChorepgrapher)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;
+            _reactChoreographer = reactChorepgrapher;
         }
 
         /// <summary>
@@ -176,7 +178,7 @@ namespace ReactNative.UIManager
 
             // Dispatch event from non-layout thread to avoid queueing
             // main dispatcher callbacks from the layout thread
-            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(NonBatchedChoreographerKey));
+            Task.Run(() => _reactChoreographer.ActivateCallback(NonBatchedChoreographerKey));
         }
 
         /// <summary>
@@ -359,7 +361,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnSuspend()
         {
-            ReactChoreographer.Instance.DispatchUICallback -= OnRenderingSafe;
+            _reactChoreographer.DispatchUICallback -= OnRenderingSafe;
         }
 
         /// <summary>
@@ -367,7 +369,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnResume()
         {
-            ReactChoreographer.Instance.DispatchUICallback += OnRenderingSafe;
+            _reactChoreographer.DispatchUICallback += OnRenderingSafe;
         }
 
         /// <summary>
@@ -375,7 +377,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            ReactChoreographer.Instance.DispatchUICallback -= OnRenderingSafe;
+            _reactChoreographer.DispatchUICallback -= OnRenderingSafe;
         }
 
         /// <summary>
@@ -391,7 +393,7 @@ namespace ReactNative.UIManager
                 {
                     nonBatchedOperations = _nonBatchedOperations.ToArray();
                     _nonBatchedOperations.Clear();
-                    ReactChoreographer.Instance.DeactivateCallback(NonBatchedChoreographerKey);
+                    _reactChoreographer.DeactivateCallback(NonBatchedChoreographerKey);
                 }
             }
 
@@ -432,7 +434,7 @@ namespace ReactNative.UIManager
 
             // Dispatch event from non-layout thread to avoid queueing
             // main dispatcher callbacks from the layout thread
-            Task.Run(() => ReactChoreographer.Instance.ActivateCallback(nameof(UIViewOperationQueueInstance)));
+            Task.Run(() => _reactChoreographer.ActivateCallback(nameof(UIViewOperationQueueInstance)));
         }
 
         private void EnqueueOperation(Action action)
@@ -482,7 +484,7 @@ namespace ReactNative.UIManager
                 finally
                 {
                     _batches.Clear();
-                    ReactChoreographer.Instance.DeactivateCallback(nameof(UIViewOperationQueueInstance));
+                    _reactChoreographer.DeactivateCallback(nameof(UIViewOperationQueueInstance));
                 }
             }
         }
@@ -502,7 +504,7 @@ namespace ReactNative.UIManager
                 {
                     if (_nonBatchedOperations.Count == 0)
                     {
-                        ReactChoreographer.Instance.DeactivateCallback(NonBatchedChoreographerKey);
+                        _reactChoreographer.DeactivateCallback(NonBatchedChoreographerKey);
                         break;
                     }
 

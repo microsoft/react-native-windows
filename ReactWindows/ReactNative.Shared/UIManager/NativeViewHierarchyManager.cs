@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
 using Windows.Foundation;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 #endif
 using static System.FormattableString;
 
@@ -57,12 +59,22 @@ namespace ReactNative.UIManager
         private readonly ViewManagerRegistry _viewManagers;
         private readonly RootViewManager _rootViewManager;
         private readonly LayoutAnimationController _layoutAnimator;
+#if WINDOWS_UWP
+        private readonly CoreDispatcher _dispatcher;
+#endif
 
         /// <summary>
         /// Instantiates the <see cref="NativeViewHierarchyManager"/>.
         /// </summary>
         /// <param name="viewManagers">The view manager registry.</param>
-        public NativeViewHierarchyManager(ViewManagerRegistry viewManagers)
+        /// <param name="dispatcher">The dispatcher of the view.</param>
+        public NativeViewHierarchyManager(ViewManagerRegistry viewManagers,
+#if WINDOWS_UWP
+            CoreDispatcher dispatcher
+#else
+            Dispatcher notUsed
+#endif
+            )
         {
             _viewManagers = viewManagers;
             _layoutAnimator = new LayoutAnimationController();
@@ -70,6 +82,9 @@ namespace ReactNative.UIManager
             _tagsToViewManagers = new Dictionary<int, IViewManager>();
             _rootTags = new Dictionary<int, bool>();
             _rootViewManager = new RootViewManager();
+#if WINDOWS_UWP
+            _dispatcher = dispatcher;
+#endif
         }
 
         /// <summary>
@@ -88,7 +103,7 @@ namespace ReactNative.UIManager
         /// <param name="props">The properties.</param>
         public void UpdateProperties(int tag, ReactStylesDiffMap props)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             var viewManager = ResolveViewManager(tag);
             var viewToUpdate = ResolveView(tag);
             viewManager.UpdateProperties(viewToUpdate, props);
@@ -101,7 +116,7 @@ namespace ReactNative.UIManager
         /// <param name="extraData">The extra data.</param>
         public void UpdateViewExtraData(int tag, object extraData)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             var viewManager = ResolveViewManager(tag);
             var viewToUpdate = ResolveView(tag);
             viewManager.UpdateExtraData(viewToUpdate, extraData);
@@ -115,7 +130,7 @@ namespace ReactNative.UIManager
         /// <param name="dimensions">The dimensions.</param>
         public void UpdateLayout(int parentTag, int tag, Dimensions dimensions)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")
                 .With("parentTag", parentTag)
                 .With("tag", tag)
@@ -149,7 +164,7 @@ namespace ReactNative.UIManager
         /// <param name="initialProperties">The properties.</param>
         public void CreateView(ThemedReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
                 .With("tag", tag)
                 .With("className", className)
@@ -330,7 +345,7 @@ namespace ReactNative.UIManager
         /// <param name="rootViewTag">The root view tag.</param>
         public void RemoveRootView(int rootViewTag)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             if (!_rootTags.ContainsKey(rootViewTag))
             {
                 throw new InvalidOperationException(
@@ -350,7 +365,7 @@ namespace ReactNative.UIManager
         /// <param name="outputBuffer">The output buffer.</param>
         public void Measure(int tag, double[] outputBuffer)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(tag, out view))
             {
@@ -395,7 +410,7 @@ namespace ReactNative.UIManager
         /// <param name="outputBuffer">The output buffer.</param>
         public void MeasureInWindow(int tag, double[] outputBuffer)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(tag, out view))
             {
@@ -490,7 +505,7 @@ namespace ReactNative.UIManager
         /// <param name="args">The command arguments.</param>
         public void DispatchCommand(int reactTag, int commandId, JArray args)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             var view = default(DependencyObject);
             if (!_tagsToViews.TryGetValue(reactTag, out view))
             {
@@ -518,7 +533,7 @@ namespace ReactNative.UIManager
         public void ShowPopupMenu(int tag, string[] items, ICallback success)
         {
 #if WINDOWS_UWP
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             var view = ResolveView(tag);
 
             var menu = new PopupMenu();
@@ -585,7 +600,7 @@ namespace ReactNative.UIManager
 
         private void AddRootViewParent(int tag, FrameworkElement view, ThemedReactContext themedContext)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
             _tagsToViews.Add(tag, view);
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
@@ -595,7 +610,7 @@ namespace ReactNative.UIManager
 
         private void DropView(DependencyObject view)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            AssertOnCorrectDispatcher();
 
             var tag = view.GetTag();
             if (!_rootTags.ContainsKey(tag))
@@ -641,6 +656,20 @@ namespace ReactNative.UIManager
             {;
                 viewManager.SetDimensions(viewToUpdate, dimensions);
             }
+        }
+
+        private void AssertOnCorrectDispatcher()
+        {
+#if WINDOWS_UWP
+#if DEBUG
+            if (!DispatcherHelpers.IsOnDispatcher(_dispatcher))
+            {
+                throw new InvalidOperationException("Thread does not have correct dispatcher access.");
+            }
+#endif
+#else
+            DispatcherHelpers.AssertOnDispatcher();
+#endif
         }
     }
 }

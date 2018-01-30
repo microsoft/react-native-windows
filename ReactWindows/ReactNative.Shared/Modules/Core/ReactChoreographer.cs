@@ -22,8 +22,11 @@ namespace ReactNative.Modules.Core
     {
 #if WINDOWS_UWP
         private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
+        private const CoreDispatcherPriority TickPriority = CoreDispatcherPriority.Normal;
+        private CoreApplicationView _applicationView = CoreApplication.MainView;
 #else
         private const DispatcherPriority ActivatePriority = DispatcherPriority.Send;
+        private const DispatcherPriority TickPriority = DispatcherPriority.Normal;
 #endif
         private const int InactiveFrameCount = 120;
 
@@ -79,12 +82,24 @@ namespace ReactNative.Modules.Core
             }
         }
 
-        private static bool HasCoreWindow
+#if WINDOWS_UWP
+        /// <summary>
+        /// Factory for choreographer instances associated with non main-view dispatchers.
+        /// </summary>
+        public static ReactChoreographer CreateSecondaryInstance(CoreApplicationView view)
+        {
+            var instance = new ReactChoreographer();
+            instance._applicationView = view;
+            return instance;
+        }
+#endif
+
+        private bool HasCoreWindow
         {
             get
             {
 #if WINDOWS_UWP
-                return CoreApplication.MainView.CoreWindow != null;
+                return _applicationView.CoreWindow != null;
 #else
                 return true;
 #endif
@@ -148,6 +163,9 @@ namespace ReactNative.Modules.Core
             if (subscribe)
             {
                 DispatcherHelpers.RunOnDispatcher(
+#if WINDOWS_UWP
+                    _applicationView.Dispatcher,
+#endif
                     ActivatePriority,
                     () =>
                     {
@@ -223,19 +241,24 @@ namespace ReactNative.Modules.Core
 
         private void OnTick(object state)
         {
-            DispatcherHelpers.RunOnDispatcher(() =>
-            {
-                bool isSubscribed;
-                lock (_gate)
+            DispatcherHelpers.RunOnDispatcher(
+#if WINDOWS_UWP
+                _applicationView.CoreWindow.Dispatcher,
+#endif
+                TickPriority,
+                () =>
                 {
-                    isSubscribed = _isSubscribed;
-                }
+                    bool isSubscribed;
+                    lock (_gate)
+                    {
+                        isSubscribed = _isSubscribed;
+                    }
 
-                if (isSubscribed)
-                {
-                    OnRendering(null, _stopwatch.Elapsed);
-                }
-            });
+                    if (isSubscribed)
+                    {
+                        OnRendering(null, _stopwatch.Elapsed);
+                    }
+                });
         }
 
         private void OnRendering(object sender, TimeSpan e)

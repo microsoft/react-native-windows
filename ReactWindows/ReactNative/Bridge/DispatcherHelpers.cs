@@ -109,7 +109,35 @@ namespace ReactNative.Bridge
         /// </returns>
         public static bool IsOnDispatcher(DependencyObject dependencyObject)
         {
-            return CoreApplication.GetCurrentView().Dispatcher == dependencyObject.Dispatcher;
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException("dependencyObject");
+            }
+
+            return IsOnDispatcher(dependencyObject.Dispatcher);
+        }
+
+        /// <summary>
+        /// Checks if the current thread has access to a DependencyObject.
+        /// </summary>
+        /// <returns>
+        /// <code>true</code> if the current thread has dispatcher access,
+        /// otherwise <code>false</code>.
+        /// </returns>
+        public static bool IsOnDispatcher(CoreDispatcher dispatcher)
+        {
+            if (dispatcher == null)
+            {
+                throw new ArgumentNullException("dispatcher");
+            }
+
+            // Fast path for main dispatcher
+            if (dispatcher == s_mainDispatcher)
+            {
+                return IsOnDispatcher();
+            }
+
+            return CoreApplication.GetCurrentView()?.Dispatcher == dispatcher;
         }
 
         /// <summary>
@@ -174,7 +202,7 @@ namespace ReactNative.Bridge
         /// <returns>A task to await the result.</returns>
         public static Task<T> CallOnDispatcherWithInlining<T>(Func<T> func)
         {
-            if (MainDispatcher.HasThreadAccess)
+            if (IsOnDispatcher())
             {
                 return Task.FromResult(func());
             }

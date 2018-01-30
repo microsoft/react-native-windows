@@ -4,8 +4,10 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
 namespace ReactNative.UIManager
@@ -115,9 +117,35 @@ namespace ReactNative.UIManager
             if (!_dispatcherToOperationQueueInfo.TryGetValue(currentDispatcher, out queueInfo))
             {
                 // Queue instance doesn't exist for this dispatcher, we need to create
+                ReactChoreographer reactChoreographer;
+                if (currentDispatcher == DispatcherHelpers.MainDispatcher)
+                {
+                    reactChoreographer = ReactChoreographer.Instance;
+                }
+                else
+                {
+                    CoreApplicationView foundView = null;
+                    // Find the CoreApplicationView corresponding to the dispatcher
+                    foreach (var view in CoreApplication.Views)
+                    {
+                        if (view.Dispatcher == currentDispatcher)
+                        {
+                            foundView = view;
+                            break;
+                        }
+                    }
+                    if (foundView ==  null)
+                    {
+                        throw new InvalidOperationException("Can't find CoreApplicationView for CoreDispatcher");
+                    }
+
+                    reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
+                }
+
                 queueInfo = new QueueInstanceInfo()
                 {
-                    queueInstance = new UIViewOperationQueueInstance(_reactContext, new NativeViewHierarchyManager(_viewManagerRegistry)),
+                    queueInstance = new UIViewOperationQueueInstance(
+                        _reactContext, new NativeViewHierarchyManager(_viewManagerRegistry, currentDispatcher), reactChoreographer),
                     rootViewCount = 1
                 };
 
