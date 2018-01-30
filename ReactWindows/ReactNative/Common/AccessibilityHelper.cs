@@ -1,4 +1,3 @@
-using ReactNative.UIManager;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
@@ -14,15 +13,20 @@ namespace ReactNative.Common
 
         /// <summary>
         /// Initializes the value of AccessibilityView for <paramref name="uiElement"/> and its children,
-        /// based on the ancestor settings.
+        /// based on the ancestor <paramref name="parentUIElement"/> settings.
         /// </summary>
+        /// <param name="parentUIElement"></param>
         /// <param name="uiElement"></param>
-        public static void InitImportantForAccessibility(UIElement uiElement)
+        public static void InitImportantForAccessibility(UIElement parentUIElement, UIElement uiElement)
         {
-            var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
-            if (IsHiddenByAncestor(uiElementAutomationPeer))
+            var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
+            var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
+            if (parentImportantForAccessibilityAttached == ImportantForAccessibility.Yes ||
+                parentImportantForAccessibilityAttached == ImportantForAccessibility.NoHideDescendants ||
+                IsHiddenByAncestor(parentUIElementAutomationPeer))
             {
                 // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
+                var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
                 AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
                 SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
             }
@@ -45,11 +49,8 @@ namespace ReactNative.Common
 
             SetImportantForAccessibilityAttached(uiElement, importantForAccessibilityNew);
 
-            // Check if the element is "hidden" (i.e. AccessibilityView = 'Raw') by an ancestor. This occurs if
-            // there is an ancestor with 'Yes' or 'NoHideDescendants'. In this case make no change to AccessibilityView.
-            // If later the element or its parent ImportantForAccessibility is set to 'Auto' or 'No', that makes children
-            // visible, SetChildrenAccessibilityViewFromImportantForAccessibility will update AccessibilityView properly
-            // for the element and its children accordingly.
+            // Check if uiElement has an ancestor that "hides" children. If so, AccessibilityView is
+            // already set to "Raw" for all children and no updates are required.
             var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
             if (IsHiddenByAncestor(uiElementAutomationPeer))
             {
@@ -63,19 +64,19 @@ namespace ReactNative.Common
         /// <summary>
         /// Attached property used to store ImportantForAccessibility value in native controls.
         /// </summary>
-        public static readonly DependencyProperty ImportantForAccessibilityAttachedProperty =
+        private static readonly DependencyProperty ImportantForAccessibilityAttachedProperty =
             DependencyProperty.RegisterAttached(
-            "ImportantForAccessibilityAttached",
-            typeof(ImportantForAccessibility),
-            typeof(UIElement),
-            new PropertyMetadata(ImportantForAccessibility.Auto));
+                "ImportantForAccessibilityAttached",
+                typeof(ImportantForAccessibility),
+                typeof(UIElement),
+                new PropertyMetadata(ImportantForAccessibility.Auto));
 
         /// <summary>
         /// ImportantForAccessibilityAttached property setter.
         /// </summary>
         /// <param name="element"></param>
         /// <param name="value"></param>
-        public static void SetImportantForAccessibilityAttached(UIElement element, ImportantForAccessibility value)
+        private static void SetImportantForAccessibilityAttached(UIElement element, ImportantForAccessibility value)
         {
             element.SetValue(ImportantForAccessibilityAttachedProperty, value);
         }
@@ -85,7 +86,7 @@ namespace ReactNative.Common
         /// </summary>
         /// <param name="element"></param>
         /// <returns></returns>
-        public static ImportantForAccessibility GetImportantForAccessibilityAttached(UIElement element)
+        private static ImportantForAccessibility GetImportantForAccessibilityAttached(UIElement element)
         {
             return (ImportantForAccessibility)element.GetValue(ImportantForAccessibilityAttachedProperty);
         }
@@ -116,7 +117,8 @@ namespace ReactNative.Common
         /// <summary>
         /// Returns true if in <paramref name="uiElementAutomationPeer"/> parents chain there is an UIElement with
         /// ImportantForAccessibility value of Yes or NoHideDescendants. 'Yes' denotes that the element is visible
-        /// to the narrator as a container i.e. its children are 'hidden'.
+        /// to the narrator as a container i.e. its children are 'hidden'. 'NoHideDescendants' denotes that both
+        /// the element and its children are 'hidden'. 'Hidden' children have AccessibilityView set to 'Raw'.
         /// </summary>
         /// <param name="uiElementAutomationPeer"></param>
         /// <returns></returns>

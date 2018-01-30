@@ -1,4 +1,4 @@
-namespace ReactNative.UIManager
+namespace ReactNative.Common
 {
     /// <summary>
     /// Accessibility importance mode.

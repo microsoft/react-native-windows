@@ -1,4 +1,6 @@
-﻿using ReactNative.UIManager;
+using ReactNative.Common;
+using ReactNative.Reflection;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -51,6 +53,18 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the RichTextBlock.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(RichTextBlock view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
@@ -68,6 +82,12 @@ namespace ReactNative.Views.Text
             }
 
             parent.Blocks.OfType<Paragraph>().First().Inlines.Insert(index, inlineChild);
+
+            // Initialize ImportantForAccessibility for the child.
+            if (child is UIElement childUIElement)
+            {
+                AccessibilityHelper.InitImportantForAccessibility(parent, childUIElement);
+            }
         }
 
         /// <summary>
