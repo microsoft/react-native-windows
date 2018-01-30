@@ -108,8 +108,6 @@ namespace ReactNative.UIManager
             SizeMonitoringCanvas rootView,
             ThemedReactContext themedRootContext)
         {
-            DispatcherHelpers.AssertOnDispatcher();
-
             // Extract dispatcher
             var currentDispatcher = rootView.Dispatcher;
 
