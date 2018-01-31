@@ -1,6 +1,5 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
@@ -108,7 +107,6 @@ namespace ReactNative.Animated
 
             _animatedNodes.Add(tag, node);
             _updatedNodes[tag] = node;
-            ReactChoreographer.Instance.ActivateCallback(nameof(NativeAnimatedModule));
         }
 
         public void DropAnimatedNode(int tag)
@@ -235,7 +233,6 @@ namespace ReactNative.Animated
             }
 
             _activeAnimations[animationId] = animation;
-            ReactChoreographer.Instance.ActivateCallback(nameof(NativeAnimatedModule));
         }
 
         public void StopAnimation(int animationId)
