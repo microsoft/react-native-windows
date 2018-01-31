@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.UI.Core;
+#endif
 
 namespace ReactNative.UIManager
 {

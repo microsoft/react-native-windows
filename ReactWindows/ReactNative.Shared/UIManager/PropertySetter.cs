@@ -1,6 +1,7 @@
 ﻿using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -214,7 +215,10 @@ namespace ReactNative.UIManager
 
         class ViewManagerPropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[2];
+#if WINDOWS_UWP
+            [ThreadStatic]
+#endif
+            private static object[] s_args;
 
             public ViewManagerPropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
@@ -241,6 +245,11 @@ namespace ReactNative.UIManager
 
             protected override object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
             {
+                if (s_args == null)
+                {
+                    s_args =  new object[2];
+                }
+
                 s_args[0] = view;
                 s_args[1] = ExtractProperty(props);
                 return s_args;
@@ -254,7 +263,10 @@ namespace ReactNative.UIManager
 
         class ViewManagerGroupPropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[3];
+#if WINDOWS_UWP
+            [ThreadStatic]
+#endif
+            private static object[] s_args;
 
             private readonly int _index;
 
@@ -291,6 +303,11 @@ namespace ReactNative.UIManager
 
             protected override object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
             {
+                if (s_args == null)
+                {
+                    s_args = new object[3];
+                }
+
                 s_args[0] = view;
                 s_args[1] = _index;
                 s_args[2] = ExtractProperty(props);
@@ -305,7 +322,10 @@ namespace ReactNative.UIManager
 
         class ShadowNodePropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[1];
+#if WINDOWS_UWP
+            [ThreadStatic]
+#endif
+            private static object[] s_args;
 
             public ShadowNodePropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
@@ -326,6 +346,11 @@ namespace ReactNative.UIManager
 
             protected override object[] GetShadowNodeArgs(ReactStylesDiffMap props)
             {
+                if (s_args == null)
+                {
+                    s_args = new object[1];
+                }
+
                 s_args[0] = ExtractProperty(props);
                 return s_args;
             }
@@ -338,7 +363,10 @@ namespace ReactNative.UIManager
 
         class ShadowNodeGroupPropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[2];
+#if WINDOWS_UWP
+            [ThreadStatic]
+#endif
+            private static object[] s_args;
 
             private readonly int _index;
 
@@ -368,6 +396,11 @@ namespace ReactNative.UIManager
 
             protected override object[] GetShadowNodeArgs(ReactStylesDiffMap props)
             {
+                if (s_args == null)
+                {
+                    s_args = new object[2];
+                }
+
                 s_args[0] = _index;
                 s_args[1] = ExtractProperty(props);
                 return s_args;
