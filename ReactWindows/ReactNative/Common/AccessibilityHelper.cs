@@ -9,14 +9,15 @@ namespace ReactNative.Common
     /// </summary>
     public static class AccessibilityHelper
     {
-        #region ImportantForAccessibility
+        #region ImportantForAccessibility - Provides support for ImportantForAccessibility property implementation.
 
         /// <summary>
         /// Initializes the value of AccessibilityView for <paramref name="uiElement"/> and its children,
-        /// based on the ancestor <paramref name="parentUIElement"/> settings.
+        /// based on the ancestor <paramref name="parentUIElement"/> settings. Must be callded
+        /// when an element is initially added to the visula tree.
         /// </summary>
-        /// <param name="parentUIElement"></param>
-        /// <param name="uiElement"></param>
+        /// <param name="parentUIElement">The element where <paramref name="uiElement"/> is added as child.</param>
+        /// <param name="uiElement">The element being added to the visual tree.</param>
         public static void InitImportantForAccessibility(UIElement parentUIElement, UIElement uiElement)
         {
             var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
@@ -34,20 +35,20 @@ namespace ReactNative.Common
 
         /// <summary>
         /// Sets the ImportantForAccessibility property for <paramref name="uiElement"/>.
-        /// It uses AutomationProperties.AccessibilityView to implement the element and its children
-        /// visibility to narrator. ImportantForAccessibility value is stored as an attached property.
+        /// It uses AutomationProperties.AccessibilityView to expose the element and its children
+        /// to narrator. ImportantForAccessibility value is stored as an attached property.
         /// </summary>
-        /// <param name="uiElement"></param>
-        /// <param name="importantForAccessibilityNew"></param>
-        public static void SetImportantForAccessibility(UIElement uiElement, ImportantForAccessibility importantForAccessibilityNew)
+        /// <param name="uiElement">Element which ImportantForAccessibility property is set.</param>
+        /// <param name="importantForAccessibility">The new value of ImportantForAccessibility property.</param>
+        public static void SetImportantForAccessibility(UIElement uiElement, ImportantForAccessibility importantForAccessibility)
         {
-            var importantForAccessibilityOld = GetImportantForAccessibilityAttached(uiElement);
-            if (importantForAccessibilityOld == importantForAccessibilityNew)
+            // Check if property is already set to requested value.
+            if (GetImportantForAccessibilityAttached(uiElement) == importantForAccessibility)
             {
                 return;
             }
 
-            SetImportantForAccessibilityAttached(uiElement, importantForAccessibilityNew);
+            SetImportantForAccessibilityAttached(uiElement, importantForAccessibility);
 
             // Check if uiElement has an ancestor that "hides" children. If so, AccessibilityView is
             // already set to "Raw" for all children and no updates are required.
@@ -58,7 +59,7 @@ namespace ReactNative.Common
             }
 
             // Update AccessibilityView property accordingly.
-            UpdateAccessibilityViewForUIElement(uiElement, uiElementAutomationPeer, importantForAccessibilityNew);
+            UpdateAccessibilityViewForUIElement(uiElement, uiElementAutomationPeer, importantForAccessibility);
         }
 
         /// <summary>
