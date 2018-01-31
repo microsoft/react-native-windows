@@ -508,10 +508,19 @@ namespace ReactNative.UIManager
             }
             else
             {
-                // Dispatch to the correct thread. We don't need to wait for the result since the "view doesn't exist" case
-                // is already taken care of at the beginning of the method
+                // Dispatch to the correct thread. We don't for the result 
                 queue.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
-                 queue.NativeViewHierarchyManager.UpdateProperties(tag, props)).AsTask();
+                {
+                    if (queue.NativeViewHierarchyManager.ViewExists(tag))
+                    {
+                        queue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+                    }
+                    else
+                    {
+                        // TODO MW: need better error handling?
+                        ;
+                    }
+                }).AsTask();
             }
             return true;
         }
