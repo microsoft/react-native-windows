@@ -608,9 +608,7 @@ namespace ReactNative
 
             foreach (var rootView in _attachedRootViews)
             {
-                // TODO MW: oops
-                rootView.Children.Clear();
-                rootView.ClearData();
+                rootView.CleanupSafe();
             }
 
             await reactContext.DisposeAsync();

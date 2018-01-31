@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Foundation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 #else
 using System.Windows;
@@ -192,6 +193,30 @@ namespace ReactNative
             return result;
         }
 
+        internal void CleanupSafe()
+        {
+            if (this.Dispatcher == DispatcherHelpers.MainDispatcher)
+            {
+                Cleanup();
+            }
+            else
+            {
+#if WINDOWS_UWP
+                DispatcherHelpers.RunOnDispatcher(Dispatcher, CoreDispatcherPriority.Normal, Cleanup);
+#else
+                throw new InvalidOperationException("Not called from main dispatcher thread");
+#endif
+            }
+        }
+
+        internal void Cleanup()
+        {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
+            Children.Clear();
+            this.ClearData();
+        }
+
         private async Task MeasureOverrideHelperAsync()
         {
             DispatcherHelpers.AssertOnDispatcher(this);
@@ -218,7 +243,6 @@ namespace ReactNative
             task.ContinueWith(
                 t =>
                 {
-                    // TODO MW: maybe Trace?
                     Debug.Fail("Exception in fire and forget asynchronous function", t.Exception.ToString());
                 },
                 TaskContinuationOptions.OnlyOnFaulted);

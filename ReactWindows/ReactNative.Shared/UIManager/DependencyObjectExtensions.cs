@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -14,6 +14,7 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class DependencyObjectExtensions
     {
+        // ConditionalWeakTable is thread safe
         private static readonly ConditionalWeakTable<DependencyObject, DependencyObjectData> s_properties =
             new ConditionalWeakTable<DependencyObject, DependencyObjectData>();
         private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();

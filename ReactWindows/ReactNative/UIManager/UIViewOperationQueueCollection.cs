@@ -7,6 +7,7 @@ using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
@@ -56,24 +57,11 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The native view hierarchy manager.
         /// </summary>
-        internal UIViewOperationQueueInstance FirstUIViewOperationQueue
+        internal UIViewOperationQueueInstance MainUIViewOperationQueue
         {
             get
             {
-                // TODO MW: fixing this stuff
                 return _mainUiViewOperationsQueueInstance;
-            }
-        }
-
-        /// <summary>
-        /// The native view hierarchy manager.
-        /// </summary>
-        internal NativeViewHierarchyManager NativeViewHierarchyManager
-        {
-            get
-            {
-                // TODO MW: fixing this stuff
-                return FirstUIViewOperationQueue.NativeViewHierarchyManager;
             }
         }
 
@@ -85,7 +73,6 @@ namespace ReactNative.UIManager
         /// </returns>
         public bool IsEmpty()
         {
-            // TODO MW: does it need lock?
             foreach (var queueInfo in _dispatcherToOperationQueueInfo.Values)
             {
                 if (!queueInfo.queueInstance.IsEmpty())
@@ -251,10 +238,9 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void EnqueueUIBlock(IUIBlock block)
         {
-            // TODO MW
             // Native animation module is synchronized to the main dispatcher thread.
             // Always forward to the main queue
-            FirstUIViewOperationQueue.EnqueueUIBlock(block);
+            MainUIViewOperationQueue.EnqueueUIBlock(block);
         }
 
         /// <summary>
@@ -263,10 +249,9 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void PrependUIBlock(IUIBlock block)
         {
-            // TODO MW
             // Native animation module is synchronized to the main dispatcher thread.
             // Always forward to the main queue
-            FirstUIViewOperationQueue.PrependUIBlock(block);
+            MainUIViewOperationQueue.PrependUIBlock(block);
         }
 
         /// <summary>
@@ -303,9 +288,9 @@ namespace ReactNative.UIManager
         /// <param name="error">The error callback.</param>
         public void EnqueueConfigureLayoutAnimation(JObject config, ICallback success, ICallback error)
         {
-            if (FirstUIViewOperationQueue != null)
+            if (MainUIViewOperationQueue != null)
             {
-                FirstUIViewOperationQueue.EnqueueConfigureLayoutAnimation(config, success, error);
+                MainUIViewOperationQueue.EnqueueConfigureLayoutAnimation(config, success, error);
             }
         }
 
@@ -501,10 +486,10 @@ namespace ReactNative.UIManager
                 return false;
             }
 
-            if (queue == FirstUIViewOperationQueue)
+            if (queue == MainUIViewOperationQueue)
             {
                 // Main queue case. Just forward.
-                NativeViewHierarchyManager.UpdateProperties(tag, props);
+                MainUIViewOperationQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
             }
             else
             {
@@ -517,8 +502,7 @@ namespace ReactNative.UIManager
                     }
                     else
                     {
-                        // TODO MW: need better error handling?
-                        ;
+                        Debug.WriteLine($"View with tag {tag} not found due to race condition");
                     }
                 }).AsTask();
             }
