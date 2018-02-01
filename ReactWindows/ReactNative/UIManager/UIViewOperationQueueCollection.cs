@@ -566,8 +566,8 @@ namespace ReactNative.UIManager
             }
             else
             {
-                // Dispatch to the correct thread. We don't wait for the result 
-                queue.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                // Dispatch to the correct thread.
+                DispatcherHelpers.RunOnDispatcher(queue.Dispatcher, CoreDispatcherPriority.High, () =>
                 {
                     if (queue.NativeViewHierarchyManager.ViewExists(tag))
                     {
@@ -577,7 +577,7 @@ namespace ReactNative.UIManager
                     {
                         Debug.WriteLine($"View with tag {tag} not found due to race condition");
                     }
-                }).AsTask();
+                });
             }
             return true;
         }
