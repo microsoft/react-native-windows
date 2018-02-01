@@ -215,7 +215,12 @@ namespace ReactNative.UIManager
                         {
                             queue.OnDestroy();
                             return true;
-                        });
+                        }, true); // inlining allowed
+
+                        if (queue == MainUIViewOperationQueue)
+                        {
+                            _mainUiViewOperationsQueueInstance = null;
+                        }
 
                         break;
                     }
@@ -498,31 +503,41 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Called when the host receives the suspend event.
         /// </summary>
-        public async void OnSuspend()
+        public void OnSuspend()
         {
-            // TODO MW
-            _active = false;
-            foreach (var item in _dispatcherToOperationQueueInfo)
+             _active = false;
+            foreach (var pair in _dispatcherToOperationQueueInfo)
             {
-                await item.Key.RunAsync(CoreDispatcherPriority.Normal, () => { item.Value.queueInstance.OnSuspend(); }
-                ).AsTask().ConfigureAwait(false);
+                // Simulate an OnSuspend from the correct dispatcher thread
+                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
+                {
+                    pair.Value.queueInstance.OnSuspend();
+                    return true;
+                }, true); // inlining allowed
             }
+            // We don't wait for the non-inlined (asynchronous) operations to finish.
+            // A "Forget" construct (as the one used in ReactRootView) would make this more explicit
         }
 
         /// <summary>
         /// Called when the host receives the resume event.
         /// </summary>
-        public async void OnResume()
+        public void OnResume()
         {
-            // TODO MW
             _active = true;
-            foreach (var item in _dispatcherToOperationQueueInfo)
+            foreach (var pair in _dispatcherToOperationQueueInfo)
             {
-                await item.Key.RunAsync(CoreDispatcherPriority.Normal, () => {
-                    item.Value.queueInstance.OnResume();
-                }
-                ).AsTask().ConfigureAwait(false);
+                // Simulate an OnResume from the correct dispatcher thread
+                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
+                {
+                    pair.Value.queueInstance.OnResume();
+                    return true;
+                }, true); // inlining allowed
             }
+            // We don't wait for the non-inlined (asynchronous) operations to finish.
+            // A "Forget" construct (as the one used in ReactRootView) would make this more explicit
         }
 
         /// <summary>
@@ -530,7 +545,19 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            // TODO MW
+            _active = false;
+            foreach (var pair in _dispatcherToOperationQueueInfo)
+            {
+                // Simulate an OnDestroy from the correct dispatcher thread
+                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
+                {
+                    pair.Value.queueInstance.OnDestroy();
+                    return true;
+                }, true); // inlining allowed
+            }
+            // We don't wait for the non-inlined (asynchronous) operations to finish.
+            // A "Forget" construct (as the one used in ReactRootView) would make this more explicit
         }
 
         /// <summary>
