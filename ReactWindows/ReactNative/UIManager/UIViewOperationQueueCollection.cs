@@ -345,10 +345,10 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            // TODO MW: WTH, forgot about this one
-            if (MainUIViewOperationQueue != null)
+            // We have to dispatch this to all queues. Each queue will reset the "animating layout" at the end of the current batch.
+            foreach (var queue in _dispatcherToOperationQueueInfo.Values)
             {
-                MainUIViewOperationQueue.EnqueueConfigureLayoutAnimation(config, success, error);
+                queue.queueInstance.EnqueueConfigureLayoutAnimation(config, success, error);
             }
         }
 
