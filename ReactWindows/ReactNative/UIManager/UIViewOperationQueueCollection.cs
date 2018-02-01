@@ -95,25 +95,34 @@ namespace ReactNative.UIManager
             SizeMonitoringCanvas rootView,
             ThemedReactContext themedRootContext)
         {
-            // Extract dispatcher
-            var currentDispatcher = rootView.Dispatcher;
+            // This is called on layout manager thread
 
+            // Extract dispatcher
+            var rootViewDispatcher = rootView.Dispatcher;
+
+            // _dispatcherToOperationQueueInfo contains a mapping of CoreDispatcher to <UIViewOperationQueueInstance, # of ReactRootView instances>.
+            // Operation queue instances are created lazily whenever an "unknown" CoreDispatcher is detected. Each operation queue instance
+            // works together with one dedicated NativeViewHierarchyManager and one ReactChoreographer.
+            // One operation queue is the "main" one:
+            // - is coupled with the CoreApplicationView.MainView dispatcher
+            // - drives animations in ALL viewa
             QueueInstanceInfo queueInfo;
-            if (!_dispatcherToOperationQueueInfo.TryGetValue(currentDispatcher, out queueInfo))
+            if (!_dispatcherToOperationQueueInfo.TryGetValue(rootViewDispatcher, out queueInfo))
             {
                 // Queue instance doesn't exist for this dispatcher, we need to create
                 ReactChoreographer reactChoreographer;
-                if (currentDispatcher == DispatcherHelpers.MainDispatcher)
+                if (rootViewDispatcher == DispatcherHelpers.MainDispatcher)
                 {
+                    // We reuse "main" ReactChoreographer for the main queue
                     reactChoreographer = ReactChoreographer.Instance;
                 }
                 else
                 {
+                    // Find the CoreApplicationView associated to the new CoreDispatcher
                     CoreApplicationView foundView = null;
-                    // Find the CoreApplicationView corresponding to the dispatcher
                     foreach (var view in CoreApplication.Views)
                     {
-                        if (view.Dispatcher == currentDispatcher)
+                        if (view.Dispatcher == rootViewDispatcher)
                         {
                             foundView = view;
                             break;
@@ -121,37 +130,44 @@ namespace ReactNative.UIManager
                     }
                     if (foundView ==  null)
                     {
+                        // Not expected
                         throw new InvalidOperationException("Can't find CoreApplicationView for CoreDispatcher");
                     }
 
+                    // Create new ReactChoreographer for this view/dispatcher. It will only be used for its DispatchUICallback services
                     reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
                 }
 
                 queueInfo = new QueueInstanceInfo()
                 {
                     queueInstance = new UIViewOperationQueueInstance(
-                        _reactContext, new NativeViewHierarchyManager(_viewManagerRegistry, currentDispatcher), reactChoreographer),
+                        _reactContext, new NativeViewHierarchyManager(_viewManagerRegistry, rootViewDispatcher), reactChoreographer),
                     rootViewCount = 1
                 };
 
-                _dispatcherToOperationQueueInfo[currentDispatcher] = queueInfo;
+                // Add new tuple to map
+                _dispatcherToOperationQueueInfo[rootViewDispatcher] = queueInfo;
 
-                if (currentDispatcher == DispatcherHelpers.MainDispatcher)
+                if (rootViewDispatcher == DispatcherHelpers.MainDispatcher)
                 {
                     _mainUiViewOperationsQueueInstance = queueInfo.queueInstance;
                 }
 
                 if (_active)
                 {
-                    DispatcherHelpers.CallOnDispatcherWithInlining<bool>(() =>
+                    // Simulate an OnResume from the correct dispatcher thread
+                    // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                    DispatcherHelpers.CallOnDispatcher<bool>(rootViewDispatcher, () =>
                     {
                         queueInfo.queueInstance.OnResume();
                         return true;
-                    });
+                    }, true); // inlining allowed
                 }
             }
             else
             {
+                // Queue instance does exist.
+                // Increment the cout of root views. this is helpful for the case the count reaches 0 so we can cleanup the queue.
                 queueInfo.rootViewCount++;
             }
 
@@ -168,6 +184,8 @@ namespace ReactNative.UIManager
         /// <param name="rootViewTag">The root view tag.</param>
         public void EnqueueRemoveRootView(int rootViewTag)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(rootViewTag, out queue))
             {
@@ -178,7 +196,32 @@ namespace ReactNative.UIManager
             queue.EnqueueRemoveRootView(rootViewTag);
 
             // Do some maintenance/cleanup if needed.
-            // TODO MW: cleanup the core dispatcher to queue mapping
+            // Find the queue info
+            foreach (var pair in _dispatcherToOperationQueueInfo)
+            {
+                if (queue == pair.Value.queueInstance)
+                {
+                    // Decrement number of root views
+                    pair.Value.rootViewCount--;
+
+                    if (pair.Value.rootViewCount == 0)
+                    {
+                        // We can remove this queue and then destroy
+                        _dispatcherToOperationQueueInfo.Remove(pair.Key);
+
+                        // Simulate an OnDestroy from the correct dispatcher thread
+                        // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                        DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
+                        {
+                            queue.OnDestroy();
+                            return true;
+                        });
+
+                        break;
+                    }
+                }
+            }
+
         }
 
         /// <summary>
@@ -189,6 +232,8 @@ namespace ReactNative.UIManager
         /// <param name="commandArgs">The command arguments.</param>
         public void EnqueueDispatchCommand(int tag, int commandId, JArray commandArgs)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
             {
@@ -205,6 +250,8 @@ namespace ReactNative.UIManager
         /// <param name="extraData">The extra data.</param>
         public void EnqueueUpdateExtraData(int reactTag, object extraData)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
@@ -223,6 +270,8 @@ namespace ReactNative.UIManager
         /// <param name="success">Called on success.</param>
         public void EnqueueShowPopupMenu(int tag, string[] items, ICallback error, ICallback success)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
             {
@@ -238,6 +287,8 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void EnqueueUIBlock(IUIBlock block)
         {
+            // Called on layout manager thread
+
             // Native animation module is synchronized to the main dispatcher thread.
             // Always forward to the main queue
             MainUIViewOperationQueue.EnqueueUIBlock(block);
@@ -249,6 +300,8 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void PrependUIBlock(IUIBlock block)
         {
+            // Called on layout manager thread
+
             // Native animation module is synchronized to the main dispatcher thread.
             // Always forward to the main queue
             MainUIViewOperationQueue.PrependUIBlock(block);
@@ -269,6 +322,8 @@ namespace ReactNative.UIManager
             ReactStylesDiffMap initialProps,
             int rootViewTag)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(rootViewTag, out queue))
             {
@@ -288,6 +343,9 @@ namespace ReactNative.UIManager
         /// <param name="error">The error callback.</param>
         public void EnqueueConfigureLayoutAnimation(JObject config, ICallback success, ICallback error)
         {
+            // Called on layout manager thread
+
+            // TODO MW: WTH, forgot about this one
             if (MainUIViewOperationQueue != null)
             {
                 MainUIViewOperationQueue.EnqueueConfigureLayoutAnimation(config, success, error);
@@ -302,6 +360,8 @@ namespace ReactNative.UIManager
         /// <param name="props">The properties.</param>
         public void EnqueueUpdateProperties(int tag, string className, ReactStylesDiffMap props)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
             {
@@ -322,6 +382,8 @@ namespace ReactNative.UIManager
             int tag,
             Dimensions dimensions)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
             {
@@ -344,6 +406,8 @@ namespace ReactNative.UIManager
             ViewAtIndex[] viewsToAdd,
             int[] tagsToDelete)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
             {
@@ -360,6 +424,8 @@ namespace ReactNative.UIManager
         /// <param name="childrenTags">The children tags.</param>
         public void EnqueueSetChildren(int reactTag, int[] childrenTags)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
@@ -376,6 +442,8 @@ namespace ReactNative.UIManager
         /// <param name="callback">The measurement result callback.</param>
         public void EnqueueMeasure(int reactTag, ICallback callback)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
@@ -392,6 +460,8 @@ namespace ReactNative.UIManager
         /// <param name="callback">The measurement result callback.</param>
         public void EnqueueMeasureInWindow(int reactTag, ICallback callback)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
@@ -414,6 +484,8 @@ namespace ReactNative.UIManager
             double targetY,
             ICallback callback)
         {
+            // Called on layout manager thread
+
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
@@ -493,7 +565,7 @@ namespace ReactNative.UIManager
             }
             else
             {
-                // Dispatch to the correct thread. We don't for the result 
+                // Dispatch to the correct thread. We don't wait for the result 
                 queue.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                 {
                     if (queue.NativeViewHierarchyManager.ViewExists(tag))
@@ -515,6 +587,9 @@ namespace ReactNative.UIManager
         /// <param name="batchId">The batch identifier.</param>
         internal void DispatchViewUpdates(int batchId)
         {
+            // Called on layout manager thread
+
+            // Dispatch to all queues
             foreach (var queue in _dispatcherToOperationQueueInfo.Values)
             {
                 queue.queueInstance.DispatchViewUpdates(batchId);

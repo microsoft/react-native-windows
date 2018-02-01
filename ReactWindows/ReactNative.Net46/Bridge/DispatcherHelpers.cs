@@ -63,6 +63,11 @@ namespace ReactNative.Bridge
             return MainDispatcher.CheckAccess();
         }
 
+        public static bool IsOnDispatcher(Dispatcher dispatcher)
+        {
+            return dispatcher.CheckAccess();
+        }
+
         public static void AssertOnDispatcher(DependencyObject dependencyObject)
         {
             AssertDispatcherSet();
@@ -98,39 +103,49 @@ namespace ReactNative.Bridge
             RunOnDispatcher(priority, action);
         }
 
-        public static Task<T> CallOnDispatcher<T>(Func<T> func)
-        {
-            var taskCompletionSource = new TaskCompletionSource<T>();
-
-            RunOnDispatcher(() =>
-            {
-                var result = func();
-
-                // TaskCompletionSource<T>.SetResult can call continuations
-                // on the awaiter of the task completion source.
-                Task.Run(() => taskCompletionSource.SetResult(result));
-            });
-
-            return taskCompletionSource.Task;
-        }
-
         /// <summary>
-        /// Invokes a function on the dispatcher and asynchronously returns the
-        /// result. Tries to inline the call if thread has dispatcher access.
+        /// Invokes a function on the main dispatcher and asynchronously returns the
+        /// result.
         /// </summary>
         /// <typeparam name="T">Function return type.</typeparam>
         /// <param name="func">The function to invoke.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
         /// <returns>A task to await the result.</returns>
-        public static Task<T> CallOnDispatcherWithInlining<T>(Func<T> func)
+        public static Task<T> CallOnDispatcher<T>(Func<T> func, bool allowInlining = false)
         {
-            if (MainDispatcher.CheckAccess())
+            return CallOnDispatcher(MainDispatcher, func, allowInlining);
+        }
+
+        /// <summary>
+        /// Invokes a function on a specified dispatcher and asynchronously returns the
+        /// result.
+        /// </summary>
+        /// <typeparam name="T">Function return type.</typeparam>
+        /// <param name="dispatcher">The Dispatcher to be used.</param>
+        /// <param name="func">The function to invoke.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
+        /// <returns>A task to await the result.</returns>
+        public static Task<T> CallOnDispatcher<T>(Dispatcher dispatcher, Func<T> func, bool allowInlining = false)
+        {
+            var taskCompletionSource = new TaskCompletionSource<T>();
+
+            if (allowInlining && IsOnDispatcher(dispatcher))
             {
                 return Task.FromResult(func());
             }
             else
             {
-                return CallOnDispatcher(func);
+                RunOnDispatcher(dispatcher, DispatcherPriority.Normal, () =>
+                {
+                    var result = func();
+
+                    // TaskCompletionSource<T>.SetResult can call continuations
+                    // on the awaiter of the task completion source.
+                    Task.Run(() => taskCompletionSource.SetResult(result));
+                });
             }
+
+            return taskCompletionSource.Task;
         }
 
         public static void Reset()

@@ -374,6 +374,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnSuspend()
         {
+            // Must be called in the context of the dispatcher thread corresponding to this queue
             _reactChoreographer.DispatchUICallback -= OnRenderingSafe;
         }
 
@@ -382,6 +383,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnResume()
         {
+            // Must be called in the context of the dispatcher thread corresponding to this queue
             _reactChoreographer.DispatchUICallback += OnRenderingSafe;
         }
 
@@ -390,6 +392,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
+            // Must be called in the context of the dispatcher thread corresponding to this queue
             _reactChoreographer.DispatchUICallback -= OnRenderingSafe;
         }
 

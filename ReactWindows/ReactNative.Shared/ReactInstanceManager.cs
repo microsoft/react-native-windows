@@ -363,7 +363,7 @@ namespace ReactNative
             rootView.Children.Clear();
             rootView.ClearData();
 
-            await DispatcherHelpers.CallOnDispatcherWithInlining(() =>
+            await DispatcherHelpers.CallOnDispatcher(() =>
             {
                 _attachedRootViews.Add(rootView);
 
@@ -378,7 +378,7 @@ namespace ReactNative
                 }
 
                 return true;
-           });
+           }, true); // inlining allowed
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
 
-            await DispatcherHelpers.CallOnDispatcherWithInlining(() =>
+            await DispatcherHelpers.CallOnDispatcher(() =>
             {
                 if (_attachedRootViews.Remove(rootView))
                 {
@@ -407,7 +407,7 @@ namespace ReactNative
                 }
 
                 return true;
-            });
+            }, true); // inlining allowed
         }
 
         /// <summary>
