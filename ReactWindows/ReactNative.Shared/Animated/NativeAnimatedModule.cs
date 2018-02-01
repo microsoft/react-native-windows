@@ -174,6 +174,8 @@ namespace ReactNative.Animated
                     operation(nodesManager);
                 }
             }));
+
+            ReactChoreographer.Instance.ActivateCallback(nameof(NativeAnimatedModule));
         }
 
         /// <summary>
