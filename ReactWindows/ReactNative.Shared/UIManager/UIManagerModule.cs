@@ -118,7 +118,7 @@ namespace ReactNative.UIManager
 
             var context = new ThemedReactContext(Context);
 
-            DispatcherHelpers.CallOnDispatcher<bool>(rootView.Dispatcher, () =>
+            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
             {
                 var width = rootView.ActualWidth;
                 var height = rootView.ActualHeight;
@@ -145,8 +145,7 @@ namespace ReactNative.UIManager
                         }
                     });
                 });
-                return true;
-
+ 
             }, true); // Allow inlining
 
             return tag;

@@ -157,11 +157,7 @@ namespace ReactNative.UIManager
                 {
                     // Simulate an OnResume from the correct dispatcher thread
                     // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                    DispatcherHelpers.CallOnDispatcher<bool>(rootViewDispatcher, () =>
-                    {
-                        queueInfo.queueInstance.OnResume();
-                        return true;
-                    }, true); // inlining allowed
+                    DispatcherHelpers.RunOnDispatcher(rootViewDispatcher, queueInfo.queueInstance.OnResume, true); // inlining allowed
                 }
             }
             else
@@ -211,11 +207,7 @@ namespace ReactNative.UIManager
 
                         // Simulate an OnDestroy from the correct dispatcher thread
                         // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                        DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
-                        {
-                            queue.OnDestroy();
-                            return true;
-                        }, true); // inlining allowed
+                        DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy, true); // inlining allowed
 
                         if (queue == MainUIViewOperationQueue)
                         {
@@ -510,14 +502,8 @@ namespace ReactNative.UIManager
             {
                 // Simulate an OnSuspend from the correct dispatcher thread
                 // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
-                {
-                    pair.Value.queueInstance.OnSuspend();
-                    return true;
-                }, true); // inlining allowed
+                DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnSuspend, true); // inlining allowed
             }
-            // We don't wait for the non-inlined (asynchronous) operations to finish.
-            // A "Forget" construct (as the one used in ReactRootView) would make this more explicit
         }
 
         /// <summary>
@@ -530,14 +516,8 @@ namespace ReactNative.UIManager
             {
                 // Simulate an OnResume from the correct dispatcher thread
                 // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
-                {
-                    pair.Value.queueInstance.OnResume();
-                    return true;
-                }, true); // inlining allowed
+                DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnResume, true); // inlining allowed
             }
-            // We don't wait for the non-inlined (asynchronous) operations to finish.
-            // A "Forget" construct (as the one used in ReactRootView) would make this more explicit
         }
 
         /// <summary>
@@ -550,14 +530,8 @@ namespace ReactNative.UIManager
             {
                 // Simulate an OnDestroy from the correct dispatcher thread
                 // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                DispatcherHelpers.CallOnDispatcher<bool>(pair.Key, () =>
-                {
-                    pair.Value.queueInstance.OnDestroy();
-                    return true;
-                }, true); // inlining allowed
+                DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnDestroy, true); // inlining allowed
             }
-            // We don't wait for the non-inlined (asynchronous) operations to finish.
-            // A "Forget" construct (as the one used in ReactRootView) would make this more explicit
         }
 
         /// <summary>

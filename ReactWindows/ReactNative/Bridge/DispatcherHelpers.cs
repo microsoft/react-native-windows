@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -141,33 +142,59 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Invokes an action on the dispatcher.
+        /// Invokes an action on the main dispatcher.
         /// </summary>
         /// <param name="action">The action to invoke.</param>
-        public static void RunOnDispatcher(DispatchedHandler action)
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the main dispatcher.</param>
+        public static void RunOnDispatcher(DispatchedHandler action, bool allowInlining = false)
         {
-            RunOnDispatcher(CoreDispatcherPriority.Normal, action);
+            RunOnDispatcher(CoreDispatcherPriority.Normal, action, allowInlining);
         }
 
         /// <summary>
-        /// Invokes an action on the dispatcher.
+        /// Invokes an action on the main dispatcher with custom priority.
         /// </summary>
         /// <param name="priority">The priority.</param>
         /// <param name="action">The action to invoke.</param>
-        public static void RunOnDispatcher(CoreDispatcherPriority priority, DispatchedHandler action)
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the main dispatcher.</param>
+        public static void RunOnDispatcher(CoreDispatcherPriority priority, DispatchedHandler action, bool allowInlining = false)
         {
-            RunOnDispatcher(MainDispatcher, priority, action);
+            RunOnDispatcher(MainDispatcher, priority, action, allowInlining);
         }
 
         /// <summary>
-        /// Invokes an action on the dispatcher specified as parameter.
+        /// Invokes an action on a specified dispatcher.
+        /// </summary>
+        /// <param name="dispatcher">The dispatcher.</param>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
+        public static void RunOnDispatcher(CoreDispatcher dispatcher, DispatchedHandler action, bool allowInlining = false)
+        {
+            RunOnDispatcher(dispatcher, CoreDispatcherPriority.Normal, action, allowInlining);
+        }
+
+        /// <summary>
+        /// Invokes an action on a specified dispatcher and priority
         /// </summary>
         /// <param name="dispatcher">The dispatcher.</param>
         /// <param name="priority">The priority.</param>
         /// <param name="action">The action to invoke.</param>
-        public static async void RunOnDispatcher(CoreDispatcher dispatcher, CoreDispatcherPriority priority, DispatchedHandler action)
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
+        public static void RunOnDispatcher(CoreDispatcher dispatcher, CoreDispatcherPriority priority, DispatchedHandler action, bool allowInlining = false)
         {
-            await dispatcher.RunAsync(priority, action).AsTask().ConfigureAwait(false);
+            if (allowInlining && IsOnDispatcher(dispatcher))
+            {
+                action();
+            }
+            else
+            {
+                dispatcher.RunAsync(priority, action).AsTask().ContinueWith(
+                    t =>
+                    {
+                        Debug.Fail("Exception in fire and forget asynchronous function", t.Exception.ToString());
+                    },
+                    TaskContinuationOptions.OnlyOnFaulted);
+            }
         }
 
         /// <summary>
@@ -176,7 +203,7 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <typeparam name="T">Function return type.</typeparam>
         /// <param name="func">The function to invoke.</param>
-        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the main dispatcher.</param>
         /// <returns>A task to await the result.</returns>
         public static Task<T> CallOnDispatcher<T>(Func<T> func, bool allowInlining = false)
         {
@@ -194,15 +221,15 @@ namespace ReactNative.Bridge
         /// <returns>A task to await the result.</returns>
         public static Task<T> CallOnDispatcher<T>(CoreDispatcher dispatcher, Func<T> func, bool allowInlining = false)
         {
-            var taskCompletionSource = new TaskCompletionSource<T>();
-
             if (allowInlining && IsOnDispatcher(dispatcher))
             {
                 return Task.FromResult(func());
             }
             else
             {
-                RunOnDispatcher(dispatcher, CoreDispatcherPriority.Normal, () =>
+                var taskCompletionSource = new TaskCompletionSource<T>();
+
+                RunOnDispatcher(dispatcher, () =>
                 {
                     var result = func();
 
@@ -210,9 +237,9 @@ namespace ReactNative.Bridge
                     // on the awaiter of the task completion source.
                     Task.Run(() => taskCompletionSource.SetResult(result));
                 });
-            }
 
-            return taskCompletionSource.Task;
+                return taskCompletionSource.Task;
+            }
         }
 
         /// <summary>

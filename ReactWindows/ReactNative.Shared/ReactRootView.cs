@@ -196,10 +196,8 @@ namespace ReactNative
 
         internal void CleanupSafe()
         {
-            DispatcherHelpers.CallOnDispatcher<bool>(this.Dispatcher, () => {
-                Cleanup();
-                return true;
-                }, true); // Inlining allowed
+            // Inlining allowed
+            DispatcherHelpers.RunOnDispatcher(this.Dispatcher, Cleanup, true);
         }
 
         internal void Cleanup()

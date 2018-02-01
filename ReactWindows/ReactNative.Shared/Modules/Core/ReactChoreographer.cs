@@ -22,7 +22,6 @@ namespace ReactNative.Modules.Core
     {
 #if WINDOWS_UWP
         private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
-        private const CoreDispatcherPriority TickPriority = CoreDispatcherPriority.Normal;
         private CoreApplicationView _applicationView = CoreApplication.MainView;
 #else
         private const DispatcherPriority ActivatePriority = DispatcherPriority.Send;
@@ -245,7 +244,6 @@ namespace ReactNative.Modules.Core
 #if WINDOWS_UWP
                 _applicationView.CoreWindow.Dispatcher,
 #endif
-                TickPriority,
                 () =>
                 {
                     bool isSubscribed;

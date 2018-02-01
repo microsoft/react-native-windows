@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -78,20 +79,38 @@ namespace ReactNative.Bridge
             }
         }
 
-        public static async void RunOnDispatcher(Action action)
+        public static void RunOnDispatcher(Action action, bool allowInlining = false)
         {
             AssertDispatcherSet();
 
-            await MainDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
+            RunOnDispatcher(DispatcherPriority.Normal, action, allowInlining);
         }
 
-        public static async void RunOnDispatcher(DispatcherPriority priority, Action action)
+        public static void RunOnDispatcher(DispatcherPriority priority, Action action, bool allowInlining = false)
         {
             AssertDispatcherSet();
 
-            await MainDispatcher.InvokeAsync(action, priority).Task.ConfigureAwait(false);
+            if (allowInlining && IsOnDispatcher())
+            {
+                action();
+            }
+            else
+            {
+                MainDispatcher.InvokeAsync(action, priority).Task.ContinueWith(
+                    t =>
+                    {
+                        Debug.Fail("Exception in fire and forget asynchronous function", t.Exception.ToString());
+                    },
+                    TaskContinuationOptions.OnlyOnFaulted);
+            }
+
         }
-        public static async void RunOnDispatcher(Dispatcher dispatcher, DispatcherPriority priority, Action action)
+        public static void RunOnDispatcher(Dispatcher dispatcher, Action action, bool allowInlining = false)
+        {
+            RunOnDispatcher(dispatcher, DispatcherPriority.Normal, action, allowInlining);
+        }
+
+        public static void RunOnDispatcher(Dispatcher dispatcher, DispatcherPriority priority, Action action, bool allowInlining = false)
         {
             AssertDispatcherSet();
 
@@ -100,7 +119,7 @@ namespace ReactNative.Bridge
                 throw new InvalidOperationException("Only main dispatcher is supported.");
             }
 
-            RunOnDispatcher(priority, action);
+            RunOnDispatcher(priority, action, allowInlining);
         }
 
         /// <summary>
@@ -109,7 +128,7 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <typeparam name="T">Function return type.</typeparam>
         /// <param name="func">The function to invoke.</param>
-        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the main dispatcher.</param>
         /// <returns>A task to await the result.</returns>
         public static Task<T> CallOnDispatcher<T>(Func<T> func, bool allowInlining = false)
         {
@@ -127,14 +146,14 @@ namespace ReactNative.Bridge
         /// <returns>A task to await the result.</returns>
         public static Task<T> CallOnDispatcher<T>(Dispatcher dispatcher, Func<T> func, bool allowInlining = false)
         {
-            var taskCompletionSource = new TaskCompletionSource<T>();
-
             if (allowInlining && IsOnDispatcher(dispatcher))
             {
                 return Task.FromResult(func());
             }
             else
             {
+                var taskCompletionSource = new TaskCompletionSource<T>();
+
                 RunOnDispatcher(dispatcher, DispatcherPriority.Normal, () =>
                 {
                     var result = func();
@@ -143,9 +162,9 @@ namespace ReactNative.Bridge
                     // on the awaiter of the task completion source.
                     Task.Run(() => taskCompletionSource.SetResult(result));
                 });
-            }
 
-            return taskCompletionSource.Task;
+                return taskCompletionSource.Task;
+            }
         }
 
         public static void Reset()
