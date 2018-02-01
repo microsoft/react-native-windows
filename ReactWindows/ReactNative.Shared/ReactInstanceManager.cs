@@ -33,7 +33,7 @@ namespace ReactNative
     /// </summary>
     public class ReactInstanceManager
     {
-        private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
+        private readonly List<ReactRootViewBase> _attachedRootViews = new List<ReactRootViewBase>();
 
         private readonly object _lifecycleStateLock = new object();
         private readonly SerialDisposable _currentInitializationToken = new SerialDisposable();
@@ -330,7 +330,7 @@ namespace ReactNative
         /// in case of React instance restart, it will be re-attached.
         /// </summary>
         /// <param name="rootView">The root view.</param>
-        public void AttachMeasuredRootView(ReactRootView rootView)
+        public void AttachMeasuredRootView(ReactRootViewBase rootView)
         {
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
@@ -357,7 +357,7 @@ namespace ReactNative
         /// times on the same <see cref="ReactRootView"/> instance.
         /// </summary>
         /// <param name="rootView">The root view.</param>
-        public void DetachRootView(ReactRootView rootView)
+        public void DetachRootView(ReactRootViewBase rootView)
         {
             if (rootView == null)
                 throw new ArgumentNullException(nameof(rootView));
@@ -371,6 +371,35 @@ namespace ReactNative
                 {
                     DetachViewFromInstance(rootView, currentReactContext.ReactInstance);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Transmits updated initialProps value to React.
+        /// </summary>
+        /// <remarks>
+        /// This will trigger componentWillReceiveProps on the React component.
+        /// </remarks>
+        /// <param name="rootView">The root view.</param>
+        public void UpdatePropsForRootView(ReactRootViewBase rootView)
+        {
+            if (rootView == null)
+                throw new ArgumentNullException(nameof(rootView));
+
+            DispatcherHelpers.AssertOnDispatcher();
+
+            var currentReactContext = _currentReactContext;
+            if (_contextInitializationTask == null && currentReactContext != null)
+            {
+                var rootTag = rootView.GetTag();
+                var jsAppModuleName = rootView.JavaScriptModuleName;
+                var appParameters = new Dictionary<string, object>
+                {
+                    { "rootTag", rootTag },
+                    { "initialProps", rootView.InitialProps }
+                };
+
+                currentReactContext.ReactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
             }
         }
 
@@ -552,7 +581,7 @@ namespace ReactNative
         }
 
         private void AttachMeasuredRootViewToInstance(
-            ReactRootView rootView,
+            ReactRootViewBase rootView,
             IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
@@ -570,7 +599,7 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
         }
 
-        private void DetachViewFromInstance(ReactRootView rootView, IReactInstance reactInstance)
+        private void DetachViewFromInstance(ReactRootViewBase rootView, IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());

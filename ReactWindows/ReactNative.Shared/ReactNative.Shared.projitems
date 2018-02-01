@@ -149,6 +149,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactRootViewBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />

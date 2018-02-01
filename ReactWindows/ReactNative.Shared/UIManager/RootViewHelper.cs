@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -19,7 +19,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <returns>The root view instance.</returns>
-        public static ReactRootView GetRootView(DependencyObject view)
+        public static ReactRootViewBase GetRootView(DependencyObject view)
         {
             var current = view;
             while (true)
@@ -29,7 +29,7 @@ namespace ReactNative.UIManager
                     return null;
                 }
 
-                var rootView = current as ReactRootView;
+                var rootView = current as ReactRootViewBase;
                 if (rootView != null)
                 {
                     return rootView;
@@ -54,7 +54,7 @@ namespace ReactNative.UIManager
                     yield break;
                 }
 
-                if (current is ReactRootView)
+                if (current is ReactRootViewBase)
                 {
                     yield break;
                 }

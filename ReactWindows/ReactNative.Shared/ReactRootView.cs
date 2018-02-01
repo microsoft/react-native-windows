@@ -1,7 +1,6 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Touch;
-using ReactNative.UIManager;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,21 +13,28 @@ using System.Windows;
 namespace ReactNative
 {
     /// <summary>
-    /// Default root view for applicaitons. Provides the ability to listen for
+    /// Default root view for applications. Provides the ability to listen for
     /// size changes so that the UI manager can re-layout its elements.
     /// 
     /// It is also responsible for handling touch events passed to any of it's
     /// child views and sending those events to JavaScript via the
     /// <see cref="UIManager.Events.RCTEventEmitter"/> module.
     /// </summary>
-    public class ReactRootView : SizeMonitoringCanvas
+    public class ReactRootView : ReactRootViewBase
     {
+        enum AttachState
+        {
+            Detached,
+            Scheduled,
+            Attached
+        }
+
         private ReactInstanceManager _reactInstanceManager;
         private string _jsModuleName;
         private JObject _initialProps;
 
         private bool _wasMeasured;
-        private bool _attachScheduled;
+        private AttachState _attachState = AttachState.Detached;
 
         /// <summary>
         /// Instantiates the <see cref="ReactRootView"/>.
@@ -41,11 +47,15 @@ namespace ReactNative
         /// <summary>
         /// Gets the JavaScript module name.
         /// </summary>
-        internal string JavaScriptModuleName
+        public override string JavaScriptModuleName
         {
             get
             {
                 return _jsModuleName;
+            }
+            set
+            {
+                throw new NotSupportedException();
             }
         }
 
@@ -58,13 +68,24 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Get the initialProps
+        /// The props value passed to the React component
         /// </summary>
-        internal JObject InitialProps
+        public override JObject InitialProps
         {
             get
             {
                 return _initialProps;
+            }
+            set
+            {
+                if (value != _initialProps)
+                {
+                    _initialProps = value;
+                    if (_attachState == AttachState.Attached)
+                    {
+                        _reactInstanceManager.UpdatePropsForRootView(this);
+                    }
+                }
             }
         }
 
@@ -81,7 +102,7 @@ namespace ReactNative
         /// <param name="moduleName">The module name.</param>
         public void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName)
         {
-            StartReactApplication(reactInstanceManager, moduleName, default(JObject));
+            StartReactApplication(reactInstanceManager, moduleName, InitialProps);
         }
 
         /// <summary>
@@ -122,10 +143,11 @@ namespace ReactNative
             if (_wasMeasured)
             {
                 _reactInstanceManager.AttachMeasuredRootView(this);
+                _attachState = AttachState.Attached;
             }
             else
             {
-                _attachScheduled = true;
+                _attachState = AttachState.Scheduled;
             }
 
             if (getReactContextTask != null)
@@ -149,9 +171,9 @@ namespace ReactNative
             _wasMeasured = true;
 
             var reactInstanceManager = _reactInstanceManager;
-            if (_attachScheduled && reactInstanceManager != null)
+            if (_attachState == AttachState.Scheduled && reactInstanceManager != null)
             {
-                _attachScheduled = false;
+                _attachState = AttachState.Attached;
                 reactInstanceManager.AttachMeasuredRootView(this);
             }
 
