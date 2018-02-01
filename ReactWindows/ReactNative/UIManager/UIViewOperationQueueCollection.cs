@@ -444,7 +444,9 @@ namespace ReactNative.UIManager
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
-                throw new InvalidOperationException("No queue for tag " + reactTag);
+                // This is called bypassing the optimizer, so we need to fake a result for layout only nodes.
+                callback.Invoke();
+                return;
             }
 
             queue.EnqueueMeasure(reactTag, callback);
@@ -462,7 +464,9 @@ namespace ReactNative.UIManager
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
-                throw new InvalidOperationException("No queue for tag " + reactTag);
+                // This is called bypassing the optimizer, so we need to fake a result for layout only nodes.
+                callback.Invoke();
+                return;
             }
 
             queue.EnqueueMeasureInWindow(reactTag, callback);
@@ -486,7 +490,9 @@ namespace ReactNative.UIManager
             UIViewOperationQueueInstance queue;
             if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
             {
-                throw new InvalidOperationException("No queue for tag " + reactTag);
+                // This is called bypassing the optimizer, so we need to fake a result for layout only nodes.
+                callback.Invoke();
+                return;
             }
 
             queue.EnqueueFindTargetForTouch(reactTag, targetX, targetY, callback);
