@@ -113,6 +113,9 @@ namespace ReactNative.UIManager
         /// </remarks>
         public int AddMeasuredRootView(ReactRootView rootView)
         {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 

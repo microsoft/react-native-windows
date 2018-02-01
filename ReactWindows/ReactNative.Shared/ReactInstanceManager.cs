@@ -40,6 +40,16 @@ namespace ReactNative
         // - _hasStartedCreatingInitialContext == false:                                    Not initialized
         // - _hasStartedCreatingInitialContext == true && _currentReactContext == null:     Initializing (always by main dispatcher thread)
         // - _hasStartedCreatingInitialContext == true && _currentReactContext != null:     Initialized (any dispatcher thread can use the context)
+        //
+        // Threading
+        // - Most of public APIs have to be called on main dispatcher thread, with the exception of
+        // AttachMeasuredRootViewAsync and DetachRootViewAsync (called under the dispatcher corresponding to the
+        // rootView patameter)
+        // - The internal context initialization is heavily asynchronous, so it uses an AsyncLock to prevent concurrent initialization
+        // in a non-blocking manner
+        // - The "scope" of this AsyncLock extends to the DevSupportManager as well, all the private methods involved in creating a React context
+        // in any way are called with the AsyncLock held.
+        //
         private bool _hasStartedCreatingInitialContext;
         private ReactContext _currentReactContext;
         private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
@@ -351,7 +361,7 @@ namespace ReactNative
         /// associated with the provided root view will be started
         /// asynchronously. This view will then be tracked by this manager and
         /// in case of React instance restart, it will be re-attached.
-        /// WARNING! Has to be called by the thread assocviated with the view.
+        /// WARNING! Has to be called by the thread associated with the view.
         /// </summary>
         /// <param name="rootView">The root view.</param>
         public async Task AttachMeasuredRootViewAsync(ReactRootView rootView)
@@ -420,6 +430,8 @@ namespace ReactNative
         /// <returns>The list of view managers.</returns>
         public IReadOnlyList<IViewManager> CreateAllViewManagers(ReactContext reactContext)
         {
+            DispatcherHelpers.AssertOnDispatcher();
+
             if (reactContext == null)
                 throw new ArgumentNullException(nameof(reactContext));
 

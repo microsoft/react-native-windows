@@ -11,7 +11,7 @@ namespace ReactNative
     /// <summary>
     /// Simple class that holds the <see cref="ReactNativeAppHost"/> used in the multi window applications. 
     /// </summary>
-    public abstract class ReactNativeViewHost
+    public abstract class ReactNativeViewHost : IAsyncDisposable
     {
         /// <summary>
         /// Instantiates the <see cref="ReactNativeViewHost"/>.
@@ -27,6 +27,11 @@ namespace ReactNative
         public ReactNativeAppHost ReactNativeAppHost { get; private set; }
 
         /// <summary>
+        /// The root view managed by the view host.
+        /// </summary>
+        public ReactRootView RootView { get; private set; }
+
+        /// <summary>
         /// Called when the view is first initialized.
         /// </summary>
         public ReactRootView OnCreate()
@@ -40,13 +45,14 @@ namespace ReactNative
         /// <param name="initialProps">The initial props.</param>
         public ReactRootView OnCreate(JObject initialProps)
         {
-            var rootView = CreateRootView();
-            rootView.OnCreate(this);
-            rootView.StartReactApplication(
+            RootView = CreateRootView();
+            RootView.OnCreate(this);
+            RootView.StartReactApplication(
                 ReactNativeAppHost.ReactInstanceManager,
                 MainComponentName,
                 initialProps);
-            return rootView;
+
+             return RootView;
         }
         /// <summary>
         /// The main component name.
@@ -60,6 +66,14 @@ namespace ReactNative
         public virtual ReactRootView CreateRootView()
         {
             return new ReactRootView();
+        }
+
+        /// <summary>
+        /// Called before the application shuts down.
+        /// </summary>
+        public async Task DisposeAsync()
+        {
+            await RootView.StopReactApplicationAsync();
         }
     }
 }
