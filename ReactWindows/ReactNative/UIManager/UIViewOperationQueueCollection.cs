@@ -104,7 +104,7 @@ namespace ReactNative.UIManager
             // Operation queue instances are created lazily whenever an "unknown" CoreDispatcher is detected. Each operation queue instance
             // works together with one dedicated NativeViewHierarchyManager and one ReactChoreographer.
             // One operation queue is the "main" one:
-            // - is coupled with the CoreApplicationView.MainView dispatcher
+            // - is coupled with the CoreApplication.MainView dispatcher
             // - drives animations in ALL viewa
             QueueInstanceInfo queueInfo;
             if (!_dispatcherToOperationQueueInfo.TryGetValue(rootViewDispatcher, out queueInfo))

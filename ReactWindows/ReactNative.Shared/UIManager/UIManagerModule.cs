@@ -116,32 +116,38 @@ namespace ReactNative.UIManager
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
-            var width = rootView.ActualWidthSafe;
-            var height = rootView.ActualHeightSafe;
-
             var context = new ThemedReactContext(Context);
 
-            _layoutActionQueue.Dispatch(() =>
+            DispatcherHelpers.CallOnDispatcher<bool>(rootView.Dispatcher, () =>
             {
-                _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
-            });
-
-            var resizeCount = 0;
-            rootView.SetOnSizeChangedListener((sender, args) =>
-            {
-                var currentCount = ++resizeCount;
-                var newWidth = args.NewSize.Width;
-                var newHeight = args.NewSize.Height;
+                var width = rootView.ActualWidth;
+                var height = rootView.ActualHeight;
 
                 _layoutActionQueue.Dispatch(() =>
                 {
-                    if (currentCount == resizeCount)
-                    {
-                        _layoutActionQueue.AssertOnThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
-                    }
+                    _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
                 });
-            });
+
+                var resizeCount = 0;
+
+                rootView.SetOnSizeChangedListener((sender, args) =>
+                {
+                    var currentCount = ++resizeCount;
+                    var newWidth = args.NewSize.Width;
+                    var newHeight = args.NewSize.Height;
+
+                    _layoutActionQueue.Dispatch(() =>
+                    {
+                        if (currentCount == resizeCount)
+                        {
+                            _layoutActionQueue.AssertOnThread();
+                            _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
+                        }
+                    });
+                });
+                return true;
+
+            }, true); // Allow inlining
 
             return tag;
         }

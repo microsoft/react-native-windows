@@ -1,3 +1,4 @@
+using ReactNative.Bridge;
 using System.Threading;
 using Windows.System;
 using Windows.UI.Core;
@@ -20,8 +21,11 @@ namespace ReactNative
         public static void OnCreate(this ReactRootView rootView, ReactNativeViewHost host)
         {
             rootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
-            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => OnBackRequested(host.ReactNativeAppHost, sender, e);
-            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += (sender, e) => OnAcceleratorKeyActivated(host.ReactNativeAppHost, sender, e);
+            if (DispatcherHelpers.IsOnDispatcher())
+            {
+                SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => OnBackRequested(host.ReactNativeAppHost, sender, e);
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += (sender, e) => OnAcceleratorKeyActivated(host.ReactNativeAppHost, sender, e);
+            }
         }
 
         private static void OnBackRequested(ReactNativeAppHost host, object sender, BackRequestedEventArgs e)

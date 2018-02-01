@@ -72,10 +72,6 @@ namespace ReactNative
             }
         }
 
-        internal double ActualWidthSafe { get; private set; }
-
-        internal double ActualHeightSafe { get; private set; }
-
         /// <summary>
         /// Schedule rendering of the React component rendered by the 
         /// JavaScript application from the given JavaScript module 
@@ -83,6 +79,9 @@ namespace ReactNative
         /// <paramref name="reactInstanceManager"/> to attach to the JavaScript
         /// context of that manager.
         /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher the view is associated to.
+        /// </remarks>
         /// <param name="reactInstanceManager">
         /// The React instance manager.
         /// </param>
@@ -100,6 +99,9 @@ namespace ReactNative
         /// Extra parameter
         /// <paramref name="initialProps"/> can be used to pass initial properties for the react component.
         /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher associated with the view.
+        /// </remarks>
         /// <param name="reactInstanceManager">
         /// The React instance manager.
         /// </param>
@@ -114,6 +116,7 @@ namespace ReactNative
 
         private async Task StartReactApplicationAsync(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
+            // This is called under the dispatcher associated with the view.
             DispatcherHelpers.AssertOnDispatcher(this);
 
             if (_reactInstanceManager != null)
@@ -139,12 +142,6 @@ namespace ReactNative
                 _attachScheduled = true;
             }
 
-
-            ActualWidthSafe = ActualWidth;
-            ActualHeightSafe = ActualHeight;
-
-            SizeChanged += OnSizeChanged;
-
             if (getReactContextTask != null)
             {
                 await getReactContextTask.ConfigureAwait(false);
@@ -154,6 +151,9 @@ namespace ReactNative
         /// <summary>
         /// Frees resources associated with this root view (fire and forget version)
         /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher associated with the view.
+        /// </remarks>
         public void StopReactApplication()
         {
             Forget(StopReactApplicationAsync());
@@ -162,11 +162,12 @@ namespace ReactNative
         /// <summary>
         /// Frees resources associated with this root view.
         /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher associated with the view.
+        /// </remarks>
         public async Task StopReactApplicationAsync()
         {
             DispatcherHelpers.AssertOnDispatcher(this);
-
-            SizeChanged -= OnSizeChanged;
 
             var reactInstanceManager = _reactInstanceManager;
             if (!_attachScheduled && reactInstanceManager != null)
@@ -195,18 +196,10 @@ namespace ReactNative
 
         internal void CleanupSafe()
         {
-            if (this.Dispatcher == DispatcherHelpers.MainDispatcher)
-            {
+            DispatcherHelpers.CallOnDispatcher<bool>(this.Dispatcher, () => {
                 Cleanup();
-            }
-            else
-            {
-#if WINDOWS_UWP
-                DispatcherHelpers.RunOnDispatcher(Dispatcher, CoreDispatcherPriority.Normal, Cleanup);
-#else
-                throw new InvalidOperationException("Not called from main dispatcher thread");
-#endif
-            }
+                return true;
+                }, true); // Inlining allowed
         }
 
         internal void Cleanup()
@@ -230,12 +223,6 @@ namespace ReactNative
 
                 await reactInstanceManager.AttachMeasuredRootViewAsync(this);
             }
-        }
-
-        private void OnSizeChanged(Object sender, SizeChangedEventArgs e)
-        {
-            ActualWidthSafe = e.NewSize.Width;
-            ActualHeightSafe = e.NewSize.Height;
         }
 
         private static void Forget(Task task)
