@@ -13,8 +13,8 @@ namespace ReactNative.Common
 
         /// <summary>
         /// Initializes the value of AccessibilityView for <paramref name="uiElement"/> and its children,
-        /// based on the ancestor <paramref name="parentUIElement"/> settings. Must be callded
-        /// when an element is initially added to the visula tree.
+        /// based on the ancestor <paramref name="parentUIElement"/> settings. Must be called
+        /// when an element is initially added to the visual tree.
         /// </summary>
         /// <param name="parentUIElement">The element where <paramref name="uiElement"/> is added as child.</param>
         /// <param name="uiElement">The element being added to the visual tree.</param>
@@ -183,17 +183,18 @@ namespace ReactNative.Common
                 return;
             }
 
-            foreach (AutomationPeer automationPeer in uiElementAutomationPeer.GetChildren())
+            foreach (AutomationPeer childAutomationPeer in uiElementAutomationPeer.GetChildren())
             {
-                UIElement childUIElement = GetUIElementFromAutomationPeer(automationPeer);
+                UIElement childUIElement = GetUIElementFromAutomationPeer(childAutomationPeer);
                 if (childUIElement == null)
                 {
-                    SetChildrenAccessibilityViewFromImportantForAccessibility(automationPeer);
-                    continue;
+                    SetChildrenAccessibilityViewFromImportantForAccessibility(childAutomationPeer);
                 }
-
-                var importantForAccessibilityAttached = GetImportantForAccessibilityAttached(childUIElement);
-                UpdateAccessibilityViewForUIElement(childUIElement, automationPeer, importantForAccessibilityAttached);
+                else
+                {
+                    var importantForAccessibilityAttached = GetImportantForAccessibilityAttached(childUIElement);
+                    UpdateAccessibilityViewForUIElement(childUIElement, childAutomationPeer, importantForAccessibilityAttached);
+                }
             }
         }
 

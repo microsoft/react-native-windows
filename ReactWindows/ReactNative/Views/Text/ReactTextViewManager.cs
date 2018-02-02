@@ -1,3 +1,4 @@
+using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -86,7 +87,13 @@ namespace ReactNative.Views.Text
             // Initialize ImportantForAccessibility for the child.
             if (child is UIElement childUIElement)
             {
-                AccessibilityHelper.InitImportantForAccessibility(parent, childUIElement);
+                // Post on UI thread because the method requires that parent/child
+                // relationship is established and since children are added bottom-up
+                // it is necessary for the current loop to complete.
+                DispatcherHelpers.RunOnDispatcher(() =>
+                {
+                    AccessibilityHelper.InitImportantForAccessibility(parent, childUIElement);
+                });
             }
         }
 

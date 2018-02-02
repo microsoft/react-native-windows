@@ -1,4 +1,4 @@
-﻿using ReactNative.Reflection;
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 #if WINDOWS_UWP
+using ReactNative.Bridge;
+using ReactNative.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
@@ -110,6 +112,28 @@ namespace ReactNative.Views.Text
 
 #if WINDOWS_UWP
             span.Inlines.Insert(index, inlineChild);
+
+            // Initialize ImportantForAccessibility for the child.
+            if (child is UIElement childUIElement)
+            {
+                // Post on UI thread because the method requires that parent/child
+                // relationship is established and since children are added bottom-up
+                // it is necessary for the current loop to complete.
+                DispatcherHelpers.RunOnDispatcher(() =>
+                {
+                    // Find the UIElement that owns the Span.
+                    DependencyObject spanParent = span.ElementStart?.Parent;
+                    while (spanParent is TextElement textElementParent)
+                    {
+                        spanParent = textElementParent.ElementStart?.Parent;
+                    }
+
+                    if (spanParent is UIElement parentUIElement)
+                    {
+                        AccessibilityHelper.InitImportantForAccessibility(parentUIElement, childUIElement);
+                    }
+                });
+            }
 #else
             ((IList)span.Inlines).Insert(index, inlineChild);
 #endif
