@@ -104,8 +104,9 @@ namespace ReactNative.Tests
                     manager.AttachMeasuredRootViewAsync(null)),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.CreateAllViewManagers(null),
+            await AssertEx.ThrowsAsync<ArgumentNullException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.CreateAllViewManagers(null)),
                 ex => Assert.AreEqual("reactContext", ex.ParamName));
 
             await AssertEx.ThrowsAsync<ArgumentNullException>(

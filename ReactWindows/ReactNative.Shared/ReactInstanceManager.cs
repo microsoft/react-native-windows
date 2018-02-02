@@ -176,6 +176,7 @@ namespace ReactNative
         /// </returns>
         public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
         {
+            DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
                 if (!_hasStartedCreatingInitialContext)
@@ -199,6 +200,7 @@ namespace ReactNative
         /// </returns>
         public async Task<ReactContext> GetOrCreateReactContextAsync(CancellationToken token)
         {
+            DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
                 if (_hasStartedCreatingInitialContext)
@@ -226,6 +228,7 @@ namespace ReactNative
         /// <returns>A task to await the result.</returns>
         public async Task<ReactContext> RecreateReactContextAsync(CancellationToken token)
         {
+            DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
                 if (!_hasStartedCreatingInitialContext)

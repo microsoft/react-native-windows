@@ -128,7 +128,8 @@ namespace ReactNative
             _jsModuleName = moduleName;
             _initialProps = initialProps;
 
-            var getReactContextTask = _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None);
+            var getReactContextTaskTask =
+                DispatcherHelpers.CallOnDispatcher(async () => await _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None));
  
             // We need to wait for the initial `Measure` call, if this view has
             // not yet been measured, we set the `_attachScheduled` flag, which
@@ -142,9 +143,10 @@ namespace ReactNative
                 _attachScheduled = true;
             }
 
+            var getReactContextTask = await getReactContextTaskTask;
             if (getReactContextTask != null)
             {
-                await getReactContextTask.ConfigureAwait(false);
+                await getReactContextTask;
             }
         }
 
