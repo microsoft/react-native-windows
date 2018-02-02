@@ -59,9 +59,6 @@ namespace ReactNative.UIManager
         private readonly ViewManagerRegistry _viewManagers;
         private readonly RootViewManager _rootViewManager;
         private readonly LayoutAnimationController _layoutAnimator;
-#if WINDOWS_UWP
-        private readonly CoreDispatcher _dispatcher;
-#endif
 
         /// <summary>
         /// Instantiates the <see cref="NativeViewHierarchyManager"/>.
