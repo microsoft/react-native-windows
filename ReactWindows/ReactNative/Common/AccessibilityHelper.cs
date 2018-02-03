@@ -1,3 +1,4 @@
+using ReactNative.Bridge;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
@@ -20,6 +21,22 @@ namespace ReactNative.Common
         /// <param name="uiElement">The element being added to the visual tree.</param>
         public static void InitImportantForAccessibility(UIElement parentUIElement, UIElement uiElement)
         {
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                // Post on UI thread because the method relies on parent/child
+                // relationship has already been established and sometimes calls may occur while the
+                // element is in process of being added as a child.
+                InitImportantForAccessibilityInternal(parentUIElement, uiElement);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parentUIElement"></param>
+        /// <param name="uiElement"></param>
+            private static void InitImportantForAccessibilityInternal(UIElement parentUIElement, UIElement uiElement)
+        {
             var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
             var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
             if (parentImportantForAccessibilityAttached == ImportantForAccessibility.Yes ||
@@ -41,6 +58,22 @@ namespace ReactNative.Common
         /// <param name="uiElement">Element which ImportantForAccessibility property is set.</param>
         /// <param name="importantForAccessibility">The new value of ImportantForAccessibility property.</param>
         public static void SetImportantForAccessibility(UIElement uiElement, ImportantForAccessibility importantForAccessibility)
+        {
+            // Post on UI thread because the method relies on parent/child
+            // relationship has already been established and sometimes calls may occur while the
+            // element is in process of being added as a child.
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                SetImportantForAccessibilityInternal(uiElement, importantForAccessibility);
+            });
+        }
+
+        /// <summary>
+        /// Internal implementation of SetImportantForAccessibility.
+        /// </summary>
+        /// <param name="uiElement"></param>
+        /// <param name="importantForAccessibility"></param>
+        private static void SetImportantForAccessibilityInternal(UIElement uiElement, ImportantForAccessibility importantForAccessibility)
         {
             // Check if property is already set to requested value.
             if (GetImportantForAccessibilityAttached(uiElement) == importantForAccessibility)
