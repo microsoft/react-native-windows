@@ -39,8 +39,7 @@ namespace ReactNative.Common
         {
             var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
             var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
-            if (parentImportantForAccessibilityAttached == ImportantForAccessibility.Yes ||
-                parentImportantForAccessibilityAttached == ImportantForAccessibility.NoHideDescendants ||
+            if (DoesHideDescendants(parentImportantForAccessibilityAttached) ||
                 IsHiddenByAncestor(parentUIElementAutomationPeer))
             {
                 // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
@@ -170,8 +169,7 @@ namespace ReactNative.Common
                     if (parentFEAutomationPeer.Owner != null)
                     {
                         var importantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentFEAutomationPeer.Owner);
-                        if (importantForAccessibilityAttached == ImportantForAccessibility.Yes ||
-                            importantForAccessibilityAttached == ImportantForAccessibility.NoHideDescendants)
+                        if (DoesHideDescendants(importantForAccessibilityAttached))
                         {
                             return true;
                         }
@@ -182,8 +180,7 @@ namespace ReactNative.Common
                     if (parentIAutomationPeer.Item is UIElement parentUIElement)
                     {
                         var importantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
-                        if (importantForAccessibilityAttached == ImportantForAccessibility.Yes ||
-                            importantForAccessibilityAttached == ImportantForAccessibility.NoHideDescendants)
+                        if (DoesHideDescendants(importantForAccessibilityAttached))
                         {
                             return true;
                         }
@@ -286,6 +283,10 @@ namespace ReactNative.Common
                     break;
             }
         }
+
+        private static bool DoesHideDescendants(ImportantForAccessibility importantForAccessibility) =>
+            importantForAccessibility == ImportantForAccessibility.Yes ||
+            importantForAccessibility == ImportantForAccessibility.NoHideDescendants;
 
         #endregion ImportantForAccessibility
     }
