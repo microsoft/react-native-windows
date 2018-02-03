@@ -44,7 +44,7 @@ namespace ReactNative
         // Threading
         // - Most of public APIs have to be called on main dispatcher thread, with the exception of
         // AttachMeasuredRootViewAsync and DetachRootViewAsync (called under the dispatcher corresponding to the
-        // rootView patameter)
+        // rootView parameter)
         // - The internal context initialization is heavily asynchronous, so it uses an AsyncLock to prevent concurrent initialization
         // in a non-blocking manner
         // - The "scope" of this AsyncLock extends to the DevSupportManager as well, all the private methods involved in creating a React context

@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Modules.Core;
 using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
@@ -43,6 +44,9 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new NoEventsViewManager() };
+            // Pre-reqs that happens during OnSuspend usually
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+            ReactChoreographer.Initialize();
             var uiImplementationProvider = new UIImplementationProvider();
             using (var actionQueue = new ActionQueue(ex => { }))
             {
@@ -82,6 +86,9 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
+            // Pre-reqs that happens during OnSuspend usually
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+            ReactChoreographer.Initialize();
             var uiImplementationProvider = new UIImplementationProvider();
             using (var actionQueue = new ActionQueue(ex => { }))
             {
