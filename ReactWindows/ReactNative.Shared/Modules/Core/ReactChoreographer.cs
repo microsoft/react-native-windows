@@ -40,6 +40,7 @@ namespace ReactNative.Modules.Core
         private Timer _timer;
         private bool _isSubscribed;
         private bool _isSubscribing;
+        private bool _isDisposed;
         private int _currentInactiveCount;
 
         private ReactChoreographer() { }
@@ -152,8 +153,10 @@ namespace ReactNative.Modules.Core
             {
                 var isSubscribed = Volatile.Read(ref _isSubscribed);
                 var isSubscribing = Volatile.Read(ref _isSubscribing);
+                var isDisposed = Volatile.Read(ref _isDisposed);
                 subscribe = _isSubscribing =
-                    _callbackKeys.Add(callbackKey)
+                    !isDisposed
+                    && _callbackKeys.Add(callbackKey)
                     && _callbackKeys.Count == 1
                     && !isSubscribed
                     && !isSubscribing;
@@ -191,6 +194,7 @@ namespace ReactNative.Modules.Core
 
         void IDisposable.Dispose()
         {
+            _isDisposed = true;
             if (_isSubscribed)
             {
                 Unsubscribe();

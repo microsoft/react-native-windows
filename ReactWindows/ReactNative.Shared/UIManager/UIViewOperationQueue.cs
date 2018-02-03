@@ -394,6 +394,8 @@ namespace ReactNative.UIManager
         {
             // Must be called in the context of the dispatcher thread corresponding to this queue
             _reactChoreographer.DispatchUICallback -= OnRenderingSafe;
+
+            (_reactChoreographer as IDisposable).Dispose();
         }
 
         /// <summary>
