@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
+using Windows.Foundation.Metadata;
+#endif
 
 namespace ReactNative
 {
@@ -33,6 +36,12 @@ namespace ReactNative
     /// </summary>
     public class ReactInstanceManager
     {
+#if WINDOWS_UWP
+        private static bool s_isBackroundModeSupported = ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3);
+#else
+        private static bool s_isBackroundModeSupported = false;
+#endif
+
         private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
 
         private readonly object _lifecycleStateLock = new object();
@@ -237,6 +246,12 @@ namespace ReactNative
         {
             DispatcherHelpers.AssertOnDispatcher();
 
+            if (!s_isBackroundModeSupported)
+            {
+                // Simulate a move to background
+                MoveToBackgroundLifecycleState(false);
+            }
+
             _defaultBackButtonHandler = null;
             _suspendCancellation?.Dispose();
 
@@ -257,7 +272,7 @@ namespace ReactNative
         public void OnEnteredBackground()
         {
             DispatcherHelpers.AssertOnDispatcher();
-            MoveToBackgroundLifecycleState();
+            MoveToBackgroundLifecycleState(false);
         }
 
         /// <summary>
@@ -266,7 +281,7 @@ namespace ReactNative
         public void OnLeavingBackground()
         {
             DispatcherHelpers.AssertOnDispatcher();
-            MoveToResumedLifecycleState(false);
+            MoveToForegroundLifecycleState(false);
         }
 
         /// <summary>
@@ -290,7 +305,14 @@ namespace ReactNative
                 _devSupportManager.IsEnabled = true;
             }
 
-            MoveToResumedLifecycleState(false);
+            // An application is resumed in "background" mode.
+            MoveToBackgroundLifecycleState(false);
+
+            if (!s_isBackroundModeSupported)
+            {
+                // Simulate leaving background if OS doesn't support the LeavingBackground event
+                MoveToForegroundLifecycleState(false);
+            }
         }
 
         /// <summary>
@@ -582,8 +604,13 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher();
 
-            if (_lifecycleState == LifecycleState.Resumed)
+            if (_lifecycleState == LifecycleState.Foreground ||
+                _lifecycleState == LifecycleState.Background)
             {
+                if (_lifecycleState == LifecycleState.Foreground)
+                {
+                    reactContext.OnEnteredBackground();
+                }
                 reactContext.OnSuspend();
             }
 
@@ -681,9 +708,12 @@ namespace ReactNative
 
         private void MoveReactContextToCurrentLifecycleState(ReactContext reactContext)
         {
-            if (_lifecycleState == LifecycleState.Resumed)
+            if (_lifecycleState == LifecycleState.Foreground)
             {
-                MoveToResumedLifecycleState(true);
+                MoveToForegroundLifecycleState(true);
+            } else if (_lifecycleState == LifecycleState.Background)
+            {
+                MoveToBackgroundLifecycleState(true);
             }
         }
 
@@ -695,10 +725,11 @@ namespace ReactNative
                 {
                     if (_lifecycleState == LifecycleState.BeforeCreate)
                     {
+                        // Starting in suspended mode, do a resume/suspend pulse without exiting background
                         _currentReactContext.OnResume();
                         _currentReactContext.OnSuspend();
                     }
-                    else if (_lifecycleState == LifecycleState.Resumed)
+                    else if (_lifecycleState == LifecycleState.Background)
                     {
                         _currentReactContext.OnSuspend();
                     }
@@ -708,7 +739,7 @@ namespace ReactNative
             }
         }
 
-        private void MoveToResumedLifecycleState(bool force)
+        private void MoveToForegroundLifecycleState(bool force)
         {
             lock (_lifecycleStateLock)
             {
@@ -720,6 +751,7 @@ namespace ReactNative
                         _lifecycleState == LifecycleState.BeforeCreate)
                     {
                         _currentReactContext.OnResume();
+                        _currentReactContext.OnLeavingBackground();
                     }
                     else if (_lifecycleState == LifecycleState.Background)
                     {
@@ -727,7 +759,7 @@ namespace ReactNative
                     }
                 }
 
-                _lifecycleState = LifecycleState.Resumed;
+                _lifecycleState = LifecycleState.Foreground;
             }
         }
 
@@ -737,7 +769,12 @@ namespace ReactNative
             {
                 if (_currentReactContext != null)
                 {
-                    if (_lifecycleState == LifecycleState.Resumed)
+                    if (_lifecycleState == LifecycleState.Foreground)
+                    {
+                        _currentReactContext.OnEnteredBackground();
+                        _lifecycleState = LifecycleState.Background;
+                    }
+                    if (_lifecycleState == LifecycleState.Background)
                     {
                         _currentReactContext.OnSuspend();
                         _lifecycleState = LifecycleState.BeforeResume;
@@ -747,21 +784,30 @@ namespace ReactNative
                         _currentReactContext.OnDestroy();
                     }
                 }
+
+                _lifecycleState = LifecycleState.BeforeCreate;
             }
         }
 
-        private void MoveToBackgroundLifecycleState()
+        private void MoveToBackgroundLifecycleState(bool force)
         {
             lock (_lifecycleStateLock)
             {
                 if (_currentReactContext != null)
                 {
-                    if (_lifecycleState == LifecycleState.Resumed)
+                    if (_lifecycleState == LifecycleState.Foreground)
                     {
                         _currentReactContext.OnEnteredBackground();
-                        _lifecycleState = LifecycleState.Background;
+                    }
+                    else if (force ||
+                             _lifecycleState == LifecycleState.BeforeResume ||
+                             _lifecycleState == LifecycleState.BeforeCreate)
+                    {
+                        _currentReactContext.OnResume();
                     }
                 }
+
+                _lifecycleState = LifecycleState.Background;
             }
         }
 

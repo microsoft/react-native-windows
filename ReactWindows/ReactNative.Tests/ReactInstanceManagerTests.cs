@@ -316,7 +316,7 @@ namespace ReactNative.Tests
         {
             return new ReactInstanceManagerBuilder
             {
-                InitialLifecycleState = LifecycleState.Resumed,
+                InitialLifecycleState = LifecycleState.Foreground,
                 JavaScriptBundleFile = jsBundleFile,
             }.Build();
         }
