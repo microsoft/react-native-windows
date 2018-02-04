@@ -1,49 +1,31 @@
 'use strict';
 
 const chalk = require('chalk');
-const build = require('./utils/build');
-const deploy = require('./utils/deploy');
+const automatedVS = require('../automated-vs/index');
+const UWPProject = automatedVS.UWPProject;
+const buildAndDeployUtils = require('../utils/buildAndDeployUtils');
+
+const minWinSDK = '10.0.14393.0';
 
 function runWindows(config, args, options) {
-  // Fix up options
   options.root = options.root || process.cwd();
-  if (options.debug && options.release) {
-    console.log(chalk.red('Only one of "debug"/"release" options should be specified'));
-    return;
-  }
 
-  const slnFile = build.getSolutionFile(options);
+  const slnFile = buildAndDeployUtils.getSolutionFile(options, 'windows');
   if (!slnFile) {
-    console.error(chalk.red('Visual Studio Solution file not found. Maybe run "react-native windows" first?'));
+    console.error(chalk.red('Visual Studio Solution file not found. Make sure your root directory contains the windows folder.'));
     return;
   }
 
-  try {
-    build.restoreNuGetPackages(options, slnFile, options.verbose);
-  } catch (e) {
-    console.error(chalk.red('Failed to restore the NuGet packages'));
-    return;
-  }
-
-  // Get build/deploy options
-  const buildType = options.release ? 'Release' : 'Debug';
+  const uwpProj = new UWPProject(slnFile, options.root, null, minWinSDK);
 
   try {
-    build.buildSolution(slnFile, buildType, options.arch, options.verbose);
+    uwpProj.build(options);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
   }
 
-  return deploy.startServerInNewWindow(options)
-    .then(() => {
-      if (options.device || options.emulator || options.target) {
-        return deploy.deployToDevice(options);
-      } else {
-        return deploy.deployToDesktop(options);
-      }
-    })
-    .catch(e => console.error(chalk.red(`Failed to deploy: ${e.message}`)));
+  return buildAndDeployUtils.startServerInNewWindow(options).then(() => uwpProj.deploy(options, `windows/${uwpProj.name}`));
 }
 
 /*
@@ -60,15 +42,14 @@ runWindows({
 /**
  * Starts the app on a connected Windows emulator or mobile device.
  * Options are the following:
- *    root: String - The root of the application
- *    debug: Boolean - Specifies debug build
  *    release: Boolean - Specifies release build
+ *    root: String - The root of the application
  *    arch: String - The build architecture (x86, x64, ARM, Any CPU)
- *    desktop: Boolean - Deploy to the desktop
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
  *    proxy: Boolean - Run using remote JS proxy
+ *    verbose: Boolean - Enables logging
  */
 module.exports = {
   name: 'run-windows',

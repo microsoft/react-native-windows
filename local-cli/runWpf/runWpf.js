@@ -1,45 +1,33 @@
 'use strict';
 
 const chalk = require('chalk');
-const build = require('./utils/build');
-const deploy = require('./utils/deploy');
+const automatedVS = require('../automated-vs/index');
+const WPFProject = automatedVS.WPFProject;
+const buildAndDeployUtils = require('../utils/buildAndDeployUtils');
+
+const minWinSDK = '8.1.0.0';
 
 function runWpf(config, args, options) {
-  // Fix up options
+
   options.root = options.root || process.cwd();
-  if (options.debug && options.release) {
-    console.log(chalk.red('Only one of "debug"/"release" options should be specified'));
-    return;
-  }
 
-  const slnFile = build.getSolutionFile(options);
+  const slnFile = buildAndDeployUtils.getSolutionFile(options, 'wpf');
   if (!slnFile) {
-    console.error(chalk.red('Visual Studio Solution file not found. Maybe run "react-native wpf" first?'));
+    console.error(chalk.red('Visual Studio Solution file not found. Make sure your root directory contains the wpf folder.'));
     return;
   }
 
-  try {
-    build.restoreNuGetPackages(options, slnFile);
-  } catch (e) {
-    console.error(chalk.red('Failed to restore the NuGet packages'));
-    return;
-  }
-
-  // Get build/deploy options
-  const buildType = options.release ? 'Release' : 'Debug';
+  const wpfProj = new WPFProject(slnFile, options.root, null, minWinSDK);
 
   try {
-    build.buildSolution(slnFile, buildType, options.arch, options.verbose);
+    wpfProj.build(options);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
   }
 
-  return deploy.startServerInNewWindow(options)
-    .then(() => {
-      return deploy.deployToDesktop(options);
-    })
-    .catch(e => console.error(chalk.red(`Failed to deploy: ${e.message}`)));
+
+  return buildAndDeployUtils.startServerInNewWindow(options).then(() => wpfProj.deploy(options, `wpf/${wpfProj.name}`));
 }
 
 /*
@@ -56,15 +44,10 @@ runWpf({
 /**
  * Starts the app on a connected Windows emulator or mobile device.
  * Options are the following:
- *    root: String - The root of the application
- *    debug: Boolean - Specifies debug build
  *    release: Boolean - Specifies release build
+ *    root: String - The root of the application
  *    arch: String - The build architecture (x86, x64, ARM, Any CPU)
- *    desktop: Boolean - Deploy to the desktop
- *    emulator: Boolean - Deploy to the emulator
- *    device: Boolean - Deploy to a device
- *    target: String - Device GUID to deploy to
- *    proxy: Boolean - Run using remote JS proxy
+ *    verbose: Boolean - Enables logging
  */
 module.exports = {
   name: 'run-wpf',
