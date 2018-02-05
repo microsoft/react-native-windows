@@ -253,6 +253,8 @@ namespace ReactNative.Modules.Core
             DispatcherHelpers.RunOnDispatcher(
 #if WINDOWS_UWP
                 _applicationView.CoreWindow.Dispatcher,
+#else
+                DispatcherHelpers.MainDispatcher,
 #endif
                 () =>
                 {

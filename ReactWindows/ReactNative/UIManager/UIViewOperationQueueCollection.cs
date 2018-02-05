@@ -57,13 +57,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The native view hierarchy manager.
         /// </summary>
-        internal UIViewOperationQueueInstance MainUIViewOperationQueue
-        {
-            get
-            {
-                return _mainUiViewOperationsQueueInstance;
-            }
-        }
+        internal UIViewOperationQueueInstance MainUIViewOperationQueue => _mainUiViewOperationsQueueInstance;
 
         /// <summary>
         /// Checks if the operation queue is empty.
@@ -163,7 +157,7 @@ namespace ReactNative.UIManager
             else
             {
                 // Queue instance does exist.
-                // Increment the count of root views. this is helpful for the case the count reaches 0 so we can cleanup the queue.
+                // Increment the count of root views. This is helpful for the case the count reaches 0 so we can cleanup the queue.
                 queueInfo.rootViewCount++;
             }
 
@@ -182,11 +176,7 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(rootViewTag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + rootViewTag);
-            }
+            UIViewOperationQueueInstance queue = GetQueueByTag(rootViewTag);
 
             // Send forward
             queue.EnqueueRemoveRootView(rootViewTag);
@@ -231,31 +221,19 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + tag);
-            }
-
-            queue.EnqueueDispatchCommand(tag, commandId, commandArgs);
+            GetQueueByTag(tag).EnqueueDispatchCommand(tag, commandId, commandArgs);
         }
 
         /// <summary>
         /// Enqueues an operation to update the extra data for a view.
         /// </summary>
-        /// <param name="reactTag">The view tag.</param>
+        /// <param name="tag">The view tag.</param>
         /// <param name="extraData">The extra data.</param>
-        public void EnqueueUpdateExtraData(int reactTag, object extraData)
+        public void EnqueueUpdateExtraData(int tag, object extraData)
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + reactTag);
-            }
-
-            queue.EnqueueUpdateExtraData(reactTag, extraData);
+            GetQueueByTag(tag).EnqueueUpdateExtraData(tag, extraData);
         }
 
         /// <summary>
@@ -269,13 +247,7 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + tag);
-            }
-
-            queue.EnqueueShowPopupMenu(tag, items, error, success);
+            GetQueueByTag(tag).EnqueueShowPopupMenu(tag, items, error, success);
         }
 
         /// <summary>
@@ -321,11 +293,7 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(rootViewTag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + rootViewTag);
-            }
+            UIViewOperationQueueInstance queue = GetQueueByTag(rootViewTag);
 
             _reactTagToOperationQueue.Add(viewReactTag, queue);
 
@@ -359,13 +327,7 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + tag);
-            }
-
-            queue.EnqueueUpdateProperties(tag, className, props);
+            GetQueueByTag(tag).EnqueueUpdateProperties(tag, className, props);
         }
 
         /// <summary>
@@ -381,13 +343,7 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + tag);
-            }
-
-            queue.EnqueueUpdateLayout(parentTag, tag, dimensions);
+            GetQueueByTag(tag).EnqueueUpdateLayout(parentTag, tag, dimensions);
         }
 
         /// <summary>
@@ -405,97 +361,85 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + tag);
-            }
-
-            queue.EnqueueManageChildren(tag, indexesToRemove, viewsToAdd, tagsToDelete);
+            GetQueueByTag(tag).EnqueueManageChildren(tag, indexesToRemove, viewsToAdd, tagsToDelete);
         }
 
         /// <summary>
         /// Enqueues an operation to set the children of a view.
         /// </summary>
-        /// <param name="reactTag">The view to manage.</param>
+        /// <param name="tag">The view to manage.</param>
         /// <param name="childrenTags">The children tags.</param>
-        public void EnqueueSetChildren(int reactTag, int[] childrenTags)
+        public void EnqueueSetChildren(int tag, int[] childrenTags)
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
-            {
-                throw new InvalidOperationException("No queue for tag " + reactTag);
-            }
-
-            queue.EnqueueSetChildren(reactTag, childrenTags);
+            GetQueueByTag(tag).EnqueueSetChildren(tag, childrenTags);
         }
 
         /// <summary>
         /// Enqueues an operation to measure the view.
         /// </summary>
-        /// <param name="reactTag">The tag of the view to measure.</param>
+        /// <param name="tag">The tag of the view to measure.</param>
         /// <param name="callback">The measurement result callback.</param>
-        public void EnqueueMeasure(int reactTag, ICallback callback)
+        public void EnqueueMeasure(int tag, ICallback callback)
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
+            UIViewOperationQueueInstance queue = GetQueueByTag(tag, true);
+            if (queue == null)
             {
                 // This is called bypassing the optimizer, so we need to fake a result for layout only nodes.
                 callback.Invoke();
                 return;
             }
 
-            queue.EnqueueMeasure(reactTag, callback);
+            queue.EnqueueMeasure(tag, callback);
         }
 
         /// <summary>
         /// Enqueues an operation to measure the view relative to the window.
         /// </summary>
-        /// <param name="reactTag">The tag of the view to measure.</param>
+        /// <param name="tag">The tag of the view to measure.</param>
         /// <param name="callback">The measurement result callback.</param>
-        public void EnqueueMeasureInWindow(int reactTag, ICallback callback)
+        public void EnqueueMeasureInWindow(int tag, ICallback callback)
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
+            UIViewOperationQueueInstance queue = GetQueueByTag(tag, true);
+            if (queue == null)
             {
                 // This is called bypassing the optimizer, so we need to fake a result for layout only nodes.
                 callback.Invoke();
                 return;
             }
 
-            queue.EnqueueMeasureInWindow(reactTag, callback);
+            queue.EnqueueMeasureInWindow(tag, callback);
         }
 
         /// <summary>
         /// Enqueues an operation to find a touch target.
         /// </summary>
-        /// <param name="reactTag">The parent view to search from.</param>
+        /// <param name="tag">The parent view to search from.</param>
         /// <param name="targetX">The x-coordinate of the touch event.</param>
         /// <param name="targetY">The y-coordinate of the touch event.</param>
         /// <param name="callback">The callback.</param>
         public void EnqueueFindTargetForTouch(
-            int reactTag,
+            int tag,
             double targetX,
             double targetY,
             ICallback callback)
         {
             // Called on layout manager thread
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(reactTag, out queue))
+            UIViewOperationQueueInstance queue = GetQueueByTag(tag, true);
+            if (queue == null)
             {
                 // This is called bypassing the optimizer, so we need to fake a result for layout only nodes.
                 callback.Invoke();
                 return;
             }
 
-            queue.EnqueueFindTargetForTouch(reactTag, targetX, targetY, callback);
+            queue.EnqueueFindTargetForTouch(tag, targetX, targetY, callback);
         }
 
         /// <summary>
@@ -558,8 +502,8 @@ namespace ReactNative.UIManager
             // Yet, for secondary views we have to dispatch to correct dispatcher as fast as possible
             DispatcherHelpers.AssertOnDispatcher();
 
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
+            UIViewOperationQueueInstance queue = GetQueueByTag(tag, true);
+            if (queue == null)
             {
                 // Returns false as per the caller's expectation
                 return false;
@@ -601,6 +545,23 @@ namespace ReactNative.UIManager
             {
                 queue.queueInstance.DispatchViewUpdates(batchId);
             }
+        }
+
+        private UIViewOperationQueueInstance GetQueueByTag(int tag, bool dontThrow = false)
+        {
+            UIViewOperationQueueInstance queue;
+            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
+            {
+                if (dontThrow)
+                {
+                    return null;
+                }
+                else
+                {
+                    throw new InvalidOperationException("No queue for tag " + tag);
+                }
+            }
+            return queue;
         }
     }
 }

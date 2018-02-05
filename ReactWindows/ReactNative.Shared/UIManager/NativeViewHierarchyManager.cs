@@ -664,6 +664,8 @@ namespace ReactNative.UIManager
 #if DEBUG
             if (!DispatcherHelpers.IsOnDispatcher(Dispatcher))
             {
+                // Each NativeViewHierarxhyManager object has a dedicated Dispatcher thread affinity.
+                // Accessing from a wrong thread is fatal.
                 throw new InvalidOperationException("Thread does not have correct dispatcher access.");
             }
 #endif
