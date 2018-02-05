@@ -14,7 +14,7 @@ namespace ReactNative.Common
         /// <summary>
         /// Lifecycle state before an application is resumed.
         /// </summary>
-        BeforeResume,
+        Suspended,
 
         /// <summary>
         /// Lifecycle state of a foreground running application.

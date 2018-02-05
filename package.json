@@ -15,8 +15,7 @@
   "scripts": {
     "test": "jasmine",
     "lint": "eslint .",
-    "flow-check": "flow check",
-    "start": "node --max-old-space-size=4096 ./run-packager.js"    
+    "flow-check": "flow check"
   },
   "files": [
     "Libraries",
