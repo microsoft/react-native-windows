@@ -65,7 +65,7 @@ Make sure you have installed all [requirements](https://github.com/Microsoft/rea
 
 #### *Note On Expo*
 
-React Native Windows is not currently supported by Expo. If you have a React Native project created by create-react-app on which you would like to develop React Native Windows, [you can eject your app from Expo](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md).
+React Native Windows is not currently supported by Expo. If you have a React Native project created by [create-react-native-app](https://github.com/react-community/create-react-native-app) on which you would like to develop React Native Windows, [you can eject your app from Expo](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md).
 
 ## Running a React Native Windows App
 
