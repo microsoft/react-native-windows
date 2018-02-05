@@ -105,7 +105,7 @@ namespace ReactNative.UIManager
             // works together with one dedicated NativeViewHierarchyManager and one ReactChoreographer.
             // One operation queue is the "main" one:
             // - is coupled with the CoreApplication.MainView dispatcher
-            // - drives animations in ALL viewa
+            // - drives animations in ALL views
             QueueInstanceInfo queueInfo;
             if (!_dispatcherToOperationQueueInfo.TryGetValue(rootViewDispatcher, out queueInfo))
             {
@@ -146,7 +146,7 @@ namespace ReactNative.UIManager
                 };
 
                 // Add new tuple to map
-                _dispatcherToOperationQueueInfo[rootViewDispatcher] = queueInfo;
+                _dispatcherToOperationQueueInfo.Add(rootViewDispatcher, queueInfo);
 
                 if (rootViewDispatcher == DispatcherHelpers.MainDispatcher)
                 {
@@ -163,12 +163,12 @@ namespace ReactNative.UIManager
             else
             {
                 // Queue instance does exist.
-                // Increment the cout of root views. this is helpful for the case the count reaches 0 so we can cleanup the queue.
+                // Increment the count of root views. this is helpful for the case the count reaches 0 so we can cleanup the queue.
                 queueInfo.rootViewCount++;
             }
 
             // Add tag
-            _reactTagToOperationQueue[tag] = queueInfo.queueInstance;
+            _reactTagToOperationQueue.Add(tag, queueInfo.queueInstance);
 
             // Send forward
             queueInfo.queueInstance.AddRootView(tag, rootView, themedRootContext);
@@ -327,7 +327,7 @@ namespace ReactNative.UIManager
                 throw new InvalidOperationException("No queue for tag " + rootViewTag);
             }
 
-            _reactTagToOperationQueue[viewReactTag] = queue;
+            _reactTagToOperationQueue.Add(viewReactTag, queue);
 
             queue.EnqueueCreateView(themedContext, viewReactTag, viewClassName, initialProps);
         }

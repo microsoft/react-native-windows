@@ -22,10 +22,9 @@ namespace ReactNative.Modules.Core
     {
 #if WINDOWS_UWP
         private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
-        private CoreApplicationView _applicationView = CoreApplication.MainView;
+        private readonly CoreApplicationView _applicationView;
 #else
         private const DispatcherPriority ActivatePriority = DispatcherPriority.Send;
-        private const DispatcherPriority TickPriority = DispatcherPriority.Normal;
 #endif
         private const int InactiveFrameCount = 120;
 
@@ -43,7 +42,16 @@ namespace ReactNative.Modules.Core
         private bool _isDisposed;
         private int _currentInactiveCount;
 
+#if WINDOWS_UWP
+        private ReactChoreographer() : this(CoreApplication.MainView) { }
+
+        private ReactChoreographer(CoreApplicationView applicationView)
+        {
+            _applicationView = applicationView;
+        }
+#else
         private ReactChoreographer() { }
+#endif
 
         /// <summary>
         /// For use by <see cref="UIManager.UIManagerModule"/>. 
@@ -88,9 +96,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         public static ReactChoreographer CreateSecondaryInstance(CoreApplicationView view)
         {
-            var instance = new ReactChoreographer();
-            instance._applicationView = view;
-            return instance;
+            return  new ReactChoreographer(view);
         }
 #endif
 

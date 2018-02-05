@@ -51,11 +51,11 @@ namespace ReactNative.UIManager
         /// <param name="nativeViewHierarchyManager">
         /// The native view hierarchy manager.
         /// </param>
-        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChorepgrapher)
+        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChoreographer)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;
-            _reactChoreographer = reactChorepgrapher;
+            _reactChoreographer = reactChoreographer;
         }
 
         /// <summary>

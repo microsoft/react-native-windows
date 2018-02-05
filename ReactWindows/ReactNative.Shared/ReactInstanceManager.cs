@@ -190,7 +190,6 @@ namespace ReactNative
             }
         }
 
-
         /// <summary>
         /// Awaits the currently initializing React context, or creates a new one.
         /// </summary>
@@ -217,7 +216,6 @@ namespace ReactNative
                 }
             }
         }
-
 
         /// <summary>
         /// Recreate the React application and context. This should be called

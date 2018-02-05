@@ -143,11 +143,7 @@ namespace ReactNative
                 _attachScheduled = true;
             }
 
-            var getReactContextTask = await getReactContextTaskTask;
-            if (getReactContextTask != null)
-            {
-                await getReactContextTask;
-            }
+            await getReactContextTaskTask.Unwrap();
         }
 
         /// <summary>

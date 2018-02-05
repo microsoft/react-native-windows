@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ReactNative.Common
 {
     /// <summary>
-    /// A combination of the solution explained here:
+    /// A combination of the solutions explained here:
     /// - https://blogs.msdn.microsoft.com/pfxteam/2012/02/12/building-async-coordination-primitives-part-5-asyncsemaphore/
     /// - https://blogs.msdn.microsoft.com/pfxteam/2012/02/12/building-async-coordination-primitives-part-6-asynclock/
     /// - the more recent SemaphoreSlim helper
