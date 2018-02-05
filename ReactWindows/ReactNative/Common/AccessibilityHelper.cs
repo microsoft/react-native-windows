@@ -13,40 +13,38 @@ namespace ReactNative.Common
         #region ImportantForAccessibility - Provides support for ImportantForAccessibility property implementation.
 
         /// <summary>
+        /// Initializes the value of AccessibilityView for all the children of <paramref name="parentUIElement"/>,
+        /// based on the <paramref name="parentUIElement"/> and its ancesstor settings. Must be called
+        /// when multiple children are initially added to <paramref name="parentUIElement"/>.
+        /// </summary>
+        /// <param name="parentUIElement">The element whos children will be updated.</param>        
+        public static void InitImportantForAccessibility(UIElement parentUIElement)
+        {
+            // Post on UI thread because the method requires that parent/child
+            // relationship is established but XAML does not set the relationship
+            // until the next loop after the child is added.
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                InitImportantForAccessibilityInternal(parentUIElement);
+            });
+        }
+
+        /// <summary>
         /// Initializes the value of AccessibilityView for <paramref name="uiElement"/> and its children,
         /// based on the ancestor <paramref name="parentUIElement"/> settings. Must be called
-        /// when an element is initially added to the visual tree.
+        /// when <paramref name="uiElement"/> is initially added to the visual tree.
         /// </summary>
         /// <param name="parentUIElement">The element where <paramref name="uiElement"/> is added as child.</param>
         /// <param name="uiElement">The element being added to the visual tree.</param>
         public static void InitImportantForAccessibility(UIElement parentUIElement, UIElement uiElement)
         {
+            // Post on UI thread because the method requires that parent/child
+            // relationship is established but XAML does not set the relationship
+            // until the next loop after the child is added.
             DispatcherHelpers.RunOnDispatcher(() =>
             {
-                // Post on UI thread because the method relies on parent/child
-                // relationship has already been established and sometimes calls may occur while the
-                // element is in process of being added as a child.
                 InitImportantForAccessibilityInternal(parentUIElement, uiElement);
             });
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parentUIElement"></param>
-        /// <param name="uiElement"></param>
-            private static void InitImportantForAccessibilityInternal(UIElement parentUIElement, UIElement uiElement)
-        {
-            var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
-            var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
-            if (DoesHideDescendants(parentImportantForAccessibilityAttached) ||
-                IsHiddenByAncestor(parentUIElementAutomationPeer))
-            {
-                // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
-                var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
-                AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
-                SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
-            }
         }
 
         /// <summary>
@@ -58,13 +56,48 @@ namespace ReactNative.Common
         /// <param name="importantForAccessibility">The new value of ImportantForAccessibility property.</param>
         public static void SetImportantForAccessibility(UIElement uiElement, ImportantForAccessibility importantForAccessibility)
         {
-            // Post on UI thread because the method relies on parent/child
-            // relationship has already been established and sometimes calls may occur while the
-            // element is in process of being added as a child.
+            // Post on UI thread because the method requires that parent/child
+            // relationship is established but XAML does not set the relationship
+            // until the next loop after the child is added.
             DispatcherHelpers.RunOnDispatcher(() =>
             {
                 SetImportantForAccessibilityInternal(uiElement, importantForAccessibility);
             });
+        }
+
+        /// <summary>
+        /// Internal implementation of InitImportantForAccessibility.
+        /// </summary>
+        /// <param name="parentUIElement"></param>
+        private static void InitImportantForAccessibilityInternal(UIElement parentUIElement)
+        {
+            var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
+            var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
+            if (DoesHideDescendants(parentImportantForAccessibilityAttached) ||
+                IsHiddenByAncestor(parentUIElementAutomationPeer))
+            {
+                // If the parent or an ancestor is "hiding" the children, set AccessibilityView to Raw.
+                SetChildrenAccessibilityView(parentUIElementAutomationPeer, AccessibilityView.Raw);
+            }
+        }
+
+        /// <summary>
+        /// Internal implementation of InitImportantForAccessibility.
+        /// </summary>
+        /// <param name="parentUIElement"></param>
+        /// <param name="uiElement"></param>
+        private static void InitImportantForAccessibilityInternal(UIElement parentUIElement, UIElement uiElement)
+        {
+            var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
+            var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
+            if (DoesHideDescendants(parentImportantForAccessibilityAttached) ||
+                IsHiddenByAncestor(parentUIElementAutomationPeer))
+            {
+                // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
+                var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
+                AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
+                SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
+            }
         }
 
         /// <summary>

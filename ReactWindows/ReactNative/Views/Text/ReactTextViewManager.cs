@@ -89,6 +89,11 @@ namespace ReactNative.Views.Text
             {
                 AccessibilityHelper.InitImportantForAccessibility(parent, childUIElement);
             }
+            else if (child is Inline)
+            {
+                // If the child is an Inline it may contain multiple child UIElements.
+                AccessibilityHelper.InitImportantForAccessibility(parent);
+            }
         }
 
         /// <summary>
