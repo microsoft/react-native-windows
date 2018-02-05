@@ -11,10 +11,14 @@ import {
   View,
 } from 'react-native';
 
+var PropTypes = require('prop-types');
+
+View.propTypes.foo = PropTypes.number;
+
 class Playground extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View foo={42} style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to React Native!
         </Text>
