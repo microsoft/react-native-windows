@@ -18,6 +18,11 @@ namespace ReactNative.UIManager
 
         public ViewManagerWithExtensions(IViewManager viewManager, IReadOnlyList<IViewManagerExtension> extensions)
         {
+            if (viewManager == null)
+                throw new ArgumentNullException(nameof(viewManager));
+            if (extensions == null)
+                throw new ArgumentNullException(nameof(extensions));
+
             _viewManager = viewManager;
             _extensions = extensions;
             _reverseCommandsMap = CreateReverseCommandsMap(viewManager, extensions);

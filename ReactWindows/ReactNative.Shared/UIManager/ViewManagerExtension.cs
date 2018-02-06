@@ -61,6 +61,7 @@ namespace ReactNative.UIManager
         /// <param name="view">The view.</param>
         public virtual void OnCreateView(ThemedReactContext reactContext, TDependencyObject view)
         {
+            AddEventEmitters(reactContext, view);
         }
 
         /// <summary>
@@ -97,6 +98,9 @@ namespace ReactNative.UIManager
         /// <param name="props">The properties.</param>
         public void UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
+            if (props == null)
+                throw new ArgumentNullException(nameof(props));
+
             var propertySetters =
                 ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(GetType());
 
