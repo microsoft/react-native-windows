@@ -129,7 +129,7 @@ namespace ReactNative
             _initialProps = initialProps;
 
             var getReactContextTaskTask =
-                DispatcherHelpers.CallOnDispatcher(async () => await _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None));
+                DispatcherHelpers.CallOnDispatcher(async () => await _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None), true);
  
             // We need to wait for the initial `Measure` call, if this view has
             // not yet been measured, we set the `_attachScheduled` flag, which

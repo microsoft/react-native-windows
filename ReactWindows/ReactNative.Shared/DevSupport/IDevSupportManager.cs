@@ -63,7 +63,6 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Handles reloading the JavaScript bundle.
         /// </summary>
-        /// <returns>A task to await the result.</returns>
         void HandleReloadJavaScript();
 
         /// <summary>
