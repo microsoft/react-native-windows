@@ -8,6 +8,7 @@ using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
@@ -67,15 +68,7 @@ namespace ReactNative.UIManager
         /// </returns>
         public bool IsEmpty()
         {
-            foreach (var queueInfo in _dispatcherToOperationQueueInfo.Values)
-            {
-                if (!queueInfo.queueInstance.IsEmpty())
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return _dispatcherToOperationQueueInfo.Values.All(qi => qi.queueInstance.IsEmpty());
         }
 
         /// <summary>
@@ -113,20 +106,7 @@ namespace ReactNative.UIManager
                 else
                 {
                     // Find the CoreApplicationView associated to the new CoreDispatcher
-                    CoreApplicationView foundView = null;
-                    foreach (var view in CoreApplication.Views)
-                    {
-                        if (view.Dispatcher == rootViewDispatcher)
-                        {
-                            foundView = view;
-                            break;
-                        }
-                    }
-                    if (foundView ==  null)
-                    {
-                        // Not expected
-                        throw new InvalidOperationException("Can't find CoreApplicationView for CoreDispatcher");
-                    }
+                    CoreApplicationView foundView = CoreApplication.Views.First(v => v.Dispatcher == rootViewDispatcher);
 
                     // Create new ReactChoreographer for this view/dispatcher. It will only be used for its DispatchUICallback services
                     reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
@@ -183,32 +163,25 @@ namespace ReactNative.UIManager
 
             // Do some maintenance/cleanup if needed.
             // Find the queue info
-            foreach (var pair in _dispatcherToOperationQueueInfo)
+            var pair = _dispatcherToOperationQueueInfo.First(p => p.Value.queueInstance == queue);
+
+            // Decrement number of root views
+            pair.Value.rootViewCount--;
+
+            if (pair.Value.rootViewCount == 0)
             {
-                if (queue == pair.Value.queueInstance)
+                // We can remove this queue and then destroy
+                _dispatcherToOperationQueueInfo.Remove(pair.Key);
+
+                // Simulate an OnDestroy from the correct dispatcher thread
+                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy, true); // inlining allowed
+
+                if (queue == MainUIViewOperationQueue)
                 {
-                    // Decrement number of root views
-                    pair.Value.rootViewCount--;
-
-                    if (pair.Value.rootViewCount == 0)
-                    {
-                        // We can remove this queue and then destroy
-                        _dispatcherToOperationQueueInfo.Remove(pair.Key);
-
-                        // Simulate an OnDestroy from the correct dispatcher thread
-                        // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                        DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy, true); // inlining allowed
-
-                        if (queue == MainUIViewOperationQueue)
-                        {
-                            _mainUiViewOperationsQueueInstance = null;
-                        }
-
-                        break;
-                    }
-                }
+                    _mainUiViewOperationsQueueInstance = null;
+                }           
             }
-
         }
 
         /// <summary>
