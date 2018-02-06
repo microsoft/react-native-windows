@@ -65,9 +65,8 @@ namespace ReactNative.UIManager
         public virtual IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
 
         /// <summary>
-        /// Creates a shadow node for the view manager.
+        /// The native props for the view manager.
         /// </summary>
-        /// <returns>The shadow node instance.</returns>
         public IReadOnlyDictionary<string, string> NativeProperties
         {
             get
@@ -81,7 +80,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="viewToUpdate">The view to update.</param>
         /// <param name="props">The properties.</param>
-        public void UpdateProperties(TFrameworkElement viewToUpdate, ReactStylesDiffMap props)
+        public void UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
         {
             var propertySetters =
                 ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(GetType());
@@ -96,7 +95,7 @@ namespace ReactNative.UIManager
                 }
             }
 
-            OnAfterUpdateTransaction(viewToUpdate);
+            OnAfterUpdateTransaction((TFrameworkElement)viewToUpdate);
         }
 
         /// <summary>
@@ -216,12 +215,7 @@ namespace ReactNative.UIManager
         {
         }
 
-#region IViewManager
-
-        void IViewManager.UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
-        {
-            UpdateProperties((TFrameworkElement)viewToUpdate, props);
-        }
+        #region IViewManager
 
         DependencyObject IViewManager.CreateView(ThemedReactContext reactContext)
         {
@@ -258,6 +252,6 @@ namespace ReactNative.UIManager
             SetDimensions((TFrameworkElement)view, dimensions);
         }
 
-#endregion
+        #endregion
     }
 }
