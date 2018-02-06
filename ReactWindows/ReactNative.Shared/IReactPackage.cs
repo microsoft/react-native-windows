@@ -1,6 +1,5 @@
-﻿using ReactNative.Bridge;
+using ReactNative.Bridge;
 using ReactNative.UIManager;
-using System;
 using System.Collections.Generic;
 
 namespace ReactNative.Modules.Core

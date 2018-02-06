@@ -20,7 +20,7 @@ namespace ReactNative.UIManager
         Type ViewManagerType { get; }
 
         /// <summary>
-        /// The commands map for the view manager.
+        /// The commands map for the view manager extension.
         /// </summary>
         IReadOnlyDictionary<string, object> CommandsMap { get; }
 
@@ -40,7 +40,7 @@ namespace ReactNative.UIManager
         IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
 
         /// <summary>
-        /// The native props for the view manager.
+        /// The native props for the view manager extension.
         /// </summary>
         IReadOnlyDictionary<string, string> NativeProperties { get; }
 
@@ -53,14 +53,11 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
-        /// additional cleanup by the <see cref="IViewManager"/>
+        /// additional cleanup by the <see cref="IViewManagerExtension"/>
         /// subclass.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        /// <remarks>
-        /// Derived classes do not need to call this base method.
-        /// </remarks>
         void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view);
 
         /// <summary>
@@ -70,7 +67,7 @@ namespace ReactNative.UIManager
         /// <param name="view">
         /// The view instance that should receive the command.
         /// </param>
-        /// <param name="commandId">Identifer for the command.</param>
+        /// <param name="commandId">Identifier for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
         void ReceiveCommand(DependencyObject view, int commandId, JArray args);
 

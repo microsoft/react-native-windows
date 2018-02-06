@@ -9,7 +9,7 @@ namespace ReactNative
     /// </summary>
     /// <remarks>
     /// To add <see cref="IViewManagerExtension"/> instances to your application,
-    /// extend your <see cref="IReactPackage" /> implementation with this
+    /// extend your <see cref="Modules.Core.IReactPackage" /> implementation with this
     /// interface, e.g.:
     /// <code>
     /// class ReactPackage : IReactPackage, IViewManagerExtensionProvider
@@ -28,7 +28,7 @@ namespace ReactNative
     {
         /// <summary>
         /// Creates the list of view manager extensions that should be
-        ///  registered with the <see cref="UIManagerModule"/>.
+        /// registered with the <see cref="UIManagerModule"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The list of view managers.</returns>

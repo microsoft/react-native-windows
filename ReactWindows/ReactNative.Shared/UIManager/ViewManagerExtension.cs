@@ -24,7 +24,7 @@ namespace ReactNative.UIManager
         public Type ViewManagerType => typeof(TViewManager);
 
         /// <summary>
-        /// The commands map for the view manager.
+        /// The commands map for the view manager extension.
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> CommandsMap { get; }
 
@@ -65,7 +65,7 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
-        /// additional cleanup by the <see cref="IViewManager"/>
+        /// additional cleanup by the <see cref="IViewManagerExtension"/>
         /// subclass.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
@@ -84,7 +84,7 @@ namespace ReactNative.UIManager
         /// <param name="view">
         /// The view instance that should receive the command.
         /// </param>
-        /// <param name="commandId">Identifer for the command.</param>
+        /// <param name="commandId">Identifier for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
         public virtual void ReceiveCommand(TDependencyObject view, int commandId, JArray args)
         {

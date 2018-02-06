@@ -19,29 +19,19 @@ namespace ReactNative.UIManager
 
         public bool NeedsCustomLayoutForChildren => _viewManager.NeedsCustomLayoutForChildren;
 
-        public void AddView(DependencyObject parent, DependencyObject child, int index)
-        {
+        public void AddView(DependencyObject parent, DependencyObject child, int index) =>
             _viewManager.AddView(parent, child, index);
-        }
 
-        public DependencyObject GetChildAt(DependencyObject parent, int index)
-        {
-            return _viewManager.GetChildAt(parent, index);
-        }
+        public DependencyObject GetChildAt(DependencyObject parent, int index) =>
+            _viewManager.GetChildAt(parent, index);
 
-        public int GetChildCount(DependencyObject parent)
-        {
-            return _viewManager.GetChildCount(parent);
-        }
+        public int GetChildCount(DependencyObject parent) =>
+            _viewManager.GetChildCount(parent);
 
-        public void RemoveAllChildren(DependencyObject parent)
-        {
+        public void RemoveAllChildren(DependencyObject parent) =>
             _viewManager.RemoveAllChildren(parent);
-        }
 
-        public void RemoveChildAt(DependencyObject parent, int index)
-        {
+        public void RemoveChildAt(DependencyObject parent, int index) =>
             _viewManager.RemoveChildAt(parent, index);
-        }
     }
 }

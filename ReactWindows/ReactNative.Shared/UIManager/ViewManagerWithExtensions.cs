@@ -168,7 +168,7 @@ namespace ReactNative.UIManager
                 {
                     foreach (var command in extensionCommands)
                     {
-                        if (reverseMap.TryGetValue(command, out IViewManagerExtension unused) || /* registered by view manager */ unused == null)
+                        if (reverseMap.ContainsKey(command))
                         {
                             throw new InvalidOperationException("View manager extensions must use unique command identifiers.");
                         }
