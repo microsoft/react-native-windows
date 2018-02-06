@@ -44,9 +44,9 @@ namespace ReactNative.Tests.UIManager
             Assert.IsTrue(props.ContainsKey("foo"));
             Assert.IsTrue(props.ContainsKey("bar"));
             Assert.IsTrue(props.ContainsKey("qux"));
-            Assert.AreEqual("async", props["foo"]);
-            Assert.AreEqual("async", props["bar"]);
-            Assert.AreEqual("async", props["qux"]);
+            Assert.AreEqual("number", props["foo"]);
+            Assert.AreEqual("String", props["bar"]);
+            Assert.AreEqual("String", props["qux"]);
         }
 
         [Test]

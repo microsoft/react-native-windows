@@ -85,7 +85,7 @@ namespace ReactNative.Tests.UIManager
             vmx.UpdatePropertiesAction = x =>
             {
                 Assert.AreSame(diffMap, x);
-                count++;
+                xcount++;
             };
 
             vmplusx.UpdateProperties(null, diffMap);
@@ -108,7 +108,6 @@ namespace ReactNative.Tests.UIManager
             };
 
             var vmplusx = new ViewManagerWithExtensions(vm, new List<IViewManagerExtension> { vmx });
-
 
             var args = new JArray();
             var count = 0;
@@ -234,7 +233,7 @@ namespace ReactNative.Tests.UIManager
 
             foreach (var pair in TestMapDifferent)
             {
-                Assert.AreEqual(TestMap[pair.Key], result[pair.Key]);
+                Assert.AreEqual(TestMapDifferent[pair.Key], result[pair.Key]);
             }
         }
 
@@ -262,7 +261,7 @@ namespace ReactNative.Tests.UIManager
 
             foreach (var pair in TestMapDifferent)
             {
-                Assert.AreEqual(TestMap[pair.Key], result[pair.Key]);
+                Assert.AreEqual(TestMapDifferent[pair.Key], result[pair.Key]);
             }
         }
 
@@ -290,7 +289,7 @@ namespace ReactNative.Tests.UIManager
 
             foreach (var pair in TestMapDifferent)
             {
-                Assert.AreEqual(TestMap[pair.Key], result[pair.Key]);
+                Assert.AreEqual(TestMapDifferent[pair.Key], result[pair.Key]);
             }
         }
 
@@ -318,7 +317,7 @@ namespace ReactNative.Tests.UIManager
 
             foreach (var pair in TestMapDifferent)
             {
-                Assert.AreEqual(TestMap[pair.Key], result[pair.Key]);
+                Assert.AreEqual(TestMapDifferent[pair.Key], result[pair.Key]);
             }
         }
 
@@ -337,16 +336,16 @@ namespace ReactNative.Tests.UIManager
 
             var vmplusx = new ViewManagerWithExtensions(vm, new List<IViewManagerExtension> { vmx });
 
-            var result = vmplusx.ExportedViewConstants;
+            var result = vmplusx.NativeProperties;
 
-            foreach (var pair in TestMap)
+            foreach (var pair in TestMapString)
             {
-                Assert.AreEqual(TestMap[pair.Key], result[pair.Key]);
+                Assert.AreEqual(TestMapString[pair.Key], result[pair.Key]);
             }
 
-            foreach (var pair in TestMapDifferent)
+            foreach (var pair in TestMapDifferentString)
             {
-                Assert.AreEqual(TestMap[pair.Key], result[pair.Key]);
+                Assert.AreEqual(TestMapDifferentString[pair.Key], result[pair.Key]);
             }
         }
 
@@ -444,7 +443,7 @@ namespace ReactNative.Tests.UIManager
 
             var vmx = new TestViewManagerExtension
             {
-                NativeProperties = TestMapDifferentString,
+                NativeProperties = TestMapSameKeyString,
             };
 
             var vmplusx = new ViewManagerWithExtensions(vm, new List<IViewManagerExtension> { vmx });
