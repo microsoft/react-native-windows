@@ -171,7 +171,7 @@ namespace ReactNative.UIManager
                 var extensionCommands = extension.CommandsMap;
                 if (extensionCommands != null)
                 {
-                    foreach (var command in extensionCommands)
+                    foreach (var command in extensionCommands.Values)
                     {
                         if (reverseMap.ContainsKey(command))
                         {
