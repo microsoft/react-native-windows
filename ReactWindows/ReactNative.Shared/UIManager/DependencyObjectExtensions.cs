@@ -14,7 +14,6 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class DependencyObjectExtensions
     {
-        // ConditionalWeakTable is thread safe
         private static readonly ConcurrentDictionary<DependencyObject, DependencyObjectData> s_properties =
             new ConcurrentDictionary<DependencyObject, DependencyObjectData>();
         private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();

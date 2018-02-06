@@ -96,7 +96,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         public static ReactChoreographer CreateSecondaryInstance(CoreApplicationView view)
         {
-            return  new ReactChoreographer(view);
+            return new ReactChoreographer(view);
         }
 #endif
 

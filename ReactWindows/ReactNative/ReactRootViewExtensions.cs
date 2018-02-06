@@ -15,20 +15,14 @@ namespace ReactNative
         public static void OnCreate(this ReactRootView rootView, ReactNativeHost host)
         {
             rootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
-            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => OnBackRequested(host, sender, e);
-            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += (sender, e) => OnAcceleratorKeyActivated(host, sender, e);
-        }
-        public static void OnCreate(this ReactRootView rootView, ReactNativeViewHost host)
-        {
-            rootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
             if (DispatcherHelpers.IsOnDispatcher())
             {
-                SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => OnBackRequested(host.ReactNativeAppHost, sender, e);
-                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += (sender, e) => OnAcceleratorKeyActivated(host.ReactNativeAppHost, sender, e);
+                SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => OnBackRequested(host, sender, e);
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += (sender, e) => OnAcceleratorKeyActivated(host, sender, e);
             }
         }
 
-        private static void OnBackRequested(ReactNativeAppHost host, object sender, BackRequestedEventArgs e)
+        private static void OnBackRequested(ReactNativeHost host, object sender, BackRequestedEventArgs e)
         {
             if (host.HasInstance)
             {
@@ -37,7 +31,7 @@ namespace ReactNative
             }
         }
 
-        private static void OnAcceleratorKeyActivated(ReactNativeAppHost host, CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        private static void OnAcceleratorKeyActivated(ReactNativeHost host, CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (host.HasInstance)
             {
