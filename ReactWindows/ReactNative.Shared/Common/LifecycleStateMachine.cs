@@ -104,6 +104,12 @@ namespace ReactNative.Common
                         _currentReactContext.OnResume();
                         _currentReactContext.OnSuspend();
                     }
+                    else if (_lifecycleState == LifecycleState.Foreground)
+                    {
+                        // Shouldn't really happen, but I've seen it once. 
+                        _currentReactContext.OnEnteredBackground();
+                        _currentReactContext.OnSuspend();
+                    }
                     else if (_lifecycleState == LifecycleState.Background)
                     {
                         _currentReactContext.OnSuspend();
