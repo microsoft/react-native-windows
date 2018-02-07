@@ -53,6 +53,18 @@ namespace ReactNative.UIManager
             _reactContext = reactContext;
             _viewManagerRegistry = viewManagerRegistry;
             _active = false;
+
+            // Corner case: UWP scenarios that start with no main window.
+            // We create the UIViewOperationQueueInstance for main dispatcher thread ahead of time so animations
+            // in secondary windows can work.
+            var queueInfo = new QueueInstanceInfo()
+            {
+                queueInstance = new UIViewOperationQueueInstance(
+                    _reactContext, new NativeViewHierarchyManager(_viewManagerRegistry, DispatcherHelpers.MainDispatcher), ReactChoreographer.Instance)
+            };
+
+            _dispatcherToOperationQueueInfo.Add(DispatcherHelpers.MainDispatcher, queueInfo);
+            _mainUiViewOperationsQueueInstance = queueInfo.queueInstance;
         }
 
         /// <summary>
@@ -97,20 +109,12 @@ namespace ReactNative.UIManager
             if (!_dispatcherToOperationQueueInfo.TryGetValue(rootViewDispatcher, out queueInfo))
             {
                 // Queue instance doesn't exist for this dispatcher, we need to create
-                ReactChoreographer reactChoreographer;
-                if (rootViewDispatcher == DispatcherHelpers.MainDispatcher)
-                {
-                    // We reuse "main" ReactChoreographer for the main queue
-                    reactChoreographer = ReactChoreographer.Instance;
-                }
-                else
-                {
-                    // Find the CoreApplicationView associated to the new CoreDispatcher
-                    CoreApplicationView foundView = CoreApplication.Views.First(v => v.Dispatcher == rootViewDispatcher);
 
-                    // Create new ReactChoreographer for this view/dispatcher. It will only be used for its DispatchUICallback services
-                    reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
-                }
+                // Find the CoreApplicationView associated to the new CoreDispatcher
+                CoreApplicationView foundView = CoreApplication.Views.First(v => v.Dispatcher == rootViewDispatcher);
+
+                // Create new ReactChoreographer for this view/dispatcher. It will only be used for its DispatchUICallback services
+                ReactChoreographer reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
 
                 queueInfo = new QueueInstanceInfo()
                 {
@@ -121,11 +125,6 @@ namespace ReactNative.UIManager
 
                 // Add new tuple to map
                 _dispatcherToOperationQueueInfo.Add(rootViewDispatcher, queueInfo);
-
-                if (rootViewDispatcher == DispatcherHelpers.MainDispatcher)
-                {
-                    _mainUiViewOperationsQueueInstance = queueInfo.queueInstance;
-                }
 
                 if (_active)
                 {
@@ -146,7 +145,7 @@ namespace ReactNative.UIManager
 
             // Send forward
             queueInfo.queueInstance.AddRootView(tag, rootView, themedRootContext);
-        }
+       }
 
         /// <summary>
         /// Enqueues an operation to remove the root view.
@@ -168,19 +167,17 @@ namespace ReactNative.UIManager
             // Decrement number of root views
             pair.Value.rootViewCount--;
 
-            if (pair.Value.rootViewCount == 0)
+            if (queue != MainUIViewOperationQueue)
             {
-                // We can remove this queue and then destroy
-                _dispatcherToOperationQueueInfo.Remove(pair.Key);
-
-                // Simulate an OnDestroy from the correct dispatcher thread
-                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy, true); // inlining allowed
-
-                if (queue == MainUIViewOperationQueue)
+                if (pair.Value.rootViewCount == 0)
                 {
-                    _mainUiViewOperationsQueueInstance = null;
-                }           
+                    // We can remove this queue and then destroy
+                    _dispatcherToOperationQueueInfo.Remove(pair.Key);
+
+                    // Simulate an OnDestroy from the correct dispatcher thread
+                    // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                    DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy, true); // inlining allowed
+                }
             }
         }
 

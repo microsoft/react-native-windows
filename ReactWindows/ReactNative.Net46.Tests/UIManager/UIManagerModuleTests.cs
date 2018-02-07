@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace ReactNative.Tests.UIManager
 {
@@ -44,9 +45,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new NoEventsViewManager() };
-            // Pre-reqs that happens during OnSuspend usually
-            ReactNative.Bridge.DispatcherHelpers.Initialize();
-            ReactChoreographer.Initialize();
+
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var uiImplementationProvider = new UIImplementationProvider();
             using (var actionQueue = new ActionQueue(ex => { }))
             {
@@ -79,6 +81,9 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual("onMouseLeave", constants.GetMap("directEventTypes").GetMap("topMouseLeave").GetValue("registrationName"));
                 Assert.AreEqual("onMessage", constants.GetMap("directEventTypes").GetMap("topMessage").GetValue("registrationName"));
             }
+
+            // Ideally we should dispose, but the original dispatcher is somehow lost/etc.
+            // await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [Test]
@@ -86,9 +91,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
-            // Pre-reqs that happens during OnSuspend usually
-            ReactNative.Bridge.DispatcherHelpers.Initialize();
-            ReactChoreographer.Initialize();
+
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var uiImplementationProvider = new UIImplementationProvider();
             using (var actionQueue = new ActionQueue(ex => { }))
             {
@@ -101,6 +107,9 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo"));
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError"));
             }
+
+            // Ideally we should dispose, but the original dispatcher is somehow lost/etc.
+            // await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         class NoEventsViewManager : MockViewManager

@@ -23,6 +23,7 @@ namespace ReactNative.Modules.Core
 #if WINDOWS_UWP
         private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
         private readonly CoreApplicationView _applicationView;
+        private readonly CoreDispatcher _coreDispatcher;
 #else
         private const DispatcherPriority ActivatePriority = DispatcherPriority.Send;
 #endif
@@ -48,6 +49,12 @@ namespace ReactNative.Modules.Core
         private ReactChoreographer(CoreApplicationView applicationView)
         {
             _applicationView = applicationView;
+
+            // Corner case: UWP scenarios that start with no main window.
+            // This may look confusing, but _applicationView.Dispatcher seems to be accessible here (a thread corresponding to
+            // main dispatcher or layout manager), yet it may not be yet accessible from the thread pool threads that'll soon
+            // call ActivateCallback.
+            _coreDispatcher = applicationView.Dispatcher;
         }
 #else
         private ReactChoreographer() { }
@@ -172,7 +179,9 @@ namespace ReactNative.Modules.Core
             {
                 DispatcherHelpers.RunOnDispatcher(
 #if WINDOWS_UWP
-                    _applicationView.Dispatcher,
+                    _coreDispatcher,
+#else
+                    DispatcherHelpers.MainDispatcher,
 #endif
                     ActivatePriority,
                     () =>
@@ -252,7 +261,7 @@ namespace ReactNative.Modules.Core
         {
             DispatcherHelpers.RunOnDispatcher(
 #if WINDOWS_UWP
-                _applicationView.CoreWindow.Dispatcher,
+                _coreDispatcher,
 #else
                 DispatcherHelpers.MainDispatcher,
 #endif
