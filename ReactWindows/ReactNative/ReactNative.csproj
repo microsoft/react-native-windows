@@ -128,7 +128,6 @@
     <Compile Include="Modules\StatusBar\StatusBarModule.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
-    <Compile Include="ReactNativeViewHost.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
