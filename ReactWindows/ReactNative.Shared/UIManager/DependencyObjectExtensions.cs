@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -14,8 +14,9 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class DependencyObjectExtensions
     {
-        private static readonly ConcurrentDictionary<DependencyObject, DependencyObjectData> s_properties =
-            new ConcurrentDictionary<DependencyObject, DependencyObjectData>();
+        // ConditionalWeakTable is thread safe
+        private static readonly ConditionalWeakTable<DependencyObject, DependencyObjectData> s_properties =
+            new ConditionalWeakTable<DependencyObject, DependencyObjectData>();
         private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).PointerEvents = pointerEvents;
+            s_properties.GetOrCreateValue(view).PointerEvents = pointerEvents;
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).CompoundView = compoundView;
+            s_properties.GetOrCreateValue(view).CompoundView = compoundView;
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).Tag = tag;
+            s_properties.GetOrCreateValue(view).Tag = tag;
         }
 
         /// <summary>
@@ -141,7 +142,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).Context = context;
+            s_properties.GetOrCreateValue(view).Context = context;
         }
 
         /// <summary>
@@ -169,8 +170,7 @@ namespace ReactNative.UIManager
 
         internal static void ClearData(this DependencyObject view)
         {
-            DependencyObjectData removedData;
-            s_properties.TryRemove(view, out removedData);
+            s_properties.Remove(view);
         }
 
         internal static T As<T>(this DependencyObject view)

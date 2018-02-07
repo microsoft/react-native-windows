@@ -655,7 +655,7 @@ namespace ReactNative.UIManager
         {
             if (!cssNode.IsVirtual)
             {
-                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, cssNode.ThemedContext, styles);
+                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, rootViewTag, cssNode.ThemedContext, styles);
             }
         }
 

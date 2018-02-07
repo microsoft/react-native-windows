@@ -449,29 +449,29 @@ namespace ReactNative
             }
         }
 
-        private async Task<ReactContext> CreateReactContextCoreAsync(CancellationToken token)
+        private Task<ReactContext> CreateReactContextCoreAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             if (_useDeveloperSupport && _jsBundleFile == null)
             {
-                return await CreateReactContextFromDevManagerAsync(token);
+                return CreateReactContextFromDevManagerAsync(token);
             }
             else
             {
-                return await CreateReactContextFromBundleAsync(token);
+                return CreateReactContextFromBundleAsync(token);
             }
         }
 
-        private async Task<ReactContext> CreateReactContextFromDevManagerAsync(CancellationToken token)
+        private Task<ReactContext> CreateReactContextFromDevManagerAsync(CancellationToken token)
         {
             if (_devSupportManager.HasUpToDateBundleInCache())
             {
-                return await CreateReactContextFromCachedPackagerBundleAsync(token);
+                return CreateReactContextFromCachedPackagerBundleAsync(token);
             }
             else
             {
-                return await _devSupportManager.CreateReactContextFromPackagerAsync(token);
+                return _devSupportManager.CreateReactContextFromPackagerAsync(token);
             }
         }
 

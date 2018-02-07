@@ -70,12 +70,14 @@ namespace ReactNative.UIManager
         /// Handles the creation of a view.
         /// </summary>
         /// <param name="node">The shadow node for the view.</param>
+        /// <param name="rootViewTag">The react tag id of the root.</param>
         /// <param name="themedContext">The themed context.</param>
         /// <param name="initialProperties">
         /// The initial properties for the view.
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node,
+            int rootViewTag,
             ThemedReactContext themedContext, 
             ReactStylesDiffMap initialProperties)
         {
@@ -85,7 +87,7 @@ namespace ReactNative.UIManager
                     node.ReactTag,
                     node.ViewClass,
                     initialProperties,
-                    node.RootNode.ReactTag);
+                    rootViewTag);
 #else
             var isLayoutOnly = node.ViewClass == ViewProps.ViewClassName
                 && IsLayoutOnlyAndCollapsible(initialProperties);
@@ -99,7 +101,7 @@ namespace ReactNative.UIManager
                     node.ReactTag,
                     node.ViewClass,
                     initialProperties,
-                    node.RootNode.ReactTag);
+                    rootViewTag);
             }
 #endif
         }

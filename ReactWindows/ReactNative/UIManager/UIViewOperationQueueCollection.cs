@@ -37,7 +37,7 @@ namespace ReactNative.UIManager
 
         private UIViewOperationQueueInstance _mainUiViewOperationsQueueInstance;
 
-        private readonly IDictionary<int, UIViewOperationQueueInstance> _reactTagToOperationQueue = new Dictionary<int, UIViewOperationQueueInstance>();
+        private IDictionary<int, UIViewOperationQueueInstance> _reactTagToOperationQueue = new Dictionary<int, UIViewOperationQueueInstance>();
         private readonly IDictionary<CoreDispatcher, QueueInstanceInfo> _dispatcherToOperationQueueInfo = new Dictionary<CoreDispatcher, QueueInstanceInfo>();
 
         private bool _active;
@@ -160,6 +160,8 @@ namespace ReactNative.UIManager
             // Send forward
             queue.EnqueueRemoveRootView(rootViewTag);
 
+            _reactTagToOperationQueue.Remove(rootViewTag);
+
             // Do some maintenance/cleanup if needed.
             // Find the queue info
             var pair = _dispatcherToOperationQueueInfo.First(p => p.Value.queueInstance == queue);
@@ -177,6 +179,9 @@ namespace ReactNative.UIManager
                     // Simulate an OnDestroy from the correct dispatcher thread
                     // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
                     DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy, true); // inlining allowed
+
+                    // Clean all the tags associated to this queue
+                    _reactTagToOperationQueue = _reactTagToOperationQueue.Where(p => p.Value != queue).ToDictionary(p => p.Key, p => p.Value);
                 }
             }
         }
