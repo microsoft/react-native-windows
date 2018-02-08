@@ -148,6 +148,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHostExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\IWebSocketOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHost.cs" />

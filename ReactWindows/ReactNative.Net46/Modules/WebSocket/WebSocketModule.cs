@@ -28,13 +28,7 @@ namespace ReactNative.Modules.WebSocket
 
         #region NativeModuleBase Overrides
 
-        public override string Name
-        {
-            get
-            {
-                return "WebSocketModule";
-            }
-        }
+        public override string Name => "WebSocketModule";
 
         #endregion
 
