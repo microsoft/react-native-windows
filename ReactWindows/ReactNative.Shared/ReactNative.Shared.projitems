@@ -137,6 +137,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\IWebSocketOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactContextInitializedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactRootView.cs" />

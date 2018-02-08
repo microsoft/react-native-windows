@@ -32,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\NetworkingModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManagerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketModuleTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketOptionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetterTests.cs" />
