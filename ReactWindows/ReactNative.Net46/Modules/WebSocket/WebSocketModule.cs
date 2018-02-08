@@ -64,7 +64,7 @@ namespace ReactNative.Modules.WebSocket
                 OnClosed(id, sender, args);
             };
 
-            InitializeInBackground(id, url, webSocket);
+            InitializeInBackground(url, webSocket, options);
         }
 
         [ReactMethod]
@@ -196,9 +196,26 @@ namespace ReactNative.Modules.WebSocket
 
         #region Private Methods
 
-        private void InitializeInBackground(int id, string url, WebSocketSharp.WebSocket webSocket)
+        private void InitializeInBackground(string url, WebSocketSharp.WebSocket webSocket, JObject options)
         {
-            webSocket?.Connect();
+            var parsedOptions = new WebSocketOptions(options);
+            ProxyHelper proxy = null;
+
+            if (parsedOptions.UseDefaultProxy)
+            {
+                proxy = new ProxyHelper(new Uri(url));
+            }
+            else
+            {
+                proxy = new ProxyHelper(parsedOptions);
+            }
+
+            if (proxy != null && !proxy.IsBypassed)
+            {
+                webSocket.SetProxy(proxy.ProxyAddress, proxy.UserName, proxy.Password);
+            }
+
+            webSocket.Connect();
         }
 
         private void SendMessageInBackground(int id, string message)

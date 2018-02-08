@@ -150,6 +150,7 @@
     <Compile Include="Modules\NetInfo\DefaultNetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\INetworkInformation.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModule.cs" />
+    <Compile Include="Modules\WebSocket\ProxyHelper.cs" />
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactPage.cs" />
