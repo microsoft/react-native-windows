@@ -10,9 +10,6 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
-#if WINDOWS_UWP
-using Windows.Foundation.Metadata;
-#endif
 
 namespace ReactNative
 {
