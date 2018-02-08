@@ -58,6 +58,7 @@ namespace ReactNative.Tests.Modules.WebSocket
         }
 
         [Test]
+        [Category("Network")]
         public void WebSocketModule_FailedEvent()
         {
             var waitHandle = new AutoResetEvent(false);
