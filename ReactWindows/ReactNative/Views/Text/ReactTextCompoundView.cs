@@ -13,10 +13,12 @@ namespace ReactNative.Views.Text
             var textPointer = richTextBlock.GetPositionFromPoint(point);
             var textPointerParent = textPointer.Parent;
 
-            // We may encounter a case where the parent item is the
-            // `Paragraph` inline attached to the `RichTextBlock`.
+            // We may encounter a case where the parent object is the
+            // `Paragraph` inline attached to the `RichTextBlock`. This is a
+            // native implementation detail of the `Text` component, and as 
+            // such the `Paragraph` would not have a React tag associated.
             // In this case, simply return the tag of the `RichTextBlock`.
-            return textPointerParent.HasTag()
+            return textPointerParent != null && textPointerParent.HasTag()
                 ? textPointerParent.GetTag()
                 : richTextBlock.GetTag();
         }
