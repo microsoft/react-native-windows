@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -14,7 +14,7 @@ namespace ReactNative.UIManager
     /// <summary>
     /// Represents a Canvas with an optional Border inside.
     /// </summary>
-    public class BorderedCanvas : Canvas
+    public class BorderedCanvas : AutomationCanvas
     {
         private Border _border = null;
 

@@ -156,6 +156,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\AutomationCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />

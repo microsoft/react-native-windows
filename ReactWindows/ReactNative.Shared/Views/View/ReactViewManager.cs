@@ -3,6 +3,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Runtime.CompilerServices;
 #if WINDOWS_UWP
+using ReactNative.Common;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -186,6 +187,20 @@ namespace ReactNative.Views.View
             view.SetPointerEvents(pointerEvents);
         }
 
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the BorderedCanvas.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
+        {
+#if WINDOWS_UWP
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+#endif
+        }
+
         #endregion
 
         #region borders and background
@@ -322,6 +337,10 @@ namespace ReactNative.Views.View
 
             var uiElementChild = child.As<UIElement>();
             parent.Children.Insert(index, uiElementChild);
+
+#if WINDOWS_UWP
+            AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
+#endif
         }
 
         /// <summary>

@@ -66,6 +66,21 @@ namespace ReactNative.Common
         }
 
         /// <summary>
+        /// Returns the value of ImportantForAccessibility property of <paramref name="uiElement"/>
+        /// </summary>
+        /// <param name="uiElement">The UIElement which ImportantForAccessibility property value is returned.</param>
+        /// <returns></returns>
+        public static ImportantForAccessibility GetImportantForAccessibility(UIElement uiElement) => GetImportantForAccessibilityAttached(uiElement);
+
+        /// <summary>
+        /// Returns 'true' if the <paramref name="uiElement"/> has ImportantForAccessibility property set to a value that
+        /// "hides" its descendants from narrator.
+        /// </summary>
+        /// <param name="uiElement">The UIElement which ImportantForAccessibility property is checked.</param>
+        /// <returns></returns>
+        public static bool DoesHideDescendants(UIElement uiElement) => DoesHideDescendants(GetImportantForAccessibility(uiElement));
+
+        /// <summary>
         /// Internal implementation of InitImportantForAccessibility.
         /// </summary>
         /// <param name="parentUIElement"></param>
