@@ -11,6 +11,73 @@ namespace ReactNative.Tests
     [TestClass]
     public class ReactInstanceManagerTests
     {
+        private class LifecycleEventsListener :
+            ILifecycleEventListener,
+            IBackgroundEventListener,
+            IDisposable
+        {
+            public enum Step
+            {
+                Resume,
+                Suspend,
+                EnteredBackground,
+                LeavingBackground,
+                Destroy
+            };
+
+            private readonly Step[] _scenario;
+            private int _currentStep = 0;
+            private bool _disposed = false;
+
+            public LifecycleEventsListener(Step[] scenario)
+            {
+                _scenario = (Step[])scenario.Clone();
+            }
+
+            public void OnEnteredBackground()
+            {
+                Advance(Step.EnteredBackground);
+            }
+
+            public void OnLeavingBackground()
+            {
+                Advance(Step.LeavingBackground);
+            }
+
+            public void OnSuspend()
+            {
+                Advance(Step.Suspend);
+            }
+
+            public void OnResume()
+            {
+                Advance(Step.Resume);
+            }
+
+            public void OnDestroy()
+            {
+                Advance(Step.Destroy);
+            }
+
+            public void Dispose()
+            {
+                if (!_disposed)
+                {
+                    Assert.IsFalse(_currentStep != _scenario.Length, "Too few steps");
+                    _disposed = true;
+                }
+            }
+
+            private void Advance(Step step)
+            {
+                if (_disposed) return;
+
+                Assert.IsFalse(_currentStep >= _scenario.Length, "Too many steps");
+                Assert.AreEqual(_scenario[_currentStep], step);
+                _currentStep++;
+            }
+        }
+
         [TestMethod]
         public void ReactInstanceManager_Builder_SetterChecks()
         {
@@ -307,16 +374,196 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
         }
 
+        [TestMethod]
+        public async Task ReactInstanceManager_Lifecycle_Simple()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile, LifecycleState.BeforeCreate);
+
+            var listener = new LifecycleEventsListener(new LifecycleEventsListener.Step[]
+            {
+                LifecycleEventsListener.Step.Resume,
+                LifecycleEventsListener.Step.LeavingBackground,
+                LifecycleEventsListener.Step.EnteredBackground,
+                LifecycleEventsListener.Step.LeavingBackground,
+                LifecycleEventsListener.Step.EnteredBackground,
+                LifecycleEventsListener.Step.Suspend,
+                LifecycleEventsListener.Step.Resume,
+                LifecycleEventsListener.Step.LeavingBackground,
+                LifecycleEventsListener.Step.EnteredBackground,
+                LifecycleEventsListener.Step.Suspend,
+            });
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var context = await manager.CreateReactContextAsync(CancellationToken.None);
+                context.AddBackgroundEventListener(listener);
+                context.AddLifecycleEventListener(listener);
+
+                manager.OnResume(null);
+                manager.OnLeavingBackground();
+                manager.OnEnteredBackground();
+                manager.OnLeavingBackground();
+                manager.OnEnteredBackground();
+                manager.OnSuspend();
+                manager.OnResume(null);
+                manager.OnLeavingBackground();
+                manager.OnEnteredBackground();
+                manager.OnSuspend();
+
+                context.RemoveLifecycleEventListener(listener);
+                context.RemoveBackgroundEventListener(listener);
+            });
+
+            listener.Dispose();
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_Lifecycle_Dispose_From_Foreground()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile, LifecycleState.Foreground);
+
+            var listener = new LifecycleEventsListener(new LifecycleEventsListener.Step[]
+            {
+                LifecycleEventsListener.Step.EnteredBackground,
+                LifecycleEventsListener.Step.Suspend,
+                LifecycleEventsListener.Step.Destroy,
+            });
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var context = await manager.CreateReactContextAsync(CancellationToken.None);
+                context.AddBackgroundEventListener(listener);
+                context.AddLifecycleEventListener(listener);
+
+                await manager.DisposeAsync();
+            });
+
+            listener.Dispose();
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_Lifecycle_NoForeground()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile, LifecycleState.BeforeCreate);
+
+            var listener = new LifecycleEventsListener(new LifecycleEventsListener.Step[]
+            {
+                LifecycleEventsListener.Step.Resume,
+                LifecycleEventsListener.Step.Suspend,
+            });
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var context = await manager.CreateReactContextAsync(CancellationToken.None);
+                context.AddBackgroundEventListener(listener);
+                context.AddLifecycleEventListener(listener);
+
+                manager.OnResume(null);
+                manager.OnSuspend();
+
+                context.RemoveLifecycleEventListener(listener);
+                context.RemoveBackgroundEventListener(listener);
+            });
+
+            listener.Dispose();
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_Lifecycle_StartSuspended()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile, LifecycleState.BeforeCreate);
+
+            var listener = new LifecycleEventsListener(new LifecycleEventsListener.Step[]
+            {
+                LifecycleEventsListener.Step.Resume,
+                LifecycleEventsListener.Step.Suspend,
+            });
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var context = await manager.CreateReactContextAsync(CancellationToken.None);
+                context.AddBackgroundEventListener(listener);
+                context.AddLifecycleEventListener(listener);
+
+                manager.OnSuspend();
+
+                context.RemoveLifecycleEventListener(listener);
+                context.RemoveBackgroundEventListener(listener);
+            });
+
+            listener.Dispose();
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_Lifecycle_Missing_Background()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile, LifecycleState.Foreground);
+
+            var listener = new LifecycleEventsListener(new LifecycleEventsListener.Step[]
+            {
+                LifecycleEventsListener.Step.EnteredBackground,
+                LifecycleEventsListener.Step.Suspend,
+            });
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var context = await manager.CreateReactContextAsync(CancellationToken.None);
+                context.AddBackgroundEventListener(listener);
+                context.AddLifecycleEventListener(listener);
+
+                manager.OnSuspend();
+
+                context.RemoveLifecycleEventListener(listener);
+                context.RemoveBackgroundEventListener(listener);
+            });
+
+            listener.Dispose();
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_Lifecycle_Cleanup_Old_Context()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            var manager = CreateReactInstanceManager(jsBundleFile, LifecycleState.Foreground);
+
+            var listener = new LifecycleEventsListener(new LifecycleEventsListener.Step[]
+            {
+                LifecycleEventsListener.Step.EnteredBackground,
+                LifecycleEventsListener.Step.Suspend,
+            });
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+            {
+                var context = await manager.CreateReactContextAsync(CancellationToken.None);
+                context.AddBackgroundEventListener(listener);
+                context.AddLifecycleEventListener(listener);
+
+                var newContext = await manager.RecreateReactContextAsync(CancellationToken.None);
+            });
+                
+            listener.Dispose();
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+        }
+
         private static ReactInstanceManager CreateReactInstanceManager()
         {
             return CreateReactInstanceManager("ms-appx:///Resources/main.jsbundle");
         }
 
-        private static ReactInstanceManager CreateReactInstanceManager(string jsBundleFile)
+        private static ReactInstanceManager CreateReactInstanceManager(string jsBundleFile, LifecycleState initialLifecycleState = LifecycleState.Foreground)
         {
             return new ReactInstanceManagerBuilder
             {
-                InitialLifecycleState = LifecycleState.Foreground,
+                InitialLifecycleState = initialLifecycleState,
                 JavaScriptBundleFile = jsBundleFile,
             }.Build();
         }
