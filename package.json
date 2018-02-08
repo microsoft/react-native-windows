@@ -62,6 +62,7 @@
     "yeoman-generator": "^0.21.2"
   },
   "rnpm": {
-    "plugin": "./local-cli/index.js"
+    "plugin": "./local-cli/index.js",
+    "platform": "./local-cli/platform.js"
   }
 }
