@@ -297,7 +297,7 @@ namespace ReactNative.UIManager
                 var y = _measureBuffer[1];
                 var width = _measureBuffer[2];
                 var height = _measureBuffer[3];
-                callback.Invoke(0, 0, width, height, x, y);
+                callback.Invoke(x, y, width, height);
             });
         }
 
