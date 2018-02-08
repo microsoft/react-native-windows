@@ -14,7 +14,7 @@ using System.Windows;
 namespace ReactNative
 {
     /// <summary>
-    /// Default root view for applicaitons. Provides the ability to listen for
+    /// Default root view for applications. Provides the ability to listen for
     /// size changes so that the UI manager can re-layout its elements.
     /// 
     /// It is also responsible for handling touch events passed to any of it's
@@ -23,12 +23,19 @@ namespace ReactNative
     /// </summary>
     public class ReactRootView : SizeMonitoringCanvas
     {
+        enum AttachState
+        {
+            Detached,
+            Scheduled,
+            Attached
+        }
+
         private ReactInstanceManager _reactInstanceManager;
         private string _jsModuleName;
         private JObject _initialProps;
 
         private bool _wasMeasured;
-        private bool _attachScheduled;
+        private AttachState _attachState = AttachState.Detached;
 
         /// <summary>
         /// Instantiates the <see cref="ReactRootView"/>.
@@ -58,13 +65,24 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Get the initialProps
+        /// Gets/sets the props object passed to the React component
         /// </summary>
-        internal JObject InitialProps
+        public JObject InitialProps
         {
             get
             {
                 return _initialProps;
+            }
+            set
+            {
+                if(value != _initialProps)
+                {
+                    _initialProps = value;
+                    if (_attachState == AttachState.Attached)
+                    {
+                        _reactInstanceManager.UpdatePropsForRootView(this);
+                    }
+                }
             }
         }
 
@@ -122,10 +140,11 @@ namespace ReactNative
             if (_wasMeasured)
             {
                 _reactInstanceManager.AttachMeasuredRootView(this);
+                _attachState = AttachState.Attached;
             }
             else
             {
-                _attachScheduled = true;
+                _attachState = AttachState.Scheduled;
             }
 
             if (getReactContextTask != null)
@@ -149,10 +168,10 @@ namespace ReactNative
             _wasMeasured = true;
 
             var reactInstanceManager = _reactInstanceManager;
-            if (_attachScheduled && reactInstanceManager != null)
+            if (_attachState == AttachState.Scheduled && reactInstanceManager != null)
             {
-                _attachScheduled = false;
                 reactInstanceManager.AttachMeasuredRootView(this);
+                _attachState = AttachState.Attached;
             }
 
             return result;

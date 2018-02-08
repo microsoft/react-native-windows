@@ -376,6 +376,34 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Transmits updated initialProps value to React.
+        /// </summary>
+        /// <remarks>
+        /// This will trigger componentWillReceiveProps on the React component.
+        /// </remarks>
+        /// <param name="rootView">The root view</param>
+        public void UpdatePropsForRootView(ReactRootView rootView)
+        {
+            if (rootView == null)
+                throw new ArgumentNullException(nameof(rootView));
+
+            DispatcherHelpers.AssertOnDispatcher();
+
+            var currentReactContext = _currentReactContext;
+            if(_contextInitializationTask == null && currentReactContext != null)
+            {
+                var rootTag = rootView.GetTag();
+                var jsAppModuleName = rootView.JavaScriptModuleName;
+                var appParameters = new Dictionary<string, object>
+                {
+                    { "rootTag", rootTag },
+                    { "initialProps", rootView.InitialProps }
+                };
+                currentReactContext.ReactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
+            }
+        }
+
+        /// <summary>
         /// Uses the configured <see cref="IReactPackage"/> instances to create
         /// all <see cref="IViewManager"/> instances.
         /// </summary>
