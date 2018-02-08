@@ -322,5 +322,39 @@ namespace ReactNative.Common
             importantForAccessibility == ImportantForAccessibility.NoHideDescendants;
 
         #endregion ImportantForAccessibility
+
+        #region AccessibilityLabel
+
+        /// <summary>
+        /// Attached property used to store AccessibilityLabel value in native controls.
+        /// </summary>
+        private static readonly DependencyProperty AccessibilityLabelAttachedProperty =
+            DependencyProperty.RegisterAttached(
+                "AccessibilityLabelAttached",
+                typeof(string),
+                typeof(UIElement),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// AccessibilityLabelAttached property setter.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="value"></param>
+        private static void SetAccessibilityLabelAttached(UIElement element, string value)
+        {
+            element.SetValue(AccessibilityLabelAttachedProperty, value);
+        }
+
+        /// <summary>
+        /// AccessibilityLabelAttached property getter.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private static string GetAccessibilityLabelAttached(UIElement element)
+        {
+            return (string)element.GetValue(AccessibilityLabelAttachedProperty);
+        }
+
+        #endregion AccessibilityLabel
     }
 }
