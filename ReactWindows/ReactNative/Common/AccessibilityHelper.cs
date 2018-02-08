@@ -71,9 +71,8 @@ namespace ReactNative.Common
         /// <param name="parentUIElement"></param>
         private static void InitImportantForAccessibilityInternal(UIElement parentUIElement)
         {
-            var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
             var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
-            if (DoesHideDescendants(parentImportantForAccessibilityAttached) ||
+            if (DoesHideDescendants(parentUIElement) ||
                 IsHiddenByAncestor(parentUIElementAutomationPeer))
             {
                 // If the parent or an ancestor is "hiding" the children, set AccessibilityView to Raw.
@@ -88,9 +87,8 @@ namespace ReactNative.Common
         /// <param name="uiElement"></param>
         private static void InitImportantForAccessibilityInternal(UIElement parentUIElement, UIElement uiElement)
         {
-            var parentImportantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
             var parentUIElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(parentUIElement);
-            if (DoesHideDescendants(parentImportantForAccessibilityAttached) ||
+            if (DoesHideDescendants(parentUIElement) ||
                 IsHiddenByAncestor(parentUIElementAutomationPeer))
             {
                 // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
@@ -182,7 +180,8 @@ namespace ReactNative.Common
 
         /// <summary>
         /// Returns true if in <paramref name="uiElementAutomationPeer"/> parents chain there is an UIElement with
-        /// ImportantForAccessibility value of Yes or NoHideDescendants. 'Yes' denotes that the element is visible
+        /// ImportantForAccessibility value of Yes or NoHideDescendants or (Auto and AccessibilityLabelAttached attached property is set).
+        /// 'Yes' or (Auto and AccessibilityLabelAttached attached property is set) denotes that the element is visible
         /// to the narrator as a container i.e. its children are 'hidden'. 'NoHideDescendants' denotes that both
         /// the element and its children are 'hidden'. 'Hidden' children have AccessibilityView set to 'Raw'.
         /// </summary>
@@ -201,8 +200,7 @@ namespace ReactNative.Common
                 case FrameworkElementAutomationPeer parentFEAutomationPeer:
                     if (parentFEAutomationPeer.Owner != null)
                     {
-                        var importantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentFEAutomationPeer.Owner);
-                        if (DoesHideDescendants(importantForAccessibilityAttached))
+                        if (DoesHideDescendants(parentFEAutomationPeer.Owner))
                         {
                             return true;
                         }
@@ -212,8 +210,7 @@ namespace ReactNative.Common
                 case ItemAutomationPeer parentIAutomationPeer:
                     if (parentIAutomationPeer.Item is UIElement parentUIElement)
                     {
-                        var importantForAccessibilityAttached = GetImportantForAccessibilityAttached(parentUIElement);
-                        if (DoesHideDescendants(importantForAccessibilityAttached))
+                        if (DoesHideDescendants(parentUIElement))
                         {
                             return true;
                         }
@@ -296,9 +293,14 @@ namespace ReactNative.Common
         {
             switch (importantForAccessibility)
             {
-                case ImportantForAccessibility.Auto:
+                case ImportantForAccessibility.Auto when GetAccessibilityLabelAttached(uiElement) == null:
                     uiElement.ClearValue(AutomationProperties.AccessibilityViewProperty);
                     SetChildrenAccessibilityViewFromImportantForAccessibility(uiElementAutomationPeer);
+                    break;
+                case ImportantForAccessibility.Auto when GetAccessibilityLabelAttached(uiElement) != null:
+                case ImportantForAccessibility.Yes:
+                    AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Content);
+                    SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
                     break;
                 case ImportantForAccessibility.No:
                     AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
@@ -308,18 +310,20 @@ namespace ReactNative.Common
                     AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
                     SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
                     break;
-                case ImportantForAccessibility.Yes:
-                    AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Content);
-                    SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
-                    break;
                 default:
                     break;
             }
         }
 
-        private static bool DoesHideDescendants(ImportantForAccessibility importantForAccessibility) =>
-            importantForAccessibility == ImportantForAccessibility.Yes ||
-            importantForAccessibility == ImportantForAccessibility.NoHideDescendants;
+        private static bool DoesHideDescendants(UIElement element)
+        {
+            ImportantForAccessibility importantForAccessibility = GetImportantForAccessibilityAttached(element);
+            bool isAccessibilityLabelSet = GetAccessibilityLabelAttached(element) != null;
+
+            return importantForAccessibility == ImportantForAccessibility.Yes
+                || importantForAccessibility == ImportantForAccessibility.NoHideDescendants
+                || (importantForAccessibility == ImportantForAccessibility.Auto && isAccessibilityLabelSet == true);
+        }
 
         #endregion ImportantForAccessibility
 
