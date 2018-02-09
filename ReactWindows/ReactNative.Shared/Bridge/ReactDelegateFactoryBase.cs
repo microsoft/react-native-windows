@@ -37,9 +37,8 @@ namespace ReactNative
         /// </summary>
         /// <param name="nativeModule">The native module instance.</param>
         /// <param name="method">The method.</param>
-        /// <param name="genericDelegate">The delegate used to avoid expensive reflection invocation.</param>
         /// <returns>The invocation delegate.</returns>
-        public abstract Action<INativeModule, IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method, IGenericDelegate genericDelegate);
+        public abstract Action<IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
 
         /// <summary>
         /// Extracts the native method type from the method.

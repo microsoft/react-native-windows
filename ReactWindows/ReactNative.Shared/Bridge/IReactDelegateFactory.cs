@@ -21,9 +21,8 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="nativeModule">The native module instance.</param>
         /// <param name="method">The method.</param>
-        /// <param name="genericDelegate">The delegate used to avoid expensive reflection invocation.</param>
         /// <returns>The invocation delegate.</returns>
-        Action<INativeModule, IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method, IGenericDelegate genericDelegate);
+        Action<IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
 
         /// <summary>
         /// Check that the method is valid for <see cref="ReactMethodAttribute"/>.

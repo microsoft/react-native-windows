@@ -25,21 +25,21 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
-        /// <param name="genericDelegate">The delegate used to avoid expensive reflection invocation.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method, IGenericDelegate genericDelegate)
+        public override Action<IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
         {
             var extractors = CreateExtractors(module, method);
             var expectedArguments = extractors.Sum(e => e.ExpectedArguments);
             var extractFunctions = extractors.Select(e => e.ExtractFunction).ToList();
+            var genericDelegate = CreateGenericDelegate(module, method);
 
-            return (moduleInstance, reactInstance, arguments) => 
+            return (reactInstance, arguments) => 
                 Invoke(
                     method, 
                     expectedArguments,
                     extractFunctions,
                     genericDelegate,
-                    moduleInstance,
+                    module,
                     reactInstance,
                     arguments);
         }
@@ -168,14 +168,61 @@ namespace ReactNative.Bridge
                 idx = result.NextIndex;
             }
 
-            bool hasDelegate = (genericDelegate != null) && ReferenceEquals(moduleInstance, genericDelegate.DelegateTarget);
-            if (hasDelegate)
+            if (genericDelegate != null)
             {
                 genericDelegate.Invoke(args);
-                return;
+            }
+            else
+            {
+                // This should only happen for React methods with greater than 16 arguments.
+                method.Invoke(moduleInstance, args);
+            }
+        }
+
+        static IGenericDelegate CreateGenericDelegate(object instance, MethodInfo method)
+        {
+            var methodParameters = method.GetParameters();
+            var hasReturnValue = method.ReturnType != typeof(void);
+            var maximumParameterCount = hasReturnValue ? GenericDelegateTypes.FuncTypes.Length : GenericDelegateTypes.ActionTypes.Length;
+
+            // If the number of arguments exceeds the number supported by generic delegates,
+            // return null. This will fall back to using reflection.
+            var argumentCount = methodParameters.Length;
+            if (argumentCount > maximumParameterCount)
+            {
+                return null;
             }
 
-            method.Invoke(moduleInstance, args);
+            // Increment the generic arity for methods with return values.
+            var genericArity = hasReturnValue ? argumentCount + 1 : argumentCount;
+            var typeList = new Type[genericArity];
+
+            // Fill the generic type parameter list with method parameter types.
+            for (int t = 0; t < argumentCount; t++)
+            {
+                typeList[t] = methodParameters[t].ParameterType;
+            }
+
+            // If the function has a return value, append it to the generic type parameters.
+            if (hasReturnValue)
+            {
+                typeList[argumentCount] = method.ReturnType;
+            }
+
+            // Get the appropriate generic delegate type.
+            var genericDelegateType = hasReturnValue
+                ? GenericDelegateTypes.FuncTypes[argumentCount]
+                : GenericDelegateTypes.ActionTypes[argumentCount];
+
+            // Close the generic type over the argument and return types, if necessary.
+            var delegateType = genericDelegateType;
+            if (genericArity > 0)
+            {
+                delegateType = genericDelegateType.MakeGenericType(typeList);
+            }
+
+            // Create the generic delegate instance.
+            return (IGenericDelegate)Activator.CreateInstance(delegateType, instance, method);
         }
 
         private struct Result

@@ -37,14 +37,13 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
-        /// <param name="genericDelegate">The delegate used to avoid expensive reflection invocation.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method, IGenericDelegate genericDelegate)
+        public override Action<IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
         {
             return GenerateExpression(module, method).Compile();
         }
 
-        private static Expression<Action<INativeModule, IReactInstance, JArray>> GenerateExpression(INativeModule module, MethodInfo method)
+        private static Expression<Action<IReactInstance, JArray>> GenerateExpression(INativeModule module, MethodInfo method)
         {
             var parameterInfos = method.GetParameters();
 
@@ -54,7 +53,7 @@ namespace ReactNative.Bridge
             var parameterExpressions = new ParameterExpression[n];
             var extractExpressions = new Expression[n];
 
-            var moduleInstanceParameter = Expression.Parameter(typeof(INativeModule), "moduleInstance");
+            var moduleInstanceConstant = Expression.Constant(module, typeof(INativeModule));
             var reactInstanceParameter = Expression.Parameter(typeof(IReactInstance), "reactInstance");
             var jsArgumentsParameter = Expression.Parameter(typeof(JArray), "jsArguments");
 
@@ -75,25 +74,19 @@ namespace ReactNative.Bridge
                     i);
             }
 
-            var blockStatements = new Expression[n + 5];
-
-            //
-            // if (moduleInstance == null)
-            //     throw new ArgumentNullException(nameof(moduleInstance));
-            //
-            blockStatements[0] = CreateNullCheckExpression<IReactInstance>(moduleInstanceParameter);
+            var blockStatements = new Expression[n + 4];
 
             //
             // if (reactInstance == null)
             //     throw new ArgumentNullException(nameof(reactInstance));
             //
-            blockStatements[1] = CreateNullCheckExpression<IReactInstance>(reactInstanceParameter);
+            blockStatements[0] = CreateNullCheckExpression<IReactInstance>(reactInstanceParameter);
 
             //
             // if (jsArguments == null)
             //     throw new ArgumentNullException(nameof(jsArguments));
             //
-            blockStatements[2] = CreateNullCheckExpression<JArray>(jsArgumentsParameter);
+            blockStatements[1] = CreateNullCheckExpression<JArray>(jsArgumentsParameter);
 
             //
             // if (jsArguments.Count != argc)
@@ -103,7 +96,7 @@ namespace ReactNative.Bridge
             //             "Module '{module.Name}' method '{method.Name}' got '{0}' arguments, expected '{parameterCount}'."
             //             jsArguments.Count));
             //
-            blockStatements[3] = Expression.IfThen(
+            blockStatements[2] = Expression.IfThen(
                 Expression.NotEqual(
                     Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
                     Expression.Constant(argc)
@@ -133,16 +126,15 @@ namespace ReactNative.Bridge
             // ...
             // pn = Extract<T>(jsArguments[n]);
             //
-            Array.Copy(extractExpressions, 0, blockStatements, 4, n);
+            Array.Copy(extractExpressions, 0, blockStatements, 3, n);
 
             blockStatements[blockStatements.Length - 1] = Expression.Call(
-                Expression.Convert(moduleInstanceParameter, method.DeclaringType),
+                Expression.Convert(moduleInstanceConstant, method.DeclaringType),
                 method,
                 parameterExpressions);
 
-            return Expression.Lambda<Action<INativeModule, IReactInstance, JArray>>(
+            return Expression.Lambda<Action<IReactInstance, JArray>>(
                 Expression.Block(parameterExpressions, blockStatements),
-                moduleInstanceParameter,
                 reactInstanceParameter,
                 jsArgumentsParameter
             );
