@@ -625,18 +625,6 @@ const TextInput = createReactClass({
      *  @platform windows
      */
     tabIndex: PropTypes.number,
-    /**
-     * Called when key down while component has focus.
-     *
-     * @platform windows
-     */
-    onKeyDown: PropTypes.func,
-    /**
-     * Called when key up while component has focus.
-     *
-     * @platform windows
-     */
-    onKeyUp: PropTypes.func,
   },
   getDefaultProps(): Object {
     return {
@@ -925,9 +913,7 @@ const TextInput = createReactClass({
           text={this._getText()}
           isTabStop={windowsTabFocusable}
           tabIndex={tabIndex}
-          onKeyDown={this.props.onKeyDown}
-          onKeyUp={this.props.onKeyUp}
-          />;
+        />;
     } else {
       textContainer =
         <RCTTextBox
@@ -944,8 +930,6 @@ const TextInput = createReactClass({
           onScroll={this._onScroll}
           isTabStop={windowsTabFocusable}
           tabIndex={tabIndex}
-          onKeyDown={this.props.onKeyDown}
-          onKeyUp={this.props.onKeyUp}
         />;
     }
 
