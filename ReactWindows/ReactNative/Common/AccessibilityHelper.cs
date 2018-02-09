@@ -1,4 +1,5 @@
 using ReactNative.Bridge;
+using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
@@ -113,6 +114,17 @@ namespace ReactNative.Common
 
             SetImportantForAccessibilityAttached(uiElement, importantForAccessibility);
 
+            UpdateAccessibilityViewIfNeeded(uiElement);
+        }
+
+        /// <summary>
+        /// If needed sets AccessibilityView property for <paramref name="uiElement"/> and its children
+        /// according to the element's <see cref="ImportantForAccessibilityAttachedProperty"/> and
+        /// <see cref="AccessibilityLabelAttachedProperty"/> values.
+        /// </summary>
+        /// <param name="uiElement"></param>
+        private static void UpdateAccessibilityViewIfNeeded(UIElement uiElement)
+        {
             // Check if uiElement has an ancestor that "hides" children. If so, AccessibilityView is
             // already set to "Raw" for all children and no updates are required.
             var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
@@ -122,7 +134,7 @@ namespace ReactNative.Common
             }
 
             // Update AccessibilityView property accordingly.
-            UpdateAccessibilityViewForUIElement(uiElement, uiElementAutomationPeer, importantForAccessibility);
+            UpdateAccessibilityViewForUIElement(uiElement, uiElementAutomationPeer, GetImportantForAccessibilityAttached(uiElement));
         }
 
         /// <summary>
@@ -270,11 +282,11 @@ namespace ReactNative.Common
 
             switch (automationPeer)
             {
-                case FrameworkElementAutomationPeer FEAutomationPeer:
-                    ret = FEAutomationPeer.Owner;
+                case FrameworkElementAutomationPeer feAutomationPeer:
+                    ret = feAutomationPeer.Owner;
                     break;
-                case ItemAutomationPeer IAutomationPeer:
-                    ret = IAutomationPeer.Item as UIElement;
+                case ItemAutomationPeer itemAutomationPeer:
+                    ret = itemAutomationPeer.Item as UIElement;
                     break;
                 default:
                     break;
@@ -284,7 +296,9 @@ namespace ReactNative.Common
         }
 
         /// <summary>
-        /// Sets AccessibilityView property for <paramref name="uiElement"/> and its children according <paramref name="importantForAccessibility"/>.
+        /// Sets AccessibilityView property for <paramref name="uiElement"/> and its children according to
+        /// the element's <paramref name="importantForAccessibility"/> property and
+        /// <see cref="AccessibilityLabelAttachedProperty"/> values.
         /// </summary>
         /// <param name="uiElement"></param>
         /// <param name="uiElementAutomationPeer"></param>
@@ -330,6 +344,70 @@ namespace ReactNative.Common
         #region AccessibilityLabel
 
         /// <summary>
+        /// Sets the AccessibilityLabel property for <paramref name="element"/>.
+        /// It uses <see cref="AutomationProperties.NameProperty"/> to expose the element and its children
+        /// to narrator. AccessibilityLabel value is stored as an attached property.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="accessibilityLabel"></param>
+        public static void SetAccessibilityLabel(UIElement element, string accessibilityLabel)
+        {
+            // Post on UI thread because the method requires that parent/child
+            // relationship is established but XAML does not set the relationship
+            // until the next loop after the child is added.
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                SetAccessibilityLabelInternal(element, accessibilityLabel);
+            });
+        }
+
+        /// <summary>
+        /// Update <see cref="AutomationProperties.NameProperty"/> on <paramref name="element"/>
+        /// and all its parents as far up as needed. This method should be called when something has
+        /// changed in <paramref name="element"/> or somewhere in its subtree that may influence
+        /// AccessibilityLabel value for <paramref name="element"/> (and so also for everyone up parent chain).
+        /// </summary>
+        /// <param name="element"></param>
+        public static void UpdateAccessibilityNameFromHereUp(UIElement element)
+        {
+            // Post on UI thread because the method requires that parent/child
+            // relationship is established but XAML does not set the relationship
+            // until the next loop after the child is added.
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                UpdateAccessibilityNameFromHereUpInternal(element);
+            });
+        }
+
+        /// <summary>
+        /// Internal implementation of <see cref="SetAccessibilityLabel(UIElement, string)"/>.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="accessibilityLabel"></param>
+        private static void SetAccessibilityLabelInternal(UIElement element, string accessibilityLabel)
+        {
+            // Check if property is already set to requested value.
+            if (GetAccessibilityLabelAttached(element) == accessibilityLabel)
+            {
+                return;
+            }
+
+            SetAccessibilityLabelAttached(element, accessibilityLabel);
+            UpdateAccessibilityNameFromHereUpInternal(element);
+            UpdateAccessibilityViewIfNeeded(element);
+        }
+
+        /// <summary>
+        /// Internal implementation of <see cref="UpdateAccessibilityNameFromHereUp(UIElement)"/>
+        /// </summary>
+        /// <param name="element"></param>
+        private static void UpdateAccessibilityNameFromHereUpInternal(UIElement element)
+        {
+            var peer = FrameworkElementAutomationPeer.FromElement(element);
+            UpdateAccessibilityNameFromHereUpInternal(peer);
+        }
+
+        /// <summary>
         /// Attached property used to store AccessibilityLabel value in native controls.
         /// </summary>
         private static readonly DependencyProperty AccessibilityLabelAttachedProperty =
@@ -357,6 +435,70 @@ namespace ReactNative.Common
         private static string GetAccessibilityLabelAttached(UIElement element)
         {
             return (string)element.GetValue(AccessibilityLabelAttachedProperty);
+        }
+
+        /// <summary>
+        /// Update <see cref="AutomationProperties.NameProperty"/> on owner of <paramref name="peer"/>
+        /// and all its parents as far up as needed. This method should be called when something has
+        /// changed in owner of <paramref name="peer"/> or somewhere in its subtree that may influence
+        /// AccessibilityLabel value for owner <paramref name="peer"/> (and so also for everyone up parent chain).
+        /// </summary>
+        /// <param name="peer"></param>
+        private static void UpdateAccessibilityNameFromHereUpInternal(AutomationPeer peer)
+        {
+            var current = peer;
+            while (current != null)
+            {
+                var name = GenerateName(current);
+                var element = GetUIElementFromAutomationPeer(current);
+                if (element != null)
+                {
+                    AutomationProperties.SetName(element, name);
+                }
+                current = current.Navigate(AutomationNavigationDirection.Parent) as AutomationPeer;
+            }
+        }
+
+        /// <summary>
+        /// Generates name to be presented to an UIA client (e.g. a screen reader) for given <paramref name="peer"/>
+        /// according to rules for <see cref="ImportantForAccessibility.Yes"/>, which is to recursively join generated
+        /// names of all children with space (" ") between them, while using AccessibilityLabel or control's natively
+        /// provided accessible name (in that order) if available.
+        /// </summary>
+        /// <param name="peer"></param>
+        /// <returns>Returns the generated name.</returns>
+        private static string GenerateName(AutomationPeer peer)
+        {
+            UIElement element = GetUIElementFromAutomationPeer(peer);
+            if (element != null)
+            {
+                var label = GetAccessibilityLabelAttached(element);
+                if (label != null)
+                {
+                    return label;
+                }
+            }
+
+            string ownName = peer.GetName();
+            if (string.IsNullOrEmpty(ownName) == false)
+            {
+                return ownName;
+            }
+
+            var generatedName = new StringBuilder();
+            var children = peer.GetChildren();
+            if (children != null)
+            {
+                foreach(var child in children)
+                {
+                    if (generatedName.Length > 0)
+                    {
+                        generatedName.Append(" ");
+                    }
+                    generatedName.Append(GenerateName(child));
+                }
+            }
+            return generatedName.ToString();
         }
 
         #endregion AccessibilityLabel
