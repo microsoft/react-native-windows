@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
+using ReactNative.Common;
 using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
@@ -141,7 +142,7 @@ namespace ReactNative.UIManager
         [ReactProp("accessibilityLabel")]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
-            AutomationProperties.SetName(view, label ?? "");
+            AccessibilityHelper.SetAccessibilityLabel(view, label ?? "");
         }
 
         /// <summary>
