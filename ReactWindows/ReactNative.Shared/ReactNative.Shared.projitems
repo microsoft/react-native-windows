@@ -28,12 +28,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\GenericDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\GenericDelegateTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IBackgroundEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IGenericDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptModule.cs" />

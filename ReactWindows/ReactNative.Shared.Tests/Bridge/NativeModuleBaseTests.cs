@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ReactNative.Tests.Bridge
 {
     [TestFixture]
-    public class NativeModuleBaseTests
+    public partial class NativeModuleBaseTests
     {
         [Test]
         public void NativeModuleBase_ReactMethod_ThrowsNotSupported()
