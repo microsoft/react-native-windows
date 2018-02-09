@@ -19,6 +19,7 @@ namespace ReactNative.UIManager.Events
     {
         public const string KeyDownEventString = "topKeyDown";
         public const string KeyUpEventString = "topKeyUp";
+        public const string KeyPressEventString = "topKeyPress";
 
         private readonly string _key;
         private readonly int _keyCode;
