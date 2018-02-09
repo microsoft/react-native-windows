@@ -392,6 +392,8 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
+            _nativeViewHierarchyManager.DropAllViews();
+
             // Must be called in the context of the dispatcher thread corresponding to this queue
             _reactChoreographer.DispatchUICallback -= OnRenderingSafe;
 

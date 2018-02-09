@@ -35,9 +35,90 @@ namespace ReactNative.UIManager
             public int rootViewCount;
         }
 
+        private class TagInfo
+        {
+            public delegate void ExternalAction(int tag);
+
+            public UIViewOperationQueueInstance queueInstance;
+
+            // An optimized encoding of the children:
+            // - childrenTags == null && oneChildTag == 0 -> no children
+            // - childrenTags == null && oneChildTag > 0 -> exactly one child
+            // - childrenTags != null -> more than one child, or having ever had more than one child
+            private int oneChildTag;
+            private List<int> childrenTags;
+
+            public void AddChild(int index, int tag)
+            {
+                if (oneChildTag == 0 && childrenTags == null)
+                {
+                    if (index != 0)
+                    {
+                        throw new InvalidOperationException("Inconsistency: first child has to have an index of 0");
+                    }
+                    oneChildTag = tag;
+                }
+                else if (childrenTags == null)
+                {
+                    if (index != 1)
+                    {
+                        throw new InvalidOperationException("Inconsistency: second child has to have an index of 1");
+                    }
+
+                    childrenTags = new List<int>();
+                    childrenTags.Add(oneChildTag);
+                    oneChildTag = 0;
+                    childrenTags.Add(tag);
+                }
+                else
+                {
+                    childrenTags.Insert(index, tag);
+                }
+            }
+
+            public void RemoveChild(int index)
+            {
+                if (oneChildTag == 0 && childrenTags == null)
+                {
+                    throw new InvalidOperationException("Inconsistency: no child to remove");
+                }
+                else if (childrenTags == null)
+                {
+                    if (index != 0)
+                    {
+                        throw new InvalidOperationException("Inconsistency: first child has to have an index of 0");
+                    }
+
+                    oneChildTag = 0;
+                }
+                else
+                {
+                    childrenTags.RemoveAt(index);
+                }
+            }
+
+            public void ForEachChild(ExternalAction del)
+            {
+                if (childrenTags != null)
+                {
+                    foreach(var tag in childrenTags)
+                    {
+                        del(tag);
+                    }
+                }
+                else if (oneChildTag != 0)
+                {
+                    del(oneChildTag);
+                }
+            }
+        }
+
         private UIViewOperationQueueInstance _mainUiViewOperationsQueueInstance;
 
-        private IDictionary<int, UIViewOperationQueueInstance> _reactTagToOperationQueue = new Dictionary<int, UIViewOperationQueueInstance>();
+        // Maps tags to <UIViewOperationQueueInstance, children tags>
+        private readonly IDictionary<int, TagInfo> _reactTagToTagInfo = new Dictionary<int, TagInfo>();
+
+        // Maps CoreDispatcher to corresponding UIViewOperationQueueInstance + rootView accounting
         private readonly IDictionary<CoreDispatcher, QueueInstanceInfo> _dispatcherToOperationQueueInfo = new Dictionary<CoreDispatcher, QueueInstanceInfo>();
 
         private bool _active;
@@ -141,7 +222,7 @@ namespace ReactNative.UIManager
             }
 
             // Add tag
-            _reactTagToOperationQueue.Add(tag, queueInfo.queueInstance);
+            _reactTagToTagInfo.Add(tag, new TagInfo() { queueInstance = queueInfo.queueInstance });
 
             // Send forward
             queueInfo.queueInstance.AddRootView(tag, rootView, themedRootContext);
@@ -160,7 +241,7 @@ namespace ReactNative.UIManager
             // Send forward
             queue.EnqueueRemoveRootView(rootViewTag);
 
-            _reactTagToOperationQueue.Remove(rootViewTag);
+            DeleteTagHelper(rootViewTag);
 
             // Do some maintenance/cleanup if needed.
             // Find the queue info
@@ -178,10 +259,7 @@ namespace ReactNative.UIManager
 
                     // Simulate an OnDestroy from the correct dispatcher thread
                     // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                    DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy, true); // inlining allowed
-
-                    // Clean all the tags associated to this queue
-                    _reactTagToOperationQueue = _reactTagToOperationQueue.Where(p => p.Value != queue).ToDictionary(p => p.Key, p => p.Value);
+                    DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy);
                 }
             }
         }
@@ -270,7 +348,7 @@ namespace ReactNative.UIManager
 
             UIViewOperationQueueInstance queue = GetQueueByTag(rootViewTag);
 
-            _reactTagToOperationQueue.Add(viewReactTag, queue);
+            _reactTagToTagInfo.Add(viewReactTag, new TagInfo() { queueInstance = queue });
 
             queue.EnqueueCreateView(themedContext, viewReactTag, viewClassName, initialProps);
         }
@@ -336,7 +414,40 @@ namespace ReactNative.UIManager
         {
             // Called on layout manager thread
 
-            GetQueueByTag(tag).EnqueueManageChildren(tag, indexesToRemove, viewsToAdd, tagsToDelete);
+            TagInfo info;
+            if (!_reactTagToTagInfo.TryGetValue(tag, out info))
+            {
+                throw new InvalidOperationException("No queue for tag " + tag);
+            }
+
+            // Remove from children list (this doesn't delete the atgs themselves)
+            if (indexesToRemove != null)
+            {
+                for (int i = indexesToRemove.Length - 1; i>=0; i--)
+                {
+                    info.RemoveChild(indexesToRemove[i]);
+                }
+            }
+
+            // Add existing tags to the children list
+            if (viewsToAdd != null)
+            {
+                for (int i=0; i<viewsToAdd.Length; i++)
+                {
+                    info.AddChild(viewsToAdd[i].Index, viewsToAdd[i].Tag);
+                }
+            }
+
+            // Delete tags
+            if (tagsToDelete != null)
+            {
+                for (int i=0; i< tagsToDelete.Length; i++)
+                {
+                    DeleteTagHelper(tagsToDelete[i]);
+                }
+            }
+
+            info.queueInstance.EnqueueManageChildren(tag, indexesToRemove, viewsToAdd, tagsToDelete);
         }
 
         /// <summary>
@@ -347,8 +458,21 @@ namespace ReactNative.UIManager
         public void EnqueueSetChildren(int tag, int[] childrenTags)
         {
             // Called on layout manager thread
+            TagInfo info;
+            if (!_reactTagToTagInfo.TryGetValue(tag, out info))
+            {
+                throw new InvalidOperationException("No queue for tag " + tag);
+            }
 
-            GetQueueByTag(tag).EnqueueSetChildren(tag, childrenTags);
+            if (childrenTags != null)
+            {
+                for (int i = 0; i < childrenTags.Length; i++)
+                {
+                    info.AddChild(i, childrenTags[i]);
+                }
+            }
+
+            info.queueInstance.EnqueueSetChildren(tag, childrenTags);
         }
 
         /// <summary>
@@ -524,8 +648,8 @@ namespace ReactNative.UIManager
 
         private UIViewOperationQueueInstance GetQueueByTag(int tag, bool dontThrow = false)
         {
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
+            TagInfo info;
+            if (!_reactTagToTagInfo.TryGetValue(tag, out info))
             {
                 if (dontThrow)
                 {
@@ -536,7 +660,25 @@ namespace ReactNative.UIManager
                     throw new InvalidOperationException("No queue for tag " + tag);
                 }
             }
-            return queue;
+            return info.queueInstance;
+        }
+
+        private void DeleteTagHelper(int tag)
+        {
+            DeleteChildrenOfTagHelper(tag);
+
+            _reactTagToTagInfo.Remove(tag);
+        }
+
+        private void DeleteChildrenOfTagHelper(int tag)
+        {
+            TagInfo info;
+            if (!_reactTagToTagInfo.TryGetValue(tag, out info))
+            {
+                throw new InvalidOperationException("No queue for tag " + tag);
+            }
+
+            info.ForEachChild((t) => DeleteTagHelper(t));
         }
     }
 }

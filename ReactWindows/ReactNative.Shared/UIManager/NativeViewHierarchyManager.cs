@@ -595,6 +595,17 @@ namespace ReactNative.UIManager
             return viewManager;
         }
 
+        internal void DropAllViews()
+        {
+            AssertOnCorrectDispatcher();
+
+            foreach (var tag in _rootTags.Keys.ToList())
+            {
+                RemoveRootView(tag);
+            }
+
+        }
+
 #if WINDOWS_UWP
         internal CoreDispatcher Dispatcher { get; private set; }
 #endif
