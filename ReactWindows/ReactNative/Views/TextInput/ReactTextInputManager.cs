@@ -499,7 +499,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets <see cref="ImportantForAccessibility"/> for the BorderedCanvas.
+        /// Sets <see cref="ImportantForAccessibility"/> for ReactTextBox.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
