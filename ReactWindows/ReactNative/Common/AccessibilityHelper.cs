@@ -465,6 +465,11 @@ namespace ReactNative.Common
         /// names of all children with space (" ") between them, while using AccessibilityLabel or control's natively
         /// provided accessible name (in that order) if available.
         /// </summary>
+        /// <remarks>
+        /// This is not recursive relying on fact that by construction each time a change potentially influencing
+        /// the name will trigger updating all affected elements. So this method assumes children already have up
+        /// to date name stored as <see cref="AutomationProperties.NameProperty"/>.
+        /// </remarks>
         /// <param name="peer"></param>
         /// <returns>Returns the generated name.</returns>
         private static string GenerateName(AutomationPeer peer)
@@ -479,23 +484,24 @@ namespace ReactNative.Common
                 }
             }
 
-            string ownName = peer.GetName();
-            if (string.IsNullOrEmpty(ownName) == false)
-            {
-                return ownName;
-            }
-
             var generatedName = new StringBuilder();
             var children = peer.GetChildren();
             if (children != null)
             {
                 foreach(var child in children)
                 {
+                    var childElement = GetUIElementFromAutomationPeer(child);
+                    if (childElement != null
+                        && GetImportantForAccessibilityAttached(childElement) == ImportantForAccessibility.NoHideDescendants)
+                    {
+                        continue;
+                    }
+
                     if (generatedName.Length > 0)
                     {
                         generatedName.Append(" ");
                     }
-                    generatedName.Append(GenerateName(child));
+                    generatedName.Append(child.GetName());
                 }
             }
             return generatedName.ToString();
