@@ -390,11 +390,45 @@ namespace ReactNative
 
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAllViewManagers").Start())
             {
+                var allViewManagerExtensions = new Dictionary<Type, List<IViewManagerExtension>>();
+                foreach (var package in _packages)
+                {
+                    if (package is IViewManagerExtensionProvider provider)
+                    {
+                        foreach (var extension in provider.CreateViewManagerExtensions(reactContext))
+                        {
+                            List<IViewManagerExtension> extensions;
+                            if (!allViewManagerExtensions.TryGetValue(extension.ViewManagerType, out extensions))
+                            {
+                                extensions = new List<IViewManagerExtension>();
+                                allViewManagerExtensions.Add(extension.ViewManagerType, extensions);
+                            }
+
+                            extensions.Add(extension);
+                        }
+                    }
+                }
+
                 var allViewManagers = new List<IViewManager>();
                 foreach (var package in _packages)
                 {
-                    allViewManagers.AddRange(
-                        package.CreateViewManagers(reactContext));
+                    foreach (var viewManager in package.CreateViewManagers(reactContext))
+                    {
+                        var modifiedViewManager = viewManager;
+                        if (allViewManagerExtensions.TryGetValue(viewManager.GetType(), out List<IViewManagerExtension> extensions))
+                        {
+                            if (viewManager is IViewParentManager viewParentManager)
+                            {
+                                modifiedViewManager = new ViewParentManagerWithExtensions(viewParentManager, extensions);
+                            }
+                            else
+                            {
+                                modifiedViewManager = new ViewManagerWithExtensions(viewManager, extensions);
+                            }
+                        }
+
+                        allViewManagers.Add(modifiedViewManager);
+                    }
                 }
 
                 return allViewManagers;

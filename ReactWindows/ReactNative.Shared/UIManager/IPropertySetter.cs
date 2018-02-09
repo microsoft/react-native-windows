@@ -1,4 +1,4 @@
-﻿#if WINDOWS_UWP
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
 using System.Windows;
@@ -15,5 +15,7 @@ namespace ReactNative.UIManager
         void UpdateShadowNodeProperty(ReactShadowNode shadowNode, ReactStylesDiffMap value);
 
         void UpdateViewManagerProperty(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap value);
+
+        void UpdateViewManagerExtensionProperty(IViewManagerExtension extension, DependencyObject view, ReactStylesDiffMap value);
     }
 }
