@@ -1,4 +1,5 @@
 using ReactNative.Bridge;
+using ReactNative.Views.ControlView;
 using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -93,7 +94,15 @@ namespace ReactNative.Common
                 IsHiddenByAncestor(parentUIElementAutomationPeer))
             {
                 // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
-                var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
+                AutomationPeer uiElementAutomationPeer;
+                if (uiElement is ReactControl reactControlUIElement)
+                {
+                    uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(reactControlUIElement.Content);
+                }
+                else
+                {
+                    uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
+                }
                 AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
                 SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
             }
