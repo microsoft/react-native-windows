@@ -16,7 +16,7 @@ namespace ReactNative.Common
 
         /// <summary>
         /// Initializes the value of AccessibilityView for all the children of <paramref name="parentUIElement"/>,
-        /// based on the <paramref name="parentUIElement"/> and its ancesstor settings. Must be called
+        /// based on the <paramref name="parentUIElement"/> and its ancestor settings. Must be called
         /// when multiple children are initially added to <paramref name="parentUIElement"/>.
         /// </summary>
         /// <param name="parentUIElement">The element whos children will be updated.</param>        
