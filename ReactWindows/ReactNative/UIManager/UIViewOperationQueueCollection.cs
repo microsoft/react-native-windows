@@ -545,8 +545,15 @@ namespace ReactNative.UIManager
             return queue;
         }
 
+        /// <summary>
+        /// Hook needed to cleanup the local state (_reactTagToOperationQueue)
+        /// </summary>
+        /// <param name="tags">List of deleted tags..</param>
         private void OnViewsDropped(List<int> tags)
         {
+            //
+            // We synchronize access to _reactTagToOperationQueue by using same action queue used by the other code paths.
+            // Cleaning up can be done lazily, a way to mark this work unit as "Idle Scheduling" would benefit performance.
             if (_uiManagerActionQueue == null)
             {
                 _uiManagerActionQueue = _reactContext.GetNativeModule<UIManagerModule>().ActionQueue;

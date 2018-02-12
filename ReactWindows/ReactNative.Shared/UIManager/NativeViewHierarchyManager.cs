@@ -642,7 +642,6 @@ namespace ReactNative.UIManager
             {
                 RemoveRootView(tag);
             }
-
         }
 
 #if WINDOWS_UWP
