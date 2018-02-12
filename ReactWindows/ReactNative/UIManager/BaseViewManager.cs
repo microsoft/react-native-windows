@@ -206,6 +206,10 @@ namespace ReactNative.UIManager
                     shadow.Color = ColorHelpers.Parse(color.Value);
                 }
             }
+            else
+            {
+                RemoveShadow(view);
+            }
         }
 
         /// <summary>
@@ -381,6 +385,13 @@ namespace ReactNative.UIManager
             if (dimensionBoundProperties.ShadowHost == null)
             {
                 var shadowHost = new Canvas();
+                shadowHost.Projection = view.Projection;
+                shadowHost.RenderTransform = view.RenderTransform;
+                Canvas.SetLeft(shadowHost, Canvas.GetLeft(view));
+                Canvas.SetTop(shadowHost, Canvas.GetTop(view));
+                shadowHost.Width = view.Width;
+                shadowHost.Height = view.Height;
+
                 var visual = ElementCompositionPreview.GetElementVisual(view);
                 var compositor = visual.Compositor;
                 var hostVisual = compositor.CreateSpriteVisual();
@@ -402,12 +413,18 @@ namespace ReactNative.UIManager
         private void RemoveShadow(TFrameworkElement view)
         {
             var dimensionBoundProperties = GetDimensionBoundProperties(view);
-            if (view.Parent is Panel parent && dimensionBoundProperties != null && dimensionBoundProperties.ShadowHost != null)
+            if (dimensionBoundProperties != null && dimensionBoundProperties.ShadowHost != null)
             {
-                if (parent.Children.Contains(dimensionBoundProperties.ShadowHost))
+                if (view.Parent is Panel parent)
                 {
-                    parent.Children.Remove(dimensionBoundProperties.ShadowHost);
+                    if (parent.Children.Contains(dimensionBoundProperties.ShadowHost))
+                    {
+                        parent.Children.Remove(dimensionBoundProperties.ShadowHost);
+                    }
                 }
+
+                dimensionBoundProperties.ShadowHost = null;
+                view.Loaded -= OnLoaded;
             }
         }
 
