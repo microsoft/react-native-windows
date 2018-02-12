@@ -59,18 +59,52 @@ namespace ReactNative.UIManager
         private readonly ViewManagerRegistry _viewManagers;
         private readonly RootViewManager _rootViewManager;
         private readonly LayoutAnimationController _layoutAnimator;
+        private readonly DeletedTagsBatchReporter _deletedTagsBatchReporter;
+
+        private class DeletedTagsBatchReporter
+        {
+            private readonly Action<List<int>> _onDropView;
+            private List<int> _pendingDeletedTags;
+
+            public DeletedTagsBatchReporter(Action<List<int>> onDropView)
+            {
+                _onDropView = onDropView;
+            }
+
+            public void Report(int tag)
+            {
+                if (_onDropView == null) return;
+
+                if (_pendingDeletedTags == null)
+                {
+                    _pendingDeletedTags = new List<int>();
+                }
+                _pendingDeletedTags.Add(tag);
+            }
+
+            public void Send()
+            {
+                if (_onDropView == null || _pendingDeletedTags == null) return;
+
+                var pendingDeletedTags = _pendingDeletedTags;
+                _pendingDeletedTags = null;
+                _onDropView(pendingDeletedTags);
+            }
+        }
 
         /// <summary>
         /// Instantiates the <see cref="NativeViewHierarchyManager"/>.
         /// </summary>
         /// <param name="viewManagers">The view manager registry.</param>
         /// <param name="dispatcher">The dispatcher of the view.</param>
+        /// <param name="onDropView">Notification callback to be passed lists of dropped views tags.</param>
         public NativeViewHierarchyManager(ViewManagerRegistry viewManagers,
 #if WINDOWS_UWP
-            CoreDispatcher dispatcher
+            CoreDispatcher dispatcher,
 #else
-            Dispatcher notUsed
+            Dispatcher notUsed,
 #endif
+            Action<List<int>> onDropView
             )
         {
             _viewManagers = viewManagers;
@@ -82,6 +116,7 @@ namespace ReactNative.UIManager
 #if WINDOWS_UWP
             Dispatcher = dispatcher;
 #endif
+            _deletedTagsBatchReporter = new DeletedTagsBatchReporter(onDropView);
         }
 
         /// <summary>
@@ -310,6 +345,8 @@ namespace ReactNative.UIManager
                     }
                 }
             }
+
+            _deletedTagsBatchReporter.Send();
         }
 
         /// <summary>
@@ -352,6 +389,8 @@ namespace ReactNative.UIManager
             var rootView = _tagsToViews[rootViewTag];
             DropView(rootView);
             _rootTags.Remove(rootViewTag);
+
+            _deletedTagsBatchReporter.Send();
         }
 
         /// <summary>
@@ -654,6 +693,8 @@ namespace ReactNative.UIManager
             _tagsToViews.Remove(tag);
             _tagsToViewManagers.Remove(tag);
             view.ClearData();
+
+            _deletedTagsBatchReporter.Report(tag);
         }
 
         private void UpdateLayout(DependencyObject viewToUpdate, IViewManager viewManager, Dimensions dimensions)

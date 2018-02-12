@@ -155,6 +155,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Detaches a root view from the size monitoring hooks in preparation for the unmount
+        /// </summary>
+        /// <param name="rootView">The root view instance.</param>
+        public void DetachRootView(ReactRootView rootView)
+        {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
+            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () => rootView.RemoveSizeChanged(), true); // allow inlining
+        }
+
+        /// <summary>
         /// Schedule a block to be executed on the UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>

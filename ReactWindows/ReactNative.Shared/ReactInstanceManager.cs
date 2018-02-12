@@ -608,6 +608,10 @@ namespace ReactNative
         private void DetachViewFromInstance(ReactRootView rootView, IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
+
+            var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
+            uiManagerModule.DetachRootView(rootView);
+
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
         }
 
