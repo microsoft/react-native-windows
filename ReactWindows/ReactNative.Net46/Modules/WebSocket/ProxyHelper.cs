@@ -20,7 +20,7 @@ namespace ReactNative.Modules.WebSocket
 
             if (!IsBypassed)
             {
-                ProxyAddress = proxy.GetProxy(address).AbsolutePath;
+                ProxyAddress = proxy.GetProxy(address).AbsoluteUri;
                 var defCreds = CredentialCache.DefaultCredentials as NetworkCredential;
 
                 if (defCreds == null)
