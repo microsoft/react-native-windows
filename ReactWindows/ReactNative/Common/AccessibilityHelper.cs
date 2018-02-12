@@ -98,12 +98,13 @@ namespace ReactNative.Common
                 if (uiElement is ReactControl reactControlUIElement)
                 {
                     uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(reactControlUIElement.Content);
+                    AutomationProperties.SetAccessibilityView(reactControlUIElement.Content, AccessibilityView.Raw);
                 }
                 else
                 {
                     uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
+                    AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
                 }
-                AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
                 SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
             }
         }
