@@ -9,6 +9,7 @@ using System.Linq;
 #if WINDOWS_UWP
 using ReactNative.Common;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 #else
@@ -182,11 +183,8 @@ namespace ReactNative.Views.ControlView
             parent.Children.Insert(index, uiElementChild);
 
 #if WINDOWS_UWP
-            if (parent.Content is UIElement controlContentUIElement)
-            {
-                AccessibilityHelper.InitImportantForAccessibility(controlContentUIElement, uiElementChild);
-                AccessibilityHelper.UpdateNameFromHereUp(controlContentUIElement);
-            }
+            AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
+            AccessibilityHelper.UpdateNameFromHereUp(parent);
 #endif
         }
 
@@ -247,7 +245,18 @@ namespace ReactNative.Views.ControlView
         /// <returns>The view instance.</returns>
         protected override ReactControl CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new ReactControl();
+            var instance = new ReactControl();
+
+#if WINDOWS_UWP
+            // Setting AutomationProperties.Name to some string and then clearing it will guarantee that
+            // AutomationPeer is always created for the border. The default implementation does not
+            // create AutomationPeer for border if AutomationProperties.Name has never been set,
+            // but to implement accessibility properly it is required that the AutomationPeer is always created.
+            AutomationProperties.SetName(instance, " ");
+            instance.ClearValue(AutomationProperties.NameProperty);
+#endif
+
+            return instance;
         }
 
         /// <summary>

@@ -28,13 +28,6 @@ namespace ReactNative.Views.ControlView
             };
 #if WINDOWS_UWP
             UseSystemFocusVisuals = true;
-
-            // Setting AutomationProperties.Name to some string and then clearing it will guarantee that
-            // AutomationPeer is always created for the canvas. The default implementation does not
-            // create AutomationPeer for canvas if AutomationProperties.Name has never been set,
-            // but to implement accessibility it is required that the AutomationPeer is always created.
-            AutomationProperties.SetName(_canvas, " ");
-            _canvas.ClearValue(AutomationProperties.NameProperty);
 #endif
         }
 

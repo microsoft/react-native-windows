@@ -97,16 +97,8 @@ namespace ReactNative.Common
             {
                 // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
                 AutomationPeer uiElementAutomationPeer;
-                if (uiElement is ReactControl reactControlUIElement)
-                {
-                    uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(reactControlUIElement.Content);
-                    AutomationProperties.SetAccessibilityView(reactControlUIElement.Content, AccessibilityView.Raw);
-                }
-                else
-                {
-                    uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
+                uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
                 AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
-                }
                 SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
             }
         }
