@@ -35,6 +35,7 @@ namespace ReactNative.Modules.WebSocket
             if (options.ContainsKey(HeadersSection))
             {
                 var headers = options[HeadersSection];
+
                 Origin = (string)(headers.SelectToken(HeadersOrigin, false) ?? string.Empty);
             }
         }
