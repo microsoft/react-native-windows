@@ -127,7 +127,7 @@ namespace ReactNative.Views.Split
 
             // Initialize ImportantForAccessibility for the child.
             AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
-            AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
+            AccessibilityHelper.UpdateNameFromHereUp(parent);
         }
 
         public override DependencyObject GetChildAt(SplitView parent, int index)

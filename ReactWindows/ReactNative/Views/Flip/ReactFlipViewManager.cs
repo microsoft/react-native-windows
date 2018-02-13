@@ -74,7 +74,7 @@ namespace ReactNative.Views.Flip
             if (child is UIElement uiElementChild)
             {
                 AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
-                AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
+                AccessibilityHelper.UpdateNameFromHereUp(parent);
             }
         }
 

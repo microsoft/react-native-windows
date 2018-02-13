@@ -185,7 +185,7 @@ namespace ReactNative.Views.ControlView
             if (parent.Content is UIElement controlContentUIElement)
             {
                 AccessibilityHelper.InitImportantForAccessibility(controlContentUIElement, uiElementChild);
-                AccessibilityHelper.UpdateAccessibilityNameFromHereUp(controlContentUIElement);
+                AccessibilityHelper.UpdateNameFromHereUp(controlContentUIElement);
             }
 #endif
         }
