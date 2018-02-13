@@ -352,7 +352,7 @@ namespace ReactNative.Views.View
 
 #if WINDOWS_UWP
             AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
-            AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
+            AccessibilityHelper.UpdateNameFromHereUp(parent);
 #endif
         }
 
@@ -408,7 +408,7 @@ namespace ReactNative.Views.View
             }
 
 #if WINDOWS_UWP
-            AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
+            AccessibilityHelper.UpdateNameFromHereUp(parent);
 #endif
         }
 
@@ -427,7 +427,7 @@ namespace ReactNative.Views.View
             parent.Children.RemoveAt(index);
 
 #if WINDOWS_UWP
-            AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
+            AccessibilityHelper.UpdateNameFromHereUp(parent);
 #endif
         }
 
