@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
@@ -21,6 +24,9 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
+        private readonly IDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
+            new Dictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
+
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
         /// properties, based on the <see cref="JObject"/> map.
@@ -30,13 +36,15 @@ namespace ReactNative.UIManager
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            if (transforms == null)
+            if (transforms == null && _transforms.Remove(view))
             {
                 ResetProjectionMatrix(view);
             }
             else
             {
-                SetProjectionMatrix(view, transforms);
+                _transforms[view] = (v, d) => SetProjectionMatrix(v, d, transforms);
+                var dimensions = GetDimensions(view);
+                SetProjectionMatrix(view, dimensions, transforms);
             }
         }
 
@@ -51,7 +59,23 @@ namespace ReactNative.UIManager
             view.Opacity = opacity;
         }
 
-        // ToDo: SetOverflow - ReactProp("overflow")
+        /// <summary>
+        /// Sets the overflow property for the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="overflow">The overflow value.</param>
+        [ReactProp("overflow")]
+        public void SetOverflow(TFrameworkElement view, string overflow)
+        {
+            if (overflow == "hidden")
+            {
+                view.ClipToBounds = true;
+            }
+            else
+            {
+                view.ClipToBounds = false;
+            }
+        }
 
         /// <summary>
         /// Sets the z-index of the element.
@@ -86,6 +110,80 @@ namespace ReactNative.UIManager
         public void SetTestId(TFrameworkElement view, string testId)
         {
             AutomationProperties.SetAutomationId(view, testId ?? "");
+        }
+
+        /// <summary>
+        /// Sets a tooltip for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="tooltip">String to display in the tooltip.</param>
+        [ReactProp("tooltip")]
+        public void SetTooltip(TFrameworkElement view, string tooltip)
+        {
+            ToolTipService.SetToolTip(view, tooltip);
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        /// <remarks>
+        /// Be sure to call this base class method to register for pointer 
+        /// entered and pointer exited events.
+        /// </remarks>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            view.MouseEnter -= OnPointerEntered;
+            view.MouseLeave -= OnPointerExited;
+            _transforms.Remove(view);
+        }
+
+        /// <summary>
+        /// Subclasses can override this method to install custom event 
+        /// emitters on the given view.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view instance.</param>
+        /// <remarks>
+        /// Consider overriding this method if your view needs to emit events
+        /// besides basic touch events to JavaScript (e.g., scroll events).
+        /// 
+        /// Make sure you call the base implementation to ensure base pointer
+        /// event handlers are subscribed.
+        /// </remarks>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            view.MouseEnter += OnPointerEntered;
+            view.MouseLeave += OnPointerExited;
+        }
+
+        private void OnPointerEntered(object sender, MouseEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            TouchHandler.OnPointerEntered(view, e);
+        }
+
+        private void OnPointerExited(object sender, MouseEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            TouchHandler.OnPointerExited(view, e);
+        }
+
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        public override void SetDimensions(TFrameworkElement view, Dimensions dimensions)
+        {
+            Action<TFrameworkElement, Dimensions> applyTransform;
+            if (_transforms.TryGetValue(view, out applyTransform))
+            {
+                applyTransform(view, dimensions);
+            }
+            base.SetDimensions(view, dimensions);
         }
 
         /// <summary>
@@ -145,22 +243,22 @@ namespace ReactNative.UIManager
             view.Effect = effect;
         }
 
-        private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
+        private static void SetProjectionMatrix(TFrameworkElement view, Dimensions dimensions, JArray transforms)
         {
             var transformMatrix = TransformHelper.ProcessTransform(transforms);
 
             var translateMatrix = Matrix3D.Identity;
             var translateBackMatrix = Matrix3D.Identity;
-            if (!double.IsNaN(view.Width))
+            if (!double.IsNaN(dimensions.Width))
             {
-                translateMatrix.OffsetX = -view.Width / 2;
-                translateBackMatrix.OffsetX = view.Width / 2;
+                translateMatrix.OffsetX = -dimensions.Width / 2;
+                translateBackMatrix.OffsetX = dimensions.Width / 2;
             }
 
-            if (!double.IsNaN(view.Height))
+            if (!double.IsNaN(dimensions.Height))
             {
-                translateMatrix.OffsetY = -view.Height / 2;
-                translateBackMatrix.OffsetY = view.Height / 2;
+                translateMatrix.OffsetY = -dimensions.Height / 2;
+                translateBackMatrix.OffsetY = dimensions.Height / 2;
             }
 
             var projectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;

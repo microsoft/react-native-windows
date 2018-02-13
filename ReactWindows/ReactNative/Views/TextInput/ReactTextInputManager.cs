@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,29 @@ namespace ReactNative.Views.TextInput
         internal const int FocusTextInput = 1;
         internal const int BlurTextInput = 2;
 
-        private bool _onSelectionChange;
+        //
+        // Grabbed these defaults from running a UWP app.
+        //
 
-        internal static readonly Color DefaultTextBoxBorder = Color.FromArgb(255, 122, 122, 122);
+        private const uint DefaultTextControlForeground = 0xFF000000;
+        private const uint DefaultTextControlForegroundPointerOver = 0xFF000000;
+        private const uint DefaultTextControlForegroundFocused = 0xFF000000;
+        private const uint DefaultTextControlForegroundDisabled = 0xFF7A7A7A;
+
+        private const uint DefaultTextControlBackground = 0x66FFFFFF;
+        private const uint DefaultTextControlBackgroundPointerOver = 0x99FFFFFF;
+        private const uint DefaultTextControlBackgroundFocused = 0xFFFFFFFF;
+        private const uint DefaultTextControlBackgroundDisabled = 0x33000000;
+
+        private const uint DefaultTextControlPlaceholderForeground = 0x99000000;
+        private const uint DefaultTextControlPlaceholderForegroundPointerOver = 0x99000000;
+        private const uint DefaultTextControlPlaceholderForegroundFocused = 0x66000000;
+        private const uint DefaultTextControlPlaceholderForegroundDisabled = 0xFF7A7A7A;
+
+        private const uint DefaultTextControlBorderBrush = 0xFF7A7A7A;
+        private const uint DefaultTextControlBorderBrushPointerOver = 0xFF171717;
+        private const uint DefaultTextControlBorderBrushFocused = 0xFF298FCC;
+        private const uint DefaultTextControlBorderBrushDisabled = 0x33000000;
 
         /// <summary>
         /// The name of the view manager.
@@ -75,34 +96,6 @@ namespace ReactNative.Views.TextInput
                             }
                         }
                     },
-                    {
-                        "topFocus",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onFocus" },
-                                    { "captured" , "onFocusCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topBlur",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onBlur" },
-                                    { "captured" , "onBlurCapture" }
-                                }
-                            }
-                        }
-                    },
                 };
             }
         }
@@ -141,9 +134,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(ReactTextBox view, uint? color)
         {
-            view.Foreground = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlForeground"] = brush;
+                view.Resources["TextControlForegroundPointerOver"] = brush;
+                view.Resources["TextControlForegroundFocused"] = brush;
+                view.Resources["TextControlForegroundDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlForeground"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForeground));
+                view.Resources["TextControlForegroundPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForegroundPointerOver));
+                view.Resources["TextControlForegroundFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForegroundFocused));
+                view.Resources["TextControlForegroundDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlForegroundDisabled));
+            }
         }
 
         /// <summary>
@@ -189,18 +194,39 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The view instance.</param>
         /// <param name="onSelectionChange">The indicator.</param>
         [ReactProp("onSelectionChange", DefaultBoolean = false)]
-        public void SetSelectionChange(ReactTextBox view, bool onSelectionChange)
+        public void SetOnSelectionChange(ReactTextBox view, bool onSelectionChange)
         {
-            if (onSelectionChange)
-            {
-                _onSelectionChange = true;
-                view.SelectionChanged += OnSelectionChanged;
-            }
-            else
-            {
-                _onSelectionChange = false;
-                view.SelectionChanged -= OnSelectionChanged;
-            }
+            view.OnSelectionChange = onSelectionChange;
+        }
+
+        /// <summary>
+        /// Sets whether to track size changes on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="onContentSizeChange">The indicator.</param>
+        [ReactProp("onContentSizeChange", DefaultBoolean = false)]
+        public void setOnContentSizeChange(ReactTextBox view, bool onContentSizeChange)
+        {
+            view.OnContentSizeChange = onContentSizeChange;
+        }
+
+        /// <summary>
+        /// Sets the selected text on the <see cref="ReactTextBox"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="selection">The selection.</param>
+        [ReactProp("selection")]
+        public void SetSelection(ReactTextBox view, JObject selection)
+        {
+            var start = selection.Value<int>("start");
+            var textLength = view.Text?.Length ?? 0;
+            var normalizedStart = Math.Min(start, textLength);
+            var end = selection.Value<int>("end");
+            var selectionLength = end - start;
+            var normalizedSelectionLength = Math.Max(selectionLength, 0);
+            var maxLength = textLength - normalizedStart;
+            view.SelectionStart = normalizedStart;
+            view.SelectionLength = Math.Min(normalizedSelectionLength, maxLength);
         }
 
         /// <summary>
@@ -222,10 +248,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp("placeholderTextColor", CustomType = "Color")]
         public void SetPlaceholderTextColor(ReactTextBox view, uint? color)
         {
-            //The 'PlaceholderTextColor' is not implemented in UWP - Use of this property
-            //will be ignored...
-
-            //TODO: #1039 #1040
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlPlaceholderForeground"] = brush;
+                view.Resources["TextControlPlaceholderForegroundPointerOver"] = brush;
+                view.Resources["TextControlPlaceholderForegroundFocused"] = brush;
+                view.Resources["TextControlPlaceholderForegroundDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlPlaceholderForeground"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForeground));
+                view.Resources["TextControlPlaceholderForegroundPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForegroundPointerOver));
+                view.Resources["TextControlPlaceholderForegroundFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForegroundFocused));
+                view.Resources["TextControlPlaceholderForegroundDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlPlaceholderForegroundDisabled));
+            }
         }
 
         /// <summary>
@@ -236,9 +273,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(ReactTextBox view, uint? color)
         {
-            view.BorderBrush = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(DefaultTextBoxBorder);
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlBorderBrush"] = brush;
+                view.Resources["TextControlBorderBrushPointerOver"] = brush;
+                view.Resources["TextControlBorderBrushFocused"] = brush;
+                view.Resources["TextControlBorderBrushDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlBorderBrush"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrush));
+                view.Resources["TextControlBorderBrushPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrushPointerOver));
+                view.Resources["TextControlBorderBrushFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrushFocused));
+                view.Resources["TextControlBorderBrushDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBorderBrushDisabled));
+            }
         }
 
         /// <summary>
@@ -249,9 +298,21 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
         public void SetBackgroundColor(ReactTextBox view, uint? color)
         {
-            view.Background = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : new SolidColorBrush(Colors.White);
+            if (color.HasValue)
+            {
+                var brush = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+                view.Resources["TextControlBackground"] = brush;
+                view.Resources["TextControlBackgroundPointerOver"] = brush;
+                view.Resources["TextControlBackgroundFocused"] = brush;
+                view.Resources["TextControlBackgroundDisabled"] = brush;
+            }
+            else
+            {
+                view.Resources["TextControlBackground"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackground));
+                view.Resources["TextControlBackgroundPointerOver"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackgroundPointerOver));
+                view.Resources["TextControlBackgroundFocused"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackgroundFocused));
+                view.Resources["TextControlBackgroundDisabled"] = new SolidColorBrush(ColorHelpers.Parse(DefaultTextControlBackgroundDisabled));
+            }
         }
 
         /// <summary>
@@ -275,7 +336,7 @@ namespace ReactNative.Views.TextInput
         {
             view.TextAlignment = EnumHelpers.Parse<TextAlignment>(alignment);
         }
-
+ 
         /// <summary>
         /// Sets the text alignment property on the <see cref="ReactTextBox"/>.
         /// </summary>
@@ -333,6 +394,21 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets whether to enable the <see cref="ReactTextBox"/> to autogrow.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="autoGrow">The auto-grow flag.</param>
+        [ReactProp("autoGrow", DefaultBoolean = false)]
+        public void SetAutoGrow(ReactTextBox view, bool autoGrow)
+        {
+            view.AutoGrow = autoGrow;
+            if (autoGrow)
+            {
+                view.Height = double.NaN;
+            }
+        }
+
+        /// <summary>
         /// Sets the keyboard type on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -386,6 +462,42 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Sets the max height of the text box.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="height">The max height.</param>
+        [ReactProp("maxHeight")]
+        public void SetMaxHeight(ReactTextBox view, double height)
+        {
+            view.MaxHeight = height;
+        }
+    
+        /// <summary>
+        /// Sets whether the view is a tab stop.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
+        /// </param>
+        /// 
+        [ReactProp("isTabStop")]
+        public void SetIsTabStop(ReactTextBox view, bool isTabStop)
+        {
+            view.IsTabStop = isTabStop;
+        }
+
+        /// <summary>
+        /// Sets the tab index for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabIndex">The tab index.</param>
+        [ReactProp("tabIndex")]
+        public void SetTabIndex(ReactTextBox view, int tabIndex)
+        {
+            view.TabIndex = tabIndex;
+        }
+
+        /// <summary>
         /// Create the shadow node instance.
         /// </summary>
         /// <returns>The shadow node instance.</returns>
@@ -411,8 +523,11 @@ namespace ReactNative.Views.TextInput
             }
             else if (commandId == BlurTextInput)
             {
-                var frame = Window.Current?.Content as Frame;
-                frame?.Focus(FocusState.Programmatic);
+                if (FocusManager.GetFocusedElement() == view)
+                {
+                    var frame = Window.Current?.Content as Frame;
+                    frame?.Focus(FocusState.Programmatic);
+                }
             }
         }
 
@@ -444,24 +559,35 @@ namespace ReactNative.Views.TextInput
                 view.TextChanging -= OnTextChanging;
                 view.TextChanged -= OnTextChanged;
 
-                if (_onSelectionChange)
+                var removeOnSelectionChange = view.OnSelectionChange;
+                if (removeOnSelectionChange)
                 {
-                    view.SelectionChanged -= OnSelectionChanged;
+                    view.OnSelectionChange = false;
                 }
 
                 var text = textUpdate.Item2;
+                var previousText = view.Text;
+
                 var selectionStart = view.SelectionStart;
-                var selectionLength = view.SelectionLength;
                 var textLength = text?.Length ?? 0;
-                var maxLength = textLength - selectionLength;
+                var normalizedStart = Math.Min(selectionStart, textLength);
+                var selectionLength = view.SelectionLength;
+                var maxLength = textLength - normalizedStart;
 
                 view.Text = text ?? "";
-                view.SelectionStart = Math.Min(selectionStart, textLength);
-                view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
-
-                if (_onSelectionChange)
+                if (selectionStart == previousText.Length)
                 {
-                    view.SelectionChanged += OnSelectionChanged;
+                    view.SelectionStart = textLength;
+                }
+                else
+                {
+                    view.SelectionStart = normalizedStart;
+                    view.SelectionLength = Math.Min(selectionLength, maxLength);
+                }
+
+                if (removeOnSelectionChange)
+                {
+                    view.OnSelectionChange = true;
                 }
 
                 view.TextChanged += OnTextChanged;
@@ -486,12 +612,28 @@ namespace ReactNative.Views.TextInput
             view.TextChanging -= OnTextChanging;
         }
 
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The dimensions.</param>
         public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
+            view.MinWidth = dimensions.Width;
+            view.MinHeight = dimensions.Height;
+
+            if (view.AutoGrow)
+            {
+                // TODO: investigate Yoga bug that rounds up height 1px
+                view.DimensionsUpdated = true;
+                Canvas.SetLeft(view, dimensions.X);
+                Canvas.SetTop(view, dimensions.Y);
+                view.Width = dimensions.Width;
+            }
+            else
+            {
+                base.SetDimensions(view, dimensions);
+            }
         }
 
         /// <summary>
@@ -521,7 +663,7 @@ namespace ReactNative.Views.TextInput
             view.LostFocus += OnLostFocus;
             view.KeyDown += OnKeyDown;
         }
-        
+
         private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
             var textBox = (ReactTextBox)sender;
@@ -538,8 +680,6 @@ namespace ReactNative.Views.TextInput
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
                         textBox.Text,
-                        textBox.ActualWidth,
-                        textBox.ActualHeight,
                         textBox.CurrentEventCount));
         }
 
@@ -550,7 +690,7 @@ namespace ReactNative.Views.TextInput
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ReactTextInputFocusEvent(textBox.GetTag()));
+                    new FocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
@@ -561,7 +701,7 @@ namespace ReactNative.Views.TextInput
                 .EventDispatcher;
 
             eventDispatcher.DispatchEvent(
-                new ReactTextInputBlurEvent(textBox.GetTag()));
+                new BlurEvent(textBox.GetTag()));
 
             eventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
@@ -571,9 +711,9 @@ namespace ReactNative.Views.TextInput
         
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
+            var textBox = (ReactTextBox)sender;
             if (e.Key == VirtualKey.Enter)
             {
-                var textBox = (ReactTextBox)sender;
                 if (!textBox.AcceptsReturn)
                 {
                     e.Handled = true;
@@ -586,21 +726,18 @@ namespace ReactNative.Views.TextInput
                                 textBox.Text));
                 }
             }
-        }
 
-        private void OnSelectionChanged(object sender, RoutedEventArgs e)
-        {
-            var textBox = (ReactTextBox)sender;
-            var start = textBox.SelectionStart;
-            var length = textBox.SelectionLength;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactTextInputSelectionEvent(
-                        textBox.GetTag(),
-                        start,
-                        start + length));
+            if (!e.Handled)
+            {
+                textBox.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyPressEventString,
+                            textBox.GetTag(),
+                            e.Key));
+            }
         }
     }
 }

@@ -11,19 +11,19 @@ namespace ReactNative.Views.Image
     public class ReactImageLoadEvent : Event
     {
         /// <summary>
+        /// The event identifier for image load start.
+        /// </summary>
+        public const int OnLoadStart = 1;
+
+        /// <summary>
         /// The event identifier for image load.
         /// </summary>
-        public const int OnLoad = 1;
+        public const int OnLoad = 2;
 
         /// <summary>
         /// The event identifier for image load end.
         /// </summary>
-        public const int OnLoadEnd = 2;
-
-        /// <summary>
-        /// The event identifier for image load start.
-        /// </summary>
-        public const int OnLoadStart = 3;
+        public const int OnLoadEnd = 3;
 
         private readonly int _eventType;
         private readonly string _imageUri;
@@ -49,7 +49,7 @@ namespace ReactNative.Views.Image
         /// <param name="width">The image width.</param>
         /// <param name="height">The image height.</param>
         public ReactImageLoadEvent(int viewId, int eventType, string imageUri, int width, int height) 
-            : base(viewId, TimeSpan.FromTicks(Environment.TickCount))
+            : base(viewId)
         {
             _eventType = eventType;
             _imageUri = imageUri;
@@ -66,12 +66,12 @@ namespace ReactNative.Views.Image
             {
                 switch (_eventType)
                 {
+                    case OnLoadStart:
+                        return "topLoadStart";
                     case OnLoad:
                         return "topLoad";
                     case OnLoadEnd:
                         return "topLoadEnd";
-                    case OnLoadStart:
-                        return "topLoadStart";
                     default:
                         throw new InvalidOperationException(
                             Invariant($"Invalid image event '{_eventType}'."));
@@ -87,6 +87,17 @@ namespace ReactNative.Views.Image
             get
             {
                 return (short)_eventType;
+            }
+        }
+
+        /// <summary>
+        /// The sorting key for the event.
+        /// </summary>
+        public override int SortingKey
+        {
+            get
+            {
+                return _eventType;
             }
         }
 

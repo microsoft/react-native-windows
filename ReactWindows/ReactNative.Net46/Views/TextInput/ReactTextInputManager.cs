@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,6 @@ namespace ReactNative.Views.TextInput
     {
         internal const int FocusTextInput = 1;
         internal const int BlurTextInput = 2;
-
-        private bool _onSelectionChange;
 
         internal static readonly Color DefaultTextBoxBorder = Color.FromArgb(255, 122, 122, 122);
         internal static readonly Color DefaultPlaceholderTextColor = Color.FromArgb(255, 0, 0, 0);
@@ -69,34 +68,6 @@ namespace ReactNative.Views.TextInput
                                 {
                                     { "bubbled" , "onEndEditing" },
                                     { "captured" , "onEndEditingCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topFocus",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onFocus" },
-                                    { "captured" , "onFocusCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topBlur",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onBlur" },
-                                    { "captured" , "onBlurCapture" }
                                 }
                             }
                         }
@@ -187,18 +158,9 @@ namespace ReactNative.Views.TextInput
         /// <param name="view">The view instance.</param>
         /// <param name="onSelectionChange">The indicator.</param>
         [ReactProp("onSelectionChange", DefaultBoolean = false)]
-        public void SetSelectionChange(ReactTextBox view, bool onSelectionChange)
+        public void SetOnSelectionChange(ReactTextBox view, bool onSelectionChange)
         {
-            if (onSelectionChange)
-            {
-                _onSelectionChange = true;
-                view.SelectionChanged += OnSelectionChanged;
-            }
-            else
-            {
-                _onSelectionChange = false;
-                view.SelectionChanged -= OnSelectionChanged;
-            }
+            view.OnSelectionChange = onSelectionChange;
         }
 
         /// <summary>
@@ -262,6 +224,7 @@ namespace ReactNative.Views.TextInput
         public void SetSelectionColor(ReactTextBox view, uint color)
         {
             view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.CaretBrush = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
@@ -295,6 +258,31 @@ namespace ReactNative.Views.TextInput
         public void SetEditable(ReactTextBox view, bool editable)
         {
             view.IsEnabled = editable;
+        }
+
+        /// <summary>
+        /// Sets whether the view is a tab stop.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
+        /// </param>
+        /// 
+        [ReactProp("isTabStop")]
+        public void SetIsTabStop(ReactTextBox view, bool isTabStop)
+        {
+            view.IsTabStop = isTabStop;
+        }
+
+        /// <summary>
+        /// Sets the tab index for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabIndex">The tab index.</param>
+        [ReactProp("tabIndex")]
+        public void SetTabIndex(ReactTextBox view, int tabIndex)
+        {
+            view.TabIndex = tabIndex;
         }
 
         /// <summary>
@@ -439,12 +427,13 @@ namespace ReactNative.Views.TextInput
                 {
                     return;
                 }
-                
+
                 view.TextChanged -= OnTextChanged;
 
-                if (_onSelectionChange)
+                var removeOnSelectionChange = view.OnSelectionChange;
+                if (removeOnSelectionChange)
                 {
-                    view.SelectionChanged -= OnSelectionChanged;
+                    view.OnSelectionChange = false;
                 }
 
                 var text = textUpdate.Item2;
@@ -457,9 +446,9 @@ namespace ReactNative.Views.TextInput
                 view.SelectionStart = Math.Min(selectionStart, textLength);
                 view.SelectionLength = Math.Min(selectionLength, maxLength < 0 ? 0 : maxLength);
 
-                if (_onSelectionChange)
+                if (removeOnSelectionChange)
                 {
-                    view.SelectionChanged += OnSelectionChanged;
+                    view.OnSelectionChange = true;
                 }
 
                 view.TextChanged += OnTextChanged;
@@ -484,10 +473,9 @@ namespace ReactNative.Views.TextInput
 
         public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
+            base.SetDimensions(view, dimensions);
+            view.MinWidth = dimensions.Width;
+            view.MinHeight = dimensions.Height;
         }
 
         /// <summary>
@@ -527,8 +515,6 @@ namespace ReactNative.Views.TextInput
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
                         textBox.Text,
-                        textBox.ActualWidth,
-                        textBox.ActualHeight,
                         textBox.CurrentEventCount));
         }
 
@@ -539,7 +525,7 @@ namespace ReactNative.Views.TextInput
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ReactTextInputFocusEvent(textBox.GetTag()));
+                    new FocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
@@ -550,19 +536,19 @@ namespace ReactNative.Views.TextInput
                 .EventDispatcher;
 
             eventDispatcher.DispatchEvent(
-                new ReactTextInputBlurEvent(textBox.GetTag()));
+                new BlurEvent(textBox.GetTag()));
 
             eventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
                       textBox.GetTag(),
                       textBox.Text));
         }
-        
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            var textBox = (ReactTextBox)sender;
             if (e.Key == Key.Enter)
             {
-                var textBox = (ReactTextBox)sender;
                 if (!textBox.AcceptsReturn)
                 {
                     e.Handled = true;
@@ -575,21 +561,18 @@ namespace ReactNative.Views.TextInput
                                 textBox.Text));
                 }
             }
-        }
 
-        private void OnSelectionChanged(object sender, RoutedEventArgs e)
-        {
-            var textBox = (ReactTextBox)sender;
-            var start = textBox.SelectionStart;
-            var length = textBox.SelectionLength;
-            textBox.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactTextInputSelectionEvent(
-                        textBox.GetTag(),
-                        start,
-                        start + length));
+            if (!e.Handled)
+            {
+                textBox.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyPressEventString,
+                            textBox.GetTag(),
+                            e.Key));
+            }
         }
     }
 }

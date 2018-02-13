@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace ReactNative.Chakra.Executor
@@ -12,13 +13,16 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public class NativeJavaScriptExecutor : IJavaScriptExecutor
     {
+        private const string BytecodeFileName = "ReactNativeBundle.bin";
+
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
         private readonly bool _useSerialization;
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
         /// </summary>
-        public NativeJavaScriptExecutor() : this(false)
+        public NativeJavaScriptExecutor()
+            : this(false)
         {
 
         }
@@ -92,27 +96,60 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
-        /// Runs the given script.
+        /// Runs the JavaScript at the given path.
         /// </summary>
-        /// <param name="script">The script.</param>
+        /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
-        public void RunScript(string script, string sourceUrl)
+        public void RunScript(string sourcePath, string sourceUrl)
         {
-            if (script == null)
-                throw new ArgumentNullException(nameof(script));
+            if (sourcePath == null)
+                throw new ArgumentNullException(nameof(sourcePath));
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
             try
             {
-                if(_useSerialization)
+                var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, BytecodeFileName);
+
+                if (_useSerialization)
                 {
-                    var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(script, binPath, sourceUrl));
+                    var srcFileInfo = new FileInfo(sourcePath);
+                    var binFileInfo = new FileInfo(binPath);
+
+                    // The idea is to run the JS bundle and generate bytecode for it on a background thread.
+                    // This eliminates the need to delay the first start when the app doesn't have bytecode.
+                    // Next time the app starts, it checks if bytecode is still good and  runs it directly.
+                    if (binFileInfo.Exists && binFileInfo.LastWriteTime > srcFileInfo.LastWriteTime)
+                    {
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                    }
+                    else
+                    {
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                // In Chakra JS engine, only one runtime can be active on a particular thread at a time,
+                                // and a runtime can only be active on one thread at a time. However it's possible to
+                                // create two runtimes and let them run on different threads.
+                                var rt = new ChakraBridge.NativeJavaScriptExecutor();
+
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.InitializeHost());
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.SerializeScript(sourcePath, binPath));
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.DisposeHost());
+                            }
+                            catch (Exception)
+                            {
+                                // It's fine if the bytecode couldn't be generated: RN can still use the JS bundle.
+                            }
+                        });
+
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
+                    }
                 }
                 else
                 {
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(script, sourceUrl));
+                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
                 }
             }
             catch (JavaScriptScriptException ex)

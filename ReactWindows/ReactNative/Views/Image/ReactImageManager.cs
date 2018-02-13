@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI;
+using ImagePipeline.Core;
+using ImagePipeline.Request;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
@@ -6,7 +7,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Reactive.Disposables;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -19,9 +19,6 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly Dictionary<int, SerialDisposable> _disposables =
-            new Dictionary<int, SerialDisposable>();
-
         private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
             new Dictionary<int, List<KeyValuePair<string, double>>>();
 
@@ -206,15 +203,7 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            var tag = view.GetTag();
-            var disposable = default(SerialDisposable);
-            if (_disposables.TryGetValue(tag, out disposable))
-            {
-                disposable.Dispose();
-                _disposables.Remove(tag);
-            }
-
-            _imageSources.Remove(tag);
+            _imageSources.Remove(view.GetTag());
         }
 
         /// <summary>
@@ -246,6 +235,12 @@ namespace ReactNative.Views.Image
 
         private void OnImageFailed(Border view)
         {
+            if (!view.HasTag())
+            {
+                // View may have been unmounted, ignore.
+                return;
+            }
+
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
@@ -257,6 +252,12 @@ namespace ReactNative.Views.Image
 
         private void OnImageStatusUpdate(Border view, ImageLoadStatus status, ImageMetadata metadata)
         {
+            if (!view.HasTag())
+            {
+                // View may have been unmounted, ignore.
+                return;
+            }
+
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher;
@@ -278,54 +279,19 @@ namespace ReactNative.Views.Image
         private async void SetUriFromSingleSource(Border view, string source)
         {
             var imageBrush = (ImageBrush)view.Background;
-            var tag = view.GetTag();
-
-            var disposable = default(SerialDisposable);
-            if (!_disposables.TryGetValue(tag, out disposable))
+            OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, default(ImageMetadata));
+            try
             {
-                disposable = new SerialDisposable();
-                _disposables.Add(tag, disposable);
-            }
-
-            if (BitmapImageHelpers.IsBase64Uri(source))
-            {
-                var image = new BitmapImage();
-
-                disposable.Disposable = image.GetStreamLoadObservable().Subscribe(
-                    status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
-                    _ => OnImageFailed(view));
-
-                using (var stream = await BitmapImageHelpers.GetStreamAsync(source))
-                {
-                    await image.SetSourceAsync(stream);
-                }
-
+                var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
+                var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source));
+                var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
+                OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
                 imageBrush.ImageSource = image;
+                OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
             }
-            else if (BitmapImageHelpers.IsHttpUri(source))
+            catch
             {
-                OnImageStatusUpdate(view, ImageLoadStatus.OnLoadStart, default(ImageMetadata));
-                try
-                {
-                    var image = await ImageCache.Instance.GetFromCacheAsync(new Uri(source), true);
-                    var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
-                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
-                    imageBrush.ImageSource = image;
-                    OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
-                }
-                catch
-                {
-                    OnImageFailed(view);
-                }
-            }
-            else
-            {
-                var image = new BitmapImage();
-                disposable.Disposable = image.GetUriLoadObservable().Subscribe(
-                    status => OnImageStatusUpdate(view, status.LoadStatus, status.Metadata),
-                    _ => OnImageFailed(view));
-                image.UriSource = new Uri(source);
-                imageBrush.ImageSource = image;
+                OnImageFailed(view);
             }
         }
 

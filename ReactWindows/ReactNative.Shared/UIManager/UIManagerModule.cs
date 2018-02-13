@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Tracing;
+using ReactNative.Bridge.Queue;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,9 @@ namespace ReactNative.UIManager
 
         private readonly UIImplementation _uiImplementation;
         private readonly IReadOnlyDictionary<string, object> _moduleConstants;
+        private readonly IReadOnlyDictionary<string, object> _customDirectEvents;
         private readonly EventDispatcher _eventDispatcher;
+        private readonly IActionQueue _layoutActionQueue;
 
         private int _batchId;
         private int _nextRootTag = 1;
@@ -27,22 +29,34 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="uiImplementationProvider">The UI implementation provider.</param>
+        /// <param name="layoutActionQueue">The layout action queue.</param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
-            UIImplementationProvider uiImplementationProvider)
-            : base(reactContext)
+            UIImplementationProvider uiImplementationProvider,
+            IActionQueue layoutActionQueue)
+            : base(reactContext, layoutActionQueue)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
             if (uiImplementationProvider == null)
                 throw new ArgumentNullException(nameof(uiImplementationProvider));
-            
+            if (layoutActionQueue == null)
+                throw new ArgumentNullException(nameof(layoutActionQueue));
+
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
-            _moduleConstants = CreateConstants(viewManagers);
+            var customDirectEvents = new Dictionary<string, object>();
+            _customDirectEvents = customDirectEvents;
+            _moduleConstants = CreateConstants(viewManagers, null, customDirectEvents);
+            _layoutActionQueue = layoutActionQueue;
             reactContext.AddLifecycleEventListener(this);
         }
+
+        /// <summary>
+        /// An event fired before the UIManager dispatches view updates.
+        /// </summary>
+        public event EventHandler DispatchingViewUpdates;
 
         /// <summary>
         /// The name of the module.
@@ -51,7 +65,7 @@ namespace ReactNative.UIManager
         {
             get
             {
-                return "RKUIManager";
+                return "UIManager";
             }
         }
 
@@ -115,11 +129,11 @@ namespace ReactNative.UIManager
                 var newWidth = args.NewSize.Width;
                 var newHeight = args.NewSize.Height;
 
-                Context.RunOnNativeModulesQueueThread(() =>
+                _layoutActionQueue.Dispatch(() =>
                 {
                     if (currentCount == resizeCount)
                     {
-                        Context.AssertOnNativeModulesQueueThread();
+                        _layoutActionQueue.AssertOnThread();
                         _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
                     }
                 });
@@ -136,6 +150,41 @@ namespace ReactNative.UIManager
         public void AddUIBlock(IUIBlock block)
         {
             _uiImplementation.AddUIBlock(block);
+        }
+
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// need view logic before all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            _uiImplementation.PrependUIBlock(block);
+        }
+
+        /// <summary>
+        /// Resolves direct event name exposed to JavaScript from the one known
+        /// to the native implementation.
+        /// </summary>
+        /// <param name="eventName">The native event name.</param>
+        /// <returns>The direct event name.</returns>
+        public string ResolveCustomEventName(string eventName)
+        {
+            var value = default(object);
+            if (!_customDirectEvents.TryGetValue(eventName, out value))
+            {
+                return eventName;
+            }
+
+            var customEventType = value as IDictionary<string, object>;
+            if (customEventType == null ||
+                !customEventType.TryGetValue("registrationName", out value))
+            {
+                return eventName;
+            }
+
+            var registrationName = value as string;
+            return registrationName ?? eventName;
         }
 
         #region React Methods
@@ -205,12 +254,12 @@ namespace ReactNative.UIManager
             int[] removeFrom)
         {
             _uiImplementation.ManageChildren(
-                viewTag,
-                moveFrom,
-                moveTo,
-                addChildTags,
-                addAtIndexes,
-                removeFrom);
+                    viewTag,
+                    moveFrom,
+                    moveTo,
+                    addChildTags,
+                    addAtIndexes,
+                    removeFrom);
         }
 
         /// <summary>
@@ -349,10 +398,10 @@ namespace ReactNative.UIManager
             ICallback callback)
         {
             _uiImplementation.FindSubViewIn(
-                reactTag,
-                point[0].Value<double>(),
-                point[1].Value<double>(),
-                callback);
+                    reactTag,
+                    point[0].Value<double>(),
+                    point[1].Value<double>(),
+                    callback);
         }
 
         /// <summary>
@@ -365,7 +414,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void setJSResponder(int reactTag, bool blockNativeResponder)
         {
-            _uiImplementation.SetJavaScriptResponder(reactTag, blockNativeResponder);
+            // TODO: (#306) implement JS responder handler
         }
 
         /// <summary>
@@ -374,7 +423,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void clearJSResponder()
         {
-            _uiImplementation.ClearJavaScriptResponder();
+            // TODO: (#306) implement JS responder handler
         }
 
         /// <summary>
@@ -432,9 +481,9 @@ namespace ReactNative.UIManager
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
-#endregion
+        #endregion
 
-        #region ILifecycleEventListenere
+        #region ILifecycleEventListener
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -458,8 +507,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            _uiImplementation.OnShutdown();
-            _eventDispatcher.OnDestroy();
+            _uiImplementation.OnDestroy();
         }
 
         #endregion
@@ -474,13 +522,8 @@ namespace ReactNative.UIManager
         public void OnBatchComplete()
         {
             var batchId = _batchId++;
-
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "onBatchCompleteUI")
-                .With("BatchId", batchId)
-                .Start())
-            {
-                _uiImplementation.DispatchViewUpdates(batchId);
-            }
+            DispatchingViewUpdates?.Invoke(this, new EventArgs());
+            _uiImplementation.DispatchViewUpdates(batchId);
         }
 
         #endregion

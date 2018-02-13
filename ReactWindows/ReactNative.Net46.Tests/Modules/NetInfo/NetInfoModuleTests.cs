@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NETWORKLIST;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.NetInfo;
 using System;
-using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -16,7 +16,7 @@ namespace ReactNative.Tests.Modules.NetInfo
         [Test]
         public void NetInfoModule_JsonResponse()
         {
-            var networkInterface = new MockNetworkInterface("None");
+            var networkInterface = new MockNetworkListManager("None");
             var networkInfo = new MockNetworkInformation(networkInterface);
             var context = CreateReactContext();
             var netInfo = new NetInfoModule(networkInfo, context);
@@ -27,7 +27,7 @@ namespace ReactNative.Tests.Modules.NetInfo
             netInfo.getCurrentConnectivity(promise);
             Assert.AreEqual(CreateNetworkInfo("None"), state);
 
-            networkInfo.NetworkInterface = new MockNetworkInterface("InternetAccess");
+            networkInfo.networkListManager = new MockNetworkListManager("InternetAccess");
             netInfo.getCurrentConnectivity(promise);
             Assert.AreEqual(CreateNetworkInfo("InternetAccess"), state);
         }
@@ -38,7 +38,7 @@ namespace ReactNative.Tests.Modules.NetInfo
         {
             SetDispatcherForTest();
 
-            var networkInterface = new MockNetworkInterface("None");
+            var networkInterface = new MockNetworkListManager("None");
             var networkInfo = new MockNetworkInformation(networkInterface);
 
             var emitted = new AutoResetEvent(false);
@@ -56,8 +56,8 @@ namespace ReactNative.Tests.Modules.NetInfo
             netInfo.Initialize();
             context.OnResume();
 
-            networkInfo.NetworkInterface = new MockNetworkInterface("InternetAccess");
-            networkInfo.OnNetworkAvailabilityChanged(new object(), (NetworkAvailabilityEventArgs)null);
+            networkInfo.networkListManager = new MockNetworkListManager("InternetAccess");
+            networkInfo.OnNetworkAvailabilityChanged(new Guid(), NLM_CONNECTIVITY.NLM_CONNECTIVITY_IPV4_INTERNET);
             Assert.IsTrue(emitted.WaitOne());
             Assert.AreEqual(CreateNetworkInfo("InternetAccess"), state);
         }
@@ -112,7 +112,7 @@ namespace ReactNative.Tests.Modules.NetInfo
 
         private static void SetDispatcherForTest()
         {
-            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
         }
 
         class TestReactInstance : MockReactInstance
@@ -141,12 +141,12 @@ namespace ReactNative.Tests.Modules.NetInfo
             private readonly Action _onStart;
             private readonly Action _onStop;
 
-            public MockNetworkInterface NetworkInterface { get; set; }
+            public MockNetworkListManager networkListManager { get; set; }
 
-            public MockNetworkInformation(MockNetworkInterface NetworkInterface)
+            public MockNetworkInformation(MockNetworkListManager networkListManager)
                 : this(() => { }, () => { })
             {
-                this.NetworkInterface = NetworkInterface;
+                this.networkListManager = networkListManager;
             }
 
             public MockNetworkInformation(Action onStart, Action onStop)
@@ -155,11 +155,11 @@ namespace ReactNative.Tests.Modules.NetInfo
                 _onStop = onStop;
             }
 
-            public event NetworkAvailabilityChangedEventHandler NetworkAvailabilityChanged;
+            public event EventHandler<NetworkConnectivityChangedEventArgs> NetworkConnectivityChanged;
 
             public string GetInternetStatus()
             {
-                return NetworkInterface.GetIsNetworkAvailable();
+                return networkListManager.IsConnectedToInternet ? "InternetAccess" : "None";
             }
 
             public void Start()
@@ -172,25 +172,25 @@ namespace ReactNative.Tests.Modules.NetInfo
                 _onStop();
             }
 
-            public void OnNetworkAvailabilityChanged(object source, NetworkAvailabilityEventArgs e)
+            public void OnNetworkAvailabilityChanged(Guid guid, NLM_CONNECTIVITY connectivity)
             {
-                NetworkAvailabilityChanged?.Invoke(source, e);
+                NetworkConnectivityChangedEventArgs e = new NetworkConnectivityChangedEventArgs()
+                {
+                    IsAvailable = networkListManager.IsConnectedToInternet,
+                    ConnectionStatus = GetInternetStatus()
+                };
+                NetworkConnectivityChanged?.Invoke(new object(), e);
             }
         }
 
-        class MockNetworkInterface
+        class MockNetworkListManager
         {
-            public MockNetworkInterface(string status)
+            public MockNetworkListManager(string status)
             {
-                _status = status;
+                IsConnectedToInternet = status == "InternetAccess";
             }
 
-            private string _status;
-
-            public string GetIsNetworkAvailable()
-            {
-                return _status;
-            }
+            public bool IsConnectedToInternet { get; set; }
         }
     }
 }

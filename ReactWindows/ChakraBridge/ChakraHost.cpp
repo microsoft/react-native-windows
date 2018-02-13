@@ -1,7 +1,11 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "ChakraHost.h"
+#include "JsIndexedModulesUnbundle.h"
 #include "JsStringify.h"
 #include "SerializedSourceContext.h"
+#include <stdint.h>
+
+const unsigned int MagicFileHeader = 0xFB0BD1E5;
 
 void ThrowException(const wchar_t* szException)
 {
@@ -27,106 +31,109 @@ JsErrorCode DefineHostCallback(JsValueRef globalObject, const wchar_t *callbackN
 
 wchar_t* LogLevel(int logLevel)
 {
-	switch (logLevel)
-	{
-	case 0:
-		return L"Trace";
-	case 1:
-		return L"Info";
-	case 2:
-		return L"Warn";
-	case 3:
-		return L"Error";
-	default:
-		return L"Log";
-	}
+    switch (logLevel)
+    {
+    case 0:
+        return L"Trace";
+    case 1:
+        return L"Info";
+    case 2:
+        return L"Warn";
+    case 3:
+        return L"Error";
+    default:
+        return L"Log";
+    }
 }
 
 JsValueRef CALLBACK NativeLoggingCallback(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
 #ifdef _DEBUG
-	wchar_t buff[56];
-	double logLevelIndex;
-	JsNumberToDouble(arguments[2], &logLevelIndex);
-	swprintf(buff, 56, L"[JS %s] ", LogLevel((int)logLevelIndex));
-	OutputDebugStringW(buff);
-	StringifyJsString(arguments[1]);
-	OutputDebugStringW(L"\n");
+    wchar_t buff[56];
+    double logLevelIndex;
+    JsNumberToDouble(arguments[2], &logLevelIndex);
+    swprintf(buff, 56, L"[JS %s] ", LogLevel((int)logLevelIndex));
+    OutputDebugStringW(buff);
+    StringifyJsString(arguments[1]);
+    OutputDebugStringW(L"\n");
 #endif
-	return JS_INVALID_REFERENCE;
+    return JS_INVALID_REFERENCE;
 }
 
-JsErrorCode LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap)
+JsErrorCode ChakraHost::LoadByteCode(const wchar_t* szPath, BYTE** pData, HANDLE* hFile, HANDLE* hMap, bool bIsReadOnly)
 {
-    *pData = nullptr;
+	*pData = nullptr;
 
-    *hFile = CreateFile2(szPath, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, OPEN_EXISTING, nullptr);
-    if (*hFile == INVALID_HANDLE_VALUE)
-    {
-        return JsErrorFatal;
-    }
+	DWORD dwShareMode = bIsReadOnly ? GENERIC_READ : GENERIC_READ | GENERIC_WRITE;
+	*hFile = CreateFile2(szPath, dwShareMode, FILE_SHARE_READ, OPEN_EXISTING, nullptr);
+	if (*hFile == INVALID_HANDLE_VALUE)
+	{
+		return JsErrorFatal;
+	}
 
-    *hMap = CreateFileMapping(*hFile, nullptr, PAGE_READWRITE | SEC_RESERVE, 0, 0, L"ReactNativeMapping");
-    if (*hMap == NULL)
-    {
-        CloseHandle(*hFile);
-        return JsErrorFatal;
-    }
+	DWORD flProtect = (bIsReadOnly ? PAGE_READONLY : PAGE_READWRITE) | SEC_RESERVE;
+	*hMap = CreateFileMapping(*hFile, nullptr, flProtect, 0, 0, L"ReactNativeMapping");
+	if (*hMap == NULL)
+	{
+		CloseHandle(*hFile);
+		return JsErrorFatal;
+	}
 
-    *pData = (BYTE*)MapViewOfFile(*hMap, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, 0);
-    if (*pData == NULL)
-    {
-        CloseHandle(*hMap);
-        CloseHandle(*hFile);
-        return JsErrorFatal;
-    }
+	DWORD dwDesiredAccess = bIsReadOnly ? FILE_MAP_READ : FILE_MAP_READ | FILE_MAP_WRITE;
+	*pData = (BYTE*)MapViewOfFile(*hMap, dwDesiredAccess, 0, 0, 0);
+	if (*pData == NULL)
+	{
+		CloseHandle(*hMap);
+		CloseHandle(*hFile);
+		return JsErrorFatal;
+	}
 
-    return JsNoError;
+	return JsNoError;
 }
 
-JsErrorCode LoadFileContents(const wchar_t* szPath, wchar_t** pszData)
+JsErrorCode ChakraHost::LoadFileContents(const wchar_t* szPath, wchar_t** pszData)
 {
-    FILE *file;
-    *pszData = nullptr;
+	FILE *file;
+	*pszData = nullptr;
 
-    if (_wfopen_s(&file, szPath, L"rb"))
-    {
-        return JsErrorInvalidArgument;
-    }
+	if (_wfopen_s(&file, szPath, L"rb"))
+	{
+		return JsErrorInvalidArgument;
+	}
 
-    unsigned int current = ftell(file);
-    fseek(file, 0, SEEK_END);
-    unsigned int end = ftell(file);
-    fseek(file, current, SEEK_SET);
-    unsigned int lengthBytes = end - current;
-    char *rawBytes = (char *)calloc(lengthBytes + 1, sizeof(char));
+	unsigned int current = ftell(file);
+	fseek(file, 0, SEEK_END);
+	unsigned int end = ftell(file);
+	fseek(file, current, SEEK_SET);
+	unsigned int lengthBytes = end - current;
+	char *rawBytes = (char *)calloc(lengthBytes + 1, sizeof(char));
 
-    if (rawBytes == nullptr)
-    {
-        return JsErrorFatal;
-    }
+	if (rawBytes == nullptr)
+	{
+		return JsErrorFatal;
+	}
 
-    fread(rawBytes, sizeof(char), lengthBytes, file);
-    if (fclose(file))
-    {
-        return JsErrorFatal;
-    }
+	fread(rawBytes, sizeof(char), lengthBytes, file);
+	if (fclose(file))
+	{
+		return JsErrorFatal;
+	}
 
-    *pszData = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
-    if (*pszData == nullptr)
-    {
-        free(rawBytes);
-        return JsErrorFatal;
-    }
+	*pszData = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
+	if (*pszData == nullptr)
+	{
+		free(rawBytes);
+		return JsErrorFatal;
+	}
 
-    if (MultiByteToWideChar(CP_UTF8, 0, rawBytes, lengthBytes + 1, *pszData, lengthBytes + 1) == 0)
-    {
-        free(*pszData);
-        free(rawBytes);
-        return JsErrorFatal;
-    }
+	if (MultiByteToWideChar(CP_UTF8, 0, rawBytes, lengthBytes + 1, *pszData, lengthBytes + 1) == 0)
+	{
+		free(*pszData);
+		free(rawBytes);
+		return JsErrorFatal;
+	}
 
-    return JsNoError;
+	return JsNoError;
 }
 
 bool CompareLastWrite(const wchar_t* szPath1, const wchar_t* szPath2)
@@ -164,11 +171,82 @@ void CALLBACK UnloadSourceCallback(JsSourceContext sourceContext)
     delete context;
 }
 
-JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
+JsValueRef CALLBACK NativeRequire(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
 {
-    HANDLE hFile = NULL;
-    HANDLE hMap = NULL;
-    JsErrorCode status = JsNoError;
+	// cast the callback state to the ChakraHost instance
+	auto host = (ChakraHost*)callbackState;
+
+	// Assert the argument count.
+	if (argumentCount != 2)
+	{
+		ThrowException(L"Expected only one parameter to nativeRequire.");
+		return JS_INVALID_REFERENCE;
+	}
+
+	// Assert a valid module index
+	double index;
+	IfFailThrow(JsNumberToDouble(arguments[1], &index), L"Index parameter to nativeRequire must be a number.");
+	uint32_t convertedIndex = (uint32_t)index;
+	if (convertedIndex <= 0)
+	{
+		ThrowException(L"Index parameter to nativeRequire must be greater than zero.");
+		return JS_INVALID_REFERENCE;
+	}
+
+	// Retrieve the unbundle module
+	auto module = host->unbundle->GetModule(convertedIndex);
+	if (!module)
+	{
+		ThrowException(L"Unable to resolve unbundle module.");
+		return JS_INVALID_REFERENCE;
+	}
+
+	// Evaluate the unbundle module script
+	if (host->EvaluateScript(module->source, module->sourceUrl, nullptr) != JsNoError)
+	{
+		// Note, control flow continues below, exception set to JS runtime
+		ThrowException(L"Failure occurred while evaluating unbundle module.");
+	}
+
+	delete module;
+	return JS_INVALID_REFERENCE;
+}
+
+bool HasMagicFileHeader(const wchar_t* szPath)
+{
+	FILE *file;
+	if (_wfopen_s(&file, szPath, L"rb"))
+	{
+		return false;
+	}
+
+	uint32_t magicHeader;
+	size_t nRead = fread(&magicHeader, sizeof(uint32_t), 1, file);
+	if (fclose(file) || nRead != 1)
+	{
+		return false;
+	}
+
+	// The header is little-endian, this function assumes a little-endian host
+	return magicHeader == MagicFileHeader;
+}
+
+bool IsUnbundle(const wchar_t* szSourcePath)
+{
+	wchar_t buffer[_MAX_DIR] = L"";
+	auto filename = wcsrchr(szSourcePath, L'\\');
+	wcsncat_s(buffer, szSourcePath, wcslen(szSourcePath) - wcslen(filename) + 1);
+	wcscat_s(buffer, L"js-modules\\UNBUNDLE");
+	return HasMagicFileHeader(buffer);
+}
+
+bool IsIndexedUnbundle(const wchar_t* szSourcePath)
+{
+	return HasMagicFileHeader(szSourcePath);
+}
+
+JsErrorCode ChakraHost::SerializeScript(const wchar_t* szPath, const wchar_t* szSerializedPath)
+{
     ULONG bufferSize = 0L;
     BYTE* buffer = nullptr;
     wchar_t* szScriptBuffer = nullptr;
@@ -185,9 +263,25 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
         fwrite(buffer, sizeof(BYTE), bufferSize, file);
         fclose(file);
     }
+
+    return JsNoError;
+}
+
+JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
+{
+    HANDLE hFile = NULL;
+    HANDLE hMap = NULL;
+    BYTE* buffer = nullptr;
+    wchar_t* szScriptBuffer = nullptr;
+    IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
+
+    if (!CompareLastWrite(szSerializedPath, szPath))
+    {
+        return JsErrorBadSerializedScript;
+    }
     else
     {
-        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap));
+        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, false));
     }
 
     SerializedSourceContext* context = new SerializedSourceContext();
@@ -197,18 +291,48 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     context->mapHandle = hMap;
 
     IfFailRet(JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result));
-    return status;
+    return JsNoError;
 }
 
 JsErrorCode ChakraHost::RunScript(const wchar_t* szFileName, const wchar_t* szSourceUri, JsValueRef* result)
 {
     wchar_t* contents = nullptr;
-    IfFailRet(LoadFileContents(szFileName, &contents));
+    if (IsUnbundle(szFileName))
+    {
+        this->unbundle = new JsModulesUnbundle(szFileName);
+		IfFailRet(InitNativeRequire());
+        IfFailRet(unbundle->GetStartupCode(&contents));
+    }
+    else if (IsIndexedUnbundle(szFileName))
+    {
+        this->unbundle = new JsIndexedModulesUnbundle(szFileName);
+		IfFailRet(InitNativeRequire());
+		IfFailRet(unbundle->GetStartupCode(&contents));
+    }
+    else
+    {
+        IfFailRet(LoadFileContents(szFileName, &contents));
+    }
 
-    JsErrorCode status = JsRunScript(contents, currentSourceContext++, szSourceUri, result);
+    JsErrorCode status = EvaluateScript(contents, szSourceUri, result);
     free(contents);
 
     return status;
+}
+
+JsErrorCode ChakraHost::EvaluateScript(const wchar_t* szScript, const wchar_t* szSourceUri, JsValueRef* result)
+{
+	if (szScript == nullptr)
+	{
+		return JsErrorNullArgument;
+	}
+
+	if (szSourceUri == nullptr)
+	{
+		return JsErrorNullArgument;
+	}
+
+	return JsRunScript(szScript, currentSourceContext++, szSourceUri, result);
 }
 
 JsErrorCode ChakraHost::JsonStringify(JsValueRef argument, JsValueRef* result)
@@ -264,6 +388,13 @@ JsErrorCode ChakraHost::InitConsole()
     IfFailRet(DefineHostCallback(globalObject, L"nativeLoggingHook", NativeLoggingCallback, nullptr));
 
     return JsNoError;
+}
+
+JsErrorCode ChakraHost::InitNativeRequire()
+{
+	IfFailRet(DefineHostCallback(globalObject, L"nativeRequire", NativeRequire, this));
+
+	return JsNoError;
 }
 
 JsErrorCode ChakraHost::Init()

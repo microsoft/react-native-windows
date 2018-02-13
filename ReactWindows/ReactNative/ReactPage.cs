@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;
@@ -15,9 +17,10 @@ namespace ReactNative
     /// <summary>
     /// Base page for React Native applications.
     /// </summary>
+    [Obsolete("Please use ReactNativeHost instead of ReactPage.")]
     public abstract class ReactPage : Page, IAsyncDisposable
     {
-        private readonly IReactInstanceManager _reactInstanceManager;
+        private readonly ReactInstanceManager _reactInstanceManager;
 
         private bool _isShiftKeyDown;
         private bool _isControlKeyDown;
@@ -171,7 +174,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        private async void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (_reactInstanceManager.DevSupportManager.IsEnabled)
             {
@@ -190,17 +193,17 @@ namespace ReactNative
                 }
                 else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && _isControlKeyDown && e.VirtualKey == VirtualKey.R)
                 {
-                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                    await _reactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
         }
 
-        private IReactInstanceManager CreateReactInstanceManager()
+        private ReactInstanceManager CreateReactInstanceManager()
         {
-            var builder = new ReactInstanceManager.Builder
+            var builder = new ReactInstanceManagerBuilder
             {
                 UseDeveloperSupport = UseDeveloperSupport,
-                InitialLifecycleState = LifecycleState.Resumed,
+                InitialLifecycleState = LifecycleState.BeforeCreate,
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
                 JavaScriptExecutorFactory = JavaScriptExecutorFactory,

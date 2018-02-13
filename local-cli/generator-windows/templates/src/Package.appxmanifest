@@ -8,7 +8,7 @@
 
   <Identity
     Name="<%= packageGuid %>"
-    Publisher="CN=publisher"
+    Publisher="CN=<%=currentUser%>"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="<%= packageGuid %>" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>

@@ -26,12 +26,13 @@ namespace ReactNative.UIManager.LayoutAnimation
                 return false;
             }
         }
-        
+
         /// <summary>
         /// Create an observable animation to be used to animate the view, 
         /// based on the animation configuration supplied at initialization
         /// time and the new view position and size.
         /// </summary>
+        /// <param name="viewManager">The view manager for the view.</param>
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions</param>
         /// <returns>
@@ -39,14 +40,10 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// stops the animation when disposed, and that completes 
         /// simultaneously with the underlying animation.
         /// </returns>
-        protected override IObservable<Unit> CreateAnimationCore(FrameworkElement view, Dimensions dimensions)
+        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
-
-            return base.CreateAnimationCore(view, dimensions);
+            viewManager.SetDimensions(view, dimensions);
+            return base.CreateAnimationCore(viewManager, view, dimensions);
         }
     }
 }

@@ -19,7 +19,7 @@ function runWindows(config, args, options) {
   }
 
   try {
-    build.restoreNuGetPackages(options, slnFile);
+    build.restoreNuGetPackages(options, slnFile, options.verbose);
   } catch (e) {
     console.error(chalk.red('Failed to restore the NuGet packages'));
     return;
@@ -29,7 +29,7 @@ function runWindows(config, args, options) {
   const buildType = options.release ? 'Release' : 'Debug';
 
   try {
-    build.buildSolution(slnFile, buildType, options.arch);
+    build.buildSolution(slnFile, buildType, options.arch, options.verbose);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
@@ -69,6 +69,7 @@ runWindows({
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
  *    proxy: Boolean - Run using remote JS proxy
+ *    no-packager: Boolean - Do not launch packager while building
  */
 module.exports = {
   name: 'run-windows',
@@ -96,5 +97,12 @@ module.exports = {
   }, {
     command: '--proxy',
     description: 'Deploys the app in remote debugging mode.',
+  }, {
+    command: '--verbose',
+    description: 'Enables logging',
+    default: false,
+  }, {
+    command: '--no-packager',
+    description: 'Do not launch packager while building'
   }]
 };

@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using ReactNative.Reflection;
+using Newtonsoft.Json.Linq;
+using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
@@ -34,17 +34,25 @@ namespace ReactNative.Bridge
     /// </remarks>
     public abstract class NativeModuleBase : INativeModule
     {
+        private static readonly IReactDelegateFactory s_defaultDelegateFactory =
+#if WINDOWS_UWP
+            ReflectionReactDelegateFactory.Instance;
+#else
+            CompiledReactDelegateFactory.Instance;
+#endif
+
         private static readonly IReadOnlyDictionary<string, object> s_emptyConstants
             = new Dictionary<string, object>();
 
         private readonly IReadOnlyDictionary<string, INativeMethod> _methods;
         private readonly IReactDelegateFactory _delegateFactory;
+        private readonly IActionQueue _actionQueue;
 
         /// <summary>
         /// Instantiates a <see cref="NativeModuleBase"/>.
         /// </summary>
         protected NativeModuleBase()
-            : this(CompiledReactDelegateFactory.Instance)
+            : this(s_defaultDelegateFactory)
         {
         }
 
@@ -55,9 +63,35 @@ namespace ReactNative.Bridge
         /// Factory responsible for creating delegates for method invocations.
         /// </param>
         protected NativeModuleBase(IReactDelegateFactory delegateFactory)
+            : this(delegateFactory, null)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="NativeModuleBase"/>.
+        /// </summary>
+        /// <param name="actionQueue">
+        /// The action queue that native modules should execute on.
+        /// </param>
+        protected NativeModuleBase(IActionQueue actionQueue)
+            : this(s_defaultDelegateFactory, actionQueue)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="NativeModuleBase"/>.
+        /// </summary>
+        /// <param name="delegateFactory">
+        /// Factory responsible for creating delegates for method invocations.
+        /// </param>
+        /// <param name="actionQueue">
+        /// The action queue that native modules should execute on.
+        /// </param>
+        protected NativeModuleBase(IReactDelegateFactory delegateFactory, IActionQueue actionQueue)
         {
             _delegateFactory = delegateFactory;
             _methods = InitializeMethods();
+            _actionQueue = actionQueue;
         }
 
         /// <summary>
@@ -72,6 +106,17 @@ namespace ReactNative.Bridge
             get
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// The action queue used by the native module.
+        /// </summary>
+        public IActionQueue ActionQueue
+        {
+            get
+            {
+                return _actionQueue;
             }
         }
 
@@ -160,16 +205,13 @@ namespace ReactNative.Bridge
 
         class NativeMethod : INativeMethod
         {
-            private readonly NativeModuleBase _instance;
-            private readonly Lazy<Action<INativeModule, IReactInstance, JArray>> _invokeDelegate;
+            private readonly Lazy<Action<IReactInstance, JArray>> _invokeDelegate;
 
             public NativeMethod(NativeModuleBase instance, MethodInfo method)
             {
-                _instance = instance;
-
                 var delegateFactory = instance._delegateFactory;
                 delegateFactory.Validate(method);
-                _invokeDelegate = new Lazy<Action<INativeModule, IReactInstance, JArray>>(() => delegateFactory.Create(instance, method));
+                _invokeDelegate = new Lazy<Action<IReactInstance, JArray>>(() => delegateFactory.Create(instance, method));
                 Type = delegateFactory.GetMethodType(method);
             }
 
@@ -182,7 +224,7 @@ namespace ReactNative.Bridge
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod").Start())
                 {
-                    _invokeDelegate.Value(_instance, reactInstance, jsArguments);
+                    _invokeDelegate.Value(reactInstance, jsArguments);
                 }
             }
         }

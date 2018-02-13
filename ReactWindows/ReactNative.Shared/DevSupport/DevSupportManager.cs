@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
@@ -33,14 +33,14 @@ namespace ReactNative.DevSupport
         private readonly SerialDisposable _pollingDisposable = new SerialDisposable();
 
         private readonly IReactInstanceDevCommandsHandler _reactInstanceCommandsHandler;
-        private readonly string _jsBundleFile;
+        private readonly bool _shouldLoadFromPackagerServer;
         private readonly string _jsAppBundleName;
         private readonly DevInternalSettings _devSettings;
         private readonly DevServerHelper _devServerHelper;
 
         private bool _isDevSupportEnabled = true;
 
-        private ReactContext _currentContext;
+        private ReactContext _currentReactContext;
         private RedBoxDialog _redBoxDialog;
         private Action _dismissRedBoxDialog;
         private bool _redBoxDialogOpen;
@@ -50,11 +50,11 @@ namespace ReactNative.DevSupport
 
         public DevSupportManager(
             IReactInstanceDevCommandsHandler reactInstanceCommandsHandler,
-            string jsBundleFile,
+            bool shouldLoadFromPackagerServer,
             string jsAppBundleName)
         {
             _reactInstanceCommandsHandler = reactInstanceCommandsHandler;
-            _jsBundleFile = jsBundleFile;
+            _shouldLoadFromPackagerServer = shouldLoadFromPackagerServer;
             _jsAppBundleName = jsAppBundleName;
             _devSettings = new DevInternalSettings(this);
             _devServerHelper = new DevServerHelper(_devSettings);
@@ -98,6 +98,12 @@ namespace ReactNative.DevSupport
             get;
             set;
         }
+
+        public bool IsProgressDialogEnabled
+        {
+            get;
+            set;
+        } = true;
 
         public string SourceMapUrl
         {
@@ -149,27 +155,22 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public async Task<bool> HasUpToDateBundleInCacheAsync()
+        public bool HasUpToDateBundleInCache()
         {
             if (_isDevSupportEnabled)
             {
 #if WINDOWS_UWP
-                var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate;
-                var localFolder = ApplicationData.Current.LocalFolder;
-                var bundleItem = await localFolder.TryGetItemAsync(JSBundleFileName);
-                if (bundleItem != null)
-                {
-                    var bundleProperties = await bundleItem.GetBasicPropertiesAsync();
-                    return bundleProperties.DateModified > lastUpdateTime;
-                }
+                var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate.UtcDateTime;
+                var localFolder = ApplicationData.Current.LocalFolder.Path;
 #else
                 var lastUpdateTime = File.GetCreationTime(Assembly.GetExecutingAssembly().Location);
-                var localFolder = FileSystem.Current.LocalStorage;
-                if (await localFolder.CheckExistsAsync(JSBundleFileName) == ExistenceCheckResult.FileExists)
-                {
-                    return File.GetLastWriteTime(JSBundleFileName) > lastUpdateTime;
-                }
+                var localFolder = FileSystem.Current.LocalStorage.Path;
 #endif
+                var localFileName = Path.Combine(localFolder, JSBundleFileName);
+                if (File.Exists(localFileName))
+                {
+                    return File.GetLastWriteTimeUtc(localFileName) > lastUpdateTime;
+                }
             }
 
             return false;
@@ -266,7 +267,9 @@ namespace ReactNative.DevSupport
                         () =>
                         {
                             _devSettings.IsElementInspectorEnabled = !_devSettings.IsElementInspectorEnabled;
-                            _reactInstanceCommandsHandler.ToggleElementInspector();
+                            _currentReactContext?
+                                .GetJavaScriptModule<RCTDeviceEventEmitter>()
+                                .emit("toggleElementInspector", null);
                         }),
                 };
 
@@ -335,58 +338,35 @@ namespace ReactNative.DevSupport
 
         public void OnReactContextDestroyed(ReactContext context)
         {
-            if (context == _currentContext)
+            if (context == _currentReactContext)
             {
                 ResetCurrentContext(null);
             }
         }
 
-        public Task<bool> IsPackagerRunningAsync()
+        public Task<bool> IsPackagerRunningAsync(CancellationToken token)
         {
-            return _devServerHelper.IsPackagerRunningAsync();
+            return _devServerHelper.IsPackagerRunningAsync(token);
         }
 
-        public async void HandleReloadJavaScript()
+        public Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             HideRedboxDialog();
             HideDevOptionsDialog();
 
-            var message = !IsRemoteDebuggingEnabled
-                ? "Fetching JavaScript bundle."
-                : "Connecting to remote debugger.";
-
-            var progressDialog = new ProgressDialog("Please wait...", message);
-#if WINDOWS_UWP
-            var dialogOperation = progressDialog.ShowAsync();
-            Action cancel = dialogOperation.Cancel;
-#else
-            if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
-            {
-                progressDialog.Owner = Application.Current.MainWindow;
-            }
-            else
-            {
-                progressDialog.Topmost = true;
-                progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            }
-            
-            Action cancel = progressDialog.Close;
-            progressDialog.Show();
-#endif
             if (IsRemoteDebuggingEnabled)
             {
-                await ReloadJavaScriptInProxyMode(cancel, progressDialog.Token).ConfigureAwait(false);
+                return ReloadJavaScriptInProxyModeAsync(token);
             }
-            else if (_jsBundleFile == null)
+            else if (_shouldLoadFromPackagerServer)
             {
-                await ReloadJavaScriptFromServerAsync(cancel, progressDialog.Token).ConfigureAwait(false);
+                return ReloadJavaScriptFromServerAsync(token);
             }
             else
             {
-                await ReloadJavaScriptFromFileAsync(progressDialog.Token);
-                cancel();
+                return _reactInstanceCommandsHandler.CreateReactContextFromBundleAsync(token);
             }
         }
 
@@ -429,14 +409,56 @@ namespace ReactNative.DevSupport
             _devServerHelper.Dispose();
         }
 
+        private async void HandleReloadJavaScript()
+        {
+            await CreateReactContextFromPackagerAsync(CancellationToken.None);
+        }
+
+        private ProgressDialog CreateProgressDialog(string message)
+        {
+            if (IsProgressDialogEnabled)
+            {
+                var progressDialog = new ProgressDialog("Please wait...", message);
+
+#if !WINDOWS_UWP
+                if (Application.Current != null && Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
+                {
+                    progressDialog.Owner = Application.Current.MainWindow;
+                }
+                else
+                {
+                    progressDialog.Topmost = true;
+                    progressDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                }
+#endif
+
+                return progressDialog;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private Action ShowProgressDialog(ProgressDialog progressDialog)
+        {
+#if WINDOWS_UWP
+            var operation = progressDialog.ShowAsync();
+            return operation.Cancel;
+#else
+            progressDialog.Show();
+            return progressDialog.Close;
+#endif
+        }
+
         private void ResetCurrentContext(ReactContext context)
         {
-            if (_currentContext == context)
+            if (_currentReactContext == context)
             {
                 return;
             }
 
-            _currentContext = context;
+            _currentReactContext = context;
 
             if (_devSettings.IsHotModuleReplacementEnabled && context != null)
             {
@@ -493,125 +515,146 @@ namespace ReactNative.DevSupport
             });
         }
 
-        private async Task ReloadJavaScriptInProxyMode(Action dismissProgress, CancellationToken token)
+        private async Task DownloadBundleFromPackagerAsync(CancellationToken token)
         {
-            try
-            {
-                await _devServerHelper.LaunchDevToolsAsync(token).ConfigureAwait(true);
-                var factory = new Func<IJavaScriptExecutor>(() =>
-                {
-                    var executor = new WebSocketJavaScriptExecutor();
-                    executor.ConnectAsync(_devServerHelper.WebsocketProxyUrl, token).Wait();
-                    return executor;
-                });
-
-                _reactInstanceCommandsHandler.OnReloadWithJavaScriptDebugger(factory);
-                dismissProgress();
-            }
-            catch (DebugServerException ex)
-            {
-                dismissProgress();
-                ShowNewNativeError(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                dismissProgress();
-                ShowNewNativeError(
-                    "Unable to download JS bundle. Did you forget to " +
-                    "start the development server or connect your device?",
-                    ex);
-            }
-        }
-
-        private async Task ReloadJavaScriptFromServerAsync(Action dismissProgress, CancellationToken token)
-        {
-            var moved = false;
+            var deleteTemporaryFile = false;
 #if WINDOWS_UWP
-            var temporaryFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(JSBundleFileName, CreationCollisionOption.GenerateUniqueName);
-            try
-            {
-                using (var stream = await temporaryFile.OpenStreamForWriteAsync())
-                {
-                    await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
-                }
-
-                await temporaryFile.MoveAsync(ApplicationData.Current.LocalFolder, JSBundleFileName, NameCollisionOption.ReplaceExisting);
-                moved = true;
-
-                dismissProgress();
-                _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
-            }
-            catch (DebugServerException ex)
-            {
-                dismissProgress();
-                ShowNewNativeError(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                dismissProgress();
-                ShowNewNativeError(
-                    "Unable to download JS bundle. Did you forget to " +
-                    "start the development server or connect your device?",
-                    ex);
-            }
-            finally
-            {
-                if (!moved)
-                {
-                    await temporaryFile.DeleteAsync();
-                }
-            }
+            var temporaryFolder = ApplicationData.Current.TemporaryFolder.Path;
+            var localFolder = ApplicationData.Current.LocalFolder.Path;
 #else
-            var temporaryFilePath = Path.GetTempPath() + JSBundleFileName;
+            var temporaryFolder = Path.GetTempPath();
+            var localFolder = FileSystem.Current.LocalStorage.Path;
+#endif
+            var temporaryFilePath = Path.Combine(temporaryFolder, JSBundleFileName);
+
             try
             {
-                using (var stream = new FileStream(temporaryFilePath, FileMode.Create))
+                using (var stream = File.OpenWrite(temporaryFilePath))
                 {
-                    await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token);
+                    deleteTemporaryFile = true;
+                    await _devServerHelper.DownloadBundleFromUrlAsync(_jsAppBundleName, stream, token).ConfigureAwait(false);
                 }
 
-                var temporaryFile = await FileSystem.Current.GetFileFromPathAsync(temporaryFilePath, token);
-                var localStorage = FileSystem.Current.LocalStorage;
-                string newPath = PortablePath.Combine(localStorage.Path, JSBundleFileName);
+                var localFilePath = Path.Combine(localFolder, JSBundleFileName);
+                if (File.Exists(localFilePath))
+                {
+                    File.Delete(localFilePath);
+                }
 
-                await temporaryFile.MoveAsync(newPath, NameCollisionOption.ReplaceExisting, token);
-                moved = true;
-
-                dismissProgress();
-                _reactInstanceCommandsHandler.OnJavaScriptBundleLoadedFromServer();
-            }
-            catch (DebugServerException ex)
-            {
-                dismissProgress();
-                ShowNewNativeError(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                dismissProgress();
-                ShowNewNativeError(
-                    "Unable to download JS bundle. Did you forget to " +
-                    "start the development server or connect your device?",
-                    ex);
+                File.Move(temporaryFilePath, localFilePath);
+                deleteTemporaryFile = false;
             }
             finally
             {
-                if (!moved)
+                if (deleteTemporaryFile)
                 {
-                    var temporaryFile = await FileSystem.Current.GetFileFromPathAsync(temporaryFilePath, token).ConfigureAwait(false);
-
-                    if (temporaryFile != null)
-                    {
-                        await temporaryFile.DeleteAsync(token).ConfigureAwait(false);
-                    }   
+                    File.Delete(temporaryFilePath);
                 }
             }
-#endif
         }
 
-        private Task ReloadJavaScriptFromFileAsync(CancellationToken token)
+        private async Task<ReactContext> ReloadJavaScriptInProxyModeAsync(CancellationToken token)
         {
-            _reactInstanceCommandsHandler.OnBundleFileReloadRequest();
-            return Task.CompletedTask;
+            var webSocketExecutor = default(WebSocketJavaScriptExecutor);
+            try
+            {
+                var progressDialog = CreateProgressDialog("Connecting to remote debugger.");
+                var dismissed = await RunWithProgressAsync(
+                    async progressToken =>
+                    {
+                        await _devServerHelper.LaunchDevToolsAsync(progressToken).ConfigureAwait(false);
+                        webSocketExecutor = new WebSocketJavaScriptExecutor();
+                        await webSocketExecutor.ConnectAsync(_devServerHelper.WebsocketProxyUrl, progressToken).ConfigureAwait(false);
+                    },
+                    progressDialog,
+                    token);
+            }
+            catch (OperationCanceledException)
+            when (token.IsCancellationRequested)
+            {
+                token.ThrowIfCancellationRequested();
+            }
+            catch (DebugServerException ex)
+            {
+                ShowNewNativeError(ex.Message, ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                ShowNewNativeError(
+                    "Unable to connect to remote debugger. Did you forget " +
+                    "to start the development server or connect your device?",
+                    ex);
+                return null;
+            }
+
+            return await _reactInstanceCommandsHandler.CreateReactContextWithRemoteDebuggerAsync(() => webSocketExecutor, token);
+        }
+
+        private async Task<ReactContext> ReloadJavaScriptFromServerAsync(CancellationToken token)
+        {
+            try
+            {
+                var progressDialog = CreateProgressDialog("Fetching JavaScript bundle.");
+                var dismissed = await RunWithProgressAsync(
+                    progressToken => DownloadBundleFromPackagerAsync(progressToken),
+                    progressDialog,
+                    token);
+                if (dismissed)
+                {
+                    return null;
+                }
+            }
+            catch (OperationCanceledException)
+            when (token.IsCancellationRequested)
+            {
+                token.ThrowIfCancellationRequested();
+            }
+            catch (DebugServerException ex)
+            {
+                ShowNewNativeError(ex.Message, ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                ShowNewNativeError(
+                    "Unable to download JS bundle. Did you forget to start " +
+                    "the development server or connect your device?",
+                    ex);
+                return null;
+            }
+
+            return await _reactInstanceCommandsHandler.CreateReactContextFromCachedPackagerBundleAsync(token);
+        }
+
+        private async Task<bool> RunWithProgressAsync(Func<CancellationToken, Task> asyncAction, ProgressDialog progressDialog, CancellationToken token)
+        {
+            var hideProgress = ShowProgressDialog(progressDialog);
+            using (var cancellationDisposable = new CancellationDisposable())
+            using (token.Register(cancellationDisposable.Dispose))
+            using (progressDialog.Token.Register(cancellationDisposable.Dispose))
+            {
+                try
+                {
+                    await asyncAction(cancellationDisposable.Token);
+                }
+                catch (OperationCanceledException)
+                when (progressDialog.Token.IsCancellationRequested)
+                {
+                    return true;
+                }
+                catch (OperationCanceledException)
+                {
+                    token.ThrowIfCancellationRequested();
+                    throw;
+                }
+                finally
+                {
+                    hideProgress();
+                }
+            }
+
+            return false;
         }
 
 #if WINDOWS_UWP

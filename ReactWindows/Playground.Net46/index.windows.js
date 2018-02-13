@@ -15,7 +15,7 @@ class Playground extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome} testID='WelcomeText'>
+        <Text style={styles.welcome} testID="WelcomeText">
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using ReactNative.Touch;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
@@ -70,7 +69,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler jsResponderHandler)
+        public virtual DependencyObject CreateView(ThemedReactContext reactContext)
         {
             throw new NotImplementedException();
         }

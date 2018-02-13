@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using static System.FormattableString;
 
 namespace ReactNative.Animated
@@ -30,16 +29,18 @@ namespace ReactNative.Animated
     class NativeAnimatedNodesManager : IEventDispatcherListener
     {
         private readonly IDictionary<int, AnimatedNode> _animatedNodes = new Dictionary<int, AnimatedNode>();
-        private readonly IList<AnimationDriver> _activeAnimations = new List<AnimationDriver>();
-        private readonly IList<AnimatedNode> _updatedNodes = new List<AnimatedNode>();
+        private readonly IDictionary<int, AnimationDriver> _activeAnimations = new Dictionary<int, AnimationDriver>();
+        private readonly IDictionary<int, AnimatedNode> _updatedNodes = new Dictionary<int, AnimatedNode>();
         // Mapping of a view tag and an event name to a list of event animation drivers. 99% of the time
         // there will be only one driver per mapping so all code should be optimized around that.
         private readonly IDictionary<Tuple<int, string>, IList<EventAnimationDriver>> _eventDrivers =
             new Dictionary<Tuple<int, string>, IList<EventAnimationDriver>>();
-        private readonly IReadOnlyDictionary<string, object> _customEventTypes;
+        private readonly Func<string, string> _customEventNamesResolver;
         private readonly UIImplementation _uiImplementation;
         // Used to avoid allocating a new array on every frame in `RunUpdates` and `OnEventDispatch`
-        private readonly IList<AnimatedNode> _runUpdateNodeList = new List<AnimatedNode>();
+        private readonly List<AnimatedNode> _runUpdateNodeList = new List<AnimatedNode>();
+        // Used to avoid allocating a new array on every frame in `RunUpdates` and `StopAnimationsForNode`
+        private int[] _activeAnimationIds;
 
         private int _animatedGraphBFSColor = 0;
 
@@ -47,7 +48,7 @@ namespace ReactNative.Animated
         {
             _uiImplementation = uiManager.UIImplementation;
             uiManager.EventDispatcher.AddListener(this);
-            _customEventTypes = GetEventTypes(uiManager);
+            _customEventNamesResolver = uiManager.ResolveCustomEventName;
         }
 
         public bool HasActiveAnimations
@@ -77,7 +78,7 @@ namespace ReactNative.Animated
                     node = new ValueAnimatedNode(tag, config);
                     break;
                 case "props":
-                    node = new PropsAnimatedNode(tag, config, this);
+                    node = new PropsAnimatedNode(tag, config, this, _uiImplementation);
                     break;
                 case "interpolation":
                     node = new InterpolationAnimatedNode(tag, config);
@@ -91,6 +92,9 @@ namespace ReactNative.Animated
                 case "multiplication":
                     node = new MultiplicationAnimatedNode(tag, config, this);
                     break;
+                case "modulus":
+                    node = new ModulusAnimatedNode(tag, config, this);
+                    break;
                 case "diffclamp":
                     node = new DiffClampAnimatedNode(tag, config, this);
                     break;
@@ -102,11 +106,13 @@ namespace ReactNative.Animated
             }
 
             _animatedNodes.Add(tag, node);
+            _updatedNodes[tag] = node;
         }
 
         public void DropAnimatedNode(int tag)
         {
             _animatedNodes.Remove(tag);
+            _updatedNodes.Remove(tag);
         }
 
         public void StartListeningToAnimatedNodeValue(int tag, Action<double> callback)
@@ -153,8 +159,49 @@ namespace ReactNative.Animated
                     Invariant($"Animated node with tag '{tag}' is not a value node."));
             }
 
-            valueNode.Value = value;
-            _updatedNodes.Add(node);
+            valueNode.RawValue = value;
+            StopAnimationsForNode(node);
+            _updatedNodes[tag] = node;
+        }
+
+        public void SetAnimatedNodeOffset(int tag, double offset)
+        {
+            var node = GetNode(tag);
+            var valueNode = node as ValueAnimatedNode;
+            if (valueNode == null)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Animated node with tag '{tag}' is not a value node"));
+            }
+
+            valueNode.Offset = offset;
+            _updatedNodes[tag] = node;
+        }
+
+        public void FlattenAnimatedNodeOffset(int tag)
+        {
+            var node = GetNode(tag);
+            var valueNode = node as ValueAnimatedNode;
+            if (valueNode == null)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Animated node with tag '{tag}' is not a value node"));
+            }
+
+            valueNode.FlattenOffset();
+        }
+
+        public void ExtractAnimatedNodeOffset(int tag)
+        {
+            var node = GetNode(tag);
+            var valueNode = node as ValueAnimatedNode;
+            if (valueNode == null)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Animated node with tag '{tag}' is not a value node"));
+            }
+
+            valueNode.ExtractOffset();
         }
 
         public void StartAnimatingNode(int animationId, int animatedNodeTag, JObject animationConfig, ICallback endCallback)
@@ -185,30 +232,20 @@ namespace ReactNative.Animated
                     throw new InvalidOperationException(Invariant($"Unsupported animation type: '{type}'"));
             }
 
-            _activeAnimations.Add(animation);
+            _activeAnimations[animationId] = animation;
         }
 
         public void StopAnimation(int animationId)
         {
-            // In most cases, there should never be more than a few active
-            // animations running at the same time. Therefore it does not make
-            // much sense to create an animationId -> animation map that would
-            // require additional memory just to support the use case of
-            // stopping the animation.
-
-            for (var i = 0; i < _activeAnimations.Count; ++i)
+            AnimationDriver animation;
+            if (_activeAnimations.TryGetValue(animationId, out animation))
             {
-                var animation = _activeAnimations[i];
-                if (animation.Id == animationId)
+                animation.EndCallback.Invoke(new JObject
                 {
-                    animation.EndCallback.Invoke(new JObject
-                    {
-                        { "finished", false },
-                    });
+                    { "finished", false },
+                });
 
-                    _activeAnimations.RemoveAt(i);
-                    return;
-                }
+                _activeAnimations.Remove(animationId);
             }
 
             // Do not throw an error in the case the animation was not found.
@@ -223,6 +260,7 @@ namespace ReactNative.Animated
             var parentNode = GetNode(parentNodeTag);
             var childNode = GetNode(childNodeTag);
             parentNode.AddChild(childNode);
+            _updatedNodes[childNodeTag] = childNode;
         }
 
         public void DisconnectAnimatedNodes(int parentNodeTag, int childNodeTag)
@@ -230,6 +268,7 @@ namespace ReactNative.Animated
             var parentNode = GetNode(parentNodeTag);
             var childNode = GetNode(childNodeTag);
             parentNode.RemoveChild(childNode);
+            _updatedNodes[childNodeTag] = childNode;
         }
 
         public void ConnectAnimatedNodeToView(int animatedNodeTag, int viewTag)
@@ -242,13 +281,8 @@ namespace ReactNative.Animated
                 throw new InvalidOperationException("Animated node connected to view should be props node.");
             }
 
-            if (propsAnimatedNode.ConnectedViewTag != -1)
-            {
-                throw new InvalidOperationException(
-                    Invariant($"Animated node '{animatedNodeTag}' is already attached to a view."));
-            }
-
-            propsAnimatedNode.ConnectedViewTag = viewTag;
+            propsAnimatedNode.ConnectToView(viewTag);
+            _updatedNodes[animatedNodeTag] = node;
         }
 
         public void DisconnectAnimatedNodeFromView(int animatedNodeTag, int viewTag)
@@ -261,13 +295,29 @@ namespace ReactNative.Animated
                 throw new InvalidOperationException("Animated node connected to view should be props node.");
             }
 
-            if (propsAnimatedNode.ConnectedViewTag != viewTag)
+            propsAnimatedNode.DisconnectFromView(viewTag);
+        }
+
+        public void RestoreDefaultValues(int animatedNodeTag, int viewTag)
+        {
+            var node = default(AnimatedNode);
+            if (!_animatedNodes.TryGetValue(animatedNodeTag, out node))
             {
-                throw new InvalidOperationException(
-                    "Attempting to disconnect view that has not been connected with the given animated node.");
+                // Restoring default values needs to happen before UIManager
+                // operations so it is possible the node hasn't been created yet if
+                // it is being connected and disconnected in the same batch. In
+                // that case we don't need to restore default values since it will
+                // never actually update the view.
+                return;
             }
 
-            propsAnimatedNode.ConnectedViewTag = -1;
+            var propsAnimatedNode = node as PropsAnimatedNode;
+            if (propsAnimatedNode == null)
+            {
+                throw new InvalidOperationException("Animated node connected to view should be props node.");
+            }
+
+            propsAnimatedNode.RestoreDefaultValues();
         }
 
         public void AddAnimatedEventToView(int viewTag, string eventName, JObject eventMapping)
@@ -327,39 +377,41 @@ namespace ReactNative.Animated
             }
         }
 
-        public bool OnEventDispatch(Event @event)
+        public void OnEventDispatch(Event @event)
         {
-            // Only support events dispatched from the dispatcher thread.
-            if (!DispatcherHelpers.IsOnDispatcher())
+            if (DispatcherHelpers.IsOnDispatcher())
             {
-                return false;
+                HandleEvent(@event);
             }
+            else
+            {
+                DispatcherHelpers.RunOnDispatcher(() =>
+                {
+                    HandleEvent(@event);
+                });
+            }
+        }
 
+
+        private void HandleEvent(Event @event)
+        {
             if (_eventDrivers.Count > 0)
             {
-                var eventName = @event.EventName;
-                var customEventName = default(string);
-                if (TryGetRegistrationName(eventName, out customEventName))
-                {
-                    eventName = customEventName;
-                }
-
+                var eventName = _customEventNamesResolver(@event.EventName);
                 var driversForKey = default(IList<EventAnimationDriver>);
                 if (_eventDrivers.TryGetValue(Tuple.Create(@event.ViewTag, eventName), out driversForKey))
                 {
                     foreach (var driver in driversForKey)
                     {
+                        StopAnimationsForNode(driver.ValueNode);
                         @event.Dispatch(driver);
                         _runUpdateNodeList.Add(driver.ValueNode);
                     }
 
                     UpdateNodes(_runUpdateNodeList);
                     _runUpdateNodeList.Clear();
-                    return true;
                 }
             }
-
-            return false;
         }
 
         /// <summary>
@@ -385,18 +437,17 @@ namespace ReactNative.Animated
             DispatcherHelpers.AssertOnDispatcher();
             var hasFinishedAnimations = false;
 
-            for (var i = 0; i < _updatedNodes.Count; ++i)
-            {
-                var node = _updatedNodes[i];
-                _runUpdateNodeList.Add(node);
-            }
+            _runUpdateNodeList.AddRange(_updatedNodes.Values);
 
             // Clean _updatedNodes queue
             _updatedNodes.Clear();
 
-            for (var i = 0; i < _activeAnimations.Count; ++i)
+            var length = _activeAnimations.Count;
+            UpdateActiveAnimationIds();
+            for (var i = 0; i < length; ++i)
             {
-                var animation = _activeAnimations[i];
+                var animationId = _activeAnimationIds[i];
+                var animation = _activeAnimations[animationId];
                 animation.RunAnimationStep(renderingTime);
                 var valueNode = animation.AnimatedValue;
                 _runUpdateNodeList.Add(valueNode);
@@ -409,30 +460,43 @@ namespace ReactNative.Animated
             UpdateNodes(_runUpdateNodeList);
             _runUpdateNodeList.Clear();
 
-            // Cleanup finished animations. Iterate over the array of animations and override ones that has
-            // finished, then resize `_activeAnimations`.
+            // Cleanup finished animations.
             if (hasFinishedAnimations)
             {
-                int dest = 0;
-                for (var i = 0; i < _activeAnimations.Count; ++i)
+                for (var i = 0; i < length; ++i)
                 {
-                    var animation = _activeAnimations[i];
-                    if (!animation.HasFinished)
-                    {
-                        _activeAnimations[dest++] = animation;
-                    }
-                    else
+                    var animationId = _activeAnimationIds[i];
+                    var animation = _activeAnimations[animationId];
+                    if (animation.HasFinished)
                     {
                         animation.EndCallback.Invoke(new JObject
                         {
                             { "finished", true },
                         });
+
+                        _activeAnimations.Remove(animationId);
                     }
                 }
+            }
+        }
 
-                for (var i = _activeAnimations.Count - 1; i >= dest; --i)
+        private void StopAnimationsForNode(AnimatedNode animatedNode)
+        {
+            var length = _activeAnimations.Count;
+            UpdateActiveAnimationIds();
+            for (var i = 0; i < length; ++i)
+            {
+                var animationId = _activeAnimationIds[i];
+                var animation = _activeAnimations[animationId];
+                if (animatedNode == animation.AnimatedValue)
                 {
-                    _activeAnimations.RemoveAt(i);
+                    // Invoke animation end callback with {finished: false}
+                    animation.EndCallback.Invoke(new JObject
+                    {
+                        { "finished", false }, 
+                    });
+
+                    _activeAnimations.Remove(animationId);
                 }
             }
         }
@@ -522,7 +586,7 @@ namespace ReactNative.Animated
                 var valueNode = default(ValueAnimatedNode);
                 if (propsNode != null)
                 {
-                    propsNode.UpdateView(_uiImplementation);
+                    propsNode.UpdateView();
                 }
                 else if ((valueNode = nextNode as ValueAnimatedNode) != null)
                 {
@@ -573,31 +637,14 @@ namespace ReactNative.Animated
             return node;
         }
 
-        private bool TryGetRegistrationName(string eventName, out string customEventName)
+        private void UpdateActiveAnimationIds()
         {
-            var customEvent = default(object);
-            if (!_customEventTypes.TryGetValue(eventName, out customEvent))
+            if (_activeAnimationIds == null || _activeAnimationIds.Length < _activeAnimations.Count)
             {
-                customEventName = default(string);
-                return false;
+                _activeAnimationIds = new int[_activeAnimations.Count];
             }
 
-            var customEventMap = customEvent as IReadOnlyDictionary<string, object>;
-            if (customEventMap == null)
-            {
-                customEventName = default(string);
-                return false;
-            }
-
-            var customEventRegistrationName = default(object);
-            if (!customEventMap.TryGetValue("registrationName", out customEventRegistrationName))
-            {
-                customEventName = default(string);
-                return false;
-            }
-
-            customEventName = customEventRegistrationName as string;
-            return customEventName != null;
+            _activeAnimations.Keys.CopyTo(_activeAnimationIds, 0);
         }
 
         private static IReadOnlyDictionary<string, object> GetEventTypes(UIManagerModule uiManager)

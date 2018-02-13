@@ -134,7 +134,7 @@ namespace ReactNative.Views.Switch
             private readonly bool _isChecked;
 
             public ReactSwitchEvent(int viewTag, bool isChecked)
-                : base(viewTag, TimeSpan.FromTicks(Environment.TickCount))
+                : base(viewTag)
             {
                 _isChecked = isChecked;
             }

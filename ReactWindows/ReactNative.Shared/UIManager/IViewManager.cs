@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using ReactNative.Touch;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
@@ -56,9 +55,8 @@ namespace ReactNative.UIManager
         IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
 
         /// <summary>
-        /// Creates a shadow node for the view manager.
+        /// The native props for the view manager.
         /// </summary>
-        /// <returns>The shadow node instance.</returns>
         IReadOnlyDictionary<string, string> NativeProperties { get; }
 
         /// <summary>
@@ -72,9 +70,8 @@ namespace ReactNative.UIManager
         /// Creates a view and installs event emitters on it.
         /// </summary>
         /// <param name="reactContext">The context.</param>
-        /// <param name="responderHandler">The responder handler.</param>
         /// <returns>The view.</returns>
-        DependencyObject CreateView(ThemedReactContext reactContext, JavaScriptResponderHandler responderHandler);
+        DependencyObject CreateView(ThemedReactContext reactContext);
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 

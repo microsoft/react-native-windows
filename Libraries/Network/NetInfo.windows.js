@@ -82,7 +82,7 @@ if (Platform.OS === 'ios') {
       connectionType: ConnectivityStateWindows,
     ): bool {
     return connectionType !== 'None' && connectionType !== 'LocalAccess';
-  }
+  };
 }
 
 const _isConnectedSubscriptions = new Map();
@@ -91,7 +91,7 @@ const _isConnectedSubscriptions = new Map();
  * NetInfo exposes info about online/offline status
  *
  * ```
- * NetInfo.fetch().done((reach) => {
+ * NetInfo.fetch().then((reach) => {
  *   console.log('Initial: ' + reach);
  * });
  * function handleFirstConnectivityChange(reach) {
@@ -143,9 +143,9 @@ const _isConnectedSubscriptions = new Map();
  * The rest ConnectivityStates are hidden by the Android API, but can be used if necessary.
  *
  * ### Windows
- * 
+ *
  * Asynchronously determine if the device is connected and details about that connection.
- * 
+ *
  * Windows Connectivity Types.
  *
  * - `None` - No connectivity.
@@ -263,10 +263,12 @@ const NetInfo = {
       eventName: ChangeEventName,
       handler: Function
     ): void {
-      /* $FlowFixMe */
       const listener = _isConnectedSubscriptions.get(handler);
       NetInfo.removeEventListener(
         eventName,
+        /* $FlowFixMe(>=0.36.0 site=react_native_fb,react_native_oss) Flow error
+         * detected during the deploy of Flow v0.36.0. To see the error, remove
+         * this comment and run Flow */
         listener
       );
       _isConnectedSubscriptions.delete(handler);

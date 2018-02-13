@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Reflection;
 
@@ -22,7 +22,7 @@ namespace ReactNative.Bridge
         /// <param name="nativeModule">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        Action<INativeModule, IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
+        Action<IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
 
         /// <summary>
         /// Check that the method is valid for <see cref="ReactMethodAttribute"/>.

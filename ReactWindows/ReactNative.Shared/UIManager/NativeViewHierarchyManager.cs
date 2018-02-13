@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Touch;
 using ReactNative.Tracing;
 using ReactNative.UIManager.LayoutAnimation;
 using System;
@@ -56,7 +55,6 @@ namespace ReactNative.UIManager
         private readonly IDictionary<int, DependencyObject> _tagsToViews;
         private readonly IDictionary<int, bool> _rootTags;
         private readonly ViewManagerRegistry _viewManagers;
-        private readonly JavaScriptResponderHandler _jsResponderHandler;
         private readonly RootViewManager _rootViewManager;
         private readonly LayoutAnimationController _layoutAnimator;
 
@@ -71,7 +69,6 @@ namespace ReactNative.UIManager
             _tagsToViews = new Dictionary<int, DependencyObject>();
             _tagsToViewManagers = new Dictionary<int, IViewManager>();
             _rootTags = new Dictionary<int, bool>();
-            _jsResponderHandler = new JavaScriptResponderHandler();
             _rootViewManager = new RootViewManager();
         }
 
@@ -159,7 +156,7 @@ namespace ReactNative.UIManager
                 .Start())
             {
                 var viewManager = _viewManagers.Get(className);
-                var view = viewManager.CreateView(themedContext, _jsResponderHandler);
+                var view = viewManager.CreateView(themedContext);
                 _tagsToViews.Add(tag, view);
                 _tagsToViewManagers.Add(tag, viewManager);
 
@@ -286,7 +283,8 @@ namespace ReactNative.UIManager
                     if (elementToDestroy != null &&
                         _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
                     {
-                        _layoutAnimator.DeleteView(elementToDestroy, () =>
+                        var viewToDestroyManager = ResolveViewManager(tagToDelete);
+                        _layoutAnimator.DeleteView(viewToDestroyManager, elementToDestroy, () =>
                         {
                             if (viewParentManager.TryRemoveView(viewToManage, viewToDestroy))
                             {
@@ -485,40 +483,6 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets the JavaScript responder handler for a view.
-        /// </summary>
-        /// <param name="reactTag">The view tag.</param>
-        /// <param name="initialReactTag">The initial tag.</param>
-        /// <param name="blockNativeResponder">
-        /// Flag to block the native responder.
-        /// </param>
-        public void SetJavaScriptResponder(int reactTag, int initialReactTag, bool blockNativeResponder)
-        {
-            if (!blockNativeResponder)
-            {
-                _jsResponderHandler.SetJavaScriptResponder(initialReactTag, null);
-                return;
-            }
-
-            var view = default(DependencyObject);
-            if (!_tagsToViews.TryGetValue(reactTag, out view))
-            {
-                throw new InvalidOperationException(
-                    Invariant($"Could not find view with tag '{reactTag}'."));
-            }
-
-            // TODO: (#306) Finish JS responder implementation. 
-        }
-
-        /// <summary>
-        /// Clears the JavaScript responder.
-        /// </summary>
-        public void ClearJavaScriptResponder()
-        {
-            _jsResponderHandler.ClearJavaScriptResponder();
-        }
-
-        /// <summary>
         /// Dispatches a command to a view.
         /// </summary>
         /// <param name="reactTag">The view tag.</param>
@@ -576,6 +540,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Checks whether a view exists.
+        /// </summary>
+        /// <param name="tag">The tag of the view.</param>
+        /// <returns>
+        /// <code>true</code> if the view still exists, otherwise <code>false</code>.
+        /// </returns>
+        public bool ViewExists(int tag)
+        {
+            return _tagsToViews.ContainsKey(tag);
+        }
+
+        /// <summary>
         /// Resolves a view.
         /// </summary>
         /// <param name="tag">The tag of the view.</param>
@@ -620,6 +596,7 @@ namespace ReactNative.UIManager
         private void DropView(DependencyObject view)
         {
             DispatcherHelpers.AssertOnDispatcher();
+
             var tag = view.GetTag();
             if (!_rootTags.ContainsKey(tag))
             {
@@ -650,6 +627,7 @@ namespace ReactNative.UIManager
 
             _tagsToViews.Remove(tag);
             _tagsToViewManagers.Remove(tag);
+            view.ClearData();
         }
 
         private void UpdateLayout(DependencyObject viewToUpdate, IViewManager viewManager, Dimensions dimensions)
@@ -657,7 +635,7 @@ namespace ReactNative.UIManager
             var frameworkElement = viewToUpdate as FrameworkElement;
             if (frameworkElement != null && _layoutAnimator.ShouldAnimateLayout(frameworkElement))
             {
-                _layoutAnimator.ApplyLayoutUpdate(frameworkElement, dimensions);
+                _layoutAnimator.ApplyLayoutUpdate(viewManager, frameworkElement, dimensions);
             }
             else
             {;
