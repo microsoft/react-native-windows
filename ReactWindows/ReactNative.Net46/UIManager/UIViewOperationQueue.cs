@@ -1,9 +1,7 @@
 
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
-/// <summary>
-/// NOTE: This file will be renamed to UIViewOperationsQueue.cs after code review.
-/// </summary>
+
 namespace ReactNative.UIManager
 {
     /// <summary>

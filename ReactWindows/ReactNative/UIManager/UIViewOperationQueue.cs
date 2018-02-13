@@ -1,7 +1,3 @@
-/// <summary>
-/// NOTE: This file will be renamed to UIViewOperationsQueue.cs after code review.
-/// </summary>
-
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;

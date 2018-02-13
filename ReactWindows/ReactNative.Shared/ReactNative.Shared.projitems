@@ -215,7 +215,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIImplementationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIManagerModule.Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIManagerModule.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIViewOperationQueue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIViewOperationQueueInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerRegistry.cs" />
