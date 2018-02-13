@@ -37,11 +37,6 @@ namespace ReactNative.Modules.WebSocket
         [ReactMethod]
         public void connect(string url, string[] protocols, JObject options, int id)
         {
-            if (options != null && options.ContainsKey("origin"))
-            {
-                throw new NotImplementedException(/* TODO: (#253) */);
-            }
-
             var webSocket = new WebSocketSharp.WebSocket(url);
 
             webSocket.OnMessage += (sender, args) =>
@@ -214,6 +209,8 @@ namespace ReactNative.Modules.WebSocket
             {
                 webSocket.SetProxy(proxy.ProxyAddress, proxy.UserName, proxy.Password);
             }
+
+            webSocket.Origin = parsedOptions.Origin;
 
             webSocket.Connect();
         }

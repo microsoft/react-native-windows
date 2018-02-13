@@ -20,13 +20,14 @@ namespace ReactNative.Tests.Modules.WebSocket
             Assert.IsEmpty(options.UserName);
             Assert.IsEmpty(options.ProxyAddress);
             Assert.IsEmpty(options.Password);
+            Assert.IsEmpty(options.Origin);
 
             var noOptions = new WebSocketOptions(null);
             Assert.That(noOptions.UseDefaultProxy, Is.False);
             Assert.IsEmpty(noOptions.UserName);
             Assert.IsEmpty(noOptions.ProxyAddress);
             Assert.IsEmpty(noOptions.Password);
-
+            Assert.IsEmpty(noOptions.Origin);
         }
 
         [Test]
@@ -114,5 +115,36 @@ namespace ReactNative.Tests.Modules.WebSocket
             Assert.That(options.UserName, Is.EqualTo("myName"));
             Assert.That(options.Password, Is.EqualTo("p@ssw0rd"));
         }
+
+        [Test]
+        [Category("WebSocket")]
+        public void WebSocketOptions_Origin()
+        {
+            var json = @"{
+    headers: {
+        origin: 'www.example.com'
+    },
+    proxy: {}
+}";
+            var jOptions = JObject.Parse(json);
+            var options = new WebSocketOptions(jOptions);
+            Assert.That(options.UseDefaultProxy, Is.False);
+            Assert.That(options.Origin, Is.EqualTo("www.example.com"));
+
+        }
+
+        [Test]
+        [Category("WebSocket")]
+        public void WebSocketOptions_NoOrigin()
+        {
+            var json = @"{
+    headers: {
+    }
+}";
+            var jOptions = JObject.Parse(json);
+            var options = new WebSocketOptions(jOptions);
+            Assert.IsEmpty(options.Origin);
+        }
+
     }
 }

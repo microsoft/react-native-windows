@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Common;
@@ -44,11 +44,6 @@ namespace ReactNative.Modules.WebSocket
                 {
                     webSocket.Control.SupportedProtocols.Add(protocol);
                 }
-            }
-
-            if (options != null && options.ContainsKey("origin"))
-            {
-                throw new NotImplementedException(/* TODO: (#253) */);
             }
 
             webSocket.MessageReceived += (sender, args) =>
@@ -151,6 +146,11 @@ namespace ReactNative.Modules.WebSocket
                         UserName = parsedOptions.UserName,
                         Password = parsedOptions.Password
                     };
+                }
+
+                if (!string.IsNullOrEmpty(parsedOptions.Origin))
+                {
+                    webSocket.SetRequestHeader("Origin", parsedOptions.Origin);
                 }
 
                 await webSocket.ConnectAsync(new Uri(url)).AsTask().ConfigureAwait(false);
