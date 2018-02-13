@@ -1,4 +1,5 @@
 using ReactNative.Bridge;
+using ReactNative.Views.ControlView;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ReactNative.Common
 
         /// <summary>
         /// Initializes the value of AccessibilityView for all the children of <paramref name="parentUIElement"/>,
-        /// based on the <paramref name="parentUIElement"/> and its ancesstor settings. Must be called
+        /// based on the <paramref name="parentUIElement"/> and its ancestor settings. Must be called
         /// when multiple children are initially added to <paramref name="parentUIElement"/>.
         /// </summary>
         /// <param name="parentUIElement">The element whos children will be updated.</param>        
@@ -95,8 +96,17 @@ namespace ReactNative.Common
                 IsHiddenByAncestor(parentUIElementAutomationPeer))
             {
                 // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
-                var uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
+                AutomationPeer uiElementAutomationPeer;
+                if (uiElement is ReactControl reactControlUIElement)
+                {
+                    uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(reactControlUIElement.Content);
+                    AutomationProperties.SetAccessibilityView(reactControlUIElement.Content, AccessibilityView.Raw);
+                }
+                else
+                {
+                    uiElementAutomationPeer = FrameworkElementAutomationPeer.FromElement(uiElement);
                 AutomationProperties.SetAccessibilityView(uiElement, AccessibilityView.Raw);
+                }
                 SetChildrenAccessibilityView(uiElementAutomationPeer, AccessibilityView.Raw);
             }
         }

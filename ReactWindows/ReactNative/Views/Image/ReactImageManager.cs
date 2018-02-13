@@ -2,9 +2,7 @@ using ImagePipeline.Core;
 using ImagePipeline.Request;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
-using ReactNative.Common;
 using ReactNative.Modules.Image;
-using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -179,18 +177,6 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
-        /// Sets <see cref="ImportantForAccessibility"/> for the Border.
-        /// </summary>
-        /// <param name="view">The view.</param>
-        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
-        [ReactProp("importantForAccessibility")]
-        public void SetImportantForAccessibility(Border view, string importantForAccessibilityValue)
-        {
-            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
-            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
-        }
-
-        /// <summary>
         /// Sets the border thickness of the image view.
         /// </summary>
         /// <param name="view">The image view instance.</param>
@@ -239,7 +225,7 @@ namespace ReactNative.Views.Image
             // Setting AutomationProperties.Name to some string and then clearing it will guarantee that
             // AutomationPeer is always created for the border. The default implementation does not
             // create AutomationPeer for border if AutomationProperties.Name has never been set,
-            // but to implement accessibility it is required that the AutomationPeer is always created.
+            // but to implement accessibility properly it is required that the AutomationPeer is always created.
             AutomationProperties.SetName(border, " ");
             border.ClearValue(AutomationProperties.NameProperty);
 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
+using ReactNative.Common;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -68,6 +69,13 @@ namespace ReactNative.Views.Flip
         public override void AddView(FlipView parent, DependencyObject child, int index)
         {
             parent.Items.Insert(index, child);
+
+            // Initialize ImportantForAccessibility for the child.
+            if (child is UIElement uiElementChild)
+            {
+                AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
+                AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
+            }
         }
 
         public override DependencyObject GetChildAt(FlipView parent, int index)

@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using ReactNative.Common;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -285,6 +286,13 @@ namespace ReactNative.Views.Scroll
             child.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
             child.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
             parent.Content = child;
+
+            // Initialize ImportantForAccessibility for the child.
+            if (child is UIElement uiElementChild)
+            {
+                AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
+                AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
+            }
         }
 
         /// <summary>

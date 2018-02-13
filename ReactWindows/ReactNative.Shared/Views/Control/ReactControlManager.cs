@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -179,6 +180,14 @@ namespace ReactNative.Views.ControlView
 
             var uiElementChild = child.As<UIElement>();
             parent.Children.Insert(index, uiElementChild);
+
+#if WINDOWS_UWP
+            if (parent.Content is UIElement controlContentUIElement)
+            {
+                AccessibilityHelper.InitImportantForAccessibility(controlContentUIElement, uiElementChild);
+                AccessibilityHelper.UpdateAccessibilityNameFromHereUp(controlContentUIElement);
+            }
+#endif
         }
 
         /// <summary>

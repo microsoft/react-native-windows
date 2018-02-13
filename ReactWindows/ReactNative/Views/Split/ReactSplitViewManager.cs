@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
+using ReactNative.Common;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Split.Events;
@@ -123,6 +124,10 @@ namespace ReactNative.Views.Split
             {
                 parent.Pane = uiElementChild;
             }
+
+            // Initialize ImportantForAccessibility for the child.
+            AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
+            AccessibilityHelper.UpdateAccessibilityNameFromHereUp(parent);
         }
 
         public override DependencyObject GetChildAt(SplitView parent, int index)
