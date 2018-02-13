@@ -27,5 +27,10 @@
         /// If UseDefaultProxy is true - this parameter should be ignored
         /// </summary>        
         string Password { get; }
+
+        /// <summary>
+        /// Gets HTTP Header Origin
+        /// </summary>
+        string Origin { get; }
     }
 }
