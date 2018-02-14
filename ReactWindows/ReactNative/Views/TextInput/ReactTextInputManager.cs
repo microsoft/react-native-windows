@@ -619,8 +619,12 @@ namespace ReactNative.Views.TextInput
         /// <param name="dimensions">The dimensions.</param>
         public override void SetDimensions(ReactTextBox view, Dimensions dimensions)
         {
-            view.MinWidth = dimensions.Width;
-            view.MinHeight = dimensions.Height;
+            if (!Double.IsNaN(dimensions.Height) && !Double.IsInfinity(dimensions.Height)
+                && !Double.IsNaN(dimensions.Width) && !Double.IsInfinity(dimensions.Width))
+            {
+                view.MinWidth = dimensions.Width;
+                view.MinHeight = dimensions.Height;
+            }
 
             if (view.AutoGrow)
             {
@@ -632,7 +636,11 @@ namespace ReactNative.Views.TextInput
             }
             else
             {
-                base.SetDimensions(view, dimensions);
+                if (!Double.IsNaN(dimensions.Height) && !Double.IsInfinity(dimensions.Height)
+                && !Double.IsNaN(dimensions.Width) && !Double.IsInfinity(dimensions.Width))
+                {
+                    base.SetDimensions(view, dimensions);
+                }
             }
         }
 
