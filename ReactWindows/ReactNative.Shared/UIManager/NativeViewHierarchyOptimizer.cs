@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 #if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
 #endif
@@ -477,6 +477,10 @@ namespace ReactNative.UIManager
             // update the layout of this node's children now that it's no 
             // longer layout-only, but we may still receive more layout updates
             // at the end of this batch that we don't want to ignore.
+            // Also <node>.DispatchUpdates optimizes the layout applying out
+            // if screen position/sizes didn't change, yet in this particular case
+            // we want to firce the applying oof those values since the native view
+            // is a freshly created one with no history.
             ApplyLayoutBase(node);
             for (var i = 0; i < node.ChildCount; ++i)
             {
@@ -484,6 +488,8 @@ namespace ReactNative.UIManager
             }
 
             _tagsWithLayoutVisited.Clear();
+
+            node.MarkForceLayout();
         }
 
         private bool IsLayoutOnlyAndCollapsible(ReactStylesDiffMap props)
