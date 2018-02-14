@@ -195,6 +195,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Yoga\csharp\Windows\Facebook.Yoga.Universal\Facebook.Yoga.Universal.csproj">
+      <Project>{d6477ad6-9edd-4eba-8c60-cd31f77c52c6}</Project>
+      <Name>Facebook.Yoga.Universal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChakraBridge\ChakraBridge.vcxproj">
       <Project>{4b72c796-16d5-4e3a-81c0-3e36f531e578}</Project>
       <Name>ChakraBridge</Name>
@@ -211,9 +215,6 @@
   </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <ItemGroup>
-    <PackageReference Include="Facebook.Yoga">
-      <Version>1.5.0-pre1</Version>
-    </PackageReference>
     <PackageReference Include="fresco.imagepipeline">
       <Version>0.1.2</Version>
     </PackageReference>

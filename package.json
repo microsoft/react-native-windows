@@ -24,6 +24,11 @@
     "ReactWindows/ReactNative.Net46",
     "ReactWindows/ReactNativeWebViewBridge",
     "ReactWindows/ChakraBridge",
+    "Yoga/csharp/Facebook.Yoga",
+    "Yoga/csharp/Windows/Facebook.Yoga",
+    "Yoga/csharp/Windows/Facebook.Yoga.Universal",
+    "Yoga/csharp/Yoga",
+    "Yoga/yoga",
     "local-cli",
     "README.md"
   ],
