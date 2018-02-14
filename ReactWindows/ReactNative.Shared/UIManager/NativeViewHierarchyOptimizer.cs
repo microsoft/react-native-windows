@@ -479,7 +479,7 @@ namespace ReactNative.UIManager
             // at the end of this batch that we don't want to ignore.
             // Also <node>.DispatchUpdates optimizes the layout applying out
             // if screen position/sizes didn't change, yet in this particular case
-            // we want to firce the applying oof those values since the native view
+            // we want to force the applying of those values since the native view
             // is a freshly created one with no history.
             ApplyLayoutBase(node);
             for (var i = 0; i < node.ChildCount; ++i)
