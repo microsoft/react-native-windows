@@ -1,4 +1,5 @@
-﻿#if WINDOWS_UWP
+#if WINDOWS_UWP
+using ReactNative.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
@@ -47,6 +48,10 @@ namespace ReactNative.UIManager
         {
             var uiElementChild = child.As<UIElement>();
             parent.Children.Insert(index, uiElementChild);
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildAdded(parent, child);
+#endif
         }
 
         /// <summary>
@@ -57,6 +62,10 @@ namespace ReactNative.UIManager
         public override void RemoveChildAt(TPanel parent, int index)
         {
             parent.Children.RemoveAt(index);
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(parent);
+#endif
         }
 
         /// <summary>
@@ -66,6 +75,10 @@ namespace ReactNative.UIManager
         public override void RemoveAllChildren(TPanel parent)
         {
             parent.Children.Clear();
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(parent);
+#endif
         }
     }
 }

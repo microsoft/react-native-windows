@@ -84,16 +84,7 @@ namespace ReactNative.Views.Text
 
             parent.Blocks.OfType<Paragraph>().First().Inlines.Insert(index, inlineChild);
 
-            // Initialize ImportantForAccessibility for the child.
-            if (child is UIElement childUIElement)
-            {
-                AccessibilityHelper.InitImportantForAccessibility(parent, childUIElement);
-            }
-            else if (child is Inline)
-            {
-                // If the child is an Inline it may contain multiple child UIElements.
-                AccessibilityHelper.InitImportantForAccessibility(parent);
-            }
+            AccessibilityHelper.OnChildAdded(parent, child);
         }
 
         /// <summary>
@@ -143,6 +134,8 @@ namespace ReactNative.Views.Text
         {
             var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
             inlines.Clear();
+
+            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         /// <summary>
@@ -154,6 +147,8 @@ namespace ReactNative.Views.Text
         {
             var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
             inlines.RemoveAt(index);
+
+            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         /// <summary>

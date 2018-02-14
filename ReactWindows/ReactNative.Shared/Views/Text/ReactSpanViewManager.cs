@@ -145,15 +145,7 @@ namespace ReactNative.Views.Text
 
                 if (spanParent is UIElement parentUIElement)
                 {
-                    if (child is UIElement childUIElement)
-                    {
-                        AccessibilityHelper.InitImportantForAccessibility(parentUIElement, childUIElement);
-                    }
-                    else if (child is Inline)
-                    {
-                        // If the child is an Inline it may contain multiple child UIElements.
-                        AccessibilityHelper.InitImportantForAccessibility(parentUIElement);
-                    }
+                    AccessibilityHelper.OnChildAdded(parentUIElement, child);
                 }
             });
 #else

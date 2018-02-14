@@ -183,8 +183,7 @@ namespace ReactNative.Views.ControlView
             parent.Children.Insert(index, uiElementChild);
 
 #if WINDOWS_UWP
-            AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
-            AccessibilityHelper.UpdateNameFromHereUp(parent);
+            AccessibilityHelper.OnChildAdded(parent, uiElementChild);
 #endif
         }
 
@@ -221,6 +220,10 @@ namespace ReactNative.Views.ControlView
         public override void RemoveAllChildren(ReactControl parent)
         {
             parent.Children.Clear();
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(parent);
+#endif
         }
 
         /// <summary>
@@ -236,6 +239,10 @@ namespace ReactNative.Views.ControlView
             }
 
             parent.Children.RemoveAt(index);
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(parent);
+#endif
         }
 
         /// <summary>

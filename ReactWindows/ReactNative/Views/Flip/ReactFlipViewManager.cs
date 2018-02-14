@@ -70,12 +70,7 @@ namespace ReactNative.Views.Flip
         {
             parent.Items.Insert(index, child);
 
-            // Initialize ImportantForAccessibility for the child.
-            if (child is UIElement uiElementChild)
-            {
-                AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
-                AccessibilityHelper.UpdateNameFromHereUp(parent);
-            }
+            AccessibilityHelper.OnChildAdded(parent, child);
         }
 
         public override DependencyObject GetChildAt(FlipView parent, int index)
@@ -91,11 +86,15 @@ namespace ReactNative.Views.Flip
         public override void RemoveAllChildren(FlipView parent)
         {
             parent.Items.Clear();
+
+            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         public override void RemoveChildAt(FlipView parent, int index)
         {
             parent.Items.RemoveAt(index);
+
+            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         public override void OnDropViewInstance(ThemedReactContext reactContext, FlipView view)

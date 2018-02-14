@@ -287,12 +287,7 @@ namespace ReactNative.Views.Scroll
             child.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
             parent.Content = child;
 
-            // Initialize ImportantForAccessibility for the child.
-            if (child is UIElement uiElementChild)
-            {
-                AccessibilityHelper.InitImportantForAccessibility(parent, uiElementChild);
-                AccessibilityHelper.UpdateNameFromHereUp(parent);
-            }
+            AccessibilityHelper.OnChildAdded(parent, child);
         }
 
         /// <summary>
@@ -331,6 +326,8 @@ namespace ReactNative.Views.Scroll
         public override void RemoveAllChildren(ScrollViewer parent)
         {
             parent.Content = null;
+
+            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         /// <summary>
