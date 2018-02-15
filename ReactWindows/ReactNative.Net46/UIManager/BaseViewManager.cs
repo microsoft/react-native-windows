@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
