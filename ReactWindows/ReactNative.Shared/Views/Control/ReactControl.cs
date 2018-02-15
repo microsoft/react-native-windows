@@ -1,9 +1,11 @@
+using ReactNative.UIManager;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 #else
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 #endif
 
@@ -12,7 +14,7 @@ namespace ReactNative.Views.ControlView
     /// <summary>
     /// A native control with a single Canvas child.
     /// </summary>
-    public class ReactControl : UserControl
+    public class ReactControl : UserControl, IAccessible
     {
         private readonly Canvas _canvas;
 
@@ -58,6 +60,16 @@ namespace ReactNative.Views.ControlView
         {
             get;
             set;
+        }
+
+        // TODO: implement runtime change raising event to screen reader #1562
+        /// <inheritdoc />                                                    
+        public AccessibilityTrait[] AccessibilityTraits { get; set; }
+
+        /// <inheritdoc />                                              
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new DynamicAutomationPeer<ReactControl>(this);
         }
     }
 }

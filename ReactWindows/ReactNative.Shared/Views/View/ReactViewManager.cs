@@ -2,6 +2,9 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 #if WINDOWS_UWP
 using ReactNative.Common;
 using Windows.UI;
@@ -197,6 +200,41 @@ namespace ReactNative.Views.View
         {
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
             view.SetPointerEvents(pointerEvents);
+        }
+
+        /// <summary>
+        /// Set accessibility traits for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object. 
+        ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
+        [ReactProp("accessibilityTraits")]
+        public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
+        {
+            AccessibilityTrait[] result = null;
+            if (accessibilityTraitsValue != null)
+            {
+                if (accessibilityTraitsValue is JArray asJArray)
+                {
+                    var list = new List<AccessibilityTrait>();
+                    foreach (var s in asJArray.Values<string>())
+                    {
+                        if (EnumHelpers.TryParse<AccessibilityTrait>(s, out var accessibilityTrait))
+                        {
+                            list.Add(accessibilityTrait);
+                        }
+                    }
+                    result = list.Any() ? list.ToArray() : null;
+                }
+                else
+                {
+                    if (EnumHelpers.TryParse<AccessibilityTrait>(accessibilityTraitsValue.ToString(), out var accessibilityTrait))
+                    {
+                        result = new[] { accessibilityTrait };
+                    }
+                }
+            }
+            view.AccessibilityTraits = result;
         }
 
         /// <summary>
