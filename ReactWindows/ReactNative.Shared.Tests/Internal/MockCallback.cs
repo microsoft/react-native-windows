@@ -1,4 +1,7 @@
-﻿using ReactNative.Bridge;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
 using System;
 
 namespace ReactNative.Tests
