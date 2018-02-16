@@ -99,16 +99,19 @@ namespace ReactNative.Tests
         {
             var manager = CreateReactInstanceManager();
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.AttachMeasuredRootView(null),
+            await AssertEx.ThrowsAsync<ArgumentNullException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.AttachMeasuredRootViewAsync(null)),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.CreateAllViewManagers(null),
+            await AssertEx.ThrowsAsync<ArgumentNullException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.CreateAllViewManagers(null)),
                 ex => Assert.AreEqual("reactContext", ex.ParamName));
 
-            AssertEx.Throws<ArgumentNullException>(
-                () => manager.DetachRootView(null),
+            await AssertEx.ThrowsAsync<ArgumentNullException>(
+                async () => await DispatcherHelpers.CallOnDispatcherAsync(() =>
+                    manager.DetachRootViewAsync(null)),
                 ex => Assert.AreEqual("rootView", ex.ParamName));
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
@@ -135,7 +138,7 @@ namespace ReactNative.Tests
             var manager = CreateReactInstanceManager(jsBundleFile);
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 var task = manager.CreateReactContextAsync(CancellationToken.None);
 
@@ -182,7 +185,7 @@ namespace ReactNative.Tests
             var manager = CreateReactInstanceManager(jsBundleFile);
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(async () =>
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 try
                 {

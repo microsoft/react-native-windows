@@ -31,7 +31,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Checks whether this host contains a Re
+        /// Checks whether this host contains a <see cref="ReactInstanceManager"/>
         /// </summary>
         public bool HasInstance
         {
@@ -100,6 +100,9 @@ namespace ReactNative
         /// <summary>
         /// Creates a new root view.
         /// </summary>
+        /// <remarks>
+        /// Has to be called in the context of the dispatcher associated with the hosting view
+        /// </remarks>
         /// <returns>The root view.</returns>
         public virtual ReactRootView CreateRootView()
         {

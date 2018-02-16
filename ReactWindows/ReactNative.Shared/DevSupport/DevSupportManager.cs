@@ -409,9 +409,12 @@ namespace ReactNative.DevSupport
             _devServerHelper.Dispose();
         }
 
-        private async void HandleReloadJavaScript()
+        public async void HandleReloadJavaScript()
         {
-            await CreateReactContextFromPackagerAsync(CancellationToken.None);
+            using (await _reactInstanceCommandsHandler.LockAsync())
+            {
+                await CreateReactContextFromPackagerAsync(CancellationToken.None);
+            }
         }
 
         private ProgressDialog CreateProgressDialog(string message)
@@ -629,6 +632,7 @@ namespace ReactNative.DevSupport
 
         private async Task<bool> RunWithProgressAsync(Func<CancellationToken, Task> asyncAction, ProgressDialog progressDialog, CancellationToken token)
         {
+            DispatcherHelpers.AssertOnDispatcher();
             var hideProgress = ShowProgressDialog(progressDialog);
             using (var cancellationDisposable = new CancellationDisposable())
             using (token.Register(cancellationDisposable.Dispose))

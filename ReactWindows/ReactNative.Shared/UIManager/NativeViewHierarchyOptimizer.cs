@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 #if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
 #endif
@@ -70,12 +70,14 @@ namespace ReactNative.UIManager
         /// Handles the creation of a view.
         /// </summary>
         /// <param name="node">The shadow node for the view.</param>
+        /// <param name="rootViewTag">The react tag id of the root.</param>
         /// <param name="themedContext">The themed context.</param>
         /// <param name="initialProperties">
         /// The initial properties for the view.
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node,
+            int rootViewTag,
             ThemedReactContext themedContext, 
             ReactStylesDiffMap initialProperties)
         {
@@ -84,7 +86,8 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProperties,
+                    rootViewTag);
 #else
             var isLayoutOnly = node.ViewClass == ViewProps.ViewClassName
                 && IsLayoutOnlyAndCollapsible(initialProperties);
@@ -97,7 +100,8 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProperties,
+                    rootViewTag);
             }
 #endif
         }
@@ -462,7 +466,8 @@ namespace ReactNative.UIManager
                 node.RootNode.ThemedContext,
                 node.ReactTag,
                 node.ViewClass,
-                props);
+                props,
+                node.RootNode.ReactTag);
 
             // Add the node and all its children as if adding new nodes.
             parent.AddChildAt(node, childIndex);
