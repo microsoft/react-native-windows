@@ -395,6 +395,11 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
+        /// The native modules queue.
+        /// </summary>
+        public IActionQueue NativeModulesQueue => _reactInstance.QueueConfiguration.NativeModulesQueue;
+
+        /// <summary>
         /// Checks if the current thread is on the React instance native 
         /// modules queue thread.
         /// </summary>
@@ -405,7 +410,7 @@ namespace ReactNative.Bridge
         public bool IsOnNativeModulesQueueThread()
         {
             AssertReactInstance();
-            return _reactInstance.QueueConfiguration.NativeModulesQueue.IsOnThread();
+            return NativeModulesQueue.IsOnThread();
         }
 
         /// <summary>
@@ -415,7 +420,7 @@ namespace ReactNative.Bridge
         public void AssertOnNativeModulesQueueThread()
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.NativeModulesQueue.AssertOnThread();
+            NativeModulesQueue.AssertOnThread();
         }
 
         /// <summary>
@@ -425,7 +430,7 @@ namespace ReactNative.Bridge
         public void RunOnNativeModulesQueueThread(Action action)
         {
             AssertReactInstance();
-            _reactInstance.QueueConfiguration.NativeModulesQueue.Dispatch(action);
+            NativeModulesQueue.Dispatch(action);
         }
 
         /// <summary>

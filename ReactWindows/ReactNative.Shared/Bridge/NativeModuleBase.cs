@@ -46,7 +46,6 @@ namespace ReactNative.Bridge
 
         private readonly IReadOnlyDictionary<string, INativeMethod> _methods;
         private readonly IReactDelegateFactory _delegateFactory;
-        private readonly IActionQueue _actionQueue;
 
         /// <summary>
         /// Instantiates a <see cref="NativeModuleBase"/>.
@@ -63,35 +62,9 @@ namespace ReactNative.Bridge
         /// Factory responsible for creating delegates for method invocations.
         /// </param>
         protected NativeModuleBase(IReactDelegateFactory delegateFactory)
-            : this(delegateFactory, null)
-        {
-        }
-
-        /// <summary>
-        /// Instantiates a <see cref="NativeModuleBase"/>.
-        /// </summary>
-        /// <param name="actionQueue">
-        /// The action queue that native modules should execute on.
-        /// </param>
-        protected NativeModuleBase(IActionQueue actionQueue)
-            : this(s_defaultDelegateFactory, actionQueue)
-        {
-        }
-
-        /// <summary>
-        /// Instantiates a <see cref="NativeModuleBase"/>.
-        /// </summary>
-        /// <param name="delegateFactory">
-        /// Factory responsible for creating delegates for method invocations.
-        /// </param>
-        /// <param name="actionQueue">
-        /// The action queue that native modules should execute on.
-        /// </param>
-        protected NativeModuleBase(IReactDelegateFactory delegateFactory, IActionQueue actionQueue)
         {
             _delegateFactory = delegateFactory;
             _methods = InitializeMethods();
-            _actionQueue = actionQueue;
         }
 
         /// <summary>
@@ -106,17 +79,6 @@ namespace ReactNative.Bridge
             get
             {
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// The action queue used by the native module.
-        /// </summary>
-        public IActionQueue ActionQueue
-        {
-            get
-            {
-                return _actionQueue;
             }
         }
 

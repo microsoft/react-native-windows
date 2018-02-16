@@ -35,7 +35,7 @@ namespace ReactNative.UIManager
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementationProvider uiImplementationProvider,
             IActionQueue layoutActionQueue)
-            : base(reactContext, layoutActionQueue)
+            : base(reactContext)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
@@ -68,6 +68,16 @@ namespace ReactNative.UIManager
                 return "UIManager";
             }
         }
+
+        /// <summary>
+        /// The action queue used by the native module.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to the native modules action queue. If you override this getter,
+        /// be sure to return the same IActionQueue instance each time this getter is
+        /// accessed for a given module instance.
+        /// </remarks>
+        public override IActionQueue ActionQueue => _layoutActionQueue;
 
         /// <summary>
         /// The constants exported by this module.

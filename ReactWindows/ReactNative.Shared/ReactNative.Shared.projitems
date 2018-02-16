@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IBackgroundEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ICallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IGenericDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IHasActionQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IJavaScriptModule.cs" />

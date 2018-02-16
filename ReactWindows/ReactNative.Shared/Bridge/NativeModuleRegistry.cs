@@ -106,8 +106,8 @@ namespace ReactNative.Bridge
             if (_moduleTable.Count < moduleId)
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
 
-            var actionQueue = _moduleTable[moduleId].Target.ActionQueue;
-            if (actionQueue != null)
+            var actionQueue = (_moduleTable[moduleId].Target as IHasActionQueue)?.ActionQueue;
+            if (actionQueue != null && !actionQueue.IsOnThread())
             {
                 actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
             }
@@ -145,18 +145,19 @@ namespace ReactNative.Bridge
                 foreach (var module in _moduleInstances.Values)
                 {
                     Dispatch(module, module.OnReactInstanceDispose);
-                    module.ActionQueue?.Dispose();
+                    (module as IHasActionQueue)?.ActionQueue?.Dispose();
                 }
             }
         }
 
         private static void Dispatch(INativeModule module, Action action)
         {
-            // If the module has an action queue, dispatch there;
-            // otherwise execute inline.
-            if (module.ActionQueue != null)
+            // If the module has an action queue and we're not already running on it,
+            // dispatch there; otherwise execute inline.
+            var actionQueue = (module as IHasActionQueue)?.ActionQueue;
+            if (actionQueue != null && !actionQueue.IsOnThread())
             {
-                module.ActionQueue.Dispatch(action);
+                actionQueue.Dispatch(action);
             }
             else
             {

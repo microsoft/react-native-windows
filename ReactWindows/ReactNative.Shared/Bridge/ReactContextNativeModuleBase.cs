@@ -1,4 +1,4 @@
-﻿using ReactNative.Bridge.Queue;
+using ReactNative.Bridge.Queue;
 using System;
 
 namespace ReactNative.Bridge
@@ -7,27 +7,13 @@ namespace ReactNative.Bridge
     /// Base class for React Native modules that require access to the 
     /// <see cref="ReactContext"/>.
     /// </summary>
-    public abstract class ReactContextNativeModuleBase : NativeModuleBase
+    public abstract class ReactContextNativeModuleBase : NativeModuleBase, IHasActionQueue
     {
         /// <summary>
         /// Instantiates the <see cref="ReactContextNativeModuleBase"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         protected ReactContextNativeModuleBase(ReactContext reactContext)
-        {
-            if (reactContext == null)
-                throw new ArgumentNullException(nameof(reactContext));
-
-            Context = reactContext;
-        }
-
-        /// <summary>
-        /// Instantiates the <see cref="ReactContextNativeModuleBase"/>.
-        /// </summary>
-        /// <param name="reactContext">The React context.</param>
-        /// <param name="actionQueue">The action queue.</param>
-        protected ReactContextNativeModuleBase(ReactContext reactContext, IActionQueue actionQueue)
-            : base(actionQueue)
         {
             if (reactContext == null)
                 throw new ArgumentNullException(nameof(reactContext));
@@ -50,18 +36,19 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Instantiates the <see cref="ReactContextNativeModuleBase"/>.
+        /// The action queue used by the native module.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
-        /// <param name="delegateFactory">The React method delegate factory.</param>
-        /// <param name="actionQueue">The action queue.</param>
-        protected ReactContextNativeModuleBase(ReactContext reactContext, IReactDelegateFactory delegateFactory, IActionQueue actionQueue)
-            : base(delegateFactory, actionQueue)
+        /// <remarks>
+        /// Defaults to the native modules action queue. If you override this getter,
+        /// be sure to return the same IActionQueue instance each time this getter is
+        /// accessed for a given module instance.
+        /// </remarks>
+        public virtual IActionQueue ActionQueue
         {
-            if (reactContext == null)
-                throw new ArgumentNullException(nameof(reactContext));
-
-            Context = reactContext;
+            get
+            {
+                return Context.NativeModulesQueue;
+            }
         }
 
         /// <summary>
