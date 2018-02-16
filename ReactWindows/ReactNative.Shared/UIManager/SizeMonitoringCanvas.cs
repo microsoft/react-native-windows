@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactNative.Bridge;
+using System;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,6 +24,8 @@ namespace ReactNative.UIManager
         /// <param name="sizeChangedEventHandler">The event handler.</param>
         public void SetOnSizeChangedListener(SizeChangedEventHandler sizeChangedEventHandler)
         {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
             var current = _sizeChangedEventHandler;
             if (current != null)
             {
@@ -41,6 +44,8 @@ namespace ReactNative.UIManager
         /// </summary>
         public void RemoveSizeChanged()
         {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
             var sizeChangedEventHandler = _sizeChangedEventHandler;
             if (sizeChangedEventHandler != null)
             {
