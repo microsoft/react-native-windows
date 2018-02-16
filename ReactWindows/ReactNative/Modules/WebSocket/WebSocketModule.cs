@@ -47,11 +47,6 @@ namespace ReactNative.Modules.WebSocket
                 }
             }
 
-            if (options != null && options.ContainsKey("origin"))
-            {
-                throw new NotImplementedException(/* TODO: (#253) */);
-            }
-
             webSocket.MessageReceived += (sender, args) =>
             {
                 OnMessageReceived(id, sender, args);
@@ -62,7 +57,7 @@ namespace ReactNative.Modules.WebSocket
                 OnClosed(id, sender, args);
             };
 
-            InitializeInBackground(id, url, webSocket);
+            InitializeInBackground(id, url, webSocket, options);
         }
 
         [ReactMethod]
@@ -108,10 +103,26 @@ namespace ReactNative.Modules.WebSocket
             SendMessageInBackground(id, dataWriter, message);
         }
 
-        private async void InitializeInBackground(int id, string url, MessageWebSocket webSocket)
+        private async void InitializeInBackground(int id, string url, MessageWebSocket webSocket, JObject options)
         {
             try
             {
+                var parsedOptions = new WebSocketOptions(options);
+                if (!string.IsNullOrEmpty(parsedOptions.ProxyAddress))
+                {
+                    webSocket.Control.ProxyCredential = new Windows.Security.Credentials.PasswordCredential
+                    {
+                        Resource = parsedOptions.ProxyAddress,
+                        UserName = parsedOptions.UserName,
+                        Password = parsedOptions.Password
+                    };
+                }
+
+                if (!string.IsNullOrEmpty(parsedOptions.Origin))
+                {
+                    webSocket.SetRequestHeader("Origin", parsedOptions.Origin);
+                }
+
                 await webSocket.ConnectAsync(new Uri(url)).AsTask().ConfigureAwait(false);
                 _webSocketConnections.Add(id, webSocket);
 

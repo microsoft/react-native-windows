@@ -27,13 +27,7 @@ namespace ReactNative.Modules.WebSocket
 
         #region NativeModuleBase Overrides
 
-        public override string Name
-        {
-            get
-            {
-                return "WebSocketModule";
-            }
-        }
+        public override string Name => "WebSocketModule";
 
         #endregion
 
@@ -42,11 +36,6 @@ namespace ReactNative.Modules.WebSocket
         [ReactMethod]
         public void connect(string url, string[] protocols, JObject options, int id)
         {
-            if (options != null && options.ContainsKey("origin"))
-            {
-                throw new NotImplementedException(/* TODO: (#253) */);
-            }
-
             var webSocket = new WebSocketSharp.WebSocket(url);
 
             webSocket.OnMessage += (sender, args) =>
@@ -69,7 +58,7 @@ namespace ReactNative.Modules.WebSocket
                 OnClosed(id, sender, args);
             };
 
-            InitializeInBackground(id, url, webSocket);
+            InitializeInBackground(url, webSocket, options);
         }
 
         [ReactMethod]
@@ -194,9 +183,28 @@ namespace ReactNative.Modules.WebSocket
 
         #region Private Methods
 
-        private void InitializeInBackground(int id, string url, WebSocketSharp.WebSocket webSocket)
+        private void InitializeInBackground(string url, WebSocketSharp.WebSocket webSocket, JObject options)
         {
-            webSocket?.Connect();
+            var parsedOptions = new WebSocketOptions(options);
+            ProxyHelper proxy = null;
+
+            if (parsedOptions.UseDefaultProxy)
+            {
+                proxy = new ProxyHelper(new Uri(url));
+            }
+            else
+            {
+                proxy = new ProxyHelper(parsedOptions);
+            }
+
+            if (proxy != null && !proxy.IsBypassed)
+            {
+                webSocket.SetProxy(proxy.ProxyAddress, proxy.UserName, proxy.Password);
+            }
+
+            webSocket.Origin = parsedOptions.Origin;
+
+            webSocket.Connect();
         }
 
         private void SendMessageInBackground(int id, string message)
