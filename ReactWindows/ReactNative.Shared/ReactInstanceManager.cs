@@ -376,7 +376,7 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
             rootView.Children.Clear();
-            rootView.ClearData();
+            ViewExtensions.ClearData(rootView);
 
             await DispatcherHelpers.CallOnDispatcher(() =>
             {

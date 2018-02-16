@@ -163,13 +163,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\BlurEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\FocusEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\KeyEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewConversion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Dimensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\EdgeSpacing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\Event.cs" />

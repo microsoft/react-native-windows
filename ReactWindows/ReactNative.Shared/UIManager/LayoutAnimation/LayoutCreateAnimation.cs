@@ -1,18 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
 using System;
 using System.Reactive;
-using System.Reactive.Linq;
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-#else
-using System.Windows;
-using System.Windows.Controls;
-#endif
 
 namespace ReactNative.UIManager.LayoutAnimation
 {
@@ -45,7 +37,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// stops the animation when disposed, and that completes 
         /// simultaneously with the underlying animation.
         /// </returns>
-        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
+        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, object view, Dimensions dimensions)
         {
             viewManager.SetDimensions(view, dimensions);
             return base.CreateAnimationCore(viewManager, view, dimensions);

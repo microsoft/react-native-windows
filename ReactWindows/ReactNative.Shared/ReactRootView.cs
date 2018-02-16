@@ -207,7 +207,7 @@ namespace ReactNative
             DispatcherHelpers.AssertOnDispatcher(this);
 
             Children.Clear();
-            this.ClearData();
+            ViewExtensions.ClearData(this);
         }
 
         private async Task MeasureOverrideHelperAsync()

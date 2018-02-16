@@ -95,7 +95,7 @@ namespace ReactNative.UIManager
             Invoke(GetShadowNodeArgs(shadowNode, props));
         }
 
-        public void UpdateViewManagerProperty(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+        public void UpdateViewManagerProperty(IViewManager viewManager, object view, ReactStylesDiffMap props)
         {
             if (viewManager == null)
                 throw new ArgumentNullException(nameof(viewManager));
@@ -110,7 +110,7 @@ namespace ReactNative.UIManager
             throw new NotSupportedException(Invariant($"'{nameof(ReactShadowNode)}' properties cannot be changed with this setter."));
         }
 
-        protected virtual object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+        protected virtual object[] GetViewManagerArgs(IViewManager viewManager, object view, ReactStylesDiffMap props)
         {
             throw new NotSupportedException($"'{nameof(IViewManager)}' properties cannot be changed with this setter.");
         }
@@ -203,7 +203,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        public static IEnumerable<IPropertySetter> CreateViewManagerSetters(MethodInfo method)
+        public static IEnumerable<IPropertySetter> CreateViewManagerSetters<TView>(MethodInfo method)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
@@ -212,19 +212,26 @@ namespace ReactNative.UIManager
             var reactPropGroup = default(ReactPropGroupAttribute);
             if (reactProp != null)
             {
-                yield return new ViewManagerPropertySetter(method, reactProp.Name, reactProp);
+                yield return new ViewManagerPropertySetter<TView>(
+                    method,
+                    reactProp.Name,
+                    reactProp);
             }
             else if ((reactPropGroup = method.GetCustomAttribute<ReactPropGroupAttribute>()) != null)
             {
                 for (var i = 0; i < reactPropGroup.Names.Length; ++i)
                 {
                     var name = reactPropGroup.Names[i];
-                    yield return new ViewManagerGroupPropertySetter(method, i, name, reactPropGroup);
+                    yield return new ViewManagerGroupPropertySetter<TView>(
+                        method,
+                        i,
+                        name,
+                        reactPropGroup);
                 }
             }
         }
 
-        class ViewManagerPropertySetter : PropertySetter
+        class ViewManagerPropertySetter<TView> : PropertySetter
         {
             private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[3]);
 
@@ -242,16 +249,16 @@ namespace ReactNative.UIManager
                         Invariant($"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
-                if (!typeof(DependencyObject).IsAssignableFrom(parameters[0].ParameterType))
+                if (!typeof(TView).IsAssignableFrom(parameters[0].ParameterType))
                 {
                     throw new InvalidOperationException(
-                        Invariant($"First parameter must be a dependency object for property setter '{method.DeclaringType.Name}.{Name}'."));
+                        Invariant($"First parameter must be of type '{typeof(TView)}' for property setter '{method.DeclaringType.Name}.{Name}'."));
                 }
 
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, ReactStylesDiffMap props)
             {
                 var args = s_args.Value;
                 args[0] = viewManager;
@@ -266,7 +273,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        class ViewManagerGroupPropertySetter : PropertySetter
+        class ViewManagerGroupPropertySetter<TView> : PropertySetter
         {
             private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[4]);
 
@@ -287,10 +294,10 @@ namespace ReactNative.UIManager
                         Invariant($"Wrong number of arguments for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
-                if (!typeof(FrameworkElement).IsAssignableFrom(parameters[0].ParameterType))
+                if (!typeof(TView).IsAssignableFrom(parameters[0].ParameterType))
                 {
                     throw new InvalidOperationException(
-                        Invariant($"First parameter must be a framework element for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"First parameter must be of type '{typeof(TView)}' for group property setter '{method.DeclaringType.Name}.{Name}'."));
                 }
 
                 if (parameters[1].ParameterType != typeof(int))
@@ -303,7 +310,7 @@ namespace ReactNative.UIManager
                 return parameters[2].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, ReactStylesDiffMap props)
             {
                 var args = s_args.Value;
                 args[0] = viewManager;

@@ -6,11 +6,6 @@ using NUnit.Framework;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-#else
-using System.Windows;
-#endif
 
 namespace ReactNative.Tests.UIManager
 {
@@ -21,15 +16,15 @@ namespace ReactNative.Tests.UIManager
         public void ViewManagersPropertyCache_ArgumentChecks()
         {
             AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertiesForView(null, typeof(object)),
+                () => ViewManagersPropertyCache.GetNativePropertiesForView<object>(null, typeof(object)),
                 ex => Assert.AreEqual("viewManagerType", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertiesForView(typeof(object), null),
+                () => ViewManagersPropertyCache.GetNativePropertiesForView<object>(typeof(object), null),
                 ex => Assert.AreEqual("shadowNodeType", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(null),
+                () => ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(null),
                 ex => Assert.AreEqual("type", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
@@ -57,7 +52,7 @@ namespace ReactNative.Tests.UIManager
         {
             var instance = new ViewManagerValueTest();
 
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(typeof(ViewManagerValueTest));
+            var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(typeof(ViewManagerValueTest));
             Assert.AreEqual(3, setters.Count);
 
             var props = new ReactStylesDiffMap(new JObject
@@ -119,7 +114,7 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void ViewManagersPropertyCache_GetNativePropertiesForView()
         {
-            var props = ViewManagersPropertyCache.GetNativePropertiesForView(typeof(ViewManagerValueTest), typeof(ShadowNodeValueTest));
+            var props = ViewManagersPropertyCache.GetNativePropertiesForView<object>(typeof(ViewManagerValueTest), typeof(ShadowNodeValueTest));
             Assert.AreEqual(5, props.Count);
             Assert.AreEqual("number", props["Foo"]);
             Assert.AreEqual("String", props["Bar1"]);
@@ -132,7 +127,7 @@ namespace ReactNative.Tests.UIManager
         public void ViewManagersPropertyCache_Defaults()
         {
             var instance = new DefaultsTest();
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(typeof(DefaultsTest));
+            var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(typeof(DefaultsTest));
 
             var props = new ReactStylesDiffMap(new JObject());
 
@@ -204,7 +199,7 @@ namespace ReactNative.Tests.UIManager
             public string FooValue;
 
             [ReactProp("Foo")]
-            public void Foo(FrameworkElement element, string value)
+            public void Foo(object element, string value)
             {
                 FooValue = value;
             }
@@ -212,7 +207,7 @@ namespace ReactNative.Tests.UIManager
             public string[] BarValues = new string[2];
 
             [ReactPropGroup("Bar1", "Bar2")]
-            public void Bar(FrameworkElement element, int index, string value)
+            public void Bar(object element, int index, string value)
             {
                 BarValues[index] = value;
             }
@@ -260,103 +255,103 @@ namespace ReactNative.Tests.UIManager
             public string[] GroupValue = new string[3];
 
             [ReactProp("TestByte")]
-            public void TestByte(FrameworkElement element, byte value)
+            public void TestByte(object element, byte value)
             {
                 ByteValue = value;
             }
 
             [ReactProp("TestSByte")]
-            public void TestSByte(FrameworkElement element, sbyte value)
+            public void TestSByte(object element, sbyte value)
             {
                 SByteValue = value;
             }
 
             [ReactProp("TestInt16")]
-            public void TestInt16(FrameworkElement element, short value)
+            public void TestInt16(object element, short value)
             {
                 Int16Value = value;
             }
 
             [ReactProp("TestUInt16")]
-            public void TestUInt16(FrameworkElement element, ushort value)
+            public void TestUInt16(object element, ushort value)
             {
                 UInt16Value = value;
             }
 
             [ReactProp("TestInt32")]
-            public void TestInt32(FrameworkElement element, int value)
+            public void TestInt32(object element, int value)
             {
                 Int32Value = value;
             }
 
             [ReactProp("TestUInt32")]
-            public void TestUInt32(FrameworkElement element, uint value)
+            public void TestUInt32(object element, uint value)
             {
                 UInt32Value = value;
             }
 
             [ReactProp("TestInt64")]
-            public void TestInt64(FrameworkElement element, long value)
+            public void TestInt64(object element, long value)
             {
                 Int64Value = value;
             }
 
             [ReactProp("TestUInt64")]
-            public void TestUInt64(FrameworkElement element, ulong value)
+            public void TestUInt64(object element, ulong value)
             {
                 UInt64Value = value;
             }
 
             [ReactProp("TestSingle")]
-            public void TestSingle(FrameworkElement element, float value)
+            public void TestSingle(object element, float value)
             {
                 SingleValue = value;
             }
 
             [ReactProp("TestDouble")]
-            public void TestDouble(FrameworkElement element, double value)
+            public void TestDouble(object element, double value)
             {
                 DoubleValue = value;
             }
 
             [ReactProp("TestDecimal")]
-            public void TestDecimal(FrameworkElement element, decimal value)
+            public void TestDecimal(object element, decimal value)
             {
                 DecimalValue = value;
             }
 
             [ReactProp("TestBoolean")]
-            public void TestBoolean(FrameworkElement element, bool value)
+            public void TestBoolean(object element, bool value)
             {
                 BooleanValue = value;
             }
 
             [ReactProp("TestString")]
-            public void TestString(FrameworkElement element, string value)
+            public void TestString(object element, string value)
             {
                 StringValue = value;
             }
 
             [ReactProp("TestArray")]
-            public void TestArray(FrameworkElement element, int[] value)
+            public void TestArray(object element, int[] value)
             {
                 ArrayValue = value;
             }
 
             [ReactProp("TestNullable")]
-            public void TestNullable(FrameworkElement element, bool? value)
+            public void TestNullable(object element, bool? value)
             {
                 NullableValue = value;
             }
 
             [ReactProp("TestMap")]
-            public void TestMap(FrameworkElement element, object value)
+            public void TestMap(object element, object value)
             {
                 MapValue = value;
             }
 
             [ReactPropGroup("foo", "bar", "baz")]
-            public void TestGroup(FrameworkElement element, int index, string value)
+            public void TestGroup(object element, int index, string value)
             {
                 GroupValue[index] = value;
             }

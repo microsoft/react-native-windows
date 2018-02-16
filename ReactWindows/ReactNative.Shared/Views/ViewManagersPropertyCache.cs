@@ -16,7 +16,7 @@ namespace ReactNative.UIManager
         private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>> s_settersCache =
             new ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>>();
 
-        public static IReadOnlyDictionary<string, IPropertySetter> GetNativePropertySettersForViewManagerType(Type type)
+        public static IReadOnlyDictionary<string, IPropertySetter> GetNativePropertySettersForViewManagerType<TView>(Type type)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
@@ -30,7 +30,7 @@ namespace ReactNative.UIManager
             var methods = type.GetMethods();
             foreach (var method in methods)
             {
-                foreach (var setter in PropertySetter.CreateViewManagerSetters(method))
+                foreach (var setter in PropertySetter.CreateViewManagerSetters<TView>(method))
                 {
                     settersImpl.Add(setter.Name, setter);
                 }
@@ -71,7 +71,7 @@ namespace ReactNative.UIManager
             return settersImpl;
         }
 
-        public static IReadOnlyDictionary<string, string> GetNativePropertiesForView(Type viewManagerType, Type shadowNodeType)
+        public static IReadOnlyDictionary<string, string> GetNativePropertiesForView<TView>(Type viewManagerType, Type shadowNodeType)
         {
             if (viewManagerType == null)
                 throw new ArgumentNullException(nameof(viewManagerType));
@@ -79,7 +79,7 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(shadowNodeType));
 
             var result = new Dictionary<string, string>();
-            var viewManagerProperties = GetNativePropertySettersForViewManagerType(viewManagerType);
+            var viewManagerProperties = GetNativePropertySettersForViewManagerType<TView>(viewManagerType);
             foreach (var pair in viewManagerProperties)
             {
                 result[pair.Key] = pair.Value.PropertyType;

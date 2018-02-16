@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TestReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersTests.cs" />
@@ -34,7 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManagerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMapTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelperTests.cs" />

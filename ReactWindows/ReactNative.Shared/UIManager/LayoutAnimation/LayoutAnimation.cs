@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -75,7 +75,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
-        public IObservable<Unit> CreateAnimation(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
+        public IObservable<Unit> CreateAnimation(IViewManager viewManager, object view, Dimensions dimensions)
         {
             if (!IsValid)
             {
@@ -133,6 +133,6 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
-        protected abstract IObservable<Unit> CreateAnimationCore(IViewManager viewManager, FrameworkElement view, Dimensions dimensions);
+        protected abstract IObservable<Unit> CreateAnimationCore(IViewManager viewManager, object view, Dimensions dimensions);
     }
 }
