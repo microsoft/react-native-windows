@@ -103,28 +103,6 @@ namespace ReactNative.Modules.WebSocket
             SendMessageInBackground(id, dataWriter, message);
         }
 
-        [ReactMethod]
-        public void sendBinary(string message, int id)
-        {
-            var webSocket = default(MessageWebSocket);
-            if (!_webSocketConnections.TryGetValue(id, out webSocket))
-            {
-                throw new InvalidOperationException(
-                    Invariant($"Cannot send a message. Unknown WebSocket id '{id}'."));
-            }
-
-            webSocket.Control.MessageType = SocketMessageType.Binary;
-
-            var dataWriter = default(DataWriter);
-            if (!_dataWriters.TryGetValue(id, out dataWriter))
-            {
-                throw new InvalidOperationException(
-                    Invariant($"Cannot send a message. Unknown WebSocket id '{id}'."));
-            }
-
-            SendMessageInBackground(id, dataWriter, Convert.FromBase64String(message));
-        }
-
         private async void InitializeInBackground(int id, string url, MessageWebSocket webSocket, JObject options)
         {
             try
