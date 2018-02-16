@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -28,7 +28,7 @@ namespace ReactNative.Tests.UIManager
                 ex => Assert.AreEqual("method", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => PropertySetter.CreateViewManagerSetters(null).ToList(),
+                () => PropertySetter.CreateViewManagerSetters<object>(null).ToList(),
                 ex => Assert.AreEqual("method", ex.ParamName));
         }
 
@@ -36,7 +36,7 @@ namespace ReactNative.Tests.UIManager
         public void PropertySetter_ViewManager_Name()
         {
             var method = (MethodInfo)ReflectionHelpers.InfoOf((Test t) => t.TestString(null, null));
-            var setters = PropertySetter.CreateViewManagerSetters(method);
+            var setters = PropertySetter.CreateViewManagerSetters<object>(method);
             Assert.AreEqual(1, setters.Count());
             Assert.AreEqual("TestString", setters.First().Name);
         }
@@ -61,7 +61,7 @@ namespace ReactNative.Tests.UIManager
 
             foreach (var method in methods)
             {
-                foreach (var setter in PropertySetter.CreateViewManagerSetters(method))
+                foreach (var setter in PropertySetter.CreateViewManagerSetters<object>(method))
                 {
                     Assert.AreEqual("number", setter.PropertyType);
                 }
@@ -71,7 +71,7 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void PropertySetter_ViewManager_PropertyType_Boolean()
         {
-            var setters = PropertySetter.CreateViewManagerSetters(
+            var setters = PropertySetter.CreateViewManagerSetters<object>(
                 (MethodInfo)ReflectionHelpers.InfoOf(
                     (Test t) => t.TestBoolean(null, false)));
 
@@ -84,7 +84,7 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void PropertySetter_ViewManager_PropertyType_Nullable_Boolean()
         {
-            var setters = PropertySetter.CreateViewManagerSetters(
+            var setters = PropertySetter.CreateViewManagerSetters<object>(
                 (MethodInfo)ReflectionHelpers.InfoOf(
                     (Test t) => t.TestNullable(null, false)));
 
@@ -97,7 +97,7 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void PropertySetter_ViewManager_PropertyType_String()
         {
-            var setters = PropertySetter.CreateViewManagerSetters(
+            var setters = PropertySetter.CreateViewManagerSetters<object>(
                 (MethodInfo)ReflectionHelpers.InfoOf(
                     (Test t) => t.TestString(null, null)));
 
@@ -110,7 +110,7 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void PropertySetter_ViewManager_PropertyType_Array()
         {
-            var setters = PropertySetter.CreateViewManagerSetters(
+            var setters = PropertySetter.CreateViewManagerSetters<object>(
                 (MethodInfo)ReflectionHelpers.InfoOf(
                     (Test t) => t.TestArray(null, null)));
 
@@ -123,7 +123,7 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void PropertySetter_ViewManager_PropertyType_Map()
         {
-            var setters = PropertySetter.CreateViewManagerSetters(
+            var setters = PropertySetter.CreateViewManagerSetters<object>(
                 (MethodInfo)ReflectionHelpers.InfoOf(
                     (Test t) => t.TestMap(null, null)));
 
@@ -136,7 +136,7 @@ namespace ReactNative.Tests.UIManager
         [Test]
         public void PropertySetter_ViewManager_Group()
         {
-            var setters = PropertySetter.CreateViewManagerSetters(
+            var setters = PropertySetter.CreateViewManagerSetters<object>(
                 (MethodInfo)ReflectionHelpers.InfoOf(
                     (Test t) => t.TestGroup(null, 0, null))).ToList();
 
@@ -226,7 +226,7 @@ namespace ReactNative.Tests.UIManager
             var emptyMap = new ReactStylesDiffMap(new JObject());
             foreach (var method in methods)
             {
-                var setter = PropertySetter.CreateViewManagerSetters(method).Single();
+                var setter = PropertySetter.CreateViewManagerSetters<object>(method).Single();
                 setter.UpdateViewManagerProperty(instance, null, emptyMap);
             }
 
@@ -254,7 +254,7 @@ namespace ReactNative.Tests.UIManager
                 { "TestBoolean", null },
             });
 
-            var setter = PropertySetter.CreateViewManagerSetters(method).Single();
+            var setter = PropertySetter.CreateViewManagerSetters<object>(method).Single();
             setter.UpdateViewManagerProperty(instance, null, emptyMap);
             Assert.AreEqual(true, instance.TestBooleanValue);
         }
@@ -270,7 +270,7 @@ namespace ReactNative.Tests.UIManager
                 { "TestBoolean", JValue.CreateUndefined() },
             });
 
-            var setter = PropertySetter.CreateViewManagerSetters(method).Single();
+            var setter = PropertySetter.CreateViewManagerSetters<object>(method).Single();
             setter.UpdateViewManagerProperty(instance, null, emptyMap);
             Assert.AreEqual(true, instance.TestBooleanValue);
         }

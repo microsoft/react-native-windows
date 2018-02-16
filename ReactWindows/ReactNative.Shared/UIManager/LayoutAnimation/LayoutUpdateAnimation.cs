@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -43,7 +43,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
         /// <returns>The storyboard.</returns>
-        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
+        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, object view, Dimensions dimensions)
         {
             var currentDimensions = viewManager.GetDimensions(view);
 
@@ -55,22 +55,23 @@ namespace ReactNative.UIManager.LayoutAnimation
                 return null;
             }
 
+            var element = ViewConversion.GetDependencyObject(view);
             var storyboard = new Storyboard();
             if (currentDimensions.X != dimensions.X)
             {
                 storyboard.Children.Add(
-                    CreateTimeline(view, "(Canvas.Left)", currentDimensions.X, dimensions.X));
+                    CreateTimeline(element, "(Canvas.Left)", currentDimensions.X, dimensions.X));
             }
 
             if (currentDimensions.Y != dimensions.Y)
             {
                 storyboard.Children.Add(
-                    CreateTimeline(view, "(Canvas.Top)", currentDimensions.Y, dimensions.Y));
+                    CreateTimeline(element, "(Canvas.Top)", currentDimensions.Y, dimensions.Y));
             }
 
             if (currentDimensions.Width != dimensions.Width)
             {
-                var timeline = CreateTimeline(view, "Width", currentDimensions.Width, dimensions.Width);
+                var timeline = CreateTimeline(element, "Width", currentDimensions.Width, dimensions.Width);
 #if WINDOWS_UWP
                 timeline.EnableDependentAnimation = true;
 #endif
@@ -79,7 +80,7 @@ namespace ReactNative.UIManager.LayoutAnimation
 
             if (currentDimensions.Height != dimensions.Height)
             {
-                var timeline = CreateTimeline(view, "Height", currentDimensions.Height, dimensions.Height);
+                var timeline = CreateTimeline(element, "Height", currentDimensions.Height, dimensions.Height);
 #if WINDOWS_UWP
                 timeline.EnableDependentAnimation = true;
 #endif
@@ -88,11 +89,11 @@ namespace ReactNative.UIManager.LayoutAnimation
 
             return new StoryboardObservable(storyboard, () =>
             {
-                viewManager.SetDimensions(view, dimensions);
+                viewManager.SetDimensions(element, dimensions);
             });
         }
 
-        private DoubleAnimation CreateTimeline(FrameworkElement view, string path, double from, double to)
+        private DoubleAnimation CreateTimeline(DependencyObject view, string path, double from, double to)
         {
             var timeline = new DoubleAnimation
             {

@@ -6,11 +6,6 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-#else
-using System.Windows;
-#endif
 
 namespace ReactNative.UIManager
 {
@@ -69,14 +64,14 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="viewToUpdate">The view to update.</param>
         /// <param name="props">The properties.</param>
-        void UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props);
+        void UpdateProperties(object viewToUpdate, ReactStylesDiffMap props);
 
         /// <summary>
         /// Creates a view and installs event emitters on it.
         /// </summary>
         /// <param name="reactContext">The context.</param>
         /// <returns>The view.</returns>
-        DependencyObject CreateView(ThemedReactContext reactContext);
+        object CreateView(ThemedReactContext reactContext);
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
@@ -88,7 +83,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view);
+        void OnDropViewInstance(ThemedReactContext reactContext, object view);
 
         /// <summary>
         /// This method should return the subclass of <see cref="ReactShadowNode"/>
@@ -109,31 +104,31 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        void UpdateExtraData(DependencyObject root, object extraData);
+        void UpdateExtraData(object root, object extraData);
 
         /// <summary>
         /// Implement this method to receive events/commands directly from
-        /// JavaScript through the <see cref="UIManager"/>.
+        /// JavaScript through the <see cref="UIManagerModule"/>.
         /// </summary>
         /// <param name="view">
         /// The view instance that should receive the command.
         /// </param>
         /// <param name="commandId">Identifer for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
-        void ReceiveCommand(DependencyObject view, int commandId, JArray args);
+        void ReceiveCommand(object view, int commandId, JArray args);
 
         /// <summary>
         /// Gets the dimensions of the view.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns>The view dimensions.</returns>
-        Dimensions GetDimensions(DependencyObject view);
+        Dimensions GetDimensions(object view);
 
         /// <summary>
         /// Sets the dimensions of the view.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="dimensions">The dimensions.</param>
-        void SetDimensions(DependencyObject view, Dimensions dimensions);
+        void SetDimensions(object view, Dimensions dimensions);
     }
 }

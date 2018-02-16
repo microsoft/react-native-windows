@@ -4,11 +4,6 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-#else
-using System.Windows;
-#endif
 
 namespace ReactNative.UIManager
 {
@@ -18,8 +13,7 @@ namespace ReactNative.UIManager
     /// <see cref="ReactShadowNode"/> subclasses used for calculating position
     /// and size for the corresponding native view.
     /// </summary>
-    public abstract class DependencyObjectViewManager<TDependencyObject, TReactShadowNode> : IViewManager
-        where TDependencyObject : DependencyObject
+    public abstract class ViewManagerBase<TView, TReactShadowNode> : IViewManager
         where TReactShadowNode : ReactShadowNode
     {
         /// <summary>
@@ -37,13 +31,7 @@ namespace ReactNative.UIManager
         /// collect properties exposed using the <see cref="Annotations.ReactPropAttribute"/>
         /// annotation from the <see cref="ReactShadowNode"/> subclass.
         /// </summary>
-        public virtual Type ShadowNodeType
-        {
-            get
-            {
-                return typeof(TReactShadowNode);
-            }
-        }
+        public virtual Type ShadowNodeType => typeof(TReactShadowNode);
 
         /// <summary>
         /// The commands map for the view manager.
@@ -66,48 +54,14 @@ namespace ReactNative.UIManager
         public virtual IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
 
         /// <summary>
-        /// Creates a shadow node for the view manager.
-        /// </summary>
-        /// <returns>The shadow node instance.</returns>
-        public IReadOnlyDictionary<string, string> NativeProperties
-        {
-            get
-            {
-                return ViewManagersPropertyCache.GetNativePropertiesForView(GetType(), ShadowNodeType);
-            }
-        }
-
-        /// <summary>
-        /// Update the properties of the given view.
-        /// </summary>
-        /// <param name="viewToUpdate">The view to update.</param>
-        /// <param name="props">The properties.</param>
-        public void UpdateProperties(TDependencyObject viewToUpdate, ReactStylesDiffMap props)
-        {
-            var propertySetters =
-                ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(GetType());
-
-            var keys = props.Keys;
-            foreach (var key in keys)
-            {
-                var setter = default(IPropertySetter);
-                if (propertySetters.TryGetValue(key, out setter))
-                {
-                    setter.UpdateViewManagerProperty(this, viewToUpdate, props);
-                }
-            }
-
-            OnAfterUpdateTransaction(viewToUpdate);
-        }
-
-        /// <summary>
         /// Creates a view and installs event emitters on it.
         /// </summary>
         /// <param name="reactContext">The context.</param>
         /// <returns>The view.</returns>
-        public TDependencyObject CreateView(ThemedReactContext reactContext)
+        public virtual TView CreateView(ThemedReactContext reactContext)
         {
             var view = CreateViewInstance(reactContext);
+            OnViewInstanceCreated(reactContext, view);
             AddEventEmitters(reactContext, view);
             // TODO: enable touch intercepting view parents
             return view;
@@ -115,15 +69,11 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
-        /// additional cleanup by the <see cref="IViewManager"/>
-        /// subclass.
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        /// <remarks>
-        /// Derived classes do not need to call this base method.
-        /// </remarks>
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TDependencyObject view)
+        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TView view)
         {
         }
 
@@ -146,7 +96,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public abstract void UpdateExtraData(TDependencyObject root, object extraData);
+        public abstract void UpdateExtraData(TView root, object extraData);
 
         /// <summary>
         /// Implement this method to receive events/commands directly from
@@ -157,7 +107,7 @@ namespace ReactNative.UIManager
         /// </param>
         /// <param name="commandId">Identifer for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
-        public virtual void ReceiveCommand(TDependencyObject view, int commandId, JArray args)
+        public virtual void ReceiveCommand(TView view, int commandId, JArray args)
         {
         }
 
@@ -166,21 +116,21 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns>The view dimensions.</returns>
-        public abstract Dimensions GetDimensions(TDependencyObject view);
+        public abstract Dimensions GetDimensions(TView view);
 
         /// <summary>
         /// Sets the dimensions of the view.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="dimensions">The output buffer.</param>
-        public abstract void SetDimensions(TDependencyObject view, Dimensions dimensions);
+        public abstract void SetDimensions(TView view, Dimensions dimensions);
 
         /// <summary>
-        /// Creates a new view instance of type <typeparamref name="TDependencyObject"/>.
+        /// Creates a new view instance of type <typeparamref name="TView"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TDependencyObject CreateViewInstance(ThemedReactContext reactContext);
+        protected abstract TView CreateViewInstance(ThemedReactContext reactContext);
 
         /// <summary>
         /// Subclasses can override this method to install custom event 
@@ -192,7 +142,7 @@ namespace ReactNative.UIManager
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
         /// </remarks>
-        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TDependencyObject view)
+        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TView view)
         {
         }
 
@@ -202,25 +152,50 @@ namespace ReactNative.UIManager
         /// for properties updated in the current transaction have been called).
         /// </summary>
         /// <param name="view">The view.</param>
-        protected virtual void OnAfterUpdateTransaction(TDependencyObject view)
+        protected virtual void OnAfterUpdateTransaction(TView view)
         {
         }
 
-#region IViewManager
-
-        void IViewManager.UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
+        internal virtual void OnViewInstanceCreated(ThemedReactContext reactContext, TView view)
         {
-            UpdateProperties((TDependencyObject)viewToUpdate, props);
         }
 
-        DependencyObject IViewManager.CreateView(ThemedReactContext reactContext)
+        #region IViewManager
+
+        IReadOnlyDictionary<string, string> IViewManager.NativeProperties
+        {
+            get
+            {
+                return ViewManagersPropertyCache.GetNativePropertiesForView<TView>(GetType(), ShadowNodeType);
+            }
+        }
+
+        void IViewManager.UpdateProperties(object viewToUpdate, ReactStylesDiffMap props)
+        {
+            var propertySetters =
+                ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<TView>(GetType());
+
+            var keys = props.Keys;
+            foreach (var key in keys)
+            {
+                var setter = default(IPropertySetter);
+                if (propertySetters.TryGetValue(key, out setter))
+                {
+                    setter.UpdateViewManagerProperty(this, viewToUpdate, props);
+                }
+            }
+
+            OnAfterUpdateTransaction((TView)viewToUpdate);
+        }
+
+        object IViewManager.CreateView(ThemedReactContext reactContext)
         {
             return CreateView(reactContext);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
+        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, object view)
         {
-            OnDropViewInstance(reactContext, (TDependencyObject)view);
+            OnDropViewInstance(reactContext, (TView)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()
@@ -228,26 +203,26 @@ namespace ReactNative.UIManager
             return CreateShadowNodeInstance();
         }
 
-        void IViewManager.UpdateExtraData(DependencyObject root, object extraData)
+        void IViewManager.UpdateExtraData(object root, object extraData)
         {
-            UpdateExtraData((TDependencyObject)root, extraData);
+            UpdateExtraData((TView)root, extraData);
         }
 
-        void IViewManager.ReceiveCommand(DependencyObject view, int commandId, JArray args)
+        void IViewManager.ReceiveCommand(object view, int commandId, JArray args)
         {
-            ReceiveCommand((TDependencyObject)view, commandId, args);
+            ReceiveCommand((TView)view, commandId, args);
         }
 
-        Dimensions IViewManager.GetDimensions(DependencyObject view)
+        Dimensions IViewManager.GetDimensions(object view)
         {
-            return GetDimensions((TDependencyObject)view);
+            return GetDimensions((TView)view);
         }
 
-        void IViewManager.SetDimensions(DependencyObject view, Dimensions dimensions)
+        void IViewManager.SetDimensions(object view, Dimensions dimensions)
         {
-            SetDimensions((TDependencyObject)view, dimensions);
+            SetDimensions((TView)view, dimensions);
         }
 
-#endregion
+        #endregion
     }
 }

@@ -1,11 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-#else
-using System.Windows;
-#endif
 
 namespace ReactNative.UIManager
 {
@@ -17,6 +11,6 @@ namespace ReactNative.UIManager
 
         void UpdateShadowNodeProperty(ReactShadowNode shadowNode, ReactStylesDiffMap value);
 
-        void UpdateViewManagerProperty(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap value);
+        void UpdateViewManagerProperty(IViewManager viewManager, object view, ReactStylesDiffMap value);
     }
 }

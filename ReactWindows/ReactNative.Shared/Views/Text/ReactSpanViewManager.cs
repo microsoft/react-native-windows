@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -12,7 +11,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 #else
+using ReactNative.Reflection;
 using System.Collections;
+using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -97,16 +98,17 @@ namespace ReactNative.Views.Text
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        public void AddView(DependencyObject parent, DependencyObject child, int index)
+        public void AddView(object parent, object child, int index)
         {
             var span = (Span)parent;
 
-            var inlineChild = child as Inline;
+            var dependencyObject = ViewConversion.GetDependencyObject(child);
+            var inlineChild = dependencyObject as Inline;
             if (inlineChild == null)
             {
                 inlineChild = new InlineUIContainer
                 {
-                    Child = (UIElement)child,
+                    Child = dependencyObject.As<UIElement>(),
                 };
             }
 
@@ -116,7 +118,7 @@ namespace ReactNative.Views.Text
             var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
             if (parentUIElement != null)
             {
-                AccessibilityHelper.OnChildAdded(parentUIElement, child);
+                AccessibilityHelper.OnChildAdded(parentUIElement, dependencyObject);
             }
 #else
             ((IList)span.Inlines).Insert(index, inlineChild);
@@ -144,7 +146,7 @@ namespace ReactNative.Views.Text
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        public DependencyObject GetChildAt(DependencyObject parent, int index)
+        public object GetChildAt(object parent, int index)
         {
             var span = (Span)parent;
 #if WINDOWS_UWP
@@ -159,11 +161,7 @@ namespace ReactNative.Views.Text
             }
             else
             {
-#if WINDOWS_UWP
                 return child;
-#else
-                return (DependencyObject)child;
-#endif
             }
         }
 
@@ -172,7 +170,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <returns>The number of children.</returns>
-        public int GetChildCount(DependencyObject parent)
+        public int GetChildCount(object parent)
         {
             var span = (Span)parent;
             return span.Inlines.Count;
@@ -196,7 +194,7 @@ namespace ReactNative.Views.Text
         /// Removes all children from the view parent.
         /// </summary>
         /// <param name="parent">The view parent.</param>
-        public void RemoveAllChildren(DependencyObject parent)
+        public void RemoveAllChildren(object parent)
         {
             var span = (Span)parent;
             span.Inlines.Clear();
@@ -214,7 +212,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <param name="index">The index.</param>
-        public void RemoveChildAt(DependencyObject parent, int index)
+        public void RemoveChildAt(object parent, int index)
         {
             var span = (Span)parent;
 #if WINDOWS_UWP

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -46,8 +46,9 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="viewManager">The view manager for the view.</param>
         /// <param name="view">The view to create the animation for.</param>
         /// <param name="dimensions">The view dimensions.</param>
-        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
+        protected override IObservable<Unit> CreateAnimationCore(IViewManager viewManager, object view, Dimensions dimensions)
         {
+            var element = ViewConversion.GetDependencyObject<UIElement>(view);
             var animatedProperty = AnimatedProperty;
             if (animatedProperty.HasValue)
             {
@@ -56,12 +57,12 @@ namespace ReactNative.UIManager.LayoutAnimation
                 switch (animatedProperty.Value)
                 {
                     case AnimatedPropertyType.Opacity:
-                        var opacity = view.Opacity;
+                        var opacity = element.Opacity;
                         var fromOpacity = IsReverse ? opacity : 0.0;
                         var toOpacity = IsReverse ? 0.0 : opacity;
-                        view.Opacity = fromOpacity;
-                        storyboard.Children.Add(CreateDoubleAnimation(view, "Opacity", fromOpacity, toOpacity));
-                        @finally = () => view.Opacity = toOpacity;
+                        element.Opacity = fromOpacity;
+                        storyboard.Children.Add(CreateDoubleAnimation(element, "Opacity", fromOpacity, toOpacity));
+                        @finally = () => element.Opacity = toOpacity;
                         break;
                     case AnimatedPropertyType.ScaleXY:
                         var fromScale = IsReverse ? 1.0 : 0.0;
@@ -74,14 +75,14 @@ namespace ReactNative.UIManager.LayoutAnimation
                             ScaleY = fromScale,
                         };
 
-                        var originalTransform = view.RenderTransform;
+                        var originalTransform = element.RenderTransform;
                         var transformGroup = new TransformGroup();
                         transformGroup.Children.Add(originalTransform);
                         transformGroup.Children.Add(scaleTransform);
-                        view.RenderTransform = transformGroup;
+                        element.RenderTransform = transformGroup;
                         storyboard.Children.Add(CreateDoubleAnimation(scaleTransform, "ScaleX", fromScale, toScale));
                         storyboard.Children.Add(CreateDoubleAnimation(scaleTransform, "ScaleY", fromScale, toScale));
-                        @finally = () => view.RenderTransform = originalTransform;
+                        @finally = () => element.RenderTransform = originalTransform;
                         break;
                     default:
                         throw new InvalidOperationException(

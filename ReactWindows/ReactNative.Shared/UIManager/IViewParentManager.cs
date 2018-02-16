@@ -1,13 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
-
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-#else
-using System.Windows;
-#endif
 
 namespace ReactNative.UIManager
 {
@@ -28,14 +22,14 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        void AddView(DependencyObject parent, DependencyObject child, int index);
+        void AddView(object parent, object child, int index);
 
         /// <summary>
         /// Gets the number of children in the view parent.
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <returns>The number of children.</returns>
-        int GetChildCount(DependencyObject parent);
+        int GetChildCount(object parent);
 
         /// <summary>
         /// Gets the child at the given index.
@@ -43,19 +37,19 @@ namespace ReactNative.UIManager
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        DependencyObject GetChildAt(DependencyObject parent, int index);
+        object GetChildAt(object parent, int index);
 
         /// <summary>
         /// Removes the child at the given index.
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <param name="index">The index.</param>
-        void RemoveChildAt(DependencyObject parent, int index);
+        void RemoveChildAt(object parent, int index);
 
         /// <summary>
         /// Removes all children from the view parent.
         /// </summary>
         /// <param name="parent">The view parent.</param>
-        void RemoveAllChildren(DependencyObject parent);
+        void RemoveAllChildren(object parent);
     }
 }
