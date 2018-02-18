@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace ReactNative.UIManager
@@ -148,7 +148,6 @@ namespace ReactNative.UIManager
                 FlexShrink,
                 FlexWrap,
                 JustifyContent,
-                Overflow,
                 AlignContent,
                 Display,
 
@@ -199,6 +198,12 @@ namespace ReactNative.UIManager
             if (s_layoutOnlyProperties.Contains(prop))
             {
                 return true;
+            }
+            else if (Overflow == prop)
+            {
+                var value = props.GetProperty(prop).Value<string>();
+                // A native view is needed for clipping
+                return value == "visible";
             }
             else if (PointerEvents == prop)
             {
