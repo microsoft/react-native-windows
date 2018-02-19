@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.Modules.WebSocket;
 
@@ -16,18 +16,18 @@ namespace ReactNative.Tests.Modules.WebSocket
 }";
             var jOptions = JObject.Parse(json);
             var options = new WebSocketOptions(jOptions);
-            Assert.IsFalse(options.UseDefaultProxy);
-            Assert.IsEmpty(options.UserName);
-            Assert.IsEmpty(options.ProxyAddress);
-            Assert.IsEmpty(options.Password);
-            Assert.IsEmpty(options.Origin);
+            Assert.That(options.UseDefaultProxy, Is.False);
+            Assert.That(options.UserName, Is.Empty);
+            Assert.That(options.ProxyAddress, Is.Empty);
+            Assert.That(options.Password, Is.Empty);
+            Assert.That(options.Origin, Is.Empty);
 
             var noOptions = new WebSocketOptions(null);
             Assert.That(noOptions.UseDefaultProxy, Is.False);
-            Assert.IsEmpty(noOptions.UserName);
-            Assert.IsEmpty(noOptions.ProxyAddress);
-            Assert.IsEmpty(noOptions.Password);
-            Assert.IsEmpty(noOptions.Origin);
+            Assert.That(noOptions.UserName, Is.Empty);
+            Assert.That(noOptions.ProxyAddress, Is.Empty);
+            Assert.That(noOptions.Password, Is.Empty);
+            Assert.That(noOptions.Origin, Is.Empty);
         }
 
         [Test]
@@ -41,9 +41,9 @@ namespace ReactNative.Tests.Modules.WebSocket
             var jOptions = JObject.Parse(json);
             var options = new WebSocketOptions(jOptions);
             Assert.That(options.UseDefaultProxy, Is.False);
-            Assert.IsEmpty(options.UserName);
-            Assert.IsEmpty(options.ProxyAddress);
-            Assert.IsEmpty(options.Password);
+            Assert.That(options.UserName, Is.Empty);
+            Assert.That(options.ProxyAddress, Is.Empty);
+            Assert.That(options.Password, Is.Empty);
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace ReactNative.Tests.Modules.WebSocket
             var jOptions = JObject.Parse(json);
             var options = new WebSocketOptions(jOptions);
             Assert.That(options.UseDefaultProxy, Is.False);
-            Assert.IsEmpty(options.UserName);
-            Assert.IsEmpty(options.ProxyAddress);
-            Assert.IsEmpty(options.Password);
+            Assert.That(options.UserName, Is.Empty);
+            Assert.That(options.ProxyAddress, Is.Empty);
+            Assert.That(options.Password, Is.Empty);
         }
 
         [Test]
@@ -73,9 +73,9 @@ namespace ReactNative.Tests.Modules.WebSocket
             var jOptions = JObject.Parse(json);
             var options = new WebSocketOptions(jOptions);
             Assert.That(options.UseDefaultProxy, Is.False);
-            Assert.IsEmpty(options.UserName);
-            Assert.IsEmpty(options.ProxyAddress);
-            Assert.IsEmpty(options.Password);
+            Assert.That(options.UserName, Is.Empty);
+            Assert.That(options.ProxyAddress, Is.Empty);
+            Assert.That(options.Password, Is.Empty);
         }
 
         [Test]
@@ -91,9 +91,9 @@ namespace ReactNative.Tests.Modules.WebSocket
             var jOptions = JObject.Parse(json);
             var options = new WebSocketOptions(jOptions);
             Assert.That(options.UseDefaultProxy, Is.True);
-            Assert.IsEmpty(options.UserName);
-            Assert.IsEmpty(options.ProxyAddress);
-            Assert.IsEmpty(options.Password);
+            Assert.That(options.UserName, Is.Empty);
+            Assert.That(options.ProxyAddress, Is.Empty);
+            Assert.That(options.Password, Is.Empty);
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace ReactNative.Tests.Modules.WebSocket
 }";
             var jOptions = JObject.Parse(json);
             var options = new WebSocketOptions(jOptions);
-            Assert.IsEmpty(options.Origin);
+            Assert.That(options.Origin, Is.Empty);
         }
 
     }
