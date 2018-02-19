@@ -75,7 +75,7 @@ class WebSocket extends EventTarget(...WEBSOCKET_EVENTS) {
   // `WebSocket.isAvailable` will return `false`, and WebSocket constructor will throw an error
   static isAvailable: boolean = !!RCTWebSocketModule;
 
-  constructor(url: string, protocols: ?string | ?Array<string>, options: ?{origin?: string}) {
+  constructor(url: string, protocols: ?string | ?Array<string>, options: ?{ headers?: { origin?: string }}) {
     super();
     if (typeof protocols === 'string') {
       protocols = [protocols];
