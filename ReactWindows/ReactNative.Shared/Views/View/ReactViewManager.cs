@@ -119,7 +119,9 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                view.Border = new Border { BorderBrush = DefaultBorderBrush };
+                var borderProps = GetBorderProps(view);
+                var borderBrush = (borderProps?.Color.HasValue ?? false) ? new SolidColorBrush(ColorHelpers.Parse(borderProps.Color.Value)) : DefaultBorderBrush;
+                view.Border = new Border { BorderBrush = borderBrush };
 
                 // Layout animations bypass SetDimensions, hence using XAML bindings.
 
