@@ -48,6 +48,16 @@ namespace ReactNative.Views.View
         /// </summary>
         private BorderProps GetBorderProps(BorderedCanvas view)
         {
+            if (_borderProps.TryGetValue(view, out var props))
+            {
+                return props;
+            }
+
+            return null;
+        }
+
+        private BorderProps GetOrCreateBorderProps(BorderedCanvas view)
+        {
             BorderProps props;
 
             if (!_borderProps.TryGetValue(view, out props))
@@ -271,7 +281,7 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                GetBorderProps(view).Color = color;
+                GetOrCreateBorderProps(view).Color = color;
             }
             else
             {
@@ -302,7 +312,7 @@ namespace ReactNative.Views.View
 
             if (border.BorderBrush == null)
             {
-                var color = GetBorderProps(view).Color;
+                var color = GetOrCreateBorderProps(view).Color;
                 SetBorderColor(view, color);
             }
 
