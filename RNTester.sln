@@ -25,7 +25,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{91c42d32-291d-4b72-90b4-551663d60b8b}*SharedItemsImports = 13
 		..\ReactWindows\ReactNative.Shared\ReactNative.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
-		..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{d6477ad6-9edd-4eba-8c60-cd31f77c52c6}*SharedItemsImports = 4
+		..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
 		..\ReactWindows\ReactNative.Shared\ReactNative.Shared.projitems*{eea8b852-4d07-48e1-8294-a21ab5909fe5}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
