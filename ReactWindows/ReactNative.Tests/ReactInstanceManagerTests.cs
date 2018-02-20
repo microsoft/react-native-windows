@@ -232,6 +232,9 @@ namespace ReactNative.Tests
 
             await DispatcherHelpers.CallOnDispatcherAsync(manager.DisposeAsync);
 
+            // The manager.DisposeAsync resets DispatherHelpers as well 
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+
             reactContext = await DispatcherHelpers.CallOnDispatcherAsync(
                 () => manager.CreateReactContextAsync(CancellationToken.None));
 
@@ -564,6 +567,8 @@ namespace ReactNative.Tests
 
         private static ReactInstanceManager CreateReactInstanceManager(string jsBundleFile, LifecycleState initialLifecycleState = LifecycleState.Foreground)
         {
+            ReactNative.Bridge.DispatcherHelpers.Initialize();
+
             return new ReactInstanceManagerBuilder
             {
                 InitialLifecycleState = initialLifecycleState,
