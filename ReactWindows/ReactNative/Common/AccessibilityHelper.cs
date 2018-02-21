@@ -5,6 +5,7 @@ using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Documents;
 
 namespace ReactNative.Common
 {
@@ -13,6 +14,45 @@ namespace ReactNative.Common
     /// </summary>
     public static class AccessibilityHelper
     {
+        /// <summary>
+        /// Finds the <see cref="UIElement"/> that owns the TextElement.
+        /// </summary>
+        /// <param name="textElement"></param>
+        /// <returns><see cref="UIElement"/> parent of <paramref name="textElement"/>, null otherwise.</returns>
+        public static UIElement GetParentElementFromTextElement(TextElement textElement)
+        {
+            // If the TextElement has not been added to an UIElement yet, accessing ElementStart
+            // will throw NotSupportedException.
+            DependencyObject parent;
+            try
+            {
+                parent = textElement.ElementStart?.Parent;
+            }
+            catch (NotSupportedException)
+            {
+                return null;
+            }
+
+            while (parent is TextElement textElementParent)
+            {
+                try
+                {
+                    parent = textElementParent.ElementStart?.Parent;
+                }
+                catch (NotSupportedException)
+                {
+                    return null;
+                }
+            }
+
+            if (parent is UIElement parentUIElement)
+            {
+                return parentUIElement;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Updates accessibility data in UI tree after <paramref name="child"/> is added to <paramref name="parent"/>
         /// Must be called when a child is added to <paramref name="parent"/>.
@@ -44,6 +84,35 @@ namespace ReactNative.Common
             {
                 UpdateGeneratedNameHereAndUp(parent);
             });
+        }
+
+        /// <summary>
+        /// Updates accessibility data in UI tree after text is changed on a <see cref="TextElement"/>
+        /// Must be called after text is changed on a <see cref="TextElement"/>
+        /// </summary>
+        /// <param name="textElement">The <see cref="TextElement"/>.</param>
+        public static void OnTextChanged(TextElement textElement)
+        {
+            // Post on UI thread because the method requires that parent/child
+            // relationship is established but XAML does not set the relationship
+            // until the next loop after the child is added.
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                OnTextChangedInternal(textElement);
+            });
+        }
+
+        /// <summary>
+        /// Internal implementation of <see cref="OnTextChanged(TextElement)"/>.
+        /// </summary>
+        /// <param name="textElement"></param>
+        private static void OnTextChangedInternal(TextElement textElement)
+        {
+            var parentUIElement = GetParentElementFromTextElement(textElement);
+            if (parentUIElement != null)
+            {
+                UpdateGeneratedNameHereAndUp(parentUIElement);
+            }
         }
 
         /// <summary>

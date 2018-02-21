@@ -119,31 +119,8 @@ namespace ReactNative.Views.Text
             // until the next loop after the child is added.
             DispatcherHelpers.RunOnDispatcher(() =>
             {
-                // Find the UIElement that owns the Span. If the Span has not been added
-                // to an UIElement yet, accessing ElementStart will throw NotSupportedException.
-                DependencyObject spanParent;
-                try
-                {
-                    spanParent = span.ElementStart?.Parent;
-                }
-                catch (NotSupportedException)
-                {
-                    return;
-                }
-
-                while (spanParent is TextElement textElementParent)
-                {
-                    try
-                    {
-                        spanParent = textElementParent.ElementStart?.Parent;
-                    }
-                    catch (NotSupportedException)
-                    {
-                        return;
-                    }
-                }
-
-                if (spanParent is UIElement parentUIElement)
+                var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
+                if (parentUIElement != null)
                 {
                     AccessibilityHelper.OnChildAdded(parentUIElement, child);
                 }
