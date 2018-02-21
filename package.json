@@ -11,7 +11,7 @@
     "node": ">=4"
   },
   "engineStrict": true,
-  "main": "Libraries/react-native-windows/react-native-windows.js",
+  "main": "Libraries/react-native-windows/react-native-windows-implementation.js",
   "scripts": {
     "test": "jasmine",
     "lint": "eslint .",
