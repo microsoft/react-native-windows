@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RNTesterApp", "windows\RNTester\RNTesterApp.csproj", "{283F872F-7145-45A4-8EE0-4A6DB9FB2628}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C} = {2EACF721-73B5-46AE-9775-4A8674D05A9C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative", "..\ReactWindows\ReactNative\ReactNative.csproj", "{C7673AD5-E3AA-468C-A5FD-FA38154E205C}"
 EndProject
@@ -13,11 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNativeWebViewBridge", "..\ReactWindows\ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj", "{7596216B-669C-41F8-86DA-F3637F6545C0}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.shproj", "{91C42D32-291D-4B72-90B4-551663D60B8B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Universal", "..\Yoga\csharp\Windows\Facebook.Yoga.Universal\Facebook.Yoga.Universal.csproj", "{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2EACF721-73B5-46AE-9775-4A8674D05A9C} = {2EACF721-73B5-46AE-9775-4A8674D05A9C}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yoga.uwp", "..\Yoga\csharp\Yoga\Yoga.Universal.vcxproj", "{2EACF721-73B5-46AE-9775-4A8674D05A9C}"
 EndProject
@@ -151,30 +149,6 @@ Global
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x64.Build.0 = Release|x64
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.ActiveCfg = Release|x86
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.Build.0 = Release|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Debug|ARM.ActiveCfg = Debug|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Debug|ARM.Build.0 = Debug|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Debug|x64.ActiveCfg = Debug|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Debug|x64.Build.0 = Debug|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Debug|x86.ActiveCfg = Debug|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Debug|x86.Build.0 = Debug|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.DebugBundle|ARM.ActiveCfg = Debug|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.DebugBundle|ARM.Build.0 = Debug|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.DebugBundle|x64.ActiveCfg = Debug|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.DebugBundle|x64.Build.0 = Debug|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.DebugBundle|x86.ActiveCfg = Debug|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.DebugBundle|x86.Build.0 = Debug|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Release|ARM.ActiveCfg = Release|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Release|ARM.Build.0 = Release|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Release|x64.ActiveCfg = Release|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Release|x64.Build.0 = Release|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Release|x86.ActiveCfg = Release|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.Release|x86.Build.0 = Release|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.ReleaseBundle|ARM.Build.0 = Release|ARM
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.ReleaseBundle|x64.ActiveCfg = Release|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.ReleaseBundle|x64.Build.0 = Release|x64
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.ReleaseBundle|x86.ActiveCfg = Release|x86
-		{D6477AD6-9EDD-4EBA-8C60-CD31F77C52C6}.ReleaseBundle|x86.Build.0 = Release|x86
 		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|ARM.ActiveCfg = Debug|ARM
 		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|ARM.Build.0 = Debug|ARM
 		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|x64.ActiveCfg = Debug|x64
