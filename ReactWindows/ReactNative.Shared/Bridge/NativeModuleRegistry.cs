@@ -113,6 +113,9 @@ namespace ReactNative.Bridge
             if (module is IHasActionQueue moduleWithActionQueue)
             {
                 var actionQueue = moduleWithActionQueue.ActionQueue;
+                if (actionQueue == null)
+                    throw new InvalidOperationException("ActionQueue cannot be null.");
+
                 if (actionQueue.IsOnThread())
                 {
                     _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
@@ -171,6 +174,9 @@ namespace ReactNative.Bridge
             if (module is IHasActionQueue moduleWithActionQueue)
             {
                 var actionQueue = moduleWithActionQueue.ActionQueue;
+                if (actionQueue == null)
+                    throw new InvalidOperationException("ActionQueue cannot be null.");
+
                 if (actionQueue.IsOnThread())
                 {
                     action();
