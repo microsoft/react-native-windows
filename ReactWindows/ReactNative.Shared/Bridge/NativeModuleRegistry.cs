@@ -106,10 +106,18 @@ namespace ReactNative.Bridge
             if (_moduleTable.Count < moduleId)
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
 
-            var actionQueue = (_moduleTable[moduleId].Target as IHasActionQueue)?.ActionQueue;
-            if (actionQueue != null && !actionQueue.IsOnThread())
+            var module = _moduleTable[moduleId].Target;
+            if (module is IHasActionQueue moduleWithActionQueue)
             {
-                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
+                var actionQueue = moduleWithActionQueue.ActionQueue;
+                if (actionQueue.IsOnThread())
+                {
+                    _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+                }
+                else
+                {
+                    actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
+                }
             }
             else
             {
@@ -145,7 +153,6 @@ namespace ReactNative.Bridge
                 foreach (var module in _moduleInstances.Values)
                 {
                     Dispatch(module, module.OnReactInstanceDispose);
-                    (module as IHasActionQueue)?.ActionQueue?.Dispose();
                 }
             }
         }
@@ -154,10 +161,17 @@ namespace ReactNative.Bridge
         {
             // If the module has an action queue and we're not already running on it,
             // dispatch there; otherwise execute inline.
-            var actionQueue = (module as IHasActionQueue)?.ActionQueue;
-            if (actionQueue != null && !actionQueue.IsOnThread())
+            if (module is IHasActionQueue moduleWithActionQueue)
             {
-                actionQueue.Dispatch(action);
+                var actionQueue = moduleWithActionQueue.ActionQueue;
+                if (actionQueue.IsOnThread())
+                {
+                    action();
+                }
+                else
+                {
+                    actionQueue.Dispatch(action);
+                }
             }
             else
             {

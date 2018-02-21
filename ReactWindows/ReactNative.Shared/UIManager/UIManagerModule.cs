@@ -570,6 +570,7 @@ namespace ReactNative.UIManager
         public override void OnReactInstanceDispose()
         {
             _eventDispatcher.OnReactInstanceDispose();
+            _layoutActionQueue.Dispose();
         }
 
         #endregion

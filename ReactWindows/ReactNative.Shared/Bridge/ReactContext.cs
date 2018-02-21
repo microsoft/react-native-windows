@@ -397,7 +397,7 @@ namespace ReactNative.Bridge
         /// <summary>
         /// The native modules queue.
         /// </summary>
-        public IActionQueue NativeModulesQueue => _reactInstance.QueueConfiguration.NativeModulesQueue;
+        internal IActionQueue NativeModulesQueue => _reactInstance.QueueConfiguration.NativeModulesQueue;
 
         /// <summary>
         /// Checks if the current thread is on the React instance native 
