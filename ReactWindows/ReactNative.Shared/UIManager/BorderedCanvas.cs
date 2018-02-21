@@ -39,11 +39,13 @@ namespace ReactNative.UIManager
             }
         }
 
+#if WINDOWS_UWP
         /// <inheritdoc />
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new DynamicAutomationPeer<BorderedCanvas>(this);
         }
+#endif
 
         // TODO: implement runtime change raising event to screen reader #1562
         /// <inheritdoc />

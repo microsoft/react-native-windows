@@ -156,7 +156,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AccessibilityTrait.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DynamicAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />

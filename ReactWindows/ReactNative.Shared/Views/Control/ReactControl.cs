@@ -66,10 +66,12 @@ namespace ReactNative.Views.ControlView
         /// <inheritdoc />                                                    
         public AccessibilityTrait[] AccessibilityTraits { get; set; }
 
+#if WINDOWS_UWP
         /// <inheritdoc />                                              
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new DynamicAutomationPeer<ReactControl>(this);
         }
+#endif
     }
 }

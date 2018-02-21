@@ -1,13 +1,7 @@
 using System.Linq;
-#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Automation.Provider;
-#else
-using System.Windows;
-using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
-#endif
 
 namespace ReactNative.UIManager
 {

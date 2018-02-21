@@ -204,6 +204,7 @@ namespace ReactNative.Views.View
         [ReactProp("accessibilityTraits")]
         public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
         {
+#if WINDOWS_UWP
             AccessibilityTrait[] result = null;
             if (accessibilityTraitsValue != null)
             {
@@ -228,6 +229,7 @@ namespace ReactNative.Views.View
                 }
             }
             view.AccessibilityTraits = result;
+#endif
         }
 
         /// <summary>
