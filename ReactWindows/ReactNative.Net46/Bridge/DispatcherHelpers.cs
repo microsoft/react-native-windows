@@ -43,7 +43,7 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Gets a value indicating whetehr the dispatcher has been set
+        /// Gets a value indicating whether the dispatcher has been set
         /// </summary>
         /// <returns></returns>
         public static bool IsDispatcherSet()
