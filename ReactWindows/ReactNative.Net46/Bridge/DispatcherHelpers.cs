@@ -3,13 +3,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
+// NOTE: Made DispatcherHelpers public for use in CursorModule. Once we upgrade to 0.49 all of this changes anyways.
+
 namespace ReactNative.Bridge
 {
-    // Made DispatcherHelpers public for use in CursorModule. Once we upgrade to 0.49 all of this changes anyways.
+    /// <summary>
+    /// Utility for managing the application dispatcher
+    /// </summary>
     public static class DispatcherHelpers
     {
         private static Dispatcher _dispatcher;
 
+        /// <summary>
+        /// Gets the current dispatcher
+        /// </summary>
         internal static Dispatcher CurrentDispatcher
         {
             get
@@ -35,11 +42,18 @@ namespace ReactNative.Bridge
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the dispatcher has been set
+        /// </summary>
+        /// <returns></returns>
         public static bool IsDispatcherSet()
         {
             return _dispatcher != null;
         }
 
+        /// <summary>
+        /// Assert that the current thread is running on the dispatcher
+        /// </summary>
         public static void AssertOnDispatcher()
         {
             if (!IsOnDispatcher())
@@ -48,6 +62,10 @@ namespace ReactNative.Bridge
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the current thread is the dispatcher thread
+        /// </summary>
+        /// <returns></returns>
         public static bool IsOnDispatcher()
         {
             AssertDispatcherSet();
@@ -55,6 +73,10 @@ namespace ReactNative.Bridge
             return CurrentDispatcher.CheckAccess();
         }
 
+        /// <summary>
+        /// Invoke the action on the dispatcher thread
+        /// </summary>
+        /// <param name="action">The action to invoke</param>
         public static async void RunOnDispatcher(Action action)
         {
             AssertDispatcherSet();
@@ -62,6 +84,12 @@ namespace ReactNative.Bridge
             await CurrentDispatcher.InvokeAsync(action).Task.ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Invoke the function on the dispatcher
+        /// </summary>
+        /// <typeparam name="T">The return type of the result</typeparam>
+        /// <param name="func">The function to invoke</param>
+        /// <returns></returns>
         public static Task<T> CallOnDispatcher<T>(Func<T> func)
         {
             var taskCompletionSource = new TaskCompletionSource<T>();
