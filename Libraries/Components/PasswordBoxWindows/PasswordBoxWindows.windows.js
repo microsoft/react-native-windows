@@ -1,32 +1,42 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ * 
+ * Portions copyright for react-native-windows:
+ * 
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * 
  * @providesModule PasswordBoxWindows
  * @flow
+ * @format
  */
 'use strict';
 
-var DocumentSelectionState = require('DocumentSelectionState');
-var EventEmitter = require('EventEmitter');
-var NativeMethodsMixin = require('NativeMethodsMixin');
-var PropTypes = require('prop-types');
-var React = require('React');
-var createReactClass = require('create-react-class');
-var ReactNative = require('ReactNative');
-var StyleSheet = require('StyleSheet');
-var Text = require('Text');
-var TextInputState = require('TextInputState');
-var TimerMixin = require('react-timer-mixin');
-var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
+const ColorPropType = require('ColorPropType');
+const DocumentSelectionState = require('DocumentSelectionState');
+const EventEmitter = require('EventEmitter');
+const NativeMethodsMixin = require('NativeMethodsMixin');
+const React = require('React');
+const createReactClass = require('create-react-class');
+const PropTypes = require('prop-types');
+const ReactNative = require('ReactNative');
+const StyleSheet = require('StyleSheet');
+const Text = require('Text');
+const TextInputState = require('TextInputState');
+/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
+ * found when Flow v0.54 was deployed. To see the error delete this comment and
+ * run Flow. */
+const TimerMixin = require('react-timer-mixin');
+const TouchableWithoutFeedback = require('TouchableWithoutFeedback');
+const ViewPropTypes = require('ViewPropTypes');
+const {ViewContextTypes} = require('ViewContext');
 
-var ViewPropTypes = require('ViewPropTypes');
+const requireNativeComponent = require('requireNativeComponent');
 
-var requireNativeComponent = require('requireNativeComponent');
+import type {ViewChildContext} from 'ViewContext';
 
 var NativePasswordBox = requireNativeComponent('PasswordBoxWindows', null);
 
@@ -35,7 +45,7 @@ type Event = Object;
 /**
  * A foundational component for inputting passwords into the app via a
  * keyboard. Props provide configurability for several features, such as
- * placeholder text, and different keyboardvtypes, such as a numeric keypad.
+ * placeholder text, and different keyboard types, such as a numeric keypad.
  *
  * The simplest use case is to plop down a `PasswordBoxWindows` and subscribe to the
  * `onChangeText` events to read the user input. There are also other events,
@@ -49,10 +59,12 @@ type Event = Object;
  *     value={this.state.text}
  *   />
  * ```
+ *
+ * Two methods exposed via the native element are .focus() and .blur() that
+ * will focus or blur the PasswordBox programmatically.
  */
-var PasswordBoxWindows = createReactClass({
+const PasswordBoxWindows = createReactClass({
   displayName: 'PasswordBoxWindows',
-
   statics: {
     /* TODO(brentvatne) docs are needed for this */
     State: TextInputState,
@@ -61,11 +73,12 @@ var PasswordBoxWindows = createReactClass({
   propTypes: {
     ...ViewPropTypes,
     /**
-     * If false, disables auto-correct. The default value is true.
+     * If `true`, focuses the input on `componentDidMount`.
+     * The default value is `false`.
      */
     autoFocus: PropTypes.bool,
     /**
-     * If false, text is not editable. The default value is true.
+     * If `false`, text is not editable. The default value is `true`.
      */
     editable: PropTypes.bool,
     /**
@@ -73,9 +86,9 @@ var PasswordBoxWindows = createReactClass({
      *
      * The following values work across platforms:
      *
-     * - default
-     * - numeric
-     * - email-address
+     * - `default`
+     * - `numeric`
+     * - `email-address`
      */
     keyboardType: PropTypes.oneOf([
       // Cross-platform
@@ -97,36 +110,38 @@ var PasswordBoxWindows = createReactClass({
      * Determines the color of the keyboard.
      * @platform ios
      */
-    keyboardAppearance: PropTypes.oneOf([
-      'default',
-      'light',
-      'dark',
-    ]),
+    keyboardAppearance: PropTypes.oneOf(['default', 'light', 'dark']),
     /**
      * Determines how the return key should look. On Android you can also use
      * `returnKeyLabel`.
      *
+     * *Cross platform*
+     *
      * The following values work across platforms:
      *
-     * - done
-     * - go
-     * - next
-     * - search
-     * - send
+     * - `done`
+     * - `go`
+     * - `next`
+     * - `search`
+     * - `send`
+     *
+     * *Android Only*
      *
      * The following values work on Android only:
      *
-     * - none
-     * - previous
+     * - `none`
+     * - `previous`
+     *
+     * *iOS Only*
      *
      * The following values work on iOS only:
      *
-     * - default
-     * - emergency-call
-     * - google
-     * - join
-     * - route
-     * - yahoo
+     * - `default`
+     * - `emergency-call`
+     * - `google`
+     * - `join`
+     * - `route`
+     * - `yahoo`
      */
     returnKeyType: PropTypes.oneOf([
       // Cross-platform
@@ -150,24 +165,24 @@ var PasswordBoxWindows = createReactClass({
      * Sets the return key to the label. Use it instead of `returnKeyType`.
      * @platform android
      */
-     returnKeyLabel: PropTypes.string,
+    returnKeyLabel: PropTypes.string,
     /**
      * Limits the maximum number of characters that can be entered. Use this
      * instead of implementing the logic in JS to avoid flicker.
      */
     maxLength: PropTypes.number,
     /**
-     * If true, the keyboard disables the return key when there is no text and
-     * automatically enables it when there is text. The default value is false.
+     * If `true`, the keyboard disables the return key when there is no text and
+     * automatically enables it when there is text. The default value is `false`.
      * @platform ios
      */
     enablesReturnKeyAutomatically: PropTypes.bool,
     /**
-     * Callback that is called when the text input is blurred
+     * Callback that is called when the text input is blurred.
      */
     onBlur: PropTypes.func,
     /**
-     * Callback that is called when the text input is focused
+     * Callback that is called when the text input is focused.
      */
     onFocus: PropTypes.func,
     /**
@@ -185,14 +200,15 @@ var PasswordBoxWindows = createReactClass({
     onEndEditing: PropTypes.func,
     /**
      * Callback that is called when the text input's submit button is pressed.
-     * Invalid if multiline={true} is specified.
+     * Invalid if `multiline={true}` is specified.
      */
     onSubmitEditing: PropTypes.func,
     /**
      * Callback that is called when a key is pressed.
-     * Pressed key value is passed as an argument to the callback handler.
-     * Fires before onChange callbacks.
-     * @platform ios
+     * This will be called with `{ nativeEvent: { key: keyValue } }`
+     * where `keyValue` is `'Enter'` or `'Backspace'` for respective keys and
+     * the typed-in character otherwise including `' '` for space.
+     * Fires before `onChange` callbacks.
      */
     onKeyPress: PropTypes.func,
     /**
@@ -208,27 +224,37 @@ var PasswordBoxWindows = createReactClass({
      */
     passwordRevealMode: PropTypes.string,
     /**
-     * The string that will be rendered before text input has been entered
+     * The string that will be rendered before text input has been entered.
      */
     placeholder: PropTypes.string,
     /**
-     * The text color of the placeholder string
+     * The text color of the placeholder string.
      */
-    placeholderTextColor: PropTypes.string,
+    placeholderTextColor: ColorPropType,
     /**
-    * The highlight (and cursor on ios) color of the text input
-    */
-    selectionColor: PropTypes.string,
+     * The highlight and cursor color of the text input.
+     */
+    selectionColor: ColorPropType,
     /**
-     * See DocumentSelectionState.js, some state that is responsible for
-     * maintaining selection information for a document
+     * An instance of `DocumentSelectionState`, this is some state that is responsible for
+     * maintaining selection information for a document.
+     *
+     * Some functionality that can be performed with this instance is:
+     *
+     * - `blur()`
+     * - `focus()`
+     * - `update()`
+     *
+     * > You can reference `DocumentSelectionState` in
+     * > [`vendor/document/selection/DocumentSelectionState.js`](https://github.com/facebook/react-native/blob/master/Libraries/vendor/document/selection/DocumentSelectionState.js)
+     *
      * @platform ios
      */
     selectionState: PropTypes.instanceOf(DocumentSelectionState),
     /**
-     * The value to show for the text input. TextInput is a controlled
+     * The value to show for the text input. `TextInput` is a controlled
      * component, which means the native value will be forced to match this
-     * value prop if provided. For most uses this works great, but in some
+     * value prop if provided. For most uses, this works great, but in some
      * cases this may cause flickering - one common cause is preventing edits
      * by keeping value the same. In addition to simply setting the same value,
      * either set `editable={false}`, or set/update `maxLength` to prevent
@@ -237,12 +263,13 @@ var PasswordBoxWindows = createReactClass({
     value: PropTypes.string,
     /**
      * Provides an initial value that will change when the user starts typing.
-     * Useful for simple use-cases where you don't want to deal with listening
+     * Useful for simple use-cases where you do not want to deal with listening
      * to events and updating the value prop to keep the controlled state in sync.
      */
     defaultValue: PropTypes.string,
     /**
-     * When the clear button should appear on the right side of the text view
+     * When the clear button should appear on the right side of the text view.
+     * This property is supported only for single-line TextInput component.
      * @platform ios
      */
     clearButtonMode: PropTypes.oneOf([
@@ -252,24 +279,38 @@ var PasswordBoxWindows = createReactClass({
       'always',
     ]),
     /**
-     * If true, clears the text field automatically when editing begins
+     * If `true`, clears the text field automatically when editing begins.
      * @platform ios
      */
     clearTextOnFocus: PropTypes.bool,
     /**
-     * If true, all text will automatically be selected on focus
+     * If `true`, all text will automatically be selected on focus.
      */
     selectTextOnFocus: PropTypes.bool,
     /**
-     * If true, the text field will blur when submitted.
+     * If `true`, the text field will blur when submitted.
      * The default value is true for single-line fields and false for
-     * multiline fields. Note that for multiline fields, setting blurOnSubmit
-     * to true means that pressing return will blur the field and trigger the
-     * onSubmitEditing event instead of inserting a newline into the field.
+     * multiline fields. Note that for multiline fields, setting `blurOnSubmit`
+     * to `true` means that pressing return will blur the field and trigger the
+     * `onSubmitEditing` event instead of inserting a newline into the field.
      */
     blurOnSubmit: PropTypes.bool,
     /**
-     * Styles
+     * Note that not all Text styles are supported, an incomplete list of what is not supported includes:
+     *
+     * - `borderLeftWidth`
+     * - `borderTopWidth`
+     * - `borderRightWidth`
+     * - `borderBottomWidth`
+     * - `borderTopLeftRadius`
+     * - `borderTopRightRadius`
+     * - `borderBottomRightRadius`
+     * - `borderBottomLeftRadius`
+     *
+     * see [Issue#7070](https://github.com/facebook/react-native/issues/7070)
+     * for more detail.
+     *
+     * [Styles](docs/style.html)
      */
     style: Text.propTypes.style,
     /**
@@ -285,21 +326,17 @@ var PasswordBoxWindows = createReactClass({
    */
   mixins: [NativeMethodsMixin, TimerMixin],
 
-  viewConfig: NativePasswordBox.viewConfig,
-
   /**
-   * Returns if the input is currently focused.
+   * Returns `true` if the input is currently focused; `false` otherwise.
    */
   isFocused: function(): boolean {
-    return TextInputState.currentlyFocusedField() ===
-      ReactNative.findNodeHandle(this.refs.input);
+    return (
+      TextInputState.currentlyFocusedField() ===
+      ReactNative.findNodeHandle(this._inputRef)
+    );
   },
 
-  contextTypes: {
-    onFocusRequested: PropTypes.func,
-    focusEmitter: PropTypes.instanceOf(EventEmitter),
-  },
-
+  _inputRef: (undefined: any),
   _focusSubscription: (undefined: ?Function),
   _lastNativeText: (undefined: ?string),
 
@@ -313,13 +350,13 @@ var PasswordBoxWindows = createReactClass({
     }
     this._focusSubscription = this.context.focusEmitter.addListener(
       'focus',
-      (el) => {
+      el => {
         if (this === el) {
           this.requestAnimationFrame(this.focus);
         } else if (this.isFocused()) {
           this.blur();
         }
-      }
+      },
     );
     if (this.props.autoFocus) {
       this.context.onFocusRequested(this);
@@ -333,31 +370,43 @@ var PasswordBoxWindows = createReactClass({
     }
   },
 
-  getChildContext: function(): Object {
-    return {isInAParentText: true};
+  getChildContext(): ViewChildContext {
+    return {
+      isInAParentText: true,
+    };
   },
 
-  childContextTypes: {
-    isInAParentText: PropTypes.bool
+  childContextTypes: ViewContextTypes,
+
+  contextTypes: {
+    ...ViewContextTypes,
+    onFocusRequested: PropTypes.func,
+    focusEmitter: PropTypes.instanceOf(EventEmitter),
   },
 
   /**
-   * Removes all text from the input.
+   * Removes all text from the `PasswordBox`.
    */
   clear: function() {
     this.setNativeProps({text: ''});
   },
 
   _getText: function(): ?string {
-    return typeof this.props.value === 'string' ?
-      this.props.value :
-      this.props.defaultValue;
+    return typeof this.props.value === 'string'
+      ? this.props.value
+      : typeof this.props.defaultValue === 'string'
+        ? this.props.defaultValue
+        : '';
+  },
+
+  _setNativeRef: function(ref: any) {
+    this._inputRef = ref;
   },
 
   render: function() {
-    var textContainer =
+    const textContainer =
       <NativePasswordBox
-        ref="input"
+        ref={this._setNativeRef}
         style={[this.props.style]}
         keyboardType={this.props.keyboardType}
         maxLength={this.props.maxLength}
@@ -410,15 +459,17 @@ var PasswordBoxWindows = createReactClass({
   _onChange: function(event: Event) {
     // Make sure to fire the mostRecentEventCount first so it is already set on
     // native when the text value is set.
-    this.refs.input.setNativeProps({
-      mostRecentEventCount: event.nativeEvent.eventCount,
-    });
+    if (this._inputRef) {
+      this._inputRef.setNativeProps({
+        mostRecentEventCount: event.nativeEvent.eventCount,
+      });
+    }
 
     var text = event.nativeEvent.text;
     this.props.onChange && this.props.onChange(event);
     this.props.onChangeText && this.props.onChangeText(text);
 
-    if (!this.refs.input) {
+    if (!this._inputRef) {
       // calling `this.props.onChange` or `this.props.onChangeText`
       // may clean up the input itself. Exits here.
       return;
@@ -428,14 +479,21 @@ var PasswordBoxWindows = createReactClass({
     this.forceUpdate();
   },
 
-  componentDidUpdate: function () {
+  componentDidUpdate: function() {
     // This is necessary in case native updates the text and JS decides
     // that the update should be ignored and we should stick with the value
     // that we have in JS.
-    if (this._lastNativeText !== this.props.value && typeof this.props.value === 'string') {
-      this.refs.input.setNativeProps({
-        text: this.props.value,
-      });
+    const nativeProps = {};
+
+    if (
+      this._lastNativeText !== this.props.value &&
+      typeof this.props.value === 'string'
+    ) {
+      nativeProps.text = this.props.value;
+    }
+
+    if (Object.keys(nativeProps).length > 0 && this._inputRef) {
+      this._inputRef.setNativeProps(nativeProps);
     }
   },
 

@@ -1,9 +1,6 @@
 /**
- * Copyright (c) Microsoft Corporation and contributors. All rights reserved.
- * All rights reserved.
- *
- * This source code is licensed under the MIT-style license found in the
- * LICENSE file in the root directory of this source tree.
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
  *
  * Helper component for building keyboard focusable custom controls when the original native one has no such support
  *
@@ -155,7 +152,7 @@ function createFocusableComponent(Component: any) {
       this._splitProps(props);
     }
 
-    componentWillReceiveProps(nextProps: Object) {
+    UNSAFE_componentWillReceiveProps(nextProps: Object) {
       this._splitProps(nextProps);      
     }
 
