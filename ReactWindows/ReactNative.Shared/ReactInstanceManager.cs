@@ -403,6 +403,8 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
 
+            var rootViewtag = rootView.GetTag();
+
             await DispatcherHelpers.CallOnDispatcher(() =>
             {
                 if (_attachedRootViews.Remove(rootView))
@@ -410,7 +412,7 @@ namespace ReactNative
                     var currentReactContext = _currentReactContext;
                     if (currentReactContext != null && currentReactContext.HasActiveReactInstance)
                     {
-                        DetachViewFromInstance(rootView, currentReactContext.ReactInstance);
+                        DetachViewFromInstance(rootView, rootViewtag, currentReactContext.ReactInstance);
                     }
                 }
 
@@ -602,14 +604,14 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
         }
 
-        private void DetachViewFromInstance(ReactRootView rootView, IReactInstance reactInstance)
+        private void DetachViewFromInstance(ReactRootView rootView, int rootViewTag, IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
             uiManagerModule.DetachRootView(rootView);
 
-            reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
+            reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootViewTag);
         }
 
         private async Task TearDownReactContextAsync(ReactContext reactContext, CancellationToken token)

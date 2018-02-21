@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -21,8 +21,25 @@ namespace ReactNative.Views.Scroll
     {
         private const int CommandScrollTo = 1;
 
-        private readonly IDictionary<ScrollView, ScrollViewerData> _scrollViewerData =
-            new Dictionary<ScrollView, ScrollViewerData>();
+        /// <summary>
+        /// Attached property for ScrollViewerData
+        /// </summary>
+        public static readonly DependencyProperty ScrollViewerDataProperty =
+            DependencyProperty.RegisterAttached(
+                "ScrollViewerData",
+                typeof(ScrollViewerData),
+                typeof(ScrollView),
+                null);
+
+        private static ScrollViewerData GetScrollViewerData(ScrollView view)
+        {
+            return (ScrollViewerData)view.GetValue(ScrollViewerDataProperty);
+        }
+
+        private static void SetScrollViewerData(ScrollView view, ScrollViewerData scrollViewerData)
+        {
+            view.SetValue(ScrollViewerDataProperty, scrollViewerData);
+        }
 
         /// <summary>
         /// The name of the view manager.
@@ -122,7 +139,7 @@ namespace ReactNative.Views.Scroll
                 ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Disabled;
 
-            view.HorizontalScrollBarVisibility = _scrollViewerData[view].HorizontalScrollBarVisibility = horizontalScrollMode;
+            view.HorizontalScrollBarVisibility = GetScrollViewerData(view).HorizontalScrollBarVisibility = horizontalScrollMode;
         }
 
         /// <summary>
@@ -317,7 +334,7 @@ namespace ReactNative.Views.Scroll
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _scrollViewerData.Remove(view);
+            view.ClearValue(ScrollViewerDataProperty);
 
             var hashCode = view.GetHashCode();
             if (_scollViewCancelMap.ContainsKey(hashCode))
@@ -372,7 +389,7 @@ namespace ReactNative.Views.Scroll
                 Focusable = false,
             };
 
-            _scrollViewerData.Add(scrollViewer, scrollViewerData);
+            SetScrollViewerData(scrollViewer, scrollViewerData);
 
             return scrollViewer;
         }

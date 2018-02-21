@@ -8,6 +8,7 @@ using ReactNativeWebViewBridge;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using static System.FormattableString;
@@ -30,8 +31,18 @@ namespace ReactNative.Views.Web
 
         private const string BridgeName = "__REACT_WEB_VIEW_BRIDGE";
 
-        private readonly ConcurrentDictionary<WebView, WebViewData> _webViewData = new ConcurrentDictionary<WebView, WebViewData>();
         private readonly ReactContext _context;
+
+        /// <summary>
+        /// Attached property for WebViewData
+        /// </summary>
+        public static readonly DependencyProperty WebViewDataProperty =
+            DependencyProperty.RegisterAttached(
+                "WebViewData",
+                typeof(WebViewData),
+                typeof(WebView),
+                null);
+
 
         /// <summary>
         /// Instantiates the <see cref="ReactWebViewManager"/>.
@@ -194,8 +205,7 @@ namespace ReactNative.Views.Web
             view.NavigationFailed -= OnNavigationFailed;
             view.NavigationCompleted -= OnNavigationCompleted;
 
-            WebViewData data;
-            _webViewData.TryRemove(view, out data);
+            view.ClearValue(WebViewDataProperty);
         }
 
         /// <summary>
@@ -206,8 +216,7 @@ namespace ReactNative.Views.Web
         protected override WebView CreateViewInstance(ThemedReactContext reactContext)
         {
             var view = new WebView(WebViewExecutionMode.SeparateThread);
-            var data = new WebViewData();
-            _webViewData.AddOrUpdate(view, data, (k, v) => v);
+            view.SetValue(WebViewDataProperty, new WebViewData());
             return view;
         }
 
@@ -422,7 +431,7 @@ namespace ReactNative.Views.Web
 
         private WebViewData GetWebViewData(WebView webView)
         {
-            return _webViewData[webView];
+            return (WebViewData)webView.GetValue(WebViewDataProperty);
         }
 
         class WebViewData

@@ -19,11 +19,45 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly Dictionary<int, SerialDisposable> _disposables =
-            new Dictionary<int, SerialDisposable>();
+        /// <summary>
+        /// Attached property for list of image sources
+        /// </summary>
+        public static readonly DependencyProperty DisposableProperty =
+            DependencyProperty.RegisterAttached(
+                "Disposable",
+                typeof(SerialDisposable),
+                typeof(Border),
+                null);
 
-        private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
-            new Dictionary<int, List<KeyValuePair<string, double>>>();
+        private static SerialDisposable GetDisposable(Border view)
+        {
+            return (SerialDisposable)view.GetValue(DisposableProperty);
+        }
+
+        private static void SetDisposable(Border view, SerialDisposable disposable)
+        {
+            view.SetValue(DisposableProperty, disposable);
+        }
+
+        /// <summary>
+        /// Attached property for list of image sources
+        /// </summary>
+        public static readonly DependencyProperty SourcesProperty =
+            DependencyProperty.RegisterAttached(
+                "Sources",
+                typeof(List<KeyValuePair<string, double>>),
+                typeof(Border),
+                null);
+
+        private static List<KeyValuePair<string, double>> GetSources(Border view)
+        {
+            return (List<KeyValuePair<string, double>>)view.GetValue(SourcesProperty);
+        }
+
+        private static void SetSources(Border view, List<KeyValuePair<string, double>> sources)
+        {
+            view.SetValue(SourcesProperty, sources);
+        }
 
         /// <summary>
         /// The view manager name.
@@ -120,17 +154,15 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                var viewSources = default(List<KeyValuePair<string, double>>);
-                var tag = view.GetTag();
-
-                if (_imageSources.TryGetValue(tag, out viewSources))
+                var viewSources = GetSources(view);
+                if (viewSources != null)
                 {
                     viewSources.Clear();
                 }
                 else
                 {
                     viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.Add(tag, viewSources);
+                    SetSources(view, viewSources);
                 }
 
                 foreach (var source in sources)
@@ -207,14 +239,14 @@ namespace ReactNative.Views.Image
             base.OnDropViewInstance(reactContext, view);
 
             var tag = view.GetTag();
-            var disposable = default(SerialDisposable);
-            if (_disposables.TryGetValue(tag, out disposable))
+            var disposable = GetDisposable(view);
+            if (disposable != null)
             {
                 disposable.Dispose();
-                _disposables.Remove(tag);
+                view.ClearValue(DisposableProperty);
             }
 
-            _imageSources.Remove(tag);
+            view.ClearValue(SourcesProperty);
         }
 
         /// <summary>
@@ -292,11 +324,11 @@ namespace ReactNative.Views.Image
             var imageBrush = (ImageBrush)view.Background;
             var tag = view.GetTag();
 
-            var disposable = default(SerialDisposable);
-            if (!_disposables.TryGetValue(tag, out disposable))
+            var disposable = GetDisposable(view);
+            if (disposable == null)
             {
                 disposable = new SerialDisposable();
-                _disposables.Add(tag, disposable);
+                SetDisposable(view, disposable);
             }
 
             var image = new BitmapImage();
@@ -332,8 +364,8 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         private void SetUriFromMultipleSources(Border view)
         {
-            var sources = default(List<KeyValuePair<string, double>>);
-            if (_imageSources.TryGetValue(view.GetTag(), out sources))
+            var sources = GetSources(view);
+            if (sources != null)
             {
                 var targetImageSize = view.Width * view.Height;
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));
