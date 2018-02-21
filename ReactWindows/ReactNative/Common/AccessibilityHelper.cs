@@ -64,7 +64,7 @@ namespace ReactNative.Common
             // Post on UI thread because the method requires that parent/child
             // relationship is established but XAML does not set the relationship
             // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcher(parent.Dispatcher, () =>
             {
                 OnChildAddedInternal(parent, child);
             });
@@ -80,7 +80,7 @@ namespace ReactNative.Common
             // Post on UI thread because the method requires that parent/child
             // relationship is established but XAML does not set the relationship
             // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcher(parent.Dispatcher, () =>
             {
                 UpdateGeneratedNameHereAndUp(parent);
             });
@@ -96,10 +96,25 @@ namespace ReactNative.Common
             // Post on UI thread because the method requires that parent/child
             // relationship is established but XAML does not set the relationship
             // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcher(textElement.Dispatcher, () =>
             {
                 OnTextChangedInternal(textElement);
             });
+        }
+
+        /// <summary>
+        /// The framework calls this method on new view instance creation. The method is
+        /// intended for performing necessary accessibility setup (if any) for the newly created views.
+        /// </summary>
+        /// <param name="view"></param>
+        public static void OnViewInstanceCreated(UIElement view)
+        {
+            // Not all the UIElements will create AutomationPeer immediately after being created (e.g. Border, Canvas).
+            // We need to make sure AutomationPeer is always created since the impementation relies on
+            // traversing automation tree. Setting AutomationProperties.Name to some string and then clearing it will guarantee that
+            // AutomationPeer is always created.
+            AutomationProperties.SetName(view, " ");
+            view.ClearValue(AutomationProperties.NameProperty);
         }
 
         /// <summary>
@@ -165,7 +180,7 @@ namespace ReactNative.Common
             // Post on UI thread because the method requires that parent/child
             // relationship is established but XAML does not set the relationship
             // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcher(uiElement.Dispatcher, () =>
             {
                 SetImportantForAccessibilityInternal(uiElement, importantForAccessibility);
             });
@@ -424,7 +439,7 @@ namespace ReactNative.Common
             // Post on UI thread because the method requires that parent/child
             // relationship is established but XAML does not set the relationship
             // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcher(element.Dispatcher, () =>
             {
                 SetAccessibilityLabelInternal(element, accessibilityLabel);
             });

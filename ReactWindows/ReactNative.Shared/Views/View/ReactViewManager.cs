@@ -151,18 +151,7 @@ namespace ReactNative.Views.View
         /// <returns>The view instance.</returns>
         protected override BorderedCanvas CreateViewInstance(ThemedReactContext reactContext)
         {
-            var borderedCanvas = new BorderedCanvas();
-
-#if WINDOWS_UWP
-            // Setting AutomationProperties.Name to some string and then clearing it will guarantee that
-            // AutomationPeer is always created for the canvas. The default implementation does not
-            // create AutomationPeer for canvas if AutomationProperties.Name has never been set,
-            // but to implement accessibility it is required that the AutomationPeer is always created.
-            AutomationProperties.SetName(borderedCanvas, " ");
-            borderedCanvas.ClearValue(AutomationProperties.NameProperty);
-#endif
-
-            return borderedCanvas;
+            return new BorderedCanvas();
         }
 
         #region misc RN props

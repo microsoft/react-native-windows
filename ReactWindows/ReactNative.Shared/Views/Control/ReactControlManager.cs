@@ -252,18 +252,7 @@ namespace ReactNative.Views.ControlView
         /// <returns>The view instance.</returns>
         protected override ReactControl CreateViewInstance(ThemedReactContext reactContext)
         {
-            var instance = new ReactControl();
-
-#if WINDOWS_UWP
-            // Setting AutomationProperties.Name to some string and then clearing it will guarantee that
-            // AutomationPeer is always created for the border. The default implementation does not
-            // create AutomationPeer for border if AutomationProperties.Name has never been set,
-            // but to implement accessibility properly it is required that the AutomationPeer is always created.
-            AutomationProperties.SetName(instance, " ");
-            instance.ClearValue(AutomationProperties.NameProperty);
-#endif
-
-            return instance;
+            return new ReactControl();
         }
 
         /// <summary>

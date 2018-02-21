@@ -222,13 +222,6 @@ namespace ReactNative.Views.Image
                 },
             };
 
-            // Setting AutomationProperties.Name to some string and then clearing it will guarantee that
-            // AutomationPeer is always created for the border. The default implementation does not
-            // create AutomationPeer for border if AutomationProperties.Name has never been set,
-            // but to implement accessibility properly it is required that the AutomationPeer is always created.
-            AutomationProperties.SetName(border, " ");
-            border.ClearValue(AutomationProperties.NameProperty);
-
             return border;
         }
 

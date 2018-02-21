@@ -117,7 +117,7 @@ namespace ReactNative.Views.Text
             // Post on UI thread because the method requires that parent/child
             // relationship is established but XAML does not set the relationship
             // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(() =>
+            DispatcherHelpers.RunOnDispatcher(parent.Dispatcher, () =>
             {
                 var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
                 if (parentUIElement != null)
