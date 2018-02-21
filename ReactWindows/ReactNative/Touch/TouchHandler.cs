@@ -19,6 +19,7 @@ namespace ReactNative.Touch
     {
         private readonly FrameworkElement _view;
         private readonly List<ReactPointer> _pointers;
+        private readonly Dictionary<RoutedEvent, PointerEventHandler> _pointerHandlers;
 
         private uint _pointerIDs;
 
@@ -26,21 +27,27 @@ namespace ReactNative.Touch
         {
             _view = view;
             _pointers = new List<ReactPointer>();
+            _pointerHandlers = new Dictionary<RoutedEvent, PointerEventHandler>()
+            {
+                { UIElement.PointerPressedEvent, new PointerEventHandler(OnPointerPressed) },
+                { UIElement.PointerMovedEvent, new PointerEventHandler(OnPointerMoved) },
+                { UIElement.PointerReleasedEvent, new PointerEventHandler(OnPointerReleased) },
+                { UIElement.PointerCanceledEvent, new PointerEventHandler(OnPointerCanceled) },
+                { UIElement.PointerCaptureLostEvent, new PointerEventHandler(OnPointerCaptureLost)}
+            };
 
-            _view.PointerPressed += OnPointerPressed;
-            _view.PointerMoved += OnPointerMoved;
-            _view.PointerReleased += OnPointerReleased;
-            _view.PointerCanceled += OnPointerCanceled;
-            _view.PointerCaptureLost += OnPointerCaptureLost;
+            foreach (KeyValuePair<RoutedEvent, PointerEventHandler> handler in _pointerHandlers)
+            {
+                _view.AddHandler(handler.Key, handler.Value, true);
+            }
         }
 
         public void Dispose()
         {
-            _view.PointerPressed -= OnPointerPressed;
-            _view.PointerMoved -= OnPointerMoved;
-            _view.PointerReleased -= OnPointerReleased;
-            _view.PointerCanceled -= OnPointerCanceled;
-            _view.PointerCaptureLost -= OnPointerCaptureLost;
+            foreach (KeyValuePair<RoutedEvent, PointerEventHandler> handler in _pointerHandlers)
+            {
+                _view.RemoveHandler(handler.Key, handler.Value);
+            }
         }
 
         public static void OnPointerEntered(DependencyObject view, PointerRoutedEventArgs e)

@@ -205,16 +205,13 @@ namespace ReactNative.Bridge
 
         class NativeMethod : INativeMethod
         {
-            private readonly NativeModuleBase _instance;
-            private readonly Lazy<Action<INativeModule, IReactInstance, JArray>> _invokeDelegate;
+            private readonly Lazy<Action<IReactInstance, JArray>> _invokeDelegate;
 
             public NativeMethod(NativeModuleBase instance, MethodInfo method)
             {
-                _instance = instance;
-
                 var delegateFactory = instance._delegateFactory;
                 delegateFactory.Validate(method);
-                _invokeDelegate = new Lazy<Action<INativeModule, IReactInstance, JArray>>(() => delegateFactory.Create(instance, method));
+                _invokeDelegate = new Lazy<Action<IReactInstance, JArray>>(() => delegateFactory.Create(instance, method));
                 Type = delegateFactory.GetMethodType(method);
             }
 
@@ -227,7 +224,7 @@ namespace ReactNative.Bridge
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod").Start())
                 {
-                    _invokeDelegate.Value(_instance, reactInstance, jsArguments);
+                    _invokeDelegate.Value(reactInstance, jsArguments);
                 }
             }
         }

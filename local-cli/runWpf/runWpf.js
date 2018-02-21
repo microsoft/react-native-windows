@@ -65,6 +65,7 @@ runWpf({
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
  *    proxy: Boolean - Run using remote JS proxy
+ *    no-packager: Boolean - Do not launch packager while building
  */
 module.exports = {
   name: 'run-wpf',
@@ -84,5 +85,8 @@ module.exports = {
     command: '--verbose',
     description: 'Enables logging',
     default: false,
+  }, {
+    command: '--no-packager',
+    description: 'Do not launch packager while building'
   }]
 };

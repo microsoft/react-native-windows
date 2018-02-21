@@ -301,6 +301,20 @@ namespace ReactNative.UIManager
                         }
                     }
                 },
+                {
+                    "topKeyPress",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onKeyPress" },
+                                { "captured" , "onKeyPressCapture" }
+                            }
+                        }
+                    }
+                },
             };
         }
 

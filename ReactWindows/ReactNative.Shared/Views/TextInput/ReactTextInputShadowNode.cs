@@ -38,8 +38,6 @@ namespace ReactNative.Views.TextInput
             5f,
         };
 
-        private float[] _computedPadding;
-
         private bool _multiline;
         private bool _autoGrow;
         private int _letterSpacing;
@@ -281,10 +279,11 @@ namespace ReactNative.Views.TextInput
         {
             base.OnCollectExtraUpdates(uiViewOperationQueue);
 
-            if (_computedPadding != null)
+            var computedPadding = GetComputedPadding();
+
+            if (computedPadding != null)
             {
-                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, _computedPadding);
-                _computedPadding = null;
+                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, computedPadding);
             }
 
             if (_jsEventCount != Unset)
@@ -326,8 +325,6 @@ namespace ReactNative.Views.TextInput
 
         private static YogaSize MeasureTextInput(ReactTextInputShadowNode textInputNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            textInputNode._computedPadding = textInputNode.GetComputedPadding();
-
             var normalizedWidth = Math.Max(0,
                 (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width));
 

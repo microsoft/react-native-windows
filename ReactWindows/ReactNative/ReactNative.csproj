@@ -147,6 +147,7 @@
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\DisplayMetrics.cs" />
+    <Compile Include="UIManager\UIViewOperationQueue.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
@@ -217,16 +218,16 @@
       <Version>1.5.0-pre1</Version>
     </PackageReference>
     <PackageReference Include="fresco.imagepipeline">
-      <Version>0.1.1</Version>
+      <Version>0.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.4</Version>
+      <Version>6.0.6</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>9.0.1</Version>
+      <Version>10.0.3</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive">
-      <Version>3.1.1</Version>
+      <Version>4.0.0-preview00001</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

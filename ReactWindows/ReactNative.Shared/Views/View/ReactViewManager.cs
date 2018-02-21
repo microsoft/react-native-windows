@@ -1,8 +1,10 @@
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
@@ -76,10 +78,12 @@ namespace ReactNative.Views.View
             }
         }
 
+        private static ThreadLocal<Brush> s_defaultBorderBrush = new ThreadLocal<Brush>(() => new SolidColorBrush(Colors.Black));
+
         /// <summary>
         /// Default brush for the view borders.
         /// </summary>
-        protected readonly Brush _defaultBorderBrush = new SolidColorBrush(Colors.Black);
+        protected Brush DefaultBorderBrush => s_defaultBorderBrush.Value;
 
         /// <summary>
         /// In WPF in order to be clickable (hit-test visible) the element needs to have background brush.
@@ -120,7 +124,7 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                view.Border = new Border { BorderBrush = _defaultBorderBrush };
+                view.Border = new Border { BorderBrush = DefaultBorderBrush };
 
                 // Layout animations bypass SetDimensions, hence using XAML bindings.
 
@@ -337,7 +341,7 @@ namespace ReactNative.Views.View
                 var border = GetOrCreateBorder(view);
                 border.BorderBrush = color.HasValue
                     ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                    : _defaultBorderBrush;
+                    : DefaultBorderBrush;
                 TransferBackgroundBrush(view);
             }
         }

@@ -32,8 +32,6 @@ namespace ReactNative.Views.TextInput
 
         private static string s_passwordChar;
 
-        private float[] _computedPadding;
-
         private int _letterSpacing;
 
         private double _fontSize = Unset;
@@ -173,10 +171,11 @@ namespace ReactNative.Views.TextInput
         {
             base.OnCollectExtraUpdates(uiViewOperationQueue);
 
-            if (_computedPadding != null)
+            var computedPadding = GetComputedPadding();
+
+            if (computedPadding != null)
             {
-                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, _computedPadding);
-                _computedPadding = null;
+                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, computedPadding);
             }
         }
 
@@ -214,8 +213,6 @@ namespace ReactNative.Views.TextInput
 
         private static YogaSize MeasurePasswordBox(ReactPasswordBoxShadowNode textInputNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            textInputNode._computedPadding = textInputNode.GetComputedPadding();
-
             var normalizedWidth = Math.Max(0,
                 (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width));
 
