@@ -5,5 +5,7 @@ namespace ReactNative.Bridge
     interface IHasActionQueue
     {
         IActionQueue ActionQueue { get; }
+
+        void DisposeActionQueue();
     }
 }

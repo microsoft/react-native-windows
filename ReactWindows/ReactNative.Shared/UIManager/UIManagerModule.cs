@@ -80,6 +80,25 @@ namespace ReactNative.UIManager
         public override IActionQueue ActionQueue => _layoutActionQueue;
 
         /// <summary>
+        /// Disposes the ActionQueue.
+        /// </summary>
+        /// <remarks>
+        /// If you override <see cref="ActionQueue" /> to return a custom action
+        /// queue, you should also override this method to ensure your action
+        /// queue is disposed properly. This method runs on the native modules
+        /// queue.
+        /// 
+        /// Note that <see cref="INativeModule.OnReactInstanceDispose" />
+        /// isn't the appropriate place to dispose your action queue because
+        /// that means you'll dispose your action queue while running on
+        /// your action queue.
+        /// </remarks>
+        public override void DisposeActionQueue()
+        {
+            _layoutActionQueue.Dispose();
+        }
+
+        /// <summary>
         /// The constants exported by this module.
         /// </summary>
         public override IReadOnlyDictionary<string, object> Constants
@@ -570,7 +589,6 @@ namespace ReactNative.UIManager
         public override void OnReactInstanceDispose()
         {
             _eventDispatcher.OnReactInstanceDispose();
-            _layoutActionQueue.Dispose();
         }
 
         #endregion

@@ -106,6 +106,9 @@ namespace ReactNative.Bridge
             if (_moduleTable.Count < moduleId)
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
 
+            // We don't use the `NativeModuleRegistry.Dispatch` helper here
+            // because it would require creating an an extra `Action` in the
+            // case that `Invoke` is called inline.
             var module = _moduleTable[moduleId].Target;
             if (module is IHasActionQueue moduleWithActionQueue)
             {
@@ -153,6 +156,10 @@ namespace ReactNative.Bridge
                 foreach (var module in _moduleInstances.Values)
                 {
                     Dispatch(module, module.OnReactInstanceDispose);
+                    if (module is IHasActionQueue moduleWithActionQueue)
+                    {
+                        moduleWithActionQueue.DisposeActionQueue();
+                    }
                 }
             }
         }

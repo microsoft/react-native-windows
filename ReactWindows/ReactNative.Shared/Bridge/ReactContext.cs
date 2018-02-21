@@ -22,6 +22,7 @@ namespace ReactNative.Bridge
             new List<IBackgroundEventListener>();
 
         private IReactInstance _reactInstance;
+        private IndisposableActionQueue _indisposableNativeModulesQueue;
 
         /// <summary>
         /// The React instance associated with the context.
@@ -397,7 +398,7 @@ namespace ReactNative.Bridge
         /// <summary>
         /// The native modules queue.
         /// </summary>
-        internal IActionQueue NativeModulesQueue => _reactInstance.QueueConfiguration.NativeModulesQueue;
+        internal IActionQueue IndisposableNativeModulesQueue => _indisposableNativeModulesQueue;
 
         /// <summary>
         /// Checks if the current thread is on the React instance native 
@@ -410,7 +411,7 @@ namespace ReactNative.Bridge
         public bool IsOnNativeModulesQueueThread()
         {
             AssertReactInstance();
-            return NativeModulesQueue.IsOnThread();
+            return _reactInstance.QueueConfiguration.NativeModulesQueue.IsOnThread();
         }
 
         /// <summary>
@@ -420,7 +421,7 @@ namespace ReactNative.Bridge
         public void AssertOnNativeModulesQueueThread()
         {
             AssertReactInstance();
-            NativeModulesQueue.AssertOnThread();
+            _reactInstance.QueueConfiguration.NativeModulesQueue.AssertOnThread();
         }
 
         /// <summary>
@@ -430,7 +431,7 @@ namespace ReactNative.Bridge
         public void RunOnNativeModulesQueueThread(Action action)
         {
             AssertReactInstance();
-            NativeModulesQueue.Dispatch(action);
+            _reactInstance.QueueConfiguration.NativeModulesQueue.Dispatch(action);
         }
 
         /// <summary>
@@ -473,6 +474,7 @@ namespace ReactNative.Bridge
             }
 
             _reactInstance = instance;
+            _indisposableNativeModulesQueue = new IndisposableActionQueue(_reactInstance.QueueConfiguration.NativeModulesQueue);
         }
 
         private void AssertReactInstance()
