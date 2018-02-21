@@ -26,10 +26,15 @@ namespace ReactNative.UIManager
 
         private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();
 
-        private static DependencyObjectData GetData(this DependencyObject view, bool create = false)
+        private static DependencyObjectData GetData(this DependencyObject view)
         {
-            var elementData = (DependencyObjectData)view.GetValue(DependencyObjectExtensionsProperty);
-            if (elementData == null && create)
+            return (DependencyObjectData)view.GetValue(DependencyObjectExtensionsProperty);
+        }
+
+        private static DependencyObjectData GetOrAddData(this DependencyObject view)
+        {
+            var elementData = view.GetData();
+            if (elementData == null)
             {
                 elementData = new DependencyObjectData();
                 view.SetValue(DependencyObjectExtensionsProperty, elementData);
@@ -47,7 +52,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            view.GetData(true).PointerEvents = pointerEvents;
+            view.GetOrAddData().PointerEvents = pointerEvents;
         }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            view.GetData(true).CompoundView = compoundView;
+            view.GetOrAddData().CompoundView = compoundView;
         }
 
         /// <summary>
@@ -114,7 +119,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            view.GetData(true).Tag = tag;
+            view.GetOrAddData().Tag = tag;
         }
 
         /// <summary>
@@ -160,7 +165,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            view.GetData(true).Context = context;
+            view.GetOrAddData().Context = context;
         }
 
         /// <summary>
