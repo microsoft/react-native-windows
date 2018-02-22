@@ -89,6 +89,8 @@ namespace ReactNative.Common
             var parentUIElement = GetParentElementFromTextElement(textElement);
             if (parentUIElement != null)
             {
+                // Call UpdateLayout() on parent to make sure parent/child relationship is updated.
+                parentUIElement.UpdateLayout();
                 UpdateGeneratedNameHereAndUp(parentUIElement);
             }
         }
