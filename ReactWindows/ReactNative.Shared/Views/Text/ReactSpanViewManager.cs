@@ -113,18 +113,11 @@ namespace ReactNative.Views.Text
 #if WINDOWS_UWP
             span.Inlines.Insert(index, inlineChild);
 
-            // Initialize ImportantForAccessibility for the child.
-            // Post on UI thread because the method requires that parent/child
-            // relationship is established but XAML does not set the relationship
-            // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(parent.Dispatcher, () =>
+            var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
+            if (parentUIElement != null)
             {
-                var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
-                if (parentUIElement != null)
-                {
-                    AccessibilityHelper.OnChildAdded(parentUIElement, child);
-                }
-            });
+                AccessibilityHelper.OnChildAdded(parentUIElement, child);
+            }
 #else
             ((IList)span.Inlines).Insert(index, inlineChild);
 #endif

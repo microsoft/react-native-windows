@@ -61,13 +61,10 @@ namespace ReactNative.Common
         /// <param name="child">The added child.</param>
         public static void OnChildAdded(UIElement parent, DependencyObject child)
         {
-            // Post on UI thread because the method requires that parent/child
-            // relationship is established but XAML does not set the relationship
-            // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(parent.Dispatcher, () =>
-            {
-                OnChildAddedInternal(parent, child);
-            });
+            // Call UpdateLayout() on parent to make sure parent/child relationship is updated.
+            parent.UpdateLayout();
+            UpdateImportantForAccessibilityForAddedChild(parent, child);
+            UpdateGeneratedNameHereAndUp(parent);
         }
 
         /// <summary>
@@ -77,13 +74,9 @@ namespace ReactNative.Common
         /// <param name="parent">The element from which a child is removed.</param>
         public static void OnChildRemoved(UIElement parent)
         {
-            // Post on UI thread because the method requires that parent/child
-            // relationship is established but XAML does not set the relationship
-            // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(parent.Dispatcher, () =>
-            {
-                UpdateGeneratedNameHereAndUp(parent);
-            });
+            // Call UpdateLayout() on parent to make sure parent/child relationship is updated.
+            parent.UpdateLayout();
+            UpdateGeneratedNameHereAndUp(parent);
         }
 
         /// <summary>
@@ -93,13 +86,11 @@ namespace ReactNative.Common
         /// <param name="textElement">The <see cref="TextElement"/>.</param>
         public static void OnTextChanged(TextElement textElement)
         {
-            // Post on UI thread because the method requires that parent/child
-            // relationship is established but XAML does not set the relationship
-            // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(textElement.Dispatcher, () =>
+            var parentUIElement = GetParentElementFromTextElement(textElement);
+            if (parentUIElement != null)
             {
-                OnTextChangedInternal(textElement);
-            });
+                UpdateGeneratedNameHereAndUp(parentUIElement);
+            }
         }
 
         /// <summary>
@@ -115,30 +106,6 @@ namespace ReactNative.Common
             // AutomationPeer is always created.
             AutomationProperties.SetName(view, " ");
             view.ClearValue(AutomationProperties.NameProperty);
-        }
-
-        /// <summary>
-        /// Internal implementation of <see cref="OnTextChanged(TextElement)"/>.
-        /// </summary>
-        /// <param name="textElement"></param>
-        private static void OnTextChangedInternal(TextElement textElement)
-        {
-            var parentUIElement = GetParentElementFromTextElement(textElement);
-            if (parentUIElement != null)
-            {
-                UpdateGeneratedNameHereAndUp(parentUIElement);
-            }
-        }
-
-        /// <summary>
-        /// Internal implementation of <see cref="OnChildAdded(UIElement, DependencyObject)"/>.
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <param name="child"></param>
-        private static void OnChildAddedInternal(UIElement parent, DependencyObject child)
-        {
-            UpdateImportantForAccessibilityForAddedChild(parent, child);
-            UpdateGeneratedNameHereAndUp(parent);
         }
 
         /// <summary>
@@ -177,32 +144,14 @@ namespace ReactNative.Common
         /// <param name="importantForAccessibility">The new value of ImportantForAccessibility property.</param>
         public static void SetImportantForAccessibility(UIElement uiElement, ImportantForAccessibility importantForAccessibility)
         {
-            // Post on UI thread because the method requires that parent/child
-            // relationship is established but XAML does not set the relationship
-            // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(uiElement.Dispatcher, () =>
-            {
-                SetImportantForAccessibilityInternal(uiElement, importantForAccessibility);
-            });
-        }
-
-        /// <summary>
-        /// Internal implementation of SetImportantForAccessibility.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="importantForAccessibility"></param>
-        private static void SetImportantForAccessibilityInternal(UIElement element, ImportantForAccessibility importantForAccessibility)
-        {
             // Check if property is already set to requested value.
-            if (GetImportantForAccessibilityAttached(element) == importantForAccessibility)
+            if (GetImportantForAccessibilityAttached(uiElement) == importantForAccessibility)
             {
                 return;
             }
-
-            SetImportantForAccessibilityAttached(element, importantForAccessibility);
-
-            UpdateName(element);
-            UpdateAccessibilityViewIfNeeded(element);
+            SetImportantForAccessibilityAttached(uiElement, importantForAccessibility);
+            UpdateName(uiElement);
+            UpdateAccessibilityViewIfNeeded(uiElement);
         }
 
         private static void UpdateImportantForAccessibilityForAddedChild(UIElement parent, DependencyObject child)
@@ -436,28 +385,11 @@ namespace ReactNative.Common
         /// <param name="accessibilityLabel"></param>
         public static void SetAccessibilityLabel(UIElement element, string accessibilityLabel)
         {
-            // Post on UI thread because the method requires that parent/child
-            // relationship is established but XAML does not set the relationship
-            // until the next loop after the child is added.
-            DispatcherHelpers.RunOnDispatcher(element.Dispatcher, () =>
-            {
-                SetAccessibilityLabelInternal(element, accessibilityLabel);
-            });
-        }
-
-        /// <summary>
-        /// Internal implementation of <see cref="SetAccessibilityLabel(UIElement, string)"/>.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="accessibilityLabel"></param>
-        private static void SetAccessibilityLabelInternal(UIElement element, string accessibilityLabel)
-        {
             // Check if property is already set to requested value.
             if (GetAccessibilityLabelAttached(element) == accessibilityLabel)
             {
                 return;
             }
-
             SetAccessibilityLabelAttached(element, accessibilityLabel);
             UpdateName(element);
             UpdateAccessibilityViewIfNeeded(element);
