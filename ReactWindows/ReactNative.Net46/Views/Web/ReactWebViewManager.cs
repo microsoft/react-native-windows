@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Web.Events;
@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Net.Http;
 using System.Windows.Navigation;
 using static System.FormattableString;
-using System.Windows;
 
 namespace ReactNative.Views.Web
 {
@@ -23,15 +22,7 @@ namespace ReactNative.Views.Web
         private const int CommandGoForward = 2;
         private const int CommandReload = 3;
 
-        /// <summary>
-        /// Attached property for InjectedJS
-        /// </summary>
-        public static readonly DependencyProperty InjectedJSProperty =
-            DependencyProperty.RegisterAttached(
-                "InjectedJS",
-                typeof(string),
-                typeof(WebBrowser),
-                null);
+        private readonly Dictionary<int, string> _injectedJS = new Dictionary<int, string>();
 
         /// <summary>
         /// The name of the view manager.
@@ -90,7 +81,7 @@ namespace ReactNative.Views.Web
         [ReactProp("injectedJavaScript")]
         public void SetInjectedJavaScript(WebBrowser view, string injectedJavaScript)
         {
-            view.SetValue(InjectedJSProperty, injectedJavaScript);
+            _injectedJS[view.GetTag()] = injectedJavaScript;
         }
 
         /// <summary>
@@ -175,8 +166,6 @@ namespace ReactNative.Views.Web
             base.OnDropViewInstance(reactContext, view);
             view.LoadCompleted -= OnLoadCompleted;
             view.Navigated -= OnNavigationStarting;
-
-            view.ClearValue(InjectedJSProperty);
         }
 
         /// <summary>
@@ -209,9 +198,9 @@ namespace ReactNative.Views.Web
 
             if (webView.IsLoaded)
             {
-                var script = (string)webView.GetValue(InjectedJSProperty);
+                var script = default(string);
 
-                if (!string.IsNullOrWhiteSpace(script))
+                if (_injectedJS.TryGetValue(webView.GetTag(), out script) && !string.IsNullOrWhiteSpace(script))
                 {
                     string[] args = { script };
                     try

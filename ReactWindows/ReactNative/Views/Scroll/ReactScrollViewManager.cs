@@ -23,25 +23,8 @@ namespace ReactNative.Views.Scroll
     {
         private const int CommandScrollTo = 1;
 
-        /// <summary>
-        /// Attached property for ScrollViewerData
-        /// </summary>
-        public static readonly DependencyProperty ScrollViewerDataProperty =
-            DependencyProperty.RegisterAttached(
-                "ScrollViewerData",
-                typeof(ScrollViewerData),
-                typeof(ScrollViewer),
-                null);
-
-        private static ScrollViewerData GetScrollViewerData(ScrollViewer view)
-        {
-            return (ScrollViewerData)view.GetValue(ScrollViewerDataProperty);
-        }
-
-        private static void SetScrollViewerData(ScrollViewer view, ScrollViewerData scrollViewerData)
-        {
-            view.SetValue(ScrollViewerDataProperty, scrollViewerData);
-        }
+        private readonly ConcurrentDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
+            new ConcurrentDictionary<ScrollViewer, ScrollViewerData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -127,7 +110,7 @@ namespace ReactNative.Views.Scroll
             if (enabled)
             {
                 view.VerticalScrollMode = ScrollMode.Auto;
-                view.HorizontalScrollMode = GetScrollViewerData(view).HorizontalScrollMode;
+                view.HorizontalScrollMode = _scrollViewerData[view].HorizontalScrollMode;
             }
             else
             {
@@ -150,7 +133,7 @@ namespace ReactNative.Views.Scroll
                 ? ScrollMode.Auto
                 : ScrollMode.Disabled;
 
-            view.HorizontalScrollMode = GetScrollViewerData(view).HorizontalScrollMode = horizontalScrollMode;
+            view.HorizontalScrollMode = _scrollViewerData[view].HorizontalScrollMode = horizontalScrollMode;
         }
 
         /// <summary>
@@ -266,16 +249,15 @@ namespace ReactNative.Views.Scroll
         public void SetDisableKeyboardBasedScrolling(ScrollViewer view, bool? disabled)
         {
             var disabledValue = disabled ?? false;
-            var scrollViewerData = GetScrollViewerData(view);
-            if (scrollViewerData.DisableArrowNavigation != disabledValue)
+            if (_scrollViewerData[view].DisableArrowNavigation != disabledValue)
             {
-                if (scrollViewerData.IsControlLoaded)
+                if (_scrollViewerData[view].IsControlLoaded)
                 {
                     UpdateDisableKeyboardBasedScrolling(view, disabledValue);
                 }
                 else
                 {
-                    scrollViewerData.DisableArrowNavigation = disabledValue;
+                    _scrollViewerData[view].DisableArrowNavigation = disabledValue;
                 }
             }
         }
@@ -373,7 +355,8 @@ namespace ReactNative.Views.Scroll
         {
             base.OnDropViewInstance(reactContext, view);
 
-            view.ClearValue(ScrollViewerDataProperty);
+            ScrollViewerData data;
+            _scrollViewerData.TryRemove(view, out data);
 
             view.Loaded -= OnLoaded;
             view.ViewChanging -= OnViewChanging;
@@ -427,7 +410,7 @@ namespace ReactNative.Views.Scroll
                 TabIndex = 0,
             };
 
-            SetScrollViewerData(scrollViewer, scrollViewerData);
+            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => v);
 
             return scrollViewer;
         }
@@ -542,18 +525,14 @@ namespace ReactNative.Views.Scroll
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var scrollViewer = (ScrollViewer)sender;
-            var scrollViewerData = GetScrollViewerData(scrollViewer);
+            _scrollViewerData[scrollViewer].IsControlLoaded = true;
 
-            scrollViewerData.IsControlLoaded = true;
-
-            UpdateDisableKeyboardBasedScrolling(scrollViewer, scrollViewerData.DisableArrowNavigation);
+            UpdateDisableKeyboardBasedScrolling(scrollViewer, _scrollViewerData[scrollViewer].DisableArrowNavigation);
         }
 
         private void UpdateDisableKeyboardBasedScrolling(ScrollViewer view, bool disable)
         {
-            var scrollViewerData = GetScrollViewerData(view);
-
-            ScrollContentPresenter contentPresenter = scrollViewerData.ContentPresenter;
+            ScrollContentPresenter contentPresenter = _scrollViewerData[view].ContentPresenter;
             if (disable)
             {
                 if (contentPresenter == null)
@@ -563,7 +542,7 @@ namespace ReactNative.Views.Scroll
                     {
                         throw new InvalidOperationException("ScrollViewer doesn't seem to contain a ScrollContentPresenter");
                     }
-                    scrollViewerData.ContentPresenter = contentPresenter;
+                    _scrollViewerData[view].ContentPresenter = contentPresenter;
                 }
 
                 contentPresenter.KeyDown += OnPresenterKeyDown;
@@ -576,7 +555,7 @@ namespace ReactNative.Views.Scroll
                 }
             }
 
-            scrollViewerData.DisableArrowNavigation = disable;
+            _scrollViewerData[view].DisableArrowNavigation = disable;
         }
 
         private static T FindChild<T>(DependencyObject startNode)
