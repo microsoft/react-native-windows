@@ -1,7 +1,8 @@
-﻿using ReactNative.Animated;
+using ReactNative.Animated;
 using ReactNative.Bridge;
 using ReactNative.Modules.Accessibilityinfo;
 using ReactNative.Modules.AppState;
+using ReactNative.Modules.Camera;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
@@ -51,7 +52,7 @@ namespace ReactNative.Shell
                 new AccessibilityInfoModule(reactContext),
                 new AppStateModule(reactContext),
                 new AsyncStorageModule(),
-                //new CameraRollManager(reactContext),
+                new CameraRollManager(reactContext),
                 new ClipboardModule(),
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
