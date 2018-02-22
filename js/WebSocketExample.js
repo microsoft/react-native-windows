@@ -18,6 +18,7 @@ const ReactNative = require('react-native');
 const {
   Image,
   PixelRatio,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -69,7 +70,7 @@ class WebSocketImage extends React.Component {
   state: {blob: ?Blob} = {blob: null};
   componentDidMount() {
     let ws = (this.ws = new WebSocket(this.props.url));
-    ws.binaryType = 'blob';
+    ws.binaryType = Platform.OS === 'windows' ? 'arraybuffer' : 'blob';
     ws.onmessage = event => {
       if (event.data instanceof Blob) {
         const blob = event.data;
