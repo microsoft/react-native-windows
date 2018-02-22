@@ -26,7 +26,7 @@
 
 const AppRegistry = require('AppRegistry');
 const AsyncStorage = require('AsyncStorage');
-const BackAndroid = require('BackAndroid');
+const BackHandler = require('BackHandler');
 const Dimensions = require('Dimensions');
 const SplitViewWindows = require('SplitViewWindows');
 const Linking = require('Linking');
@@ -58,8 +58,8 @@ class RNTesterApp extends React.Component {
   props: Props;
   state: RNTesterNavigationState;
 
-  componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this._handleBackButtonPress.bind(this));
+  UNSAFE_componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this._handleBackButtonPress.bind(this));
   }
 
   componentDidMount() {
