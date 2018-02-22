@@ -163,7 +163,6 @@ namespace ReactNative
                 }
                 _hasStartedCreatingInitialContext = true;
 
-                ReactChoreographer.Initialize();
                 return await CreateReactContextCoreAsync(token);
             }
         }
@@ -212,7 +211,6 @@ namespace ReactNative
                 {
                     _hasStartedCreatingInitialContext = true;
 
-                    ReactChoreographer.Initialize();
                     return await CreateReactContextCoreAsync(token);
                 }
             }
