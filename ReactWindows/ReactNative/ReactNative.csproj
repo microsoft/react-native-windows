@@ -97,6 +97,8 @@
     <Compile Include="Bridge\Queue\DispatcherActionQueue.cs" />
     <Compile Include="Bridge\Queue\LayoutActionQueue.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
+    <Compile Include="Common\AccessibilityHelper.cs" />
+    <Compile Include="Common\ImportantForAccessibility.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>

@@ -1,4 +1,4 @@
-﻿using ReactNative.Reflection;
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 #if WINDOWS_UWP
+using ReactNative.Bridge;
+using ReactNative.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
@@ -110,6 +112,50 @@ namespace ReactNative.Views.Text
 
 #if WINDOWS_UWP
             span.Inlines.Insert(index, inlineChild);
+
+            // Initialize ImportantForAccessibility for the child.
+            // Post on UI thread because the method requires that parent/child
+            // relationship is established but XAML does not set the relationship
+            // until the next loop after the child is added.
+            DispatcherHelpers.RunOnDispatcher(() =>
+            {
+                // Find the UIElement that owns the Span. If the Span has not been added
+                // to an UIElement yet, accessing ElementStart will throw NotSupportedException.
+                DependencyObject spanParent;
+                try
+                {
+                    spanParent = span.ElementStart?.Parent;
+                }
+                catch (NotSupportedException)
+                {
+                    return;
+                }
+
+                while (spanParent is TextElement textElementParent)
+                {
+                    try
+                    {
+                        spanParent = textElementParent.ElementStart?.Parent;
+                    }
+                    catch (NotSupportedException)
+                    {
+                        return;
+                    }
+                }
+
+                if (spanParent is UIElement parentUIElement)
+                {
+                    if (child is UIElement childUIElement)
+                    {
+                        AccessibilityHelper.InitImportantForAccessibility(parentUIElement, childUIElement);
+                    }
+                    else if (child is Inline)
+                    {
+                        // If the child is an Inline it may contain multiple child UIElements.
+                        AccessibilityHelper.InitImportantForAccessibility(parentUIElement);
+                    }
+                }
+            });
 #else
             ((IList)span.Inlines).Insert(index, inlineChild);
 #endif
