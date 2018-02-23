@@ -151,6 +151,7 @@ namespace ReactNative
         /// <returns>A task to await the result.</returns>
         public async Task<ReactContext> CreateReactContextAsync(CancellationToken token)
         {
+            DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
                 if (_hasStartedCreatingInitialContext)
@@ -161,8 +162,7 @@ namespace ReactNative
                             "a new file, explicitly, use the re-create method.");
                 }
                 _hasStartedCreatingInitialContext = true;
- 
-                ReactChoreographer.Initialize();
+
                 return await CreateReactContextCoreAsync(token);
             }
         }
@@ -211,7 +211,6 @@ namespace ReactNative
                 {
                     _hasStartedCreatingInitialContext = true;
 
-                    ReactChoreographer.Initialize();
                     return await CreateReactContextCoreAsync(token);
                 }
             }
@@ -277,9 +276,6 @@ namespace ReactNative
             }
 
             _lifecycleStateMachine.OnSuspend();
-
-            ReactChoreographer.Dispose();
-            DispatcherHelpers.Reset();
         }
 
         /// <summary>
@@ -350,6 +346,7 @@ namespace ReactNative
                 }
 
                 ReactChoreographer.Dispose();
+                DispatcherHelpers.Reset();
             }
         }
 
