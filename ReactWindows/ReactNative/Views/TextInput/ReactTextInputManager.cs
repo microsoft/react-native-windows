@@ -1,5 +1,5 @@
 using Newtonsoft.Json.Linq;
-using ReactNative.Common;
+using ReactNative.Accessibility;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;

@@ -1,5 +1,6 @@
 using System;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 #else
@@ -12,7 +13,11 @@ namespace ReactNative.UIManager
     /// <summary>
     /// Represents a Canvas with an optional Border inside.
     /// </summary>
+#if WINDOWS_UWP
     public class BorderedCanvas : Canvas, IAccessible
+#else
+    public class BorderedCanvas : Canvas
+#endif
     {
         private Border _border = null;
 
@@ -45,10 +50,10 @@ namespace ReactNative.UIManager
         {
             return new DynamicAutomationPeer<BorderedCanvas>(this);
         }
-#endif
 
         // TODO: implement runtime change raising event to screen reader #1562
         /// <inheritdoc />
         public AccessibilityTrait[] AccessibilityTraits { get; set; }
+#endif
     }
 }

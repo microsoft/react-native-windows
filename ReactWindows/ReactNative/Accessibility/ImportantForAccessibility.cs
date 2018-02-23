@@ -1,4 +1,4 @@
-namespace ReactNative.Common
+namespace ReactNative.Accessibility
 {
     /// <summary>
     /// Accessibility importance mode.

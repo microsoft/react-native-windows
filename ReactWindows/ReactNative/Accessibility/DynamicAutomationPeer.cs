@@ -1,9 +1,10 @@
+using ReactNative.UIManager;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Automation.Provider;
 
-namespace ReactNative.UIManager
+namespace ReactNative.Accessibility
 {
     /// <summary>
     /// Automation peer that allows to dynamically change behavior.
@@ -50,7 +51,7 @@ namespace ReactNative.UIManager
             Owner.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
-                .DispatchEvent(new Events.AccessibilityTapEvent(Owner.GetTag()));
+                .DispatchEvent(new AccessibilityTapEvent(Owner.GetTag()));
         }
     }
 }

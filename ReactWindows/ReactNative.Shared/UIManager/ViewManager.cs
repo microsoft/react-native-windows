@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
-using ReactNative.Common;
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else

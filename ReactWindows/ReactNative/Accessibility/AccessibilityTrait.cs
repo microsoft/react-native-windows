@@ -1,4 +1,4 @@
-namespace ReactNative.UIManager
+namespace ReactNative.Accessibility
 {
     /// <summary>
     /// Accessibility traits supported by React Native Windows.

@@ -8,7 +8,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
-using ReactNative.Common;
+using ReactNative.Accessibility;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;

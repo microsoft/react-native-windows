@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
+using ReactNative.UIManager.Events;
 
-namespace ReactNative.UIManager.Events
+namespace ReactNative.Accessibility
 {
     internal class AccessibilityTapEvent : Event
     {

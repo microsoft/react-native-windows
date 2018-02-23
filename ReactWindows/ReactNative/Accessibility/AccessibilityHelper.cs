@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Documents;
 
-namespace ReactNative.Common
+namespace ReactNative.Accessibility
 {
     /// <summary>
     /// Accessibility helper methods.

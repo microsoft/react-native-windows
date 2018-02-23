@@ -1,6 +1,6 @@
 using System;
 #if WINDOWS_UWP
-using ReactNative.Common;
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 #else
 using System.Windows;

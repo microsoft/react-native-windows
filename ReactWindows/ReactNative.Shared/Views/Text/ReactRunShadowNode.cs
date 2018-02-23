@@ -2,7 +2,7 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
-using ReactNative.Common;
+using ReactNative.Accessibility;
 using Windows.UI.Xaml.Documents;
 #else
 using System.Windows.Documents;

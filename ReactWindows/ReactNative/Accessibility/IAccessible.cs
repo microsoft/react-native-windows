@@ -1,4 +1,4 @@
-namespace ReactNative.UIManager
+namespace ReactNative.Accessibility
 {
     /// <summary>
     /// Partial accessibility support: accessibilityTraits.
