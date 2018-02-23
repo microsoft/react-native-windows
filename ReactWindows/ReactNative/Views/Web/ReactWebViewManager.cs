@@ -6,6 +6,7 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Web.Events;
 using ReactNativeWebViewBridge;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
@@ -29,7 +30,7 @@ namespace ReactNative.Views.Web
 
         private const string BridgeName = "__REACT_WEB_VIEW_BRIDGE";
 
-        private readonly Dictionary<WebView, WebViewData> _webViewData = new Dictionary<WebView, WebViewData>();
+        private readonly ConcurrentDictionary<WebView, WebViewData> _webViewData = new ConcurrentDictionary<WebView, WebViewData>();
         private readonly ReactContext _context;
 
         /// <summary>
@@ -192,7 +193,8 @@ namespace ReactNative.Views.Web
             view.DOMContentLoaded -= OnDOMContentLoaded;
             view.NavigationFailed -= OnNavigationFailed;
             view.NavigationCompleted -= OnNavigationCompleted;
-            _webViewData.Remove(view);
+
+            _webViewData.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -203,7 +205,8 @@ namespace ReactNative.Views.Web
         protected override WebView CreateViewInstance(ThemedReactContext reactContext)
         {
             var view = new WebView(WebViewExecutionMode.SeparateThread);
-            _webViewData.Add(view, new WebViewData());
+            var data = new WebViewData();
+            _webViewData.AddOrUpdate(view, data, (k, v) => v);
             return view;
         }
 
