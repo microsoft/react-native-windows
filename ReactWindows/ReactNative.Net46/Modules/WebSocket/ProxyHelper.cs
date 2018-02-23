@@ -13,14 +13,22 @@ namespace ReactNative.Modules.WebSocket
 
         public ProxyHelper(Uri address)
         {
-            var proxy = WebRequest.GetSystemWebProxy();
+            // we get wss:// (or ws://) scheme that is not all proxies handle correctly. For better autodiscovering
+            // replace wss:// to https:// (ws:// to http:// accordingly)
+
+            var normalizedAddress = new UriBuilder(address)
+            {
+                Scheme = address.Scheme == "wss" ? Uri.UriSchemeHttps : Uri.UriSchemeHttp
+            };
+
+            var proxy = WebRequest.DefaultWebProxy;
             proxy.Credentials = CredentialCache.DefaultCredentials;
-            
-            IsBypassed = proxy.IsBypassed(address);
+
+            IsBypassed = proxy.IsBypassed(normalizedAddress.Uri);
 
             if (!IsBypassed)
             {
-                ProxyAddress = proxy.GetProxy(address).AbsoluteUri;
+                ProxyAddress = proxy.GetProxy(normalizedAddress.Uri).AbsoluteUri;
                 var defCreds = CredentialCache.DefaultCredentials as NetworkCredential;
 
                 if (defCreds == null)
