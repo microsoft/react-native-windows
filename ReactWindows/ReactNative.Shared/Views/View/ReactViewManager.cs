@@ -48,6 +48,16 @@ namespace ReactNative.Views.View
         /// </summary>
         private BorderProps GetBorderProps(BorderedCanvas view)
         {
+            if (_borderProps.TryGetValue(view, out var props))
+            {
+                return props;
+            }
+
+            return null;
+        }
+
+        private BorderProps GetOrCreateBorderProps(BorderedCanvas view)
+        {
             BorderProps props;
 
             if (!_borderProps.TryGetValue(view, out props))
@@ -119,7 +129,9 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                view.Border = new Border { BorderBrush = DefaultBorderBrush };
+                var borderProps = GetBorderProps(view);
+                var borderBrush = (borderProps?.Color.HasValue ?? false) ? new SolidColorBrush(ColorHelpers.Parse(borderProps.Color.Value)) : DefaultBorderBrush;
+                view.Border = new Border { BorderBrush = borderBrush };
 
                 // Layout animations bypass SetDimensions, hence using XAML bindings.
 
@@ -269,7 +281,7 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                GetBorderProps(view).Color = color;
+                GetOrCreateBorderProps(view).Color = color;
             }
             else
             {
@@ -300,7 +312,7 @@ namespace ReactNative.Views.View
 
             if (border.BorderBrush == null)
             {
-                var color = GetBorderProps(view).Color;
+                var color = GetOrCreateBorderProps(view).Color;
                 SetBorderColor(view, color);
             }
 
