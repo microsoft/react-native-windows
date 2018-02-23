@@ -11,7 +11,6 @@ using System.Linq;
 using ReactNative.Accessibility;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
@@ -80,6 +79,7 @@ namespace ReactNative.Views.View
 
         private static ThreadLocal<Brush> s_defaultBorderBrush = new ThreadLocal<Brush>(() => new SolidColorBrush(Colors.Black));
 
+#if WINDOWS_UWP
         private static AccessibilityTrait? ParseTrait(string trait)
         {
             if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
@@ -89,6 +89,7 @@ namespace ReactNative.Views.View
 
             return null;
         }
+#endif
 
         /// <summary>
         /// Default brush for the view borders.
