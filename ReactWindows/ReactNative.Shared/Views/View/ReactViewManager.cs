@@ -80,6 +80,16 @@ namespace ReactNative.Views.View
 
         private static ThreadLocal<Brush> s_defaultBorderBrush = new ThreadLocal<Brush>(() => new SolidColorBrush(Colors.Black));
 
+        private static AccessibilityTrait? ParseTrait(string trait)
+        {
+            if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Default brush for the view borders.
         /// </summary>
@@ -210,24 +220,19 @@ namespace ReactNative.Views.View
             {
                 if (accessibilityTraitsValue is JArray asJArray)
                 {
-                    var list = new List<AccessibilityTrait>();
-                    foreach (var s in asJArray.Values<string>())
-                    {
-                        if (EnumHelpers.TryParse<AccessibilityTrait>(s, out var accessibilityTrait))
-                        {
-                            list.Add(accessibilityTrait);
-                        }
-                    }
-                    result = list.Any() ? list.ToArray() : null;
+                    result = asJArray.Values<string>()
+                        .Select(ParseTrait)
+                        .OfType<AccessibilityTrait>()
+                        .ToArray();
+                    
+                    result = result.Length > 0 ? result : null;
                 }
-                else
+                else if (EnumHelpers.TryParse<AccessibilityTrait>(accessibilityTraitsValue.ToString(), out var accessibilityTrait))
                 {
-                    if (EnumHelpers.TryParse<AccessibilityTrait>(accessibilityTraitsValue.ToString(), out var accessibilityTrait))
-                    {
-                        result = new[] { accessibilityTrait };
-                    }
+                    result = new[] { accessibilityTrait };
                 }
             }
+            
             view.AccessibilityTraits = result;
 #endif
         }
@@ -382,10 +387,6 @@ namespace ReactNative.Views.View
 
             var uiElementChild = child.As<UIElement>();
             parent.Children.Insert(index, uiElementChild);
-
-#if WINDOWS_UWP
-            AccessibilityHelper.OnChildAdded(parent, uiElementChild);
-#endif
         }
 
         /// <summary>
@@ -438,10 +439,6 @@ namespace ReactNative.Views.View
             {
                 parent.Children.Clear();
             }
-
-#if WINDOWS_UWP
-            AccessibilityHelper.OnChildRemoved(parent);
-#endif
         }
 
         /// <summary>
@@ -457,10 +454,6 @@ namespace ReactNative.Views.View
             }
 
             parent.Children.RemoveAt(index);
-
-#if WINDOWS_UWP
-            AccessibilityHelper.OnChildRemoved(parent);
-#endif
         }
 
         #endregion

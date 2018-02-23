@@ -7,9 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
-using ReactNative.Common;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 #else
@@ -181,10 +179,6 @@ namespace ReactNative.Views.ControlView
 
             var uiElementChild = child.As<UIElement>();
             parent.Children.Insert(index, uiElementChild);
-
-#if WINDOWS_UWP
-            AccessibilityHelper.OnChildAdded(parent, uiElementChild);
-#endif
         }
 
         /// <summary>
@@ -220,10 +214,6 @@ namespace ReactNative.Views.ControlView
         public override void RemoveAllChildren(ReactControl parent)
         {
             parent.Children.Clear();
-
-#if WINDOWS_UWP
-            AccessibilityHelper.OnChildRemoved(parent);
-#endif
         }
 
         /// <summary>
@@ -239,10 +229,6 @@ namespace ReactNative.Views.ControlView
             }
 
             parent.Children.RemoveAt(index);
-
-#if WINDOWS_UWP
-            AccessibilityHelper.OnChildRemoved(parent);
-#endif
         }
 
         /// <summary>

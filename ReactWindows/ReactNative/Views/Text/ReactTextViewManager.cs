@@ -1,4 +1,3 @@
-using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -83,8 +82,6 @@ namespace ReactNative.Views.Text
             }
 
             parent.Blocks.OfType<Paragraph>().First().Inlines.Insert(index, inlineChild);
-
-            AccessibilityHelper.OnChildAdded(parent, child);
         }
 
         /// <summary>
@@ -134,8 +131,6 @@ namespace ReactNative.Views.Text
         {
             var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
             inlines.Clear();
-
-            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         /// <summary>
@@ -147,8 +142,6 @@ namespace ReactNative.Views.Text
         {
             var inlines = parent.Blocks.OfType<Paragraph>().First().Inlines;
             inlines.RemoveAt(index);
-
-            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         /// <summary>

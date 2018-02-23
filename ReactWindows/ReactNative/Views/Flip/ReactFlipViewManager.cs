@@ -1,5 +1,4 @@
 using Newtonsoft.Json.Linq;
-using ReactNative.Common;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -69,8 +68,6 @@ namespace ReactNative.Views.Flip
         public override void AddView(FlipView parent, DependencyObject child, int index)
         {
             parent.Items.Insert(index, child);
-
-            AccessibilityHelper.OnChildAdded(parent, child);
         }
 
         public override DependencyObject GetChildAt(FlipView parent, int index)
@@ -86,15 +83,11 @@ namespace ReactNative.Views.Flip
         public override void RemoveAllChildren(FlipView parent)
         {
             parent.Items.Clear();
-
-            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         public override void RemoveChildAt(FlipView parent, int index)
         {
             parent.Items.RemoveAt(index);
-
-            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         public override void OnDropViewInstance(ThemedReactContext reactContext, FlipView view)

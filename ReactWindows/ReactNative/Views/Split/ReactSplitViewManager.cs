@@ -1,5 +1,4 @@
 using Newtonsoft.Json.Linq;
-using ReactNative.Common;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Split.Events;
@@ -124,8 +123,6 @@ namespace ReactNative.Views.Split
             {
                 parent.Pane = uiElementChild;
             }
-
-            AccessibilityHelper.OnChildAdded(parent, uiElementChild);
         }
 
         public override DependencyObject GetChildAt(SplitView parent, int index)
@@ -179,8 +176,6 @@ namespace ReactNative.Views.Split
         {
             parent.Content = null;
             parent.Pane = null;
-
-            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         public override void RemoveChildAt(SplitView parent, int index)
@@ -199,8 +194,6 @@ namespace ReactNative.Views.Split
                     nameof(index),
                     Invariant($"'{Name}' only supports two child, the content and the pane."));
             }
-
-            AccessibilityHelper.OnChildRemoved(parent);
         }
 
         public override void UpdateExtraData(SplitView root, object extraData)

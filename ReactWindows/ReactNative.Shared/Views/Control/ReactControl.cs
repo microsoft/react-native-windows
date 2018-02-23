@@ -5,7 +5,6 @@ using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 #else
 using System.Windows;
-using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 #endif
 

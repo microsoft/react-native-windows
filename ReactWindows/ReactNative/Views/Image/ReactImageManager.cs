@@ -8,7 +8,6 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -214,15 +213,13 @@ namespace ReactNative.Views.Image
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
-            Border border = new Border
+            return new Border
             {
                 Background = new ImageBrush
                 {
                     Stretch = Stretch.UniformToFill,
                 },
             };
-
-            return border;
         }
 
         /// <summary>

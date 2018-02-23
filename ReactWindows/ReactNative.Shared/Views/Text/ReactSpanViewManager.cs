@@ -5,9 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
 #if WINDOWS_UWP
-using ReactNative.Bridge;
 using ReactNative.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
