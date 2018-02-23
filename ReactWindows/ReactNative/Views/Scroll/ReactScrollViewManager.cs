@@ -161,7 +161,7 @@ namespace ReactNative.Views.Scroll
         public void SetShowsVerticalScrollIndicator(ScrollViewer view, bool showIndicator)
         {
             view.VerticalScrollBarVisibility = showIndicator
-                ? ScrollBarVisibility.Visible
+                ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Hidden;
         }
 
@@ -398,9 +398,10 @@ namespace ReactNative.Views.Scroll
 
             var scrollViewer = new ScrollViewer
             {
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                // Align to RN defaults
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                 HorizontalScrollMode = ScrollMode.Disabled,
-                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 VerticalScrollMode = ScrollMode.Auto,
                 // The default tab index keeps the ScrollViewer (and its children) outside the normal flow of tabIndex==0 controls.
                 // We force a better default, at least until we start supporting TabIndex/IsTabStop properties on RCTScrollView.
