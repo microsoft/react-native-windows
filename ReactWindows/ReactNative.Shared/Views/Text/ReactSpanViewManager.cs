@@ -198,6 +198,13 @@ namespace ReactNative.Views.Text
         {
             var span = (Span)parent;
             span.Inlines.Clear();
+#if WINDOWS_UWP
+            var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
+            if (parentUIElement != null)
+            {
+                AccessibilityHelper.OnChildRemoved(parentUIElement);
+            }
+#endif
         }
 
         /// <summary>
@@ -210,6 +217,12 @@ namespace ReactNative.Views.Text
             var span = (Span)parent;
 #if WINDOWS_UWP
             span.Inlines.RemoveAt(index);
+
+            var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
+            if (parentUIElement != null)
+            {
+                AccessibilityHelper.OnChildRemoved(parentUIElement);
+            }
 #else
             ((IList)span.Inlines).RemoveAt(index);
 #endif

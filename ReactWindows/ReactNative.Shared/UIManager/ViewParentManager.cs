@@ -1,5 +1,6 @@
 using System;
 #if WINDOWS_UWP
+using ReactNative.Common;
 using Windows.UI.Xaml;
 #else
 using System.Windows;
@@ -109,7 +110,7 @@ namespace ReactNative.UIManager
             var element = (TFrameworkElement)parent;
             AddView(element, child, index);
 #if WINDOWS_UWP
-            Common.AccessibilityHelper.OnChildAdded(element, child);
+            AccessibilityHelper.OnChildAdded(element, child);
 #endif
         }
 
@@ -128,7 +129,7 @@ namespace ReactNative.UIManager
             var element = (TFrameworkElement)parent;
             RemoveChildAt((TFrameworkElement)parent, index);
 #if WINDOWS_UWP
-            Common.AccessibilityHelper.OnChildRemoved(element);
+            AccessibilityHelper.OnChildRemoved(element);
 #endif
         }
 
@@ -137,7 +138,7 @@ namespace ReactNative.UIManager
             var element = (TFrameworkElement)parent;
             RemoveAllChildren(element);
 #if WINDOWS_UWP
-            Common.AccessibilityHelper.OnChildRemoved(element);
+            AccessibilityHelper.OnChildRemoved(element);
 #endif
         }
 

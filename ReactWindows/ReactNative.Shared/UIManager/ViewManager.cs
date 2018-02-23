@@ -109,10 +109,7 @@ namespace ReactNative.UIManager
         {
             var view = CreateViewInstance(reactContext);
 #if WINDOWS_UWP
-            if (view is UIElement uiElement)
-            {
-                AccessibilityHelper.OnViewInstanceCreated(uiElement);
-            }
+            AccessibilityHelper.OnViewInstanceCreated(view);
 #endif
             AddEventEmitters(reactContext, view);
             // TODO: enable touch intercepting view parents
