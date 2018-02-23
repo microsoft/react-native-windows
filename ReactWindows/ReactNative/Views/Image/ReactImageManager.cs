@@ -204,8 +204,7 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            List<KeyValuePair<string, double>> sources;
-            _imageSources.TryRemove(view.GetTag(), out sources);
+            _imageSources.TryRemove(view.GetTag(), out _);
         }
 
         /// <summary>

@@ -194,8 +194,7 @@ namespace ReactNative.Views.Web
             view.NavigationFailed -= OnNavigationFailed;
             view.NavigationCompleted -= OnNavigationCompleted;
 
-            WebViewData data;
-            _webViewData.TryRemove(view, out data);
+            _webViewData.TryRemove(view, out _);
         }
 
         /// <summary>

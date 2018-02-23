@@ -355,8 +355,7 @@ namespace ReactNative.Views.Scroll
         {
             base.OnDropViewInstance(reactContext, view);
 
-            ScrollViewerData data;
-            _scrollViewerData.TryRemove(view, out data);
+            _scrollViewerData.TryRemove(view, out _);
 
             view.Loaded -= OnLoaded;
             view.ViewChanging -= OnViewChanging;

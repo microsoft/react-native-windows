@@ -169,8 +169,7 @@ namespace ReactNative.UIManager
 
         internal static void ClearData(this DependencyObject view)
         {
-            DependencyObjectData removedData;
-            s_properties.TryRemove(view, out removedData);
+            s_properties.TryRemove(view, out _);
         }
 
         internal static T As<T>(this DependencyObject view)
