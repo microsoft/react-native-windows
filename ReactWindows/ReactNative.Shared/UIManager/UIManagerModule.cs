@@ -111,35 +111,59 @@ namespace ReactNative.UIManager
         /// JavaScript can use the returned tag with to add or remove children 
         /// to this view through <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>.
         /// </remarks>
-        public int AddMeasuredRootView(SizeMonitoringCanvas rootView)
+        public int AddMeasuredRootView(ReactRootView rootView)
         {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
-            var width = rootView.ActualWidth;
-            var height = rootView.ActualHeight;
-
             var context = new ThemedReactContext(Context);
-            _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
 
-            var resizeCount = 0;
-            rootView.SetOnSizeChangedListener((sender, args) =>
+            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
             {
-                var currentCount = ++resizeCount;
-                var newWidth = args.NewSize.Width;
-                var newHeight = args.NewSize.Height;
+                var width = rootView.ActualWidth;
+                var height = rootView.ActualHeight;
 
                 _layoutActionQueue.Dispatch(() =>
                 {
-                    if (currentCount == resizeCount)
-                    {
-                        _layoutActionQueue.AssertOnThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
-                    }
+                    _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
                 });
-            });
+
+                var resizeCount = 0;
+
+                rootView.SetOnSizeChangedListener((sender, args) =>
+                {
+                    var currentCount = ++resizeCount;
+                    var newWidth = args.NewSize.Width;
+                    var newHeight = args.NewSize.Height;
+
+                    _layoutActionQueue.Dispatch(() =>
+                    {
+                        if (currentCount == resizeCount)
+                        {
+                            _layoutActionQueue.AssertOnThread();
+                            _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
+                        }
+                    });
+                });
+ 
+            }, true); // Allow inlining
 
             return tag;
+        }
+
+        /// <summary>
+        /// Detaches a root view from the size monitoring hooks in preparation for the unmount
+        /// </summary>
+        /// <param name="rootView">The root view instance.</param>
+        public void DetachRootView(ReactRootView rootView)
+        {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
+            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () => rootView.RemoveSizeChanged(), true); // allow inlining
         }
 
         /// <summary>

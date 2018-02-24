@@ -99,6 +99,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleStateMachine.cs" />
@@ -146,7 +147,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\PlatformConstantsModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\ReactNativeVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHostExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManagerBuilder.cs" />
@@ -215,7 +215,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIImplementationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIManagerModule.Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIManagerModule.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIViewOperationQueue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIViewOperationQueueInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerRegistry.cs" />

@@ -6,6 +6,7 @@ using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,8 +20,8 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
-            new Dictionary<int, List<KeyValuePair<string, double>>>();
+        private readonly ConcurrentDictionary<int, List<KeyValuePair<string, double>>> _imageSources =
+            new ConcurrentDictionary<int, List<KeyValuePair<string, double>>>();
 
         /// <summary>
         /// The view manager name.
@@ -75,7 +76,7 @@ namespace ReactNative.Views.Image
         [ReactProp("resizeMode")]
         public void SetResizeMode(Border view, string resizeMode)
         {
-            if (resizeMode !=  null)
+            if (resizeMode != null)
             {
                 var imageBrush = (ImageBrush)view.Background;
 
@@ -127,7 +128,7 @@ namespace ReactNative.Views.Image
                 else
                 {
                     viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.Add(tag, viewSources);
+                    _imageSources.AddOrUpdate(tag, viewSources, (k, v) => v);
                 }
 
                 foreach (var source in sources)
@@ -150,7 +151,7 @@ namespace ReactNative.Views.Image
                 SetUriFromMultipleSources(view);
             }
         }
-        
+
         /// <summary>
         /// The border radius of the <see cref="ReactRootView"/>.
         /// </summary>
@@ -203,7 +204,7 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _imageSources.Remove(view.GetTag());
+            _imageSources.TryRemove(view.GetTag(), out _);
         }
 
         /// <summary>
