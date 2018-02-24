@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
@@ -27,8 +28,8 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly IDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
-            new Dictionary<TFrameworkElement, DimensionBoundProperties>();
+        private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
+            new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
 
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
@@ -202,7 +203,7 @@ namespace ReactNative.UIManager
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
-            _dimensionBoundProperties.Remove(view);
+            _dimensionBoundProperties.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -291,7 +292,7 @@ namespace ReactNative.UIManager
             if (!_dimensionBoundProperties.TryGetValue(view, out properties))
             {
                 properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.Add(view, properties);
+                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => v);
             }
 
             return properties;
