@@ -1,7 +1,8 @@
-﻿using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml.Documents;
 #else
 using System.Windows.Documents;
@@ -51,6 +52,10 @@ namespace ReactNative.Views.Text
         public override void UpdateInline(Inline inline)
         {
             ((Run)inline).Text = _text;
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnTextChanged(inline);
+#endif
         }
     }
 }

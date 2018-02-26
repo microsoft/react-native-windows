@@ -27,20 +27,6 @@ namespace ReactNative.Tests.UIManager.Events
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 
-        [Ignore]
-        public async Task EventDispatcher_IncorrectThreadCalls()
-        {
-            var context = new ReactContext();
-            var dispatcher = new EventDispatcher(context);
-
-            // THIS IS INCORRECT
-            // The call asserts due to ReactChoreographer not being initialized. There's no
-            // obvious thread check anywhere
-            AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnReactInstanceDispose());
-
-            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
-        }
-
         [TestMethod]
         public async Task EventDispatcher_EventDispatches()
         {

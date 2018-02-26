@@ -29,7 +29,7 @@ namespace ReactNative.Modules.Core
 #endif
         private const int InactiveFrameCount = 120;
 
-        private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
+        private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
         private static ReactChoreographer s_instance;
 
         private readonly object _gate = new object();

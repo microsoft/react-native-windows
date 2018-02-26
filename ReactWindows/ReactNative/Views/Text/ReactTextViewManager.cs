@@ -1,4 +1,6 @@
-﻿using ReactNative.UIManager;
+using ReactNative.Accessibility;
+using ReactNative.Reflection;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -48,6 +50,18 @@ namespace ReactNative.Views.Text
         public void SetSelectable(RichTextBlock view, bool selectable)
         {
             view.IsTextSelectionEnabled = selectable;
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the RichTextBlock.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(RichTextBlock view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
         }
 
         /// <summary>

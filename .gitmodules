@@ -1,3 +1,6 @@
 [submodule "RNTester"]
 	path = RNTester
 	url = https://github.com/Microsoft/react-native-windows
+[submodule "Yoga"]
+	path = Yoga
+	url = https://github.com/ReactWindows/yoga
