@@ -323,6 +323,13 @@ namespace ReactNative.UIManager
             return new Map
             {
                 {
+                    "topAccessibilityTap",
+                    new Map
+                    {
+                        { "registrationName", "onAccessibilityTap" },
+                    }
+                },
+                {
                     "topSelectionChange",
                     new Map
                     {
