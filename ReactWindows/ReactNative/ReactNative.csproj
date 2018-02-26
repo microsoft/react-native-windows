@@ -93,10 +93,15 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Accessibility\AccessibilityTapEvent.cs" />
+    <Compile Include="Accessibility\AccessibilityTrait.cs" />
+    <Compile Include="Accessibility\IAccessible.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\Queue\DispatcherActionQueue.cs" />
     <Compile Include="Bridge\Queue\LayoutActionQueue.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
+    <Compile Include="Accessibility\AccessibilityHelper.cs" />
+    <Compile Include="Accessibility\ImportantForAccessibility.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
@@ -145,6 +150,7 @@
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\DisplayMetrics.cs" />
+    <Compile Include="Accessibility\DynamicAutomationPeer.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
