@@ -293,7 +293,7 @@ namespace ReactNative.UIManager
             if (!_dimensionBoundProperties.TryGetValue(view, out properties))
             {
                 properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => v);
+                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
             }
 
             return properties;

@@ -206,7 +206,7 @@ namespace ReactNative.Views.Web
         {
             var view = new WebView(WebViewExecutionMode.SeparateThread);
             var data = new WebViewData();
-            _webViewData.AddOrUpdate(view, data, (k, v) => v);
+            _webViewData.AddOrUpdate(view, data, (k, v) => data);
             return view;
         }
 

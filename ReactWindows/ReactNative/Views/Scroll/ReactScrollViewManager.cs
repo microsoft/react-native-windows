@@ -409,7 +409,7 @@ namespace ReactNative.Views.Scroll
                 TabIndex = 0,
             };
 
-            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => v);
+            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => scrollViewerData);
 
             return scrollViewer;
         }
