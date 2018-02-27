@@ -122,6 +122,32 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
+        /// Invoke a method on a native module.
+        /// </summary>
+        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="moduleId">The module ID.</param>
+        /// <param name="methodId">The method ID.</param>
+        /// <param name="parameters">The parameters.</param>
+        internal JToken CallSerializableNativeHook(
+            IReactInstance reactInstance,
+            int moduleId,
+            int methodId,
+            JArray parameters)
+        {
+            if (moduleId < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Invalid module ID: " + moduleId);
+            }
+
+            if (_moduleTable.Count < moduleId)
+            {
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
+            }
+
+            return _moduleTable[moduleId].CallSerializableNativeHook(reactInstance, methodId, parameters);
+        }
+
+        /// <summary>
         /// Hook to notify modules that the <see cref="IReactInstance"/> has
         /// been initialized.
         /// </summary>
@@ -200,6 +226,15 @@ namespace ReactNative.Bridge
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
                 {
                     method.Method.Invoke(reactInstance, parameters);
+                }
+            }
+
+            public JToken CallSerializableNativeHook(IReactInstance reactInstance, int methodId, JArray parameters)
+            {
+                var method = _methods[methodId];
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
+                {
+                    return method.Method.CallSerializableNativeHook(reactInstance, parameters);
                 }
             }
 

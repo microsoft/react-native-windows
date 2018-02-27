@@ -164,6 +164,11 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
+        public void SetCallSerializableNativeHook(CallSerializableNativeHook callSerializableNativeHook)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Sets a global variable in the JavaScript runtime.
         /// </summary>

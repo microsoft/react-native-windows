@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 
 using ReactNative.Modules.DevSupport;
 using System.Collections.Generic;
+using System.Net;
 #if WINDOWS_UWP
 using Windows.Storage;
 #else
@@ -85,6 +86,14 @@ namespace ReactNative.DevSupport
         }
 
         public bool IsElementInspectorEnabled { get; set; }
+
+        public IPAddress DeviceDebugIpAddress
+        {
+            get
+            {
+                return IPAddress.Loopback;
+            }
+        }
 
         public bool IsFpsDebugEnabled
         {

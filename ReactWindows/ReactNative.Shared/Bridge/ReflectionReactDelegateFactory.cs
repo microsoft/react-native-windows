@@ -29,20 +29,27 @@ namespace ReactNative.Bridge
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
+        public override Func<INativeModule, IReactInstance, JArray, JToken> Create(INativeModule module, MethodInfo method)
         {
+            ReactMethodAttribute attribute = method.GetCustomAttribute<ReactMethodAttribute>();
+            if (attribute != null && attribute.IsDirectCallMethod)
+            {
+
+                return (Func<INativeModule, IReactInstance, JArray, JToken>)method.CreateDelegate(typeof(Func<INativeModule, IReactInstance, JArray, JToken>));
+            }
+
             var extractors = CreateExtractors(module, method);
             var expectedArguments = extractors.Sum(e => e.ExpectedArguments);
             var extractFunctions = extractors.Select(e => e.ExtractFunction).ToList();
             var genericDelegate = GenericDelegate.Create(module, method);
 
-            return (reactInstance, arguments) => 
+            return (moduleInstance, reactInstance, arguments) => 
                 Invoke(
                     method, 
                     expectedArguments,
                     extractFunctions,
                     genericDelegate,
-                    module,
+                    moduleInstance,
                     reactInstance,
                     arguments);
         }
@@ -137,7 +144,7 @@ namespace ReactNative.Bridge
             }
         }
 
-        private static void Invoke(
+        private static JToken Invoke(
             MethodInfo method,
             int expectedArguments,
             IList<Func<IReactInstance, JArray, int, Result>> extractors,
@@ -166,20 +173,34 @@ namespace ReactNative.Bridge
             var args = new object[extractors.Count];
             for (var j = 0; j < c; ++j)
             {
-                var result = extractors[j](reactInstance, jsArguments, idx);
-                args[j] = result.Value;
-                idx = result.NextIndex;
+                var extractorResult = extractors[j](reactInstance, jsArguments, idx);
+                args[j] = extractorResult.Value;
+                idx = extractorResult.NextIndex;
             }
 
-            if (genericDelegate != null)
+            var hasDelegate = (genericDelegate != null) && ReferenceEquals(moduleInstance, genericDelegate.DelegateTarget);
+            if (method.ReturnType == typeof(void))
             {
-                genericDelegate.Invoke(args);
+                if (hasDelegate)
+                {
+                    genericDelegate.Invoke(args);
+                }
+                else
+                {
+                    // This should only happen for React methods with greater than 16 arguments.
+                    method.Invoke(moduleInstance, args);
+                }
+
+                return null;
             }
-            else
+
+            var result = hasDelegate ? genericDelegate.Invoke(args) : method.Invoke(moduleInstance, args);
+            if (result == null)
             {
-                // This should only happen for React methods with greater than 16 arguments.
-                method.Invoke(moduleInstance, args);
+                return new JValue((object)null);
             }
+
+            return JToken.FromObject(result);
         }
 
         private struct Result

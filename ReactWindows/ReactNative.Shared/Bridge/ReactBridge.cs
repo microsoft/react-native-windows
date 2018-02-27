@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -42,6 +42,7 @@ namespace ReactNative.Bridge
             _jsExecutor = executor;
             _reactCallback = reactCallback;
             _nativeModulesQueueThread = nativeModulesQueueThread;
+            _jsExecutor.SetCallSerializableNativeHook(CallSerializableNativeHook);
         }
 
         /// <summary>
@@ -148,6 +149,11 @@ namespace ReactNative.Bridge
 
                 _reactCallback.OnBatchComplete();
             });
+        }
+
+        private JToken CallSerializableNativeHook(int moduleId, int methodId, JArray arguments)
+        {
+            return _reactCallback.CallSerializableNativeHook(moduleId, methodId, arguments);
         }
     }
 }

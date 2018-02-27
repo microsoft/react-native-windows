@@ -7,52 +7,127 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Collections;
+using ReactNative.Modules.DevSupport;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.ExceptionServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WebSocketSharp;
 
 namespace ReactNative.DevSupport
 {
     class WebSocketJavaScriptExecutor : IJavaScriptExecutor
     {
+        private readonly IDeveloperSettings _developerSettings;
         private const int ConnectTimeoutMilliseconds = 5000;
         private const int ConnectRetryCount = 3;
+        private const int PrepareTimeoutMilliseconds = 2000;
+        private const int PrepareRetryCount = 3;
 
-        private WebSocket _webSocket;
+        private WebSocketSharp.WebSocket _webSocket;
         private readonly JObject _injectedObjects;
         private readonly IDictionary<int, TaskCompletionSource<JToken>> _callbacks;
 
-        private bool _connected;
+        private HttpListener _nativeHookListener;
+        private CallSerializableNativeHook _callSerializableNativeHook;
+
         private int _requestId;
         private bool _isDisposed;
 
-        public WebSocketJavaScriptExecutor()
+        public WebSocketJavaScriptExecutor(IDeveloperSettings developerSettings)
         {
+            _developerSettings = developerSettings;
             _injectedObjects = new JObject();
-            _callbacks = new Dictionary<int, TaskCompletionSource<JToken>>();
+            _callbacks = new ConcurrentDictionary<int, TaskCompletionSource<JToken>>();
+            StartNativeHookListener();
         }
 
         public async Task ConnectAsync(string webSocketServerUrl, CancellationToken token)
         {
-            var uri = default(Uri);
-            if (!Uri.TryCreate(webSocketServerUrl, UriKind.Absolute, out uri))
-            {
-                throw new ArgumentOutOfRangeException(nameof(webSocketServerUrl), "Expected valid URI argument.");
-            }
+            _webSocket = await ConnectCoreTaskAsync(webSocketServerUrl, token);
+            await PrepareJavaScriptRuntimeAsync(token);
+        }
 
-            var retryCount = ConnectRetryCount;
+        private async Task PrepareJavaScriptRuntimeAsync(CancellationToken token)
+        {
+            var retryCount = PrepareRetryCount;
             while (true)
             {
-                var timeoutSource = new CancellationTokenSource(ConnectTimeoutMilliseconds);
-                using (token.Register(timeoutSource.Cancel))
+                using (var timeoutSource = new CancellationTokenSource(PrepareTimeoutMilliseconds))
+                using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(timeoutSource.Token, token))
                 {
                     try
                     {
-                        await ConnectCoreAsync(uri, timeoutSource.Token).ConfigureAwait(false);
+                        await PrepareJavaScriptRuntimeTaskAsync(linkedTokenSource.Token);
                         return;
+                    }
+                    catch (OperationCanceledException ex)
+                    when (ex.CancellationToken == timeoutSource.Token)
+                    {
+                        token.ThrowIfCancellationRequested();
+                    }
+                    catch
+                    {
+                        if (--retryCount <= 0)
+                        {
+                            throw;
+                        }
+                    }
+                }
+            }
+        }
+
+        private async Task<WebSocketSharp.WebSocket> ConnectCoreTaskAsync(string webSocketServerUrl, CancellationToken token)
+        {
+            var retryCount = ConnectRetryCount;
+
+            var webSocket = new WebSocketSharp.WebSocket(webSocketServerUrl);
+            var callback = new TaskCompletionSource<JToken>();
+
+            webSocket.OnMessage += (sender, args) =>
+            {
+                if (args.IsText)
+                {
+                    OnMessageReceived(args.Data);
+                }
+            };
+
+            webSocket.OnOpen += (sender, args) =>
+            {
+                callback.SetResult(true);
+            };
+
+            webSocket.OnError += (sender, args) =>
+            {
+                OnClosed();
+            };
+
+            webSocket.OnClose += (sender, args) =>
+            {
+                OnClosed();
+            };
+
+            while (true)
+            {
+                var cancellationSource = new TaskCompletionSource<bool>();
+                using (var timeoutSource = new CancellationTokenSource(ConnectTimeoutMilliseconds))
+                using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(timeoutSource.Token, token))
+                using (linkedTokenSource.Token.Register(() => cancellationSource.SetResult(false)))
+                {
+                    try
+                    {
+                        webSocket.ConnectAsync();
+                        await Task.WhenAny(callback.Task, cancellationSource.Task);
+                        timeoutSource.Token.ThrowIfCancellationRequested();
+                        token.ThrowIfCancellationRequested();
+
+                        return webSocket;
                     }
                     catch (OperationCanceledException ex)
                     when (ex.CancellationToken == timeoutSource.Token)
@@ -110,7 +185,7 @@ namespace ReactNative.DevSupport
                     { "inject", _injectedObjects },
                 };
 
-                SendMessage(requestId, request.ToString(Formatting.None));
+                SendMessageAsync(requestId, request.ToString(Formatting.None));
                 callback.Task.Wait();
             }
             catch (AggregateException ex)
@@ -129,10 +204,48 @@ namespace ReactNative.DevSupport
             _injectedObjects.Add(propertyName, value.ToString(Formatting.None));
         }
 
+        public void SetCallSerializableNativeHook(CallSerializableNativeHook callSerializableNativeHook)
+        {
+            _callSerializableNativeHook = callSerializableNativeHook;
+        }
+
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_webSocket != null)
+                {
+                    if (_webSocket.IsAlive)
+                    {
+                        _webSocket.CloseAsync();
+                    }
+
+                    _webSocket = null;
+                }
+
+                if (_nativeHookListener != null)
+                {
+                    if (_nativeHookListener.IsListening)
+                    {
+                        _nativeHookListener.Close();
+                    }
+
+                    _nativeHookListener = null;
+                }
+            }
+
             _isDisposed = true;
-            _webSocket.Close();
         }
 
         private JToken Call(string methodName, JArray arguments)
@@ -150,7 +263,7 @@ namespace ReactNative.DevSupport
                     { "arguments", arguments },
                 };
 
-                SendMessage(requestId, request.ToString(Formatting.None));
+                SendMessageAsync(requestId, request.ToString(Formatting.None));
                 return callback.Task.Result;
             }
             catch (AggregateException ex)
@@ -166,23 +279,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        private async Task ConnectCoreAsync(Uri uri, CancellationToken token)
-        {
-            if (!_connected)
-            {
-                _webSocket = new WebSocket(uri.AbsoluteUri);
-
-                _webSocket.OnMessage += OnMessageReceived;
-
-                _webSocket.ConnectAsync();
-
-                _connected = true;
-            }
-
-            await PrepareJavaScriptRuntimeAsync(token);
-        }
-
-        private async Task<JToken> PrepareJavaScriptRuntimeAsync(CancellationToken token)
+        private async Task<JToken> PrepareJavaScriptRuntimeTaskAsync(CancellationToken token)
         {
             var cancellationSource = new TaskCompletionSource<bool>();
             using (token.Register(() => cancellationSource.SetResult(false)))
@@ -199,7 +296,7 @@ namespace ReactNative.DevSupport
                         { "method", "prepareJSRuntime" },
                     };
 
-                    SendMessage(requestId, request.ToString(Formatting.None));
+                    SendMessageAsync(requestId, request.ToString(Formatting.None));
                     await Task.WhenAny(callback.Task, cancellationSource.Task);
                     token.ThrowIfCancellationRequested();
                     return await callback.Task;
@@ -211,27 +308,25 @@ namespace ReactNative.DevSupport
             }
         }
 
-        private void SendMessage(int requestId, string message)
+        private void SendMessageAsync(int requestId, string message)
         {
-            if (!_isDisposed)
+            if (IsAlive)
             {
-                _webSocket.Send(message);
+                _webSocket.SendAsync(message, null);
             }
             else
             {
                 var callback = default(TaskCompletionSource<JToken>);
                 if (_callbacks.TryGetValue(requestId, out callback))
                 {
-                    callback.TrySetResult(JValue.CreateNull());
+                    callback.TrySetResult(new JValue((Uri)null)); // Creating a JValue with JTokenType.Null
                 }
             }
         }
 
-        private void OnMessageReceived(object sender, MessageEventArgs args)
+        private void OnMessageReceived(string message)
         {
-            var response = args.Data;
-
-            var json = JObject.Parse(response);
+            var json = JObject.Parse(message);
             if (json.ContainsKey("replyID"))
             {
                 var replyId = json.Value<int>("replyID");
@@ -255,6 +350,111 @@ namespace ReactNative.DevSupport
                         callback.TrySetResult(null);
                     }
                 }
+            }
+        }
+
+        private void StartNativeHookListener()
+        {
+            IPAddress devAddr;
+            try
+            {
+                devAddr = _developerSettings.DeviceDebugIpAddress;
+            }
+            catch
+            {
+                Debug.WriteLine("Failed to get dev port IP address.");
+                return;
+            }
+
+            var port = getFreeTcpPort();
+            var url = $"http://{devAddr}:{port}/";
+            _nativeHookListener = new HttpListener();
+            _nativeHookListener.Prefixes.Add(url);
+            _nativeHookListener.Start();
+
+            Task.Factory.StartNew(
+                async () =>
+                {
+                    var listener = _nativeHookListener;
+                    while (listener.IsListening)
+                    {
+                        await Listen(listener);
+                    }
+                },
+                TaskCreationOptions.LongRunning);
+
+            Debug.WriteLine($"__NATIVE_HOOK_URL__={url}");
+            var nativeHookUrl = new JValue(url);
+            _injectedObjects.Add("__NATIVE_HOOK_URL__", nativeHookUrl.ToString(Formatting.None));
+        }
+
+        private static int getFreeTcpPort()
+        {
+            var l = new TcpListener(IPAddress.Loopback, 0);
+            l.Start();
+            int port = ((IPEndPoint) l.LocalEndpoint).Port;
+            l.Stop();
+            return port;
+        }
+
+        private async Task Listen(HttpListener listener)
+        {
+            try
+            {
+                var context = await listener.GetContextAsync();
+                HandleRequest(context);
+            }
+            catch (HttpListenerException)
+            {
+            }
+        }
+
+        private void HandleRequest(HttpListenerContext context)
+        {
+            var response = context.Response;
+            response.StatusCode = 200;
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+            string result = "{}";
+            try
+            {
+                JObject request;
+                using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+                {
+                    request = JObject.Parse(reader.ReadToEnd());
+                }
+
+                if (_callSerializableNativeHook != null && ((string)request["type"]).Equals("NativeCallSyncHook"))
+                {
+                    JArray args = (JArray)request["args"];
+                    result = _callSerializableNativeHook(
+                        (int)args[0],
+                        (int)args[1],
+                        (JArray)args[2]).ToString(Formatting.None);
+                }
+                else
+                {
+                }
+            }
+            catch
+            {
+            }
+
+            byte[] content = Encoding.UTF8.GetBytes(result);
+            response.OutputStream.Write(content, 0, content.Length);
+            response.Close();
+        }
+
+        private void OnClosed()
+        {
+            Dispose();
+        }
+
+        private bool IsAlive
+        {
+            get
+            {
+                return !_isDisposed && _webSocket != null && _webSocket.IsAlive;
             }
         }
     }

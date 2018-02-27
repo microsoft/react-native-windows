@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -29,6 +29,10 @@ namespace ReactNative.Tests
         public void RunScript(string sourcePath, string sourceUrl)
         {
             OnRunScript(sourcePath, sourceUrl);
+        }
+
+        public void SetCallSerializableNativeHook(CallSerializableNativeHook callSerializableNativeHook)
+        {
         }
 
         public void SetGlobalVariable(string propertyName, JToken value)
