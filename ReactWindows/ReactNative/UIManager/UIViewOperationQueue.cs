@@ -49,7 +49,8 @@ namespace ReactNative.UIManager
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        /// The native view hierarchy manager.
+        /// <param name="viewManagerRegistry">
+        /// The view manager registry.
         /// </param>
         public UIViewOperationQueue(ReactContext reactContext, ViewManagerRegistry viewManagerRegistry)
         {
