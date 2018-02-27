@@ -284,6 +284,16 @@ namespace ReactNative.Bridge
                 _parent._registry.Invoke(_parent, moduleId, methodId, parameters);
             }
 
+            public JToken CallSerializableNativeHook(int moduleId, int methodId, JArray parameters)
+            {
+                if (_parent.IsDisposed)
+                {
+                    return null;
+                }
+
+                return _parent._registry.CallSerializableNativeHook(_parent, moduleId, methodId, parameters);
+            }
+
             public void OnBatchComplete()
             {
                 _parent.QueueConfiguration.NativeModulesQueue.AssertOnThread();

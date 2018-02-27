@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -20,6 +20,14 @@ namespace ReactNative.Bridge
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
         void Invoke(int moduleId, int methodId, JArray parameters);
+
+        /// <summary>
+        /// Invoke the native synchronous hook.
+        /// </summary>
+        /// <param name="moduleId">The module ID.</param>
+        /// <param name="methodId">The method ID.</param>
+        /// <param name="parameters">The parameters.</param>
+        JToken CallSerializableNativeHook(int moduleId, int methodId, JArray parameters);
 
         /// <summary>
         /// Signals that a batch of operations is complete.

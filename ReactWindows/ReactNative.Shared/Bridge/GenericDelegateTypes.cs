@@ -127,6 +127,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, TResult>)method.CreateDelegate(typeof(Func<T0, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0]);
         }
@@ -143,6 +145,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1>)method.CreateDelegate(typeof(Action<T0, T1>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -165,6 +169,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, TResult>)method.CreateDelegate(typeof(Func<T0, T1, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1]);
         }
@@ -181,6 +187,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2>)method.CreateDelegate(typeof(Action<T0, T1, T2>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -203,6 +211,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2]);
         }
@@ -219,6 +229,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -241,6 +253,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3]);
         }
@@ -257,6 +271,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -279,6 +295,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4]);
         }
@@ -295,6 +313,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -317,6 +337,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5]);
         }
@@ -333,6 +355,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -355,6 +379,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6]);
         }
@@ -371,6 +397,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -393,6 +421,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7]);
         }
@@ -409,6 +439,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -431,6 +463,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8]);
         }
@@ -447,6 +481,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -469,6 +505,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8], (T9)args[9]);
         }
@@ -485,6 +523,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -507,6 +547,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8], (T9)args[9], (T10)args[10]);
         }
@@ -523,6 +565,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -545,6 +589,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8], (T9)args[9], (T10)args[10], (T11)args[11]);
         }
@@ -561,6 +607,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -583,6 +631,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8], (T9)args[9], (T10)args[10], (T11)args[11], (T12)args[12]);
         }
@@ -599,6 +649,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -621,6 +673,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8], (T9)args[9], (T10)args[10], (T11)args[11], (T12)args[12], (T13)args[13]);
         }
@@ -637,6 +691,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -659,6 +715,8 @@ namespace ReactNative.Bridge
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>), instance);
             }
 
+            public object DelegateTarget => _instancedDelegate.Target;
+
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8], (T9)args[9], (T10)args[10], (T11)args[11], (T12)args[12], (T13)args[13], (T14)args[14]);
         }
@@ -675,6 +733,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>)method.CreateDelegate(typeof(Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args)
             {
@@ -696,6 +756,8 @@ namespace ReactNative.Bridge
             {
                 _instancedDelegate = (Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>)method.CreateDelegate(typeof(Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>), instance);
             }
+
+            public object DelegateTarget => _instancedDelegate.Target;
 
             public object Invoke(object[] args) =>
                 _instancedDelegate((T0)args[0], (T1)args[1], (T2)args[2], (T3)args[3], (T4)args[4], (T5)args[5], (T6)args[6], (T7)args[7], (T8)args[8], (T9)args[9], (T10)args[10], (T11)args[11], (T12)args[12], (T13)args[13], (T14)args[14], (T15)args[15]);

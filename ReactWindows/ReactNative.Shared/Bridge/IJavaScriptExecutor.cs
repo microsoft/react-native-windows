@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -8,6 +8,15 @@ using System;
 
 namespace ReactNative.Bridge
 {
+    /// <summary>
+    /// The delagate to invoke a NativeModule synchronous hook.
+    /// </summary>
+    /// <param name="moduleId">The module ID.</param>
+    /// <param name="methodId">The method ID.</param>
+    /// <param name="arguments">The arguments.</param>
+    /// <returns>The result</returns>
+    public delegate JToken CallSerializableNativeHook(int moduleId, int methodId, JArray arguments);
+
     /// <summary>
     /// Interface for making JavaScript calls from native code.
     /// </summary>
@@ -49,5 +58,11 @@ namespace ReactNative.Bridge
         /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
         void RunScript(string sourcePath, string sourceUrl);
+
+        /// <summary>
+        /// Set a CallSerializableNativeHook delegate on the executor.
+        /// </summary>
+        /// <param name="callSerializableNativeHook">The delegate</param>
+        void SetCallSerializableNativeHook(CallSerializableNativeHook callSerializableNativeHook);
     }
 }
