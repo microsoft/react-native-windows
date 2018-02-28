@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactNative.Modules.Launch;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -37,6 +38,8 @@ namespace Playground.Net46
         private void OnCreate(string[] arguments)
         {
             _reactPage.OnResume(Shutdown);
+
+            LauncherModule.SetActivatedUrl(String.Join(" ", arguments));
 
             var shellWindow = Application.Current.MainWindow;
 

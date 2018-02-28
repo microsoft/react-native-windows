@@ -50,6 +50,12 @@ int NativeJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
     return JsNoError;
 }
 
+int NativeJavaScriptExecutor::SerializeScript(String^ source, String^ serialized)
+{
+    IfFailRet(this->host.SerializeScript(source->Data(), serialized->Data()));
+    return JsNoError;
+}
+
 int NativeJavaScriptExecutor::RunSerializedScript(String^ source, String^ serialized, String^ sourceUri)
 {
     JsValueRef result;

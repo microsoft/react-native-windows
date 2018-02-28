@@ -1,7 +1,9 @@
 using Newtonsoft.Json.Linq;
+using ReactNative.Accessibility;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
 using System.Collections.Generic;
@@ -91,34 +93,6 @@ namespace ReactNative.Views.TextInput
                                 {
                                     { "bubbled" , "onEndEditing" },
                                     { "captured" , "onEndEditingCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topFocus",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onFocus" },
-                                    { "captured" , "onFocusCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topBlur",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onBlur" },
-                                    { "captured" , "onBlurCapture" }
                                 }
                             }
                         }
@@ -363,7 +337,7 @@ namespace ReactNative.Views.TextInput
         {
             view.TextAlignment = EnumHelpers.Parse<TextAlignment>(alignment);
         }
-
+ 
         /// <summary>
         /// Sets the text alignment property on the <see cref="ReactTextBox"/>.
         /// </summary>
@@ -497,6 +471,43 @@ namespace ReactNative.Views.TextInput
         public void SetMaxHeight(ReactTextBox view, double height)
         {
             view.MaxHeight = height;
+        }
+    
+        /// <summary>
+        /// Sets whether the view is a tab stop.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
+        /// </param>
+        /// 
+        [ReactProp("isTabStop")]
+        public void SetIsTabStop(ReactTextBox view, bool isTabStop)
+        {
+            view.IsTabStop = isTabStop;
+        }
+
+        /// <summary>
+        /// Sets the tab index for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabIndex">The tab index.</param>
+        [ReactProp("tabIndex")]
+        public void SetTabIndex(ReactTextBox view, int tabIndex)
+        {
+            view.TabIndex = tabIndex;
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for ReactTextBox.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(ReactTextBox view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
         }
 
         /// <summary>
@@ -692,7 +703,7 @@ namespace ReactNative.Views.TextInput
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ReactTextInputFocusEvent(textBox.GetTag()));
+                    new FocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
@@ -703,7 +714,7 @@ namespace ReactNative.Views.TextInput
                 .EventDispatcher;
 
             eventDispatcher.DispatchEvent(
-                new ReactTextInputBlurEvent(textBox.GetTag()));
+                new BlurEvent(textBox.GetTag()));
 
             eventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
@@ -713,9 +724,9 @@ namespace ReactNative.Views.TextInput
         
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
+            var textBox = (ReactTextBox)sender;
             if (e.Key == VirtualKey.Enter)
             {
-                var textBox = (ReactTextBox)sender;
                 if (!textBox.AcceptsReturn)
                 {
                     e.Handled = true;
@@ -727,6 +738,18 @@ namespace ReactNative.Views.TextInput
                                 textBox.GetTag(),
                                 textBox.Text));
                 }
+            }
+
+            if (!e.Handled)
+            {
+                textBox.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyPressEventString,
+                            textBox.GetTag(),
+                            e.Key));
             }
         }
     }

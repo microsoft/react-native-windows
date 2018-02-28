@@ -16,6 +16,7 @@ using ReactNative.Modules.Storage;
 using ReactNative.Modules.Vibration;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.ControlView;
 using ReactNative.Views.Flip;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
@@ -92,6 +93,7 @@ namespace ReactNative.Shell
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
                 new ReactViewManager(),
+                new ReactControlManager(),
                 new ReactSpanViewManager(),
                 //new SwipeRefreshLayoutManager(),
                 new ReactWebViewManager(reactContext),

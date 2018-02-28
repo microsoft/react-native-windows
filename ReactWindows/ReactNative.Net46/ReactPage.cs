@@ -158,6 +158,8 @@ namespace ReactNative
         {
             RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
+            await RootView?.StopReactApplicationAsync();
+
             if (_reactInstanceManager.IsValueCreated)
             {
                 await ReactInstanceManager.DisposeAsync().ConfigureAwait(false);
@@ -182,7 +184,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
+        private void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
         {
             if (ReactInstanceManager.DevSupportManager.IsEnabled)
             {
@@ -197,7 +199,7 @@ namespace ReactNative
                 // Ctrl+R
                 if (isCtrlKeyDown && e.Key == Key.R)
                 {
-                    await ReactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None);
+                    ReactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
             }
 

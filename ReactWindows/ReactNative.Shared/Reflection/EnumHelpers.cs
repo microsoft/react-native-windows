@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using static System.FormattableString;
@@ -15,19 +14,13 @@ namespace ReactNative.Reflection
 
         public static T Parse<T>(string value)
         {
-            var lookup = s_enumCache.GetOrAdd(
-                typeof(T),
-                type => EnumToDictionary(type));
-
-            var result = default(object);
-            if (!lookup.TryGetValue(Normalize(value), out result))
+            if (!TryParse(value, out T result))
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),
                     Invariant($"Invalid value '{value}' for type '{typeof(T)}'."));
             }
-
-            return (T)result;
+            return result;
         }
 
         public static T? ParseNullable<T>(string value)
@@ -37,6 +30,22 @@ namespace ReactNative.Reflection
                 return null;
 
             return Parse<T>(value);
+        }
+
+        public static bool TryParse<T>(string value, out T result)
+        {
+            var lookup = s_enumCache.GetOrAdd(
+                typeof(T),
+                type => EnumToDictionary(type));
+
+            if (!lookup.TryGetValue(Normalize(value), out var objectResult))
+            {
+                result = default(T);
+                return false;
+            }
+
+            result = (T)objectResult;
+            return true;
         }
 
         private static Dictionary<string, object> EnumToDictionary(Type type)

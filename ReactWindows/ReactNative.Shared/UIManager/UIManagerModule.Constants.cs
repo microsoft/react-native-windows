@@ -245,6 +245,76 @@ namespace ReactNative.UIManager
                         }
                     }
                 },
+                {
+                    "topFocus",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onFocus" },
+                                { "captured" , "onFocusCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topBlur",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onBlur" },
+                                { "captured" , "onBlurCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyDown",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onKeyDown" },
+                                { "captured" , "onKeyDownCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyUp",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onKeyUp" },
+                                { "captured" , "onKeyUpCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyPress",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onKeyPress" },
+                                { "captured" , "onKeyPressCapture" }
+                            }
+                        }
+                    }
+                },
             };
         }
 
@@ -252,6 +322,13 @@ namespace ReactNative.UIManager
         {
             return new Map
             {
+                {
+                    "topAccessibilityTap",
+                    new Map
+                    {
+                        { "registrationName", "onAccessibilityTap" },
+                    }
+                },
                 {
                     "topSelectionChange",
                     new Map

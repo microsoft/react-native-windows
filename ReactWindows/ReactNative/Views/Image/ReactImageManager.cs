@@ -1,4 +1,4 @@
-﻿using ImagePipeline.Core;
+using ImagePipeline.Core;
 using ImagePipeline.Request;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
@@ -6,6 +6,7 @@ using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,8 +20,8 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
-            new Dictionary<int, List<KeyValuePair<string, double>>>();
+        private readonly ConcurrentDictionary<int, List<KeyValuePair<string, double>>> _imageSources =
+            new ConcurrentDictionary<int, List<KeyValuePair<string, double>>>();
 
         /// <summary>
         /// The view manager name.
@@ -75,7 +76,7 @@ namespace ReactNative.Views.Image
         [ReactProp("resizeMode")]
         public void SetResizeMode(Border view, string resizeMode)
         {
-            if (resizeMode !=  null)
+            if (resizeMode != null)
             {
                 var imageBrush = (ImageBrush)view.Background;
 
@@ -127,7 +128,7 @@ namespace ReactNative.Views.Image
                 else
                 {
                     viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.Add(tag, viewSources);
+                    _imageSources.AddOrUpdate(tag, viewSources, (k, v) => viewSources);
                 }
 
                 foreach (var source in sources)
@@ -150,7 +151,7 @@ namespace ReactNative.Views.Image
                 SetUriFromMultipleSources(view);
             }
         }
-        
+
         /// <summary>
         /// The border radius of the <see cref="ReactRootView"/>.
         /// </summary>
@@ -203,7 +204,7 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _imageSources.Remove(view.GetTag());
+            _imageSources.TryRemove(view.GetTag(), out _);
         }
 
         /// <summary>
@@ -235,6 +236,12 @@ namespace ReactNative.Views.Image
 
         private void OnImageFailed(Border view)
         {
+            if (!view.HasTag())
+            {
+                // View may have been unmounted, ignore.
+                return;
+            }
+
             view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
@@ -246,6 +253,12 @@ namespace ReactNative.Views.Image
 
         private void OnImageStatusUpdate(Border view, ImageLoadStatus status, ImageMetadata metadata)
         {
+            if (!view.HasTag())
+            {
+                // View may have been unmounted, ignore.
+                return;
+            }
+
             var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher;
@@ -271,19 +284,7 @@ namespace ReactNative.Views.Image
             try
             {
                 var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
-                var image = default(BitmapSource);
-                var uri = new Uri(source);
-
-                // Remote images
-                if (source.StartsWith("http:") || source.StartsWith("https:"))
-                {
-                    image = await imagePipeline.FetchEncodedBitmapImageAsync(uri);                   
-                }
-                else // Base64 or local images
-                {
-                    image = await imagePipeline.FetchDecodedBitmapImageAsync(ImageRequest.FromUri(uri));
-                }
-
+                var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source));
                 var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
                 imageBrush.ImageSource = image;

@@ -6,11 +6,13 @@ using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
 using ReactNative.Modules.Image;
 using ReactNative.Modules.I18N;
+using ReactNative.Modules.Launch;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
 using ReactNative.Modules.Storage;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
+using ReactNative.Views.ControlView;
 using ReactNative.Views.Image;
 using ReactNative.Views.Picker;
 using ReactNative.Views.Progress;
@@ -47,7 +49,7 @@ namespace ReactNative.Shell
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
                 new I18NModule(),
-                //new LauncherModule(reactContext),
+                new LauncherModule(reactContext),
                 //new LocationModule(reactContext),
                 new NativeAnimatedModule(reactContext),
                 new NetworkingModule(reactContext),
@@ -83,6 +85,7 @@ namespace ReactNative.Shell
                 new ReactPasswordBoxManager(),
                 new ReactTextInputManager(),
                 new ReactTextViewManager(),
+                new ReactControlManager(),
                 new ReactViewManager(),
                 new ReactSpanViewManager(),
                 ////new SwipeRefreshLayoutManager(),

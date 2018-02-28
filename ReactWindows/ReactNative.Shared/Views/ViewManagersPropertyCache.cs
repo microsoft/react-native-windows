@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -8,8 +9,8 @@ namespace ReactNative.UIManager
     {
         private static readonly IReadOnlyDictionary<string, IPropertySetter> s_shadowEmpty = new Dictionary<string, IPropertySetter>();
 
-        private static readonly IDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>> s_settersCache =
-            new Dictionary<Type, IReadOnlyDictionary<string, IPropertySetter>>();
+        private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>> s_settersCache =
+            new ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>>();
 
         public static IReadOnlyDictionary<string, IPropertySetter> GetNativePropertySettersForViewManagerType(Type type)
         {
@@ -32,7 +33,8 @@ namespace ReactNative.UIManager
                 }
             }
 
-            s_settersCache.Add(type, settersImpl);
+            // Make sure it works on concurrent accesses that both created a value for same key
+            s_settersCache.AddOrUpdate(type, settersImpl, (key, value) => settersImpl);
             return settersImpl;
         }
 
@@ -62,7 +64,8 @@ namespace ReactNative.UIManager
                 }
             }
 
-            s_settersCache.Add(type, settersImpl);
+            // Make sure it works on concurrent accesses that both created a value for same key
+            s_settersCache.AddOrUpdate(type, settersImpl, (key, value) => settersImpl);
             return settersImpl;
         }
 

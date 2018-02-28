@@ -82,6 +82,7 @@ export type ViewProps = {
   shouldRasterizeIOS?: bool,
   collapsable?: bool,
   needsOffscreenAlphaCompositing?: bool,
+  tooltip?: string,
 } & TVViewProps;
 
 module.exports = {
@@ -497,4 +498,12 @@ module.exports = {
         'scale',
         'all',
     ])),
+
+    /**
+     * A short string description that will appear in a tooltip if the user
+     * hovers their pointer over the View for a short duration.
+     *
+     * @platform windows
+     */
+    tooltip: PropTypes.string,
 };

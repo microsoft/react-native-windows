@@ -28,17 +28,6 @@ namespace ReactNative.Tests.UIManager.Events
         }
 
         [TestMethod]
-        public async Task EventDispatcher_IncorrectThreadCalls()
-        {
-            var context = new ReactContext();
-            var dispatcher = new EventDispatcher(context);
-
-            AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnReactInstanceDispose());
-
-            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
-        }
-
-        [TestMethod]
         public async Task EventDispatcher_EventDispatches()
         {
             await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);

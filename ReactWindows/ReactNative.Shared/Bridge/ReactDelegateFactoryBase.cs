@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace ReactNative
         /// <param name="nativeModule">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public abstract Action<INativeModule, IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
+        public abstract Action<IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
 
         /// <summary>
         /// Extracts the native method type from the method.
