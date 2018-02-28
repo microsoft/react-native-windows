@@ -495,12 +495,9 @@ namespace ReactNative.Accessibility
         {
             var i4a = GetImportantForAccessibilityAttached(element);
             var label = GetAccessibilityLabelAttached(element);
-            var peer = FrameworkElementAutomationPeer.FromElement(element);
-            var ownName = peer.GetName();
             return i4a == ImportantForAccessibility.NoHideDescendants
                 || (i4a == ImportantForAccessibility.Yes && !string.IsNullOrEmpty(label))
-                || (i4a == ImportantForAccessibility.Auto && !string.IsNullOrEmpty(label))
-                || (i4a == ImportantForAccessibility.Auto && string.IsNullOrEmpty(label) && string.IsNullOrEmpty(ownName));
+                || (i4a == ImportantForAccessibility.Auto && !string.IsNullOrEmpty(label));
         }
 
         /// <summary>
