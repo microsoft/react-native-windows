@@ -4,6 +4,7 @@ using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
@@ -32,11 +33,11 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly IDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
-            new Dictionary<TFrameworkElement, DimensionBoundProperties>();
+        private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
+            new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
 
-        private readonly IDictionary<TFrameworkElement, ShadowProperties> _shadowProperties =
-            new Dictionary<TFrameworkElement, ShadowProperties>();
+        private readonly ConcurrentDictionary<TFrameworkElement, ShadowProperties> _shadowProperties =
+            new ConcurrentDictionary<TFrameworkElement, ShadowProperties>();
 
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
@@ -276,8 +277,8 @@ namespace ReactNative.UIManager
             RemoveShadow(view);
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
-            _dimensionBoundProperties.Remove(view);
-            _shadowProperties.Remove(view);
+            _dimensionBoundProperties.TryRemove(view, out _);
+            _shadowProperties.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -376,7 +377,7 @@ namespace ReactNative.UIManager
             if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.Add(view, properties);
+                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
             }
 
             return properties;
@@ -397,7 +398,7 @@ namespace ReactNative.UIManager
             if (!_shadowProperties.TryGetValue(view, out var properties))
             {
                 properties = new ShadowProperties();
-                _shadowProperties.Add(view, properties);
+                _shadowProperties.AddOrUpdate(view, properties, (k, v) => properties);
             }
 
             return properties;

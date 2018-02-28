@@ -128,7 +128,7 @@ namespace ReactNative.Views.Image
                 else
                 {
                     viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.AddOrUpdate(tag, viewSources, (k, v) => v);
+                    _imageSources.AddOrUpdate(tag, viewSources, (k, v) => viewSources);
                 }
 
                 foreach (var source in sources)
