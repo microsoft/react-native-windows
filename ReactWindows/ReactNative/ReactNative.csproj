@@ -113,7 +113,6 @@
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
