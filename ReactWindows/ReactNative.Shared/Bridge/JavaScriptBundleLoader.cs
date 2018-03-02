@@ -8,7 +8,6 @@ using PCLStorage;
 using System.IO;
 using System.Reflection;
 #endif
-using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {

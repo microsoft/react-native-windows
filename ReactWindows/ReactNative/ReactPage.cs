@@ -4,7 +4,6 @@ using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;

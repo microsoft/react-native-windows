@@ -1,4 +1,3 @@
-using ReactNative.UIManager;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
 using Windows.UI.Xaml;

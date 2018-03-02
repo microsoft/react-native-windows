@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
-using System;
 
 namespace ReactNative.Views.Split.Events
 {

@@ -1,4 +1,3 @@
-
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 

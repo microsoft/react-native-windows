@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.Chakra.Executor
