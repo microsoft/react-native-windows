@@ -118,10 +118,9 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                var viewSources = default(List<KeyValuePair<string, double>>);
                 var tag = view.GetTag();
 
-                if (_imageSources.TryGetValue(tag, out viewSources))
+                if (_imageSources.TryGetValue(tag, out var viewSources))
                 {
                     viewSources.Clear();
                 }
@@ -304,8 +303,7 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         private void SetUriFromMultipleSources(Border view)
         {
-            var sources = default(List<KeyValuePair<string, double>>);
-            if (_imageSources.TryGetValue(view.GetTag(), out sources))
+            if (_imageSources.TryGetValue(view.GetTag(), out var sources))
             {
                 var targetImageSize = view.Width * view.Height;
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));

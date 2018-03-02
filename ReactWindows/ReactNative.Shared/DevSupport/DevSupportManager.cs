@@ -178,8 +178,7 @@ namespace ReactNative.DevSupport
 
         public void ShowNewNativeError(string message, Exception exception)
         {
-            var javaScriptException = exception as JavaScriptException;
-            if (javaScriptException != null && javaScriptException.JavaScriptStackTrace != null)
+            if (exception is JavaScriptException javaScriptException && javaScriptException.JavaScriptStackTrace != null)
             {
                 var stackTrace = StackTraceHelper.ConvertChakraStackTrace(javaScriptException.JavaScriptStackTrace);
                 ShowNewError(exception.Message, stackTrace, NativeErrorCookie);

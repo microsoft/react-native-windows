@@ -75,8 +75,11 @@ namespace ReactNative.Bridge
             {
                 if (MainDispatcher.HasThreadAccess)
                 {
-                    s_isOnDispatcherThread = new ThreadLocal<bool>();
-                    s_isOnDispatcherThread.Value = true;
+                    s_isOnDispatcherThread = new ThreadLocal<bool>
+                    {
+                        Value = true,
+                    };
+
                     return true;
                 }
                 else

@@ -384,8 +384,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="extraData">The extra data.</param>
         public override void UpdateExtraData(PasswordBox view, object extraData)
         {
-            var paddings = extraData as float[];
-            if (paddings != null)
+            if (extraData is float[] paddings)
             {
                 view.Padding = new Thickness(
                     paddings[0],

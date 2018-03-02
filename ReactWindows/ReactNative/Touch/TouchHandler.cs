@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
@@ -89,17 +89,20 @@ namespace ReactNative.Touch
             {
                 var viewPoint = e.GetCurrentPoint(reactView);
                 var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint.Position);
-                var pointer = new ReactPointer();
-                pointer.Target = reactTag;
-                pointer.PointerId = e.Pointer.PointerId;
-                pointer.Identifier = ++_pointerIDs;
-                pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
-                pointer.IsLeftButton = viewPoint.Properties.IsLeftButtonPressed;
-                pointer.IsRightButton = viewPoint.Properties.IsRightButtonPressed;
-                pointer.IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed;
-                pointer.IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel;
-                pointer.IsEraser = viewPoint.Properties.IsEraser;
-                pointer.ReactView = reactView;
+                var pointer = new ReactPointer
+                {
+                    Target = reactTag,
+                    PointerId = e.Pointer.PointerId,
+                    Identifier = ++_pointerIDs,
+                    PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName(),
+                    IsLeftButton = viewPoint.Properties.IsLeftButtonPressed,
+                    IsRightButton = viewPoint.Properties.IsRightButtonPressed,
+                    IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed,
+                    IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel,
+                    IsEraser = viewPoint.Properties.IsEraser,
+                    ReactView = reactView,
+                };
+
                 UpdatePointerForEvent(pointer, rootPoint, viewPoint);
 
                 var pointerIndex = _pointers.Count;
@@ -238,8 +241,10 @@ namespace ReactNative.Touch
                 touches.Add(JObject.FromObject(pointer));
             }
 
-            var changedIndices = new JArray();
-            changedIndices.Add(JToken.FromObject(pointerIndex));
+            var changedIndices = new JArray
+            {
+                JToken.FromObject(pointerIndex)
+            };
 
             var coalescingKey = activePointers[pointerIndex].PointerId;
 
@@ -272,8 +277,7 @@ namespace ReactNative.Touch
             }
 
             var currentView = enumerator.Current;
-            var isBoxOnly = default(bool);
-            if (!cache.TryGetValue(currentView, out isBoxOnly))
+            if (!cache.TryGetValue(currentView, out var isBoxOnly))
             {
                 var pointerEvents = currentView.GetPointerEvents();
 

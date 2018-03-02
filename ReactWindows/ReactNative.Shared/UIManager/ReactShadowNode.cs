@@ -962,8 +962,7 @@ namespace ReactNative.UIManager
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(GetType());
             foreach (var key in props.Keys)
             {
-                var setter = default(IPropertySetter);
-                if (setters.TryGetValue(key, out setter))
+                if (setters.TryGetValue(key, out var setter))
                 {
                     setter.UpdateShadowNodeProperty(this, props);
                 }

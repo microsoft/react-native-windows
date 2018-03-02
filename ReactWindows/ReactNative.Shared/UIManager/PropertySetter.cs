@@ -115,8 +115,7 @@ namespace ReactNative.UIManager
 
         protected object ExtractProperty(ReactStylesDiffMap props)
         {
-            var defaultFunc = default(Func<ReactPropBaseAttribute, object>);
-            if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropertyType, out defaultFunc))
+            if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropertyType, out var defaultFunc))
             {
                 return defaultFunc(_attribute);
             }

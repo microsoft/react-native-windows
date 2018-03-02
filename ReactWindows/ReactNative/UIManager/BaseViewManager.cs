@@ -5,7 +5,6 @@ using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -278,8 +277,7 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = null;
             }
@@ -289,8 +287,7 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetOrCreateDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = new DimensionBoundProperties();
                 _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);

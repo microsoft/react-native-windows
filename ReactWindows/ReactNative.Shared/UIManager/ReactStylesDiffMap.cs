@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
 using System;
 using System.Collections.Generic;
@@ -55,8 +55,7 @@ namespace ReactNative.UIManager
         /// <returns>The property value.</returns>
         public JToken GetProperty(string name)
         {
-            var result = default(JToken);
-            if (_props.TryGetValue(name, out result))
+            if (_props.TryGetValue(name, out var result))
             {
                 return result;
             }
