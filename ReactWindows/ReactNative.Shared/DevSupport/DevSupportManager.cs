@@ -141,10 +141,6 @@ namespace ReactNative.DevSupport
 
         public void HandleException(Exception exception)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
-#endif
-
             if (IsEnabled)
             {
                 ShowNewNativeError(exception.Message, exception);
