@@ -28,7 +28,7 @@ namespace ReactNative.UIManager
         /// node that this manager will return from
         /// <see cref="CreateShadowNodeInstance"/>.
         /// 
-        /// This method will be used in the bridge initialization phase to
+        /// This property will be used in the bridge initialization phase to
         /// collect properties exposed using the <see cref="Annotations.ReactPropAttribute"/>
         /// annotation from the <see cref="ReactShadowNode"/> subclass.
         /// </summary>
@@ -113,7 +113,7 @@ namespace ReactNative.UIManager
         /// <param name="view">
         /// The view instance that should receive the command.
         /// </param>
-        /// <param name="commandId">Identifer for the command.</param>
+        /// <param name="commandId">Identifier for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
         void ReceiveCommand(DependencyObject view, int commandId, JArray args);
 

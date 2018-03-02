@@ -39,7 +39,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelperTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndexTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerExtensionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropertyCacheTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerWithExtensionsTests.cs" />
   </ItemGroup>
 </Project>

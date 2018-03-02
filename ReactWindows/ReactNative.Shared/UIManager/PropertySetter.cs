@@ -97,6 +97,16 @@ namespace ReactNative.UIManager
             Invoke(viewManager, GetViewManagerArgs(view, props));
         }
 
+        public void UpdateViewManagerExtensionProperty(IViewManagerExtension extension, DependencyObject view, ReactStylesDiffMap props)
+        {
+            if (extension == null)
+                throw new ArgumentNullException(nameof(extension));
+            if (props == null)
+                throw new ArgumentNullException(nameof(props));
+
+            Invoke(extension, GetViewManagerArgs(view, props));
+        }
+
         protected virtual object[] GetShadowNodeArgs(ReactStylesDiffMap props)
         {
             throw new NotSupportedException(Invariant($"'{nameof(ReactShadowNode)}' properties cannot be changed with this setter."));
