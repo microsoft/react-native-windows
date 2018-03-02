@@ -1,5 +1,4 @@
 using ReactNative.Bridge;
-using System.Threading;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;

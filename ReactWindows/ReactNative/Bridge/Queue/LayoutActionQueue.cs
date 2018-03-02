@@ -1,7 +1,7 @@
 using System;
+#if CREATE_LAYOUT_THREAD
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-#if CREATE_LAYOUT_THREAD
 using Windows.ApplicationModel.Core;
 #endif
 

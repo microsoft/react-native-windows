@@ -8,8 +8,8 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".Generated.cs" #>
 <# const int maxArity = 16; #>
-using NUnit.Framework;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using ReactNative.Bridge;
 using System.Linq;
 

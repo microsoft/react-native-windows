@@ -1,11 +1,9 @@
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using System;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 using System.Threading;
-using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;

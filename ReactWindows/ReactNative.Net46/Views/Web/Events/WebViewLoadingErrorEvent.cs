@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
-using System;
-using System.Web;
 
 namespace ReactNative.Views.Web.Events
 {

@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Newtonsoft.Json.Linq;
-using System;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System.Threading.Tasks;
 
 namespace ReactNative.Tests.UIManager.Events

@@ -1,10 +1,3 @@
-using Facebook.Yoga;
-using Newtonsoft.Json.Linq;
-using ReactNative.Reflection;
-using ReactNative.UIManager.Annotations;
-using System;
-using static System.FormattableString;
-
 namespace ReactNative.UIManager
 {
     /// <summary>

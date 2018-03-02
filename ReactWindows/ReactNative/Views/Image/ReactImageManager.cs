@@ -1,5 +1,4 @@
 using ImagePipeline.Core;
-using ImagePipeline.Request;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
@@ -11,7 +10,6 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Views.Image
 {
