@@ -468,12 +468,10 @@ namespace ReactNative.UIManager
 
             foreach (var pair in source)
             {
-                var existing = default(object);
-                if (sink.TryGetValue(pair.Key, out existing))
+                if (sink.TryGetValue(pair.Key, out var existing))
                 {
-                    var sourceAsMap = pair.Value as IReadOnlyDictionary<string, object>;
-                    var sinkAsMap = existing as IDictionary<string, object>;
-                    if (sourceAsMap != null && sinkAsMap != null)
+                    if (pair.Value is IReadOnlyDictionary<string, object> sourceAsMap &&
+                        existing is IDictionary<string, object> sinkAsMap)
                     {
                         RecursiveMerge(sinkAsMap, sourceAsMap);
                     }

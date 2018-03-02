@@ -62,9 +62,7 @@ namespace ReactNative.Views.View
 
         private BorderProps GetOrCreateBorderProps(BorderedCanvas view)
         {
-            BorderProps props;
-
-            if (!_borderProps.TryGetValue(view, out props))
+            if (!_borderProps.TryGetValue(view, out var props))
             {
                 props = new BorderProps();
                 _borderProps.Add(view, props);

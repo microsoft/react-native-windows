@@ -81,13 +81,11 @@ namespace ReactNative.Animated
             foreach (var entry in _propNodeMapping)
             {
                 var node = _manager.GetNodeById(entry.Value);
-                var styleNode = node as StyleAnimatedNode;
-                var valueNode = default(ValueAnimatedNode);
-                if (styleNode != null)
+                if (node is StyleAnimatedNode styleNode)
                 {
                     styleNode.CollectViewUpdates(_propMap);
                 }
-                else if ((valueNode = node as ValueAnimatedNode) != null)
+                else if (node is ValueAnimatedNode valueNode)
                 {
                     _propMap[entry.Key] = valueNode.Value;
                 }

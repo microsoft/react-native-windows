@@ -47,12 +47,10 @@ namespace ReactNative.Animated
             foreach (var transformConfig in _transformConfigs)
             {
                 var value = default(double);
-                var animatedConfig = transformConfig as AnimatedTransformConfig;
-                if (animatedConfig != null)
+                if (transformConfig is AnimatedTransformConfig animatedConfig)
                 {
                     var node = _manager.GetNodeById(animatedConfig.NodeTag);
-                    var valueNode = node as ValueAnimatedNode;
-                    if (valueNode != null)
+                    if (node is ValueAnimatedNode valueNode)
                     {
                         value = valueNode.Value;
                     }

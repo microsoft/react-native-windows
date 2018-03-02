@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using static System.FormattableString;
 
@@ -41,8 +41,7 @@ namespace ReactNative.UIManager
             if (className == null)
                 throw new ArgumentNullException(nameof(className));
 
-            var viewManager = default(IViewManager);
-            if (_registry.TryGetValue(className, out viewManager))
+            if (_registry.TryGetValue(className, out var viewManager))
             {
                 return viewManager;
             }

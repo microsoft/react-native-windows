@@ -171,10 +171,8 @@ namespace ReactNative.UIManager
                 var viewToUpdate = ResolveView(tag);
                 var viewManager = ResolveViewManager(tag);
 
-                var parentViewManager = default(IViewManager);
-                var parentViewParentManager = default(IViewParentManager);
-                if (!_tagsToViewManagers.TryGetValue(parentTag, out parentViewManager) ||
-                    (parentViewParentManager = parentViewManager as IViewParentManager) == null)
+                if (!_tagsToViewManagers.TryGetValue(parentTag, out var parentViewManager) ||
+                    !(parentViewManager is IViewParentManager parentViewParentManager))
                 {
                     throw new InvalidOperationException(
                         Invariant($"Trying to use view with tag '{tag}' as a parent, but its manager doesn't extend ViewParentManager."));
@@ -247,8 +245,7 @@ namespace ReactNative.UIManager
         /// <param name="tagsToDelete">Tags to delete.</param>
         public void ManageChildren(int tag, int[] indexesToRemove, ViewAtIndex[] viewsToAdd, int[] tagsToDelete)
         {
-            var viewManager = default(IViewManager);
-            if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            if (!_tagsToViewManagers.TryGetValue(tag, out var viewManager))
             {
                 throw new InvalidOperationException(
                     Invariant($"Trying to manage children with tag '{tag}' which doesn't exist."));
@@ -281,8 +278,7 @@ namespace ReactNative.UIManager
                             Invariant($"Trying to remove an out of order index '{indexToRemove}' (last index was '{lastIndexToRemove}') for view tag '{tag}'."));
                     }
 
-                    var viewToRemove = viewParentManager.GetChildAt(viewToManage, indexToRemove) as FrameworkElement;
-                    if (viewToRemove != null &&
+                    if (viewParentManager.GetChildAt(viewToManage, indexToRemove) is FrameworkElement viewToRemove &&
                         _layoutAnimator.ShouldAnimateLayout(viewToRemove) &&
                         tagsToDelete.Contains(viewToRemove.GetTag()))
                     {
@@ -303,8 +299,7 @@ namespace ReactNative.UIManager
                 for (var i = 0; i < viewsToAdd.Length; ++i)
                 {
                     var viewAtIndex = viewsToAdd[i];
-                    var viewToAdd = default(DependencyObject);
-                    if (!_tagsToViews.TryGetValue(viewAtIndex.Tag, out viewToAdd))
+                    if (!_tagsToViews.TryGetValue(viewAtIndex.Tag, out var viewToAdd))
                     {
                         throw new InvalidOperationException(
                             Invariant($"Trying to add unknown view tag '{viewAtIndex.Tag}'."));
@@ -319,15 +314,13 @@ namespace ReactNative.UIManager
                 for (var i = 0; i < tagsToDelete.Length; ++i)
                 {
                     var tagToDelete = tagsToDelete[i];
-                    var viewToDestroy = default(DependencyObject);
-                    if (!_tagsToViews.TryGetValue(tagToDelete, out viewToDestroy))
+                    if (!_tagsToViews.TryGetValue(tagToDelete, out var viewToDestroy))
                     {
                         throw new InvalidOperationException(
                             Invariant($"Trying to destroy unknown view tag '{tagToDelete}'."));
                     }
 
-                    var elementToDestroy = viewToDestroy as FrameworkElement;
-                    if (elementToDestroy != null &&
+                    if (viewToDestroy is FrameworkElement elementToDestroy &&
                         _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
                     {
                         var viewToDestroyManager = ResolveViewManager(tagToDelete);
@@ -402,14 +395,12 @@ namespace ReactNative.UIManager
         public void Measure(int tag, double[] outputBuffer)
         {
             AssertOnCorrectDispatcher();
-            var view = default(DependencyObject);
-            if (!_tagsToViews.TryGetValue(tag, out view))
+            if (!_tagsToViews.TryGetValue(tag, out var view))
             {
                 throw new ArgumentOutOfRangeException(nameof(tag));
             }
 
-            var viewManager = default(IViewManager);
-            if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            if (!_tagsToViewManagers.TryGetValue(tag, out var viewManager))
             {
                 throw new InvalidOperationException(
                     Invariant($"Could not find view manager for tag '{tag}."));
@@ -447,14 +438,12 @@ namespace ReactNative.UIManager
         public void MeasureInWindow(int tag, double[] outputBuffer)
         {
             AssertOnCorrectDispatcher();
-            var view = default(DependencyObject);
-            if (!_tagsToViews.TryGetValue(tag, out view))
+            if (!_tagsToViews.TryGetValue(tag, out var view))
             {
                 throw new ArgumentOutOfRangeException(nameof(tag));
             }
 
-            var viewManager = default(IViewManager);
-            if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            if (!_tagsToViewManagers.TryGetValue(tag, out var viewManager))
             {
                 throw new InvalidOperationException(
                     Invariant($"Could not find view manager for tag '{tag}."));
@@ -496,8 +485,7 @@ namespace ReactNative.UIManager
         /// <returns>The view target.</returns>
         public int FindTargetForTouch(int reactTag, double touchX, double touchY)
         {
-            var view = default(DependencyObject);
-            if (!_tagsToViews.TryGetValue(reactTag, out view))
+            if (!_tagsToViews.TryGetValue(reactTag, out var view))
             {
                 throw new InvalidOperationException(
                     Invariant($"Could not find view with tag '{reactTag}'."));
@@ -542,8 +530,7 @@ namespace ReactNative.UIManager
         public void DispatchCommand(int reactTag, int commandId, JArray args)
         {
             AssertOnCorrectDispatcher();
-            var view = default(DependencyObject);
-            if (!_tagsToViews.TryGetValue(reactTag, out view))
+            if (!_tagsToViews.TryGetValue(reactTag, out var view))
             {
                 throw new InvalidOperationException(
                     Invariant($"Trying to send command to a non-existent view with tag '{reactTag}."));
@@ -608,8 +595,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag of the view.</param>
         public DependencyObject ResolveView(int tag)
         {
-            var view = default(DependencyObject);
-            if (!_tagsToViews.TryGetValue(tag, out view))
+            if (!_tagsToViews.TryGetValue(tag, out var view))
             {
                 throw new InvalidOperationException(
                     Invariant($"Trying to resolve view with tag '{tag}' which doesn't exist."));
@@ -624,8 +610,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag of the view.</param>
         public IViewManager ResolveViewManager(int tag)
         {
-            var viewManager = default(IViewManager);
-            if (!_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            if (!_tagsToViewManagers.TryGetValue(tag, out var viewManager))
             {
                 throw new InvalidOperationException(
                     Invariant($"ViewManager for tag '{tag}' could not be found."));
@@ -669,17 +654,14 @@ namespace ReactNative.UIManager
                 mgr.OnDropViewInstance(view.GetReactContext(), view);
             }
 
-            var viewManager = default(IViewManager);
-            if (_tagsToViewManagers.TryGetValue(tag, out viewManager))
+            if (_tagsToViewManagers.TryGetValue(tag, out var viewManager))
             {
-                var viewParentManager = viewManager as IViewParentManager;
-                if (viewParentManager != null)
+                if (viewManager is IViewParentManager viewParentManager)
                 {
                     for (var i = viewParentManager.GetChildCount(view) - 1; i >= 0; --i)
                     {
                         var child = viewParentManager.GetChildAt(view, i);
-                        var managedChild = default(DependencyObject);
-                        if (_tagsToViews.TryGetValue(child.GetTag(), out managedChild))
+                        if (_tagsToViews.TryGetValue(child.GetTag(), out var managedChild))
                         {
                             DropView(managedChild);
                         }
@@ -698,8 +680,7 @@ namespace ReactNative.UIManager
 
         private void UpdateLayout(DependencyObject viewToUpdate, IViewManager viewManager, Dimensions dimensions)
         {
-            var frameworkElement = viewToUpdate as FrameworkElement;
-            if (frameworkElement != null && _layoutAnimator.ShouldAnimateLayout(frameworkElement))
+            if (viewToUpdate is FrameworkElement frameworkElement && _layoutAnimator.ShouldAnimateLayout(frameworkElement))
             {
                 _layoutAnimator.ApplyLayoutUpdate(viewManager, frameworkElement, dimensions);
             }
