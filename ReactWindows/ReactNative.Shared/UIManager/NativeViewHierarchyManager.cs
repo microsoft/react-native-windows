@@ -258,6 +258,7 @@ namespace ReactNative.UIManager
             var viewToManage = _tagsToViews[tag];
 
             var lastIndexToRemove = viewParentManager.GetChildCount(viewToManage);
+            var animatedTags = new List<int>();
             if (indexesToRemove != null)
             {
                 for (var i = indexesToRemove.Length - 1; i >= 0; --i)
@@ -282,12 +283,27 @@ namespace ReactNative.UIManager
                     }
 
                     var viewToRemove = viewParentManager.GetChildAt(viewToManage, indexToRemove) as FrameworkElement;
+                    var tagToRemove = viewToRemove.GetTag();
                     if (viewToRemove != null &&
                         _layoutAnimator.ShouldAnimateLayout(viewToRemove) &&
-                        tagsToDelete.Contains(viewToRemove.GetTag()))
+                        tagsToDelete.Contains(tagToRemove))
                     {
-                        // The view will be removed and dropped by the 'delete'
-                        // layout animation instead, so do nothing.
+                        animatedTags.Add(tagToRemove);
+                        var viewToDestroyManager = ResolveViewManager(tagToRemove);
+                        _layoutAnimator.DeleteView(viewToDestroyManager, viewToRemove, () =>
+                        {
+                        if (viewParentManager.TryRemoveView(viewToManage, viewToRemove))
+                        {
+#if WINDOWS_UWP
+                                Dispatcher.RunIdleAsync(_ =>
+                                {
+#endif
+                                    DropView(viewToRemove);
+#if WINDOWS_UWP
+                                });
+#endif
+                            }
+                        });
                     }
                     else
                     {
@@ -314,39 +330,38 @@ namespace ReactNative.UIManager
                 }
             }
 
-            if (tagsToDelete != null)
+#if WINDOWS_UWP
+            Dispatcher.RunIdleAsync(_ =>
             {
-                for (var i = 0; i < tagsToDelete.Length; ++i)
+#endif
+                if (tagsToDelete != null)
                 {
-                    var tagToDelete = tagsToDelete[i];
-                    var viewToDestroy = default(DependencyObject);
-                    if (!_tagsToViews.TryGetValue(tagToDelete, out viewToDestroy))
+                    for (var i = 0; i < tagsToDelete.Length; ++i)
                     {
-                        throw new InvalidOperationException(
-                            Invariant($"Trying to destroy unknown view tag '{tagToDelete}'."));
-                    }
-
-                    var elementToDestroy = viewToDestroy as FrameworkElement;
-                    if (elementToDestroy != null &&
-                        _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
-                    {
-                        var viewToDestroyManager = ResolveViewManager(tagToDelete);
-                        _layoutAnimator.DeleteView(viewToDestroyManager, elementToDestroy, () =>
+                        var tagToDelete = tagsToDelete[i];
+                        var viewToDestroy = default(DependencyObject);
+                        if (!_tagsToViews.TryGetValue(tagToDelete, out viewToDestroy))
                         {
-                            if (viewParentManager.TryRemoveView(viewToManage, viewToDestroy))
-                            {
-                                DropView(viewToDestroy);
-                            }
-                        });
-                    }
-                    else
-                    {
-                        DropView(viewToDestroy);
+                            throw new InvalidOperationException(
+                                Invariant($"Trying to destroy unknown view tag '{tagToDelete}'."));
+                        }
+
+                        if (animatedTags.Contains(tagToDelete))
+                        {
+                            // The view will be dropped by the 'remove' layout
+                            // animation instead, so do nothing.
+                        }
+                        else
+                        {
+                            DropView(viewToDestroy);
+                        }
                     }
                 }
-            }
 
-            _deletedTagsBatchReporter.Send();
+                _deletedTagsBatchReporter.Send();
+#if WINDOWS_UWP
+            });
+#endif
         }
 
         /// <summary>
