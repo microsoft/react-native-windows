@@ -123,8 +123,15 @@ namespace ReactNative.UIManager
                 return defaultFunc(_attribute);
             }
 
-            return props.GetProperty(Name)?
+            var prop = props.GetProperty(Name)?
                 .ToObject(PropertyType);
+
+            if (prop == null && PropertyType.GetTypeInfo().IsValueType)
+            {
+                return Activator.CreateInstance(PropertyType);
+            }
+
+            return prop;
         }
 
         private void Invoke(object[] args)
