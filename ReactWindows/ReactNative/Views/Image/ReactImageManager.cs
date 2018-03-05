@@ -62,6 +62,13 @@ namespace ReactNative.Views.Image
                             { "registrationName", "onLoadEnd" }
                         }
                     },
+                    {
+                        "topError",
+                        new Dictionary<string, object>
+                        {
+                            { "registrationName", "onError" }
+                        }
+                    },
                 };
             }
         }
@@ -231,7 +238,7 @@ namespace ReactNative.Views.Image
             SetUriFromMultipleSources(view);
         }
 
-        private void OnImageFailed(Border view)
+        private void OnImageFailed(Border view, Exception e)
         {
             if (!view.HasTag())
             {
@@ -239,13 +246,20 @@ namespace ReactNative.Views.Image
                 return;
             }
 
-            view.GetReactContext()
+            var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        ReactImageLoadEvent.OnLoadEnd));
+                .EventDispatcher;
+
+            eventDispatcher.DispatchEvent(
+                new ReactImageLoadEvent(
+                    view.GetTag(),
+                    e.Message));
+
+            eventDispatcher.DispatchEvent(
+                new ReactImageLoadEvent(
+                    view.GetTag(),
+                    ReactImageLoadEvent.OnLoadEnd));
+
         }
 
         private void OnImageStatusUpdate(Border view, ImageLoadStatus status, ImageMetadata metadata)
@@ -287,9 +301,9 @@ namespace ReactNative.Views.Image
                 imageBrush.ImageSource = image;
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
             }
-            catch
+            catch (Exception e)
             {
-                OnImageFailed(view);
+                OnImageFailed(view, e);
             }
         }
 
