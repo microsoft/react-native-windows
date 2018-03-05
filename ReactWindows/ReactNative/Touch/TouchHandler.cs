@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -231,6 +232,10 @@ namespace ReactNative.Touch
             pointer.Timestamp = rootPoint.Timestamp / 1000; // Convert microseconds to milliseconds;
             pointer.Force = rootPoint.Properties.Pressure;
             pointer.IsBarrelButtonPressed = rootPoint.Properties.IsBarrelButtonPressed;
+
+            pointer.ShiftKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
+            pointer.AltKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
+            pointer.CtrlKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
@@ -480,6 +485,15 @@ namespace ReactNative.Touch
 
             [JsonProperty(PropertyName = "isEraser", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public bool IsEraser { get; set; }
+
+            [JsonProperty(PropertyName = "shiftKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool ShiftKey { get; set; }
+
+            [JsonProperty(PropertyName = "ctrlKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool CtrlKey { get; set; }
+
+            [JsonProperty(PropertyName = "altKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool AltKey { get; set; }
         }
     }
 }
