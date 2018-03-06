@@ -151,7 +151,6 @@
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
-    <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\NullLoggingActivityBuilderExtensions.generated.cs">
       <DependentUpon>NullLoggingActivityBuilderExtensions.tt</DependentUpon>
