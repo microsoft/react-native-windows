@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 
@@ -7,12 +8,15 @@ namespace ReactNative.Modules.AppState
     /// <summary>
     /// Native module for monitoring the state of the application.
     /// </summary>
-    public class AppStateModule : ReactContextNativeModuleBase, ILifecycleEventListener
+    public class AppStateModule : ReactContextNativeModuleBase, IBackgroundEventListener
     {
         private const string AppStateActive = "active";
         private const string AppStateBackground = "background";
 
-        private string _appState = "uninitialized";
+        // UWP apps are always activated/launched into the background. Afterwards, they
+        // may receive a `LeavingBackground` event. This information is described in
+        // https://docs.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle#app-execution-state.
+        private string _appState = AppStateBackground;
 
         /// <summary>
         /// Instantiates the <see cref="AppStateModule"/>.
@@ -35,26 +39,40 @@ namespace ReactNative.Modules.AppState
         }
 
         /// <summary>
+        /// The constants exported by this module.
+        /// </summary>
+        public override IReadOnlyDictionary<string, object> Constants
+        {
+            get
+            {
+                return new Dictionary<string, object>
+                {
+                    { "initialAppState", _appState }
+                };
+            }
+        }
+
+        /// <summary>
         /// Initializes the module.
         /// </summary>
         public override void Initialize()
         {
-            Context.AddLifecycleEventListener(this);
+            Context.AddBackgroundEventListener(this);
         }
 
         /// <summary>
-        /// Called when the application host suspends.
+        /// Called when the host entered background mode.
         /// </summary>
-        public void OnSuspend()
+        public void OnEnteredBackground()
         {
             _appState = AppStateBackground;
             SendAppStateChangeEvent();
         }
 
         /// <summary>
-        /// Called when the application host resumes.
+        /// Called when the host is leaving background mode.
         /// </summary>
-        public void OnResume()
+        public void OnLeavingBackground()
         {
             _appState = AppStateActive;
             SendAppStateChangeEvent();
