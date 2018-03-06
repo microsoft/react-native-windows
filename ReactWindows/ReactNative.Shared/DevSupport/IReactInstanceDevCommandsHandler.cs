@@ -13,6 +13,13 @@ namespace ReactNative.DevSupport
     public interface IReactInstanceDevCommandsHandler
     {
         /// <summary>
+        /// Asynchronously locks <see cref="ReactInstanceManager"/> in order to
+        /// serialize context (re)initialization
+        /// </summary>
+        /// <returns>A task to await the Lock on. Releasing the result releases the lock</returns>
+        Task<IDisposable> LockAsync();
+
+        /// <summary>
         /// Action to notify the <see cref="ReactInstanceManager"/> about the
         /// availability of a new JavaScript bundle downloaded from the server.
         /// </summary>

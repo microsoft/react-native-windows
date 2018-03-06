@@ -2,7 +2,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace ReactNative.Views.Slider
 {

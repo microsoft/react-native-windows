@@ -63,6 +63,12 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Handles reloading the JavaScript bundle.
         /// </summary>
+        void HandleReloadJavaScript();
+
+        /// <summary>
+        /// Handles reloading the JavaScript bundle.
+        /// It is called with the react instance manager lock locked
+        /// </summary>
         /// <param name="token">A token to cancel the operation.</param>
         /// <returns>A task to await the result.</returns>
         Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token);

@@ -1,4 +1,6 @@
-﻿using ReactNative.UIManager;
+using ReactNative.Accessibility;
+using ReactNative.Reflection;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -51,6 +53,18 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the RichTextBlock.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(RichTextBlock view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
@@ -88,8 +102,7 @@ namespace ReactNative.Views.Text
         public override DependencyObject GetChildAt(RichTextBlock parent, int index)
         {
             var child = parent.Blocks.OfType<Paragraph>().First().Inlines[index];
-            var childInlineContainer = child as InlineUIContainer;
-            if (childInlineContainer != null)
+            if (child is InlineUIContainer childInlineContainer)
             {
                 return childInlineContainer.Child;
             }
@@ -139,8 +152,7 @@ namespace ReactNative.Views.Text
         {
             base.UpdateExtraData(root, extraData);
 
-            var textNode = extraData as ReactTextShadowNode;
-            if (textNode != null)
+            if (extraData is ReactTextShadowNode textNode)
             {
                 textNode.UpdateTextBlock(root);
             }

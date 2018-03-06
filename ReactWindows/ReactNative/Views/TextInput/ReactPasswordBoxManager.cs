@@ -4,10 +4,8 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
-using System;
 using System.Collections.Generic;
 using Windows.System;
-using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -384,8 +382,7 @@ namespace ReactNative.Views.TextInput
         /// <param name="extraData">The extra data.</param>
         public override void UpdateExtraData(PasswordBox view, object extraData)
         {
-            var paddings = extraData as float[];
-            if (paddings != null)
+            if (extraData is float[] paddings)
             {
                 view.Padding = new Thickness(
                     paddings[0],

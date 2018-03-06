@@ -35,6 +35,7 @@ namespace ReactNative.UIManager
         private ReactShadowNode _nativeParent;
         private IList<ReactShadowNode> _nativeChildren;
         private bool _hasChildLayoutChanged;
+        private bool _forceLayoutUpdate;
 
         /// <summary>
         /// Instantiates a <see cref="ReactShadowNode"/>. 
@@ -349,6 +350,11 @@ namespace ReactNative.UIManager
         /// </summary>
         public bool IsDirty => _yogaNode != null && _yogaNode.IsDirty;
 
+        /// <summary>
+        /// Signals layout updates must be applied even if various optimizations suggest the contrary
+        /// </summary>
+        public bool MustForceLayout => _forceLayoutUpdate;
+        
         /// <summary>
         /// The number of children.
         /// </summary>
@@ -764,6 +770,14 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Forces the further applying of layout updates bypassing optimizations
+        /// </summary>
+        public void MarkForceLayout()
+        {
+            _forceLayoutUpdate = true;
+        }
+
+        /// <summary>
         /// Marks that an update has been seen.
         /// </summary>
         public void MarkUpdateSeen()
@@ -791,6 +805,8 @@ namespace ReactNative.UIManager
             {
                 _yogaNode?.MarkLayoutSeen();
             }
+
+            _forceLayoutUpdate = false;
         }
 
         /// <summary>
@@ -946,8 +962,7 @@ namespace ReactNative.UIManager
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(GetType());
             foreach (var key in props.Keys)
             {
-                var setter = default(IPropertySetter);
-                if (setters.TryGetValue(key, out setter))
+                if (setters.TryGetValue(key, out var setter))
                 {
                     setter.UpdateShadowNodeProperty(this, props);
                 }
@@ -1227,6 +1242,7 @@ namespace ReactNative.UIManager
                 var newScreenHeight = newAbsoluteBottom - newAbsoluteTop;
 
                 var layoutHasChanged =
+                    MustForceLayout ||
                     newScreenX != ScreenX ||
                     newScreenY != ScreenY ||
                     newScreenWidth != ScreenWidth ||

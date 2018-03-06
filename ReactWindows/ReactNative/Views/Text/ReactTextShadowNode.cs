@@ -1,5 +1,4 @@
-﻿using Facebook.Yoga;
-using ReactNative.Bridge;
+using Facebook.Yoga;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;

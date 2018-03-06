@@ -2,7 +2,11 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
+using System.Threading;
+using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -46,9 +50,17 @@ namespace ReactNative.Views.View
         /// </summary>
         private BorderProps GetBorderProps(BorderedCanvas view)
         {
-            BorderProps props;
+            if (_borderProps.TryGetValue(view, out var props))
+            {
+                return props;
+            }
 
-            if (!_borderProps.TryGetValue(view, out props))
+            return null;
+        }
+
+        private BorderProps GetOrCreateBorderProps(BorderedCanvas view)
+        {
+            if (!_borderProps.TryGetValue(view, out var props))
             {
                 props = new BorderProps();
                 _borderProps.Add(view, props);
@@ -71,10 +83,24 @@ namespace ReactNative.Views.View
             }
         }
 
+        private static ThreadLocal<Brush> s_defaultBorderBrush = new ThreadLocal<Brush>(() => new SolidColorBrush(Colors.Black));
+
+#if WINDOWS_UWP
+        private static AccessibilityTrait? ParseTrait(string trait)
+        {
+            if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+#endif
+
         /// <summary>
         /// Default brush for the view borders.
         /// </summary>
-        protected readonly Brush _defaultBorderBrush = new SolidColorBrush(Colors.Black);
+        protected Brush DefaultBorderBrush => s_defaultBorderBrush.Value;
 
         /// <summary>
         /// In WPF in order to be clickable (hit-test visible) the element needs to have background brush.
@@ -115,7 +141,9 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                view.Border = new Border { BorderBrush = _defaultBorderBrush };
+                var borderProps = GetBorderProps(view);
+                var borderBrush = (borderProps?.Color.HasValue ?? false) ? new SolidColorBrush(ColorHelpers.Parse(borderProps.Color.Value)) : DefaultBorderBrush;
+                view.Border = new Border { BorderBrush = borderBrush };
 
                 // Layout animations bypass SetDimensions, hence using XAML bindings.
 
@@ -184,6 +212,52 @@ namespace ReactNative.Views.View
         {
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
             view.SetPointerEvents(pointerEvents);
+        }
+
+        /// <summary>
+        /// Set accessibility traits for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object. 
+        ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
+        [ReactProp("accessibilityTraits")]
+        public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
+        {
+#if WINDOWS_UWP
+            AccessibilityTrait[] result = null;
+            if (accessibilityTraitsValue != null)
+            {
+                if (accessibilityTraitsValue is JArray asJArray)
+                {
+                    result = asJArray.Values<string>()
+                        .Select(ParseTrait)
+                        .OfType<AccessibilityTrait>()
+                        .ToArray();
+                    
+                    result = result.Length > 0 ? result : null;
+                }
+                else if (EnumHelpers.TryParse<AccessibilityTrait>(accessibilityTraitsValue.ToString(), out var accessibilityTrait))
+                {
+                    result = new[] { accessibilityTrait };
+                }
+            }
+            
+            view.AccessibilityTraits = result;
+#endif
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the BorderedCanvas.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
+        {
+#if WINDOWS_UWP
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+#endif
         }
 
         #endregion
@@ -265,14 +339,14 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                GetBorderProps(view).Color = color;
+                GetOrCreateBorderProps(view).Color = color;
             }
             else
             {
                 var border = GetOrCreateBorder(view);
                 border.BorderBrush = color.HasValue
                     ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                    : _defaultBorderBrush;
+                    : DefaultBorderBrush;
                 TransferBackgroundBrush(view);
             }
         }
@@ -296,7 +370,7 @@ namespace ReactNative.Views.View
 
             if (border.BorderBrush == null)
             {
-                var color = GetBorderProps(view).Color;
+                var color = GetOrCreateBorderProps(view).Color;
                 SetBorderColor(view, color);
             }
 

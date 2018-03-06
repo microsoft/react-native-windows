@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;

@@ -1,4 +1,3 @@
-﻿using NETWORKLIST;
 using System;
 
 namespace ReactNative.Modules.NetInfo

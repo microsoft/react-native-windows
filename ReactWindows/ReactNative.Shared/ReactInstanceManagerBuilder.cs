@@ -1,6 +1,6 @@
-﻿using ReactNative.Bridge;
-using ReactNative.Common;
+using ReactNative.Bridge;
 using ReactNative.Chakra.Executor;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System;

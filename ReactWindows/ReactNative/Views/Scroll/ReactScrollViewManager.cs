@@ -4,6 +4,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using Windows.System;
@@ -22,8 +23,8 @@ namespace ReactNative.Views.Scroll
     {
         private const int CommandScrollTo = 1;
 
-        private readonly IDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
-            new Dictionary<ScrollViewer, ScrollViewerData>();
+        private readonly ConcurrentDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
+            new ConcurrentDictionary<ScrollViewer, ScrollViewerData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -161,7 +162,7 @@ namespace ReactNative.Views.Scroll
         public void SetShowsVerticalScrollIndicator(ScrollViewer view, bool showIndicator)
         {
             view.VerticalScrollBarVisibility = showIndicator
-                ? ScrollBarVisibility.Visible
+                ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Hidden;
         }
 
@@ -354,7 +355,7 @@ namespace ReactNative.Views.Scroll
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _scrollViewerData.Remove(view);
+            _scrollViewerData.TryRemove(view, out _);
 
             view.Loaded -= OnLoaded;
             view.ViewChanging -= OnViewChanging;
@@ -398,16 +399,17 @@ namespace ReactNative.Views.Scroll
 
             var scrollViewer = new ScrollViewer
             {
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                // Align to RN defaults
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                 HorizontalScrollMode = ScrollMode.Disabled,
-                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 VerticalScrollMode = ScrollMode.Auto,
                 // The default tab index keeps the ScrollViewer (and its children) outside the normal flow of tabIndex==0 controls.
                 // We force a better default, at least until we start supporting TabIndex/IsTabStop properties on RCTScrollView.
                 TabIndex = 0,
             };
 
-            _scrollViewerData.Add(scrollViewer, scrollViewerData);
+            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => scrollViewerData);
 
             return scrollViewer;
         }

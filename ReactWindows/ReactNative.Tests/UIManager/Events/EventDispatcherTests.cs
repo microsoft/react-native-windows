@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager.Events;
 using System;
@@ -24,18 +23,6 @@ namespace ReactNative.Tests.UIManager.Events
             var context = new ReactContext();
             var dispatcher = new EventDispatcher(context);
             AssertEx.Throws<ArgumentNullException>(() => dispatcher.DispatchEvent(null), ex => Assert.AreEqual("event", ex.ParamName));
-            await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
-        }
-
-        [Ignore]
-        public async Task EventDispatcher_IncorrectThreadCalls()
-        {
-            var context = new ReactContext();
-            var dispatcher = new EventDispatcher(context);
-
-            // Incorrect test, will be removed
-            AssertEx.Throws<InvalidOperationException>(() => dispatcher.OnReactInstanceDispose());
-
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
         }
 

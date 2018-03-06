@@ -1,5 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Concurrent;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -14,8 +14,8 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class DependencyObjectExtensions
     {
-        private static readonly ConditionalWeakTable<DependencyObject, DependencyObjectData> s_properties =
-            new ConditionalWeakTable<DependencyObject, DependencyObjectData>();
+        private static readonly ConcurrentDictionary<DependencyObject, DependencyObjectData> s_properties =
+            new ConcurrentDictionary<DependencyObject, DependencyObjectData>();
         private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrCreateValue(view).PointerEvents = pointerEvents;
+            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).PointerEvents = pointerEvents;
         }
 
         /// <summary>
@@ -41,8 +41,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.PointerEvents.HasValue)
+            if (!s_properties.TryGetValue(view, out var elementData) || !elementData.PointerEvents.HasValue)
             {
                 return PointerEvents.Auto;
             }
@@ -60,7 +59,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrCreateValue(view).CompoundView = compoundView;
+            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).CompoundView = compoundView;
         }
 
         /// <summary>
@@ -77,8 +76,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (s_properties.TryGetValue(view, out elementData))
+            if (s_properties.TryGetValue(view, out var elementData))
             {
                 var compoundView = elementData.CompoundView;
                 if (compoundView != null)
@@ -95,7 +93,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrCreateValue(view).Tag = tag;
+            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).Tag = tag;
         }
 
         /// <summary>
@@ -111,8 +109,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
+            if (!s_properties.TryGetValue(view, out var elementData) || !elementData.Tag.HasValue)
             {
                 throw new InvalidOperationException("Could not get tag for view.");
             }
@@ -132,8 +129,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
+            return s_properties.TryGetValue(view, out var elementData) && elementData.Tag.HasValue;
         }
 
         internal static void SetReactContext(this DependencyObject view, ThemedReactContext context)
@@ -141,7 +137,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            s_properties.GetOrCreateValue(view).Context = context;
+            s_properties.GetOrAdd(view, (v) => new DependencyObjectData()).Context = context;
         }
 
         /// <summary>
@@ -158,8 +154,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData))
+            if (!s_properties.TryGetValue(view, out var elementData))
             {
                 throw new InvalidOperationException("Could not get React context for view.");
             }
@@ -169,7 +164,7 @@ namespace ReactNative.UIManager
 
         internal static void ClearData(this DependencyObject view)
         {
-            s_properties.Remove(view);
+            s_properties.TryRemove(view, out _);
         }
 
         internal static T As<T>(this DependencyObject view)

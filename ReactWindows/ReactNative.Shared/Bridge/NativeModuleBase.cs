@@ -190,8 +190,7 @@ namespace ReactNative.Bridge
             var methodMap = new Dictionary<string, INativeMethod>(exportedMethods.Count);
             foreach (var method in exportedMethods)
             {
-                var existingMethod = default(INativeMethod);
-                if (methodMap.TryGetValue(method.Name, out existingMethod))
+                if (methodMap.TryGetValue(method.Name, out var existingMethod))
                 {
                     throw new NotSupportedException(
                         Invariant($"React module '{GetType()}' with name '{Name}' has more than one ReactMethod with the name '{method.Name}'."));

@@ -117,8 +117,7 @@ namespace ReactNative.Animated
 
         public void StartListeningToAnimatedNodeValue(int tag, Action<double> callback)
         {
-            var node = default(AnimatedNode);
-            if (!_animatedNodes.TryGetValue(tag, out node))
+            if (!_animatedNodes.TryGetValue(tag, out var node))
             {
                 throw new InvalidOperationException(
                     Invariant($"Animated node with tag '{tag}' does not exist."));
@@ -237,8 +236,7 @@ namespace ReactNative.Animated
 
         public void StopAnimation(int animationId)
         {
-            AnimationDriver animation;
-            if (_activeAnimations.TryGetValue(animationId, out animation))
+            if (_activeAnimations.TryGetValue(animationId, out var animation))
             {
                 animation.EndCallback.Invoke(new JObject
                 {
@@ -300,8 +298,7 @@ namespace ReactNative.Animated
 
         public void RestoreDefaultValues(int animatedNodeTag, int viewTag)
         {
-            var node = default(AnimatedNode);
-            if (!_animatedNodes.TryGetValue(animatedNodeTag, out node))
+            if (!_animatedNodes.TryGetValue(animatedNodeTag, out var node))
             {
                 // Restoring default values needs to happen before UIManager
                 // operations so it is possible the node hasn't been created yet if
@@ -323,8 +320,7 @@ namespace ReactNative.Animated
         public void AddAnimatedEventToView(int viewTag, string eventName, JObject eventMapping)
         {
             var nodeTag = eventMapping.Value<int>("animatedValueTag");
-            var node = default(AnimatedNode);
-            if (!_animatedNodes.TryGetValue(nodeTag, out node))
+            if (!_animatedNodes.TryGetValue(nodeTag, out var node))
             {
                  throw new InvalidOperationException(
                      Invariant($"Animated node with tag '{nodeTag}' does not exist."));
@@ -346,8 +342,11 @@ namespace ReactNative.Animated
             }
             else
             {
-                var drivers = new List<EventAnimationDriver>(1);
-                drivers.Add(@event);
+                var drivers = new List<EventAnimationDriver>(1)
+                {
+                    @event,
+                };
+
                 _eventDrivers.Add(key, drivers);
             }
         }
@@ -398,8 +397,7 @@ namespace ReactNative.Animated
             if (_eventDrivers.Count > 0)
             {
                 var eventName = _customEventNamesResolver(@event.EventName);
-                var driversForKey = default(IList<EventAnimationDriver>);
-                if (_eventDrivers.TryGetValue(Tuple.Create(@event.ViewTag, eventName), out driversForKey))
+                if (_eventDrivers.TryGetValue(Tuple.Create(@event.ViewTag, eventName), out var driversForKey))
                 {
                     foreach (var driver in driversForKey)
                     {
@@ -582,13 +580,11 @@ namespace ReactNative.Animated
                 var nextNode = nodesQueue.Dequeue();
                 nextNode.Update();
 
-                var propsNode = nextNode as PropsAnimatedNode;
-                var valueNode = default(ValueAnimatedNode);
-                if (propsNode != null)
+                if (nextNode is PropsAnimatedNode propsNode)
                 {
                     propsNode.UpdateView();
                 }
-                else if ((valueNode = nextNode as ValueAnimatedNode) != null)
+                else if (nextNode is ValueAnimatedNode valueNode)
                 {
                     // Potentially send events to JS when the node's value is updated
                     valueNode.OnValueUpdate();
@@ -627,8 +623,7 @@ namespace ReactNative.Animated
 
         private AnimatedNode GetNode(int tag)
         {
-            var node = default(AnimatedNode);
-            if (!_animatedNodes.TryGetValue(tag, out node))
+            if (!_animatedNodes.TryGetValue(tag, out var node))
             {
                 throw new InvalidOperationException(
                     Invariant($"Animated node with tag '{tag}' does not exist."));

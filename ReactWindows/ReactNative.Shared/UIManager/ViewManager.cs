@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
@@ -89,8 +90,7 @@ namespace ReactNative.UIManager
             var keys = props.Keys;
             foreach (var key in keys)
             {
-                var setter = default(IPropertySetter);
-                if (propertySetters.TryGetValue(key, out setter))
+                if (propertySetters.TryGetValue(key, out var setter))
                 {
                     setter.UpdateViewManagerProperty(this, viewToUpdate, props);
                 }
@@ -107,6 +107,9 @@ namespace ReactNative.UIManager
         public TFrameworkElement CreateView(ThemedReactContext reactContext)
         {
             var view = CreateViewInstance(reactContext);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnViewInstanceCreated(view);
+#endif
             AddEventEmitters(reactContext, view);
             // TODO: enable touch intercepting view parents
             return view;

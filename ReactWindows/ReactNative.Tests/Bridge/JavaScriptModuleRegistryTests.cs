@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.Bridge;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 
