@@ -76,7 +76,7 @@ class PickerWindows extends React.Component<{
 
   // Translate prop and children into stuff that the native picker understands.
   _stateFromProps = (props) => {
-    var selectedIndex = 0;
+    var selectedIndex = -1;
     const items = React.Children.map(props.children, (child, index) => {
       if (child.props.value === props.selectedValue) {
         selectedIndex = index;
