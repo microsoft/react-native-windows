@@ -218,6 +218,8 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selection")]
         public void SetSelection(ReactTextBox view, JObject selection)
         {
+            if (selection == null) return;
+
             var start = selection.Value<int>("start");
             var textLength = view.Text?.Length ?? 0;
             var normalizedStart = Math.Min(start, textLength);
