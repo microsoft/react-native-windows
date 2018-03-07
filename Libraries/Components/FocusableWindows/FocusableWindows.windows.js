@@ -181,7 +181,7 @@ function createFocusableComponent(Component: any) {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps: Object) {
-      this._splitProps(nextProps);
+      this._splitProps(nextProps);      
     }
 
     componentDidMount() {
