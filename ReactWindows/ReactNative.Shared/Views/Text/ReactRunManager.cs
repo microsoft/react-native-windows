@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using ReactNative.UIManager;
@@ -77,6 +77,19 @@ namespace ReactNative.Views.Text
         protected override Run CreateViewInstance(ThemedReactContext reactContext)
         {
             return new Run();
+        }
+
+        /// <summary>
+        /// Receive extra updates from the shadow node.
+        /// </summary>
+        /// <param name="root">The root view.</param>
+        /// <param name="extraData">The extra data.</param>
+        public override void UpdateExtraData(Run root, object extraData)
+        {
+            base.UpdateExtraData(root, extraData);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnTextChanged(root);
+#endif
         }
     }
 }
