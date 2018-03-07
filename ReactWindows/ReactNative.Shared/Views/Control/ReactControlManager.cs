@@ -331,18 +331,6 @@ namespace ReactNative.Views.ControlView
             }
         }
 
-#if WINDOWS_UWP
-        private static AccessibilityTrait? ParseTrait(string trait)
-        {
-            if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
-            {
-                return result;
-            }
-
-            return null;
-        }
-#endif
-
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
             if (e.OriginalSource == sender)
