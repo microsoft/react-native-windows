@@ -223,31 +223,13 @@ namespace ReactNative.Views.View
         /// Set accessibility traits for the view.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object. 
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object.
         ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
         [ReactProp("accessibilityTraits")]
         public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
         {
 #if WINDOWS_UWP
-            AccessibilityTrait[] result = null;
-            if (accessibilityTraitsValue != null)
-            {
-                if (accessibilityTraitsValue is JArray asJArray)
-                {
-                    result = asJArray.Values<string>()
-                        .Select(ParseTrait)
-                        .OfType<AccessibilityTrait>()
-                        .ToArray();
-                    
-                    result = result.Length > 0 ? result : null;
-                }
-                else if (EnumHelpers.TryParse<AccessibilityTrait>(accessibilityTraitsValue.ToString(), out var accessibilityTrait))
-                {
-                    result = new[] { accessibilityTrait };
-                }
-            }
-            
-            view.AccessibilityTraits = result;
+            AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
 #endif
         }
 

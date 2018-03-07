@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -161,6 +162,34 @@ namespace ReactNative.Views.ControlView
         }
 
         /// <summary>
+        /// Set accessibility traits for the control.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object. 
+        ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
+        [ReactProp("accessibilityTraits")]
+        public void SetAccessibilityTraits(ReactControl view, object accessibilityTraitsValue)
+        {
+#if WINDOWS_UWP
+            AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
+#endif
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the ReactControl.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(ReactControl view, string importantForAccessibilityValue)
+        {
+#if WINDOWS_UWP
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+#endif
+        }
+
+        /// <summary>
         /// Adds a child at the given index.
         /// </summary>
         /// <param name="parent">The parent view.</param>
@@ -301,6 +330,18 @@ namespace ReactNative.Views.ControlView
                 view.KeyUp -= OnKeyUp;
             }
         }
+
+#if WINDOWS_UWP
+        private static AccessibilityTrait? ParseTrait(string trait)
+        {
+            if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+#endif
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
