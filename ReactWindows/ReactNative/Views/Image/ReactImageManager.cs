@@ -1,5 +1,4 @@
 using ImagePipeline.Core;
-using ImagePipeline.Request;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
@@ -11,7 +10,6 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace ReactNative.Views.Image
 {
@@ -62,6 +60,13 @@ namespace ReactNative.Views.Image
                         new Dictionary<string, object>
                         {
                             { "registrationName", "onLoadEnd" }
+                        }
+                    },
+                    {
+                        "topError",
+                        new Dictionary<string, object>
+                        {
+                            { "registrationName", "onError" }
                         }
                     },
                 };
@@ -118,10 +123,9 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                var viewSources = default(List<KeyValuePair<string, double>>);
                 var tag = view.GetTag();
 
-                if (_imageSources.TryGetValue(tag, out viewSources))
+                if (_imageSources.TryGetValue(tag, out var viewSources))
                 {
                     viewSources.Clear();
                 }
@@ -234,7 +238,7 @@ namespace ReactNative.Views.Image
             SetUriFromMultipleSources(view);
         }
 
-        private void OnImageFailed(Border view)
+        private void OnImageFailed(Border view, Exception e)
         {
             if (!view.HasTag())
             {
@@ -242,13 +246,20 @@ namespace ReactNative.Views.Image
                 return;
             }
 
-            view.GetReactContext()
+            var eventDispatcher = view.GetReactContext()
                 .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(
-                    new ReactImageLoadEvent(
-                        view.GetTag(),
-                        ReactImageLoadEvent.OnLoadEnd));
+                .EventDispatcher;
+
+            eventDispatcher.DispatchEvent(
+                new ReactImageLoadEvent(
+                    view.GetTag(),
+                    e.Message));
+
+            eventDispatcher.DispatchEvent(
+                new ReactImageLoadEvent(
+                    view.GetTag(),
+                    ReactImageLoadEvent.OnLoadEnd));
+
         }
 
         private void OnImageStatusUpdate(Border view, ImageLoadStatus status, ImageMetadata metadata)
@@ -290,9 +301,9 @@ namespace ReactNative.Views.Image
                 imageBrush.ImageSource = image;
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);
             }
-            catch
+            catch (Exception e)
             {
-                OnImageFailed(view);
+                OnImageFailed(view, e);
             }
         }
 
@@ -304,8 +315,7 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         private void SetUriFromMultipleSources(Border view)
         {
-            var sources = default(List<KeyValuePair<string, double>>);
-            if (_imageSources.TryGetValue(view.GetTag(), out sources))
+            if (_imageSources.TryGetValue(view.GetTag(), out var sources))
             {
                 var targetImageSize = view.Width * view.Height;
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));

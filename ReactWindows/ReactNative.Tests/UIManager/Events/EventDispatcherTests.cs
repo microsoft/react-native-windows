@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager.Events;
 using System;

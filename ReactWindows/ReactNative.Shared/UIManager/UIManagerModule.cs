@@ -194,8 +194,7 @@ namespace ReactNative.UIManager
         /// <returns>The direct event name.</returns>
         public string ResolveCustomEventName(string eventName)
         {
-            var value = default(object);
-            if (!_customDirectEvents.TryGetValue(eventName, out value))
+            if (!_customDirectEvents.TryGetValue(eventName, out var value))
             {
                 return eventName;
             }

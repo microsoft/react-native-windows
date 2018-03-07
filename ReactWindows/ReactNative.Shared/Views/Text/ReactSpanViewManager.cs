@@ -2,8 +2,6 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
@@ -11,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 #else
+using System.Collections;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;

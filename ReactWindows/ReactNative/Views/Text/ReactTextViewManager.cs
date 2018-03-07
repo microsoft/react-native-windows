@@ -102,8 +102,7 @@ namespace ReactNative.Views.Text
         public override DependencyObject GetChildAt(RichTextBlock parent, int index)
         {
             var child = parent.Blocks.OfType<Paragraph>().First().Inlines[index];
-            var childInlineContainer = child as InlineUIContainer;
-            if (childInlineContainer != null)
+            if (child is InlineUIContainer childInlineContainer)
             {
                 return childInlineContainer.Child;
             }
@@ -153,8 +152,7 @@ namespace ReactNative.Views.Text
         {
             base.UpdateExtraData(root, extraData);
 
-            var textNode = extraData as ReactTextShadowNode;
-            if (textNode != null)
+            if (extraData is ReactTextShadowNode textNode)
             {
                 textNode.UpdateTextBlock(root);
             }

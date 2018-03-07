@@ -55,8 +55,7 @@ namespace ReactNative.Modules.Launch
                 return;
             }
 
-            var uri = default(Uri);
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
             {
                 promise.Reject(new ArgumentException(Invariant($"URL argument '{uri}' is not valid.")));
                 return;
@@ -90,8 +89,7 @@ namespace ReactNative.Modules.Launch
                 return;
             }
 
-            var uri = default(Uri);
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
             {
                 promise.Reject(new ArgumentException(Invariant($"URL argument '{uri}' is not valid.")));
                 return;

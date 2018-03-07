@@ -111,8 +111,7 @@ namespace ReactNative.UIManager
             // One operation queue is the "main" one:
             // - is coupled with the CoreApplication.MainView dispatcher
             // - drives animations in ALL views
-            QueueInstanceInfo queueInfo;
-            if (!_dispatcherToOperationQueueInfo.TryGetValue(rootViewDispatcher, out queueInfo))
+            if (!_dispatcherToOperationQueueInfo.TryGetValue(rootViewDispatcher, out var queueInfo))
             {
                 // Queue instance doesn't exist for this dispatcher, we need to create
 
@@ -527,8 +526,7 @@ namespace ReactNative.UIManager
 
         private UIViewOperationQueueInstance GetQueueByTag(int tag, bool dontThrow = false)
         {
-            UIViewOperationQueueInstance queue;
-            if (!_reactTagToOperationQueue.TryGetValue(tag, out queue))
+            if (!_reactTagToOperationQueue.TryGetValue(tag, out var queue))
             {
                 if (dontThrow)
                 {

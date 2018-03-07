@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -89,17 +90,20 @@ namespace ReactNative.Touch
             {
                 var viewPoint = e.GetCurrentPoint(reactView);
                 var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint.Position);
-                var pointer = new ReactPointer();
-                pointer.Target = reactTag;
-                pointer.PointerId = e.Pointer.PointerId;
-                pointer.Identifier = ++_pointerIDs;
-                pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
-                pointer.IsLeftButton = viewPoint.Properties.IsLeftButtonPressed;
-                pointer.IsRightButton = viewPoint.Properties.IsRightButtonPressed;
-                pointer.IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed;
-                pointer.IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel;
-                pointer.IsEraser = viewPoint.Properties.IsEraser;
-                pointer.ReactView = reactView;
+                var pointer = new ReactPointer
+                {
+                    Target = reactTag,
+                    PointerId = e.Pointer.PointerId,
+                    Identifier = ++_pointerIDs,
+                    PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName(),
+                    IsLeftButton = viewPoint.Properties.IsLeftButtonPressed,
+                    IsRightButton = viewPoint.Properties.IsRightButtonPressed,
+                    IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed,
+                    IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel,
+                    IsEraser = viewPoint.Properties.IsEraser,
+                    ReactView = reactView,
+                };
+
                 UpdatePointerForEvent(pointer, rootPoint, viewPoint);
 
                 var pointerIndex = _pointers.Count;
@@ -228,6 +232,10 @@ namespace ReactNative.Touch
             pointer.Timestamp = rootPoint.Timestamp / 1000; // Convert microseconds to milliseconds;
             pointer.Force = rootPoint.Properties.Pressure;
             pointer.IsBarrelButtonPressed = rootPoint.Properties.IsBarrelButtonPressed;
+
+            pointer.ShiftKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
+            pointer.AltKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
+            pointer.CtrlKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
@@ -238,8 +246,10 @@ namespace ReactNative.Touch
                 touches.Add(JObject.FromObject(pointer));
             }
 
-            var changedIndices = new JArray();
-            changedIndices.Add(JToken.FromObject(pointerIndex));
+            var changedIndices = new JArray
+            {
+                JToken.FromObject(pointerIndex)
+            };
 
             var coalescingKey = activePointers[pointerIndex].PointerId;
 
@@ -272,8 +282,7 @@ namespace ReactNative.Touch
             }
 
             var currentView = enumerator.Current;
-            var isBoxOnly = default(bool);
-            if (!cache.TryGetValue(currentView, out isBoxOnly))
+            if (!cache.TryGetValue(currentView, out var isBoxOnly))
             {
                 var pointerEvents = currentView.GetPointerEvents();
 
@@ -476,6 +485,15 @@ namespace ReactNative.Touch
 
             [JsonProperty(PropertyName = "isEraser", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public bool IsEraser { get; set; }
+
+            [JsonProperty(PropertyName = "shiftKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool ShiftKey { get; set; }
+
+            [JsonProperty(PropertyName = "ctrlKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool CtrlKey { get; set; }
+
+            [JsonProperty(PropertyName = "altKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool AltKey { get; set; }
         }
     }
 }

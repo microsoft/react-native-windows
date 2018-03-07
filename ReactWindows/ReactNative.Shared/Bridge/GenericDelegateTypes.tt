@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace ReactNative.Bridge
 {
-    static class GenericDelegateType
+    static class GenericDelegateTypes
     {
         public static Type[] ActionTypes =
         {
@@ -54,9 +54,15 @@ for (var i = 0; i <= maxArity; ++i)
         funcTypeParamsString = funcTypeParamsString + ", ";
     }
 #>
+
         class SignatureAction<#=i#><#=actionTypeParamsString#> : IGenericDelegate
         {
             Action<#=actionTypeParamsString#> _instancedDelegate;
+
+            public SignatureAction<#=i#>(MethodInfo method)
+            {
+                _instancedDelegate = (Action<#=actionTypeParamsString#>)method.CreateDelegate(typeof(Action<#=actionTypeParamsString#>));
+            }
 
             public SignatureAction<#=i#>(object instance, MethodInfo method)
             {
@@ -73,6 +79,11 @@ for (var i = 0; i <= maxArity; ++i)
         class SignatureFunc<#=i#><<#=funcTypeParamsString#>TResult> : IGenericDelegate
         {
             Func<<#=funcTypeParamsString#>TResult> _instancedDelegate;
+
+            public SignatureFunc<#=i#>(MethodInfo method)
+            {
+                _instancedDelegate = (Func<<#=funcTypeParamsString#>TResult>)method.CreateDelegate(typeof(Func<<#=funcTypeParamsString#>TResult>));
+            }
 
             public SignatureFunc<#=i#>(object instance, MethodInfo method)
             {

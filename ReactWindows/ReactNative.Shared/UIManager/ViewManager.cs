@@ -90,8 +90,7 @@ namespace ReactNative.UIManager
             var keys = props.Keys;
             foreach (var key in keys)
             {
-                var setter = default(IPropertySetter);
-                if (propertySetters.TryGetValue(key, out setter))
+                if (propertySetters.TryGetValue(key, out var setter))
                 {
                     setter.UpdateViewManagerProperty(this, viewToUpdate, props);
                 }

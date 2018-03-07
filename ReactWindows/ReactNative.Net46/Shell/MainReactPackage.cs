@@ -1,11 +1,11 @@
-﻿using ReactNative.Animated;
+using ReactNative.Animated;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
 using ReactNative.Modules.Clipboard;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.Dialog;
-using ReactNative.Modules.Image;
 using ReactNative.Modules.I18N;
+using ReactNative.Modules.Image;
 using ReactNative.Modules.Launch;
 using ReactNative.Modules.NetInfo;
 using ReactNative.Modules.Network;
@@ -22,7 +22,6 @@ using ReactNative.Views.Text;
 using ReactNative.Views.TextInput;
 using ReactNative.Views.View;
 using ReactNative.Views.Web;
-using System;
 using System.Collections.Generic;
 
 namespace ReactNative.Shell

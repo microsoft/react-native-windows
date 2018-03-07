@@ -1,4 +1,4 @@
-﻿#if WINDOWS_UWP
+#if WINDOWS_UWP
 using Windows.UI.Text;
 #else
 using System.Windows;
@@ -36,8 +36,7 @@ namespace ReactNative.Views.Text
 
         private static int ParseNumericFontWeight(string fontWeightString)
         {
-            var result = default(int);
-            if (int.TryParse(fontWeightString, out result))
+            if (int.TryParse(fontWeightString, out var result))
             {
                 return result;
             }

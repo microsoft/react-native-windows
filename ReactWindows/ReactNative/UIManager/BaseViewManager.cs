@@ -5,7 +5,6 @@ using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
 using Windows.Foundation;

@@ -1,11 +1,14 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
+ * Portions copyright for react-native-windows:
+ * 
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * 
  * @providesModule Button
  * @flow
  */
@@ -32,7 +35,6 @@ const KEY_CODE_SPACE = FocusableView.keys.Space;
 const DOWN_KEYCODES = [KEY_CODE_SPACE, KEY_CODE_ENTER];
 const UP_KEYCODES = [KEY_CODE_SPACE];
 
-
 /**
  * A basic button component that should render nicely on any platform. Supports
  * a minimal level of customization.
@@ -48,6 +50,9 @@ const UP_KEYCODES = [KEY_CODE_SPACE];
  * Example usage:
  *
  * ```
+ * import { Button } from 'react-native';
+ * ...
+ *
  * <Button
  *   onPress={onPressLearnMore}
  *   title="Learn More"
@@ -58,17 +63,15 @@ const UP_KEYCODES = [KEY_CODE_SPACE];
  *
  */
 
-class Button extends React.Component {
-
-  props: {
-    title: string,
-    onPress: () => any,
-    color?: ?string,
-    accessibilityLabel?: ?string,
-    disabled?: ?boolean,
-    testID?: ?string,
-  };
-
+class Button extends React.Component<{
+  title: string,
+  onPress: () => any,
+  color?: ?string,
+  accessibilityLabel?: ?string,
+  disabled?: ?boolean,
+  testID?: ?string,
+  hasTVPreferredFocus?: ?boolean,
+}> {
   static propTypes = {
     /**
      * Text to display inside the button
@@ -95,6 +98,12 @@ class Button extends React.Component {
      */
     testID: PropTypes.string,
     /**
+     * *(Apple TV only)* TV preferred focus (see documentation for the View component).
+     *
+     * @platform ios
+     */
+    hasTVPreferredFocus: PropTypes.bool,
+    /**
      * tabIndex:
      * -1: Control is not keyboard focusable in any way
      * 0 (default): Control is keyboard focusable in the normal order
@@ -118,7 +127,7 @@ class Button extends React.Component {
      * @platform windows
      */
     onFocus: PropTypes.func,
-};
+  };
 
   render() {
     const {
@@ -126,6 +135,7 @@ class Button extends React.Component {
       color,
       onPress,
       title,
+      hasTVPreferredFocus,
       disabled,
       testID,
     } = this.props;
@@ -183,10 +193,11 @@ class Button extends React.Component {
         accessibilityComponentType="button"
         accessibilityLabel={accessibilityLabel}
         accessibilityTraits={accessibilityTraits}
+        hasTVPreferredFocus={hasTVPreferredFocus}
         testID={testID}
         disabled={disabled}
         onPress={onPress}>
-          {content}
+        {content}
       </Touchable>
     );
   }
