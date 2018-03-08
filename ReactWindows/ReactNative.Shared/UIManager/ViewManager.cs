@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -90,8 +95,7 @@ namespace ReactNative.UIManager
             var keys = props.Keys;
             foreach (var key in keys)
             {
-                var setter = default(IPropertySetter);
-                if (propertySetters.TryGetValue(key, out setter))
+                if (propertySetters.TryGetValue(key, out var setter))
                 {
                     setter.UpdateViewManagerProperty(this, viewToUpdate, props);
                 }

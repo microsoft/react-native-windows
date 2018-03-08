@@ -1,4 +1,9 @@
-﻿using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using static System.FormattableString;
 
@@ -75,8 +80,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag of the node to remove.</param>
         public void RemoveNode(int tag)
         {
-            var isRoot = default(bool);
-            if (_rootTags.TryGetValue(tag, out isRoot) && isRoot)
+            if (_rootTags.TryGetValue(tag, out var isRoot) && isRoot)
             {
                 throw new KeyNotFoundException(
                     Invariant($"Trying to remove root node '{tag}' without using RemoveRootNode."));
@@ -92,8 +96,7 @@ namespace ReactNative.UIManager
         /// <returns>The React shadow node.</returns>
         public ReactShadowNode GetNode(int tag)
         {
-            var result = default(ReactShadowNode);
-            if (_tagsToCssNodes.TryGetValue(tag, out result))
+            if (_tagsToCssNodes.TryGetValue(tag, out var result))
             {
                 return result;
             }

@@ -1,4 +1,7 @@
-﻿using ReactNative.UIManager;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.UIManager;
 using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Documents;

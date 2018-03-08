@@ -1,3 +1,7 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+// TODO
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -17,8 +21,7 @@ namespace ReactNative.UIManager
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            var setters = default(IReadOnlyDictionary<string, IPropertySetter>);
-            if (s_settersCache.TryGetValue(type, out setters))
+            if (s_settersCache.TryGetValue(type, out var setters))
             {
                 return setters;
             }
@@ -48,8 +51,7 @@ namespace ReactNative.UIManager
                 return s_shadowEmpty;
             }
 
-            var setters = default(IReadOnlyDictionary<string, IPropertySetter>);
-            if (s_settersCache.TryGetValue(type, out setters))
+            if (s_settersCache.TryGetValue(type, out var setters))
             {
                 return setters;
             }

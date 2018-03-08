@@ -113,7 +113,6 @@
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
@@ -135,7 +134,6 @@
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootViewExtensions.cs" />
-    <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />

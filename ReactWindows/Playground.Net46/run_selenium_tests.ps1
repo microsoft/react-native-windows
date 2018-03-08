@@ -1,4 +1,7 @@
-Add-Type -assembly “system.io.compression.filesystem”
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+Add-Type -assembly ï¿½system.io.compression.filesystemï¿½
 
 $root = (split-path -parent $MyInvocation.MyCommand.Definition) + '\..\..'
 

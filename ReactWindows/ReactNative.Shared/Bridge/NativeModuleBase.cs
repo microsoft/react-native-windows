@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
@@ -190,8 +195,7 @@ namespace ReactNative.Bridge
             var methodMap = new Dictionary<string, INativeMethod>(exportedMethods.Count);
             foreach (var method in exportedMethods)
             {
-                var existingMethod = default(INativeMethod);
-                if (methodMap.TryGetValue(method.Name, out existingMethod))
+                if (methodMap.TryGetValue(method.Name, out var existingMethod))
                 {
                     throw new NotSupportedException(
                         Invariant($"React module '{GetType()}' with name '{Name}' has more than one ReactMethod with the name '{method.Name}'."));

@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.Tracing;
@@ -196,9 +201,8 @@ namespace ReactNative.UIManager.Events
                         var eventCookie = GetEventCookie(@event.ViewTag, @event.EventName, @event.CoalescingKey);
                         var eventToAdd = default(Event);
                         var eventToDispose = default(Event);
-                        var lastEventIdx = default(int);
 
-                        if (!_eventCookieToLastEventIndex.TryGetValue(eventCookie, out lastEventIdx))
+                        if (!_eventCookieToLastEventIndex.TryGetValue(eventCookie, out var lastEventIdx))
                         {
                             eventToAdd = @event;
                             _eventCookieToLastEventIndex.Add(eventCookie, _eventsToDispatchSize);
@@ -239,8 +243,7 @@ namespace ReactNative.UIManager.Events
 
         private long GetEventCookie(int viewTag, string eventName, short coalescingKey)
         {
-            var eventTypeId = default(short);
-            if (!_eventNameToEventId.TryGetValue(eventName, out eventTypeId))
+            if (!_eventNameToEventId.TryGetValue(eventName, out var eventTypeId))
             {
                 if (_eventNameToEventId.Count == short.MaxValue)
                 {

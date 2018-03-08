@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
@@ -51,8 +56,7 @@ namespace ReactNative.Bridge
         /// <returns>The module instance.</returns>
         public T GetModule<T>() where T : INativeModule
         {
-            var instance = default(INativeModule);
-            if (_moduleInstances.TryGetValue(typeof(T), out instance))
+            if (_moduleInstances.TryGetValue(typeof(T), out var instance))
             {
                 return (T)instance;
             }
@@ -301,8 +305,7 @@ namespace ReactNative.Bridge
                         Invariant($"Native module '{module.GetType()}' cannot have a null `Name`."),
                         nameof(module));
 
-                var existing = default(INativeModule);
-                if (_modules.TryGetValue(module.Name, out existing) && !module.CanOverrideExistingModule)
+                if (_modules.TryGetValue(module.Name, out var existing) && !module.CanOverrideExistingModule)
                 {
                     throw new InvalidOperationException(
                         string.Format(

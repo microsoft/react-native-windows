@@ -1,7 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
+#if CREATE_LAYOUT_THREAD
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-#if CREATE_LAYOUT_THREAD
 using Windows.ApplicationModel.Core;
 #endif
 

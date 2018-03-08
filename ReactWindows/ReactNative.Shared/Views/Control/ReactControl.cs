@@ -1,4 +1,6 @@
-using ReactNative.UIManager;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
 using Windows.UI.Xaml;

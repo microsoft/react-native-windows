@@ -1,4 +1,8 @@
-﻿using Facebook.Yoga;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+// TODO
+
+using Facebook.Yoga;
 using ReactNative.UIManager;
 
 namespace ReactNative.Views.Slider

@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Accessibility;
 using ReactNative.Reflection;
@@ -5,7 +10,6 @@ using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -278,8 +282,7 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = null;
             }
@@ -289,8 +292,7 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetOrCreateDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = new DimensionBoundProperties();
                 _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);

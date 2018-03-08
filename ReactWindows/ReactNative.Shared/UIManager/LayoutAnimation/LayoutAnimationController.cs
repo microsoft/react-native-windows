@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Reactive;
@@ -98,7 +103,8 @@ namespace ReactNative.UIManager.LayoutAnimation
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            var layoutAnimation = view.ActualWidth == 0 || view.ActualHeight == 0
+            var currentDimensions = viewManager.GetDimensions(view);
+            var layoutAnimation = IsZeroOrNaN(currentDimensions.Width) || IsZeroOrNaN(currentDimensions.Height)
                 ? _layoutCreateAnimation
                 : _layoutUpdateAnimation;
 
@@ -162,6 +168,11 @@ namespace ReactNative.UIManager.LayoutAnimation
 
             // Start the next animation
             serialDisposable.Disposable = animation.Subscribe();
+        }
+
+        private static bool IsZeroOrNaN(double value)
+        {
+            return value == 0 || double.IsNaN(value);
         }
     }
 }

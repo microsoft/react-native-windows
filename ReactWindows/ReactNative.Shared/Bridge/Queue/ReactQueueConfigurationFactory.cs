@@ -1,12 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Reactive.Concurrency;
-#if WINDOWS_UWP
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
-#else
-using System.Windows;
-using System.Windows.Threading;
-#endif
 
 namespace ReactNative.Bridge.Queue
 {
