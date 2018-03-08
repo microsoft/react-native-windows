@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
+using System.Collections.Generic;
 
 namespace ReactNative.Modules.AppState
 {
@@ -16,6 +16,10 @@ namespace ReactNative.Modules.AppState
         // UWP apps are always activated/launched into the background. Afterwards, they
         // may receive a `LeavingBackground` event. This information is described in
         // https://docs.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle#app-execution-state.
+        // Note that React Native Windows's `LeavingBackground` event behaves similarly even on versions
+        // of Windows that don't support `LeavingBackground/EnteredBackground` (i.e. Windows.Foundation.UniversalApiContract v3).
+        // On such Windows versions, React Native Windows always fires `LeavingBackground` immediately before
+        // `Resume` and `EnteredBackground` immediately before `Suspend`.
         private string _appState = AppStateBackground;
 
         /// <summary>
