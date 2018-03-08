@@ -18,7 +18,7 @@ namespace ReactNative.Modules.AppState
         // https://docs.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle#app-execution-state.
         // Note that React Native Windows's `LeavingBackground` event behaves similarly even on versions
         // of Windows that don't support `LeavingBackground/EnteredBackground` (i.e. Windows.Foundation.UniversalApiContract v3).
-        // On such Windows versions, React Native Windows always fires `LeavingBackground` immediately before
+        // On such Windows versions, React Native Windows always fires `LeavingBackground` immediately after
         // `Resume` and `EnteredBackground` immediately before `Suspend`.
         private string _appState = AppStateBackground;
 
