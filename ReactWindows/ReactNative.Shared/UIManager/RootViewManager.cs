@@ -1,4 +1,9 @@
-﻿namespace ReactNative.UIManager
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+namespace ReactNative.UIManager
 {
     /// <summary>
     /// View manager for React root view components.
