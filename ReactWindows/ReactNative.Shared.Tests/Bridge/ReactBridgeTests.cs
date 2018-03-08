@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Chakra.Executor;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -137,9 +138,11 @@ namespace ReactNative.Tests.Bridge
 
                 var callbacks = new List<Tuple<int, int, JArray>>();
                 var eventHandler = new AutoResetEvent(false);
-                var callback = new MockReactCallback(
-                    (moduleId, methodId, args) => callbacks.Add(Tuple.Create(moduleId, methodId, args)),
-                    () => eventHandler.Set());
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, args) => callbacks.Add(Tuple.Create(moduleId, methodId, args)),
+                    OnBatchCompleteHandler = () => eventHandler.Set(),
+                };
 
                 var bridge = new ReactBridge(executor, callback, nativeThread);
                 bridge.CallFunction("module", "method", new JArray());
@@ -240,6 +243,52 @@ namespace ReactNative.Tests.Bridge
             }
         }
 
+        [Test]
+        public async Task ReactBridge_SyncCallback()
+        {
+            var jsFactories = new Func<IJavaScriptExecutor>[]
+            {
+                () => new ChakraJavaScriptExecutor(),
+#if WINDOWS_UWP
+                () => new NativeJavaScriptExecutor(),
+#endif
+            };
+
+            foreach (var jsFactory in jsFactories)
+            {
+                await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
+                {
+                    using (var nativeThread = CreateNativeModulesThread())
+                    {
+                        var moduleId = 42;
+                        var methodId = 7;
+                        var called = 0;
+                        var callback = new MockReactCallback
+                        {
+                            InvokeSyncHandler = (mod, met, arg) =>
+                            {
+                                Assert.AreEqual(moduleId, mod);
+                                Assert.AreEqual(methodId, met);
+                                Assert.AreEqual(0, arg.Count);
+                                ++called;
+                                return JValue.CreateNull();
+                            },
+                        };
+
+                        var bridge = new ReactBridge(executor, callback, nativeThread);
+                        await jsQueueThread.RunAsync(() =>
+                        {
+                            bridge.CallFunction("SyncModule", "test", new JArray { 42, 7, new JArray() });
+                        });
+
+                        Assert.AreEqual(1, called);
+                    }
+                },
+                jsFactory,
+                @"Resources/sync.js");
+            }
+        }
+
         private static IActionQueue CreateNativeModulesThread()
         {
             return CreateNativeModulesThread(ex => Assert.Fail(ex.ToString()));
@@ -248,43 +297,6 @@ namespace ReactNative.Tests.Bridge
         private static IActionQueue CreateNativeModulesThread(Action<Exception> exceptionHandler)
         {
             return new ActionQueue(exceptionHandler);
-        }
-
-        class MockReactCallback : IReactCallback
-        {
-            private readonly Action<int, int, JArray> _invoke;
-            private readonly Action _onBatchComplete;
-
-            public MockReactCallback()
-                : this(() => { })
-            {
-            }
-
-            public MockReactCallback(Action onBatchComplete)
-                : this((p0, p1, p2) => { }, onBatchComplete)
-            {
-            }
-
-            public MockReactCallback(Action<int, int, JArray> invoke, Action onBatchComplete)
-            {
-                _invoke = invoke;
-                _onBatchComplete = onBatchComplete;
-            }
-
-            public void Invoke(int moduleId, int methodId, JArray parameters)
-            {
-                _invoke(moduleId, methodId, parameters);
-            }
-
-            public JToken CallSerializableNativeHook(int moduleId, int methodId, JArray parameters)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void OnBatchComplete()
-            {
-                _onBatchComplete();
-            }
         }
     }
 }

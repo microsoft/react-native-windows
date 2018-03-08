@@ -42,7 +42,7 @@ namespace ReactNative.Bridge
             _jsExecutor = executor;
             _reactCallback = reactCallback;
             _nativeModulesQueueThread = nativeModulesQueueThread;
-            _jsExecutor.SetCallSerializableNativeHook(CallSerializableNativeHook);
+            _jsExecutor.SetCallSyncHook(_reactCallback.InvokeSync);
         }
 
         /// <summary>
@@ -149,11 +149,6 @@ namespace ReactNative.Bridge
 
                 _reactCallback.OnBatchComplete();
             });
-        }
-
-        private JToken CallSerializableNativeHook(int moduleId, int methodId, JArray arguments)
-        {
-            return _reactCallback.CallSerializableNativeHook(moduleId, methodId, arguments);
         }
     }
 }

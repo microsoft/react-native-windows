@@ -14,8 +14,9 @@ namespace ReactNative.Bridge
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class ReactMethodAttribute : Attribute
     {
+        /// <summary>
+        /// Signals that a method will be invoked synchronously from JavaScript.
+        /// </summary>
         public bool IsBlockingSynchronousMethod { get; set; } = false;
-
-        public bool IsDirectCallMethod { get; set; } = false;
     }
 }

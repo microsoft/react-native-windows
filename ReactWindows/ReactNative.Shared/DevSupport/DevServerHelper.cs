@@ -61,7 +61,7 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// The host to use when connecting to the bundle server.
         /// </summary>
-        public string DebugServerHost
+        private string DebugServerHost
         {
             get
             {

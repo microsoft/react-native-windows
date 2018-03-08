@@ -566,7 +566,7 @@ namespace ReactNative.DevSupport
                     async progressToken =>
                     {
                         await _devServerHelper.LaunchDevToolsAsync(progressToken).ConfigureAwait(false);
-                        webSocketExecutor = new WebSocketJavaScriptExecutor(_devSettings);
+                        webSocketExecutor = new WebSocketJavaScriptExecutor();
                         await webSocketExecutor.ConnectAsync(_devServerHelper.WebsocketProxyUrl, progressToken).ConfigureAwait(false);
                     },
                     progressDialog,

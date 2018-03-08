@@ -22,13 +22,7 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="reactInstance">The React instance.</param>
         /// <param name="arguments">The arguments.</param>
-        void Invoke(IReactInstance reactInstance, JArray arguments);
-
-        /// <summary>
-        /// Invoke the native synchronous hook.
-        /// </summary>
-        /// <param name="reactInstance">The React instance.</param>
-        /// <param name="arguments">The arguments.</param>
-        JToken CallSerializableNativeHook(IReactInstance reactInstance, JArray arguments);
+        /// <returns>The native method result.</returns>
+        JToken Invoke(IReactInstance reactInstance, JArray arguments);
     }
 }

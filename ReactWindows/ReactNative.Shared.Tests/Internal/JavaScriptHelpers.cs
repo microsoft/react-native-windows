@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
@@ -28,14 +29,20 @@ namespace ReactNative.Tests
             });
         }
 
-        public static async Task Run(Func<ChakraJavaScriptExecutor, IActionQueue, Task> action)
+        public static Task Run(Func<ChakraJavaScriptExecutor, IActionQueue, Task> action)
+        {
+            return Run(action, () => new ChakraJavaScriptExecutor(), @"Resources/test.js");
+        }
+
+        public static async Task Run<TJavaScriptExecutor>(Func<TJavaScriptExecutor, IActionQueue, Task> action, Func<TJavaScriptExecutor> jsFactory, string scriptPath)
+            where TJavaScriptExecutor : IJavaScriptExecutor
         {
             using (var jsQueueThread = CreateJavaScriptQueue())
             {
-                var executor = await jsQueueThread.RunAsync(() => new ChakraJavaScriptExecutor());
+                var executor = await jsQueueThread.RunAsync(jsFactory);
                 try
                 {
-                    await Initialize(executor, jsQueueThread);
+                    await Initialize(executor, jsQueueThread, scriptPath);
                     await action(executor, jsQueueThread);
                 }
                 finally
@@ -49,42 +56,25 @@ namespace ReactNative.Tests
             }
         }
 
-        public static async Task Initialize(ChakraJavaScriptExecutor executor, IActionQueue jsQueueThread)
+        public static async Task Initialize(IJavaScriptExecutor executor, IActionQueue jsQueueThread, string scriptPath)
         {
-            var scriptUris = new[]
-            {
-                @"Resources/test.js",
-            };
-
-            var scripts = new KeyValuePair<string, string>[scriptUris.Length];
-            for (var i = 0; i < scriptUris.Length; ++i)
-            {
-                var uri = scriptUris[i];
 #if WINDOWS_UWP
-                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + "/" + uri)); 
-                var filePath = storageFile.Path; 
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + "/" + scriptPath)); 
+            var filePath = storageFile.Path;
 #else
-                var assembly = Assembly.GetAssembly(typeof(JavaScriptHelpers));
-                var assemblyName = assembly.GetName();
-                var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
-                if (pathToAssembly == null) throw new FileNotFoundException($"Could not get directory name for code base of '{assemblyName}'.");
-                var pathToAssemblyResource = Path.Combine(pathToAssembly, uri);
+            var assembly = Assembly.GetAssembly(typeof(JavaScriptHelpers));
+            var assemblyName = assembly.GetName();
+            var pathToAssembly = Path.GetDirectoryName(assemblyName.CodeBase);
+            if (pathToAssembly == null) throw new FileNotFoundException($"Could not get directory name for code base of '{assemblyName}'.");
+            var pathToAssemblyResource = Path.Combine(pathToAssembly, scriptPath);
 
-                var u = new Uri(pathToAssemblyResource);
-                var filePath = u.LocalPath;
+            var u = new Uri(pathToAssemblyResource);
+            var filePath = u.LocalPath;
 #endif
-
-                scripts[i] = new KeyValuePair<string, string>(uri, filePath);
-            }
 
             await jsQueueThread.RunAsync(() =>
             {
-                foreach (var script in scripts)
-                {
-                    executor.RunScript(script.Value, script.Key);
-                }
-
-                return true;
+                executor.RunScript(filePath, filePath);
             });
         }
 
