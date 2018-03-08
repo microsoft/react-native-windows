@@ -1,3 +1,7 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+// TODO
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
