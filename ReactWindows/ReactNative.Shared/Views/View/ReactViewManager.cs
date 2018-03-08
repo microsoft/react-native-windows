@@ -219,6 +219,7 @@ namespace ReactNative.Views.View
             view.SetPointerEvents(pointerEvents);
         }
 
+#if WINDOWS_UWP
         /// <summary>
         /// Set accessibility traits for the view.
         /// </summary>
@@ -228,9 +229,7 @@ namespace ReactNative.Views.View
         [ReactProp("accessibilityTraits")]
         public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
         {
-#if WINDOWS_UWP
             AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
-#endif
         }
 
         /// <summary>
@@ -241,11 +240,10 @@ namespace ReactNative.Views.View
         [ReactProp("importantForAccessibility")]
         public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
         {
-#if WINDOWS_UWP
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
             AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
-#endif
         }
+#endif
 
         #endregion
 

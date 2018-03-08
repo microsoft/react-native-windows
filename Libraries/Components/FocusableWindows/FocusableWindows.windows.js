@@ -77,9 +77,10 @@ class FocusableWindowsTemplate {
     disableSystemFocusVisuals: PropTypes.bool,
 
     /**
-     * Controls how view is important for accessibility which is if it
-     * fires accessibility events and if it is reported to accessibility services
-     * that query the screen. For more details refer to Libraries\Components\View\ViewPropTypes.js
+     * Determines control accessibility behavior.
+     * For more details refer to Libraries\Components\View\ViewPropTypes.js
+     * 
+     * @platform windows
      */
     importantForAccessibility: PropTypes.oneOf([
       'auto',
@@ -89,8 +90,10 @@ class FocusableWindowsTemplate {
     ]),
 
     /**
-     * Provides additional traits to screen reader. By default no traits are
-     * provided unless specified otherwise in element. For more details refer to Libraries\Components\View\ViewPropTypes.js.
+     * Provides accessibility traits to the screen reader. By default no traits are set.
+     * For more details refer to Libraries\Components\View\ViewPropTypes.js.
+     * 
+     * @platform windows
      */
     accessibilityTraits: PropTypes.oneOfType([
       PropTypes.oneOf(AccessibilityTraits),
@@ -98,8 +101,9 @@ class FocusableWindowsTemplate {
     ]),
 
     /**
-     * When `accessible` is true, the system will try to invoke this function
-     * when the user performs accessibility tap gesture.
+     * Called when the user performs accessibility tap gesture.
+     * 
+     * @platform windows
      */
     onAccessibilityTap: PropTypes.func,
 

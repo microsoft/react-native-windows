@@ -161,6 +161,7 @@ namespace ReactNative.Views.ControlView
             view.HandledKeyUpKeys = keys;
         }
 
+#if WINDOWS_UWP
         /// <summary>
         /// Set accessibility traits for the control.
         /// </summary>
@@ -170,9 +171,7 @@ namespace ReactNative.Views.ControlView
         [ReactProp("accessibilityTraits")]
         public void SetAccessibilityTraits(ReactControl view, object accessibilityTraitsValue)
         {
-#if WINDOWS_UWP
             AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
-#endif
         }
 
         /// <summary>
@@ -183,11 +182,10 @@ namespace ReactNative.Views.ControlView
         [ReactProp("importantForAccessibility")]
         public void SetImportantForAccessibility(ReactControl view, string importantForAccessibilityValue)
         {
-#if WINDOWS_UWP
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
             AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
-#endif
         }
+#endif
 
         /// <summary>
         /// Adds a child at the given index.
