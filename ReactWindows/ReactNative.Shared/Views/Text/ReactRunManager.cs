@@ -4,6 +4,7 @@
 using ReactNative.UIManager;
 using System;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml.Documents;
 #else
 using System.Windows.Documents;
