@@ -25,5 +25,6 @@
     <ClInclude Include="SerializedSourceContext.h" />
     <ClInclude Include="JsModulesUnbundle.h" />
     <ClInclude Include="JsIndexedModulesUnbundle.h" />
+    <ClInclude Include="CallSyncHandler.h" />
   </ItemGroup>
 </Project>

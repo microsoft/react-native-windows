@@ -31,13 +31,13 @@ namespace ReactNative.Tests
             OnRunScript(sourcePath, sourceUrl);
         }
 
-        public void SetCallSerializableNativeHook(CallSerializableNativeHook callSerializableNativeHook)
-        {
-        }
-
         public void SetGlobalVariable(string propertyName, JToken value)
         {
             OnSetGlobalVariable(propertyName, value);
+        }
+
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
         }
 
         public void Dispose()

@@ -16,8 +16,9 @@ namespace ReactNative.Bridge
         /// Extracts the native method type from the method.
         /// </summary>
         /// <param name="method">The method.</param>
+        /// <param name="attribute">The attribute.</param>
         /// <returns>The native method type.</returns>
-        string GetMethodType(MethodInfo method);
+        string GetMethodType(MethodInfo method, ReactMethodAttribute attribute);
 
         /// <summary>
         /// Create an invocation delegate from the given method.
@@ -25,12 +26,13 @@ namespace ReactNative.Bridge
         /// <param name="nativeModule">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        Func<INativeModule, IReactInstance, JArray, JToken> Create(INativeModule nativeModule, MethodInfo method);
+        Func<IReactInstance, JArray, JToken> Create(INativeModule nativeModule, MethodInfo method);
 
         /// <summary>
         /// Check that the method is valid for <see cref="ReactMethodAttribute"/>.
         /// </summary>
         /// <param name="method">The method.</param>
-        void Validate(MethodInfo method);
+        /// <param name="attribute">The attribute.</param>
+        void Validate(MethodInfo method, ReactMethodAttribute attribute);
     }
 }

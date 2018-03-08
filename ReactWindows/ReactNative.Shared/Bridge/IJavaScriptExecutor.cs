@@ -9,15 +9,6 @@ using System;
 namespace ReactNative.Bridge
 {
     /// <summary>
-    /// The delagate to invoke a NativeModule synchronous hook.
-    /// </summary>
-    /// <param name="moduleId">The module ID.</param>
-    /// <param name="methodId">The method ID.</param>
-    /// <param name="arguments">The arguments.</param>
-    /// <returns>The result</returns>
-    public delegate JToken CallSerializableNativeHook(int moduleId, int methodId, JArray arguments);
-
-    /// <summary>
     /// Interface for making JavaScript calls from native code.
     /// </summary>
     public interface IJavaScriptExecutor : IDisposable
@@ -60,9 +51,9 @@ namespace ReactNative.Bridge
         void RunScript(string sourcePath, string sourceUrl);
 
         /// <summary>
-        /// Set a CallSerializableNativeHook delegate on the executor.
+        /// Sets a callback for synchronous native methods.
         /// </summary>
-        /// <param name="callSerializableNativeHook">The delegate</param>
-        void SetCallSerializableNativeHook(CallSerializableNativeHook callSerializableNativeHook);
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook);
     }
 }

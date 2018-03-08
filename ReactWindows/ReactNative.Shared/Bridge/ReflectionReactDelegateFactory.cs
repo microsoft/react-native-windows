@@ -15,6 +15,8 @@ namespace ReactNative.Bridge
     /// </summary>
     public sealed class ReflectionReactDelegateFactory : ReactDelegateFactoryBase
     {
+        private static readonly JToken s_null = JValue.CreateNull();
+
         private ReflectionReactDelegateFactory() { }
 
         /// <summary>
@@ -29,27 +31,22 @@ namespace ReactNative.Bridge
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Func<INativeModule, IReactInstance, JArray, JToken> Create(INativeModule module, MethodInfo method)
+        public override Func<IReactInstance, JArray, JToken> Create(INativeModule module, MethodInfo method)
         {
-            ReactMethodAttribute attribute = method.GetCustomAttribute<ReactMethodAttribute>();
-            if (attribute != null && attribute.IsDirectCallMethod)
-            {
-
-                return (Func<INativeModule, IReactInstance, JArray, JToken>)method.CreateDelegate(typeof(Func<INativeModule, IReactInstance, JArray, JToken>));
-            }
-
             var extractors = CreateExtractors(module, method);
             var expectedArguments = extractors.Sum(e => e.ExpectedArguments);
             var extractFunctions = extractors.Select(e => e.ExtractFunction).ToList();
             var genericDelegate = GenericDelegate.Create(module, method);
+            var hasReturnType = method.ReturnType != typeof(void);
 
-            return (moduleInstance, reactInstance, arguments) => 
+            return (reactInstance, arguments) => 
                 Invoke(
-                    method, 
+                    method,
                     expectedArguments,
                     extractFunctions,
                     genericDelegate,
-                    moduleInstance,
+                    hasReturnType,
+                    module,
                     reactInstance,
                     arguments);
         }
@@ -149,6 +146,7 @@ namespace ReactNative.Bridge
             int expectedArguments,
             IList<Func<IReactInstance, JArray, int, Result>> extractors,
             IGenericDelegate genericDelegate,
+            bool hasReturnType,
             INativeModule moduleInstance,
             IReactInstance reactInstance,
             JArray jsArguments)
@@ -178,26 +176,24 @@ namespace ReactNative.Bridge
                 idx = extractorResult.NextIndex;
             }
 
-            var hasDelegate = (genericDelegate != null) && ReferenceEquals(moduleInstance, genericDelegate.DelegateTarget);
-            if (method.ReturnType == typeof(void))
+            object result; 
+            if (genericDelegate != null)
             {
-                if (hasDelegate)
-                {
-                    genericDelegate.Invoke(args);
-                }
-                else
-                {
-                    // This should only happen for React methods with greater than 16 arguments.
-                    method.Invoke(moduleInstance, args);
-                }
-
-                return null;
+                result = genericDelegate.Invoke(args);
+            }
+            else
+            {
+                // This should only happen for React methods with greater than 16 arguments.
+                result = method.Invoke(moduleInstance, args);
             }
 
-            var result = hasDelegate ? genericDelegate.Invoke(args) : method.Invoke(moduleInstance, args);
-            if (result == null)
+            if (!hasReturnType)
             {
-                return new JValue((object)null);
+                return s_null;
+            }
+            else if (result == null)
+            {
+                return s_null;
             }
 
             return JToken.FromObject(result);

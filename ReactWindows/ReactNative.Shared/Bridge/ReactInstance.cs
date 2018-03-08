@@ -98,7 +98,7 @@ namespace ReactNative.Bridge
                     QueueConfiguration.JavaScriptQueue.AssertOnThread();
 
                     var jsExecutor = _jsExecutorFactory();
-
+                    
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor").Start())
                     {
                         _bridge = new ReactBridge(
@@ -284,14 +284,16 @@ namespace ReactNative.Bridge
                 _parent._registry.Invoke(_parent, moduleId, methodId, parameters);
             }
 
-            public JToken CallSerializableNativeHook(int moduleId, int methodId, JArray parameters)
+            public JToken InvokeSync(int moduleId, int methodId, JArray parameters)
             {
+                _parent.QueueConfiguration.JavaScriptQueue.AssertOnThread();
+
                 if (_parent.IsDisposed)
                 {
                     return null;
                 }
 
-                return _parent._registry.CallSerializableNativeHook(_parent, moduleId, methodId, parameters);
+                return _parent._registry.InvokeSync(_parent, moduleId, methodId, parameters);
             }
 
             public void OnBatchComplete()

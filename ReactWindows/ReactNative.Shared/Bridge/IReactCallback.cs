@@ -14,7 +14,7 @@ namespace ReactNative.Bridge
     public interface IReactCallback
     {
         /// <summary>
-        /// Invoke the native callback.
+        /// Invoke the native method.
         /// </summary>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
@@ -22,12 +22,13 @@ namespace ReactNative.Bridge
         void Invoke(int moduleId, int methodId, JArray parameters);
 
         /// <summary>
-        /// Invoke the native synchronous hook.
+        /// Invoke the native method synchronously.
         /// </summary>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
-        JToken CallSerializableNativeHook(int moduleId, int methodId, JArray parameters);
+        /// <returns>The value returned from the method.</returns>
+        JToken InvokeSync(int moduleId, int methodId, JArray parameters);
 
         /// <summary>
         /// Signals that a batch of operations is complete.

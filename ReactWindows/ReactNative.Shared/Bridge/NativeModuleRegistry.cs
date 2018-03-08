@@ -122,13 +122,14 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Invoke a method on a native module.
+        /// Invoke the native method synchronously.
         /// </summary>
         /// <param name="reactInstance">The React instance.</param>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
-        internal JToken CallSerializableNativeHook(
+        /// <returns>The value returned from the method.</returns>
+        internal JToken InvokeSync(
             IReactInstance reactInstance,
             int moduleId,
             int methodId,
@@ -144,7 +145,7 @@ namespace ReactNative.Bridge
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
             }
 
-            return _moduleTable[moduleId].CallSerializableNativeHook(reactInstance, methodId, parameters);
+            return _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
         }
 
         /// <summary>
@@ -220,21 +221,12 @@ namespace ReactNative.Bridge
 
             public INativeModule Target { get; }
 
-            public void Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
+            public JToken Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
             {
                 var method = _methods[methodId];
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
                 {
-                    method.Method.Invoke(reactInstance, parameters);
-                }
-            }
-
-            public JToken CallSerializableNativeHook(IReactInstance reactInstance, int methodId, JArray parameters)
-            {
-                var method = _methods[methodId];
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
-                {
-                    return method.Method.CallSerializableNativeHook(reactInstance, parameters);
+                    return method.Method.Invoke(reactInstance, parameters);
                 }
             }
 

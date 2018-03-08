@@ -106,17 +106,35 @@ namespace ReactNative.Bridge
         /// method is considered an error and will throw an exception during
         /// initialization. By default, all modules return false.
         /// </summary>
-        public virtual bool CanOverrideExistingModule => false;
+        public virtual bool CanOverrideExistingModule
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// The action queue used by the native module.
         /// </summary>
-        public IActionQueue ActionQueue => _actionQueue;
+        public IActionQueue ActionQueue
+        {
+            get
+            {
+                return _actionQueue;
+            }
+        }
 
         /// <summary>
         /// The constants exported by this module.
         /// </summary>
-        public virtual IReadOnlyDictionary<string, object> Constants => s_emptyConstants;
+        public virtual IReadOnlyDictionary<string, object> Constants
+        {
+            get
+            {
+                return s_emptyConstants;
+            }
+        }
 
         /// <summary>
         /// The methods callabke from JavaScript on this module.
@@ -125,7 +143,10 @@ namespace ReactNative.Bridge
         {
             get
             {
-                if (_methods == null) throw new InvalidOperationException("Module has not been initialized.");
+                if (_methods == null)
+                {
+                    throw new InvalidOperationException("Module has not been initialized.");
+                }
 
                 return _methods;
             }
@@ -162,36 +183,41 @@ namespace ReactNative.Bridge
         private IReadOnlyDictionary<string, INativeMethod> InitializeMethods()
         {
             var declaredMethods = GetType().GetTypeInfo().DeclaredMethods;
-            var exportedMethods = new List<MethodInfo>();
+            var exportedMethods = new List<Tuple<MethodInfo, ReactMethodAttribute>>();
             foreach (var method in declaredMethods)
-                if (method.IsDefined(typeof(ReactMethodAttribute))) exportedMethods.Add(method);
+            {
+                var attribute = (ReactMethodAttribute)method.GetCustomAttribute(typeof(ReactMethodAttribute));
+                if (attribute != null)
+                {
+                    exportedMethods.Add(Tuple.Create(method, attribute));
+                }
+            }
 
             var methodMap = new Dictionary<string, INativeMethod>(exportedMethods.Count);
-            foreach (var method in exportedMethods)
+            foreach (var methodData in exportedMethods)
             {
+                var method = methodData.Item1;
+                var attribute = methodData.Item2;
                 if (methodMap.TryGetValue(method.Name, out var existingMethod))
                     throw new NotSupportedException(
                         Invariant($"React module '{GetType()}' with name '{Name}' has more than one ReactMethod with the name '{method.Name}'."));
 
-                methodMap.Add(method.Name, new NativeMethod(this, method));
+                methodMap.Add(method.Name, new NativeMethod(this, method, attribute));
             }
 
             return methodMap;
         }
 
-        private class NativeMethod : INativeMethod
+        class NativeMethod : INativeMethod
         {
-            private readonly Lazy<Func<INativeModule, IReactInstance, JArray, JToken>> _invokeDelegate;
-            private readonly NativeModuleBase _instance;
+            private readonly Lazy<Func<IReactInstance, JArray, JToken>> _invokeDelegate;
 
-            public NativeMethod(NativeModuleBase instance, MethodInfo method)
+            public NativeMethod(NativeModuleBase instance, MethodInfo method, ReactMethodAttribute attribute)
             {
-                _instance = instance;
-
                 var delegateFactory = instance._delegateFactory;
-                delegateFactory.Validate(method);
-                _invokeDelegate = new Lazy<Func<INativeModule, IReactInstance, JArray, JToken>>(() => delegateFactory.Create(instance, method));
-                Type = delegateFactory.GetMethodType(method);
+                delegateFactory.Validate(method, attribute);
+                _invokeDelegate = new Lazy<Func<IReactInstance, JArray, JToken>>(() => delegateFactory.Create(instance, method));
+                Type = delegateFactory.GetMethodType(method, attribute);
             }
 
             public string Type
@@ -199,19 +225,11 @@ namespace ReactNative.Bridge
                 get;
             }
 
-            public void Invoke(IReactInstance reactInstance, JArray jsArguments)
+            public JToken Invoke(IReactInstance reactInstance, JArray jsArguments)
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod").Start())
                 {
-                    _invokeDelegate.Value(_instance, reactInstance, jsArguments);
-                }
-            }
-
-            public JToken CallSerializableNativeHook(IReactInstance reactInstance, JArray jsArguments)
-            {
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callSerializableNativeHook").Start())
-                {
-                    return _invokeDelegate.Value(_instance, reactInstance, jsArguments);
+                    return _invokeDelegate.Value(reactInstance, jsArguments);
                 }
             }
         }

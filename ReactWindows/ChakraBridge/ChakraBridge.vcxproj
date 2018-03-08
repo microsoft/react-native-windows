@@ -207,6 +207,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="asprintf.h" />
+    <ClInclude Include="CallSyncHandler.h" />
     <ClInclude Include="ChakraHost.h" />
     <ClInclude Include="JsIndexedModulesUnbundle.h" />
     <ClInclude Include="JsModulesUnbundle.h" />
