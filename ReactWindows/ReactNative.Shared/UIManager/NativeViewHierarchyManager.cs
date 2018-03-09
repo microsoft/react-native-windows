@@ -690,7 +690,7 @@ namespace ReactNative.UIManager
                 _layoutAnimator.ApplyLayoutUpdate(viewManager, frameworkElement, dimensions);
             }
             else
-            {;
+            {
                 viewManager.SetDimensions(viewToUpdate, dimensions);
             }
         }
