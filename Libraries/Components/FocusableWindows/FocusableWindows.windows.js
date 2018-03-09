@@ -242,7 +242,7 @@ function createFocusableComponent(Component: any) {
             let componentStyle = {};
             const flattenedStyles = flattenStyle(styles);
             for (const styleName in flattenedStyles) {
-              if (styleName === 'transform') {
+              if (styleName === 'transform' || styleName === 'display') {
                 focusableStyle[styleName] = flattenedStyles[styleName];
               } else {
                 componentStyle[styleName] = flattenedStyles[styleName];
@@ -330,7 +330,7 @@ function createFocusableComponent(Component: any) {
               let focusableStyle = {};
               let childStyle = {};
               for (const styleName in styles) {
-                if (styleName === 'transform') {
+                if (styleName === 'transform' || styleName === 'display') {
                   focusableStyle[styleName] = styles[styleName];
                   atLeastOneFocusableProp = true;
                 } else {
