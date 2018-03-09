@@ -127,21 +127,6 @@ class Button extends React.Component<{
      * @platform windows
      */
     onFocus: PropTypes.func,
-    /**
-     * Determines control accessibility behavior.
-     * For more details refer to Libraries\Components\View\ViewPropTypes.js
-     * @platform windows
-     */
-    importantForAccessibility: PropTypes.oneOf([
-      'auto',
-      'yes',
-      'no',
-      'no-hide-descendants'
-    ]),
-  };
-
-  static defaultProps = {
-    importantForAccessibility: 'yes',
   };
 
   render() {
@@ -193,7 +178,7 @@ class Button extends React.Component<{
           onFocus={this._onFocus}
           onBlur={this._onBlur}
           style={buttonStyles}
-          importantForAccessibility={this.props.importantForAccessibility}
+          importantForAccessibility={'yes'}
           accessibilityTraits={accessibilityTraits}
           onAccessibilityTap={this._onAccessibilityTap}
         >
