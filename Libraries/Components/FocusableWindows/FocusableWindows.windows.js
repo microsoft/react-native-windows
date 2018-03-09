@@ -8,7 +8,7 @@
  * be created by using createFocusableComponent:
  *
  *   const FocusableSomeComponent = createFocusableComponent(SomeComponent);
- * 
+ *
  *   class Whatever extends React.Component {
  *     render () {
  *         return (
@@ -23,7 +23,7 @@
  *         );
  *      }
  *   }
- * 
+ *
  * The generated component uses a helper FocusableWindow component that relies on WindowsControl native view.
  * Implementation allows for splitting the property/styles (setNativeProps included )between WindowsControl and the original Component appropriately.
  *
@@ -38,6 +38,7 @@ var ViewPropTypes = require('ViewPropTypes');
 var requireNativeComponent = require('requireNativeComponent');
 var UIManager = require('UIManager');
 const flattenStyle = require('flattenStyle');
+const AccessibilityTraits = require('ViewAccessibility');
 
 // This describes the propType based interface for WindowsControl
 class FocusableWindowsTemplate {
@@ -74,6 +75,37 @@ class FocusableWindowsTemplate {
      * @platform windows
      */
     disableSystemFocusVisuals: PropTypes.bool,
+
+    /**
+     * Determines control accessibility behavior.
+     * For more details refer to Libraries\Components\View\ViewPropTypes.js
+     * 
+     * @platform windows
+     */
+    importantForAccessibility: PropTypes.oneOf([
+      'auto',
+      'yes',
+      'no',
+      'no-hide-descendants'
+    ]),
+
+    /**
+     * Provides accessibility traits to the screen reader. By default no traits are set.
+     * For more details refer to Libraries\Components\View\ViewPropTypes.js.
+     * 
+     * @platform windows
+     */
+    accessibilityTraits: PropTypes.oneOfType([
+      PropTypes.oneOf(AccessibilityTraits),
+      PropTypes.arrayOf(PropTypes.oneOf(AccessibilityTraits)),
+    ]),
+
+    /**
+     * Called when the user performs accessibility tap gesture.
+     * 
+     * @platform windows
+     */
+    onAccessibilityTap: PropTypes.func,
 
     /**
      * Called when the view receives focus.
@@ -123,8 +155,8 @@ class FocusableWindowsTemplate {
      *
      * @platform windows
      */
-    componentRef: PropTypes.func,  
-  };  
+    componentRef: PropTypes.func,
+  };
 }
 
 // WindowsControl implementation peculiarities make it check for presence of RCTView like properties in propTypes,
@@ -145,7 +177,7 @@ function createFocusableComponent(Component: any) {
 
     _focusableProps: Object;
     _componentProps: Object;
- 
+
     constructor(props: Object) {
       super(props);
       this._isMounted = false;
@@ -178,19 +210,27 @@ function createFocusableComponent(Component: any) {
       if (this.props.componentRef) {
         this.props.componentRef(null);
       }
-      this._isMounted = false;      
+      this._isMounted = false;
     }
 
     _splitProps(props: Object) {
       this._focusableProps = {};
       this._componentProps = {};
-  
+
       for (const key in props) {
         if (key in FocusableWindowsTemplate.focusablePropTypes) {
           // Property supported by WindowsControl
           this._focusableProps[key] = props[key];
+
+          // Accessibility properties are exposed to the WindowsControl but also must be set on the Component.
+          if (key === 'importantForAccessibility' ||
+              key === 'accessibilityTraits' ||
+              key === 'onAccessibilityTap')
+          {
+            this._componentProps[key] = props[key];
+          }
         } else if (key !== 'style') {
-          // Property supported by Component 
+          // Property supported by Component
           this._componentProps[key] = props[key];
         } else {
           // Style case is special because it has to be split:
@@ -212,7 +252,7 @@ function createFocusableComponent(Component: any) {
             this._componentProps['style'] = componentStyle;
           }
         }
-      } 
+      }
     }
 
     render() {
@@ -277,7 +317,7 @@ function createFocusableComponent(Component: any) {
             focusableProps[key] = nativeProps[key];
             atLeastOneFocusableProp = true;
           } else if (key !== 'style') {
-            // Property supported by Component 
+            // Property supported by Component
             componentProps[key] = nativeProps[key];
             atLeastOneComponentProp = true;
           } else {
@@ -303,7 +343,7 @@ function createFocusableComponent(Component: any) {
             }
           }
         }
-        
+
         if (this._focusable && atLeastOneFocusableProp) {
           this._focusable.setNativeProps(focusableProps);
         }
