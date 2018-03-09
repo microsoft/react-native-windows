@@ -1,5 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -134,6 +140,53 @@ namespace ReactNative.Accessibility
             return ret;
         }
 
+        #region AccessibilityTraits
+
+        /// <summary>
+        /// Parses <paramref name="accessibilityTraitsValue"/> and sets AccessibilityTraits property for <paramref name="view"/>.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="accessibilityTraitsValue"></param>
+        public static void SetAccessibilityTraits(IAccessible view, object accessibilityTraitsValue)
+        {
+            AccessibilityTrait[] result = null;
+            if (accessibilityTraitsValue != null)
+            {
+                if (accessibilityTraitsValue is JArray asJArray)
+                {
+                    result = asJArray.Values<string>()
+                        .Select(ParseTrait)
+                        .OfType<AccessibilityTrait>()
+                        .ToArray();
+
+                    result = result.Length > 0 ? result : null;
+                }
+                else if (EnumHelpers.TryParse<AccessibilityTrait>(accessibilityTraitsValue.ToString(), out var accessibilityTrait))
+                {
+                    result = new[] { accessibilityTrait };
+                }
+            }
+
+            view.AccessibilityTraits = result;
+        }
+
+        /// <summary>
+        /// Helper parses the <paramref name="trait"/> into AccessibilityTrait enum.
+        /// </summary>
+        /// <param name="trait"></param>
+        /// <returns>AccessibilityTrait enum</returns>
+        private static AccessibilityTrait? ParseTrait(string trait)
+        {
+            if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        #endregion AccessibilityTraits
+
         #region ImportantForAccessibility
 
         /// <summary>
@@ -166,6 +219,11 @@ namespace ReactNative.Accessibility
                     // If an ancestor is "hiding" the element, set AccessibilityView to Raw.
                     AutomationPeer childPeer = FrameworkElementAutomationPeer.FromElement(childElement);
                     AutomationProperties.SetAccessibilityView(childElement, AccessibilityView.Raw);
+                    // Clear the generated label if any.
+                    if (IsInGenerativeStateAndHidden(childElement))
+                    {
+                        childElement.ClearValue(AutomationProperties.NameProperty);
+                    }
                     SetChildrenAccessibilityView(childPeer, AccessibilityView.Raw);
                 }
                 else
@@ -244,6 +302,11 @@ namespace ReactNative.Accessibility
                 if (child != null)
                 {
                     AutomationProperties.SetAccessibilityView(child, accessibilityView);
+                    // If element is hidden clear the generated label if any.
+                    if (IsInGenerativeStateAndHidden(child))
+                    {
+                        child.ClearValue(AutomationProperties.NameProperty);
+                    }
                 }
                 SetChildrenAccessibilityView(childPeer, accessibilityView);
             }
@@ -347,7 +410,13 @@ namespace ReactNative.Accessibility
                     break;
                 case ImportantForAccessibility.Auto when GetAccessibilityLabelAttached(element) != null:
                 case ImportantForAccessibility.Yes:
+                    var currentAccessibilityView = AutomationProperties.GetAccessibilityView(element);
                     AutomationProperties.SetAccessibilityView(element, AccessibilityView.Content);
+                    // Generate the label in case the element was hidden.
+                    if (currentAccessibilityView == AccessibilityView.Raw)
+                    {
+                        UpdateName(element);
+                    }
                     SetChildrenAccessibilityView(elementPeer, AccessibilityView.Raw);
                     break;
                 case ImportantForAccessibility.No:
@@ -407,8 +476,11 @@ namespace ReactNative.Accessibility
             var peer = FrameworkElementAutomationPeer.FromElement(element);
             if (IsInGenerativeState(element))
             {
-                var generatedName = GenerateNameFromUpdated(peer);
-                AutomationProperties.SetName(element, generatedName);
+                if (AutomationProperties.GetAccessibilityView(element) != AccessibilityView.Raw)
+                {
+                    var generatedName = GenerateNameFromUpdated(peer);
+                    AutomationProperties.SetName(element, generatedName);
+                }
             }
             else
             {
@@ -429,7 +501,6 @@ namespace ReactNative.Accessibility
             {
                 UpdateGeneratedNameHereAndUp(parentPeer);
             }
-
         }
 
         /// <summary>
@@ -460,7 +531,8 @@ namespace ReactNative.Accessibility
                 {
                     break;
                 }
-                if (IsInGenerativeState(element))
+                if (IsInGenerativeState(element) &&
+                    (AutomationProperties.GetAccessibilityView(element) != AccessibilityView.Raw))
                 {
                     var generatedName = GenerateNameFromUpdated(current);
                     AutomationProperties.SetName(element, generatedName);
@@ -482,6 +554,13 @@ namespace ReactNative.Accessibility
         }
 
         /// <summary>
+        /// True if the <paramref name="element"/> generates name, but it is not visible to narrator.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private static bool IsInGenerativeStateAndHidden(UIElement element) => AutomationProperties.GetAccessibilityView(element) == AccessibilityView.Raw && IsInGenerativeState(element);
+
+        /// <summary>
         /// Checks if <paramref name="element"/> decides that its children are not needed
         /// for determining either its own name directly or its part it contributes to generation
         /// of a parent's name. 
@@ -492,12 +571,9 @@ namespace ReactNative.Accessibility
         {
             var i4a = GetImportantForAccessibilityAttached(element);
             var label = GetAccessibilityLabelAttached(element);
-            var peer = FrameworkElementAutomationPeer.FromElement(element);
-            var ownName = peer.GetName();
             return i4a == ImportantForAccessibility.NoHideDescendants
                 || (i4a == ImportantForAccessibility.Yes && !string.IsNullOrEmpty(label))
-                || (i4a == ImportantForAccessibility.Auto && !string.IsNullOrEmpty(label))
-                || (i4a == ImportantForAccessibility.Auto && string.IsNullOrEmpty(label) && string.IsNullOrEmpty(ownName));
+                || (i4a == ImportantForAccessibility.Auto && !string.IsNullOrEmpty(label));
         }
 
         /// <summary>
@@ -553,7 +629,15 @@ namespace ReactNative.Accessibility
                         // AutomationProperties.Name should have been already set as
                         // either generated from subtree, if AccessibilityLabel is not set,
                         // or as value of AccessiblityLabel, if it's set.
-                        childResult = AutomationProperties.GetName(childElement);
+                        // If the element is hidden, the generated name is cleared. In such case do a full generation.
+                        if (IsInGenerativeStateAndHidden(childElement))
+                        {
+                            childResult = GenerateNameFromChildren(child.GetChildren());
+                        }
+                        else
+                        {
+                            childResult = AutomationProperties.GetName(childElement);
+                        }
                         break;
                     case ImportantForAccessibility.Auto:
                         // Priority order is: AccessiblityLabel, control-provided name, children.
