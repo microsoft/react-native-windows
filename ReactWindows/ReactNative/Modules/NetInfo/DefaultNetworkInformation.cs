@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Windows.Networking.Connectivity;
+﻿using Windows.Networking.Connectivity;
 
 namespace ReactNative.Modules.NetInfo
 {

@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ReactNative.Modules.Network;
 using System;
 using System.Collections.Generic;

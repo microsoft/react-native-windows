@@ -1,9 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Portions derived from React Native:
-// Copyright (c) 2015-present, Facebook, Inc.
-// Licensed under the MIT License.
-
-namespace ReactNative.UIManager
+﻿namespace ReactNative.UIManager
 {
     /// <summary>
     /// Possible values for pointer events that a view and its descendants should

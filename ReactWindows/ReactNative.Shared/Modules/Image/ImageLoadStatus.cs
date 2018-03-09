@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-namespace ReactNative.Modules.Image
+﻿namespace ReactNative.Modules.Image
 {
     /// <summary>
     /// Image load status enum.

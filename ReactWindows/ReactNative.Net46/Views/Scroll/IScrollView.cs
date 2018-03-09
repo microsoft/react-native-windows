@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-namespace ReactNative.Views.Scroll
+﻿namespace ReactNative.Views.Scroll
 {
     /// <summary>
     /// An interface of ScrollView for mock to do unit tests.

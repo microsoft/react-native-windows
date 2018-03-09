@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;

@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-namespace ReactNative.DevSupport
+﻿namespace ReactNative.DevSupport
 {
     /// <summary>
     /// A data container for call stack information.

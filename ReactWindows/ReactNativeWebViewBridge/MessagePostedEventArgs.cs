@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-namespace ReactNativeWebViewBridge
+﻿namespace ReactNativeWebViewBridge
 {
     /// <summary>
     /// Arguments for <see cref="WebViewBridge.MessagePosted"/> event.

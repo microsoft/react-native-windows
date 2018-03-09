@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Windows.Foundation;
+﻿using Windows.Foundation;
 using Windows.UI;
 using static Windows.UI.ViewManagement.StatusBar;
 

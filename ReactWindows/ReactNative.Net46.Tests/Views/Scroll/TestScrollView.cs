@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using ReactNative.Views.Scroll;
+﻿using ReactNative.Views.Scroll;
 
 namespace ReactNative.Tests.Views.Scroll
 {

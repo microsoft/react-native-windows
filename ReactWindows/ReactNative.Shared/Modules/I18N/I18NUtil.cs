@@ -1,9 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Portions derived from React Native:
-// Copyright (c) 2015-present, Facebook, Inc.
-// Licensed under the MIT License.
-
-#if WINDOWS_UWP
+﻿#if WINDOWS_UWP
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
 #else

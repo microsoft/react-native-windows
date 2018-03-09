@@ -1,9 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Portions derived from React Native:
-// Copyright (c) 2015-present, Facebook, Inc.
-// Licensed under the MIT License.
-
-namespace ReactNative.Bridge
+﻿namespace ReactNative.Bridge
 {
     /// <summary>
     /// Interface that will be notified when a batch of JavaScript to native

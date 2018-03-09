@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-#if WINDOWS_UWP
+﻿#if WINDOWS_UWP
 using Windows.UI;
 #else
 using System.Windows.Media;

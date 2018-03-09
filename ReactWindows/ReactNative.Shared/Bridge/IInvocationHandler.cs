@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-namespace ReactNative.Bridge
+﻿namespace ReactNative.Bridge
 {
     /// <summary>
     /// An interface for invoking methods specified by name.

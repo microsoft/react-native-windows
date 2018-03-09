@@ -1,9 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Portions derived from React Native:
-// Copyright (c) 2015-present, Facebook, Inc.
-// Licensed under the MIT License.
-
-using System;
+﻿using System;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Media.Media3D;
 #else
