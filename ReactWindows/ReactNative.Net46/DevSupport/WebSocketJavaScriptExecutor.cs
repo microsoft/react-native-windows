@@ -21,6 +21,7 @@ namespace ReactNative.DevSupport
         private const int ConnectTimeoutMilliseconds = 5000;
         private const int ConnectRetryCount = 3;
 
+        private readonly object _gate = new object();
         private WebSocket _webSocket;
         private readonly JObject _injectedObjects;
         private readonly IDictionary<int, TaskCompletionSource<JToken>> _callbacks;
@@ -98,7 +99,11 @@ namespace ReactNative.DevSupport
         {
             var requestId = Interlocked.Increment(ref _requestId);
             var callback = new TaskCompletionSource<JToken>();
-            _callbacks.Add(requestId, callback);
+
+            lock (_gate)
+            {
+                _callbacks.Add(requestId, callback);
+            }
 
             try
             {
@@ -120,7 +125,10 @@ namespace ReactNative.DevSupport
             }
             finally
             {
-                _callbacks.Remove(requestId);
+                lock (_gate)
+                {
+                    _callbacks.Remove(requestId);
+                }
             }
         }
 
@@ -139,7 +147,10 @@ namespace ReactNative.DevSupport
         {
             var requestId = Interlocked.Increment(ref _requestId);
             var callback = new TaskCompletionSource<JToken>();
-            _callbacks.Add(requestId, callback);
+            lock (_gate)
+            {
+                _callbacks.Add(requestId, callback);
+            }
 
             try
             {
@@ -162,7 +173,10 @@ namespace ReactNative.DevSupport
             }
             finally
             {
-                _callbacks.Remove(requestId);
+                lock (_gate)
+                {
+                    _callbacks.Remove(requestId);
+                }
             }
         }
 
@@ -173,6 +187,8 @@ namespace ReactNative.DevSupport
                 _webSocket = new WebSocket(uri.AbsoluteUri);
 
                 _webSocket.OnMessage += OnMessageReceived;
+
+                _webSocket.OnClose += OnClose;
 
                 _webSocket.ConnectAsync();
 
@@ -189,7 +205,10 @@ namespace ReactNative.DevSupport
             {
                 var requestId = Interlocked.Increment(ref _requestId);
                 var callback = new TaskCompletionSource<JToken>();
-                _callbacks.Add(requestId, callback);
+                lock (_gate)
+                {
+                    _callbacks.Add(requestId, callback);
+                }
 
                 try
                 {
@@ -206,7 +225,10 @@ namespace ReactNative.DevSupport
                 }
                 finally
                 {
-                    _callbacks.Remove(requestId);
+                    lock (_gate)
+                    {
+                        _callbacks.Remove(requestId);
+                    }
                 }
             }
         }
@@ -256,6 +278,11 @@ namespace ReactNative.DevSupport
                     }
                 }
             }
+        }
+
+        private void OnClose(object sender, CloseEventArgs e)
+        {
+          Dispose();
         }
     }
 }
