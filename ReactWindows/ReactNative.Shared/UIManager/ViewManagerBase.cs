@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Json;
 using System;
 using System.Collections.Generic;
 
@@ -170,7 +171,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        void IViewManager.UpdateProperties(object viewToUpdate, ReactStylesDiffMap props)
+        void IViewManager.UpdateProperties(object viewToUpdate, JObject props)
         {
             var propertySetters =
                 ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<TView>(GetType());

@@ -101,7 +101,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual void UpdateProperties(object viewToUpdate, ReactStylesDiffMap props)
+        public virtual void UpdateProperties(object viewToUpdate, JObject props)
         {
             throw new NotImplementedException();
         }

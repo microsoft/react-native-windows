@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Json;
 using System.Collections.Generic;
 
 namespace ReactNative.UIManager
@@ -199,7 +200,7 @@ namespace ReactNative.UIManager
         /// <returns>
         /// <b>true</b> if the property is layout-only, <b>false</b> otherwise.
         /// </returns>
-        public static bool IsLayoutOnly(ReactStylesDiffMap props, string prop)
+        public static bool IsLayoutOnly(JObject props, string prop)
         {
             if (s_layoutOnlyProperties.Contains(prop))
             {

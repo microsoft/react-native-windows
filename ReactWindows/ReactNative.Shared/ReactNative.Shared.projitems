@@ -98,7 +98,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\JavaScriptValueType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackFrameExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\StackTraceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactPackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Json\JObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\DeviceEventManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\ExceptionsManagerModule.cs" />
@@ -205,8 +205,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactDefaultCompoundView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMap.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMapExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistry.cs" />

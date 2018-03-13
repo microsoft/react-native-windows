@@ -37,7 +37,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetterTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMapTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelperTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndexTests.cs" />

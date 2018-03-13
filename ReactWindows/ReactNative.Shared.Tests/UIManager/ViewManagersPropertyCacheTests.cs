@@ -55,12 +55,12 @@ namespace ReactNative.Tests.UIManager
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(typeof(ViewManagerValueTest));
             Assert.AreEqual(3, setters.Count);
 
-            var props = new ReactStylesDiffMap(new JObject
+            var props = new JObject
             {
                 { "Foo", "v1" },
                 { "Bar1", "v2" },
                 { "Bar2", "v3" },
-            });
+            };
 
             AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateShadowNodeProperty(new ShadowNodeValueTest(), props));
             AssertEx.Throws<ArgumentNullException>(
@@ -87,12 +87,12 @@ namespace ReactNative.Tests.UIManager
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(typeof(ShadowNodeValueTest));
             Assert.AreEqual(3, setters.Count);
 
-            var props = new ReactStylesDiffMap(new JObject
+            var props = new JObject
             {
                 { "Foo", 42 },
                 { "Qux1", "v2" },
                 { "Qux2", "v3" },
-            });
+            };
 
             AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateViewManagerProperty(new ViewManagerValueTest(), null, props));
             AssertEx.Throws<ArgumentNullException>(
@@ -129,7 +129,7 @@ namespace ReactNative.Tests.UIManager
             var instance = new DefaultsTest();
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(typeof(DefaultsTest));
 
-            var props = new ReactStylesDiffMap(new JObject());
+            var props = new JObject();
 
             instance.ByteValue = byte.MaxValue;
             instance.SByteValue = sbyte.MaxValue;

@@ -3,7 +3,9 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Json;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
@@ -85,7 +87,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        public void UpdateShadowNodeProperty(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+        public void UpdateShadowNodeProperty(ReactShadowNode shadowNode, JObject props)
         {
             if (shadowNode == null)
                 throw new ArgumentNullException(nameof(shadowNode));
@@ -95,7 +97,7 @@ namespace ReactNative.UIManager
             Invoke(GetShadowNodeArgs(shadowNode, props));
         }
 
-        public void UpdateViewManagerProperty(IViewManager viewManager, object view, ReactStylesDiffMap props)
+        public void UpdateViewManagerProperty(IViewManager viewManager, object view, JObject props)
         {
             if (viewManager == null)
                 throw new ArgumentNullException(nameof(viewManager));
@@ -105,12 +107,12 @@ namespace ReactNative.UIManager
             Invoke(GetViewManagerArgs(viewManager, view, props));
         }
 
-        protected virtual object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+        protected virtual object[] GetShadowNodeArgs(ReactShadowNode shadowNode, JObject props)
         {
             throw new NotSupportedException(Invariant($"'{nameof(ReactShadowNode)}' properties cannot be changed with this setter."));
         }
 
-        protected virtual object[] GetViewManagerArgs(IViewManager viewManager, object view, ReactStylesDiffMap props)
+        protected virtual object[] GetViewManagerArgs(IViewManager viewManager, object view, JObject props)
         {
             throw new NotSupportedException($"'{nameof(IViewManager)}' properties cannot be changed with this setter.");
         }
@@ -121,7 +123,7 @@ namespace ReactNative.UIManager
         {
         }
 
-        protected object ExtractProperty(ReactStylesDiffMap props)
+        protected object ExtractProperty(JObject props)
         {
             if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropertyType, out var defaultFunc))
             {
@@ -258,7 +260,7 @@ namespace ReactNative.UIManager
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = viewManager;
@@ -310,7 +312,7 @@ namespace ReactNative.UIManager
                 return parameters[2].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = viewManager;
@@ -347,7 +349,7 @@ namespace ReactNative.UIManager
                 return  parameters[0].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = shadowNode;
@@ -391,7 +393,7 @@ namespace ReactNative.UIManager
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = shadowNode;
