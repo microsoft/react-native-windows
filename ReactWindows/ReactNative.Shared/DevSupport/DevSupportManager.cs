@@ -98,8 +98,14 @@ namespace ReactNative.DevSupport
 
         public bool IsRemoteDebuggingEnabled
         {
-            get;
-            set;
+            get
+            {
+                return _devSettings.IsRemoteDebuggingEnabled;
+            }
+            set
+            {
+                _devSettings.IsRemoteDebuggingEnabled = value;
+            }
         }
 
         public bool IsProgressDialogEnabled
@@ -579,7 +585,7 @@ namespace ReactNative.DevSupport
                     async progressToken =>
                     {
                         await _devServerHelper.LaunchDevToolsAsync(progressToken).ConfigureAwait(false);
-                        webSocketExecutor = new WebSocketJavaScriptExecutor();
+                webSocketExecutor = new WebSocketJavaScriptExecutor();
                         await webSocketExecutor.ConnectAsync(_devServerHelper.WebsocketProxyUrl, progressToken).ConfigureAwait(false);
                     },
                     progressDialog,

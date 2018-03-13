@@ -500,7 +500,7 @@ namespace ReactNative
 
         private Task<ReactContext> CreateReactContextFromDevManagerAsync(CancellationToken token)
         {
-            if (_devSupportManager.HasUpToDateBundleInCache())
+            if (!_devSupportManager.IsRemoteDebuggingEnabled && _devSupportManager.HasUpToDateBundleInCache())
             {
                 return CreateReactContextFromCachedPackagerBundleAsync(token);
             }
