@@ -182,7 +182,7 @@ namespace ReactNative.UIManager
             ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
-            ReactStylesDiffMap initialProps)
+            JObject initialProps)
         {
             lock (_nonBatchedGate)
             {
@@ -215,7 +215,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="props">The properties.</param>
-        public void EnqueueUpdateProperties(int tag, string className, ReactStylesDiffMap props)
+        public void EnqueueUpdateProperties(int tag, string className, JObject props)
         {
             EnqueueOperation(() =>
                 _nativeViewHierarchyManager.UpdateProperties(tag, props));

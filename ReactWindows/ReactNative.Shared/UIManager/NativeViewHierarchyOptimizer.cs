@@ -3,6 +3,8 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
+using ReactNative.Json;
 using System.Collections.Generic;
 #if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
@@ -84,7 +86,7 @@ namespace ReactNative.UIManager
             ReactShadowNode node,
             int rootViewTag,
             ThemedReactContext themedContext, 
-            ReactStylesDiffMap initialProperties)
+            JObject initialProperties)
         {
 #if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueCreateView(
@@ -121,7 +123,7 @@ namespace ReactNative.UIManager
         /// <param name="node">The node.</param>
         /// <param name="className">The class name.</param>
         /// <param name="props">The properties.</param>
-        public void HandleUpdateView(ReactShadowNode node, string className, ReactStylesDiffMap props)
+        public void HandleUpdateView(ReactShadowNode node, string className, JObject props)
         {
 #if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueUpdateProperties(node.ReactTag, className, props);
@@ -446,7 +448,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void TransitionLayoutOnlyViewToNativeView(ReactShadowNode node, ReactStylesDiffMap props)
+        private void TransitionLayoutOnlyViewToNativeView(ReactShadowNode node, JObject props)
         {
             var parent = node.Parent;
             if (parent == null)
@@ -500,7 +502,7 @@ namespace ReactNative.UIManager
             node.MarkForceLayout();
         }
 
-        private bool IsLayoutOnlyAndCollapsible(ReactStylesDiffMap props)
+        private bool IsLayoutOnlyAndCollapsible(JObject props)
         {
             if (props == null)
             {
@@ -512,7 +514,7 @@ namespace ReactNative.UIManager
                 return false;
             }
 
-            foreach (var key in props.Keys)
+            foreach (var key in props.Keys())
             {
                 if (!ViewProps.IsLayoutOnly(props, key))
                 {

@@ -19,10 +19,8 @@ namespace ReactNative.Animated
         private readonly UIImplementation _uiImplementation;
         private readonly Dictionary<string, int> _propNodeMapping;
 
-        // This is the backing map for `_diffMap` we can mutate this to update
-        // it instead of having to create a new one for each update.
+        // We can mutate this to update instead of creating a new one for each update.
         private readonly JObject _propMap;
-        private readonly ReactStylesDiffMap _diffMap;
 
         private int _connectedViewTag = -1;
 
@@ -37,7 +35,6 @@ namespace ReactNative.Animated
             }
 
             _propMap = new JObject();
-            _diffMap = new ReactStylesDiffMap(_propMap);
             _manager = manager;
             _uiImplementation = uiImplementation;
         }
@@ -73,7 +70,7 @@ namespace ReactNative.Animated
 
             _uiImplementation.SynchronouslyUpdateViewOnDispatcherThread(
                 _connectedViewTag,
-                _diffMap);
+                _propMap);
         }
 
         public void UpdateView()
@@ -103,7 +100,7 @@ namespace ReactNative.Animated
 
             var updated = _uiImplementation.SynchronouslyUpdateViewOnDispatcherThread(
                 _connectedViewTag,
-                _diffMap);
+                _propMap);
 
             if (!updated)
             {

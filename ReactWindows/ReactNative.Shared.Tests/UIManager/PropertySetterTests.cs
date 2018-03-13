@@ -223,7 +223,7 @@ namespace ReactNative.Tests.UIManager
             Assert.AreEqual(default(double), instance.TestDoubleValue);
             Assert.AreEqual(false, instance.TestBooleanValue);
 
-            var emptyMap = new ReactStylesDiffMap(new JObject());
+            var emptyMap = new JObject();
             foreach (var method in methods)
             {
                 var setter = PropertySetter.CreateViewManagerSetters<object>(method).Single();
@@ -249,10 +249,10 @@ namespace ReactNative.Tests.UIManager
             var method = (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestBoolean(null, false));
             var instance = new DefaultTest();
             Assert.AreEqual(false, instance.TestBooleanValue);
-            var emptyMap = new ReactStylesDiffMap(new JObject
+            var emptyMap = new JObject
             {
                 { "TestBoolean", null },
-            });
+            };
 
             var setter = PropertySetter.CreateViewManagerSetters<object>(method).Single();
             setter.UpdateViewManagerProperty(instance, null, emptyMap);
@@ -265,10 +265,10 @@ namespace ReactNative.Tests.UIManager
             var method = (MethodInfo)ReflectionHelpers.InfoOf((DefaultTest t) => t.TestBoolean(null, false));
             var instance = new DefaultTest();
             Assert.AreEqual(false, instance.TestBooleanValue);
-            var emptyMap = new ReactStylesDiffMap(new JObject
+            var emptyMap = new JObject
             {
                 { "TestBoolean", JValue.CreateUndefined() },
-            });
+            };
 
             var setter = PropertySetter.CreateViewManagerSetters<object>(method).Single();
             setter.UpdateViewManagerProperty(instance, null, emptyMap);

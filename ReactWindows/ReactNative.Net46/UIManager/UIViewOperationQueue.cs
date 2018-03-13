@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 
@@ -41,7 +42,7 @@ namespace ReactNative.UIManager
             ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
-            ReactStylesDiffMap initialProps,
+            JObject initialProps,
             int rootViewTag)
         {
             EnqueueCreateView(
@@ -62,7 +63,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, JObject props)
         {
             DispatcherHelpers.AssertOnDispatcher();
 

@@ -31,9 +31,9 @@ namespace ReactNative.UIManager
     /// corresponding instances of <see cref="IViewManager"/>. The 
     /// <see cref="UIManagerModule"/> communicates with this class by it's
     /// public interface methods:
-    /// - <see cref="UpdateProperties(int, ReactStylesDiffMap)"/>
+    /// - <see cref="UpdateProperties(int, JObject)"/>
     /// - <see cref="UpdateLayout(int, int, Dimensions)"/>
-    /// - <see cref="CreateView(ThemedReactContext, int, string, ReactStylesDiffMap)"/>
+    /// - <see cref="CreateView(ThemedReactContext, int, string, JObject)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
     /// executing all the scheduled operations at the end of the JavaScript batch.
     /// </summary>
@@ -138,7 +138,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="props">The properties.</param>
-        public void UpdateProperties(int tag, ReactStylesDiffMap props)
+        public void UpdateProperties(int tag, JObject props)
         {
             AssertOnCorrectDispatcher();
             var viewManager = ResolveViewManager(tag);
@@ -197,7 +197,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="initialProperties">The properties.</param>
-        public void CreateView(ThemedReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
+        public void CreateView(ThemedReactContext themedContext, int tag, string className, JObject initialProperties)
         {
             AssertOnCorrectDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")

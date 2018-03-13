@@ -64,7 +64,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="viewToUpdate">The view to update.</param>
         /// <param name="props">The properties.</param>
-        void UpdateProperties(object viewToUpdate, ReactStylesDiffMap props);
+        void UpdateProperties(object viewToUpdate, JObject props);
 
         /// <summary>
         /// Creates a view and installs event emitters on it.

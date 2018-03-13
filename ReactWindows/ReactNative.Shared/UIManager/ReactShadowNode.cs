@@ -4,6 +4,8 @@
 // Licensed under the MIT License.
 
 using Facebook.Yoga;
+using Newtonsoft.Json.Linq;
+using ReactNative.Json;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -962,10 +964,10 @@ namespace ReactNative.UIManager
         /// Updates the properties of the node.
         /// </summary>
         /// <param name="props">The properties.</param>
-        public void UpdateProperties(ReactStylesDiffMap props)
+        public void UpdateProperties(JObject props)
         {
             var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(GetType());
-            foreach (var key in props.Keys)
+            foreach (var key in props.Keys())
             {
                 if (setters.TryGetValue(key, out var setter))
                 {

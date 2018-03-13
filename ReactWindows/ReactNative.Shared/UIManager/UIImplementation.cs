@@ -168,14 +168,12 @@ namespace ReactNative.UIManager
 
             _shadowNodeRegistry.AddNode(cssNode);
 
-            var styles = default(ReactStylesDiffMap);
             if (props != null)
             {
-                styles = new ReactStylesDiffMap(props);
-                cssNode.UpdateProperties(styles);
+                cssNode.UpdateProperties(props);
             }
 
-            HandleCreateView(cssNode, rootViewTag, styles);
+            HandleCreateView(cssNode, rootViewTag, props);
         }
 
         /// <summary>
@@ -208,9 +206,8 @@ namespace ReactNative.UIManager
 
             if (props != null)
             {
-                var styles = new ReactStylesDiffMap(props);
-                cssNode.UpdateProperties(styles);
-                HandleUpdateView(cssNode, className, styles);
+                cssNode.UpdateProperties(props);
+                HandleUpdateView(cssNode, className, props);
             }
         }
 
@@ -225,7 +222,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, JObject props)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -656,7 +653,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void HandleCreateView(ReactShadowNode cssNode, int rootViewTag, ReactStylesDiffMap styles)
+        private void HandleCreateView(ReactShadowNode cssNode, int rootViewTag, JObject styles)
         {
             if (!cssNode.IsVirtual)
             {
@@ -667,7 +664,7 @@ namespace ReactNative.UIManager
         private void HandleUpdateView(
             ReactShadowNode cssNode,
             string className,
-            ReactStylesDiffMap styles)
+            JObject styles)
         {
             if (!cssNode.IsVirtual)
             {

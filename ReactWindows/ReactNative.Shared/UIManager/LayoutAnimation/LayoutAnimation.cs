@@ -4,7 +4,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Collections;
+using ReactNative.Json;
 using ReactNative.Reflection;
 using System;
 using System.Reactive;

@@ -262,13 +262,13 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
-        /// <param name="initialProps">The initial properties.</param>
+        /// <param name="initialProps">The initial props.</param>
         /// <param name="rootViewTag">Root view tag.</param>
         public void EnqueueCreateView(
             ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
-            ReactStylesDiffMap initialProps,
+            JObject initialProps,
             int rootViewTag)
         {
             // Called on layout manager thread
@@ -303,7 +303,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="props">The properties.</param>
-        public void EnqueueUpdateProperties(int tag, string className, ReactStylesDiffMap props)
+        public void EnqueueUpdateProperties(int tag, string className, JObject props)
         {
             // Called on layout manager thread
 
@@ -475,7 +475,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, JObject props)
         {
             // The native animations module is a single threaded implementation affinitized to the "main" dispatcher thread.
             // As a result all calls of this method are on main dispatcher thread.
