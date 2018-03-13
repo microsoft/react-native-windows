@@ -164,7 +164,7 @@ var Image = createReactClass({
      * the nature of caches, there's no guarantee how long the returned path will
      * exist. Only use this method if you're okay with that limitation.
      * 
-     * Only available on Windows.
+     * @platform windows
      */
     prefetchAndGetCachedPath(url: string, callback: ?Function) {
       const requestId = generateRequestId();

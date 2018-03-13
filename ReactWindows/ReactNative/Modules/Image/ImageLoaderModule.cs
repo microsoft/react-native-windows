@@ -3,11 +3,8 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
-using BinaryResource;
-using Cache.Common;
 using FBCore.Common.References;
 using FBCore.DataSource;
-using ImagePipeline.Cache;
 using ImagePipeline.Core;
 using ImagePipeline.Image;
 using ImagePipeline.Request;
