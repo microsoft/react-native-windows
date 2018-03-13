@@ -218,7 +218,7 @@
   <Import Project="..\..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems" Label="Shared" />
   <ItemGroup>
     <PackageReference Include="fresco.imagepipeline">
-      <Version>0.1.2</Version>
+      <Version>0.1.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
