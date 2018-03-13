@@ -231,7 +231,7 @@ namespace ReactNative.Views.Web
         }
 
         /// <summary>
-        /// Callback that will be triggered after all properties are updated         
+        /// Callback that will be triggered after all props are updated         
         /// </summary>
         /// <param name="view">The view instance.</param>
         protected override void OnAfterUpdateTransaction(WebView view)

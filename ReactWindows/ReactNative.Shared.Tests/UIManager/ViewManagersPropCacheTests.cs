@@ -10,49 +10,49 @@ using System;
 namespace ReactNative.Tests.UIManager
 {
     [TestFixture]
-    public class ViewManagersPropertyCacheTests
+    public class ViewManagersPropCacheTests
     {
         [Test]
-        public void ViewManagersPropertyCache_ArgumentChecks()
+        public void ViewManagersPropCache_ArgumentChecks()
         {
             AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertiesForView<object>(null, typeof(object)),
+                () => ViewManagersPropCache.GetNativePropsForView<object>(null, typeof(object)),
                 ex => Assert.AreEqual("viewManagerType", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertiesForView<object>(typeof(object), null),
+                () => ViewManagersPropCache.GetNativePropsForView<object>(typeof(object), null),
                 ex => Assert.AreEqual("shadowNodeType", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(null),
+                () => ViewManagersPropCache.GetNativePropSettersForViewManagerType<object>(null),
                 ex => Assert.AreEqual("type", ex.ParamName));
 
             AssertEx.Throws<ArgumentNullException>(
-                () => ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType
+                () => ViewManagersPropCache.GetNativePropSettersForShadowNodeType
                 (null),
                 ex => Assert.AreEqual("type", ex.ParamName));
         }
 
         [Test]
-        public void ViewManagersPropertyCache_ViewManager_Empty()
+        public void ViewManagersPropCache_ViewManager_Empty()
         {
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(typeof(EmptyTest));
+            var setters = ViewManagersPropCache.GetNativePropSettersForShadowNodeType(typeof(EmptyTest));
             Assert.AreEqual(0, setters.Count);
         }
 
         [Test]
-        public void ViewManagersPropertyCache_ShadowNode_Empty()
+        public void ViewManagersPropCache_ShadowNode_Empty()
         {
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(typeof(ReactShadowNode));
+            var setters = ViewManagersPropCache.GetNativePropSettersForShadowNodeType(typeof(ReactShadowNode));
             Assert.AreEqual(0, setters.Count);
         }
 
         [Test]
-        public void ViewManagersPropertyCache_ViewManager_Set()
+        public void ViewManagersPropCache_ViewManager_Set()
         {
             var instance = new ViewManagerValueTest();
 
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(typeof(ViewManagerValueTest));
+            var setters = ViewManagersPropCache.GetNativePropSettersForViewManagerType<object>(typeof(ViewManagerValueTest));
             Assert.AreEqual(3, setters.Count);
 
             var props = new JObject
@@ -62,17 +62,17 @@ namespace ReactNative.Tests.UIManager
                 { "Bar2", "v3" },
             };
 
-            AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateShadowNodeProperty(new ShadowNodeValueTest(), props));
+            AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateShadowNodeProp(new ShadowNodeValueTest(), props));
             AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateViewManagerProperty(null, null, props),
+                () => setters["Foo"].UpdateViewManagerProp(null, null, props),
                 ex => Assert.AreEqual("viewManager", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateViewManagerProperty(instance, null, null),
+                () => setters["Foo"].UpdateViewManagerProp(instance, null, null),
                 ex => Assert.AreEqual("props", ex.ParamName));
 
-            setters["Foo"].UpdateViewManagerProperty(instance, null, props);
-            setters["Bar1"].UpdateViewManagerProperty(instance, null, props);
-            setters["Bar2"].UpdateViewManagerProperty(instance, null, props);
+            setters["Foo"].UpdateViewManagerProp(instance, null, props);
+            setters["Bar1"].UpdateViewManagerProp(instance, null, props);
+            setters["Bar2"].UpdateViewManagerProp(instance, null, props);
 
             Assert.AreEqual("v1", instance.FooValue);
             Assert.AreEqual("v2", instance.BarValues[0]);
@@ -80,11 +80,11 @@ namespace ReactNative.Tests.UIManager
         }
 
         [Test]
-        public void ViewManagersPropertyCache_ShadowNode_Set()
+        public void ViewManagersPropCache_ShadowNode_Set()
         {
             var instance = new ShadowNodeValueTest();
 
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(typeof(ShadowNodeValueTest));
+            var setters = ViewManagersPropCache.GetNativePropSettersForShadowNodeType(typeof(ShadowNodeValueTest));
             Assert.AreEqual(3, setters.Count);
 
             var props = new JObject
@@ -94,17 +94,17 @@ namespace ReactNative.Tests.UIManager
                 { "Qux2", "v3" },
             };
 
-            AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateViewManagerProperty(new ViewManagerValueTest(), null, props));
+            AssertEx.Throws<NotSupportedException>(() => setters["Foo"].UpdateViewManagerProp(new ViewManagerValueTest(), null, props));
             AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateShadowNodeProperty(null, props),
+                () => setters["Foo"].UpdateShadowNodeProp(null, props),
                 ex => Assert.AreEqual("shadowNode", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(
-                () => setters["Foo"].UpdateShadowNodeProperty(instance, null),
+                () => setters["Foo"].UpdateShadowNodeProp(instance, null),
                 ex => Assert.AreEqual("props", ex.ParamName));
 
-            setters["Foo"].UpdateShadowNodeProperty(instance, props);
-            setters["Qux1"].UpdateShadowNodeProperty(instance, props);
-            setters["Qux2"].UpdateShadowNodeProperty(instance, props);
+            setters["Foo"].UpdateShadowNodeProp(instance, props);
+            setters["Qux1"].UpdateShadowNodeProp(instance, props);
+            setters["Qux2"].UpdateShadowNodeProp(instance, props);
 
             Assert.AreEqual(42, instance.FooValue);
             Assert.AreEqual("v2", instance.QuxValues[0]);
@@ -112,9 +112,9 @@ namespace ReactNative.Tests.UIManager
         }
 
         [Test]
-        public void ViewManagersPropertyCache_GetNativePropertiesForView()
+        public void ViewManagersPropCache_GetNativePropsForView()
         {
-            var props = ViewManagersPropertyCache.GetNativePropertiesForView<object>(typeof(ViewManagerValueTest), typeof(ShadowNodeValueTest));
+            var props = ViewManagersPropCache.GetNativePropsForView<object>(typeof(ViewManagerValueTest), typeof(ShadowNodeValueTest));
             Assert.AreEqual(5, props.Count);
             Assert.AreEqual("number", props["Foo"]);
             Assert.AreEqual("String", props["Bar1"]);
@@ -124,10 +124,10 @@ namespace ReactNative.Tests.UIManager
         }
 
         [Test]
-        public void ViewManagersPropertyCache_Defaults()
+        public void ViewManagersPropCache_Defaults()
         {
             var instance = new DefaultsTest();
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<object>(typeof(DefaultsTest));
+            var setters = ViewManagersPropCache.GetNativePropSettersForViewManagerType<object>(typeof(DefaultsTest));
 
             var props = new JObject();
 
@@ -149,25 +149,25 @@ namespace ReactNative.Tests.UIManager
             instance.NullableValue = true;
             instance.GroupValue = new[] { "a", "b", "c" };
 
-            setters["TestByte"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestSByte"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestInt16"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestUInt16"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestInt32"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestUInt32"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestInt64"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestUInt64"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestSingle"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestDouble"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestDecimal"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestBoolean"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestString"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestArray"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestMap"].UpdateViewManagerProperty(instance, null, props);
-            setters["TestNullable"].UpdateViewManagerProperty(instance, null, props);
-            setters["foo"].UpdateViewManagerProperty(instance, null, props);
-            setters["bar"].UpdateViewManagerProperty(instance, null, props);
-            setters["baz"].UpdateViewManagerProperty(instance, null, props);
+            setters["TestByte"].UpdateViewManagerProp(instance, null, props);
+            setters["TestSByte"].UpdateViewManagerProp(instance, null, props);
+            setters["TestInt16"].UpdateViewManagerProp(instance, null, props);
+            setters["TestUInt16"].UpdateViewManagerProp(instance, null, props);
+            setters["TestInt32"].UpdateViewManagerProp(instance, null, props);
+            setters["TestUInt32"].UpdateViewManagerProp(instance, null, props);
+            setters["TestInt64"].UpdateViewManagerProp(instance, null, props);
+            setters["TestUInt64"].UpdateViewManagerProp(instance, null, props);
+            setters["TestSingle"].UpdateViewManagerProp(instance, null, props);
+            setters["TestDouble"].UpdateViewManagerProp(instance, null, props);
+            setters["TestDecimal"].UpdateViewManagerProp(instance, null, props);
+            setters["TestBoolean"].UpdateViewManagerProp(instance, null, props);
+            setters["TestString"].UpdateViewManagerProp(instance, null, props);
+            setters["TestArray"].UpdateViewManagerProp(instance, null, props);
+            setters["TestMap"].UpdateViewManagerProp(instance, null, props);
+            setters["TestNullable"].UpdateViewManagerProp(instance, null, props);
+            setters["foo"].UpdateViewManagerProp(instance, null, props);
+            setters["bar"].UpdateViewManagerProp(instance, null, props);
+            setters["baz"].UpdateViewManagerProp(instance, null, props);
 
             Assert.AreEqual(0, instance.ByteValue);
             Assert.AreEqual(0, instance.SByteValue);

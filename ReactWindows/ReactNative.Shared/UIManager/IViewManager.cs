@@ -29,7 +29,7 @@ namespace ReactNative.UIManager
         /// <see cref="CreateShadowNodeInstance"/>.
         /// 
         /// This method will be used in the bridge initialization phase to
-        /// collect properties exposed using the <see cref="Annotations.ReactPropAttribute"/>
+        /// collect props exposed using the <see cref="Annotations.ReactPropAttribute"/>
         /// annotation from the <see cref="ReactShadowNode"/> subclass.
         /// </summary>
         Type ShadowNodeType { get; }
@@ -57,14 +57,14 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The native props for the view manager.
         /// </summary>
-        IReadOnlyDictionary<string, string> NativeProperties { get; }
+        IReadOnlyDictionary<string, string> NativeProps { get; }
 
         /// <summary>
-        /// Update the properties of the given view.
+        /// Update the props of the given view.
         /// </summary>
         /// <param name="viewToUpdate">The view to update.</param>
-        /// <param name="props">The properties.</param>
-        void UpdateProperties(object viewToUpdate, JObject props);
+        /// <param name="props">The props.</param>
+        void UpdateProps(object viewToUpdate, JObject props);
 
         /// <summary>
         /// Creates a view and installs event emitters on it.

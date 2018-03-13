@@ -38,10 +38,10 @@ namespace ReactNative.Animated
     /// You can mix and chain nodes however you like and this way create nodes
     /// graph with connections between them.
     /// 
-    /// To map animated node values to view properties there is a special type
+    /// To map animated node values to view props there is a special type
     /// of a node: AnimatedProps. It is created by AnimatedImplementation 
     /// whenever you render Animated.View and stores a mapping from the view
-    /// properties to the corresponding animated values (so it's actually also
+    /// props to the corresponding animated values (so it's actually also
     /// a node with connections to the value nodes).
     /// 
     /// Last "special" elements of the the graph are "animation drivers". Those
@@ -51,7 +51,7 @@ namespace ReactNative.Animated
     /// and "stopped". Those are like "pulse generators" for the rest of the 
     /// nodes graph. Those pulses then propagate along the graph to the
     /// children nodes up to the special node type: AnimatedProps which then 
-    /// can be used to calculate property update map for a view.
+    /// can be used to calculate prop update map for a view.
     /// 
     /// This class acts as a proxy between the "native" API that can be called
     /// from JS and the main class that coordinates all the action: 

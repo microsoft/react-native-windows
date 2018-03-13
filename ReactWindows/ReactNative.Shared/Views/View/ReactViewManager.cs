@@ -188,7 +188,7 @@ namespace ReactNative.Views.View
         [ReactProp(ViewProps.Collapsible)]
         public void SetCollapsible(BorderedCanvas view, bool collapsible)
         {
-            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
+            // no-op: it's here only so that "collapsable" prop is exported to JS. The value is actually
             // handled in NativeViewHierarchyOptimizer
         }
 
@@ -253,7 +253,7 @@ namespace ReactNative.Views.View
         /// Sets the border radius of the view.
         /// </summary>
         /// <param name="view">The view panel.</param>
-        /// <param name="index">The property index.</param>
+        /// <param name="index">The prop index.</param>
         /// <param name="radius">The border radius value.</param>
         [ReactPropGroup(
             ViewProps.BorderRadius,
@@ -340,7 +340,7 @@ namespace ReactNative.Views.View
         /// Sets the border thickness of the view.
         /// </summary>
         /// <param name="view">The view panel.</param>
-        /// <param name="index">The property index.</param>
+        /// <param name="index">The prop index.</param>
         /// <param name="width">The border width in pixels.</param>
         [ReactPropGroup(
             ViewProps.BorderWidth,

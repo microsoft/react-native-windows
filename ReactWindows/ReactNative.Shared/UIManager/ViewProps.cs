@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace ReactNative.UIManager
 {
     /// <summary>
-    /// Property keys for React views.
+    /// Prop keys for React views.
     /// </summary>
     public static class ViewProps
     {
@@ -18,7 +18,7 @@ namespace ReactNative.UIManager
         public const string ViewClassName = "RCTView";
 
         // Layout only (only affect positions of children, causes no drawing)
-        // !!! Keep in sync with s_layoutOnlyProperties below !!!
+        // !!! Keep in sync with s_layoutOnlyProps below !!!
         public const string AlignItems = "alignItems";
         public const string AlignSelf = "alignSelf";
         public const string AlignContent = "alignContent";
@@ -67,7 +67,7 @@ namespace ReactNative.UIManager
         // Props that sometimes may prevent us from collapsing views
         public static string PointerEvents = "pointerEvents";
 
-        // Properties that affect more than just layout
+        // Props that affect more than just layout
         public const string Disabled = "disabled";
         public const string BackgroundColor = "backgroundColor";
         public const string Color = "color";
@@ -141,7 +141,7 @@ namespace ReactNative.UIManager
                 EdgeSpacing.Bottom,
             };
 
-        private static readonly HashSet<string> s_layoutOnlyProperties =
+        private static readonly HashSet<string> s_layoutOnlyProps =
             new HashSet<string>
             {
                 AlignItems,
@@ -193,16 +193,16 @@ namespace ReactNative.UIManager
             };
 
         /// <summary>
-        /// Checks if the property key is layout-only.
+        /// Checks if the prop key is layout-only.
         /// </summary>
         /// <param name="props">The prop collection.</param>
         /// <param name="prop">The prop name.</param>
         /// <returns>
-        /// <b>true</b> if the property is layout-only, <b>false</b> otherwise.
+        /// <b>true</b> if the prop is layout-only, <b>false</b> otherwise.
         /// </returns>
         public static bool IsLayoutOnly(JObject props, string prop)
         {
-            if (s_layoutOnlyProperties.Contains(prop))
+            if (s_layoutOnlyProps.Contains(prop))
             {
                 return true;
             }

@@ -235,7 +235,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the default text placeholder property on the <see cref="ReactTextBox"/>.
+        /// Sets the default text placeholder prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="placeholder">The placeholder text.</param>
@@ -246,7 +246,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// Sets the placeholderTextColor prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="color">The placeholder text color.</param>
@@ -332,7 +332,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the text alignment property on the <see cref="ReactTextBox"/>.
+        /// Sets the text alignment prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="alignment">The text alignment.</param>
@@ -343,7 +343,7 @@ namespace ReactNative.Views.TextInput
         }
  
         /// <summary>
-        /// Sets the text alignment property on the <see cref="ReactTextBox"/>.
+        /// Sets the text alignment prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="alignment">The text alignment.</param>
@@ -354,7 +354,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the editablity property on the <see cref="ReactTextBox"/>.
+        /// Sets the editablity prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="editable">The editable flag.</param>
@@ -365,7 +365,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the max character length property on the <see cref="ReactTextBox"/>.
+        /// Sets the max character length prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="maxCharLength">The max length.</param>

@@ -29,7 +29,7 @@ namespace ReactNative.UIManager
         /// <see cref="CreateShadowNodeInstance"/>.
         /// 
         /// This method will be used in the bridge initialization phase to
-        /// collect properties exposed using the <see cref="Annotations.ReactPropAttribute"/>
+        /// collect props exposed using the <see cref="Annotations.ReactPropAttribute"/>
         /// annotation from the <see cref="ReactShadowNode"/> subclass.
         /// </summary>
         public virtual Type ShadowNodeType => typeof(TReactShadowNode);
@@ -148,9 +148,9 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Callback that will be triggered after all properties are updated in
+        /// Callback that will be triggered after all props are updated in
         /// the current update transation (all <see cref="Annotations.ReactPropAttribute"/> handlers
-        /// for properties updated in the current transaction have been called).
+        /// for props updated in the current transaction have been called).
         /// </summary>
         /// <param name="view">The view.</param>
         protected virtual void OnAfterUpdateTransaction(TView view)
@@ -163,26 +163,26 @@ namespace ReactNative.UIManager
 
         #region IViewManager
 
-        IReadOnlyDictionary<string, string> IViewManager.NativeProperties
+        IReadOnlyDictionary<string, string> IViewManager.NativeProps
         {
             get
             {
-                return ViewManagersPropertyCache.GetNativePropertiesForView<TView>(GetType(), ShadowNodeType);
+                return ViewManagersPropCache.GetNativePropsForView<TView>(GetType(), ShadowNodeType);
             }
         }
 
-        void IViewManager.UpdateProperties(object viewToUpdate, JObject props)
+        void IViewManager.UpdateProps(object viewToUpdate, JObject props)
         {
-            var propertySetters =
-                ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType<TView>(GetType());
+            var propSetters =
+                ViewManagersPropCache.GetNativePropSettersForViewManagerType<TView>(GetType());
 
-            var keys = props.Keys;
+            var keys = props.Keys();
             foreach (var key in keys)
             {
-                var setter = default(IPropertySetter);
-                if (propertySetters.TryGetValue(key, out setter))
+                var setter = default(IPropSetter);
+                if (propSetters.TryGetValue(key, out setter))
                 {
-                    setter.UpdateViewManagerProperty(this, viewToUpdate, props);
+                    setter.UpdateViewManagerProp(this, viewToUpdate, props);
                 }
             }
 

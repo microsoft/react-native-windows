@@ -9,14 +9,14 @@ using System.Reflection;
 
 namespace ReactNative.UIManager
 {
-    static class ViewManagersPropertyCache
+    static class ViewManagersPropCache
     {
-        private static readonly IReadOnlyDictionary<string, IPropertySetter> s_shadowEmpty = new Dictionary<string, IPropertySetter>();
+        private static readonly IReadOnlyDictionary<string, IPropSetter> s_shadowEmpty = new Dictionary<string, IPropSetter>();
 
-        private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>> s_settersCache =
-            new ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropertySetter>>();
+        private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropSetter>> s_settersCache =
+            new ConcurrentDictionary<Type, IReadOnlyDictionary<string, IPropSetter>>();
 
-        public static IReadOnlyDictionary<string, IPropertySetter> GetNativePropertySettersForViewManagerType<TView>(Type type)
+        public static IReadOnlyDictionary<string, IPropSetter> GetNativePropSettersForViewManagerType<TView>(Type type)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
@@ -26,11 +26,11 @@ namespace ReactNative.UIManager
                 return setters;
             }
 
-            var settersImpl = new Dictionary<string, IPropertySetter>();
+            var settersImpl = new Dictionary<string, IPropSetter>();
             var methods = type.GetMethods();
             foreach (var method in methods)
             {
-                foreach (var setter in PropertySetter.CreateViewManagerSetters<TView>(method))
+                foreach (var setter in PropSetter.CreateViewManagerSetters<TView>(method))
                 {
                     settersImpl.Add(setter.Name, setter);
                 }
@@ -41,7 +41,7 @@ namespace ReactNative.UIManager
             return settersImpl;
         }
 
-        public static IReadOnlyDictionary<string, IPropertySetter> GetNativePropertySettersForShadowNodeType(Type type)
+        public static IReadOnlyDictionary<string, IPropSetter> GetNativePropSettersForShadowNodeType(Type type)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
@@ -56,11 +56,11 @@ namespace ReactNative.UIManager
                 return setters;
             }
 
-            var settersImpl = new Dictionary<string, IPropertySetter>();
+            var settersImpl = new Dictionary<string, IPropSetter>();
             var methods = type.GetMethods();
             foreach (var method in methods)
             {
-                foreach (var setter in PropertySetter.CreateShadowNodeSetters(method))
+                foreach (var setter in PropSetter.CreateShadowNodeSetters(method))
                 {
                     settersImpl.Add(setter.Name, setter);
                 }
@@ -71,7 +71,7 @@ namespace ReactNative.UIManager
             return settersImpl;
         }
 
-        public static IReadOnlyDictionary<string, string> GetNativePropertiesForView<TView>(Type viewManagerType, Type shadowNodeType)
+        public static IReadOnlyDictionary<string, string> GetNativePropsForView<TView>(Type viewManagerType, Type shadowNodeType)
         {
             if (viewManagerType == null)
                 throw new ArgumentNullException(nameof(viewManagerType));
@@ -79,18 +79,18 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(shadowNodeType));
 
             var result = new Dictionary<string, string>();
-            var viewManagerProperties = GetNativePropertySettersForViewManagerType<TView>(viewManagerType);
-            foreach (var pair in viewManagerProperties)
+            var viewManagerProps = GetNativePropSettersForViewManagerType<TView>(viewManagerType);
+            foreach (var pair in viewManagerProps)
             {
-                result[pair.Key] = pair.Value.PropertyType;
+                result[pair.Key] = pair.Value.PropType;
             }
 
-            var shadowNodeProperties = GetNativePropertySettersForShadowNodeType(shadowNodeType);
-            foreach (var pair in shadowNodeProperties)
+            var shadowNodeProps = GetNativePropSettersForShadowNodeType(shadowNodeType);
+            foreach (var pair in shadowNodeProps)
             {
                 // TODO: Do we want overwrite behavior here?
-                // What if the property types do not match?
-                result[pair.Key] = pair.Value.PropertyType;
+                // What if the prop types do not match?
+                result[pair.Key] = pair.Value.PropType;
             }
 
             return result;

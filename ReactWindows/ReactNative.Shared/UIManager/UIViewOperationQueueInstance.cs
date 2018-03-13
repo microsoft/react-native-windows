@@ -177,7 +177,7 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
-        /// <param name="initialProps">The initial properties.</param>
+        /// <param name="initialProps">The initial props.</param>
         public void EnqueueCreateView(
             ThemedReactContext themedContext,
             int viewReactTag,
@@ -210,15 +210,15 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues an operation to update the properties of a view.
+        /// Enqueues an operation to update the props of a view.
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="props">The properties.</param>
-        public void EnqueueUpdateProperties(int tag, string className, JObject props)
+        /// <param name="props">The props.</param>
+        public void EnqueueUpdateProps(int tag, string className, JObject props)
         {
             EnqueueOperation(() =>
-                _nativeViewHierarchyManager.UpdateProperties(tag, props));
+                _nativeViewHierarchyManager.UpdateProps(tag, props));
         }
 
         /// <summary>

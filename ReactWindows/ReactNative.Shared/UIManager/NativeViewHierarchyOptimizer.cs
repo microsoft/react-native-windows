@@ -41,11 +41,11 @@ namespace ReactNative.UIManager
     /// 
     /// Some examples of the optimizations this class will do based on commands
     /// from JavaScript:
-    /// - Create a view with only layout properties: a description of that view
+    /// - Create a view with only layout props: a description of that view
     ///   is created as a <see cref="ReactShadowNode"/> in <see cref="UIManagerModule"/>,
     ///   but this class will not output any commands to create the view in the
     ///   native view hierarchy.
-    /// - Update a layout-only view to have non-layout properties: before
+    /// - Update a layout-only view to have non-layout props: before
     ///   issuing the call to update the shadow node, issue commands to create
     ///   the view we optimized away and move it into the view hierarchy.
     /// - Manage the children of a view: multiple calls to manage children for
@@ -79,25 +79,25 @@ namespace ReactNative.UIManager
         /// <param name="node">The shadow node for the view.</param>
         /// <param name="rootViewTag">The react tag id of the root.</param>
         /// <param name="themedContext">The themed context.</param>
-        /// <param name="initialProperties">
-        /// The initial properties for the view.
+        /// <param name="initialProps">
+        /// The initial props for the view.
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node,
             int rootViewTag,
             ThemedReactContext themedContext, 
-            JObject initialProperties)
+            JObject initialProps)
         {
 #if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueCreateView(
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties,
+                    initialProps,
                     rootViewTag);
 #else
             var isLayoutOnly = node.ViewClass == ViewProps.ViewClassName
-                && IsLayoutOnlyAndCollapsible(initialProperties);
+                && IsLayoutOnlyAndCollapsible(initialProps);
 
             node.IsLayoutOnly = isLayoutOnly;
 
@@ -107,7 +107,7 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties,
+                    initialProps,
                     rootViewTag);
             }
 #endif
@@ -122,11 +122,11 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="node">The node.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="props">The properties.</param>
+        /// <param name="props">The props.</param>
         public void HandleUpdateView(ReactShadowNode node, string className, JObject props)
         {
 #if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
-            _uiViewOperationQueue.EnqueueUpdateProperties(node.ReactTag, className, props);
+            _uiViewOperationQueue.EnqueueUpdateProps(node.ReactTag, className, props);
 #else
             var needsToLeaveLayoutOnly = node.IsLayoutOnly && !IsLayoutOnlyAndCollapsible(props);
             if (needsToLeaveLayoutOnly)
@@ -135,7 +135,7 @@ namespace ReactNative.UIManager
             }
             else if (!node.IsLayoutOnly)
             {
-                _uiViewOperationQueue.EnqueueUpdateProperties(node.ReactTag, className, props);
+                _uiViewOperationQueue.EnqueueUpdateProps(node.ReactTag, className, props);
             }
 #endif
         }

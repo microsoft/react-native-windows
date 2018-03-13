@@ -239,7 +239,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="rootViewTag">The root view tag.</param>
-        /// <param name="props">The properties.</param>
+        /// <param name="props">The props.</param>
         [ReactMethod]
         public void createView(int tag, string className, int rootViewTag, JObject props)
         {
@@ -251,7 +251,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="props">The properties.</param>
+        /// <param name="props">The props.</param>
         [ReactMethod]
         public void updateView(int tag, string className, JObject props)
         {

@@ -144,7 +144,7 @@ namespace ReactNative.UIManager
                 viewManagerConstants.Add("Commands", viewManagerCommands);
             }
 
-            var viewManagerNativeProps = viewManager.NativeProperties;
+            var viewManagerNativeProps = viewManager.NativeProps;
             if (viewManagerNativeProps != null && viewManagerNativeProps.Count > 0)
             {
                 viewManagerConstants.Add("NativeProps", viewManagerNativeProps);
