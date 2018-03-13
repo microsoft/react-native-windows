@@ -8,13 +8,13 @@ using System;
 namespace ReactNative.UIManager.Annotations
 {
     /// <summary>
-    /// An annotation for properties of native vies that should be exposed to
+    /// An annotation for props of native views that should be exposed to
     /// JavaScript.
     /// </summary>
     /// <remarks>
     /// Each annotated method should return <see cref="void"/>.
     /// 
-    /// In cases when the property has been removed from the corresponding 
+    /// In cases when the prop has been removed from the corresponding 
     /// React component, the annotated setter will be called and a default
     /// value will be provided as a value parameter. Default values can be
     /// customized using, e.g., <see cref="ReactPropBaseAttribute.DefaultInt32"/>. 
@@ -27,14 +27,14 @@ namespace ReactNative.UIManager.Annotations
         /// <summary>
         /// Instantiates the <see cref="ReactPropAttribute"/>.
         /// </summary>
-        /// <param name="name">The property name.</param>
+        /// <param name="name">The prop name.</param>
         public ReactPropAttribute(string name)
         {
             Name = name;
         }
 
         /// <summary>
-        /// Name of the property exposed to JavaScript.
+        /// Name of the prop exposed to JavaScript.
         /// </summary>
         public string Name { get; }
     }

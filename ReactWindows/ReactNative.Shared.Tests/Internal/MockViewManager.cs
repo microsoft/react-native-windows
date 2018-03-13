@@ -50,7 +50,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public virtual IReadOnlyDictionary<string, string> NativeProperties
+        public virtual IReadOnlyDictionary<string, string> NativeProps
         {
             get
             {
@@ -101,7 +101,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual void UpdateProperties(object viewToUpdate, JObject props)
+        public virtual void UpdateProps(object viewToUpdate, JObject props)
         {
             throw new NotImplementedException();
         }

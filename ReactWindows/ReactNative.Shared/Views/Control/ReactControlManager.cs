@@ -83,7 +83,7 @@ namespace ReactNative.Views.ControlView
         {
 #if !WINDOWS_UWP
             // Keep WPF consistent with UWP (so a control is either fully focusable (including by tabbing), or not at all.
-            // This can be made more granular (for the WPF case) if a new property is exposed.
+            // This can be made more granular (for the WPF case) if a new prop is exposed.
             view.Focusable = isTabStop;
 #endif
             view.IsTabStop = isTabStop;

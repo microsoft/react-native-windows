@@ -167,7 +167,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\BlurEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\FocusEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\KeyEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\IPropSetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropSetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewConversion.cs" />
@@ -181,7 +183,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\TouchEventTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\EpsilonEqualityComparer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\IPropertySetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IReactCompoundView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IViewParentManager.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\OnLayoutEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PanelViewParentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PointerEvents.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactDefaultCompoundView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelper.cs" />
@@ -253,7 +253,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputSubmitEditingEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\TextDecorationLine.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewManagersPropertyCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\View\ReactViewManager.cs" />
   </ItemGroup>
 </Project>

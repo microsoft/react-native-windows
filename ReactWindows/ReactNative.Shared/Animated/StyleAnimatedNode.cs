@@ -44,7 +44,7 @@ namespace ReactNative.Animated
                 else
                 {
                     throw new InvalidOperationException(
-                        Invariant($"Unsupported type of node used in property node: '{node.GetType()}'"));
+                        Invariant($"Unsupported type of node used in prop node: '{node.GetType()}'"));
                 }
             }
         }

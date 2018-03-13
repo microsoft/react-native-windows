@@ -35,12 +35,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManagerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropSetterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewExtensionsTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelperTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndexTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerRegistryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropertyCacheTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropCacheTests.cs" />
   </ItemGroup>
 </Project>

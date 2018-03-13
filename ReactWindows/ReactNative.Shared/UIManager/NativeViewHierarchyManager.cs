@@ -31,7 +31,7 @@ namespace ReactNative.UIManager
     /// corresponding instances of <see cref="IViewManager"/>. The 
     /// <see cref="UIManagerModule"/> communicates with this class by it's
     /// public interface methods:
-    /// - <see cref="UpdateProperties(int, JObject)"/>
+    /// - <see cref="UpdateProps(int, JObject)"/>
     /// - <see cref="UpdateLayout(int, int, Dimensions)"/>
     /// - <see cref="CreateView(ThemedReactContext, int, string, JObject)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
@@ -134,16 +134,16 @@ namespace ReactNative.UIManager
         }
         
         /// <summary>
-        /// Updates the properties of the view with the given tag.
+        /// Updates the props of the view with the given tag.
         /// </summary>
         /// <param name="tag">The view tag.</param>
-        /// <param name="props">The properties.</param>
-        public void UpdateProperties(int tag, JObject props)
+        /// <param name="props">The props.</param>
+        public void UpdateProps(int tag, JObject props)
         {
             AssertOnCorrectDispatcher();
             var viewManager = ResolveViewManager(tag);
             var viewToUpdate = ResolveView(tag);
-            viewManager.UpdateProperties(viewToUpdate, props);
+            viewManager.UpdateProps(viewToUpdate, props);
         }
 
         /// <summary>
@@ -196,8 +196,8 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The context.</param>
         /// <param name="tag">The tag.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="initialProperties">The properties.</param>
-        public void CreateView(ThemedReactContext themedContext, int tag, string className, JObject initialProperties)
+        /// <param name="initialProps">The initial props.</param>
+        public void CreateView(ThemedReactContext themedContext, int tag, string className, JObject initialProps)
         {
             AssertOnCorrectDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
@@ -215,9 +215,9 @@ namespace ReactNative.UIManager
                 ViewExtensions.SetTag(view, tag);
                 ViewExtensions.SetReactContext(view, themedContext);
 
-                if (initialProperties != null)
+                if (initialProps != null)
                 {
-                    viewManager.UpdateProperties(view, initialProperties);
+                    viewManager.UpdateProps(view, initialProps);
                 }
             }
         }

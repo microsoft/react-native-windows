@@ -66,7 +66,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Get the initialProps
+        /// The initial props.
         /// </summary>
         internal JObject InitialProps
         {
@@ -97,11 +97,11 @@ namespace ReactNative
 
         /// <summary>
         /// Schedule rendering of the React component rendered by the 
-        /// JavaScript application from the given JavaScript module 
+        /// JavaScript application from the given JavaScript module. 
         /// <paramref name="moduleName"/> using the provided
         /// <paramref name="reactInstanceManager"/> to attach to the JavaScript context of that manager.
         /// Extra parameter
-        /// <paramref name="initialProps"/> can be used to pass initial properties for the react component.
+        /// <paramref name="initialProps"/> can be used to pass initial props for the React component.
         /// </summary>
         /// <remarks>
         /// Has to be called under the dispatcher associated with the view.
@@ -110,8 +110,7 @@ namespace ReactNative
         /// The React instance manager.
         /// </param>
         /// <param name="moduleName">The module name.</param>
-        /// <param name="initialProps">The initialProps</param>
-        ///
+        /// <param name="initialProps">The initial props.</param>
         public void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
             // Fire and forget async
