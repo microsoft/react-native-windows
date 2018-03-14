@@ -98,6 +98,8 @@ react-native run-windows
 
 A new Command Prompt window will open with the React packager as well as a React Native Windows app. You can now start developing! :tada:
 
+*Note:* If you want to work on another PC, you have to import the pfx file on the PC by opening `windows/<AppName>/<AppName>_TemporaryKey.pfx` and by entering `password` as the required password.
+
 ## Additional Resources
 
 - For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](RunningOnDeviceWindows.md)
