@@ -28,7 +28,7 @@ namespace ReactNative.UIManager
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
 
-            _registry = new Dictionary<string, IViewManager>();
+            _registry = new Dictionary<string, IViewManager>(viewManagers.Count);
 
             foreach (var viewManager in viewManagers)
             {

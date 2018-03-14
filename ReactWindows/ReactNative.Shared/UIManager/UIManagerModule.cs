@@ -6,6 +6,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace ReactNative.UIManager
 
         private readonly UIImplementation _uiImplementation;
         private readonly IReadOnlyDictionary<string, object> _moduleConstants;
-        private readonly IReadOnlyDictionary<string, object> _customDirectEvents;
+        private readonly IDictionary<string, object> _customDirectEvents;
         private readonly EventDispatcher _eventDispatcher;
         private readonly IActionQueue _layoutActionQueue;
 
@@ -35,11 +36,15 @@ namespace ReactNative.UIManager
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="uiImplementationProvider">The UI implementation provider.</param>
         /// <param name="layoutActionQueue">The layout action queue.</param>
+        /// <param name="lazyViewManagersEnabled">
+        /// Signals if view manager constants can be lazy loaded.
+        /// </param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementationProvider uiImplementationProvider,
-            IActionQueue layoutActionQueue)
+            IActionQueue layoutActionQueue,
+            bool lazyViewManagersEnabled)
             : base(reactContext, layoutActionQueue)
         {
             if (viewManagers == null)
@@ -53,7 +58,7 @@ namespace ReactNative.UIManager
             _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
             var customDirectEvents = new Dictionary<string, object>();
             _customDirectEvents = customDirectEvents;
-            _moduleConstants = CreateConstants(viewManagers, null, customDirectEvents);
+            _moduleConstants = CreateConstants(viewManagers, null, customDirectEvents, lazyViewManagersEnabled);
             _layoutActionQueue = layoutActionQueue;
             reactContext.AddLifecycleEventListener(this);
         }
@@ -507,6 +512,39 @@ namespace ReactNative.UIManager
         public void configureNextLayoutAnimation(JObject config, ICallback success, ICallback error)
         {
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
+        }
+
+        #endregion
+
+        #region Sync React Methods
+
+        /// <summary>
+        /// Gets the constants for the view manager.
+        /// </summary>
+        /// <param name="viewManagerName">The view manager name.</param>
+        /// <returns>The view manager constants.</returns>
+        [ReactMethod(IsBlockingSynchronousMethod = true)]
+        public IDictionary<string, object> getConstantsForViewManager(string viewManagerName)
+        {
+            var viewManager = _uiImplementation.ResolveViewManager(viewManagerName);
+
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "UIManagerModule.getConstantsForViewManager")
+                .With("ViewManager", viewManagerName)
+                .With("Lazy", true)
+                .Start())
+            {
+                return CreateConstantsForViewManager(viewManager, null, null, null, _customDirectEvents);
+            }
+        }
+
+        /// <summary>
+        /// Gets the default event types for the view manager.
+        /// </summary>
+        /// <returns>The default event types.</returns>
+        [ReactMethod(IsBlockingSynchronousMethod = true)]
+        public IDictionary<string, object> getDefaultEventTypes()
+        {
+            return GetDefaultExportableEventTypes();
         }
 
         #endregion

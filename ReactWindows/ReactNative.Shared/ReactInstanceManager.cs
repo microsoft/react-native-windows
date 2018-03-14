@@ -109,7 +109,7 @@ namespace ReactNative
             _javaScriptExecutorFactory = javaScriptExecutorFactory;
             _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
         }
-
+        
         /// <summary>
         /// The developer support manager for the instance.
         /// </summary>
@@ -657,7 +657,8 @@ namespace ReactNative
                 var coreModulesPackage = new CoreModulesPackage(
                     this,
                     InvokeDefaultOnBackPressed,
-                    _uiImplementationProvider);
+                    _uiImplementationProvider,
+                    true);
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }

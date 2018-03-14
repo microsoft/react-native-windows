@@ -6,6 +6,7 @@
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System.Collections.Generic;
+using System.Linq;
 using Map = System.Collections.Generic.Dictionary<string, object>;
 
 namespace ReactNative.UIManager
@@ -24,9 +25,16 @@ namespace ReactNative.UIManager
         private static Dictionary<string, object> CreateConstants(
             IReadOnlyList<IViewManager> viewManagers,
             IDictionary<string, object> allBubblingEventTypes,
-            IDictionary<string, object> allDirectEventTypes)
+            IDictionary<string, object> allDirectEventTypes,
+            bool lazyViewManagersEnabled)
         {
             var constants = GetConstants();
+
+            if (lazyViewManagersEnabled)
+            {
+                constants.Add("ViewManagerNames", viewManagers.Select(viewManager => viewManager.Name));
+                return constants;
+            }
 
             // Generic/default event types:
             // All view managers are capable of dispatching these events.
@@ -74,6 +82,15 @@ namespace ReactNative.UIManager
             }
 
             return constants;
+        }
+
+        private static IDictionary<string, object> GetDefaultExportableEventTypes()
+        {
+            return new Map
+            {
+                { BUBBLING_EVENTS_KEY, GetBubblingEventTypeConstants() },
+                { DIRECT_EVENTS_KEY, GetDirectEventTypeConstants() },
+            };
         }
 
         private static IDictionary<string, object> CreateConstantsForViewManager(
