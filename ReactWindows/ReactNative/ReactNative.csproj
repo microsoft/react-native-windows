@@ -132,6 +132,7 @@
     <Compile Include="Modules\StatusBar\StatusBarModule.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
+    <Compile Include="PlatformServices\CurrentPlatformServiceProvider.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
@@ -230,6 +231,7 @@
       <Version>4.0.0-preview00001</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -147,6 +147,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Storage\AsyncStorageHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\PlatformConstantsModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\ReactNativeVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlatformServices\IServiceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlatformServices\ServiceResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHostExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
