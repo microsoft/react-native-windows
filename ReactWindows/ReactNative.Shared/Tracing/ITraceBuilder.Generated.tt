@@ -1,0 +1,94 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".generated.cs" #>
+<#
+var types = new[]
+{
+    typeof(bool),
+    typeof(Double),
+    typeof(Guid),
+    typeof(short),
+    typeof(int),
+    typeof(long),
+    typeof(float),
+    typeof(string),
+    typeof(TimeSpan),
+    typeof(ushort),
+    typeof(uint),
+    typeof(ulong),
+};
+
+var mappings = new Dictionary<Type, string>
+{
+    { typeof(byte), "UInt8" },
+    { typeof(char), "Char16" },
+    { typeof(DateTimeOffset), "DateTime" },
+};
+
+#>
+//
+// This file is generated with ITraceBuilder.Generated.tt
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+
+namespace ReactNative.Tracing
+{
+    /// <summary>
+    /// An interface for adding properties to a trace operation.
+    /// </summary>
+    public partial interface ITraceBuilder
+    {
+<#
+foreach (var type in types)
+{
+#>
+        /// <summary>
+        /// Adds a <see cref="<#=type.Name#>"/> property to the trace.
+        /// </summary>
+        /// <param name="name">The property name.</param>
+        /// <param name="value">The <see cref="<#=type.Name#>"/> value.</param>
+        /// <returns>The trace builder instance.</returns>       
+        ITraceBuilder With(string name, <#=type.Name#> value);
+
+        /// <summary>
+        /// Adds a <see cref="<#=type.Name#>"/> array property to the trace.
+        /// </summary>
+        /// <param name="name">The property name.</param>
+        /// <param name="value">The <see cref="<#=type.Name#>"/> array value.</param>
+        /// <returns>The trace builder instance.</returns>      
+        ITraceBuilder With(string name, <#=type.Name#>[] value);
+
+<#
+}
+#>
+<#
+foreach (var mapping in mappings)
+{
+#>
+        /// <summary>
+        /// Adds a <see cref="<#=mapping.Key.Name#>"/> property to the trace.
+        /// </summary>
+        /// <param name="name">The property name.</param>
+        /// <param name="value">The <see cref="<#=mapping.Key.Name#>"/> value.</param>
+        /// <returns>The trace builder instance.</returns>      
+        ITraceBuilder With(string name, <#=mapping.Key.Name#> value);
+
+        /// <summary>
+        /// Adds a <see cref="<#=mapping.Key.Name#>"/> array property to the trace.
+        /// </summary>
+        /// <param name="name">The property name.</param>
+        /// <param name="value">The <see cref="<#=mapping.Key.Name#>"/> array value.</param>
+        /// <returns>The trace builder instance.</returns>     
+        ITraceBuilder With(string name, <#=mapping.Key.Name#>[] value);
+
+<#
+}
+#>
+    }
+}

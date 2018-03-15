@@ -42,7 +42,7 @@ namespace ReactNative
         public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
         {
             var uiManagerModule = default(INativeModule);
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule")?.Start())
             {
                 var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
                 var layoutActionQueue = new LayoutActionQueue(reactContext.HandleException);

@@ -133,20 +133,20 @@
     <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
     <Compile Include="PlatformServices\CurrentPlatformServiceProvider.cs" />
+    <Compile Include="Tracing\LoggingActivityBuilder.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LoggingActivityBuilder.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
-    <Compile Include="Tracing\LoggingActivityBuilderExtensions.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LoggingActivityBuilderExtensions.tt</DependentUpon>
-    </Compile>
     <Compile Include="Modules\WebSocket\WebSocketModule.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tracing\Tracer.cs" />
+    <Compile Include="Tracing\LoggingChannelTracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="Accessibility\DynamicAutomationPeer.cs" />
@@ -178,9 +178,9 @@
     <EmbeddedResource Include="Properties\ReactNative.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tracing\LoggingActivityBuilderExtensions.tt">
+    <Content Include="Tracing\LoggingActivityBuilder.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LoggingActivityBuilderExtensions.generated.cs</LastGenOutput>
+      <LastGenOutput>LoggingActivityBuilder.Generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

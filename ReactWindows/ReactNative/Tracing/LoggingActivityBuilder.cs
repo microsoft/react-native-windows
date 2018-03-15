@@ -1,11 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Windows.Foundation.Diagnostics;
 
 namespace ReactNative.Tracing
 {
-    class LoggingActivityBuilder
+    partial class LoggingActivityBuilder : ITraceBuilder
     {
         private readonly ILoggingTarget _target;
         private readonly string _name;
@@ -22,7 +23,7 @@ namespace ReactNative.Tracing
             _options = options;
         }
 
-        public LoggingFields Fields
+        private LoggingFields Fields
         {
             get
             {
@@ -35,7 +36,7 @@ namespace ReactNative.Tracing
             }
         }
 
-        public LoggingActivity Create()
+        public IDisposable Start()
         {
             return _target.StartActivity(_name, _fields, _level, _options);
         }

@@ -168,7 +168,7 @@ namespace ReactNative.UIManager
         public void UpdateLayout(int parentTag, int tag, Dimensions dimensions)
         {
             AssertOnCorrectDispatcher();
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.UpdateLayout")?
                 .With("parentTag", parentTag)
                 .With("tag", tag)
                 .Start())
@@ -200,7 +200,7 @@ namespace ReactNative.UIManager
         public void CreateView(ThemedReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
         {
             AssertOnCorrectDispatcher();
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")?
                 .With("tag", tag)
                 .With("className", className)
                 .Start())

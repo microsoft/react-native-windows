@@ -431,7 +431,7 @@ namespace ReactNative.UIManager
 
                 _batches.Add(() =>
                 {
-                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchUI")
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchUI")?
                         .With("BatchId", batchId)
                         .Start())
                     {
@@ -491,7 +491,7 @@ namespace ReactNative.UIManager
 
         private void OnRendering(object sender, FrameEventArgs e)
         {
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations")?.Start())
             {
                 DispatchPendingNonBatchedOperations(e.FrameTime);
             }

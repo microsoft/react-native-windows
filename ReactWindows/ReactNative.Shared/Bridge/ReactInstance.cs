@@ -91,7 +91,7 @@ namespace ReactNative.Bridge
         {
             await _bundleLoader.InitializeAsync(token).ConfigureAwait(false);
 
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge").Start())
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "initializeBridge")?.Start())
             {
                 await QueueConfiguration.JavaScriptQueue.RunAsync(() =>
                 {
@@ -99,7 +99,7 @@ namespace ReactNative.Bridge
 
                     var jsExecutor = _jsExecutorFactory();
                     
-                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor").Start())
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor")?.Start())
                     {
                         _bridge = new ReactBridge(
                             jsExecutor,
@@ -107,7 +107,7 @@ namespace ReactNative.Bridge
                             QueueConfiguration.NativeModulesQueue);
                     }
 
-                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig").Start())
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "setBatchedBridgeConfig")?.Start())
                     {
                         _bridge.SetGlobalVariable("__fbBatchedBridgeConfig", BuildModulesConfig());
                     }
@@ -133,7 +133,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "<callback>").Start())
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "<callback>")?.Start())
                 {
                     _bridge.InvokeCallback(callbackId, arguments);
                 }
@@ -151,7 +151,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName).Start())
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName)?.Start())
                 {
                     if (_bridge == null)
                     {
@@ -305,7 +305,7 @@ namespace ReactNative.Bridge
                 // bad state so we don't want to call anything on them.
                 if (!_parent.IsDisposed)
                 {
-                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "OnBatchComplete").Start())
+                    using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "OnBatchComplete")?.Start())
                     {
                         _parent._registry.OnBatchComplete();
                     }

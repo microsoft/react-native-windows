@@ -153,13 +153,6 @@
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Shell\MainReactPackage.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
-    <Compile Include="Tracing\NullLoggingActivityBuilderExtensions.generated.cs">
-      <DependentUpon>NullLoggingActivityBuilderExtensions.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Tracing\NullLoggingActivityBuilder.cs" />
-    <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
@@ -185,12 +178,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Tracing\NullLoggingActivityBuilderExtensions.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NullLoggingActivityBuilderExtensions.generated.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DevSupport\Resources\Styles.xaml">

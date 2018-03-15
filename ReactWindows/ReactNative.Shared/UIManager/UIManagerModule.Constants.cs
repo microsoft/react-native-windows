@@ -55,7 +55,7 @@ namespace ReactNative.UIManager
             foreach (var viewManager in viewManagers)
             {
                 var viewManagerName = viewManager.Name;
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "UIManagerModuleConstantsHelper.createConstants")
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "UIManagerModuleConstantsHelper.createConstants")?
                     .With("ViewManager", viewManagerName)
                     .Start())
                 {

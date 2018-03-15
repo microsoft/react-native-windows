@@ -852,7 +852,7 @@ namespace ReactNative.UIManager
 
         private void CalculateRootLayout(ReactShadowNode cssRoot)
         {
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactShadowNode.CalculateLayout")
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactShadowNode.CalculateLayout")?
                 .With("RootTag", cssRoot.ReactTag)
                 .Start())
             {

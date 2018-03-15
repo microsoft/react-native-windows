@@ -227,7 +227,7 @@ namespace ReactNative.Bridge
 
             public JToken Invoke(IReactInstance reactInstance, JArray jsArguments)
             {
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod").Start())
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod")?.Start())
                 {
                     return _invokeDelegate.Value(reactInstance, jsArguments);
                 }

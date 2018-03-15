@@ -81,7 +81,7 @@ namespace ReactNative.Bridge
         /// <param name="writer">The JSON writer.</param>
         internal void WriteModuleDescriptions(JsonWriter writer)
         {
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "CreateJSON").Start())
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "CreateJSON")?.Start())
             {
                 writer.WriteStartArray();
                 foreach (var moduleDef in _moduleTable)
@@ -155,7 +155,7 @@ namespace ReactNative.Bridge
         internal void NotifyReactInstanceInitialize()
         {
             _reactContext.AssertOnNativeModulesQueueThread();
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize").Start())
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize")?.Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {
@@ -171,7 +171,7 @@ namespace ReactNative.Bridge
         internal void NotifyReactInstanceDispose()
         {
             _reactContext.AssertOnNativeModulesQueueThread();
-            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy").Start())
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy")?.Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {
@@ -224,7 +224,7 @@ namespace ReactNative.Bridge
             public JToken Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
             {
                 var method = _methods[methodId];
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName)?.Start())
                 {
                     return method.Method.Invoke(reactInstance, parameters);
                 }

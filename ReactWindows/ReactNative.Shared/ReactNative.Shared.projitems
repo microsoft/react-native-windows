@@ -149,6 +149,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\SystemInfo\ReactNativeVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformServices\IServiceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformServices\ServiceResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\ITraceBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\ITraceBuilder.Generated.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\ITracer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pooling\ObjectPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactNativeHostExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactInstanceManager.cs" />
@@ -158,6 +161,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\Tracer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
