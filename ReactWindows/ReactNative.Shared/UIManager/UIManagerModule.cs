@@ -36,15 +36,13 @@ namespace ReactNative.UIManager
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="uiImplementationProvider">The UI implementation provider.</param>
         /// <param name="layoutActionQueue">The layout action queue.</param>
-        /// <param name="lazyViewManagersEnabled">
-        /// Signals if view manager constants can be lazy loaded.
-        /// </param>
+        /// <param name="options">Options for the <see cref="UIManagerModule"/>.</param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementationProvider uiImplementationProvider,
             IActionQueue layoutActionQueue,
-            bool lazyViewManagersEnabled)
+            UIManagerModuleOptions options)
             : base(reactContext, layoutActionQueue)
         {
             if (viewManagers == null)
@@ -56,9 +54,9 @@ namespace ReactNative.UIManager
 
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
-            var customDirectEvents = new Dictionary<string, object>();
-            _customDirectEvents = customDirectEvents;
-            _moduleConstants = CreateConstants(viewManagers, null, customDirectEvents, lazyViewManagersEnabled);
+            var lazyViewManagersEnabled = IsLazyViewManagersEnabled(options);
+            _customDirectEvents = lazyViewManagersEnabled ? GetDirectEventTypeConstants() : new Dictionary<string, object>();
+            _moduleConstants = CreateConstants(viewManagers, null, _customDirectEvents, IsLazyViewManagersEnabled(options));
             _layoutActionQueue = layoutActionQueue;
             reactContext.AddLifecycleEventListener(this);
         }
@@ -204,20 +202,23 @@ namespace ReactNative.UIManager
         /// <returns>The direct event name.</returns>
         public string ResolveCustomEventName(string eventName)
         {
-            if (!_customDirectEvents.TryGetValue(eventName, out var value))
+            lock (_customDirectEvents)
             {
-                return eventName;
-            }
+                if (!_customDirectEvents.TryGetValue(eventName, out var value))
+                {
+                    return eventName;
+                }
 
-            var customEventType = value as IDictionary<string, object>;
-            if (customEventType == null ||
-                !customEventType.TryGetValue("registrationName", out value))
-            {
-                return eventName;
-            }
+                var customEventType = value as IDictionary<string, object>;
+                if (customEventType == null ||
+                    !customEventType.TryGetValue("registrationName", out value))
+                {
+                    return eventName;
+                }
 
-            var registrationName = value as string;
-            return registrationName ?? eventName;
+                var registrationName = value as string;
+                return registrationName ?? eventName;
+            }
         }
 
         #region React Methods
@@ -533,12 +534,15 @@ namespace ReactNative.UIManager
                 .With("Lazy", true)
                 .Start())
             {
-                return CreateConstantsForViewManager(viewManager, null, null, null, _customDirectEvents);
+                lock (_customDirectEvents)
+                {
+                    return CreateConstantsForViewManager(viewManager, null, null, null, _customDirectEvents);
+                }
             }
         }
 
         /// <summary>
-        /// Gets the default event types for the view manager.
+        /// Gets the default event types for the <see cref="UIManagerModule"/>.
         /// </summary>
         /// <returns>The default event types.</returns>
         [ReactMethod(IsBlockingSynchronousMethod = true)]
@@ -602,6 +606,15 @@ namespace ReactNative.UIManager
         public override void OnReactInstanceDispose()
         {
             _eventDispatcher.OnReactInstanceDispose();
+        }
+
+        #endregion
+
+        #region Options
+
+        private static bool IsLazyViewManagersEnabled(UIManagerModuleOptions options)
+        {
+            return (options & UIManagerModuleOptions.LazyViewManagers) == UIManagerModuleOptions.LazyViewManagers;
         }
 
         #endregion

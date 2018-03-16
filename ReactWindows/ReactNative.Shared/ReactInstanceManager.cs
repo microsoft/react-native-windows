@@ -69,6 +69,7 @@ namespace ReactNative
         private readonly UIImplementationProvider _uiImplementationProvider;
         private readonly Func<IJavaScriptExecutor> _javaScriptExecutorFactory;
         private readonly Action<Exception> _nativeModuleCallExceptionHandler;
+        private readonly bool _lazyViewManagersEnabled;
 
         private LifecycleStateMachine _lifecycleStateMachine;
         private CancellationDisposable _suspendCancellation;
@@ -83,7 +84,8 @@ namespace ReactNative
             LifecycleState initialLifecycleState,
             UIImplementationProvider uiImplementationProvider,
             Func<IJavaScriptExecutor> javaScriptExecutorFactory,
-            Action<Exception> nativeModuleCallExceptionHandler)
+            Action<Exception> nativeModuleCallExceptionHandler,
+            bool lazyViewManagersEnabled)
         {
             if (packages == null)
                 throw new ArgumentNullException(nameof(packages));
@@ -658,7 +660,7 @@ namespace ReactNative
                     this,
                     InvokeDefaultOnBackPressed,
                     _uiImplementationProvider,
-                    true);
+                    _lazyViewManagersEnabled);
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }

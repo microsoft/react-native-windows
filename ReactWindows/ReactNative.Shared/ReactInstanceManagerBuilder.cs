@@ -26,6 +26,7 @@ namespace ReactNative
         private UIImplementationProvider _uiImplementationProvider;
         private Action<Exception> _nativeModuleCallExceptionHandler;
         private Func<IJavaScriptExecutor> _jsExecutorFactory;
+        private bool _lazyViewManagersEnabled;
 
         /// <summary>
         /// Sets a provider of <see cref="UIImplementation"/>.
@@ -119,6 +120,19 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// When <code>true</code>, view manager constants, including custom
+        /// events and native props configuration are loaded
+        /// on-demand rather than at startup.
+        /// </summary>
+        public bool LazyViewManagersEnabled
+        {
+            set
+            {
+                _lazyViewManagersEnabled = value;
+            }
+        }
+
+        /// <summary>
         /// Sets the JavaScript executor factory.
         /// </summary>
         public Func<IJavaScriptExecutor> JavaScriptExecutorFactory
@@ -169,7 +183,8 @@ namespace ReactNative
                 _initialLifecycleState.Value,
                 _uiImplementationProvider,
                 _jsExecutorFactory,
-                _nativeModuleCallExceptionHandler);
+                _nativeModuleCallExceptionHandler,
+                _lazyViewManagersEnabled);
         }
     }
 }

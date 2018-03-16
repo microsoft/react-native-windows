@@ -48,12 +48,13 @@ namespace ReactNative
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
                 var layoutActionQueue = new LayoutActionQueue(reactContext.HandleException);
+                var options = _lazyViewManagersEnabled ? UIManagerModuleOptions.LazyViewManagers : UIManagerModuleOptions.None;
                 uiManagerModule = new UIManagerModule(
                     reactContext,
                     _reactInstanceManager.CreateAllViewManagers(reactContext),
                     _uiImplementationProvider,
                     layoutActionQueue,
-                    _lazyViewManagersEnabled);
+                    options);
             }
 
             return new List<INativeModule>

@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule requireNativeComponent
  * @flow
@@ -12,7 +10,6 @@
  */
 'use strict';
 
-const Platform = require('Platform');
 const ReactNativeBridgeEventPlugin = require('ReactNativeBridgeEventPlugin');
 const ReactNativeStyleAttributes = require('ReactNativeStyleAttributes');
 const UIManager = require('UIManager');
@@ -25,9 +22,6 @@ const processColor = require('processColor');
 const resolveAssetSource = require('resolveAssetSource');
 const sizesDiffer = require('sizesDiffer');
 const verifyPropTypes = require('verifyPropTypes');
-/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
- * found when Flow v0.54 was deployed. To see the error delete this comment and
- * run Flow. */
 const invariant = require('fbjs/lib/invariant');
 const warning = require('fbjs/lib/warning');
 
@@ -56,10 +50,13 @@ function requireNativeComponent(
   extraConfig?: ?{nativeOnly?: Object},
 ): React$ComponentType<any> | string {
   function attachDefaultEventTypes(viewConfig: any) {
+    // This is supported on UIManager platforms (ex: Android),
+    // as lazy view managers are not implemented for all platforms.
+    // See [UIManager] for details on constants and implementation.
     if (UIManager.ViewManagerNames) {
       // Lazy view managers enabled.
       viewConfig = merge(viewConfig, UIManager.getDefaultEventTypes());
-    } else if (Platform.OS === 'android') {
+    } else {
       viewConfig.bubblingEventTypes = merge(
         viewConfig.bubblingEventTypes,
         UIManager.genericBubblingEventTypes,
