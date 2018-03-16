@@ -1,16 +1,18 @@
-﻿using ReactNative.Reflection;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 #else
+using System.Collections;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -110,6 +112,12 @@ namespace ReactNative.Views.Text
 
 #if WINDOWS_UWP
             span.Inlines.Insert(index, inlineChild);
+
+            var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
+            if (parentUIElement != null)
+            {
+                AccessibilityHelper.OnChildAdded(parentUIElement, child);
+            }
 #else
             ((IList)span.Inlines).Insert(index, inlineChild);
 #endif
@@ -192,6 +200,13 @@ namespace ReactNative.Views.Text
         {
             var span = (Span)parent;
             span.Inlines.Clear();
+#if WINDOWS_UWP
+            var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
+            if (parentUIElement != null)
+            {
+                AccessibilityHelper.OnChildRemoved(parentUIElement);
+            }
+#endif
         }
 
         /// <summary>
@@ -204,6 +219,12 @@ namespace ReactNative.Views.Text
             var span = (Span)parent;
 #if WINDOWS_UWP
             span.Inlines.RemoveAt(index);
+
+            var parentUIElement = AccessibilityHelper.GetParentElementFromTextElement(span);
+            if (parentUIElement != null)
+            {
+                AccessibilityHelper.OnChildRemoved(parentUIElement);
+            }
 #else
             ((IList)span.Inlines).RemoveAt(index);
 #endif

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Concurrent;
 #if WINDOWS_UWP
@@ -41,8 +44,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.PointerEvents.HasValue)
+            if (!s_properties.TryGetValue(view, out var elementData) || !elementData.PointerEvents.HasValue)
             {
                 return PointerEvents.Auto;
             }
@@ -77,8 +79,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (s_properties.TryGetValue(view, out elementData))
+            if (s_properties.TryGetValue(view, out var elementData))
             {
                 var compoundView = elementData.CompoundView;
                 if (compoundView != null)
@@ -111,8 +112,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
+            if (!s_properties.TryGetValue(view, out var elementData) || !elementData.Tag.HasValue)
             {
                 throw new InvalidOperationException("Could not get tag for view.");
             }
@@ -132,8 +132,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
+            return s_properties.TryGetValue(view, out var elementData) && elementData.Tag.HasValue;
         }
 
         internal static void SetReactContext(this DependencyObject view, ThemedReactContext context)
@@ -158,8 +157,7 @@ namespace ReactNative.UIManager
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData))
+            if (!s_properties.TryGetValue(view, out var elementData))
             {
                 throw new InvalidOperationException("Could not get React context for view.");
             }

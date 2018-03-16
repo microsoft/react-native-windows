@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\GenericDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\GenericDelegateTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncCancelable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IAsyncDisposable.cs" />

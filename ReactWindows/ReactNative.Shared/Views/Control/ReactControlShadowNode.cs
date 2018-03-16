@@ -1,9 +1,5 @@
-using Facebook.Yoga;
-using Newtonsoft.Json.Linq;
-using ReactNative.Reflection;
-using ReactNative.UIManager.Annotations;
-using System;
-using static System.FormattableString;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace ReactNative.UIManager
 {

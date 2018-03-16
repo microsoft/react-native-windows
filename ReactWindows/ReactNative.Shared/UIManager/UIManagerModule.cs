@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
@@ -194,8 +199,7 @@ namespace ReactNative.UIManager
         /// <returns>The direct event name.</returns>
         public string ResolveCustomEventName(string eventName)
         {
-            var value = default(object);
-            if (!_customDirectEvents.TryGetValue(eventName, out value))
+            if (!_customDirectEvents.TryGetValue(eventName, out var value))
             {
                 return eventName;
             }

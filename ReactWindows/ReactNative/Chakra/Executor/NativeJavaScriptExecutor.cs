@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
@@ -159,6 +162,19 @@ namespace ReactNative.Chakra.Executor
                 var stackTrace = jsonError.Value<string>("stack");
                 throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
             }
+        }
+
+        /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+            if (callSyncHook == null)
+                throw new ArgumentNullException(nameof(callSyncHook));
+
+            _executor.SetCallSyncHook((moduleId, methodId, args) =>
+                callSyncHook(moduleId, methodId, JArray.Parse(args)).ToString(Formatting.None));
         }
 
         /// <summary>

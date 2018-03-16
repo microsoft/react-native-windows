@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
@@ -141,10 +146,6 @@ namespace ReactNative.DevSupport
 
         public void HandleException(Exception exception)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
-#endif
-
             if (IsEnabled)
             {
                 ShowNewNativeError(exception.Message, exception);
@@ -178,8 +179,7 @@ namespace ReactNative.DevSupport
 
         public void ShowNewNativeError(string message, Exception exception)
         {
-            var javaScriptException = exception as JavaScriptException;
-            if (javaScriptException != null && javaScriptException.JavaScriptStackTrace != null)
+            if (exception is JavaScriptException javaScriptException && javaScriptException.JavaScriptStackTrace != null)
             {
                 var stackTrace = StackTraceHelper.ConvertChakraStackTrace(javaScriptException.JavaScriptStackTrace);
                 ShowNewError(exception.Message, stackTrace, NativeErrorCookie);

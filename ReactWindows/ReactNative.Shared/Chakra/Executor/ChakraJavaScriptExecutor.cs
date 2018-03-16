@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
@@ -6,7 +9,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.Chakra.Executor
@@ -30,6 +32,7 @@ namespace ReactNative.Chakra.Executor
 
         private JavaScriptNativeFunction _nativeLoggingHook;
         private JavaScriptNativeFunction _nativeRequire;
+        private JavaScriptNativeFunction _nativeCallSyncHook;
 
         private JavaScriptValue _globalObject;
 
@@ -41,6 +44,8 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue _parseFunction;
         private JavaScriptValue _stringifyFunction;
 #endif
+
+        private Func<int, int, JArray, JToken> _callSyncHook;
 
         /// <summary>
         /// Instantiates the <see cref="ChakraJavaScriptExecutor"/>.
@@ -196,6 +201,15 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+            _callSyncHook = callSyncHook;
+        }
+
+        /// <summary>
         /// Disposes the <see cref="ChakraJavaScriptExecutor"/> instance.
         /// </summary>
         public void Dispose()
@@ -212,6 +226,12 @@ namespace ReactNative.Chakra.Executor
             EnsureGlobalObject().SetProperty(
                 JavaScriptPropertyId.FromString("nativeLoggingHook"),
                 JavaScriptValue.CreateFunction(_nativeLoggingHook),
+                true);
+
+            _nativeCallSyncHook = NativeCallSyncHook;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeCallSyncHook"),
+                JavaScriptValue.CreateFunction(_nativeCallSyncHook),
                 true);
         }
 
@@ -288,6 +308,32 @@ namespace ReactNative.Chakra.Executor
             }
 
             return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Call Sync Hook
+        private JavaScriptValue NativeCallSyncHook(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly four arguments (global, moduleId, methodId, and args).");
+            }
+
+            if (_callSyncHook == null)
+            {
+                throw new InvalidOperationException("Sync hook has not been set.");
+            }
+
+            var moduleId = (int)arguments[1].ToDouble();
+            var methodId = (int)arguments[2].ToDouble();
+            var args = (JArray)ConvertJson(arguments[3]);
+            var result = _callSyncHook(moduleId, methodId, args);
+            return ConvertJson(result);
         }
         #endregion
 

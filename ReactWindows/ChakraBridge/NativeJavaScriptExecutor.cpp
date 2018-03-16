@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "NativeJavaScriptExecutor.h"
 
@@ -167,4 +170,9 @@ ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
 
     ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
     return finalResult;
+}
+
+void NativeJavaScriptExecutor::SetCallSyncHook(CallSyncHandler^ handler)
+{
+    host.SetCallSyncHook(handler);
 }

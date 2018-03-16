@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using System;
 
 namespace ReactNative.Bridge
@@ -44,5 +49,11 @@ namespace ReactNative.Bridge
         /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
         void RunScript(string sourcePath, string sourceUrl);
+
+        /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook);
     }
 }

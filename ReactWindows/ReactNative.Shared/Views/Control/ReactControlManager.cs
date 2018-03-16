@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -7,15 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 #else
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 #endif
 
 namespace ReactNative.Views.ControlView
@@ -158,6 +160,32 @@ namespace ReactNative.Views.ControlView
         {
             view.HandledKeyUpKeys = keys;
         }
+
+#if WINDOWS_UWP
+        /// <summary>
+        /// Set accessibility traits for the control.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object. 
+        ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
+        [ReactProp("accessibilityTraits")]
+        public void SetAccessibilityTraits(ReactControl view, object accessibilityTraitsValue)
+        {
+            AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the ReactControl.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(ReactControl view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+#endif
 
         /// <summary>
         /// Adds a child at the given index.

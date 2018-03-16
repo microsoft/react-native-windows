@@ -1,4 +1,9 @@
-﻿namespace ReactNative.UIManager.Events
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+namespace ReactNative.UIManager.Events
 {
     /// <summary>
     /// Touch event types that the JavaScript module <see cref="RCTEventEmitter"/>

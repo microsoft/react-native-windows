@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -75,8 +78,11 @@ namespace ReactNative.Bridge
             {
                 if (MainDispatcher.HasThreadAccess)
                 {
-                    s_isOnDispatcherThread = new ThreadLocal<bool>();
-                    s_isOnDispatcherThread.Value = true;
+                    s_isOnDispatcherThread = new ThreadLocal<bool>
+                    {
+                        Value = true,
+                    };
+
                     return true;
                 }
                 else

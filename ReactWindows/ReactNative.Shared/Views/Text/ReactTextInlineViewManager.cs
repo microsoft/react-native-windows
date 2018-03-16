@@ -1,4 +1,7 @@
-﻿using ReactNative.UIManager;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.UIManager;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Documents;
 #else
@@ -21,7 +24,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public sealed override void UpdateExtraData(TInline root, object extraData)
+        public override void UpdateExtraData(TInline root, object extraData)
         {
             var inlineNode = extraData as ReactInlineShadowNode;
             if (inlineNode != null)
