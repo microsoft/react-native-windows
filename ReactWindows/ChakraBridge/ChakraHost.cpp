@@ -215,6 +215,49 @@ JsValueRef CALLBACK NativeRequire(JsValueRef callee, bool isConstructCall, JsVal
 	return JS_INVALID_REFERENCE;
 }
 
+JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+{
+    // cast the callback state to the ChakraHost instance
+    auto host = (ChakraHost*)callbackState;
+
+    // Assert the argument count.
+    if (argumentCount != 4)
+    {
+        ThrowException(L"Expected only three parameters to nativeCallSyncHook.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Assert the handler has been set.
+    if (host->callSyncHandler == nullptr)
+    {
+        ThrowException(L"Sync hook has not been set.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Get the module ID and method ID
+    double moduleId;
+    IfFailThrow(JsNumberToDouble(arguments[1], &moduleId), L"The moduleId parameter to nativeCallSyncHook must be a number.");
+    double methodId;
+    IfFailThrow(JsNumberToDouble(arguments[2], &methodId), L"The methodId parameter to nativeCallSyncHook must be a number.");
+
+    // Get the stringified arguments
+    JsValueRef stringifiedArgs;
+    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter");
+    const wchar_t* argsBuf;
+    size_t bufLen;
+    IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
+
+    // Invoke the sync callback
+    String^ result = host->callSyncHandler(moduleId, methodId, ref new String(argsBuf, bufLen));
+
+    // Return the parsed JSON result
+    JsValueRef stringifiedResult;
+    IfFailThrow(JsPointerToString(result->Data(), result->Length(), &stringifiedResult), L"Could not convert pointer to stringified result.");
+    JsValueRef jsonResult;
+    IfFailThrow(host->JsonParse(stringifiedResult, &jsonResult), L"Could not parse stringified result");
+    return jsonResult;
+}
+
 bool HasMagicFileHeader(const wchar_t* szPath)
 {
 	FILE *file;
@@ -368,6 +411,11 @@ JsErrorCode ChakraHost::SetGlobalVariable(const wchar_t* szPropertyName, JsValue
     return JsNoError;
 }
 
+void ChakraHost::SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler)
+{
+    this->callSyncHandler = handler;
+}
+
 JsErrorCode ChakraHost::InitJson()
 {
     JsPropertyIdRef jsonPropertyId;
@@ -400,6 +448,13 @@ JsErrorCode ChakraHost::InitNativeRequire()
 	return JsNoError;
 }
 
+JsErrorCode ChakraHost::InitNativeCallSyncHook()
+{
+    IfFailRet(DefineHostCallback(globalObject, L"nativeCallSyncHook", NativeCallSyncHook, this));
+
+    return JsNoError;
+}
+
 JsErrorCode ChakraHost::Init()
 {
     currentSourceContext = 0;
@@ -412,6 +467,7 @@ JsErrorCode ChakraHost::Init()
 
     IfFailRet(InitJson());
     IfFailRet(InitConsole());
+    IfFailRet(InitNativeCallSyncHook());
 
     return JsNoError;
 }

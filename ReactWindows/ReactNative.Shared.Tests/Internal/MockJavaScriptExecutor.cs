@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -34,6 +34,10 @@ namespace ReactNative.Tests
         public void SetGlobalVariable(string propertyName, JToken value)
         {
             OnSetGlobalVariable(propertyName, value);
+        }
+
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
         }
 
         public void Dispose()

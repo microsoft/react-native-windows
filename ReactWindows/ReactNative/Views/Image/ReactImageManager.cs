@@ -12,6 +12,8 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -300,8 +302,10 @@ namespace ReactNative.Views.Image
             try
             {
                 var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
-                var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source));
+                var dispatcher = CoreApplication.GetCurrentView().Dispatcher;
+                var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source), default(CancellationToken), dispatcher);
                 var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
+
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
                 imageBrush.ImageSource = image;
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);

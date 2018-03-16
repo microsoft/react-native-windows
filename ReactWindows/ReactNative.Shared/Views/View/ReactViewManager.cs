@@ -219,36 +219,17 @@ namespace ReactNative.Views.View
             view.SetPointerEvents(pointerEvents);
         }
 
+#if WINDOWS_UWP
         /// <summary>
         /// Set accessibility traits for the view.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object. 
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object.
         ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
         [ReactProp("accessibilityTraits")]
         public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
         {
-#if WINDOWS_UWP
-            AccessibilityTrait[] result = null;
-            if (accessibilityTraitsValue != null)
-            {
-                if (accessibilityTraitsValue is JArray asJArray)
-                {
-                    result = asJArray.Values<string>()
-                        .Select(ParseTrait)
-                        .OfType<AccessibilityTrait>()
-                        .ToArray();
-                    
-                    result = result.Length > 0 ? result : null;
-                }
-                else if (EnumHelpers.TryParse<AccessibilityTrait>(accessibilityTraitsValue.ToString(), out var accessibilityTrait))
-                {
-                    result = new[] { accessibilityTrait };
-                }
-            }
-            
-            view.AccessibilityTraits = result;
-#endif
+            AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
         }
 
         /// <summary>
@@ -259,11 +240,10 @@ namespace ReactNative.Views.View
         [ReactProp("importantForAccessibility")]
         public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
         {
-#if WINDOWS_UWP
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
             AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
-#endif
         }
+#endif
 
         #endregion
 

@@ -143,6 +143,10 @@ namespace ReactNative.DevSupport
             _injectedObjects.Add(propertyName, value.ToString(Formatting.None));
         }
 
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+        }
+
         public void Dispose()
         {
             _isDisposed = true;

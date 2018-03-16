@@ -165,6 +165,19 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+            if (callSyncHook == null)
+                throw new ArgumentNullException(nameof(callSyncHook));
+
+            _executor.SetCallSyncHook((moduleId, methodId, args) =>
+                callSyncHook(moduleId, methodId, JArray.Parse(args)).ToString(Formatting.None));
+        }
+
+        /// <summary>
         /// Sets a global variable in the JavaScript runtime.
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>

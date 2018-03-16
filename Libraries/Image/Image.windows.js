@@ -160,6 +160,19 @@ var Image = createReactClass({
     },
 
     /**
+     * Like `prefetch` but returns the path to the cached image on disk. Due to
+     * the nature of caches, there's no guarantee how long the returned path will
+     * exist. Only use this method if you're okay with that limitation.
+     * 
+     * @platform windows
+     */
+    prefetchAndGetCachedPath(url: string, callback: ?Function) {
+      const requestId = generateRequestId();
+      callback && callback(requestId);
+      return ImageLoader.prefetchImageAndGetCachedPath(url, requestId);
+    },
+
+    /**
      * Abort prefetch request.
      *
      * See https://facebook.github.io/react-native/docs/image.html#abortprefetch
