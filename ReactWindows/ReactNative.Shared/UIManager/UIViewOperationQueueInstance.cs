@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
@@ -45,7 +50,10 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="nativeViewHierarchyManager">
-        /// The native view hierarchy manager.
+        /// The native view hierarchy manager associated with this instance.
+        /// </param>
+        /// <param name="reactChoreographer">
+        /// The choreographer associated with this instance.
         /// </param>
         public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChoreographer)
         {

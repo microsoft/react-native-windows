@@ -96,9 +96,7 @@ Each pull request has the unit tests, code analysis, and a [Winium](https://gith
 
 ## License
 
-Portions of the React Native Windows plugin are subject to certain Facebook provided license terms. More information can be found in the [FacebookLicense](FacebookLicense) directory.
-
-All modifications to the original Facebook source code, and all newly contributed code to the React Native Windows plugin are provided under the [MIT License](LICENSE).
+The React Native Windows plugin, including modifications to the original Facebook source code, and all newly contributed code is provided under the [MIT License](LICENSE). Portions of the React Native Windows plugin derived from React Native are copyright Facebook.
 
 ## Code of Conduct
 

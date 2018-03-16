@@ -1,9 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Accessibility;
 using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -27,8 +33,8 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly IDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
-            new Dictionary<TFrameworkElement, DimensionBoundProperties>();
+        private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
+            new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
 
         /// <summary>
         /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
@@ -141,7 +147,7 @@ namespace ReactNative.UIManager
         [ReactProp("accessibilityLabel")]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
-            AutomationProperties.SetName(view, label ?? "");
+            AccessibilityHelper.SetAccessibilityLabel(view, label ?? "");
         }
 
         /// <summary>
@@ -202,7 +208,7 @@ namespace ReactNative.UIManager
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
-            _dimensionBoundProperties.Remove(view);
+            _dimensionBoundProperties.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -276,8 +282,7 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = null;
             }
@@ -287,11 +292,10 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetOrCreateDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.Add(view, properties);
+                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
             }
 
             return properties;

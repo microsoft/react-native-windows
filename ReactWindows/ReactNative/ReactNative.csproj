@@ -93,10 +93,15 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Accessibility\AccessibilityTapEvent.cs" />
+    <Compile Include="Accessibility\AccessibilityTrait.cs" />
+    <Compile Include="Accessibility\IAccessible.cs" />
     <Compile Include="Bridge\DispatcherHelpers.cs" />
     <Compile Include="Bridge\Queue\DispatcherActionQueue.cs" />
     <Compile Include="Bridge\Queue\LayoutActionQueue.cs" />
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
+    <Compile Include="Accessibility\AccessibilityHelper.cs" />
+    <Compile Include="Accessibility\ImportantForAccessibility.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
@@ -108,7 +113,6 @@
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
@@ -130,7 +134,6 @@
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootViewExtensions.cs" />
-    <Compile Include="Touch\IOnInterceptTouchEventListener.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\DisplayMetrics.cs" />
+    <Compile Include="Accessibility\DynamicAutomationPeer.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
@@ -214,7 +218,7 @@
   <Import Project="..\..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems" Label="Shared" />
   <ItemGroup>
     <PackageReference Include="fresco.imagepipeline">
-      <Version>0.1.2</Version>
+      <Version>0.1.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>

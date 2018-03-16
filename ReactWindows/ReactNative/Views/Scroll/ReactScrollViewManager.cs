@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -409,7 +414,7 @@ namespace ReactNative.Views.Scroll
                 TabIndex = 0,
             };
 
-            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => v);
+            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => scrollViewerData);
 
             return scrollViewer;
         }

@@ -11,7 +11,7 @@
     "node": ">=4"
   },
   "engineStrict": true,
-  "main": "Libraries/react-native-windows/react-native-windows.js",
+  "main": "Libraries/react-native-windows/react-native-windows-implementation.js",
   "scripts": {
     "test": "jasmine",
     "lint": "eslint .",
@@ -31,27 +31,27 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": "16.2.0",
-    "react-native": "~0.53.0"
+    "react": "16.3.0-alpha.1",
+    "react-native": "0.54.0"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^3.19.0",
-    "eslint-config-fb-strict": "^20.0.3",
-    "eslint-config-fbjs": "^1.1.1",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.17.0",
+    "eslint-config-fb-strict": "^22.1.0",
+    "eslint-config-fbjs": "^2.0.1",
     "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-flowtype": "^2.33.0",
-    "eslint-plugin-prettier": "^2.1.1",
-    "eslint-plugin-react": "^7.2.1",
-    "flow-bin": "^0.63.0",
+    "eslint-plugin-flowtype": "^2.43.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.6.1",
+    "flow-bin": "^0.65.0",
     "https-proxy-agent": "^1.0.0",
     "jasmine": "^2.6.0",
     "jasmine-reporters": "^2.2.1",
     "minimist": "^1.2.0",
     "prettier": "^1.9.1",
-    "react": "16.2.0",
-    "react-devtools-core": "^3.0.0",
-    "react-native": "~0.53.0",
+    "react": "16.3.0-alpha.1",
+    "react-devtools-core": "^3.1.0",
+    "react-native": "0.54.0",
     "selenium-webdriver": "2.48.x"
   },
   "dependencies": {

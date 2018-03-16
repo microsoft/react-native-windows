@@ -1,5 +1,11 @@
-﻿using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 #else
 using System.Windows;
@@ -102,11 +108,15 @@ namespace ReactNative.UIManager
         /// <param name="parent">The view parent.</param>
         public abstract void RemoveAllChildren(TFrameworkElement parent);
 
-#region IViewParentManager
+        #region IViewParentManager
 
         void IViewParentManager.AddView(DependencyObject parent, DependencyObject child, int index)
         {
-            AddView((TFrameworkElement)parent, child, index);
+            var element = (TFrameworkElement)parent;
+            AddView(element, child, index);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildAdded(element, child);
+#endif
         }
 
         int IViewParentManager.GetChildCount(DependencyObject parent)
@@ -121,15 +131,23 @@ namespace ReactNative.UIManager
 
         void IViewParentManager.RemoveChildAt(DependencyObject parent, int index)
         {
+            var element = (TFrameworkElement)parent;
             RemoveChildAt((TFrameworkElement)parent, index);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(element);
+#endif
         }
 
         void IViewParentManager.RemoveAllChildren(DependencyObject parent)
         {
-            RemoveAllChildren((TFrameworkElement)parent);
+            var element = (TFrameworkElement)parent;
+            RemoveAllChildren(element);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(element);
+#endif
         }
 
-#endregion
+        #endregion
     }
 
     /// <summary>

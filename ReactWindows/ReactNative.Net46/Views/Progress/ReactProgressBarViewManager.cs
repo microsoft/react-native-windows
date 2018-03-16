@@ -1,4 +1,7 @@
-﻿using ReactNative.UIManager;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Windows.Controls;
 using System.Windows.Media;

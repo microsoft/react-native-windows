@@ -1,5 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 #else
 using System.Windows;
@@ -11,7 +16,11 @@ namespace ReactNative.Views.ControlView
     /// <summary>
     /// A native control with a single Canvas child.
     /// </summary>
+#if WINDOWS_UWP
+    public class ReactControl : UserControl, IAccessible
+#else
     public class ReactControl : UserControl
+#endif
     {
         private readonly Canvas _canvas;
 
@@ -58,5 +67,17 @@ namespace ReactNative.Views.ControlView
             get;
             set;
         }
+
+#if WINDOWS_UWP
+        /// <inheritdoc />                                              
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new DynamicAutomationPeer<ReactControl>(this);
+        }
+
+        // TODO: implement runtime change raising event to screen reader #1562
+        /// <inheritdoc />                                                    
+        public AccessibilityTrait[] AccessibilityTraits { get; set; }
+#endif
     }
 }

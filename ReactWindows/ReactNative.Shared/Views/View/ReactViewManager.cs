@@ -1,10 +1,17 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using System;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
 using System.Threading;
+using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -58,9 +65,7 @@ namespace ReactNative.Views.View
 
         private BorderProps GetOrCreateBorderProps(BorderedCanvas view)
         {
-            BorderProps props;
-
-            if (!_borderProps.TryGetValue(view, out props))
+            if (!_borderProps.TryGetValue(view, out var props))
             {
                 props = new BorderProps();
                 _borderProps.Add(view, props);
@@ -84,6 +89,18 @@ namespace ReactNative.Views.View
         }
 
         private static ThreadLocal<Brush> s_defaultBorderBrush = new ThreadLocal<Brush>(() => new SolidColorBrush(Colors.Black));
+
+#if WINDOWS_UWP
+        private static AccessibilityTrait? ParseTrait(string trait)
+        {
+            if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+#endif
 
         /// <summary>
         /// Default brush for the view borders.
@@ -201,6 +218,32 @@ namespace ReactNative.Views.View
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
             view.SetPointerEvents(pointerEvents);
         }
+
+#if WINDOWS_UWP
+        /// <summary>
+        /// Set accessibility traits for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object.
+        ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
+        [ReactProp("accessibilityTraits")]
+        public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
+        {
+            AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the BorderedCanvas.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+#endif
 
         #endregion
 

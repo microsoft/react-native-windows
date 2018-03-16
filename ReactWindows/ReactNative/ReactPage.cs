@@ -1,10 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;
@@ -232,8 +234,7 @@ namespace ReactNative
                     throw new ArgumentException("Expected value for remoteDebugging argument.", nameof(arguments));
                 }
 
-                bool isRemoteDebuggingEnabled;
-                if (bool.TryParse(args[index + 1], out isRemoteDebuggingEnabled))
+                if (bool.TryParse(args[index + 1], out var isRemoteDebuggingEnabled))
                 {
                     _reactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
                 }
