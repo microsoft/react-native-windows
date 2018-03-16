@@ -13,7 +13,7 @@ namespace ReactNative.Modules.WebSocket
 
         public ProxyHelper(Uri address)
         {
-            // we get wss:// (or ws://) scheme that is not all proxies handle correctly. For better autodiscovering
+            // we get wss:// (or ws://) scheme that is not all proxies handle correctly. For better auto-discovering
             // replace wss:// to https:// (ws:// to http:// accordingly)
 
             var normalizedAddress = new UriBuilder(address)
@@ -45,7 +45,7 @@ namespace ReactNative.Modules.WebSocket
         {
             if (options == null)
             {
-                throw new ArgumentNullException("options", "Parameter cannot be null");
+                throw new ArgumentNullException(nameof(options));
             }
 
             if (options.UseDefaultProxy)
