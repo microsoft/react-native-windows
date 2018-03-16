@@ -11,6 +11,7 @@ using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Text;
 #else
 using System.Collections;
 using System.Windows;
@@ -61,7 +62,7 @@ namespace ReactNative.Views.Text
                 : null;
         }
 
-#if !WINDOWS_UWP
+
         /// <summary>
         /// Sets the TextDecorationLine for the node.
         /// </summary>
@@ -72,6 +73,7 @@ namespace ReactNative.Views.Text
         {
             var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue) ?? TextDecorationLine.None;
 
+
             switch (textDecorationLine)
             {
                 case TextDecorationLine.Underline:
@@ -80,6 +82,7 @@ namespace ReactNative.Views.Text
                 case TextDecorationLine.LineThrough:
                     view.TextDecorations = TextDecorations.Strikethrough;
                     break;
+#if !WINDOWS_UWP
                 case TextDecorationLine.UnderlineLineThrough:
                     view.TextDecorations = new TextDecorationCollection(TextDecorations.Underline.Concat(TextDecorations.Strikethrough));
                     break;
@@ -88,8 +91,18 @@ namespace ReactNative.Views.Text
                     view.TextDecorations = null;
                     break;
             }
-        }
+#else
+                case TextDecorationLine.UnderlineLineThrough:
+                    // TODO: Can do only one here
+                    view.TextDecorations = TextDecorations.Strikethrough;
+                    break;
+                case TextDecorationLine.None:
+                default:
+                    view.TextDecorations = TextDecorations.None;
+                    break;
+            }
 #endif
+        }
 
         /// <summary>
         /// Adds a child at the given index.
