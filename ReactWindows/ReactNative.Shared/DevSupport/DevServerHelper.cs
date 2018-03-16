@@ -106,7 +106,7 @@ namespace ReactNative.DevSupport
         {
             get
             {
-                return DeviceLocalhost;
+                return _settings.DebugServerHost ?? DeviceLocalhost;
             }
         }
 
