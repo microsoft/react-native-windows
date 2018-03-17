@@ -233,9 +233,7 @@ namespace ReactNative.UIManager
 
         DependencyObject IViewManager.CreateView(ThemedReactContext reactContext)
         {
-            var view = CreateView(reactContext);
-            SetDimensions(view, default(Dimensions));
-            return view;
+            return CreateView(reactContext);
         }
 
         void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
