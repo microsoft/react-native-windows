@@ -34,5 +34,15 @@ namespace ReactNative.Bridge
         /// Signals that a batch of operations is complete.
         /// </summary>
         void OnBatchComplete();
+
+        /// <summary>
+        /// Increments counter that tracks pending JavaScript calls.
+        /// </summary>
+        void IncrementPendingJSCalls();
+
+        /// <summary>
+        /// Decrements counter that tracks pending JavaScript calls.
+        /// </summary>
+        void DecrementPendingJSCalls();
     }
 }

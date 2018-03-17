@@ -14,10 +14,13 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ReactNative.Chakra;
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
+    public delegate void OnTransitionToBridgeHandler(bool busy);
+
     /// <summary>
     /// A higher level API on top of the <see cref="IJavaScriptExecutor" /> and module registries. This provides an
     /// environment allowing the invocation of JavaScript methods.
@@ -32,6 +35,13 @@ namespace ReactNative.Bridge
         private IReactBridge _bridge;
 
         private bool _initialized;
+
+        public event OnTransitionToBridgeHandler OnTransitionToBridgeHandler;
+
+        private bool BridgeBusy
+        {
+            set => OnTransitionToBridgeHandler?.Invoke(value);
+        }
 
         private ReactInstance(
             IReactQueueConfiguration queueConfiguration,
@@ -175,6 +185,8 @@ namespace ReactNative.Bridge
             IsDisposed = true;
 
             await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDispose).ConfigureAwait(false);
+            // RN Android is structured differently and notifies idle listeners here, should we do the same?
+            // CatalystInstanceImpl.java#L331
             await QueueConfiguration.JavaScriptQueue.RunAsync(() => _bridge?.Dispose()).ConfigureAwait(false);
             QueueConfiguration.Dispose();
         }
@@ -266,6 +278,7 @@ namespace ReactNative.Bridge
         class NativeModulesReactCallback : IReactCallback
         {
             private readonly ReactInstance _parent;
+            private int _pendingJSCalls;
 
             public NativeModulesReactCallback(ReactInstance parent)
             {
@@ -309,6 +322,24 @@ namespace ReactNative.Bridge
                     {
                         _parent._registry.OnBatchComplete();
                     }
+                }
+            }
+
+            public void IncrementPendingJSCalls()
+            {
+                int newVal = Interlocked.Increment(ref _pendingJSCalls);
+                if ((newVal - 1) == 0)
+                {
+                    _parent.BridgeBusy = true;
+                }
+            }
+
+            public void DecrementPendingJSCalls()
+            {
+                int newVal = Interlocked.Decrement(ref _pendingJSCalls);
+                if (newVal == 0)
+                {
+                    _parent.BridgeBusy = false;
                 }
             }
         }

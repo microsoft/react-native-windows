@@ -18,6 +18,7 @@ namespace ReactNative.Bridge
         private readonly IJavaScriptExecutor _jsExecutor;
         private readonly IReactCallback _reactCallback;
         private readonly IActionQueue _nativeModulesQueueThread;
+        private bool _batchHadNativeModuleCalls;
 
         /// <summary>
         /// Instantiates the <see cref="IReactBridge"/>.
@@ -54,7 +55,8 @@ namespace ReactNative.Bridge
         public void CallFunction(string moduleName, string method, JArray arguments)
         {
             var response = _jsExecutor.CallFunctionReturnFlushedQueue(moduleName, method, arguments);
-            ProcessResponse(response);
+            _reactCallback.IncrementPendingJSCalls();
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -65,7 +67,8 @@ namespace ReactNative.Bridge
         public void InvokeCallback(int callbackId, JArray arguments)
         {
             var response = _jsExecutor.InvokeCallbackAndReturnFlushedQueue(callbackId, arguments);
-            ProcessResponse(response);
+            _reactCallback.IncrementPendingJSCalls();
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -93,9 +96,10 @@ namespace ReactNative.Bridge
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
+            _reactCallback.IncrementPendingJSCalls();
             _jsExecutor.RunScript(sourcePath, sourceUrl);
             var response = _jsExecutor.FlushedQueue();
-            ProcessResponse(response);
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -106,13 +110,32 @@ namespace ReactNative.Bridge
             _jsExecutor.Dispose();
         }
 
-        private void ProcessResponse(JToken response)
+        private void ProcessResponse(JToken response, bool isEndOfBatch = false)
         {
+            bool localBatchHadNativeModuleCalls;
+
             if (response == null || response.Type == JTokenType.Null || response.Type == JTokenType.Undefined)
             {
+                if (isEndOfBatch)
+                {
+                    localBatchHadNativeModuleCalls = _batchHadNativeModuleCalls;
+                    _batchHadNativeModuleCalls = false;
+
+                    _nativeModulesQueueThread.Dispatch(() =>
+                    {
+                        if (localBatchHadNativeModuleCalls)
+                        {
+                            _reactCallback.OnBatchComplete();
+                        }
+
+                        _reactCallback.DecrementPendingJSCalls();
+                    });
+                }
+
                 return;
             }
 
+            _batchHadNativeModuleCalls = true;
             var messages = response as JArray;
             if (messages == null)
             {
@@ -136,6 +159,12 @@ namespace ReactNative.Bridge
                     "Did not get valid calls back from JavaScript. JSON: " + response);
             }
 
+            localBatchHadNativeModuleCalls = _batchHadNativeModuleCalls;
+            if (isEndOfBatch)
+            {
+                _batchHadNativeModuleCalls = false;
+            }
+
             _nativeModulesQueueThread.Dispatch(() =>
             {
                 for (var i = 0; i < moduleIds.Count; ++i)
@@ -147,7 +176,18 @@ namespace ReactNative.Bridge
                     _reactCallback.Invoke(moduleId, methodId, args);
                 };
 
-                _reactCallback.OnBatchComplete();
+                if (isEndOfBatch)
+                {
+                    // onBatchComplete will be called on the native (module) ActionQueue, but
+                    // decrementPendingJSCalls will be called sync. Be aware that the bridge may still
+                    // be processing native calls when the bridge idle signaler fires.
+                    if (localBatchHadNativeModuleCalls)
+                    {
+                        _reactCallback.OnBatchComplete();
+                    }
+
+                    _reactCallback.DecrementPendingJSCalls();
+                }
             });
         }
     }

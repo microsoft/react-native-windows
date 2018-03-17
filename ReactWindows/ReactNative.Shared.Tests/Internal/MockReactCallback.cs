@@ -26,5 +26,13 @@ namespace ReactNative.Tests
         {
             OnBatchCompleteHandler?.Invoke();
         }
+
+        public void IncrementPendingJSCalls()
+        {
+        }
+
+        public void DecrementPendingJSCalls()
+        {
+        }
     }
 }
