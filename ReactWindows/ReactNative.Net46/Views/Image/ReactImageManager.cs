@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Automation.Peers;
 
 namespace ReactNative.Views.Image
 {
@@ -224,7 +225,7 @@ namespace ReactNative.Views.Image
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new Border
+            return new UIAutomationBorder
             {
                 Background = new ImageBrush
                 {
@@ -327,6 +328,27 @@ namespace ReactNative.Views.Image
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));
                 SetUriFromSingleSource(view, bestResult.Key);
             }
+        }
+    }
+
+    public class ModifiedBorderAutomationPeer : FrameworkElementAutomationPeer
+    {
+        public ModifiedBorderAutomationPeer(Border owner) : base(owner)
+        {
+
+        }
+
+        protected override bool IsControlElementCore()
+        {
+            return true;
+        }
+    }
+
+    public class UIAutomationBorder : Border
+    {
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new ModifiedBorderAutomationPeer(this);
         }
     }
 }
