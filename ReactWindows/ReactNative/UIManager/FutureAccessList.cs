@@ -39,7 +39,7 @@ namespace ReactNative.UIManager
         /// Resolves a URI returned by the Add(file) method to the file object.
         /// The file object remains in the cache and can be retrieved again later.
         /// </summary>
-        public static async Task<StorageFile> Get(string uri)
+        public static async Task<StorageFile> GetFileAsync(string uri)
         {
             if (!uri.StartsWith(Scheme))
             {
