@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -166,7 +166,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\BlurEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\FocusEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\KeyEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DragDropEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
