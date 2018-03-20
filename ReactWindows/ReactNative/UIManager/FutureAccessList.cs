@@ -16,9 +16,12 @@ namespace ReactNative.UIManager
     /// and it will support other schemes like blob. At that time this class will
     /// likely to be rewritten.
     /// </summary>
-    static class FutureAccessList
+    public static class FutureAccessList
     {
-        private const string PREFIX = "urn:future-access-list:";
+        /// <summary>
+        /// FAL URIs start with this prefix.
+        /// </summary>
+        public static string Scheme => "urn:future-access-list:";
 
         /// <summary>
         /// Stores a file object in the future access list cache.
@@ -29,7 +32,7 @@ namespace ReactNative.UIManager
         public static string Add(StorageFile file)
         {
             var token = GetAccessToken(file);
-            return PREFIX + Uri.EscapeUriString(token);
+            return Scheme + Uri.EscapeUriString(token);
         }
 
         /// <summary>
@@ -38,13 +41,13 @@ namespace ReactNative.UIManager
         /// </summary>
         public static async Task<StorageFile> Get(string uri)
         {
-            if (!uri.StartsWith(PREFIX))
+            if (!uri.StartsWith(Scheme))
             {
                 throw new ArgumentException("Invalid future access list URI: " + uri);
             }
             else
             {
-                var token = Uri.UnescapeDataString(uri.Substring(PREFIX.Length));
+                var token = Uri.UnescapeDataString(uri.Substring(Scheme.Length));
                 return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
             }
         }
