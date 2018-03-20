@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBaseTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBaseTests.Generated.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\PromiseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridgeTests.cs" />
@@ -22,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockInvocationHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockJavaScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockPromise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TestReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />

@@ -1,8 +1,12 @@
-﻿using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace ReactNative.Chakra.Executor
@@ -12,6 +16,8 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public class NativeJavaScriptExecutor : IJavaScriptExecutor
     {
+        private const string BytecodeFileName = "ReactNativeBundle.bin";
+
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
         private readonly bool _useSerialization;
 
@@ -21,6 +27,7 @@ namespace ReactNative.Chakra.Executor
         public NativeJavaScriptExecutor()
             : this(false)
         {
+
         }
 
         /// <summary>
@@ -105,10 +112,43 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
+                var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, BytecodeFileName);
+
                 if (_useSerialization)
                 {
-                    var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                    var srcFileInfo = new FileInfo(sourcePath);
+                    var binFileInfo = new FileInfo(binPath);
+
+                    // The idea is to run the JS bundle and generate bytecode for it on a background thread.
+                    // This eliminates the need to delay the first start when the app doesn't have bytecode.
+                    // Next time the app starts, it checks if bytecode is still good and  runs it directly.
+                    if (binFileInfo.Exists && binFileInfo.LastWriteTime > srcFileInfo.LastWriteTime)
+                    {
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                    }
+                    else
+                    {
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                // In Chakra JS engine, only one runtime can be active on a particular thread at a time,
+                                // and a runtime can only be active on one thread at a time. However it's possible to
+                                // create two runtimes and let them run on different threads.
+                                var rt = new ChakraBridge.NativeJavaScriptExecutor();
+
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.InitializeHost());
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.SerializeScript(sourcePath, binPath));
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.DisposeHost());
+                            }
+                            catch (Exception)
+                            {
+                                // It's fine if the bytecode couldn't be generated: RN can still use the JS bundle.
+                            }
+                        });
+
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
+                    }
                 }
                 else
                 {
@@ -122,6 +162,19 @@ namespace ReactNative.Chakra.Executor
                 var stackTrace = jsonError.Value<string>("stack");
                 throw new Modules.Core.JavaScriptException(message ?? ex.Message, stackTrace, ex);
             }
+        }
+
+        /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+            if (callSyncHook == null)
+                throw new ArgumentNullException(nameof(callSyncHook));
+
+            _executor.SetCallSyncHook((moduleId, methodId, args) =>
+                callSyncHook(moduleId, methodId, JArray.Parse(args)).ToString(Formatting.None));
         }
 
         /// <summary>

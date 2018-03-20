@@ -1,8 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "pch.h"
 #include "ChakraHost.h"
 #include "ChakraStringResult.h"
+#include "CallSyncHandler.h"
 
 using namespace Platform;
 
@@ -59,6 +63,8 @@ public:
     /// </returns>
     int RunScript(String^ source, String^ sourceUri);
 
+    int SerializeScript(String^ source, String^ serialized);
+
     /// <summary>
     /// Runs the given serialized script with the source URI and returns the result.
     /// </summary>
@@ -98,6 +104,11 @@ public:
     /// A compount result with the JSON stringified value and an error code if any occurred.
     /// </returns>
     ChakraStringResult FlushedQueue();
+
+    /// <summary>
+    /// Sets the sync native method hook.
+    /// </summary>
+    void SetCallSyncHook(CallSyncHandler^ handler);
 private:
     ChakraHost host;
 };

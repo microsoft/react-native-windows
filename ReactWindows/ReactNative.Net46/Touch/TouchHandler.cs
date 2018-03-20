@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
@@ -299,6 +302,10 @@ namespace ReactNative.Touch
             pointer.LocationX = (float)positionInView.X;
             pointer.LocationY = (float)positionInView.Y;
             pointer.Timestamp = (ulong) timestamp;
+
+            pointer.ShiftKey = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+            pointer.AltKey = (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
+            pointer.CtrlKey = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
@@ -510,6 +517,15 @@ namespace ReactNative.Touch
 
             [JsonProperty(PropertyName = "isEraser", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public bool IsEraser { get; set; }
+
+            [JsonProperty(PropertyName = "shiftKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool ShiftKey { get; set; }
+
+            [JsonProperty(PropertyName = "ctrlKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool CtrlKey { get; set; }
+
+            [JsonProperty(PropertyName = "altKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool AltKey { get; set; }
         }
     }
 }

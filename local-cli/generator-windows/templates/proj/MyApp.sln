@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= name %>", "<%= name %>\<%= name %>.csproj", "{<%= projectGuid %>}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C} = {2EACF721-73B5-46AE-9775-4A8674D05A9C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative", "..\node_modules\react-native-windows\ReactWindows\ReactNative\ReactNative.csproj", "{C7673AD5-E3AA-468C-A5FD-FA38154E205C}"
 EndProject
@@ -13,12 +16,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "..\node_mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNativeWebViewBridge", "..\node_modules\react-native-windows\ReactWindows\ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj", "{7596216B-669C-41F8-86DA-F3637F6545C0}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\node_modules\react-native-windows\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.shproj", "{91C42D32-291D-4B72-90B4-551663D60B8B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yoga.uwp", "..\node_modules\react-native-windows\Yoga\csharp\Yoga\Yoga.Universal.vcxproj", "{2EACF721-73B5-46AE-9775-4A8674D05A9C}"
+EndProject
 Global
-GlobalSection(SharedMSBuildProjectFiles) = preSolution
-	ReactNative.Shared\ReactNative.Shared.projitems*{98efa5d4-a185-4971-ae77-3845e31b84ce}*SharedItemsImports = 4
-	ReactNative.Shared\ReactNative.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
-	ReactNative.Shared\ReactNative.Shared.projitems*{eea8b852-4d07-48e1-8294-a21ab5909fe5}*SharedItemsImports = 13
-EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ReactNative.Shared\ReactNative.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
+		ReactNative.Shared\ReactNative.Shared.projitems*{eea8b852-4d07-48e1-8294-a21ab5909fe5}*SharedItemsImports = 13
+		..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
+		..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{91c42d32-291d-4b72-90b4-551663d60b8b}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
@@ -142,6 +150,30 @@ EndGlobalSection
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x64.Build.0 = Release|x64
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.ActiveCfg = Release|x86
 		{7596216B-669C-41F8-86DA-F3637F6545C0}.ReleaseBundle|x86.Build.0 = Release|x86
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|ARM.ActiveCfg = Debug|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|ARM.Build.0 = Debug|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|x64.ActiveCfg = Debug|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|x64.Build.0 = Debug|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|x86.ActiveCfg = Debug|Win32
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Debug|x86.Build.0 = Debug|Win32
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.DebugBundle|x64.Build.0 = Debug|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.DebugBundle|x86.Build.0 = Debug|Win32
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Release|ARM.ActiveCfg = Release|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Release|ARM.Build.0 = Release|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Release|x64.ActiveCfg = Release|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Release|x64.Build.0 = Release|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Release|x86.ActiveCfg = Release|Win32
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.Release|x86.Build.0 = Release|Win32
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.ReleaseBundle|x64.Build.0 = Release|x64
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{2EACF721-73B5-46AE-9775-4A8674D05A9C}.ReleaseBundle|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

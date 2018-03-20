@@ -1,6 +1,11 @@
-﻿using ReactNative.Bridge;
-using ReactNative.Common;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
 using ReactNative.Chakra.Executor;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System;

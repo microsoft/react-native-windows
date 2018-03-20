@@ -1,4 +1,7 @@
-﻿using Windows.Devices.Input;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Windows.Devices.Input;
 
 namespace ReactNative.Touch
 {

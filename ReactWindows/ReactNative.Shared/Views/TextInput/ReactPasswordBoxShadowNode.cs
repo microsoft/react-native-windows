@@ -1,5 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+// TODO
+
 using Facebook.Yoga;
-using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -31,8 +34,6 @@ namespace ReactNative.Views.TextInput
         private const int DefaultBorderWidth = 2;
 
         private static string s_passwordChar;
-
-        private float[] _computedPadding;
 
         private int _letterSpacing;
 
@@ -173,10 +174,11 @@ namespace ReactNative.Views.TextInput
         {
             base.OnCollectExtraUpdates(uiViewOperationQueue);
 
-            if (_computedPadding != null)
+            var computedPadding = GetComputedPadding();
+
+            if (computedPadding != null)
             {
-                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, _computedPadding);
-                _computedPadding = null;
+                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, computedPadding);
             }
         }
 
@@ -214,8 +216,6 @@ namespace ReactNative.Views.TextInput
 
         private static YogaSize MeasurePasswordBox(ReactPasswordBoxShadowNode textInputNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            textInputNode._computedPadding = textInputNode.GetComputedPadding();
-
             var normalizedWidth = Math.Max(0,
                 (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width));
 

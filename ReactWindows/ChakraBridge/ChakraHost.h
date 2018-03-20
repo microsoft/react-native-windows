@@ -1,7 +1,11 @@
-﻿#pragma once
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#pragma once
 
 #include "pch.h"
 #include "JsModulesUnbundle.h"
+#include "CallSyncHandler.h"
 #include <jsrt.h>
 
 bool CompareLastWrite(const wchar_t* szPath1, const wchar_t* szPath2);
@@ -61,6 +65,11 @@ public:
     /// JsNoError is no error, else a JsErrorCode with the appropriate error.
     /// </returns>
     JsErrorCode RunScript(const wchar_t* szPath, const wchar_t* szSourceUri, JsValueRef* result);
+
+    /// <summary>
+    /// Serializes the script and writes the bytecode to the specified file.
+    /// </summary>
+    JsErrorCode SerializeScript(const wchar_t* szPath, const wchar_t* szSerializedPath);
 
     /// <summary>
     /// Runs the serialized script from the serialized file location with source file path, source URI and returns the <see cref="JsValueRef" /> result.
@@ -126,6 +135,12 @@ public:
 	JsErrorCode EvaluateScript(const wchar_t* szScript, const wchar_t* szSourceUri, JsValueRef* result);
 
     /// <summary>
+    /// Sets a callback for sync native methods.
+    /// </summary>
+    /// <param name="handler">The call sync hook.</param>
+    void SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler);
+
+    /// <summary>
     /// The JSRT global object for the session.
     /// </summary>
     JsValueRef globalObject;
@@ -134,10 +149,16 @@ public:
 	/// The reference to the unbundle manager.
 	/// </summary>
 	JsModulesUnbundle* unbundle;
+
+    /// <summary>
+    /// The reference to the sync native method callback.
+    /// </summary>
+    ChakraBridge::CallSyncHandler^ callSyncHandler;
 private:
     JsErrorCode InitJson();
     JsErrorCode InitConsole();
 	JsErrorCode InitNativeRequire();
+    JsErrorCode InitNativeCallSyncHook();
 
     unsigned currentSourceContext;
     JsRuntimeHandle runtime;

@@ -1,6 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Modules.Core;
 using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
@@ -38,15 +42,16 @@ namespace ReactNative.Tests.UIManager
         [TestMethod]
         public async Task UIManagerModule_CustomEvents_Constants()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new NoEventsViewManager() };
             var uiImplementationProvider = new UIImplementationProvider();
 
             using (var actionQueue = new ActionQueue(ex => { }))
             {
-                var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
-
+                var module = await DispatcherHelpers.CallOnDispatcherAsync(() => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
+ 
                 var constants = module.Constants.GetMap("Test");
 
                 Assert.AreEqual("onSelect", constants.GetMap("bubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("bubbled"));
@@ -73,20 +78,22 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual("onMouseLeave", constants.GetMap("directEventTypes").GetMap("topMouseLeave").GetValue("registrationName"));
                 Assert.AreEqual("onMessage", constants.GetMap("directEventTypes").GetMap("topMessage").GetValue("registrationName"));
             }
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task UIManagerModule_Constants_ViewManagerOverrides()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
             var uiImplementationProvider = new UIImplementationProvider();
 
             using (var actionQueue = new ActionQueue(ex => { }))
             {
-                var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
-
+                var module = await DispatcherHelpers.CallOnDispatcherAsync(() => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
+ 
                 var constants = module.Constants.GetMap("Test");
 
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("otherSelectionChange"));
@@ -94,6 +101,8 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo"));
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError"));
             }
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         class NoEventsViewManager : MockViewManager

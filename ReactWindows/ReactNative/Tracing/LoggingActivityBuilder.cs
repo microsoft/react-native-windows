@@ -1,4 +1,7 @@
-﻿using Windows.Foundation.Diagnostics;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Windows.Foundation.Diagnostics;
 
 namespace ReactNative.Tracing
 {

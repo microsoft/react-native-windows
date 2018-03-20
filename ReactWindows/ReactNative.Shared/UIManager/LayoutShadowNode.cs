@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
@@ -26,8 +31,11 @@ namespace ReactNative.UIManager
         /// <param name="isVirtual">
         /// <code>true</code> if the node is virtual, otherwise <code>false</code>.
         /// </param>
-        public LayoutShadowNode(bool isVirtual)
-            : base(isVirtual)
+        /// <param name="isDelegatedLayout">
+        /// <code>true</code> if the node delegates the layout to the child.
+        /// </param>
+        public LayoutShadowNode(bool isVirtual, bool isDelegatedLayout)
+            : base(isVirtual, isDelegatedLayout)
         {
         }
 
@@ -38,7 +46,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Width, DefaultSingle = YogaConstants.Undefined)]
         public void SetWidth(JValue width)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -53,7 +61,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.MinWidth, DefaultSingle = YogaConstants.Undefined)]
         public void SetMinWidth(JValue minWidth)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -68,7 +76,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.MaxWidth, DefaultSingle = YogaConstants.Undefined)]
         public void SetMaxWidth(JValue maxWidth)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -83,7 +91,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Height, DefaultSingle = YogaConstants.Undefined)]
         public void SetHeight(JValue height)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -98,7 +106,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.MinHeight, DefaultSingle = YogaConstants.Undefined)]
         public void SetMinHeight(JValue minHeight)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -113,7 +121,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.MaxHeight, DefaultSingle = YogaConstants.Undefined)]
         public virtual void SetMaxHeight(JValue maxHeight)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -128,7 +136,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Flex, DefaultSingle = 0f)]
         public void SetFlex(float flex)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -143,7 +151,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexGrow, DefaultSingle = 0f)]
         public void SetFlexGrow(float flexGrow)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -158,7 +166,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexShrink, DefaultSingle = 0f)]
         public void SetFlexShrink(float flexShrink)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -173,7 +181,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexBasis, DefaultSingle = 0f)]
         public void SetFlexBasis(float flexBasis)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -188,6 +196,11 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AspectRatio, DefaultSingle = YogaConstants.Undefined)]
         public void SetAspectRatio(float aspectRatio)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+
             StyleAspectRatio = aspectRatio;
         }
 
@@ -198,7 +211,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexDirection)]
         public void SetFlexDirection(string flexDirection)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -213,7 +226,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexWrap)]
         public void SetFlexWrap(string flexWrap)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -228,7 +241,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignSelf)]
         public void SetAlignSelf(string alignSelf)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -243,7 +256,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignItems)]
         public void SetAlignItems(string alignItems)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -258,7 +271,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignContent)]
         public void SetAlignContent(string alignContent)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -273,7 +286,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.JustifyContent)]
         public void SetJustifyContent(string justifyContent)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -288,7 +301,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Overflow)]
         public void SetOverflow(string overflow)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -303,7 +316,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Display)]
         public void SetDisplay(string display)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -327,7 +340,7 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public void SetMargins(int index, JValue margin)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -351,6 +364,11 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public virtual void SetPaddings(int index, JValue padding)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+
             SetPadding(ViewProps.PaddingMarginSpacingTypes[index], ToYogaValue(padding));
         }
 
@@ -368,6 +386,11 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public void SetBorderWidth(int index, float borderWidth)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+
             SetBorder(ViewProps.BorderSpacingTypes[index], borderWidth);
         }
 
@@ -384,7 +407,7 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public void SetPositionValues(int index, JValue position)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -399,6 +422,11 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Position)]
         public void SetPosition(string position)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+            
             PositionType = EnumHelpers.ParseNullable<YogaPositionType>(position) ?? YogaPositionType.Relative;
         }
 

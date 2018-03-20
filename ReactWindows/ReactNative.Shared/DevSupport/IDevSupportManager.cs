@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.DevSupport;
@@ -62,6 +67,12 @@ namespace ReactNative.DevSupport
 
         /// <summary>
         /// Handles reloading the JavaScript bundle.
+        /// </summary>
+        void HandleReloadJavaScript();
+
+        /// <summary>
+        /// Handles reloading the JavaScript bundle.
+        /// It is called with the react instance manager lock locked
         /// </summary>
         /// <param name="token">A token to cancel the operation.</param>
         /// <returns>A task to await the result.</returns>

@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
@@ -141,10 +146,6 @@ namespace ReactNative.DevSupport
 
         public void HandleException(Exception exception)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
-#endif
-
             if (IsEnabled)
             {
                 ShowNewNativeError(exception.Message, exception);
@@ -178,8 +179,7 @@ namespace ReactNative.DevSupport
 
         public void ShowNewNativeError(string message, Exception exception)
         {
-            var javaScriptException = exception as JavaScriptException;
-            if (javaScriptException != null && javaScriptException.JavaScriptStackTrace != null)
+            if (exception is JavaScriptException javaScriptException && javaScriptException.JavaScriptStackTrace != null)
             {
                 var stackTrace = StackTraceHelper.ConvertChakraStackTrace(javaScriptException.JavaScriptStackTrace);
                 ShowNewError(exception.Message, stackTrace, NativeErrorCookie);
@@ -409,9 +409,12 @@ namespace ReactNative.DevSupport
             _devServerHelper.Dispose();
         }
 
-        private async void HandleReloadJavaScript()
+        public async void HandleReloadJavaScript()
         {
-            await CreateReactContextFromPackagerAsync(CancellationToken.None);
+            using (await _reactInstanceCommandsHandler.LockAsync())
+            {
+                await CreateReactContextFromPackagerAsync(CancellationToken.None);
+            }
         }
 
         private ProgressDialog CreateProgressDialog(string message)
@@ -629,6 +632,7 @@ namespace ReactNative.DevSupport
 
         private async Task<bool> RunWithProgressAsync(Func<CancellationToken, Task> asyncAction, ProgressDialog progressDialog, CancellationToken token)
         {
+            DispatcherHelpers.AssertOnDispatcher();
             var hideProgress = ShowProgressDialog(progressDialog);
             using (var cancellationDisposable = new CancellationDisposable())
             using (token.Register(cancellationDisposable.Dispose))

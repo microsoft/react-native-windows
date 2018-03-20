@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -8,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using static System.FormattableString;
 
@@ -209,6 +211,17 @@ namespace ReactNative.Views.Scroll
         /// <param name="enabled">Signals whether zoom is enabled.</param>
         [ReactProp("zoomEnabled")]
         public void SetZoomScale(ScrollView view, bool? enabled)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Disables keyboaed based arrow scrolling.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="disabled">Signals whether keyboard based scrolling is disabled.</param>
+        [ReactProp("disableKeyboardBasedScrolling")]
+        public void SetDisableKeyboardBasedScrolling(ScrollViewer view, bool? disabled)
         {
             throw new NotImplementedException();
         }

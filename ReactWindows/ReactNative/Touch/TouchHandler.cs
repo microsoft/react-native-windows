@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
@@ -7,6 +10,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -19,6 +23,7 @@ namespace ReactNative.Touch
     {
         private readonly FrameworkElement _view;
         private readonly List<ReactPointer> _pointers;
+        private readonly Dictionary<RoutedEvent, PointerEventHandler> _pointerHandlers;
 
         private uint _pointerIDs;
 
@@ -26,21 +31,27 @@ namespace ReactNative.Touch
         {
             _view = view;
             _pointers = new List<ReactPointer>();
+            _pointerHandlers = new Dictionary<RoutedEvent, PointerEventHandler>()
+            {
+                { UIElement.PointerPressedEvent, new PointerEventHandler(OnPointerPressed) },
+                { UIElement.PointerMovedEvent, new PointerEventHandler(OnPointerMoved) },
+                { UIElement.PointerReleasedEvent, new PointerEventHandler(OnPointerReleased) },
+                { UIElement.PointerCanceledEvent, new PointerEventHandler(OnPointerCanceled) },
+                { UIElement.PointerCaptureLostEvent, new PointerEventHandler(OnPointerCaptureLost)}
+            };
 
-            _view.PointerPressed += OnPointerPressed;
-            _view.PointerMoved += OnPointerMoved;
-            _view.PointerReleased += OnPointerReleased;
-            _view.PointerCanceled += OnPointerCanceled;
-            _view.PointerCaptureLost += OnPointerCaptureLost;
+            foreach (KeyValuePair<RoutedEvent, PointerEventHandler> handler in _pointerHandlers)
+            {
+                _view.AddHandler(handler.Key, handler.Value, true);
+            }
         }
 
         public void Dispose()
         {
-            _view.PointerPressed -= OnPointerPressed;
-            _view.PointerMoved -= OnPointerMoved;
-            _view.PointerReleased -= OnPointerReleased;
-            _view.PointerCanceled -= OnPointerCanceled;
-            _view.PointerCaptureLost -= OnPointerCaptureLost;
+            foreach (KeyValuePair<RoutedEvent, PointerEventHandler> handler in _pointerHandlers)
+            {
+                _view.RemoveHandler(handler.Key, handler.Value);
+            }
         }
 
         public static void OnPointerEntered(DependencyObject view, PointerRoutedEventArgs e)
@@ -82,17 +93,20 @@ namespace ReactNative.Touch
             {
                 var viewPoint = e.GetCurrentPoint(reactView);
                 var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint.Position);
-                var pointer = new ReactPointer();
-                pointer.Target = reactTag;
-                pointer.PointerId = e.Pointer.PointerId;
-                pointer.Identifier = ++_pointerIDs;
-                pointer.PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName();
-                pointer.IsLeftButton = viewPoint.Properties.IsLeftButtonPressed;
-                pointer.IsRightButton = viewPoint.Properties.IsRightButtonPressed;
-                pointer.IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed;
-                pointer.IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel;
-                pointer.IsEraser = viewPoint.Properties.IsEraser;
-                pointer.ReactView = reactView;
+                var pointer = new ReactPointer
+                {
+                    Target = reactTag,
+                    PointerId = e.Pointer.PointerId,
+                    Identifier = ++_pointerIDs,
+                    PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName(),
+                    IsLeftButton = viewPoint.Properties.IsLeftButtonPressed,
+                    IsRightButton = viewPoint.Properties.IsRightButtonPressed,
+                    IsMiddleButton = viewPoint.Properties.IsMiddleButtonPressed,
+                    IsHorizontalMouseWheel = viewPoint.Properties.IsHorizontalMouseWheel,
+                    IsEraser = viewPoint.Properties.IsEraser,
+                    ReactView = reactView,
+                };
+
                 UpdatePointerForEvent(pointer, rootPoint, viewPoint);
 
                 var pointerIndex = _pointers.Count;
@@ -221,6 +235,10 @@ namespace ReactNative.Touch
             pointer.Timestamp = rootPoint.Timestamp / 1000; // Convert microseconds to milliseconds;
             pointer.Force = rootPoint.Properties.Pressure;
             pointer.IsBarrelButtonPressed = rootPoint.Properties.IsBarrelButtonPressed;
+
+            pointer.ShiftKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
+            pointer.AltKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
+            pointer.CtrlKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
@@ -231,8 +249,10 @@ namespace ReactNative.Touch
                 touches.Add(JObject.FromObject(pointer));
             }
 
-            var changedIndices = new JArray();
-            changedIndices.Add(JToken.FromObject(pointerIndex));
+            var changedIndices = new JArray
+            {
+                JToken.FromObject(pointerIndex)
+            };
 
             var coalescingKey = activePointers[pointerIndex].PointerId;
 
@@ -265,8 +285,7 @@ namespace ReactNative.Touch
             }
 
             var currentView = enumerator.Current;
-            var isBoxOnly = default(bool);
-            if (!cache.TryGetValue(currentView, out isBoxOnly))
+            if (!cache.TryGetValue(currentView, out var isBoxOnly))
             {
                 var pointerEvents = currentView.GetPointerEvents();
 
@@ -469,6 +488,15 @@ namespace ReactNative.Touch
 
             [JsonProperty(PropertyName = "isEraser", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public bool IsEraser { get; set; }
+
+            [JsonProperty(PropertyName = "shiftKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool ShiftKey { get; set; }
+
+            [JsonProperty(PropertyName = "ctrlKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool CtrlKey { get; set; }
+
+            [JsonProperty(PropertyName = "altKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public bool AltKey { get; set; }
         }
     }
 }

@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System.Collections.Generic;
@@ -245,6 +250,76 @@ namespace ReactNative.UIManager
                         }
                     }
                 },
+                {
+                    "topFocus",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onFocus" },
+                                { "captured" , "onFocusCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topBlur",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onBlur" },
+                                { "captured" , "onBlurCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyDown",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onKeyDown" },
+                                { "captured" , "onKeyDownCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyUp",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onKeyUp" },
+                                { "captured" , "onKeyUpCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyPress",
+                    new Dictionary<string, object>()
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new Dictionary<string, string>()
+                            {
+                                { "bubbled" , "onKeyPress" },
+                                { "captured" , "onKeyPressCapture" }
+                            }
+                        }
+                    }
+                },
             };
         }
 
@@ -252,6 +327,13 @@ namespace ReactNative.UIManager
         {
             return new Map
             {
+                {
+                    "topAccessibilityTap",
+                    new Map
+                    {
+                        { "registrationName", "onAccessibilityTap" },
+                    }
+                },
                 {
                     "topSelectionChange",
                     new Map
@@ -419,12 +501,10 @@ namespace ReactNative.UIManager
 
             foreach (var pair in source)
             {
-                var existing = default(object);
-                if (sink.TryGetValue(pair.Key, out existing))
+                if (sink.TryGetValue(pair.Key, out var existing))
                 {
-                    var sourceAsMap = pair.Value as IReadOnlyDictionary<string, object>;
-                    var sinkAsMap = existing as IDictionary<string, object>;
-                    if (sourceAsMap != null && sinkAsMap != null)
+                    if (pair.Value is IReadOnlyDictionary<string, object> sourceAsMap &&
+                        existing is IDictionary<string, object> sinkAsMap)
                     {
                         RecursiveMerge(sinkAsMap, sourceAsMap);
                     }

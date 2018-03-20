@@ -1,12 +1,20 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.UIManager;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Foundation;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 #else
 using System.Windows;
 #endif
@@ -75,6 +83,9 @@ namespace ReactNative
         /// <paramref name="reactInstanceManager"/> to attach to the JavaScript
         /// context of that manager.
         /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher the view is associated to.
+        /// </remarks>
         /// <param name="reactInstanceManager">
         /// The React instance manager.
         /// </param>
@@ -92,14 +103,25 @@ namespace ReactNative
         /// Extra parameter
         /// <paramref name="initialProps"/> can be used to pass initial properties for the react component.
         /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher associated with the view.
+        /// </remarks>
         /// <param name="reactInstanceManager">
         /// The React instance manager.
         /// </param>
         /// <param name="moduleName">The module name.</param>
         /// <param name="initialProps">The initialProps</param>
-        public async void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
+        ///
+        public void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            // Fire and forget async
+            Forget(StartReactApplicationAsync(reactInstanceManager, moduleName, initialProps));
+        }
+
+        private async Task StartReactApplicationAsync(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
+        {
+            // This is called under the dispatcher associated with the view.
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             if (_reactInstanceManager != null)
             {
@@ -110,27 +132,49 @@ namespace ReactNative
             _jsModuleName = moduleName;
             _initialProps = initialProps;
 
-            var getReactContextTask = default(Task);
-            if (!_reactInstanceManager.HasStartedCreatingInitialContext)
-            {
-                getReactContextTask = _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None);
-            }
-
+            var getReactContextTaskTask =
+                DispatcherHelpers.CallOnDispatcher(async () => await _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None), true);
+ 
             // We need to wait for the initial `Measure` call, if this view has
             // not yet been measured, we set the `_attachScheduled` flag, which
             // will enable deferred attachment of the root node.
             if (_wasMeasured)
             {
-                _reactInstanceManager.AttachMeasuredRootView(this);
+                await _reactInstanceManager.AttachMeasuredRootViewAsync(this);
             }
             else
             {
                 _attachScheduled = true;
             }
 
-            if (getReactContextTask != null)
+            await getReactContextTaskTask.Unwrap();
+        }
+
+        /// <summary>
+        /// Frees resources associated with this root view (fire and forget version)
+        /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher associated with the view.
+        /// </remarks>
+        public void StopReactApplication()
+        {
+            Forget(StopReactApplicationAsync());
+        }
+
+        /// <summary>
+        /// Frees resources associated with this root view.
+        /// </summary>
+        /// <remarks>
+        /// Has to be called under the dispatcher associated with the view.
+        /// </remarks>
+        public async Task StopReactApplicationAsync()
+        {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
+            var reactInstanceManager = _reactInstanceManager;
+            if (!_attachScheduled && reactInstanceManager != null)
             {
-                await getReactContextTask.ConfigureAwait(false);
+                await reactInstanceManager.DetachRootViewAsync(this);
             }
         }
 
@@ -142,9 +186,33 @@ namespace ReactNative
         /// <returns>The desired size.</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             var result = base.MeasureOverride(availableSize);
+
+            // Fire and forget async
+            Forget(MeasureOverrideHelperAsync());
+
+            return result;
+        }
+
+        internal void CleanupSafe()
+        {
+            // Inlining allowed
+            DispatcherHelpers.RunOnDispatcher(this.Dispatcher, Cleanup, true);
+        }
+
+        internal void Cleanup()
+        {
+            DispatcherHelpers.AssertOnDispatcher(this);
+
+            Children.Clear();
+            this.ClearData();
+        }
+
+        private async Task MeasureOverrideHelperAsync()
+        {
+            DispatcherHelpers.AssertOnDispatcher(this);
 
             _wasMeasured = true;
 
@@ -152,10 +220,19 @@ namespace ReactNative
             if (_attachScheduled && reactInstanceManager != null)
             {
                 _attachScheduled = false;
-                reactInstanceManager.AttachMeasuredRootView(this);
-            }
 
-            return result;
+                await reactInstanceManager.AttachMeasuredRootViewAsync(this);
+            }
+        }
+
+        private static void Forget(Task task)
+        {
+            task.ContinueWith(
+                t =>
+                {
+                    Debug.Fail("Exception in fire and forget asynchronous function", t.Exception.ToString());
+                },
+                TaskContinuationOptions.OnlyOnFaulted);
         }
     }
 }

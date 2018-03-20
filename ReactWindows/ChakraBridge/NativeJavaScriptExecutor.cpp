@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "NativeJavaScriptExecutor.h"
 
@@ -47,6 +50,12 @@ int NativeJavaScriptExecutor::RunScript(String^ source, String^ sourceUri)
 {
     JsValueRef result;
     IfFailRet(this->host.RunScript(source->Data(), sourceUri->Data(), &result));
+    return JsNoError;
+}
+
+int NativeJavaScriptExecutor::SerializeScript(String^ source, String^ serialized)
+{
+    IfFailRet(this->host.SerializeScript(source->Data(), serialized->Data()));
     return JsNoError;
 }
 
@@ -161,4 +170,9 @@ ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
 
     ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
     return finalResult;
+}
+
+void NativeJavaScriptExecutor::SetCallSyncHook(CallSyncHandler^ handler)
+{
+    host.SetCallSyncHook(handler);
 }

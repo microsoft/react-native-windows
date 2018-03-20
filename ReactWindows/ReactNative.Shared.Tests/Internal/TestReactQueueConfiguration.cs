@@ -1,4 +1,7 @@
-﻿using ReactNative.Bridge.Queue;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge.Queue;
 using System;
 
 namespace ReactNative.Tests

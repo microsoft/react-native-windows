@@ -49,7 +49,7 @@ Please use these community resources for getting help. We use the GitHub issues 
 
 ## Documentation
 
-[React Native already has great documentation](http://facebook.github.io/react-native/docs), and we're working to ensure the React Native Windows plugin is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
+[React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows plugin is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
 For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](docs/CoreParityStatus.md).
 
@@ -96,7 +96,7 @@ Each pull request has the unit tests, code analysis, and a [Winium](https://gith
 
 ## License
 
-The React Native Windows plugin is provided under the [MIT License](LICENSE).
+The React Native Windows plugin, including modifications to the original Facebook source code, and all newly contributed code is provided under the [MIT License](LICENSE). Portions of the React Native Windows plugin derived from React Native are copyright Facebook.
 
 ## Code of Conduct
 

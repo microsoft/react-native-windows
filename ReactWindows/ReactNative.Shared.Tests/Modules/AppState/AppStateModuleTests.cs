@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Modules.AppState;
@@ -21,7 +24,6 @@ namespace ReactNative.Tests.Modules.AppState
         [Test]
         public async Task AppStateModule_StateChecks()
         {
-            var uninitializedState = CreateExpectedState("uninitialized");
             var activeState = CreateExpectedState("active");
             var backgroundState = CreateExpectedState("background");
 
@@ -32,18 +34,18 @@ namespace ReactNative.Tests.Modules.AppState
             var callback = new MockCallback(a => args = a);
 
             module.getCurrentAppState(callback, new MockCallback(_ => { }));
-            Assert.AreEqual(uninitializedState.ToString(), args[0].ToString());
+            Assert.AreEqual(backgroundState.ToString(), args[0].ToString());
 
 #if !WINDOWS_UWP
             ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
 #endif
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
+            await DispatcherHelpers.RunOnDispatcherAsync(context.OnLeavingBackground);
 
             module.getCurrentAppState(callback, new MockCallback(_ => { }));
             Assert.AreEqual(activeState.ToString(), args[0].ToString());
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.OnSuspend);
+            await DispatcherHelpers.RunOnDispatcherAsync(context.OnEnteredBackground);
 
             module.getCurrentAppState(callback, new MockCallback(_ => { }));
             Assert.AreEqual(backgroundState.ToString(), args[0].ToString());
@@ -70,13 +72,13 @@ namespace ReactNative.Tests.Modules.AppState
             ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
 #endif
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
+            await DispatcherHelpers.RunOnDispatcherAsync(context.OnLeavingBackground);
 
             waitHandle.WaitOne();
             Assert.AreEqual(activeState.ToString(), lastState.ToString());
             lastState = null;
 
-            await DispatcherHelpers.RunOnDispatcherAsync(context.OnSuspend);
+            await DispatcherHelpers.RunOnDispatcherAsync(context.OnEnteredBackground);
 
             waitHandle.WaitOne();
             Assert.AreEqual(backgroundState.ToString(), lastState.ToString());

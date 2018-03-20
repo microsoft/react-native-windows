@@ -1,4 +1,9 @@
-﻿using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using static System.FormattableString;
 
@@ -10,40 +15,20 @@ namespace ReactNative.UIManager
     /// </summary>
     public class ShadowNodeRegistry
     {
-        private readonly object _gate = new object();
-
         private readonly IDictionary<int, ReactShadowNode> _tagsToCssNodes =
             new Dictionary<int, ReactShadowNode>();
 
         private readonly IDictionary<int, bool> _rootTags =
             new Dictionary<int, bool>();
 
-        // The RootNodeTags API is called from UI thread instead of the
-        // layout thread. Occasionally, we would get an exception related to
-        // the enumeration of the Keys collection being disrupted by an
-        // AddRootNode operation. This was especially likely in Debug mode, but
-        // also could occur during a reload of the application from CodePush.
-        // To get around this, we copy the key collection into this list.
-        private List<int> _rootNodeTags = new List<int>();
-
         /// <summary>
         /// The collection of root node tags.
         /// </summary>
-        public IReadOnlyList<int> RootNodeTags
+        public ICollection<int> RootNodeTags
         {
             get
             {
-                _rootNodeTags.Clear();
-
-                lock (_gate)
-                {
-                    foreach (var tag in _rootTags.Keys)
-                    {
-                        _rootNodeTags.Add(tag);
-                    }
-                }
-
-                return _rootNodeTags;
+                return _rootTags.Keys;
             }
         }  
 
@@ -58,11 +43,7 @@ namespace ReactNative.UIManager
 
             var tag = node.ReactTag;
             _tagsToCssNodes[tag] = node;
-
-            lock (_gate)
-            {
-                _rootTags[tag] = true;
-            }
+            _rootTags[tag] = true;
         }
 
         /// <summary>
@@ -78,11 +59,7 @@ namespace ReactNative.UIManager
             }
 
             _tagsToCssNodes.Remove(tag);
-
-            lock (_gate)
-            {
-                _rootTags.Remove(tag);
-            }
+            _rootTags.Remove(tag);
         }
 
         /// <summary>
@@ -103,8 +80,7 @@ namespace ReactNative.UIManager
         /// <param name="tag">The tag of the node to remove.</param>
         public void RemoveNode(int tag)
         {
-            var isRoot = default(bool);
-            if (_rootTags.TryGetValue(tag, out isRoot) && isRoot)
+            if (_rootTags.TryGetValue(tag, out var isRoot) && isRoot)
             {
                 throw new KeyNotFoundException(
                     Invariant($"Trying to remove root node '{tag}' without using RemoveRootNode."));
@@ -120,8 +96,7 @@ namespace ReactNative.UIManager
         /// <returns>The React shadow node.</returns>
         public ReactShadowNode GetNode(int tag)
         {
-            var result = default(ReactShadowNode);
-            if (_tagsToCssNodes.TryGetValue(tag, out result))
+            if (_tagsToCssNodes.TryGetValue(tag, out var result))
             {
                 return result;
             }

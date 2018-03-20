@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
@@ -54,7 +59,7 @@ namespace ReactNative.UIManager
             : this(
                 reactContext,
                 viewManagers,
-                new UIViewOperationQueue(reactContext, new NativeViewHierarchyManager(viewManagers)), 
+                new UIViewOperationQueue(reactContext, viewManagers), 
                 eventDispatcher)
         {
         }
@@ -224,19 +229,7 @@ namespace ReactNative.UIManager
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            // First check if the view exists, as the views are created in
-            // batches, and native modules attempting to synchronously interact
-            // with views may attempt to update properties before the batch has
-            // been processed.
-            if (_operationsQueue.NativeViewHierarchyManager.ViewExists(tag))
-            {
-                _operationsQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _operationsQueue.SynchronouslyUpdateViewOnDispatcherThread(tag, props);
         }
 
         /// <summary>
@@ -667,7 +660,7 @@ namespace ReactNative.UIManager
         {
             if (!cssNode.IsVirtual)
             {
-                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, cssNode.ThemedContext, styles);
+                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, rootViewTag, cssNode.ThemedContext, styles);
             }
         }
 

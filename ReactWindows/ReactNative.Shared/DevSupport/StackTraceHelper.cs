@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -26,8 +31,7 @@ namespace ReactNative.DevSupport
             var result = new IStackFrame[n];
             for (var i = 0; i < n; ++i)
             {
-                var item = stack[i] as JObject;
-                if (item != null)
+                if (stack[i] is JObject item)
                 {
                     result[i] = new JavaScriptStackFrame(item);
                 }
@@ -120,8 +124,7 @@ namespace ReactNative.DevSupport
                 get
                 {
                     var columnNumber = -1;
-                    var token = default(JToken);
-                    if (_map.TryGetValue("column", out token) && token.Type == JTokenType.Integer)
+                    if (_map.TryGetValue("column", out var token) && token.Type == JTokenType.Integer)
                     {
                         columnNumber = token.Value<int>();
                     }
@@ -143,8 +146,7 @@ namespace ReactNative.DevSupport
                 get
                 {
                     var lineNumber = -1;
-                    var token = default(JToken);
-                    if (_map.TryGetValue("lineNumber", out token) && token.Type == JTokenType.Integer)
+                    if (_map.TryGetValue("lineNumber", out var token) && token.Type == JTokenType.Integer)
                     {
                         lineNumber = token.Value<int>();
                     }

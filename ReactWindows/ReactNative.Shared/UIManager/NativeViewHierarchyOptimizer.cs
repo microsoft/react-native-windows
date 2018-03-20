@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
 #if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
 #endif
@@ -70,12 +75,14 @@ namespace ReactNative.UIManager
         /// Handles the creation of a view.
         /// </summary>
         /// <param name="node">The shadow node for the view.</param>
+        /// <param name="rootViewTag">The react tag id of the root.</param>
         /// <param name="themedContext">The themed context.</param>
         /// <param name="initialProperties">
         /// The initial properties for the view.
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node,
+            int rootViewTag,
             ThemedReactContext themedContext, 
             ReactStylesDiffMap initialProperties)
         {
@@ -84,7 +91,8 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProperties,
+                    rootViewTag);
 #else
             var isLayoutOnly = node.ViewClass == ViewProps.ViewClassName
                 && IsLayoutOnlyAndCollapsible(initialProperties);
@@ -97,7 +105,8 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProperties,
+                    rootViewTag);
             }
 #endif
         }
@@ -373,8 +382,7 @@ namespace ReactNative.UIManager
         private void ApplyLayoutBase(ReactShadowNode node)
         {
             var tag = node.ReactTag;
-            var visited = default(bool);
-            if (_tagsWithLayoutVisited.TryGetValue(tag, out visited) && visited)
+            if (_tagsWithLayoutVisited.TryGetValue(tag, out var visited) && visited)
             {
                 return;
             }
@@ -421,8 +429,7 @@ namespace ReactNative.UIManager
             for (var i = 0; i < node.ChildCount; ++i)
             {
                 var child = node.GetChildAt(i);
-                var visited = default(bool);
-                if (_tagsWithLayoutVisited.TryGetValue(child.ReactTag, out visited) && visited)
+                if (_tagsWithLayoutVisited.TryGetValue(child.ReactTag, out var visited) && visited)
                 {
                     continue;
                 }
@@ -462,7 +469,8 @@ namespace ReactNative.UIManager
                 node.RootNode.ThemedContext,
                 node.ReactTag,
                 node.ViewClass,
-                props);
+                props,
+                node.RootNode.ReactTag);
 
             // Add the node and all its children as if adding new nodes.
             parent.AddChildAt(node, childIndex);
@@ -477,6 +485,10 @@ namespace ReactNative.UIManager
             // update the layout of this node's children now that it's no 
             // longer layout-only, but we may still receive more layout updates
             // at the end of this batch that we don't want to ignore.
+            // Also <node>.DispatchUpdates optimizes the layout applying out
+            // if screen position/sizes didn't change, yet in this particular case
+            // we want to force the applying of those values since the native view
+            // is a freshly created one with no history.
             ApplyLayoutBase(node);
             for (var i = 0; i < node.ChildCount; ++i)
             {
@@ -484,6 +496,8 @@ namespace ReactNative.UIManager
             }
 
             _tagsWithLayoutVisited.Clear();
+
+            node.MarkForceLayout();
         }
 
         private bool IsLayoutOnlyAndCollapsible(ReactStylesDiffMap props)

@@ -1,7 +1,14 @@
-﻿using ReactNative.UIManager.Annotations;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
+using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -45,6 +52,7 @@ namespace ReactNative.UIManager
                 { typeof(bool), a => a.DefaultBoolean },
             };
 
+        private readonly IGenericDelegate _genericDelegate;
         private readonly ReactPropBaseAttribute _attribute;
         private readonly string _propertyType;
 
@@ -53,6 +61,8 @@ namespace ReactNative.UIManager
             Method = method;
             Name = name;
             PropertyType = GetPropertyType(method);
+
+            _genericDelegate = GenericDelegate.Create(method);
 
             _propertyType = attribute.CustomType == ReactPropBaseAttribute.UseDefaultType
                 ? GetPropertyType(PropertyType)
@@ -82,7 +92,7 @@ namespace ReactNative.UIManager
             if (props == null)
                 throw new ArgumentNullException(nameof(props));
 
-            Invoke(shadowNode, GetShadowNodeArgs(props));
+            Invoke(GetShadowNodeArgs(shadowNode, props));
         }
 
         public void UpdateViewManagerProperty(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
@@ -92,15 +102,15 @@ namespace ReactNative.UIManager
             if (props == null)
                 throw new ArgumentNullException(nameof(props));
 
-            Invoke(viewManager, GetViewManagerArgs(view, props));
+            Invoke(GetViewManagerArgs(viewManager, view, props));
         }
 
-        protected virtual object[] GetShadowNodeArgs(ReactStylesDiffMap props)
+        protected virtual object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
         {
             throw new NotSupportedException(Invariant($"'{nameof(ReactShadowNode)}' properties cannot be changed with this setter."));
         }
 
-        protected virtual object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
+        protected virtual object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
         {
             throw new NotSupportedException($"'{nameof(IViewManager)}' properties cannot be changed with this setter.");
         }
@@ -113,25 +123,27 @@ namespace ReactNative.UIManager
 
         protected object ExtractProperty(ReactStylesDiffMap props)
         {
-            var defaultFunc = default(Func<ReactPropBaseAttribute, object>);
-            if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropertyType, out defaultFunc))
+            if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropertyType, out var defaultFunc))
             {
                 return defaultFunc(_attribute);
             }
 
-            return props.GetProperty(Name)?
+            var prop = props.GetProperty(Name)?
                 .ToObject(PropertyType);
+
+            if (prop == null && PropertyType.GetTypeInfo().IsValueType)
+            {
+                return Activator.CreateInstance(PropertyType);
+            }
+
+            return prop;
         }
 
-        private void Invoke(object instance, object[] args)
+        private void Invoke(object[] args)
         {
             try
             {
-                Method.Invoke(instance, args);
-            }
-            catch (TargetInvocationException ex)
-            {
-                throw ex.InnerException;
+                _genericDelegate.Invoke(args);
             }
             finally
             {
@@ -214,7 +226,7 @@ namespace ReactNative.UIManager
 
         class ViewManagerPropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[2];
+            private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[3]);
 
             public ViewManagerPropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
@@ -239,22 +251,24 @@ namespace ReactNative.UIManager
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
             {
-                s_args[0] = view;
-                s_args[1] = ExtractProperty(props);
-                return s_args;
+                var args = s_args.Value;
+                args[0] = viewManager;
+                args[1] = view;
+                args[2] = ExtractProperty(props);
+                return args;
             }
 
             protected override void OnInvoked()
             {
-                Array.Clear(s_args, 0, 2);
+                Array.Clear(s_args.Value, 0, 3);
             }
         }
 
         class ViewManagerGroupPropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[3];
+            private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[4]);
 
             private readonly int _index;
 
@@ -289,23 +303,25 @@ namespace ReactNative.UIManager
                 return parameters[2].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(DependencyObject view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
             {
-                s_args[0] = view;
-                s_args[1] = _index;
-                s_args[2] = ExtractProperty(props);
-                return s_args;
+                var args = s_args.Value;
+                args[0] = viewManager;
+                args[1] = view;
+                args[2] = _index;
+                args[3] = ExtractProperty(props);
+                return args;
             }
 
             protected override void OnInvoked()
             {
-                Array.Clear(s_args, 0, 3);
+                Array.Clear(s_args.Value, 0, 4);
             }
         }
 
         class ShadowNodePropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[1];
+            private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[2]);
 
             public ShadowNodePropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
@@ -324,21 +340,23 @@ namespace ReactNative.UIManager
                 return  parameters[0].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactStylesDiffMap props)
+            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
             {
-                s_args[0] = ExtractProperty(props);
-                return s_args;
+                var args = s_args.Value;
+                args[0] = shadowNode;
+                args[1] = ExtractProperty(props);
+                return args;
             }
 
             protected override void OnInvoked()
             {
-                Array.Clear(s_args, 0, 1);
+                Array.Clear(s_args.Value, 0, 2);
             }
         }
 
         class ShadowNodeGroupPropertySetter : PropertySetter
         {
-            private static readonly object[] s_args = new object[2];
+            private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[3]);
 
             private readonly int _index;
 
@@ -366,16 +384,18 @@ namespace ReactNative.UIManager
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactStylesDiffMap props)
+            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
             {
-                s_args[0] = _index;
-                s_args[1] = ExtractProperty(props);
-                return s_args;
+                var args = s_args.Value;
+                args[0] = shadowNode;
+                args[1] = _index;
+                args[2] = ExtractProperty(props);
+                return args;
             }
 
             protected override void OnInvoked()
             {
-                Array.Clear(s_args, 0, 2);
+                Array.Clear(s_args.Value, 0, 3);
             }
         }
     }

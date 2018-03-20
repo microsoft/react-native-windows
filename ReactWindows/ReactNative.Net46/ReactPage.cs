@@ -1,12 +1,13 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -158,6 +159,8 @@ namespace ReactNative
         {
             RootView?.RemoveHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnAcceleratorKeyActivated);
 
+            await RootView?.StopReactApplicationAsync();
+
             if (_reactInstanceManager.IsValueCreated)
             {
                 await ReactInstanceManager.DisposeAsync().ConfigureAwait(false);
@@ -182,7 +185,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
+        private void OnAcceleratorKeyActivated(object sender, KeyEventArgs e)
         {
             if (ReactInstanceManager.DevSupportManager.IsEnabled)
             {
@@ -197,7 +200,7 @@ namespace ReactNative
                 // Ctrl+R
                 if (isCtrlKeyDown && e.Key == Key.R)
                 {
-                    await ReactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None);
+                    ReactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
             }
 

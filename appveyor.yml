@@ -17,7 +17,6 @@ environment:
 
 # Uncomment to enable entire matrix of tests.
 #image:
-#  - Visual Studio 2015
 #  - Visual Studio 2017
 #configuration:
 #  - Debug
@@ -38,8 +37,8 @@ hosts:
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
-  - npm install -g npm@lts
-  - npm i
+  - appveyor-retry npm install -g npm@lts
+  - appveyor-retry npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
   - ps: mkdir C:\winium
   - ps: Add-Type -A 'System.IO.Compression.FileSystem'
@@ -78,15 +77,15 @@ test_script:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if($platform -ne "ARM") { nunit3-console --where "cat != Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
+      if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
       if ($platform -eq "ReleaseBundle" -Or $platform -eq "DebugBundle") { npm test }
 
   # Disabling for now
   #- npm run flow-check
   # Spec test only works when there is a bundle
-
-  - npm run lint
+  #
+  # - npm run lint
 
 after_test:
   - ps: >-
@@ -98,7 +97,7 @@ after_test:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.5.0\tools\nunit3-console.exe" -targetargs:"ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll" -output:ReactWindows_coverage.xml }
+      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
 
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov

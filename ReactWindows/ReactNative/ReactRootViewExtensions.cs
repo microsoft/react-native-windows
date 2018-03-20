@@ -1,4 +1,7 @@
-using System.Threading;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -14,8 +17,11 @@ namespace ReactNative
         public static void OnCreate(this ReactRootView rootView, ReactNativeHost host)
         {
             rootView.Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
-            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => OnBackRequested(host, sender, e);
-            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += (sender, e) => OnAcceleratorKeyActivated(host, sender, e);
+            if (DispatcherHelpers.IsOnDispatcher())
+            {
+                SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => OnBackRequested(host, sender, e);
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += (sender, e) => OnAcceleratorKeyActivated(host, sender, e);
+            }
         }
 
         private static void OnBackRequested(ReactNativeHost host, object sender, BackRequestedEventArgs e)
@@ -27,7 +33,7 @@ namespace ReactNative
             }
         }
 
-        private static async void OnAcceleratorKeyActivated(ReactNativeHost host, CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        private static void OnAcceleratorKeyActivated(ReactNativeHost host, CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (host.HasInstance)
             {
@@ -49,7 +55,7 @@ namespace ReactNative
                     }
                     else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && s_isControlKeyDown && e.VirtualKey == VirtualKey.R)
                     {
-                        await reactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None).ConfigureAwait(false);
+                        reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                     }
                 }
             }

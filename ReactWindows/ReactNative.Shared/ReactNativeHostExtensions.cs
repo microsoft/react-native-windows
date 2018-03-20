@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using System;
 
@@ -24,11 +27,22 @@ namespace ReactNative
         /// <param name="initialProps">The initial props.</param>
         public static ReactRootView OnCreate(this ReactNativeHost host, JObject initialProps)
         {
+            return host.OnCreate(host.MainComponentName, initialProps);
+        }
+
+        /// <summary>
+        /// Called when the application is first initialized.
+        /// </summary>
+        /// <param name="host">The React Native host.</param>
+        /// <param name="componentName">The component name.</param>
+        /// <param name="initialProps">The initial props.</param>
+        public static ReactRootView OnCreate(this ReactNativeHost host, string componentName, JObject initialProps)
+        {
             var rootView = host.CreateRootView();
             rootView.OnCreate(host);
             rootView.StartReactApplication(
-                host.ReactInstanceManager, 
-                host.MainComponentName,
+                host.ReactInstanceManager,
+                componentName,
                 initialProps);
             return rootView;
         }

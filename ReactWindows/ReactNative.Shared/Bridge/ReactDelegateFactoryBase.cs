@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
 using System.Linq;
@@ -38,15 +41,21 @@ namespace ReactNative
         /// <param name="nativeModule">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public abstract Action<INativeModule, IReactInstance, JArray> Create(INativeModule nativeModule, MethodInfo method);
+        public abstract Func<IReactInstance, JArray, JToken> Create(INativeModule nativeModule, MethodInfo method);
 
         /// <summary>
         /// Extracts the native method type from the method.
         /// </summary>
         /// <param name="method">The method.</param>
+        /// <param name="attribute">The attribute.</param>
         /// <returns>The native method type.</returns>
-        public string GetMethodType(MethodInfo method)
+        public string GetMethodType(MethodInfo method, ReactMethodAttribute attribute)
         {
+            if (attribute.IsBlockingSynchronousMethod)
+            {
+                return SyncMethodType;
+            }
+
             if (method.ReturnType == typeof(Task))
             {
                 throw new NotImplementedException("Async methods are not yet supported.");
@@ -65,10 +74,11 @@ namespace ReactNative
         /// Check that the method is valid for <see cref="ReactMethodAttribute"/>.
         /// </summary>
         /// <param name="method">The method.</param>
-        public void Validate(MethodInfo method)
+        /// <param name="attribute">The attribute.</param>
+        public void Validate(MethodInfo method, ReactMethodAttribute attribute)
         {
             var returnType = method.ReturnType;
-            if (returnType != typeof(Task) && returnType != typeof(void))
+            if (!attribute.IsBlockingSynchronousMethod && returnType != typeof(Task) && returnType != typeof(void))
             {
                 throw new NotSupportedException("Native module methods must either return void or Task.");
             }

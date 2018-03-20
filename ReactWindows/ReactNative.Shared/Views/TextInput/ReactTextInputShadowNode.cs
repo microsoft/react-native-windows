@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
@@ -10,7 +15,6 @@ using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
@@ -37,8 +41,6 @@ namespace ReactNative.Views.TextInput
             6f,
             5f,
         };
-
-        private float[] _computedPadding;
 
         private bool _multiline;
         private bool _autoGrow;
@@ -281,10 +283,11 @@ namespace ReactNative.Views.TextInput
         {
             base.OnCollectExtraUpdates(uiViewOperationQueue);
 
-            if (_computedPadding != null)
+            var computedPadding = GetComputedPadding();
+
+            if (computedPadding != null)
             {
-                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, _computedPadding);
-                _computedPadding = null;
+                uiViewOperationQueue.EnqueueUpdateExtraData(ReactTag, computedPadding);
             }
 
             if (_jsEventCount != Unset)
@@ -326,8 +329,6 @@ namespace ReactNative.Views.TextInput
 
         private static YogaSize MeasureTextInput(ReactTextInputShadowNode textInputNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            textInputNode._computedPadding = textInputNode.GetComputedPadding();
-
             var normalizedWidth = Math.Max(0,
                 (YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width));
 

@@ -1,10 +1,13 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * Portions copyright for react-native-windows:
+ * 
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
  *
  * @providesModule WebView
  */
@@ -45,6 +48,14 @@ var defaultRenderLoading = () => (
  * Renders a native WebView.
  */
 class WebView extends React.Component {
+  static get extraNativeComponentConfig() {
+    return {
+      nativeOnly: {
+        messagingEnabled: PropTypes.bool,
+      },
+    };
+  }
+
   static propTypes = {
     ...ViewPropTypes,
     renderError: PropTypes.func,
@@ -57,6 +68,7 @@ class WebView extends React.Component {
     contentInset: EdgeInsetsPropType,
     onNavigationStateChange: PropTypes.func,
     onMessage: PropTypes.func,
+    onContentSizeChange: PropTypes.func,
     startInLoadingState: PropTypes.bool, // force WebView to show loadingView on first load
     style: ViewPropTypes.style,
 
@@ -124,11 +136,35 @@ class WebView extends React.Component {
      * @platform windows
      */
     indexedDbEnabled: PropTypes.bool,
-    
+
+    /**
+     * Used on Android Lollipop and above only, third party cookies are enabled
+     * by default for WebView on Android Kitkat and below and on iOS
+     * @platform android
+     */
+    thirdPartyCookiesEnabled: PropTypes.bool,
+
+    /**
+     * Used on Android only, controls whether DOM Storage is enabled or not
+     * @platform android
+     */
+    domStorageEnabled: PropTypes.bool,
+
     /**
      * Sets the JS to be injected when the webpage loads.
      */
     injectedJavaScript: PropTypes.string,
+
+    /**
+     * Sets whether the webpage scales to fit the view and the user can change the scale.
+     */
+    scalesPageToFit: PropTypes.bool,
+
+    /**
+     * Sets the user-agent for this WebView. The user-agent can also be set in native using
+     * WebViewConfig. This prop will overwrite that config.
+     */
+    userAgent: PropTypes.string,
 
     /**
      * Used to locate this view in end-to-end tests.
@@ -142,14 +178,76 @@ class WebView extends React.Component {
     mediaPlaybackRequiresUserAction: PropTypes.bool,
 
     /**
+     * Boolean that sets whether JavaScript running in the context of a file
+     * scheme URL should be allowed to access content from any origin.
+     * Including accessing content from other file scheme URLs
+     * @platform android
+     */
+    allowUniversalAccessFromFileURLs: PropTypes.bool,
+
+    /**
      * Function that accepts a string that will be passed to the WebView and
      * executed immediately as JavaScript.
      */
     injectJavaScript: PropTypes.func,
+
+    /**
+     * Specifies the mixed content mode. i.e WebView will allow a secure origin to load content from any other origin.
+     *
+     * Possible values for `mixedContentMode` are:
+     *
+     * - `'never'` (default) - WebView will not allow a secure origin to load content from an insecure origin.
+     * - `'always'` - WebView will allow a secure origin to load content from any other origin, even if that origin is insecure.
+     * - `'compatibility'` -  WebView will attempt to be compatible with the approach of a modern web browser with regard to mixed content.
+     * @platform android
+     */
+    mixedContentMode: PropTypes.oneOf([
+      'never',
+      'always',
+      'compatibility'
+    ]),
+
+    /**
+     * Used on Android only, controls whether form autocomplete data should be saved
+     * @platform android
+     */
+    saveFormDataDisabled: PropTypes.bool,
+
+    /**
+     * Override the native component used to render the WebView. Enables a custom native
+     * WebView which uses the same JavaScript as the original WebView.
+     */
+    nativeConfig: PropTypes.shape({
+      /*
+       * The native component used to render the WebView.
+       */
+      component: PropTypes.any,
+      /*
+       * Set props directly on the native component WebView. Enables custom props which the
+       * original WebView doesn't pass through.
+       */
+      props: PropTypes.object,
+      /*
+       * Set the ViewManager to use for communcation with the native side.
+       * @platform ios
+       */
+      viewManager: PropTypes.object,
+    }),
+    /*
+     * Used on Android only, controls whether the given list of URL prefixes should
+     * make {@link com.facebook.react.views.webview.ReactWebViewClient} to launch a
+     * default activity intent for those URL instead of loading it within the webview.
+     * Use this to list URLs that WebView cannot handle, e.g. a PDF url.
+     * @platform android
+     */
+    urlPrefixesForDefaultIntent: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
     javaScriptEnabled : true,
+    thirdPartyCookiesEnabled: true,
+    scalesPageToFit: true,
+    saveFormDataDisabled: false
   };
 
   state = {
@@ -158,7 +256,7 @@ class WebView extends React.Component {
     startInLoadingState: true,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.props.startInLoadingState) {
       this.setState({viewState: WebViewState.LOADING});
     }
@@ -193,23 +291,44 @@ class WebView extends React.Component {
       source.uri = this.props.url;
     }
 
+    if (source.method === 'POST' && source.headers) {
+      console.warn('WebView: `source.headers` is not supported when using POST.');
+    } else if (source.method === 'GET' && source.body) {
+      console.warn('WebView: `source.body` is not supported when using GET.');
+    }
+
+    const nativeConfig = this.props.nativeConfig || {};
+
+    let NativeWebView = nativeConfig.component || RCTWebView;
+
     var webView =
-      <RCTWebView
+      <NativeWebView
         ref={RCT_WEBVIEW_REF}
         key="webViewKey"
         style={webViewStyles}
         source={resolveAssetSource(source)}
+        scalesPageToFit={this.props.scalesPageToFit}
         injectedJavaScript={this.props.injectedJavaScript}
+        userAgent={this.props.userAgent}
         javaScriptEnabled={this.props.javaScriptEnabled}
         indexedDbEnabled={this.props.indexedDbEnabled}        
+        thirdPartyCookiesEnabled={this.props.thirdPartyCookiesEnabled}
+        domStorageEnabled={this.props.domStorageEnabled}
         messagingEnabled={typeof this.props.onMessage === 'function'}
         onMessage={this.onMessage}
         contentInset={this.props.contentInset}
         automaticallyAdjustContentInsets={this.props.automaticallyAdjustContentInsets}
+        onContentSizeChange={this.props.onContentSizeChange}
         onLoadingStart={this.onLoadingStart}
         onLoadingFinish={this.onLoadingFinish}
         onLoadingError={this.onLoadingError}
         testID={this.props.testID}
+        mediaPlaybackRequiresUserAction={this.props.mediaPlaybackRequiresUserAction}
+        allowUniversalAccessFromFileURLs={this.props.allowUniversalAccessFromFileURLs}
+        mixedContentMode={this.props.mixedContentMode}
+        saveFormDataDisabled={this.props.saveFormDataDisabled}
+        urlPrefixesForDefaultIntent={this.props.urlPrefixesForDefaultIntent}
+        {...nativeConfig.props}
       />;
 
     return (
@@ -326,11 +445,7 @@ class WebView extends React.Component {
   }
 }
 
-var RCTWebView = requireNativeComponent('RCTWebView', WebView, {
-  nativeOnly: {
-    messagingEnabled: PropTypes.bool,
-  },
-});
+var RCTWebView = requireNativeComponent('RCTWebView', WebView, WebView.extraNativeComponentConfig);
 
 var styles = StyleSheet.create({
   container: {

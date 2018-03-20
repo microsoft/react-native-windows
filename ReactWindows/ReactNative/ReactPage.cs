@@ -1,10 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;
@@ -149,11 +151,13 @@ namespace ReactNative
         /// <summary>
         /// Called before the application shuts down.
         /// </summary>
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
 
-            return _reactInstanceManager.DisposeAsync();            
+            await RootView.StopReactApplicationAsync();
+
+            await _reactInstanceManager.DisposeAsync();            
         }
 
         /// <summary>
@@ -174,7 +178,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if (_reactInstanceManager.DevSupportManager.IsEnabled)
             {
@@ -193,7 +197,7 @@ namespace ReactNative
                 }
                 else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && _isControlKeyDown && e.VirtualKey == VirtualKey.R)
                 {
-                    await _reactInstanceManager.DevSupportManager.CreateReactContextFromPackagerAsync(CancellationToken.None).ConfigureAwait(false);
+                   _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
             }
         }
@@ -230,8 +234,7 @@ namespace ReactNative
                     throw new ArgumentException("Expected value for remoteDebugging argument.", nameof(arguments));
                 }
 
-                bool isRemoteDebuggingEnabled;
-                if (bool.TryParse(args[index + 1], out isRemoteDebuggingEnabled))
+                if (bool.TryParse(args[index + 1], out var isRemoteDebuggingEnabled))
                 {
                     _reactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
                 }

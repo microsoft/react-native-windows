@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
@@ -51,8 +56,7 @@ namespace ReactNative.Bridge
         /// <returns>The module instance.</returns>
         public T GetModule<T>() where T : INativeModule
         {
-            var instance = default(INativeModule);
-            if (_moduleInstances.TryGetValue(typeof(T), out instance))
+            if (_moduleInstances.TryGetValue(typeof(T), out var instance))
             {
                 return (T)instance;
             }
@@ -115,6 +119,33 @@ namespace ReactNative.Bridge
             {
                 _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
             }
+        }
+
+        /// <summary>
+        /// Invoke the native method synchronously.
+        /// </summary>
+        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="moduleId">The module ID.</param>
+        /// <param name="methodId">The method ID.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The value returned from the method.</returns>
+        internal JToken InvokeSync(
+            IReactInstance reactInstance,
+            int moduleId,
+            int methodId,
+            JArray parameters)
+        {
+            if (moduleId < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Invalid module ID: " + moduleId);
+            }
+
+            if (_moduleTable.Count < moduleId)
+            {
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
+            }
+
+            return _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
         }
 
         /// <summary>
@@ -190,12 +221,12 @@ namespace ReactNative.Bridge
 
             public INativeModule Target { get; }
 
-            public void Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
+            public JToken Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
             {
                 var method = _methods[methodId];
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
                 {
-                    method.Method.Invoke(reactInstance, parameters);
+                    return method.Method.Invoke(reactInstance, parameters);
                 }
             }
 
@@ -301,8 +332,7 @@ namespace ReactNative.Bridge
                         Invariant($"Native module '{module.GetType()}' cannot have a null `Name`."),
                         nameof(module));
 
-                var existing = default(INativeModule);
-                if (_modules.TryGetValue(module.Name, out existing) && !module.CanOverrideExistingModule)
+                if (_modules.TryGetValue(module.Name, out var existing) && !module.CanOverrideExistingModule)
                 {
                     throw new InvalidOperationException(
                         string.Format(

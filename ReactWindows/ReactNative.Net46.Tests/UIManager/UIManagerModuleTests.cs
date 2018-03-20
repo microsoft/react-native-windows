@@ -1,6 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using NUnit.Framework;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Modules.Core;
 using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
@@ -8,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace ReactNative.Tests.UIManager
 {
@@ -43,6 +48,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new NoEventsViewManager() };
+
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var uiImplementationProvider = new UIImplementationProvider();
             using (var actionQueue = new ActionQueue(ex => { }))
             {
@@ -75,6 +84,9 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual("onMouseLeave", constants.GetMap("directEventTypes").GetMap("topMouseLeave").GetValue("registrationName"));
                 Assert.AreEqual("onMessage", constants.GetMap("directEventTypes").GetMap("topMessage").GetValue("registrationName"));
             }
+
+            // Ideally we should dispose, but the original dispatcher is somehow lost/etc.
+            // await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [Test]
@@ -82,6 +94,10 @@ namespace ReactNative.Tests.UIManager
         {
             var context = new ReactContext();
             var viewManagers = new List<IViewManager> { new TestViewManager() };
+
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var uiImplementationProvider = new UIImplementationProvider();
             using (var actionQueue = new ActionQueue(ex => { }))
             {
@@ -94,6 +110,9 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo"));
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError"));
             }
+
+            // Ideally we should dispose, but the original dispatcher is somehow lost/etc.
+            // await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         class NoEventsViewManager : MockViewManager

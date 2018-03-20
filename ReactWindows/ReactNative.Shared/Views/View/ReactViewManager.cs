@@ -1,7 +1,17 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
+using System.Threading;
+using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -30,10 +40,84 @@ namespace ReactNative.Views.View
             BottomRight,
         }
 
+        private class BorderProps
+        {
+            public uint? Color;
+        }
+
+        private readonly ConditionalWeakTable<BorderedCanvas, BorderProps> _borderProps =
+            new ConditionalWeakTable<BorderedCanvas, BorderProps>();
+
+        /// <summary>
+        /// Some border props do not affect appearance unless they are combined
+        /// with other props. Such props are saved in the dictionary and applied
+        /// later. This allows to not create the inner Border if it's not visible.
+        /// </summary>
+        private BorderProps GetBorderProps(BorderedCanvas view)
+        {
+            if (_borderProps.TryGetValue(view, out var props))
+            {
+                return props;
+            }
+
+            return null;
+        }
+
+        private BorderProps GetOrCreateBorderProps(BorderedCanvas view)
+        {
+            if (!_borderProps.TryGetValue(view, out var props))
+            {
+                props = new BorderProps();
+                _borderProps.Add(view, props);
+            }
+
+            return props;
+        }
+
+        /// <summary>
+        /// Canvas.Background supports flat backgrounds. Border.Background supports
+        /// backgrounds with customizations, such as rounded corners. If the background
+        /// is flat, it's set on Canvas. If it has cutomizations, it's transferred to Border.
+        /// </summary>
+        private void TransferBackgroundBrush(BorderedCanvas view)
+        {
+            if (view.Background != null && view.Background != _defaultBackgroundBrush && view.Border != null)
+            {
+                view.Border.Background = view.Background;
+                view.Background = _defaultBackgroundBrush;
+            }
+        }
+
+        private static ThreadLocal<Brush> s_defaultBorderBrush = new ThreadLocal<Brush>(() => new SolidColorBrush(Colors.Black));
+
+#if WINDOWS_UWP
+        private static AccessibilityTrait? ParseTrait(string trait)
+        {
+            if (EnumHelpers.TryParse<AccessibilityTrait>(trait, out var result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+#endif
+
         /// <summary>
         /// Default brush for the view borders.
         /// </summary>
-        protected static readonly Brush s_defaultBorderBrush = new SolidColorBrush(Colors.Black);
+        protected Brush DefaultBorderBrush => s_defaultBorderBrush.Value;
+
+        /// <summary>
+        /// In WPF in order to be clickable (hit-test visible) the element needs to have background brush.
+        /// This is why when the background and border brushes are set on the inner Border, the Canvas gets
+        /// a transparent background brush.
+        /// </summary>                
+        protected readonly Brush _defaultBackgroundBrush
+#if WINDOWS_UWP
+            = null;
+#else
+            = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+#endif
 
         /// <summary>
         /// The name of this view manager. This will be the name used to 
@@ -62,7 +146,9 @@ namespace ReactNative.Views.View
         {
             if (view.Border == null)
             {
-                view.Border = new Border { BorderBrush = s_defaultBorderBrush };
+                var borderProps = GetBorderProps(view);
+                var borderBrush = (borderProps?.Color.HasValue ?? false) ? new SolidColorBrush(ColorHelpers.Parse(borderProps.Color.Value)) : DefaultBorderBrush;
+                view.Border = new Border { BorderBrush = borderBrush };
 
                 // Layout animations bypass SetDimensions, hence using XAML bindings.
 
@@ -92,6 +178,20 @@ namespace ReactNative.Views.View
             return new BorderedCanvas();
         }
 
+        #region misc RN props
+
+        /// <summary>
+        /// Sets whether the view is collapsible.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="collapsible">The flag.</param>
+        [ReactProp(ViewProps.Collapsible)]
+        public void SetCollapsible(BorderedCanvas view, bool collapsible)
+        {
+            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
+            // handled in NativeViewHierarchyOptimizer
+        }
+
         /// <summary>
         /// Sets whether or not the view is an accessibility element.
         /// </summary>
@@ -118,6 +218,36 @@ namespace ReactNative.Views.View
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
             view.SetPointerEvents(pointerEvents);
         }
+
+#if WINDOWS_UWP
+        /// <summary>
+        /// Set accessibility traits for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object.
+        ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
+        [ReactProp("accessibilityTraits")]
+        public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
+        {
+            AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the BorderedCanvas.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp("importantForAccessibility")]
+        public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+#endif
+
+        #endregion
+
+        #region borders and background
 
         /// <summary>
         /// Sets the border radius of the view.
@@ -156,6 +286,7 @@ namespace ReactNative.Views.View
             }
 
             border.CornerRadius = cornerRadius;
+            TransferBackgroundBrush(view);
         }
 
         /// <summary>
@@ -169,8 +300,18 @@ namespace ReactNative.Views.View
             DefaultUInt32 = ColorHelpers.Transparent)]
         public void SetBackgroundColor(BorderedCanvas view, uint color)
         {
-            var border = GetOrCreateBorder(view);
-            border.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            var brush = new SolidColorBrush(ColorHelpers.Parse(color));
+
+            if (view.Border == null)
+            {
+                view.Background = brush;
+            }
+            else
+            {
+                var border = GetOrCreateBorder(view);
+                border.Background = brush;
+                view.Background = view.Background ?? _defaultBackgroundBrush;
+            }
         }
 
         /// <summary>
@@ -181,10 +322,18 @@ namespace ReactNative.Views.View
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(BorderedCanvas view, uint? color)
         {
-            var border = GetOrCreateBorder(view);
-            border.BorderBrush = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : s_defaultBorderBrush;
+            if (view.Border == null)
+            {
+                GetOrCreateBorderProps(view).Color = color;
+            }
+            else
+            {
+                var border = GetOrCreateBorder(view);
+                border.BorderBrush = color.HasValue
+                    ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                    : DefaultBorderBrush;
+                TransferBackgroundBrush(view);
+            }
         }
 
         /// <summary>
@@ -203,19 +352,19 @@ namespace ReactNative.Views.View
         {
             var border = GetOrCreateBorder(view);
             border.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
+
+            if (border.BorderBrush == null)
+            {
+                var color = GetOrCreateBorderProps(view).Color;
+                SetBorderColor(view, color);
+            }
+
+            TransferBackgroundBrush(view);
         }
 
-        /// <summary>
-        /// Sets whether the view is collapsible.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="collapsible">The flag.</param>
-        [ReactProp(ViewProps.Collapsible)]
-        public void SetCollapsible(BorderedCanvas view, bool collapsible)
-        {
-            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
-            // handled in NativeViewHierarchyOptimizer
-        }
+        #endregion
+
+        #region children collection management
 
         /// <summary>
         /// Adds a child at the given index.
@@ -300,5 +449,7 @@ namespace ReactNative.Views.View
 
             parent.Children.RemoveAt(index);
         }
+
+        #endregion
     }
 }
