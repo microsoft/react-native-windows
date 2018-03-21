@@ -24,15 +24,25 @@ namespace ReactNative.UIManager
         public static string Scheme => "urn:future-access-list:";
 
         /// <summary>
-        /// Stores a file object in the future access list cache.
-        /// Later the file object can be retrieved with the Get(token) method.
+        /// Stores a file or folder object in the future access list cache.
         /// The capacity of the cache is limited (up to about 1000 items) and
         /// if necessary old items can be removed to free space for new ones.
         /// </summary>
-        public static string Add(StorageFile file)
+        public static string Add(IStorageItem item)
         {
-            var token = GetAccessToken(file);
+            var token = GetAccessToken(item);
             return Scheme + Uri.EscapeUriString(token);
+        }
+
+        /// <summary>
+        /// Removes the file or folder associated with this URI.
+        /// </summary>
+        public static void Remove(string uri)
+        {
+            if (TryExtractAccessToken(uri, out var token))
+            {
+                StorageApplicationPermissions.FutureAccessList.Remove(token);
+            }
         }
 
         /// <summary>
@@ -41,18 +51,47 @@ namespace ReactNative.UIManager
         /// </summary>
         public static async Task<StorageFile> GetFileAsync(string uri)
         {
-            if (!uri.StartsWith(Scheme))
+            if (TryExtractAccessToken(uri, out var token))
             {
-                throw new ArgumentException("Invalid future access list URI: " + uri);
+                return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
             }
             else
             {
-                var token = Uri.UnescapeDataString(uri.Substring(Scheme.Length));
-                return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
+                throw new ArgumentException("Invalid future access list URI: " + uri);
             }
         }
 
-        private static string GetAccessToken(StorageFile file)
+        /// <summary>
+        /// Resolves a URI returned by the Add(folder) method to the folder object.
+        /// The folder object remains in the cache and can be retrieved again later.
+        /// </summary>
+        public static async Task<StorageFolder> GetFolderAsync(string uri)
+        {
+            if (TryExtractAccessToken(uri, out var token))
+            {
+                return await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(token);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid future access list URI: " + uri);
+            }
+        }
+
+        private static bool TryExtractAccessToken(string uri, out string token)
+        {
+            if (!uri.StartsWith(Scheme))
+            {
+                token = null;
+                return false;
+            }
+            else
+            {
+                token = Uri.UnescapeDataString(uri.Substring(Scheme.Length));
+                return true;
+            }
+        }
+
+        private static string GetAccessToken(IStorageItem item)
         {
             var futureAccessList = StorageApplicationPermissions.FutureAccessList;
             var existingEntries = futureAccessList.Entries;
@@ -73,7 +112,7 @@ namespace ReactNative.UIManager
                 }
             }
 
-            return futureAccessList.Add(file, now.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            return futureAccessList.Add(item, now.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
     }
 }
