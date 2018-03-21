@@ -35,7 +35,9 @@ namespace ReactNative.Animated
             var frameIndex = (int)(timeFromStartTicks / FrameTimeMilliseconds);
             if (frameIndex < 0)
             {
-                throw new InvalidOperationException("Calculated frame index should never be lower than 0.");
+                // abnormal case, but under some circumstances on some environments it's observable.
+                // will miss animation on this run, usually next frame comes with correct Timer.Ticks
+                return;
             }
             else if (HasFinished)
             {
