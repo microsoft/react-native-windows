@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
@@ -122,6 +127,10 @@ namespace ReactNative.DevSupport
         public void SetGlobalVariable(string propertyName, JToken value)
         {
             _injectedObjects.Add(propertyName, value.ToString(Formatting.None));
+        }
+
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> nativeCallSyncHook)
+        {
         }
 
         public void Dispose()

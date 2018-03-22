@@ -1,4 +1,7 @@
-﻿using NETWORKLIST;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using NETWORKLIST;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.Bridge;

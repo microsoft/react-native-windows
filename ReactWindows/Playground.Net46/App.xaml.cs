@@ -1,4 +1,7 @@
-﻿using ReactNative.Modules.Launch;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.Modules.Launch;
 using System;
 using System.Windows;
 using System.Windows.Controls;

@@ -178,6 +178,9 @@ class Button extends React.Component<{
           onFocus={this._onFocus}
           onBlur={this._onBlur}
           style={buttonStyles}
+          importantForAccessibility={'yes'}
+          accessibilityTraits={accessibilityTraits}
+          onAccessibilityTap={this._onAccessibilityTap}
         >
           <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
       </FocusableView>;
@@ -239,6 +242,14 @@ class Button extends React.Component<{
   _onBlur = (e): void => {
     if (this.props.onBlur) {
       this.props.onBlur(e);
+    }
+  }
+
+  _onAccessibilityTap = (e): void => {
+    if (!this.props.disabled) {
+      if (this.props.onPress) {
+        this.props.onPress(e);
+      }
     }
   }
 

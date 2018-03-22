@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using ImagePipeline.Core;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
@@ -7,6 +12,8 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -295,8 +302,10 @@ namespace ReactNative.Views.Image
             try
             {
                 var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
-                var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source));
+                var dispatcher = CoreApplication.GetCurrentView().Dispatcher;
+                var image = await imagePipeline.FetchEncodedBitmapImageAsync(new Uri(source), default(CancellationToken), dispatcher);
                 var metadata = new ImageMetadata(source, image.PixelWidth, image.PixelHeight);
+
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoad, metadata);
                 imageBrush.ImageSource = image;
                 OnImageStatusUpdate(view, ImageLoadStatus.OnLoadEnd, metadata);

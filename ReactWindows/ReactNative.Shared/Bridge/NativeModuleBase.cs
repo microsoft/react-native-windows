@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
@@ -178,25 +183,26 @@ namespace ReactNative.Bridge
         private IReadOnlyDictionary<string, INativeMethod> InitializeMethods()
         {
             var declaredMethods = GetType().GetTypeInfo().DeclaredMethods;
-            var exportedMethods = new List<MethodInfo>();
+            var exportedMethods = new List<Tuple<MethodInfo, ReactMethodAttribute>>();
             foreach (var method in declaredMethods)
             {
-                if (method.IsDefined(typeof(ReactMethodAttribute)))
+                var attribute = (ReactMethodAttribute)method.GetCustomAttribute(typeof(ReactMethodAttribute));
+                if (attribute != null)
                 {
-                    exportedMethods.Add(method);
+                    exportedMethods.Add(Tuple.Create(method, attribute));
                 }
             }
 
             var methodMap = new Dictionary<string, INativeMethod>(exportedMethods.Count);
-            foreach (var method in exportedMethods)
+            foreach (var methodData in exportedMethods)
             {
+                var method = methodData.Item1;
+                var attribute = methodData.Item2;
                 if (methodMap.TryGetValue(method.Name, out var existingMethod))
-                {
                     throw new NotSupportedException(
                         Invariant($"React module '{GetType()}' with name '{Name}' has more than one ReactMethod with the name '{method.Name}'."));
-                }
 
-                methodMap.Add(method.Name, new NativeMethod(this, method));
+                methodMap.Add(method.Name, new NativeMethod(this, method, attribute));
             }
 
             return methodMap;
@@ -204,14 +210,14 @@ namespace ReactNative.Bridge
 
         class NativeMethod : INativeMethod
         {
-            private readonly Lazy<Action<IReactInstance, JArray>> _invokeDelegate;
+            private readonly Lazy<Func<IReactInstance, JArray, JToken>> _invokeDelegate;
 
-            public NativeMethod(NativeModuleBase instance, MethodInfo method)
+            public NativeMethod(NativeModuleBase instance, MethodInfo method, ReactMethodAttribute attribute)
             {
                 var delegateFactory = instance._delegateFactory;
-                delegateFactory.Validate(method);
-                _invokeDelegate = new Lazy<Action<IReactInstance, JArray>>(() => delegateFactory.Create(instance, method));
-                Type = delegateFactory.GetMethodType(method);
+                delegateFactory.Validate(method, attribute);
+                _invokeDelegate = new Lazy<Func<IReactInstance, JArray, JToken>>(() => delegateFactory.Create(instance, method));
+                Type = delegateFactory.GetMethodType(method, attribute);
             }
 
             public string Type
@@ -219,11 +225,11 @@ namespace ReactNative.Bridge
                 get;
             }
 
-            public void Invoke(IReactInstance reactInstance, JArray jsArguments)
+            public JToken Invoke(IReactInstance reactInstance, JArray jsArguments)
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod").Start())
                 {
-                    _invokeDelegate.Value(reactInstance, jsArguments);
+                    return _invokeDelegate.Value(reactInstance, jsArguments);
                 }
             }
         }

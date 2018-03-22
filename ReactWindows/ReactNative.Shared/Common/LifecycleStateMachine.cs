@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using ReactNative.Bridge;
 #if WINDOWS_UWP
 using Windows.Foundation.Metadata;

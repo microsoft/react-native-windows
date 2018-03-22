@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -228,7 +233,9 @@ namespace ReactNative.UIManager
 
         DependencyObject IViewManager.CreateView(ThemedReactContext reactContext)
         {
-            return CreateView(reactContext);
+            var view = CreateView(reactContext);
+            SetDimensions(view, default(Dimensions));
+            return view;
         }
 
         void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)

@@ -1,8 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "pch.h"
 #include "ChakraHost.h"
 #include "ChakraStringResult.h"
+#include "CallSyncHandler.h"
 
 using namespace Platform;
 
@@ -100,6 +104,11 @@ public:
     /// A compount result with the JSON stringified value and an error code if any occurred.
     /// </returns>
     ChakraStringResult FlushedQueue();
+
+    /// <summary>
+    /// Sets the sync native method hook.
+    /// </summary>
+    void SetCallSyncHook(CallSyncHandler^ handler);
 private:
     ChakraHost host;
 };
