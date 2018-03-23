@@ -492,6 +492,11 @@ namespace ReactNative.UIManager
             if (queue == MainUIViewOperationQueue)
             {
                 // Main queue case. Just forward.
+                if (!MainUIViewOperationQueue.NativeViewHierarchyManager.ViewExists(tag))
+                {
+                    return false;
+                }
+
                 MainUIViewOperationQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
             }
             else
