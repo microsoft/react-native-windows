@@ -144,6 +144,7 @@ namespace ReactNative.UIManager
             view.MouseEnter -= OnPointerEntered;
             view.MouseLeave -= OnPointerExited;
             _transforms.Remove(view);
+            base.OnDropViewInstance(reactContext, view);
         }
 
         /// <summary>

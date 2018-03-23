@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -215,6 +216,13 @@ namespace ReactNative.UIManager
                 ViewExtensions.SetTag(view, tag);
                 ViewExtensions.SetReactContext(view, themedContext);
 
+#if WINDOWS_UWP
+                if (view is UIElement element)
+                {
+                    AccessibilityHelper.OnViewInstanceCreated(element);
+                }
+#endif
+
                 if (initialProps != null)
                 {
                     viewManager.UpdateProps(view, initialProps);
@@ -234,11 +242,15 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Clears out the <see cref="LayoutAnimationController"/>.
+        /// Clears out the <see cref="LayoutAnimationController"/> and processes accessibility changes
         /// </summary>
-        public void ClearLayoutAnimation()
+        public void OnBatchComplete()
         {
             _layoutAnimator.Reset();
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnBatchComplete();
+#endif
         }
 
         /// <summary>
@@ -386,6 +398,10 @@ namespace ReactNative.UIManager
             var rootView = _tagsToViews[rootViewTag];
             DropView(rootView);
             _rootTags.Remove(rootViewTag);
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnRootViewRemoved(rootView as UIElement);
+#endif
 
             _deletedTagsBatchReporter.Send();
         }
@@ -643,8 +659,12 @@ namespace ReactNative.UIManager
             _tagsToViews.Add(tag, view);
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
+
             ViewExtensions.SetTag(view, tag);
             ViewExtensions.SetReactContext(view, themedContext);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnRootViewAdded(view);
+#endif
         }
 
         private void DropView(object view)
@@ -675,6 +695,13 @@ namespace ReactNative.UIManager
                     viewParentManager.RemoveAllChildren(view);
                 }
             }
+
+#if WINDOWS_UWP
+            if (view is UIElement element)
+            {
+                AccessibilityHelper.OnDropViewInstance(element);
+            }
+#endif
 
             _tagsToViews.Remove(tag);
             _tagsToViewManagers.Remove(tag);

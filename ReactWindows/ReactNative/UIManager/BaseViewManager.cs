@@ -210,6 +210,7 @@ namespace ReactNative.UIManager
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
             _dimensionBoundProperties.TryRemove(view, out _);
+            base.OnDropViewInstance(reactContext, view);
         }
 
         /// <summary>
