@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace ReactNative.UIManager
+namespace ReactNative.Storage
 {
     /// <summary>
     /// The reason this future access list thing was introduced was a need

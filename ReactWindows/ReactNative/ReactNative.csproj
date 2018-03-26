@@ -148,9 +148,9 @@
     <Compile Include="Tracing\Tracer.cs" />
     <Compile Include="UIManager\BaseViewManager.cs" />
     <Compile Include="UIManager\DisplayMetrics.cs" />
+    <Compile Include="Storage\FutureAccessList.cs" />
     <Compile Include="Accessibility\DynamicAutomationPeer.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
-    <Compile Include="UIManager\FutureAccessList.cs" />
     <Compile Include="UIManager\DragDropEvent.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
