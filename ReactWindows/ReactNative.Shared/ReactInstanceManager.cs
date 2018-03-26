@@ -415,7 +415,7 @@ namespace ReactNative
                     var currentReactContext = _currentReactContext;
                     if (currentReactContext != null && currentReactContext.HasActiveReactInstance)
                     {
-                        return DetachViewFromInstance(rootView, currentReactContext.ReactInstance);
+                        return DetachViewFromInstanceAsync(rootView, currentReactContext.ReactInstance);
                     }
                 }
 
@@ -607,7 +607,7 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
         }
 
-        private async Task DetachViewFromInstance(ReactRootView rootView, IReactInstance reactInstance)
+        private async Task DetachViewFromInstanceAsync(ReactRootView rootView, IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -615,7 +615,7 @@ namespace ReactNative
 
             // Detaches ReactRootView from instance manager root view list and size change monitoring.
             // Has to complete before unmounting application
-            await uiManagerModule.DetachRootView(rootView);
+            await uiManagerModule.DetachRootViewAsync(rootView);
 
             // Initiates a clean up operation that will wait for both a "removeRootView" command from JS (an effect of
             // unmounting the application) and the release of all dispatcher affined UI objects.
