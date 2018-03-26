@@ -415,12 +415,12 @@ namespace ReactNative
                     var currentReactContext = _currentReactContext;
                     if (currentReactContext != null && currentReactContext.HasActiveReactInstance)
                     {
-                        DetachViewFromInstance(rootView, currentReactContext.ReactInstance);
+                        return DetachViewFromInstance(rootView, currentReactContext.ReactInstance);
                     }
                 }
 
-                return true;
-            }, true); // inlining allowed
+                return Task.CompletedTask;
+            }, true).Unwrap(); // inlining allowed
         }
 
         /// <summary>
@@ -607,12 +607,12 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
         }
 
-        private void DetachViewFromInstance(ReactRootView rootView, IReactInstance reactInstance)
+        private async Task DetachViewFromInstance(ReactRootView rootView, IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
-            uiManagerModule.DetachRootView(rootView);
+            await uiManagerModule.DetachRootView(rootView);
 
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
         }

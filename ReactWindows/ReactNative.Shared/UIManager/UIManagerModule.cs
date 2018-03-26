@@ -9,6 +9,7 @@ using ReactNative.Bridge.Queue;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -163,12 +164,16 @@ namespace ReactNative.UIManager
         /// Detaches a root view from the size monitoring hooks in preparation for the unmount
         /// </summary>
         /// <param name="rootView">The root view instance.</param>
-        public void DetachRootView(ReactRootView rootView)
+        public async Task DetachRootView(ReactRootView rootView)
         {
             // Called on main dispatcher thread
             DispatcherHelpers.AssertOnDispatcher();
 
-            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () => rootView.RemoveSizeChanged(), true); // allow inlining
+            await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
+            {
+                rootView.RemoveSizeChanged();
+                return true;
+            }, true); // allow inlining
         }
 
         /// <summary>
