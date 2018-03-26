@@ -98,9 +98,7 @@ namespace ReactNative.Storage
             var capacity = futureAccessList.MaximumItemsAllowed;
             var now = DateTime.UtcNow;
 
-            // Use more aggresive timeout when number of items exceed 100 or half of the capacity
-            // Note: 100 is an arbitary limit in case that OS reduces the capacity (it is 1000 in RS1). 
-            var expiry = existingEntries.Count >= capacity / 2 || existingEntries.Count >= 100 ?
+            var expiry = existingEntries.Count >= capacity / 2 ?
                 now.AddDays(-1) :
                 now.AddDays(-7);
 
