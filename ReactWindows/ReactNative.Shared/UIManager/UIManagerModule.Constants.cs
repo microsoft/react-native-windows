@@ -61,8 +61,8 @@ namespace ReactNative.UIManager
                 {
                     var viewManagerConstants = CreateConstantsForViewManager(
                         viewManager,
-                        genericBubblingEventTypes,
-                        genericDirectEventTypes,
+                        null,
+                        null,
                         allBubblingEventTypes,
                         allDirectEventTypes);
 
@@ -73,6 +73,8 @@ namespace ReactNative.UIManager
                 }
             }
 
+            constants.Add("genericBubblingEventTypes", genericBubblingEventTypes);
+            constants.Add("genericDirectEventTypes", genericDirectEventTypes);
             return constants;
         }
 
