@@ -5,10 +5,12 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
-using ReactNative.Tracing;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+#if PERF_LOG
+using System.Diagnostics;
+#endif
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -106,7 +108,7 @@ namespace ReactNative.Accessibility
             return property;
         }
 
-        #region Property Accessors
+#region Property Accessors
 
         private static void SetAccessibilityLabelProp(UIElement element, string value)
         {
@@ -198,9 +200,9 @@ namespace ReactNative.Accessibility
             s_treeContext.Value.Dirty = true;
         }
 
-        #endregion
+#endregion
 
-        #region Public entry points
+#region Public entry points
 
         /// <summary>
         /// Marks accessibility data in UI tree for update after <paramref name="child"/> is added to <paramref name="parent"/>
@@ -313,9 +315,9 @@ namespace ReactNative.Accessibility
             view.AccessibilityTraits = result;
         }
 
-        #endregion
+#endregion
 
-        #region Internal entry points
+#region Internal entry points
 
         /// <summary>
         /// The framework calls this method on new view instance creation. The method is
@@ -409,16 +411,16 @@ namespace ReactNative.Accessibility
             s_treeContext.Value.Dirty = false;
 
 #if PERF_LOG
-            RnLog.Info("AccessibilityHelper", $"Stats: ElementCount: {s_treeContext.Value.ElementCount}, " +
-                                                     $"MarkedDirtyNodesCount: {s_treeContext.Value.MarkedDirtyNodesCount}, " +
-                                                     $"DirtyNodesCount(before): {savedDirtyNodesCount}, " +
-                                                     $"DirtyNodesCount(after): {s_treeContext.Value.DirtyNodesCount}, " +
-                                                     $"ProcessedNodesCount: {s_treeContext.Value.ProcessedNodesCount}");
+            Debug.WriteLine($"Stats: ElementCount: {s_treeContext.Value.ElementCount}, " +
+                                   $"MarkedDirtyNodesCount: {s_treeContext.Value.MarkedDirtyNodesCount}, " +
+                                   $"DirtyNodesCount(before): {savedDirtyNodesCount}, " +
+                                   $"DirtyNodesCount(after): {s_treeContext.Value.DirtyNodesCount}, " +
+                                   $"ProcessedNodesCount: {s_treeContext.Value.ProcessedNodesCount}");
             s_treeContext.Value.MarkedDirtyNodesCount = 0;
 #endif
         }
 
-        #endregion
+#endregion
 
         /// <summary>
         /// Recursively updates all accessibility properties in the tree rooted by <paramref name="rootElement"/>.

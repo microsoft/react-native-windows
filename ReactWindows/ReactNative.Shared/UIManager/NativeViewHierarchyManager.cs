@@ -400,7 +400,10 @@ namespace ReactNative.UIManager
             _rootTags.Remove(rootViewTag);
 
 #if WINDOWS_UWP
-            AccessibilityHelper.OnRootViewRemoved(rootView as UIElement);
+            if (rootView is UIElement element)
+            {
+                AccessibilityHelper.OnRootViewRemoved(element);
+            }
 #endif
 
             _deletedTagsBatchReporter.Send();
