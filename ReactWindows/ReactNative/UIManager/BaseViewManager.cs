@@ -6,6 +6,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Accessibility;
 using ReactNative.Reflection;
+using ReactNative.Storage;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -15,7 +16,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Storage;
-using Windows.Storage.AccessCache;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
