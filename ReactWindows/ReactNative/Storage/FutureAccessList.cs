@@ -96,7 +96,7 @@ namespace ReactNative.Storage
             var futureAccessList = StorageApplicationPermissions.FutureAccessList;
             var existingEntries = futureAccessList.Entries;
             var capacity = futureAccessList.MaximumItemsAllowed;
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             // Use more aggresive timeout when number of items exceed 100 or half of the capacity
             // Note: 100 is an arbitary limit in case that OS reduces the capacity (it is 1000 in RS1). 
@@ -106,13 +106,18 @@ namespace ReactNative.Storage
 
             foreach (var entry in existingEntries)
             {
-                if (DateTime.TryParse(entry.Metadata, out DateTime time) && time < expiry)
+                if (long.TryParse(entry.Metadata, out long ticks))
                 {
-                    futureAccessList.Remove(entry.Token);
+                    var time = new DateTime(ticks);
+
+                    if (time < expiry)
+                    {
+                        futureAccessList.Remove(entry.Token);
+                    }
                 }
             }
 
-            return futureAccessList.Add(item, now.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            return futureAccessList.Add(item, now.Ticks.ToString());
         }
     }
 }
