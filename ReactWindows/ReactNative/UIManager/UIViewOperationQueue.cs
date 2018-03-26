@@ -161,7 +161,8 @@ namespace ReactNative.UIManager
         /// Enqueues an operation to remove the root view.
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
-        public void EnqueueRemoveRootView(int rootViewTag)
+        /// <param name="cleanupCompleted">Callback called when cleanup completes.</param>
+        public void EnqueueRemoveRootView(int rootViewTag, Action cleanupCompleted)
         {
             // Called on layout manager thread
 
@@ -186,8 +187,21 @@ namespace ReactNative.UIManager
 
                     // Simulate an OnDestroy from the correct dispatcher thread
                     // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                    DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy);
+                    DispatcherHelpers.RunOnDispatcher(pair.Key, () =>
+                    {
+                        queue.OnDestroy();
+
+                        cleanupCompleted?.Invoke();
+                    });
                 }
+                else
+                {
+                    cleanupCompleted?.Invoke();
+                }
+            }
+            else
+            {
+                cleanupCompleted?.Invoke();
             }
         }
 

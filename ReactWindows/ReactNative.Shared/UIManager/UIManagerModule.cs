@@ -8,6 +8,7 @@ using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.UIManager.Events;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,6 +29,19 @@ namespace ReactNative.UIManager
 
         private int _batchId;
         private int _nextRootTag = 1;
+
+        private class DelayedCleanupTask : TaskCompletionSource<bool>
+        {
+            public void Complete()
+            {
+                // TaskCompletionSource<T>.SetResult can call continuations
+                // on the awaiter of the task completion source.
+                System.Threading.Tasks.Task.Run(() => SetResult(true));
+            }
+        }
+
+        private readonly ConcurrentDictionary<int, DelayedCleanupTask> _rootViewCleanupTasks =
+            new ConcurrentDictionary<int, DelayedCleanupTask>();
 
         /// <summary>
         /// Instantiates a <see cref="UIManagerModule"/>.
@@ -177,6 +191,22 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Awaitable method completing when a root view (and a lot of dependent resources on the same dispatcher thread)
+        /// completes its cleanup.
+        /// </summary>
+        /// <param name="rootTag">The root view react tag.</param>
+        public Task CleanupRootView(int rootTag)
+        {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
+            // Prepare a cleanup task
+            var ct = new DelayedCleanupTask();
+            _rootViewCleanupTasks.AddOrUpdate(rootTag, ct, (k, v) => throw new InvalidOperationException("Duplicate root view removal"));
+            return ct.Task;
+        }
+
+        /// <summary>
         /// Schedule a block to be executed on the UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>
@@ -229,7 +259,14 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void removeRootView(int rootViewTag)
         {
-            _uiImplementation.RemoveRootView(rootViewTag);
+            // A cleanup task should be waiting here
+            DelayedCleanupTask cleanupTask;
+            if (!_rootViewCleanupTasks.TryRemove(rootViewTag, out cleanupTask))
+            {
+                throw new InvalidOperationException("Unexpected removeRootView");
+            }
+
+            _uiImplementation.RemoveRootView(rootViewTag, cleanupTask.Complete);
         }
 
         /// <summary>

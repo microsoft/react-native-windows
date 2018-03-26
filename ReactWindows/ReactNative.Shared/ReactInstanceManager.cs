@@ -612,9 +612,18 @@ namespace ReactNative
             DispatcherHelpers.AssertOnDispatcher();
 
             var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
+
+            // Detaches ReactRootView from instance manager root view list and size change monitoring.
+            // Has to complete before unmounting application
             await uiManagerModule.DetachRootView(rootView);
 
+            // Initiates a clean up operation that will wait for both a "removeRootView" command from JS (an effect of
+            // unmounting the application) and the release of all dispatcher affined UI objects.
+            var crTask = uiManagerModule.CleanupRootView(rootView.GetTag());
+
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
+
+            await crTask;
         }
 
         private async Task TearDownReactContextAsync(ReactContext reactContext, CancellationToken token)
