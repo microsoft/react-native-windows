@@ -110,6 +110,7 @@ namespace ReactNative
             _uiImplementationProvider = uiImplementationProvider;
             _javaScriptExecutorFactory = javaScriptExecutorFactory;
             _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
+            _lazyViewManagersEnabled = lazyViewManagersEnabled;
         }
         
         /// <summary>
