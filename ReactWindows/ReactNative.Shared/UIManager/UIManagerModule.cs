@@ -191,11 +191,11 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Awaitable method completing when a root view (and a lot of dependent resources on the same dispatcher thread)
+        /// Method returning a task that completes when a root view (and a lot of dependent resources on the same dispatcher thread)
         /// completes its cleanup.
         /// </summary>
         /// <param name="rootTag">The root view react tag.</param>
-        public Task CleanupRootView(int rootTag)
+        public Task GetRootViewCleanupTask(int rootTag)
         {
             // Called on main dispatcher thread
             DispatcherHelpers.AssertOnDispatcher();

@@ -408,7 +408,7 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
 
-            await DispatcherHelpers.CallOnDispatcher(() =>
+            var detachTask = await DispatcherHelpers.CallOnDispatcher(() =>
             {
                 if (_attachedRootViews.Remove(rootView))
                 {
@@ -420,7 +420,9 @@ namespace ReactNative
                 }
 
                 return Task.CompletedTask;
-            }, true).Unwrap(); // inlining allowed
+            }, true); // inlining allowed
+
+            await detachTask;
         }
 
         /// <summary>
@@ -619,7 +621,7 @@ namespace ReactNative
 
             // Initiates a clean up operation that will wait for both a "removeRootView" command from JS (an effect of
             // unmounting the application) and the release of all dispatcher affined UI objects.
-            var crTask = uiManagerModule.CleanupRootView(rootView.GetTag());
+            var crTask = uiManagerModule.GetRootViewCleanupTask(rootView.GetTag());
 
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
 
