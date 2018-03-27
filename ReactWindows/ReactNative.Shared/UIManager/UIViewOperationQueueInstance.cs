@@ -341,6 +341,9 @@ namespace ReactNative.UIManager
             {
                 try
                 {
+                    _nativeViewHierarchyManager.MeasureInWindow(reactTag, _measureBuffer);
+                    targetX += (double)_measureBuffer[0];
+                    targetY += (double)_measureBuffer[1];
                     _nativeViewHierarchyManager.Measure(reactTag, _measureBuffer);
                 }
                 catch
