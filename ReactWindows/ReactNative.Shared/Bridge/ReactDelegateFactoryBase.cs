@@ -56,11 +56,6 @@ namespace ReactNative
                 return SyncMethodType;
             }
 
-            if (method.ReturnType == typeof(Task))
-            {
-                throw new NotImplementedException("Async methods are not yet supported.");
-            }
-
             var parameters = method.GetParameters();
             if (parameters.Length > 0 && parameters.Last().ParameterType == typeof(IPromise))
             {
@@ -78,7 +73,7 @@ namespace ReactNative
         public void Validate(MethodInfo method, ReactMethodAttribute attribute)
         {
             var returnType = method.ReturnType;
-            if (!attribute.IsBlockingSynchronousMethod && returnType != typeof(Task) && returnType != typeof(void))
+            if (!attribute.IsBlockingSynchronousMethod && returnType != typeof(void))
             {
                 throw new NotSupportedException("Native module methods must either return void or Task.");
             }
@@ -98,10 +93,6 @@ namespace ReactNative
                     {
                         throw new NotSupportedException("Callbacks are only supported in the last two positions of a native module method.");
                     }
-                }
-                else if (returnType == typeof(Task) && (parameterType == typeof(ICallback) || parameterType == typeof(IPromise)))
-                {
-                    throw new NotSupportedException("Callbacks and promises are not supported in async native module methods.");
                 }
             }
         }
