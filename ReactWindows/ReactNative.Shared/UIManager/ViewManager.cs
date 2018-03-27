@@ -4,7 +4,6 @@
 // Licensed under the MIT License.
 
 #if WINDOWS_UWP
-using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
@@ -54,12 +53,5 @@ namespace ReactNative.UIManager
             view.Width = dimensions.Width;
             view.Height = dimensions.Height;
         }
-#if WINDOWS_UWP
-
-        internal override void OnViewInstanceCreated(ThemedReactContext reactContext, TFrameworkElement view)
-        {
-            AccessibilityHelper.OnViewInstanceCreated(view);
-        }
-#endif
     }
 }

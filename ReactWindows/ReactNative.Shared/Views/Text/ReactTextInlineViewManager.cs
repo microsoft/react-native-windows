@@ -24,7 +24,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public override void UpdateExtraData(TInline root, object extraData)
+        public sealed override void UpdateExtraData(TInline root, object extraData)
         {
             var inlineNode = extraData as ReactInlineShadowNode;
             if (inlineNode != null)

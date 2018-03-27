@@ -454,7 +454,7 @@ namespace ReactNative.UIManager
                             }
                         }
 
-                        _nativeViewHierarchyManager.ClearLayoutAnimation();
+                        _nativeViewHierarchyManager.OnBatchComplete();
                     }
                 });
             }

@@ -161,6 +161,8 @@ namespace ReactNative.Views.Text
             {
                 textNode.UpdateTextBlock(root);
             }
+
+            AccessibilityHelper.OnElementChanged(root);
         }
 
         /// <summary>
