@@ -78,7 +78,7 @@ namespace ReactNative.Bridge
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
 
-            _jsExecutor.SetGlobalVariable(propertyName, JToken.Parse(jsonEncodedArgument));
+            _jsExecutor.SetGlobalVariable(propertyName, jsonEncodedArgument);
         }
 
         /// <summary>
