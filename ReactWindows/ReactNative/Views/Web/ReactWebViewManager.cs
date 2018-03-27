@@ -12,7 +12,6 @@ using ReactNative.Views.Web.Events;
 using ReactNativeWebViewBridge;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using static System.FormattableString;
@@ -61,11 +60,11 @@ namespace ReactNative.Views.Web
         /// <summary>
         /// The commands map for the webview manager.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "goBack", CommandGoBack },
                     { "goForward", CommandGoForward },

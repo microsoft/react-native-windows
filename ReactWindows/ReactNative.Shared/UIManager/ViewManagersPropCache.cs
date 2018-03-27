@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-// TODO
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -71,14 +71,14 @@ namespace ReactNative.UIManager
             return settersImpl;
         }
 
-        public static IReadOnlyDictionary<string, string> GetNativePropsForView<TView>(Type viewManagerType, Type shadowNodeType)
+        public static JObject GetNativePropsForView<TView>(Type viewManagerType, Type shadowNodeType)
         {
             if (viewManagerType == null)
                 throw new ArgumentNullException(nameof(viewManagerType));
             if (shadowNodeType == null)
                 throw new ArgumentNullException(nameof(shadowNodeType));
 
-            var result = new Dictionary<string, string>();
+            var result = new JObject();
             var viewManagerProps = GetNativePropSettersForViewManagerType<TView>(viewManagerType);
             foreach (var pair in viewManagerProps)
             {

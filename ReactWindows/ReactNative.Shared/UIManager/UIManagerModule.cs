@@ -21,8 +21,8 @@ namespace ReactNative.UIManager
         private const int RootViewTagIncrement = 10;
 
         private readonly UIImplementation _uiImplementation;
-        private readonly IReadOnlyDictionary<string, object> _moduleConstants;
-        private readonly IDictionary<string, object> _customDirectEvents;
+        private readonly JObject _moduleConstants;
+        private readonly JObject _customDirectEvents;
         private readonly EventDispatcher _eventDispatcher;
         private readonly IActionQueue _layoutActionQueue;
 
@@ -55,7 +55,7 @@ namespace ReactNative.UIManager
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
             var lazyViewManagersEnabled = IsLazyViewManagersEnabled(options);
-            _customDirectEvents = lazyViewManagersEnabled ? GetDirectEventTypeConstants() : new Dictionary<string, object>();
+            _customDirectEvents = lazyViewManagersEnabled ? GetDirectEventTypeConstants() : new JObject();
             _moduleConstants = CreateConstants(viewManagers, null, _customDirectEvents, IsLazyViewManagersEnabled(options));
             _layoutActionQueue = layoutActionQueue;
             reactContext.AddLifecycleEventListener(this);
@@ -80,7 +80,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The constants exported by this module.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
@@ -204,20 +204,15 @@ namespace ReactNative.UIManager
         {
             lock (_customDirectEvents)
             {
-                if (!_customDirectEvents.TryGetValue(eventName, out var value))
+                if (_customDirectEvents.TryGetValue(eventName, out var value) &&
+                    value is JObject customEventType &&
+                    customEventType.TryGetValue("registrationName", out value) &&
+                    value.Type == JTokenType.String)
                 {
-                    return eventName;
+                    return value.Value<string>();
                 }
 
-                var customEventType = value as IDictionary<string, object>;
-                if (customEventType == null ||
-                    !customEventType.TryGetValue("registrationName", out value))
-                {
-                    return eventName;
-                }
-
-                var registrationName = value as string;
-                return registrationName ?? eventName;
+                return eventName;
             }
         }
 
@@ -525,7 +520,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagerName">The view manager name.</param>
         /// <returns>The view manager constants.</returns>
         [ReactMethod(IsBlockingSynchronousMethod = true)]
-        public IDictionary<string, object> getConstantsForViewManager(string viewManagerName)
+        public JObject getConstantsForViewManager(string viewManagerName)
         {
             var viewManager = _uiImplementation.ResolveViewManager(viewManagerName);
 
@@ -546,7 +541,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <returns>The default event types.</returns>
         [ReactMethod(IsBlockingSynchronousMethod = true)]
-        public IDictionary<string, object> getDefaultEventTypes()
+        public JObject getDefaultEventTypes()
         {
             return GetDefaultExportableEventTypes();
         }

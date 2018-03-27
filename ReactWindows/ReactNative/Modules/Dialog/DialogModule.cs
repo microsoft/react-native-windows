@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Json;
 using System;
-using System.Collections.Generic;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -32,11 +31,11 @@ namespace ReactNative.Modules.Dialog
             }
         }
 
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.ActionButtonClicked },
                     { DialogModuleHelper.ActionDismissed, DialogModuleHelper.ActionDismissed },

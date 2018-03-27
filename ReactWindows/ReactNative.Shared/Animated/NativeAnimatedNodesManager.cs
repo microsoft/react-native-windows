@@ -647,9 +647,9 @@ namespace ReactNative.Animated
             _activeAnimations.Keys.CopyTo(_activeAnimationIds, 0);
         }
 
-        private static IReadOnlyDictionary<string, object> GetEventTypes(UIManagerModule uiManager)
+        private static JObject GetEventTypes(UIManagerModule uiManager)
         {
-            return (IReadOnlyDictionary<string, object>)uiManager.Constants["customDirectEventTypes"];
+            return (JObject)uiManager.ModuleConstants["customDirectEventTypes"];
         }
     }
 }

@@ -8,7 +8,6 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,19 +37,19 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// The exported custom bubbling event types.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+        public override JObject CustomBubblingEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>()
+                return new JObject
                 {
                     {
                         "topSubmitEditing",
-                        new Dictionary<string, object>()
+                        new JObject
                         {
                             {
                                 "phasedRegistrationNames",
-                                new Dictionary<string, string>()
+                                new JObject
                                 {
                                     { "bubbled" , "onSubmitEditing" },
                                     { "captured" , "onSubmitEditingCapture" }
@@ -60,11 +59,11 @@ namespace ReactNative.Views.TextInput
                     },
                     {
                         "topEndEditing",
-                        new Dictionary<string, object>()
+                        new JObject
                         {
                             {
                                 "phasedRegistrationNames",
-                                new Dictionary<string, string>()
+                                new JObject
                                 {
                                     { "bubbled" , "onEndEditing" },
                                     { "captured" , "onEndEditingCapture" }

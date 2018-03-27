@@ -4,13 +4,12 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using System;
-using System.Collections.Generic;
 
 namespace ReactNative.Tests
 {
     class MockViewManager : IViewManager
     {
-        public virtual IReadOnlyDictionary<string, object> CommandsMap
+        public virtual JObject CommandsMap
         {
             get
             {
@@ -18,7 +17,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public virtual IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+        public virtual JObject ExportedCustomBubblingEventTypeConstants
         {
             get
             {
@@ -26,7 +25,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public virtual IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        public virtual JObject ExportedCustomDirectEventTypeConstants
         {
             get
             {
@@ -34,7 +33,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public virtual IReadOnlyDictionary<string, object> ExportedViewConstants
+        public virtual JObject ExportedViewConstants
         {
             get
             {
@@ -50,7 +49,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public virtual IReadOnlyDictionary<string, string> NativeProps
+        public virtual JObject NativeProps
         {
             get
             {

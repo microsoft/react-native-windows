@@ -7,7 +7,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
@@ -45,11 +44,11 @@ namespace ReactNative.Views.ControlView
         /// <summary>
         /// The commands.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "focus", FocusCommand },
                     { "blur", BlurCommand },
@@ -60,11 +59,11 @@ namespace ReactNative.Views.ControlView
         /// <summary>
         /// Exported view constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedViewConstants
+        public override JObject ViewConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "Keys", KeyHelpers.GetKeyConstants() },
                 };

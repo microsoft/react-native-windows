@@ -5,7 +5,6 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using System.Collections.Generic;
 
 namespace ReactNative.Modules.DevSupport
 {
@@ -43,11 +42,11 @@ namespace ReactNative.Modules.DevSupport
         /// <summary>
         /// The module constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "scriptURL", _sourceUrl },
                 };

@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\AssertEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\ConstantsHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockEvent.cs" />

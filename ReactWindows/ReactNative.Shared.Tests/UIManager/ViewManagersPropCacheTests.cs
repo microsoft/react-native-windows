@@ -116,11 +116,11 @@ namespace ReactNative.Tests.UIManager
         {
             var props = ViewManagersPropCache.GetNativePropsForView<object>(typeof(ViewManagerValueTest), typeof(ShadowNodeValueTest));
             Assert.AreEqual(5, props.Count);
-            Assert.AreEqual("number", props["Foo"]);
-            Assert.AreEqual("String", props["Bar1"]);
-            Assert.AreEqual("String", props["Bar2"]);
-            Assert.AreEqual("String", props["Qux1"]);
-            Assert.AreEqual("String", props["Qux2"]);
+            Assert.AreEqual("number", props["Foo"].Value<string>());
+            Assert.AreEqual("String", props["Bar1"].Value<string>());
+            Assert.AreEqual("String", props["Bar2"].Value<string>());
+            Assert.AreEqual("String", props["Qux1"].Value<string>());
+            Assert.AreEqual("String", props["Qux2"].Value<string>());
         }
 
         [Test]

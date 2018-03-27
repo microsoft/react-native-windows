@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace ReactNative.Modules.I18N
@@ -32,11 +32,11 @@ namespace ReactNative.Modules.I18N
         /// <summary>
         /// The constants exported by this module.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { IsRtl, I18NUtil.IsRightToLeft },
                     { LocalIdentifier, CultureInfo.CurrentCulture.Name }
