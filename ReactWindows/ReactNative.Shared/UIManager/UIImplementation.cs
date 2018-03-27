@@ -698,7 +698,7 @@ namespace ReactNative.UIManager
             return _shadowNodeRegistry.GetNode(reactTag);
         }
 
-        private IViewManager ResolveViewManager(string className)
+        internal IViewManager ResolveViewManager(string className)
         {
             return _viewManagers.Get(className);
         }

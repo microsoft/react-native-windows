@@ -9,9 +9,9 @@ using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 
 namespace ReactNative.Tests.UIManager
@@ -30,15 +30,15 @@ namespace ReactNative.Tests.UIManager
             using (var actionQueue = new ActionQueue(ex => { }))
             {
                 ArgumentNullException ex1 = Assert.Throws<ArgumentNullException>(
-                    () => new UIManagerModule(context, null, uiImplementationProvider, actionQueue));
+                    () => new UIManagerModule(context, null, uiImplementationProvider, actionQueue, UIManagerModuleOptions.None));
                 Assert.AreEqual("viewManagers", ex1.ParamName);
 
                 ArgumentNullException ex2 = Assert.Throws<ArgumentNullException>(
-                    () => new UIManagerModule(context, viewManagers, null, actionQueue));
+                    () => new UIManagerModule(context, viewManagers, null, actionQueue, UIManagerModuleOptions.None));
                 Assert.AreEqual("uiImplementationProvider", ex2.ParamName);
 
                 ArgumentNullException ex3 = Assert.Throws<ArgumentNullException>(
-                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, null));
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, null, UIManagerModuleOptions.None));
                 Assert.AreEqual("layoutActionQueue", ex3.ParamName);
             }
         }
@@ -56,7 +56,7 @@ namespace ReactNative.Tests.UIManager
             using (var actionQueue = new ActionQueue(ex => { }))
             {
                 var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.None));
 
                 var constants = module.Constants;
 
@@ -102,9 +102,61 @@ namespace ReactNative.Tests.UIManager
             using (var actionQueue = new ActionQueue(ex => { }))
             {
                 var module = await DispatcherHelpers.CallOnDispatcherAsync(
-                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue));
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.None));
 
                 var constants = module.Constants.GetMap("Test");
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("otherSelectionChange"));
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo"));
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError"));
+            }
+
+            // Ideally we should dispose, but the original dispatcher is somehow lost/etc.
+            // await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
+        }
+
+        [Test]
+        public async Task UIManagerModule_Constants_ViewManager_LazyConstants()
+        {
+            var context = new ReactContext();
+            var viewManagers = new List<IViewManager> { new TestViewManager() };
+
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
+            var uiImplementationProvider = new UIImplementationProvider();
+            using (var actionQueue = new ActionQueue(ex => { }))
+            {
+                var module = await DispatcherHelpers.CallOnDispatcherAsync(
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.LazyViewManagers));
+
+                var obj = module.Constants.GetValue("ViewManagerNames");
+                var viewManagerNames = obj as IEnumerable<string>;
+                Assert.IsNotNull(viewManagerNames);
+                Assert.AreEqual(1, viewManagerNames.Count());
+                Assert.AreEqual("Test", viewManagerNames.Single());
+            }
+
+            // Ideally we should dispose, but the original dispatcher is somehow lost/etc.
+            // await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
+        }
+
+        [Test]
+        public async Task UIManagerModule_getConstantsForViewManager()
+        {
+            var context = new ReactContext();
+            var viewManagers = new List<IViewManager> { new TestViewManager() };
+
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
+            var uiImplementationProvider = new UIImplementationProvider();
+            using (var actionQueue = new ActionQueue(ex => { }))
+            {
+                var module = await DispatcherHelpers.CallOnDispatcherAsync(
+                    () => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.LazyViewManagers));
+
+                var constants = module.getConstantsForViewManager("Test");
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("otherSelectionChange"));
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
                 Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo"));
