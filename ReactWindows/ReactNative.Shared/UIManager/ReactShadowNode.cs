@@ -4,6 +4,8 @@
 // Licensed under the MIT License.
 
 using Facebook.Yoga;
+using Newtonsoft.Json.Linq;
+using ReactNative.Json;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -14,7 +16,7 @@ namespace ReactNative.UIManager
     /// Base node class for representing the virtual tree of React nodes.
     /// Shadow nodes are used primarily for layout, therefore it encapsulates
     /// <see cref="YogaNode"/> to allow that. Instances of this class receive 
-    /// property updates from JavaScript via the <see cref="UIManagerModule"/>.
+    /// prop updates from JavaScript via the <see cref="UIManagerModule"/>.
     /// 
     /// This class allows for the native view hierarchy not to be an exact copy
     /// of the hierarchy received from JavaScript by keeping track of both
@@ -959,17 +961,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Updates the properties of the node.
+        /// Updates the props of the node.
         /// </summary>
-        /// <param name="props">The properties.</param>
-        public void UpdateProperties(ReactStylesDiffMap props)
+        /// <param name="props">The props.</param>
+        public void UpdateProps(JObject props)
         {
-            var setters = ViewManagersPropertyCache.GetNativePropertySettersForShadowNodeType(GetType());
-            foreach (var key in props.Keys)
+            var setters = ViewManagersPropCache.GetNativePropSettersForShadowNodeType(GetType());
+            foreach (var key in props.Keys())
             {
                 if (setters.TryGetValue(key, out var setter))
                 {
-                    setter.UpdateShadowNodeProperty(this, props);
+                    setter.UpdateShadowNodeProp(this, props);
                 }
             }
 
@@ -977,7 +979,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Called following property updates for node.
+        /// Called following prop updates for node.
         /// </summary>
         public virtual void OnAfterUpdateTransaction()
         {

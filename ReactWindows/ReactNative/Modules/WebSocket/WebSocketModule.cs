@@ -5,8 +5,8 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Collections;
 using ReactNative.Common;
+using ReactNative.Json;
 using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;

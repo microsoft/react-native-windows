@@ -262,13 +262,13 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
-        /// <param name="initialProps">The initial properties.</param>
+        /// <param name="initialProps">The initial props.</param>
         /// <param name="rootViewTag">Root view tag.</param>
         public void EnqueueCreateView(
             ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
-            ReactStylesDiffMap initialProps,
+            JObject initialProps,
             int rootViewTag)
         {
             // Called on layout manager thread
@@ -298,16 +298,16 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues an operation to update the properties of a view.
+        /// Enqueues an operation to update the props of a view.
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="props">The properties.</param>
-        public void EnqueueUpdateProperties(int tag, string className, ReactStylesDiffMap props)
+        /// <param name="props">The props.</param>
+        public void EnqueueUpdateProps(int tag, string className, JObject props)
         {
             // Called on layout manager thread
 
-            GetQueueByTag(tag).EnqueueUpdateProperties(tag, className, props);
+            GetQueueByTag(tag).EnqueueUpdateProps(tag, className, props);
         }
 
         /// <summary>
@@ -468,14 +468,14 @@ namespace ReactNative.UIManager
         /// Used by the native animated module to bypass the process of
         /// updating the values through the shadow view hierarchy. This method
         /// will directly update the native views, which means that updates for
-        /// layout-related properties won't be handled properly.
+        /// layout-related props won't be handled properly.
         /// </summary>
         /// <param name="tag">The view tag.</param>
-        /// <param name="props">The properties</param>
+        /// <param name="props">The props.</param>
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, JObject props)
         {
             // The native animations module is a single threaded implementation affinitized to the "main" dispatcher thread.
             // As a result all calls of this method are on main dispatcher thread.
@@ -497,7 +497,7 @@ namespace ReactNative.UIManager
                     return false;
                 }
 
-                MainUIViewOperationQueue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+                MainUIViewOperationQueue.NativeViewHierarchyManager.UpdateProps(tag, props);
             }
             else
             {
@@ -506,7 +506,7 @@ namespace ReactNative.UIManager
                 {
                     if (queue.NativeViewHierarchyManager.ViewExists(tag))
                     {
-                        queue.NativeViewHierarchyManager.UpdateProperties(tag, props);
+                        queue.NativeViewHierarchyManager.UpdateProps(tag, props);
                     }
                     else
                     {

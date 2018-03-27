@@ -110,6 +110,7 @@ namespace ReactNative
             _uiImplementationProvider = uiImplementationProvider;
             _javaScriptExecutorFactory = javaScriptExecutorFactory;
             _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
+            _lazyViewManagersEnabled = lazyViewManagersEnabled;
         }
         
         /// <summary>
@@ -376,7 +377,7 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
             rootView.Children.Clear();
-            rootView.ClearData();
+            ViewExtensions.ClearData(rootView);
 
             await DispatcherHelpers.CallOnDispatcher(() =>
             {

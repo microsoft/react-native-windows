@@ -25,7 +25,7 @@ namespace ReactNative.Animated
     /// updated as well as their children that may use parent's values to
     /// update themselves. At the end of the traversal algorithm we expect to
     /// reach a special type of the node: PropsAnimatedNode that is then 
-    /// responsible for calculating property map which can be sent to native
+    /// responsible for calculating prop map which can be sent to native
     /// view hierarchy to update the view.
     /// </summary>
     /// <remarks>
@@ -612,7 +612,7 @@ namespace ReactNative.Animated
 
             // Verify that we've visited *all* active nodes. Throw otherwise as this would mean there is a
             // cycle in animated node graph. We also take advantage of the fact that all active nodes are
-            // visited in the step above so that all the nodes properties `mActiveIncomingNodes` are set to
+            // visited in the step above so that all the nodes properties `ActiveIncomingNodes` are set to
             // zero
             if (activeNodesCount != updatedNodesCount)
             {

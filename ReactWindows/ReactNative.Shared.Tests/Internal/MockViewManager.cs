@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
-using Windows.UI.Xaml;
 
 namespace ReactNative.Tests
 {
@@ -51,7 +50,7 @@ namespace ReactNative.Tests
             }
         }
 
-        public virtual IReadOnlyDictionary<string, string> NativeProperties
+        public virtual IReadOnlyDictionary<string, string> NativeProps
         {
             get
             {
@@ -72,37 +71,37 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual DependencyObject CreateView(ThemedReactContext reactContext)
+        public virtual object CreateView(ThemedReactContext reactContext)
         {
             throw new NotImplementedException();
         }
 
-        public Dimensions GetDimensions(DependencyObject view)
+        public Dimensions GetDimensions(object view)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
+        public virtual void OnDropViewInstance(ThemedReactContext reactContext, object view)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ReceiveCommand(DependencyObject view, int commandId, JArray args)
+        public virtual void ReceiveCommand(object view, int commandId, JArray args)
         {
             throw new NotImplementedException();
         }
 
-        public void SetDimensions(DependencyObject view, Dimensions dimensions)
+        public void SetDimensions(object view, Dimensions dimensions)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void UpdateExtraData(DependencyObject root, object extraData)
+        public virtual void UpdateExtraData(object root, object extraData)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
+        public virtual void UpdateProps(object viewToUpdate, JObject props)
         {
             throw new NotImplementedException();
         }

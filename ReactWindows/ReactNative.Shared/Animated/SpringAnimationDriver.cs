@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Collections;
+using ReactNative.Json;
 using System;
 
 namespace ReactNative.Animated

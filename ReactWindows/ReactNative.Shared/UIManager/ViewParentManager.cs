@@ -32,7 +32,7 @@ namespace ReactNative.UIManager
         /// <see cref="CreateShadowNodeInstance"/>.
         /// 
         /// This method will be used in the bridge initialization phase to
-        /// collect properties exposed using the <see cref="Annotations.ReactPropAttribute"/>
+        /// collect props exposed using the <see cref="Annotations.ReactPropAttribute"/>
         /// annotation from the <see cref="ReactShadowNode"/> subclass.
         /// </summary>
         public sealed override Type ShadowNodeType
@@ -110,26 +110,27 @@ namespace ReactNative.UIManager
 
         #region IViewParentManager
 
-        void IViewParentManager.AddView(DependencyObject parent, DependencyObject child, int index)
+        void IViewParentManager.AddView(object parent, object child, int index)
         {
             var element = (TFrameworkElement)parent;
-            AddView(element, child, index);
+            var dependencyObject = ViewConversion.GetDependencyObject(child);
+            AddView(element, dependencyObject, index);
 #if WINDOWS_UWP
-            AccessibilityHelper.OnChildAdded(element, child);
+            AccessibilityHelper.OnChildAdded(element, dependencyObject);
 #endif
         }
 
-        int IViewParentManager.GetChildCount(DependencyObject parent)
+        int IViewParentManager.GetChildCount(object parent)
         {
             return GetChildCount((TFrameworkElement)parent);
         }
 
-        DependencyObject IViewParentManager.GetChildAt(DependencyObject parent, int index)
+        object IViewParentManager.GetChildAt(object parent, int index)
         {
             return GetChildAt((TFrameworkElement)parent, index);
         }
 
-        void IViewParentManager.RemoveChildAt(DependencyObject parent, int index)
+        void IViewParentManager.RemoveChildAt(object parent, int index)
         {
             var element = (TFrameworkElement)parent;
             RemoveChildAt((TFrameworkElement)parent, index);
@@ -138,7 +139,7 @@ namespace ReactNative.UIManager
 #endif
         }
 
-        void IViewParentManager.RemoveAllChildren(DependencyObject parent)
+        void IViewParentManager.RemoveAllChildren(object parent)
         {
             var element = (TFrameworkElement)parent;
             RemoveAllChildren(element);
