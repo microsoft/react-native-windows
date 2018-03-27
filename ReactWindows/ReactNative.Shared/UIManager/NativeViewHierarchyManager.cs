@@ -210,12 +210,10 @@ namespace ReactNative.UIManager
                 var view = viewManager.CreateView(themedContext);
                 _tagsToViews.Add(tag, view);
                 _tagsToViewManagers.Add(tag, viewManager);
-
-                // Uses an extension method and `Tag` property on 
-                // DependencyObject to store the tag of the view.
+              
                 ViewExtensions.SetTag(view, tag);
                 ViewExtensions.SetReactContext(view, themedContext);
-
+              
 #if WINDOWS_UWP
                 if (view is UIElement element)
                 {
