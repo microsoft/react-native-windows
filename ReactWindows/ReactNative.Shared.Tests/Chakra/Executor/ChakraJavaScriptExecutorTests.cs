@@ -46,7 +46,7 @@ namespace ReactNative.Tests.Chakra.Executor
                 );
 
                 Assert.That(
-                    () => executor.SetGlobalVariable(null, new JArray()),
+                    () => executor.SetGlobalVariable(null, "[]"),
                     Throws.ArgumentNullException.With.Property("ParamName").EqualTo("propertyName")
                 );
 

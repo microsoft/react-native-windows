@@ -14,12 +14,12 @@ namespace ReactNative.Tests
         public Func<JToken> OnFlushQueue { get; set; } = EmptyFlushQueue;
 
         public Action<string, string> OnRunScript { get; set; } = EmptyRunScript;
-        public Action<string, JToken> OnSetGlobalVariable { get; set; } = EmptySetGlobalVariable;
+        public Action<string, string> OnSetGlobalVariable { get; set; } = EmptySetGlobalVariable;
         public Action OnDispose { get; set; } = EmptyAction;
 
         private static readonly Action EmptyAction = () => { };
         private static readonly Action<string, string> EmptyRunScript = (_, __) => { };
-        private static readonly Action<string, JToken> EmptySetGlobalVariable = (_, __) => { };
+        private static readonly Action<string, string> EmptySetGlobalVariable = (_, __) => { };
         private static readonly Func<string, string, JArray, JToken> EmptyCallFunctionReturnFlushedQueue = (_, __, ___) => { throw new NotImplementedException(); };
         private static readonly Func<int, JArray, JToken> EmptyInvokeCallbackAndReturnFlushedQueue = (_, __) => { throw new NotImplementedException(); };
         private static readonly Func<JToken> EmptyFlushQueue = () => { throw new NotImplementedException(); };
@@ -31,7 +31,7 @@ namespace ReactNative.Tests
             OnRunScript(sourcePath, sourceUrl);
         }
 
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
             OnSetGlobalVariable(propertyName, value);
         }
