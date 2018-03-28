@@ -4,7 +4,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using System;
 
 namespace ReactNative.Bridge
 {
@@ -27,38 +26,6 @@ namespace ReactNative.Bridge
             {
                 _resolve.Invoke(value);
             }
-        }
-
-        public void Reject(string code, string message)
-        {
-            Reject(code, message, default(Exception));
-        }
-
-        public void Reject(string message)
-        {
-            Reject(DefaultError, message, default(Exception));
-        }
-
-        public void Reject(string code, Exception e)
-        {
-            Reject(code, e.Message, e);
-        }
-
-        public void Reject(Exception e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            Reject(DefaultError, e.Message, e);
-        }
-
-        public void Reject(string code, string message, Exception e)
-        {
-            var errorData = e?.Data;
-            var userInfo = errorData != null
-                ? JToken.FromObject(errorData) 
-                : null;
-            Reject(code, message, e?.StackTrace, userInfo);
         }
 
         public void Reject(string code, string message, string stack, JToken userInfo)
