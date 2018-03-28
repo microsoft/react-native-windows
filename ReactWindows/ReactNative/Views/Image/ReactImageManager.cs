@@ -42,36 +42,36 @@ namespace ReactNative.Views.Image
         /// <summary>
         /// The view manager event constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        public override JObject CustomDirectEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     {
                         "topLoadStart",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onLoadStart" }
                         }
                     },
                     {
                         "topLoad",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onLoad" }
                         }
                     },
                     {
                         "topLoadEnd",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onLoadEnd" }
                         }
                     },
                     {
                         "topError",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onError" }
                         }

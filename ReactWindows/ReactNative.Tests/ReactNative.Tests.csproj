@@ -101,7 +101,6 @@
     <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Bridge\ReactInstanceTests.cs" />
     <Compile Include="Bridge\Queue\ActionQueueTests.cs" />
-    <Compile Include="Internal\Constants\DictionaryHelpers.cs" />
     <Compile Include="Internal\DispatcherHelpers.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModuleTests.cs" />
     <Compile Include="Modules\Clipboard\MockClipboardInstance.cs" />
@@ -171,6 +170,9 @@
     <PackageReference Include="NUnit3TestAdapter">
       <Version>3.9.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Internal\Constants\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -234,7 +234,7 @@ namespace ReactNative.Bridge
             {
                 writer.WriteStartArray();
                 writer.WriteValue(Name);
-                JObject.FromObject(Target.Constants).WriteTo(writer);
+                Target.Constants.WriteTo(writer);
 
                 if (_methods.Count > 0)
                 {

@@ -5,7 +5,6 @@
 
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 
 namespace ReactNative.UIManager
 {
@@ -37,27 +36,27 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The commands map for the view manager.
         /// </summary>
-        IReadOnlyDictionary<string, object> CommandsMap { get; }
+        JObject CommandsMap { get; }
 
         /// <summary>
         /// The exported custom bubbling event types.
         /// </summary>
-        IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants { get; }
+        JObject ExportedCustomBubblingEventTypeConstants { get; }
 
         /// <summary>
         /// The exported custom direct event types.
         /// </summary>
-        IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants { get; }
+        JObject ExportedCustomDirectEventTypeConstants { get; }
 
         /// <summary>
         /// The exported view constants.
         /// </summary>
-        IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
+        JObject ExportedViewConstants { get; }
 
         /// <summary>
         /// The native props for the view manager.
         /// </summary>
-        IReadOnlyDictionary<string, string> NativeProps { get; }
+        JObject NativeProps { get; }
 
         /// <summary>
         /// Update the props of the given view.

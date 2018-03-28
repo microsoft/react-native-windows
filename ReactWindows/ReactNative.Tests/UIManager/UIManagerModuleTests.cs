@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
-using ReactNative.Tests.Constants;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
@@ -53,31 +53,31 @@ namespace ReactNative.Tests.UIManager
             {
                 var module = await DispatcherHelpers.CallOnDispatcherAsync(() => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.None));
  
-                var constants = module.Constants;
+                var constants = ((INativeModule)module).Constants;
 
-                Assert.AreEqual("onSelect", constants.GetMap("genericBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-                Assert.AreEqual("onSelectCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("captured"));
-                Assert.AreEqual("onChange", constants.GetMap("genericBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-                Assert.AreEqual("onChangeCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("captured"));
-                Assert.AreEqual("onTouchStart", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-                Assert.AreEqual("onTouchStartCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("captured"));
-                Assert.AreEqual("onTouchMove", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-                Assert.AreEqual("onTouchMoveCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("captured"));
-                Assert.AreEqual("onTouchEnd", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-                Assert.AreEqual("onTouchEndCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("captured"));
-                Assert.AreEqual("onMouseOver", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOver").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-                Assert.AreEqual("onMouseOverCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOver").GetMap("phasedRegistrationNames").GetValue("captured"));
-                Assert.AreEqual("onMouseOut", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("bubbled"));
-                Assert.AreEqual("onMouseOutCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("captured"));
+                Assert.AreEqual("onSelect", constants.GetMap("genericBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onSelectCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topSelect").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onChange", constants.GetMap("genericBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onChangeCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topChange").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onTouchStart", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onTouchStartCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchStart").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onTouchMove", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onTouchMoveCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchMove").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onTouchEnd", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onTouchEndCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topTouchEnd").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onMouseOver", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOver").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onMouseOverCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOver").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onMouseOut", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onMouseOutCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
 
-                Assert.AreEqual("onSelectionChange", constants.GetMap("genericDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
-                Assert.AreEqual("onLoadingStart", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingStart").GetValue("registrationName"));
-                Assert.AreEqual("onLoadingFinish", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingFinish").GetValue("registrationName"));
-                Assert.AreEqual("onLoadingError", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingError").GetValue("registrationName"));
-                Assert.AreEqual("onLayout", constants.GetMap("genericDirectEventTypes").GetMap("topLayout").GetValue("registrationName"));
-                Assert.AreEqual("onMouseEnter", constants.GetMap("genericDirectEventTypes").GetMap("topMouseEnter").GetValue("registrationName"));
-                Assert.AreEqual("onMouseLeave", constants.GetMap("genericDirectEventTypes").GetMap("topMouseLeave").GetValue("registrationName"));
-                Assert.AreEqual("onMessage", constants.GetMap("genericDirectEventTypes").GetMap("topMessage").GetValue("registrationName"));
+                Assert.AreEqual("onSelectionChange", constants.GetMap("genericDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onLoadingStart", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingStart").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onLoadingFinish", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingFinish").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onLoadingError", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingError").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onLayout", constants.GetMap("genericDirectEventTypes").GetMap("topLayout").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onMouseEnter", constants.GetMap("genericDirectEventTypes").GetMap("topMouseEnter").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onMouseLeave", constants.GetMap("genericDirectEventTypes").GetMap("topMouseLeave").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onMessage", constants.GetMap("genericDirectEventTypes").GetMap("topMessage").GetValue("registrationName").Value<string>());
             }
 
             await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
@@ -95,12 +95,12 @@ namespace ReactNative.Tests.UIManager
             {
                 var module = await DispatcherHelpers.CallOnDispatcherAsync(() => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.None));
  
-                var constants = module.Constants.GetMap("Test");
+                var constants = ((INativeModule)module).Constants.GetMap("Test");
 
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("otherSelectionChange"));
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo"));
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError"));
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("otherSelectionChange").Value<int>());
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topSelectionChange").GetValue("registrationName").Value<int>());
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo").Value<int>());
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError").Value<int>());
             }
 
             await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
@@ -118,11 +118,11 @@ namespace ReactNative.Tests.UIManager
             {
                 var module = await DispatcherHelpers.CallOnDispatcherAsync(() => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.LazyViewManagers));
 
-                var obj = module.Constants.GetValue("ViewManagerNames");
-                var viewManagerNames = obj as IEnumerable<string>;
+                var obj = ((INativeModule)module).Constants.GetValue("ViewManagerNames");
+                var viewManagerNames = obj as JArray;
                 Assert.IsNotNull(viewManagerNames);
                 Assert.AreEqual(1, viewManagerNames.Count());
-                Assert.AreEqual("Test", viewManagerNames.Single());
+                Assert.AreEqual("Test", viewManagerNames.Single().Value<string>());
             }
 
             await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
@@ -140,10 +140,10 @@ namespace ReactNative.Tests.UIManager
             {
                 var module = await DispatcherHelpers.CallOnDispatcherAsync(() => new UIManagerModule(context, viewManagers, uiImplementationProvider, actionQueue, UIManagerModuleOptions.LazyViewManagers));
                 var constants = module.getConstantsForViewManager("Test");
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("otherSelectionChange"));
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topSelectionChange").GetValue("registrationName"));
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo"));
-                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError"));
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("otherSelectionChange").Value<int>());
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topSelectionChange").GetValue("registrationName").Value<int>());
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetMap("topLoadingStart").GetValue("foo").Value<int>());
+                Assert.AreEqual(42, constants.GetMap("directEventTypes").GetValue("topLoadingError").Value<int>());
             }
 
             await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
@@ -151,7 +151,7 @@ namespace ReactNative.Tests.UIManager
 
         class NoEventsViewManager : MockViewManager
         {
-            public override IReadOnlyDictionary<string, object> CommandsMap
+            public override JObject CommandsMap
             {
                 get
                 {
@@ -159,7 +159,7 @@ namespace ReactNative.Tests.UIManager
                 }
             }
 
-            public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+            public override JObject ExportedCustomBubblingEventTypeConstants
             {
                 get
                 {
@@ -167,15 +167,7 @@ namespace ReactNative.Tests.UIManager
                 }
             }
 
-            public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
-            {
-                get
-                {
-                    return new Dictionary<string, object>();
-                }
-            }
-
-            public override IReadOnlyDictionary<string, object> ExportedViewConstants
+            public override JObject ExportedCustomDirectEventTypeConstants
             {
                 get
                 {
@@ -183,7 +175,15 @@ namespace ReactNative.Tests.UIManager
                 }
             }
 
-            public override IReadOnlyDictionary<string, string> NativeProps
+            public override JObject ExportedViewConstants
+            {
+                get
+                {
+                    return null;
+                }
+            }
+
+            public override JObject NativeProps
             {
                 get
                 {
@@ -210,15 +210,15 @@ namespace ReactNative.Tests.UIManager
 
         class TestViewManager : NoEventsViewManager
         {
-            public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+            public override JObject ExportedCustomDirectEventTypeConstants
             {
                 get
                 {
-                    return new Dictionary<string, object>
+                    return new JObject
                     {
                         { "otherSelectionChange", 42 },
-                        { "topSelectionChange", new Dictionary<string, object> { { "registrationName", 42 } } },
-                        { "topLoadingStart", new Dictionary<string, object> { { "foo", 42 } } },
+                        { "topSelectionChange", new JObject { { "registrationName", 42 } } },
+                        { "topLoadingStart", new JObject { { "foo", 42 } } },
                         { "topLoadingError", 42 },
                     };
                 }

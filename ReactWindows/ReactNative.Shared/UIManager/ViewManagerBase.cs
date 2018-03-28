@@ -37,22 +37,46 @@ namespace ReactNative.UIManager
         /// <summary>
         /// The commands map for the view manager.
         /// </summary>
+        [Obsolete("Use 'ViewCommandsMap' instead.")]
         public virtual IReadOnlyDictionary<string, object> CommandsMap { get; }
+
+        /// <summary>
+        /// The commands map for the view manager.
+        /// </summary>
+        public virtual JObject ViewCommandsMap { get; }
 
         /// <summary>
         /// The exported custom bubbling event types.
         /// </summary>
+        [Obsolete("Use 'CustomBubblingEventTypeConstants' instead.")]
         public virtual IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants { get; }
+
+        /// <summary>
+        /// The exported custom bubbling event types.
+        /// </summary>
+        public virtual JObject CustomBubblingEventTypeConstants { get; }
 
         /// <summary>
         /// The exported custom direct event types.
         /// </summary>
+        [Obsolete("Use 'CustomDirectEventTypeConstants' instead.")]
         public virtual IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants { get; }
+
+        /// <summary>
+        /// The exported custom direct event types.
+        /// </summary>
+        public virtual JObject CustomDirectEventTypeConstants { get; }
 
         /// <summary>
         /// The exported view constants.
         /// </summary>
+        [Obsolete("Use 'ViewConstants' instead.")]
         public virtual IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
+
+        /// <summary>
+        /// The exported view constants.
+        /// </summary>
+        public virtual JObject ViewConstants { get; }
 
         /// <summary>
         /// Creates a view and installs event emitters on it.
@@ -163,13 +187,47 @@ namespace ReactNative.UIManager
 
         #region IViewManager
 
-        IReadOnlyDictionary<string, string> IViewManager.NativeProps
+        JObject IViewManager.NativeProps
         {
             get
             {
                 return ViewManagersPropCache.GetNativePropsForView<TView>(GetType(), ShadowNodeType);
             }
         }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        JObject IViewManager.CommandsMap
+        {
+            get
+            {
+                return OneOf(ViewCommandsMap, CommandsMap);
+            }
+        }
+
+        JObject IViewManager.ExportedCustomBubblingEventTypeConstants
+        {
+            get
+            {
+                return OneOf(CustomBubblingEventTypeConstants, ExportedCustomBubblingEventTypeConstants);
+            }
+        }
+
+        JObject IViewManager.ExportedCustomDirectEventTypeConstants
+        {
+            get
+            {
+                return OneOf(CustomDirectEventTypeConstants, ExportedCustomDirectEventTypeConstants);
+            }
+        }
+
+        JObject IViewManager.ExportedViewConstants
+        {
+            get
+            {
+                return OneOf(ViewConstants, ExportedViewConstants);
+            }
+        }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         void IViewManager.UpdateProps(object viewToUpdate, JObject props)
         {
@@ -222,6 +280,20 @@ namespace ReactNative.UIManager
         void IViewManager.SetDimensions(object view, Dimensions dimensions)
         {
             SetDimensions((TView)view, dimensions);
+        }
+
+        #endregion
+
+        #region Constants Helpers
+
+        private static JObject OneOf(JObject json, IReadOnlyDictionary<string, object> map)
+        {
+            if (map != null && json != null)
+            {
+                throw new NotSupportedException("Do not override both JObject and dictionary constants properties.");
+            }
+
+            return json ?? (map != null ? JObject.FromObject(map) : null);
         }
 
         #endregion
