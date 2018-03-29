@@ -22,6 +22,8 @@
     "ReactWindows/ReactNative",
     "ReactWindows/ReactNative.Shared",
     "ReactWindows/ReactNative.Net46",
+    "ReactWindows/ReactNative.CodeGen",
+    "ReactWindows/ReactNative.CodeGen.sln",
     "ReactWindows/ReactNativeWebViewBridge",
     "ReactWindows/ChakraBridge",
     "Yoga/csharp/Facebook.Yoga",
