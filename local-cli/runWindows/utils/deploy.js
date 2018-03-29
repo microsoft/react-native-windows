@@ -85,6 +85,7 @@ function deployToDesktop(options) {
   const appName = identity.attributes.Name;
   const script = glob.sync(path.join(appPackageFolder, 'Add-AppDevPackage.ps1'))[0];
   const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
+  const wait = options.codegen ? '$True' : '$False';
   const execOptions = options.verbose ? { stdio: 'inherit' } : {};
 
   return new Promise(resolve => {
@@ -100,7 +101,10 @@ function deployToDesktop(options) {
     execSync(`CheckNetIsolation LoopbackExempt -a -n=${appFamilyName}`, execOptions);
 
     console.log(chalk.green('Starting the app'));
-    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`, execOptions);
+    if (options.codegen) {
+      console.info('Close the app to continue codegen...')
+    }
+    execSync(`powershell -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args} ${wait}`, execOptions);
 
     popd();
 

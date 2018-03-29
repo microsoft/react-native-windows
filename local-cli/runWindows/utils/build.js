@@ -7,7 +7,7 @@ const glob = require('glob');
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
 
-function buildSolution(slnFile, buildType, buildArch, verbose) {
+function buildSolution(slnFile, buildType, buildArch, config, verbose) {
   const minVersion = new Version(10, 0, 10586, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
   if (!allVersions.some(v => v.gte(minVersion))) {
@@ -16,7 +16,7 @@ function buildSolution(slnFile, buildType, buildArch, verbose) {
 
   console.log(chalk.green(`Building ${slnFile}`));
   const msBuildTools = MSBuildTools.findAvailableVersion();
-  msBuildTools.buildProject(slnFile, buildType, buildArch, null, verbose);
+  msBuildTools.buildProject(slnFile, buildType, buildArch, config, verbose);
 }
 
 function restoreNuGetPackages(options, slnFile, verbose) {

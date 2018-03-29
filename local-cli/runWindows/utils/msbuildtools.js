@@ -33,7 +33,7 @@ class MSBuildTools {
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
       `/p:Configuration=${buildType}`,
-      `/p:Platform=${buildArch}`,
+      `/p:Platform="${buildArch}"`,
       '/p:AppxBundle=Never'
     ];
 

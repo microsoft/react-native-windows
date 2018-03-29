@@ -153,7 +153,10 @@ function Start-Locally {
         [string] $ID, <# package.appxmanifest//Identity@name #>
 
         [Parameter(Mandatory=$false, Position=1, ValueFromPipelineByPropertyName=$true)]
-        [string[]] $argv
+        [string[]] $argv,
+
+        [Parameter(Mandatory=$false, Position=2, ValueFromPipelineByPropertyName=$true)]
+        [bool] $wait
     )
     
     $package = Get-AppxPackage $ID
@@ -165,5 +168,12 @@ function Start-Locally {
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
     $args = [system.String]::Join(",", $argv)
-    $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
+    $appPID = 0
+    $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]$appPID) | Out-Null
+    if ($wait -and $appPID -ne 0) {
+      Write-Host "WaitForPID: " $appPID
+      $proc = Get-Process -ID $appPID
+      $proc.WaitForExit()
+      Write-Host "ProcessExited: " $appPID
+    }
 }

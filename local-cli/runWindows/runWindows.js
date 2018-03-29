@@ -3,6 +3,13 @@
 const chalk = require('chalk');
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
+const codegen = require('./utils/codegen');
+
+function getConfig(options) {
+  return {
+    ReactNativeCodeGen: options.codegen ? 'True' : 'False',
+  };
+}
 
 function runWindows(config, args, options) {
   // Fix up options
@@ -29,7 +36,8 @@ function runWindows(config, args, options) {
   const buildType = options.release ? 'Release' : 'Debug';
 
   try {
-    build.buildSolution(slnFile, buildType, options.arch, options.verbose);
+    const config = getConfig(options);
+    build.buildSolution(slnFile, buildType, options.arch, config, options.verbose);
   } catch (e) {
     console.error(chalk.red(`Build failed with message ${e}. Check your build configuration.`));
     return;
@@ -41,6 +49,16 @@ function runWindows(config, args, options) {
         return deploy.deployToDevice(options);
       } else {
         return deploy.deployToDesktop(options);
+      }
+    })
+    .then(() => {
+      if (options.codegen) {
+        try
+        {
+          return codegen.generate(options);
+        } catch (e) {
+          console.error(chalk.red(`Codegen failed: ${e.message}`))
+        }
       }
     })
     .catch(e => console.error(chalk.red(`Failed to deploy: ${e.message}`)));
@@ -104,5 +122,8 @@ module.exports = {
   }, {
     command: '--no-packager',
     description: 'Do not launch packager while building'
+  }, {
+    command: '--codegen',
+    description: 'Deploys the app in codegen mode.'
   }]
 };
