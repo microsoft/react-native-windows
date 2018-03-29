@@ -92,6 +92,9 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ReactNativeCodeGen)' == 'True'">
+    <DefineConstants>$(DefineConstants);RNCODEGEN</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Accessibility\AccessibilityTapEvent.cs" />
     <Compile Include="Accessibility\AccessibilityTrait.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Chakra\Executor\NativeJavaScriptExecutor.cs" />
     <Compile Include="Accessibility\AccessibilityHelper.cs" />
     <Compile Include="Accessibility\ImportantForAccessibility.cs" />
+    <Compile Include="CodeGen\MetadataExtractorReactPackage.cs" />
     <Compile Include="DevSupport\DevOptionDialog.xaml.cs">
       <DependentUpon>DevOptionDialog.xaml</DependentUpon>
     </Compile>
@@ -113,6 +117,7 @@
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
+    <Compile Include="CodeGen\MetadataWriter.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
@@ -230,6 +235,7 @@
       <Version>4.0.0-preview00001</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

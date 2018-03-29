@@ -714,6 +714,9 @@ namespace ReactNative
             ReactContext reactContext,
             NativeModuleRegistry.Builder nativeRegistryBuilder)
         {
+#if RNCODEGEN
+            reactPackage = new CodeGen.MetadataExtractorReactPackage(reactPackage);
+#endif
             foreach (var nativeModule in reactPackage.CreateNativeModules(reactContext))
             {
                 nativeRegistryBuilder.Add(nativeModule);
