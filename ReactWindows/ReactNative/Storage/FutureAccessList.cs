@@ -24,6 +24,15 @@ namespace ReactNative.Storage
         public static string Scheme => "urn:future-access-list:";
 
         /// <summary>
+        /// Checks the syntax of the FAL URI. It doesn't check if
+        /// this URI corresponds to an entry in the FAL.
+        /// </summary>
+        public static bool IsValidURI(string uri)
+        {
+            return uri.StartsWith(Scheme);
+        }
+
+        /// <summary>
         /// Stores a file or folder object in the future access list cache.
         /// The capacity of the cache is limited (up to about 1000 items) and
         /// if necessary old items can be removed to free space for new ones.
@@ -51,14 +60,8 @@ namespace ReactNative.Storage
         /// </summary>
         public static async Task<StorageFile> GetFileAsync(string uri)
         {
-            if (TryExtractAccessToken(uri, out var token))
-            {
-                return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
-            }
-            else
-            {
-                throw new ArgumentException("Invalid future access list URI: " + uri);
-            }
+            var token = ExtractAccessToken(uri);
+            return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
         }
 
         /// <summary>
@@ -67,13 +70,23 @@ namespace ReactNative.Storage
         /// </summary>
         public static async Task<StorageFolder> GetFolderAsync(string uri)
         {
+            var token = ExtractAccessToken(uri);
+            return await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(token);
+        }
+
+        /// <summary>
+        /// Checks if FAL contains a file or folder with the given URI.
+        /// Returns false If the URI is invalid.
+        /// </summary>
+        public static bool ContainsItem(string uri)
+        {
             if (TryExtractAccessToken(uri, out var token))
             {
-                return await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(token);
+                return StorageApplicationPermissions.FutureAccessList.ContainsItem(token);
             }
             else
             {
-                throw new ArgumentException("Invalid future access list URI: " + uri);
+                return false;
             }
         }
 
@@ -88,6 +101,18 @@ namespace ReactNative.Storage
             {
                 token = Uri.UnescapeDataString(uri.Substring(Scheme.Length));
                 return true;
+            }
+        }
+
+        private static string ExtractAccessToken(string uri)
+        {
+            if (!TryExtractAccessToken(uri, out var token))
+            {
+                throw new ArgumentException("Invalid future access list URI: " + uri);
+            }
+            else
+            {
+                return token;
             }
         }
 
