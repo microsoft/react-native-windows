@@ -508,7 +508,7 @@ namespace ReactNative.Accessibility
                 // Force a full traversal of children if current node has been hiding them (or not sure),
                 // else just follow the "dirty" nodes, if any
                 traverseAllChildren = GetCurrentlyHidingChildren(element) != ElementAccessibilityContext.HidingChildren.No;
-                SetChildrenAccessibilityViewAndNameForPeer(elementPeer, true, traverseAllChildren);
+                SetChildrenAccessibilityViewAndNameForPeer(elementPeer, false, traverseAllChildren);
             }
                
             SetCurrentlyHidingChildren(element, willHideChildren ? ElementAccessibilityContext.HidingChildren.Yes : ElementAccessibilityContext.HidingChildren.No);
