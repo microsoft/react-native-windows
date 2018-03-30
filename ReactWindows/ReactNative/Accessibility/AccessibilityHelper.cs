@@ -156,8 +156,21 @@ namespace ReactNative.Accessibility
             return EnsureElementAccessibilityContext(element).Dirty;
         }
 
-        private static void MarkElementDirty(UIElement element)
+        private static void MarkElementDirty(UIElement element, bool skipIfNoPeer = false)
         {
+            // Retrieve automation peer
+            var peer = FrameworkElementAutomationPeer.FromElement(element);
+
+            if (peer == null)
+            {
+                if (skipIfNoPeer)
+                {
+                    return;
+                }
+
+                throw new InvalidOperationException("Element has no automation peer");
+            }
+
 #if PERF_LOG
             if (!GetDirty(element))
             {
@@ -166,14 +179,6 @@ namespace ReactNative.Accessibility
 #endif
             // Mark element itself
             SetDirty(element, true);
-
-            // Retrieve automation peer
-            var peer = FrameworkElementAutomationPeer.FromElement(element);
-
-            if (peer == null)
-            {
-                throw new InvalidOperationException("Element has no automation peer");
-            }
 
             // Go up the parent chain
             peer = peer.Navigate(AutomationNavigationDirection.Parent) as AutomationPeer;
@@ -218,8 +223,8 @@ namespace ReactNative.Accessibility
             // No guarantee all children are hidden anymore due to additional child, reset the flag
             SetCurrentlyHidingChildren(parent, ElementAccessibilityContext.HidingChildren.NotSure);
 
-            // Mark the parent dirty
-            MarkElementDirty(parent);
+            // Mark the parent dirty (or skip if there is no associated peer available)
+            MarkElementDirty(parent, true);
         }
 
         /// <summary>
@@ -232,8 +237,8 @@ namespace ReactNative.Accessibility
             // Call UpdateLayout() on parent to make sure parent/child relationship is updated.
             parent.UpdateLayout();
 
-            // Mark the parent dirty
-            MarkElementDirty(parent);
+            // Mark the parent dirty (or skip if there is no associated peer available)
+            MarkElementDirty(parent, true);
         }
 
         /// <summary>
