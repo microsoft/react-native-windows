@@ -21,7 +21,7 @@ namespace ReactNative.Modules.Core
     /// A simple action queue that allows us to control the order certain
     /// callbacks are executed within a given frame.
     /// </summary>
-    public class ReactChoreographer : IDisposable
+    public class ReactChoreographer : IDisposable, IReactChoreographer
     {
 #if WINDOWS_UWP
         private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
@@ -33,12 +33,12 @@ namespace ReactNative.Modules.Core
         private const int InactiveFrameCount = 120;
 
         private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
-        private static ReactChoreographer s_instance;
+        private static IReactChoreographer s_instance;
 
         private readonly object _gate = new object();
         private readonly HashSet<string> _callbackKeys = new HashSet<string>();
 
-        private FrameEventArgs _frameEventArgs;
+        private IMutableFrameEventArgs _frameEventArgs;
         private IMutableFrameEventArgs _mutableReference;
         private Timer _timer;
         private bool _isSubscribed;
@@ -66,28 +66,28 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// For use by <see cref="UIManager.UIManagerModule"/>. 
         /// </summary>
-        public event EventHandler<FrameEventArgs> DispatchUICallback;
+        public event EventHandler<IMutableFrameEventArgs> DispatchUICallback;
 
         /// <summary>
         /// For use by <see cref="Animated.NativeAnimatedModule"/>. 
         /// </summary>
-        public event EventHandler<FrameEventArgs> NativeAnimatedCallback;
+        public event EventHandler<IMutableFrameEventArgs> NativeAnimatedCallback;
 
         /// <summary>
         /// For events that make JavaScript do things.
         /// </summary>
-        public event EventHandler<FrameEventArgs> JavaScriptEventsCallback;
+        public event EventHandler<IMutableFrameEventArgs> JavaScriptEventsCallback;
 
         /// <summary>
         /// Event used to trigger the idle callback. Called after all UI work has been
         /// dispatched to JavaScript.
         /// </summary>
-        public event EventHandler<FrameEventArgs> IdleCallback;
+        public event EventHandler<IMutableFrameEventArgs> IdleCallback;
 
         /// <summary>
         /// The choreographer instance.
         /// </summary>
-        public static ReactChoreographer Instance
+        public static IReactChoreographer Instance
         {
             get
             {
@@ -104,7 +104,7 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// Factory for choreographer instances associated with non main-view dispatchers.
         /// </summary>
-        public static ReactChoreographer CreateSecondaryInstance(CoreApplicationView view)
+        public static IReactChoreographer CreateSecondaryInstance(CoreApplicationView view)
         {
             return new ReactChoreographer(view);
         }

@@ -26,7 +26,7 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
-        private readonly ReactContext _reactContext;
+        private readonly IReactContext _reactContext;
         private readonly ViewManagerRegistry _viewManagerRegistry;
 
         private class QueueInstanceInfo
@@ -55,7 +55,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagerRegistry">
         /// The view manager registry.
         /// </param>
-        public UIViewOperationQueue(ReactContext reactContext, ViewManagerRegistry viewManagerRegistry)
+        public UIViewOperationQueue(IReactContext reactContext, ViewManagerRegistry viewManagerRegistry)
         {
             _reactContext = reactContext;
             _viewManagerRegistry = viewManagerRegistry;
@@ -122,7 +122,7 @@ namespace ReactNative.UIManager
                 CoreApplicationView foundView = CoreApplication.Views.First(v => v.Dispatcher == rootViewDispatcher);
 
                 // Create new ReactChoreographer for this view/dispatcher. It will only be used for its DispatchUICallback services
-                ReactChoreographer reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
+                IReactChoreographer reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
 
                 queueInfo = new QueueInstanceInfo()
                 {

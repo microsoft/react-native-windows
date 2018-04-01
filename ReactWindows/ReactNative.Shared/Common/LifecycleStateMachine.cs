@@ -17,14 +17,14 @@ namespace ReactNative.Common
 #endif
         private readonly object _lifecycleStateLock = new object();
         private LifecycleState _lifecycleState;
-        private ReactContext _currentReactContext;
+        private IReactContext _currentReactContext;
 
         public LifecycleStateMachine(LifecycleState initialLifecycleState)
         {
             _lifecycleState = initialLifecycleState;
         }
 
-        public void SetContext(ReactContext _reactContext)
+        public void SetContext(IReactContext _reactContext)
         {
             lock (_lifecycleStateLock)
             {

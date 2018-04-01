@@ -221,7 +221,12 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ReactNative.Interfaces\ReactNative.Interfaces.csproj">
+      <Project>{d7c86d96-6c8a-4fbb-ba20-98dea7f87c84}</Project>
+      <Name>ReactNative.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\ReactNative.Shared\ReactNative.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

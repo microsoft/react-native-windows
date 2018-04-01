@@ -25,7 +25,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagers">
         /// The view manager registry.
         /// </param>
-        public UIViewOperationQueue(ReactContext reactContext, ViewManagerRegistry viewManagers) :
+        public UIViewOperationQueue(IReactContext reactContext, ViewManagerRegistry viewManagers) :
             base(reactContext, new NativeViewHierarchyManager(viewManagers, DispatcherHelpers.MainDispatcher, null), ReactChoreographer.Instance)
         {
         }

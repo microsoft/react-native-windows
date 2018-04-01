@@ -362,7 +362,7 @@ namespace ReactNative.Tests.UIManager.Events
             return context;
         }
 
-        private static ReactInstance CreateReactInstance(ReactContext reactContext, IJavaScriptExecutor executor)
+        private static ReactInstance CreateReactInstance(IReactContext reactContext, IJavaScriptExecutor executor)
         {
             var registry = new NativeModuleRegistry.Builder(reactContext).Build();
 
@@ -377,7 +377,7 @@ namespace ReactNative.Tests.UIManager.Events
             return instance;
         }
 
-        private static IDisposable BlockJavaScriptThread(ReactContext reactContext)
+        private static IDisposable BlockJavaScriptThread(IReactContext reactContext)
         {
             var enter = new AutoResetEvent(false);
             var exit = new AutoResetEvent(false);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -22,7 +22,7 @@ namespace ReactNative.Modules.NetInfo
         /// Instantiates the <see cref="NetInfoModule"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        public NetInfoModule(ReactContext reactContext)
+        public NetInfoModule(IReactContext reactContext)
             : this(new DefaultNetworkInformation(), reactContext)
         {
         }
@@ -32,7 +32,7 @@ namespace ReactNative.Modules.NetInfo
         /// </summary>
         /// <param name="networkInfo">The network information.</param>
         /// <param name="reactContext">The React context.</param>
-        public NetInfoModule(INetworkInformation networkInfo, ReactContext reactContext)
+        public NetInfoModule(INetworkInformation networkInfo, IReactContext reactContext)
             : base(reactContext)
         {
             _networkInfo = networkInfo;

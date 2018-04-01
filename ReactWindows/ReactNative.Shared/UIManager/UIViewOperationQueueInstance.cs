@@ -37,8 +37,8 @@ namespace ReactNative.UIManager
         private readonly double[] _measureBuffer = new double[4];
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
-        private readonly ReactContext _reactContext;
-        private readonly ReactChoreographer _reactChoreographer;
+        private readonly IReactContext _reactContext;
+        private readonly IReactChoreographer _reactChoreographer;
 
         private readonly IList<Action> _nonBatchedOperations = new List<Action>();
 
@@ -55,7 +55,7 @@ namespace ReactNative.UIManager
         /// <param name="reactChoreographer">
         /// The choreographer associated with this instance.
         /// </param>
-        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChoreographer)
+        public UIViewOperationQueueInstance(IReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, IReactChoreographer reactChoreographer)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;
@@ -480,7 +480,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void OnRenderingSafe(object sender, FrameEventArgs e)
+        private void OnRenderingSafe(object sender, IMutableFrameEventArgs e)
         {
             try
             {
@@ -492,7 +492,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void OnRendering(object sender, FrameEventArgs e)
+        private void OnRendering(object sender, IMutableFrameEventArgs e)
         {
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "dispatchNonBatchedUIOperations").Start())
             {

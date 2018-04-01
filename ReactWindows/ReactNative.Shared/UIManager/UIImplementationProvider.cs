@@ -23,7 +23,7 @@ namespace ReactNative.UIManager
         /// <param name="eventDispatcher">The event dispatcher.</param>
         /// <returns>The <see cref="UIImplementation"/> instance.</returns>
         public UIImplementation Create(
-            ReactContext reactContext,
+            IReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
             EventDispatcher eventDispatcher)
         {

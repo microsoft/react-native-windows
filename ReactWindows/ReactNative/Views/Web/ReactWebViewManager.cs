@@ -35,13 +35,13 @@ namespace ReactNative.Views.Web
         private const string BridgeName = "__REACT_WEB_VIEW_BRIDGE";
 
         private readonly ConcurrentDictionary<WebView, WebViewData> _webViewData = new ConcurrentDictionary<WebView, WebViewData>();
-        private readonly ReactContext _context;
+        private readonly IReactContext _context;
 
         /// <summary>
         /// Instantiates the <see cref="ReactWebViewManager"/>.
         /// </summary>
         /// <param name="context">The React context.</param>
-        public ReactWebViewManager(ReactContext context)
+        public ReactWebViewManager(IReactContext context)
         {
             _context = context;
         }

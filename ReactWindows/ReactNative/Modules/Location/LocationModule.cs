@@ -21,7 +21,7 @@ namespace ReactNative.Modules.Location
     {
         private readonly SerialDisposable _currentSubscription = new SerialDisposable();
 
-        public LocationModule(ReactContext reactContext) 
+        public LocationModule(IReactContext reactContext) 
             : base(reactContext)
         {
         }

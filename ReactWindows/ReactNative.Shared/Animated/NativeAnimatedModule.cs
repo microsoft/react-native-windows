@@ -68,7 +68,7 @@ namespace ReactNative.Animated
     {
         private readonly object _operationsGate = new object();
 
-        private EventHandler<FrameEventArgs> _animatedFrameCallback;
+        private EventHandler<IMutableFrameEventArgs> _animatedFrameCallback;
 
         private List<Action<NativeAnimatedNodesManager>> _operations = 
             new List<Action<NativeAnimatedNodesManager>>();
@@ -81,7 +81,7 @@ namespace ReactNative.Animated
         /// Instantiates the <see cref="NativeAnimatedModule"/>. 
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        public NativeAnimatedModule(ReactContext reactContext)
+        public NativeAnimatedModule(IReactContext reactContext)
             : base(reactContext)
         {
         }

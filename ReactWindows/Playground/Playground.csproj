@@ -209,6 +209,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReactNative.Interfaces\ReactNative.Interfaces.csproj">
+      <Project>{d7c86d96-6c8a-4fbb-ba20-98dea7f87c84}</Project>
+      <Name>ReactNative.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReactNative\ReactNative.csproj">
       <Project>{c7673ad5-e3aa-468c-a5fd-fa38154e205c}</Project>
       <Name>ReactNative</Name>

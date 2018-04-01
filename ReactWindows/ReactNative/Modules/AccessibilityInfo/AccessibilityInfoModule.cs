@@ -41,7 +41,7 @@ namespace ReactNative.Modules.Accessibilityinfo
             };
         }
 
-        public AccessibilityInfoModule(ReactContext reactContext)
+        public AccessibilityInfoModule(IReactContext reactContext)
             : base(reactContext)
         {
 

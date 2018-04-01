@@ -38,7 +38,7 @@ namespace ReactNative.Modules.Core
         /// Instantiates the <see cref="Timing"/> module.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        public Timing(ReactContext reactContext)
+        public Timing(IReactContext reactContext)
             : base(reactContext)
         {
             _timers = new HeapBasedPriorityQueue<TimerData>(
@@ -252,7 +252,7 @@ namespace ReactNative.Modules.Core
             }
         }
 
-        private void DoFrameIdleCallbackSafe(object sender, FrameEventArgs e)
+        private void DoFrameIdleCallbackSafe(object sender, IMutableFrameEventArgs e)
         {
             try
             {
@@ -264,7 +264,7 @@ namespace ReactNative.Modules.Core
             }
         }
 
-        private void DoFrameIdleCallback(object sender, FrameEventArgs e)
+        private void DoFrameIdleCallback(object sender, IMutableFrameEventArgs e)
         {
             if (Volatile.Read(ref _suspended))
             {

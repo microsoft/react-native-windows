@@ -38,7 +38,7 @@ namespace ReactNative.UIManager
         /// <param name="layoutActionQueue">The layout action queue.</param>
         /// <param name="options">Options for the <see cref="UIManagerModule"/>.</param>
         public UIManagerModule(
-            ReactContext reactContext,
+            IReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementationProvider uiImplementationProvider,
             IActionQueue layoutActionQueue,

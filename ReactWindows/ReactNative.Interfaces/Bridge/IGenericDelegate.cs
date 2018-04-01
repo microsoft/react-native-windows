@@ -3,7 +3,7 @@
 
 namespace ReactNative.Bridge
 {
-    interface IGenericDelegate
+    public interface IGenericDelegate
     {
         object Invoke(object[] args);
     }
