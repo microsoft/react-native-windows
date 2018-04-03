@@ -116,6 +116,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets the display mode of the element.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="display">The display mode.</param>
+        [ReactProp(ViewProps.Display)]
+        public void SetDisplay(TFrameworkElement view, string display)
+        {
+            view.Visibility = display == "none" ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
         /// Sets the manipulation mode for the view.
         /// </summary>
         /// <param name="view">The view instance.</param>

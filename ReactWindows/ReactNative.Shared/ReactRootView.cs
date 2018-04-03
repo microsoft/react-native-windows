@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
 #else
 using System.Windows;
 #endif
@@ -194,6 +195,28 @@ namespace ReactNative
 
             return result;
         }
+
+#if WINDOWS_UWP
+        /// <summary>
+        /// Override ensuring the creation of an AutomationPeer for ReactRootView 
+        /// root view.
+        /// </summary>
+        /// <returns>The new AutomationPeer.</returns>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            //
+            // Older Windows OS'es (RS1, for ex.) don't create automation peers for normal Canvas elements.
+            // This is not an issue in general, but for ReactRootView in particular is, since it is the root of accessibility traversal
+            // done in AccessibilityHelper and so it needs a peer.
+            var peer = base.OnCreateAutomationPeer();
+            if (peer == null)
+            {
+                // Fallback to creating peer if base didn't provide one.
+                peer = new FrameworkElementAutomationPeer(this);
+            }
+            return peer;
+        }
+#endif
 
         internal void CleanupSafe()
         {

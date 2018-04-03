@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -92,6 +92,17 @@ namespace ReactNative.UIManager
         public void SetZIndex(TFrameworkElement view, int zIndex)
         {
             Canvas.SetZIndex(view, zIndex);
+        }
+
+        /// <summary>
+        /// Sets the display mode of the element.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="display">The display mode.</param>
+        [ReactProp(ViewProps.Display)]
+        public void SetDisplay(TFrameworkElement view, string display)
+        {
+            view.Visibility = display == "none" ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
