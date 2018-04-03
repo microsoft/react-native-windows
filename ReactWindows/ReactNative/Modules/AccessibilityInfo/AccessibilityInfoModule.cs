@@ -3,6 +3,7 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System.Collections.Generic;
@@ -48,11 +49,11 @@ namespace ReactNative.Modules.Accessibilityinfo
 
         public override string Name => "AccessibilityInfo";
 
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     // TODO: It would be better to have a sync GethIsHighContrast,
                     // but this is not supported by the framework at the moment.

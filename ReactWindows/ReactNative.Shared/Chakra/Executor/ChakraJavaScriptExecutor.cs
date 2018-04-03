@@ -174,7 +174,7 @@ namespace ReactNative.Chakra.Executor
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
@@ -267,6 +267,11 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue ConvertJson(JToken token)
         {
             var jsonString = token.ToString(Formatting.None);
+            return ConvertJson(jsonString);
+        }
+
+        private JavaScriptValue ConvertJson(string jsonString)
+        {
             var jsonStringValue = JavaScriptValue.FromString(jsonString);
             jsonStringValue.AddRef();
             var parseFunction = EnsureParseFunction();

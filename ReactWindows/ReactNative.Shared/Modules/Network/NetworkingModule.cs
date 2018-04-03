@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Collections;
+using ReactNative.Json;
 using ReactNative.Modules.Core;
 using System;
 using System.Collections.Generic;
@@ -236,23 +236,35 @@ namespace ReactNative.Modules.Network
             string responseType,
             CancellationToken token)
         {
+            try
+            {
 #if WINDOWS_UWP
-            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().ConfigureAwait(false);
-            var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
+                var storageFile = await StorageFile.GetFileFromPathAsync(uri.LocalPath).AsTask().ConfigureAwait(false);
+                var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
 #else
-            var storageFile = await FileSystem.Current.GetFileFromPathAsync(uri.ToString()).ConfigureAwait(false);
-            var input = await storageFile.ReadAllTextAsync().ConfigureAwait(false);
-            var byteArray = Encoding.UTF8.GetBytes(input);
-            var inputStream = new MemoryStream(byteArray);
+                var storageFile = await FileSystem.Current.GetFileFromPathAsync(uri.ToString()).ConfigureAwait(false);
+                var input = await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+                var byteArray = Encoding.UTF8.GetBytes(input);
+                var inputStream = new MemoryStream(byteArray);
 #endif
-            request.Content = new HttpStreamContent(inputStream);
-            await ProcessRequestAsync(
-                requestId,
-                useIncrementalUpdates,
-                timeout,
-                request,
-                responseType,
-                token).ConfigureAwait(false);
+                request.Content = new HttpStreamContent(inputStream);
+                await ProcessRequestAsync(
+                    requestId,
+                    useIncrementalUpdates,
+                    timeout,
+                    request,
+                    responseType,
+                    token).ConfigureAwait(false);
+            }
+            catch(Exception ex)
+            {
+                if (_shuttingDown)
+                {
+                    return;
+                }
+
+                OnRequestError(requestId, ex.Message, false);
+            }
         }
 
         private async Task ProcessRequestAsync(

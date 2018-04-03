@@ -6,7 +6,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Collections;
+using ReactNative.Json;
 using System;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
@@ -124,9 +124,9 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
-            _injectedObjects.Add(propertyName, value.ToString(Formatting.None));
+            _injectedObjects.Add(propertyName, value);
         }
 
         public void SetCallSyncHook(Func<int, int, JArray, JToken> nativeCallSyncHook)

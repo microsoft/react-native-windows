@@ -8,7 +8,6 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -41,19 +40,19 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// The exported custom bubbling event types.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+        public override JObject CustomBubblingEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>()
+                return new JObject
                 {
                     {
                         "topSubmitEditing",
-                        new Dictionary<string, object>()
+                        new JObject
                         {
                             {
                                 "phasedRegistrationNames",
-                                new Dictionary<string, string>()
+                                new JObject
                                 {
                                     { "bubbled" , "onSubmitEditing" },
                                     { "captured" , "onSubmitEditingCapture" }
@@ -63,11 +62,11 @@ namespace ReactNative.Views.TextInput
                     },
                     {
                         "topEndEditing",
-                        new Dictionary<string, object>()
+                        new JObject
                         {
                             {
                                 "phasedRegistrationNames",
-                                new Dictionary<string, string>()
+                                new JObject
                                 {
                                     { "bubbled" , "onEndEditing" },
                                     { "captured" , "onEndEditingCapture" }
@@ -82,11 +81,11 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// The commands map for the <see cref="ReactTextInputManager"/>.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>()
+                return new JObject
                 {
                     { "focusTextInput", FocusTextInput },
                     { "blurTextInput", BlurTextInput },
@@ -167,7 +166,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the default text placeholder property on the <see cref="ReactTextBox"/>.
+        /// Sets the default text placeholder prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="placeholder">The placeholder text.</param>
@@ -178,7 +177,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// Sets the placeholderTextColor prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="color">The placeholder text color.</param>
@@ -231,7 +230,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the text alignment property on the <see cref="ReactTextBox"/>.
+        /// Sets the text alignment prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="alignment">The text alignment.</param>
@@ -242,7 +241,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the text alignment property on the <see cref="ReactTextBox"/>.
+        /// Sets the text alignment prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="alignment">The text alignment.</param>
@@ -253,7 +252,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the editablity property on the <see cref="ReactTextBox"/>.
+        /// Sets the editablity prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="editable">The editable flag.</param>
@@ -289,7 +288,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the max character length property on the <see cref="ReactTextBox"/>.
+        /// Sets the max character length prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="maxCharLength">The max length.</param>

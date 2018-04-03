@@ -6,7 +6,6 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
-using System.Collections.Generic;
 
 namespace ReactNative.Modules.AppState
 {
@@ -50,11 +49,11 @@ namespace ReactNative.Modules.AppState
         /// <summary>
         /// The constants exported by this module.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "initialAppState", _appState }
                 };

@@ -69,6 +69,7 @@ namespace ReactNative
         private readonly UIImplementationProvider _uiImplementationProvider;
         private readonly Func<IJavaScriptExecutor> _javaScriptExecutorFactory;
         private readonly Action<Exception> _nativeModuleCallExceptionHandler;
+        private readonly bool _lazyViewManagersEnabled;
 
         private LifecycleStateMachine _lifecycleStateMachine;
         private CancellationDisposable _suspendCancellation;
@@ -83,7 +84,8 @@ namespace ReactNative
             LifecycleState initialLifecycleState,
             UIImplementationProvider uiImplementationProvider,
             Func<IJavaScriptExecutor> javaScriptExecutorFactory,
-            Action<Exception> nativeModuleCallExceptionHandler)
+            Action<Exception> nativeModuleCallExceptionHandler,
+            bool lazyViewManagersEnabled)
         {
             if (packages == null)
                 throw new ArgumentNullException(nameof(packages));
@@ -108,8 +110,9 @@ namespace ReactNative
             _uiImplementationProvider = uiImplementationProvider;
             _javaScriptExecutorFactory = javaScriptExecutorFactory;
             _nativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
+            _lazyViewManagersEnabled = lazyViewManagersEnabled;
         }
-
+        
         /// <summary>
         /// The developer support manager for the instance.
         /// </summary>
@@ -374,7 +377,7 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
             rootView.Children.Clear();
-            rootView.ClearData();
+            ViewExtensions.ClearData(rootView);
 
             await DispatcherHelpers.CallOnDispatcher(() =>
             {
@@ -668,7 +671,8 @@ namespace ReactNative
                 var coreModulesPackage = new CoreModulesPackage(
                     this,
                     InvokeDefaultOnBackPressed,
-                    _uiImplementationProvider);
+                    _uiImplementationProvider,
+                    _lazyViewManagersEnabled);
 
                 ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
             }

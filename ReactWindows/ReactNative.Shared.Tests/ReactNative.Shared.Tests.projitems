@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Chakra\Executor\ChakraJavaScriptExecutorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\AssertEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\ConstantsHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\JavaScriptHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockEvent.cs" />
@@ -25,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MockReactInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MockViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TestReactQueueConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\AppState\AppStateModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimersTests.cs" />
@@ -34,13 +36,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Network\TaskCancellationManagerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\WebSocket\WebSocketModuleTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensionsTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropertySetterTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactStylesDiffMapTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropSetterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\RootViewHelperTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewAtIndexTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerRegistryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropertyCacheTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagersPropCacheTests.cs" />
   </ItemGroup>
 </Project>
