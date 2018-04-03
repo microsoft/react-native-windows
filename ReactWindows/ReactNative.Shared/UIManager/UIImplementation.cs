@@ -117,11 +117,10 @@ namespace ReactNative.UIManager
         /// Unregisters a root view with the given tag.
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
-        /// <param name="cleanupCompleted">Callback called when cleanup completes.</param>
-        public void RemoveRootView(int rootViewTag, Action cleanupCompleted)
+        public Task RemoveRootViewAsync(int rootViewTag)
         {
             _shadowNodeRegistry.RemoveRootNode(rootViewTag);
-            _operationsQueue.EnqueueRemoveRootView(rootViewTag, cleanupCompleted);
+            return _operationsQueue.RemoveRootViewAsync(rootViewTag);
         }
 
         /// <summary>

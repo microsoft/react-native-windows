@@ -43,6 +43,17 @@ namespace ReactNative.UIManager
         private readonly ConcurrentDictionary<int, DelayedCleanupTask> _rootViewCleanupTasks =
             new ConcurrentDictionary<int, DelayedCleanupTask>();
 
+        internal Task GetRootViewCleanupTask(int rootTag)
+        {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
+            // Prepare a cleanup task
+            var ct = new DelayedCleanupTask();
+            _rootViewCleanupTasks.AddOrUpdate(rootTag, ct, (k, v) => throw new InvalidOperationException("Duplicate root view removal"));
+            return ct.Task;
+        }
+
         /// <summary>
         /// Instantiates a <see cref="UIManagerModule"/>.
         /// </summary>
@@ -191,22 +202,6 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Method returning a task that completes when a root view (and a lot of dependent resources on the same dispatcher thread)
-        /// completes its cleanup.
-        /// </summary>
-        /// <param name="rootTag">The root view react tag.</param>
-        public Task GetRootViewCleanupTask(int rootTag)
-        {
-            // Called on main dispatcher thread
-            DispatcherHelpers.AssertOnDispatcher();
-
-            // Prepare a cleanup task
-            var ct = new DelayedCleanupTask();
-            _rootViewCleanupTasks.AddOrUpdate(rootTag, ct, (k, v) => throw new InvalidOperationException("Duplicate root view removal"));
-            return ct.Task;
-        }
-
-        /// <summary>
         /// Schedule a block to be executed on the UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>
@@ -257,7 +252,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
         [ReactMethod]
-        public void removeRootView(int rootViewTag)
+        public async void removeRootView(int rootViewTag)
         {
             // A cleanup task should be waiting here
             DelayedCleanupTask cleanupTask;
@@ -266,7 +261,9 @@ namespace ReactNative.UIManager
                 throw new InvalidOperationException("Unexpected removeRootView");
             }
 
-            _uiImplementation.RemoveRootView(rootViewTag, cleanupTask.Complete);
+            await _uiImplementation.RemoveRootViewAsync(rootViewTag);
+
+            cleanupTask.Complete();
         }
 
         /// <summary>

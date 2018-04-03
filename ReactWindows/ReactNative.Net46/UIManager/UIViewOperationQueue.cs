@@ -4,6 +4,7 @@
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -56,14 +57,13 @@ namespace ReactNative.UIManager
         /// Enqueues an operation to remove the root view.
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
-        /// <param name="cleanupComplete">Callback called when cleanup completes.</param>
-        public void EnqueueRemoveRootView(int rootViewTag, Action cleanupComplete)
+        public Task RemoveRootViewAsync(int rootViewTag)
         {
             EnqueueRemoveRootView(rootViewTag);
 
             // WPF implementation is single-threaded as far as UI dispatcher threads are concerned.
             // We can call the callback safely at this point.
-            cleanupComplete?.Invoke();
+            return Task.CompletedTask;
         }
 
         /// <summary>
