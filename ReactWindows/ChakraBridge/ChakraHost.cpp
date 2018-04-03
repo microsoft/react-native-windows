@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "ChakraHost.h"
 #include "JsIndexedModulesUnbundle.h"
-#include "JsStringify.h"
 #include "SerializedSourceContext.h"
 #include <stdint.h>
 
@@ -57,7 +56,13 @@ JsValueRef CALLBACK NativeLoggingCallback(JsValueRef callee, bool isConstructCal
     JsNumberToDouble(arguments[2], &logLevelIndex);
     swprintf(buff, 56, L"[JS %s] ", LogLevel((int)logLevelIndex));
     OutputDebugStringW(buff);
-    StringifyJsString(arguments[1]);
+    
+	// Memory is owned by JS engine and is GC'ed later.
+    const wchar_t* szResult;
+    size_t sResult;
+    JsStringToPointer(arguments[1], &szResult, &sResult);
+    OutputDebugStringW(szResult);
+
     OutputDebugStringW(L"\n");
 #endif
     return JS_INVALID_REFERENCE;
@@ -248,7 +253,7 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
     IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
 
     // Invoke the sync callback
-    String^ result = host->callSyncHandler(moduleId, methodId, ref new String(argsBuf, bufLen));
+    String^ result = host->callSyncHandler((int)moduleId, (int)methodId, ref new String(argsBuf, (unsigned int)bufLen));
 
     // Return the parsed JSON result
     JsValueRef stringifiedResult;
