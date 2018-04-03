@@ -182,7 +182,7 @@ namespace ReactNative
         /// <returns>
         /// A task to await the React context.
         /// </returns>
-        public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
+        public async Task<IReactContext> GetReactContextAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())

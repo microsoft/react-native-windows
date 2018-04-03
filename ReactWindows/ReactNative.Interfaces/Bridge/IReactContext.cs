@@ -10,22 +10,6 @@ namespace ReactNative.Bridge
     public interface IReactContext : IAsyncDisposable
     {
         /// <summary>
-        /// The React instance associated with the context.
-        /// </summary>
-        IReactInstance ReactInstance
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Checks if the context has an active <see cref="IReactInstance"/>.
-        /// </summary>
-        bool HasActiveReactInstance
-        {
-            get;
-        }
-
-        /// <summary>
         /// The exception handler for native module calls.
         /// </summary>
         Action<Exception> NativeModuleCallExceptionHandler
@@ -175,16 +159,6 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="exception"></param>
         void HandleException(Exception exception);
-
-        /// <summary>
-        /// Set and initialize the <see cref="IReactInstance"/> instance
-        /// for this context.
-        /// </summary>
-        /// <param name="instance">The React instance.</param>
-        /// <remarks>
-        /// This method should be called exactly once.
-        /// </remarks>
-        void InitializeWithInstance(IReactInstance instance);
     }
 }
 
