@@ -13,7 +13,7 @@ namespace ReactNative.UIManager
 {
     /// <summary>
     /// Common base class for most of the <see cref="IViewManager"/> instances. 
-    /// It provides support for most common properties through extending 
+    /// It provides support for most common props through extending 
     /// <see cref="BaseViewManager{TFrameworkElement, TLayoutShadowNode}"/>.
     /// </summary>
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>

@@ -25,8 +25,8 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly ConcurrentDictionary<int, List<KeyValuePair<string, double>>> _imageSources =
-            new ConcurrentDictionary<int, List<KeyValuePair<string, double>>>();
+        private readonly ConcurrentDictionary<Border, List<KeyValuePair<string, double>>> _imageSources =
+            new ConcurrentDictionary<Border, List<KeyValuePair<string, double>>>();
 
         /// <summary>
         /// The view manager name.
@@ -42,36 +42,36 @@ namespace ReactNative.Views.Image
         /// <summary>
         /// The view manager event constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        public override JObject CustomDirectEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     {
                         "topLoadStart",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onLoadStart" }
                         }
                     },
                     {
                         "topLoad",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onLoad" }
                         }
                     },
                     {
                         "topLoadEnd",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onLoadEnd" }
                         }
                     },
                     {
                         "topError",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onError" }
                         }
@@ -130,16 +130,14 @@ namespace ReactNative.Views.Image
             }
             else
             {
-                var tag = view.GetTag();
-
-                if (_imageSources.TryGetValue(tag, out var viewSources))
+                if (_imageSources.TryGetValue(view, out var viewSources))
                 {
                     viewSources.Clear();
                 }
                 else
                 {
                     viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.AddOrUpdate(tag, viewSources, (k, v) => viewSources);
+                    _imageSources.AddOrUpdate(view, viewSources, (k, v) => viewSources);
                 }
 
                 foreach (var source in sources)
@@ -191,7 +189,7 @@ namespace ReactNative.Views.Image
         /// Sets the border thickness of the image view.
         /// </summary>
         /// <param name="view">The image view instance.</param>
-        /// <param name="index">The property index.</param>
+        /// <param name="index">The prop index.</param>
         /// <param name="width">The border width in pixels.</param>
         [ReactPropGroup(
             ViewProps.BorderWidth,
@@ -215,7 +213,7 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _imageSources.TryRemove(view.GetTag(), out _);
+            _imageSources.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -324,7 +322,7 @@ namespace ReactNative.Views.Image
         /// <param name="view">The image view instance.</param>
         private void SetUriFromMultipleSources(Border view)
         {
-            if (_imageSources.TryGetValue(view.GetTag(), out var sources))
+            if (_imageSources.TryGetValue(view, out var sources))
             {
                 var targetImageSize = view.Width * view.Height;
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));

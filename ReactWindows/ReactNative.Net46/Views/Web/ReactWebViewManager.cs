@@ -41,11 +41,11 @@ namespace ReactNative.Views.Web
         /// <summary>
         /// The commands map for the webview manager.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "goBack", CommandGoBack },
                     { "goForward", CommandGoForward },

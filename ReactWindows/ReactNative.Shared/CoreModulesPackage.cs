@@ -27,15 +27,18 @@ namespace ReactNative
         private readonly ReactInstanceManager _reactInstanceManager;
         private readonly Action _hardwareBackButtonHandler;
         private readonly UIImplementationProvider _uiImplementationProvider;
+        private readonly bool _lazyViewManagersEnabled;
 
         public CoreModulesPackage(
             ReactInstanceManager reactInstanceManager,
             Action hardwareBackButtonHandler,
-            UIImplementationProvider uiImplementationProvider)
+            UIImplementationProvider uiImplementationProvider,
+            bool lazyViewManagersEnabled)
         {
             _reactInstanceManager = reactInstanceManager;
             _hardwareBackButtonHandler = hardwareBackButtonHandler;
             _uiImplementationProvider = uiImplementationProvider;
+            _lazyViewManagersEnabled = lazyViewManagersEnabled;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller manages scope of returned list of disposables.")]
@@ -44,13 +47,14 @@ namespace ReactNative
             var uiManagerModule = default(INativeModule);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
-                var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
                 var layoutActionQueue = new LayoutActionQueue(reactContext.HandleException);
+                var options = _lazyViewManagersEnabled ? UIManagerModuleOptions.LazyViewManagers : UIManagerModuleOptions.None;
                 uiManagerModule = new UIManagerModule(
-                    reactContext, 
-                    viewManagerList,
+                    reactContext,
+                    _reactInstanceManager.CreateAllViewManagers(reactContext),
                     _uiImplementationProvider,
-                    layoutActionQueue);
+                    layoutActionQueue,
+                    options);
             }
 
             return new List<INativeModule>

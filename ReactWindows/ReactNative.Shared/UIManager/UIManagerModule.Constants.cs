@@ -3,10 +3,11 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System.Collections.Generic;
-using Map = System.Collections.Generic.Dictionary<string, object>;
+using System.Linq;
 
 namespace ReactNative.UIManager
 {
@@ -21,12 +22,19 @@ namespace ReactNative.UIManager
         private const string ACTION_DISMISSED = "dismissed";
         private const string ACTION_ITEM_SELECTED = "itemSelected";
 
-        private static Dictionary<string, object> CreateConstants(
+        private static JObject CreateConstants(
             IReadOnlyList<IViewManager> viewManagers,
-            IDictionary<string, object> allBubblingEventTypes,
-            IDictionary<string, object> allDirectEventTypes)
+            JObject allBubblingEventTypes,
+            JObject allDirectEventTypes,
+            bool lazyViewManagersEnabled)
         {
             var constants = GetConstants();
+
+            if (lazyViewManagersEnabled)
+            {
+                constants.Add("ViewManagerNames", new JArray(viewManagers.Select(viewManager => viewManager.Name)));
+                return constants;
+            }
 
             // Generic/default event types:
             // All view managers are capable of dispatching these events.
@@ -39,17 +47,12 @@ namespace ReactNative.UIManager
             // This information is used later when events are dispatched.
             if (allBubblingEventTypes != null)
             {
-                foreach (var entry in genericBubblingEventTypes)
-                {
-                    allBubblingEventTypes.Add(entry);
-                }
+                allBubblingEventTypes.Merge(genericBubblingEventTypes);
             }
+
             if (allDirectEventTypes != null)
             {
-                foreach (var entry in genericDirectEventTypes)
-                {
-                    allDirectEventTypes.Add(entry);
-                }
+                allDirectEventTypes.Merge(genericDirectEventTypes);
             }
 
             foreach (var viewManager in viewManagers)
@@ -61,8 +64,8 @@ namespace ReactNative.UIManager
                 {
                     var viewManagerConstants = CreateConstantsForViewManager(
                         viewManager,
-                        genericBubblingEventTypes,
-                        genericDirectEventTypes,
+                        null,
+                        null,
                         allBubblingEventTypes,
                         allDirectEventTypes);
 
@@ -73,25 +76,36 @@ namespace ReactNative.UIManager
                 }
             }
 
+            constants.Add("genericBubblingEventTypes", genericBubblingEventTypes);
+            constants.Add("genericDirectEventTypes", genericDirectEventTypes);
             return constants;
         }
 
-        private static IDictionary<string, object> CreateConstantsForViewManager(
-            IViewManager viewManager,
-            IReadOnlyDictionary<string, object> defaultBubblingEvents,
-            IReadOnlyDictionary<string, object> defaultDirectEvents,
-            IDictionary<string, object> cumulativeBubblingEventTypes,
-            IDictionary<string, object> cumulativeDirectEventTypes)
+        private static JObject GetDefaultExportableEventTypes()
         {
-            var viewManagerConstants = new Dictionary<string, object>();
+            return new JObject
+            {
+                { BUBBLING_EVENTS_KEY, GetBubblingEventTypeConstants() },
+                { DIRECT_EVENTS_KEY, GetDirectEventTypeConstants() },
+            };
+        }
+
+        private static JObject CreateConstantsForViewManager(
+            IViewManager viewManager,
+            JObject defaultBubblingEvents,
+            JObject defaultDirectEvents,
+            JObject cumulativeBubblingEventTypes,
+            JObject cumulativeDirectEventTypes)
+        {
+            var viewManagerConstants = new JObject();
 
             var viewManagerBubblingEvents = viewManager.ExportedCustomBubblingEventTypeConstants;
             if (viewManagerBubblingEvents != null)
             {
-                var mergedViewManagerBubblingEvents = new Dictionary<string, object>();
-                RecursiveMerge(cumulativeBubblingEventTypes, viewManagerBubblingEvents);
-                RecursiveMerge(mergedViewManagerBubblingEvents, defaultBubblingEvents);
-                RecursiveMerge(mergedViewManagerBubblingEvents, viewManagerBubblingEvents);
+                var mergedViewManagerBubblingEvents = new JObject();
+                cumulativeBubblingEventTypes?.Merge(viewManagerBubblingEvents);
+                mergedViewManagerBubblingEvents.Merge(defaultBubblingEvents);
+                mergedViewManagerBubblingEvents.Merge(viewManagerBubblingEvents);
                 viewManagerConstants.Add("bubblingEventTypes", mergedViewManagerBubblingEvents);
             }
             else if (defaultBubblingEvents != null)
@@ -102,10 +116,10 @@ namespace ReactNative.UIManager
             var viewManagerDirectEvents = viewManager.ExportedCustomDirectEventTypeConstants;
             if (viewManagerDirectEvents != null)
             {
-                var mergedViewManagerDirectEvents = new Dictionary<string, object>();
-                RecursiveMerge(cumulativeDirectEventTypes, viewManagerDirectEvents);
-                RecursiveMerge(mergedViewManagerDirectEvents, defaultDirectEvents);
-                RecursiveMerge(mergedViewManagerDirectEvents, viewManagerDirectEvents);
+                var mergedViewManagerDirectEvents = new JObject();
+                cumulativeDirectEventTypes?.Merge(viewManagerDirectEvents);
+                mergedViewManagerDirectEvents.Merge(defaultDirectEvents);
+                mergedViewManagerDirectEvents.Merge(viewManagerDirectEvents);
                 viewManagerConstants.Add("directEventTypes", mergedViewManagerDirectEvents);
             }
             else if (defaultDirectEvents != null)
@@ -125,7 +139,7 @@ namespace ReactNative.UIManager
                 viewManagerConstants.Add("Commands", viewManagerCommands);
             }
 
-            var viewManagerNativeProps = viewManager.NativeProperties;
+            var viewManagerNativeProps = viewManager.NativeProps;
             if (viewManagerNativeProps != null && viewManagerNativeProps.Count > 0)
             {
                 viewManagerConstants.Add("NativeProps", viewManagerNativeProps);
@@ -134,17 +148,17 @@ namespace ReactNative.UIManager
             return viewManagerConstants;
         }
 
-        private static Dictionary<string, object> GetBubblingEventTypeConstants()
+        private static JObject GetBubblingEventTypeConstants()
         {
-            return new Map
+            return new JObject
             {
                 {
                     "topChange",
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onChange" },
                                 { "captured", "onChangeCapture" },
@@ -154,11 +168,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topSelect",
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onSelect" },
                                 { "captured", "onSelectCapture" },
@@ -168,11 +182,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Start.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onTouchStart" },
                                 { "captured", "onTouchStartCapture" },
@@ -182,11 +196,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Move.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onTouchMove" },
                                 { "captured", "onTouchMoveCapture" },
@@ -196,11 +210,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.End.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onTouchEnd" },
                                 { "captured", "onTouchEndCapture" },
@@ -210,11 +224,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Cancel.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onTouchCancel" },
                                 { "captured", "onTouchCancelCapture" },
@@ -224,11 +238,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Entered.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onMouseOver" },
                                 { "captured", "onMouseOverCapture" },
@@ -238,11 +252,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Exited.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onMouseOut" },
                                 { "captured", "onMouseOutCapture" },
@@ -252,11 +266,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topFocus",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Dictionary<string, string>()
+                            new JObject
                             {
                                 { "bubbled" , "onFocus" },
                                 { "captured" , "onFocusCapture" }
@@ -266,11 +280,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topBlur",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Dictionary<string, string>()
+                            new JObject
                             {
                                 { "bubbled" , "onBlur" },
                                 { "captured" , "onBlurCapture" }
@@ -280,11 +294,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topKeyDown",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Dictionary<string, string>()
+                            new JObject
                             {
                                 { "bubbled" , "onKeyDown" },
                                 { "captured" , "onKeyDownCapture" }
@@ -294,11 +308,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topKeyUp",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Dictionary<string, string>()
+                            new JObject
                             {
                                 { "bubbled" , "onKeyUp" },
                                 { "captured" , "onKeyUpCapture" }
@@ -308,11 +322,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topKeyPress",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Dictionary<string, string>()
+                            new JObject
                             {
                                 { "bubbled" , "onKeyPress" },
                                 { "captured" , "onKeyPressCapture" }
@@ -323,76 +337,76 @@ namespace ReactNative.UIManager
             };
         }
 
-        private static Dictionary<string, object> GetDirectEventTypeConstants()
+        private static JObject GetDirectEventTypeConstants()
         {
-            return new Map
+            return new JObject
             {
                 {
                     "topAccessibilityTap",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onAccessibilityTap" },
                     }
                 },
                 {
                     "topSelectionChange",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onSelectionChange" },
                     }
                 },
                 {
                     "topLoadingStart",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLoadingStart" },
                     }
                 },
                 {
                     "topLoadingFinish",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLoadingFinish" },
                     }
                 },
                 {
                     "topLoadingError",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLoadingError" },
                     }
                 },
                 {
                     "topContentSizeChange",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onContentSizeChange" },
                     }
                 },
                 {
                     "topLayout",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLayout" },
                     }
                 },
                 {
                     "topMouseEnter",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onMouseEnter" },
                     }
                 },
                 {
                     "topMouseLeave",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onMouseLeave" },
                     }
                 },
                 {
                     "topMessage",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onMessage" },
                     }
@@ -400,17 +414,17 @@ namespace ReactNative.UIManager
             };
         }
 
-        private static Dictionary<string, object> GetConstants()
+        private static JObject GetConstants()
         {
-            return new Map
+            return new JObject
             {
                 {
                     "UIView",
-                    new Map
+                    new JObject
                     {
                         {
                             "ContentMode",
-                            new Map
+                            new JObject
                             {
                                 /* TODO: declare content mode properties */
                             }
@@ -419,11 +433,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "UIText",
-                    new Map
+                    new JObject
                     {
                         {
                             "AutocapitalizationType",
-                            new Map
+                            new JObject
                             {
                                 /* TODO: declare capitalization types */
                             }
@@ -432,11 +446,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "StyleConstants",
-                    new Map
+                    new JObject
                     {
                         {
                             "PointerEventsValues",
-                            new Map
+                            new JObject
                             {
                                 { "none", PointerEvents.None.ToString() },
                                 { "boxNone", PointerEvents.BoxNone.ToString() },
@@ -448,7 +462,7 @@ namespace ReactNative.UIManager
                 },
                 {
                     "PopupMenu",
-                    new Map
+                    new JObject
                     {
                         { ACTION_DISMISSED, ACTION_DISMISSED },
                         { ACTION_ITEM_SELECTED, ACTION_ITEM_SELECTED },
@@ -456,41 +470,12 @@ namespace ReactNative.UIManager
                 },
                 {
                     "AccessibilityEventTypes",
-                    new Map
+                    new JObject
                     {
                         /* TODO: declare accessibility event types */
                     }
                 },
             };
-        }
-
-        private static void RecursiveMerge(IDictionary<string, object> sink, IReadOnlyDictionary<string, object> source)
-        {
-            if (sink == null || source == null || source.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var pair in source)
-            {
-                if (sink.TryGetValue(pair.Key, out var existing))
-                {
-                    if (pair.Value is IReadOnlyDictionary<string, object> sourceAsMap &&
-                        existing is IDictionary<string, object> sinkAsMap)
-                    {
-                        RecursiveMerge(sinkAsMap, sourceAsMap);
-                    }
-                    else
-                    {
-                        // TODO: confirm that exports should be allowed to override.
-                        sink[pair.Key] = pair.Value;
-                    }
-                }
-                else
-                {
-                    sink.Add(pair.Key, pair.Value);
-                }
-            }
         }
     }
 }

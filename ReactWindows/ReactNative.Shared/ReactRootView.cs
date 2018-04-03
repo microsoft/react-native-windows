@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
 #else
 using System.Windows;
 #endif
@@ -66,7 +67,7 @@ namespace ReactNative
         }
 
         /// <summary>
-        /// Get the initialProps
+        /// The initial props.
         /// </summary>
         internal JObject InitialProps
         {
@@ -97,11 +98,11 @@ namespace ReactNative
 
         /// <summary>
         /// Schedule rendering of the React component rendered by the 
-        /// JavaScript application from the given JavaScript module 
+        /// JavaScript application from the given JavaScript module. 
         /// <paramref name="moduleName"/> using the provided
         /// <paramref name="reactInstanceManager"/> to attach to the JavaScript context of that manager.
         /// Extra parameter
-        /// <paramref name="initialProps"/> can be used to pass initial properties for the react component.
+        /// <paramref name="initialProps"/> can be used to pass initial props for the React component.
         /// </summary>
         /// <remarks>
         /// Has to be called under the dispatcher associated with the view.
@@ -110,8 +111,7 @@ namespace ReactNative
         /// The React instance manager.
         /// </param>
         /// <param name="moduleName">The module name.</param>
-        /// <param name="initialProps">The initialProps</param>
-        ///
+        /// <param name="initialProps">The initial props.</param>
         public void StartReactApplication(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
             // Fire and forget async
@@ -196,6 +196,28 @@ namespace ReactNative
             return result;
         }
 
+#if WINDOWS_UWP
+        /// <summary>
+        /// Override ensuring the creation of an AutomationPeer for ReactRootView 
+        /// root view.
+        /// </summary>
+        /// <returns>The new AutomationPeer.</returns>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            //
+            // Older Windows OS'es (RS1, for ex.) don't create automation peers for normal Canvas elements.
+            // This is not an issue in general, but for ReactRootView in particular is, since it is the root of accessibility traversal
+            // done in AccessibilityHelper and so it needs a peer.
+            var peer = base.OnCreateAutomationPeer();
+            if (peer == null)
+            {
+                // Fallback to creating peer if base didn't provide one.
+                peer = new FrameworkElementAutomationPeer(this);
+            }
+            return peer;
+        }
+#endif
+
         internal void CleanupSafe()
         {
             // Inlining allowed
@@ -207,7 +229,7 @@ namespace ReactNative
             DispatcherHelpers.AssertOnDispatcher(this);
 
             Children.Clear();
-            this.ClearData();
+            ViewExtensions.ClearData(this);
         }
 
         private async Task MeasureOverrideHelperAsync()

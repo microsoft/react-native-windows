@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using ReactNative.UIManager;
@@ -15,7 +15,7 @@ namespace ReactNative.Views.Text
     /// </summary>
     /// <typeparam name="TInline">Type of inline.</typeparam>
     /// <typeparam name="TReactTextInlineShadowNode">Type of shadow node.</typeparam>
-    public abstract class ReactTextInlineViewManager<TInline, TReactTextInlineShadowNode> : DependencyObjectViewManager<TInline, TReactTextInlineShadowNode>
+    public abstract class ReactTextInlineViewManager<TInline, TReactTextInlineShadowNode> : ViewManagerBase<TInline, TReactTextInlineShadowNode>
         where TInline : Inline
         where TReactTextInlineShadowNode : ReactInlineShadowNode
     {
@@ -24,7 +24,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public override void UpdateExtraData(TInline root, object extraData)
+        public sealed override void UpdateExtraData(TInline root, object extraData)
         {
             var inlineNode = extraData as ReactInlineShadowNode;
             if (inlineNode != null)

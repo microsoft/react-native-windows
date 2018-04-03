@@ -139,9 +139,7 @@
     <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Bridge\Queue\ActionQueueTests.cs" />
-    <Compile Include="Internal\Constants\DictionaryHelpers.cs" />
     <Compile Include="Internal\DispatcherHelpers.cs" />
-    <Compile Include="Internal\MockViewManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModuleTests.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -183,6 +181,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\packages\Facebook.Yoga.1.5.0-pre1\build\net45\Facebook.Yoga.targets" Condition="Exists('$(SolutionDir)\packages\Facebook.Yoga.1.5.0-pre1\build\net45\Facebook.Yoga.targets')" />

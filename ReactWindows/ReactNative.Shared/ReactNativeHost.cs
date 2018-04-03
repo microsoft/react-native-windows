@@ -98,6 +98,19 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// When <code>true</code>, view manager constants, including custom
+        /// events and native props configuration are loaded
+        /// on-demand rather than at startup.
+        /// </summary>
+        protected virtual bool LazyViewManagersEnabled
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// The list of <see cref="IReactPackage"/>s used by the application.
         /// </summary>
         protected abstract List<IReactPackage> Packages { get; }
@@ -138,6 +151,7 @@ namespace ReactNative
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
                 JavaScriptExecutorFactory = JavaScriptExecutorFactory,
+                LazyViewManagersEnabled = LazyViewManagersEnabled,
             };
 
             builder.Packages.AddRange(Packages);

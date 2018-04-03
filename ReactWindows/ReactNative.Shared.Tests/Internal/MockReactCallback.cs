@@ -6,8 +6,6 @@ namespace ReactNative.Tests
 {
     class MockReactCallback : IReactCallback
     {
-        private readonly Action<int, int, JArray> _invoke;
-
         public Action OnBatchCompleteHandler;
         public Action<int, int, JArray> InvokeHandler;
         public Func<int, int, JArray, JToken> InvokeSyncHandler;

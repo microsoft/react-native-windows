@@ -14,7 +14,7 @@ namespace ReactNative.UIManager
 {
     /// <summary>
     /// Shadow node subclass that supplies setters for base view layout
-    /// properties such as width, height, flex properties, borders, etc.
+    /// props such as width, height, flex props, borders, etc.
     /// </summary>
     public class LayoutShadowNode : ReactShadowNode
     {
@@ -220,7 +220,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets the wrap property on the shadow node.
+        /// Sets the wrap prop on the shadow node.
         /// </summary>
         /// <param name="flexWrap">The wrap.</param>
         [ReactProp(ViewProps.FlexWrap)]
@@ -237,7 +237,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Sets the self alignment of the shadow node.
         /// </summary>
-        /// <param name="alignSelf">The align self property.</param>
+        /// <param name="alignSelf">The align self prop.</param>
         [ReactProp(ViewProps.AlignSelf)]
         public void SetAlignSelf(string alignSelf)
         {
@@ -373,7 +373,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets the border width properties for the shadow node.
+        /// Sets the border width props for the shadow node.
         /// </summary>
         /// <param name="index">The border spacing type index.</param>
         /// <param name="borderWidth">The border width.</param>
