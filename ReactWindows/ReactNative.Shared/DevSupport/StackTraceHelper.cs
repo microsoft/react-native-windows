@@ -42,7 +42,7 @@ namespace ReactNative.DevSupport
 
         public static IStackFrame[] ConvertNativeStackTrace(Exception exception)
         {
-            var stackTrace = new StackTrace(exception, true);
+            var stackTrace = new StackTrace(exception, false);
             var frames = stackTrace.GetFrames();
             var n = frames.Length;
             var results = new IStackFrame[n];
