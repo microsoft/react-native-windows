@@ -221,7 +221,7 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         /// <param name="disabled">Signals whether keyboard based scrolling is disabled.</param>
         [ReactProp("disableKeyboardBasedScrolling")]
-        public void SetDisableKeyboardBasedScrolling(ScrollViewer view, bool? disabled)
+        public void SetDisableKeyboardBasedScrolling(ScrollView view, bool? disabled)
         {
             throw new NotImplementedException();
         }
