@@ -25,6 +25,8 @@ namespace RNTesterApp
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
+            this.LeavingBackground += OnLeavingBackground;
+            this.EnteredBackground += OnEnteredBackground;
         }
 
         /// <summary>
@@ -104,6 +106,26 @@ namespace RNTesterApp
         private void OnResuming(object sender, object e)
         {
             _host.OnResume(Exit);
+        }
+
+        /// <summary>
+        /// Invoked when application execution is leaving background.
+        /// </summary>
+        /// <param name="sender">The source of the leaving background request.</param>
+        /// <param name="e">Details about the leaving background request.</param>
+        private void OnLeavingBackground(object sender, LeavingBackgroundEventArgs e)
+        {
+            _host.OnLeavingBackground();
+        }
+
+        /// <summary>
+        /// Invoked when application execution entered background.
+        /// </summary>
+        /// <param name="sender">The source of the entered background request.</param>
+        /// <param name="e">Details about the entered background request.</param>
+        private void OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
+        {
+            _host.OnEnteredBackground();
         }
     }
 }
