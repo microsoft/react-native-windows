@@ -411,7 +411,7 @@ namespace ReactNative
 
             DispatcherHelpers.AssertOnDispatcher(rootView);
 
-            var detachTask = await DispatcherHelpers.CallOnDispatcher(() =>
+            await DispatcherHelpers.CallOnDispatcher(() =>
             {
                 if (_attachedRootViews.Remove(rootView))
                 {
@@ -423,9 +423,7 @@ namespace ReactNative
                 }
 
                 return Task.CompletedTask;
-            }, true); // inlining allowed
-
-            await detachTask;
+            }, true /* inlining allowed */).Unwrap(); // await inner task
         }
 
         /// <summary>
@@ -598,9 +596,8 @@ namespace ReactNative
             IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
-
-            var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
-            var rootTag = uiManagerModule.AddMeasuredRootView(rootView);
+            var rootTag = reactInstance.GetNativeModule<UIManagerModule>()
+                .AddMeasuredRootView(rootView);
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>
@@ -612,23 +609,22 @@ namespace ReactNative
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
         }
 
-        private async Task DetachViewFromInstanceAsync(ReactRootView rootView, IReactInstance reactInstance)
+        private async Task DetachViewFromInstanceAsync(
+            ReactRootView rootView,
+            IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
-            var uiManagerModule = reactInstance.GetNativeModule<UIManagerModule>();
-
             // Detaches ReactRootView from instance manager root view list and size change monitoring.
-            // Has to complete before unmounting application
-            await uiManagerModule.DetachRootViewAsync(rootView);
-
-            // Initiates a clean up operation that will wait for both a "removeRootView" command from JS (an effect of
+            // This has to complete before unmounting the application.
+            // Returns a task to await the completion of the `removeRootView` UIManager call (an effect of
             // unmounting the application) and the release of all dispatcher affined UI objects.
-            var crTask = uiManagerModule.GetRootViewCleanupTask(rootView.GetTag());
+            var rootViewRemovedTask = await reactInstance.GetNativeModule<UIManagerModule>()
+                .DetachRootViewAsync(rootView);
 
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
 
-            await crTask;
+            await rootViewRemovedTask;
         }
 
         private async Task TearDownReactContextAsync(ReactContext reactContext, CancellationToken token)

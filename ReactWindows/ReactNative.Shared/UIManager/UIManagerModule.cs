@@ -31,29 +31,8 @@ namespace ReactNative.UIManager
         private int _batchId;
         private int _nextRootTag = 1;
 
-        private class DelayedCleanupTask : TaskCompletionSource<bool>
-        {
-            public void Complete()
-            {
-                // TaskCompletionSource<T>.SetResult can call continuations
-                // on the awaiter of the task completion source.
-                System.Threading.Tasks.Task.Run(() => SetResult(true));
-            }
-        }
-
-        private readonly ConcurrentDictionary<int, DelayedCleanupTask> _rootViewCleanupTasks =
-            new ConcurrentDictionary<int, DelayedCleanupTask>();
-
-        internal Task GetRootViewCleanupTask(int rootTag)
-        {
-            // Called on main dispatcher thread
-            DispatcherHelpers.AssertOnDispatcher();
-
-            // Prepare a cleanup task
-            var ct = new DelayedCleanupTask();
-            _rootViewCleanupTasks.AddOrUpdate(rootTag, ct, (k, v) => throw new InvalidOperationException("Duplicate root view removal"));
-            return ct.Task;
-        }
+        private readonly ConcurrentDictionary<int, TaskCompletionSource<bool>> _rootViewCleanupTasks =
+            new ConcurrentDictionary<int, TaskCompletionSource<bool>>();
 
         /// <summary>
         /// Instantiates a <see cref="UIManagerModule"/>.
@@ -192,7 +171,8 @@ namespace ReactNative.UIManager
         /// Detaches a root view from the size monitoring hooks in preparation for the unmount
         /// </summary>
         /// <param name="rootView">The root view instance.</param>
-        public async Task DetachRootViewAsync(ReactRootView rootView)
+        /// <returns>A task to await the cleanup of the root view.</returns>
+        public async Task<Task> DetachRootViewAsync(ReactRootView rootView)
         {
             // Called on main dispatcher thread
             DispatcherHelpers.AssertOnDispatcher();
@@ -202,6 +182,11 @@ namespace ReactNative.UIManager
                 rootView.RemoveSizeChanged();
                 return true;
             }, true); // allow inlining
+
+            var rootTag = rootView.GetTag();
+            var taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _rootViewCleanupTasks.AddOrUpdate(rootTag, taskCompletionSource, (k, v) => throw new InvalidOperationException("Duplicate root view removal"));
+            return taskCompletionSource.Task;
         }
 
         /// <summary>
@@ -256,15 +241,14 @@ namespace ReactNative.UIManager
         public async void removeRootView(int rootViewTag)
         {
             // A cleanup task should be waiting here
-            DelayedCleanupTask cleanupTask;
-            if (!_rootViewCleanupTasks.TryRemove(rootViewTag, out cleanupTask))
+            if (!_rootViewCleanupTasks.TryRemove(rootViewTag, out var cleanupTask))
             {
                 throw new InvalidOperationException("Unexpected removeRootView");
             }
 
             await _uiImplementation.RemoveRootViewAsync(rootViewTag);
 
-            cleanupTask.Complete();
+            cleanupTask.SetResult(true);
         }
 
         /// <summary>
