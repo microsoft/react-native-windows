@@ -204,7 +204,15 @@ namespace ReactNative.DevSupport
             {
                 get
                 {
-                    return _stackFrame.GetMethod()?.Name ?? "<unknown method>";
+                    var method = _stackFrame.GetMethod();
+                    if (method != null)
+                    {
+                        var typeName = method.DeclaringType?.FullName;
+                        typeName = typeName != null ? typeName + "." : "";
+                        return typeName + method.Name;
+                    }
+
+                    return "<unknown method>";
                 }
             }
         }
