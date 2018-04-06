@@ -135,7 +135,7 @@ namespace ReactNative.Views.View
             ViewProps.BorderBottomRightRadius)]
         public void SetBorderRadius(BorderedCanvas view, int index, double radius)
         {
-            var cornerRadius = view.BorderRadius;
+            var cornerRadius = view.CornerRadius;
             switch ((Radius)index)
             {
                 case Radius.All:
@@ -154,7 +154,7 @@ namespace ReactNative.Views.View
                     cornerRadius.BottomRight = radius;
                     break;
             }
-            view.BorderRadius = cornerRadius;
+            view.CornerRadius = cornerRadius;
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace ReactNative.Views.View
             DefaultUInt32 = ColorHelpers.Transparent)]
         public void SetBackgroundColor(BorderedCanvas view, uint color)
         {
-            view.BackgroundColor = ColorHelpers.Parse(color);
+            view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace ReactNative.Views.View
         /// <param name="index">The index.</param>
         public override void AddView(BorderedCanvas parent, DependencyObject child, int index)
         {
-            parent.AddView(child, index);
+            parent.Children.Insert(index, child.As<UIElement>());
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace ReactNative.Views.View
         /// <returns>The child view.</returns>
         public override DependencyObject GetChildAt(BorderedCanvas parent, int index)
         {
-            return parent.GetChildAt(index);
+            return parent.Children[index];
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace ReactNative.Views.View
         /// <returns>The number of children.</returns>
         public override int GetChildCount(BorderedCanvas parent)
         {
-            return parent.GetChildCount();
+            return parent.Children.Count;
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace ReactNative.Views.View
         /// <param name="parent">The view parent.</param>
         public override void RemoveAllChildren(BorderedCanvas parent)
         {
-            parent.RemoveAllChildren();
+            parent.Children.Clear();
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace ReactNative.Views.View
         /// <param name="index">The index.</param>
         public override void RemoveChildAt(BorderedCanvas parent, int index)
         {
-            parent.RemoveChildAt(index);
+            parent.Children.RemoveAt(index);
         }
     }
 }

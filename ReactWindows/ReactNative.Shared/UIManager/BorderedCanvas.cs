@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
 using Windows.UI;
@@ -30,339 +31,267 @@ namespace ReactNative.UIManager
     public class BorderedCanvas : Canvas
 #endif
     {
-        private Border _border = null;
-
-        /// <summary>
-        /// The Border associated with this Canvas or null if it doesn't have a border.
-        /// The Border is always the first element in the Children collection.
-        /// </summary>
-        private Border Border
-        {
-            get => _border;
-            set
-            {
-                if (_border != null)
-                {
-                    throw new InvalidOperationException("The Canvas already has a Border");
-                }
-
-                _border = value;
-
-                Children.Insert(0, _border);
-            }
-        }
-
-        private class BorderProps
-        {
-            public Brush Brush;
-        }
-
-        private static readonly ThreadLocal<ConditionalWeakTable<BorderedCanvas, BorderProps>> s_borderProps =
-            new ThreadLocal<ConditionalWeakTable<BorderedCanvas, BorderProps>>(
-                () => new ConditionalWeakTable<BorderedCanvas, BorderProps>());
-
-        /// <summary>
-        /// Some border props do not affect appearance unless they are combined
-        /// with other props. Such props are saved in the dictionary and applied
-        /// later. This allows to not create the inner Border if it's not visible.
-        /// </summary>
-        private BorderProps GetBorderProps()
-        {
-            if (s_borderProps.Value.TryGetValue(this, out var props))
-            {
-                return props;
-            }
-
-            return null;
-        }
-
-        private BorderProps GetOrCreateBorderProps()
-        {
-            if (!s_borderProps.Value.TryGetValue(this, out var props))
-            {
-                props = new BorderProps();
-                s_borderProps.Value.Add(this, props);
-            }
-
-            return props;
-        }
-
-        /// <summary>
-        /// Canvas.Background supports flat backgrounds. Border.Background supports
-        /// backgrounds with customizations, such as rounded corners. If the background
-        /// is flat, it's set on Canvas. If it has cutomizations, it's transferred to Border.
-        /// </summary>
-        private void TransferBackgroundBrush()
-        {
-            if (base.Background != null && base.Background != _defaultBackgroundBrush && Border != null)
-            {
-                Border.Background = base.Background;
-                base.Background = _defaultBackgroundBrush;
-            }
-        }
-
         private static readonly ThreadLocal<Brush> s_defaultBorderBrush = new ThreadLocal<Brush>(() => new SolidColorBrush(Colors.Black));
 
-        /// <summary>
-        /// Default brush for the view borders.
-        /// </summary>
-        protected Brush DefaultBorderBrush => s_defaultBorderBrush.Value;
-
-        /// <summary>
-        /// In WPF in order to be clickable (hit-test visible) the element needs to have background brush.
-        /// This is why when the background and border brushes are set on the inner Border, the Canvas gets
-        /// a transparent background brush.
-        /// </summary>                
-        protected readonly Brush _defaultBackgroundBrush
+        private static readonly Brush s_defaultBackgroundBrush
 #if WINDOWS_UWP
             = null;
 #else
             = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 #endif
 
+        private static Brush DefaultBorderBrush => s_defaultBorderBrush.Value;
+
+        private readonly ReactUIElementCollection _children;
+
+        private Border _border = null;
+        private Brush _borderBrush = null;
+
         /// <summary>
-        /// Checks if the Canvas has a Border already.
+        /// Instantiates the <see cref="BorderedCanvas"/>.
         /// </summary>
-        protected bool HasBorder()
+        public BorderedCanvas()
         {
-            return Border != null;
+            _children = new ReactUIElementCollection(base.Children);
         }
 
         /// <summary>
-        /// Adds a Border to a Canvas if it hasn't been added already.
+        /// The collection of child elements.
         /// </summary>
-        protected Border GetOrCreateBorder()
-        {
-            if (Border == null)
-            {
-                var borderProps = GetBorderProps();
-                var borderBrush = borderProps?.Brush ?? DefaultBorderBrush;
-                Border = new Border { BorderBrush = borderBrush };
-
-                // Layout animations bypass SetDimensions, hence using XAML bindings.
-
-                Border.SetBinding(FrameworkElement.WidthProperty, new Binding
-                {
-                    Source = this,
-                    Path = new PropertyPath("Width")
-                });
-
-                Border.SetBinding(FrameworkElement.HeightProperty, new Binding
-                {
-                    Source = this,
-                    Path = new PropertyPath("Height")
-                });
-
-                TransferBackgroundBrush();
-            }
-
-            return Border;
-        }
+        public new IList<UIElement> Children => _children;
 
         /// <summary>
-        /// Gets or sets background brush of Canvas itself or of Border child as
-        /// appropriate. This is the only supported method to access background
-        /// of BorderedCanvas. DO NOT use Canvas.Background or Border.Background directly.
+        /// The background brush.
         /// </summary>
+        /// <remarks>
+        /// Do not use Canvas.Background or Border.Background directly.
+        /// </remarks>
         public new Brush Background
         {
-            get
-            {
-                if (Border == null)
-                {
-                    return base.Background;
-                }
-                else
-                {
-                    var border = GetOrCreateBorder();
-                    return border.Background;
-                }
-            }
+            get => _border == null ? base.Background : _border.Background;
             set
             {
-                if (Border == null)
+                if (_border == null)
                 {
-                    base.Background = value;
+                    base.Background = value ?? s_defaultBackgroundBrush;
                 }
                 else
                 {
-                    var border = GetOrCreateBorder();
-                    border.Background = value;
-                    base.Background = base.Background ?? _defaultBackgroundBrush;
+                    _border.Background = value;
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the border radius of the view.
+        /// The corner radius.
         /// </summary>
-        public CornerRadius BorderRadius
+        public CornerRadius CornerRadius
         {
-            get
-            {
-                if (HasBorder())
-                {
-                    var border = GetOrCreateBorder();
-                    return border.CornerRadius;
-                }
-                else
-                {
-                    return new CornerRadius();
-                }
-            }
-            set
-            {
-                var border = GetOrCreateBorder();
-                border.CornerRadius = value;
-            }
+            get => _border != null ? _border.CornerRadius : default(CornerRadius);
+            set => GetOrCreateBorder().CornerRadius = value;
         }
 
         /// <summary>
-        /// Sets the background color of the view.
-        /// </summary>
-        public Color BackgroundColor
-        {
-            set => Background = new SolidColorBrush(value);
-        }
-
-        /// <summary>
-        /// Set the border color of the view.
+        /// The border brush.
         /// </summary>
         public Brush BorderBrush
         {
+            get => _border != null ? _border.BorderBrush : _borderBrush;
             set
             {
-                if (Border == null)
+                if (_border == null)
                 {
-                    GetOrCreateBorderProps().Brush = value;
+                    _borderBrush = value;
                 }
                 else
                 {
-                    var border = GetOrCreateBorder();
-                    border.BorderBrush = value ?? DefaultBorderBrush;
+                    GetOrCreateBorder().BorderBrush = value ?? DefaultBorderBrush;
                 }
             }
         }
 
         /// <summary>
-        /// Sets the border thickness of the view.
+        /// The border thickness.
         /// </summary>
         public Thickness BorderThickness
         {
-            get
-            {
-                if (HasBorder())
-                {
-                    var border = GetOrCreateBorder();
-                    return border.BorderThickness;
-                }
-                else
-                {
-                    return default(Thickness);
-                }
-            }
-            set
-            {
-                var border = GetOrCreateBorder();
-                border.BorderThickness = value;
-
-                if (border.BorderBrush == null)
-                {
-                    var brush = GetOrCreateBorderProps().Brush;
-                    BorderBrush = brush;
-                }
-            }
+            get => _border != null ? _border.BorderThickness : default(Thickness);
+            set => GetOrCreateBorder().BorderThickness = value;
         }
-
-        /// <summary>
-        /// Adds a child at the given index.
-        /// </summary>
-        /// <param name="child">The child view.</param>
-        /// <param name="index">The index.</param>
-        public void AddView(DependencyObject child, int index)
-        {
-            if (HasBorder())
-            {
-                index++;
-            }
-
-            var uiElementChild = child.As<UIElement>();
-            Children.Insert(index, uiElementChild);
-        }
-
-        /// <summary>
-        /// Gets the child at the given index.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <returns>The child view.</returns>
-        public DependencyObject GetChildAt(int index)
-        {
-            if (HasBorder())
-            {
-                index++;
-            }
-
-            return Children[index];
-        }
-
-        /// <summary>
-        /// Gets the number of children.
-        /// </summary>
-        /// <returns>The number of children.</returns>
-        public int GetChildCount()
-        {
-            var count = Children.Count;
-
-            if (HasBorder())
-            {
-                count--;
-            }
-
-            return count;
-        }
-
-        /// <summary>
-        /// Removes all children.
-        /// </summary>
-        public void RemoveAllChildren()
-        {
-            if (HasBorder())
-            {
-                for (var i = Children.Count - 1; i > 0; i--)
-                {
-                    Children.RemoveAt(i);
-                }
-            }
-            else
-            {
-                Children.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Removes the child at the given index.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        public void RemoveChildAt(int index)
-        {
-            if (HasBorder())
-            {
-                index++;
-            }
-
-            Children.RemoveAt(index);
-        }
-
 #if WINDOWS_UWP
+
+        // TODO: implement runtime change raising event to screen reader #1562
+        /// <inheritdoc />
+        public AccessibilityTrait[] AccessibilityTraits { get; set; }
+
         /// <inheritdoc />
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new DynamicAutomationPeer<BorderedCanvas>(this);
         }
-
-        // TODO: implement runtime change raising event to screen reader #1562
-        /// <inheritdoc />
-        public AccessibilityTrait[] AccessibilityTraits { get; set; }
 #endif
+
+        private Border GetOrCreateBorder()
+        {
+            if (_border == null)
+            {
+                // Create border with current or default brush
+                _border = new Border
+                {
+                    BorderBrush = _borderBrush ?? DefaultBorderBrush
+                };
+
+                // Bind border width and height to canvas dimensions
+                SetBinding(WidthProperty, new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("Width")
+                });
+
+                SetBinding(HeightProperty, new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("Height")
+                });
+
+                // Transfer background to border
+                if (base.Background != null && base.Background != s_defaultBackgroundBrush)
+                {
+                    _border.Background = base.Background;
+                    base.Background = s_defaultBackgroundBrush;
+                }
+
+                // Add border to children
+                _children.Add(_border);
+            }
+
+            return _border;
+        }
+
+        class ReactUIElementCollection : IList<UIElement>
+        {
+            private readonly UIElementCollection _inner;
+            private int _offset;
+
+            public ReactUIElementCollection(UIElementCollection innerCollection)
+            {
+                _inner = innerCollection;
+            }
+
+            #region Border and native children management
+
+            public void Add(UIElement element)
+            {
+                _inner.Insert(_offset++, element);
+            }
+
+            #endregion
+
+            #region React children management
+
+            UIElement IList<UIElement>.this[int index]
+            {
+                get => _inner[index + _offset];
+                set => _inner[index + _offset] = value;
+            }
+
+            int ICollection<UIElement>.Count => _inner.Count - _offset;
+
+            bool ICollection<UIElement>.IsReadOnly => false;
+
+            void ICollection<UIElement>.Add(UIElement item) => _inner.Add(item);
+
+            bool ICollection<UIElement>.Contains(UIElement item) => IndexOf(item) >= 0;
+
+            void ICollection<UIElement>.CopyTo(UIElement[] array, int arrayIndex)
+            {
+                if (array == null)
+                    throw new ArgumentNullException(nameof(array));
+                if (arrayIndex < 0)
+                    throw new ArgumentOutOfRangeException(nameof(arrayIndex), "The argument must be greater than or equal to zero.");
+
+                if ((array.Length - arrayIndex) < (_inner.Count - _offset))
+                {
+                    throw new ArgumentException("Destination array was not long enough.", nameof(array));
+                }
+
+                for (var i = 0; i < _inner.Count - _offset; ++i)
+                {
+                    array[arrayIndex + i] = _inner[i + _offset];
+                }
+            }
+
+            int IList<UIElement>.IndexOf(UIElement item) => IndexOf(item);
+
+            void IList<UIElement>.Insert(int index, UIElement item)
+            {
+                if (index < 0)
+                    throw new ArgumentOutOfRangeException(nameof(index), "The argument must be greater than or equal to zero.");
+
+                _inner.Insert(index + _offset, item);
+            }
+
+            bool ICollection<UIElement>.Remove(UIElement item)
+            {
+                var index = IndexOf(item);
+
+                if (index >= 0)
+                {
+                    _inner.RemoveAt(index);
+                    return true;
+                }
+
+                return false;
+            }
+
+            void IList<UIElement>.RemoveAt(int index)
+            {
+                if (index < 0)
+                    throw new ArgumentOutOfRangeException(nameof(index), "The argument must be greater than or equal to zero.");
+
+                _inner.RemoveAt(index + _offset);
+            }
+
+            void ICollection<UIElement>.Clear()
+            {
+                for (var i = _offset; i < _inner.Count; ++i)
+                {
+                    _inner.RemoveAt(i);
+                }
+            }
+
+            IEnumerator<UIElement> IEnumerable<UIElement>.GetEnumerator()
+            {
+                return EnumerateAfterOffset().GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return EnumerateAfterOffset().GetEnumerator();
+            }
+
+            private int IndexOf(UIElement item)
+            {
+                for (var i = _offset; i < _inner.Count; ++i)
+                {
+                    if (_inner[i] == item)
+                    {
+                        return i - _offset;
+                    }
+                }
+
+                return -1;
+            }
+
+            private IEnumerable<UIElement> EnumerateAfterOffset()
+            {
+                for (var i = _offset; i < _inner.Count; ++i)
+                {
+                    yield return _inner[i];
+                }
+            }
+
+            #endregion
+        }
     }
 }
