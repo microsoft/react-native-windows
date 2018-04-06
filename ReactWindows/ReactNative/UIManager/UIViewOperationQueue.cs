@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
@@ -161,7 +162,7 @@ namespace ReactNative.UIManager
         /// Enqueues an operation to remove the root view.
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
-        public void EnqueueRemoveRootView(int rootViewTag)
+        public Task RemoveRootViewAsync(int rootViewTag)
         {
             // Called on layout manager thread
 
@@ -186,8 +187,21 @@ namespace ReactNative.UIManager
 
                     // Simulate an OnDestroy from the correct dispatcher thread
                     // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                    DispatcherHelpers.RunOnDispatcher(pair.Key, queue.OnDestroy);
+                    return DispatcherHelpers.CallOnDispatcher(pair.Key, () =>
+                    {
+                        queue.OnDestroy();
+
+                        return true;
+                    });
                 }
+                else
+                {
+                    return Task.CompletedTask;
+                }
+            }
+            else
+            {
+                return Task.CompletedTask;
             }
         }
 
