@@ -5,7 +5,6 @@
 
 using ReactNative.Modules.Launch;
 using System;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -18,26 +17,34 @@ namespace ReactNative
     /// Base <see cref="Application"/> class to manage subscription to app
     /// lifecycle events and initialize the window with the React root view.
     /// </summary>
-    public abstract class ReactApplication : Application
+    public abstract class ReactApplication : Application, IReactApplication
     {
+        private readonly ReactApplicationDelegate _delegate;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public ReactApplication()
         {
-            this.Suspending += OnSuspending;
-            this.Resuming += OnResuming;
-            this.EnteredBackground += OnEnteredBackground;
-            this.LeavingBackground += OnLeavingBackground;
+            _delegate = CreateReactApplicationDelegate();
         }
 
         /// <summary>
         /// The React Native host.
         /// </summary>
-        protected abstract ReactNativeHost Host
+        public abstract ReactNativeHost Host
         {
             get;
+        }
+
+        /// <summary>
+        /// Creates the <see cref="ReactApplicationDelegate"/> for the application.
+        /// </summary>
+        /// <returns>The delegate instance.</returns>
+        protected virtual ReactApplicationDelegate CreateReactApplicationDelegate()
+        {
+            return new ReactApplicationDelegate(this);
         }
 
         /// <summary>
@@ -133,48 +140,6 @@ namespace ReactNative
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
-
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            Host.OnSuspend();
-        }
-
-        /// <summary>
-        /// Invoked when application execution is being resumed.
-        /// </summary>
-        /// <param name="sender">The source of the resume request.</param>
-        /// <param name="e">Details about the resume request.</param>
-        private void OnResuming(object sender, object e)
-        {
-            Host.OnResume(Exit);
-        }
-
-        /// <summary>
-        /// Invoked when application entered the background.
-        /// </summary>
-        /// <param name="sender">The source of the entered background request.</param>
-        /// <param name="e">Details about the entered background request.</param>
-        private void OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
-        {
-            Host.OnEnteredBackground();
-        }
-
-        /// <summary>
-        /// Invoked when application leaving the background.
-        /// </summary>
-        /// <param name="sender">The source of the leaving background request.</param>
-        /// <param name="e">Details about the leaving background request.</param>
-        private void OnLeavingBackground(object sender, LeavingBackgroundEventArgs e)
-        {
-            Host.OnLeavingBackground();
         }
     }
 }
