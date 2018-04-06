@@ -155,15 +155,12 @@ namespace ReactNative.Bridge
             }
             else
             {
-                var taskCompletionSource = new TaskCompletionSource<T>();
+                var taskCompletionSource = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
 
                 RunOnDispatcher(dispatcher, DispatcherPriority.Normal, () =>
                 {
                     var result = func();
-
-                    // TaskCompletionSource<T>.SetResult can call continuations
-                    // on the awaiter of the task completion source.
-                    Task.Run(() => taskCompletionSource.SetResult(result));
+                    taskCompletionSource.SetResult(result);
                 });
 
                 return taskCompletionSource.Task;
