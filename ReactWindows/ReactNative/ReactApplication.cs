@@ -3,7 +3,6 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
-using ReactNative.Modules.Launch;
 using System;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
@@ -66,14 +65,7 @@ namespace ReactNative
         {
             base.OnActivated(args);
 
-            switch (args.Kind)
-            {
-                case ActivationKind.Protocol:
-                case ActivationKind.ProtocolForResults:
-                    var protocolArgs = (IProtocolActivatedEventArgs)args;
-                    LauncherModule.SetActivatedUrl(protocolArgs.Uri.AbsoluteUri);
-                    break;
-            }
+            _delegate.OnActivated(args);
 
             if (args.PreviousExecutionState != ApplicationExecutionState.Running &&
                 args.PreviousExecutionState != ApplicationExecutionState.Suspended)

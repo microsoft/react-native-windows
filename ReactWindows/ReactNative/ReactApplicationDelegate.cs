@@ -3,8 +3,10 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using ReactNative.Modules.Launch;
 using System;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
 namespace ReactNative
@@ -39,6 +41,34 @@ namespace ReactNative
             _application.Suspending += OnSuspending; ;
             _application.LeavingBackground += OnLeavingBackground;
             _application.EnteredBackground += OnEnteredBackground;
+        }
+
+        /// <summary>
+        /// Apply activation arguments to the React instance.
+        /// </summary>
+        /// <param name="args">The activation arguments.</param>
+        public void OnActivated(IActivatedEventArgs args)
+        {
+            switch (args.Kind)
+            {
+                case ActivationKind.Protocol:
+                    var protocolArgs = (IProtocolActivatedEventArgs)args;
+                    var uri = protocolArgs.Uri.AbsoluteUri;
+                    if (args.PreviousExecutionState != ApplicationExecutionState.Running)
+                    {
+                        LauncherModule.SetActivatedUrl(uri);
+                    }
+                    else
+                    {
+                        _reactApplication.Host
+                            .ReactInstanceManager
+                            .CurrentReactContext?
+                            .GetNativeModule<LauncherModule>()
+                            .OnActivated(uri);
+                    }
+
+                    break;
+            }
         }
 
         private void OnResuming(object sender, object e)
