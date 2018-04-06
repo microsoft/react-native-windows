@@ -21,6 +21,6 @@ namespace <%= ns %>
         /// <summary>
         /// The React Native host.
         /// </summary>
-        protected override ReactNativeHost Host => _host;
+        public override ReactNativeHost Host => _host;
     }
 }
