@@ -35,27 +35,18 @@ namespace ReactNative.Bridge.Queue
         /// <returns>A task to await the result.</returns>
         public static Task<T> RunAsync<T>(this IActionQueue actionQueue, Func<T> func)
         {
-            var taskCompletionSource = new TaskCompletionSource<T>();
+            var taskCompletionSource = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             actionQueue.Dispatch(() =>
             {
                 try
                 {
                     var result = func();
-
-                    // TaskCompletionSource<T>.SetResult can call continuations
-                    // on the awaiter of the task completion source. We want to
-                    // prevent the action queue thread from executing these
-                    // continuations.
-                    Task.Run(() => taskCompletionSource.SetResult(result));
+                    taskCompletionSource.SetResult(result);
                 }
                 catch (Exception ex)
                 {
-                    // TaskCompletionSource<T>.SetException can call continuations
-                    // on the awaiter of the task completion source. We want to
-                    // prevent the action queue thread from executing these
-                    // continuations.
-                    Task.Run(() => taskCompletionSource.SetException(ex));
+                    taskCompletionSource.SetException(ex);
                 }
             });
 

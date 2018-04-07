@@ -16,18 +16,18 @@ namespace ReactNative.Tests
 
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
         {
-            var tcs = new TaskCompletionSource<T>();
+            var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            await RunOnDispatcherAsync(async () =>
+            await RunOnDispatcherAsync(() =>
             {
                 try
                 {
                     var result = func();
-                    await Task.Run(() => tcs.SetResult(result));
+                    tcs.SetResult(result);
                 }
                 catch (Exception ex)
                 {
-                    await Task.Run(() => tcs.SetException(ex));
+                    tcs.SetException(ex);
                 }
             }).ConfigureAwait(false);
 
@@ -36,18 +36,18 @@ namespace ReactNative.Tests
 
         public static async Task CallOnDispatcherAsync(Func<Task> asyncFunc)
         {
-            var tcs = new TaskCompletionSource<bool>();
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await RunOnDispatcherAsync(async () =>
             {
                 try
                 {
                     await asyncFunc();
-                    await Task.Run(() => tcs.SetResult(true));
+                    tcs.SetResult(true);
                 }
                 catch (Exception ex)
                 {
-                    await Task.Run(() => tcs.SetException(ex));
+                    tcs.SetException(ex);
                 }
             }).ConfigureAwait(false);
 
@@ -56,18 +56,18 @@ namespace ReactNative.Tests
 
         public static async Task<T> CallOnDispatcherAsync<T>(Func<Task<T>> asyncFunc)
         {
-            var tcs = new TaskCompletionSource<T>();
+            var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await RunOnDispatcherAsync(async () =>
             {
                 try
                 {
                     var result = await asyncFunc();
-                    await Task.Run(() => tcs.SetResult(result));
+                    tcs.SetResult(result);
                 }
                 catch (Exception ex)
                 {
-                    await Task.Run(() => tcs.SetException(ex));
+                    tcs.SetException(ex);
                 }
             }).ConfigureAwait(false);
 

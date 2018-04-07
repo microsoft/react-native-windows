@@ -16,8 +16,9 @@ namespace ReactNative.Modules.Launch
     /// </summary>
     public class LauncherModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
-        private static readonly Subject<string> s_urlSubject = new Subject<string>();
         private static string s_activatedUrl;
+
+        private readonly Subject<string> _urlSubject = new Subject<string>();
 
         private bool _initialized;
         private IDisposable _subscription;
@@ -161,17 +162,26 @@ namespace ReactNative.Modules.Launch
         }
 
         /// <summary>
+        /// Called whenever a protocol activation occurs.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        public void OnActivated(string url)
+        {
+            _urlSubject.OnNext(url);
+        }
+
+        /// <summary>
         /// The initial URL used to activate the application.
         /// </summary>
+        /// <param name="url">The URL.</param>
         public static void SetActivatedUrl(string url)
         {
             s_activatedUrl = url;
-            s_urlSubject.OnNext(url);
         }
 
         private IDisposable CreateUrlSubscription()
         {
-            return s_urlSubject.Subscribe(url =>
+            return _urlSubject.Subscribe(url =>
                 Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                     .emit("url", new JObject
                     {
