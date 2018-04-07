@@ -20,6 +20,7 @@
   "files": [
     "Libraries",
     "ReactWindows/ReactNative",
+    "ReactWindows/ReactNative.Interfaces",
     "ReactWindows/ReactNative.Shared",
     "ReactWindows/ReactNative.Net46",
     "ReactWindows/ReactNativeWebViewBridge",

@@ -118,6 +118,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\node_modules\react-native-windows\ReactWindows\ReactNative.Interfaces\ReactNative.Interfaces.csproj"> 
+    <Project>{d7c86d96-6c8a-4fbb-ba20-98dea7f87c84}</Project> 
+      <Name>ReactNative.Interfaces</Name> 
+    </ProjectReference>
     <ProjectReference Include="..\..\node_modules\react-native-windows\ReactWindows\ReactNative.Net46\ReactNative.Net46.csproj">
       <Project>{22cbff9c-fe36-43e8-a246-266c7635e662}</Project>
       <Name>ReactNative.Net46</Name>
