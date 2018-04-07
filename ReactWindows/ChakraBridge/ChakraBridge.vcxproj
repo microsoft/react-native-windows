@@ -211,7 +211,6 @@
     <ClInclude Include="ChakraHost.h" />
     <ClInclude Include="JsIndexedModulesUnbundle.h" />
     <ClInclude Include="JsModulesUnbundle.h" />
-    <ClInclude Include="JsStringify.h" />
     <ClInclude Include="NativeJavaScriptExecutor.h" />
     <ClInclude Include="ChakraStringResult.h" />
     <ClInclude Include="pch.h" />
@@ -222,7 +221,6 @@
     <ClCompile Include="ChakraHost.cpp" />
     <ClCompile Include="JsIndexedModulesUnbundle.cpp" />
     <ClCompile Include="JsModulesUnbundle.cpp" />
-    <ClCompile Include="JsStringify.cpp" />
     <ClCompile Include="NativeJavaScriptExecutor.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

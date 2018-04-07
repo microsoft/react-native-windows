@@ -9,7 +9,9 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -28,6 +30,9 @@ namespace ReactNative.UIManager
 
         private int _batchId;
         private int _nextRootTag = 1;
+
+        private readonly ConcurrentDictionary<int, TaskCompletionSource<bool>> _rootViewCleanupTasks =
+            new ConcurrentDictionary<int, TaskCompletionSource<bool>>();
 
         /// <summary>
         /// Instantiates a <see cref="UIManagerModule"/>.
@@ -166,12 +171,22 @@ namespace ReactNative.UIManager
         /// Detaches a root view from the size monitoring hooks in preparation for the unmount
         /// </summary>
         /// <param name="rootView">The root view instance.</param>
-        public void DetachRootView(ReactRootView rootView)
+        /// <returns>A task to await the cleanup of the root view.</returns>
+        public async Task<Task> DetachRootViewAsync(ReactRootView rootView)
         {
             // Called on main dispatcher thread
             DispatcherHelpers.AssertOnDispatcher();
 
-            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () => rootView.RemoveSizeChanged(), true); // allow inlining
+            await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
+            {
+                rootView.RemoveSizeChanged();
+                return true;
+            }, true); // allow inlining
+
+            var rootTag = rootView.GetTag();
+            var taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _rootViewCleanupTasks.AddOrUpdate(rootTag, taskCompletionSource, (k, v) => throw new InvalidOperationException("Duplicate root view removal"));
+            return taskCompletionSource.Task;
         }
 
         /// <summary>
@@ -223,9 +238,17 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
         [ReactMethod]
-        public void removeRootView(int rootViewTag)
+        public async void removeRootView(int rootViewTag)
         {
-            _uiImplementation.RemoveRootView(rootViewTag);
+            // A cleanup task should be waiting here
+            if (!_rootViewCleanupTasks.TryRemove(rootViewTag, out var cleanupTask))
+            {
+                throw new InvalidOperationException("Unexpected removeRootView");
+            }
+
+            await _uiImplementation.RemoveRootViewAsync(rootViewTag);
+
+            cleanupTask.SetResult(true);
         }
 
         /// <summary>
