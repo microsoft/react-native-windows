@@ -142,13 +142,13 @@ namespace ReactNative.UIManager
                 };
 
                 // Bind border width and height to canvas dimensions
-                SetBinding(WidthProperty, new Binding
+                _border.SetBinding(WidthProperty, new Binding
                 {
                     Source = this,
                     Path = new PropertyPath("Width")
                 });
 
-                SetBinding(HeightProperty, new Binding
+                _border.SetBinding(HeightProperty, new Binding
                 {
                     Source = this,
                     Path = new PropertyPath("Height")
