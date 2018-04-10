@@ -119,10 +119,10 @@ namespace ReactNative.Bridge
                 if (isEndOfBatch)
                 {
                     localBatchHadNativeModuleCalls = _batchHadNativeModuleCalls;
-                    _batchHadNativeModuleCalls = false;
 
                     _nativeModulesQueueThread.Dispatch(() =>
                     {
+                        // the bridge could still be processing native calls when the idle signaler fires
                         if (localBatchHadNativeModuleCalls)
                         {
                             _reactCallback.OnBatchComplete();
@@ -130,6 +130,8 @@ namespace ReactNative.Bridge
 
                         _reactCallback.DecrementPendingJSCalls();
                     });
+
+                    _batchHadNativeModuleCalls = false;
                 }
 
                 return;
@@ -174,13 +176,11 @@ namespace ReactNative.Bridge
                     var args = (JArray)paramsArray[i];
 
                     _reactCallback.Invoke(moduleId, methodId, args);
-                };
+                }
 
                 if (isEndOfBatch)
                 {
-                    // onBatchComplete will be called on the native (module) ActionQueue, but
-                    // decrementPendingJSCalls will be called sync. Be aware that the bridge may still
-                    // be processing native calls when the bridge idle signaler fires.
+                    // the bridge could still be processing native calls when the idle signaler fires
                     if (localBatchHadNativeModuleCalls)
                     {
                         _reactCallback.OnBatchComplete();

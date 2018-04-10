@@ -14,13 +14,10 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using ReactNative.Chakra;
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
 {
-    public delegate void OnTransitionToBridgeHandler(bool busy);
-
     /// <summary>
     /// A higher level API on top of the <see cref="IJavaScriptExecutor" /> and module registries. This provides an
     /// environment allowing the invocation of JavaScript methods.
@@ -36,12 +33,8 @@ namespace ReactNative.Bridge
 
         private bool _initialized;
 
-        public event OnTransitionToBridgeHandler OnTransitionToBridgeHandler;
-
-        private bool BridgeBusy
-        {
-            set => OnTransitionToBridgeHandler?.Invoke(value);
-        }
+        public event TransitionToBridgeIdleCallback OnTransitionToBridgeIdleCallback;
+        public event TransitionToBridgeIdleCallback OnTransitionToBridgeBusyCallback;
 
         private ReactInstance(
             IReactQueueConfiguration queueConfiguration,
@@ -330,7 +323,7 @@ namespace ReactNative.Bridge
                 int newVal = Interlocked.Increment(ref _pendingJSCalls);
                 if ((newVal - 1) == 0)
                 {
-                    _parent.BridgeBusy = true;
+                    _parent.OnTransitionToBridgeBusyCallback();
                 }
             }
 
@@ -339,7 +332,7 @@ namespace ReactNative.Bridge
                 int newVal = Interlocked.Decrement(ref _pendingJSCalls);
                 if (newVal == 0)
                 {
-                    _parent.BridgeBusy = false;
+                    _parent.OnTransitionToBridgeIdleCallback();
                 }
             }
         }
