@@ -47,7 +47,7 @@
 
 | Name | Status | Notes |
 |------|--------|-------------|
-| Accessibility | Partial | Only `accessibilityLiveRegion` and `accessibilityLabel` supported. See [#918](https://github.com/ReactWindows/react-native-windows/issues/918). |
+| Accessibility | Partial | Supported: `accessibilityLiveRegion`, `accessibilityLabel`, `importantForAccessibility`, `accessibilityTraits`. Not supported by design: `accessible` - use `importantForAccessibility` instead. In `accessibilityTraits` only `button` and `none` are supported. See [#918](https://github.com/ReactWindows/react-native-windows/issues/918). |
 | ActionSheetIOS | n/a | iOS-only. |
 | AdSupportIOS | n/a | iOS-only. |
 | Alert | Ready | See [Source](../ReactWindows/ReactNative/Modules/Dialog/DialogModule.cs). |
