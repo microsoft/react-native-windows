@@ -18,10 +18,12 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
+using Windows.Web.Http.Headers;
 #else
 using PCLStorage;
 using System.Linq;
 using System.Net.Http;
+using HttpMediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 using HttpMultipartFormDataContent = System.Net.Http.MultipartFormDataContent;
 using HttpStreamContent = System.Net.Http.StreamContent;
 using HttpStringContent = System.Net.Http.StringContent;
@@ -248,6 +250,15 @@ namespace ReactNative.Modules.Network
                 var inputStream = new MemoryStream(byteArray);
 #endif
                 request.Content = new HttpStreamContent(inputStream);
+                if (header.ContentType == null)
+                {
+                    request.Content.Headers.ContentType = new HttpMediaTypeHeaderValue(storageFile.ContentType);
+                }
+                else
+                {
+                    request.Content.Headers.ContentType = new HttpMediaTypeHeaderValue(header.ContentType);
+                }
+
                 await ProcessRequestAsync(
                     requestId,
                     useIncrementalUpdates,
