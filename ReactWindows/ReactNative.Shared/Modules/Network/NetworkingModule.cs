@@ -239,7 +239,15 @@ namespace ReactNative.Modules.Network
             try
             {
 #if WINDOWS_UWP
-                var storageFile = await StorageFile.GetFileFromPathAsync(uri.LocalPath).AsTask().ConfigureAwait(false);
+                StorageFile storageFile;
+                if (FutureAccessList.IsValidURI(uri.ToString()))
+                {
+                    storageFile = await FutureAccessList.GetFileAsync(uri.ToString());
+                }
+                else
+                {
+                    storageFile = await StorageFile.GetFileFromPathAsync(uri.LocalPath).AsTask().ConfigureAwait(false);                    
+                }
                 var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
 #else
                 var storageFile = await FileSystem.Current.GetFileFromPathAsync(uri.ToString()).ConfigureAwait(false);
