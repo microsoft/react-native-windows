@@ -323,7 +323,7 @@ namespace ReactNative.Bridge
                 int newVal = Interlocked.Increment(ref _pendingJSCalls);
                 if ((newVal - 1) == 0)
                 {
-                    _parent.OnTransitionToBridgeBusyCallback();
+                    _parent.OnTransitionToBridgeBusyCallback?.Invoke();
                 }
             }
 
@@ -332,7 +332,7 @@ namespace ReactNative.Bridge
                 int newVal = Interlocked.Decrement(ref _pendingJSCalls);
                 if (newVal == 0)
                 {
-                    _parent.OnTransitionToBridgeIdleCallback();
+                    _parent.OnTransitionToBridgeIdleCallback?.Invoke();
                 }
             }
         }
