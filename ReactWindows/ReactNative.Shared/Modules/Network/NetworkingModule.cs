@@ -152,6 +152,7 @@ namespace ReactNative.Modules.Network
                     _tasks.AddAndInvokeAsync(requestId, token => ProcessRequestFromUriAsync(
                         requestId,
                         new Uri(uri),
+                        headerData,
                         useIncrementalUpdates,
                         timeout,
                         request,
@@ -232,6 +233,7 @@ namespace ReactNative.Modules.Network
         private async Task ProcessRequestFromUriAsync(
             int requestId,
             Uri uri,
+            HttpContentHeaderData header,
             bool useIncrementalUpdates,
             int timeout,
             HttpRequestMessage request,
