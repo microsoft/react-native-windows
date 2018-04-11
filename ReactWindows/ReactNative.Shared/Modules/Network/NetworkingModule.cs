@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Json;
 using ReactNative.Modules.Core;
+using ReactNative.Storage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
