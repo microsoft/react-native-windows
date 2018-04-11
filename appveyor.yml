@@ -39,10 +39,8 @@ install:
   - ps: Install-Product node $env:nodejs_version x64
   - appveyor-retry npm install -g npm@lts
   - appveyor-retry npm i
-  - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
-  - ps: mkdir C:\winium
-  - ps: Add-Type -A 'System.IO.Compression.FileSystem'
-  - ps: '[IO.Compression.ZipFile]::ExtractToDirectory("C:\winium.zip", "C:\winium")'
+  - ps: curl -o C:\WindowsApplicationDriver.msi https://github.com/Microsoft/WinAppDriver/releases/download/v1.0/WindowsApplicationDriver.msi
+  - ps: msiexec /i C:\WindowsApplicationDriver.msi /q
 
 clone_script:
 - ps: git clone -q $("--branch=" + $env:APPVEYOR_REPO_BRANCH) $("https://github.com/" + $env:APPVEYOR_REPO_NAME + ".git") $env:APPVEYOR_BUILD_FOLDER
@@ -61,9 +59,9 @@ build_script:
 - ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
 - ps: msbuild /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "ReactWindows\ReactNative.sln"
 
-# Start Winium in the background, give it a moment to start
+# Start WinAppDriver in the background, give it a moment to start
 before_test:
-  - ps: $winium = Start-Process -PassThru C:\winium\Winium.Desktop.Driver.exe
+  - ps: $appium = Start-Process -PassThru "c:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe"
   - ps: Start-Sleep -s 5
 
 test_script:
@@ -79,7 +77,7 @@ test_script:
 
       if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
-      if ($platform -eq "ReleaseBundle" -Or $platform -eq "DebugBundle") { npm test }
+      if ($platform -ne "ARM" -And $config -eq "ReleaseBundle" -Or $config -eq "DebugBundle") { nunit3-console "ReactWindows\Playground.Net46.Tests\bin\$platform\$config\Playground.Net46.Tests.dll" --result=myresults.xml }
 
   # Disabling for now
   #- npm run flow-check
@@ -89,7 +87,7 @@ test_script:
 
 after_test:
   - ps: >-
-      Stop-Process -Id $winium.Id
+      Stop-Process -Id $appium.Id
 
       $platform = Get-ChildItem Env:PLATFORM
 
