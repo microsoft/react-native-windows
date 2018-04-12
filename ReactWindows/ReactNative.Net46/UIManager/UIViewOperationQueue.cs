@@ -35,20 +35,20 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="themedContext">The React context.</param>
+        /// <param name="reactContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial props.</param>
         /// <param name="rootViewTag">Root view tag.</param>
         public void EnqueueCreateView(
-            ThemedReactContext themedContext,
+            IReactContext reactContext,
             int viewReactTag,
             string viewClassName,
             JObject initialProps,
             int rootViewTag)
         {
             EnqueueCreateView(
-                themedContext,
+                reactContext,
                 viewReactTag,
                 viewClassName,
                 initialProps);

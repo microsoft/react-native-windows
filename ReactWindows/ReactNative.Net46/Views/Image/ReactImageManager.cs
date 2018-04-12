@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Collections;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
@@ -204,7 +205,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
+        public override void OnDropViewInstance(IReactContext reactContext, Border view)
         {
             base.OnDropViewInstance(reactContext, view);
 
@@ -224,7 +225,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The image view instance.</returns>
-        protected override Border CreateViewInstance(ThemedReactContext reactContext)
+        protected override Border CreateViewInstance(IReactContext reactContext)
         {
             return new Border
             {

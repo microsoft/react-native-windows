@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Web.Events;
@@ -164,7 +165,7 @@ namespace ReactNative.Views.Web
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, WebBrowser view)
+        public override void OnDropViewInstance(IReactContext reactContext, WebBrowser view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.LoadCompleted -= OnLoadCompleted;
@@ -176,7 +177,7 @@ namespace ReactNative.Views.Web
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override WebBrowser CreateViewInstance(ThemedReactContext reactContext)
+        protected override WebBrowser CreateViewInstance(IReactContext reactContext)
         {
             return new WebBrowser();
         }
@@ -187,7 +188,7 @@ namespace ReactNative.Views.Web
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, WebBrowser view)
+        protected override void AddEventEmitters(IReactContext reactContext, WebBrowser view)
         {
             base.AddEventEmitters(reactContext, view);
             view.LoadCompleted += OnLoadCompleted;

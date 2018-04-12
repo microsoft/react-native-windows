@@ -3,6 +3,7 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using ReactNative.Bridge;
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
@@ -355,7 +356,7 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ScrollViewer view)
+        public override void OnDropViewInstance(IReactContext reactContext, ScrollViewer view)
         {
             base.OnDropViewInstance(reactContext, view);
 
@@ -397,7 +398,7 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ScrollViewer CreateViewInstance(ThemedReactContext reactContext)
+        protected override ScrollViewer CreateViewInstance(IReactContext reactContext)
         {
             var scrollViewerData = new ScrollViewerData();
 
@@ -423,7 +424,7 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ScrollViewer view)
+        protected override void AddEventEmitters(IReactContext reactContext, ScrollViewer view)
         {
             base.AddEventEmitters(reactContext, view);
             view.DirectManipulationCompleted += OnDirectManipulationCompleted;

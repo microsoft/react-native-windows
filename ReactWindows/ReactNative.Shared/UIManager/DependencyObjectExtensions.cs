@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ReactNative.Bridge;
 using System;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -86,7 +87,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Gets the <see cref="ThemedReactContext"/> associated with the view
+        /// Gets the <see cref="IReactContext"/> associated with the view
         /// instance.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -94,7 +95,7 @@ namespace ReactNative.UIManager
         /// <exception cref="InvalidOperationException">
         /// Thrown if context is not available for the view.
         /// </exception>
-        public static ThemedReactContext GetReactContext(this DependencyObject view)
+        public static IReactContext GetReactContext(this DependencyObject view)
         {
             return ViewExtensions.GetReactContext(view);
         }

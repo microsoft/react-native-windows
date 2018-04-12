@@ -179,7 +179,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ShadowNodeRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\SimpleViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\SizeMonitoringCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ThemedReactContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\TransformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIImplementation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\UIImplementationProvider.cs" />

@@ -190,7 +190,7 @@ namespace ReactNative.Views.Web
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, WebView view)
+        public override void OnDropViewInstance(IReactContext reactContext, WebView view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.NavigationStarting -= OnNavigationStarting;
@@ -206,7 +206,7 @@ namespace ReactNative.Views.Web
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override WebView CreateViewInstance(ThemedReactContext reactContext)
+        protected override WebView CreateViewInstance(IReactContext reactContext)
         {
             var view = new WebView(WebViewExecutionMode.SeparateThread);
             var data = new WebViewData();
@@ -220,7 +220,7 @@ namespace ReactNative.Views.Web
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, WebView view)
+        protected override void AddEventEmitters(IReactContext reactContext, WebView view)
         {
             base.AddEventEmitters(reactContext, view);
             view.NavigationStarting += OnNavigationStarting;

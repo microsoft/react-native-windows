@@ -98,11 +98,11 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The root view tag.</param>
         /// <param name="rootView">The root view.</param>
-        /// <param name="themedRootContext">The React context.</param>
+        /// <param name="rootContext">The React context.</param>
         public void AddRootView(
             int tag,
             SizeMonitoringCanvas rootView,
-            ThemedReactContext themedRootContext)
+            IReactContext rootContext)
         {
             // This is called on layout manager thread
 
@@ -155,7 +155,7 @@ namespace ReactNative.UIManager
             _reactTagToOperationQueue.Add(tag, queueInfo.queueInstance);
 
             // Send forward
-            queueInfo.queueInstance.AddRootView(tag, rootView, themedRootContext);
+            queueInfo.queueInstance.AddRootView(tag, rootView, rootContext);
        }
 
         /// <summary>
@@ -273,13 +273,13 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="themedContext">The React context.</param>
+        /// <param name="context">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial props.</param>
         /// <param name="rootViewTag">Root view tag.</param>
         public void EnqueueCreateView(
-            ThemedReactContext themedContext,
+            IReactContext context,
             int viewReactTag,
             string viewClassName,
             JObject initialProps,
@@ -291,7 +291,7 @@ namespace ReactNative.UIManager
 
             _reactTagToOperationQueue.Add(viewReactTag, queue);
 
-            queue.EnqueueCreateView(themedContext, viewReactTag, viewClassName, initialProps);
+            queue.EnqueueCreateView(context, viewReactTag, viewClassName, initialProps);
         }
 
         /// <summary>

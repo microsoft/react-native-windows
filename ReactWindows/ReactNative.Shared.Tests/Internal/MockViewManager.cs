@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.UIManager;
 using System;
 
@@ -70,7 +71,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual object CreateView(ThemedReactContext reactContext)
+        public virtual object CreateView(IReactContext reactContext)
         {
             throw new NotImplementedException();
         }
@@ -80,7 +81,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, object view)
+        public virtual void OnDropViewInstance(IReactContext reactContext, object view)
         {
             throw new NotImplementedException();
         }

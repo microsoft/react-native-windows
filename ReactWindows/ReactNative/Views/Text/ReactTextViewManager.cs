@@ -4,6 +4,7 @@
 // Licensed under the MIT License.
 
 using ReactNative.Accessibility;
+using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -170,7 +171,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override RichTextBlock CreateViewInstance(ThemedReactContext reactContext)
+        protected override RichTextBlock CreateViewInstance(IReactContext reactContext)
         {
             var richTextBlock = new RichTextBlock
             {
