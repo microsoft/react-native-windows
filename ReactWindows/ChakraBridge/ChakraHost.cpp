@@ -263,6 +263,38 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
     return jsonResult;
 }
 
+JsValueRef CALLBACK NativeFlushQueueImmediate(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+{
+    // cast the callback state to the ChakraHost instance
+    auto host = (ChakraHost*)callbackState;
+
+    // Assert the argument count.
+    if (argumentCount != 1)
+    {
+        ThrowException(L"Expected only one parameter to nativeFlushQueueImmediate");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Assert the handler has been set.
+    if (host->flushQueueImmediateHandler == nullptr)
+    {
+        ThrowException(L"flushQueueImmediate handler has not been set.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    JsValueRef argumentAsJson;
+    IfFailThrow(host->JsonParse(arguments[0], &argumentAsJson), L"Could not parse stringified result");
+    const wchar_t* argsBuf;
+    size_t bufLen;
+    IfFailThrow(JsStringToPointer(argumentAsJson, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
+
+    host->flushQueueImmediateHandler(ref new String(argsBuf, (unsigned int)bufLen));
+
+    JsValueRef undefined;
+    JsGetUndefinedValue(&undefined);
+    return undefined;
+}
+
 bool HasMagicFileHeader(const wchar_t* szPath)
 {
 	FILE *file;
@@ -421,6 +453,11 @@ void ChakraHost::SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler)
     this->callSyncHandler = handler;
 }
 
+void ChakraHost::SetFlushQueueImmediate(ChakraBridge::FlushQueueImmediateHandler^ handler)
+{
+    this->flushQueueImmediateHandler = handler;
+}
+
 JsErrorCode ChakraHost::InitJson()
 {
     JsPropertyIdRef jsonPropertyId;
@@ -460,6 +497,13 @@ JsErrorCode ChakraHost::InitNativeCallSyncHook()
     return JsNoError;
 }
 
+JsErrorCode ChakraHost::InitFlushQueueImmediate()
+{
+    IfFailRet(DefineHostCallback(globalObject, L"nativeFlushQueueImmediate", NativeFlushQueueImmediate, this));
+
+    return JsNoError;
+}
+
 JsErrorCode ChakraHost::Init()
 {
     currentSourceContext = 0;
@@ -473,6 +517,7 @@ JsErrorCode ChakraHost::Init()
     IfFailRet(InitJson());
     IfFailRet(InitConsole());
     IfFailRet(InitNativeCallSyncHook());
+    IfFailRet(InitFlushQueueImmediate());
 
     return JsNoError;
 }

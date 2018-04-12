@@ -138,6 +138,10 @@ namespace ReactNative.DevSupport
             }
         }
 
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+        }
+
         public void SetGlobalVariable(string propertyName, string value)
         {
             _injectedObjects.Add(propertyName, value);

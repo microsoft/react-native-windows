@@ -18,6 +18,7 @@ namespace ReactNative.Bridge
         private readonly IJavaScriptExecutor _jsExecutor;
         private readonly IReactCallback _reactCallback;
         private readonly IActionQueue _nativeModulesQueueThread;
+        private bool _batchHadNativeModuleCalls;
 
         /// <summary>
         /// Instantiates the <see cref="IReactBridge"/>.
@@ -43,6 +44,7 @@ namespace ReactNative.Bridge
             _reactCallback = reactCallback;
             _nativeModulesQueueThread = nativeModulesQueueThread;
             _jsExecutor.SetCallSyncHook(_reactCallback.InvokeSync);
+            _jsExecutor.SetFlushQueueImmediate(ProcessResponse);
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace ReactNative.Bridge
         public void CallFunction(string moduleName, string method, JArray arguments)
         {
             var response = _jsExecutor.CallFunctionReturnFlushedQueue(moduleName, method, arguments);
-            ProcessResponse(response);
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace ReactNative.Bridge
         public void InvokeCallback(int callbackId, JArray arguments)
         {
             var response = _jsExecutor.InvokeCallbackAndReturnFlushedQueue(callbackId, arguments);
-            ProcessResponse(response);
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace ReactNative.Bridge
 
             _jsExecutor.RunScript(sourcePath, sourceUrl);
             var response = _jsExecutor.FlushedQueue();
-            ProcessResponse(response);
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -108,11 +110,35 @@ namespace ReactNative.Bridge
 
         private void ProcessResponse(JToken response)
         {
+            ProcessResponse(response, false);
+        }
+
+        private void ProcessResponse(JToken response, bool isEndOfBatch)
+        {
+            bool localBatchHadNativeModuleCalls;
+
             if (response == null || response.Type == JTokenType.Null || response.Type == JTokenType.Undefined)
             {
+                if (isEndOfBatch)
+                {
+                    localBatchHadNativeModuleCalls = _batchHadNativeModuleCalls;
+
+                    _nativeModulesQueueThread.Dispatch(() =>
+                    {
+                        // the bridge could still be processing native calls when the idle signaler fires
+                        if (localBatchHadNativeModuleCalls)
+                        {
+                            _reactCallback.OnBatchComplete();
+                        }
+                    });
+
+                    _batchHadNativeModuleCalls = false;
+                }
+
                 return;
             }
 
+            _batchHadNativeModuleCalls = true;
             var messages = response as JArray;
             if (messages == null)
             {
@@ -136,6 +162,12 @@ namespace ReactNative.Bridge
                     "Did not get valid calls back from JavaScript. JSON: " + response);
             }
 
+            localBatchHadNativeModuleCalls = _batchHadNativeModuleCalls;
+            if (isEndOfBatch)
+            {
+                _batchHadNativeModuleCalls = false;
+            }
+
             _nativeModulesQueueThread.Dispatch(() =>
             {
                 for (var i = 0; i < moduleIds.Count; ++i)
@@ -145,9 +177,16 @@ namespace ReactNative.Bridge
                     var args = (JArray)paramsArray[i];
 
                     _reactCallback.Invoke(moduleId, methodId, args);
-                };
+                }
 
-                _reactCallback.OnBatchComplete();
+                if (isEndOfBatch)
+                {
+                    // the bridge could still be processing native calls when the idle signaler fires
+                    if (localBatchHadNativeModuleCalls)
+                    {
+                        _reactCallback.OnBatchComplete();
+                    }
+                }
             });
         }
     }
