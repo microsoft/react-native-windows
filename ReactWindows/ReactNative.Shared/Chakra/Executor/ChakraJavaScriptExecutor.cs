@@ -33,6 +33,7 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptNativeFunction _nativeLoggingHook;
         private JavaScriptNativeFunction _nativeRequire;
         private JavaScriptNativeFunction _nativeCallSyncHook;
+        private JavaScriptNativeFunction _nativeFlushQueueImmediate;
 
         private JavaScriptValue _globalObject;
 
@@ -46,6 +47,7 @@ namespace ReactNative.Chakra.Executor
 #endif
 
         private Func<int, int, JArray, JToken> _callSyncHook;
+        private Action<JToken> _flushQueueImmediate;
 
         /// <summary>
         /// Instantiates the <see cref="ChakraJavaScriptExecutor"/>.
@@ -169,6 +171,11 @@ namespace ReactNative.Chakra.Executor
             EvaluateScript(startupCode, sourceUrl);
         }
 
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            _flushQueueImmediate = flushQueueImmediate;
+        }
+
         /// <summary>
         /// Sets a global variable in the JavaScript runtime.
         /// </summary>
@@ -232,6 +239,12 @@ namespace ReactNative.Chakra.Executor
             EnsureGlobalObject().SetProperty(
                 JavaScriptPropertyId.FromString("nativeCallSyncHook"),
                 JavaScriptValue.CreateFunction(_nativeCallSyncHook),
+                true);
+
+            _nativeFlushQueueImmediate = NativeFlushQueueImmediate;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeFlushQueueImmediate"),
+                JavaScriptValue.CreateFunction(_nativeFlushQueueImmediate),
                 true);
         }
 
@@ -315,6 +328,31 @@ namespace ReactNative.Chakra.Executor
             return JavaScriptValue.Undefined;
         }
         #endregion
+
+        #region Native Flush Queue Immediate Hook
+        private JavaScriptValue NativeFlushQueueImmediate(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected excactly one argument");
+            }
+
+            if (_flushQueueImmediate == null)
+            {
+                throw new InvalidOperationException("FlushQueueImmediate hook has not been set");
+            }
+
+            _flushQueueImmediate(ConvertJson(arguments[0]));
+
+            return JavaScriptValue.Undefined;
+        }
+        #endregion
+
 
         #region Native Call Sync Hook
         private JavaScriptValue NativeCallSyncHook(
