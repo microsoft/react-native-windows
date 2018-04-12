@@ -252,14 +252,8 @@ namespace ReactNative.Modules.Network
                 var inputStream = new MemoryStream(byteArray);
 #endif
                 request.Content = new HttpStreamContent(inputStream);
-                if (header.ContentType == null)
-                {
-                    request.Content.Headers.ContentType = new HttpMediaTypeHeaderValue(storageFile.ContentType);
-                }
-                else
-                {
-                    request.Content.Headers.ContentType = new HttpMediaTypeHeaderValue(header.ContentType);
-                }
+                request.Content.Headers.ContentType = new HttpMediaTypeHeaderValue(
+                    header.ContentType != null ? header.ContentType : storageFile.ContentType);
 
                 await ProcessRequestAsync(
                     requestId,
