@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Accessibility;
+using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
@@ -216,7 +217,7 @@ namespace ReactNative.UIManager
         /// Be sure to call this base class method to register for pointer 
         /// entered and pointer exited events.
         /// </remarks>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
+        public override void OnDropViewInstance(IReactContext reactContext, TFrameworkElement view)
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
@@ -265,7 +266,7 @@ namespace ReactNative.UIManager
         /// Make sure you call the base implementation to ensure base pointer
         /// event handlers are subscribed.
         /// </remarks>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        protected override void AddEventEmitters(IReactContext reactContext, TFrameworkElement view)
         {
             view.PointerEntered += OnPointerEntered;
             view.PointerExited += OnPointerExited;

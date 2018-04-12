@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -184,7 +185,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override TextBlock CreateViewInstance(ThemedReactContext reactContext)
+        protected override TextBlock CreateViewInstance(IReactContext reactContext)
         {
             var textBlock = new TextBlock
             {

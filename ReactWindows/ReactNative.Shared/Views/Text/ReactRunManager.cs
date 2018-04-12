@@ -1,6 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ReactNative.Bridge;
 using ReactNative.UIManager;
 using System;
 #if WINDOWS_UWP
@@ -75,7 +76,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override Run CreateViewInstance(ThemedReactContext reactContext)
+        protected override Run CreateViewInstance(IReactContext reactContext)
         {
             return new Run();
         }

@@ -138,7 +138,7 @@ namespace ReactNative
         /// <summary>
         /// Gets the current React context instance.
         /// </summary>
-        public ReactContext CurrentReactContext
+        public IReactContext CurrentReactContext
         {
             get
             {
@@ -157,7 +157,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the result.</returns>
-        public async Task<ReactContext> CreateReactContextAsync(CancellationToken token)
+        public async Task<IReactContext> CreateReactContextAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
@@ -182,7 +182,7 @@ namespace ReactNative
         /// <returns>
         /// A task to await the React context.
         /// </returns>
-        public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
+        public async Task<IReactContext> GetReactContextAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
@@ -205,7 +205,7 @@ namespace ReactNative
         /// <returns>
         /// A task to await the React context.
         /// </returns>
-        public async Task<ReactContext> GetOrCreateReactContextAsync(CancellationToken token)
+        public async Task<IReactContext> GetOrCreateReactContextAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
@@ -231,7 +231,7 @@ namespace ReactNative
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the result.</returns>
-        public async Task<ReactContext> RecreateReactContextAsync(CancellationToken token)
+        public async Task<IReactContext> RecreateReactContextAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
@@ -434,7 +434,7 @@ namespace ReactNative
         /// The application context.
         /// </param>
         /// <returns>The list of view managers.</returns>
-        public IReadOnlyList<IViewManager> CreateAllViewManagers(ReactContext reactContext)
+        public IReadOnlyList<IViewManager> CreateAllViewManagers(IReactContext reactContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -454,7 +454,7 @@ namespace ReactNative
             }
         }
 
-        private Task<ReactContext> CreateReactContextCoreAsync(CancellationToken token)
+        private Task<IReactContext> CreateReactContextCoreAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -468,7 +468,7 @@ namespace ReactNative
             }
         }
 
-        private Task<ReactContext> CreateReactContextFromDevManagerAsync(CancellationToken token)
+        private Task<IReactContext> CreateReactContextFromDevManagerAsync(CancellationToken token)
         {
             if (_devSupportManager.HasUpToDateBundleInCache())
             {
@@ -480,7 +480,7 @@ namespace ReactNative
             }
         }
 
-        private Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
+        private Task<IReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
         {
             return CreateReactContextAsync(
                     _javaScriptExecutorFactory,
@@ -488,7 +488,7 @@ namespace ReactNative
                     token);
         }
 
-        private Task<ReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token)
+        private Task<IReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token)
         {
             var bundleLoader = JavaScriptBundleLoader.CreateCachedBundleFromNetworkLoader(
                 _devSupportManager.SourceUrl,
@@ -496,7 +496,7 @@ namespace ReactNative
             return CreateReactContextAsync(_javaScriptExecutorFactory, bundleLoader, token);
        }
 
-        private Task<ReactContext> CreateReactContextWithRemoteDebuggerAsync(
+        private Task<IReactContext> CreateReactContextWithRemoteDebuggerAsync(
             Func<IJavaScriptExecutor> javaScriptExecutorFactory,
             CancellationToken token)
         {
@@ -506,7 +506,7 @@ namespace ReactNative
             return CreateReactContextAsync(javaScriptExecutorFactory, bundleLoader, token);
         }
 
-        private async Task<ReactContext> CreateReactContextAsync(
+        private async Task<IReactContext> CreateReactContextAsync(
             Func<IJavaScriptExecutor> jsExecutorFactory,
             JavaScriptBundleLoader jsBundleLoader,
             CancellationToken token)
@@ -533,7 +533,7 @@ namespace ReactNative
             }
         }
 
-        private async Task<ReactContext> InitializeReactContextAsync(
+        private async Task<IReactContext> InitializeReactContextAsync(
             Func<IJavaScriptExecutor> jsExecutorFactory,
             JavaScriptBundleLoader jsBundleLoader,
             CancellationToken token)
@@ -627,7 +627,7 @@ namespace ReactNative
             await rootViewRemovedTask;
         }
 
-        private async Task TearDownReactContextAsync(ReactContext reactContext, CancellationToken token)
+        private async Task TearDownReactContextAsync(IReactContext reactContext, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
 
@@ -718,7 +718,7 @@ namespace ReactNative
 
         private void ProcessPackage(
             IReactPackage reactPackage,
-            ReactContext reactContext,
+            IReactContext reactContext,
             NativeModuleRegistry.Builder nativeRegistryBuilder)
         {
             foreach (var nativeModule in reactPackage.CreateNativeModules(reactContext))
@@ -741,17 +741,17 @@ namespace ReactNative
                 return _parent._lock.LockAsync();
             }
 
-            public Task<ReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
+            public Task<IReactContext> CreateReactContextFromBundleAsync(CancellationToken token)
             {
                 return _parent.CreateReactContextFromBundleAsync(token);
             }
 
-            public Task<ReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token)
+            public Task<IReactContext> CreateReactContextFromCachedPackagerBundleAsync(CancellationToken token)
             {
                 return _parent.CreateReactContextFromCachedPackagerBundleAsync(token);
             }
 
-            public Task<ReactContext> CreateReactContextWithRemoteDebuggerAsync(Func<IJavaScriptExecutor> javaScriptExecutorFactory, CancellationToken token)
+            public Task<IReactContext> CreateReactContextWithRemoteDebuggerAsync(Func<IJavaScriptExecutor> javaScriptExecutorFactory, CancellationToken token)
             {
                 return _parent.CreateReactContextWithRemoteDebuggerAsync(javaScriptExecutorFactory, token);
             }

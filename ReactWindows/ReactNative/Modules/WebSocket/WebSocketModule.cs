@@ -23,7 +23,7 @@ namespace ReactNative.Modules.WebSocket
         private readonly IDictionary<int, MessageWebSocket> _webSocketConnections;
         private readonly IDictionary<int, DataWriter> _dataWriters;
 
-        public WebSocketModule(ReactContext reactContext)
+        public WebSocketModule(IReactContext reactContext)
             : base(reactContext)
         {
             _webSocketConnections = new Dictionary<int, MessageWebSocket>();

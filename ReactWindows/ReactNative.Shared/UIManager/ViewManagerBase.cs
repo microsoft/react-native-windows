@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Json;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The context.</param>
         /// <returns>The view.</returns>
-        public virtual TView CreateView(ThemedReactContext reactContext)
+        public virtual TView CreateView(IReactContext reactContext)
         {
             var view = CreateViewInstance(reactContext);
             OnViewInstanceCreated(reactContext, view);
@@ -98,7 +99,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TView view)
+        public virtual void OnDropViewInstance(IReactContext reactContext, TView view)
         {
         }
 
@@ -155,7 +156,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TView CreateViewInstance(ThemedReactContext reactContext);
+        protected abstract TView CreateViewInstance(IReactContext reactContext);
 
         /// <summary>
         /// Subclasses can override this method to install custom event 
@@ -167,7 +168,7 @@ namespace ReactNative.UIManager
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
         /// </remarks>
-        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TView view)
+        protected virtual void AddEventEmitters(IReactContext reactContext, TView view)
         {
         }
 
@@ -181,7 +182,7 @@ namespace ReactNative.UIManager
         {
         }
 
-        internal virtual void OnViewInstanceCreated(ThemedReactContext reactContext, TView view)
+        internal virtual void OnViewInstanceCreated(IReactContext reactContext, TView view)
         {
         }
 
@@ -247,12 +248,12 @@ namespace ReactNative.UIManager
             OnAfterUpdateTransaction((TView)viewToUpdate);
         }
 
-        object IViewManager.CreateView(ThemedReactContext reactContext)
+        object IViewManager.CreateView(IReactContext reactContext)
         {
             return CreateView(reactContext);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, object view)
+        void IViewManager.OnDropViewInstance(IReactContext reactContext, object view)
         {
             OnDropViewInstance(reactContext, (TView)view);
         }

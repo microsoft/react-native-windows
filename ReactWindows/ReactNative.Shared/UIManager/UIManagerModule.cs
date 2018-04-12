@@ -43,7 +43,7 @@ namespace ReactNative.UIManager
         /// <param name="layoutActionQueue">The layout action queue.</param>
         /// <param name="options">Options for the <see cref="UIManagerModule"/>.</param>
         public UIManagerModule(
-            ReactContext reactContext,
+            IReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
             UIImplementationProvider uiImplementationProvider,
             IActionQueue layoutActionQueue,
@@ -132,8 +132,6 @@ namespace ReactNative.UIManager
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
-            var context = new ThemedReactContext(Context);
-
             DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
             {
                 var width = rootView.ActualWidth;
@@ -141,7 +139,7 @@ namespace ReactNative.UIManager
 
                 _layoutActionQueue.Dispatch(() =>
                 {
-                    _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
+                    _uiImplementation.RegisterRootView(rootView, tag, width, height, Context);
                 });
 
                 var resizeCount = 0;

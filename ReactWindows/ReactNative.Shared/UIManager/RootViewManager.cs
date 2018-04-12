@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
+
+using ReactNative.Bridge;
 
 namespace ReactNative.UIManager
 {
@@ -27,7 +29,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, SizeMonitoringCanvas view)
+        public override void OnDropViewInstance(IReactContext reactContext, SizeMonitoringCanvas view)
         {
             view.RemoveSizeChanged();
         }
@@ -41,7 +43,7 @@ namespace ReactNative.UIManager
         /// Intentionally skipping call to base method because we don't care
         /// about pointer enter/leave events on the root view.
         /// </remarks>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, SizeMonitoringCanvas view)
+        protected override void AddEventEmitters(IReactContext reactContext, SizeMonitoringCanvas view)
         {
         }
 
@@ -50,7 +52,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override SizeMonitoringCanvas CreateViewInstance(ThemedReactContext reactContext)
+        protected override SizeMonitoringCanvas CreateViewInstance(IReactContext reactContext)
         {
             return new SizeMonitoringCanvas();
         }

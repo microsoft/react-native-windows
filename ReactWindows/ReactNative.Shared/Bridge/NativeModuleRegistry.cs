@@ -19,13 +19,13 @@ namespace ReactNative.Bridge
     /// </summary>
     public sealed class NativeModuleRegistry
     {
-        private readonly ReactContext _reactContext;
+        private readonly IReactContext _reactContext;
         private readonly IReadOnlyList<ModuleDefinition> _moduleTable;
         private readonly IReadOnlyDictionary<Type, INativeModule> _moduleInstances;
         private readonly IList<IOnBatchCompleteListener> _batchCompleteListenerModules;
 
         private NativeModuleRegistry(
-            ReactContext reactContext,
+            IReactContext reactContext,
             IReadOnlyList<ModuleDefinition> moduleTable,
             IReadOnlyDictionary<Type, INativeModule> moduleInstances)
         {
@@ -304,13 +304,13 @@ namespace ReactNative.Bridge
             private readonly IDictionary<string, INativeModule> _modules = 
                 new Dictionary<string, INativeModule>();
 
-            private readonly ReactContext _reactContext;
+            private readonly IReactContext _reactContext;
 
             /// <summary>
             /// Instantiates the <see cref="Builder"/>.
             /// </summary>
             /// <param name="reactContext">The React context.</param>
-            public Builder(ReactContext reactContext)
+            public Builder(IReactContext reactContext)
             {
                 if (reactContext == null)
                     throw new ArgumentNullException(nameof(reactContext));

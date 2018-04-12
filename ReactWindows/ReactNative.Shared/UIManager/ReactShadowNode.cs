@@ -5,6 +5,7 @@
 
 using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Json;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace ReactNative.UIManager
     public class ReactShadowNode : IDisposable
     {
         private ReactShadowNode _rootNode;
-        private ThemedReactContext _themedContext;
+        private IReactContext _reactContext;
         private bool _nodeUpdated = true;
         private IList<ReactShadowNode> _children;
         private ReactShadowNode _parent;
@@ -412,23 +413,23 @@ namespace ReactNative.UIManager
         public ReactShadowNode Parent => _parent;
 
         /// <summary>
-        /// The themed context.
+        /// The context.
         /// </summary>
-        public ThemedReactContext ThemedContext
+        public IReactContext ReactContext
         {
             get
             {
-                var themedContext = _themedContext;
-                if (themedContext == null)
+                var context = _reactContext;
+                if (context == null)
                 {
-                    throw new InvalidOperationException("Themed context has not been set.");
+                    throw new InvalidOperationException("Context has not been set.");
                 }
 
-                return themedContext;
+                return context;
             }
             protected internal set
             {
-                _themedContext = value;
+                _reactContext = value;
             }
         }
 

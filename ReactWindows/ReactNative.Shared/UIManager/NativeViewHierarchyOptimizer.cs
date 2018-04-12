@@ -3,9 +3,10 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json.Linq;
-using ReactNative.Json;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
+using ReactNative.Json;
 #if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
 #endif
@@ -78,19 +79,19 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="node">The shadow node for the view.</param>
         /// <param name="rootViewTag">The react tag id of the root.</param>
-        /// <param name="themedContext">The themed context.</param>
+        /// <param name="context">The context.</param>
         /// <param name="initialProps">
         /// The initial props for the view.
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node,
             int rootViewTag,
-            ThemedReactContext themedContext, 
+            IReactContext context, 
             JObject initialProps)
         {
 #if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueCreateView(
-                    themedContext,
+                    context,
                     node.ReactTag,
                     node.ViewClass,
                     initialProps,
@@ -104,7 +105,7 @@ namespace ReactNative.UIManager
             if (!isLayoutOnly)
             {
                 _uiViewOperationQueue.EnqueueCreateView(
-                    themedContext,
+                    context,
                     node.ReactTag,
                     node.ViewClass,
                     initialProps,
@@ -468,7 +469,7 @@ namespace ReactNative.UIManager
 
             // Create the view since it doesn't exist in the native hierarchy yet.
             _uiViewOperationQueue.EnqueueCreateView(
-                node.RootNode.ThemedContext,
+                node.RootNode.ReactContext,
                 node.ReactTag,
                 node.ViewClass,
                 props,

@@ -4,6 +4,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -90,7 +91,7 @@ namespace ReactNative.Views.Switch
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ToggleSwitch view)
+        public override void OnDropViewInstance(IReactContext reactContext, ToggleSwitch view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.Toggled -= OnToggled;
@@ -101,7 +102,7 @@ namespace ReactNative.Views.Switch
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ToggleSwitch CreateViewInstance(ThemedReactContext reactContext)
+        protected override ToggleSwitch CreateViewInstance(IReactContext reactContext)
         {
             var view = new ToggleSwitch();
             view.OnContent = null;
@@ -115,7 +116,7 @@ namespace ReactNative.Views.Switch
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ToggleSwitch view)
+        protected override void AddEventEmitters(IReactContext reactContext, ToggleSwitch view)
         {
             base.AddEventEmitters(reactContext, view);
             view.Toggled += OnToggled;
