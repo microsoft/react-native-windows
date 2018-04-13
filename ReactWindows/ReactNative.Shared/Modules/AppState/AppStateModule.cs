@@ -30,7 +30,7 @@ namespace ReactNative.Modules.AppState
         /// Instantiates the <see cref="AppStateModule"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        public AppStateModule(IReactContext reactContext)
+        public AppStateModule(ReactContext reactContext)
             : base(reactContext)
         {
         }

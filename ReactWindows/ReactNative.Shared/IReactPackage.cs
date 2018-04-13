@@ -33,7 +33,7 @@ namespace ReactNative.Modules.Core
         /// </summary>
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of native modules.</returns>
-        IReadOnlyList<INativeModule> CreateNativeModules(IReactContext reactContext);
+        IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext);
 
         /// <summary>
         /// Creates the list of view managers that should be registered with
@@ -41,6 +41,6 @@ namespace ReactNative.Modules.Core
         /// </summary>
         /// <param name="reactContext">The React application context.</param>
         /// <returns>The list of view managers.</returns>
-        IReadOnlyList<IViewManager> CreateViewManagers(IReactContext reactContext);
+        IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext);
     }
 }

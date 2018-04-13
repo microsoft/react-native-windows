@@ -76,7 +76,7 @@ namespace ReactNative.DevSupport
         /// </summary>
         /// <param name="token">A token to cancel the operation.</param>
         /// <returns>A task to await the result.</returns>
-        Task<IReactContext> CreateReactContextFromPackagerAsync(CancellationToken token);
+        Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token);
 
         /// <summary>
         /// Checks if an up-to-date JavaScript bundle is ready.

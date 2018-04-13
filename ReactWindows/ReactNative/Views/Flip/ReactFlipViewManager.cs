@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
@@ -92,7 +91,7 @@ namespace ReactNative.Views.Flip
             parent.Items.RemoveAt(index);
         }
 
-        public override void OnDropViewInstance(IReactContext reactContext, FlipView view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, FlipView view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
@@ -112,12 +111,12 @@ namespace ReactNative.Views.Flip
             }
         }
 
-        protected override FlipView CreateViewInstance(IReactContext reactContext)
+        protected override FlipView CreateViewInstance(ThemedReactContext reactContext)
         {
             return new FlipView();
         }
 
-        protected override void AddEventEmitters(IReactContext reactContext, FlipView view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, FlipView view)
         {
             base.AddEventEmitters(reactContext, view);
             view.SelectionChanged += OnSelectionChanged;

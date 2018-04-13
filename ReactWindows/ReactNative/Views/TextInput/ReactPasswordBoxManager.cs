@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -398,9 +397,9 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// Returns the view instance for <see cref="PasswordBox"/>.
         /// </summary>
-        /// <param name="reactContext">The React Context</param>
+        /// <param name="reactContext">The themed React Context</param>
         /// <returns>A new initialized <see cref="PasswordBox"/></returns>
-        protected override PasswordBox CreateViewInstance(IReactContext reactContext)
+        protected override PasswordBox CreateViewInstance(ThemedReactContext reactContext)
         {
             return new PasswordBox();
         }
@@ -435,7 +434,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="PasswordBox"/> view instance.</param>
-        protected override void AddEventEmitters(IReactContext reactContext, PasswordBox view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, PasswordBox view)
         {
             base.AddEventEmitters(reactContext, view);
             view.PasswordChanged += OnPasswordChanged;
@@ -451,7 +450,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="PasswordBox"/>.</param>
-        public override void OnDropViewInstance(IReactContext reactContext, PasswordBox view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, PasswordBox view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.KeyDown -= OnKeyDown;

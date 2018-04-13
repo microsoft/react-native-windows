@@ -3,7 +3,6 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
-using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -38,7 +37,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override BorderedCanvas CreateViewInstance(IReactContext reactContext)
+        protected override BorderedCanvas CreateViewInstance(ThemedReactContext reactContext)
         {
             return new BorderedCanvas();
         }

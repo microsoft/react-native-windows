@@ -4,7 +4,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -151,7 +150,7 @@ namespace ReactNative.UIManager
         /// Be sure to call this base class method to register for pointer 
         /// entered and pointer exited events.
         /// </remarks>
-        public override void OnDropViewInstance(IReactContext reactContext, TFrameworkElement view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
         {
             view.MouseEnter -= OnPointerEntered;
             view.MouseLeave -= OnPointerExited;
@@ -172,7 +171,7 @@ namespace ReactNative.UIManager
         /// Make sure you call the base implementation to ensure base pointer
         /// event handlers are subscribed.
         /// </remarks>
-        protected override void AddEventEmitters(IReactContext reactContext, TFrameworkElement view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
         {
             view.MouseEnter += OnPointerEntered;
             view.MouseLeave += OnPointerExited;

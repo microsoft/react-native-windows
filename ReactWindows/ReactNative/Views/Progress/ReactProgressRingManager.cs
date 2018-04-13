@@ -1,7 +1,6 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI;
@@ -76,9 +75,9 @@ namespace ReactNative.Views.Progress
         /// <summary>
         /// Creates a new view instance of a native <see cref="ProgressRing"/> component.
         /// </summary>
-        /// <param name="reactContext">The <see cref="IReactContext"/> of the components view context.</param>
+        /// <param name="reactContext">The <see cref="ThemedReactContext"/> of the components view context.</param>
         /// <returns>Returns a native <see cref="ProgressRing"/> component.</returns>
-        protected override ProgressRing CreateViewInstance(IReactContext reactContext)
+        protected override ProgressRing CreateViewInstance(ThemedReactContext reactContext)
         {
             return new ProgressRing();
         }

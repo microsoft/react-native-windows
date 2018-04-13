@@ -4,7 +4,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml;
@@ -139,7 +138,7 @@ namespace ReactNative.Views.Slider
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(IReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.ValueChanged -= OnValueChange;
@@ -163,7 +162,7 @@ namespace ReactNative.Views.Slider
         /// </summary>
         /// <param name="reactContext"></param>
         /// <returns></returns>
-        protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance(IReactContext reactContext)
+        protected override Windows.UI.Xaml.Controls.Slider CreateViewInstance(ThemedReactContext reactContext)
         {
             return new Windows.UI.Xaml.Controls.Slider();
         }
@@ -174,7 +173,7 @@ namespace ReactNative.Views.Slider
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(IReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, Windows.UI.Xaml.Controls.Slider view)
         {
             base.AddEventEmitters(reactContext, view);
             view.ValueChanged += OnValueChange;

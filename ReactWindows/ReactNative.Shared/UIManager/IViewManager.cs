@@ -4,7 +4,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using System;
 
 namespace ReactNative.UIManager
@@ -71,7 +70,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The context.</param>
         /// <returns>The view.</returns>
-        object CreateView(IReactContext reactContext);
+        object CreateView(ThemedReactContext reactContext);
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
@@ -83,7 +82,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Derived classes do not need to call this base method.
         /// </remarks>
-        void OnDropViewInstance(IReactContext reactContext, object view);
+        void OnDropViewInstance(ThemedReactContext reactContext, object view);
 
         /// <summary>
         /// This method should return the subclass of <see cref="ReactShadowNode"/>

@@ -35,7 +35,7 @@ namespace ReactNative.UIManager
         private readonly UIViewOperationQueue _operationsQueue;
         private readonly ShadowNodeRegistry _shadowNodeRegistry;
         private readonly NativeViewHierarchyOptimizer _nativeViewHierarchyOptimizer;
-        private readonly IReactContext _reactContext;
+        private readonly ReactContext _reactContext;
         private readonly EventDispatcher _eventDispatcher;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="eventDispatcher">The event dispatcher.</param>
         public UIImplementation(
-            IReactContext reactContext, 
+            ReactContext reactContext, 
             IReadOnlyList<IViewManager> viewManagers, 
             EventDispatcher eventDispatcher)
             : this(reactContext, new ViewManagerRegistry(viewManagers), eventDispatcher)
@@ -53,7 +53,7 @@ namespace ReactNative.UIManager
         }
 
         private UIImplementation(
-            IReactContext reactContext, 
+            ReactContext reactContext, 
             ViewManagerRegistry viewManagers,
             EventDispatcher eventDispatcher)
             : this(
@@ -72,7 +72,7 @@ namespace ReactNative.UIManager
         /// <param name="operationsQueue">The operations queue.</param>
         /// <param name="eventDispatcher">The event dispatcher.</param>
         protected UIImplementation(
-            IReactContext reactContext,
+            ReactContext reactContext,
             ViewManagerRegistry viewManagers,
             UIViewOperationQueue operationsQueue,
             EventDispatcher eventDispatcher)
@@ -100,11 +100,11 @@ namespace ReactNative.UIManager
             int tag,
             double width,
             double height,
-            IReactContext context)
+            ThemedReactContext context)
         {
             var rootCssNode = CreateRootShadowNode();
             rootCssNode.ReactTag = tag;
-            rootCssNode.ReactContext = context;
+            rootCssNode.ThemedContext = context;
             rootCssNode.StyleWidth = (float)width;
             rootCssNode.StyleHeight = (float)height;
             _shadowNodeRegistry.AddRootNode(rootCssNode);
@@ -164,7 +164,7 @@ namespace ReactNative.UIManager
             cssNode.ReactTag = tag;
             cssNode.ViewClass = className;
             cssNode.RootNode = rootNode;
-            cssNode.ReactContext = rootNode.ReactContext;
+            cssNode.ThemedContext = rootNode.ThemedContext;
 
             _shadowNodeRegistry.AddNode(cssNode);
 
@@ -657,7 +657,7 @@ namespace ReactNative.UIManager
         {
             if (!cssNode.IsVirtual)
             {
-                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, rootViewTag, cssNode.ReactContext, styles);
+                _nativeViewHierarchyOptimizer.HandleCreateView(cssNode, rootViewTag, cssNode.ThemedContext, styles);
             }
         }
 

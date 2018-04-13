@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Split.Events;
@@ -149,7 +148,7 @@ namespace ReactNative.Views.Split
             return count;
         }
 
-        public override void OnDropViewInstance(IReactContext reactContext, SplitView view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, SplitView view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.PaneClosed -= OnPaneClosed;
@@ -203,13 +202,13 @@ namespace ReactNative.Views.Split
         {
         }
 
-        protected override void AddEventEmitters(IReactContext reactContext, SplitView view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, SplitView view)
         {
             base.AddEventEmitters(reactContext, view);
             view.PaneClosed += OnPaneClosed;
         }
 
-        protected override SplitView CreateViewInstance(IReactContext reactContext)
+        protected override SplitView CreateViewInstance(ThemedReactContext reactContext)
         {
             return new SplitView
             {

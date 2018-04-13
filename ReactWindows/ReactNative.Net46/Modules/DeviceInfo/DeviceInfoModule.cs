@@ -23,7 +23,7 @@ namespace ReactNative.Modules.DeviceInfo
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
         /// </summary>
         /// <param name="reactContext">The React context.</param>
-        public DeviceInfoModule(IReactContext reactContext)
+        public DeviceInfoModule(ReactContext reactContext)
             : base(reactContext)
         {
             _window = Application.Current.MainWindow;

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -465,7 +464,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/>.</param>
-        public override void OnDropViewInstance(IReactContext reactContext, ReactTextBox view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, ReactTextBox view)
         {
             base.OnDropViewInstance(reactContext, view);
             view.KeyDown -= OnKeyDown;
@@ -486,7 +485,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext"></param>
         /// <returns></returns>
-        protected override ReactTextBox CreateViewInstance(IReactContext reactContext)
+        protected override ReactTextBox CreateViewInstance(ThemedReactContext reactContext)
         {
             return new ReactTextBox
             {
@@ -499,7 +498,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The <see cref="ReactTextBox"/> view instance.</param>
-        protected override void AddEventEmitters(IReactContext reactContext, ReactTextBox view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, ReactTextBox view)
         {
             base.AddEventEmitters(reactContext, view);
             view.TextChanged += OnTextChanged;

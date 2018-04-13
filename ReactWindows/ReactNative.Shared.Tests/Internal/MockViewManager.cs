@@ -71,7 +71,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual object CreateView(IReactContext reactContext)
+        public virtual object CreateView(ThemedReactContext reactContext)
         {
             throw new NotImplementedException();
         }
@@ -81,7 +81,7 @@ namespace ReactNative.Tests
             throw new NotImplementedException();
         }
 
-        public virtual void OnDropViewInstance(IReactContext reactContext, object view)
+        public virtual void OnDropViewInstance(ThemedReactContext reactContext, object view)
         {
             throw new NotImplementedException();
         }

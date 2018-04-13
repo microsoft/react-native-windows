@@ -27,7 +27,7 @@ namespace ReactNative.UIManager
     /// </summary>
     public class UIViewOperationQueue
     {
-        private readonly IReactContext _reactContext;
+        private readonly ReactContext _reactContext;
         private readonly ViewManagerRegistry _viewManagerRegistry;
 
         private class QueueInstanceInfo
@@ -56,7 +56,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagerRegistry">
         /// The view manager registry.
         /// </param>
-        public UIViewOperationQueue(IReactContext reactContext, ViewManagerRegistry viewManagerRegistry)
+        public UIViewOperationQueue(ReactContext reactContext, ViewManagerRegistry viewManagerRegistry)
         {
             _reactContext = reactContext;
             _viewManagerRegistry = viewManagerRegistry;
@@ -98,11 +98,11 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The root view tag.</param>
         /// <param name="rootView">The root view.</param>
-        /// <param name="rootContext">The React context.</param>
+        /// <param name="themedRootContext">The React context.</param>
         public void AddRootView(
             int tag,
             SizeMonitoringCanvas rootView,
-            IReactContext rootContext)
+            ThemedReactContext themedRootContext)
         {
             // This is called on layout manager thread
 
@@ -123,7 +123,7 @@ namespace ReactNative.UIManager
                 CoreApplicationView foundView = CoreApplication.Views.First(v => v.Dispatcher == rootViewDispatcher);
 
                 // Create new ReactChoreographer for this view/dispatcher. It will only be used for its DispatchUICallback services
-                var reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
+                ReactChoreographer reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
 
                 queueInfo = new QueueInstanceInfo()
                 {
@@ -155,7 +155,7 @@ namespace ReactNative.UIManager
             _reactTagToOperationQueue.Add(tag, queueInfo.queueInstance);
 
             // Send forward
-            queueInfo.queueInstance.AddRootView(tag, rootView, rootContext);
+            queueInfo.queueInstance.AddRootView(tag, rootView, themedRootContext);
        }
 
         /// <summary>
@@ -273,13 +273,13 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="context">The React context.</param>
+        /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial props.</param>
         /// <param name="rootViewTag">Root view tag.</param>
         public void EnqueueCreateView(
-            IReactContext context,
+            ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
             JObject initialProps,
@@ -291,7 +291,7 @@ namespace ReactNative.UIManager
 
             _reactTagToOperationQueue.Add(viewReactTag, queue);
 
-            queue.EnqueueCreateView(context, viewReactTag, viewClassName, initialProps);
+            queue.EnqueueCreateView(themedContext, viewReactTag, viewClassName, initialProps);
         }
 
         /// <summary>

@@ -1,9 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
-using ReactNative.Bridge;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml.Controls;
@@ -50,7 +49,7 @@ namespace ReactNative.Views.Progress
         {
         }
 
-        protected override ProgressBar CreateViewInstance(IReactContext reactContext)
+        protected override ProgressBar CreateViewInstance(ThemedReactContext reactContext)
         {
             return new ProgressBar();
         }

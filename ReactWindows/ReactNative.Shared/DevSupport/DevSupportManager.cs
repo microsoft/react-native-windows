@@ -349,7 +349,7 @@ namespace ReactNative.DevSupport
             return _devServerHelper.IsPackagerRunningAsync(token);
         }
 
-        public Task<IReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
+        public Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -556,7 +556,7 @@ namespace ReactNative.DevSupport
             }
         }
 
-        private async Task<IReactContext> ReloadJavaScriptInProxyModeAsync(CancellationToken token)
+        private async Task<ReactContext> ReloadJavaScriptInProxyModeAsync(CancellationToken token)
         {
             var webSocketExecutor = default(WebSocketJavaScriptExecutor);
             try
@@ -594,7 +594,7 @@ namespace ReactNative.DevSupport
             return await _reactInstanceCommandsHandler.CreateReactContextWithRemoteDebuggerAsync(() => webSocketExecutor, token);
         }
 
-        private async Task<IReactContext> ReloadJavaScriptFromServerAsync(CancellationToken token)
+        private async Task<ReactContext> ReloadJavaScriptFromServerAsync(CancellationToken token)
         {
             try
             {

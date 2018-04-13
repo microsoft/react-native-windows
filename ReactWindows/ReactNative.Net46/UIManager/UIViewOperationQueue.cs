@@ -27,7 +27,7 @@ namespace ReactNative.UIManager
         /// <param name="viewManagers">
         /// The view manager registry.
         /// </param>
-        public UIViewOperationQueue(IReactContext reactContext, ViewManagerRegistry viewManagers) :
+        public UIViewOperationQueue(ReactContext reactContext, ViewManagerRegistry viewManagers) :
             base(reactContext, new NativeViewHierarchyManager(viewManagers, DispatcherHelpers.MainDispatcher, null), ReactChoreographer.Instance)
         {
         }
@@ -35,20 +35,20 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="reactContext">The React context.</param>
+        /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial props.</param>
         /// <param name="rootViewTag">Root view tag.</param>
         public void EnqueueCreateView(
-            IReactContext reactContext,
+            ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
             JObject initialProps,
             int rootViewTag)
         {
             EnqueueCreateView(
-                reactContext,
+                themedContext,
                 viewReactTag,
                 viewClassName,
                 initialProps);

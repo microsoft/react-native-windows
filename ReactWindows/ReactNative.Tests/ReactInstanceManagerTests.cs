@@ -170,7 +170,7 @@ namespace ReactNative.Tests
             ReactInstanceManager manager = null;
             await DispatcherHelpers.CallOnDispatcherAsync(() => manager = CreateReactInstanceManager(jsBundleFile));
 
-            var task = default(Task<IReactContext>);
+            var task = default(Task<ReactContext>);
             var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 task = manager.CreateReactContextAsync(CancellationToken.None);

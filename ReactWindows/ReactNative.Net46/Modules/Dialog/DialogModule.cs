@@ -12,7 +12,7 @@ namespace ReactNative.Modules.Dialog
 {
     class DialogModule : ReactContextNativeModuleBase
     {
-        public DialogModule(IReactContext reactContext)
+        public DialogModule(ReactContext reactContext)
             : base(reactContext)
         {
         }

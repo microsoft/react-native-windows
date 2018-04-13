@@ -37,7 +37,7 @@ namespace ReactNative.UIManager
         private readonly double[] _measureBuffer = new double[4];
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
-        private readonly IReactContext _reactContext;
+        private readonly ReactContext _reactContext;
         private readonly ReactChoreographer _reactChoreographer;
 
         private readonly IList<Action> _nonBatchedOperations = new List<Action>();
@@ -55,7 +55,7 @@ namespace ReactNative.UIManager
         /// <param name="reactChoreographer">
         /// The choreographer associated with this instance.
         /// </param>
-        public UIViewOperationQueueInstance(IReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChoreographer)
+        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChoreographer)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;
@@ -102,13 +102,13 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The root view tag.</param>
         /// <param name="rootView">The root view.</param>
-        /// <param name="rootContext">The React context.</param>
+        /// <param name="themedRootContext">The React context.</param>
         public void AddRootView(
             int tag,
             SizeMonitoringCanvas rootView,
-            IReactContext rootContext)
+            ThemedReactContext themedRootContext)
         {
-            EnqueueOperation(() => _nativeViewHierarchyManager.AddRootView(tag, rootView, rootContext));
+            EnqueueOperation(() => _nativeViewHierarchyManager.AddRootView(tag, rootView, themedRootContext));
         }
 
         /// <summary>
@@ -174,12 +174,12 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Enqueues an operation to create a view.
         /// </summary>
-        /// <param name="context">The React context.</param>
+        /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
         /// <param name="initialProps">The initial props.</param>
         public void EnqueueCreateView(
-            IReactContext context,
+            ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
             JObject initialProps)
@@ -187,7 +187,7 @@ namespace ReactNative.UIManager
             lock (_nonBatchedGate)
             {
                 _nonBatchedOperations.Add(() => _nativeViewHierarchyManager.CreateView(
-                   context,
+                   themedContext,
                    viewReactTag,
                    viewClassName,
                    initialProps));

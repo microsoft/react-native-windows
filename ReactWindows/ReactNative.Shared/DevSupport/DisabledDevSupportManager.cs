@@ -82,9 +82,9 @@ namespace ReactNative.DevSupport
         {
         }
 
-        public Task<IReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
+        public Task<ReactContext> CreateReactContextFromPackagerAsync(CancellationToken token)
         {
-            return Task.FromResult(default(IReactContext));
+            return Task.FromResult(default(ReactContext));
         }
 
         public bool HasUpToDateBundleInCache()

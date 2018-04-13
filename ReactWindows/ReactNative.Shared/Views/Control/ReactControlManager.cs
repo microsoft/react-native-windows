@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using ReactNative.Bridge;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -264,7 +263,7 @@ namespace ReactNative.Views.ControlView
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ReactControl CreateViewInstance(IReactContext reactContext)
+        protected override ReactControl CreateViewInstance(ThemedReactContext reactContext)
         {
             return new ReactControl();
         }
@@ -317,7 +316,7 @@ namespace ReactNative.Views.ControlView
         /// Be sure to call this base class method to register for pointer 
         /// entered and pointer exited events.
         /// </remarks>
-        public override void OnDropViewInstance(IReactContext reactContext, ReactControl view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, ReactControl view)
         {
             base.OnDropViewInstance(reactContext, view);
             if (view.IsTabStop)
