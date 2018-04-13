@@ -171,11 +171,6 @@ namespace ReactNative.Chakra.Executor
             EvaluateScript(startupCode, sourceUrl);
         }
 
-        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
-        {
-            _flushQueueImmediate = flushQueueImmediate;
-        }
-
         /// <summary>
         /// Sets a global variable in the JavaScript runtime.
         /// </summary>
@@ -214,6 +209,15 @@ namespace ReactNative.Chakra.Executor
         public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
         {
             _callSyncHook = callSyncHook;
+        }
+
+        /// <summary>
+        /// Sets a callback for immediate queue flushes.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            _flushQueueImmediate = flushQueueImmediate;
         }
 
         /// <summary>
@@ -337,22 +341,21 @@ namespace ReactNative.Chakra.Executor
             ushort argumentCount,
             IntPtr callbackData)
         {
-            if (argumentCount != 1)
+            if (argumentCount != 2)
             {
-                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected excactly one argument");
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly two arguments (global, flushedQueue)");
             }
 
             if (_flushQueueImmediate == null)
             {
-                throw new InvalidOperationException("FlushQueueImmediate hook has not been set");
+                throw new InvalidOperationException("Callback hook for `nativeFlushQueueImmediate` has not been set.");
             }
 
-            _flushQueueImmediate(ConvertJson(arguments[0]));
+            _flushQueueImmediate(ConvertJson(arguments[1]));
 
             return JavaScriptValue.Undefined;
         }
         #endregion
-
 
         #region Native Call Sync Hook
         private JavaScriptValue NativeCallSyncHook(

@@ -247,7 +247,7 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
 
     // Get the stringified arguments
     JsValueRef stringifiedArgs;
-    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter");
+    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter.");
     const wchar_t* argsBuf;
     size_t bufLen;
     IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
@@ -269,30 +269,30 @@ JsValueRef CALLBACK NativeFlushQueueImmediate(JsValueRef callee, bool isConstruc
     auto host = (ChakraHost*)callbackState;
 
     // Assert the argument count.
-    if (argumentCount != 1)
+    if (argumentCount != 2)
     {
-        ThrowException(L"Expected only one parameter to nativeFlushQueueImmediate");
+        ThrowException(L"Expected only one parameter to nativeFlushQueueImmediate.");
         return JS_INVALID_REFERENCE;
     }
 
     // Assert the handler has been set.
     if (host->flushQueueImmediateHandler == nullptr)
     {
-        ThrowException(L"flushQueueImmediate handler has not been set.");
+        ThrowException(L"flushQueueImmediate callback has not been set.");
         return JS_INVALID_REFERENCE;
     }
 
-    JsValueRef argumentAsJson;
-    IfFailThrow(host->JsonParse(arguments[0], &argumentAsJson), L"Could not parse stringified result");
+    // Get the stringified arguments.
+    JsValueRef stringifiedArgs;
+    IfFailThrow(host->JsonStringify(arguments[1], &stringifiedArgs), L"Could not stringify the args parameter.");
     const wchar_t* argsBuf;
     size_t bufLen;
-    IfFailThrow(JsStringToPointer(argumentAsJson, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
+    IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
 
+    // Invoke the flushQueueImmediate callback.
     host->flushQueueImmediateHandler(ref new String(argsBuf, (unsigned int)bufLen));
 
-    JsValueRef undefined;
-    JsGetUndefinedValue(&undefined);
-    return undefined;
+    return JS_INVALID_REFERENCE;
 }
 
 bool HasMagicFileHeader(const wchar_t* szPath)
