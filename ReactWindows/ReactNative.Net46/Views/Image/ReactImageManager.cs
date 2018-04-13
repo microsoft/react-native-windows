@@ -331,21 +331,38 @@ namespace ReactNative.Views.Image
         }
     }
 
+    /// <summary>
+    /// Custom peer class deriving from FrameworkElementAutomationPeer
+    /// </summary>
     public class ModifiedBorderAutomationPeer : FrameworkElementAutomationPeer
     {
+        /// <summary>
+        /// Modified Border with interactive role.
+        /// </summary>
+        /// <param name="owner">The Border instance.</param>
         public ModifiedBorderAutomationPeer(Border owner) : base(owner)
         {
 
         }
 
+        /// <summary>
+        /// Interactive role in the user interface
+        /// </summary>
+        /// <returns> Boolean </returns>
         protected override bool IsControlElementCore()
         {
             return true;
         }
     }
 
+    /// <summary>
+    /// Class providing automation support for the Border element.
+    /// </summary>
     public class UIAutomationBorder : Border
     {
+        /// <summary>
+        /// Class specific AutomationPeer implementation
+        /// </summary>
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new ModifiedBorderAutomationPeer(this);
