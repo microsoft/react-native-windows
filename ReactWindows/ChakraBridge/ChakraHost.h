@@ -142,9 +142,9 @@ public:
     void SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler);
 
     /// <summary>
-    /// Sets a callback for flushing the queue immediately
+    /// Sets a callback for flushing the queue immediately.
     /// </summary>
-    /// <param name="handler">the callback</param>
+    /// <param name="handler">The callback.</param>
     void SetFlushQueueImmediate(ChakraBridge::FlushQueueImmediateHandler^ handler);
 
     /// <summary>

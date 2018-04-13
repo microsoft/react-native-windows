@@ -107,7 +107,7 @@ public:
     ChakraStringResult FlushedQueue();
 
     /// <summary>
-    /// Sets the flush queue immediately hook
+    /// Sets the flush queue immediately hook.
     /// </summary>
     void SetFlushQueueImmediate(FlushQueueImmediateHandler^ handler);
 
