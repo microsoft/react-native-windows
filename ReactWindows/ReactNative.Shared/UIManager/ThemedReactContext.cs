@@ -23,12 +23,7 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The inner context.</param>
         public ThemedReactContext(IReactContext reactContext)
         {
-            if (reactContext == null)
-            {
-                throw new ArgumentNullException(nameof(reactContext));   
-            }
-
-            _reactContext = reactContext;
+            _reactContext = reactContext ?? throw new ArgumentNullException(nameof(reactContext));
         }
 
         /// <inheritdoc />
@@ -36,13 +31,6 @@ namespace ReactNative.UIManager
             where T : INativeModule
         {
             return _reactContext.GetNativeModule<T>();
-        }
-
-        /// <inheritdoc />
-        public Action<Exception> NativeModuleCallExceptionHandler
-        {
-            get => _reactContext.NativeModuleCallExceptionHandler;
-            set => _reactContext.NativeModuleCallExceptionHandler = value;
         }
 
         /// <inheritdoc />
@@ -77,45 +65,9 @@ namespace ReactNative.UIManager
         }
 
         /// <inheritdoc />
-        public void OnSuspend()
-        {
-            _reactContext.OnSuspend();
-        }
-
-        /// <inheritdoc />
-        public void OnResume()
-        {
-            _reactContext.OnResume();
-        }
-
-        /// <inheritdoc />
-        public void OnDestroy()
-        {
-            _reactContext.OnDestroy();
-        }
-
-        /// <inheritdoc />
-        public void OnEnteredBackground()
-        {
-            _reactContext.OnEnteredBackground();
-        }
-
-        /// <inheritdoc />
-        public void OnLeavingBackground()
-        {
-            _reactContext.OnLeavingBackground();
-        }
-
-        /// <inheritdoc />
         public bool IsOnDispatcherQueueThread()
         {
             return _reactContext.IsOnDispatcherQueueThread();
-        }
-
-        /// <inheritdoc />
-        public void AssertOnDispatcherQueueThread()
-        {
-            _reactContext.AssertOnDispatcherQueueThread();
         }
 
         /// <inheritdoc />
@@ -131,12 +83,6 @@ namespace ReactNative.UIManager
         }
 
         /// <inheritdoc />
-        public void AssertOnJavaScriptQueueThread()
-        {
-            _reactContext.AssertOnJavaScriptQueueThread();
-        }
-
-        /// <inheritdoc />
         public void RunOnJavaScriptQueueThread(Action action)
         {
             _reactContext.RunOnJavaScriptQueueThread(action);
@@ -146,12 +92,6 @@ namespace ReactNative.UIManager
         public bool IsOnNativeModulesQueueThread()
         {
             return _reactContext.IsOnNativeModulesQueueThread();
-        }
-
-        /// <inheritdoc />
-        public void AssertOnNativeModulesQueueThread()
-        {
-            _reactContext.AssertOnNativeModulesQueueThread();
         }
 
         /// <inheritdoc />

@@ -10,15 +10,6 @@ namespace ReactNative.Bridge
     public interface IReactContext : IAsyncDisposable
     {
         /// <summary>
-        /// The exception handler for native module calls.
-        /// </summary>
-        Action<Exception> NativeModuleCallExceptionHandler
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets the instance of the <see cref="IJavaScriptModule"/> associated
         /// with the <see cref="IReactInstance"/>.
         /// </summary>
@@ -60,32 +51,6 @@ namespace ReactNative.Bridge
         /// <param name="listener">The listener.</param>
         void RemoveBackgroundEventListener(IBackgroundEventListener listener);
 
-
-        /// <summary>
-        /// Called by the host when the application suspends.
-        /// </summary>
-        void OnSuspend();
-
-        /// <summary>
-        /// Called by the host when the application resumes.
-        /// </summary>
-        void OnResume();
-
-        /// <summary>
-        /// Called by the host when the application is destroyed.
-        /// </summary>
-        void OnDestroy();
-
-        /// <summary>
-        /// Called when the host is entering the background.
-        /// </summary>
-        void OnEnteredBackground();
-
-        /// <summary>
-        /// Called when the host is leaving the background.
-        /// </summary>
-        void OnLeavingBackground();
-
         /// <summary>
         /// Checks if the current thread is on the React instance dispatcher
         /// queue thread.
@@ -95,12 +60,6 @@ namespace ReactNative.Bridge
         ///  <b>false</b> otherwise.
         /// </returns>
         bool IsOnDispatcherQueueThread();
-
-        /// <summary>
-        /// Asserts that the current thread is on the React instance dispatcher
-        /// queue thread.
-        /// </summary>
-        void AssertOnDispatcherQueueThread();
 
         /// <summary>
         /// Enqueues an action on the dispatcher queue thread.
@@ -119,12 +78,6 @@ namespace ReactNative.Bridge
         bool IsOnJavaScriptQueueThread();
 
         /// <summary>
-        /// Asserts that the current thread is on the React instance
-        /// JavaScript queue thread.
-        /// </summary>
-        void AssertOnJavaScriptQueueThread();
-
-        /// <summary>
         /// Enqueues an action on the JavaScript queue thread.
         /// </summary>
         /// <param name="action">The action.</param>
@@ -141,21 +94,13 @@ namespace ReactNative.Bridge
         bool IsOnNativeModulesQueueThread();
 
         /// <summary>
-        /// Asserts that the current thread is on the React instance native
-        /// modules queue thread.
-        /// </summary>
-        void AssertOnNativeModulesQueueThread();
-
-        /// <summary>
         /// Enqueues an action on the native modules queue thread.
         /// </summary>
         /// <param name="action">The action.</param>
         void RunOnNativeModulesQueueThread(Action action);
 
         /// <summary>
-        /// Passes the exception to the current 
-        /// <see cref="NativeModuleCallExceptionHandler"/>, if set, otherwise
-        /// rethrows.
+        /// Passes the exception to the current, if set, otherwise rethrows.
         /// </summary>
         /// <param name="exception"></param>
         void HandleException(Exception exception);

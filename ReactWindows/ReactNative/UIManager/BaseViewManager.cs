@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Media3D;
+using ReactNative.Bridge;
 
 namespace ReactNative.UIManager
 {

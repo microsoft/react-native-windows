@@ -125,7 +125,7 @@ namespace ReactNative
 
         class Callback : ICallback
         {
-            private static readonly object[] s_empty = Array.Empty<object>();
+            private static readonly object[] s_empty = new object[0];
 
             private readonly int _id;
             private readonly IReactInstance _instance;

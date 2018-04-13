@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Json;
 using System;
 using System.Collections.Generic;
+using ReactNative.Bridge;
 
 namespace ReactNative.UIManager
 {
@@ -247,14 +248,14 @@ namespace ReactNative.UIManager
             OnAfterUpdateTransaction((TView)viewToUpdate);
         }
 
-        object IViewManager.CreateView(ThemedReactContext reactContext)
+        object IViewManager.CreateView(IReactContext reactContext)
         {
-            return CreateView(reactContext);
+            return CreateView((ThemedReactContext)reactContext);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, object view)
+        void IViewManager.OnDropViewInstance(IReactContext reactContext, object view)
         {
-            OnDropViewInstance(reactContext, (TView)view);
+            OnDropViewInstance((ThemedReactContext)reactContext, (TView)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()

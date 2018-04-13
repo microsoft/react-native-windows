@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
+using ReactNative.Bridge;
 
 namespace ReactNative.UIManager
 {

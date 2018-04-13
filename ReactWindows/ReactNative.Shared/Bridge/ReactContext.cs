@@ -346,16 +346,6 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Asserts that the current thread is on the React instance dispatcher
-        /// queue thread.
-        /// </summary>
-        public void AssertOnDispatcherQueueThread()
-        {
-            AssertReactInstance();
-            _reactInstance.QueueConfiguration.DispatcherQueue.AssertOnThread();
-        }
-
-        /// <summary>
         /// Enqueues an action on the dispatcher queue thread.
         /// </summary>
         /// <param name="action">The action.</param>
@@ -380,16 +370,6 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
-        /// Asserts that the current thread is on the React instance
-        /// JavaScript queue thread.
-        /// </summary>
-        public void AssertOnJavaScriptQueueThread()
-        {
-            AssertReactInstance();
-            _reactInstance.QueueConfiguration.JavaScriptQueue.AssertOnThread();
-        }
-
-        /// <summary>
         /// Enqueues an action on the JavaScript queue thread.
         /// </summary>
         /// <param name="action">The action.</param>
@@ -411,16 +391,6 @@ namespace ReactNative.Bridge
         {
             AssertReactInstance();
             return _reactInstance.QueueConfiguration.NativeModulesQueue.IsOnThread();
-        }
-
-        /// <summary>
-        /// Asserts that the current thread is on the React instance native
-        /// modules queue thread.
-        /// </summary>
-        public void AssertOnNativeModulesQueueThread()
-        {
-            AssertReactInstance();
-            _reactInstance.QueueConfiguration.NativeModulesQueue.AssertOnThread();
         }
 
         /// <summary>
