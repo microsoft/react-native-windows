@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Automation.Peers;
 
 namespace ReactNative.Views.Image
 {
@@ -224,7 +225,7 @@ namespace ReactNative.Views.Image
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new Border
+            return new UIAutomationBorder
             {
                 Background = new ImageBrush
                 {
@@ -327,6 +328,44 @@ namespace ReactNative.Views.Image
                 var bestResult = sources.LocalMin((s) => Math.Abs(s.Value - targetImageSize));
                 SetUriFromSingleSource(view, bestResult.Key);
             }
+        }
+    }
+
+    /// <summary>
+    /// Custom peer class deriving from FrameworkElementAutomationPeer
+    /// </summary>
+    public class ModifiedBorderAutomationPeer : FrameworkElementAutomationPeer
+    {
+        /// <summary>
+        /// Modified Border with interactive role.
+        /// </summary>
+        /// <param name="owner">The Border instance.</param>
+        public ModifiedBorderAutomationPeer(Border owner) : base(owner)
+        {
+
+        }
+
+        /// <summary>
+        /// Interactive role in the user interface
+        /// </summary>
+        /// <returns> Boolean </returns>
+        protected override bool IsControlElementCore()
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Class providing automation support for the Border element.
+    /// </summary>
+    public class UIAutomationBorder : Border
+    {
+        /// <summary>
+        /// Class specific AutomationPeer implementation
+        /// </summary>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new ModifiedBorderAutomationPeer(this);
         }
     }
 }

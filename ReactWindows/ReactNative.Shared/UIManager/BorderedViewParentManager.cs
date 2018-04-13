@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Automation.Peers;
 #endif
 
 namespace ReactNative.UIManager
@@ -188,7 +189,7 @@ namespace ReactNative.UIManager
         protected sealed override Border CreateViewInstance(ThemedReactContext reactContext)
         {
             var inner = CreateInnerElement(reactContext);
-            return new Border
+            return new UIAutomationBorder
             {
                 BorderBrush = s_defaultBorderBrush,
                 Child = inner
@@ -249,6 +250,44 @@ namespace ReactNative.UIManager
                 throw new ArgumentNullException(nameof(parent));
 
             return (TFrameworkElement)parent.Child;
+        }
+    }
+
+    /// <summary>
+    /// Custom peer class deriving from FrameworkElementAutomationPeer
+    /// </summary>
+    public class ModifiedBorderAutomationPeer : FrameworkElementAutomationPeer
+    {
+        /// <summary>
+        /// Modified Border with interactive role.
+        /// </summary>
+        /// <param name="owner">The Border instance.</param>
+        public ModifiedBorderAutomationPeer(Border owner) : base(owner)
+        {
+
+        }
+
+        /// <summary>
+        /// Interactive role in the user interface
+        /// </summary>
+        /// <returns> Boolean </returns>
+        protected override bool IsControlElementCore()
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Class providing automation support for the Border element.
+    /// </summary>
+    public class UIAutomationBorder : Border
+    {
+        /// <summary>
+        /// Class specific AutomationPeer implementation
+        /// </summary>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new ModifiedBorderAutomationPeer(this);
         }
     }
 }
