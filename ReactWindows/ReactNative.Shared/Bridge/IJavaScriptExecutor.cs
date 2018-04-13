@@ -51,6 +51,12 @@ namespace ReactNative.Bridge
         void RunScript(string sourcePath, string sourceUrl);
 
         /// <summary>
+        /// Sets a callback for immediate native method call queue flush.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate);
+
+        /// <summary>
         /// Sets a callback for synchronous native methods.
         /// </summary>
         /// <param name="callSyncHook">The sync hook for native methods.</param>

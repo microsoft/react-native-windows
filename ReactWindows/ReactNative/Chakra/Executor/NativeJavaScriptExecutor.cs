@@ -165,6 +165,19 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Set a callback for flushing the queue immediately.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            if (flushQueueImmediate == null)
+                throw new ArgumentNullException(nameof(flushQueueImmediate));
+
+            _executor.SetFlushQueueImmediate(args =>
+                flushQueueImmediate(JToken.Parse(args)));
+        }
+
+        /// <summary>
         /// Sets a callback for synchronous native methods.
         /// </summary>
         /// <param name="callSyncHook">The sync hook for native methods.</param>

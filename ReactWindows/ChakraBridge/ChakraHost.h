@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "JsModulesUnbundle.h"
 #include "CallSyncHandler.h"
+#include "FlushQueueImmediateHandler.h"
 #include <jsrt.h>
 
 bool CompareLastWrite(const wchar_t* szPath1, const wchar_t* szPath2);
@@ -141,6 +142,12 @@ public:
     void SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler);
 
     /// <summary>
+    /// Sets a callback for flushing the queue immediately.
+    /// </summary>
+    /// <param name="handler">The callback.</param>
+    void SetFlushQueueImmediate(ChakraBridge::FlushQueueImmediateHandler^ handler);
+
+    /// <summary>
     /// The JSRT global object for the session.
     /// </summary>
     JsValueRef globalObject;
@@ -154,11 +161,18 @@ public:
     /// The reference to the sync native method callback.
     /// </summary>
     ChakraBridge::CallSyncHandler^ callSyncHandler;
+
+    /// <summary>
+    /// The reference to the flush queue immediately callback.
+    /// </summary>
+    ChakraBridge::FlushQueueImmediateHandler^ flushQueueImmediateHandler;
+
 private:
     JsErrorCode InitJson();
     JsErrorCode InitConsole();
 	JsErrorCode InitNativeRequire();
     JsErrorCode InitNativeCallSyncHook();
+    JsErrorCode InitFlushQueueImmediate();
 
     unsigned currentSourceContext;
     JsRuntimeHandle runtime;

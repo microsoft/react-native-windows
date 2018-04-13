@@ -31,6 +31,10 @@ namespace ReactNative.Tests
             OnRunScript(sourcePath, sourceUrl);
         }
 
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+        }
+
         public void SetGlobalVariable(string propertyName, string value)
         {
             OnSetGlobalVariable(propertyName, value);
