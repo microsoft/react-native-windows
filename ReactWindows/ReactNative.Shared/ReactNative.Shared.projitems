@@ -45,6 +45,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptBundleLoader.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfigurationFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactDelegateFactoryBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactInstance.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\FrameEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IMutableFrameEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IReactChoreographer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitter.cs" />
