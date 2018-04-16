@@ -66,7 +66,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ReactQueueConfigurationFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactContextNativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactDelegateFactoryBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ReactInstance.cs" />
