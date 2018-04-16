@@ -45,7 +45,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactCallback.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\JavaScriptBundleLoader.cs" />
