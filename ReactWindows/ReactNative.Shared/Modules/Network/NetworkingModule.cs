@@ -233,7 +233,7 @@ namespace ReactNative.Modules.Network
         private async Task ProcessRequestFromUriAsync(
             int requestId,
             Uri uri,
-            HttpContentHeaderData header,
+            HttpContentHeaderData headerData,
             bool useIncrementalUpdates,
             int timeout,
             HttpRequestMessage request,
@@ -252,8 +252,7 @@ namespace ReactNative.Modules.Network
                 var inputStream = new MemoryStream(byteArray);
 #endif
                 request.Content = new HttpStreamContent(inputStream);
-                request.Content.Headers.ContentType = new HttpMediaTypeHeaderValue(
-                    header.ContentType != null ? header.ContentType : storageFile.ContentType);
+                request.Content.Headers.ContentType = new HttpMediaTypeHeaderValue(headerData.ContentType);
 
                 await ProcessRequestAsync(
                     requestId,
