@@ -243,11 +243,11 @@ namespace ReactNative.Modules.Network
                 StorageFile storageFile;
                 if (FutureAccessList.IsValidURI(uri.ToString()))
                 {
-                    storageFile = await FutureAccessList.GetFileAsync(uri.ToString());
+                    storageFile = await FutureAccessList.GetFileAsync(uri.ToString()).ConfigureAwait(false);
                 }
                 else
                 {
-                    storageFile = await StorageFile.GetFileFromPathAsync(uri.LocalPath).AsTask().ConfigureAwait(false);                    
+                    storageFile = await StorageFile.GetFileFromPathAsync(uri.LocalPath).AsTask().ConfigureAwait(false);
                 }
                 var inputStream = await storageFile.OpenReadAsync().AsTask().ConfigureAwait(false);
 #else
