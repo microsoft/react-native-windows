@@ -3,6 +3,7 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
@@ -55,6 +56,11 @@ namespace ReactNative
         /// Signals whether developer mode should be enabled.
         /// </summary>
         public abstract bool UseDeveloperSupport { get; }
+
+        /// <summary>
+        /// The set of initial properties to give to <see cref="ReactRootView"/>
+        /// </summary>
+        public abstract JObject InitialProperties { get; }
 
         /// <summary>
         /// Instantiates the JavaScript executor.

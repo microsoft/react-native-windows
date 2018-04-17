@@ -116,7 +116,7 @@ namespace ReactNative
                 // parameter
                 rootFrame.Content = new Page
                 {
-                    Content = Host.OnCreate(),
+                    Content = Host.OnCreate(Host.InitialProperties),
                 };
             }
 

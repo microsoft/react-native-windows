@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
@@ -14,6 +15,13 @@ namespace Playground
 
 #if !BUNDLE || DEBUG
         public override bool UseDeveloperSupport => true;
+
+        public override JObject InitialProperties => JObject.FromObject(new Dictionary<string, object>
+        {
+            {
+                "date", System.DateTime.Now.ToString("M/d/yyyy")
+            }
+        });
 #else
         public override bool UseDeveloperSupport => false;
 #endif

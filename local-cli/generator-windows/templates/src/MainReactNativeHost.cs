@@ -1,4 +1,5 @@
-﻿using ReactNative;
+﻿using Newtonsoft.Json.Linq;
+using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace <%= ns %>
 #else
         public override bool UseDeveloperSupport => false;
 #endif
+
+        public override JObject InitialProperties => null;
 
         protected override string JavaScriptMainModuleName => "index";
 
