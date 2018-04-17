@@ -181,7 +181,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\immediate.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\packages\Facebook.Yoga.1.5.0-pre1\build\net45\Facebook.Yoga.targets" Condition="Exists('$(SolutionDir)\packages\Facebook.Yoga.1.5.0-pre1\build\net45\Facebook.Yoga.targets')" />

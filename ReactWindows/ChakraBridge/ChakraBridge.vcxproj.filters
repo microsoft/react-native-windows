@@ -24,5 +24,6 @@
     <ClInclude Include="JsModulesUnbundle.h" />
     <ClInclude Include="JsIndexedModulesUnbundle.h" />
     <ClInclude Include="CallSyncHandler.h" />
+    <ClInclude Include="FlushQueueImmediateHandler.h" />
   </ItemGroup>
 </Project>

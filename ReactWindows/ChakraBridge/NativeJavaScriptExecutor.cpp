@@ -172,6 +172,11 @@ ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
     return finalResult;
 }
 
+void NativeJavaScriptExecutor::SetFlushQueueImmediate(FlushQueueImmediateHandler^ handler)
+{
+    host.SetFlushQueueImmediate(handler);
+}
+
 void NativeJavaScriptExecutor::SetCallSyncHook(CallSyncHandler^ handler)
 {
     host.SetCallSyncHook(handler);
