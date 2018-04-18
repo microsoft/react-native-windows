@@ -124,6 +124,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\ExceptionsManagerModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\FrameEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IMutableFrameEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IReactChoreographer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitter.cs" />
