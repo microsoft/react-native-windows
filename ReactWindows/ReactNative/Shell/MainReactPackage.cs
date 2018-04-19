@@ -100,6 +100,7 @@ namespace ReactNative.Shell
                 new ReactViewManager(),
                 new ReactControlManager(),
                 new ReactSpanViewManager(),
+                new ReactHyperlinkViewManager(),
                 //new SwipeRefreshLayoutManager(),
                 new ReactWebViewManager(reactContext),
             };
