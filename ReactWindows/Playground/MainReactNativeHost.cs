@@ -15,13 +15,6 @@ namespace Playground
 
 #if !BUNDLE || DEBUG
         public override bool UseDeveloperSupport => true;
-
-        public override JObject InitialProperties => JObject.FromObject(new Dictionary<string, object>
-        {
-            {
-                "date", System.DateTime.Now.ToString("M/d/yyyy")
-            }
-        });
 #else
         public override bool UseDeveloperSupport => false;
 #endif
@@ -31,6 +24,13 @@ namespace Playground
 #if BUNDLE
         protected override string JavaScriptBundleFile => "ms-appx:///ReactAssets/index.windows.bundle";
 #endif
+
+        public override JObject InitialProperties => JObject.FromObject(new Dictionary<string, object>
+        {
+            {
+                "date", System.DateTime.Now.ToString("M/d/yyyy")
+            }
+        });
 
         protected override List<IReactPackage> Packages => new List<IReactPackage>
         {
