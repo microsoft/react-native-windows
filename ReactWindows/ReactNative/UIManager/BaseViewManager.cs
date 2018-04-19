@@ -33,8 +33,8 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
-            new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
+        private readonly ConcurrentDictionary<TFrameworkElement, ViewBoundProperties> _viewBoundProperties =
+            new ConcurrentDictionary<TFrameworkElement, ViewBoundProperties>();
 
         /// <summary>
         /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
@@ -48,18 +48,18 @@ namespace ReactNative.UIManager
         {
             if (transforms == null)
             {
-                var dimensionBoundProperties = GetDimensionBoundProperties(view);
-                if (dimensionBoundProperties?.MatrixTransform != null)
+                var viewBoundProperties = GetViewBoundProperties(view);
+                if (viewBoundProperties?.MatrixTransform != null)
                 {
-                    dimensionBoundProperties.MatrixTransform = null;
+                    viewBoundProperties.MatrixTransform = null;
                     ResetProjectionMatrix(view);
                     ResetRenderTransform(view);
                 }
             }
             else
             {
-                var dimensionBoundProperties = GetOrCreateDimensionBoundProperties(view);
-                dimensionBoundProperties.MatrixTransform = transforms;
+                var viewBoundProperties = GetOrCreateViewBoundProperties(view);
+                viewBoundProperties.MatrixTransform = transforms;
                 var dimensions = GetDimensions(view);
                 SetProjectionMatrix(view, dimensions, transforms);
             }
@@ -86,8 +86,8 @@ namespace ReactNative.UIManager
         {
             if (overflow == "hidden")
             {
-                var dimensionBoundProperties = GetOrCreateDimensionBoundProperties(view);
-                dimensionBoundProperties.OverflowHidden = true;
+                var viewBoundProperties = GetOrCreateViewBoundProperties(view);
+                viewBoundProperties.OverflowHidden = true;
                 var dimensions = GetDimensions(view);
                 SetOverflowHidden(view, dimensions);
                 view.SizeChanged += OnSizeChanged;
@@ -95,10 +95,10 @@ namespace ReactNative.UIManager
             else
             {
                 view.SizeChanged -= OnSizeChanged;
-                var dimensionBoundProperties = GetDimensionBoundProperties(view);
-                if (dimensionBoundProperties != null && dimensionBoundProperties.OverflowHidden)
+                var viewBoundProperties = GetViewBoundProperties(view);
+                if (viewBoundProperties != null && viewBoundProperties.OverflowHidden)
                 {
-                    dimensionBoundProperties.OverflowHidden = false;
+                    viewBoundProperties.OverflowHidden = false;
                     SetOverflowVisible(view);
                 }
             }
@@ -207,6 +207,29 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Detects the presence of a mouse view handler for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="handlerPresent">true if a mouse move handler is present.</param>
+        [ReactProp("onMouseMove")]
+        public void SetOnMouseMove(TFrameworkElement view, bool handlerPresent)
+        {
+            if (handlerPresent)
+            {
+                var viewBoundProperties = GetOrCreateViewBoundProperties(view);
+                viewBoundProperties.MouseMoveHandlerPresent = true;
+            }
+            else
+            {
+                var viewBoundProperties = GetViewBoundProperties(view);
+                if (viewBoundProperties != null)
+                {
+                    viewBoundProperties.MouseMoveHandlerPresent = false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
@@ -220,7 +243,8 @@ namespace ReactNative.UIManager
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
-            _dimensionBoundProperties.TryRemove(view, out _);
+            view.PointerMoved -= OnPointerMoved;
+            _viewBoundProperties.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -230,7 +254,7 @@ namespace ReactNative.UIManager
         /// <param name="dimensions">The dimensions.</param>
         public override void SetDimensions(TFrameworkElement view, Dimensions dimensions)
         {
-            var dimensionBoundProperties = GetDimensionBoundProperties(view);
+            var dimensionBoundProperties = GetViewBoundProperties(view);
             var matrixTransform = dimensionBoundProperties?.MatrixTransform;
             var overflowHidden = dimensionBoundProperties?.OverflowHidden ?? false;
             if (matrixTransform != null)
@@ -269,6 +293,7 @@ namespace ReactNative.UIManager
         {
             view.PointerEntered += OnPointerEntered;
             view.PointerExited += OnPointerExited;
+            view.PointerMoved += OnPointerMoved;
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -292,9 +317,21 @@ namespace ReactNative.UIManager
             TouchHandler.OnPointerExited(view, e);
         }
 
-        private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
+        private void OnPointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
+            var view = (TFrameworkElement)sender;
+
+            // Avoid flooding the bridge if no handler is present
+            var viewBoundProperties = GetViewBoundProperties(view);
+            if (viewBoundProperties != null && viewBoundProperties.MouseMoveHandlerPresent)
+            {
+                TouchHandler.OnPointerMoved(view, e);
+            }
+        }
+
+        private ViewBoundProperties GetViewBoundProperties(TFrameworkElement view)
+        {
+            if (!_viewBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = null;
             }
@@ -302,12 +339,12 @@ namespace ReactNative.UIManager
             return properties;
         }
 
-        private DimensionBoundProperties GetOrCreateDimensionBoundProperties(TFrameworkElement view)
+        private ViewBoundProperties GetOrCreateViewBoundProperties(TFrameworkElement view)
         {
-            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
+            if (!_viewBoundProperties.TryGetValue(view, out var properties))
             {
-                properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
+                properties = new ViewBoundProperties();
+                _viewBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
             }
 
             return properties;
@@ -427,11 +464,13 @@ namespace ReactNative.UIManager
             element.Clip = null;
         }
 
-        class DimensionBoundProperties
+        class ViewBoundProperties
         {
             public bool OverflowHidden { get; set; }
 
             public JArray MatrixTransform { get; set; }
+
+            public bool MouseMoveHandlerPresent { get; set; }
         }
     }
 }

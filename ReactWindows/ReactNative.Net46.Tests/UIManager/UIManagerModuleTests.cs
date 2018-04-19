@@ -82,6 +82,7 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual("onLayout", constants.GetMap("genericDirectEventTypes").GetMap("topLayout").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onMouseEnter", constants.GetMap("genericDirectEventTypes").GetMap("topMouseEnter").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onMouseLeave", constants.GetMap("genericDirectEventTypes").GetMap("topMouseLeave").GetValue("registrationName").Value<string>());
+                Assert.AreEqual("onMouseMove", constants.GetMap("genericDirectEventTypes").GetMap("topMouseMoveCustom").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onMessage", constants.GetMap("genericDirectEventTypes").GetMap("topMessage").GetValue("registrationName").Value<string>());
             }
 
