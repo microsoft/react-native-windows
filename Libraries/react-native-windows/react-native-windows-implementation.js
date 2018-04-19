@@ -10,6 +10,7 @@
 var ReactWindows = {
   // Components
   get FlipViewWindows() { return require('FlipViewWindows'); },
+  get HyperlinkWindows() { return require('HyperlinkWindows'); },
   get PasswordBoxWindows() { return require('PasswordBoxWindows'); },
   get ProgressBarWindows() { return require('ProgressBarWindows'); },
   get ProgressRingWindows() { return require('ProgressRingWindows'); },
