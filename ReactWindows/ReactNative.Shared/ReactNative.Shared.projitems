@@ -109,6 +109,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackageWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DebugServerException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevInternalSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevServerHelper.cs" />
