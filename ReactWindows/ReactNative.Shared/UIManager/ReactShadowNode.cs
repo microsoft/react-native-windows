@@ -1104,7 +1104,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns>The child removed.</returns>
-        public ReactShadowNode RemoveNativeChildAt(int index)
+        public virtual ReactShadowNode RemoveNativeChildAt(int index)
         {
             if (_nativeChildren == null)
             {
@@ -1120,7 +1120,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Remove all native children.
         /// </summary>
-        public void RemoveAllNativeChildren()
+        public virtual void RemoveAllNativeChildren()
         {
             if (_nativeChildren != null)
             {
