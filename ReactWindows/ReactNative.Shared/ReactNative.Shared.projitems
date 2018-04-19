@@ -238,6 +238,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputContentSizeChangedEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\FontStyleHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactHyperlinkViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactRunManager.cs" />
