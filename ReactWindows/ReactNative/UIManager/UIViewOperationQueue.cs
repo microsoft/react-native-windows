@@ -123,7 +123,7 @@ namespace ReactNative.UIManager
                 CoreApplicationView foundView = CoreApplication.Views.First(v => v.Dispatcher == rootViewDispatcher);
 
                 // Create new ReactChoreographer for this view/dispatcher. It will only be used for its DispatchUICallback services
-                ReactChoreographer reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
+                var reactChoreographer = ReactChoreographer.CreateSecondaryInstance(foundView);
 
                 queueInfo = new QueueInstanceInfo()
                 {
