@@ -670,7 +670,9 @@ namespace ReactNative
                     _uiImplementationProvider,
                     _lazyViewManagersEnabled);
 
-                ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
+                var coreModulesPackageWrapper = new CoreModulesPackageWrapper(coreModulesPackage);
+
+                ProcessPackage(coreModulesPackageWrapper, reactContext, nativeRegistryBuilder);
             }
 
             foreach (var reactPackage in _packages)
