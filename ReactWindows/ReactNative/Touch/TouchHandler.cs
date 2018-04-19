@@ -474,53 +474,6 @@ namespace ReactNative.Touch
             }
         }
 
-        class PointerMovedEvent : Event
-        {
-            private readonly ReactPointer _pointer;
-            private readonly uint _coalescingKey;
-
-            public PointerMovedEvent(int viewTag, ReactPointer pointer, uint coalescingKey)
-                : base(viewTag)
-            {
-                _pointer = pointer;
-                _coalescingKey = coalescingKey;
-            }
-
-            public override string EventName
-            {
-                get
-                {
-                    return "topMouseMoveCustom";
-                }
-            }
-
-            public override bool CanCoalesce
-            {
-                get
-                {
-                    return true;
-                }
-            }
-
-            public override short CoalescingKey
-            {
-                get
-                {
-                    unchecked
-                    {
-                        return (short)_coalescingKey;
-                    }
-                }
-            }
-
-            public override void Dispatch(RCTEventEmitter eventEmitter)
-            {
-                var eventData = JObject.FromObject(_pointer);
-
-                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
-            }
-        }
-
         class ReactPointer
         {
             [JsonProperty(PropertyName = "target")]
