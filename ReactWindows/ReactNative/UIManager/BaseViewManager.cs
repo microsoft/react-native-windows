@@ -11,11 +11,15 @@ using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Numerics;
 using Windows.Foundation;
+using Windows.UI;
+using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Media3D;
@@ -35,6 +39,9 @@ namespace ReactNative.UIManager
     {
         private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
             new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
+
+        private readonly ConcurrentDictionary<TFrameworkElement, ShadowProperties> _shadowProperties =
+            new ConcurrentDictionary<TFrameworkElement, ShadowProperties>();
 
         /// <summary>
         /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
@@ -207,6 +214,71 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets the shadow color of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The shadow color.</param>
+        [ReactProp("shadowColor", CustomType = "Color")]
+        public void SetShadowColor(TFrameworkElement view, uint? color)
+        {
+            var shadowProps = GetOrCreateShadowProperties(view);
+            shadowProps.Color = color.HasValue ? ColorHelpers.Parse(color.Value) : (Color?)null;
+            ApplyShadowProps(view, shadowProps);
+        }
+
+        /// <summary>
+        /// Sets the shadow offset of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="offset">The shadow offset.</param>
+        [ReactProp("shadowOffset")]
+        public void SetShadowOffset(TFrameworkElement view, JObject offset)
+        {
+            var shadowProps = GetOrCreateShadowProperties(view);
+            var width = offset?.Value<JToken>("width")?.Value<float?>();
+            var height = offset?.Value<JToken>("height")?.Value<float?>();
+
+            if (width.HasValue && height.HasValue)
+            {
+                shadowProps.Offset = new Vector3(width.Value, height.Value, 0);
+            }
+            else
+            {
+                shadowProps.Offset = null;
+            }
+
+            ApplyShadowProps(view, shadowProps);
+        }
+
+        /// <summary>
+        /// Sets the shadow opacity of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="opacity">The shadow opacity.</param>
+        [ReactProp("shadowOpacity")]
+        public void SetShadowOpacity(TFrameworkElement view, JToken opacity)
+        {
+            var shadowProps = GetOrCreateShadowProperties(view);
+            shadowProps.Opacity = opacity?.Value<double?>();
+
+            ApplyShadowProps(view, shadowProps);
+        }
+
+        /// <summary>
+        /// Sets the shadow radius of the <typeparamref name="TFrameworkElement"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="radius">The shadow radius.</param>
+        [ReactProp("shadowRadius")]
+        public void SetShadowRadius(TFrameworkElement view, JToken radius)
+        {
+            var shadowProps = GetOrCreateShadowProperties(view);
+            shadowProps.Radius = radius?.Value<double?>();
+
+            ApplyShadowProps(view, shadowProps);
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
@@ -218,9 +290,11 @@ namespace ReactNative.UIManager
         /// </remarks>
         public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
         {
+            RemoveShadow(view);
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
             _dimensionBoundProperties.TryRemove(view, out _);
+            _shadowProperties.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -233,9 +307,21 @@ namespace ReactNative.UIManager
             var dimensionBoundProperties = GetDimensionBoundProperties(view);
             var matrixTransform = dimensionBoundProperties?.MatrixTransform;
             var overflowHidden = dimensionBoundProperties?.OverflowHidden ?? false;
+            var shadowHost = GetShadowProperties(view)?.HostElement;
             if (matrixTransform != null)
             {
                 SetProjectionMatrix(view, dimensions, matrixTransform);
+            }
+
+            if (shadowHost != null)
+            {
+                ElementCompositionPreview.GetElementChildVisual(shadowHost).Size = new Vector2((float)dimensions.Width, (float)dimensions.Height);
+                shadowHost.Projection = view.Projection;
+                shadowHost.RenderTransform = view.RenderTransform;
+                Canvas.SetLeft(shadowHost, dimensions.X);
+                Canvas.SetTop(shadowHost, dimensions.Y);
+                shadowHost.Width = dimensions.Width;
+                shadowHost.Height = dimensions.Height;
             }
 
             if (overflowHidden)
@@ -311,6 +397,120 @@ namespace ReactNative.UIManager
             }
 
             return properties;
+        }
+
+        private ShadowProperties GetShadowProperties(TFrameworkElement view)
+        {
+            if (!_shadowProperties.TryGetValue(view, out var properties))
+            {
+                properties = null;
+            }
+
+            return properties;
+        }
+
+        private ShadowProperties GetOrCreateShadowProperties(TFrameworkElement view)
+        {
+            if (!_shadowProperties.TryGetValue(view, out var properties))
+            {
+                properties = new ShadowProperties();
+                _shadowProperties.AddOrUpdate(view, properties, (k, v) => properties);
+            }
+
+            return properties;
+        }
+
+        private void RemoveShadow(TFrameworkElement view)
+        {
+            var shadowProperties = GetShadowProperties(view);
+            if (shadowProperties != null && shadowProperties.HostElement != null)
+            {
+                view.Loaded -= OnLoaded;
+                if (view.Parent is Panel parent)
+                {
+                    if (parent.Children.Contains(shadowProperties.HostElement))
+                    {
+                        parent.Children.Remove(shadowProperties.HostElement);
+                    }
+                }
+
+                shadowProperties.HostElement = null;
+            }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var view = (TFrameworkElement)sender;
+            view.Loaded -= OnLoaded;
+
+            var shadowProperties = GetShadowProperties(view);
+            if (shadowProperties != null && shadowProperties.HostElement != null)
+            {
+                TryInsertShadow(view, shadowProperties.HostElement);
+            }
+        }
+
+        private static bool TryInsertShadow(TFrameworkElement view, FrameworkElement shadowHost)
+        {
+            if (view.Parent is Panel parent)
+            {
+                if (!parent.Children.Contains(shadowHost))
+                {
+                    parent.Children.Add(shadowHost);
+                    Canvas.SetZIndex(shadowHost, 1 - Int16.MaxValue);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ApplyShadowProps(TFrameworkElement view, ShadowProperties shadowProperties)
+        {
+            if (shadowProperties.ShouldDisplay)
+            {
+                DropShadow shadow;
+                if (shadowProperties.HostElement == null)
+                {
+                    var shadowHost = new Canvas();
+                    shadowHost.Projection = view.Projection;
+                    shadowHost.RenderTransform = view.RenderTransform;
+                    Canvas.SetLeft(shadowHost, Canvas.GetLeft(view));
+                    Canvas.SetTop(shadowHost, Canvas.GetTop(view));
+                    shadowHost.Width = view.Width;
+                    shadowHost.Height = view.Height;
+
+                    var compositor = ElementCompositionPreview.GetElementVisual(view).Compositor;
+                    shadow = compositor.CreateDropShadow();
+                    var hostVisual = compositor.CreateSpriteVisual();
+                    hostVisual.Size = new Vector2((float)view.Width, (float)view.Height);
+                    hostVisual.Shadow = shadow;
+
+                    ElementCompositionPreview.SetElementChildVisual(shadowHost, hostVisual);
+                    shadowProperties.HostElement = shadowHost;
+
+                    if (!TryInsertShadow(view, shadowProperties.HostElement))
+                    {
+                        // We assume that if insertion fails, it's because the element hasn't been Loaded yet.
+                        // Insertion is thus deferred until we receive the Loaded event.
+                        view.Loaded += OnLoaded;
+                    }
+                }
+                else
+                {
+                    shadow = (DropShadow)((SpriteVisual)ElementCompositionPreview.GetElementChildVisual(shadowProperties.HostElement)).Shadow;
+                }
+
+                shadow.Color = shadowProperties.ColorOrDefault;
+                shadow.Offset = shadowProperties.OffsetOrDefault;
+                shadow.Opacity = (float)shadowProperties.OpacityOrDefault;
+                shadow.BlurRadius = (float)shadowProperties.RadiusOrDefault;
+            }
+            else
+            {
+                RemoveShadow(view);
+            }
         }
 
         private static void SetProjectionMatrix(TFrameworkElement view, Dimensions dimensions, JArray transforms)
@@ -432,6 +632,30 @@ namespace ReactNative.UIManager
             public bool OverflowHidden { get; set; }
 
             public JArray MatrixTransform { get; set; }
+        }
+
+        private sealed class ShadowProperties
+        {
+            private static readonly Color DefaultColor = Windows.UI.Color.FromArgb(255, 0, 0, 0);
+            private static readonly Vector3 DefaultOffset = new Vector3();
+            private const double DefaultOpacity = 1.0;
+            private const double DefaultRadius = 9.0;
+
+            public Color? Color { get; set; }
+            public Color ColorOrDefault => Color.HasValue ? Color.Value : DefaultColor;
+
+            public Vector3? Offset { get; set; }
+            public Vector3 OffsetOrDefault => Offset.HasValue ? Offset.Value : DefaultOffset;
+
+            public double? Opacity { get; set; }
+            public double OpacityOrDefault => Opacity.HasValue ? Opacity.Value : DefaultOpacity;
+
+            public double? Radius { get; set; }
+            public double RadiusOrDefault => Radius.HasValue ? Radius.Value : DefaultRadius;
+
+            public bool ShouldDisplay => Color.HasValue || Offset.HasValue || Opacity.HasValue || Radius.HasValue;
+
+            public FrameworkElement HostElement { get; set; }
         }
     }
 }
