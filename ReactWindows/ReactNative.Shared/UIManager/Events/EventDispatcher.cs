@@ -296,13 +296,13 @@ namespace ReactNative.UIManager.Events
                 _reactContext.RunOnJavaScriptQueueThread(() =>
                 {
                     DispatchEvents(activity);
-                    activity.Dispose();
+                    activity?.Dispose();
                 });
 
                 return;
             }
 
-            activity.Dispose();
+            activity?.Dispose();
         }
 
         private void DispatchEvents(IDisposable activity)
