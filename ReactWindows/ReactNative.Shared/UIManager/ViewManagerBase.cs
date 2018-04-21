@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Json;
 using System;
 using System.Collections.Generic;
@@ -247,14 +248,14 @@ namespace ReactNative.UIManager
             OnAfterUpdateTransaction((TView)viewToUpdate);
         }
 
-        object IViewManager.CreateView(ThemedReactContext reactContext)
+        object IViewManager.CreateView(IReactContext reactContext)
         {
-            return CreateView(reactContext);
+            return CreateView((ThemedReactContext)reactContext);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, object view)
+        void IViewManager.OnDropViewInstance(IReactContext reactContext, object view)
         {
-            OnDropViewInstance(reactContext, (TView)view);
+            OnDropViewInstance((ThemedReactContext)reactContext, (TView)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()
