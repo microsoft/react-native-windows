@@ -43,38 +43,38 @@ namespace ReactNative.Touch
             _view.TouchUp -= OnTouchReleased;
         }
 
-        public static void OnPointerEntered(DependencyObject view, MouseEventArgs e)
+        public static void OnPointerEntered(UIElement view, MouseEventArgs e)
         {
-            OnPointerEnteredMovedExited(TouchEventType.Entered, view, e);
-        }
-
-        public static void OnPointerExited(DependencyObject view, MouseEventArgs e)
-        {
-            OnPointerEnteredMovedExited(TouchEventType.Exited, view, e);
-
-        }
-
-        public static void OnPointerMoved(DependencyObject view, MouseEventArgs e)
-        {
-            OnPointerEnteredMovedExited(TouchEventType.PointerMove, view, e);
-        }
-
-        private static void OnPointerEnteredMovedExited(TouchEventType eventType, DependencyObject view, MouseEventArgs e)
-        {
-            if (ShouldSendEnterMoveLeaveEvent(view))
+            if (ShouldSendEnterLeaveEvent(view))
             {
-                var reactTag = view.GetTag();
+                OnPointerEnteredMovedExited(TouchEventType.Entered, view, view.GetTag(), e);
+            }
+        }
 
-                var pointer = new ReactPointer
-                {
-                    Target = reactTag,
-                    PointerId = (uint)e.Device.GetHashCode(),
-                    Identifier = 0,
-                    PointerType = "mouse",
-                    ReactView = view as UIElement,
-                };
+        public static void OnPointerExited(UIElement view, MouseEventArgs e)
+        {
+            if (ShouldSendEnterLeaveEvent(view))
+            {
+                OnPointerEnteredMovedExited(TouchEventType.Exited, view, view.GetTag(), e);
+            }
+        }
 
-                RootViewHelper.GetRootView(view).TouchHandler.UpdatePointerForEvent(pointer, e);
+        private static void OnPointerEnteredMovedExited(TouchEventType eventType, UIElement view, int reactTag, MouseEventArgs e)
+        {
+            var pointer = new ReactPointer
+            {
+                Target = reactTag,
+                PointerId = (uint)e.Device.GetHashCode(),
+                Identifier = 0,
+                PointerType = "mouse",
+                ReactView = view as UIElement,
+            };
+
+            var rootView = RootViewHelper.GetRootView(view);
+            if (rootView != null)
+            {
+
+                rootView.TouchHandler.UpdatePointerForEvent(pointer, e);
 
                 view.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
@@ -160,6 +160,26 @@ namespace ReactNative.Touch
                 var pointer = _pointers[pointerIndex];
                 UpdatePointerForEvent(pointer, e);
                 DispatchTouchEvent(TouchEventType.Move, _pointers, pointerIndex);
+            }
+            else
+            {
+                // Moving case (with no buttons pressed)
+                var originalSource = e.OriginalSource as DependencyObject;
+                var rootPoint = e.GetPosition(_view);
+                var reactView = GetReactViewTarget(originalSource, rootPoint);
+
+                if (reactView != null)
+                {
+                    // Check if any handler is hooked so we don't overwhelm the bridge.
+                    // Note: Even though reactTag is granular (as returned by compound view interface), we start the check from the UIElement.
+                    if (ShouldSendPointerMoveEvent(reactView))
+                    {
+                        var viewPoint = e.GetPosition(reactView);
+                        var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint);
+
+                        OnPointerEnteredMovedExited(TouchEventType.PointerMove, reactView, reactTag, e);
+                    }
+                }
             }
         }
 
@@ -382,7 +402,7 @@ namespace ReactNative.Touch
             return isBoxOnly;
         }
 
-        private static bool ShouldSendEnterMoveLeaveEvent(DependencyObject view)
+        private static bool ShouldSendEnterLeaveEvent(DependencyObject view)
         {
             // If the target is not a child of the root view, then this pointer
             // event does not belong to React.
@@ -402,6 +422,28 @@ namespace ReactNative.Touch
             }
 
             return true;
+        }
+        private static bool ShouldSendPointerMoveEvent(DependencyObject view)
+        {
+            // If the target is not a child of the root view, then this pointer
+            // event does not belong to React.
+            if (!RootViewHelper.IsReactSubview(view))
+            {
+                return false;
+            }
+
+            // This is a bubbling event, so we have to check if mouse move hanlder is hooked to any ancestor 
+            var viewHierarchy = RootViewHelper.GetReactViewHierarchy(view);
+            foreach (var ancestor in viewHierarchy)
+            {
+                var mouseMoveHandlerPresent = ancestor.GetMouseMoveHandlerPresent();
+                if (mouseMoveHandlerPresent)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         class TouchEvent : Event
@@ -483,21 +525,13 @@ namespace ReactNative.Touch
                 {
                     directEventName = "topMouseLeave";
                 }
-                else if (_touchEventType == TouchEventType.PointerMove)
-                {
-                    directEventName = "topMouseMoveCustom";
-                }
 
                 if (directEventName != null)
                 {
                     eventEmitter.receiveEvent(ViewTag, directEventName, eventData);
                 }
 
-                var bubbledEventName = EventName;
-                if (bubbledEventName != "topMouseMove")
-                {
-                    eventEmitter.receiveEvent(ViewTag, bubbledEventName, eventData);
-                }
+                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
             }
         }
 

@@ -74,6 +74,7 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual("onMouseOverCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOver").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
                 Assert.AreEqual("onMouseOut", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
                 Assert.AreEqual("onMouseOutCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onMouseMove", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseMoveCustom").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
 
                 Assert.AreEqual("onSelectionChange", constants.GetMap("genericDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onLoadingStart", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingStart").GetValue("registrationName").Value<string>());
@@ -82,7 +83,6 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual("onLayout", constants.GetMap("genericDirectEventTypes").GetMap("topLayout").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onMouseEnter", constants.GetMap("genericDirectEventTypes").GetMap("topMouseEnter").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onMouseLeave", constants.GetMap("genericDirectEventTypes").GetMap("topMouseLeave").GetValue("registrationName").Value<string>());
-                Assert.AreEqual("onMouseMove", constants.GetMap("genericDirectEventTypes").GetMap("topMouseMoveCustom").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onMessage", constants.GetMap("genericDirectEventTypes").GetMap("topMessage").GetValue("registrationName").Value<string>());
             }
 

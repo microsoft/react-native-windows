@@ -265,6 +265,20 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
+                    TouchEventType.PointerMove.GetJavaScriptEventName(),
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
+                            {
+                                { "bubbled", "onMouseMove" },
+                                { "captured", "onMouseMoveCapture" },
+                            }
+                        }
+                    }
+                },
+                {
                     "topFocus",
                     new JObject
                     {
@@ -405,13 +419,6 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
-                    // Using a custom name since "topMouseMove" is intercepted by the touch react code
-                    "topMouseMoveCustom",
-                    new JObject
-                    {
-                        { "registrationName", "onMouseMove" },
-                    }
-                },                {
                     "topMessage",
                     new JObject
                     {

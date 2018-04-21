@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,6 @@ namespace ReactNative.UIManager
     {
         private readonly IDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
             new Dictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
-
-        private readonly HashSet<TFrameworkElement> _viewsWithMouseMoveHandlers =
-            new HashSet<TFrameworkElement>();
 
         /// <summary>
         /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
@@ -147,18 +145,14 @@ namespace ReactNative.UIManager
         /// Detects the presence of a mouse view handler for the view.
         /// </summary>
         /// <param name="view">The view instance.</param>
+        /// <param name="index">The prop index.</param>
         /// <param name="handlerPresent">true if a mouse move handler is present.</param>
-        [ReactProp("onMouseMove")]
-        public void SetOnMouseMove(TFrameworkElement view, bool handlerPresent)
+        [ReactPropGroup(
+            "onMouseMove",
+            "onMouseMoveCapture")]
+        public void SetOnMouseMove(TFrameworkElement view, int index, bool handlerPresent)
         {
-            if (handlerPresent)
-            {
-                _viewsWithMouseMoveHandlers.Add(view);
-            }
-            else
-            {
-                _viewsWithMouseMoveHandlers.Remove(view);
-            }
+            view.SetMouseMoveHandlerPresent(index, handlerPresent);
         }
 
         /// <summary>
@@ -175,9 +169,7 @@ namespace ReactNative.UIManager
         {
             view.MouseEnter -= OnPointerEntered;
             view.MouseLeave -= OnPointerExited;
-            view.MouseMove -= OnPointerMoved;
             _transforms.Remove(view);
-            _viewsWithMouseMoveHandlers.Remove(view);
             base.OnDropViewInstance(reactContext, view);
         }
 
@@ -198,7 +190,6 @@ namespace ReactNative.UIManager
         {
             view.MouseEnter += OnPointerEntered;
             view.MouseLeave += OnPointerExited;
-            view.MouseMove += OnPointerMoved;
         }
 
         private void OnPointerEntered(object sender, MouseEventArgs e)
@@ -211,17 +202,6 @@ namespace ReactNative.UIManager
         {
             var view = (TFrameworkElement)sender;
             TouchHandler.OnPointerExited(view, e);
-        }
-
-        private void OnPointerMoved(object sender, MouseEventArgs e)
-        {
-            var view = (TFrameworkElement)sender;
-
-            // Avoid flooding the bridge if no handler is present
-            if (_viewsWithMouseMoveHandlers.Contains(view))
-            {
-                TouchHandler.OnPointerMoved(view, e);
-            }
         }
 
         /// <summary>
@@ -338,7 +318,7 @@ namespace ReactNative.UIManager
             else
             {
                 var transform = new MatrixTransform(projectionMatrix.M11,
-					projectionMatrix.M12,
+                    projectionMatrix.M12,
                     projectionMatrix.M21,
                     projectionMatrix.M22,
                     projectionMatrix.OffsetX,

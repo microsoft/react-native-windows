@@ -53,4 +53,13 @@ module.exports = {
    * @platform windows
    */
   onMouseMove: PropTypes.func,
+
+  /**
+   * Mouse move (capturing phase) handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseMoveCapture: PropTypes.func,  
 };

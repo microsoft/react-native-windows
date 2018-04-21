@@ -159,6 +159,48 @@ namespace ReactNative.UIManager
             return elementData.Context;
         }
 
+        /// <summary>
+        /// Sets mouse move handler presence for the view. Tracks multiple handlers, whereas the getter returns an "OR" value.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="index">Index of the handler.</param>
+        /// <param name="handlerPresent">true if handler present, false otherwise.</param>
+        internal static void SetMouseMoveHandlerPresent(this object view, int index, bool handlerPresent)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            var data = s_properties.GetOrAdd(view, (v) => new ViewData());
+            if (handlerPresent)
+            {
+                data.MouseMoveHandlerPresent |= (1 << index);
+            }
+            else
+            {
+                data.MouseMoveHandlerPresent &= ~(1 << index);
+            }
+        }
+
+        /// <summary>
+        /// Gets the mouse move handler presence for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <returns>
+        /// true if a "mouse move" handler is enabled on the view, false otherwise.
+        /// </returns>
+        public static bool GetMouseMoveHandlerPresent(this object view)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            if (s_properties.TryGetValue(view, out var elementData))
+            {
+                return elementData.MouseMoveHandlerPresent != 0;
+            }
+
+            return false;
+        }
+
         internal static void ClearData(this object view)
         {
             s_properties.TryRemove(view, out _);
@@ -173,6 +215,8 @@ namespace ReactNative.UIManager
             public int? Tag { get; set; }
 
             public IReactCompoundView CompoundView { get; set; }
+
+            public int MouseMoveHandlerPresent { get; set; }
         }
     }
 }
