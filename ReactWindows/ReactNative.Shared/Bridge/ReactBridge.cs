@@ -44,6 +44,7 @@ namespace ReactNative.Bridge
             _reactCallback = reactCallback;
             _nativeModulesQueueThread = nativeModulesQueueThread;
             _jsExecutor.SetCallSyncHook(_reactCallback.InvokeSync);
+            _jsExecutor.SetFlushQueueImmediate(ProcessResponseImmediate);
         }
 
         /// <summary>
@@ -110,39 +111,55 @@ namespace ReactNative.Bridge
             _jsExecutor.Dispose();
         }
 
-        private void ProcessResponse(JToken response, bool isEndOfBatch = false)
+        private void ProcessResponseImmediate(JToken response)
         {
-            bool localBatchHadNativeModuleCalls;
+            ProcessResponse(response, false);
+        }
 
-            if (response == null || response.Type == JTokenType.Null || response.Type == JTokenType.Undefined)
+        private void ProcessResponse(JToken response, bool isEndOfBatch)
+        {
+            var moduleCallCount = GetModuleCallCount(response);
+
+            _nativeModulesQueueThread.Dispatch(() =>
             {
-                if (isEndOfBatch)
+                _batchHadNativeModuleCalls = _batchHadNativeModuleCalls || moduleCallCount > 0;
+
+                for (var i = 0; i < moduleCallCount; ++i)
                 {
-                    localBatchHadNativeModuleCalls = _batchHadNativeModuleCalls;
-
-                    _nativeModulesQueueThread.Dispatch(() =>
-                    {
-                        // the bridge could still be processing native calls when the idle signaler fires
-                        if (localBatchHadNativeModuleCalls)
-                        {
-                            _reactCallback.OnBatchComplete();
-                        }
-
-                        _reactCallback.DecrementPendingJSCalls();
-                    });
-
-                    _batchHadNativeModuleCalls = false;
+                    var call = GetModuleCall(response, i);
+                    _reactCallback.Invoke(call.ModuleId, call.MethodId, call.Arguments);
                 }
 
-                return;
+                if (isEndOfBatch)
+                {
+                    if (_batchHadNativeModuleCalls)
+                    {
+                        _reactCallback.OnBatchComplete();
+                        _batchHadNativeModuleCalls = false;
+                    }
+
+                    _reactCallback.DecrementPendingJSCalls();
+                }
+            });
+        }
+
+        private static int GetModuleCallCount(JToken response)
+        {
+            if (response == null || response.Type == JTokenType.Null || response.Type == JTokenType.Undefined)
+            {
+                return 0;
             }
 
-            _batchHadNativeModuleCalls = true;
             var messages = response as JArray;
             if (messages == null)
             {
                 throw new InvalidOperationException(
                     "Did not get valid calls back from JavaScript. Message type: " + response.Type);
+            }
+
+            if (messages.Count == 0)
+            {
+                return 0;
             }
 
             if (messages.Count < 3)
@@ -161,34 +178,24 @@ namespace ReactNative.Bridge
                     "Did not get valid calls back from JavaScript. JSON: " + response);
             }
 
-            localBatchHadNativeModuleCalls = _batchHadNativeModuleCalls;
-            if (isEndOfBatch)
+            return moduleIds.Count;
+        }
+
+        private static ModuleCall GetModuleCall(JToken response, int index)
+        {
+            return new ModuleCall
             {
-                _batchHadNativeModuleCalls = false;
-            }
+                ModuleId = response[0][index].Value<int>(),
+                MethodId = response[1][index].Value<int>(),
+                Arguments = (JArray)response[2][index],
+            };
+        }
 
-            _nativeModulesQueueThread.Dispatch(() =>
-            {
-                for (var i = 0; i < moduleIds.Count; ++i)
-                {
-                    var moduleId = moduleIds[i].Value<int>();
-                    var methodId = methodIds[i].Value<int>();
-                    var args = (JArray)paramsArray[i];
-
-                    _reactCallback.Invoke(moduleId, methodId, args);
-                }
-
-                if (isEndOfBatch)
-                {
-                    // the bridge could still be processing native calls when the idle signaler fires
-                    if (localBatchHadNativeModuleCalls)
-                    {
-                        _reactCallback.OnBatchComplete();
-                    }
-
-                    _reactCallback.DecrementPendingJSCalls();
-                }
-            });
+        struct ModuleCall
+        {
+            public int ModuleId;
+            public int MethodId;
+            public JArray Arguments;
         }
     }
 }
