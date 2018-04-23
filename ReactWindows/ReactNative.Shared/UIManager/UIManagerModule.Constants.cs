@@ -413,28 +413,28 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topDragEnter",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         { "registrationName", "onDragEnter" }
                     }
                 },
                 {
                     "topDragOver",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         { "registrationName", "onDragOver" }
                     }
                 },
                 {
                     "topDrop",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         { "registrationName", "onDrop" }
                     }
                 },
                 {
                     "topDragLeave",
-                    new Dictionary<string, object>()
+                    new JObject
                     {
                         { "registrationName", "onDragLeave" }
                     }
