@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
-using System.Collections.Generic;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -19,7 +18,7 @@ namespace ReactNative.Modules.DeviceInfo
     /// </summary>
     class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener, IBackgroundEventListener
     {
-        private readonly IReadOnlyDictionary<string, object> _constants;
+        private readonly JObject _constants;
 
         private bool _isSubscribed;
 
@@ -34,7 +33,7 @@ namespace ReactNative.Modules.DeviceInfo
                 ? DisplayMetrics.GetForCurrentView()
                 : DisplayMetrics.Empty;
 
-            _constants = new Dictionary<string, object>
+            _constants = new JObject
             {
                 { "Dimensions", GetDimensions(displayMetrics) },
             };
@@ -51,7 +50,7 @@ namespace ReactNative.Modules.DeviceInfo
         /// <summary>
         /// Native module constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
@@ -187,18 +186,18 @@ namespace ReactNative.Modules.DeviceInfo
                 .emit("didUpdateDimensions", GetDimensions());
         }
 
-        private static IDictionary<string, object> GetDimensions()
+        private static JObject GetDimensions()
         {
             return GetDimensions(DisplayMetrics.GetForCurrentView());
         }
 
-        private static IDictionary<string, object> GetDimensions(DisplayMetrics displayMetrics)
+        private static JObject GetDimensions(DisplayMetrics displayMetrics)
         {
-            return new Dictionary<string, object>
+            return new JObject
             {
                 {
                     "window",
-                    new Dictionary<string, object>
+                    new JObject
                     {
                         { "width", displayMetrics.Width },
                         { "height", displayMetrics.Height },

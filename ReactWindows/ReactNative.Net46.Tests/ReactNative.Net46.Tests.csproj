@@ -139,9 +139,7 @@
     <Compile Include="Bridge\JavaScriptModuleBaseTests.cs" />
     <Compile Include="Bridge\JavaScriptModuleRegistryTests.cs" />
     <Compile Include="Bridge\Queue\ActionQueueTests.cs" />
-    <Compile Include="Internal\Constants\DictionaryHelpers.cs" />
     <Compile Include="Internal\DispatcherHelpers.cs" />
-    <Compile Include="Internal\MockViewManager.cs" />
     <Compile Include="Modules\NetInfo\NetInfoModuleTests.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +178,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\sync.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\immediate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #if WINDOWS_UWP
@@ -13,9 +13,20 @@ namespace ReactNative.UIManager
 {
     static class BorderExtensions
     {
+        public static void SetBorderWidth(this BorderedCanvas borderedCanvas, int spacingType, double width)
+        {
+            var thickness = borderedCanvas.BorderThickness.GetUpdated(spacingType, width);
+            borderedCanvas.BorderThickness = thickness;
+        }
+
         public static void SetBorderWidth(this Border border, int spacingType, double width)
         {
-            var thickness = border.BorderThickness;
+            var thickness = border.BorderThickness.GetUpdated(spacingType, width);
+            border.BorderThickness = thickness;
+        }
+
+        private static Thickness GetUpdated(this Thickness thickness, int spacingType, double width)
+        {
             switch (spacingType)
             {
                 case EdgeSpacing.Left:
@@ -34,8 +45,7 @@ namespace ReactNative.UIManager
                     thickness = new Thickness(width);
                     break;
             }
-
-            border.BorderThickness = thickness;
+            return thickness;
         }
     }
 }

@@ -165,6 +165,19 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Set a callback for flushing the queue immediately.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            if (flushQueueImmediate == null)
+                throw new ArgumentNullException(nameof(flushQueueImmediate));
+
+            _executor.SetFlushQueueImmediate(args =>
+                flushQueueImmediate(JToken.Parse(args)));
+        }
+
+        /// <summary>
         /// Sets a callback for synchronous native methods.
         /// </summary>
         /// <param name="callSyncHook">The sync hook for native methods.</param>
@@ -182,7 +195,7 @@ namespace ReactNative.Chakra.Executor
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
@@ -190,7 +203,7 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(value));
 
             Native.ThrowIfError(
-                (JavaScriptErrorCode)_executor.SetGlobalVariable(propertyName, value.ToString(Formatting.None)));
+                (JavaScriptErrorCode)_executor.SetGlobalVariable(propertyName, value));
         }
     }
 }

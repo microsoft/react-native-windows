@@ -28,7 +28,7 @@ namespace ReactNative.UIManager
 {
     /// <summary>
     /// Base class that should be suitable for the majority of subclasses of <see cref="IViewManager"/>.
-    /// It provides support for base view properties such as opacity, etc.
+    /// It provides support for base view props such as opacity, etc.
     /// </summary>
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>
     /// <typeparam name="TLayoutShadowNode">Type of shadow node.</typeparam>
@@ -41,11 +41,12 @@ namespace ReactNative.UIManager
             new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
 
         /// <summary>
-        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
-        /// properties, based on the <see cref="JObject"/> map.
+        /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
-        /// <param name="transforms">The list of transforms.</param>
+        /// <param name="transforms">
+        /// The transform matrix or the list of transforms.
+        /// </param>
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
@@ -80,7 +81,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets the overflow property for the <typeparamref name="TFrameworkElement"/>.
+        /// Sets the overflow prop for the <typeparamref name="TFrameworkElement"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="overflow">The overflow value.</param>
@@ -116,6 +117,17 @@ namespace ReactNative.UIManager
         public void SetZIndex(TFrameworkElement view, int zIndex)
         {
             Canvas.SetZIndex(view, zIndex);
+        }
+
+        /// <summary>
+        /// Sets the display mode of the element.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="display">The display mode.</param>
+        [ReactProp(ViewProps.Display)]
+        public void SetDisplay(TFrameworkElement view, string display)
+        {
+            view.Visibility = display == "none" ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>

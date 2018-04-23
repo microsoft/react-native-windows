@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
+using System;
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -35,13 +38,13 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
-        /// <param name="initialProps">The initial properties.</param>
+        /// <param name="initialProps">The initial props.</param>
         /// <param name="rootViewTag">Root view tag.</param>
         public void EnqueueCreateView(
             ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
-            ReactStylesDiffMap initialProps,
+            JObject initialProps,
             int rootViewTag)
         {
             EnqueueCreateView(
@@ -52,27 +55,40 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Enqueues an operation to remove the root view.
+        /// </summary>
+        /// <param name="rootViewTag">The root view tag.</param>
+        public Task RemoveRootViewAsync(int rootViewTag)
+        {
+            EnqueueRemoveRootView(rootViewTag);
+
+            // WPF implementation is single-threaded as far as UI dispatcher threads are concerned.
+            // We can call the callback safely at this point.
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
         /// Used by the native animated module to bypass the process of
         /// updating the values through the shadow view hierarchy. This method
         /// will directly update the native views, which means that updates for
-        /// layout-related properties won't be handled properly.
+        /// layout-related props won't be handled properly.
         /// </summary>
         /// <param name="tag">The view tag.</param>
-        /// <param name="props">The properties</param>
+        /// <param name="props">The props.</param>
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, JObject props)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
             // First check if the view exists, as the views are created in
             // batches, and native modules attempting to synchronously interact
-            // with views may attempt to update properties before the batch has
+            // with views may attempt to update props before the batch has
             // been processed.
             if (NativeViewHierarchyManager.ViewExists(tag))
             {
-                NativeViewHierarchyManager.UpdateProperties(tag, props);
+                NativeViewHierarchyManager.UpdateProps(tag, props);
                 return true;
             }
             else

@@ -117,10 +117,10 @@ namespace ReactNative.UIManager
         /// Unregisters a root view with the given tag.
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
-        public void RemoveRootView(int rootViewTag)
+        public Task RemoveRootViewAsync(int rootViewTag)
         {
             _shadowNodeRegistry.RemoveRootNode(rootViewTag);
-            _operationsQueue.EnqueueRemoveRootView(rootViewTag);
+            return _operationsQueue.RemoveRootViewAsync(rootViewTag);
         }
 
         /// <summary>
@@ -151,12 +151,12 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Invoked by React to create a new node with the given tag, class
-        /// name, and properties.
+        /// name, and props.
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="rootViewTag">The root view tag.</param>
-        /// <param name="props">The properties.</param>
+        /// <param name="props">The props.</param>
         public void CreateView(int tag, string className, int rootViewTag, JObject props)
         {
             var cssNode = CreateShadowNode(className);
@@ -168,18 +168,16 @@ namespace ReactNative.UIManager
 
             _shadowNodeRegistry.AddNode(cssNode);
 
-            var styles = default(ReactStylesDiffMap);
             if (props != null)
             {
-                styles = new ReactStylesDiffMap(props);
-                cssNode.UpdateProperties(styles);
+                cssNode.UpdateProps(props);
             }
 
-            HandleCreateView(cssNode, rootViewTag, styles);
+            HandleCreateView(cssNode, rootViewTag, props);
         }
 
         /// <summary>
-        /// Invoked by React to create a new node with a given tag, class name and properties.
+        /// Configures the next layout animation.
         /// </summary>
         /// <param name="config">the animation configuration properties.</param>
         /// <param name="success">Success callback.</param>
@@ -190,12 +188,12 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Invoked by React when the properties change for a node with the
+        /// Invoked by React when the props change for a node with the
         /// given tag.
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The view class name.</param>
-        /// <param name="props">The properties.</param>
+        /// <param name="props">The props.</param>
         public void UpdateView(int tag, string className, JObject props)
         {
             var viewManager = _viewManagers.Get(className);
@@ -208,9 +206,8 @@ namespace ReactNative.UIManager
 
             if (props != null)
             {
-                var styles = new ReactStylesDiffMap(props);
-                cssNode.UpdateProperties(styles);
-                HandleUpdateView(cssNode, className, styles);
+                cssNode.UpdateProps(props);
+                HandleUpdateView(cssNode, className, props);
             }
         }
 
@@ -218,14 +215,14 @@ namespace ReactNative.UIManager
         /// Used by the native animated module to bypass the process of
         /// updating the values through the shadow view hierarchy. This method
         /// will directly update the native views, which means that updates for
-        /// layout-related properties won't be handled properly.
+        /// layout-related props won't be handled properly.
         /// </summary>
         /// <param name="tag">The view tag.</param>
-        /// <param name="props">The properties</param>
+        /// <param name="props">The props.</param>
         /// <remarks>
         /// Make sure you know what you're doing before calling this method :)
         /// </remarks>
-        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, ReactStylesDiffMap props)
+        public bool SynchronouslyUpdateViewOnDispatcherThread(int tag, JObject props)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -656,7 +653,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void HandleCreateView(ReactShadowNode cssNode, int rootViewTag, ReactStylesDiffMap styles)
+        private void HandleCreateView(ReactShadowNode cssNode, int rootViewTag, JObject styles)
         {
             if (!cssNode.IsVirtual)
             {
@@ -667,11 +664,11 @@ namespace ReactNative.UIManager
         private void HandleUpdateView(
             ReactShadowNode cssNode,
             string className,
-            ReactStylesDiffMap styles)
+            JObject props)
         {
             if (!cssNode.IsVirtual)
             {
-                _nativeViewHierarchyOptimizer.HandleUpdateView(cssNode, className, styles);
+                _nativeViewHierarchyOptimizer.HandleUpdateView(cssNode, className, props);
             }
         }
 
@@ -698,7 +695,7 @@ namespace ReactNative.UIManager
             return _shadowNodeRegistry.GetNode(reactTag);
         }
 
-        private IViewManager ResolveViewManager(string className)
+        internal IViewManager ResolveViewManager(string className)
         {
             return _viewManagers.Get(className);
         }

@@ -2,13 +2,9 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Json;
 using System;
 using System.Collections.Generic;
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-#else
-using System.Windows;
-#endif
 
 namespace ReactNative.UIManager
 {
@@ -18,8 +14,7 @@ namespace ReactNative.UIManager
     /// <see cref="ReactShadowNode"/> subclasses used for calculating position
     /// and size for the corresponding native view.
     /// </summary>
-    public abstract class DependencyObjectViewManager<TDependencyObject, TReactShadowNode> : IViewManager
-        where TDependencyObject : DependencyObject
+    public abstract class ViewManagerBase<TView, TReactShadowNode> : IViewManager
         where TReactShadowNode : ReactShadowNode
     {
         /// <summary>
@@ -34,80 +29,64 @@ namespace ReactNative.UIManager
         /// <see cref="CreateShadowNodeInstance"/>.
         /// 
         /// This method will be used in the bridge initialization phase to
-        /// collect properties exposed using the <see cref="Annotations.ReactPropAttribute"/>
+        /// collect props exposed using the <see cref="Annotations.ReactPropAttribute"/>
         /// annotation from the <see cref="ReactShadowNode"/> subclass.
         /// </summary>
-        public virtual Type ShadowNodeType
-        {
-            get
-            {
-                return typeof(TReactShadowNode);
-            }
-        }
+        public virtual Type ShadowNodeType => typeof(TReactShadowNode);
 
         /// <summary>
         /// The commands map for the view manager.
         /// </summary>
+        [Obsolete("Use 'ViewCommandsMap' instead.")]
         public virtual IReadOnlyDictionary<string, object> CommandsMap { get; }
+
+        /// <summary>
+        /// The commands map for the view manager.
+        /// </summary>
+        public virtual JObject ViewCommandsMap { get; }
 
         /// <summary>
         /// The exported custom bubbling event types.
         /// </summary>
+        [Obsolete("Use 'CustomBubblingEventTypeConstants' instead.")]
         public virtual IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants { get; }
+
+        /// <summary>
+        /// The exported custom bubbling event types.
+        /// </summary>
+        public virtual JObject CustomBubblingEventTypeConstants { get; }
 
         /// <summary>
         /// The exported custom direct event types.
         /// </summary>
+        [Obsolete("Use 'CustomDirectEventTypeConstants' instead.")]
         public virtual IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants { get; }
+
+        /// <summary>
+        /// The exported custom direct event types.
+        /// </summary>
+        public virtual JObject CustomDirectEventTypeConstants { get; }
 
         /// <summary>
         /// The exported view constants.
         /// </summary>
+        [Obsolete("Use 'ViewConstants' instead.")]
         public virtual IReadOnlyDictionary<string, object> ExportedViewConstants { get; }
 
         /// <summary>
-        /// Creates a shadow node for the view manager.
+        /// The exported view constants.
         /// </summary>
-        /// <returns>The shadow node instance.</returns>
-        public IReadOnlyDictionary<string, string> NativeProperties
-        {
-            get
-            {
-                return ViewManagersPropertyCache.GetNativePropertiesForView(GetType(), ShadowNodeType);
-            }
-        }
-
-        /// <summary>
-        /// Update the properties of the given view.
-        /// </summary>
-        /// <param name="viewToUpdate">The view to update.</param>
-        /// <param name="props">The properties.</param>
-        public void UpdateProperties(TDependencyObject viewToUpdate, ReactStylesDiffMap props)
-        {
-            var propertySetters =
-                ViewManagersPropertyCache.GetNativePropertySettersForViewManagerType(GetType());
-
-            var keys = props.Keys;
-            foreach (var key in keys)
-            {
-                var setter = default(IPropertySetter);
-                if (propertySetters.TryGetValue(key, out setter))
-                {
-                    setter.UpdateViewManagerProperty(this, viewToUpdate, props);
-                }
-            }
-
-            OnAfterUpdateTransaction(viewToUpdate);
-        }
+        public virtual JObject ViewConstants { get; }
 
         /// <summary>
         /// Creates a view and installs event emitters on it.
         /// </summary>
         /// <param name="reactContext">The context.</param>
         /// <returns>The view.</returns>
-        public TDependencyObject CreateView(ThemedReactContext reactContext)
+        public virtual TView CreateView(ThemedReactContext reactContext)
         {
             var view = CreateViewInstance(reactContext);
+            OnViewInstanceCreated(reactContext, view);
             AddEventEmitters(reactContext, view);
             // TODO: enable touch intercepting view parents
             return view;
@@ -115,15 +94,11 @@ namespace ReactNative.UIManager
 
         /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
-        /// additional cleanup by the <see cref="IViewManager"/>
-        /// subclass.
+        /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        /// <remarks>
-        /// Derived classes do not need to call this base method.
-        /// </remarks>
-        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TDependencyObject view)
+        public virtual void OnDropViewInstance(ThemedReactContext reactContext, TView view)
         {
         }
 
@@ -146,7 +121,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="root">The root view.</param>
         /// <param name="extraData">The extra data.</param>
-        public abstract void UpdateExtraData(TDependencyObject root, object extraData);
+        public abstract void UpdateExtraData(TView root, object extraData);
 
         /// <summary>
         /// Implement this method to receive events/commands directly from
@@ -157,7 +132,7 @@ namespace ReactNative.UIManager
         /// </param>
         /// <param name="commandId">Identifer for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
-        public virtual void ReceiveCommand(TDependencyObject view, int commandId, JArray args)
+        public virtual void ReceiveCommand(TView view, int commandId, JArray args)
         {
         }
 
@@ -166,21 +141,21 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns>The view dimensions.</returns>
-        public abstract Dimensions GetDimensions(TDependencyObject view);
+        public abstract Dimensions GetDimensions(TView view);
 
         /// <summary>
         /// Sets the dimensions of the view.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="dimensions">The output buffer.</param>
-        public abstract void SetDimensions(TDependencyObject view, Dimensions dimensions);
+        public abstract void SetDimensions(TView view, Dimensions dimensions);
 
         /// <summary>
-        /// Creates a new view instance of type <typeparamref name="TDependencyObject"/>.
+        /// Creates a new view instance of type <typeparamref name="TView"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected abstract TDependencyObject CreateViewInstance(ThemedReactContext reactContext);
+        protected abstract TView CreateViewInstance(ThemedReactContext reactContext);
 
         /// <summary>
         /// Subclasses can override this method to install custom event 
@@ -192,35 +167,94 @@ namespace ReactNative.UIManager
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
         /// </remarks>
-        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TDependencyObject view)
+        protected virtual void AddEventEmitters(ThemedReactContext reactContext, TView view)
         {
         }
 
         /// <summary>
-        /// Callback that will be triggered after all properties are updated in
+        /// Callback that will be triggered after all props are updated in
         /// the current update transation (all <see cref="Annotations.ReactPropAttribute"/> handlers
-        /// for properties updated in the current transaction have been called).
+        /// for props updated in the current transaction have been called).
         /// </summary>
         /// <param name="view">The view.</param>
-        protected virtual void OnAfterUpdateTransaction(TDependencyObject view)
+        protected virtual void OnAfterUpdateTransaction(TView view)
         {
         }
 
-#region IViewManager
-
-        void IViewManager.UpdateProperties(DependencyObject viewToUpdate, ReactStylesDiffMap props)
+        internal virtual void OnViewInstanceCreated(ThemedReactContext reactContext, TView view)
         {
-            UpdateProperties((TDependencyObject)viewToUpdate, props);
         }
 
-        DependencyObject IViewManager.CreateView(ThemedReactContext reactContext)
+        #region IViewManager
+
+        JObject IViewManager.NativeProps
+        {
+            get
+            {
+                return ViewManagersPropCache.GetNativePropsForView<TView>(GetType(), ShadowNodeType);
+            }
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        JObject IViewManager.CommandsMap
+        {
+            get
+            {
+                return OneOf(ViewCommandsMap, CommandsMap);
+            }
+        }
+
+        JObject IViewManager.ExportedCustomBubblingEventTypeConstants
+        {
+            get
+            {
+                return OneOf(CustomBubblingEventTypeConstants, ExportedCustomBubblingEventTypeConstants);
+            }
+        }
+
+        JObject IViewManager.ExportedCustomDirectEventTypeConstants
+        {
+            get
+            {
+                return OneOf(CustomDirectEventTypeConstants, ExportedCustomDirectEventTypeConstants);
+            }
+        }
+
+        JObject IViewManager.ExportedViewConstants
+        {
+            get
+            {
+                return OneOf(ViewConstants, ExportedViewConstants);
+            }
+        }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        void IViewManager.UpdateProps(object viewToUpdate, JObject props)
+        {
+            var propSetters =
+                ViewManagersPropCache.GetNativePropSettersForViewManagerType<TView>(GetType());
+
+            var keys = props.Keys();
+            foreach (var key in keys)
+            {
+                var setter = default(IPropSetter);
+                if (propSetters.TryGetValue(key, out setter))
+                {
+                    setter.UpdateViewManagerProp(this, viewToUpdate, props);
+                }
+            }
+
+            OnAfterUpdateTransaction((TView)viewToUpdate);
+        }
+
+        object IViewManager.CreateView(ThemedReactContext reactContext)
         {
             return CreateView(reactContext);
         }
 
-        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, DependencyObject view)
+        void IViewManager.OnDropViewInstance(ThemedReactContext reactContext, object view)
         {
-            OnDropViewInstance(reactContext, (TDependencyObject)view);
+            OnDropViewInstance(reactContext, (TView)view);
         }
 
         ReactShadowNode IViewManager.CreateShadowNodeInstance()
@@ -228,26 +262,40 @@ namespace ReactNative.UIManager
             return CreateShadowNodeInstance();
         }
 
-        void IViewManager.UpdateExtraData(DependencyObject root, object extraData)
+        void IViewManager.UpdateExtraData(object root, object extraData)
         {
-            UpdateExtraData((TDependencyObject)root, extraData);
+            UpdateExtraData((TView)root, extraData);
         }
 
-        void IViewManager.ReceiveCommand(DependencyObject view, int commandId, JArray args)
+        void IViewManager.ReceiveCommand(object view, int commandId, JArray args)
         {
-            ReceiveCommand((TDependencyObject)view, commandId, args);
+            ReceiveCommand((TView)view, commandId, args);
         }
 
-        Dimensions IViewManager.GetDimensions(DependencyObject view)
+        Dimensions IViewManager.GetDimensions(object view)
         {
-            return GetDimensions((TDependencyObject)view);
+            return GetDimensions((TView)view);
         }
 
-        void IViewManager.SetDimensions(DependencyObject view, Dimensions dimensions)
+        void IViewManager.SetDimensions(object view, Dimensions dimensions)
         {
-            SetDimensions((TDependencyObject)view, dimensions);
+            SetDimensions((TView)view, dimensions);
         }
 
-#endregion
+        #endregion
+
+        #region Constants Helpers
+
+        private static JObject OneOf(JObject json, IReadOnlyDictionary<string, object> map)
+        {
+            if (map != null && json != null)
+            {
+                throw new NotSupportedException("Do not override both JObject and dictionary constants properties.");
+            }
+
+            return json ?? (map != null ? JObject.FromObject(map) : null);
+        }
+
+        #endregion
     }
 }

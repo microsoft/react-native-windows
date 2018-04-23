@@ -46,9 +46,6 @@ namespace ReactNative.Bridge
             CompiledReactDelegateFactory.Instance;
 #endif
 
-        private static readonly IReadOnlyDictionary<string, object> s_emptyConstants
-            = new Dictionary<string, object>();
-
         private readonly IReadOnlyDictionary<string, INativeMethod> _methods;
         private readonly IReactDelegateFactory _delegateFactory;
         private readonly IActionQueue _actionQueue;
@@ -128,11 +125,40 @@ namespace ReactNative.Bridge
         /// <summary>
         /// The constants exported by this module.
         /// </summary>
+        [Obsolete("Please use `ModuleConstants` instead.")]
         public virtual IReadOnlyDictionary<string, object> Constants
         {
             get
             {
-                return s_emptyConstants;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// The constants exported by this module.
+        /// </summary>
+        public virtual JObject ModuleConstants
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        JObject INativeModule.Constants
+        {
+            get
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                var constants = Constants;
+#pragma warning restore CS0618 // Type or member is obsolete
+                var moduleConstants = ModuleConstants;
+                if (constants != null && moduleConstants != null)
+                {
+                    throw new NotSupportedException("Do not override both JObject and dictionary constants properties.");
+                }
+
+                return moduleConstants ?? (constants != null ? JObject.FromObject(constants) : new JObject());
             }
         }
 

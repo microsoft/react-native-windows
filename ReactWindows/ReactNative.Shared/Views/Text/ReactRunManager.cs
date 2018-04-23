@@ -79,18 +79,5 @@ namespace ReactNative.Views.Text
         {
             return new Run();
         }
-
-        /// <summary>
-        /// Receive extra updates from the shadow node.
-        /// </summary>
-        /// <param name="root">The root view.</param>
-        /// <param name="extraData">The extra data.</param>
-        public override void UpdateExtraData(Run root, object extraData)
-        {
-            base.UpdateExtraData(root, extraData);
-#if WINDOWS_UWP
-            AccessibilityHelper.OnTextChanged(root);
-#endif
-        }
     }
 }

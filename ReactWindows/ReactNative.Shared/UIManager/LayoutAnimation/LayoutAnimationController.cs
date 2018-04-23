@@ -30,8 +30,8 @@ namespace ReactNative.UIManager.LayoutAnimation
     /// </remarks>
     public class LayoutAnimationController
     {
-        private readonly ConditionalWeakTable<FrameworkElement, SerialDisposable> _activeAnimations =
-            new ConditionalWeakTable<FrameworkElement, SerialDisposable>();
+        private readonly ConditionalWeakTable<object, SerialDisposable> _activeAnimations =
+            new ConditionalWeakTable<object, SerialDisposable>();
 
         private readonly LayoutAnimation _layoutCreateAnimation = new LayoutCreateAnimation();
         private readonly LayoutAnimation _layoutUpdateAnimation = new LayoutUpdateAnimation();
@@ -87,9 +87,15 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <code>true</code> if the layout operation should be animated, 
         /// otherwise <code>false</code>.
         /// </returns>
-        public bool ShouldAnimateLayout(FrameworkElement view)
+        public bool ShouldAnimateLayout(object view)
         {
-            return _shouldAnimateLayout && view.Parent != null;
+            if (_shouldAnimateLayout)
+            {
+                var dependencyObject = ViewConversion.GetDependencyObject(view);
+                return dependencyObject is FrameworkElement frameworkElement && frameworkElement.Parent != null;
+            }
+            
+            return false;
         }
 
         /// <summary>
@@ -99,7 +105,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// <param name="viewManager">The view manager for the native view.</param>
         /// <param name="view">The native view to animate.</param>
         /// <param name="dimensions">The new view dimensions to animate to.</param>
-        public void ApplyLayoutUpdate(IViewManager viewManager, FrameworkElement view, Dimensions dimensions)
+        public void ApplyLayoutUpdate(IViewManager viewManager, object view, Dimensions dimensions)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -129,7 +135,7 @@ namespace ReactNative.UIManager.LayoutAnimation
         /// Called once the animation is finished, should be used to completely
         /// remove the view.
         /// </param>
-        public void DeleteView(IViewManager viewManager, FrameworkElement view, Action @finally)
+        public void DeleteView(IViewManager viewManager, object view, Action @finally)
         {
             DispatcherHelpers.AssertOnDispatcher();
 
@@ -139,7 +145,8 @@ namespace ReactNative.UIManager.LayoutAnimation
 
             if (animation != null)
             {
-                view.IsHitTestVisible = false;
+                var element = ViewConversion.GetDependencyObject<UIElement>(view);
+                element.IsHitTestVisible = false;
                 StartAnimation(view, animation.Finally(@finally));
             }
             else
@@ -158,7 +165,7 @@ namespace ReactNative.UIManager.LayoutAnimation
             _shouldAnimateLayout = false;
         }
 
-        private void StartAnimation(FrameworkElement view, IObservable<Unit> animation)
+        private void StartAnimation(object view, IObservable<Unit> animation)
         {
             // Get the serial disposable for the view
             var serialDisposable = _activeAnimations.GetOrCreateValue(view);

@@ -3,7 +3,9 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Json;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
-    abstract class PropertySetter : IPropertySetter
+    abstract class PropSetter : IPropSetter
     {
         private static HashSet<Type> s_numberTypes =
             new HashSet<Type>
@@ -54,18 +56,18 @@ namespace ReactNative.UIManager
 
         private readonly IGenericDelegate _genericDelegate;
         private readonly ReactPropBaseAttribute _attribute;
-        private readonly string _propertyType;
+        private readonly string _propType;
 
-        protected PropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
+        protected PropSetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
         {
             Method = method;
             Name = name;
-            PropertyType = GetPropertyType(method);
+            PropType = GetPropType(method);
 
             _genericDelegate = GenericDelegate.Create(method);
 
-            _propertyType = attribute.CustomType == ReactPropBaseAttribute.UseDefaultType
-                ? GetPropertyType(PropertyType)
+            _propType = attribute.CustomType == ReactPropBaseAttribute.UseDefaultType
+                ? GetPropType(PropType)
                 : attribute.CustomType;
 
             _attribute = attribute;
@@ -75,17 +77,17 @@ namespace ReactNative.UIManager
 
         protected MethodInfo Method { get; }
 
-        protected Type PropertyType { get; }
+        protected Type PropType { get; }
 
-        string IPropertySetter.PropertyType
+        string IPropSetter.PropType
         {
             get
             {
-                return _propertyType;
+                return _propType;
             }
         }
 
-        public void UpdateShadowNodeProperty(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+        public void UpdateShadowNodeProp(ReactShadowNode shadowNode, JObject props)
         {
             if (shadowNode == null)
                 throw new ArgumentNullException(nameof(shadowNode));
@@ -95,7 +97,7 @@ namespace ReactNative.UIManager
             Invoke(GetShadowNodeArgs(shadowNode, props));
         }
 
-        public void UpdateViewManagerProperty(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+        public void UpdateViewManagerProp(IViewManager viewManager, object view, JObject props)
         {
             if (viewManager == null)
                 throw new ArgumentNullException(nameof(viewManager));
@@ -105,35 +107,35 @@ namespace ReactNative.UIManager
             Invoke(GetViewManagerArgs(viewManager, view, props));
         }
 
-        protected virtual object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+        protected virtual object[] GetShadowNodeArgs(ReactShadowNode shadowNode, JObject props)
         {
-            throw new NotSupportedException(Invariant($"'{nameof(ReactShadowNode)}' properties cannot be changed with this setter."));
+            throw new NotSupportedException(Invariant($"'{nameof(ReactShadowNode)}' props cannot be changed with this setter."));
         }
 
-        protected virtual object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+        protected virtual object[] GetViewManagerArgs(IViewManager viewManager, object view, JObject props)
         {
-            throw new NotSupportedException($"'{nameof(IViewManager)}' properties cannot be changed with this setter.");
+            throw new NotSupportedException($"'{nameof(IViewManager)}' props cannot be changed with this setter.");
         }
 
-        protected abstract Type GetPropertyType(MethodInfo method);
+        protected abstract Type GetPropType(MethodInfo method);
 
         protected virtual void OnInvoked()
         {
         }
 
-        protected object ExtractProperty(ReactStylesDiffMap props)
+        protected object ExtractProp(JObject props)
         {
-            if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropertyType, out var defaultFunc))
+            if (props.IsNull(Name) && s_defaultValues.TryGetValue(PropType, out var defaultFunc))
             {
                 return defaultFunc(_attribute);
             }
 
             var prop = props.GetProperty(Name)?
-                .ToObject(PropertyType);
+                .ToObject(PropType);
 
-            if (prop == null && PropertyType.GetTypeInfo().IsValueType)
+            if (prop == null && PropType.GetTypeInfo().IsValueType)
             {
-                return Activator.CreateInstance(PropertyType);
+                return Activator.CreateInstance(PropType);
             }
 
             return prop;
@@ -151,38 +153,38 @@ namespace ReactNative.UIManager
             }
         }
 
-        private string GetPropertyType(Type propertyType)
+        private string GetPropType(Type propType)
         {
-            if (s_numberTypes.Contains(propertyType))
+            if (s_numberTypes.Contains(propType))
             {
                 return "number";
             }
 
-            if (propertyType == typeof(bool))
+            if (propType == typeof(bool))
             {
                 return "boolean";
             }
 
-            if (propertyType == typeof(string))
+            if (propType == typeof(string))
             {
                 return "String";
             }
 
-            if (propertyType.IsArray)
+            if (propType.IsArray)
             {
                 return "Array";
             }
 
-            var nullableType = Nullable.GetUnderlyingType(propertyType);
+            var nullableType = Nullable.GetUnderlyingType(propType);
             if (nullableType != null)
             {
-                return GetPropertyType(nullableType);
+                return GetPropType(nullableType);
             }
 
             return "Map";
         }
 
-        public static IEnumerable<IPropertySetter> CreateShadowNodeSetters(MethodInfo method)
+        public static IEnumerable<IPropSetter> CreateShadowNodeSetters(MethodInfo method)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
@@ -191,19 +193,19 @@ namespace ReactNative.UIManager
             var reactPropGroup = default(ReactPropGroupAttribute);
             if (reactProp != null)
             {
-                yield return new ShadowNodePropertySetter(method, reactProp.Name, reactProp);
+                yield return new ShadowNodePropSetter(method, reactProp.Name, reactProp);
             }
             else if ((reactPropGroup = method.GetCustomAttribute<ReactPropGroupAttribute>()) != null)
             {
                 for (var i = 0; i < reactPropGroup.Names.Length; ++i)
                 {
                     var name = reactPropGroup.Names[i];
-                    yield return new ShadowNodeGroupPropertySetter(method, i, name, reactPropGroup);
+                    yield return new ShadowNodeGroupPropSetter(method, i, name, reactPropGroup);
                 }
             }
         }
 
-        public static IEnumerable<IPropertySetter> CreateViewManagerSetters(MethodInfo method)
+        public static IEnumerable<IPropSetter> CreateViewManagerSetters<TView>(MethodInfo method)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
@@ -212,51 +214,58 @@ namespace ReactNative.UIManager
             var reactPropGroup = default(ReactPropGroupAttribute);
             if (reactProp != null)
             {
-                yield return new ViewManagerPropertySetter(method, reactProp.Name, reactProp);
+                yield return new ViewManagerPropSetter<TView>(
+                    method,
+                    reactProp.Name,
+                    reactProp);
             }
             else if ((reactPropGroup = method.GetCustomAttribute<ReactPropGroupAttribute>()) != null)
             {
                 for (var i = 0; i < reactPropGroup.Names.Length; ++i)
                 {
                     var name = reactPropGroup.Names[i];
-                    yield return new ViewManagerGroupPropertySetter(method, i, name, reactPropGroup);
+                    yield return new ViewManagerGroupPropSetter<TView>(
+                        method,
+                        i,
+                        name,
+                        reactPropGroup);
                 }
             }
         }
 
-        class ViewManagerPropertySetter : PropertySetter
+        class ViewManagerPropSetter<TView> : PropSetter
         {
             private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[3]);
 
-            public ViewManagerPropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
+            public ViewManagerPropSetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
             }
 
-            protected override Type GetPropertyType(MethodInfo method)
+            protected override Type GetPropType(MethodInfo method)
             {
                 var parameters = method.GetParameters();
                 if (parameters.Length != 2)
                 {
                     throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"Wrong number of arguments for prop setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
-                if (!typeof(DependencyObject).IsAssignableFrom(parameters[0].ParameterType))
+                if (!typeof(TView).IsAssignableFrom(parameters[0].ParameterType))
                 {
                     throw new InvalidOperationException(
-                        Invariant($"First parameter must be a dependency object for property setter '{method.DeclaringType.Name}.{Name}'."));
+                        Invariant($"First parameter must be of type '{typeof(TView)}' for prop setter '{method.DeclaringType.Name}.{Name}'."));
                 }
 
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = viewManager;
                 args[1] = view;
-                args[2] = ExtractProperty(props);
+                args[2] = ExtractProp(props);
                 return args;
             }
 
@@ -266,50 +275,50 @@ namespace ReactNative.UIManager
             }
         }
 
-        class ViewManagerGroupPropertySetter : PropertySetter
+        class ViewManagerGroupPropSetter<TView> : PropSetter
         {
             private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[4]);
 
             private readonly int _index;
 
-            public ViewManagerGroupPropertySetter(MethodInfo method, int index, string name, ReactPropBaseAttribute attribute)
+            public ViewManagerGroupPropSetter(MethodInfo method, int index, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
                 _index = index;
             }
 
-            protected override Type GetPropertyType(MethodInfo method)
+            protected override Type GetPropType(MethodInfo method)
             {
                 var parameters = method.GetParameters();
                 if (parameters.Length != 3)
                 {
                     throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"Wrong number of arguments for group prop setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
-                if (!typeof(FrameworkElement).IsAssignableFrom(parameters[0].ParameterType))
+                if (!typeof(TView).IsAssignableFrom(parameters[0].ParameterType))
                 {
                     throw new InvalidOperationException(
-                        Invariant($"First parameter must be a framework element for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"First parameter must be of type '{typeof(TView)}' for group prop setter '{method.DeclaringType.Name}.{Name}'."));
                 }
 
                 if (parameters[1].ParameterType != typeof(int))
                 {
                     throw new InvalidOperationException(
-                        Invariant($"Second parameter must be a property index for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"Second parameter must be a prop index for group prop setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
 
                 return parameters[2].ParameterType;
             }
 
-            protected override object[] GetViewManagerArgs(IViewManager viewManager, DependencyObject view, ReactStylesDiffMap props)
+            protected override object[] GetViewManagerArgs(IViewManager viewManager, object view, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = viewManager;
                 args[1] = view;
                 args[2] = _index;
-                args[3] = ExtractProperty(props);
+                args[3] = ExtractProp(props);
                 return args;
             }
 
@@ -319,32 +328,32 @@ namespace ReactNative.UIManager
             }
         }
 
-        class ShadowNodePropertySetter : PropertySetter
+        class ShadowNodePropSetter : PropSetter
         {
             private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[2]);
 
-            public ShadowNodePropertySetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
+            public ShadowNodePropSetter(MethodInfo method, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
             }
 
-            protected override Type GetPropertyType(MethodInfo method)
+            protected override Type GetPropType(MethodInfo method)
             {
                 var parameters = method.GetParameters();
                 if (parameters.Length != 1)
                 {
                     throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"Wrong number of arguments for prop setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
                 return  parameters[0].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = shadowNode;
-                args[1] = ExtractProperty(props);
+                args[1] = ExtractProp(props);
                 return args;
             }
 
@@ -354,42 +363,42 @@ namespace ReactNative.UIManager
             }
         }
 
-        class ShadowNodeGroupPropertySetter : PropertySetter
+        class ShadowNodeGroupPropSetter : PropSetter
         {
             private static ThreadLocal<object[]> s_args = new ThreadLocal<object[]>(() => new object[3]);
 
             private readonly int _index;
 
-            public ShadowNodeGroupPropertySetter(MethodInfo method, int index, string name, ReactPropBaseAttribute attribute)
+            public ShadowNodeGroupPropSetter(MethodInfo method, int index, string name, ReactPropBaseAttribute attribute)
                 : base(method, name, attribute)
             {
                 _index = index;
             }
 
-            protected override Type GetPropertyType(MethodInfo method)
+            protected override Type GetPropType(MethodInfo method)
             {
                 var parameters = method.GetParameters();
                 if (parameters.Length != 2)
                 {
                     throw new InvalidOperationException(
-                        Invariant($"Wrong number of arguments for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"Wrong number of arguments for group prop setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
                 if (parameters[0].ParameterType != typeof(int))
                 {
                     throw new InvalidOperationException(
-                        Invariant($"First parameter must be a property index for group property setter '{method.DeclaringType.Name}.{method.Name}'."));
+                        Invariant($"First parameter must be a prop index for group prop setter '{method.DeclaringType.Name}.{method.Name}'."));
                 }
 
                 return parameters[1].ParameterType;
             }
 
-            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, ReactStylesDiffMap props)
+            protected override object[] GetShadowNodeArgs(ReactShadowNode shadowNode, JObject props)
             {
                 var args = s_args.Value;
                 args[0] = shadowNode;
                 args[1] = _index;
-                args[2] = ExtractProperty(props);
+                args[2] = ExtractProp(props);
                 return args;
             }
 

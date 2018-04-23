@@ -48,13 +48,13 @@ clone_script:
 - ps: git clone -q $("--branch=" + $env:APPVEYOR_REPO_BRANCH) $("https://github.com/" + $env:APPVEYOR_REPO_NAME + ".git") $env:APPVEYOR_BUILD_FOLDER
 - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) {$("git checkout -qf " + $env:APPVEYOR_REPO_COMMIT)}
 - ps: if ($env:APPVEYOR_PULL_REQUEST_NUMBER) {git fetch -q origin +refs/pull/$($env:APPVEYOR_PULL_REQUEST_NUMBER)/merge; git checkout -qf FETCH_HEAD}
-- ps: git submodule update -q --init --recursive
+- appveyor-retry git submodule update -q --init --recursive
 
 before_build:
 - ps: $env:playgroundNet46_dir=$env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
 - ps: $env:bundle_dir=$env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
-- ps: nuget restore ReactWindows\ReactNative.sln
-- npm i -g react-native-cli
+- appveyor-retry nuget restore ReactWindows\ReactNative.sln
+- appveyor-retry npm i -g react-native-cli
 
 build_script:
 - ps: mkdir $env:bundle_dir

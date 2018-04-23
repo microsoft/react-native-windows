@@ -41,7 +41,7 @@ namespace ReactNative.Bridge
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        void SetGlobalVariable(string propertyName, JToken value);
+        void SetGlobalVariable(string propertyName, string value);
 
         /// <summary>
         /// Runs the JavaScript at the given path.
@@ -49,6 +49,12 @@ namespace ReactNative.Bridge
         /// <param name="sourcePath">The source path.</param>
         /// <param name="sourceUrl">The source URL.</param>
         void RunScript(string sourcePath, string sourceUrl);
+
+        /// <summary>
+        /// Sets a callback for immediate native method call queue flush.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate);
 
         /// <summary>
         /// Sets a callback for synchronous native methods.

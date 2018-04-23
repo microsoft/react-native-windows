@@ -33,6 +33,7 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptNativeFunction _nativeLoggingHook;
         private JavaScriptNativeFunction _nativeRequire;
         private JavaScriptNativeFunction _nativeCallSyncHook;
+        private JavaScriptNativeFunction _nativeFlushQueueImmediate;
 
         private JavaScriptValue _globalObject;
 
@@ -46,6 +47,7 @@ namespace ReactNative.Chakra.Executor
 #endif
 
         private Func<int, int, JArray, JToken> _callSyncHook;
+        private Action<JToken> _flushQueueImmediate;
 
         /// <summary>
         /// Instantiates the <see cref="ChakraJavaScriptExecutor"/>.
@@ -174,7 +176,7 @@ namespace ReactNative.Chakra.Executor
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
@@ -210,6 +212,15 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Sets a callback for immediate queue flushes.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            _flushQueueImmediate = flushQueueImmediate;
+        }
+
+        /// <summary>
         /// Disposes the <see cref="ChakraJavaScriptExecutor"/> instance.
         /// </summary>
         public void Dispose()
@@ -232,6 +243,12 @@ namespace ReactNative.Chakra.Executor
             EnsureGlobalObject().SetProperty(
                 JavaScriptPropertyId.FromString("nativeCallSyncHook"),
                 JavaScriptValue.CreateFunction(_nativeCallSyncHook),
+                true);
+
+            _nativeFlushQueueImmediate = NativeFlushQueueImmediate;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeFlushQueueImmediate"),
+                JavaScriptValue.CreateFunction(_nativeFlushQueueImmediate),
                 true);
         }
 
@@ -267,6 +284,11 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue ConvertJson(JToken token)
         {
             var jsonString = token.ToString(Formatting.None);
+            return ConvertJson(jsonString);
+        }
+
+        private JavaScriptValue ConvertJson(string jsonString)
+        {
             var jsonStringValue = JavaScriptValue.FromString(jsonString);
             jsonStringValue.AddRef();
             var parseFunction = EnsureParseFunction();
@@ -306,6 +328,30 @@ namespace ReactNative.Chakra.Executor
             {
                 Debug.WriteLine("Unable to process JavaScript console statement");
             }
+
+            return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Flush Queue Immediate Hook
+        private JavaScriptValue NativeFlushQueueImmediate(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly two arguments (global, flushedQueue)");
+            }
+
+            if (_flushQueueImmediate == null)
+            {
+                throw new InvalidOperationException("Callback hook for `nativeFlushQueueImmediate` has not been set.");
+            }
+
+            _flushQueueImmediate(ConvertJson(arguments[1]));
 
             return JavaScriptValue.Undefined;
         }

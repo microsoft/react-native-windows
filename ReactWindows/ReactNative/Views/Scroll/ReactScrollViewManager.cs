@@ -10,7 +10,6 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Reflection;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -45,11 +44,11 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// The commands map for the view manager.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "scrollTo", CommandScrollTo },
                 };
@@ -59,29 +58,29 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// The exported custom direct event types.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        public override JObject CustomDirectEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     {
                         ScrollEventType.BeginDrag.GetJavaScriptEventName(),
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onScrollBeginDrag" },
                         }
                     },
                     {
                         ScrollEventType.EndDrag.GetJavaScriptEventName(),
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onScrollEndDrag" },
                         }
                     },
                     {
                         ScrollEventType.Scroll.GetJavaScriptEventName(),
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onScroll" },
                         }

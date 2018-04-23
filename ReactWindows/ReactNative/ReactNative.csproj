@@ -112,7 +112,9 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
+    <Compile Include="DevSupport\SourceInfoVisibilityConverter.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
+    <Compile Include="IReactApplication.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
     <Compile Include="Modules\Clipboard\ClipboardInstance.cs" />
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="Modules\StatusBar\StatusBarModule.cs" />
     <Compile Include="Modules\Storage\AsyncStorageModule.cs" />
     <Compile Include="Modules\Vibration\VibrationModule.cs" />
+    <Compile Include="ReactApplication.cs" />
+    <Compile Include="ReactApplicationDelegate.cs" />
     <Compile Include="ReactPage.cs" />
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />

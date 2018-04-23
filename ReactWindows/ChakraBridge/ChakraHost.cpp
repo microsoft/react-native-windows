@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "ChakraHost.h"
 #include "JsIndexedModulesUnbundle.h"
-#include "JsStringify.h"
 #include "SerializedSourceContext.h"
 #include <stdint.h>
 
@@ -57,7 +56,13 @@ JsValueRef CALLBACK NativeLoggingCallback(JsValueRef callee, bool isConstructCal
     JsNumberToDouble(arguments[2], &logLevelIndex);
     swprintf(buff, 56, L"[JS %s] ", LogLevel((int)logLevelIndex));
     OutputDebugStringW(buff);
-    StringifyJsString(arguments[1]);
+    
+	// Memory is owned by JS engine and is GC'ed later.
+    const wchar_t* szResult;
+    size_t sResult;
+    JsStringToPointer(arguments[1], &szResult, &sResult);
+    OutputDebugStringW(szResult);
+
     OutputDebugStringW(L"\n");
 #endif
     return JS_INVALID_REFERENCE;
@@ -242,13 +247,13 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
 
     // Get the stringified arguments
     JsValueRef stringifiedArgs;
-    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter");
+    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter.");
     const wchar_t* argsBuf;
     size_t bufLen;
     IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
 
     // Invoke the sync callback
-    String^ result = host->callSyncHandler(moduleId, methodId, ref new String(argsBuf, bufLen));
+    String^ result = host->callSyncHandler((int)moduleId, (int)methodId, ref new String(argsBuf, (unsigned int)bufLen));
 
     // Return the parsed JSON result
     JsValueRef stringifiedResult;
@@ -256,6 +261,38 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
     JsValueRef jsonResult;
     IfFailThrow(host->JsonParse(stringifiedResult, &jsonResult), L"Could not parse stringified result");
     return jsonResult;
+}
+
+JsValueRef CALLBACK NativeFlushQueueImmediate(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+{
+    // cast the callback state to the ChakraHost instance
+    auto host = (ChakraHost*)callbackState;
+
+    // Assert the argument count.
+    if (argumentCount != 2)
+    {
+        ThrowException(L"Expected only one parameter to nativeFlushQueueImmediate.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Assert the handler has been set.
+    if (host->flushQueueImmediateHandler == nullptr)
+    {
+        ThrowException(L"flushQueueImmediate callback has not been set.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Get the stringified arguments.
+    JsValueRef stringifiedArgs;
+    IfFailThrow(host->JsonStringify(arguments[1], &stringifiedArgs), L"Could not stringify the args parameter.");
+    const wchar_t* argsBuf;
+    size_t bufLen;
+    IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
+
+    // Invoke the flushQueueImmediate callback.
+    host->flushQueueImmediateHandler(ref new String(argsBuf, (unsigned int)bufLen));
+
+    return JS_INVALID_REFERENCE;
 }
 
 bool HasMagicFileHeader(const wchar_t* szPath)
@@ -416,6 +453,11 @@ void ChakraHost::SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler)
     this->callSyncHandler = handler;
 }
 
+void ChakraHost::SetFlushQueueImmediate(ChakraBridge::FlushQueueImmediateHandler^ handler)
+{
+    this->flushQueueImmediateHandler = handler;
+}
+
 JsErrorCode ChakraHost::InitJson()
 {
     JsPropertyIdRef jsonPropertyId;
@@ -455,6 +497,13 @@ JsErrorCode ChakraHost::InitNativeCallSyncHook()
     return JsNoError;
 }
 
+JsErrorCode ChakraHost::InitFlushQueueImmediate()
+{
+    IfFailRet(DefineHostCallback(globalObject, L"nativeFlushQueueImmediate", NativeFlushQueueImmediate, this));
+
+    return JsNoError;
+}
+
 JsErrorCode ChakraHost::Init()
 {
     currentSourceContext = 0;
@@ -468,6 +517,7 @@ JsErrorCode ChakraHost::Init()
     IfFailRet(InitJson());
     IfFailRet(InitConsole());
     IfFailRet(InitNativeCallSyncHook());
+    IfFailRet(InitFlushQueueImmediate());
 
     return JsNoError;
 }
