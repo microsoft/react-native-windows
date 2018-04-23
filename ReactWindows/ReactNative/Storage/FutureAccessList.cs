@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -21,13 +26,13 @@ namespace ReactNative.Storage
         /// <summary>
         /// FAL URIs start with this prefix.
         /// </summary>
-        public static string Scheme => "urn:future-access-list:";
+        public const string Scheme = "urn:future-access-list:";
 
         /// <summary>
         /// Checks the syntax of the FAL URI. It doesn't check if
         /// this URI corresponds to an entry in the FAL.
         /// </summary>
-        public static bool IsValidURI(string uri)
+        public static bool IsValidUri(string uri)
         {
             return uri.StartsWith(Scheme);
         }
@@ -60,7 +65,7 @@ namespace ReactNative.Storage
         /// </summary>
         public static async Task<StorageFile> GetFileAsync(string uri)
         {
-            var token = ExtractAccessToken(uri);
+            var token = ExtractAccessToken(uri, nameof(uri));
             return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
         }
 
@@ -70,7 +75,7 @@ namespace ReactNative.Storage
         /// </summary>
         public static async Task<StorageFolder> GetFolderAsync(string uri)
         {
-            var token = ExtractAccessToken(uri);
+            var token = ExtractAccessToken(uri, nameof(uri));
             return await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(token);
         }
 
@@ -104,11 +109,11 @@ namespace ReactNative.Storage
             }
         }
 
-        private static string ExtractAccessToken(string uri)
+        private static string ExtractAccessToken(string uri, string paramName)
         {
             if (!TryExtractAccessToken(uri, out var token))
             {
-                throw new ArgumentException("Invalid future access list URI: " + uri);
+                throw new ArgumentException("Invalid future access list URI: " + uri, paramName);
             }
             else
             {
@@ -118,6 +123,7 @@ namespace ReactNative.Storage
 
         private static string GetAccessToken(IStorageItem item)
         {
+            // TODO(1802): Implement more efficient pruning with LFU cache.
             var futureAccessList = StorageApplicationPermissions.FutureAccessList;
             var existingEntries = futureAccessList.Entries;
             var capacity = futureAccessList.MaximumItemsAllowed;
@@ -131,7 +137,7 @@ namespace ReactNative.Storage
             {
                 if (long.TryParse(entry.Metadata, out long ticks))
                 {
-                    var time = new DateTime(ticks);
+                    var time = new DateTime(ticks, DateTimeKind.Utc);
 
                     if (time < expiry)
                     {

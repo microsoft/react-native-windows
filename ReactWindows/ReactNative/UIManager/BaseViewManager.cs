@@ -142,7 +142,7 @@ namespace ReactNative.UIManager
 
             view.ManipulationMode = manipulationMode;
         }
-        
+
         /// <summary>
         /// Sets the accessibility label of the element.
         /// </summary>
@@ -316,71 +316,64 @@ namespace ReactNative.UIManager
         // RN views get the proper enter-leave event pairs.
         private static async void OnDragEnter(object sender, DragEventArgs args)
         {
-            if (sender is TFrameworkElement view)
-            {
-                var data = await GetDataTransferInfo(args.DataView);
+            var view = (TFrameworkElement)sender;
+            var data = await GetDataTransferInfo(args.DataView);
 
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", data));
-            }
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragEnter", data));
         }
 
         private static async void OnDragOver(object sender, DragEventArgs args)
         {
-            if (sender is TFrameworkElement view)
-            {
-                args.Handled = true;
+            args.Handled = true;
 
-                // In web when JS gets a "drag over" event, it modifies the event
-                // object to tell if the DOM element supports dropping items:
-                //
-                //      e.dataTransfer.effectAllowed = 'copy';
-                //      e.dataTransfer.dropEffect = 'copy';
-                //
-                // However in RN this approach doesn't work, so we use a simpler
-                // solution: JS sets allowDrop=true which implies that the RN element
-                // always allows dropping items.
-                args.AcceptedOperation = DataPackageOperation.Copy;
+            var view = (TFrameworkElement)sender;
 
-                var data = await GetDataTransferInfo(args.DataView);
+            // In web when JS gets a "drag over" event, it modifies the event
+            // object to tell if the DOM element supports dropping items:
+            //
+            //      e.dataTransfer.effectAllowed = 'copy';
+            //      e.dataTransfer.dropEffect = 'copy';
+            //
+            // However in RN this approach doesn't work, so we use a simpler
+            // solution: JS sets allowDrop=true which implies that the RN element
+            // always allows dropping items.
+            args.AcceptedOperation = DataPackageOperation.Copy;
 
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", data));
-            }
+            var data = await GetDataTransferInfo(args.DataView);
+
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragOver", data));
         }
 
         private static async void OnDrop(object sender, DragEventArgs args)
         {
-            if (sender is TFrameworkElement view)
-            {
-                args.Handled = true;
+            args.Handled = true;
 
-                var data = await GetDataTransferInfo(args.DataView, true);
+            var view = (TFrameworkElement)sender;
+            var data = await GetDataTransferInfo(args.DataView, true);
 
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
-            }
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDrop", data));
         }
 
         // This event is intentionally allowed to bubble up, so all the corresponding
         // RN views get the proper enter-leave event pairs.
         private static async void OnDragLeave(object sender, DragEventArgs args)
         {
-            if (sender is TFrameworkElement view)
-            {
-                var data = await GetDataTransferInfo(args.DataView);
+            var view = (TFrameworkElement)sender;
+            var data = await GetDataTransferInfo(args.DataView);
 
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragLeave", data));
-            }
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new DragDropEvent(view.GetTag(), "topDragLeave", data));
         }
 
         private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
@@ -528,17 +521,15 @@ namespace ReactNative.UIManager
             {
                 foreach (var item in await data.GetStorageItemsAsync())
                 {
-                    try
+                    var file = item as StorageFile;
+
+                    if (file != null)
                     {
-                        var file = item as StorageFile;
+                        var props = await file.GetBasicPropertiesAsync();
+                        var type = file.ContentType;
+                        var path = drop ? FutureAccessList.Add(file) : "";
 
-                        if (file != null)
-                        {
-                            var props = await file.GetBasicPropertiesAsync();
-                            var type = file.ContentType;
-                            var path = drop ? FutureAccessList.Add(file).ToString() : "";
-
-                            files.Add(new JObject
+                        files.Add(new JObject
                             {
                                 { "name", file.Name },
                                 { "size", props.Size },
@@ -546,18 +537,13 @@ namespace ReactNative.UIManager
                                 { "uri", path }
                             });
 
-                            items.Add(new JObject
+                        items.Add(new JObject
                             {
                                 { "kind", "file" },
                                 { "type", type }
                             });
 
-                            types.Add(type);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine("GetDataTransferInfo: " + ex);
+                        types.Add(type);
                     }
                 }
             }
