@@ -9,22 +9,24 @@
  */
 'use strict';
 
-var PropTypes = require('prop-types');
-var React = require('React');
-var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
-var ViewPropTypes = require('ViewPropTypes');
-var requireNativeComponent = require('requireNativeComponent');
-
 const ColorPropType = require('ColorPropType');
 const EdgeInsetsPropType = require('EdgeInsetsPropType');
+const PropTypes = require('prop-types');
+const React = require('React');
+const ReactNative = require('ReactNative');
+const requireNativeComponent = require('requireNativeComponent');
+const ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 const StyleSheetPropType = require('StyleSheetPropType');
 const Text = require('Text');
 const TextStylePropTypes = require('TextStylePropTypes');
 const TouchableWithoutFeedback = require('TouchableWithoutFeedback');
+const UIManager = require('UIManager');
+const ViewPropTypes = require('ViewPropTypes');
 
 const stylePropType = StyleSheetPropType(TextStylePropTypes);
 
 class HyperlinkWindows extends React.Component {
+  displayName: string = 'Hyperlink';
   props: {
     ellipsizeMode: 'head' | 'middle' | 'tail' | 'clip',
     numberOfLines: number,
@@ -44,44 +46,81 @@ class HyperlinkWindows extends React.Component {
     adjustsFontSizeToFit: boolean,
     minimumFontScale: number,
     disabled: boolean,
+    onFocus: Function,
   };
 
   static propTypes = {
-    ...Text.PropTypes,
+    ...Text.propTypes,
   };
 
   static defaultProps = {
   };
 
+  _focusable: any;
+
+  _longPressSent: boolean;
+
   render() {
     return (
         <TouchableWithoutFeedback 
             onLayout={this.props.onLayout}
-            onPress={this._onPress}
             onLongPress={this._onLongPress}
             rejectResponderTermination={true}
             nativeID={this.props.nativeID}
-            testID={this.props.testID}
-        >
-            <RCTHyperlink 
-                { ...this.props } 
-            />
+            testID={this.props.testID}>
+          <RCTHyperlink 
+              { ...this.props }
+              ref={ this._setFocusableRef }
+              onFocus={ this._onFocus }
+              onClick={ this._onClick }
+          />
         </TouchableWithoutFeedback>
     );
   }
+ 
+  _setFocusableRef = (ref) => {
+    this._focusable = ref;
+  }
 
-  _onPress = (e) => {
-    this.props.onPress && this.props.onPress(e);
+  _onFocus = (e) => {
+    this.props.onFocus && this.props.onFocus(e);
+  }
+
+  _onClick = (e) => {
+    if (!this._longPressSent) {
+      this.props.onPress && this.props.onPress(e);
+    }
+
+    this._longPressSent = false;
   }
 
   _onLongPress = (e) => {
-      this.props.onLongPress && this.props.onLongPress(e);
+    this._longPressSent = true;
+    this.props.onLongPress && this.props.onLongPress(e);
+  }
+
+  focus() {
+    if (this._focusable) {
+      UIManager.dispatchViewManagerCommand(
+        ReactNative.findNodeHandle(this._focusable),
+        UIManager.WindowsControl.Commands.focus,
+        null);
+    }
+  }
+
+  blur() {
+    if (this._focusable) {
+      UIManager.dispatchViewManagerCommand(
+        ReactNative.findNodeHandle(this._focusable),
+        UIManager.WindowsControl.Commands.blur,
+        null);
+    }
   }
 }
 
 var RCTHyperlink = requireNativeComponent(
     'RCTHyperlink',
     HyperlinkWindows
-);
+  );
 
 module.exports = HyperlinkWindows;
