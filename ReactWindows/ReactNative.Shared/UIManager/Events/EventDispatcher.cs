@@ -293,14 +293,20 @@ namespace ReactNative.UIManager.Events
             if (shouldDispatch && !Volatile.Read(ref _hasDispatchScheduled))
             {
                 _hasDispatchScheduled = true;
-                _reactContext.RunOnJavaScriptQueueThread(() => DispatchEvents(activity));
+                _reactContext.RunOnJavaScriptQueueThread(() =>
+                {
+                    DispatchEvents(activity);
+                    activity?.Dispose();
+                });
+
+                return;
             }
+
+            activity?.Dispose();
         }
 
         private void DispatchEvents(IDisposable activity)
         {
-            using (activity) { }
-
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchEvents").Start())
             {
                 _hasDispatchScheduled = false;
