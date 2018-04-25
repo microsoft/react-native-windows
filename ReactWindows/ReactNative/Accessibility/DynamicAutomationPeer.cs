@@ -33,7 +33,8 @@ namespace ReactNative.Accessibility
             if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
             {
                 return AutomationControlType.ListItem;
-            } else if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
+            }
+            if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
             {
                 return AutomationControlType.Button;
             }
@@ -48,7 +49,11 @@ namespace ReactNative.Accessibility
             {
                 return this;
             }
-            return base.GetPatternCore(patternInterface);
+            if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
+            {
+                return base.GetPatternCore(patternInterface);
+            }
+            return null;
         }
 
         /// <inheritdoc />
