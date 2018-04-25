@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -31,8 +31,8 @@ namespace ReactNative.Bridge
         /// Sets a global JavaScript variable.
         /// </summary>
         /// <param name="propertyName">The property name.</param>
-        /// <param name="jsonEncodedArgument">The JSON-encoded value.</param>
-        void SetGlobalVariable(string propertyName, string jsonEncodedArgument);
+        /// <param name="value">The value.</param>
+        void SetGlobalVariable(string propertyName, JToken value);
 
         /// <summary>
         /// Evaluates JavaScript.
