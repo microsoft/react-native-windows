@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Documents;
 #else
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 #endif
 
