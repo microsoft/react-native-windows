@@ -12,5 +12,9 @@ namespace ReactNative.Accessibility
         /// Corresponds to Invoke UI Automation pattern: https://msdn.microsoft.com/en-us/library/windows/desktop/ee671279.aspx
         /// </summary>
         Button,
+        /// <summary>
+        /// Denotes item in a ListView.
+        /// </summary>
+        ListItem,
     }
 }
