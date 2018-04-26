@@ -662,6 +662,7 @@ namespace ReactNative
             }
 
             var nativeRegistryBuilder = new NativeModuleRegistry.Builder(reactContext);
+            var processPackageTasks = new List<Task>();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCoreModulesPackage").Start())
             {
                 var coreModulesPackage = new CoreModulesPackage(
@@ -670,16 +671,18 @@ namespace ReactNative
                     _uiImplementationProvider,
                     _lazyViewManagersEnabled);
 
-                ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
+                processPackageTasks.Add(ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder));
             }
 
             foreach (var reactPackage in _packages)
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createAndProcessCustomReactPackage").Start())
                 {
-                    ProcessPackage(reactPackage, reactContext, nativeRegistryBuilder);
+                    processPackageTasks.Add(ProcessPackage(reactPackage, reactContext, nativeRegistryBuilder));
                 }
             }
+
+            await Task.WhenAll(processPackageTasks);
 
             var nativeModuleRegistry = default(NativeModuleRegistry);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "buildNativeModuleRegistry").Start())
@@ -716,15 +719,23 @@ namespace ReactNative
             return reactContext;
         }
 
-        private void ProcessPackage(
+        private Task ProcessPackage(
             IReactPackage reactPackage,
             ReactContext reactContext,
             NativeModuleRegistry.Builder nativeRegistryBuilder)
         {
-            foreach (var nativeModule in reactPackage.CreateNativeModules(reactContext))
+            return DispatcherHelpers.CallOnDispatcher(() =>
             {
-                nativeRegistryBuilder.Add(nativeModule);
-            }
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, $"processPackage {reactPackage.GetType()}").Start())
+                {
+                    foreach (var nativeModule in reactPackage.CreateNativeModules(reactContext))
+                    {
+                        nativeRegistryBuilder.Add(nativeModule);
+                    }
+                }
+
+                return 0;
+            });
         }
 
         class ReactInstanceDevCommandsHandler : IReactInstanceDevCommandsHandler

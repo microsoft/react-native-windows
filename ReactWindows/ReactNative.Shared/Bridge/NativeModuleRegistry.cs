@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -302,7 +303,7 @@ namespace ReactNative.Bridge
         public sealed class Builder
         {
             private readonly IDictionary<string, INativeModule> _modules = 
-                new Dictionary<string, INativeModule>();
+                new ConcurrentDictionary<string, INativeModule>();
 
             private readonly ReactContext _reactContext;
 
