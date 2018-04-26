@@ -459,7 +459,6 @@ namespace ReactNative.Accessibility
             s_treeContext.Value.ProcessedNodesCount++;
 #endif
 
-            //
             // Phase 1: set correct AV for the current node
             if (hideNodes)
             {
@@ -475,6 +474,7 @@ namespace ReactNative.Accessibility
 
                     case ImportantForAccessibility.Auto when hasLabelSet:
                     case ImportantForAccessibility.Yes:
+                    case ImportantForAccessibility.YesDontHideDescendants:
                         AutomationProperties.SetAccessibilityView(element, AccessibilityView.Content);
                         break;
 
@@ -484,11 +484,10 @@ namespace ReactNative.Accessibility
                         break;
 
                     default:
-                        throw new NotImplementedException("Can't reach here");
+                        throw new NotImplementedException($"Unknown ImportantForAccessibility value [{importantForAccessibilityProp}]");
                 }
             }
 
-            //
             // Phase 2: go down the tree after deciding how
             // We can follow dirty nodes (may be none) or traverse all
             // We can switch to "hiding nodes", to "unhiding nodes", or not switch at all.
@@ -522,7 +521,9 @@ namespace ReactNative.Accessibility
             // Phase 3: set name if needed (all children nodes have been updated by this point)
             if (traverseAllChildren || GetDirty(element))
             {
-                if (importantForAccessibilityProp == ImportantForAccessibility.Yes && !hasLabelSet)
+                if (!hasLabelSet
+                    && (importantForAccessibilityProp == ImportantForAccessibility.Yes
+                        || importantForAccessibilityProp == ImportantForAccessibility.YesDontHideDescendants))
                 {
                     // Set generated name
                     SetName(element, GenerateNameFromPeer(elementPeer));
@@ -637,6 +638,7 @@ namespace ReactNative.Accessibility
                         childResult = GenerateNameFromChildren(child.GetChildren());
                         break;
                     case ImportantForAccessibility.Yes:
+                    case ImportantForAccessibility.YesDontHideDescendants:
                     case ImportantForAccessibility.Auto:
                         // Priority order is: AccessiblityLabel (if React element), control-provided name, children.
                         label = isReactChild ? GetAccessibilityLabelProp(childElement) : null;

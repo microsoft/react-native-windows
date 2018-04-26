@@ -30,5 +30,12 @@ namespace ReactNative.Accessibility
         /// Hides the view and its subviews from the screen reader
         /// </summary>
         NoHideDescendants,
+
+        /// <summary>
+        /// If the accessibilityLabel is specified, it is announced; 
+        /// otherwise, the labels of its children are used. Let subviews
+        /// specify their own screen reader behavior.
+        /// </summary>
+        YesDontHideDescendants,
     }
 }
