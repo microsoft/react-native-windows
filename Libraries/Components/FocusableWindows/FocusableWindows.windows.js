@@ -87,7 +87,7 @@ class FocusableWindowsTemplate {
       'yes',
       'no',
       'no-hide-descendants',
-      'yes-dont-hide-descendants' // Windows only, not in ReactNative
+      'yes-dont-hide-descendants', // Windows only
     ]),
 
     /**
