@@ -215,7 +215,9 @@ function createFocusableComponent(Component: any) {
 
     _splitProps(props: Object) {
       this._focusableProps = {};
-      this._componentProps = {};
+      // Prevent the child (that is View in most of the cases) from being collapsed.
+      // Passed parameters can override this
+      this._componentProps = { collapsable: false };
 
       for (const key in props) {
         if (key in FocusableWindowsTemplate.focusablePropTypes) {
