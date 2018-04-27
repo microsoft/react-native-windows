@@ -10,7 +10,7 @@ using ReactNative.Modules.Core;
 namespace ReactNative.Modules.NetInfo
 {
     /// <summary>
-    /// Module that monitors and provides nformation about the connectivity
+    /// Module that monitors and provides information about the connectivity
     /// state of the device.
     /// </summary>
     public class NetInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
