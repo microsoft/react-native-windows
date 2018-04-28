@@ -30,6 +30,10 @@ namespace ReactNative.Accessibility
         /// <inheritdoc />
         protected override AutomationControlType GetAutomationControlTypeCore()
         {
+            if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
+            {
+                return AutomationControlType.ListItem;
+            }
             if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
             {
                 return AutomationControlType.Button;
@@ -44,6 +48,10 @@ namespace ReactNative.Accessibility
                 && Owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
             {
                 return this;
+            }
+            if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
+            {
+                return base.GetPatternCore(patternInterface);
             }
             return null;
         }
