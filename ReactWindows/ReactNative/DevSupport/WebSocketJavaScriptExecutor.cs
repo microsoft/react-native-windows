@@ -142,7 +142,7 @@ namespace ReactNative.DevSupport
         {
         }
 
-        public void SetGlobalVariable(string propertyName, string value)
+        public void SetGlobalVariable(string propertyName, JToken value)
         {
             _injectedObjects.Add(propertyName, value);
         }

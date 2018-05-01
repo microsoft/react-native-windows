@@ -70,17 +70,13 @@ namespace ReactNative.Bridge
             ProcessResponse(response, true);
         }
 
-        /// <summary>
-        /// Sets a global JavaScript variable.
-        /// </summary>
-        /// <param name="propertyName">The property name.</param>
-        /// <param name="jsonEncodedArgument">The JSON-encoded value.</param>
-        public void SetGlobalVariable(string propertyName, string jsonEncodedArgument)
+        /// <inheritdoc cref="IReactBridge"/>
+        public void SetGlobalVariable(string propertyName, JToken value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
 
-            _jsExecutor.SetGlobalVariable(propertyName, jsonEncodedArgument);
+            _jsExecutor.SetGlobalVariable(propertyName, value);
         }
 
         /// <summary>

@@ -179,28 +179,18 @@ namespace ReactNative.Bridge
             QueueConfiguration.Dispose();
         }
 
-        private string BuildModulesConfig()
+        private JToken BuildModulesConfig()
         {
-            var stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-            try
+            var writer = new JTokenWriter();
+            using (writer)
             {
-                using (var writer = new JsonTextWriter(stringWriter))
-                {
-                    writer.WriteStartObject();
-                    writer.WritePropertyName("remoteModuleConfig");
-                    _registry.WriteModuleDescriptions(writer);
-                    writer.WriteEndObject();
-                }
+                writer.WriteStartObject();
+                writer.WritePropertyName("remoteModuleConfig");
+                _registry.WriteModuleDescriptions(writer);
+                writer.WriteEndObject();
+            }
 
-                return stringWriter.ToString();
-            }
-            finally
-            {
-                if (stringWriter != null)
-                {
-                    stringWriter.Dispose();
-                }
-            }
+            return writer.Token;
         }
 
         public sealed class Builder

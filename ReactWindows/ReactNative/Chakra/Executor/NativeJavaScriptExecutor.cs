@@ -195,7 +195,7 @@ namespace ReactNative.Chakra.Executor
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        public void SetGlobalVariable(string propertyName, string value)
+        public void SetGlobalVariable(string propertyName, JToken value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
@@ -203,7 +203,7 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(value));
 
             Native.ThrowIfError(
-                (JavaScriptErrorCode)_executor.SetGlobalVariable(propertyName, value));
+                (JavaScriptErrorCode)_executor.SetGlobalVariable(propertyName, value.ToString(Formatting.None)));
         }
     }
 }
