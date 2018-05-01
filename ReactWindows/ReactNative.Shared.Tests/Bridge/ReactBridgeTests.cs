@@ -9,6 +9,7 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -166,7 +167,7 @@ namespace ReactNative.Tests.Bridge
         public void ReactBridge_ValidJavaScriptResponse()
         {
             var responses = new[]
-{
+            {
                 JToken.Parse("null"),
                 JToken.Parse("undefined"),
                 JArray.Parse("[[],[],[]]"),
@@ -194,6 +195,301 @@ namespace ReactNative.Tests.Bridge
                 }
 
                 Assert.AreEqual(n, count);
+            }
+        }
+
+        [Test]
+        public async Task SingleReturnCallNoArgs()
+        {
+            var jsText = "[[7],[3],[[]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(0));
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public async Task StringReturn()
+        {
+            var jsText = "[[0],[0],[[\"foobar\"]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(1));
+                        Assert.That(arguments[0].Type, Is.EqualTo(JTokenType.String));
+                        Assert.That(arguments[0].Value<string>(), Is.EqualTo("foobar"));
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public async Task NumberReturn()
+        {
+            var jsText = "[[0],[0],[[42.16]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(1));
+                        Assert.That(arguments[0].Type, Is.EqualTo(JTokenType.Float));
+                        Assert.That(arguments[0].Value<double>(), Is.EqualTo(42.16));
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public async Task BoolReturn()
+        {
+            var jsText = "[[0],[0],[[false]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(1));
+                        Assert.That(arguments[0].Type, Is.EqualTo(JTokenType.Boolean));
+                        Assert.That(arguments[0].Value<bool>(), Is.False);
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public async Task NullReturn()
+        {
+            var jsText = "[[0],[0],[[null]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(1));
+                        Assert.That(arguments[0].Type, Is.EqualTo(JTokenType.Null));
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public async Task MapReturn()
+        {
+            var jsText = "[[0],[0],[[{\"foo\": \"hello\", \"bar\": 4.2, \"baz\": true}]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(1));
+                        Assert.That(arguments[0].Type, Is.EqualTo(JTokenType.Object));
+                        Assert.That(arguments[0]["foo"].Value<string>(), Is.EqualTo("hello"));
+                        Assert.That(arguments[0]["bar"].Value<double>(), Is.EqualTo(4.2));
+                        Assert.That(arguments[0]["baz"].Value<bool>(), Is.EqualTo(true));
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public async Task ArrayReturn()
+        {
+            var jsText = "[[0],[0],[[[\"foo\", 4.2, false]]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(1));
+                        Assert.That(arguments[0].Type, Is.EqualTo(JTokenType.Array));
+                        Assert.That(arguments[0].Count(), Is.EqualTo(3));
+                        Assert.That(arguments[0][0].Value<string>, Is.EqualTo("foo"));
+                        Assert.That(arguments[0][1].Value<double>(), Is.EqualTo(4.2));
+                        Assert.That(arguments[0][2].Value<bool>(), Is.False);
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public async Task ReturnMultipleParams()
+        {
+            var jsText = "[[0],[0],[[\"foo\", 14, null, false]]]";
+            var response = JToken.Parse(jsText);
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+
+            using (var nativeThread = CreateNativeModulesThread())
+            {
+                var executor = new MockJavaScriptExecutor
+                {
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) => response
+                };
+
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, arguments) =>
+                    {
+                        ++called;
+                        Assert.That(arguments.Count, Is.EqualTo(4));
+                        Assert.That(arguments[0].Type, Is.EqualTo(JTokenType.String));
+                        Assert.That(arguments[1].Type, Is.EqualTo(JTokenType.Integer));
+                        Assert.That(arguments[2].Type, Is.EqualTo(JTokenType.Null));
+                        Assert.That(arguments[3].Type, Is.EqualTo(JTokenType.Boolean));
+                        Assert.That(arguments[0].Value<string>, Is.EqualTo("foo"));
+                        Assert.That(arguments[1].Value<int>(), Is.EqualTo(14));
+                        Assert.That(arguments[3].Value<bool>(), Is.False);
+                    },
+                    OnBatchCompleteHandler = () => countdownEvent.Signal()
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
+
+                bridge.CallFunction("module", "method", new JArray());
+
+                await Task.Run(new Action(countdownEvent.Wait));
+                Assert.That(called, Is.EqualTo(1));
             }
         }
 
