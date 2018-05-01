@@ -7,23 +7,27 @@
 
 struct SerializedSourceContext
 {
-    HANDLE fileHandle;
-    HANDLE mapHandle;
-    BYTE* byteBuffer;
-    wchar_t* scriptBuffer;
+	HANDLE fileHandle;
+	HANDLE mapHandle;
+	BYTE* byteBuffer;
+	wchar_t* scriptBuffer;
 
-    ~SerializedSourceContext()
-    {
-        if (fileHandle != NULL)
-        {
-            UnmapViewOfFile(byteBuffer);
-            CloseHandle(mapHandle);
-            CloseHandle(fileHandle);
-        }
-        else
-        {
-            delete[] byteBuffer;
-        }
-        delete[] scriptBuffer;
-    }
+	void Dispose()
+	{
+		if (fileHandle != NULL)
+		{
+			UnmapViewOfFile(byteBuffer);
+			CloseHandle(mapHandle);
+			CloseHandle(fileHandle);
+			fileHandle = NULL;
+		}
+
+		delete[] scriptBuffer;
+		scriptBuffer = NULL;
+	}
+
+	~SerializedSourceContext()
+	{
+		Dispose();
+	}
 };
