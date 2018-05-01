@@ -364,7 +364,7 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     }
     else
     {
-        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, false));
+        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, true));
     }
 
     SerializedSourceContext* context = new SerializedSourceContext();
