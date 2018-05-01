@@ -12,6 +12,7 @@ using ReactNative.Views.Web.Events;
 using ReactNativeWebViewBridge;
 using System;
 using System.Collections.Concurrent;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using static System.FormattableString;
@@ -73,6 +74,24 @@ namespace ReactNative.Views.Web
                     { "postMessage", CommandPostMessage },
                     { "injectJavaScript", CommandInjectJavaScript },
                 };
+            }
+        }
+
+        /// <summary>
+        /// Sets the background color for the <see cref="WebView"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
+        public void SetBackgroundColor(WebView view, uint? color)
+        {
+            if (color.HasValue) {
+                var parsedColor = ColorHelpers.Parse(color.Value);
+                // "style={{ backgroundColor: 'transparent' }}" gives #00000000,
+                // but we need #00FFFFFF to make the background color transparent
+                view.DefaultBackgroundColor = parsedColor.A == 0 ? Colors.Transparent : parsedColor;
+            } else {
+                view.DefaultBackgroundColor = Colors.White;
             }
         }
 
