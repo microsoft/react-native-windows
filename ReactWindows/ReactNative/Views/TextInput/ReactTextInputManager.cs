@@ -676,8 +676,8 @@ namespace ReactNative.Views.TextInput
             view.TextChanged += OnTextChanged;
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
-            view.KeyDown += OnKeyDown;
             view.KeyUp += OnKeyUp;
+            view.KeyDown += OnKeyDown;
         }
 
         private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -759,17 +759,14 @@ namespace ReactNative.Views.TextInput
         private void OnKeyUp(object sender, KeyRoutedEventArgs e)
         {
             var textBox = (ReactTextBox)sender;
-            if (!e.Handled)
-            {
-                textBox.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new KeyEvent(
-                            KeyEvent.KeyUpEventString,
-                            textBox.GetTag(),
-                            e.Key));
-            }
+            textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new KeyEvent(
+                        KeyEvent.KeyUpEventString,
+                        textBox.GetTag(),
+                        e.Key));
         }
     }
 }

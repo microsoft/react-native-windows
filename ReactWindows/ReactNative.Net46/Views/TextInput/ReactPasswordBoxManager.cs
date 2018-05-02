@@ -373,6 +373,7 @@ namespace ReactNative.Views.TextInput
             view.PasswordChanged += OnPasswordChanged;
             view.GotFocus += OnGotFocus;
             view.LostFocus += OnLostFocus;
+            view.KeyUp += OnKeyUp;
             view.KeyDown += OnKeyDown;
         }
 
@@ -387,6 +388,7 @@ namespace ReactNative.Views.TextInput
         {
             base.OnDropViewInstance(reactContext, view);
             view.KeyDown -= OnKeyDown;
+            view.KeyUp -= OnKeyUp;
             view.LostFocus -= OnLostFocus;
             view.GotFocus -= OnGotFocus;
             view.PasswordChanged -= OnPasswordChanged;
@@ -469,6 +471,19 @@ namespace ReactNative.Views.TextInput
                             textBox.GetTag(),
                             e.Key));
             }
+        }
+
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            var textBox = (PasswordBox)sender;
+            textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new KeyEvent(
+                        KeyEvent.KeyUpEventString,
+                        textBox.GetTag(),
+                        e.Key));
         }
     }
 }
