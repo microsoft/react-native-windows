@@ -86,10 +86,7 @@ namespace ReactNative.Views.Web
         public void SetBackgroundColor(WebView view, uint? color)
         {
             if (color.HasValue) {
-                var parsedColor = ColorHelpers.Parse(color.Value);
-                // "style={{ backgroundColor: 'transparent' }}" gives #00000000,
-                // but we need #00FFFFFF to make the background color transparent
-                view.DefaultBackgroundColor = parsedColor.A == 0 ? Colors.Transparent : parsedColor;
+                view.DefaultBackgroundColor = ColorHelpers.Parse(color.Value);
             } else {
                 view.DefaultBackgroundColor = Colors.White;
             }
