@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using NUnit.Framework;
@@ -31,13 +31,12 @@ namespace ReactNative.Tests
         [Apartment(ApartmentState.STA)]
         public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
         {
-            var tcs = new TaskCompletionSource<T>();
+            var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await RunOnDispatcherAsync(() =>
             {
                 var result = func();
-
-                Task.Run(() => tcs.SetResult(result));
+                tcs.SetResult(result);
             }).ConfigureAwait(false);
 
             return await tcs.Task.ConfigureAwait(false);
@@ -45,12 +44,12 @@ namespace ReactNative.Tests
 
         public static async Task CallOnDispatcherAsync(Func<Task> asyncFunc)
         {
-            var tcs = new TaskCompletionSource<bool>();
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await RunOnDispatcherAsync(async () =>
             {
                 await asyncFunc();
-                await Task.Run(() => tcs.SetResult(true));
+                tcs.SetResult(true);
             }).ConfigureAwait(false);
 
             await tcs.Task.ConfigureAwait(false);

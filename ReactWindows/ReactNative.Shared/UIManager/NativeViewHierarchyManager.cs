@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -31,9 +32,9 @@ namespace ReactNative.UIManager
     /// corresponding instances of <see cref="IViewManager"/>. The 
     /// <see cref="UIManagerModule"/> communicates with this class by it's
     /// public interface methods:
-    /// - <see cref="UpdateProperties(int, ReactStylesDiffMap)"/>
+    /// - <see cref="UpdateProps(int, JObject)"/>
     /// - <see cref="UpdateLayout(int, int, Dimensions)"/>
-    /// - <see cref="CreateView(ThemedReactContext, int, string, ReactStylesDiffMap)"/>
+    /// - <see cref="CreateView(ThemedReactContext, int, string, JObject)"/>
     /// - <see cref="ManageChildren(int, int[], ViewAtIndex[], int[])"/>
     /// executing all the scheduled operations at the end of the JavaScript batch.
     /// </summary>
@@ -59,7 +60,7 @@ namespace ReactNative.UIManager
     public class NativeViewHierarchyManager
     {
         private readonly IDictionary<int, IViewManager> _tagsToViewManagers;
-        private readonly IDictionary<int, DependencyObject> _tagsToViews;
+        private readonly IDictionary<int, object> _tagsToViews;
         private readonly IDictionary<int, bool> _rootTags;
         private readonly ViewManagerRegistry _viewManagers;
         private readonly RootViewManager _rootViewManager;
@@ -114,7 +115,7 @@ namespace ReactNative.UIManager
         {
             _viewManagers = viewManagers;
             _layoutAnimator = new LayoutAnimationController();
-            _tagsToViews = new Dictionary<int, DependencyObject>();
+            _tagsToViews = new Dictionary<int, object>();
             _tagsToViewManagers = new Dictionary<int, IViewManager>();
             _rootTags = new Dictionary<int, bool>();
             _rootViewManager = new RootViewManager();
@@ -134,16 +135,16 @@ namespace ReactNative.UIManager
         }
         
         /// <summary>
-        /// Updates the properties of the view with the given tag.
+        /// Updates the props of the view with the given tag.
         /// </summary>
         /// <param name="tag">The view tag.</param>
-        /// <param name="props">The properties.</param>
-        public void UpdateProperties(int tag, ReactStylesDiffMap props)
+        /// <param name="props">The props.</param>
+        public void UpdateProps(int tag, JObject props)
         {
             AssertOnCorrectDispatcher();
             var viewManager = ResolveViewManager(tag);
             var viewToUpdate = ResolveView(tag);
-            viewManager.UpdateProperties(viewToUpdate, props);
+            viewManager.UpdateProps(viewToUpdate, props);
         }
 
         /// <summary>
@@ -196,8 +197,8 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The context.</param>
         /// <param name="tag">The tag.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="initialProperties">The properties.</param>
-        public void CreateView(ThemedReactContext themedContext, int tag, string className, ReactStylesDiffMap initialProperties)
+        /// <param name="initialProps">The initial props.</param>
+        public void CreateView(ThemedReactContext themedContext, int tag, string className, JObject initialProps)
         {
             AssertOnCorrectDispatcher();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_VIEW, "NativeViewHierarcyManager.CreateView")
@@ -209,15 +210,20 @@ namespace ReactNative.UIManager
                 var view = viewManager.CreateView(themedContext);
                 _tagsToViews.Add(tag, view);
                 _tagsToViewManagers.Add(tag, viewManager);
-
-                // Uses an extension method and `Tag` property on 
-                // DependencyObject to store the tag of the view.
-                view.SetTag(tag);
-                view.SetReactContext(themedContext);
-
-                if (initialProperties != null)
+              
+                ViewExtensions.SetTag(view, tag);
+                ViewExtensions.SetReactContext(view, themedContext);
+              
+#if WINDOWS_UWP
+                if (view is UIElement element)
                 {
-                    viewManager.UpdateProperties(view, initialProperties);
+                    AccessibilityHelper.OnViewInstanceCreated(element);
+                }
+#endif
+
+                if (initialProps != null)
+                {
+                    viewManager.UpdateProps(view, initialProps);
                 }
             }
         }
@@ -234,11 +240,15 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Clears out the <see cref="LayoutAnimationController"/>.
+        /// Clears out the <see cref="LayoutAnimationController"/> and processes accessibility changes
         /// </summary>
-        public void ClearLayoutAnimation()
+        public void OnBatchComplete()
         {
             _layoutAnimator.Reset();
+
+#if WINDOWS_UWP
+            AccessibilityHelper.OnBatchComplete();
+#endif
         }
 
         /// <summary>
@@ -325,11 +335,10 @@ namespace ReactNative.UIManager
                             Invariant($"Trying to destroy unknown view tag '{tagToDelete}'."));
                     }
 
-                    if (viewToDestroy is FrameworkElement elementToDestroy &&
-                        _layoutAnimator.ShouldAnimateLayout(elementToDestroy))
+                    if (_layoutAnimator.ShouldAnimateLayout(viewToDestroy))
                     {
                         var viewToDestroyManager = ResolveViewManager(tagToDelete);
-                        _layoutAnimator.DeleteView(viewToDestroyManager, elementToDestroy, () =>
+                        _layoutAnimator.DeleteView(viewToDestroyManager, viewToDestroy, () =>
                         {
                             if (viewParentManager.TryRemoveView(viewToManage, viewToDestroy))
                             {
@@ -388,6 +397,13 @@ namespace ReactNative.UIManager
             DropView(rootView);
             _rootTags.Remove(rootViewTag);
 
+#if WINDOWS_UWP
+            if (rootView is UIElement element)
+            {
+                AccessibilityHelper.OnRootViewRemoved(element);
+            }
+#endif
+
             _deletedTagsBatchReporter.Send();
         }
 
@@ -411,7 +427,9 @@ namespace ReactNative.UIManager
                     Invariant($"Could not find view manager for tag '{tag}."));
             }
 
-            var rootView = RootViewHelper.GetRootView(view);
+            // TODO: can we get the relative coordinates without conversion?
+            var uiElement = ViewConversion.GetDependencyObject<UIElement>(view);
+            var rootView = RootViewHelper.GetRootView(uiElement);
             if (rootView == null)
             {
                 throw new InvalidOperationException(
@@ -419,7 +437,6 @@ namespace ReactNative.UIManager
             }
 
             // TODO: better way to get relative position?
-            var uiElement = view.As<UIElement>();
             var rootTransform = uiElement.TransformToVisual(rootView);
 #if WINDOWS_UWP
             var positionInRoot = rootTransform.TransformPoint(new Point(0, 0));
@@ -427,7 +444,7 @@ namespace ReactNative.UIManager
             var positionInRoot = rootTransform.Transform(new Point(0, 0));
 #endif
 
-            var dimensions = viewManager.GetDimensions(uiElement);
+            var dimensions = viewManager.GetDimensions(view);
             outputBuffer[0] = positionInRoot.X;
             outputBuffer[1] = positionInRoot.Y;
             outputBuffer[2] = dimensions.Width;
@@ -454,7 +471,7 @@ namespace ReactNative.UIManager
                     Invariant($"Could not find view manager for tag '{tag}."));
             }
 
-            var uiElement = view.As<UIElement>();
+            var uiElement = ViewConversion.GetDependencyObject<UIElement>(view);
 #if WINDOWS_UWP
             var windowTransform = uiElement.TransformToVisual(Window.Current.Content);
             var positionInWindow = windowTransform.TransformPoint(new Point(0, 0));
@@ -463,7 +480,7 @@ namespace ReactNative.UIManager
             var positionInWindow = windowTransform.Transform(new Point(0, 0));
 #endif
 
-            var dimensions = viewManager.GetDimensions(uiElement);
+            var dimensions = viewManager.GetDimensions(view);
             outputBuffer[0] = positionInWindow.X;
             outputBuffer[1] = positionInWindow.Y;
             outputBuffer[2] = dimensions.Width;
@@ -496,7 +513,7 @@ namespace ReactNative.UIManager
                     Invariant($"Could not find view with tag '{reactTag}'."));
             }
 
-            var uiElement = view.As<UIElement>();
+            var uiElement = ViewConversion.GetDependencyObject<UIElement>(view);
 #if WINDOWS_UWP
             var target = VisualTreeHelper.FindElementsInHostCoordinates(new Point(touchX, touchY), uiElement)
 #else
@@ -598,7 +615,7 @@ namespace ReactNative.UIManager
         /// Resolves a view.
         /// </summary>
         /// <param name="tag">The tag of the view.</param>
-        public DependencyObject ResolveView(int tag)
+        public object ResolveView(int tag)
         {
             if (!_tagsToViews.TryGetValue(tag, out var view))
             {
@@ -643,20 +660,24 @@ namespace ReactNative.UIManager
             _tagsToViews.Add(tag, view);
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
-            view.SetTag(tag);
-            view.SetReactContext(themedContext);
+
+            ViewExtensions.SetTag(view, tag);
+            ViewExtensions.SetReactContext(view, themedContext);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnRootViewAdded(view);
+#endif
         }
 
-        private void DropView(DependencyObject view)
+        private void DropView(object view)
         {
             AssertOnCorrectDispatcher();
 
-            var tag = view.GetTag();
+            var tag = ViewExtensions.GetTag(view);
             if (!_rootTags.ContainsKey(tag))
             {
                 // For non-root views, we notify the view manager with `OnDropViewInstance`
                 var mgr = ResolveViewManager(tag);
-                mgr.OnDropViewInstance(view.GetReactContext(), view);
+                mgr.OnDropViewInstance(ViewExtensions.GetReactContext(view), view);
             }
 
             if (_tagsToViewManagers.TryGetValue(tag, out var viewManager))
@@ -676,18 +697,25 @@ namespace ReactNative.UIManager
                 }
             }
 
+#if WINDOWS_UWP
+            if (view is UIElement element)
+            {
+                AccessibilityHelper.OnDropViewInstance(element);
+            }
+#endif
+
             _tagsToViews.Remove(tag);
             _tagsToViewManagers.Remove(tag);
-            view.ClearData();
+            ViewExtensions.ClearData(view);
 
             _deletedTagsBatchReporter.Report(tag);
         }
 
-        private void UpdateLayout(DependencyObject viewToUpdate, IViewManager viewManager, Dimensions dimensions)
+        private void UpdateLayout(object viewToUpdate, IViewManager viewManager, Dimensions dimensions)
         {
-            if (viewToUpdate is FrameworkElement frameworkElement && _layoutAnimator.ShouldAnimateLayout(frameworkElement))
+            if (_layoutAnimator.ShouldAnimateLayout(viewToUpdate))
             {
-                _layoutAnimator.ApplyLayoutUpdate(viewManager, frameworkElement, dimensions);
+                _layoutAnimator.ApplyLayoutUpdate(viewManager, viewToUpdate, dimensions);
             }
             else
             {

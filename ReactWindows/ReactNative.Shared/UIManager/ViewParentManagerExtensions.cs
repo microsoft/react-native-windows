@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -25,7 +25,7 @@ namespace ReactNative.UIManager
         /// <returns>
         /// <code>true</code> if a view is removed, <code>false</code> otherwise.
         /// </returns>
-        public static bool TryRemoveView(this IViewParentManager viewManager, DependencyObject parent, DependencyObject view)
+        public static bool TryRemoveView(this IViewParentManager viewManager, object parent, object view)
         {
             for (var i = 0; i < viewManager.GetChildCount(parent); ++i)
             {

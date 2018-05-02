@@ -24,20 +24,13 @@ namespace ReactNative.Tests.Bridge
                 () => new CallbackNotSupportedNativeModule(),
                 () => new CallbackNotSupportedNativeModule2(),
                 () => new PromiseNotSupportedNativeModule(),
-                () => new AsyncCallbackNotSupportedNativeModule(),
-                () => new AsyncPromiseNotSupportedNativeModule(),
+                () => new AsyncNotSupportedNativeModule(),
             };
 
             foreach (var action in actions)
             {
                 AssertEx.Throws<NotSupportedException>(action);
             }
-        }
-
-        [Test]
-        public void NativeModuleBase_ReactMethod_Async_ThrowsNotImplemented()
-        {
-            AssertEx.Throws<NotImplementedException>(() => new AsyncNotImplementedNativeModule());
         }
 
         [Test]
@@ -384,41 +377,7 @@ namespace ReactNative.Tests.Bridge
             public void Foo(IPromise promise, int foo) { }
         }
 
-        class AsyncCallbackNotSupportedNativeModule : NativeModuleBase
-        {
-            public override string Name
-            {
-                get
-                {
-                    return "Test";
-                }
-            }
-
-            [ReactMethod]
-            public Task Foo(ICallback callback)
-            {
-                return Task.CompletedTask;
-            }
-        }
-
-        class AsyncPromiseNotSupportedNativeModule : NativeModuleBase
-        {
-            public override string Name
-            {
-                get
-                {
-                    return "Test";
-                }
-            }
-
-            [ReactMethod]
-            public Task Foo(IPromise promise)
-            {
-                return Task.CompletedTask;
-            }
-        }
-
-        class AsyncNotImplementedNativeModule : NativeModuleBase
+        class AsyncNotSupportedNativeModule : NativeModuleBase
         {
             public override string Name
             {

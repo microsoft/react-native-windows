@@ -32,6 +32,8 @@ namespace ReactNative.Chakra.Executor
 
         private JavaScriptNativeFunction _nativeLoggingHook;
         private JavaScriptNativeFunction _nativeRequire;
+        private JavaScriptNativeFunction _nativeCallSyncHook;
+        private JavaScriptNativeFunction _nativeFlushQueueImmediate;
 
         private JavaScriptValue _globalObject;
 
@@ -43,6 +45,9 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue _parseFunction;
         private JavaScriptValue _stringifyFunction;
 #endif
+
+        private Func<int, int, JArray, JToken> _callSyncHook;
+        private Action<JToken> _flushQueueImmediate;
 
         /// <summary>
         /// Instantiates the <see cref="ChakraJavaScriptExecutor"/>.
@@ -171,7 +176,7 @@ namespace ReactNative.Chakra.Executor
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
@@ -198,6 +203,24 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+            _callSyncHook = callSyncHook;
+        }
+
+        /// <summary>
+        /// Sets a callback for immediate queue flushes.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            _flushQueueImmediate = flushQueueImmediate;
+        }
+
+        /// <summary>
         /// Disposes the <see cref="ChakraJavaScriptExecutor"/> instance.
         /// </summary>
         public void Dispose()
@@ -214,6 +237,18 @@ namespace ReactNative.Chakra.Executor
             EnsureGlobalObject().SetProperty(
                 JavaScriptPropertyId.FromString("nativeLoggingHook"),
                 JavaScriptValue.CreateFunction(_nativeLoggingHook),
+                true);
+
+            _nativeCallSyncHook = NativeCallSyncHook;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeCallSyncHook"),
+                JavaScriptValue.CreateFunction(_nativeCallSyncHook),
+                true);
+
+            _nativeFlushQueueImmediate = NativeFlushQueueImmediate;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeFlushQueueImmediate"),
+                JavaScriptValue.CreateFunction(_nativeFlushQueueImmediate),
                 true);
         }
 
@@ -249,6 +284,11 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue ConvertJson(JToken token)
         {
             var jsonString = token.ToString(Formatting.None);
+            return ConvertJson(jsonString);
+        }
+
+        private JavaScriptValue ConvertJson(string jsonString)
+        {
             var jsonStringValue = JavaScriptValue.FromString(jsonString);
             jsonStringValue.AddRef();
             var parseFunction = EnsureParseFunction();
@@ -290,6 +330,56 @@ namespace ReactNative.Chakra.Executor
             }
 
             return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Flush Queue Immediate Hook
+        private JavaScriptValue NativeFlushQueueImmediate(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly two arguments (global, flushedQueue)");
+            }
+
+            if (_flushQueueImmediate == null)
+            {
+                throw new InvalidOperationException("Callback hook for `nativeFlushQueueImmediate` has not been set.");
+            }
+
+            _flushQueueImmediate(ConvertJson(arguments[1]));
+
+            return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Call Sync Hook
+        private JavaScriptValue NativeCallSyncHook(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly four arguments (global, moduleId, methodId, and args).");
+            }
+
+            if (_callSyncHook == null)
+            {
+                throw new InvalidOperationException("Sync hook has not been set.");
+            }
+
+            var moduleId = (int)arguments[1].ToDouble();
+            var methodId = (int)arguments[2].ToDouble();
+            var args = (JArray)ConvertJson(arguments[3]);
+            var result = _callSyncHook(moduleId, methodId, args);
+            return ConvertJson(result);
         }
         #endregion
 

@@ -38,7 +38,7 @@ namespace ReactNative.UIManager
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
-        private readonly ReactChoreographer _reactChoreographer;
+        private readonly IReactChoreographer _reactChoreographer;
 
         private readonly IList<Action> _nonBatchedOperations = new List<Action>();
 
@@ -55,7 +55,7 @@ namespace ReactNative.UIManager
         /// <param name="reactChoreographer">
         /// The choreographer associated with this instance.
         /// </param>
-        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChoreographer)
+        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, IReactChoreographer reactChoreographer)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;
@@ -177,12 +177,12 @@ namespace ReactNative.UIManager
         /// <param name="themedContext">The React context.</param>
         /// <param name="viewReactTag">The view React tag.</param>
         /// <param name="viewClassName">The view class name.</param>
-        /// <param name="initialProps">The initial properties.</param>
+        /// <param name="initialProps">The initial props.</param>
         public void EnqueueCreateView(
             ThemedReactContext themedContext,
             int viewReactTag,
             string viewClassName,
-            ReactStylesDiffMap initialProps)
+            JObject initialProps)
         {
             lock (_nonBatchedGate)
             {
@@ -210,15 +210,15 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues an operation to update the properties of a view.
+        /// Enqueues an operation to update the props of a view.
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="props">The properties.</param>
-        public void EnqueueUpdateProperties(int tag, string className, ReactStylesDiffMap props)
+        /// <param name="props">The props.</param>
+        public void EnqueueUpdateProps(int tag, string className, JObject props)
         {
             EnqueueOperation(() =>
-                _nativeViewHierarchyManager.UpdateProperties(tag, props));
+                _nativeViewHierarchyManager.UpdateProps(tag, props));
         }
 
         /// <summary>
@@ -341,6 +341,9 @@ namespace ReactNative.UIManager
             {
                 try
                 {
+                    _nativeViewHierarchyManager.MeasureInWindow(reactTag, _measureBuffer);
+                    targetX += (double)_measureBuffer[0];
+                    targetY += (double)_measureBuffer[1];
                     _nativeViewHierarchyManager.Measure(reactTag, _measureBuffer);
                 }
                 catch
@@ -451,7 +454,7 @@ namespace ReactNative.UIManager
                             }
                         }
 
-                        _nativeViewHierarchyManager.ClearLayoutAnimation();
+                        _nativeViewHierarchyManager.OnBatchComplete();
                     }
                 });
             }

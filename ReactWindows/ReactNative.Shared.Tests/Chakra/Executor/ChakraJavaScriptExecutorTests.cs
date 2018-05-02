@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -46,7 +46,7 @@ namespace ReactNative.Tests.Chakra.Executor
                 );
 
                 Assert.That(
-                    () => executor.SetGlobalVariable(null, new JArray()),
+                    () => executor.SetGlobalVariable(null, "[]"),
                     Throws.ArgumentNullException.With.Property("ParamName").EqualTo("propertyName")
                 );
 

@@ -88,7 +88,9 @@ namespace ReactNative.Touch
 
             var originalSource = e.OriginalSource as DependencyObject;
             var rootPoint = e.GetCurrentPoint(_view);
-            var reactView = GetReactViewTarget(originalSource, rootPoint.Position);
+            var transform = ((UIElement)sender).TransformToVisual(Window.Current.Content);
+            Point p = transform.TransformPoint(rootPoint.Position);
+            var reactView = GetReactViewTarget(originalSource, p);
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
                 var viewPoint = e.GetCurrentPoint(reactView);

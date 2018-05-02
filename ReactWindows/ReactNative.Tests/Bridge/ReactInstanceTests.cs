@@ -127,15 +127,10 @@ namespace ReactNative.Tests.Bridge
             };
 
             var exception = new Exception();
-            var tcs = new TaskCompletionSource<Exception>();
-            var handler = new Action<Exception>(ex =>
-            {
-                Task.Run(() => tcs.SetResult(ex));
-            });
-
+            var tcs = new TaskCompletionSource<Exception>(TaskCreationOptions.RunContinuationsAsynchronously);
             var builder = new ReactInstance.Builder()
             {
-                QueueConfiguration = TestReactQueueConfiguration.Create(handler),
+                QueueConfiguration = TestReactQueueConfiguration.Create(tcs.SetResult),
                 Registry = registry,
                 JavaScriptExecutorFactory = () => executor,
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),

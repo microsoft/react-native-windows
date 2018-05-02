@@ -3,10 +3,10 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace ReactNative.Modules.DeviceInfo
@@ -17,7 +17,7 @@ namespace ReactNative.Modules.DeviceInfo
     class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
         private readonly Window _window;
-        private readonly IReadOnlyDictionary<string, object> _constants;
+        private readonly JObject _constants;
 
         /// <summary>
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
@@ -27,7 +27,7 @@ namespace ReactNative.Modules.DeviceInfo
             : base(reactContext)
         {
             _window = Application.Current.MainWindow;
-            _constants = new Dictionary<string, object>
+            _constants = new JObject
             {
                 { "Dimensions", GetDimensions() },
             };
@@ -47,7 +47,7 @@ namespace ReactNative.Modules.DeviceInfo
         /// <summary>
         /// Native module constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
@@ -93,18 +93,18 @@ namespace ReactNative.Modules.DeviceInfo
                 .emit("didUpdateDimensions", GetDimensions());
         }
 
-        private IDictionary<string, object> GetDimensions()
+        private JObject GetDimensions()
         {
             return GetDimensions(DisplayMetrics.GetForCurrentView());
         }
 
-        private IDictionary<string, object> GetDimensions(DisplayMetrics displayMetrics)
+        private JObject GetDimensions(DisplayMetrics displayMetrics)
         {
-            return new Dictionary<string, object>
+            return new JObject
             {
                 {
                     "window",
-                    new Dictionary<string, object>
+                    new JObject
                     {
                         { "width", displayMetrics.Width },
                         { "height", displayMetrics.Height },

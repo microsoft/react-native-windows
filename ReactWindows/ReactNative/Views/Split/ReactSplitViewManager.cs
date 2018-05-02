@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -6,7 +6,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Split.Events;
 using System;
-using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using static System.FormattableString;
@@ -26,11 +25,11 @@ namespace ReactNative.Views.Split
             }
         }
 
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "openPane", OpenPane },
                     { "closePane", ClosePane },
@@ -38,22 +37,22 @@ namespace ReactNative.Views.Split
             }
         }
 
-        public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        public override JObject CustomDirectEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     {
                         SplitViewClosedEvent.EventNameValue,
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onSplitViewClose" },
                         }
                     },
                     {
                         SplitViewOpenedEvent.EventNameValue,
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onSplitViewOpen" },
                         }
@@ -62,15 +61,15 @@ namespace ReactNative.Views.Split
             }
         }
 
-        public override IReadOnlyDictionary<string, object> ExportedViewConstants
+        public override JObject ViewConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     {
                         "PanePositions",
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "Left", (int)SplitViewPanePlacement.Left },
                             { "Right", (int)SplitViewPanePlacement.Right },

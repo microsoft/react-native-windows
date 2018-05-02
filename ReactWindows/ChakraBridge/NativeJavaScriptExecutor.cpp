@@ -171,3 +171,13 @@ ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
     ChakraStringResult finalResult = { JsNoError, ref new String(szBuf, bufLen) };
     return finalResult;
 }
+
+void NativeJavaScriptExecutor::SetFlushQueueImmediate(FlushQueueImmediateHandler^ handler)
+{
+    host.SetFlushQueueImmediate(handler);
+}
+
+void NativeJavaScriptExecutor::SetCallSyncHook(CallSyncHandler^ handler)
+{
+    host.SetCallSyncHook(handler);
+}

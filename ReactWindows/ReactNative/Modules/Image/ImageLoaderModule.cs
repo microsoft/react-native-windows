@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Network;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -53,6 +54,35 @@ namespace ReactNative.Modules.Image
                     .ConfigureAwait(false);
 
                 promise.Resolve(true);
+            }
+            catch (Exception ex)
+            {
+                promise.Reject(ErrorPrefetchFailure, ex.Message);
+            }
+        }
+
+        [ReactMethod]
+        public async void prefetchImageAndGetCachedPath(string uriString, int requestId, IPromise promise)
+        {
+            if (string.IsNullOrEmpty(uriString))
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
+                return;
+            }
+
+            try
+            {
+                var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
+                var uri = new Uri(uriString);
+
+                await _prefetchRequests.AddAndInvokeAsync(
+                        requestId,
+                        async token =>
+                            await imagePipeline.PrefetchToDiskCacheAsync(uri, token).ConfigureAwait(false))
+                    .ConfigureAwait(false);
+
+                FileInfo file = await imagePipeline.GetFileCachePath(uri).ConfigureAwait(false);
+                promise.Resolve(file.FullName);
             }
             catch (Exception ex)
             {

@@ -6,6 +6,8 @@
 #include "pch.h"
 #include "ChakraHost.h"
 #include "ChakraStringResult.h"
+#include "CallSyncHandler.h"
+#include "FlushQueueImmediateHandler.h"
 
 using namespace Platform;
 
@@ -103,6 +105,16 @@ public:
     /// A compount result with the JSON stringified value and an error code if any occurred.
     /// </returns>
     ChakraStringResult FlushedQueue();
+
+    /// <summary>
+    /// Sets the flush queue immediately hook.
+    /// </summary>
+    void SetFlushQueueImmediate(FlushQueueImmediateHandler^ handler);
+
+    /// <summary>
+    /// Sets the sync native method hook.
+    /// </summary>
+    void SetCallSyncHook(CallSyncHandler^ handler);
 private:
     ChakraHost host;
 };

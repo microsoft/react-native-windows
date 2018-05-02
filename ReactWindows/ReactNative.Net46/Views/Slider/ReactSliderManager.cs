@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace ReactNative.Views.Slider
@@ -30,15 +30,15 @@ namespace ReactNative.Views.Slider
         /// <summary>
         /// The exported custom direct event types.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        public override JObject CustomDirectEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     {
                         "topSlidingComplete",
-                        new Dictionary<string, object>()
+                        new JObject
                         {
                             { "registrationName", "onSlidingComplete" },
                         }
