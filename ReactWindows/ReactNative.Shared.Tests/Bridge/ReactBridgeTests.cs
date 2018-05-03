@@ -18,6 +18,36 @@ namespace ReactNative.Tests.Bridge
     [TestFixture]
     public class ReactBridgeTests
     {
+        private JToken _response;
+        private List<(int moduleId, int methodId, JArray args)> _receivedCallbacks;
+        private AutoResetEvent _eventHandler;
+        private MockReactCallback _mockReactCallback;
+        private MockJavaScriptExecutor _mockJavaScriptExecutor;
+        private IActionQueue _nativeModulesQueueThread;
+        private ReactBridge _reactBridge;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _receivedCallbacks = new List<(int moduleId, int methodId, JArray args)>();
+            _eventHandler = new AutoResetEvent(false);
+
+            _mockReactCallback = new MockReactCallback
+            {
+                InvokeHandler = (moduleId, methodId, args) => _receivedCallbacks.Add((moduleId, methodId, args)),
+                OnBatchCompleteHandler = () => _eventHandler.Set(),
+            };
+
+            _mockJavaScriptExecutor = new MockJavaScriptExecutor
+            {
+                OnCallFunctionReturnFlushedQueue = (module, method, args) => _response
+            };
+
+            _nativeModulesQueueThread = CreateNativeModulesThread();
+
+            _reactBridge = new ReactBridge(_mockJavaScriptExecutor, _mockReactCallback, _nativeModulesQueueThread);
+        }
+
         [Test]
         public async Task ReactBridge_Ctor_ArgumentChecks()
         {
@@ -200,308 +230,127 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public void SingleReturnCallNoArgs()
         {
-            var jsText = "[[7],[3],[[]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[7],[3],[[]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args.Count, Is.EqualTo(0));
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void StringReturn()
         {
-            var jsText = "[[0],[0],[[\"foobar\"]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0],[0],[[\"foobar\"]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args[0].Type, Is.EqualTo(JTokenType.String));
-            Assert.That(callbacks[0].args[0].Value<string>(), Is.EqualTo("foobar"));
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.String));
+            Assert.That(_receivedCallbacks[0].args[0].Value<string>(), Is.EqualTo("foobar"));
         }
 
         [Test]
         public void NumberReturn()
         {
-            var jsText = "[[0],[0],[[42.16]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0],[0],[[42.16]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args[0].Type, Is.EqualTo(JTokenType.Float));
-            Assert.That(callbacks[0].args[0].Value<double>(), Is.EqualTo(42.16));
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Float));
+            Assert.That(_receivedCallbacks[0].args[0].Value<double>(), Is.EqualTo(42.16));
         }
 
         [Test]
         public void BoolReturn()
         {
-            var jsText = "[[0],[0],[[false]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0],[0],[[false]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args[0].Type, Is.EqualTo(JTokenType.Boolean));
-            Assert.That(callbacks[0].args[0].Value<bool>(), Is.EqualTo(false));
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Boolean));
+            Assert.That(_receivedCallbacks[0].args[0].Value<bool>(), Is.EqualTo(false));
         }
 
         [Test]
         public void NullReturn()
         {
-            var jsText = "[[0],[0],[[null]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0],[0],[[null]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args[0].Type, Is.EqualTo(JTokenType.Null));
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Null));
         }
 
         [Test]
         public void MapReturn()
         {
-            var jsText = "[[0],[0],[[{\"foo\": \"hello\", \"bar\": 4.2, \"baz\": true}]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0],[0],[[{\"foo\": \"hello\", \"bar\": 4.2, \"baz\": true}]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args[0].Type, Is.EqualTo(JTokenType.Object));
-            Assert.That(callbacks[0].args[0]["foo"].Value<string>(), Is.EqualTo("hello"));
-            Assert.That(callbacks[0].args[0]["bar"].Value<double>(), Is.EqualTo(4.2));
-            Assert.That(callbacks[0].args[0]["baz"].Value<bool>(), Is.EqualTo(true));
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Object));
+            Assert.That(_receivedCallbacks[0].args[0]["foo"].Value<string>(), Is.EqualTo("hello"));
+            Assert.That(_receivedCallbacks[0].args[0]["bar"].Value<double>(), Is.EqualTo(4.2));
+            Assert.That(_receivedCallbacks[0].args[0]["baz"].Value<bool>(), Is.EqualTo(true));
         }
 
         [Test]
         public void ArrayReturn()
         {
-            var jsText = "[[0],[0],[[[\"foo\", 4.2, false]]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0],[0],[[[\"foo\", 4.2, false]]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args[0].Type, Is.EqualTo(JTokenType.Array));
-            Assert.That(callbacks[0].args[0].Count(), Is.EqualTo(3));
-            Assert.That(callbacks[0].args[0][0].Value<string>, Is.EqualTo("foo"));
-            Assert.That(callbacks[0].args[0][1].Value<double>(), Is.EqualTo(4.2));
-            Assert.That(callbacks[0].args[0][2].Value<bool>(), Is.False);
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Array));
+            Assert.That(_receivedCallbacks[0].args[0].Count(), Is.EqualTo(3));
+            Assert.That(_receivedCallbacks[0].args[0][0].Value<string>, Is.EqualTo("foo"));
+            Assert.That(_receivedCallbacks[0].args[0][1].Value<double>(), Is.EqualTo(4.2));
+            Assert.That(_receivedCallbacks[0].args[0][2].Value<bool>(), Is.False);
         }
 
         [Test]
         public void ReturnMultipleParams()
         {
-            var jsText = "[[0],[0],[[\"foo\", 14, null, false]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0],[0],[[\"foo\", 14, null, false]]]";
+            _response = JToken.Parse(jsText);
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(1));
-            Assert.That(callbacks[0].args.Count, Is.EqualTo(4));
-            Assert.That(callbacks[0].args[0].Type, Is.EqualTo(JTokenType.String));
-            Assert.That(callbacks[0].args[1].Type, Is.EqualTo(JTokenType.Integer));
-            Assert.That(callbacks[0].args[2].Type, Is.EqualTo(JTokenType.Null));
-            Assert.That(callbacks[0].args[3].Type, Is.EqualTo(JTokenType.Boolean));
-            Assert.That(callbacks[0].args[0].Value<string>, Is.EqualTo("foo"));
-            Assert.That(callbacks[0].args[1].Value<int>(), Is.EqualTo(14));
-            Assert.That(callbacks[0].args[3].Value<bool>(), Is.False);
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
+            Assert.That(_receivedCallbacks[0].args.Count, Is.EqualTo(4));
+            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.String));
+            Assert.That(_receivedCallbacks[0].args[1].Type, Is.EqualTo(JTokenType.Integer));
+            Assert.That(_receivedCallbacks[0].args[2].Type, Is.EqualTo(JTokenType.Null));
+            Assert.That(_receivedCallbacks[0].args[3].Type, Is.EqualTo(JTokenType.Boolean));
+            Assert.That(_receivedCallbacks[0].args[0].Value<string>, Is.EqualTo("foo"));
+            Assert.That(_receivedCallbacks[0].args[1].Value<int>(), Is.EqualTo(14));
+            Assert.That(_receivedCallbacks[0].args[3].Value<bool>(), Is.False);
         }
 
 
         [Test]
         public void ParseTwoCalls()
         {
-            var jsText = "[[0,0],[1,1],[[],[]]]";
-            var response = JToken.Parse(jsText);
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => response
-            };
+            const string jsText = "[[0,0],[1,1],[[],[]]]";
+            _response = JToken.Parse(jsText);
 
-            var callbacks = new List<(int moduleId, int methodId, JArray args)>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+            CallFunctionOnReactBridge();
 
-            var nativeThread = CreateNativeModulesThread();
-            var bridge = new ReactBridge(executor, callback, nativeThread);
-
-            using (nativeThread)
-            {
-                bridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(eventHandler.WaitOne());
-            }
-
-            Assert.That(callbacks.Count, Is.EqualTo(2));
+            Assert.That(_receivedCallbacks.Count, Is.EqualTo(2));
         }
 
         [Test]
@@ -647,6 +496,15 @@ namespace ReactNative.Tests.Bridge
             }
         }
 
+        private void CallFunctionOnReactBridge()
+        {
+            using (_nativeModulesQueueThread)
+            {
+                _reactBridge.CallFunction("module", "method", new JArray());
+
+                Assert.That(_eventHandler.WaitOne());
+            }
+        }
 
         private static IActionQueue CreateNativeModulesThread()
         {
