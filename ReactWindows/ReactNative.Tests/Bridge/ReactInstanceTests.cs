@@ -39,6 +39,8 @@ namespace ReactNative.Tests.Bridge
             };
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
+            var idleHandlerCalled = false;
+            instance.OnTransitionToBridgeIdleHandler = () => idleHandlerCalled = true;
             reactContext.InitializeWithInstance(instance);
 
             var actualModule = instance.GetNativeModule<TestNativeModule>();
@@ -49,6 +51,7 @@ namespace ReactNative.Tests.Bridge
             Assert.AreSame(firstJSModule, secondJSModule);
 
             await DispatcherHelpers.CallOnDispatcherAsync(instance.DisposeAsync);
+            Assert.IsTrue(idleHandlerCalled);
         }
 
         [TestMethod]
@@ -80,6 +83,8 @@ namespace ReactNative.Tests.Bridge
             };
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
+            var idleHandlerCalled = false;
+            instance.OnTransitionToBridgeIdleHandler = () => idleHandlerCalled = true;
             reactContext.InitializeWithInstance(instance);
             await DispatcherHelpers.RunOnDispatcherAsync(() => instance.Initialize());
 
@@ -102,6 +107,7 @@ namespace ReactNative.Tests.Bridge
 
             await DispatcherHelpers.CallOnDispatcherAsync(instance.DisposeAsync);
             Assert.AreEqual(1, module.OnReactInstanceDisposeCalls);
+            Assert.IsTrue(idleHandlerCalled);
 
             // Dispose is idempotent
             await DispatcherHelpers.CallOnDispatcherAsync(instance.DisposeAsync);
@@ -136,7 +142,9 @@ namespace ReactNative.Tests.Bridge
                 BundleLoader = JavaScriptBundleLoader.CreateFileLoader("ms-appx:///Resources/test.js"),
             };
 
+            var idleHandlerCalled = false;
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
+            instance.OnTransitionToBridgeIdleHandler = () => idleHandlerCalled = true;
             instance.QueueConfiguration.JavaScriptQueue.Dispatch(() =>
             {
                 throw exception;
@@ -147,6 +155,8 @@ namespace ReactNative.Tests.Bridge
 
             Assert.IsFalse(eventHandler.WaitOne(500));
             Assert.IsFalse(instance.IsDisposed);
+            Assert.IsFalse(idleHandlerCalled);
+
         }
 
         class TestNativeModule : NativeModuleBase

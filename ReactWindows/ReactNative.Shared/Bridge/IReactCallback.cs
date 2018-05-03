@@ -38,11 +38,11 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Increments counter that tracks pending JavaScript calls.
         /// </summary>
-        void IncrementPendingJSCalls();
+        void IncrementPendingBridgeCalls();
 
         /// <summary>
         /// Decrements counter that tracks pending JavaScript calls.
         /// </summary>
-        void DecrementPendingJSCalls();
+        void DecrementPendingBridgeCalls();
     }
 }

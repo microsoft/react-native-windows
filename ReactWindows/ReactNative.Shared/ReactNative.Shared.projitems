@@ -27,8 +27,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\StyleAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\TransitionToBridgeBusyCallback.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bridge\TransitionToBridgeIdleCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\GenericDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\GenericDelegateTypes.cs" />

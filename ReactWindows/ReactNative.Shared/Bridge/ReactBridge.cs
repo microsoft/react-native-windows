@@ -55,8 +55,8 @@ namespace ReactNative.Bridge
         /// <param name="arguments">The arguments.</param>
         public void CallFunction(string moduleName, string method, JArray arguments)
         {
+            _reactCallback.IncrementPendingBridgeCalls();
             var response = _jsExecutor.CallFunctionReturnFlushedQueue(moduleName, method, arguments);
-            _reactCallback.IncrementPendingJSCalls();
             ProcessResponse(response, true);
         }
 
@@ -67,8 +67,8 @@ namespace ReactNative.Bridge
         /// <param name="arguments">The arguments.</param>
         public void InvokeCallback(int callbackId, JArray arguments)
         {
+            _reactCallback.IncrementPendingBridgeCalls();
             var response = _jsExecutor.InvokeCallbackAndReturnFlushedQueue(callbackId, arguments);
-            _reactCallback.IncrementPendingJSCalls();
             ProcessResponse(response, true);
         }
 
@@ -97,7 +97,7 @@ namespace ReactNative.Bridge
             if (sourceUrl == null)
                 throw new ArgumentNullException(nameof(sourceUrl));
 
-            _reactCallback.IncrementPendingJSCalls();
+            _reactCallback.IncrementPendingBridgeCalls();
             _jsExecutor.RunScript(sourcePath, sourceUrl);
             var response = _jsExecutor.FlushedQueue();
             ProcessResponse(response, true);
@@ -126,7 +126,7 @@ namespace ReactNative.Bridge
             }
             catch (Exception)
             {
-                _reactCallback.DecrementPendingJSCalls();
+                _reactCallback.DecrementPendingBridgeCalls();
                 throw;
             }
 
@@ -148,7 +148,7 @@ namespace ReactNative.Bridge
                         _batchHadNativeModuleCalls = false;
                     }
 
-                    _reactCallback.DecrementPendingJSCalls();
+                    _reactCallback.DecrementPendingBridgeCalls();
                 }
             });
         }

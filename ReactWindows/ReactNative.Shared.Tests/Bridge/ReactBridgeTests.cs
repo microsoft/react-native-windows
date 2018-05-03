@@ -53,17 +53,17 @@ namespace ReactNative.Tests.Bridge
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
             {
-                using (var nativeThread = CreateNativeModulesThread())
+                using (_nativeModulesQueueThread)
                 {
                     var reactCallback = new MockReactCallback();
 
                     Assert.That(
-                        () => new ReactBridge(null, reactCallback, nativeThread),
+                        () => new ReactBridge(null, reactCallback, _nativeModulesQueueThread),
                         Throws.ArgumentNullException.With.Property("ParamName").EqualTo("executor")
                     );
 
                     Assert.That(
-                        () => new ReactBridge(executor, null, nativeThread),
+                        () => new ReactBridge(executor, null, _nativeModulesQueueThread),
                         Throws.ArgumentNullException.With.Property("ParamName").EqualTo("reactCallback")
                     );
 
@@ -80,10 +80,10 @@ namespace ReactNative.Tests.Bridge
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
             {
-                using (var nativeThread = CreateNativeModulesThread())
+                using (_nativeModulesQueueThread)
                 {
                     var reactCallback = new MockReactCallback();
-                    var bridge = new ReactBridge(executor, reactCallback, nativeThread);
+                    var bridge = new ReactBridge(executor, reactCallback, _nativeModulesQueueThread);
 
                     Assert.That(
                         () => bridge.SetGlobalVariable(null, null),
@@ -98,9 +98,9 @@ namespace ReactNative.Tests.Bridge
         {
             await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
             {
-                using (var nativeThread = CreateNativeModulesThread())
+                using (_nativeModulesQueueThread)
                 {
-                    var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
+                    var bridge = new ReactBridge(executor, new MockReactCallback(), _nativeModulesQueueThread);
                     var token = await jsQueueThread.RunAsync(() =>
                     {
                         bridge.CallFunction("module", "method", new JArray());
@@ -172,9 +172,9 @@ namespace ReactNative.Tests.Bridge
                 }
             };
 
-            using (var nativeThread = CreateNativeModulesThread())
+            using (_nativeModulesQueueThread)
             {
-                var bridge = new ReactBridge(executor, callback, nativeThread);
+                var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
                 bridge.CallFunction("module", "method", new JArray());
 
                 Assert.IsTrue(eventHandler.WaitOne());
@@ -205,7 +205,7 @@ namespace ReactNative.Tests.Bridge
             };
 
             var n = responses.Length;
-            using (var nativeThread = CreateNativeModulesThread())
+            using (_nativeModulesQueueThread)
             {
                 var count = 0;
                 var executor = new MockJavaScriptExecutor
@@ -216,7 +216,7 @@ namespace ReactNative.Tests.Bridge
                     }
                 };
 
-                var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
+                var bridge = new ReactBridge(executor, new MockReactCallback(), _nativeModulesQueueThread);
 
                 for (var i = 0; i < n; ++i)
                 {
@@ -382,7 +382,7 @@ namespace ReactNative.Tests.Bridge
             };
 
             var n = responses.Length;
-            using (var nativeThread = CreateNativeModulesThread())
+            using (_nativeModulesQueueThread)
             {
                 var count = 0;
                 var executor = new MockJavaScriptExecutor
@@ -394,7 +394,7 @@ namespace ReactNative.Tests.Bridge
                 };
 
                 var callback = new MockReactCallback();
-                var bridge = new ReactBridge(executor, callback, nativeThread);
+                var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
 
                 for (var i = 0; i < n; ++i)
                 {
@@ -420,40 +420,46 @@ namespace ReactNative.Tests.Bridge
 #endif
             };
 
+            var moduleId = 42;
+            var methodId = 7;
+            var called = 0;
+            var countdownEvent = new CountdownEvent(1);
+            var callback = new MockReactCallback
+            {
+                InvokeSyncHandler = (mod, met, arg) =>
+                {
+                    Assert.AreEqual(moduleId, mod);
+                    Assert.AreEqual(methodId, met);
+                    Assert.AreEqual(0, arg.Count);
+                    ++called;
+                    return JValue.CreateNull();
+                },
+                OnBatchCompleteHandler = () => countdownEvent.Signal(),
+            };
+
             foreach (var jsFactory in jsFactories)
             {
                 await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
                 {
-                    using (var nativeThread = CreateNativeModulesThread())
+                    using (_nativeModulesQueueThread)
                     {
-                        var moduleId = 42;
-                        var methodId = 7;
-                        var called = 0;
-                        var callback = new MockReactCallback
-                        {
-                            InvokeSyncHandler = (mod, met, arg) =>
-                            {
-                                Assert.AreEqual(moduleId, mod);
-                                Assert.AreEqual(methodId, met);
-                                Assert.AreEqual(0, arg.Count);
-                                ++called;
-                                return JValue.CreateNull();
-                            },
-                        };
-
-                        var bridge = new ReactBridge(executor, callback, nativeThread);
+                        var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
                         await jsQueueThread.RunAsync(() =>
                         {
                             bridge.CallFunction("SyncModule", "test", new JArray { 42, 7, new JArray() });
                         });
-
-                        Assert.AreEqual(1, called);
-                        Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
                     }
                 },
                 jsFactory,
                 @"Resources/sync.js");
             }
+
+
+            // FIXME: this test is flaky, but adding synchronization makes it wait forever (unlike below)
+            // await Task.Run(new Action(countdownEvent.Wait));
+
+            Assert.AreEqual(1, called);
+            Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -471,7 +477,7 @@ namespace ReactNative.Tests.Bridge
             {
                 await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
                 {
-                    using (var nativeThread = CreateNativeModulesThread())
+                    using (_nativeModulesQueueThread)
                     {
                         var moduleId = 42;
                         var methodId = 7;
@@ -490,7 +496,7 @@ namespace ReactNative.Tests.Bridge
                             OnBatchCompleteHandler = () => countdownEvent.Signal(),
                         };
 
-                        var bridge = new ReactBridge(executor, callback, nativeThread);
+                        var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
                         await jsQueueThread.RunAsync(() =>
                         {
                             bridge.CallFunction("FlushQueueImmediateModule", "test", new JArray { 10, new JArray { new JArray { 42 }, new JArray { 7 }, new JArray { new JArray { "foo" } } } });

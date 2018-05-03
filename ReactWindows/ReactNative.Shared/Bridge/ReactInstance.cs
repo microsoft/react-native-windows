@@ -33,9 +33,6 @@ namespace ReactNative.Bridge
 
         private bool _initialized;
 
-        public event TransitionToBridgeIdleCallback OnTransitionToBridgeIdleCallback;
-        public event TransitionToBridgeIdleCallback OnTransitionToBridgeBusyCallback;
-
         private ReactInstance(
             IReactQueueConfiguration queueConfiguration,
             Func<IJavaScriptExecutor> jsExecutorFactory,
@@ -62,6 +59,9 @@ namespace ReactNative.Bridge
                 return _registry.Modules;
             }
         }
+
+        public Action OnTransitionToBridgeIdleHandler { get; set; }
+        public Action OnTransitionToBridgeBusyHandler { get; set; }
 
         public IReactQueueConfiguration QueueConfiguration
         {
@@ -178,8 +178,8 @@ namespace ReactNative.Bridge
             IsDisposed = true;
 
             await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDispose).ConfigureAwait(false);
-            // RN Android is structured differently and notifies idle listeners here, should we do the same?
-            // CatalystInstanceImpl.java#L331
+            // from RN Android CatalystInstanceImpl.java#L331
+            OnTransitionToBridgeIdleHandler?.Invoke();
             await QueueConfiguration.JavaScriptQueue.RunAsync(() => _bridge?.Dispose()).ConfigureAwait(false);
             QueueConfiguration.Dispose();
         }
@@ -318,21 +318,21 @@ namespace ReactNative.Bridge
                 }
             }
 
-            public void IncrementPendingJSCalls()
+            public void IncrementPendingBridgeCalls()
             {
                 int newVal = Interlocked.Increment(ref _pendingJSCalls);
                 if ((newVal - 1) == 0)
                 {
-                    _parent.OnTransitionToBridgeBusyCallback?.Invoke();
+                    _parent.OnTransitionToBridgeBusyHandler?.Invoke();
                 }
             }
 
-            public void DecrementPendingJSCalls()
+            public void DecrementPendingBridgeCalls()
             {
                 int newVal = Interlocked.Decrement(ref _pendingJSCalls);
                 if (newVal == 0)
                 {
-                    _parent.OnTransitionToBridgeIdleCallback?.Invoke();
+                    _parent.OnTransitionToBridgeIdleHandler?.Invoke();
                 }
             }
         }

@@ -26,12 +26,12 @@ namespace ReactNative.Tests
             OnBatchCompleteHandler?.Invoke();
         }
 
-        public void IncrementPendingJSCalls()
+        public void IncrementPendingBridgeCalls()
         {
             PendingJavaScriptCalls++;
         }
 
-        public void DecrementPendingJSCalls()
+        public void DecrementPendingBridgeCalls()
         {
             PendingJavaScriptCalls--;
         }
