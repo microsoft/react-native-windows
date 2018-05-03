@@ -38,7 +38,7 @@ namespace ReactNative.UIManager
 
         private readonly NativeViewHierarchyManager _nativeViewHierarchyManager;
         private readonly ReactContext _reactContext;
-        private readonly ReactChoreographer _reactChoreographer;
+        private readonly IReactChoreographer _reactChoreographer;
 
         private readonly IList<Action> _nonBatchedOperations = new List<Action>();
 
@@ -55,7 +55,7 @@ namespace ReactNative.UIManager
         /// <param name="reactChoreographer">
         /// The choreographer associated with this instance.
         /// </param>
-        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, ReactChoreographer reactChoreographer)
+        public UIViewOperationQueueInstance(ReactContext reactContext, NativeViewHierarchyManager nativeViewHierarchyManager, IReactChoreographer reactChoreographer)
         {
             _nativeViewHierarchyManager = nativeViewHierarchyManager;
             _reactContext = reactContext;

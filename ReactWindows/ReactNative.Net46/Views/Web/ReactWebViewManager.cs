@@ -168,7 +168,7 @@ namespace ReactNative.Views.Web
         {
             base.OnDropViewInstance(reactContext, view);
             view.LoadCompleted -= OnLoadCompleted;
-            view.Navigated -= OnNavigationStarting;
+            view.Navigating -= OnNavigationStarting;
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace ReactNative.Views.Web
         {
             base.AddEventEmitters(reactContext, view);
             view.LoadCompleted += OnLoadCompleted;
-            view.Navigated += OnNavigationStarting;
+            view.Navigating += OnNavigationStarting;
         }
 
         private void OnLoadCompleted(object sender, NavigationEventArgs e)
@@ -222,7 +222,7 @@ namespace ReactNative.Views.Web
             }
         }
 
-        private static void OnNavigationStarting(object sender, NavigationEventArgs e)
+        private static void OnNavigationStarting(object sender, NavigatingCancelEventArgs e)
         {
             var webView = (WebBrowser)sender;
 

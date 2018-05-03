@@ -209,6 +209,7 @@
     <ClInclude Include="asprintf.h" />
     <ClInclude Include="CallSyncHandler.h" />
     <ClInclude Include="ChakraHost.h" />
+    <ClInclude Include="FlushQueueImmediateHandler.h" />
     <ClInclude Include="JsIndexedModulesUnbundle.h" />
     <ClInclude Include="JsModulesUnbundle.h" />
     <ClInclude Include="NativeJavaScriptExecutor.h" />

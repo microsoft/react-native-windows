@@ -247,7 +247,7 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
 
     // Get the stringified arguments
     JsValueRef stringifiedArgs;
-    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter");
+    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter.");
     const wchar_t* argsBuf;
     size_t bufLen;
     IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
@@ -261,6 +261,38 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
     JsValueRef jsonResult;
     IfFailThrow(host->JsonParse(stringifiedResult, &jsonResult), L"Could not parse stringified result");
     return jsonResult;
+}
+
+JsValueRef CALLBACK NativeFlushQueueImmediate(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+{
+    // cast the callback state to the ChakraHost instance
+    auto host = (ChakraHost*)callbackState;
+
+    // Assert the argument count.
+    if (argumentCount != 2)
+    {
+        ThrowException(L"Expected only one parameter to nativeFlushQueueImmediate.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Assert the handler has been set.
+    if (host->flushQueueImmediateHandler == nullptr)
+    {
+        ThrowException(L"flushQueueImmediate callback has not been set.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Get the stringified arguments.
+    JsValueRef stringifiedArgs;
+    IfFailThrow(host->JsonStringify(arguments[1], &stringifiedArgs), L"Could not stringify the args parameter.");
+    const wchar_t* argsBuf;
+    size_t bufLen;
+    IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
+
+    // Invoke the flushQueueImmediate callback.
+    host->flushQueueImmediateHandler(ref new String(argsBuf, (unsigned int)bufLen));
+
+    return JS_INVALID_REFERENCE;
 }
 
 bool HasMagicFileHeader(const wchar_t* szPath)
@@ -421,6 +453,11 @@ void ChakraHost::SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler)
     this->callSyncHandler = handler;
 }
 
+void ChakraHost::SetFlushQueueImmediate(ChakraBridge::FlushQueueImmediateHandler^ handler)
+{
+    this->flushQueueImmediateHandler = handler;
+}
+
 JsErrorCode ChakraHost::InitJson()
 {
     JsPropertyIdRef jsonPropertyId;
@@ -460,6 +497,13 @@ JsErrorCode ChakraHost::InitNativeCallSyncHook()
     return JsNoError;
 }
 
+JsErrorCode ChakraHost::InitFlushQueueImmediate()
+{
+    IfFailRet(DefineHostCallback(globalObject, L"nativeFlushQueueImmediate", NativeFlushQueueImmediate, this));
+
+    return JsNoError;
+}
+
 JsErrorCode ChakraHost::Init()
 {
     currentSourceContext = 0;
@@ -473,6 +517,7 @@ JsErrorCode ChakraHost::Init()
     IfFailRet(InitJson());
     IfFailRet(InitConsole());
     IfFailRet(InitNativeCallSyncHook());
+    IfFailRet(InitFlushQueueImmediate());
 
     return JsNoError;
 }

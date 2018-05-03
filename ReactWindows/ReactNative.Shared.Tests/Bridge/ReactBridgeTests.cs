@@ -210,7 +210,6 @@ namespace ReactNative.Tests.Bridge
                 JArray.Parse("[[],[],[42]]"),
                 JArray.Parse("[[42],[42],[]]"),
                 JArray.Parse("[[42],[42],[[],[]]]"),
-                JArray.Parse("[]"),
                 JArray.Parse("[[]]"),
                 JArray.Parse("[[],[]]"),
                 JObject.Parse("{}"),
@@ -288,6 +287,59 @@ namespace ReactNative.Tests.Bridge
                 @"Resources/sync.js");
             }
         }
+
+        [Test]
+        public async Task ReactBridge_FlushQueueImmediate()
+        {
+            var jsFactories = new Func<IJavaScriptExecutor>[]
+            {
+                () => new ChakraJavaScriptExecutor(),
+#if WINDOWS_UWP
+                () => new NativeJavaScriptExecutor(),
+#endif
+            };
+
+            foreach (var jsFactory in jsFactories)
+            {
+                await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
+                {
+                    using (var nativeThread = CreateNativeModulesThread())
+                    {
+                        var moduleId = 42;
+                        var methodId = 7;
+                        var called = 0;
+                        var countdownEvent = new CountdownEvent(1);
+                        var callback = new MockReactCallback
+                        {
+                            InvokeHandler = (mod, met, arg) =>
+                            {
+                                Assert.AreEqual(moduleId, mod);
+                                Assert.AreEqual(methodId, met);
+                                Assert.AreEqual(1, arg.Count);
+                                Assert.AreEqual("foo", arg[0].Value<string>());
+                                ++called;
+                            },
+                            OnBatchCompleteHandler = () => countdownEvent.Signal(),
+                        };
+
+                        var bridge = new ReactBridge(executor, callback, nativeThread);
+                        await jsQueueThread.RunAsync(() =>
+                        {
+                            bridge.CallFunction("FlushQueueImmediateModule", "test", new JArray { 10, new JArray { new JArray { 42 }, new JArray { 7 }, new JArray { new JArray { "foo" } } } });
+                        });
+
+                        // wait for `OnBatchComplete` in background
+                        // so we don't block native module thread
+                        await Task.Run(new Action(countdownEvent.Wait));
+
+                        Assert.AreEqual(10, called);
+                    }
+                },
+                jsFactory,
+                @"Resources/immediate.js");
+            }
+        }
+
 
         private static IActionQueue CreateNativeModulesThread()
         {
