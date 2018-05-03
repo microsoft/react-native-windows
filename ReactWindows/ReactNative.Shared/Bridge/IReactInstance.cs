@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
+using System;
 using System.Collections.Generic;
 
 namespace ReactNative.Bridge
@@ -60,5 +61,15 @@ namespace ReactNative.Bridge
         /// <typeparam name="T">Type of native module.</typeparam>
         /// <returns>The native module instance.</returns>
         T GetNativeModule<T>() where T : INativeModule;
+
+        /// <summary>
+        /// Fires when there were, but are now no, pending bridge calls
+        /// </summary>
+        event Action BridgeIdle;
+
+        /// <summary>
+        /// Fires when there are none, but now are, pending bridge calls
+        /// </summary>
+        event Action BridgeBusy;
     }
 }

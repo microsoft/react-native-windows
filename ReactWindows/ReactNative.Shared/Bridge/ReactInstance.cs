@@ -60,8 +60,8 @@ namespace ReactNative.Bridge
             }
         }
 
-        public Action OnTransitionToBridgeIdleHandler { get; set; }
-        public Action OnTransitionToBridgeBusyHandler { get; set; }
+        public event Action BridgeIdle;
+        public event Action BridgeBusy;
 
         public IReactQueueConfiguration QueueConfiguration
         {
@@ -179,7 +179,7 @@ namespace ReactNative.Bridge
 
             await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDispose).ConfigureAwait(false);
             // from RN Android CatalystInstanceImpl.java#L331
-            OnTransitionToBridgeIdleHandler?.Invoke();
+            BridgeIdle?.Invoke();
             await QueueConfiguration.JavaScriptQueue.RunAsync(() => _bridge?.Dispose()).ConfigureAwait(false);
             QueueConfiguration.Dispose();
         }
@@ -323,7 +323,7 @@ namespace ReactNative.Bridge
                 int newVal = Interlocked.Increment(ref _pendingJSCalls);
                 if ((newVal - 1) == 0)
                 {
-                    _parent.OnTransitionToBridgeBusyHandler?.Invoke();
+                    _parent.BridgeBusy?.Invoke();
                 }
             }
 
@@ -332,7 +332,7 @@ namespace ReactNative.Bridge
                 int newVal = Interlocked.Decrement(ref _pendingJSCalls);
                 if (newVal == 0)
                 {
-                    _parent.OnTransitionToBridgeIdleHandler?.Invoke();
+                    _parent.BridgeIdle?.Invoke();
                 }
             }
         }
