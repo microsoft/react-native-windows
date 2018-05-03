@@ -118,7 +118,17 @@ namespace ReactNative.Bridge
 
         private void ProcessResponse(JToken response, bool isEndOfBatch)
         {
-            var moduleCallCount = GetModuleCallCount(response);
+            int moduleCallCount;
+
+            try
+            {
+                moduleCallCount = GetModuleCallCount(response);
+            }
+            catch (Exception)
+            {
+                _reactCallback.DecrementPendingJSCalls();
+                throw;
+            }
 
             _nativeModulesQueueThread.Dispatch(() =>
             {

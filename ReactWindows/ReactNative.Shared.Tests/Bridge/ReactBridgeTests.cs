@@ -237,6 +237,7 @@ namespace ReactNative.Tests.Bridge
 
             Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
             Assert.That(_receivedCallbacks[0].args.Count, Is.EqualTo(0));
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -250,6 +251,7 @@ namespace ReactNative.Tests.Bridge
             Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
             Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.String));
             Assert.That(_receivedCallbacks[0].args[0].Value<string>(), Is.EqualTo("foobar"));
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -263,6 +265,7 @@ namespace ReactNative.Tests.Bridge
             Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
             Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Float));
             Assert.That(_receivedCallbacks[0].args[0].Value<double>(), Is.EqualTo(42.16));
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -276,6 +279,7 @@ namespace ReactNative.Tests.Bridge
             Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
             Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Boolean));
             Assert.That(_receivedCallbacks[0].args[0].Value<bool>(), Is.EqualTo(false));
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -288,6 +292,7 @@ namespace ReactNative.Tests.Bridge
 
             Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
             Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Null));
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -303,6 +308,7 @@ namespace ReactNative.Tests.Bridge
             Assert.That(_receivedCallbacks[0].args[0]["foo"].Value<string>(), Is.EqualTo("hello"));
             Assert.That(_receivedCallbacks[0].args[0]["bar"].Value<double>(), Is.EqualTo(4.2));
             Assert.That(_receivedCallbacks[0].args[0]["baz"].Value<bool>(), Is.EqualTo(true));
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -319,6 +325,7 @@ namespace ReactNative.Tests.Bridge
             Assert.That(_receivedCallbacks[0].args[0][0].Value<string>, Is.EqualTo("foo"));
             Assert.That(_receivedCallbacks[0].args[0][1].Value<double>(), Is.EqualTo(4.2));
             Assert.That(_receivedCallbacks[0].args[0][2].Value<bool>(), Is.False);
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -339,6 +346,7 @@ namespace ReactNative.Tests.Bridge
             Assert.That(_receivedCallbacks[0].args[0].Value<string>, Is.EqualTo("foo"));
             Assert.That(_receivedCallbacks[0].args[1].Value<int>(), Is.EqualTo(14));
             Assert.That(_receivedCallbacks[0].args[3].Value<bool>(), Is.False);
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
 
@@ -351,6 +359,7 @@ namespace ReactNative.Tests.Bridge
             CallFunctionOnReactBridge();
 
             Assert.That(_receivedCallbacks.Count, Is.EqualTo(2));
+            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -384,7 +393,8 @@ namespace ReactNative.Tests.Bridge
                     }
                 };
 
-                var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
+                var callback = new MockReactCallback();
+                var bridge = new ReactBridge(executor, callback, nativeThread);
 
                 for (var i = 0; i < n; ++i)
                 {
@@ -395,6 +405,7 @@ namespace ReactNative.Tests.Bridge
                 }
 
                 Assert.AreEqual(n, count);
+                Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
             }
         }
 
@@ -437,6 +448,7 @@ namespace ReactNative.Tests.Bridge
                         });
 
                         Assert.AreEqual(1, called);
+                        Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
                     }
                 },
                 jsFactory,
@@ -489,6 +501,7 @@ namespace ReactNative.Tests.Bridge
                         await Task.Run(new Action(countdownEvent.Wait));
 
                         Assert.AreEqual(10, called);
+                        Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
                     }
                 },
                 jsFactory,

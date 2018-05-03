@@ -9,6 +9,7 @@ namespace ReactNative.Tests
         public Action OnBatchCompleteHandler;
         public Action<int, int, JArray> InvokeHandler;
         public Func<int, int, JArray, JToken> InvokeSyncHandler;
+        public int PendingJavaScriptCalls = 0;
         
         public void Invoke(int moduleId, int methodId, JArray parameters)
         {
@@ -27,10 +28,12 @@ namespace ReactNative.Tests
 
         public void IncrementPendingJSCalls()
         {
+            PendingJavaScriptCalls++;
         }
 
         public void DecrementPendingJSCalls()
         {
+            PendingJavaScriptCalls--;
         }
     }
 }
