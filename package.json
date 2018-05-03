@@ -30,8 +30,8 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": "^16.3.0-alpha.1",
-    "react-native": "~0.55.0"
+    "react": "^16.3.1",
+    "react-native": "~0.55.3"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
@@ -46,9 +46,9 @@
     "https-proxy-agent": "^1.0.0",
     "minimist": "^1.2.0",
     "prettier": "^1.9.1",
-    "react": "^16.3.0-alpha.1",
+    "react": "^16.3.1",
     "react-devtools-core": "3.1.0",
-    "react-native": "~0.55.0",
+    "react-native": "~0.55.3",
     "selenium-webdriver": "2.48.x"
   },
   "dependencies": {
