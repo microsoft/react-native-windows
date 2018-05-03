@@ -164,11 +164,12 @@ namespace ReactNative.Views.View
         /// <param name="color">The masked color value.</param>
         [ReactProp(
             ViewProps.BackgroundColor,
-            CustomType = "Color",
-            DefaultUInt32 = ColorHelpers.Transparent)]
-        public void SetBackgroundColor(BorderedCanvas view, uint color)
+            CustomType = "Color")]
+        public void SetBackgroundColor(BorderedCanvas view, uint? color)
         {
-            view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.Background = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
         }
 
         /// <summary>
