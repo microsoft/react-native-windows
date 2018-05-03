@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -67,6 +67,9 @@ namespace ReactNative.Tests
         {
             throw new NotImplementedException();
         }
+
+        public event Action BridgeIdle;
+        public event Action BridgeBusy;
 
         public virtual T GetJavaScriptModule<T>() where T : IJavaScriptModule, new()
         {

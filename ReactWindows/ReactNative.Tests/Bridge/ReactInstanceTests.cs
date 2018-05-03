@@ -40,7 +40,7 @@ namespace ReactNative.Tests.Bridge
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
             var idleHandlerCalled = false;
-            instance.BridgeIdle = () => idleHandlerCalled = true;
+            instance.BridgeIdle += () => idleHandlerCalled = true;
             reactContext.InitializeWithInstance(instance);
 
             var actualModule = instance.GetNativeModule<TestNativeModule>();
@@ -84,7 +84,7 @@ namespace ReactNative.Tests.Bridge
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
             var idleHandlerCalled = false;
-            instance.BridgeIdle = () => idleHandlerCalled = true;
+            instance.BridgeIdle += () => idleHandlerCalled = true;
             reactContext.InitializeWithInstance(instance);
             await DispatcherHelpers.RunOnDispatcherAsync(() => instance.Initialize());
 
@@ -144,7 +144,7 @@ namespace ReactNative.Tests.Bridge
 
             var idleHandlerCalled = false;
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
-            instance.BridgeIdle = () => idleHandlerCalled = true;
+            instance.BridgeIdle += () => idleHandlerCalled = true;
             instance.QueueConfiguration.JavaScriptQueue.Dispatch(() =>
             {
                 throw exception;
