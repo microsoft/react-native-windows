@@ -85,11 +85,9 @@ namespace ReactNative.Views.Web
         [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
         public void SetBackgroundColor(WebView view, uint? color)
         {
-            if (color.HasValue) {
-                view.DefaultBackgroundColor = ColorHelpers.Parse(color.Value);
-            } else {
-                view.DefaultBackgroundColor = Colors.White;
-            }
+            view.DefaultBackgroundColor = color.HasValue
+                ? ColorHelpers.Parse(color.Value);
+                : Colors.White;
         }
 
         /// <summary>
