@@ -26,7 +26,7 @@ namespace ReactNative.UIManager.Events
                 case TouchEventType.Exited:
                     return "topMouseOut";
                 case TouchEventType.PointerMove:
-                    return "topMouseMoveCustom"; // Using a name different from "topMouseMove" since this one is treated by touch infra in an unexpected way
+                    return "topMouseMove"; // Using a name different from "topMouseMove" since this one is treated by touch infra in an unexpected way
                 default:
                     throw new NotSupportedException("Unsupported touch event type.");
             }
