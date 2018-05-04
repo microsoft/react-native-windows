@@ -39,7 +39,7 @@ install:
   - ps: Install-Product node $env:nodejs_version x64
   - appveyor-retry npm install -g npm@lts
   - appveyor-retry npm i
-  - ps: curl -o C:\WindowsApplicationDriver.msi https://github.com/Microsoft/WinAppDriver/releases/download/v1.0/WindowsApplicationDriver.msi
+  - appveyor-retry curl -o C:\WindowsApplicationDriver.msi https://github.com/Microsoft/WinAppDriver/releases/download/v1.0/WindowsApplicationDriver.msi
   - ps: msiexec /i C:\WindowsApplicationDriver.msi /q
 
 clone_script:
