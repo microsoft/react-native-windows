@@ -9,7 +9,6 @@ using ReactNative.Bridge.Queue;
 using ReactNative.Chakra.Executor;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,52 +17,22 @@ namespace ReactNative.Tests.Bridge
     [TestFixture]
     public class ReactBridgeTests
     {
-        private JToken _response;
-        private List<(int moduleId, int methodId, JArray args)> _receivedCallbacks;
-        private AutoResetEvent _eventHandler;
-        private MockReactCallback _mockReactCallback;
-        private MockJavaScriptExecutor _mockJavaScriptExecutor;
-        private IActionQueue _nativeModulesQueueThread;
-        private ReactBridge _reactBridge;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _receivedCallbacks = new List<(int moduleId, int methodId, JArray args)>();
-            _eventHandler = new AutoResetEvent(false);
-
-            _mockReactCallback = new MockReactCallback
-            {
-                InvokeHandler = (moduleId, methodId, args) => _receivedCallbacks.Add((moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => _eventHandler.Set(),
-            };
-
-            _mockJavaScriptExecutor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) => _response
-            };
-
-            _nativeModulesQueueThread = CreateNativeModulesThread();
-
-            _reactBridge = new ReactBridge(_mockJavaScriptExecutor, _mockReactCallback, _nativeModulesQueueThread);
-        }
-
         [Test]
         public async Task ReactBridge_Ctor_ArgumentChecks()
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
             {
-                using (_nativeModulesQueueThread)
+                using (var nativeThread = CreateNativeModulesThread())
                 {
                     var reactCallback = new MockReactCallback();
 
                     Assert.That(
-                        () => new ReactBridge(null, reactCallback, _nativeModulesQueueThread),
+                        () => new ReactBridge(null, reactCallback, nativeThread),
                         Throws.ArgumentNullException.With.Property("ParamName").EqualTo("executor")
                     );
 
                     Assert.That(
-                        () => new ReactBridge(executor, null, _nativeModulesQueueThread),
+                        () => new ReactBridge(executor, null, nativeThread),
                         Throws.ArgumentNullException.With.Property("ParamName").EqualTo("reactCallback")
                     );
 
@@ -80,10 +49,10 @@ namespace ReactNative.Tests.Bridge
         {
             await JavaScriptHelpers.Run((executor, jsQueueThread) =>
             {
-                using (_nativeModulesQueueThread)
+                using (var nativeThread = CreateNativeModulesThread())
                 {
                     var reactCallback = new MockReactCallback();
-                    var bridge = new ReactBridge(executor, reactCallback, _nativeModulesQueueThread);
+                    var bridge = new ReactBridge(executor, reactCallback, nativeThread);
 
                     Assert.That(
                         () => bridge.SetGlobalVariable(null, null),
@@ -98,9 +67,9 @@ namespace ReactNative.Tests.Bridge
         {
             await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
             {
-                using (_nativeModulesQueueThread)
+                using (var nativeThread = CreateNativeModulesThread())
                 {
-                    var bridge = new ReactBridge(executor, new MockReactCallback(), _nativeModulesQueueThread);
+                    var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
                     var token = await jsQueueThread.RunAsync(() =>
                     {
                         bridge.CallFunction("module", "method", new JArray());
@@ -153,50 +122,51 @@ namespace ReactNative.Tests.Bridge
         [Test]
         public void ReactBridge_ReactCallbacks()
         {
-            var jsonResponse = JArray.Parse("[[42,17],[16,22],[[],[\"foo\"]]]");
-            var callbacks = new List<Tuple<int, int, JArray>>();
-            var eventHandler = new AutoResetEvent(false);
-            var callback = new MockReactCallback
+            using (var nativeThread = CreateNativeModulesThread())
             {
-                InvokeHandler = (moduleId, methodId, args) => callbacks.Add(Tuple.Create(moduleId, methodId, args)),
-                OnBatchCompleteHandler = () => eventHandler.Set(),
-            };
+                var jsonResponse = JArray.Parse("[[42,17],[16,22],[[],[\"foo\"]]]");
 
-            var executor = new MockJavaScriptExecutor
-            {
-                OnCallFunctionReturnFlushedQueue = (module, method, args) =>
+                var executor = new MockJavaScriptExecutor
                 {
-                    Assert.AreEqual(module, "module");
-                    Assert.AreEqual(method, "method");
-                    return jsonResponse;
-                }
-            };
+                    OnCallFunctionReturnFlushedQueue = (module, method, args) =>
+                    {
+                        Assert.AreEqual(module, "module");
+                        Assert.AreEqual(method, "method");
+                        return jsonResponse;
+                    }
+                };
 
-            using (_nativeModulesQueueThread)
-            {
-                var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
+                var callbacks = new List<Tuple<int, int, JArray>>();
+                var eventHandler = new AutoResetEvent(false);
+                var callback = new MockReactCallback
+                {
+                    InvokeHandler = (moduleId, methodId, args) => callbacks.Add(Tuple.Create(moduleId, methodId, args)),
+                    OnBatchCompleteHandler = () => eventHandler.Set(),
+                };
+
+                var bridge = new ReactBridge(executor, callback, nativeThread);
                 bridge.CallFunction("module", "method", new JArray());
 
                 Assert.IsTrue(eventHandler.WaitOne());
+
+                Assert.AreEqual(2, callbacks.Count);
+
+                Assert.AreEqual(42, callbacks[0].Item1);
+                Assert.AreEqual(16, callbacks[0].Item2);
+                Assert.AreEqual(0, callbacks[0].Item3.Count);
+
+                Assert.AreEqual(17, callbacks[1].Item1);
+                Assert.AreEqual(22, callbacks[1].Item2);
+                Assert.AreEqual(1, callbacks[1].Item3.Count);
+                Assert.AreEqual("foo", callbacks[1].Item3[0].Value<string>());
             }
-
-            Assert.AreEqual(2, callbacks.Count);
-
-            Assert.AreEqual(42, callbacks[0].Item1);
-            Assert.AreEqual(16, callbacks[0].Item2);
-            Assert.AreEqual(0, callbacks[0].Item3.Count);
-
-            Assert.AreEqual(17, callbacks[1].Item1);
-            Assert.AreEqual(22, callbacks[1].Item2);
-            Assert.AreEqual(1, callbacks[1].Item3.Count);
-            Assert.AreEqual("foo", callbacks[1].Item3[0].Value<string>());
         }
 
         [Test]
         public void ReactBridge_ValidJavaScriptResponse()
         {
             var responses = new[]
-            {
+{
                 JToken.Parse("null"),
                 JToken.Parse("undefined"),
                 JArray.Parse("[[],[],[]]"),
@@ -205,7 +175,7 @@ namespace ReactNative.Tests.Bridge
             };
 
             var n = responses.Length;
-            using (_nativeModulesQueueThread)
+            using (var nativeThread = CreateNativeModulesThread())
             {
                 var count = 0;
                 var executor = new MockJavaScriptExecutor
@@ -216,7 +186,7 @@ namespace ReactNative.Tests.Bridge
                     }
                 };
 
-                var bridge = new ReactBridge(executor, new MockReactCallback(), _nativeModulesQueueThread);
+                var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
 
                 for (var i = 0; i < n; ++i)
                 {
@@ -225,141 +195,6 @@ namespace ReactNative.Tests.Bridge
 
                 Assert.AreEqual(n, count);
             }
-        }
-
-        [Test]
-        public void SingleReturnCallNoArgs()
-        {
-            const string jsText = "[[7],[3],[[]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args.Count, Is.EqualTo(0));
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-        [Test]
-        public void StringReturn()
-        {
-            const string jsText = "[[0],[0],[[\"foobar\"]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.String));
-            Assert.That(_receivedCallbacks[0].args[0].Value<string>(), Is.EqualTo("foobar"));
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-        [Test]
-        public void NumberReturn()
-        {
-            const string jsText = "[[0],[0],[[42.16]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Float));
-            Assert.That(_receivedCallbacks[0].args[0].Value<double>(), Is.EqualTo(42.16));
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-        [Test]
-        public void BoolReturn()
-        {
-            const string jsText = "[[0],[0],[[false]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Boolean));
-            Assert.That(_receivedCallbacks[0].args[0].Value<bool>(), Is.EqualTo(false));
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-        [Test]
-        public void NullReturn()
-        {
-            const string jsText = "[[0],[0],[[null]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Null));
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-        [Test]
-        public void MapReturn()
-        {
-            const string jsText = "[[0],[0],[[{\"foo\": \"hello\", \"bar\": 4.2, \"baz\": true}]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Object));
-            Assert.That(_receivedCallbacks[0].args[0]["foo"].Value<string>(), Is.EqualTo("hello"));
-            Assert.That(_receivedCallbacks[0].args[0]["bar"].Value<double>(), Is.EqualTo(4.2));
-            Assert.That(_receivedCallbacks[0].args[0]["baz"].Value<bool>(), Is.EqualTo(true));
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-        [Test]
-        public void ArrayReturn()
-        {
-            const string jsText = "[[0],[0],[[[\"foo\", 4.2, false]]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.Array));
-            Assert.That(_receivedCallbacks[0].args[0].Count(), Is.EqualTo(3));
-            Assert.That(_receivedCallbacks[0].args[0][0].Value<string>, Is.EqualTo("foo"));
-            Assert.That(_receivedCallbacks[0].args[0][1].Value<double>(), Is.EqualTo(4.2));
-            Assert.That(_receivedCallbacks[0].args[0][2].Value<bool>(), Is.False);
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-        [Test]
-        public void ReturnMultipleParams()
-        {
-            const string jsText = "[[0],[0],[[\"foo\", 14, null, false]]]";
-            _response = JToken.Parse(jsText);
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(1));
-            Assert.That(_receivedCallbacks[0].args.Count, Is.EqualTo(4));
-            Assert.That(_receivedCallbacks[0].args[0].Type, Is.EqualTo(JTokenType.String));
-            Assert.That(_receivedCallbacks[0].args[1].Type, Is.EqualTo(JTokenType.Integer));
-            Assert.That(_receivedCallbacks[0].args[2].Type, Is.EqualTo(JTokenType.Null));
-            Assert.That(_receivedCallbacks[0].args[3].Type, Is.EqualTo(JTokenType.Boolean));
-            Assert.That(_receivedCallbacks[0].args[0].Value<string>, Is.EqualTo("foo"));
-            Assert.That(_receivedCallbacks[0].args[1].Value<int>(), Is.EqualTo(14));
-            Assert.That(_receivedCallbacks[0].args[3].Value<bool>(), Is.False);
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
-        }
-
-
-        [Test]
-        public void ParseTwoCalls()
-        {
-            const string jsText = "[[0,0],[1,1],[[],[]]]";
-            _response = JToken.Parse(jsText);
-
-            CallFunctionOnReactBridge();
-
-            Assert.That(_receivedCallbacks.Count, Is.EqualTo(2));
-            Assert.That(_mockReactCallback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -382,7 +217,7 @@ namespace ReactNative.Tests.Bridge
             };
 
             var n = responses.Length;
-            using (_nativeModulesQueueThread)
+            using (var nativeThread = CreateNativeModulesThread())
             {
                 var count = 0;
                 var executor = new MockJavaScriptExecutor
@@ -393,8 +228,7 @@ namespace ReactNative.Tests.Bridge
                     }
                 };
 
-                var callback = new MockReactCallback();
-                var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
+                var bridge = new ReactBridge(executor, new MockReactCallback(), nativeThread);
 
                 for (var i = 0; i < n; ++i)
                 {
@@ -405,7 +239,6 @@ namespace ReactNative.Tests.Bridge
                 }
 
                 Assert.AreEqual(n, count);
-                Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
             }
         }
 
@@ -420,46 +253,39 @@ namespace ReactNative.Tests.Bridge
 #endif
             };
 
-            var moduleId = 42;
-            var methodId = 7;
-            var called = 0;
-            var countdownEvent = new CountdownEvent(1);
-            var callback = new MockReactCallback
-            {
-                InvokeSyncHandler = (mod, met, arg) =>
-                {
-                    Assert.AreEqual(moduleId, mod);
-                    Assert.AreEqual(methodId, met);
-                    Assert.AreEqual(0, arg.Count);
-                    ++called;
-                    return JValue.CreateNull();
-                },
-                OnBatchCompleteHandler = () => countdownEvent.Signal(),
-            };
-
             foreach (var jsFactory in jsFactories)
             {
                 await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
                 {
-                    using (_nativeModulesQueueThread)
+                    using (var nativeThread = CreateNativeModulesThread())
                     {
-                        var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
+                        var moduleId = 42;
+                        var methodId = 7;
+                        var called = 0;
+                        var callback = new MockReactCallback
+                        {
+                            InvokeSyncHandler = (mod, met, arg) =>
+                            {
+                                Assert.AreEqual(moduleId, mod);
+                                Assert.AreEqual(methodId, met);
+                                Assert.AreEqual(0, arg.Count);
+                                ++called;
+                                return JValue.CreateNull();
+                            },
+                        };
+
+                        var bridge = new ReactBridge(executor, callback, nativeThread);
                         await jsQueueThread.RunAsync(() =>
                         {
                             bridge.CallFunction("SyncModule", "test", new JArray { 42, 7, new JArray() });
                         });
+
+                        Assert.AreEqual(1, called);
                     }
                 },
                 jsFactory,
                 @"Resources/sync.js");
             }
-
-
-
-            Assert.AreEqual(1, called);
-            // FIXME: this test is flaky, but adding synchronization makes it wait forever (unlike below)
-            // await Task.Run(new Action(countdownEvent.Wait));
-            // Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
         }
 
         [Test]
@@ -477,7 +303,7 @@ namespace ReactNative.Tests.Bridge
             {
                 await JavaScriptHelpers.Run(async (executor, jsQueueThread) =>
                 {
-                    using (_nativeModulesQueueThread)
+                    using (var nativeThread = CreateNativeModulesThread())
                     {
                         var moduleId = 42;
                         var methodId = 7;
@@ -496,7 +322,7 @@ namespace ReactNative.Tests.Bridge
                             OnBatchCompleteHandler = () => countdownEvent.Signal(),
                         };
 
-                        var bridge = new ReactBridge(executor, callback, _nativeModulesQueueThread);
+                        var bridge = new ReactBridge(executor, callback, nativeThread);
                         await jsQueueThread.RunAsync(() =>
                         {
                             bridge.CallFunction("FlushQueueImmediateModule", "test", new JArray { 10, new JArray { new JArray { 42 }, new JArray { 7 }, new JArray { new JArray { "foo" } } } });
@@ -507,7 +333,6 @@ namespace ReactNative.Tests.Bridge
                         await Task.Run(new Action(countdownEvent.Wait));
 
                         Assert.AreEqual(10, called);
-                        Assert.That(callback.PendingJavaScriptCalls, Is.Zero);
                     }
                 },
                 jsFactory,
@@ -515,15 +340,6 @@ namespace ReactNative.Tests.Bridge
             }
         }
 
-        private void CallFunctionOnReactBridge()
-        {
-            using (_nativeModulesQueueThread)
-            {
-                _reactBridge.CallFunction("module", "method", new JArray());
-
-                Assert.That(_eventHandler.WaitOne());
-            }
-        }
 
         private static IActionQueue CreateNativeModulesThread()
         {

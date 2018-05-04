@@ -63,12 +63,12 @@ namespace ReactNative.Bridge
         T GetNativeModule<T>() where T : INativeModule;
 
         /// <summary>
-        /// Fires when there were, but are now no, pending bridge calls
+        /// Fires when the number of pending bridge calls goes to zero.
         /// </summary>
         event Action BridgeIdle;
 
         /// <summary>
-        /// Fires when there are none, but now are, pending bridge calls
+        /// Fires when the bridge is no longer idle.
         /// </summary>
         event Action BridgeBusy;
     }
