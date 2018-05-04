@@ -12,7 +12,6 @@ using ReactNative.Views.Web.Events;
 using ReactNativeWebViewBridge;
 using System;
 using System.Collections.Concurrent;
-using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using static System.FormattableString;
@@ -85,9 +84,14 @@ namespace ReactNative.Views.Web
         [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
         public void SetBackgroundColor(WebView view, uint? color)
         {
-            view.DefaultBackgroundColor = color.HasValue
-                ? ColorHelpers.Parse(color.Value)
-                : Colors.White;
+            if (color.HasValue)
+            {
+                view.DefaultBackgroundColor = ColorHelpers.Parse(color.Value);
+            }
+            else
+            {
+                view.ClearValue(WebView.DefaultBackgroundColorProperty);
+            }
         }
 
         /// <summary>
