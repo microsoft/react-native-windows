@@ -77,7 +77,7 @@ test_script:
 
       if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
-      if ($platform -ne "ARM" -And $config -eq "ReleaseBundle" -Or $config -eq "DebugBundle") { nunit3-console "ReactWindows\Playground.Net46.Tests\bin\$platform\$config\Playground.Net46.Tests.dll" --result=myresults.xml }
+      if ($config -eq "ReleaseBundle" -Or $config -eq "DebugBundle") { nunit3-console "ReactWindows\Playground.Net46.Tests\bin\$platform\$config\Playground.Net46.Tests.dll" --result=myresults.xml }
 
   # Disabling for now
   #- npm run flow-check
