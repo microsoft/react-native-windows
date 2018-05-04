@@ -17,11 +17,8 @@ using System.Windows.Threading;
 
 namespace ReactNative.Modules.Core
 {
-    /// <summary>
-    /// A simple action queue that allows us to control the order certain
-    /// callbacks are executed within a given frame.
-    /// </summary>
-    public class ReactChoreographer : IDisposable
+    /// <inheritdoc />
+    public class ReactChoreographer : IReactChoreographer
     {
 #if WINDOWS_UWP
         private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
@@ -33,7 +30,7 @@ namespace ReactNative.Modules.Core
         private const int InactiveFrameCount = 120;
 
         private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
-        private static ReactChoreographer s_instance;
+        private static IReactChoreographer s_instance;
 
         private readonly object _gate = new object();
         private readonly HashSet<string> _callbackKeys = new HashSet<string>();
@@ -87,7 +84,7 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// The choreographer instance.
         /// </summary>
-        public static ReactChoreographer Instance
+        public static IReactChoreographer Instance
         {
             get
             {
@@ -104,7 +101,7 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// Factory for choreographer instances associated with non main-view dispatchers.
         /// </summary>
-        public static ReactChoreographer CreateSecondaryInstance(CoreApplicationView view)
+        public static IReactChoreographer CreateSecondaryInstance(CoreApplicationView view)
         {
             return new ReactChoreographer(view);
         }
@@ -285,14 +282,13 @@ namespace ReactNative.Modules.Core
 
         private void OnRendering(object sender, TimeSpan e)
         {
-            var renderingTime = _stopwatch.Elapsed;
             if (_frameEventArgs == null)
             {
-                _mutableReference = _frameEventArgs = new FrameEventArgs(renderingTime);
+                _mutableReference = _frameEventArgs = new FrameEventArgs(e);
             }
             else
             {
-                _mutableReference.Update(renderingTime);
+                _mutableReference.Update(e);
             }
 
             DispatchUICallback?.Invoke(this, _frameEventArgs);
