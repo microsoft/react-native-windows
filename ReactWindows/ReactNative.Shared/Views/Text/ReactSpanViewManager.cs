@@ -56,9 +56,14 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(Span view, uint? color)
         {
-            view.Foreground = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+            if (color.HasValue)
+            {
+                view.Foreground = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+            }
+            else
+            {
+                view.ClearValue(Span.ForegroundProperty);
+            }
         }
 
 #if !WINDOWS_UWP
@@ -70,23 +75,30 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.TextDecorationLine)]
         public void SetTextDecorationLine(Span view, string textDecorationLineValue)
         {
-            var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue) ?? TextDecorationLine.None;
+            var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue);
 
-            switch (textDecorationLine)
+            if (textDecorationLine.HasValue)
             {
-                case TextDecorationLine.Underline:
-                    view.TextDecorations = TextDecorations.Underline;
-                    break;
-                case TextDecorationLine.LineThrough:
-                    view.TextDecorations = TextDecorations.Strikethrough;
-                    break;
-                case TextDecorationLine.UnderlineLineThrough:
-                    view.TextDecorations = new TextDecorationCollection(TextDecorations.Underline.Concat(TextDecorations.Strikethrough));
-                    break;
-                case TextDecorationLine.None:
-                default:
-                    view.TextDecorations = null;
-                    break;
+                switch (textDecorationLine.Value)
+                {
+                    case TextDecorationLine.Underline:
+                        view.TextDecorations = TextDecorations.Underline;
+                        break;
+                    case TextDecorationLine.LineThrough:
+                        view.TextDecorations = TextDecorations.Strikethrough;
+                        break;
+                    case TextDecorationLine.UnderlineLineThrough:
+                        view.TextDecorations = new TextDecorationCollection(TextDecorations.Underline.Concat(TextDecorations.Strikethrough));
+                        break;
+                    case TextDecorationLine.None:
+                    default:
+                        view.TextDecorations = null;
+                        break;
+                }
+            }
+            else
+            {
+                view.ClearValue(Span.TextDecorationsProperty);
             }
         }
 #endif
