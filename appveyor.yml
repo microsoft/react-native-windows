@@ -72,12 +72,14 @@ test_script:
       $platform = $platform.value
 
       $config = Get-ChildItem Env:CONFIGURATION
+      
+      echo $config
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
       if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
-      if ($config -eq "ReleaseBundle" -Or $config -eq "DebugBundle") { nunit3-console "ReactWindows\Playground.Net46.Tests\bin\$platform\$config\Playground.Net46.Tests.dll" --result=myresults.xml }
+      nunit3-console "ReactWindows\Playground.Net46.Tests\bin\$platform\$config\Playground.Net46.Tests.dll" --result=myresults.xml
 
   # Disabling for now
   #- npm run flow-check
