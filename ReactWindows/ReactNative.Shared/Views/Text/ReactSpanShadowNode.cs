@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using ReactNative.Reflection;
@@ -23,7 +23,7 @@ namespace ReactNative.Views.Text
     public class ReactSpanShadowNode : ReactInlineShadowNode
     {
         private double? _fontSize;
-        private int _letterSpacing;
+        private int? _letterSpacing;
 
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
@@ -99,13 +99,11 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="letterSpacing">The letter spacing.</param>
         [ReactProp(ViewProps.LetterSpacing)]
-        public void SetLetterSpacing(int letterSpacing)
+        public void SetLetterSpacing(int? letterSpacing)
         {
-            var spacing = 50*letterSpacing; // TODO: Find exact multiplier (50) to match iOS
-
-            if (_letterSpacing != spacing)
+            if (_letterSpacing != letterSpacing)
             {
-                _letterSpacing = spacing;
+                _letterSpacing = letterSpacing;
                 MarkUpdated();
             }
         }
@@ -135,15 +133,51 @@ namespace ReactNative.Views.Text
         public override void UpdateInline(Inline inline)
         {
 #if WINDOWS_UWP
-            inline.CharacterSpacing = _letterSpacing;
-            inline.FontStyle = _fontStyle ?? FontStyle.Normal;
-            inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : FontFamily.XamlAutoFontFamily;
-#else
-            inline.FontStyle = _fontStyle ?? new FontStyle();
-            inline.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : new FontFamily();
+            if (_letterSpacing.HasValue)
+            {
+                var spacing = 50 * _letterSpacing.Value; // TODO: Find exact multiplier (50) to match iOS
+                inline.CharacterSpacing = spacing;
+            }
+            else
+            {
+                inline.ClearValue(Inline.CharacterSpacingProperty);
+            }
 #endif
-            inline.FontSize = _fontSize ?? 15;
-            inline.FontWeight = _fontWeight ?? FontWeights.Normal;
+            if (_fontStyle.HasValue)
+            {
+                inline.FontStyle = _fontStyle.Value;
+            }
+            else
+            {
+                inline.ClearValue(Inline.FontStyleProperty);
+            }
+            
+            if (!string.IsNullOrEmpty(_fontFamily))
+            {
+                inline.FontFamily = new FontFamily(_fontFamily);
+            }
+            else
+            {
+                inline.ClearValue(Inline.FontFamilyProperty);
+            }
+
+            if (_fontSize.HasValue)
+            {
+                inline.FontSize = _fontSize.Value;
+            }
+            else
+            {
+                inline.ClearValue(Inline.FontSizeProperty);
+            }
+
+            if (_fontWeight.HasValue)
+            {
+                inline.FontWeight = _fontWeight.Value;
+            }
+            else
+            {
+                inline.ClearValue(Inline.FontWeightProperty);
+            }
         }
 
         /// <summary>
