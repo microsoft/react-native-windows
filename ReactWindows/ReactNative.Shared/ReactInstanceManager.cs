@@ -171,7 +171,20 @@ namespace ReactNative
                 }
                 _hasStartedCreatingInitialContext = true;
 
-                return await CreateReactContextCoreAsync(token);
+                ReactContext context = null;
+                try
+                {
+                    context = await CreateReactContextCoreAsync(token);
+                }
+                finally
+                {
+                    if (context == null)
+                    {
+                        _hasStartedCreatingInitialContext = false;
+                    }
+                }
+
+                return context;
             }
         }
 
@@ -179,15 +192,16 @@ namespace ReactNative
         /// Awaits the currently initializing React context.
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
+        /// <param name="noThrow">If true, method returns null instead of throwing if no context exists.</param>
         /// <returns>
         /// A task to await the React context.
         /// </returns>
-        public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
+        public async Task<ReactContext> GetReactContextAsync(CancellationToken token, bool noThrow = false)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
-                if (!_hasStartedCreatingInitialContext)
+                if (!_hasStartedCreatingInitialContext && !noThrow)
                 {
                     throw new InvalidOperationException(
                         "Use the create method to start initializing the React context.");
@@ -219,7 +233,20 @@ namespace ReactNative
                 {
                     _hasStartedCreatingInitialContext = true;
 
-                    return await CreateReactContextCoreAsync(token);
+                    ReactContext context = null;
+                    try
+                    {
+                        context = await CreateReactContextCoreAsync(token);
+                    }
+                    finally
+                    {
+                        if (context == null)
+                        {
+                            _hasStartedCreatingInitialContext = false;
+                        }
+                    }
+
+                    return context;
                 }
             }
         }
