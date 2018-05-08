@@ -43,7 +43,7 @@ namespace ReactNative.UIManager
             ViewProps.BorderTopRightRadius,
             ViewProps.BorderBottomLeftRadius,
             ViewProps.BorderBottomRightRadius)]
-        public void SetBorderRadius(Border view, int index, double radius)
+        public virtual void SetBorderRadius(Border view, int index, double radius)
         {
             var cornerRadius = view.CornerRadius == null ? new CornerRadius() : view.CornerRadius;
 
@@ -78,7 +78,7 @@ namespace ReactNative.UIManager
             ViewProps.BackgroundColor,
             CustomType = "Color",
             DefaultUInt32 = ColorHelpers.Transparent)]
-        public void SetBackgroundColor(Border view, uint color)
+        public virtual void SetBackgroundColor(Border view, uint color)
         {
             view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
         }
@@ -89,7 +89,7 @@ namespace ReactNative.UIManager
         /// <param name="view">The view panel.</param>
         /// <param name="color">The color hex code.</param>
         [ReactProp("borderColor", CustomType = "Color")]
-        public void SetBorderColor(Border view, uint? color)
+        public virtual void SetBorderColor(Border view, uint? color)
         {
             view.BorderBrush = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
@@ -108,7 +108,7 @@ namespace ReactNative.UIManager
             ViewProps.BorderRightWidth,
             ViewProps.BorderTopWidth,
             ViewProps.BorderBottomWidth)]
-        public void SetBorderWidth(Border view, int index, double width)
+        public virtual void SetBorderWidth(Border view, int index, double width)
         {
             view.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
         }
@@ -186,7 +186,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected sealed override Border CreateViewInstance(ThemedReactContext reactContext)
+        protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
             var inner = CreateInnerElement(reactContext);
             return new UIAutomationBorder

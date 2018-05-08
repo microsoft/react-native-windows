@@ -143,7 +143,7 @@ namespace ReactNative.UIManager
         /// <param name="view">The view instance.</param>
         /// <param name="color">The shadow color.</param>
         [ReactProp("shadowColor", CustomType = "Color")]
-        public void SetShadowColor(TFrameworkElement view, uint? color)
+        public virtual void SetShadowColor(TFrameworkElement view, uint? color)
         {
             var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
             effect.Color = ColorHelpers.Parse(color.Value);
@@ -156,7 +156,7 @@ namespace ReactNative.UIManager
         /// <param name="view">The view instance.</param>
         /// <param name="offset">The shadow offset.</param>
         [ReactProp("shadowOffset")]
-        public void SetShadowOffset(TFrameworkElement view, JObject offset)
+        public virtual void SetShadowOffset(TFrameworkElement view, JObject offset)
         {
             var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
             var deltaX = offset.Value<double>("width");
@@ -174,7 +174,7 @@ namespace ReactNative.UIManager
         /// <param name="view">The view instance.</param>
         /// <param name="opacity">The shadow opacity.</param>
         [ReactProp("shadowOpacity")]
-        public void SetShadowOpacity(TFrameworkElement view, double opacity)
+        public virtual void SetShadowOpacity(TFrameworkElement view, double opacity)
         {
             var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
             effect.Opacity = opacity;
@@ -187,7 +187,7 @@ namespace ReactNative.UIManager
         /// <param name="view">The view instance.</param>
         /// <param name="radius">The shadow radius.</param>
         [ReactProp("shadowRadius")]
-        public void SetShadowRadius(TFrameworkElement view, double radius)
+        public virtual void SetShadowRadius(TFrameworkElement view, double radius)
         {
             var effect = (DropShadowEffect)view.Effect ?? new DropShadowEffect();
             effect.BlurRadius = radius;
