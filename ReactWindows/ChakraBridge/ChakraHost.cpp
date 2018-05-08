@@ -364,7 +364,7 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     }
     else
     {
-        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, false));
+        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, true));
     }
 
     SerializedSourceContext* context = new SerializedSourceContext();
@@ -373,7 +373,13 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     context->fileHandle = hFile;
     context->mapHandle = hMap;
 
-    IfFailRet(JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result));
+    JsErrorCode error = JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result);
+    if (error != JsNoError)
+    {
+        // UnloadSourceCallback is called even in error case (though LoadSourceCallback never is), so we can't fully delete the context
+        context->Dispose();
+        return error;
+    }
     return JsNoError;
 }
 
