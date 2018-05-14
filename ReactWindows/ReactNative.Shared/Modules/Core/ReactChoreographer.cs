@@ -207,6 +207,11 @@ namespace ReactNative.Modules.Core
             }
         }
 
+        /// <summary>
+        /// Returns the time elapsed since application start.
+        /// </summary>
+        public TimeSpan GetApplicationTime => _stopwatch.Elapsed;
+
         void IDisposable.Dispose()
         {
             _isDisposed = true;
