@@ -47,7 +47,7 @@ const {
  *
  * @platform windows
  */
-const FocusableWindowsAccessibilityTraits = Array.from(AccessibilityTraits).concat['listItem'];
+const FocusableWindowsAccessibilityTraits = Array.from(AccessibilityTraits).concat(['listItem']);
 
 // This describes the propType based interface for WindowsControl
 class FocusableWindowsTemplate {
