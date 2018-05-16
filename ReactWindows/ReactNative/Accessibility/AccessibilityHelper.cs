@@ -273,6 +273,16 @@ namespace ReactNative.Accessibility
         }
 
         /// <summary>
+        /// Gets the ImportantForAccessibility property for <paramref name="element"/>.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public static ImportantForAccessibility GetImportantForAccessibility(UIElement element)
+        {
+            return GetImportantForAccessibilityProp(element);
+        }
+
+        /// <summary>
         /// Sets the AccessibilityLabel property for <paramref name="element"/>.
         /// It uses <see cref="AutomationProperties.NameProperty"/> to expose the element and its children
         /// to narrator. AccessibilityLabel value is stored as an attached-like property.
@@ -290,6 +300,16 @@ namespace ReactNative.Accessibility
 
             // Mark element as dirty
             MarkElementDirty(element);
+        }
+
+        /// <summary>
+        /// Gets the AccessibilityLabel property for <paramref name="element"/>.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public static string GetAccessibilityLabel(UIElement element)
+        {
+            return GetAccessibilityLabelProp(element);
         }
 
         /// <summary>
