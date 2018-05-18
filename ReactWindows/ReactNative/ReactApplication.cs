@@ -81,9 +81,6 @@ namespace ReactNative
         /// <param name="arguments"></param>
         private void OnCreate(string arguments)
         {
-            Host.OnResume(Exit);
-            Host.ApplyArguments(arguments);
-
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -116,7 +113,7 @@ namespace ReactNative
                 // parameter
                 rootFrame.Content = new Page
                 {
-                    Content = Host.OnCreate(),
+                    Content = _delegate.OnCreate(arguments),
                 };
             }
 
