@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -156,6 +157,15 @@ namespace ReactNative.Modules.Storage
         public static JObject GetInvalidValueError(string key)
         {
             return GetError(key, "Invalid Value");
+        }
+
+        public static JObject GetError(Exception ex)
+        {
+            return new JObject
+            {
+                { "message", ex.Message },
+                { "key", ex.GetType().Name },
+            };
         }
     }
 }
