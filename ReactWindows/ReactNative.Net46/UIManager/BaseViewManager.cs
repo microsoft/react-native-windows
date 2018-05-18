@@ -42,9 +42,12 @@ namespace ReactNative.UIManager
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            if (transforms == null && _transforms.Remove(view))
+            if (transforms == null)
             {
-                ResetProjectionMatrix(view);
+                if (_transforms.Remove(view))
+                {
+                    ResetProjectionMatrix(view);
+                }
             }
             else
             {
