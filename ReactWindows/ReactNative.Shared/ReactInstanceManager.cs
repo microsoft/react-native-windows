@@ -195,12 +195,12 @@ namespace ReactNative
         /// <returns>
         /// A task to await the React context.
         /// </returns>
-        public async Task<ReactContext> GetReactContextAsync(CancellationToken token, bool noThrow = false)
+        public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
         {
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
-                if (!_hasStartedCreatingInitialContext && !noThrow)
+                if (!_hasStartedCreatingInitialContext)
                 {
                     throw new InvalidOperationException(
                         "Use the create method to start initializing the React context.");
