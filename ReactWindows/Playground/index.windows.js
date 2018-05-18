@@ -19,6 +19,9 @@ class Playground extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
+          Today is {this.props.date}
+        </Text>
+        <Text style={styles.instructions}>
           To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
