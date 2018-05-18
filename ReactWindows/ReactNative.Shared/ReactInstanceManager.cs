@@ -192,7 +192,6 @@ namespace ReactNative
         /// Awaits the currently initializing React context.
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
-        /// <param name="noThrow">If true, method returns null instead of throwing if no context exists.</param>
         /// <returns>
         /// A task to await the React context.
         /// </returns>
@@ -207,6 +206,23 @@ namespace ReactNative
                         "Use the create method to start initializing the React context.");
                 }
 
+                // By this point context has already been created due to the serialized aspect of context initialization.
+                return _currentReactContext;
+            }
+        }
+
+        /// <summary>
+        /// Awaits the currently initializing React context, or returns null if context fails to initialize.
+        /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>
+        /// A task to await the React context.
+        /// </returns>
+        public async Task<ReactContext> TryGetReactContextAsync(CancellationToken token)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            using (await _lock.LockAsync())
+            {
                 // By this point context has already been created due to the serialized aspect of context initialization.
                 return _currentReactContext;
             }
