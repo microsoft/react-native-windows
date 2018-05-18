@@ -171,7 +171,20 @@ namespace ReactNative
                 }
                 _hasStartedCreatingInitialContext = true;
 
-                return await CreateReactContextCoreAsync(token);
+                ReactContext context = null;
+                try
+                {
+                    context = await CreateReactContextCoreAsync(token);
+                }
+                finally
+                {
+                    if (context == null)
+                    {
+                        _hasStartedCreatingInitialContext = false;
+                    }
+                }
+
+                return context;
             }
         }
 
@@ -199,6 +212,23 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Awaits the currently initializing React context, or returns null if context fails to initialize.
+        /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>
+        /// A task to await the React context.
+        /// </returns>
+        public async Task<ReactContext> TryGetReactContextAsync(CancellationToken token)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            using (await _lock.LockAsync())
+            {
+                // By this point context has already been created due to the serialized aspect of context initialization.
+                return _currentReactContext;
+            }
+        }
+
+        /// <summary>
         /// Awaits the currently initializing React context, or creates a new one.
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
@@ -219,7 +249,20 @@ namespace ReactNative
                 {
                     _hasStartedCreatingInitialContext = true;
 
-                    return await CreateReactContextCoreAsync(token);
+                    ReactContext context = null;
+                    try
+                    {
+                        context = await CreateReactContextCoreAsync(token);
+                    }
+                    finally
+                    {
+                        if (context == null)
+                        {
+                            _hasStartedCreatingInitialContext = false;
+                        }
+                    }
+
+                    return context;
                 }
             }
         }
