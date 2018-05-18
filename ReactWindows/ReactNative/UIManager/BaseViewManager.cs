@@ -156,7 +156,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="label">The label.</param>
-        [ReactProp("accessibilityLabel")]
+        [ReactProp(ViewProps.AccessibilityLabel)]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
             AccessibilityHelper.SetAccessibilityLabel(view, label ?? "");
@@ -167,7 +167,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="liveRegion">The live region.</param>
-        [ReactProp("accessibilityLiveRegion")]
+        [ReactProp(ViewProps.AccessibilityLiveRegion)]
         public void SetAccessibilityLiveRegion(TFrameworkElement view, string liveRegion)
         {
             var liveSetting = AutomationLiveSetting.Off;
