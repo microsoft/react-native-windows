@@ -282,14 +282,13 @@ namespace ReactNative.Modules.Core
 
         private void OnRendering(object sender, TimeSpan e)
         {
-            var renderingTime = _stopwatch.Elapsed;
             if (_frameEventArgs == null)
             {
-                _mutableReference = _frameEventArgs = new FrameEventArgs(renderingTime);
+                _mutableReference = _frameEventArgs = new FrameEventArgs(e);
             }
             else
             {
-                _mutableReference.Update(renderingTime);
+                _mutableReference.Update(e);
             }
 
             DispatchUICallback?.Invoke(this, _frameEventArgs);

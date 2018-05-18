@@ -125,6 +125,7 @@ namespace ReactNative.UIManager
         public void SetDisplay(TFrameworkElement view, string display)
         {
             view.Visibility = display == "none" ? Visibility.Collapsed : Visibility.Visible;
+            AccessibilityHelper.OnElementChanged(view, UIElement.VisibilityProperty);
         }
 
         /// <summary>
@@ -157,7 +158,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="label">The label.</param>
-        [ReactProp("accessibilityLabel")]
+        [ReactProp(ViewProps.AccessibilityLabel)]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
             AccessibilityHelper.SetAccessibilityLabel(view, label ?? "");
@@ -168,7 +169,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="liveRegion">The live region.</param>
-        [ReactProp("accessibilityLiveRegion")]
+        [ReactProp(ViewProps.AccessibilityLiveRegion)]
         public void SetAccessibilityLiveRegion(TFrameworkElement view, string liveRegion)
         {
             var liveSetting = AutomationLiveSetting.Off;

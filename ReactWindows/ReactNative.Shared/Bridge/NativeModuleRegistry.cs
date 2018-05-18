@@ -33,7 +33,10 @@ namespace ReactNative.Bridge
             _moduleTable = moduleTable;
             _moduleInstances = moduleInstances;
             _batchCompleteListenerModules = _moduleTable
-                .Select(moduleDefinition => moduleDefinition.Target)
+                .Select(moduleDefinition =>
+                    moduleDefinition.Target is INativeModuleWrapper wrapper
+                        ? wrapper.Module
+                        : moduleDefinition.Target)
                 .OfType<IOnBatchCompleteListener>()
                 .ToList();
         }
@@ -58,7 +61,8 @@ namespace ReactNative.Bridge
         {
             if (_moduleInstances.TryGetValue(typeof(T), out var instance))
             {
-                return (T)instance;
+                var wrapper = instance as INativeModuleWrapper;
+                return wrapper != null ? (T)wrapper.Module : (T)instance;
             }
 
             throw new InvalidOperationException("No module instance for type '{0}'.");
@@ -361,7 +365,9 @@ namespace ReactNative.Bridge
                     var name = module.Name;
                     var moduleDef = new ModuleDefinition(name, module);
                     moduleTable.Add(moduleDef);
-                    moduleInstances.Add(module.GetType(), module);
+                    var wrapper = module as INativeModuleWrapper;
+                    var type = (wrapper?.Module ?? module).GetType();
+                    moduleInstances.Add(type, module);
                 }
 
                 return new NativeModuleRegistry(_reactContext, moduleTable, moduleInstances);
