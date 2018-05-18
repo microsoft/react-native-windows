@@ -77,6 +77,24 @@ namespace ReactNative.Views.Web
         }
 
         /// <summary>
+        /// Sets the background color for the <see cref="WebView"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
+        public void SetBackgroundColor(WebView view, uint? color)
+        {
+            if (color.HasValue)
+            {
+                view.DefaultBackgroundColor = ColorHelpers.Parse(color.Value);
+            }
+            else
+            {
+                view.ClearValue(WebView.DefaultBackgroundColorProperty);
+            }
+        }
+
+        /// <summary>
         /// Sets whether JavaScript is enabled or not.
         /// </summary>
         /// <param name="view">A webview instance.</param>
