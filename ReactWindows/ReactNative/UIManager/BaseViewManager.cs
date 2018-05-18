@@ -124,6 +124,7 @@ namespace ReactNative.UIManager
         public void SetDisplay(TFrameworkElement view, string display)
         {
             view.Visibility = display == "none" ? Visibility.Collapsed : Visibility.Visible;
+            AccessibilityHelper.OnElementChanged(view, UIElement.VisibilityProperty);
         }
 
         /// <summary>
