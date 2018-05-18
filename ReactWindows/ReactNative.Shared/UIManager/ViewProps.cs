@@ -6,6 +6,9 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Json;
 using System.Collections.Generic;
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Automation.Peers;
+#endif
 
 namespace ReactNative.UIManager
 {
@@ -88,6 +91,7 @@ namespace ReactNative.UIManager
         public const string AccessibilityTraits = "accessibilityTraits";
         public const string AccessibilityLabel = "accessibilityLabel";
         public const string ImportantForAccessibility = "importantForAccessibility";
+        public const string AccessibilityLiveRegion = "accessibilityLiveRegion";
 
         public const string BorderWidth = "borderWidth";
         public const string BorderLeftWidth = "borderLeftWidth";
@@ -234,6 +238,10 @@ namespace ReactNative.UIManager
                     case ImportantForAccessibility:
                         return value == null || value.Type == JTokenType.String &&
                             (value.Value<string>().Length == 0 || value.Value<string>() == "auto");
+#if WINDOWS_UWP
+                    case AccessibilityLiveRegion:
+                        return value.Value<AutomationLiveSetting>() == AutomationLiveSetting.Off;
+#endif
                 }
             }
 
