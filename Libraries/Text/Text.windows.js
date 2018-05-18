@@ -10,7 +10,6 @@
  */
 'use strict';
 
-const Platform = require('Platform');
 const React = require('React');
 const ReactNative = require('ReactNative');
 const ReactNativeViewAttributes = require('ReactNativeViewAttributes');
@@ -237,7 +236,7 @@ class Text extends ReactNative.NativeComponent<TextProps, State> {
     if (this.context.isInAParentText) {
       return <RCTVirtualText {...newProps} />;
     } else {
-      if (Platform.OS === 'windows' && typeof newProps.children === 'string') {
+      if (RCTSimpleText && typeof newProps.children === 'string') {
         let simpleProps = {};
         Object.assign(simpleProps, newProps);
         simpleProps.text = simpleProps.children;
@@ -255,7 +254,7 @@ var RCTText = createReactNativeComponentClass(
   () => viewConfig,
 );
 var RCTVirtualText = RCTText;
-var RCTSimpleText = RCTText;
+var RCTSimpleText;
 
 if (UIManager.RCTVirtualText) {
   RCTVirtualText = createReactNativeComponentClass('RCTVirtualText', () => ({
