@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace ReactNative.UIManager
 {
     /// <summary>
-    /// A wrapper <see cref="T:ReactNative.Bridge.ReactContext" /> that delegates lifecycle events to
+    /// A wrapper <see cref="T:ReactContext" /> that delegates lifecycle events to
     /// the original instance of <see cref="T:ReactNative.Bridge.ReactContext" />.
     /// </summary>
-    public class ThemedReactContext : IReactContext
+    public class ThemedReactContext : IReactContext, IAsyncDisposable
     {
         private readonly IReactContext _reactContext;
 
@@ -106,10 +106,9 @@ namespace ReactNative.UIManager
             _reactContext.HandleException(exception);
         }
 
-        /// <inheritdoc />
         public Task DisposeAsync()
         {
-            return _reactContext.DisposeAsync();
+            return (_reactContext as IAsyncDisposable)?.DisposeAsync();
         }
     }
 }

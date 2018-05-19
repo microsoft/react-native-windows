@@ -7,12 +7,11 @@ using System;
 
 namespace ReactNative.Bridge
 {
-    /// <inheritdoc />
     /// <summary>
     /// Abstract context wrapper for the React instance to manage
     /// lifecycle events.
     /// </summary>
-    public interface IReactContext : IAsyncDisposable
+    public interface IReactContext 
     {
         /// <summary>
         /// Gets the instance of the <see cref="IJavaScriptModule"/> associated

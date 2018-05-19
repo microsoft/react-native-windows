@@ -4,8 +4,8 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
-using System;
 using ReactNative.Bridge;
+using System;
 
 namespace ReactNative.UIManager
 {

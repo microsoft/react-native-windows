@@ -316,7 +316,10 @@ namespace ReactNative.Bridge
             /// <param name="reactContext">The React context.</param>
             public Builder(ReactContext reactContext)
             {
-                _reactContext = reactContext ?? throw new ArgumentNullException(nameof(reactContext));
+                if (reactContext == null)
+                    throw new ArgumentNullException(nameof(reactContext));
+
+                _reactContext = reactContext;
             }
 
             /// <summary>

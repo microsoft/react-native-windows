@@ -17,7 +17,7 @@ namespace ReactNative.Bridge
     /// Abstract context wrapper for the React instance to manage
     /// lifecycle events.
     /// </summary>
-    public class ReactContext : IReactContext
+    public class ReactContext : IReactContext, IAsyncDisposable
     {
         private readonly ReaderWriterLockSlim _lifecycleLock = new ReaderWriterLockSlim();
         private readonly ReaderWriterLockSlim _backgroundLock = new ReaderWriterLockSlim();
@@ -432,7 +432,7 @@ namespace ReactNative.Bridge
         /// <remarks>
         /// This method should be called exactly once.
         /// </remarks>
-        public void InitializeWithInstance(IReactInstance instance)
+        internal void InitializeWithInstance(IReactInstance instance)
         {
             if (instance == null)
                 throw new ArgumentNullException(nameof(instance));
