@@ -42,9 +42,12 @@ namespace ReactNative.UIManager
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            if (transforms == null && _transforms.Remove(view))
+            if (transforms == null)
             {
-                ResetProjectionMatrix(view);
+                if (_transforms.Remove(view))
+                {
+                    ResetProjectionMatrix(view);
+                }
             }
             else
             {
@@ -110,7 +113,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="label">The label.</param>
-        [ReactProp("accessibilityLabel")]
+        [ReactProp(ViewProps.AccessibilityLabel)]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
             AutomationProperties.SetName(view, label ?? "");
