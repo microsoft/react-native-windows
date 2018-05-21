@@ -299,7 +299,7 @@ namespace ReactNative.Accessibility
         /// <returns>Null if the <paramref name="element"/> is not a React Native view, value of the property otherwise.</returns>
         public static ImportantForAccessibility? GetImportantForAccessibility(UIElement element)
         {
-            return element.HasTag() ? GetImportantForAccessibilityProp(element) : null;
+            return element.HasTag() ? GetImportantForAccessibilityProp(element) : (ImportantForAccessibility?)null;
         }
 
         /// <summary>
