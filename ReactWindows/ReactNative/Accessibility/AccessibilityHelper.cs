@@ -156,19 +156,14 @@ namespace ReactNative.Accessibility
             return EnsureElementAccessibilityContext(element).Dirty;
         }
 
-        private static void MarkElementDirty(UIElement element, bool skipIfNoPeer = false)
+        private static void MarkElementDirty(UIElement element)
         {
             // Retrieve automation peer
             var peer = FrameworkElementAutomationPeer.FromElement(element);
 
             if (peer == null)
             {
-                if (skipIfNoPeer)
-                {
-                    return;
-                }
-
-                throw new InvalidOperationException("Element has no automation peer");
+                return;
             }
 
 #if PERF_LOG
@@ -224,7 +219,7 @@ namespace ReactNative.Accessibility
             SetCurrentlyHidingChildren(parent, ElementAccessibilityContext.HidingChildren.NotSure);
 
             // Mark the parent dirty (or skip if there is no associated peer available)
-            MarkElementDirty(parent, true);
+            MarkElementDirty(parent);
         }
 
         /// <summary>
@@ -238,7 +233,7 @@ namespace ReactNative.Accessibility
             parent.UpdateLayout();
 
             // Mark the parent dirty (or skip if there is no associated peer available)
-            MarkElementDirty(parent, true);
+            MarkElementDirty(parent);
         }
 
         /// <summary>
@@ -246,8 +241,33 @@ namespace ReactNative.Accessibility
         /// For example, it is used by <see cref="RichTextBlock"/> to notify when text or structure is changed inside the text block.
         /// </summary>
         /// <param name="uiElement">The <see cref="UIElement"/>.</param>
-        public static void OnElementChanged(UIElement uiElement)
+        /// <param name="dependencyProperty">The dependency property that changed. It's important to provide this parameter if possible.</param>
+        public static void OnElementChanged(UIElement uiElement, DependencyProperty dependencyProperty = null)
         {
+            if (ReferenceEquals(UIElement.VisibilityProperty, dependencyProperty))
+            {
+                // add/remove like
+                var fe = uiElement as FrameworkElement;
+                if (fe == null)
+                {
+                    return;
+                }
+                var parent = fe.Parent as UIElement;
+                if (parent == null)
+                {
+                    return;
+                }
+
+                if (uiElement.Visibility == Visibility.Visible)
+                {
+                    OnChildAdded(parent, fe);
+                }
+                else
+                {
+                    OnChildRemoved(parent);
+                }
+                return;
+            }
             // Mark the element dirty
             MarkElementDirty(uiElement);
         }

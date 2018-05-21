@@ -57,8 +57,11 @@ class MSBuildTools {
 
     const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + ['"' + slnFile + '"'].concat(args).join(' ');
     const execOptions = verbose ? { stdio: 'inherit' } : {};
-    const results = child_process.execSync(cmd, execOptions).toString().split(EOL);
-    results.forEach(result => console.log(chalk.white(result)));
+    const result = child_process.execSync(cmd, execOptions);
+    // result is null when enabling verbose option
+    if (result != null) {
+      result.toString().split(EOL).forEach(result => console.log(chalk.white(result)));
+    }
   }
 }
 

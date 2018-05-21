@@ -506,7 +506,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
-        [ReactProp("importantForAccessibility")]
+        [ReactProp(ViewProps.ImportantForAccessibility)]
         public void SetImportantForAccessibility(ReactTextBox view, string importantForAccessibilityValue)
         {
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
