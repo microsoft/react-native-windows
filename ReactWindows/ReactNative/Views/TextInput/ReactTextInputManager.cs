@@ -759,17 +759,14 @@ namespace ReactNative.Views.TextInput
         private void OnKeyUp(object sender, KeyRoutedEventArgs e)
         {
             var textBox = (ReactTextBox)sender;
-            if (!e.Handled)
-            {
-                textBox.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new KeyEvent(
-                            KeyEvent.KeyUpEventString,
-                            textBox.GetTag(),
-                            e.Key));
-            }
+            textBox.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new KeyEvent(
+                        KeyEvent.KeyUpEventString,
+                        textBox.GetTag(),
+                        e.Key));
         }
     }
 }
