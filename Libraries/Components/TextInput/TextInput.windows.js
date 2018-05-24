@@ -459,6 +459,19 @@ const TextInput = createReactClass({
      */
     onKeyPress: PropTypes.func,
     /**
+     * Callback that is called when a key down event occurs.
+     * This event provides symmetry with `onKeyUp`, and has the same semantics
+     * as the `onKeyPress` event.
+     */
+    onKeyDown: PropTypes.func,
+    /**
+     * Callback that is called when a key up event occurs.
+     * This will be called with `{ nativeEvent: { key: keyValue } }`
+     * where `keyValue` is `'Enter'` or `'Backspace'` for respective keys and
+     * the typed-in character otherwise including `' '` for space.
+     */
+    onKeyUp: PropTypes.func,
+    /**
      * Invoked on mount and layout changes with `{x, y, width, height}`.
      */
     onLayout: PropTypes.func,
@@ -985,6 +998,7 @@ const TextInput = createReactClass({
           onFocus={this._onFocus}
           onBlur={this._onBlur}
           onChange={this._onChange}
+          onKeyPress={this._onKeyPress}
           text={this._getText()}
           isTabStop={windowsTabFocusable}
           tabIndex={tabIndex}
@@ -1001,6 +1015,7 @@ const TextInput = createReactClass({
           onContentSizeChange={this._onContentSizeChange}
           onSelectionChange={this._onSelectionChange}
           onTextInput={this._onTextInput}
+          onKeyPress={this._onKeyPress}
           text={this._getText()}
           onScroll={this._onScroll}
           isTabStop={windowsTabFocusable}
@@ -1146,6 +1161,11 @@ const TextInput = createReactClass({
   _onTextInput: function(event: Event) {
     this.props.onTextInput && this.props.onTextInput(event);
   },
+
+  _onKeyPress: function(event: Event) {
+    this.props.onKeyDown && this.props.onKeyDown(event);
+    this.props.onKeyPress && this.props.onKeyPress(event);
+  }
 
   _onScroll: function(event: Event) {
     this.props.onScroll && this.props.onScroll(event);
