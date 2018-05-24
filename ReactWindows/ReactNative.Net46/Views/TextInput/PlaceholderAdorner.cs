@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
@@ -578,21 +578,23 @@ namespace ReactNative.Views.TextInput
             ClipToBoundsProperty.OverrideMetadata(typeof(PlaceholderAdorner), new FrameworkPropertyMetadata(true));
         }
 
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="T:T:ReactNative.Views.TextInput.PlaceholderAdorner"/> class.
         /// </summary>
         /// <param name="adornedElement">
         ///   The element to bind the adorner to.
         /// </param>
+        /// <param name="textControl"></param>
         /// <exception cref="T:System.ArgumentNullException">
         ///   Raised when adornedElement is null.
         /// </exception>
-        public PlaceholderAdorner(PasswordBox adornedElement)
-            : this((Control)adornedElement)
+        public PlaceholderAdorner(UIElement adornedElement, PasswordBox textControl)
+            : this(adornedElement, (Control)textControl)
         {
-            if (!(adornedElement.IsFocused && (bool)adornedElement.GetValue(HideOnFocusProperty)))
+            if (!(textControl.IsFocused && (bool)textControl.GetValue(HideOnFocusProperty)))
             {
-                adornedElement.PasswordChanged += this.AdornedElement_ContentChanged;
+                textControl.PasswordChanged += this.AdornedElement_ContentChanged;
             }
         }
 
@@ -602,11 +604,12 @@ namespace ReactNative.Views.TextInput
         /// <param name="adornedElement">
         ///   The element to bind the adorner to.
         /// </param>
+        /// <param name="textControl"></param>
         /// <exception cref="T:System.ArgumentNullException">
         ///   Raised when adornedElement is null.
         /// </exception>
-        public PlaceholderAdorner(TextBoxBase adornedElement)
-            : this((Control)adornedElement)
+        public PlaceholderAdorner(UIElement adornedElement, TextBoxBase textControl)
+            : this(adornedElement, (Control)textControl)
         {
 
             //if ((bool) adornedElement.GetValue(ShowWhenContentEmptyProperty))
@@ -614,9 +617,9 @@ namespace ReactNative.Views.TextInput
             //    adornedElement.TextChanged += this.AdornedElement_ContentChanged;
             //}
 
-            if (!(adornedElement.IsFocused && (bool)adornedElement.GetValue(HideOnFocusProperty)))
+            if (!(textControl.IsFocused && (bool)textControl.GetValue(HideOnFocusProperty)))
             {
-                adornedElement.TextChanged += this.AdornedElement_ContentChanged;
+                textControl.TextChanged += this.AdornedElement_ContentChanged;
             }
         }
 
@@ -626,16 +629,17 @@ namespace ReactNative.Views.TextInput
         /// <param name="adornedElement">
         ///   The element to bind the adorner to.
         /// </param>
+        /// <param name="textControl"></param>
         /// <exception cref="T:System.ArgumentNullException">
         ///   Raised when adornedElement is null.
         /// </exception>
-        protected PlaceholderAdorner(Control adornedElement)
+        protected PlaceholderAdorner(UIElement adornedElement, Control textControl)
             : base(adornedElement)
         {
-            if ((bool)adornedElement.GetValue(HideOnFocusProperty))
+            if ((bool)textControl.GetValue(HideOnFocusProperty))
             {
-                adornedElement.GotFocus += this.AdornedElement_GotFocus;
-                adornedElement.LostFocus += this.AdornedElement_LostFocus;
+                textControl.GotFocus += this.AdornedElement_GotFocus;
+                textControl.LostFocus += this.AdornedElement_LostFocus;
             }
         }
         #endregion
@@ -650,7 +654,8 @@ namespace ReactNative.Views.TextInput
         /// </param>
         protected override void OnRender(DrawingContext drawingContext)
         {
-            var adornedElement = this.AdornedElement as Control;
+            
+            var adornedElement = getTextBoxControl(this.AdornedElement) as Control;
 
             string placeholderText;
 
@@ -706,25 +711,25 @@ namespace ReactNative.Views.TextInput
             double top = 0.0;
             if (adornedElement.FlowDirection == FlowDirection.RightToLeft)
             {
-                left = adornedElement.BorderThickness.Right + adornedElement.Padding.Right + 2.0;
+                left = adornedElement.BorderThickness.Right + /*adornedElement.Padding.Right+*/ 2.0;
             }
             else
             {
-                left = adornedElement.BorderThickness.Left + adornedElement.Padding.Left + 2.0;
+                left = adornedElement.BorderThickness.Left +/* adornedElement.Padding.Left + */2.0;
             }
 
             switch (adornedElement.VerticalContentAlignment)
             {
                 case VerticalAlignment.Top:
                 case VerticalAlignment.Stretch:
-                    top = adornedElement.BorderThickness.Top + adornedElement.Padding.Top;
+                    top = adornedElement.BorderThickness.Top /* + adornedElement.Padding.Top*/;
                     break;
                 case VerticalAlignment.Bottom:
-                    top = size.Height - adornedElement.BorderThickness.Bottom - adornedElement.Padding.Bottom - formattedText.Height;
+                    top = size.Height - adornedElement.BorderThickness.Bottom /*- adornedElement.Padding.Bottom */- formattedText.Height;
                     break;
                 case VerticalAlignment.Center:
-                    top = (size.Height + adornedElement.BorderThickness.Top - adornedElement.BorderThickness.Bottom +
-                            adornedElement.Padding.Top - adornedElement.Padding.Bottom - formattedText.Height) / 2.0;
+                    top = (size.Height + adornedElement.BorderThickness.Top - adornedElement.BorderThickness.Bottom /*+
+                            adornedElement.Padding.Top - adornedElement.Padding.Bottom*/ - formattedText.Height) / 2.0;
                     break;
             }
 
@@ -755,7 +760,9 @@ namespace ReactNative.Views.TextInput
         /// </param>
         private void AdornedElement_GotFocus(object sender, RoutedEventArgs e)
         {
-            var textBoxBase = AdornedElement as TextBoxBase;
+            var adornedElement = getTextBoxControl(this.AdornedElement);
+
+            var textBoxBase = adornedElement as TextBoxBase;
 
             if (textBoxBase != null)
             {
@@ -763,7 +770,7 @@ namespace ReactNative.Views.TextInput
             }
             else
             {
-                var passwordBox = AdornedElement as PasswordBox;
+                var passwordBox = adornedElement as PasswordBox;
 
                 if (passwordBox != null)
                 {
@@ -788,7 +795,9 @@ namespace ReactNative.Views.TextInput
         /// </param>
         private void AdornedElement_LostFocus(object sender, RoutedEventArgs e)
         {
-            var textBoxBase = AdornedElement as TextBoxBase;
+            var adornedElement = getTextBoxControl(this.AdornedElement);
+
+            var textBoxBase = adornedElement as TextBoxBase;
 
             if (textBoxBase != null)
             {
@@ -796,7 +805,7 @@ namespace ReactNative.Views.TextInput
             }
             else
             {
-                var passwordBox = AdornedElement as PasswordBox;
+                var passwordBox = adornedElement as PasswordBox;
 
                 if (passwordBox != null)
                 {
@@ -833,6 +842,55 @@ namespace ReactNative.Views.TextInput
         #endregion
 
         #region Private Static Methods
+        /// <summary>
+        /// finding ui element in Visual Tree
+        /// </summary>
+        /// <param name="firstElement"></param>
+        /// start point element
+        /// <param name="searchElementType"></param>
+        /// searched element type
+        /// <returns></returns>
+        private static DependencyObject getUIElement(DependencyObject firstElement, Type searchElementType)
+        {
+            DependencyObject result = null;
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(firstElement); i++)
+            {
+                var item = VisualTreeHelper.GetChild(firstElement, i);
+                if (item.GetType().Equals(searchElementType))
+                {
+                    result = item;
+                    return result;
+                }
+                else
+                {
+                    result = getUIElement(item, searchElementType);
+                    if (result != null) return result;
+                }
+            }
+            return result;
+        }
+        /// <summary>
+        /// finding text input element in Visual Tree
+        /// </summary>
+        /// <param name="firstElement"></param>
+        /// <returns></returns>
+        private static UIElement getTextBoxControl(DependencyObject firstElement)
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(firstElement);
+            if (parent == null)
+            {
+                return null;
+            }
+
+            if (parent is TextBox || parent is PasswordBox || parent is RichTextBox)
+            {
+                return parent as UIElement;
+            }
+            else
+            {
+                return getTextBoxControl(parent);
+            }
+        }
 
         /// <summary>
         ///   Adds a <see cref="T:T:ReactNative.Views.TextInput.PlaceholderAdorner"/> to the adorner layer.
@@ -848,6 +906,10 @@ namespace ReactNative.Views.TextInput
             {
                 return;
             }
+
+            var reactTextBoxAdornerLayer = getUIElement(adornedElement, typeof(AdornerLayer)) as AdornerLayer;
+
+            adornerLayer = reactTextBoxAdornerLayer ?? adornerLayer;
 
             var adorners = adornerLayer.GetAdorners(adornedElement);
             if (adorners != null)
@@ -866,7 +928,14 @@ namespace ReactNative.Views.TextInput
 
             if (textBox != null)
             {
-                adornerLayer.Add(new PlaceholderAdorner(textBox));
+                //Get ScrollContentPresenter for ReactTextBox
+                var scrollContent = getUIElement(adornedElement, typeof(ScrollContentPresenter)) as ScrollContentPresenter;
+
+                if (scrollContent != null)
+                    adornerLayer.Add(new PlaceholderAdorner(scrollContent, textBox));
+                else
+                    adornerLayer.Add(new PlaceholderAdorner(textBox, textBox));
+
                 return;
             }
 
@@ -874,7 +943,12 @@ namespace ReactNative.Views.TextInput
 
             if (richTextBox != null)
             {
-                adornerLayer.Add(new PlaceholderAdorner(richTextBox));
+                //Get ScrollContentPresenter for ReactTextBox
+                var scrollContent = getUIElement(adornedElement, typeof(ScrollContentPresenter)) as ScrollContentPresenter;
+                if (scrollContent != null)
+                    adornerLayer.Add(new PlaceholderAdorner(scrollContent, richTextBox));
+                else
+                    adornerLayer.Add(new PlaceholderAdorner(richTextBox, richTextBox));
                 return;
             }
 
@@ -882,7 +956,12 @@ namespace ReactNative.Views.TextInput
 
             if (passwordBox != null)
             {
-                adornerLayer.Add(new PlaceholderAdorner(passwordBox));
+                var scrollContent = getUIElement(adornedElement, typeof(ScrollContentPresenter)) as ScrollContentPresenter;
+
+                if (scrollContent != null)
+                    adornerLayer.Add(new PlaceholderAdorner(scrollContent, passwordBox));
+                else
+                    adornerLayer.Add(new PlaceholderAdorner(passwordBox, passwordBox));
                 return;
             }
 
@@ -978,7 +1057,7 @@ namespace ReactNative.Views.TextInput
         /// </returns>
         private bool IsElementEmpty()
         {
-            var adornedElement = AdornedElement;
+            var adornedElement = getTextBoxControl(AdornedElement);
 
             var textBox = adornedElement as TextBox;
 
@@ -1039,7 +1118,7 @@ namespace ReactNative.Views.TextInput
         /// </returns>
         private TextAlignment ComputedTextAlignment()
         {
-            var adornedElement = AdornedElement as Control;
+            var adornedElement = getTextBoxControl(this.AdornedElement) as Control;
 
             var textBox = adornedElement as TextBox;
 
