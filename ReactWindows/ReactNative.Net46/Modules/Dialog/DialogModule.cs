@@ -53,33 +53,47 @@ namespace ReactNative.Modules.Dialog
 
             if (containsPositive && containsNegative)
             {
-                var result = MessageBox.Show(message, title, MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
+                DispatcherHelpers.RunOnDispatcher(() =>
                 {
-                    actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
-                }
-                else
-                {
-                    actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonNegativeValue);
-                }
+                    var result = MessageBox.Show(message, title, MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
+                    }
+                    else
+                    {
+                        actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonNegativeValue);
+                    }
+                });
+
             }
             else if (containsPositive)
             {
-                var result = MessageBox.Show(message, title, MessageBoxButton.OK);
-                if (result == MessageBoxResult.OK)
+                DispatcherHelpers.RunOnDispatcher(() =>
                 {
-                    actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
-                }
+                    var result = MessageBox.Show(message, title, MessageBoxButton.OK);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
+                    }
+                });
             }
             else if (containsTitle)
             {
-                MessageBox.Show(message, title);
+                DispatcherHelpers.RunOnDispatcher(() =>
+                {
+                    MessageBox.Show(message, title);
+                });
+
             }
             else
             {
-                MessageBox.Show(message);
+                DispatcherHelpers.RunOnDispatcher(() =>
+                {
+                    MessageBox.Show(message);
+                });
             }
-            
+
         }
 
     }
