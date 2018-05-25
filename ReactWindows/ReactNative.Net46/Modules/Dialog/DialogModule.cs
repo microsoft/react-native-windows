@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Bridge.Queue;
 using ReactNative.Json;
 using System.Windows;
 
@@ -12,9 +13,11 @@ namespace ReactNative.Modules.Dialog
 {
     class DialogModule : ReactContextNativeModuleBase
     {
+
         public DialogModule(ReactContext reactContext)
-            : base(reactContext)
+            : base(reactContext, new DispatcherActionQueue(reactContext.NativeModuleCallExceptionHandler))
         {
+
         }
 
         public override string Name
@@ -53,45 +56,31 @@ namespace ReactNative.Modules.Dialog
 
             if (containsPositive && containsNegative)
             {
-                DispatcherHelpers.RunOnDispatcher(() =>
+                var result = MessageBox.Show(message, title, MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
                 {
-                    var result = MessageBox.Show(message, title, MessageBoxButton.OKCancel);
-                    if (result == MessageBoxResult.OK)
-                    {
-                        actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
-                    }
-                    else
-                    {
-                        actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonNegativeValue);
-                    }
-                });
-
+                    actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
+                }
+                else
+                {
+                    actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonNegativeValue);
+                }
             }
             else if (containsPositive)
             {
-                DispatcherHelpers.RunOnDispatcher(() =>
+                var result = MessageBox.Show(message, title, MessageBoxButton.OK);
+                if (result == MessageBoxResult.OK)
                 {
-                    var result = MessageBox.Show(message, title, MessageBoxButton.OK);
-                    if (result == MessageBoxResult.OK)
-                    {
-                        actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
-                    }
-                });
+                    actionCallback.Invoke(DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.KeyButtonPositiveValue);
+                }
             }
             else if (containsTitle)
             {
-                DispatcherHelpers.RunOnDispatcher(() =>
-                {
-                    MessageBox.Show(message, title);
-                });
-
+                MessageBox.Show(message, title);
             }
             else
             {
-                DispatcherHelpers.RunOnDispatcher(() =>
-                {
                     MessageBox.Show(message);
-                });
             }
 
         }
