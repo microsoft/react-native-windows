@@ -16,7 +16,6 @@ namespace ReactNative.Modules.Dialog
         public DialogModule(ReactContext reactContext)
             : base(reactContext, new DispatcherActionQueue(reactContext.HandleException))
         {
-
         }
 
         public override string Name
