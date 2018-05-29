@@ -265,6 +265,20 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
+                    TouchEventType.PointerMove.GetJavaScriptEventName(),
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
+                            {
+                                { "bubbled", "onMouseMove" },
+                                { "captured", "onMouseMoveCapture" },
+                            }
+                        }
+                    }
+                },
+                {
                     "topFocus",
                     new JObject
                     {

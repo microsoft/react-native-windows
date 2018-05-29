@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
+using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
 using System.Collections.Generic;
@@ -141,6 +142,20 @@ namespace ReactNative.UIManager
         public void SetTooltip(TFrameworkElement view, string tooltip)
         {
             ToolTipService.SetToolTip(view, tooltip);
+        }
+
+        /// <summary>
+        /// Detects the presence of a mouse view handler for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="index">The prop index.</param>
+        /// <param name="handlerPresent">true if a mouse move handler is present.</param>
+        [ReactPropGroup(
+            "onMouseMove",
+            "onMouseMoveCapture")]
+        public void SetOnMouseMove(TFrameworkElement view, int index, bool handlerPresent)
+        {
+            view.SetMouseMoveHandlerPresent(index, handlerPresent);
         }
 
         /// <summary>
@@ -306,7 +321,7 @@ namespace ReactNative.UIManager
             else
             {
                 var transform = new MatrixTransform(projectionMatrix.M11,
-					projectionMatrix.M12,
+                    projectionMatrix.M12,
                     projectionMatrix.M21,
                     projectionMatrix.M22,
                     projectionMatrix.OffsetX,

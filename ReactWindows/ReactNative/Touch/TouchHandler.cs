@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
-using Windows.UI.Core;
+using Windows.System;
 using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -54,27 +54,43 @@ namespace ReactNative.Touch
             }
         }
 
-        public static void OnPointerEntered(DependencyObject view, PointerRoutedEventArgs e)
+        public static void OnPointerEntered(UIElement view, PointerRoutedEventArgs e)
         {
             if (ShouldSendEnterLeaveEvent(view))
             {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
+                OnPointerEnteredMovedExited(TouchEventType.Entered, view, view.GetTag(), e);
             }
         }
 
-        public static void OnPointerExited(DependencyObject view, PointerRoutedEventArgs e)
+        public static void OnPointerExited(UIElement view, PointerRoutedEventArgs e)
         {
             if (ShouldSendEnterLeaveEvent(view))
             {
+                OnPointerEnteredMovedExited(TouchEventType.Exited, view, view.GetTag(), e);
+            }
+        }
+
+        private static void OnPointerEnteredMovedExited(TouchEventType eventType, UIElement view, int reactTag, PointerRoutedEventArgs e)
+        {
+            var pointer = new ReactPointer
+            {
+                Target = reactTag,
+                PointerId = e.Pointer.PointerId,
+                Identifier = 0,
+                PointerType = e.Pointer.PointerDeviceType.GetPointerDeviceTypeName(),
+                ReactView = view,
+            };
+
+            var rootView = RootViewHelper.GetRootView(view);
+            if (rootView != null)
+            {
+                rootView.TouchHandler.UpdatePointerForEvent(pointer, e);
+
                 view.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
                     .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
+                        new PointerEnterMoveExitEvent(eventType, reactTag, pointer, e.Pointer.PointerId));
             }
         }
 
@@ -109,7 +125,7 @@ namespace ReactNative.Touch
                     ReactView = reactView,
                 };
 
-                UpdatePointerForEvent(pointer, rootPoint, viewPoint);
+                UpdatePointerForEvent(pointer, rootPoint, viewPoint, e.KeyModifiers);
 
                 var pointerIndex = _pointers.Count;
                 _pointers.Add(pointer);
@@ -122,9 +138,32 @@ namespace ReactNative.Touch
             var pointerIndex = IndexOfPointerWithId(e.Pointer.PointerId);
             if (pointerIndex != -1)
             {
+                // Touch/Dragging case
                 var pointer = _pointers[pointerIndex];
                 UpdatePointerForEvent(pointer, e);
                 DispatchTouchEvent(TouchEventType.Move, _pointers, pointerIndex);
+            }
+            else
+            {
+                // Moving case (with no buttons pressed)
+                var originalSource = e.OriginalSource as DependencyObject;
+                var rootPoint = e.GetCurrentPoint(_view);
+                var transform = ((UIElement)sender).TransformToVisual(Window.Current.Content);
+                Point p = transform.TransformPoint(rootPoint.Position);
+                var reactView = GetReactViewTarget(originalSource, p);
+
+                if (reactView != null)
+                {
+                    // Check if any handler is hooked so we don't overwhelm the bridge.
+                    // Note: Even though reactTag is granular (as returned by compound view interface), we start the check from the UIElement.
+                    if (ShouldSendPointerMoveEvent(reactView))
+                    {
+                        var viewPoint = e.GetCurrentPoint(reactView);
+                        var reactTag = reactView.GetReactCompoundView().GetReactTagAtPoint(reactView, viewPoint.Position);
+
+                        OnPointerEnteredMovedExited(TouchEventType.PointerMove, reactView, reactTag, e);
+                    }
+                }
             }
         }
 
@@ -222,10 +261,10 @@ namespace ReactNative.Touch
         {
             var rootPoint = e.GetCurrentPoint(_view);
             var viewPoint = e.GetCurrentPoint(pointer.ReactView);
-            UpdatePointerForEvent(pointer, rootPoint, viewPoint);
+            UpdatePointerForEvent(pointer, rootPoint, viewPoint, e.KeyModifiers);
         }
 
-        private void UpdatePointerForEvent(ReactPointer pointer, PointerPoint rootPoint, PointerPoint viewPoint)
+        private void UpdatePointerForEvent(ReactPointer pointer, PointerPoint rootPoint, PointerPoint viewPoint, VirtualKeyModifiers keyModifiers)
         {
             var positionInRoot = rootPoint.Position;
             var positionInView = viewPoint.Position;
@@ -238,9 +277,9 @@ namespace ReactNative.Touch
             pointer.Force = rootPoint.Properties.Pressure;
             pointer.IsBarrelButtonPressed = rootPoint.Properties.IsBarrelButtonPressed;
 
-            pointer.ShiftKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
-            pointer.AltKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
-            pointer.CtrlKey = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
+            pointer.ShiftKey = keyModifiers.HasFlag(VirtualKeyModifiers.Shift);
+            pointer.AltKey = keyModifiers.HasFlag(VirtualKeyModifiers.Menu);
+            pointer.CtrlKey = keyModifiers.HasFlag(VirtualKeyModifiers.Control);
         }
 
         private void DispatchTouchEvent(TouchEventType touchEventType, List<ReactPointer> activePointers, int pointerIndex)
@@ -323,6 +362,29 @@ namespace ReactNative.Touch
             return true;
         }
 
+        private static bool ShouldSendPointerMoveEvent(DependencyObject view)
+        {
+            // If the target is not a child of the root view, then this pointer
+            // event does not belong to React.
+            if (!RootViewHelper.IsReactSubview(view))
+            {
+                return false;
+            }
+
+            // This is a bubbling event, so we have to check if mouse move hanlder is hooked to any ancestor 
+            var viewHierarchy = RootViewHelper.GetReactViewHierarchy(view);
+            foreach (var ancestor in viewHierarchy)
+            {
+                var mouseMoveHandlerPresent = ancestor.GetMouseMoveHandlerPresent();
+                if (mouseMoveHandlerPresent)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static Point AdjustPointForStatusBar(Point point)
         {
             var currentOrientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
@@ -386,14 +448,18 @@ namespace ReactNative.Touch
             }
         }
 
-        class PointerEnterExitEvent : Event
+        class PointerEnterMoveExitEvent : Event
         {
             private readonly TouchEventType _touchEventType;
+            private readonly ReactPointer _pointer;
+            private readonly uint _coalescingKey;
 
-            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag) 
+            public PointerEnterMoveExitEvent(TouchEventType touchEventType, int viewTag, ReactPointer pointer, uint coalescingKey) 
                 : base(viewTag)
             {
                 _touchEventType = touchEventType;
+                _pointer = pointer;
+                _coalescingKey = coalescingKey;
             }
 
             public override string EventName
@@ -408,30 +474,38 @@ namespace ReactNative.Touch
             {
                 get
                 {
-                    return false;
+                    return _touchEventType == TouchEventType.PointerMove;
+                }
+            }
+
+            public override short CoalescingKey
+            {
+                get
+                {
+                    unchecked
+                    {
+                        return (short)_coalescingKey;
+                    }
                 }
             }
 
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
-                var eventData = new JObject
-                {
-                    { "target", ViewTag },
-                };
+                var eventData = JObject.FromObject(_pointer);
 
-                var enterLeaveEventName = default(string);
+                var directEventName = default(string);
                 if (_touchEventType == TouchEventType.Entered)
                 {
-                    enterLeaveEventName = "topMouseEnter";
+                    directEventName = "topMouseEnter";
                 }
                 else if (_touchEventType == TouchEventType.Exited)
                 {
-                    enterLeaveEventName = "topMouseLeave";
+                    directEventName = "topMouseLeave";
                 }
-               
-                if (enterLeaveEventName != null)
+
+                if (directEventName != null)
                 {
-                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
+                    eventEmitter.receiveEvent(ViewTag, directEventName, eventData);
                 }
 
                 eventEmitter.receiveEvent(ViewTag, EventName, eventData);
