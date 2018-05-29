@@ -4,7 +4,12 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @providesModule ViewPropTypes
  * @flow
+ */
+/**
+ * NOTICE: This file is copied from https://github.com/facebook/react-native/blob/0.55-stable/Libraries/Components/View/ViewPropTypes.js
+ * This file provides temporary patch, and will be deleted in react-native-windows v0.56.
  */
 'use strict';
 
@@ -41,7 +46,7 @@ export type ViewProps = {
   accessibilityActions?: Array<string>,
   accessibilityComponentType?: AccessibilityComponentType,
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
-  importantForAccessibility?: 'auto'| 'yes'| 'no'| 'no-hide-descendants' | 'yes-dont-hide-descendants',
+  importantForAccessibility?: 'auto'| 'yes'| 'no'| 'no-hide-descendants',
   accessibilityTraits?: AccessibilityTrait | Array<AccessibilityTrait>,
   accessibilityViewIsModal?: bool,
   accessibilityElementsHidden?: bool,
@@ -73,8 +78,6 @@ export type ViewProps = {
 } & TVViewProps;
 
 module.exports = {
-  ...PlatformViewPropTypes,
-
   /**
    * When `true`, indicates that the view is an accessibility element.
    * By default, all the touchable elements are accessible.
@@ -137,7 +140,6 @@ module.exports = {
     'yes',
     'no',
     'no-hide-descendants',
-    'yes-dont-hide-descendants', // Windows only
   ]),
 
   /**
@@ -428,4 +430,6 @@ module.exports = {
    * See http://facebook.github.io/react-native/docs/view.html#needsoffscreenalphacompositing
    */
   needsOffscreenAlphaCompositing: PropTypes.bool,
+
+  ...PlatformViewPropTypes,
 };
