@@ -4,12 +4,12 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * NOTICE: This file is copied from:
+ *   https://github.com/facebook/react-native/blob/0.55-stable/Libraries/Components/View/ViewPropTypes.js
+ * This includes a temporary patch, and will be deleted in react-native-windows v0.56.
+ *
  * @providesModule ViewPropTypes
  * @flow
- */
-/**
- * NOTICE: This file is copied from https://github.com/facebook/react-native/blob/0.55-stable/Libraries/Components/View/ViewPropTypes.js
- * This file provides temporary patch, and will be deleted in react-native-windows v0.56.
  */
 'use strict';
 
