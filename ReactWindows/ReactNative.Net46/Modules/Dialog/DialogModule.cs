@@ -13,7 +13,6 @@ namespace ReactNative.Modules.Dialog
 {
     class DialogModule : ReactContextNativeModuleBase
     {
-
         public DialogModule(ReactContext reactContext)
             : base(reactContext, new DispatcherActionQueue(reactContext.NativeModuleCallExceptionHandler))
         {
@@ -80,10 +79,8 @@ namespace ReactNative.Modules.Dialog
             }
             else
             {
-                    MessageBox.Show(message);
+                MessageBox.Show(message);
             }
-
         }
-
     }
 }
