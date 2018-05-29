@@ -14,7 +14,7 @@ namespace ReactNative.Modules.Dialog
     class DialogModule : ReactContextNativeModuleBase
     {
         public DialogModule(ReactContext reactContext)
-            : base(reactContext, new DispatcherActionQueue(reactContext.NativeModuleCallExceptionHandler))
+            : base(reactContext, new DispatcherActionQueue(reactContext.HandleException))
         {
 
         }
