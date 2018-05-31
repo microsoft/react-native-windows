@@ -214,7 +214,7 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(callSyncHook));
 
             _executor.SetCallSyncHook((moduleId, methodId, args) =>
-                callSyncHook(moduleId, methodId, JArray.Parse(args)).ToString(Formatting.None));
+                callSyncHook(moduleId, methodId, JArray.Parse(args))?.ToString(Formatting.None) ?? "");
         }
 
         /// <summary>
