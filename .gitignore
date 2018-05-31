@@ -102,6 +102,8 @@ WiniumDriver/
 #NuGet
 packages/
 *.nupkg
+*.nuget.props
+*.nuget.targets
 
 #ncrunch
 *ncrunch*
@@ -119,6 +121,7 @@ packages/
 .vscode/
 *project.lock.json
 jsconfig.json
+package-lock.json
 
 #JavaScript files
 *.jsbundle

@@ -1,11 +1,8 @@
 {
   "name": "rnpm-plugin-windows",
-  "version": "0.2.7",
+  "version": "0.2.9",
   "description": "rnpm plugin that generates a Windows template project",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "rnpm",
     "react-native",

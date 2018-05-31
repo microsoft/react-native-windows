@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
@@ -16,6 +19,8 @@ namespace ReactNative.Tests.Modules.Core
         [TestMethod]
         public async Task Timing_Create()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
@@ -35,11 +40,15 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(new[] { 42 }.SequenceEqual(ids));
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_ManyTimers()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var count = 1000;
             var ids = new List<int>(count);
             var countdown = new CountdownEvent(count);
@@ -67,11 +76,15 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(countdown.Wait(count * 2));
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_Create_Delete()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
@@ -92,11 +105,15 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsFalse(waitHandle.WaitOne(1000));
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_Suspend_Resume()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
@@ -118,11 +135,15 @@ namespace ReactNative.Tests.Modules.Core
             await DispatcherHelpers.RunOnDispatcherAsync(context.OnResume);
             Assert.IsTrue(waitHandle.WaitOne(1000));
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_Repeat()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var ids = new List<int>();
             var repeat = 10;
             var interval = 200;
@@ -153,11 +174,15 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(ids.Count >= repeat);
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_ManOrBoy()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var r = new Random();
             var batchCount = 15;
             var maxDuration = 500;
@@ -196,11 +221,15 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(countdown.Wait(batchCount * maxDuration / 4 * 2));
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_AnimationBehavior()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var id = 0;
 
             var seconds = 3;
@@ -246,11 +275,15 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(waitHandle.WaitOne());
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_Zero_NoRepeat()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var ids = new List<int>();
             var waitHandle = new AutoResetEvent(false);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
@@ -270,11 +303,15 @@ namespace ReactNative.Tests.Modules.Core
             Assert.IsTrue(new[] { 42 }.SequenceEqual(ids));
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_Zero_Repeat()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var ids = new List<int>();
             var countdown = new CountdownEvent(60);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
@@ -294,11 +331,15 @@ namespace ReactNative.Tests.Modules.Core
             timing.deleteTimer(42);
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         [TestMethod]
         public async Task Timing_Correct_Order()
         {
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Initialize);
+
             var ids = new List<int>();
             var countdown = new CountdownEvent(1);
             var context = CreateReactContext(new MockInvocationHandler((name, args) =>
@@ -321,6 +362,8 @@ namespace ReactNative.Tests.Modules.Core
             timing.deleteTimer(1);
 
             await DispatcherHelpers.CallOnDispatcherAsync(context.DisposeAsync);
+
+            await DispatcherHelpers.RunOnDispatcherAsync(ReactChoreographer.Dispose);
         }
 
         private static ReactContext CreateReactContext(IInvocationHandler handler)

@@ -1,9 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Accessibility;
 using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -18,7 +24,7 @@ namespace ReactNative.UIManager
 {
     /// <summary>
     /// Base class that should be suitable for the majority of subclasses of <see cref="IViewManager"/>.
-    /// It provides support for base view properties such as opacity, etc.
+    /// It provides support for base view props such as opacity, etc.
     /// </summary>
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>
     /// <typeparam name="TLayoutShadowNode">Type of shadow node.</typeparam>
@@ -27,15 +33,16 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly IDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
-            new Dictionary<TFrameworkElement, DimensionBoundProperties>();
+        private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
+            new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
 
         /// <summary>
-        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
-        /// properties, based on the <see cref="JObject"/> map.
+        /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
-        /// <param name="transforms">The list of transforms.</param>
+        /// <param name="transforms">
+        /// The transform matrix or the list of transforms.
+        /// </param>
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
@@ -70,7 +77,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets the overflow property for the <typeparamref name="TFrameworkElement"/>.
+        /// Sets the overflow prop for the <typeparamref name="TFrameworkElement"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="overflow">The overflow value.</param>
@@ -109,6 +116,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets the display mode of the element.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="display">The display mode.</param>
+        [ReactProp(ViewProps.Display)]
+        public void SetDisplay(TFrameworkElement view, string display)
+        {
+            view.Visibility = display == "none" ? Visibility.Collapsed : Visibility.Visible;
+            AccessibilityHelper.OnElementChanged(view, UIElement.VisibilityProperty);
+        }
+
+        /// <summary>
         /// Sets the manipulation mode for the view.
         /// </summary>
         /// <param name="view">The view instance.</param>
@@ -138,10 +157,10 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="label">The label.</param>
-        [ReactProp("accessibilityLabel")]
+        [ReactProp(ViewProps.AccessibilityLabel)]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
-            AutomationProperties.SetName(view, label ?? "");
+            AccessibilityHelper.SetAccessibilityLabel(view, label ?? "");
         }
 
         /// <summary>
@@ -149,7 +168,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="liveRegion">The live region.</param>
-        [ReactProp("accessibilityLiveRegion")]
+        [ReactProp(ViewProps.AccessibilityLiveRegion)]
         public void SetAccessibilityLiveRegion(TFrameworkElement view, string liveRegion)
         {
             var liveSetting = AutomationLiveSetting.Off;
@@ -178,6 +197,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets a tooltip for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="tooltip">String to display in the tooltip.</param>
+        [ReactProp("tooltip")]
+        public void SetTooltip(TFrameworkElement view, string tooltip)
+        {
+            ToolTipService.SetToolTip(view, tooltip);
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
@@ -191,7 +221,7 @@ namespace ReactNative.UIManager
         {
             view.PointerEntered -= OnPointerEntered;
             view.PointerExited -= OnPointerExited;
-            _dimensionBoundProperties.Remove(view);
+            _dimensionBoundProperties.TryRemove(view, out _);
         }
 
         /// <summary>
@@ -265,8 +295,7 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = null;
             }
@@ -276,11 +305,10 @@ namespace ReactNative.UIManager
 
         private DimensionBoundProperties GetOrCreateDimensionBoundProperties(TFrameworkElement view)
         {
-            DimensionBoundProperties properties;
-            if (!_dimensionBoundProperties.TryGetValue(view, out properties))
+            if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.Add(view, properties);
+                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
             }
 
             return properties;

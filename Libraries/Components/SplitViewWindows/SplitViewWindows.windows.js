@@ -1,29 +1,32 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ * 
+ * Portions copyright for react-native-windows:
+ * 
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * 
  * @providesModule SplitViewWindows
  */
 'use strict';
 
+var ColorPropType = require('ColorPropType');
 var NativeMethodsMixin = require('NativeMethodsMixin');
-var PropTypes = require('prop-types');
 var React = require('React');
-var createReactClass = require('create-react-class');
+var PropTypes = require('prop-types');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
-
 var View = require('View');
 var ViewPropTypes = require('ViewPropTypes');
 
 var SplitViewConsts = UIManager.WindowsSplitView.Constants;
-var dismissKeyboard = require('dismissKeyboard');
 
+var createReactClass = require('create-react-class');
+var dismissKeyboard = require('dismissKeyboard');
 var requireNativeComponent = require('requireNativeComponent');
 
 var RK_PANE_REF = 'paneView';
@@ -67,7 +70,6 @@ var SplitViewValidAttributes = {
  */
 var SplitViewWindows = createReactClass({
   displayName: 'SplitViewWindows',
-
   statics: {
     positions: SplitViewConsts.PanePositions,
   },
@@ -83,6 +85,18 @@ var SplitViewWindows = createReactClass({
       'none', // default
       'on-drag',
     ]),
+    /**
+     * Specifies the background color of the pane. The default value is white.
+     * If you want to set the opacity of the pane, use rgba. Example:
+     *
+     * ```
+     * return (
+     *   <SplitViewWindows paneBackgroundColor="rgba(0,0,0,0.5)">
+     *   </SplitViewWindows>
+     * );
+     * ```
+     */
+    paneBackgroundColor: ColorPropType,
     /**
      * Specifies the side of the screen from which the pane will slide in.
      */
@@ -111,13 +125,24 @@ var SplitViewWindows = createReactClass({
 
   mixins: [NativeMethodsMixin],
 
+  getDefaultProps: function(): Object {
+    return {
+      paneBackgroundColor: 'white',
+    };
+  },
+
   getInnerViewNode: function() {
     return this.refs[CONTENT_REF].getInnerViewNode();
   },
 
   render: function() {
     var paneViewWrapper =
-      <View style={[styles.paneSubview, {width: this.props.paneWidth}]} collapsable={false}>
+      <View
+        style={[
+          styles.paneSubview,
+          {width: this.props.paneWidth, backgroundColor: this.props.paneBackgroundColor}
+        ]}
+        collapsable={false}>
         {this.props.renderPaneView()}
       </View>;
     var childrenWrapper =
@@ -130,7 +155,7 @@ var SplitViewWindows = createReactClass({
         ref={RK_PANE_REF}
         paneWidth={this.props.paneWidth}
         panePosition={this.props.panePosition}
-        style={styles.base}
+        style={[styles.base, this.props.style]}
         onPaneOpen={this._onPaneOpen}
         onPaneClose={this._onPaneClose}>
         {childrenWrapper}
@@ -151,6 +176,9 @@ var SplitViewWindows = createReactClass({
     }
   },
 
+  /**
+   * Opens the pane.
+   */
   openPane: function() {
     UIManager.dispatchViewManagerCommand(
       this._getPaneLayoutHandle(),
@@ -159,6 +187,9 @@ var SplitViewWindows = createReactClass({
     );
   },
 
+  /**
+   * Closes the pane.
+   */
   closePane: function() {
     UIManager.dispatchViewManagerCommand(
       this._getPaneLayoutHandle(),
@@ -166,15 +197,32 @@ var SplitViewWindows = createReactClass({
       null
     );
   },
-
+  /**
+  * Closing and opening example
+  * Note: To access the pane you have to give it a ref. Refs do not work on stateless components
+  * render () {
+  *   this.openPane = () => {
+  *     this.refs.PANE.openPane()
+  *   }
+  *   this.closePane = () => {
+  *     this.refs.PANE.closePane()
+  *   }
+  *   return (
+  *     <SplitViewWindows ref={'PANE'}>
+  *     </SplitViewWindows>
+  *   )
+  * }
+  */
   _getPaneLayoutHandle: function() {
     return ReactNative.findNodeHandle(this.refs[RK_PANE_REF]);
   },
+
 });
 
 var styles = StyleSheet.create({
   base: {
     flex: 1,
+    elevation: 16,
   },
   mainSubview: {
     position: 'absolute',

@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using System;
 using System.Globalization;
@@ -14,6 +17,7 @@ namespace ReactNative.Bridge
     /// </summary>
     public sealed class CompiledReactDelegateFactory : ReactDelegateFactoryBase
     {
+        private static readonly ConstantExpression s_nullConstant = Expression.Constant(JValue.CreateNull(), typeof(JToken));
         private static readonly ConstructorInfo s_newArgumentNullException = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new ArgumentNullException(default(string)));
         private static readonly ConstructorInfo s_newNativeArgumentParseException = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new NativeArgumentsParseException(default(string), default(string)));
         private static readonly ConstructorInfo s_newNativeArgumentParseExceptionInner = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new NativeArgumentsParseException(default(string), default(string), default(Exception)));
@@ -22,6 +26,7 @@ namespace ReactNative.Bridge
         private static readonly MethodInfo s_toObject = ((MethodInfo)ReflectionHelpers.InfoOf((JToken token) => token.ToObject(typeof(Type))));
         private static readonly MethodInfo s_stringFormat = (MethodInfo)ReflectionHelpers.InfoOf(() => string.Format(default(IFormatProvider), default(string), default(object)));
         private static readonly MethodInfo s_getIndex = (MethodInfo)ReflectionHelpers.InfoOf((JArray arr) => arr[0]);
+        private static readonly MethodInfo s_fromObject = (MethodInfo)ReflectionHelpers.InfoOf(() => JObject.FromObject(default(object)));
         private static readonly PropertyInfo s_countProperty = (PropertyInfo)ReflectionHelpers.InfoOf((JArray arr) => arr.Count);
 
         private CompiledReactDelegateFactory() { }
@@ -38,22 +43,25 @@ namespace ReactNative.Bridge
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
+        public override Func<IReactInstance, JArray, JToken> Create(INativeModule module, MethodInfo method)
         {
             return GenerateExpression(module, method).Compile();
         }
 
-        private static Expression<Action<INativeModule, IReactInstance, JArray>> GenerateExpression(INativeModule module, MethodInfo method)
+        private static Expression<Func<IReactInstance, JArray, JToken>> GenerateExpression(INativeModule module, MethodInfo method)
         {
             var parameterInfos = method.GetParameters();
 
             var n = parameterInfos.Length;
             var argc = n > 0 && parameterInfos.Last().ParameterType == typeof(IPromise) ? n + 1 : n;
 
-            var parameterExpressions = new ParameterExpression[n];
+            var resultParameter = Expression.Parameter(typeof(object), "result");
+            var blockParameterExpressions = new ParameterExpression[n + 1];
+            blockParameterExpressions[n] = resultParameter;
+            var callParameterExpressions = new ParameterExpression[n];
             var extractExpressions = new Expression[n];
 
-            var moduleInstanceParameter = Expression.Parameter(typeof(INativeModule), "moduleInstance");
+            var moduleInstanceConstant = Expression.Constant(module, typeof(INativeModule));
             var reactInstanceParameter = Expression.Parameter(typeof(IReactInstance), "reactInstance");
             var jsArgumentsParameter = Expression.Parameter(typeof(JArray), "jsArguments");
 
@@ -62,7 +70,7 @@ namespace ReactNative.Bridge
                 var parameterInfo = parameterInfos[i];
                 var parameterType = parameterInfo.ParameterType;
                 var parameterExpression = Expression.Parameter(parameterType, parameterInfo.Name);
-                parameterExpressions[i] = parameterExpression;
+                blockParameterExpressions[i] = callParameterExpressions[i] = parameterExpression;
                 extractExpressions[i] = GenerateExtractExpression(
                     parameterInfo.ParameterType,
                     parameterExpression,
@@ -74,25 +82,20 @@ namespace ReactNative.Bridge
                     i);
             }
 
+            var hasReturnType = method.ReturnType != typeof(void);
             var blockStatements = new Expression[n + 5];
-
-            //
-            // if (moduleInstance == null)
-            //     throw new ArgumentNullException(nameof(moduleInstance));
-            //
-            blockStatements[0] = CreateNullCheckExpression<IReactInstance>(moduleInstanceParameter);
 
             //
             // if (reactInstance == null)
             //     throw new ArgumentNullException(nameof(reactInstance));
             //
-            blockStatements[1] = CreateNullCheckExpression<IReactInstance>(reactInstanceParameter);
+            blockStatements[0] = CreateNullCheckExpression<IReactInstance>(reactInstanceParameter);
 
             //
             // if (jsArguments == null)
             //     throw new ArgumentNullException(nameof(jsArguments));
             //
-            blockStatements[2] = CreateNullCheckExpression<JArray>(jsArgumentsParameter);
+            blockStatements[1] = CreateNullCheckExpression<JArray>(jsArgumentsParameter);
 
             //
             // if (jsArguments.Count != argc)
@@ -102,7 +105,7 @@ namespace ReactNative.Bridge
             //             "Module '{module.Name}' method '{method.Name}' got '{0}' arguments, expected '{parameterCount}'."
             //             jsArguments.Count));
             //
-            blockStatements[3] = Expression.IfThen(
+            blockStatements[2] = Expression.IfThen(
                 Expression.NotEqual(
                     Expression.MakeMemberAccess(jsArgumentsParameter, s_countProperty),
                     Expression.Constant(argc)
@@ -132,16 +135,52 @@ namespace ReactNative.Bridge
             // ...
             // pn = Extract<T>(jsArguments[n]);
             //
-            Array.Copy(extractExpressions, 0, blockStatements, 4, n);
+            Array.Copy(extractExpressions, 0, blockStatements, 3, n);
 
-            blockStatements[blockStatements.Length - 1] = Expression.Call(
-                Expression.Convert(moduleInstanceParameter, method.DeclaringType),
+            //
+            // module.NativeMethod(p0, p1, ..., pn);
+            //
+            var resultExpression = Expression.Call(
+                Expression.Convert(moduleInstanceConstant, method.DeclaringType),
                 method,
-                parameterExpressions);
+                callParameterExpressions
+            );
 
-            return Expression.Lambda<Action<INativeModule, IReactInstance, JArray>>(
-                Expression.Block(parameterExpressions, blockStatements),
-                moduleInstanceParameter,
+            if (hasReturnType)
+            {
+                //
+                // var result = ...;
+                //
+                blockStatements[blockStatements.Length - 2] =
+                    Expression.Assign(resultParameter, resultExpression);
+
+                //
+                // return result == null ? JValue.CreateNull() : JObject.FromObject(result);
+                //
+                blockStatements[blockStatements.Length - 1] = Expression.Condition(
+                    Expression.Equal(resultParameter, Expression.Constant(null, typeof(object))),
+                    s_nullConstant,
+                    Expression.Call(
+                        s_fromObject,
+                        resultParameter
+                    )
+                );
+            }
+            else
+            {
+                //
+                // ...
+                //
+                blockStatements[blockStatements.Length - 2] = resultExpression;
+
+                //
+                // return JValue.CreateNull();
+                //
+                blockStatements[blockStatements.Length - 1] = s_nullConstant;
+            }
+
+            return Expression.Lambda<Func<IReactInstance, JArray, JToken>>(
+                Expression.Block(blockParameterExpressions, blockStatements),
                 reactInstanceParameter,
                 jsArgumentsParameter
             );

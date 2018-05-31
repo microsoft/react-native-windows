@@ -1,7 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
@@ -14,7 +20,7 @@ namespace ReactNative.UIManager
 {
     /// <summary>
     /// Base class that should be suitable for the majority of subclasses of <see cref="IViewManager"/>.
-    /// It provides support for base view properties such as opacity, etc.
+    /// It provides support for base view props such as opacity, etc.
     /// </summary>
     /// <typeparam name="TFrameworkElement">Type of framework element.</typeparam>
     /// <typeparam name="TLayoutShadowNode">Type of shadow node.</typeparam>
@@ -23,22 +29,31 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
+        private readonly IDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
+            new Dictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
+
         /// <summary>
-        /// Set's the  <typeparamref name="TFrameworkElement"/> styling layout 
-        /// properties, based on the <see cref="JObject"/> map.
+        /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
-        /// <param name="transforms">The list of transforms.</param>
+        /// <param name="transforms">
+        /// The transform matrix or the list of transforms.
+        /// </param>
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
             if (transforms == null)
             {
-                ResetProjectionMatrix(view);
+                if (_transforms.Remove(view))
+                {
+                    ResetProjectionMatrix(view);
+                }
             }
             else
             {
-                SetProjectionMatrix(view, transforms);
+                _transforms[view] = (v, d) => SetProjectionMatrix(v, d, transforms);
+                var dimensions = GetDimensions(view);
+                SetProjectionMatrix(view, dimensions, transforms);
             }
         }
 
@@ -54,7 +69,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets the overflow property for the <typeparamref name="TFrameworkElement"/>.
+        /// Sets the overflow prop for the <typeparamref name="TFrameworkElement"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="overflow">The overflow value.</param>
@@ -83,11 +98,22 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets the display mode of the element.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="display">The display mode.</param>
+        [ReactProp(ViewProps.Display)]
+        public void SetDisplay(TFrameworkElement view, string display)
+        {
+            view.Visibility = display == "none" ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
         /// Sets the accessibility label of the element.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="label">The label.</param>
-        [ReactProp("accessibilityLabel")]
+        [ReactProp(ViewProps.AccessibilityLabel)]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
             AutomationProperties.SetName(view, label ?? "");
@@ -107,6 +133,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Sets a tooltip for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="tooltip">String to display in the tooltip.</param>
+        [ReactProp("tooltip")]
+        public void SetTooltip(TFrameworkElement view, string tooltip)
+        {
+            ToolTipService.SetToolTip(view, tooltip);
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
@@ -120,6 +157,8 @@ namespace ReactNative.UIManager
         {
             view.MouseEnter -= OnPointerEntered;
             view.MouseLeave -= OnPointerExited;
+            _transforms.Remove(view);
+            base.OnDropViewInstance(reactContext, view);
         }
 
         /// <summary>
@@ -151,6 +190,21 @@ namespace ReactNative.UIManager
         {
             var view = (TFrameworkElement)sender;
             TouchHandler.OnPointerExited(view, e);
+        }
+
+        /// <summary>
+        /// Sets the dimensions of the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        public override void SetDimensions(TFrameworkElement view, Dimensions dimensions)
+        {
+            Action<TFrameworkElement, Dimensions> applyTransform;
+            if (_transforms.TryGetValue(view, out applyTransform))
+            {
+                applyTransform(view, dimensions);
+            }
+            base.SetDimensions(view, dimensions);
         }
 
         /// <summary>
@@ -210,22 +264,22 @@ namespace ReactNative.UIManager
             view.Effect = effect;
         }
 
-        private static void SetProjectionMatrix(TFrameworkElement view, JArray transforms)
+        private static void SetProjectionMatrix(TFrameworkElement view, Dimensions dimensions, JArray transforms)
         {
             var transformMatrix = TransformHelper.ProcessTransform(transforms);
 
             var translateMatrix = Matrix3D.Identity;
             var translateBackMatrix = Matrix3D.Identity;
-            if (!double.IsNaN(view.Width))
+            if (!double.IsNaN(dimensions.Width))
             {
-                translateMatrix.OffsetX = -view.Width / 2;
-                translateBackMatrix.OffsetX = view.Width / 2;
+                translateMatrix.OffsetX = -dimensions.Width / 2;
+                translateBackMatrix.OffsetX = dimensions.Width / 2;
             }
 
-            if (!double.IsNaN(view.Height))
+            if (!double.IsNaN(dimensions.Height))
             {
-                translateMatrix.OffsetY = -view.Height / 2;
-                translateBackMatrix.OffsetY = view.Height / 2;
+                translateMatrix.OffsetY = -dimensions.Height / 2;
+                translateBackMatrix.OffsetY = dimensions.Height / 2;
             }
 
             var projectionMatrix = translateMatrix * transformMatrix * translateBackMatrix;

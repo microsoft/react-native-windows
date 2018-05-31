@@ -31,14 +31,14 @@ If the dependency has native code, there should be a `.csproj` file inside it's 
 ![Add Refererence](img/AddReference.png)
 ![Add Refererence](img/AddReference2.png)
 
-### Step 3 - Update MainPage.cs
+### Step 3 - Update MainReactNativeHost.cs
 
 If the dependency has native code, there should be an implementation of `IReactPackage` in it's project.
 
-- Open MainPage.cs
-- Add the `IReactPackage` implementation to the `Packages` list in MainPage.cs
+- Open MainReactNativeHost.cs
+- Add the `IReactPackage` implementation to the `Packages` list in MainReactNativeHost.cs
 
-![Update MainPage](img/UpdateMainPage.png)
+![Update MainReactNativeHost](img/UpdateMainReactNativeHost.png)
 
 ## Automatic Linking
 

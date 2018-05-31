@@ -1,12 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using static System.FormattableString;
 
@@ -15,12 +19,12 @@ namespace ReactNative.Views.Scroll
     /// <summary>
     /// The view manager for scrolling views.
     /// </summary>
-    public class ReactScrollViewManager : ViewParentManager<ScrollViewer>
+    public class ReactScrollViewManager : ViewParentManager<ScrollView>
     {
         private const int CommandScrollTo = 1;
 
-        private readonly IDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
-            new Dictionary<ScrollViewer, ScrollViewerData>();
+        private readonly IDictionary<ScrollView, ScrollViewerData> _scrollViewerData =
+            new Dictionary<ScrollView, ScrollViewerData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -36,11 +40,11 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// The commands map for the view manager.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "scrollTo", CommandScrollTo },
                 };
@@ -50,29 +54,29 @@ namespace ReactNative.Views.Scroll
         /// <summary>
         /// The exported custom direct event types.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants
+        public override JObject CustomDirectEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     {
                         ScrollEventType.BeginDrag.GetJavaScriptEventName(),
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onScrollBeginDrag" },
                         }
                     },
                     {
                         ScrollEventType.EndDrag.GetJavaScriptEventName(),
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onScrollEndDrag" },
                         }
                     },
                     {
                         ScrollEventType.Scroll.GetJavaScriptEventName(),
-                        new Dictionary<string, object>
+                        new JObject
                         {
                             { "registrationName", "onScroll" },
                         }
@@ -88,11 +92,12 @@ namespace ReactNative.Views.Scroll
         /// <param name="color">The masked color value.</param>
         [ReactProp(
             ViewProps.BackgroundColor,
-            CustomType = "Color",
-            DefaultUInt32 = ColorHelpers.Transparent)]
-        public void SetBackgroundColor(ScrollViewer view, uint color)
+            CustomType = "Color")]
+        public void SetBackgroundColor(ScrollView view, uint? color)
         {
-            view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.Background = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
         }
 
         /// <summary>
@@ -101,20 +106,9 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         /// <param name="enabled">The enabled value.</param>
         [ReactProp("scrollEnabled", DefaultBoolean = true)]
-        public void SetEnabled(ScrollViewer view, bool enabled)
+        public void SetEnabled(ScrollView view, bool enabled)
         {
-            if (enabled)
-            {
-                view.CanContentScroll = true;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                view.HorizontalScrollBarVisibility = _scrollViewerData[view].HorizontalScrollBarVisibility;
-            }
-            else
-            {
-                view.CanContentScroll = false;
-                view.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                view.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-            }
+            view.CanContentScroll = enabled;
         }
 
         /// <summary>
@@ -125,9 +119,8 @@ namespace ReactNative.Views.Scroll
         /// The flag signaling whether horizontal scrolling is enabled.
         /// </param>
         [ReactProp("horizontal")]
-        public void SetHorizontal(ScrollViewer view, bool horizontal)
+        public void SetHorizontal(ScrollView view, bool horizontal)
         {
-            throw new NotImplementedException();
             var horizontalScrollMode = horizontal
                 ? ScrollBarVisibility.Auto
                 : ScrollBarVisibility.Disabled;
@@ -143,7 +136,7 @@ namespace ReactNative.Views.Scroll
         /// The value to show the indicator or not.
         /// </param>
         [ReactProp("showsHorizontalScrollIndicator")]
-        public void SetShowsHorizontalScrollIndicator(ScrollViewer view, bool showIndicator)
+        public void SetShowsHorizontalScrollIndicator(ScrollView view, bool showIndicator)
         {
             view.HorizontalScrollBarVisibility = showIndicator
                 ? ScrollBarVisibility.Auto
@@ -158,7 +151,7 @@ namespace ReactNative.Views.Scroll
         /// The value to show the indicator or not.
         /// </param>
         [ReactProp("showsVerticalScrollIndicator")]
-        public void SetShowsVerticalScrollIndicator(ScrollViewer view, bool showIndicator)
+        public void SetShowsVerticalScrollIndicator(ScrollView view, bool showIndicator)
         {
             view.VerticalScrollBarVisibility = showIndicator
                 ? ScrollBarVisibility.Visible
@@ -171,9 +164,12 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         /// <param name="contentOffset">The content offset.</param>
         [ReactProp("contentOffset")]
-        public void SetContentOffset(ScrollViewer view, JObject contentOffset)
+        public void SetContentOffset(ScrollView view, JObject contentOffset)
         {
-            throw new NotImplementedException();
+            view.ScrollChanged -= OnViewChanging;
+            view.ScrollToHorizontalOffset(contentOffset.Value<double>("x"));
+            view.ScrollToVerticalOffset(contentOffset.Value<double>("y"));
+            view.ScrollChanged += OnViewChanging;
         }
 
         /// <summary>
@@ -182,7 +178,7 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         /// <param name="zoomScale">The zoom scale.</param>
         [ReactProp("minimumZoomScale")]
-        public void SetMinimumZoomScale(ScrollViewer view, float? zoomScale)
+        public void SetMinimumZoomScale(ScrollView view, float? zoomScale)
         {
             throw new NotImplementedException();
         }
@@ -193,7 +189,7 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         /// <param name="zoomScale">The zoom scale.</param>
         [ReactProp("maximumZoomScale")]
-        public void SetMaximumZoomScale(ScrollViewer view, float? zoomScale)
+        public void SetMaximumZoomScale(ScrollView view, float? zoomScale)
         {
             throw new NotImplementedException();
         }
@@ -204,7 +200,7 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         /// <param name="zoomScale">The zoom scale.</param>
         [ReactProp("zoomScale")]
-        public void SetZoomScale(ScrollViewer view, float? zoomScale)
+        public void SetZoomScale(ScrollView view, float? zoomScale)
         {
             throw new NotImplementedException();
         }
@@ -215,7 +211,18 @@ namespace ReactNative.Views.Scroll
         /// <param name="view">The view instance.</param>
         /// <param name="enabled">Signals whether zoom is enabled.</param>
         [ReactProp("zoomEnabled")]
-        public void SetZoomScale(ScrollViewer view, bool? enabled)
+        public void SetZoomScale(ScrollView view, bool? enabled)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Disables keyboaed based arrow scrolling.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="disabled">Signals whether keyboard based scrolling is disabled.</param>
+        [ReactProp("disableKeyboardBasedScrolling")]
+        public void SetDisableKeyboardBasedScrolling(ScrollView view, bool? disabled)
         {
             throw new NotImplementedException();
         }
@@ -229,16 +236,16 @@ namespace ReactNative.Views.Scroll
         /// <remarks>
         /// <see cref="ReactScrollViewManager"/> only supports one child.
         /// </remarks>
-        public override void AddView(ScrollViewer parent, DependencyObject child, int index)
+        public override void AddView(ScrollView parent, DependencyObject child, int index)
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), Invariant($"{nameof(ScrollViewer)} currently only supports one child."));
+                throw new ArgumentOutOfRangeException(nameof(index), Invariant($"{nameof(ScrollView)} currently only supports one child."));
             }
 
             if (parent.Content != null)
             {
-                throw new InvalidOperationException(Invariant($"{nameof(ScrollViewer)} already has a child element."));
+                throw new InvalidOperationException(Invariant($"{nameof(ScrollView)} already has a child element."));
             }
 
             child.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
@@ -255,7 +262,7 @@ namespace ReactNative.Views.Scroll
         /// <remarks>
         /// <see cref="ReactScrollViewManager"/> only supports one child.
         /// </remarks>
-        public override DependencyObject GetChildAt(ScrollViewer parent, int index)
+        public override DependencyObject GetChildAt(ScrollView parent, int index)
         {
             if (index != 0)
             {
@@ -270,7 +277,7 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <returns>The number of children.</returns>
-        public override int GetChildCount(ScrollViewer parent)
+        public override int GetChildCount(ScrollView parent)
         {
             return parent.Content != null ? 1 : 0;
         }
@@ -279,7 +286,7 @@ namespace ReactNative.Views.Scroll
         /// Removes all children from the view parent.
         /// </summary>
         /// <param name="parent">The view parent.</param>
-        public override void RemoveAllChildren(ScrollViewer parent)
+        public override void RemoveAllChildren(ScrollView parent)
         {
             parent.Content = null;
         }
@@ -292,7 +299,7 @@ namespace ReactNative.Views.Scroll
         /// <remarks>
         /// <see cref="ReactScrollViewManager"/> only supports one child.
         /// </remarks>
-        public override void RemoveChildAt(ScrollViewer parent, int index)
+        public override void RemoveChildAt(ScrollView parent, int index)
         {
             if (index != 0)
             {
@@ -304,16 +311,23 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup by the <see cref="ReactScrollViewManager"/>.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
-        public override void OnDropViewInstance(ThemedReactContext reactContext, ScrollViewer view)
+        public override void OnDropViewInstance(ThemedReactContext reactContext, ScrollView view)
         {
             base.OnDropViewInstance(reactContext, view);
 
             _scrollViewerData.Remove(view);
+
+            var hashCode = view.GetHashCode();
+            if (_scollViewCancelMap.ContainsKey(hashCode))
+            {
+                _scollViewCancelMap[hashCode].Cancel();
+                _scollViewCancelMap.Remove(hashCode);
+            }
 
             view.ScrollChanged -= OnViewChanging;
             view.ManipulationStarted -= OnDirectManipulationStarted;
@@ -321,7 +335,7 @@ namespace ReactNative.Views.Scroll
         }
 
         /// <summary>
-        /// Receive events/commands directly from JavaScript through the 
+        /// Receive events/commands directly from JavaScript through the
         /// <see cref="UIManagerModule"/>.
         /// </summary>
         /// <param name="view">
@@ -329,7 +343,7 @@ namespace ReactNative.Views.Scroll
         /// </param>
         /// <param name="commandId">Identifer for the command.</param>
         /// <param name="args">Optional arguments for the command.</param>
-        public override void ReceiveCommand(ScrollViewer view, int commandId, JArray args)
+        public override void ReceiveCommand(ScrollView view, int commandId, JArray args)
         {
             switch (commandId)
             {
@@ -350,14 +364,14 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <returns>The view instance.</returns>
-        protected override ScrollViewer CreateViewInstance(ThemedReactContext reactContext)
+        protected override ScrollView CreateViewInstance(ThemedReactContext reactContext)
         {
             var scrollViewerData = new ScrollViewerData();
 
-            var scrollViewer = new ScrollViewer
+            var scrollViewer = new ScrollView
             {
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 Focusable = false,
             };
 
@@ -371,7 +385,7 @@ namespace ReactNative.Views.Scroll
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view instance.</param>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, ScrollViewer view)
+        protected override void AddEventEmitters(ThemedReactContext reactContext, ScrollView view)
         {
             base.AddEventEmitters(reactContext, view);
             view.ManipulationStarted += OnDirectManipulationStarted;
@@ -381,7 +395,7 @@ namespace ReactNative.Views.Scroll
 
         private void OnDirectManipulationCompleted(object sender, object e)
         {
-            var scrollViewer = (ScrollViewer)sender;
+            var scrollViewer = (ScrollView)sender;
             EmitScrollEvent(
                 scrollViewer,
                 ScrollEventType.EndDrag,
@@ -392,7 +406,7 @@ namespace ReactNative.Views.Scroll
 
         private void OnDirectManipulationStarted(object sender, object e)
         {
-            var scrollViewer = (ScrollViewer)sender;
+            var scrollViewer = (ScrollView)sender;
             EmitScrollEvent(
                 scrollViewer,
                 ScrollEventType.BeginDrag,
@@ -403,7 +417,7 @@ namespace ReactNative.Views.Scroll
 
         private void OnViewChanging(object sender, ScrollChangedEventArgs args)
         {
-            var scrollViewer = (ScrollViewer)sender;
+            var scrollViewer = (ScrollView)sender;
             EmitScrollEvent(
                 scrollViewer,
                 ScrollEventType.Scroll,
@@ -413,7 +427,7 @@ namespace ReactNative.Views.Scroll
         }
 
         private void EmitScrollEvent(
-            ScrollViewer scrollViewer,
+            ScrollView scrollViewer,
             ScrollEventType eventType,
             double x,
             double y,
@@ -471,27 +485,117 @@ namespace ReactNative.Views.Scroll
                         }));
         }
 
-        private static DependencyObject EnsureChild(ScrollViewer view)
+        private static DependencyObject EnsureChild(ScrollView view)
         {
             var child = view.Content;
             if (child == null)
             {
-                throw new InvalidOperationException(Invariant($"{nameof(ScrollViewer)} does not have any children."));
+                throw new InvalidOperationException(Invariant($"{nameof(ScrollView)} does not have any children."));
             }
 
             var dependencyObject = child as DependencyObject;
             if (dependencyObject == null)
             {
-                throw new InvalidOperationException(Invariant($"Invalid child element in {nameof(ScrollViewer)}."));
+                throw new InvalidOperationException(Invariant($"Invalid child element in {nameof(ScrollView)}."));
             }
 
             return dependencyObject;
         }
 
-        private static void ScrollTo(ScrollViewer scrollView, double x, double y, bool animated)
+        private void ScrollTo(ScrollView scrollView, double x, double y, bool animated)
         {
-            scrollView.ScrollToHorizontalOffset(x);
-            scrollView.ScrollToVerticalOffset(y);
+            if (animated)
+            {
+                Task.Run(() => ScrollToAnimated(new WeakReference<IScrollView>(scrollView), x, y));
+            }
+            else
+            {
+                scrollView.ScrollToHorizontalOffset(x);
+                scrollView.ScrollToVerticalOffset(y);
+            }
+        }
+
+        /// <summary>
+        /// As the <see cref="ScrollToAnimated"/> method is reentrant,
+        /// _scollViewCancelMap is a Dictionary to map scrollView and <see cref="CancellationTokenSource"/>.
+        /// </summary>
+        private readonly Dictionary<int, CancellationTokenSource> _scollViewCancelMap = new Dictionary<int, CancellationTokenSource>();
+
+        /// <summary>
+        /// ScrollViewer does not support ScrollToSomeWhere animated, this is custom animated work.
+        /// </summary>
+        /// <param name="weakScrollView">WeakRefernce ScrollViewer</param>
+        /// <param name="x">Scroll to x</param>
+        /// <param name="y">Scroll to y</param>
+        /// <returns>Async task once scrolling is done</returns>
+        internal async Task ScrollToAnimated(WeakReference<IScrollView> weakScrollView, double x, double y)
+        {
+            // Will do animation in this period
+            const int ANIMATED_TIME_INTERVAL = 300;
+
+            // Progressively scroll time unit
+            const int ANIMATED_TIME_UNIT = 100;
+
+            // Total times to do progressive scroll
+            const int ANIMATED_TIME_SLOT = ANIMATED_TIME_INTERVAL / ANIMATED_TIME_UNIT;
+
+            // Threshold to check equalness for double value
+            const double DOUBLE_EQUAL_THRESHOLD = 0.001;
+
+            double currentScrollOffsetX = 0;
+            double currentScrollOffsetY = 0;
+            IScrollView scrollView;
+
+            if (weakScrollView.TryGetTarget(out scrollView))
+            {
+                // Check to cancel previous scrolling
+                var hashCode = scrollView.GetHashCode();
+                if (_scollViewCancelMap.ContainsKey(hashCode))
+                {
+                    _scollViewCancelMap[hashCode].Cancel();
+                }
+
+                // Setup new cancellationTokenSource for this run
+                var cancellationTokenSource = new CancellationTokenSource();
+                _scollViewCancelMap[hashCode] = cancellationTokenSource;
+
+                // Setup progressive scrolling settings
+                currentScrollOffsetX = scrollView.HorizontalOffset;
+                currentScrollOffsetY = scrollView.VerticalOffset;
+                var biasX = (x - currentScrollOffsetX) / ANIMATED_TIME_SLOT;
+                var biasY = (y - currentScrollOffsetY) / ANIMATED_TIME_SLOT;
+
+                var isHorizontalScroll = Math.Abs(x - currentScrollOffsetX) >= DOUBLE_EQUAL_THRESHOLD;
+                var isVerticalScroll = Math.Abs(y - currentScrollOffsetY) >= DOUBLE_EQUAL_THRESHOLD;
+
+                while ((isHorizontalScroll || isVerticalScroll))
+                {
+                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    if (isHorizontalScroll)
+                    {
+                        scrollView.ScrollToHorizontalOffset(currentScrollOffsetX + biasX);
+                    }
+
+                    if (isVerticalScroll)
+                    {
+                        scrollView.ScrollToVerticalOffset(currentScrollOffsetY + biasY);
+                    }
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(ANIMATED_TIME_UNIT), cancellationTokenSource.Token);
+
+                    // Setup next run's progressive scrolling settings
+                    if (!weakScrollView.TryGetTarget(out scrollView))
+                    {
+                        break;
+                    }
+                    currentScrollOffsetX = scrollView.HorizontalOffset;
+                    currentScrollOffsetY = scrollView.VerticalOffset;
+                    isHorizontalScroll = Math.Abs(x - currentScrollOffsetX) >= DOUBLE_EQUAL_THRESHOLD;
+                    isVerticalScroll = Math.Abs(y - currentScrollOffsetY) >= DOUBLE_EQUAL_THRESHOLD;
+                }
+
+                _scollViewCancelMap.Remove(hashCode);
+            }
         }
 
         class ScrollEvent : Event

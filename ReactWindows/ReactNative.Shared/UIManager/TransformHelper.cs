@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 #if WINDOWS_UWP
@@ -26,7 +31,7 @@ namespace ReactNative.UIManager
             {
                 var helperMatrix = Matrix3D.Identity;
                 var transformMap = (JObject)transform;
-                var transformType = transformMap.Properties().SingleOrDefault().Name;
+                var transformType = transformMap.Properties().Single().Name;
                 switch (transformType)
                 {
                     case "matrix":

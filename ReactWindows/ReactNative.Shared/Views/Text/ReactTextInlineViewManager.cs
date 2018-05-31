@@ -1,4 +1,7 @@
-﻿using ReactNative.UIManager;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.UIManager;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Documents;
 #else
@@ -12,7 +15,7 @@ namespace ReactNative.Views.Text
     /// </summary>
     /// <typeparam name="TInline">Type of inline.</typeparam>
     /// <typeparam name="TReactTextInlineShadowNode">Type of shadow node.</typeparam>
-    public abstract class ReactTextInlineViewManager<TInline, TReactTextInlineShadowNode> : DependencyObjectViewManager<TInline, TReactTextInlineShadowNode>
+    public abstract class ReactTextInlineViewManager<TInline, TReactTextInlineShadowNode> : ViewManagerBase<TInline, TReactTextInlineShadowNode>
         where TInline : Inline
         where TReactTextInlineShadowNode : ReactInlineShadowNode
     {

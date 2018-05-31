@@ -5,22 +5,18 @@ max_jobs: 2
 environment:
   nodejs_version: "LTS"
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      PLATFORM_TOOLSET: v140
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       CONFIGURATION: Debug
       PLATFORM: x64
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      PLATFORM_TOOLSET: v140
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       CONFIGURATION: Debug
       PLATFORM: ARM
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      PLATFORM_TOOLSET: v141
       CONFIGURATION: ReleaseBundle
       PLATFORM: x86
 
 # Uncomment to enable entire matrix of tests.
 #image:
-#  - Visual Studio 2015
 #  - Visual Studio 2017
 #configuration:
 #  - Debug
@@ -36,16 +32,13 @@ matrix:
   # Fail everything immediately if one build fails.
   fast_finish: true
 
-cache:
-  - node_modules
-
 hosts:
   api.nuget.org: 93.184.221.200
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
-  - npm install -g npm@latest
-  - npm i
+  - appveyor-retry npm install -g npm@lts
+  - appveyor-retry npm i
   - ps: curl -o C:\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
   - ps: mkdir C:\winium
   - ps: Add-Type -A 'System.IO.Compression.FileSystem'
@@ -55,18 +48,18 @@ clone_script:
 - ps: git clone -q $("--branch=" + $env:APPVEYOR_REPO_BRANCH) $("https://github.com/" + $env:APPVEYOR_REPO_NAME + ".git") $env:APPVEYOR_BUILD_FOLDER
 - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) {$("git checkout -qf " + $env:APPVEYOR_REPO_COMMIT)}
 - ps: if ($env:APPVEYOR_PULL_REQUEST_NUMBER) {git fetch -q origin +refs/pull/$($env:APPVEYOR_PULL_REQUEST_NUMBER)/merge; git checkout -qf FETCH_HEAD}
-- ps: git submodule update -q --init --recursive
+- appveyor-retry git submodule update -q --init --recursive
 
 before_build:
 - ps: $env:playgroundNet46_dir=$env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46"
 - ps: $env:bundle_dir=$env:APPVEYOR_BUILD_FOLDER + "\ReactWindows\Playground.Net46\ReactAssets"
-- ps: nuget restore ReactWindows\ReactNative.sln
-- npm i -g react-native-cli
+- appveyor-retry nuget restore ReactWindows\ReactNative.sln
+- appveyor-retry npm i -g react-native-cli
 
 build_script:
 - ps: mkdir $env:bundle_dir
 - ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
-- ps: msbuild /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM /p:PlatformToolset=$env:PLATFORM_TOOLSET /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "ReactWindows\ReactNative.sln"
+- ps: msbuild /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "ReactWindows\ReactNative.sln"
 
 # Start Winium in the background, give it a moment to start
 before_test:
@@ -84,15 +77,15 @@ test_script:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if($platform -ne "ARM") { nunit3-console "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
+      if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
       if ($platform -eq "ReleaseBundle" -Or $platform -eq "DebugBundle") { npm test }
 
   # Disabling for now
   #- npm run flow-check
   # Spec test only works when there is a bundle
-
-  - npm run lint
+  #
+  # - npm run lint
 
 after_test:
   - ps: >-
@@ -104,7 +97,7 @@ after_test:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.5.0\tools\nunit3-console.exe" -targetargs:"ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll" -output:ReactWindows_coverage.xml }
+      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
 
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov

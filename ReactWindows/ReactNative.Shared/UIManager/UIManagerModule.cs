@@ -1,9 +1,17 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative.UIManager
 {
@@ -15,11 +23,16 @@ namespace ReactNative.UIManager
         private const int RootViewTagIncrement = 10;
 
         private readonly UIImplementation _uiImplementation;
-        private readonly IReadOnlyDictionary<string, object> _moduleConstants;
+        private readonly JObject _moduleConstants;
+        private readonly JObject _customDirectEvents;
         private readonly EventDispatcher _eventDispatcher;
+        private readonly IActionQueue _layoutActionQueue;
 
         private int _batchId;
         private int _nextRootTag = 1;
+
+        private readonly ConcurrentDictionary<int, TaskCompletionSource<bool>> _rootViewCleanupTasks =
+            new ConcurrentDictionary<int, TaskCompletionSource<bool>>();
 
         /// <summary>
         /// Instantiates a <see cref="UIManagerModule"/>.
@@ -27,22 +40,36 @@ namespace ReactNative.UIManager
         /// <param name="reactContext">The React context.</param>
         /// <param name="viewManagers">The view managers.</param>
         /// <param name="uiImplementationProvider">The UI implementation provider.</param>
+        /// <param name="layoutActionQueue">The layout action queue.</param>
+        /// <param name="options">Options for the <see cref="UIManagerModule"/>.</param>
         public UIManagerModule(
             ReactContext reactContext,
             IReadOnlyList<IViewManager> viewManagers,
-            UIImplementationProvider uiImplementationProvider)
-            : base(reactContext)
+            UIImplementationProvider uiImplementationProvider,
+            IActionQueue layoutActionQueue,
+            UIManagerModuleOptions options)
+            : base(reactContext, layoutActionQueue)
         {
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
             if (uiImplementationProvider == null)
                 throw new ArgumentNullException(nameof(uiImplementationProvider));
-            
+            if (layoutActionQueue == null)
+                throw new ArgumentNullException(nameof(layoutActionQueue));
+
             _eventDispatcher = new EventDispatcher(reactContext);
             _uiImplementation = uiImplementationProvider.Create(reactContext, viewManagers, _eventDispatcher);
-            _moduleConstants = CreateConstants(viewManagers);
+            var lazyViewManagersEnabled = IsLazyViewManagersEnabled(options);
+            _customDirectEvents = lazyViewManagersEnabled ? GetDirectEventTypeConstants() : new JObject();
+            _moduleConstants = CreateConstants(viewManagers, null, _customDirectEvents, IsLazyViewManagersEnabled(options));
+            _layoutActionQueue = layoutActionQueue;
             reactContext.AddLifecycleEventListener(this);
         }
+
+        /// <summary>
+        /// An event fired before the UIManager dispatches view updates.
+        /// </summary>
+        public event EventHandler DispatchingViewUpdates;
 
         /// <summary>
         /// The name of the module.
@@ -51,14 +78,14 @@ namespace ReactNative.UIManager
         {
             get
             {
-                return "RKUIManager";
+                return "UIManager";
             }
         }
 
         /// <summary>
         /// The constants exported by this module.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
@@ -97,35 +124,69 @@ namespace ReactNative.UIManager
         /// JavaScript can use the returned tag with to add or remove children 
         /// to this view through <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>.
         /// </remarks>
-        public int AddMeasuredRootView(SizeMonitoringCanvas rootView)
+        public int AddMeasuredRootView(ReactRootView rootView)
         {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
-            var width = rootView.ActualWidth;
-            var height = rootView.ActualHeight;
-
             var context = new ThemedReactContext(Context);
-            _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
 
-            var resizeCount = 0;
-            rootView.SetOnSizeChangedListener((sender, args) =>
+            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
             {
-                var currentCount = ++resizeCount;
-                var newWidth = args.NewSize.Width;
-                var newHeight = args.NewSize.Height;
+                var width = rootView.ActualWidth;
+                var height = rootView.ActualHeight;
 
-                Context.RunOnLayoutQueueThread(() =>
+                _layoutActionQueue.Dispatch(() =>
                 {
-                    if (currentCount == resizeCount)
-                    {
-                        Context.AssertOnLayoutQueueThread();
-                        _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
-                    }
+                    _uiImplementation.RegisterRootView(rootView, tag, width, height, context);
                 });
-            });
+
+                var resizeCount = 0;
+
+                rootView.SetOnSizeChangedListener((sender, args) =>
+                {
+                    var currentCount = ++resizeCount;
+                    var newWidth = args.NewSize.Width;
+                    var newHeight = args.NewSize.Height;
+
+                    _layoutActionQueue.Dispatch(() =>
+                    {
+                        if (currentCount == resizeCount)
+                        {
+                            _layoutActionQueue.AssertOnThread();
+                            _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight);
+                        }
+                    });
+                });
+ 
+            }, true); // Allow inlining
 
             return tag;
+        }
+
+        /// <summary>
+        /// Detaches a root view from the size monitoring hooks in preparation for the unmount
+        /// </summary>
+        /// <param name="rootView">The root view instance.</param>
+        /// <returns>A task to await the cleanup of the root view.</returns>
+        public async Task<Task> DetachRootViewAsync(ReactRootView rootView)
+        {
+            // Called on main dispatcher thread
+            DispatcherHelpers.AssertOnDispatcher();
+
+            await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
+            {
+                rootView.RemoveSizeChanged();
+                return true;
+            }, true); // allow inlining
+
+            var rootTag = rootView.GetTag();
+            var taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _rootViewCleanupTasks.AddOrUpdate(rootTag, taskCompletionSource, (k, v) => throw new InvalidOperationException("Duplicate root view removal"));
+            return taskCompletionSource.Task;
         }
 
         /// <summary>
@@ -135,8 +196,39 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void AddUIBlock(IUIBlock block)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.AddUIBlock(block));
+            _uiImplementation.AddUIBlock(block);
+        }
+
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// need view logic before all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        public void PrependUIBlock(IUIBlock block)
+        {
+            _uiImplementation.PrependUIBlock(block);
+        }
+
+        /// <summary>
+        /// Resolves direct event name exposed to JavaScript from the one known
+        /// to the native implementation.
+        /// </summary>
+        /// <param name="eventName">The native event name.</param>
+        /// <returns>The direct event name.</returns>
+        public string ResolveCustomEventName(string eventName)
+        {
+            lock (_customDirectEvents)
+            {
+                if (_customDirectEvents.TryGetValue(eventName, out var value) &&
+                    value is JObject customEventType &&
+                    customEventType.TryGetValue("registrationName", out value) &&
+                    value.Type == JTokenType.String)
+                {
+                    return value.Value<string>();
+                }
+
+                return eventName;
+            }
         }
 
         #region React Methods
@@ -146,10 +238,17 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="rootViewTag">The root view tag.</param>
         [ReactMethod]
-        public void removeRootView(int rootViewTag)
+        public async void removeRootView(int rootViewTag)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.RemoveRootView(rootViewTag));
+            // A cleanup task should be waiting here
+            if (!_rootViewCleanupTasks.TryRemove(rootViewTag, out var cleanupTask))
+            {
+                throw new InvalidOperationException("Unexpected removeRootView");
+            }
+
+            await _uiImplementation.RemoveRootViewAsync(rootViewTag);
+
+            cleanupTask.SetResult(true);
         }
 
         /// <summary>
@@ -158,12 +257,11 @@ namespace ReactNative.UIManager
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
         /// <param name="rootViewTag">The root view tag.</param>
-        /// <param name="props">The properties.</param>
+        /// <param name="props">The props.</param>
         [ReactMethod]
         public void createView(int tag, string className, int rootViewTag, JObject props)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.CreateView(tag, className, rootViewTag, props));
+            _uiImplementation.CreateView(tag, className, rootViewTag, props);
         }
 
         /// <summary>
@@ -171,12 +269,11 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The view tag.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="props">The properties.</param>
+        /// <param name="props">The props.</param>
         [ReactMethod]
         public void updateView(int tag, string className, JObject props)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.UpdateView(tag, className, props));
+            _uiImplementation.UpdateView(tag, className, props);
         }
 
         /// <summary>
@@ -208,14 +305,13 @@ namespace ReactNative.UIManager
             int[] addAtIndexes,
             int[] removeFrom)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ManageChildren(
+            _uiImplementation.ManageChildren(
                     viewTag,
                     moveFrom,
                     moveTo,
                     addChildTags,
                     addAtIndexes,
-                    removeFrom));
+                    removeFrom);
         }
 
         /// <summary>
@@ -231,8 +327,7 @@ namespace ReactNative.UIManager
             int viewTag,
             int[] childrenTags)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.SetChildren(viewTag, childrenTags));
+            _uiImplementation.SetChildren(viewTag, childrenTags);
         }
 
         /// <summary>
@@ -248,8 +343,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void replaceExistingNonRootView(int oldTag, int newTag)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ReplaceExistingNonRootView(oldTag, newTag));
+            _uiImplementation.ReplaceExistingNonRootView(oldTag, newTag);
         }
 
         /// <summary>
@@ -260,8 +354,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void removeSubviewsFromContainerWithID(int containerTag)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.RemoveSubViewsFromContainerWithId(containerTag));
+            _uiImplementation.RemoveSubViewsFromContainerWithId(containerTag);
         }
 
         /// <summary>
@@ -273,8 +366,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void measure(int reactTag, ICallback callback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.Measure(reactTag, callback));
+            _uiImplementation.Measure(reactTag, callback);
         }
 
         /// <summary>
@@ -286,8 +378,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void measureInWindow(int reactTag, ICallback callback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.MeasureInWindow(reactTag, callback));
+            _uiImplementation.MeasureInWindow(reactTag, callback);
         }
 
         /// <summary>
@@ -312,8 +403,7 @@ namespace ReactNative.UIManager
             ICallback errorCallback,
             ICallback successCallback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.MeasureLayout(tag, ancestorTag, errorCallback, successCallback));
+            _uiImplementation.MeasureLayout(tag, ancestorTag, errorCallback, successCallback);
         }
 
         /// <summary>
@@ -336,8 +426,7 @@ namespace ReactNative.UIManager
             ICallback errorCallback,
             ICallback successCallback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.MeasureLayoutRelativeToParent(tag, errorCallback, successCallback));
+            _uiImplementation.MeasureLayoutRelativeToParent(tag, errorCallback, successCallback);
         }
 
         /// <summary>
@@ -360,12 +449,11 @@ namespace ReactNative.UIManager
             JArray point,
             ICallback callback)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.FindSubViewIn(
+            _uiImplementation.FindSubViewIn(
                     reactTag,
                     point[0].Value<double>(),
                     point[1].Value<double>(),
-                    callback));
+                    callback);
         }
 
         /// <summary>
@@ -378,8 +466,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void setJSResponder(int reactTag, bool blockNativeResponder)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.SetJavaScriptResponder(reactTag, blockNativeResponder));
+            // TODO: (#306) implement JS responder handler
         }
 
         /// <summary>
@@ -388,8 +475,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void clearJSResponder()
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ClearJavaScriptResponder());
+            // TODO: (#306) implement JS responder handler
         }
 
         /// <summary>
@@ -401,8 +487,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void dispatchViewManagerCommand(int reactTag, int commandId, JArray commandArgs)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.DispatchViewManagerCommand(reactTag, commandId, commandArgs));
+            _uiImplementation.DispatchViewManagerCommand(reactTag, commandId, commandArgs);
         }
 
         /// <summary>
@@ -424,8 +509,7 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void showPopupMenu(int reactTag, string[] items, ICallback error, ICallback success)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ShowPopupMenu(reactTag, items, error, success));
+            _uiImplementation.ShowPopupMenu(reactTag, items, error, success);
         }
 
         /// <summary>
@@ -446,13 +530,48 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public void configureNextLayoutAnimation(JObject config, ICallback success, ICallback error)
         {
-            Context.RunOnLayoutQueueThread(() =>
-                _uiImplementation.ConfigureNextLayoutAnimation(config, success, error));
+            _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
         #endregion
 
-        #region ILifecycleEventListenere
+        #region Sync React Methods
+
+        /// <summary>
+        /// Gets the constants for the view manager.
+        /// </summary>
+        /// <param name="viewManagerName">The view manager name.</param>
+        /// <returns>The view manager constants.</returns>
+        [ReactMethod(IsBlockingSynchronousMethod = true)]
+        public JObject getConstantsForViewManager(string viewManagerName)
+        {
+            var viewManager = _uiImplementation.ResolveViewManager(viewManagerName);
+
+            using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "UIManagerModule.getConstantsForViewManager")
+                .With("ViewManager", viewManagerName)
+                .With("Lazy", true)
+                .Start())
+            {
+                lock (_customDirectEvents)
+                {
+                    return CreateConstantsForViewManager(viewManager, null, null, null, _customDirectEvents);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the default event types for the <see cref="UIManagerModule"/>.
+        /// </summary>
+        /// <returns>The default event types.</returns>
+        [ReactMethod(IsBlockingSynchronousMethod = true)]
+        public JObject getDefaultEventTypes()
+        {
+            return GetDefaultExportableEventTypes();
+        }
+
+        #endregion
+
+        #region ILifecycleEventListener
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -476,8 +595,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            _uiImplementation.OnShutdown();
-            _eventDispatcher.OnDestroy();
+            _uiImplementation.OnDestroy();
         }
 
         #endregion
@@ -492,11 +610,8 @@ namespace ReactNative.UIManager
         public void OnBatchComplete()
         {
             var batchId = _batchId++;
-
-            Context.RunOnLayoutQueueThread(() =>
-            {
-                _uiImplementation.DispatchViewUpdates(batchId);
-            });
+            DispatchingViewUpdates?.Invoke(this, new EventArgs());
+            _uiImplementation.DispatchViewUpdates(batchId);
         }
 
         #endregion
@@ -509,6 +624,15 @@ namespace ReactNative.UIManager
         public override void OnReactInstanceDispose()
         {
             _eventDispatcher.OnReactInstanceDispose();
+        }
+
+        #endregion
+
+        #region Options
+
+        private static bool IsLazyViewManagersEnabled(UIManagerModuleOptions options)
+        {
+            return (options & UIManagerModuleOptions.LazyViewManagers) == UIManagerModuleOptions.LazyViewManagers;
         }
 
         #endregion

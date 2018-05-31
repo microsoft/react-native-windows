@@ -1,8 +1,13 @@
-﻿using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace ReactNative.Chakra.Executor
@@ -12,6 +17,8 @@ namespace ReactNative.Chakra.Executor
     /// </summary>
     public class NativeJavaScriptExecutor : IJavaScriptExecutor
     {
+        private const string BytecodeFileName = "ReactNativeBundle.bin";
+
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
         private readonly bool _useSerialization;
 
@@ -21,6 +28,7 @@ namespace ReactNative.Chakra.Executor
         public NativeJavaScriptExecutor()
             : this(false)
         {
+
         }
 
         /// <summary>
@@ -105,10 +113,69 @@ namespace ReactNative.Chakra.Executor
 
             try
             {
+                var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, BytecodeFileName);
+
                 if (_useSerialization)
                 {
-                    var binPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ReactNativeBundle.bin");
-                    Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                    var srcFileInfo = new FileInfo(sourcePath);
+                    var binFileInfo = new FileInfo(binPath);
+
+                    bool ranSuccessfully = false;
+                    // The idea is to run the JS bundle and generate bytecode for it on a background thread.
+                    // This eliminates the need to delay the first start when the app doesn't have bytecode.
+                    // Next time the app starts, it checks if bytecode is still good and  runs it directly.
+                    if (binFileInfo.Exists && binFileInfo.LastWriteTime > srcFileInfo.LastWriteTime)
+                    {
+                        try
+                        {
+                            Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                            ranSuccessfully = true;
+                        }
+                        catch (JavaScriptUsageException exc)
+                        {
+                            if (exc.ErrorCode == JavaScriptErrorCode.BadSerializedScript)
+                            {
+                                // Bytecode format is dependent on Chakra engine version, so an OS upgrade may require a recompilation
+                                Debug.WriteLine("Serialized bytecode script is corrupted or wrong format, will generate new one");
+                            }
+                            else
+                            {
+                                // Some more severe error. We still have a chance (recompiling), so we keep continuing.
+                                Debug.WriteLine($"Failed to run serialized bytecode script ({exc.ToString()}), will generate new one");
+                            }
+
+                            File.Delete(binPath);
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Serialized bytecode script doesn't exist or is obsolete, will generate one");
+                    }
+
+                    if (!ranSuccessfully)
+                    {
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                // In Chakra JS engine, only one runtime can be active on a particular thread at a time,
+                                // and a runtime can only be active on one thread at a time. However it's possible to
+                                // create two runtimes and let them run on different threads.
+                                var rt = new ChakraBridge.NativeJavaScriptExecutor();
+
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.InitializeHost());
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.SerializeScript(sourcePath, binPath));
+                                Native.ThrowIfError((JavaScriptErrorCode)rt.DisposeHost());
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"Failed to generate serialized bytecode script ({ex.ToString()}).");
+                                // It's fine if the bytecode couldn't be generated: RN can still use the JS bundle.
+                            }
+                        });
+
+                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunScript(sourcePath, sourceUrl));
+                    }
                 }
                 else
                 {
@@ -125,11 +192,37 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Set a callback for flushing the queue immediately.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            if (flushQueueImmediate == null)
+                throw new ArgumentNullException(nameof(flushQueueImmediate));
+
+            _executor.SetFlushQueueImmediate(args =>
+                flushQueueImmediate(JToken.Parse(args)));
+        }
+
+        /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+            if (callSyncHook == null)
+                throw new ArgumentNullException(nameof(callSyncHook));
+
+            _executor.SetCallSyncHook((moduleId, methodId, args) =>
+                callSyncHook(moduleId, methodId, JArray.Parse(args)).ToString(Formatting.None));
+        }
+
+        /// <summary>
         /// Sets a global variable in the JavaScript runtime.
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
@@ -137,7 +230,7 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(value));
 
             Native.ThrowIfError(
-                (JavaScriptErrorCode)_executor.SetGlobalVariable(propertyName, value.ToString(Formatting.None)));
+                (JavaScriptErrorCode)_executor.SetGlobalVariable(propertyName, value));
         }
     }
 }

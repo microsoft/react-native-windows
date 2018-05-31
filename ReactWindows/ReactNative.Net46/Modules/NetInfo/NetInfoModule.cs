@@ -1,11 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 
 namespace ReactNative.Modules.NetInfo
 {
     /// <summary>
-    /// Module that monitors and provides nformation about the connectivity
+    /// Module that monitors and provides information about the connectivity
     /// state of the device.
     /// </summary>
     public class NetInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener

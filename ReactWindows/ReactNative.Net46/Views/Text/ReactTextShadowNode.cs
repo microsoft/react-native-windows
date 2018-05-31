@@ -1,5 +1,7 @@
-﻿using Facebook.Yoga;
-using ReactNative.Bridge;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Facebook.Yoga;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;

@@ -1,4 +1,7 @@
-﻿using NETWORKLIST;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using NETWORKLIST;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using ReactNative.Bridge;
@@ -112,7 +115,7 @@ namespace ReactNative.Tests.Modules.NetInfo
 
         private static void SetDispatcherForTest()
         {
-            ReactNative.Bridge.DispatcherHelpers.CurrentDispatcher = Dispatcher.CurrentDispatcher;
+            ReactNative.Bridge.DispatcherHelpers.MainDispatcher = Dispatcher.CurrentDispatcher;
         }
 
         class TestReactInstance : MockReactInstance

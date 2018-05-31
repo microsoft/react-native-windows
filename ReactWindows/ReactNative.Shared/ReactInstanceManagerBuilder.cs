@@ -1,6 +1,11 @@
-﻿using ReactNative.Bridge;
-using ReactNative.Common;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
 using ReactNative.Chakra.Executor;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System;
@@ -21,6 +26,7 @@ namespace ReactNative
         private UIImplementationProvider _uiImplementationProvider;
         private Action<Exception> _nativeModuleCallExceptionHandler;
         private Func<IJavaScriptExecutor> _jsExecutorFactory;
+        private bool _lazyViewManagersEnabled;
 
         /// <summary>
         /// Sets a provider of <see cref="UIImplementation"/>.
@@ -114,6 +120,19 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// When <code>true</code>, view manager constants, including custom
+        /// events and native props configuration are loaded
+        /// on-demand rather than at startup.
+        /// </summary>
+        public bool LazyViewManagersEnabled
+        {
+            set
+            {
+                _lazyViewManagersEnabled = value;
+            }
+        }
+
+        /// <summary>
         /// Sets the JavaScript executor factory.
         /// </summary>
         public Func<IJavaScriptExecutor> JavaScriptExecutorFactory
@@ -164,7 +183,8 @@ namespace ReactNative
                 _initialLifecycleState.Value,
                 _uiImplementationProvider,
                 _jsExecutorFactory,
-                _nativeModuleCallExceptionHandler);
+                _nativeModuleCallExceptionHandler,
+                _lazyViewManagersEnabled);
         }
     }
 }

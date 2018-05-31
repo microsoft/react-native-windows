@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using ReactNative.Modules.Core;
@@ -16,6 +19,7 @@ namespace ReactNative
     /// <summary>
     /// Base page for React Native applications.
     /// </summary>
+    [Obsolete("Please use ReactNativeHost instead of ReactPage.")]
     public abstract class ReactPage : Page, IAsyncDisposable
     {
         private readonly ReactInstanceManager _reactInstanceManager;
@@ -147,11 +151,13 @@ namespace ReactNative
         /// <summary>
         /// Called before the application shuts down.
         /// </summary>
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
 
-            return _reactInstanceManager.DisposeAsync();            
+            await RootView.StopReactApplicationAsync();
+
+            await _reactInstanceManager.DisposeAsync();            
         }
 
         /// <summary>
@@ -191,7 +197,7 @@ namespace ReactNative
                 }
                 else if (e.EventType == CoreAcceleratorKeyEventType.KeyUp && _isControlKeyDown && e.VirtualKey == VirtualKey.R)
                 {
-                    _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
+                   _reactInstanceManager.DevSupportManager.HandleReloadJavaScript();
                 }
             }
         }
@@ -228,8 +234,7 @@ namespace ReactNative
                     throw new ArgumentException("Expected value for remoteDebugging argument.", nameof(arguments));
                 }
 
-                bool isRemoteDebuggingEnabled;
-                if (bool.TryParse(args[index + 1], out isRemoteDebuggingEnabled))
+                if (bool.TryParse(args[index + 1], out var isRemoteDebuggingEnabled))
                 {
                     _reactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
                 }

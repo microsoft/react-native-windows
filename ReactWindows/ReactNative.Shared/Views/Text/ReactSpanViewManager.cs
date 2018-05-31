@@ -1,16 +1,18 @@
-﻿using ReactNative.Reflection;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 #else
+using ReactNative.Reflection;
+using System.Collections;
+using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -54,9 +56,14 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.Color, CustomType = "Color")]
         public void SetColor(Span view, uint? color)
         {
-            view.Foreground = color.HasValue
-                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : null;
+            if (color.HasValue)
+            {
+                view.Foreground = new SolidColorBrush(ColorHelpers.Parse(color.Value));
+            }
+            else
+            {
+                view.ClearValue(Span.ForegroundProperty);
+            }
         }
 
 #if !WINDOWS_UWP
@@ -68,23 +75,30 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.TextDecorationLine)]
         public void SetTextDecorationLine(Span view, string textDecorationLineValue)
         {
-            var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue) ?? TextDecorationLine.None;
+            var textDecorationLine = EnumHelpers.ParseNullable<TextDecorationLine>(textDecorationLineValue);
 
-            switch (textDecorationLine)
+            if (textDecorationLine.HasValue)
             {
-                case TextDecorationLine.Underline:
-                    view.TextDecorations = TextDecorations.Underline;
-                    break;
-                case TextDecorationLine.LineThrough:
-                    view.TextDecorations = TextDecorations.Strikethrough;
-                    break;
-                case TextDecorationLine.UnderlineLineThrough:
-                    view.TextDecorations = new TextDecorationCollection(TextDecorations.Underline.Concat(TextDecorations.Strikethrough));
-                    break;
-                case TextDecorationLine.None:
-                default:
-                    view.TextDecorations = null;
-                    break;
+                switch (textDecorationLine.Value)
+                {
+                    case TextDecorationLine.Underline:
+                        view.TextDecorations = TextDecorations.Underline;
+                        break;
+                    case TextDecorationLine.LineThrough:
+                        view.TextDecorations = TextDecorations.Strikethrough;
+                        break;
+                    case TextDecorationLine.UnderlineLineThrough:
+                        view.TextDecorations = new TextDecorationCollection(TextDecorations.Underline.Concat(TextDecorations.Strikethrough));
+                        break;
+                    case TextDecorationLine.None:
+                    default:
+                        view.TextDecorations = null;
+                        break;
+                }
+            }
+            else
+            {
+                view.ClearValue(Span.TextDecorationsProperty);
             }
         }
 #endif
@@ -95,16 +109,17 @@ namespace ReactNative.Views.Text
         /// <param name="parent">The parent view.</param>
         /// <param name="child">The child view.</param>
         /// <param name="index">The index.</param>
-        public void AddView(DependencyObject parent, DependencyObject child, int index)
+        public void AddView(object parent, object child, int index)
         {
             var span = (Span)parent;
 
-            var inlineChild = child as Inline;
+            var dependencyObject = ViewConversion.GetDependencyObject(child);
+            var inlineChild = dependencyObject as Inline;
             if (inlineChild == null)
             {
                 inlineChild = new InlineUIContainer
                 {
-                    Child = (UIElement)child,
+                    Child = dependencyObject.As<UIElement>(),
                 };
             }
 
@@ -136,7 +151,7 @@ namespace ReactNative.Views.Text
         /// <param name="parent">The parent view.</param>
         /// <param name="index">The index.</param>
         /// <returns>The child view.</returns>
-        public DependencyObject GetChildAt(DependencyObject parent, int index)
+        public object GetChildAt(object parent, int index)
         {
             var span = (Span)parent;
 #if WINDOWS_UWP
@@ -151,11 +166,7 @@ namespace ReactNative.Views.Text
             }
             else
             {
-#if WINDOWS_UWP
                 return child;
-#else
-                return (DependencyObject)child;
-#endif
             }
         }
 
@@ -164,7 +175,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <returns>The number of children.</returns>
-        public int GetChildCount(DependencyObject parent)
+        public int GetChildCount(object parent)
         {
             var span = (Span)parent;
             return span.Inlines.Count;
@@ -188,7 +199,7 @@ namespace ReactNative.Views.Text
         /// Removes all children from the view parent.
         /// </summary>
         /// <param name="parent">The view parent.</param>
-        public void RemoveAllChildren(DependencyObject parent)
+        public void RemoveAllChildren(object parent)
         {
             var span = (Span)parent;
             span.Inlines.Clear();
@@ -199,7 +210,7 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="parent">The view parent.</param>
         /// <param name="index">The index.</param>
-        public void RemoveChildAt(DependencyObject parent, int index)
+        public void RemoveChildAt(object parent, int index)
         {
             var span = (Span)parent;
 #if WINDOWS_UWP

@@ -1,16 +1,18 @@
-﻿using ReactNative.Bridge;
-using ReactNative.DevSupport;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
+using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using ReactNative.Modules.DeviceInfo;
 using ReactNative.Modules.DevSupport;
+using ReactNative.Modules.SystemInfo;
 using ReactNative.Tracing;
 using ReactNative.UIManager;
-using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
-#if !WINDOWS_UWP
-using System.Windows;
-#endif
 
 namespace ReactNative
 {
@@ -25,15 +27,18 @@ namespace ReactNative
         private readonly ReactInstanceManager _reactInstanceManager;
         private readonly Action _hardwareBackButtonHandler;
         private readonly UIImplementationProvider _uiImplementationProvider;
+        private readonly bool _lazyViewManagersEnabled;
 
         public CoreModulesPackage(
             ReactInstanceManager reactInstanceManager,
             Action hardwareBackButtonHandler,
-            UIImplementationProvider uiImplementationProvider)
+            UIImplementationProvider uiImplementationProvider,
+            bool lazyViewManagersEnabled)
         {
             _reactInstanceManager = reactInstanceManager;
             _hardwareBackButtonHandler = hardwareBackButtonHandler;
             _uiImplementationProvider = uiImplementationProvider;
+            _lazyViewManagersEnabled = lazyViewManagersEnabled;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller manages scope of returned list of disposables.")]
@@ -42,11 +47,14 @@ namespace ReactNative
             var uiManagerModule = default(INativeModule);
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "createUIManagerModule").Start())
             {
-                var viewManagerList = _reactInstanceManager.CreateAllViewManagers(reactContext);
+                var layoutActionQueue = new LayoutActionQueue(reactContext.HandleException);
+                var options = _lazyViewManagersEnabled ? UIManagerModuleOptions.LazyViewManagers : UIManagerModuleOptions.None;
                 uiManagerModule = new UIManagerModule(
-                    reactContext, 
-                    viewManagerList,
-                    _uiImplementationProvider);
+                    reactContext,
+                    _reactInstanceManager.CreateAllViewManagers(reactContext),
+                    _uiImplementationProvider,
+                    layoutActionQueue,
+                    options);
             }
 
             return new List<INativeModule>
@@ -54,14 +62,14 @@ namespace ReactNative
                 //new AnimationsDebugModule(
                 //    reactContext,
                 //    _reactInstanceManager.DevSupportManager.DevSettings),
-                //new SystemInfoModule(),
                 new DeviceEventManagerModule(reactContext, _hardwareBackButtonHandler),
                 new DeviceInfoModule(reactContext),
                 new ExceptionsManagerModule(_reactInstanceManager.DevSupportManager),
-                new Timing(reactContext),
+                new PlatformConstantsModule(),
                 new SourceCodeModule(
                     _reactInstanceManager.SourceUrl,
                     _reactInstanceManager.DevSupportManager.SourceMapUrl),
+                new Timing(reactContext),
                 uiManagerModule,
                 //new DebugComponentOwnershipModule(reactContext),
             };

@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PCLStorage;
 using ReactNative.Bridge;
 using ReactNative.Common;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.Chakra.Executor
@@ -31,6 +32,8 @@ namespace ReactNative.Chakra.Executor
 
         private JavaScriptNativeFunction _nativeLoggingHook;
         private JavaScriptNativeFunction _nativeRequire;
+        private JavaScriptNativeFunction _nativeCallSyncHook;
+        private JavaScriptNativeFunction _nativeFlushQueueImmediate;
 
         private JavaScriptValue _globalObject;
 
@@ -42,6 +45,9 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue _parseFunction;
         private JavaScriptValue _stringifyFunction;
 #endif
+
+        private Func<int, int, JArray, JToken> _callSyncHook;
+        private Action<JToken> _flushQueueImmediate;
 
         /// <summary>
         /// Instantiates the <see cref="ChakraJavaScriptExecutor"/>.
@@ -145,21 +151,21 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(sourceUrl));
 
             var startupCode = default(string);
-            if (IsUnbundleAsync(sourcePath).Result)
+            if (IsUnbundle(sourcePath))
             {
                 _unbundle = new FileBasedJavaScriptUnbundle(sourcePath);
                 InstallNativeRequire();
-                startupCode = _unbundle.GetStartupCodeAsync().Result;
+                startupCode = _unbundle.GetStartupCode();
             }
-            else if (IsIndexedUnbundleAsync(sourcePath).Result)
+            else if (IsIndexedUnbundle(sourcePath))
             {
                 _unbundle = new IndexedJavaScriptUnbundle(sourcePath);
                 InstallNativeRequire();
-                startupCode = _unbundle.GetStartupCodeAsync().Result;
+                startupCode = _unbundle.GetStartupCode();
             }
             else
             {
-                startupCode = LoadScriptAsync(sourcePath).Result;
+                startupCode = LoadScript(sourcePath);
             }
 
             EvaluateScript(startupCode, sourceUrl);
@@ -170,7 +176,7 @@ namespace ReactNative.Chakra.Executor
         /// </summary>
         /// <param name="propertyName">The global variable name.</param>
         /// <param name="value">The value.</param>
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetGlobalVariable(string propertyName, string value)
         {
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
@@ -197,6 +203,24 @@ namespace ReactNative.Chakra.Executor
         }
 
         /// <summary>
+        /// Sets a callback for synchronous native methods.
+        /// </summary>
+        /// <param name="callSyncHook">The sync hook for native methods.</param>
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> callSyncHook)
+        {
+            _callSyncHook = callSyncHook;
+        }
+
+        /// <summary>
+        /// Sets a callback for immediate queue flushes.
+        /// </summary>
+        /// <param name="flushQueueImmediate">The callback.</param>
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
+        {
+            _flushQueueImmediate = flushQueueImmediate;
+        }
+
+        /// <summary>
         /// Disposes the <see cref="ChakraJavaScriptExecutor"/> instance.
         /// </summary>
         public void Dispose()
@@ -213,6 +237,18 @@ namespace ReactNative.Chakra.Executor
             EnsureGlobalObject().SetProperty(
                 JavaScriptPropertyId.FromString("nativeLoggingHook"),
                 JavaScriptValue.CreateFunction(_nativeLoggingHook),
+                true);
+
+            _nativeCallSyncHook = NativeCallSyncHook;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeCallSyncHook"),
+                JavaScriptValue.CreateFunction(_nativeCallSyncHook),
+                true);
+
+            _nativeFlushQueueImmediate = NativeFlushQueueImmediate;
+            EnsureGlobalObject().SetProperty(
+                JavaScriptPropertyId.FromString("nativeFlushQueueImmediate"),
+                JavaScriptValue.CreateFunction(_nativeFlushQueueImmediate),
                 true);
         }
 
@@ -248,6 +284,11 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue ConvertJson(JToken token)
         {
             var jsonString = token.ToString(Formatting.None);
+            return ConvertJson(jsonString);
+        }
+
+        private JavaScriptValue ConvertJson(string jsonString)
+        {
             var jsonStringValue = JavaScriptValue.FromString(jsonString);
             jsonStringValue.AddRef();
             var parseFunction = EnsureParseFunction();
@@ -289,6 +330,56 @@ namespace ReactNative.Chakra.Executor
             }
 
             return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Flush Queue Immediate Hook
+        private JavaScriptValue NativeFlushQueueImmediate(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly two arguments (global, flushedQueue)");
+            }
+
+            if (_flushQueueImmediate == null)
+            {
+                throw new InvalidOperationException("Callback hook for `nativeFlushQueueImmediate` has not been set.");
+            }
+
+            _flushQueueImmediate(ConvertJson(arguments[1]));
+
+            return JavaScriptValue.Undefined;
+        }
+        #endregion
+
+        #region Native Call Sync Hook
+        private JavaScriptValue NativeCallSyncHook(
+            JavaScriptValue callee,
+            bool isConstructCall,
+            JavaScriptValue[] arguments,
+            ushort argumentCount,
+            IntPtr callbackData)
+        {
+            if (argumentCount != 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(argumentCount), "Expected exactly four arguments (global, moduleId, methodId, and args).");
+            }
+
+            if (_callSyncHook == null)
+            {
+                throw new InvalidOperationException("Sync hook has not been set.");
+            }
+
+            var moduleId = (int)arguments[1].ToDouble();
+            var methodId = (int)arguments[2].ToDouble();
+            var args = (JArray)ConvertJson(arguments[3]);
+            var result = _callSyncHook(moduleId, methodId, args);
+            return ConvertJson(result);
         }
         #endregion
 
@@ -417,12 +508,11 @@ namespace ReactNative.Chakra.Executor
         #endregion
 
         #region File IO
-        private static async Task<string> LoadScriptAsync(string fileName)
+        private static string LoadScript(string fileName)
         {
             try
             {
-                var storageFile = await FileSystem.Current.GetFileFromPathAsync(fileName).ConfigureAwait(false);
-                return await storageFile.ReadAllTextAsync().ConfigureAwait(false);
+                return File.ReadAllText(fileName);
             }
             catch (Exception ex)
             {
@@ -450,7 +540,7 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptUnbundleModule GetModule(int index);
 
-            Task<string> GetStartupCodeAsync();
+            string GetStartupCode();
         }
 
         class FileBasedJavaScriptUnbundle : IJavaScriptUnbundle
@@ -468,13 +558,13 @@ namespace ReactNative.Chakra.Executor
             {
                 var sourceUrl = index + ".js";
                 var fileName = Path.Combine(_modulesPath, sourceUrl);
-                var source = LoadScriptAsync(fileName).Result;
+                var source = LoadScript(fileName);
                 return new JavaScriptUnbundleModule(source, sourceUrl);
             }
 
-            public Task<string> GetStartupCodeAsync()
+            public string GetStartupCode()
             {
-                return LoadScriptAsync(_sourcePath);
+                return LoadScript(_sourcePath);
             }
 
             public void Dispose()
@@ -513,12 +603,11 @@ namespace ReactNative.Chakra.Executor
                 return new JavaScriptUnbundleModule(source, sourceUrl);
             }
 
-            public async Task<string> GetStartupCodeAsync()
+            public string GetStartupCode()
             {
-                var bundleFile = await FileSystem.Current.GetFileFromPathAsync(_sourcePath);
-                _stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read);
+                _stream = File.OpenRead(_sourcePath);
                 var header = new byte[HeaderSize];
-                if (await _stream.ReadAsync(header, 0, HeaderSize) < HeaderSize)
+                if (_stream.Read(header, 0, HeaderSize) < HeaderSize)
                 {
                     throw new InvalidOperationException("Reached end of file before end of indexed unbundle header.");
                 }
@@ -528,13 +617,13 @@ namespace ReactNative.Chakra.Executor
                 var moduleTableSize = numberOfTableEntries * 8 /* bytes per entry */;
                 _baseOffset = HeaderSize + (int)moduleTableSize;
                 _moduleTable = new byte[moduleTableSize];
-                if (await _stream.ReadAsync(_moduleTable, 0, (int)moduleTableSize) < moduleTableSize)
+                if (_stream.Read(_moduleTable, 0, (int)moduleTableSize) < moduleTableSize)
                 {
                     throw new InvalidOperationException("Reached end of file before end of indexed unbundle module table.");
                 }
 
                 var startupCodeBuffer = new byte[startupCodeSize];
-                if (await _stream.ReadAsync(startupCodeBuffer, 0, (int)startupCodeSize) < startupCodeSize)
+                if (_stream.Read(startupCodeBuffer, 0, (int)startupCodeSize) < startupCodeSize)
                 {
                     throw new InvalidOperationException("Reached end of file before end of startup code.");
                 }
@@ -548,19 +637,18 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<bool> IsUnbundleAsync(string sourcePath)
+        private static bool IsUnbundle(string sourcePath)
         {
             var magicFilePath = Path.Combine(GetUnbundleModulesDirectory(sourcePath), MagicFileName);
-            var magicFile = await FileSystem.Current.GetFileFromPathAsync(magicFilePath);
-            if (magicFile == null)
+            if (!File.Exists(magicFilePath))
             {
                 return false;
             }
 
-            using (var stream = await magicFile.OpenAsync(PCLStorage.FileAccess.Read))
+            using (var stream = File.OpenRead(magicFilePath))
             {
                 var header = new byte[4];
-                var read = await stream.ReadAsync(header, 0, 4);
+                var read = stream.Read(header, 0, 4);
                 if (read < 4)
                 {
                     return false;
@@ -571,13 +659,12 @@ namespace ReactNative.Chakra.Executor
             }
         }
 
-        private static async Task<bool> IsIndexedUnbundleAsync(string sourcePath)
+        private static bool IsIndexedUnbundle(string sourcePath)
         {
-            var bundleFile = await FileSystem.Current.GetFileFromPathAsync(sourcePath);
-            using (var stream = await bundleFile.OpenAsync(PCLStorage.FileAccess.Read))
+            using (var stream = File.OpenRead(sourcePath))
             {
                 var header = new byte[4];
-                var read = await stream.ReadAsync(header, 0, 4);
+                var read = stream.Read(header, 0, 4);
                 if (read < 4)
                 {
                     return false;

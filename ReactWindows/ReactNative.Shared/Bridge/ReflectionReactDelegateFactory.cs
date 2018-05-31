@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +15,8 @@ namespace ReactNative.Bridge
     /// </summary>
     public sealed class ReflectionReactDelegateFactory : ReactDelegateFactoryBase
     {
+        private static readonly JToken s_null = JValue.CreateNull();
+
         private ReflectionReactDelegateFactory() { }
 
         /// <summary>
@@ -26,18 +31,22 @@ namespace ReactNative.Bridge
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Action<INativeModule, IReactInstance, JArray> Create(INativeModule module, MethodInfo method)
+        public override Func<IReactInstance, JArray, JToken> Create(INativeModule module, MethodInfo method)
         {
             var extractors = CreateExtractors(module, method);
             var expectedArguments = extractors.Sum(e => e.ExpectedArguments);
             var extractFunctions = extractors.Select(e => e.ExtractFunction).ToList();
+            var genericDelegate = GenericDelegate.Create(module, method);
+            var hasReturnType = method.ReturnType != typeof(void);
 
-            return (moduleInstance, reactInstance, arguments) => 
+            return (reactInstance, arguments) => 
                 Invoke(
-                    method, 
+                    method,
                     expectedArguments,
                     extractFunctions,
-                    moduleInstance,
+                    genericDelegate,
+                    hasReturnType,
+                    module,
                     reactInstance,
                     arguments);
         }
@@ -132,10 +141,12 @@ namespace ReactNative.Bridge
             }
         }
 
-        private static void Invoke(
+        private static JToken Invoke(
             MethodInfo method,
             int expectedArguments,
             IList<Func<IReactInstance, JArray, int, Result>> extractors,
+            IGenericDelegate genericDelegate,
+            bool hasReturnType,
             INativeModule moduleInstance,
             IReactInstance reactInstance,
             JArray jsArguments)
@@ -160,12 +171,32 @@ namespace ReactNative.Bridge
             var args = new object[extractors.Count];
             for (var j = 0; j < c; ++j)
             {
-                var result = extractors[j](reactInstance, jsArguments, idx);
-                args[j] = result.Value;
-                idx = result.NextIndex;
+                var extractorResult = extractors[j](reactInstance, jsArguments, idx);
+                args[j] = extractorResult.Value;
+                idx = extractorResult.NextIndex;
             }
 
-            method.Invoke(moduleInstance, args);
+            object result; 
+            if (genericDelegate != null)
+            {
+                result = genericDelegate.Invoke(args);
+            }
+            else
+            {
+                // This should only happen for React methods with greater than 16 arguments.
+                result = method.Invoke(moduleInstance, args);
+            }
+
+            if (!hasReturnType)
+            {
+                return s_null;
+            }
+            else if (result == null)
+            {
+                return s_null;
+            }
+
+            return JToken.FromObject(result);
         }
 
         private struct Result

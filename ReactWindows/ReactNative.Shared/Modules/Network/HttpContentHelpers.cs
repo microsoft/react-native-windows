@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.IO;
 using System.IO.Compression;
 #if WINDOWS_UWP
 using Windows.Web.Http;
@@ -36,6 +40,13 @@ namespace ReactNative.Modules.Network
                 content.Headers.ContentType = HttpMediaTypeHeaderValue.Parse(headerData.ContentType);
                 return content;
             }
+        }
+
+        public static HttpContentType CreateFromBase64(HttpContentHeaderData headerData, string base64)
+        {
+            var content = CreateBase64(base64);
+            content.Headers.ContentType = HttpMediaTypeHeaderValue.Parse(headerData.ContentType);
+            return content;
         }
 
         public static HttpContentHeaderData ExtractHeaders(string[][] headers)
@@ -85,6 +96,7 @@ namespace ReactNative.Modules.Network
             }
 
             stream.Position = 0;
+
 #if WINDOWS_UWP
             return new HttpStreamContent(stream.AsInputStream());
 #else
@@ -95,6 +107,16 @@ namespace ReactNative.Modules.Network
         private static HttpContentType CreateString(string body)
         {
             return new HttpStringContent(body);
+        }
+
+        private static HttpContentType CreateBase64(string base64)
+        {
+            var stream = new MemoryStream(Convert.FromBase64String(base64));
+#if WINDOWS_UWP
+            return new HttpStreamContent(stream.AsInputStream());
+#else
+            return new StreamContent(stream);
+#endif
         }
     }
 }

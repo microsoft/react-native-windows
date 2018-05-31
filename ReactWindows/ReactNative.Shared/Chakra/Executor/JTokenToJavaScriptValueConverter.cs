@@ -1,4 +1,7 @@
-﻿#if NATIVE_JSON_MARSHALING
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#if NATIVE_JSON_MARSHALING
 using Newtonsoft.Json.Linq;
 using System;
 

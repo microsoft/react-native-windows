@@ -1,9 +1,14 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System;
 
 namespace ReactNative.Bridge.Queue
 {
     /// <summary>
-    /// Specifies which <see cref="IMessageQueueThread"/>s must be used to run
+    /// Specifies which <see cref="IActionQueue"/>s must be used to run
     /// the various contexts of execution within React (dispatcher, native
     /// modules, and JS). Some of these queue *may* be the same but should be
     /// coded against as if they are different.
@@ -11,23 +16,18 @@ namespace ReactNative.Bridge.Queue
     public interface IReactQueueConfiguration : IDisposable
     {
         /// <summary>
-        /// The main UI thread.
+        /// The main UI queue.
         /// </summary>
-        IMessageQueueThread DispatcherQueueThread { get; }
+        IActionQueue DispatcherQueue { get; }
 
         /// <summary>
-        /// The layout thread.
+        /// The native modules queue.
         /// </summary>
-        IMessageQueueThread LayoutQueueThread { get; }
+        IActionQueue NativeModulesQueue { get; }
 
         /// <summary>
-        /// The native modules thread.
+        /// The JavaScript queue.
         /// </summary>
-        IMessageQueueThread NativeModulesQueueThread { get; }
-
-        /// <summary>
-        /// The JavaScript thread.
-        /// </summary>
-        IMessageQueueThread JavaScriptQueueThread { get; }
+        IActionQueue JavaScriptQueue { get; }
     }
 }

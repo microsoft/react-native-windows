@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Json;
+using System.Collections.Generic;
 #if !DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
 using System.Linq;
 #endif
@@ -34,11 +41,11 @@ namespace ReactNative.UIManager
     /// 
     /// Some examples of the optimizations this class will do based on commands
     /// from JavaScript:
-    /// - Create a view with only layout properties: a description of that view
+    /// - Create a view with only layout props: a description of that view
     ///   is created as a <see cref="ReactShadowNode"/> in <see cref="UIManagerModule"/>,
     ///   but this class will not output any commands to create the view in the
     ///   native view hierarchy.
-    /// - Update a layout-only view to have non-layout properties: before
+    /// - Update a layout-only view to have non-layout props: before
     ///   issuing the call to update the shadow node, issue commands to create
     ///   the view we optimized away and move it into the view hierarchy.
     /// - Manage the children of a view: multiple calls to manage children for
@@ -70,24 +77,27 @@ namespace ReactNative.UIManager
         /// Handles the creation of a view.
         /// </summary>
         /// <param name="node">The shadow node for the view.</param>
+        /// <param name="rootViewTag">The react tag id of the root.</param>
         /// <param name="themedContext">The themed context.</param>
-        /// <param name="initialProperties">
-        /// The initial properties for the view.
+        /// <param name="initialProps">
+        /// The initial props for the view.
         /// </param>
         public void HandleCreateView(
             ReactShadowNode node,
+            int rootViewTag,
             ThemedReactContext themedContext, 
-            ReactStylesDiffMap initialProperties)
+            JObject initialProps)
         {
 #if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
             _uiViewOperationQueue.EnqueueCreateView(
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProps,
+                    rootViewTag);
 #else
             var isLayoutOnly = node.ViewClass == ViewProps.ViewClassName
-                && IsLayoutOnlyAndCollapsible(initialProperties);
+                && IsLayoutOnlyAndCollapsible(initialProps);
 
             node.IsLayoutOnly = isLayoutOnly;
 
@@ -97,7 +107,8 @@ namespace ReactNative.UIManager
                     themedContext,
                     node.ReactTag,
                     node.ViewClass,
-                    initialProperties);
+                    initialProps,
+                    rootViewTag);
             }
 #endif
         }
@@ -111,11 +122,11 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="node">The node.</param>
         /// <param name="className">The class name.</param>
-        /// <param name="props">The properties.</param>
-        public void HandleUpdateView(ReactShadowNode node, string className, ReactStylesDiffMap props)
+        /// <param name="props">The props.</param>
+        public void HandleUpdateView(ReactShadowNode node, string className, JObject props)
         {
 #if DISABLE_NATIVE_VIEW_HIERARCHY_OPTIMIZER
-            _uiViewOperationQueue.EnqueueUpdateProperties(node.ReactTag, className, props);
+            _uiViewOperationQueue.EnqueueUpdateProps(node.ReactTag, className, props);
 #else
             var needsToLeaveLayoutOnly = node.IsLayoutOnly && !IsLayoutOnlyAndCollapsible(props);
             if (needsToLeaveLayoutOnly)
@@ -124,7 +135,7 @@ namespace ReactNative.UIManager
             }
             else if (!node.IsLayoutOnly)
             {
-                _uiViewOperationQueue.EnqueueUpdateProperties(node.ReactTag, className, props);
+                _uiViewOperationQueue.EnqueueUpdateProps(node.ReactTag, className, props);
             }
 #endif
         }
@@ -373,8 +384,7 @@ namespace ReactNative.UIManager
         private void ApplyLayoutBase(ReactShadowNode node)
         {
             var tag = node.ReactTag;
-            var visited = default(bool);
-            if (_tagsWithLayoutVisited.TryGetValue(tag, out visited) && visited)
+            if (_tagsWithLayoutVisited.TryGetValue(tag, out var visited) && visited)
             {
                 return;
             }
@@ -421,8 +431,7 @@ namespace ReactNative.UIManager
             for (var i = 0; i < node.ChildCount; ++i)
             {
                 var child = node.GetChildAt(i);
-                var visited = default(bool);
-                if (_tagsWithLayoutVisited.TryGetValue(child.ReactTag, out visited) && visited)
+                if (_tagsWithLayoutVisited.TryGetValue(child.ReactTag, out var visited) && visited)
                 {
                     continue;
                 }
@@ -439,7 +448,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        private void TransitionLayoutOnlyViewToNativeView(ReactShadowNode node, ReactStylesDiffMap props)
+        private void TransitionLayoutOnlyViewToNativeView(ReactShadowNode node, JObject props)
         {
             var parent = node.Parent;
             if (parent == null)
@@ -462,7 +471,8 @@ namespace ReactNative.UIManager
                 node.RootNode.ThemedContext,
                 node.ReactTag,
                 node.ViewClass,
-                props);
+                props,
+                node.RootNode.ReactTag);
 
             // Add the node and all its children as if adding new nodes.
             parent.AddChildAt(node, childIndex);
@@ -477,6 +487,10 @@ namespace ReactNative.UIManager
             // update the layout of this node's children now that it's no 
             // longer layout-only, but we may still receive more layout updates
             // at the end of this batch that we don't want to ignore.
+            // Also <node>.DispatchUpdates optimizes the layout applying out
+            // if screen position/sizes didn't change, yet in this particular case
+            // we want to force the applying of those values since the native view
+            // is a freshly created one with no history.
             ApplyLayoutBase(node);
             for (var i = 0; i < node.ChildCount; ++i)
             {
@@ -484,9 +498,11 @@ namespace ReactNative.UIManager
             }
 
             _tagsWithLayoutVisited.Clear();
+
+            node.MarkForceLayout();
         }
 
-        private bool IsLayoutOnlyAndCollapsible(ReactStylesDiffMap props)
+        private bool IsLayoutOnlyAndCollapsible(JObject props)
         {
             if (props == null)
             {
@@ -498,7 +514,7 @@ namespace ReactNative.UIManager
                 return false;
             }
 
-            foreach (var key in props.Keys)
+            foreach (var key in props.Keys())
             {
                 if (!ViewProps.IsLayoutOnly(props, key))
                 {

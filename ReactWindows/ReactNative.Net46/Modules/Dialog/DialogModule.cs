@@ -1,7 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Collections;
-using System.Collections.Generic;
+using ReactNative.Bridge.Queue;
+using ReactNative.Json;
 using System.Windows;
 
 namespace ReactNative.Modules.Dialog
@@ -9,7 +14,7 @@ namespace ReactNative.Modules.Dialog
     class DialogModule : ReactContextNativeModuleBase
     {
         public DialogModule(ReactContext reactContext)
-            : base(reactContext)
+            : base(reactContext, new DispatcherActionQueue(reactContext.HandleException))
         {
         }
 
@@ -21,11 +26,11 @@ namespace ReactNative.Modules.Dialog
             }
         }
 
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { DialogModuleHelper.ActionButtonClicked, DialogModuleHelper.ActionButtonClicked },
                     { DialogModuleHelper.ActionDismissed, DialogModuleHelper.ActionDismissed },
@@ -75,8 +80,6 @@ namespace ReactNative.Modules.Dialog
             {
                 MessageBox.Show(message);
             }
-            
         }
-
     }
 }

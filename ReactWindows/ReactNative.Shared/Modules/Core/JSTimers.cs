@@ -1,4 +1,9 @@
-﻿using ReactNative.Bridge;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
 using System.Collections.Generic;
 
 namespace ReactNative.Modules.Core
@@ -15,6 +20,15 @@ namespace ReactNative.Modules.Core
         public void callTimers(IList<int> timerIds)
         {
             Invoke(timerIds);
+        }
+        
+        /// <summary>
+        /// Calls the idle callbacks with the current frame time.
+        /// </summary>
+        /// <param name="frameTime">The frame time.</param>
+        public void callIdleCallbacks(long frameTime)
+        {
+            Invoke(frameTime);
         }
     }
 }

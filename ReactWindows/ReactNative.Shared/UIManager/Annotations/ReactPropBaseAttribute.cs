@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System;
 
 namespace ReactNative.UIManager.Annotations
 {
@@ -24,27 +29,27 @@ namespace ReactNative.UIManager.Annotations
         public string CustomType { get; set; } = UseDefaultType;
 
         /// <summary>
-        /// The default value for boolean properties.
+        /// The default value for boolean props.
         /// </summary>
         public bool DefaultBoolean { get; set; } = false;
 
         /// <summary>
-        /// The default value for byte properties.
+        /// The default value for byte props.
         /// </summary>
         public byte DefaultByte { get; set; } = 0;
 
         /// <summary>
-        /// The default value for signed byte properties.
+        /// The default value for signed byte props.
         /// </summary>
         public sbyte DefaultSByte { get; set; } = 0;
 
         /// <summary>
-        /// The default value for double properties.
+        /// The default value for double props.
         /// </summary>
         public double DefaultDouble { get; set; } = 0.0;
 
         /// <summary>
-        /// The default value for float properties.
+        /// The default value for float props.
         /// </summary>
         public float DefaultSingle { get; set; } = 0.0f;
 

@@ -1,5 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 
 namespace ReactNative.Bridge
 {
@@ -18,51 +22,18 @@ namespace ReactNative.Bridge
 
         public void Resolve(object value)
         {
-            if (_resolve != null)
+            _resolve?.Invoke(value);
+        }
+
+        public void Reject(string code, string message, string stack, JToken userInfo)
+        {
+            _reject?.Invoke(new JObject
             {
-                _resolve.Invoke(value);
-            }
-        }
-
-        public void Reject(string code, string message)
-        {
-            Reject(code, message, default(Exception));
-        }
-
-        public void Reject(string message)
-        {
-            Reject(DefaultError, message, default(Exception));
-        }
-
-        public void Reject(string code, Exception e)
-        {
-            Reject(code, e.Message, e);
-        }
-
-        public void Reject(Exception e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            Reject(DefaultError, e.Message, e);
-        }
-
-        public void Reject(string code, string message, Exception e)
-        {
-            if (_reject != null)
-            {
-                var errorData = e?.Data;
-                var userInfo = errorData != null
-                    ? JToken.FromObject(errorData) 
-                    : null;
-                _reject.Invoke(new JObject
-                {
-                    { "code", code ?? DefaultError },
-                    { "message", message },
-                    { "stack", e?.StackTrace },
-                    { "userInfo", userInfo },
-                });
-            }
+                { "code", code ?? DefaultError },
+                { "message", message },
+                { "stack", stack },
+                { "userInfo", userInfo },
+            });
         }
     }
 }

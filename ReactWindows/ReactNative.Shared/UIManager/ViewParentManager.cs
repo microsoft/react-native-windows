@@ -1,5 +1,11 @@
-﻿using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 #else
 using System.Windows;
@@ -26,7 +32,7 @@ namespace ReactNative.UIManager
         /// <see cref="CreateShadowNodeInstance"/>.
         /// 
         /// This method will be used in the bridge initialization phase to
-        /// collect properties exposed using the <see cref="Annotations.ReactPropAttribute"/>
+        /// collect props exposed using the <see cref="Annotations.ReactPropAttribute"/>
         /// annotation from the <see cref="ReactShadowNode"/> subclass.
         /// </summary>
         public sealed override Type ShadowNodeType
@@ -102,34 +108,47 @@ namespace ReactNative.UIManager
         /// <param name="parent">The view parent.</param>
         public abstract void RemoveAllChildren(TFrameworkElement parent);
 
-#region IViewParentManager
+        #region IViewParentManager
 
-        void IViewParentManager.AddView(DependencyObject parent, DependencyObject child, int index)
+        void IViewParentManager.AddView(object parent, object child, int index)
         {
-            AddView((TFrameworkElement)parent, child, index);
+            var element = (TFrameworkElement)parent;
+            var dependencyObject = ViewConversion.GetDependencyObject(child);
+            AddView(element, dependencyObject, index);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildAdded(element, dependencyObject);
+#endif
         }
 
-        int IViewParentManager.GetChildCount(DependencyObject parent)
+        int IViewParentManager.GetChildCount(object parent)
         {
             return GetChildCount((TFrameworkElement)parent);
         }
 
-        DependencyObject IViewParentManager.GetChildAt(DependencyObject parent, int index)
+        object IViewParentManager.GetChildAt(object parent, int index)
         {
             return GetChildAt((TFrameworkElement)parent, index);
         }
 
-        void IViewParentManager.RemoveChildAt(DependencyObject parent, int index)
+        void IViewParentManager.RemoveChildAt(object parent, int index)
         {
+            var element = (TFrameworkElement)parent;
             RemoveChildAt((TFrameworkElement)parent, index);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(element);
+#endif
         }
 
-        void IViewParentManager.RemoveAllChildren(DependencyObject parent)
+        void IViewParentManager.RemoveAllChildren(object parent)
         {
-            RemoveAllChildren((TFrameworkElement)parent);
+            var element = (TFrameworkElement)parent;
+            RemoveAllChildren(element);
+#if WINDOWS_UWP
+            AccessibilityHelper.OnChildRemoved(element);
+#endif
         }
 
-#endregion
+        #endregion
     }
 
     /// <summary>
