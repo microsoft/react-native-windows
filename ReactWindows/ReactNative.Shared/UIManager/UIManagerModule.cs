@@ -12,6 +12,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ReactNative.Modules.DeviceInfo;
 
 namespace ReactNative.UIManager
 {
@@ -161,7 +162,11 @@ namespace ReactNative.UIManager
                         }
                     });
                 });
- 
+
+#if WINDOWS_UWP
+                // Register view in DeviceInfoModule for tracking its dimensions
+                Context.GetNativeModule<DeviceInfoModule>().RegisterRootView(rootView, tag);
+#endif
             }, true); // Allow inlining
 
             return tag;
@@ -180,6 +185,10 @@ namespace ReactNative.UIManager
             await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
             {
                 rootView.RemoveSizeChanged();
+#if WINDOWS_UWP
+                // Unregister view from DeviceInfoModule
+                Context.GetNativeModule<DeviceInfoModule>().RemoveRootView(rootView);
+#endif
                 return true;
             }, true); // allow inlining
 

@@ -3,24 +3,26 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
-using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
 namespace ReactNative.Modules.DeviceInfo
 {
     /// <summary>
-    /// Native module that manages window dimension updates to JavaScript.
+    /// Native module that manages window dimension updates to JavaScript (with support for multi window application).
     /// </summary>
-    class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener, IBackgroundEventListener
+    class DeviceInfoModule : ReactContextNativeModuleBase
     {
         private readonly JObject _constants;
 
-        private bool _isSubscribed;
+        private readonly ConcurrentDictionary<ApplicationView, DeviceViewInfo> _registeredViews = new ConcurrentDictionary<ApplicationView, DeviceViewInfo>();
 
         /// <summary>
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
@@ -29,13 +31,9 @@ namespace ReactNative.Modules.DeviceInfo
         public DeviceInfoModule(ReactContext reactContext)
             : base(reactContext)
         {
-            var displayMetrics = HasCoreWindow
-                ? DisplayMetrics.GetForCurrentView()
-                : DisplayMetrics.Empty;
-
             _constants = new JObject
             {
-                { "Dimensions", GetDimensions(displayMetrics) },
+                { "Dimensions", GetAllDimensions() },
             };
         }
 
@@ -44,7 +42,7 @@ namespace ReactNative.Modules.DeviceInfo
         /// </summary>
         public override string Name
         {
-            get { return "DeviceInfo"; }    
+            get { return "DeviceInfo"; }
         }
 
         /// <summary>
@@ -58,85 +56,52 @@ namespace ReactNative.Modules.DeviceInfo
             }
         }
 
-        private static bool HasCoreWindow
+        public void RegisterRootView(ReactRootView rootView, int tag)
         {
-            get
+            DispatcherHelpers.AssertOnDispatcher(rootView);
+
+            var appView = ApplicationView.GetForCurrentView();
+
+            _registeredViews.AddOrUpdate(appView, (v) =>
             {
-                return CoreApplication.MainView.CoreWindow != null;
+                // Register new view info and hook up for events
+                var displayInformation = DisplayInformation.GetForCurrentView();
+
+                var info = new DeviceViewInfo(appView, rootView, displayInformation, tag);
+
+                appView.VisibleBoundsChanged += OnVisibleBoundsChanged;
+                appView.Consolidated += AppViewOnConsolidated;
+                displayInformation.OrientationChanged += OnOrientationChanged;
+
+                return info;
+            },
+                (view, info) =>
+                {
+                    // View is already registered, just update tag in case view is being reregistered
+                    info.RootViewTag = tag;
+                    return info;
+                });
+
+            SendUpdateDimensionsEvent();
+        }
+
+        public void RemoveRootView(ReactRootView rootView)
+        {
+            var info = _registeredViews.Values.SingleOrDefault(i => i.RootView == rootView);
+
+            if (info != null)
+            {
+                CleanupViewInfo(info.ApplicationView);
             }
         }
 
-        /// <summary>
-        /// Called after the creation of a <see cref="IReactInstance"/>,
-        /// </summary>
-        public override void Initialize()
+        public void OnVisibleBoundsChanged(ApplicationView sender, object args)
         {
-            Context.AddLifecycleEventListener(this);
-            Context.AddBackgroundEventListener(this);
-        }
-
-        /// <summary>
-        /// Called when the application is suspended.
-        /// </summary>
-        public void OnSuspend()
-        {
-            Unsubscribe();
-        }
-
-        /// <summary>
-        /// Called when the application is resumed.
-        /// </summary>
-        public void OnResume()
-        {
-            Subscribe();
-        }
-
-        /// <summary>
-        /// Called when the host entered background mode.
-        /// </summary>
-        public void OnEnteredBackground()
-        {
-            Unsubscribe();
-        }
-
-        /// <summary>
-        /// Called when the host is leaving background mode.
-        /// </summary>
-        public void OnLeavingBackground()
-        {
-            Subscribe();
-        }
-
-        private void Subscribe()
-        {
-            if (!_isSubscribed && HasCoreWindow)
+            if (_registeredViews.ContainsKey(sender))
             {
-                _isSubscribed = true;
-                ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnVisibleBoundsChanged;
-                DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
-                SendUpdateDimensionsEvent();
+                _registeredViews[sender].UpdateDisplayMetrics();
             }
-        }
 
-        private void Unsubscribe()
-        {
-            if (_isSubscribed && HasCoreWindow)
-            {
-                _isSubscribed = false;
-                ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnVisibleBoundsChanged;
-                DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
-            }
-        }
-
-        /// <summary>
-        /// Called when the application is terminated.
-        /// </summary>
-        public void OnDestroy()
-        {
-        }
-
-        private void OnVisibleBoundsChanged(ApplicationView sender, object args)
-        {
             SendUpdateDimensionsEvent();
         }
 
@@ -183,29 +148,58 @@ namespace ReactNative.Modules.DeviceInfo
         private void SendUpdateDimensionsEvent()
         {
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                .emit("didUpdateDimensions", GetDimensions());
+                .emit("didUpdateDimensions", GetAllDimensions());
         }
 
-        private static JObject GetDimensions()
+        private JObject GetAllDimensions()
         {
-            return GetDimensions(DisplayMetrics.GetForCurrentView());
+            var dimensions = new JObject();
+
+            // Default metric for main window - is always first registered
+            // TODO It would make sense to make default actively focused window and not the main in the future
+            var defaultMetric = _registeredViews.Any() ? _registeredViews.Values.First().CurrentDisplayMetrics : DisplayMetrics.Empty;
+
+            dimensions.Add("window", GetDimensions(defaultMetric));
+
+            foreach (var info in _registeredViews.Values)
+            {
+                dimensions.Add($"window-{info.RootViewTag}", GetDimensions(info.CurrentDisplayMetrics));
+            }
+
+            return dimensions;
         }
 
         private static JObject GetDimensions(DisplayMetrics displayMetrics)
         {
             return new JObject
             {
-                {
-                    "window",
-                    new JObject
-                    {
-                        { "width", displayMetrics.Width },
-                        { "height", displayMetrics.Height },
-                        { "scale", displayMetrics.Scale },
-                        /* TODO: density and DPI needed? */
-                    }
-                },
+                { "width", displayMetrics.Width },
+                { "height", displayMetrics.Height },
+                { "scale", displayMetrics.Scale },
+                /* TODO: density and DPI needed? */
             };
+        }
+
+        private void AppViewOnConsolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs args)
+        {
+            CleanupViewInfo(sender);
+        }
+
+        private void CleanupViewInfo(ApplicationView appView)
+        {
+            DeviceViewInfo info = null;
+
+            if (_registeredViews.TryRemove(appView, out info))
+            {
+                DispatcherHelpers.CallOnDispatcher(info.RootView.Dispatcher, () =>
+                {
+                    info.ApplicationView.VisibleBoundsChanged -= OnVisibleBoundsChanged;
+                    info.ApplicationView.Consolidated -= AppViewOnConsolidated;
+                    info.DisplayInformation.OrientationChanged -= OnOrientationChanged;
+
+                    return true;
+                }, true).Wait();
+            }
         }
     }
 }
