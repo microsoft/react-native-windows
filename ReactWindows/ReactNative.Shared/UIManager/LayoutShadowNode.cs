@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Globalization;
 using static System.FormattableString;
 
 namespace ReactNative.UIManager
@@ -460,7 +461,7 @@ namespace ReactNative.UIManager
 
                 if (s.EndsWith("%"))
                 {
-                    return YogaValue.Percent(float.Parse(s.Substring(0, s.Length - 1)));
+                    return YogaValue.Percent(float.Parse(s.Substring(0, s.Length - 1), CultureInfo.InvariantCulture));
                 }
 
                 throw new InvalidOperationException(
