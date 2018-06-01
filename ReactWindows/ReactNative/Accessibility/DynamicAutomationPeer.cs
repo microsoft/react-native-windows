@@ -38,6 +38,20 @@ namespace ReactNative.Accessibility
             {
                 return AutomationControlType.Button;
             }
+
+            // We expose a view that hides all children but makes itself visible to screen reader
+            // with an (expected) accessible name as Text control type instead of Group to avoid
+            // "group" suffix screen reader appends to the name.
+            // Another argument for this is that it's not ideal to tell user that something without children
+            // is a "group".
+            var isLabelSet = !string.IsNullOrEmpty(AccessibilityHelper.GetAccessibilityLabel(Owner));
+            var i4a = AccessibilityHelper.GetImportantForAccessibility(Owner);
+            if ( i4a == ImportantForAccessibility.Yes
+                || (i4a == ImportantForAccessibility.Auto && isLabelSet))
+            {
+                return AutomationControlType.Text;
+            }
+
             return AutomationControlType.Group;
         }
 
