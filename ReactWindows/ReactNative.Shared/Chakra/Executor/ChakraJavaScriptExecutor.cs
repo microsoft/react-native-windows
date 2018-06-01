@@ -283,7 +283,7 @@ namespace ReactNative.Chakra.Executor
 #else
         private JavaScriptValue ConvertJson(JToken token)
         {
-            var jsonString = token?.ToString(Formatting.None) ?? null;
+            var jsonString = token?.ToString(Formatting.None) ?? "";
             return ConvertJson(jsonString);
         }
 
