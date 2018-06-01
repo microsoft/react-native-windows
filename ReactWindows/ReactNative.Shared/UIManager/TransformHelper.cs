@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using System;
+using System.Globalization;
 using System.Linq;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Media.Media3D;
@@ -119,7 +120,7 @@ namespace ReactNative.UIManager
                     stringValue = stringValue.Substring(0, stringValue.Length - 3);
                 }
 
-                value = double.Parse(stringValue);
+                value = double.Parse(stringValue, CultureInfo.InvariantCulture);
             }
             else
             {
