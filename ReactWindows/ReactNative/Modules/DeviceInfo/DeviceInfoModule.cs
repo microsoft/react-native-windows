@@ -6,6 +6,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
+using Windows.ApplicationModel.Core;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
@@ -155,10 +156,10 @@ namespace ReactNative.Modules.DeviceInfo
         {
             var dimensions = new JObject();
 
-            // Default metric for main window - is always first registered
+            // Default metric for main window
             // TODO It would make sense to make default actively focused window and not the main in the future
-            var defaultMetric = _registeredViews.Any() ? _registeredViews.Values.First().CurrentDisplayMetrics : DisplayMetrics.Empty;
-
+            var mainView = _registeredViews.Values.FirstOrDefault(v => v.RootView.Dispatcher == CoreApplication.MainView.Dispatcher);
+            var defaultMetric = mainView == null ? DisplayMetrics.Empty : mainView.CurrentDisplayMetrics;
             dimensions.Add("window", GetDimensions(defaultMetric));
 
             foreach (var info in _registeredViews.Values)
