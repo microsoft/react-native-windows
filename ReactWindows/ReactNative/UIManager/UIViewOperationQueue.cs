@@ -532,11 +532,10 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Invokes the action to execute on dispatcher thread associated with view specified by reactTag.
+        /// Invokes the action to execute on dispatcher thread associated with view specified by <paramref name="tag" />.
         /// Action is not queued on operation queue, but it goes to dispatcher directly.
-        /// Always on main dispatcher for WPF.
         /// </summary>
-        /// <param name="tag">The react tag which specifies view. Only valid for UWP.</param>
+        /// <param name="tag">The react tag which specifies view.</param>
         /// <param name="action">The action to invoke.</param>
         public void InvokeAction(int tag, Action action)
         {
