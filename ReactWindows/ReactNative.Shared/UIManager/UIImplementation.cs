@@ -646,7 +646,7 @@ namespace ReactNative.UIManager
         /// Runs action on dispatcher thread associated with view specified by reactTag.
         /// Always on main dispatcher for WPF.
         /// </summary>
-        /// <param name="tag">The react tag which specifies view. Only valid for UWP.</param>
+        /// <param name="reactTag">The react tag which specifies view. Only valid for UWP.</param>
         /// <param name="action">The action to invoke.</param>
         public void RunOnDispatcherThread(int reactTag, Action action)
         {
