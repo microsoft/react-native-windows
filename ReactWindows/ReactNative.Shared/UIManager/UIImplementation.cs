@@ -642,6 +642,17 @@ namespace ReactNative.UIManager
             _operationsQueue.OnDestroy();
         }
 
+        /// <summary>
+        /// Runs action on dispatcher thread associated with view specified by reactTag.
+        /// Always on main dispatcher for WPF.
+        /// </summary>
+        /// <param name="tag">The react tag which specifies view. Only valid for UWP.</param>
+        /// <param name="action">The action to invoke.</param>
+        public void RunOnDispatcherThread(int reactTag, Action action)
+        {
+            _operationsQueue.EnqueueAction(reactTag, action);
+        }
+
         private void UpdateViewHierarchy()
         {
             foreach (var tag in _shadowNodeRegistry.RootNodeTags)

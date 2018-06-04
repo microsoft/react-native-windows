@@ -532,6 +532,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Enqueues the action to execute on dispatcher thread associated with view specified by reactTag.
+        /// Always on main dispatcher for WPF.
+        /// </summary>
+        /// <param name="tag">The react tag which specifies view. Only valid for UWP.</param>
+        /// <param name="action">The action to invoke.</param>
+        public void EnqueueAction(int tag, Action action)
+        {
+            DispatcherHelpers.RunOnDispatcher(GetQueueByTag(tag).Dispatcher,() => action());
+        }
+
+        /// <summary>
         /// Dispatches the view updates.
         /// </summary>
         /// <param name="batchId">The batch identifier.</param>

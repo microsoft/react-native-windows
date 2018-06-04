@@ -96,5 +96,15 @@ namespace ReactNative.UIManager
                 return false;
             }
         }
+
+        /// <summary>
+        /// Enqueues the action to execute on MainDispatcher.
+        /// </summary>
+        /// <param name="tag">The react tag which specifies view. Not used here, runs on main dispatcher.</param>
+        /// <param name="action">The action to invoke.</param>
+        public void EnqueueAction(int tag, Action action)
+        {
+            DispatcherHelpers.RunOnDispatcher(action);
+        }
     }
 }
