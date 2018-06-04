@@ -3,14 +3,13 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Linq;
-using Windows.ApplicationModel.Core;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using ReactNative.UIManager;
+using System.Collections.Concurrent;
+using System.Linq;
+using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
@@ -19,6 +18,23 @@ namespace ReactNative.Modules.DeviceInfo
     /// <summary>
     /// Native module that manages window dimension updates to JavaScript (with support for multi window application).
     /// </summary>
+    /// <remarks>
+    /// Dimensions are tracked for each application window right after creation of its ReactRootView.
+    /// After any change in dimensions of any tracked window whole list of dimensions is emited and dimensions are available by 3 kinds of ids:
+    ///
+    ///  "window" - dimensions of main window
+    ///  "{rootViewTag}" - dimensions of window with specified rootViewTag (each view has assigned one)
+    ///  "{rootViewId}" - dimensions of window initialized with unique value of "reactxp_rootViewId" property
+    ///
+    /// <example>
+    ///  {
+    ///     "window": { /* main window dimensions */ },
+    ///     "1": { /* alt-window-dimensions */ },
+    ///     "41": { /* alt-window dimensions */ },
+    ///     "03391df9-750d-465c-b0b0-66ee9dcf4a86": { /* alt-window dimensions */ }
+    ///  }
+    /// </example>
+    /// </remarks>
     class DeviceInfoModule : ReactContextNativeModuleBase
     {
         private readonly JObject _constants;
@@ -57,6 +73,11 @@ namespace ReactNative.Modules.DeviceInfo
             }
         }
 
+        /// <summary>
+        /// Register <paramref name="rootView"/> to keep track of his dimensions
+        /// </summary>
+        /// <param name="rootView">The react root view</param>
+        /// <param name="tag">The react root view tag</param>
         public void RegisterRootView(ReactRootView rootView, int tag)
         {
             DispatcherHelpers.AssertOnDispatcher(rootView);
@@ -86,6 +107,10 @@ namespace ReactNative.Modules.DeviceInfo
             SendUpdateDimensionsEvent();
         }
 
+        /// <summary>
+        /// Removes <paramref name="rootView"/> from registration, stop keeping track of his dimensions
+        /// </summary>
+        /// <param name="rootView">The react root view</param>
         public void RemoveRootView(ReactRootView rootView)
         {
             var info = _registeredViews.Values.SingleOrDefault(i => i.RootView == rootView);
@@ -164,7 +189,12 @@ namespace ReactNative.Modules.DeviceInfo
 
             foreach (var info in _registeredViews.Values)
             {
-                dimensions.Add($"window-{info.RootViewTag}", GetDimensions(info.CurrentDisplayMetrics));
+                dimensions.Add($"{info.RootViewTag}", GetDimensions(info.CurrentDisplayMetrics));
+
+                if (info.RootViewId != null)
+                {
+                    dimensions.Add($"{info.RootViewId}", GetDimensions(info.CurrentDisplayMetrics));
+                }
             }
 
             return dimensions;

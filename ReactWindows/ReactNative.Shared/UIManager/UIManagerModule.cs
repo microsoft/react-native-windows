@@ -6,13 +6,13 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Modules.DeviceInfo;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ReactNative.Modules.DeviceInfo;
 
 namespace ReactNative.UIManager
 {

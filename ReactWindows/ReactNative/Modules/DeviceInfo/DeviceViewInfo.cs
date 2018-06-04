@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
 using ReactNative.Bridge;
 using ReactNative.UIManager;
+using Windows.Graphics.Display;
+using Windows.UI.ViewManagement;
 
 namespace ReactNative.Modules.DeviceInfo
 {
@@ -21,6 +21,8 @@ namespace ReactNative.Modules.DeviceInfo
 
         public int RootViewTag { get; set; }
 
+        public string RootViewId { get; }
+
         public DisplayMetrics CurrentDisplayMetrics { get; private set; }
 
         public DeviceViewInfo(ApplicationView applicationView, ReactRootView rootView, DisplayInformation displayInformation, int tag)
@@ -29,7 +31,7 @@ namespace ReactNative.Modules.DeviceInfo
             this.RootView = rootView;
             this.DisplayInformation = displayInformation;
             this.RootViewTag = tag;
-
+            this.RootViewId = rootView.InitialProps?.GetValue("reactxp_rootViewId")?.ToString();
             this.CurrentDisplayMetrics = DisplayMetrics.GetForDeviceView(this);
         }
 
