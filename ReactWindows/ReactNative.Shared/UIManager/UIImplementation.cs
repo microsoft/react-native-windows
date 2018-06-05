@@ -653,7 +653,7 @@ namespace ReactNative.UIManager
         /// </remarks>
         public void RunOnDispatcherThread(int reactTag, Action action)
         {
-            //runs on dispather thread
+            //runs on dispatcher thread
             _operationsQueue.InvokeAction(reactTag, action);
         }
 
