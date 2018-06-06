@@ -43,6 +43,7 @@ namespace ReactNative.UIManager
         private IList<ReactShadowNode> _nativeChildren;
         private bool _hasChildLayoutChanged;
         private bool _forceLayoutUpdate;
+        private bool _disposed;
 
         /// <summary>
         /// Instantiates a <see cref="ReactShadowNode"/>. 
@@ -50,6 +51,11 @@ namespace ReactNative.UIManager
         public ReactShadowNode()
             : this(false)
         {
+        }
+
+        ~ReactShadowNode()
+        {
+            Dispose(false);
         }
 
         /// <summary>
@@ -1077,6 +1083,20 @@ namespace ReactNative.UIManager
             UpdateNativeChildrenCountInParent(-decrease);
         }
 
+        private void UnlinkFromParent()
+        {
+            if (_parent == null)
+            {
+                return;
+            }
+
+            var index = _parent.IndexOf(this);
+            if (index != -1)
+            {
+                _parent.RemoveChildAt(index);
+            }
+        }
+
         /// <summary>
         /// Adds a child that the native view hierarchy will have at this index
         /// in the native view corresponding to this node.
@@ -1191,18 +1211,33 @@ namespace ReactNative.UIManager
             return index;
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         /// <summary>
         /// Disposes the shadow node.
         /// </summary>
-        public void Dispose()
+        protected virtual void Dispose(bool disposing)
         {
+            if (_disposed)
+            {
+                return;
+            }
+
             YogaNode nodeToDispose = (IsDelegatedLayout && _initialYogaNode != null) ? _initialYogaNode : _yogaNode;
 
             if (nodeToDispose != null)
             {
+                RemoveAndDisposeAllChildren();
+                UnlinkFromParent();
                 nodeToDispose.Reset();
                 YogaNodePool.Instance.Free(nodeToDispose);
             }
+
+            _disposed = true;
         }
 
         /// <summary>
