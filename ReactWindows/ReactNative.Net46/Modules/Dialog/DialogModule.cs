@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Bridge.Queue;
 using ReactNative.Json;
 using System.Windows;
 
@@ -13,7 +14,7 @@ namespace ReactNative.Modules.Dialog
     class DialogModule : ReactContextNativeModuleBase
     {
         public DialogModule(ReactContext reactContext)
-            : base(reactContext)
+            : base(reactContext, new DispatcherActionQueue(reactContext.HandleException))
         {
         }
 
@@ -79,8 +80,6 @@ namespace ReactNative.Modules.Dialog
             {
                 MessageBox.Show(message);
             }
-            
         }
-
     }
 }
