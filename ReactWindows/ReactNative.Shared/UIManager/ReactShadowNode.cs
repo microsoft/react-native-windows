@@ -1239,7 +1239,7 @@ namespace ReactNative.UIManager
             {
                 RemoveAndDisposeAllChildren();
                 UnlinkFromParent();
-                if (!disposing) nodeToDispose.Reset();
+                nodeToDispose.Reset();
                 YogaNodePool.Instance.Free(nodeToDispose);
             }
 
