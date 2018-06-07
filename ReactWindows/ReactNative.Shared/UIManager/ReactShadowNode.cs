@@ -53,6 +53,7 @@ namespace ReactNative.UIManager
         {
         }
 
+        /// <inheritdoc />
         ~ReactShadowNode()
         {
             Dispose(false);
@@ -1211,6 +1212,7 @@ namespace ReactNative.UIManager
             return index;
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             Dispose(true);
@@ -1220,6 +1222,10 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Disposes the shadow node.
         /// </summary>
+        /// <param name="disposing">
+        ///     <code>true</code> if disposing directly,
+        ///     <code>false</code> if called by finalizer.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
@@ -1233,7 +1239,7 @@ namespace ReactNative.UIManager
             {
                 RemoveAndDisposeAllChildren();
                 UnlinkFromParent();
-                nodeToDispose.Reset();
+                if (!disposing) nodeToDispose.Reset();
                 YogaNodePool.Instance.Free(nodeToDispose);
             }
 
