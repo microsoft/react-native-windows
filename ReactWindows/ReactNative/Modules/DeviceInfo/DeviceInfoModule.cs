@@ -92,7 +92,6 @@ namespace ReactNative.Modules.DeviceInfo
                 var info = new DeviceViewInfo(appView, rootView, displayInformation, tag);
 
                 appView.VisibleBoundsChanged += OnVisibleBoundsChanged;
-                appView.Consolidated += AppViewOnConsolidated;
                 displayInformation.OrientationChanged += OnOrientationChanged;
 
                 return info;
@@ -108,16 +107,19 @@ namespace ReactNative.Modules.DeviceInfo
         }
 
         /// <summary>
-        /// Removes <paramref name="rootView"/> from registration, stop keeping track of his dimensions
+        /// Unregister <paramref name="rootView"/> and stop keeping track of his dimensions
         /// </summary>
         /// <param name="rootView">The react root view</param>
-        public void RemoveRootView(ReactRootView rootView)
+        public void UnregisterRootView(ReactRootView rootView)
         {
+            DispatcherHelpers.AssertOnDispatcher(rootView);
+
             var info = _registeredViews.Values.SingleOrDefault(i => i.RootView == rootView);
 
-            if (info != null)
+            if (info != null && _registeredViews.TryRemove(info.ApplicationView, out info))
             {
-                CleanupViewInfo(info.ApplicationView);
+                info.ApplicationView.VisibleBoundsChanged -= OnVisibleBoundsChanged;
+                info.DisplayInformation.OrientationChanged -= OnOrientationChanged;
             }
         }
 
@@ -183,7 +185,7 @@ namespace ReactNative.Modules.DeviceInfo
 
             // Default metric for main window
             // TODO It would make sense to make default actively focused window and not the main in the future
-            var mainView = _registeredViews.Values.FirstOrDefault(v => v.RootView.Dispatcher == CoreApplication.MainView.Dispatcher);
+            var mainView = _registeredViews.Values.FirstOrDefault(v => v.RootView.Dispatcher == DispatcherHelpers.MainDispatcher);
             var defaultMetric = mainView == null ? DisplayMetrics.Empty : mainView.CurrentDisplayMetrics;
             dimensions.Add("window", GetDimensions(defaultMetric));
 
@@ -209,28 +211,6 @@ namespace ReactNative.Modules.DeviceInfo
                 { "scale", displayMetrics.Scale },
                 /* TODO: density and DPI needed? */
             };
-        }
-
-        private void AppViewOnConsolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs args)
-        {
-            CleanupViewInfo(sender);
-        }
-
-        private void CleanupViewInfo(ApplicationView appView)
-        {
-            DeviceViewInfo info = null;
-
-            if (_registeredViews.TryRemove(appView, out info))
-            {
-                DispatcherHelpers.CallOnDispatcher(info.RootView.Dispatcher, () =>
-                {
-                    info.ApplicationView.VisibleBoundsChanged -= OnVisibleBoundsChanged;
-                    info.ApplicationView.Consolidated -= AppViewOnConsolidated;
-                    info.DisplayInformation.OrientationChanged -= OnOrientationChanged;
-
-                    return true;
-                }, true).Wait();
-            }
         }
     }
 }

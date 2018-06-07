@@ -187,7 +187,7 @@ namespace ReactNative.UIManager
                 rootView.RemoveSizeChanged();
 #if WINDOWS_UWP
                 // Unregister view from DeviceInfoModule
-                Context.GetNativeModule<DeviceInfoModule>().RemoveRootView(rootView);
+                Context.GetNativeModule<DeviceInfoModule>().UnregisterRootView(rootView);
 #endif
                 return true;
             }, true); // allow inlining
