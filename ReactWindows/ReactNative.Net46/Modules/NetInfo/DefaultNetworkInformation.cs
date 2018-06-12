@@ -11,6 +11,10 @@ namespace ReactNative.Modules.NetInfo
         public event EventHandler<NetworkConnectivityChangedEventArgs> NetworkConnectivityChanged;
         private NetworkListManager _networkListManager;
 
+        private string CONNECTION_TYPE_NONE = "none";
+
+        private string CONNECTION_TYPE_NONE_DEPRECATED = "None";
+
         public void Start()
         {
             _networkListManager = new NetworkListManager();
@@ -23,9 +27,14 @@ namespace ReactNative.Modules.NetInfo
             _networkListManager = null;
         }
 
+        public string GetInternetStatusDeprecated()
+        {
+            return _networkListManager.IsConnectedToInternet ? "InternetAccess" : CONNECTION_TYPE_NONE_DEPRECATED;
+        }
+
         public string GetInternetStatus()
         {
-            return _networkListManager.IsConnectedToInternet ? "InternetAccess" : "None";
+            return _networkListManager.IsConnectedToInternet ? "InternetAccess" : CONNECTION_TYPE_NONE;
         }
 
         private void OnNetworkConnectivityChanged(Guid guid, NLM_CONNECTIVITY connectivity)

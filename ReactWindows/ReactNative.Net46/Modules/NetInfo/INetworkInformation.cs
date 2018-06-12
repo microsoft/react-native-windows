@@ -16,6 +16,14 @@ namespace ReactNative.Modules.NetInfo
         event EventHandler<NetworkConnectivityChangedEventArgs> NetworkConnectivityChanged;
 
         /// <summary>
+        /// Gets the internet status - Deprecated
+        /// </summary>
+        /// <returns>
+        /// The React Native friendly internet status
+        /// </returns>
+        string GetInternetStatusDeprecated();
+
+        /// <summary>
         /// Gets the internet status
         /// </summary>
         /// <returns>

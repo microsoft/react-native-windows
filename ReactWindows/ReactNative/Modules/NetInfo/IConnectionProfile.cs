@@ -14,5 +14,10 @@ namespace ReactNative.Modules.NetInfo
         /// A value that indicates the network connectivity level.
         /// </summary>
         NetworkConnectivityLevel ConnectivityLevel { get; }
+
+        /// <summary>
+        /// A value that indicates the network connectivity type.
+        /// </summary>
+        string ConnectivityType { get; }
     }
 }

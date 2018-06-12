@@ -17,6 +17,15 @@ namespace ReactNative.Modules.NetInfo
     {
         private readonly INetworkInformation _networkInfo;
 
+        // Based on the EffectiveConnectionType enum described in the W3C Network Information API spec
+        // (https://wicg.github.io/netinfo/).
+
+        private string EFFECTIVE_CONNECTION_TYPE_UNKNOWN = "unknown";
+
+        private string CONNECTION_TYPE_NONE = "none";
+
+        private string CONNECTION_TYPE_NONE_DEPRECATED = "None";
+
         /// <summary>
         /// Instantiates the <see cref="NetInfoModule"/>.
         /// </summary>
@@ -95,14 +104,28 @@ namespace ReactNative.Modules.NetInfo
         {
             return new JObject
             {
-                { "network_info", GetConnnectivityType() },
+                { "connectionType", GetConnnectivityType() },
+                { "effectiveConnectionType", GetEffectiveConnnectivityType() },
+                { "network_info", GetConnnectivityTypeDeprecated() }
             };
+        }
+
+        private string GetConnnectivityTypeDeprecated()
+        {
+            var profile = _networkInfo.GetInternetConnectionProfile();
+            return profile?.ConnectivityLevel.ToString() ?? CONNECTION_TYPE_NONE_DEPRECATED;
         }
 
         private string GetConnnectivityType()
         {
             var profile = _networkInfo.GetInternetConnectionProfile();
-            return profile?.ConnectivityLevel.ToString() ?? "None";
+            return profile?.ConnectivityLevel.ToString() ?? CONNECTION_TYPE_NONE;
+        }
+
+        private string GetEffectiveConnnectivityType()
+        {
+            var profile = _networkInfo.GetInternetConnectionProfile();
+            return profile?.ConnectivityType.ToString() ?? EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
         }
 
         private void OnStatusChanged(object ignored)

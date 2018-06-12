@@ -18,6 +18,11 @@ namespace ReactNative.Modules.NetInfo
         private readonly INetworkInformation _networkInfo;
         private string _connected;
 
+        // Based on the EffectiveConnectionType enum described in the W3C Network Information API spec
+        // (https://wicg.github.io/netinfo/).
+
+        private string EFFECTIVE_CONNECTION_TYPE_UNKNOWN = "unknown";
+
         /// <summary>
         /// Instantiates the <see cref="NetInfoModule"/>.
         /// </summary>
@@ -96,8 +101,15 @@ namespace ReactNative.Modules.NetInfo
         {
             return new JObject
             {
-                { "network_info", _networkInfo.GetInternetStatus() },
+                { "connectionType",  _networkInfo.GetInternetStatus()},
+                { "effectiveConnectionType", GetEffectiveConnnectivityType() },
+                { "network_info", _networkInfo.GetInternetStatusDeprecated() },
             };
+        }
+
+        private string GetEffectiveConnnectivityType()
+        {
+            return EFFECTIVE_CONNECTION_TYPE_UNKNOWN.ToString();
         }
 
         private void OnNetworkConnectivityChanged(object ignored, NetworkConnectivityChangedEventArgs e)
