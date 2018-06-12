@@ -38,7 +38,16 @@ var ViewPropTypes = require('ViewPropTypes');
 var requireNativeComponent = require('requireNativeComponent');
 var UIManager = require('UIManager');
 const flattenStyle = require('flattenStyle');
-const AccessibilityTraits = require('ViewAccessibility');
+const {
+  AccessibilityComponentTypes,
+  AccessibilityTraits,
+ } = require('ViewAccessibility');
+/**
+ * Add 'listItem' to supported traits.
+ *
+ * @platform windows
+ */
+const FocusableWindowsAccessibilityTraits = Array.from(AccessibilityTraits).concat(['listItem']);
 
 // This describes the propType based interface for WindowsControl
 class FocusableWindowsTemplate {
@@ -79,30 +88,39 @@ class FocusableWindowsTemplate {
     /**
      * Determines control accessibility behavior.
      * For more details refer to Libraries\Components\View\ViewPropTypes.js
-     * 
+     *
      * @platform windows
      */
     importantForAccessibility: PropTypes.oneOf([
       'auto',
       'yes',
       'no',
-      'no-hide-descendants'
+      'no-hide-descendants',
+      'yes-dont-hide-descendants', // Windows only
     ]),
 
     /**
      * Provides accessibility traits to the screen reader. By default no traits are set.
      * For more details refer to Libraries\Components\View\ViewPropTypes.js.
-     * 
+     *
      * @platform windows
      */
     accessibilityTraits: PropTypes.oneOfType([
-      PropTypes.oneOf(AccessibilityTraits),
-      PropTypes.arrayOf(PropTypes.oneOf(AccessibilityTraits)),
+      PropTypes.oneOf(FocusableWindowsAccessibilityTraits),
+      PropTypes.arrayOf(PropTypes.oneOf(FocusableWindowsAccessibilityTraits)),
     ]),
 
     /**
+     * Provides element accessibility text to the screen reader.
+     * For more details refer to Libraries\Components\View\ViewPropTypes.js.
+     *
+     * @platform windows
+     */
+    accessibilityLabel: PropTypes.string,
+
+    /**
      * Called when the user performs accessibility tap gesture.
-     * 
+     *
      * @platform windows
      */
     onAccessibilityTap: PropTypes.func,
@@ -185,7 +203,7 @@ function createFocusableComponent(Component: any) {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps: Object) {
-      this._splitProps(nextProps);      
+      this._splitProps(nextProps);
     }
 
     componentDidMount() {
@@ -215,20 +233,14 @@ function createFocusableComponent(Component: any) {
 
     _splitProps(props: Object) {
       this._focusableProps = {};
-      this._componentProps = {};
+      // Prevent the child (that is View in most of the cases) from being collapsed.
+      // Passed parameters can override this
+      this._componentProps = { collapsable: false };
 
       for (const key in props) {
         if (key in FocusableWindowsTemplate.focusablePropTypes) {
           // Property supported by WindowsControl
           this._focusableProps[key] = props[key];
-
-          // Accessibility properties are exposed to the WindowsControl but also must be set on the Component.
-          if (key === 'importantForAccessibility' ||
-              key === 'accessibilityTraits' ||
-              key === 'onAccessibilityTap')
-          {
-            this._componentProps[key] = props[key];
-          }
         } else if (key !== 'style') {
           // Property supported by Component
           this._componentProps[key] = props[key];

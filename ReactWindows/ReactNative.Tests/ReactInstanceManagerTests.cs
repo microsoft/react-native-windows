@@ -341,6 +341,55 @@ namespace ReactNative.Tests
         }
 
         [TestMethod]
+        public async Task ReactInstanceManager_TryGetReactContextAsync_Unfinished()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            ReactInstanceManager manager = null;
+            await DispatcherHelpers.CallOnDispatcherAsync(() => manager = CreateReactInstanceManager(jsBundleFile));
+
+            var initialContextTask = DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.CreateReactContextAsync(CancellationToken.None));
+            var context = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.TryGetReactContextAsync(CancellationToken.None));
+            var initialContext = await initialContextTask;
+
+            Assert.AreSame(initialContext, context);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () => await DisposeInstanceManager(manager));
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_TryGetReactContextAsync_Finished()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            ReactInstanceManager manager = null;
+            await DispatcherHelpers.CallOnDispatcherAsync(() => manager = CreateReactInstanceManager(jsBundleFile));
+
+            var initialContext = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.CreateReactContextAsync(CancellationToken.None));
+            var context = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.TryGetReactContextAsync(CancellationToken.None));
+
+            Assert.AreSame(initialContext, context);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () => await DisposeInstanceManager(manager));
+        }
+
+        [TestMethod]
+        public async Task ReactInstanceManager_TryGetReactContextAsync_Fail()
+        {
+            var jsBundleFile = "ms-appx:///Resources/test.js";
+            ReactInstanceManager manager = null;
+            await DispatcherHelpers.CallOnDispatcherAsync(() => manager = CreateReactInstanceManager(jsBundleFile));
+            var context = await DispatcherHelpers.CallOnDispatcherAsync(async () =>
+                await manager.TryGetReactContextAsync(CancellationToken.None));
+
+            Assert.IsNull(context);
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () => await DisposeInstanceManager(manager));
+        }
+
+        [TestMethod]
         public async Task ReactInstanceManager_GetOrCreateReactContextAsync_Create()
         {
             var jsBundleFile = "ms-appx:///Resources/test.js";

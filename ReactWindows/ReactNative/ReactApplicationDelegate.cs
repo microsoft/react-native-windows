@@ -3,6 +3,7 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Linq;
 using ReactNative.Modules.Launch;
 using System;
 using Windows.ApplicationModel;
@@ -44,6 +45,14 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// The initial props for the React app.
+        /// </summary>
+        public virtual JObject LaunchOptions
+        {
+            get;
+        }
+
+        /// <summary>
         /// Apply activation arguments to the React instance.
         /// </summary>
         /// <param name="args">The activation arguments.</param>
@@ -69,6 +78,19 @@ namespace ReactNative
 
                     break;
             }
+        }
+
+        /// <summary>
+        /// Creates the root view for the React app.
+        /// </summary>
+        /// <param name="arguments">The native app launch arguments.</param>
+        /// <returns>The root view.</returns>
+        public ReactRootView OnCreate(string arguments)
+        {
+            var host = _reactApplication.Host;
+            host.OnResume(_application.Exit);
+            host.ApplyArguments(arguments);
+            return host.OnCreate(LaunchOptions);
         }
 
         private void OnResuming(object sender, object e)

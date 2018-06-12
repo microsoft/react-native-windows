@@ -86,19 +86,6 @@ namespace ReactNative.Views.ControlView
             view.Focusable = isTabStop;
 #endif
             view.IsTabStop = isTabStop;
-
-            view.GotFocus -= OnGotFocus;
-            view.LostFocus -= OnLostFocus;
-            view.KeyDown -= OnKeyDown;
-            view.KeyUp -= OnKeyUp;
-
-            if (isTabStop)
-            {
-                view.GotFocus += OnGotFocus;
-                view.LostFocus += OnLostFocus;
-                view.KeyUp += OnKeyUp;
-                view.KeyDown += OnKeyDown;
-            }
         }
 
         /// <summary>
@@ -167,7 +154,7 @@ namespace ReactNative.Views.ControlView
         /// <param name="view">The view.</param>
         /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object. 
         ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
-        [ReactProp("accessibilityTraits")]
+        [ReactProp(ViewProps.AccessibilityTraits)]
         public void SetAccessibilityTraits(ReactControl view, object accessibilityTraitsValue)
         {
             AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
@@ -178,7 +165,7 @@ namespace ReactNative.Views.ControlView
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
-        [ReactProp("importantForAccessibility")]
+        [ReactProp(ViewProps.ImportantForAccessibility)]
         public void SetImportantForAccessibility(ReactControl view, string importantForAccessibilityValue)
         {
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
@@ -307,6 +294,25 @@ namespace ReactNative.Views.ControlView
         }
 
         /// <summary>
+        /// Subclasses can override this method to install custom event 
+        /// emitters on the given view.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view instance.</param>
+        /// <remarks>
+        /// Consider overriding this method if your view needs to emit events
+        /// besides basic touch events to JavaScript (e.g., scroll events).
+        /// </remarks>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, ReactControl view)
+        {
+            base.AddEventEmitters(reactContext, view);
+            view.GotFocus += OnGotFocus;
+            view.LostFocus += OnLostFocus;
+            view.KeyUp += OnKeyUp;
+            view.KeyDown += OnKeyDown;
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
@@ -318,14 +324,11 @@ namespace ReactNative.Views.ControlView
         /// </remarks>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ReactControl view)
         {
+            view.GotFocus -= OnGotFocus;
+            view.LostFocus -= OnLostFocus;
+            view.KeyDown -= OnKeyDown;
+            view.KeyUp -= OnKeyUp;
             base.OnDropViewInstance(reactContext, view);
-            if (view.IsTabStop)
-            {
-                view.GotFocus -= OnGotFocus;
-                view.LostFocus -= OnLostFocus;
-                view.KeyDown -= OnKeyDown;
-                view.KeyUp -= OnKeyUp;
-            }
         }
 
         private void OnGotFocus(object sender, RoutedEventArgs e)

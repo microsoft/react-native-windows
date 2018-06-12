@@ -88,7 +88,7 @@ namespace ReactNative.Views.View
         /// <param name="view">The view.</param>
         /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object.
         ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
-        [ReactProp("accessibilityTraits")]
+        [ReactProp(ViewProps.AccessibilityTraits)]
         public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
         {
             AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
@@ -99,7 +99,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
-        [ReactProp("importantForAccessibility")]
+        [ReactProp(ViewProps.ImportantForAccessibility)]
         public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
         {
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue)
@@ -164,11 +164,12 @@ namespace ReactNative.Views.View
         /// <param name="color">The masked color value.</param>
         [ReactProp(
             ViewProps.BackgroundColor,
-            CustomType = "Color",
-            DefaultUInt32 = ColorHelpers.Transparent)]
-        public void SetBackgroundColor(BorderedCanvas view, uint color)
+            CustomType = "Color")]
+        public void SetBackgroundColor(BorderedCanvas view, uint? color)
         {
-            view.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.Background = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
         }
 
         /// <summary>

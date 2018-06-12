@@ -115,13 +115,19 @@ namespace ReactNative.Views.Web
                 {
                     using (var request = new HttpRequestMessage())
                     {
-                        request.RequestUri = new Uri(uri);
+                        var sourceUri = new Uri(uri);
 
+                        //If the source URI has a file URL scheme, do not form the RequestUri.
+                        if (!sourceUri.IsFile)
+                        {
+                            request.RequestUri = sourceUri;
+                        }
+                      
                         var method = source.Value<string>("method");
                         var headers = (string)source.GetValue("headers", StringComparison.Ordinal);
                         var body = source.Value<Byte[]>("body");
 
-                        view.Navigate(uri, view.Name, body, headers);
+                        view.Navigate(sourceUri, view.Name, body, headers);
                         return;
                     }
                 }
@@ -168,7 +174,7 @@ namespace ReactNative.Views.Web
         {
             base.OnDropViewInstance(reactContext, view);
             view.LoadCompleted -= OnLoadCompleted;
-            view.Navigated -= OnNavigationStarting;
+            view.Navigating -= OnNavigationStarting;
         }
 
         /// <summary>
@@ -191,7 +197,7 @@ namespace ReactNative.Views.Web
         {
             base.AddEventEmitters(reactContext, view);
             view.LoadCompleted += OnLoadCompleted;
-            view.Navigated += OnNavigationStarting;
+            view.Navigating += OnNavigationStarting;
         }
 
         private void OnLoadCompleted(object sender, NavigationEventArgs e)
@@ -222,7 +228,7 @@ namespace ReactNative.Views.Web
             }
         }
 
-        private static void OnNavigationStarting(object sender, NavigationEventArgs e)
+        private static void OnNavigationStarting(object sender, NavigatingCancelEventArgs e)
         {
             var webView = (WebBrowser)sender;
 
