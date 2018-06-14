@@ -35,8 +35,15 @@ namespace ReactNative.Tests
 
             await RunOnDispatcherAsync(() =>
             {
-                var result = func();
-                tcs.SetResult(result);
+                try
+                {
+                    var result = func();
+                    tcs.SetResult(result);
+                }
+                catch (Exception e)
+                {
+                    tcs.SetException(e);
+                }
             }).ConfigureAwait(false);
 
             return await tcs.Task.ConfigureAwait(false);
