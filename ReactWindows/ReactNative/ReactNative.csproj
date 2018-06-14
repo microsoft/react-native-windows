@@ -120,6 +120,7 @@
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
     <Compile Include="Modules\DeviceInfo\DeviceInfoModule.cs" />
+    <Compile Include="Modules\DeviceInfo\DeviceViewInfo.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
