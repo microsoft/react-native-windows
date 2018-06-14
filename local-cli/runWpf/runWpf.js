@@ -7,10 +7,6 @@ const deploy = require('./utils/deploy');
 function runWpf(config, args, options) {
   // Fix up options
   options.root = options.root || process.cwd();
-  if (options.debug && options.release) {
-    console.log(chalk.red('Only one of "debug"/"release" options should be specified'));
-    return;
-  }
 
   const slnFile = build.getSolutionFile(options);
   if (!slnFile) {
