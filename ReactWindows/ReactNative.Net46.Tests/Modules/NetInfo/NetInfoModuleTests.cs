@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using NETWORKLIST;
@@ -28,12 +28,12 @@ namespace ReactNative.Tests.Modules.NetInfo
             var promise = new MockPromise(value => state = (JObject)value);
 
             netInfo.getCurrentConnectivity(promise);
-            Assert.AreEqual(CreateNetworkInfo("None"), state);
-
+            Assert.AreEqual(CreateNetworkInfo("none","unknown", "None"), state);
+        
             networkInfo.networkListManager = new MockNetworkListManager("InternetAccess");
             netInfo.getCurrentConnectivity(promise);
-            Assert.AreEqual(CreateNetworkInfo("InternetAccess"), state);
-        }
+            Assert.AreEqual(CreateNetworkInfo("InternetAccess", "unknown", "InternetAccess"), state);
+          }
 
         [Test]
         [Apartment(ApartmentState.STA)]
@@ -62,7 +62,7 @@ namespace ReactNative.Tests.Modules.NetInfo
             networkInfo.networkListManager = new MockNetworkListManager("InternetAccess");
             networkInfo.OnNetworkAvailabilityChanged(new Guid(), NLM_CONNECTIVITY.NLM_CONNECTIVITY_IPV4_INTERNET);
             Assert.IsTrue(emitted.WaitOne());
-            Assert.AreEqual(CreateNetworkInfo("InternetAccess"), state);
+            Assert.AreEqual(CreateNetworkInfo("InternetAccess", "unknown", "InternetAccess"), state);
         }
 
         [Test]
@@ -89,11 +89,13 @@ namespace ReactNative.Tests.Modules.NetInfo
             Assert.IsTrue(stopped.WaitOne());
         }
 
-        private static JObject CreateNetworkInfo(string status)
+        private static JObject CreateNetworkInfo(string _connectionType, string _effectiveConnectionType, string _networkInfoDepricated)
         {
             return new JObject
             {
-                { "network_info", status },
+                { "connectionType",  _connectionType},
+                { "effectiveConnectionType", _effectiveConnectionType },
+                { "network_info", _networkInfoDepricated }
             };
         }
 
@@ -162,11 +164,21 @@ namespace ReactNative.Tests.Modules.NetInfo
 
             public string GetInternetStatus()
             {
+                return networkListManager.IsConnectedToInternet ? "InternetAccess" : "none";
+            }
+
+            public string GetInternetStatusDeprecated()
+            {
                 return networkListManager.IsConnectedToInternet ? "InternetAccess" : "None";
             }
 
             public void Start()
             {
+                if(networkListManager == null)
+                {
+                    networkListManager = new MockNetworkListManager("None");
+                }
+
                 _onStart();
             }
 
@@ -188,12 +200,15 @@ namespace ReactNative.Tests.Modules.NetInfo
 
         class MockNetworkListManager
         {
+            public MockNetworkListManager() { }
+           
             public MockNetworkListManager(string status)
             {
                 IsConnectedToInternet = status == "InternetAccess";
             }
 
             public bool IsConnectedToInternet { get; set; }
+
         }
     }
 }
