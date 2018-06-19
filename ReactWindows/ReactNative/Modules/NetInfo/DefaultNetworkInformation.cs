@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Windows.Networking.Connectivity;
@@ -64,7 +64,7 @@ namespace ReactNative.Modules.NetInfo
             {
                 get
                 {
-                   WwanDataClass effectiveConnnectivityType = _profile.IsWwanConnectionProfile ? _profile.WwanConnectionProfileDetails.GetCurrentDataClass() : WwanDataClass.None;
+                   var effectiveConnnectivityType = _profile.IsWwanConnectionProfile ? _profile.WwanConnectionProfileDetails.GetCurrentDataClass() : WwanDataClass.None;
                     switch (effectiveConnnectivityType)
                     {
                         //2G-equivalent
