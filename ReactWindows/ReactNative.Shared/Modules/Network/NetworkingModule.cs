@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net;
 #if WINDOWS_UWP
 using Windows.Storage;
 using Windows.Web.Http;
@@ -40,6 +41,7 @@ namespace ReactNative.Modules.Network
         private const int MaxChunkSizeBetweenFlushes = 8 * 1024; // 8kb
         private readonly IHttpClient _client;
         private readonly TaskCancellationManager<int> _tasks;
+        private readonly CookieContainer _cookieContainer;
 
         private bool _shuttingDown;
 
@@ -49,19 +51,17 @@ namespace ReactNative.Modules.Network
         /// <param name="reactContext">The context.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "HttpClient disposed by module.")]
         internal NetworkingModule(ReactContext reactContext)
-            : this(CreateDefaultHttpClient(), reactContext)
-        {
-        }
-
-        /// <summary>
-        /// Instantiates the <see cref="NetworkingModule"/>.
-        /// </summary>
-        /// <param name="client">The HTTP client.</param>
-        /// <param name="reactContext">The context.</param>
-        internal NetworkingModule(IHttpClient client, ReactContext reactContext)
             : base(reactContext)
         {
-            _client = client;
+            _cookieContainer = new CookieContainer();
+            _client = new DefaultHttpClient(
+                new HttpClient(
+                    new HttpBaseProtocolFilter
+                    {
+                        CookieContainer = _cookieContainer,
+                        AllowAutoRedirect = false,
+                    }));
+
             _tasks = new TaskCancellationManager<int>();
         }
 
@@ -123,6 +123,18 @@ namespace ReactNative.Modules.Network
             if (headers != null)
             {
                 headerData = HttpContentHelpers.ExtractHeaders(headers);
+                foreach(string[] header in headers )
+                {
+                    if (String.Compare(header[0], "Cookie", true) == 0)
+                    {
+                        string[] cookie = header[1].Split('=');
+                        if (cookie.Length == 2)
+                        {
+                            _cookieContainer.Add(url, new Cookie(cookie[0], cookie[1]));
+                        }
+                    }
+                }
+                
                 ApplyHeaders(request, headers);
             }
 
@@ -487,6 +499,7 @@ namespace ReactNative.Modules.Network
                     case "content-encoding":
                     case "content-length":
                     case "content-type":
+                    case "cookie":
                         break;
                     default:
                         request.Headers.Add(key, header[1]);
@@ -509,16 +522,6 @@ namespace ReactNative.Modules.Network
                     headerData.Add(header.Key, header.Value);
                 }
             }
-        }
-
-        private static IHttpClient CreateDefaultHttpClient()
-        {
-            return new DefaultHttpClient(
-                new HttpClient(
-                    new HttpBaseProtocolFilter
-                    {
-                        AllowAutoRedirect = false,
-                    }));
         }
     }
 }
