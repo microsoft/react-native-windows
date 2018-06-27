@@ -4,6 +4,7 @@
 // Licensed under the MIT License.
 
 using ReactNative.UIManager;
+using System;
 using System.Threading;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -20,6 +21,35 @@ namespace ReactNative.Views.TextInput
         private int _eventCount;
         private bool _selectionChangedSubscribed;
         private bool _sizeChangedSubscribed;
+        private ClearButtonModeType _clearButtonMode = ClearButtonModeType.Default;
+
+        public ClearButtonModeType ClearButtonMode
+        {
+            get
+            {
+                return _clearButtonMode;
+            }
+            set
+            {
+                if (_clearButtonMode != value)
+                {
+                    _clearButtonMode = value;
+                    UpdateDeleteButtonVisibility();
+                }
+            }
+        }
+
+        private Button DeleteButton
+        {
+            get;
+            set;
+        }
+
+        private long? DeleteButtonVisibilityToken
+        {
+            get;
+            set;
+        }
 
         public int CurrentEventCount
         {
@@ -104,6 +134,46 @@ namespace ReactNative.Views.TextInput
             return Interlocked.Increment(ref _eventCount);
         }
 
+        protected override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            if (DeleteButton == null)
+            {
+                DeleteButton = (Button)GetTemplateChild("DeleteButton");
+                if (DeleteButtonVisibilityToken != null)
+                {
+                    DeleteButton.UnregisterPropertyChangedCallback(Button.VisibilityProperty, DeleteButtonVisibilityToken ?? 0);
+                }
+                DeleteButtonVisibilityToken = DeleteButton.RegisterPropertyChangedCallback(Button.VisibilityProperty, (DependencyObject d, DependencyProperty dp) => UpdateDeleteButtonVisibility());
+            }
+        }
+
+        private void UpdateDeleteButtonVisibility()
+        {
+            if (DeleteButton != null)
+            {
+                switch (ClearButtonMode)
+                {
+                    case ClearButtonModeType.Default:
+                        break;
+                    case ClearButtonModeType.Never:
+                        DeleteButton.Visibility = Visibility.Collapsed;
+                        break;
+                    case ClearButtonModeType.Always:
+                        DeleteButton.Visibility = Visibility.Visible;
+                        break;
+                    case ClearButtonModeType.WhileEditing:
+                        DeleteButton.Visibility = IsBeingEdited() ? Visibility.Visible : Visibility.Collapsed;
+                        break;
+                    case ClearButtonModeType.UnlessEditing:
+                        DeleteButton.Visibility = IsBeingEdited() ? Visibility.Collapsed : Visibility.Visible;
+                        break;
+                    default:
+                        throw new NotSupportedException($"'{ClearButtonMode}' is not a mode supported by ClearButtonMode property.");
+                }
+            }
+        }
+
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
@@ -118,6 +188,14 @@ namespace ReactNative.Views.TextInput
                 SelectionStart = 0;
                 SelectionLength = Text.Length;
             }
+
+            UpdateDeleteButtonVisibility();
+        }
+
+        protected override void OnLostFocus(RoutedEventArgs e)
+        {
+            base.OnLostFocus(e);
+            UpdateDeleteButtonVisibility();
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -150,6 +228,11 @@ namespace ReactNative.Views.TextInput
                         this.GetTag(),
                         start,
                         start + length));
+        }
+
+        private bool IsBeingEdited()
+        {
+            return !(FocusState == FocusState.Unfocused);
         }
     }
 }

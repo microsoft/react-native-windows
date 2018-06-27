@@ -170,6 +170,7 @@
     <Compile Include="Views\Scroll\ReactScrollViewManager.cs" />
     <Compile Include="Views\Switch\ReactSwitchManager.cs" />
     <Compile Include="Views\Switch\ReactSwitchShadowNode.cs" />
+    <Compile Include="Views\TextInput\ReactClearButtonModeHelper.cs" />
     <Compile Include="Views\TextInput\ReactPasswordBoxManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
