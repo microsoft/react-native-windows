@@ -22,6 +22,7 @@ namespace ReactNative.Views.TextInput
         private bool _selectionChangedSubscribed;
         private bool _sizeChangedSubscribed;
         private ClearButtonModeType _clearButtonMode = ClearButtonModeType.Default;
+        private Button _deleteButton;
 
         public ClearButtonModeType ClearButtonMode
         {
@@ -37,12 +38,6 @@ namespace ReactNative.Views.TextInput
                     UpdateDeleteButtonVisibility();
                 }
             }
-        }
-
-        private Button DeleteButton
-        {
-            get;
-            set;
         }
 
         private long? DeleteButtonVisibilityToken
@@ -137,36 +132,39 @@ namespace ReactNative.Views.TextInput
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            if (DeleteButton == null)
+
+            if (_deleteButton != null)
             {
-                DeleteButton = (Button)GetTemplateChild("DeleteButton");
-                if (DeleteButtonVisibilityToken != null)
+                if (DeleteButtonVisibilityToken.HasValue)
                 {
-                    DeleteButton.UnregisterPropertyChangedCallback(Button.VisibilityProperty, (long)DeleteButtonVisibilityToken);
+                    _deleteButton.UnregisterPropertyChangedCallback(Button.VisibilityProperty, (long)DeleteButtonVisibilityToken);
                 }
-                DeleteButtonVisibilityToken = DeleteButton.RegisterPropertyChangedCallback(Button.VisibilityProperty, (DependencyObject d, DependencyProperty dp) => UpdateDeleteButtonVisibility());
             }
+
+            _deleteButton = (Button)GetTemplateChild("DeleteButton");
+            DeleteButtonVisibilityToken = _deleteButton.RegisterPropertyChangedCallback(Button.VisibilityProperty, (DependencyObject d, DependencyProperty dp) => UpdateDeleteButtonVisibility());
+            TextChanged += OnTextChanged;
         }
 
         private void UpdateDeleteButtonVisibility()
         {
-            if (DeleteButton != null)
+            if (_deleteButton != null)
             {
                 switch (ClearButtonMode)
                 {
                     case ClearButtonModeType.Default:
                         break;
                     case ClearButtonModeType.Never:
-                        DeleteButton.Visibility = Visibility.Collapsed;
+                        _deleteButton.Visibility = Visibility.Collapsed;
                         break;
                     case ClearButtonModeType.Always:
-                        DeleteButton.Visibility = Visibility.Visible;
+                        _deleteButton.Visibility = Visibility.Visible;
                         break;
                     case ClearButtonModeType.WhileEditing:
-                        DeleteButton.Visibility = IsBeingEdited() ? Visibility.Visible : Visibility.Collapsed;
+                        _deleteButton.Visibility = IsBeingEdited() ? Visibility.Visible : Visibility.Collapsed;
                         break;
                     case ClearButtonModeType.UnlessEditing:
-                        DeleteButton.Visibility = IsBeingEdited() ? Visibility.Collapsed : Visibility.Visible;
+                        _deleteButton.Visibility = UnlessBeingEdited() ? Visibility.Visible : Visibility.Collapsed;
                         break;
                     default:
                         throw new NotSupportedException($"'{ClearButtonMode}' is not a mode supported by ClearButtonMode property.");
@@ -195,6 +193,11 @@ namespace ReactNative.Views.TextInput
         protected override void OnLostFocus(RoutedEventArgs e)
         {
             base.OnLostFocus(e);
+            UpdateDeleteButtonVisibility();
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
             UpdateDeleteButtonVisibility();
         }
 
@@ -232,7 +235,12 @@ namespace ReactNative.Views.TextInput
 
         private bool IsBeingEdited()
         {
-            return !(FocusState == FocusState.Unfocused);
+            return FocusState != FocusState.Unfocused && !string.IsNullOrEmpty(Text);
+        }
+
+        private bool UnlessBeingEdited()
+        {
+            return FocusState == FocusState.Unfocused && !string.IsNullOrEmpty(Text);
         }
     }
 }
