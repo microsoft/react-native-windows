@@ -55,7 +55,6 @@ namespace ReactNative.UIManager
     /// 
     /// TODO: 
     /// 1) AnimationRegistry
-    /// 2) ShowPopupMenu
     /// </remarks>
     public class NativeViewHierarchyManager
     {
@@ -581,22 +580,33 @@ namespace ReactNative.UIManager
             AssertOnCorrectDispatcher();
             var view = ResolveView(tag);
 
-            var menu = new PopupMenu();
-            for (var i = 0; i < items.Length; ++i)
+            var menu = new Windows.UI.Xaml.Controls.MenuFlyout();
+            bool dismissed = true;
+            for (int i = 0; i < items.Length; ++i)
             {
-                menu.Commands.Add(new UICommand(
-                    items[i],
-                    cmd =>
-                    {
-                        success.Invoke(cmd.Id);
-                    },
-                    i));
+                var item = new Windows.UI.Xaml.Controls.MenuFlyoutItem
+                {
+                    Text = items[i],
+                    Tag = i
+                };
+                item.Click += (sender, e) =>
+                {
+                    success.Invoke((sender as Windows.UI.Xaml.Controls.MenuFlyoutItem).Tag);
+                    dismissed = false;
+                };
+                menu.Items.Add(item);
             }
-#endif
-
-            // TODO: figure out where to popup the menu
-            // TODO: add continuation that calls the callback with empty args
+            menu.Closed += (sender, e) =>
+            {
+                if (dismissed)
+                {
+                    success.Invoke();
+                }
+            };
+            menu.ShowAt(view as FrameworkElement);
+#else
             throw new NotImplementedException();
+#endif
         }
 
         /// <summary>
