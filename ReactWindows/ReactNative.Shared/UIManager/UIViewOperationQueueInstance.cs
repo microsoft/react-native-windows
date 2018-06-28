@@ -150,7 +150,7 @@ namespace ReactNative.UIManager
         /// <param name="success">Called on success.</param>
         public void EnqueueShowPopupMenu(int tag, string[] items, ICallback error, ICallback success)
         {
-            EnqueueOperation(() => _nativeViewHierarchyManager.ShowPopupMenu(tag, items, success));
+            EnqueueOperation(() => _nativeViewHierarchyManager.ShowPopupMenu(tag, items, error, success));
         }
 
         /// <summary>

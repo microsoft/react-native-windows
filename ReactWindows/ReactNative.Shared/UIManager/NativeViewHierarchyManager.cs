@@ -14,7 +14,6 @@ using System.Linq;
 using ReactNative.Accessibility;
 using Windows.Foundation;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 #else
@@ -570,15 +569,25 @@ namespace ReactNative.UIManager
         /// view (shadow views cannot be anchors).
         /// </param>
         /// <param name="items">The menu items as an array of strings.</param>
+        /// <param name="error">Called if the popup menu failed to be shown.</param>
         /// <param name="success">
         /// A callback used with the position of the selected item as the first
         /// argument, or no arguments if the menu is dismissed.
         /// </param>
-        public void ShowPopupMenu(int tag, string[] items, ICallback success)
+        public void ShowPopupMenu(int tag, string[] items, ICallback error, ICallback success)
         {
 #if WINDOWS_UWP
             AssertOnCorrectDispatcher();
-            var view = ResolveView(tag);
+            object view;
+            try
+            {
+                view = ResolveView(tag);
+            }
+            catch (InvalidOperationException e)
+            {
+                error.Invoke(e.Message);
+                return;
+            }
 
             var menu = new Windows.UI.Xaml.Controls.MenuFlyout();
             bool dismissed = true;
