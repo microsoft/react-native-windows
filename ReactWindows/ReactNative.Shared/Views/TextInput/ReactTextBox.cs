@@ -129,7 +129,7 @@ namespace ReactNative.Views.TextInput
             return Interlocked.Increment(ref _eventCount);
         }
 
-        protected override void OnApplyTemplate()
+        public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
