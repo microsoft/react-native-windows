@@ -9,6 +9,7 @@ using System.Threading;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 #else
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +25,9 @@ namespace ReactNative.Views.TextInput
         private ClearButtonModeType _clearButtonMode = ClearButtonModeType.Default;
         private Button _deleteButton;
 
+#if WINDOWS_UWP
+        public event KeyEventHandler PreKeyDown;
+#endif
         public ClearButtonModeType ClearButtonMode
         {
             get
@@ -129,7 +133,11 @@ namespace ReactNative.Views.TextInput
             return Interlocked.Increment(ref _eventCount);
         }
 
+#if WINDOWS_UWP
+        protected override void OnApplyTemplate()
+#else
         public override void OnApplyTemplate()
+#endif
         {
             base.OnApplyTemplate();
 
@@ -137,12 +145,16 @@ namespace ReactNative.Views.TextInput
             {
                 if (DeleteButtonVisibilityToken.HasValue)
                 {
+#if WINDOWS_UWP
                     _deleteButton.UnregisterPropertyChangedCallback(Button.VisibilityProperty, (long)DeleteButtonVisibilityToken);
+#endif
                 }
             }
 
             _deleteButton = (Button)GetTemplateChild("DeleteButton");
+#if WINDOWS_UWP
             DeleteButtonVisibilityToken = _deleteButton.RegisterPropertyChangedCallback(Button.VisibilityProperty, (DependencyObject d, DependencyProperty dp) => UpdateDeleteButtonVisibility());
+#endif
             TextChanged += OnTextChanged;
         }
 
@@ -235,12 +247,20 @@ namespace ReactNative.Views.TextInput
 
         private bool IsBeingEdited()
         {
+#if WINDOWS_UWP
             return FocusState != FocusState.Unfocused && !string.IsNullOrEmpty(Text);
+#else
+            return this.IsKeyboardFocused && !string.IsNullOrEmpty(Text);
+#endif
         }
 
         private bool UnlessBeingEdited()
         {
+#if WINDOWS_UWP
             return FocusState == FocusState.Unfocused && !string.IsNullOrEmpty(Text);
+#else
+            return !this.IsKeyboardFocused && !string.IsNullOrEmpty(Text);
+#endif
         }
     }
 }
