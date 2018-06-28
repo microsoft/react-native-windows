@@ -600,7 +600,7 @@ namespace ReactNative.UIManager
                 };
                 item.Click += (sender, e) =>
                 {
-                    success.Invoke((sender as Windows.UI.Xaml.Controls.MenuFlyoutItem).Tag);
+                    success.Invoke(UIManagerModule.ACTION_ITEM_SELECTED, (sender as Windows.UI.Xaml.Controls.MenuFlyoutItem).Tag);
                     dismissed = false;
                 };
                 menu.Items.Add(item);
@@ -609,7 +609,7 @@ namespace ReactNative.UIManager
             {
                 if (dismissed)
                 {
-                    success.Invoke();
+                    success.Invoke(UIManagerModule.ACTION_DISMISSED);
                 }
             };
             menu.ShowAt(view as FrameworkElement);

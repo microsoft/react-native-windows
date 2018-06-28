@@ -19,8 +19,8 @@ namespace ReactNative.UIManager
         private const string BUBBLING_EVENTS_KEY = "bubblingEventTypes";
         private const string DIRECT_EVENTS_KEY = "directEventTypes";
 
-        private const string ACTION_DISMISSED = "dismissed";
-        private const string ACTION_ITEM_SELECTED = "itemSelected";
+        public const string ACTION_DISMISSED = "dismissed";
+        public const string ACTION_ITEM_SELECTED = "itemSelected";
 
         private static JObject CreateConstants(
             IReadOnlyList<IViewManager> viewManagers,
