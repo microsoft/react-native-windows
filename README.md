@@ -58,6 +58,10 @@ For information on parity status with Android and iOS, including details on impl
 - On UWP, press Shift+F10 to open the debug menu.
 - On WPF, press CTRL+D or CTRL+M to open the debug menu.
 
+### Hide Debug Performance Counters/Stats
+- Open App.xaml.cs and then jump into ReactApplication.cs (or open it directly from the ReactNative project)
+- Search for debug and set `this.DebugSettings.EnableFrameRateCounter = false`
+
 ## Extending React Native
 
 - Looking for a component? [JS.coach](https://js.coach/react-native)
