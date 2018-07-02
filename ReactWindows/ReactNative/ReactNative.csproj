@@ -155,6 +155,8 @@
     <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="Accessibility\DynamicAutomationPeer.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
+    <Compile Include="Views\DatePicker\ReactCalendarDatePickerManager.cs" />
+    <Compile Include="Views\DatePicker\ReactCalendarDatePickerShadowNode.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
@@ -235,6 +237,7 @@
       <Version>4.0.0-preview00001</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
