@@ -38,14 +38,14 @@ class DatePickerWindows extends React.Component {
 
     /**
      * Minimum year.
-     * 
+     *
      * Restricts the range with an lower bound on the year.
      */
     minYear: PropTypes.instanceOf(Date),
 
     /**
      * Maximum year.
-     * 
+     *
      * Restricts the range with an upper bound on the year.
      */
     maxYear: PropTypes.instanceOf(Date),
