@@ -85,6 +85,7 @@ namespace ReactNative.Shell
             return new List<IViewManager>
             {
                 new ReactCalendarDatePickerManager(),
+                new ReactDatePickerManager(),
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
                 new ReactProgressBarViewManager(),

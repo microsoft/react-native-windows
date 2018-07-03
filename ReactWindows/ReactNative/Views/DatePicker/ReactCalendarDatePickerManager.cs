@@ -19,7 +19,7 @@ namespace ReactNative.Views.DatePicker
         {
             get
             {
-                return "CalendarPickerWindows";
+                return "CalendarDatePickerWindows";
             }
         }
 
