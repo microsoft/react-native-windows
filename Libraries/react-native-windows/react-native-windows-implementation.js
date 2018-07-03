@@ -16,6 +16,7 @@ var ReactWindows = {
   get ProgressBarWindows() { return require('ProgressBarWindows'); },
   get ProgressRingWindows() { return require('ProgressRingWindows'); },
   get SplitViewWindows() { return require('SplitViewWindows'); },
+  get TimePickerWindows() { return require('TimePickerWindows'); },
 
   get createFocusableComponent() { return require('FocusableWindows'); },
 };
