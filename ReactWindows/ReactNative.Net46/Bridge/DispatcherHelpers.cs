@@ -180,55 +180,6 @@ namespace ReactNative.Bridge
             return taskCompletionSource.Task;
         }
 
-        /// <summary>
-        /// Invokes an async function on a specified dispatcher and asynchronously returns the
-        /// result.
-        /// </summary>
-        /// <param name="dispatcher">The Dispatcher to be used.</param>
-        /// <param name="func">The function to invoke.</param>
-        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
-        /// <returns>A task to await the result.</returns>
-        public static Task CallOnDispatcher(Dispatcher dispatcher, Func<Task> func, bool allowInlining = false)
-        {
-            if (allowInlining && IsOnDispatcher(dispatcher))
-            {
-                var result = Task.Run(async () =>
-                {
-                    try
-                    {
-                        await func();
-                        return Task.FromResult(true);
-                    }
-                    catch (Exception e)
-                    {
-                        return Task.FromException(e);
-                    }
-                });
-
-                return result;
-            }
-
-            var taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-            RunOnDispatcher(dispatcher, DispatcherPriority.Normal, () =>
-            {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await func();
-                        taskCompletionSource.SetResult(true);
-                    }
-                    catch (Exception e)
-                    {
-                        taskCompletionSource.SetException(e);
-                    }
-                });
-            });
-
-            return taskCompletionSource.Task;
-        }
-
         public static void Reset()
         {
             // No-op on WPF
