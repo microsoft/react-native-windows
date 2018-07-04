@@ -44,4 +44,21 @@ module.exports = {
    * @platform windows
    */
   tooltip: PropTypes.string,
+
+  /**
+   * Controls how view is important for accessibility which is if it
+   * fires accessibility events and if it is reported to accessibility services
+   * that query the screen. Works for Android only.
+   *
+   * @platform windows
+   *
+   * See http://facebook.github.io/react-native/docs/view.html#importantforaccessibility
+   */
+  importantForAccessibility: PropTypes.oneOf([
+    'auto',
+    'yes',
+    'no',
+    'no-hide-descendants',
+    'yes-dont-hide-descendants',
+  ]),
 };

@@ -6,6 +6,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Modules.DeviceInfo;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
@@ -161,7 +162,11 @@ namespace ReactNative.UIManager
                         }
                     });
                 });
- 
+
+#if WINDOWS_UWP
+                // Register view in DeviceInfoModule for tracking its dimensions
+                Context.GetNativeModule<DeviceInfoModule>().RegisterRootView(rootView, tag);
+#endif
             }, true); // Allow inlining
 
             return tag;
@@ -180,6 +185,10 @@ namespace ReactNative.UIManager
             await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
             {
                 rootView.RemoveSizeChanged();
+#if WINDOWS_UWP
+                // Unregister view from DeviceInfoModule
+                Context.GetNativeModule<DeviceInfoModule>().UnregisterRootView(rootView);
+#endif
                 return true;
             }, true); // allow inlining
 

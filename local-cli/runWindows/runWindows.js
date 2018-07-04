@@ -7,10 +7,6 @@ const deploy = require('./utils/deploy');
 function runWindows(config, args, options) {
   // Fix up options
   options.root = options.root || process.cwd();
-  if (options.debug && options.release) {
-    console.log(chalk.red('Only one of "debug"/"release" options should be specified'));
-    return;
-  }
 
   const slnFile = build.getSolutionFile(options);
   if (!slnFile) {
@@ -52,23 +48,21 @@ runWindows({
   root: 'C:\\github\\hack\\myapp',
   debug: true,
   arch: 'x86',
-  nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe',
-  desktop: true
+  nugetPath: 'C:\\github\\react\\react-native-windows\\local-cli\\runWindows\\.nuget\\nuget.exe'
 });
 */
 
 /**
  * Starts the app on a connected Windows emulator or mobile device.
  * Options are the following:
- *    root: String - The root of the application
- *    debug: Boolean - Specifies debug build
  *    release: Boolean - Specifies release build
+ *    root: String - The root of the application
  *    arch: String - The build architecture (x86, x64, ARM, Any CPU)
- *    desktop: Boolean - Deploy to the desktop
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
  *    proxy: Boolean - Run using remote JS proxy
+ *    verbose: Boolean - Enables logging
  *    no-packager: Boolean - Do not launch packager while building
  */
 module.exports = {
