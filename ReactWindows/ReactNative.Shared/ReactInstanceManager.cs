@@ -588,9 +588,11 @@ namespace ReactNative
                 _currentReactContext = null;
             }
 
+            var reactContext = default(ReactContext);
+
             try
             {
-                var reactContext = await CreateReactContextCoreAsync(jsExecutorFactory, jsBundleLoader, token);
+                reactContext = await CreateReactContextCoreAsync(jsExecutorFactory, jsBundleLoader, token);
                 SetupReactContext(reactContext);
                 return reactContext;
             }
@@ -601,6 +603,7 @@ namespace ReactNative
             }
             catch (Exception ex)
             {
+                await reactContext?.DisposeAsync();
                 _devSupportManager.HandleException(ex);
             }
 
