@@ -227,6 +227,7 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptContext.Current = JavaScriptContext.Invalid;
             _runtime.Dispose();
+            _unbundle?.Dispose();
         }
 
         private void InitializeChakra()
