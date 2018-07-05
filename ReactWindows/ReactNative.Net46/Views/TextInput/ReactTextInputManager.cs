@@ -376,6 +376,17 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
+        /// Controls the visibility of the DeleteButton.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="clearButtonMode">Visibility of the DeleteButton.</param>
+        [ReactProp("clearButtonMode")]
+        public void SetClearButtonMode(ReactTextBox view, string clearButtonMode)
+        {
+            view.ClearButtonMode = EnumHelpers.ParseNullable<ClearButtonModeType>(clearButtonMode) ?? ClearButtonModeType.Default;
+        }
+
+        /// <summary>
         /// Create the shadow node instance.
         /// </summary>
         /// <returns>The shadow node instance.</returns>
