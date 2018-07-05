@@ -16,6 +16,7 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Controls;
 #else
 using System.Windows;
 using System.Windows.Media;
@@ -54,6 +55,7 @@ namespace ReactNative.UIManager
     /// 
     /// TODO: 
     /// 1) AnimationRegistry
+    /// 2) ShowPopupMenu
     /// </remarks>
     public class NativeViewHierarchyManager
     {
@@ -589,31 +591,41 @@ namespace ReactNative.UIManager
                 return;
             }
 
-            var menu = new Windows.UI.Xaml.Controls.MenuFlyout();
-            bool dismissed = true;
-            for (int i = 0; i < items.Length; ++i)
+            var menu = new MenuFlyout();
+            var dismissed = true;
+
+            void onClickHandler(object sender, RoutedEventArgs e)
             {
-                var item = new Windows.UI.Xaml.Controls.MenuFlyoutItem
-                {
-                    Text = items[i],
-                    Tag = i
-                };
-                item.Click += (sender, e) =>
-                {
-                    success.Invoke(UIManagerModule.ACTION_ITEM_SELECTED, (sender as Windows.UI.Xaml.Controls.MenuFlyoutItem).Tag);
-                    dismissed = false;
-                };
-                menu.Items.Add(item);
+                var item = sender as MenuFlyoutItem;
+                success.Invoke(UIManagerModule.ACTION_ITEM_SELECTED, item.Tag);
+                dismissed = false;
+                item.Click -= onClickHandler;
             }
-            menu.Closed += (sender, e) =>
+
+            void onCloseHandler(object sender, object e)
             {
                 if (dismissed)
                 {
                     success.Invoke(UIManagerModule.ACTION_DISMISSED);
                 }
-            };
+                (sender as MenuFlyout).Closed -= onCloseHandler;
+            }
+
+            for (int i = 0; i < items.Length; ++i)
+            {
+                var item = new MenuFlyoutItem
+                {
+                    Text = items[i],
+                    Tag = i
+                };
+                item.Click += onClickHandler;
+                menu.Items.Add(item);
+            }
+            menu.Closed += onCloseHandler;
             menu.ShowAt(view as FrameworkElement);
 #else
+            // TODO: figure out where to popup the menu
+            // TODO: add continuation that calls the callback with empty args
             throw new NotImplementedException();
 #endif
         }
