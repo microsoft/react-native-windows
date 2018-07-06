@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using NUnit.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Modules.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -37,14 +38,18 @@ namespace ReactNative.Tests.Modules.Storage
         }
 
         [TearDown]
-        public void Cleanup()
+        public void TearDown()
         {
-            module.clear(callback);
-            Assert.That(waitHandle.WaitOne(), Is.True);
-            Assert.That(error, Is.Null);
-            Assert.That(result, Is.Null);
+            module.clear(new MockCallback((invoke) => { }));
         }
 
+        [Test]
+        public void AsyncStorageModule_DoesNotInvokeCallbackAfterDispose()
+        {
+            callback = new MockCallback(invoke => throw new Exception("should not be called"));
+            module.OnReactInstanceDispose();
+            module.multiGet(new[] { "" }, callback);
+        }
 
         [Test]
         public void AsyncStorageModule_InvalidKeyValue_Method()

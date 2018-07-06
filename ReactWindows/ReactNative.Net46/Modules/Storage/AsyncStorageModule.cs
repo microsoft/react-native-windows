@@ -3,6 +3,7 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PCLStorage;
@@ -15,6 +16,8 @@ namespace ReactNative.Modules.Storage
     class AsyncStorageModule : NativeModuleBase
     {
         private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
+        private CancellationTokenSource _cancelSource = new CancellationTokenSource();
+
 
         public override string Name
         {
@@ -27,6 +30,8 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void multiGet(string[] keys, ICallback callback)
         {
+           if (await IsCancelledOrDisposed()) return;
+
             if (keys == null)
             {
                 callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null), null);
@@ -69,6 +74,8 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void multiSet(string[][] keyValueArray, ICallback callback)
         {
+            if (await IsCancelledOrDisposed()) return;
+
             if (keyValueArray == null || keyValueArray.Length == 0)
             {
                 callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null));
@@ -125,6 +132,8 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void multiRemove(string[] keys, ICallback callback)
         {
+            if (await IsCancelledOrDisposed()) return;
+
             if (keys == null || keys.Length == 0)
             {
                 callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null));
@@ -169,6 +178,8 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void multiMerge(string[][] keyValueArray, ICallback callback)
         {
+            if (await IsCancelledOrDisposed()) return;
+
             if (keyValueArray == null || keyValueArray.Length == 0)
             {
                 callback.Invoke(AsyncStorageHelpers.GetInvalidKeyError(null));
@@ -225,6 +236,8 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void clear(ICallback callback)
         {
+            if (await IsCancelledOrDisposed()) return;
+
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
             {
@@ -245,6 +258,8 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void getAllKeys(ICallback callback)
         {
+            if (await IsCancelledOrDisposed()) return;
+
             var keys = new JArray();
 
             await _mutex.WaitAsync().ConfigureAwait(false);
@@ -274,6 +289,8 @@ namespace ReactNative.Modules.Storage
 
         public override void OnReactInstanceDispose()
         {
+            _cancelSource.Cancel();
+            _cancelSource.Dispose();
             _mutex.Dispose();
         }
 
@@ -357,6 +374,33 @@ namespace ReactNative.Modules.Storage
             }
 
             return null;
+        }
+
+        private async Task<bool> IsCancelledOrDisposed()
+        {
+            try
+            {
+                var token = _cancelSource.Token;
+                await _mutex.WaitAsync(token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // in this case OnReactInstanceDispose() was called in the other thread while waiting for the mutex
+                // no JS callback invoked intentionally.
+                return true;
+            }
+            catch (ObjectDisposedException)
+            {
+                // TODO: This is workaround. ReactInstance doesn't stop invoking ReactMethod even after DisposeAsync call.
+                // ReactInstance has the responsibility to guarantee flushing of all tasks from JavaScript and NativeModules.
+                return true;
+            }
+            finally
+            {
+                _mutex.Release();
+            }
+
+            return false;
         }
     }
 }
