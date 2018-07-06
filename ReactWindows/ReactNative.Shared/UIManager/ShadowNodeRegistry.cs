@@ -4,6 +4,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using static System.FormattableString;
 
@@ -19,7 +20,7 @@ namespace ReactNative.UIManager
             new Dictionary<int, ReactShadowNode>();
 
         private readonly IDictionary<int, bool> _rootTags =
-            new Dictionary<int, bool>();
+            new ConcurrentDictionary<int, bool>();
 
         /// <summary>
         /// The collection of root node tags.
