@@ -28,6 +28,7 @@ namespace ReactNative.Bridge
         private readonly JavaScriptModuleRegistry _jsRegistry;
         private readonly Func<IJavaScriptExecutor> _jsExecutorFactory;
         private readonly JavaScriptBundleLoader _bundleLoader;
+        private readonly List<Action> _onInitBridgeActions = new List<Action>();
 
         private IReactBridge _bridge;
 
@@ -63,7 +64,7 @@ namespace ReactNative.Bridge
         public IReactQueueConfiguration QueueConfiguration
         {
             get;
-        } 
+        }
 
         public T GetJavaScriptModule<T>() where T : IJavaScriptModule, new()
         {
@@ -98,7 +99,7 @@ namespace ReactNative.Bridge
                     QueueConfiguration.JavaScriptQueue.AssertOnThread();
 
                     var jsExecutor = _jsExecutorFactory();
-                    
+
                     using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "ReactBridgeCtor").Start())
                     {
                         _bridge = new ReactBridge(
@@ -113,26 +114,21 @@ namespace ReactNative.Bridge
                     }
 
                     _bundleLoader.LoadScript(_bridge);
+
+                    // Now that the bridge is initialized, queue up all actions which were waiting for bridge
+                    foreach (var action in _onInitBridgeActions)
+                    {
+                        QueueConfiguration.JavaScriptQueue.RunAsync(action);
+                    }
+                    _onInitBridgeActions.Clear();
                 }).ConfigureAwait(false);
             }
         }
 
         public void InvokeCallback(int callbackId, JArray arguments)
         {
-            if (IsDisposed)
+            DispatchBridgeAction(() =>
             {
-                Tracer.Write(ReactConstants.Tag, "Invoking JS callback after bridge has been destroyed.");
-                return;
-            }
-
-            QueueConfiguration.JavaScriptQueue.Dispatch(() =>
-            {
-                QueueConfiguration.JavaScriptQueue.AssertOnThread();
-                if (IsDisposed)
-                {
-                    return;
-                }
-
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "<callback>").Start())
                 {
                     _bridge.InvokeCallback(callbackId, arguments);
@@ -142,23 +138,40 @@ namespace ReactNative.Bridge
 
         public /* TODO: internal? */ void InvokeFunction(string module, string method, JArray arguments, string tracingName)
         {
+            DispatchBridgeAction(() =>
+            {
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName).Start())
+                {
+                    _bridge.CallFunction(module, method, arguments);
+                }
+            });
+        }
+
+        private void DispatchBridgeAction(Action action)
+        {
+            if (IsDisposed)
+            {
+                Tracer.Write(ReactConstants.Tag, "Ignoring Invocation of JS function/callback as the bridge has been destroyed.");
+                return;
+            }
+
             QueueConfiguration.JavaScriptQueue.Dispatch(() =>
             {
                 QueueConfiguration.JavaScriptQueue.AssertOnThread();
 
                 if (IsDisposed)
                 {
+                    Tracer.Write(ReactConstants.Tag, "Ignoring Invocation of JS function/callback as the bridge has been destroyed.");
                     return;
                 }
 
-                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, tracingName).Start())
+                if (_bridge == null)
                 {
-                    if (_bridge == null)
-                    {
-                        throw new InvalidOperationException("Bridge has not been initialized.");
-                    }
-
-                    _bridge.CallFunction(module, method, arguments);
+                    _onInitBridgeActions.Add(action);
+                }
+                else
+                {
+                    action();
                 }
             });
         }
@@ -248,7 +261,7 @@ namespace ReactNative.Bridge
                 AssertNotNull(_jsExecutorFactory, nameof(JavaScriptExecutorFactory));
                 AssertNotNull(_registry, nameof(Registry));
                 AssertNotNull(_bundleLoader, nameof(BundleLoader));
-                 
+
                 return new ReactInstance(
                     _reactQueueConfiguration,
                     _jsExecutorFactory,
