@@ -89,13 +89,14 @@ namespace ReactNative.Tests.Modules.NetInfo
             Assert.IsTrue(stopped.WaitOne());
         }
 
-        private static JObject CreateNetworkInfo(string _connectionType, string _effectiveConnectionType, string _networkInfoDepricated)
+        private static JObject CreateNetworkInfo(string _connectionType, string _effectiveConnectionType, string _networkInfoDeprecated)
         {
             return new JObject
             {
                 { "connectionType",  _connectionType},
                 { "effectiveConnectionType", _effectiveConnectionType },
-                { "network_info", _networkInfoDepricated }
+                { "network_info", _networkInfoDeprecated
+                }
             };
         }
 
