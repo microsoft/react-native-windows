@@ -43,13 +43,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as maximum.</param>
         [ReactProp("maxYear")]
-        public void SetMaxYear(Windows.UI.Xaml.Controls.DatePicker view, DateTime? date)
-        {
-            if (date.HasValue)
-            {
-                view.MaxYear = date.Value;
-            }
-        }
+        public void SetMaxYear(Windows.UI.Xaml.Controls.DatePicker view, DateTime? date) => view.MaxYear = date ?? DateTimeOffset.MaxValue;
 
         /// <summary>
         /// Sets the minimum allowed year of the picker.
@@ -57,13 +51,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as minimum.</param>
         [ReactProp("minYear")]
-        public void SetMinYear(Windows.UI.Xaml.Controls.DatePicker view, DateTime? date)
-        {
-            if (date.HasValue)
-            {
-                view.MinYear = date.Value;
-            }
-        }
+        public void SetMinYear(Windows.UI.Xaml.Controls.DatePicker view, DateTime? date) => view.MinYear = date ?? DateTimeOffset.MinValue;
 
         /// <summary>
         /// This method returns the <see cref="ReactDatePickerShadowNode"/>
