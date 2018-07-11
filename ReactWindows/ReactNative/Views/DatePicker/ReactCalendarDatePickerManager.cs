@@ -41,13 +41,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as maximum.</param>
         [ReactProp("maxDate")]
-        public void SetMaxDate(CalendarDatePicker view, DateTime? date)
-        {
-            if (date.HasValue)
-            {
-                view.MaxDate = date.Value;
-            }
-        }
+        public void SetMaxDate(CalendarDatePicker view, DateTime? date) => view.MaxDate = date ?? DateTimeOffset.MaxValue;
 
         /// <summary>
         /// Sets the minimum allowed date of the picker.
@@ -55,13 +49,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as minimum.</param>
         [ReactProp("minDate")]
-        public void SetMinDate(CalendarDatePicker view, DateTime? date)
-        {
-            if (date.HasValue)
-            {
-                view.MinDate = date.Value;
-            }
-        }
+        public void SetMinDate(CalendarDatePicker view, DateTime? date) => view.MinDate = date ?? DateTimeOffset.MinValue;
 
         /// <summary>
         /// Sets the placeholder text for the picker.
@@ -210,21 +198,10 @@ namespace ReactNative.Views.DatePicker
             /// <param name="eventEmitter"></param>
             public override void Dispatch(RCTEventEmitter eventEmitter)
             {
-                JObject eventData;
-                if (_date.HasValue)
+                JObject eventData = new JObject
                 {
-                    eventData = new JObject
-                    {
-                        {"date", _date.Value },
-                    };
-                }
-                else
-                {
-                    eventData = new JObject
-                    {
-                        {"date", null },
-                    };
-                }
+                    {"date", _date }
+                };
                 eventEmitter.receiveEvent(ViewTag, EventName, eventData);
             }
         }
