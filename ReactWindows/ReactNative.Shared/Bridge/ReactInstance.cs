@@ -281,7 +281,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                _parent._registry.Invoke(_parent, moduleId, methodId, parameters);
+                _parent._registry.Invoke(_parent.InvokeCallback, moduleId, methodId, parameters);
             }
 
             public JToken InvokeSync(int moduleId, int methodId, JArray parameters)
@@ -293,7 +293,7 @@ namespace ReactNative.Bridge
                     return null;
                 }
 
-                return _parent._registry.InvokeSync(_parent, moduleId, methodId, parameters);
+                return _parent._registry.InvokeSync(_parent.InvokeCallback, moduleId, methodId, parameters);
             }
 
             public void OnBatchComplete()

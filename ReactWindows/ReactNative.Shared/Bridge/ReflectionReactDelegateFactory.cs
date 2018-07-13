@@ -31,7 +31,7 @@ namespace ReactNative.Bridge
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Func<IReactInstance, JArray, JToken> Create(INativeModule module, MethodInfo method)
+        public override Func<InvokeCallback, JArray, JToken> Create(INativeModule module, MethodInfo method)
         {
             var extractors = CreateExtractors(module, method);
             var expectedArguments = extractors.Sum(e => e.ExpectedArguments);
@@ -39,7 +39,7 @@ namespace ReactNative.Bridge
             var genericDelegate = GenericDelegate.Create(module, method);
             var hasReturnType = method.ReturnType != typeof(void);
 
-            return (reactInstance, arguments) => 
+            return (invokeCallback, arguments) => 
                 Invoke(
                     method,
                     expectedArguments,
@@ -47,7 +47,7 @@ namespace ReactNative.Bridge
                     genericDelegate,
                     hasReturnType,
                     module,
-                    reactInstance,
+                    invokeCallback,
                     arguments);
         }
 
@@ -144,17 +144,17 @@ namespace ReactNative.Bridge
         private static JToken Invoke(
             MethodInfo method,
             int expectedArguments,
-            IList<Func<IReactInstance, JArray, int, Result>> extractors,
+            IList<ExtractArgument> extractors,
             IGenericDelegate genericDelegate,
             bool hasReturnType,
             INativeModule moduleInstance,
-            IReactInstance reactInstance,
+            InvokeCallback invokeCallback,
             JArray jsArguments)
         {
             if (moduleInstance == null)
                 throw new ArgumentNullException(nameof(moduleInstance));
-            if (reactInstance == null)
-                throw new ArgumentNullException(nameof(reactInstance));
+            if (invokeCallback == null)
+                throw new ArgumentNullException(nameof(invokeCallback));
             if (jsArguments == null)
                 throw new ArgumentNullException(nameof(jsArguments));
 
@@ -171,7 +171,7 @@ namespace ReactNative.Bridge
             var args = new object[extractors.Count];
             for (var j = 0; j < c; ++j)
             {
-                var extractorResult = extractors[j](reactInstance, jsArguments, idx);
+                var extractorResult = extractors[j](invokeCallback, jsArguments, idx);
                 args[j] = extractorResult.Value;
                 idx = extractorResult.NextIndex;
             }
@@ -199,6 +199,8 @@ namespace ReactNative.Bridge
             return JToken.FromObject(result);
         }
 
+        private delegate Result ExtractArgument(InvokeCallback invokeCallback, JArray arguments, int index);
+
         private struct Result
         {
             public Result(int nextIndex, object value)
@@ -214,14 +216,14 @@ namespace ReactNative.Bridge
 
         private struct Extractor
         {
-            public Extractor(int expectedArguments, Func<IReactInstance, JArray, int, Result> extractFunction)
+            public Extractor(int expectedArguments, ExtractArgument extractFunction)
             {
                 ExpectedArguments = expectedArguments;
                 ExtractFunction = extractFunction;
             }
 
             public int ExpectedArguments { get; }
-            public Func<IReactInstance, JArray, int, Result> ExtractFunction { get; }
+            public ExtractArgument ExtractFunction { get; }
         }
     }
 }

@@ -99,12 +99,12 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Invoke a method on a native module.
         /// </summary>
-        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="invokeCallback">The invoke callback delegate.</param>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
         internal void Invoke(
-            IReactInstance reactInstance,
+            InvokeCallback invokeCallback,
             int moduleId,
             int methodId,
             JArray parameters)
@@ -117,24 +117,24 @@ namespace ReactNative.Bridge
             var actionQueue = _moduleTable[moduleId].Target.ActionQueue;
             if (actionQueue != null)
             {
-                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
+                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(invokeCallback, methodId, parameters));
             }
             else
             {
-                _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+                _moduleTable[moduleId].Invoke(invokeCallback, methodId, parameters);
             }
         }
 
         /// <summary>
         /// Invoke the native method synchronously.
         /// </summary>
-        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="invokeCallback">The invoke callback delegate.</param>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The value returned from the method.</returns>
         internal JToken InvokeSync(
-            IReactInstance reactInstance,
+            InvokeCallback invokeCallback,
             int moduleId,
             int methodId,
             JArray parameters)
@@ -149,7 +149,7 @@ namespace ReactNative.Bridge
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
             }
 
-            return _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            return _moduleTable[moduleId].Invoke(invokeCallback, methodId, parameters);
         }
 
         /// <summary>
@@ -225,12 +225,12 @@ namespace ReactNative.Bridge
 
             public INativeModule Target { get; }
 
-            public JToken Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
+            public JToken Invoke(InvokeCallback invokeCallback, int methodId, JArray parameters)
             {
                 var method = _methods[methodId];
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
                 {
-                    return method.Method.Invoke(reactInstance, parameters);
+                    return method.Method.Invoke(invokeCallback, parameters);
                 }
             }
 
