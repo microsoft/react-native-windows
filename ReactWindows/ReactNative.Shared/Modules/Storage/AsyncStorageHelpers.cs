@@ -165,6 +165,7 @@ namespace ReactNative.Modules.Storage
             {
                 { "message", ex.Message },
                 { "key", ex.GetType().Name },
+                { "stacktrace", ex.StackTrace },
             };
         }
     }
