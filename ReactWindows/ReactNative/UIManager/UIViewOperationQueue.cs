@@ -532,6 +532,17 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Invokes the action to execute on dispatcher thread associated with view specified by <paramref name="tag" />.
+        /// Action is not queued on operation queue, but it goes to dispatcher directly.
+        /// </summary>
+        /// <param name="tag">The react tag which specifies view.</param>
+        /// <param name="action">The action to invoke.</param>
+        public void InvokeAction(int tag, Action action)
+        {
+            DispatcherHelpers.RunOnDispatcher(GetQueueByTag(tag).Dispatcher,() => action());
+        }
+
+        /// <summary>
         /// Dispatches the view updates.
         /// </summary>
         /// <param name="batchId">The batch identifier.</param>

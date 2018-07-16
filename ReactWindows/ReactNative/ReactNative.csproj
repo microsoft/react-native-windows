@@ -112,7 +112,6 @@
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DevSupport\ShakeAccelerometer.cs" />
-    <Compile Include="DevSupport\SourceInfoVisibilityConverter.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="IReactApplication.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
@@ -120,6 +119,7 @@
     <Compile Include="Modules\Clipboard\ClipboardModule.cs" />
     <Compile Include="Modules\Clipboard\IClipboardInstance.cs" />
     <Compile Include="Modules\DeviceInfo\DeviceInfoModule.cs" />
+    <Compile Include="Modules\DeviceInfo\DeviceViewInfo.cs" />
     <Compile Include="Modules\Dialog\DialogModule.cs" />
     <Compile Include="Modules\Image\ImageLoaderModule.cs" />
     <Compile Include="Modules\Launch\LauncherModule.cs" />
@@ -222,7 +222,7 @@
   <Import Project="..\..\Yoga\csharp\Facebook.Yoga\Facebook.Yoga.Shared.projitems" Label="Shared" />
   <ItemGroup>
     <PackageReference Include="fresco.imagepipeline">
-      <Version>0.1.5</Version>
+      <Version>0.1.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
