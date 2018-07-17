@@ -22,6 +22,7 @@ namespace ReactNative
         private string _jsBundleFile;
         private string _jsMainModuleName;
         private bool _useDeveloperSupport;
+        private bool _useBundleCaching;
         private LifecycleState? _initialLifecycleState;
         private UIImplementationProvider _uiImplementationProvider;
         private Action<Exception> _nativeModuleCallExceptionHandler;
@@ -92,6 +93,18 @@ namespace ReactNative
             set
             {
                 _useDeveloperSupport = value;
+            }
+        }
+
+        /// <summary>
+        /// When <code>true</code>, bundle caching will be enabled;
+        /// Otherwise, <code>false</code>; bundle will not be cached;
+        /// </summary>
+        public bool UseBundleCaching
+        {
+            set
+            {
+                _useBundleCaching = value;
             }
         }
 
@@ -175,7 +188,7 @@ namespace ReactNative
                 _jsExecutorFactory = () => new ChakraJavaScriptExecutor();
             }
 
-            return new ReactInstanceManager(
+            var instance = new ReactInstanceManager(
                 _jsBundleFile,
                 _jsMainModuleName,
                 _packages,
@@ -185,6 +198,13 @@ namespace ReactNative
                 _jsExecutorFactory,
                 _nativeModuleCallExceptionHandler,
                 _lazyViewManagersEnabled);
+
+            if (instance.DevSupportManager != null)
+            {
+                instance.DevSupportManager.IsBundleCachingEnabled = _useBundleCaching;
+            }
+
+            return instance;
         }
     }
 }

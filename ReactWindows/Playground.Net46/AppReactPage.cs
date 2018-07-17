@@ -1,10 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
-using System;
 using System.Collections.Generic;
 
 namespace Playground.Net46
@@ -32,6 +31,18 @@ namespace Playground.Net46
                 return true;
 #else
                 return false;
+#endif
+            }
+        }
+
+        public override bool UseBundleCaching
+        {
+            get
+            {
+#if DEBUG
+                return false;
+#else
+                return true;
 #endif
             }
         }

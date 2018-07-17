@@ -45,6 +45,11 @@ namespace ReactNative.DevSupport
         bool IsProgressDialogEnabled { get; set; }
 
         /// <summary>
+        /// Enables or disables the bundle caching option
+        /// </summary>
+        bool IsBundleCachingEnabled { get; set; }
+
+        /// <summary>
         /// The source map URL.
         /// </summary>
         string SourceMapUrl { get; }

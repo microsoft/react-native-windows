@@ -49,6 +49,12 @@ namespace ReactNative.DevSupport
             set;
         }
 
+        public bool IsBundleCachingEnabled
+        {
+            get;
+            set;
+        }
+
         public string SourceMapUrl
         {
             get

@@ -98,6 +98,11 @@ namespace ReactNative
         public abstract bool UseDeveloperSupport { get; }
 
         /// <summary>
+        /// Signals whether bundle caching should be enabled
+        /// </summary>
+        public virtual bool UseBundleCaching { get; } = true;
+
+        /// <summary>
         /// The list of <see cref="IReactPackage"/>s used by the application.
         /// </summary>
         public abstract List<IReactPackage> Packages { get; }
@@ -216,6 +221,7 @@ namespace ReactNative
             var builder = new ReactInstanceManagerBuilder
             {
                 UseDeveloperSupport = UseDeveloperSupport,
+                UseBundleCaching = UseBundleCaching,
                 InitialLifecycleState = LifecycleState.BeforeCreate,
                 JavaScriptBundleFile = JavaScriptBundleFile,
                 JavaScriptMainModuleName = JavaScriptMainModuleName,
