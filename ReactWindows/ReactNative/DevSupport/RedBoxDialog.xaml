@@ -10,7 +10,6 @@
     PrimaryButtonText="Reload JavaScript"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
     <ContentDialog.Resources>
-        <devsupport:SourceInfoVisibilityConverter x:Key="SourceInfoVisibilityConverter" />
         <DataTemplate x:Key="StackFrameTemplate"
                       x:DataType="devsupport:IStackFrame">
             <StackPanel>
@@ -21,7 +20,6 @@
                            Text="{x:Bind Path=Method}" />
                 <TextBlock FontSize="10"
                            Foreground="LightGray"
-                           Visibility="{x:Bind Path=FileName, Converter={StaticResource SourceInfoVisibilityConverter}}"
                            Text="{x:Bind Path=SourceInfo}" 
                            Grid.Row="1" />
             </StackPanel>

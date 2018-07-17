@@ -40,6 +40,7 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue _callFunctionAndReturnFlushedQueueFunction;
         private JavaScriptValue _invokeCallbackAndReturnFlushedQueueFunction;
         private JavaScriptValue _flushedQueueFunction;
+        private JavaScriptValue _fbBatchedBridge;
 
 #if !NATIVE_JSON_MARSHALING
         private JavaScriptValue _parseFunction;
@@ -227,6 +228,7 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptContext.Current = JavaScriptContext.Invalid;
             _runtime.Dispose();
+            _unbundle?.Dispose();
         }
 
         private void InitializeChakra()
@@ -445,16 +447,21 @@ namespace ReactNative.Chakra.Executor
 
         private JavaScriptValue EnsureBatchedBridge()
         {
-            var globalObject = EnsureGlobalObject();
-            var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-            var fbBatchedBridge = globalObject.GetProperty(propertyId);
-            if (fbBatchedBridge.ValueType != JavaScriptValueType.Object)
+            if (!_fbBatchedBridge.IsValid)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' object.  Check the JavaScript bundle to ensure it is generated correctly."));
+                var globalObject = EnsureGlobalObject();
+                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
+                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                if (fbBatchedBridge.ValueType != JavaScriptValueType.Object)
+                {
+                    throw new InvalidOperationException(
+                        Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' object.  Check the JavaScript bundle to ensure it is generated correctly."));
+                }
+
+                _fbBatchedBridge = fbBatchedBridge;
             }
 
-            return fbBatchedBridge;
+            return _fbBatchedBridge;
         }
 
         private JavaScriptValue EnsureStringifyFunction()

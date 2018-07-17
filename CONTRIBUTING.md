@@ -29,7 +29,7 @@ RNTester is a React Native Windows app that demonstrates the implemented views a
 You can use it to test your changes to React Native Windows by making sure your changes haven't broken the views and modules.
 
 #### But How?
-Before starting make sure you have run `npm install` in the react-native-windows directory. Additionally, make sure the RNTester submodule is up to date by running `git pull --recursive-submodules` from the react-native-windows directory.
+Before starting make sure you have run `npm install` in the react-native-windows directory. Additionally, make sure the RNTester submodule is up to date by running `git pull --recurse-submodules` from the react-native-windows directory.
 
 Use Visual Studio 2017 or higher, with the Windows 10 SDK 10.0.14393 or higher.
 
