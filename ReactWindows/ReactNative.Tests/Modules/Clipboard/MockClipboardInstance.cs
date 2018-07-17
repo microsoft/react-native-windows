@@ -1,4 +1,7 @@
-﻿using ReactNative.Modules.Clipboard;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using ReactNative.Modules.Clipboard;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace ReactNative.Tests.Modules.Clipboard

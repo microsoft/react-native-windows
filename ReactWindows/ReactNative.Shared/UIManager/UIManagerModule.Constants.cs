@@ -1,6 +1,13 @@
-﻿using ReactNative.UIManager.Events;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Tracing;
+using ReactNative.UIManager.Events;
 using System.Collections.Generic;
-using Map = System.Collections.Generic.Dictionary<string, object>;
+using System.Linq;
 
 namespace ReactNative.UIManager
 {
@@ -9,80 +16,149 @@ namespace ReactNative.UIManager
     /// </summary>
     public partial class UIManagerModule
     {
-        private const string CUSTOM_BUBBLING_EVENT_TYPES_KEY = "customBubblingEventTypes";
-        private const string CUSTOM_DIRECT_EVENT_TYPES_KEY = "customDirectEventTypes";
+        private const string BUBBLING_EVENTS_KEY = "bubblingEventTypes";
+        private const string DIRECT_EVENTS_KEY = "directEventTypes";
 
         private const string ACTION_DISMISSED = "dismissed";
         private const string ACTION_ITEM_SELECTED = "itemSelected";
 
-        /// <summary>
-        /// Create the declared constants for the module.
-        /// </summary>
-        /// <param name="viewManagers">
-        /// The view managers exported by the module.
-        /// </param>
-        /// <returns>The constants map.</returns>
-        public static Dictionary<string, object> CreateConstants(IReadOnlyList<IViewManager> viewManagers)
+        private static JObject CreateConstants(
+            IReadOnlyList<IViewManager> viewManagers,
+            JObject allBubblingEventTypes,
+            JObject allDirectEventTypes,
+            bool lazyViewManagersEnabled)
         {
             var constants = GetConstants();
-            var bubblingEventTypesConstants = GetBubblingEventTypeConstants();
-            var directEventTypesConstants = GetDirectEventTypeConstants();
+
+            if (lazyViewManagersEnabled)
+            {
+                constants.Add("ViewManagerNames", new JArray(viewManagers.Select(viewManager => viewManager.Name)));
+                return constants;
+            }
+
+            // Generic/default event types:
+            // All view managers are capable of dispatching these events.
+            // They will be automatically registered with React Fiber.
+            var genericBubblingEventTypes = GetBubblingEventTypeConstants();
+            var genericDirectEventTypes = GetDirectEventTypeConstants();
+
+            // Cumulative event types:
+            // View manager specific event types are collected as views are loaded.
+            // This information is used later when events are dispatched.
+            if (allBubblingEventTypes != null)
+            {
+                allBubblingEventTypes.Merge(genericBubblingEventTypes);
+            }
+
+            if (allDirectEventTypes != null)
+            {
+                allDirectEventTypes.Merge(genericDirectEventTypes);
+            }
 
             foreach (var viewManager in viewManagers)
             {
-                var viewManagerBubblingEvents = viewManager.ExportedCustomBubblingEventTypeConstants;
-                if (viewManagerBubblingEvents != null)
+                var viewManagerName = viewManager.Name;
+                using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "UIManagerModuleConstantsHelper.createConstants")
+                    .With("ViewManager", viewManagerName)
+                    .Start())
                 {
-                    RecursiveMerge(bubblingEventTypesConstants, viewManagerBubblingEvents);
-                }
+                    var viewManagerConstants = CreateConstantsForViewManager(
+                        viewManager,
+                        null,
+                        null,
+                        allBubblingEventTypes,
+                        allDirectEventTypes);
 
-                var viewManagerDirectEvents = viewManager.ExportedCustomDirectEventTypeConstants;
-                if (viewManagerDirectEvents != null)
-                {
-                    RecursiveMerge(directEventTypesConstants, viewManagerDirectEvents);
-                }
-
-                var viewManagerConstants = new Dictionary<string, object>();
-                var customViewConstants = viewManager.ExportedViewConstants;
-                if (customViewConstants != null)
-                {
-                    viewManagerConstants.Add("Constants", customViewConstants);
-                }
-
-                var viewManagerCommands = viewManager.CommandsMap;
-                if (viewManagerCommands != null)
-                {
-                    viewManagerConstants.Add("Commands", viewManagerCommands);
-                }
-
-                var viewManagerNativeProps = viewManager.NativeProperties;
-                if (viewManagerNativeProps != null && viewManagerNativeProps.Count > 0)
-                {
-                    viewManagerConstants.Add("NativeProps", viewManagerNativeProps);
-                }
-
-                if (viewManagerConstants.Count > 0)
-                {
-                    constants.Add(viewManager.Name, viewManagerConstants);
+                    if (viewManagerConstants.Count > 0)
+                    {
+                        constants.Add(viewManagerName, viewManagerConstants);
+                    }
                 }
             }
 
-            constants.Add(CUSTOM_BUBBLING_EVENT_TYPES_KEY, bubblingEventTypesConstants);
-            constants.Add(CUSTOM_DIRECT_EVENT_TYPES_KEY, directEventTypesConstants);
+            constants.Add("genericBubblingEventTypes", genericBubblingEventTypes);
+            constants.Add("genericDirectEventTypes", genericDirectEventTypes);
             return constants;
         }
 
-        private static IDictionary<string, object> GetBubblingEventTypeConstants()
+        private static JObject GetDefaultExportableEventTypes()
         {
-            return new Map
+            return new JObject
+            {
+                { BUBBLING_EVENTS_KEY, GetBubblingEventTypeConstants() },
+                { DIRECT_EVENTS_KEY, GetDirectEventTypeConstants() },
+            };
+        }
+
+        private static JObject CreateConstantsForViewManager(
+            IViewManager viewManager,
+            JObject defaultBubblingEvents,
+            JObject defaultDirectEvents,
+            JObject cumulativeBubblingEventTypes,
+            JObject cumulativeDirectEventTypes)
+        {
+            var viewManagerConstants = new JObject();
+
+            var viewManagerBubblingEvents = viewManager.ExportedCustomBubblingEventTypeConstants;
+            if (viewManagerBubblingEvents != null)
+            {
+                var mergedViewManagerBubblingEvents = new JObject();
+                cumulativeBubblingEventTypes?.Merge(viewManagerBubblingEvents);
+                mergedViewManagerBubblingEvents.Merge(defaultBubblingEvents);
+                mergedViewManagerBubblingEvents.Merge(viewManagerBubblingEvents);
+                viewManagerConstants.Add("bubblingEventTypes", mergedViewManagerBubblingEvents);
+            }
+            else if (defaultBubblingEvents != null)
+            {
+                viewManagerConstants.Add("bubblingEventTypes", defaultBubblingEvents);
+            }
+
+            var viewManagerDirectEvents = viewManager.ExportedCustomDirectEventTypeConstants;
+            if (viewManagerDirectEvents != null)
+            {
+                var mergedViewManagerDirectEvents = new JObject();
+                cumulativeDirectEventTypes?.Merge(viewManagerDirectEvents);
+                mergedViewManagerDirectEvents.Merge(defaultDirectEvents);
+                mergedViewManagerDirectEvents.Merge(viewManagerDirectEvents);
+                viewManagerConstants.Add("directEventTypes", mergedViewManagerDirectEvents);
+            }
+            else if (defaultDirectEvents != null)
+            {
+                viewManagerConstants.Add("directEventTypes", defaultDirectEvents);
+            }
+
+            var customViewConstants = viewManager.ExportedViewConstants;
+            if (customViewConstants != null)
+            {
+                viewManagerConstants.Add("Constants", customViewConstants);
+            }
+
+            var viewManagerCommands = viewManager.CommandsMap;
+            if (viewManagerCommands != null)
+            {
+                viewManagerConstants.Add("Commands", viewManagerCommands);
+            }
+
+            var viewManagerNativeProps = viewManager.NativeProps;
+            if (viewManagerNativeProps != null && viewManagerNativeProps.Count > 0)
+            {
+                viewManagerConstants.Add("NativeProps", viewManagerNativeProps);
+            }
+
+            return viewManagerConstants;
+        }
+
+        private static JObject GetBubblingEventTypeConstants()
+        {
+            return new JObject
             {
                 {
                     "topChange",
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onChange" },
                                 { "captured", "onChangeCapture" },
@@ -92,11 +168,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "topSelect",
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onSelect" },
                                 { "captured", "onSelectCapture" },
@@ -106,11 +182,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Start.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onTouchStart" },
                                 { "captured", "onTouchStartCapture" },
@@ -120,11 +196,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Move.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onTouchMove" },
                                 { "captured", "onTouchMoveCapture" },
@@ -134,11 +210,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.End.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onTouchEnd" },
                                 { "captured", "onTouchEndCapture" },
@@ -147,12 +223,26 @@ namespace ReactNative.UIManager
                     }
                 },
                 {
-                    TouchEventType.Entered.GetJavaScriptEventName(),
-                    new Map
+                    TouchEventType.Cancel.GetJavaScriptEventName(),
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
+                            {
+                                { "bubbled", "onTouchCancel" },
+                                { "captured", "onTouchCancelCapture" },
+                            }
+                        }
+                    }
+                },
+                {
+                    TouchEventType.Entered.GetJavaScriptEventName(),
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
                             {
                                 { "bubbled", "onMouseOver" },
                                 { "captured", "onMouseOverCapture" },
@@ -162,11 +252,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     TouchEventType.Exited.GetJavaScriptEventName(),
-                    new Map
+                    new JObject
                     {
                         {
                             "phasedRegistrationNames",
-                            new Map
+                            new JObject
                             {
                                 { "bubbled", "onMouseOut" },
                                 { "captured", "onMouseOutCapture" },
@@ -174,76 +264,167 @@ namespace ReactNative.UIManager
                         }
                     }
                 },
+                {
+                    "topFocus",
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
+                            {
+                                { "bubbled" , "onFocus" },
+                                { "captured" , "onFocusCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topBlur",
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
+                            {
+                                { "bubbled" , "onBlur" },
+                                { "captured" , "onBlurCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyDown",
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
+                            {
+                                { "bubbled" , "onKeyDown" },
+                                { "captured" , "onKeyDownCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyUp",
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
+                            {
+                                { "bubbled" , "onKeyUp" },
+                                { "captured" , "onKeyUpCapture" }
+                            }
+                        }
+                    }
+                },
+                {
+                    "topKeyPress",
+                    new JObject
+                    {
+                        {
+                            "phasedRegistrationNames",
+                            new JObject
+                            {
+                                { "bubbled" , "onKeyPress" },
+                                { "captured" , "onKeyPressCapture" }
+                            }
+                        }
+                    }
+                },
             };
         }
 
-        private static Dictionary<string, object> GetDirectEventTypeConstants()
+        private static JObject GetDirectEventTypeConstants()
         {
-            return new Map
+            return new JObject
             {
                 {
+                    "topAccessibilityTap",
+                    new JObject
+                    {
+                        { "registrationName", "onAccessibilityTap" },
+                    }
+                },
+                {
                     "topSelectionChange",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onSelectionChange" },
                     }
                 },
                 {
                     "topLoadingStart",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLoadingStart" },
                     }
                 },
                 {
                     "topLoadingFinish",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLoadingFinish" },
                     }
                 },
                 {
                     "topLoadingError",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLoadingError" },
                     }
                 },
                 {
+                    "topContentSizeChange",
+                    new JObject
+                    {
+                        { "registrationName", "onContentSizeChange" },
+                    }
+                },
+                {
                     "topLayout",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onLayout" },
                     }
                 },
                 {
                     "topMouseEnter",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onMouseEnter" },
                     }
                 },
                 {
                     "topMouseLeave",
-                    new Map
+                    new JObject
                     {
                         { "registrationName", "onMouseLeave" },
+                    }
+                },
+                {
+                    "topMessage",
+                    new JObject
+                    {
+                        { "registrationName", "onMessage" },
                     }
                 },
             };
         }
 
-        private static Dictionary<string, object> GetConstants()
+        private static JObject GetConstants()
         {
-            return new Map
+            return new JObject
             {
                 {
                     "UIView",
-                    new Map
+                    new JObject
                     {
                         {
                             "ContentMode",
-                            new Map
+                            new JObject
                             {
                                 /* TODO: declare content mode properties */
                             }
@@ -252,11 +433,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "UIText",
-                    new Map
+                    new JObject
                     {
                         {
                             "AutocapitalizationType",
-                            new Map
+                            new JObject
                             {
                                 /* TODO: declare capitalization types */
                             }
@@ -265,11 +446,11 @@ namespace ReactNative.UIManager
                 },
                 {
                     "StyleConstants",
-                    new Map
+                    new JObject
                     {
                         {
                             "PointerEventsValues",
-                            new Map
+                            new JObject
                             {
                                 { "none", PointerEvents.None.ToString() },
                                 { "boxNone", PointerEvents.BoxNone.ToString() },
@@ -281,7 +462,7 @@ namespace ReactNative.UIManager
                 },
                 {
                     "PopupMenu",
-                    new Map
+                    new JObject
                     {
                         { ACTION_DISMISSED, ACTION_DISMISSED },
                         { ACTION_ITEM_SELECTED, ACTION_ITEM_SELECTED },
@@ -289,38 +470,12 @@ namespace ReactNative.UIManager
                 },
                 {
                     "AccessibilityEventTypes",
-                    new Map
+                    new JObject
                     {
                         /* TODO: declare accessibility event types */
                     }
                 },
             };
-        }
-
-        private static void RecursiveMerge(IDictionary<string, object> sink, IReadOnlyDictionary<string, object> source)
-        {
-            foreach (var pair in source)
-            {
-                var existing = default(object);
-                if (sink.TryGetValue(pair.Key, out existing))
-                {
-                    var sourceAsMap = pair.Value as IReadOnlyDictionary<string, object>;
-                    var sinkAsMap = existing as IDictionary<string, object>;
-                    if (sourceAsMap != null && sinkAsMap != null)
-                    {
-                        RecursiveMerge(sinkAsMap, sourceAsMap);
-                    }
-                    else
-                    {
-                        // TODO: confirm that exports should be allowed to override.
-                        sink[pair.Key] = pair.Value;
-                    }
-                }
-                else
-                {
-                    sink.Add(pair.Key, pair.Value);
-                }
-            }
         }
     }
 }

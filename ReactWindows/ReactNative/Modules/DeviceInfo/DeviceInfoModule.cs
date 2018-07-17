@@ -1,30 +1,56 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
-using System.Collections.Generic;
+using ReactNative.UIManager;
+using System.Collections.Concurrent;
+using System.Linq;
+using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
 namespace ReactNative.Modules.DeviceInfo
 {
     /// <summary>
-    /// Native module that manages window dimension updates to JavaScript.
+    /// Native module that manages window dimension updates to JavaScript (with support for multi window application).
     /// </summary>
-    public class DeviceInfoModule : NativeModuleBase, ILifecycleEventListener
+    /// <remarks>
+    /// Dimensions are tracked for each application window right after creation of its ReactRootView.
+    /// After any change in dimensions of any tracked window whole list of dimensions is emited and dimensions are available by 3 kinds of ids:
+    ///
+    ///  "window" - dimensions of main window
+    ///  "{rootViewTag}" - dimensions of window with specified rootViewTag (each view has assigned one)
+    ///  "{rootViewId}" - dimensions of window initialized with unique value of "reactxp_rootViewId" property
+    ///
+    /// <example>
+    ///  {
+    ///     "window": { /* main window dimensions */ },
+    ///     "1": { /* alt-window-dimensions */ },
+    ///     "41": { /* alt-window dimensions */ },
+    ///     "03391df9-750d-465c-b0b0-66ee9dcf4a86": { /* alt-window dimensions */ }
+    ///  }
+    /// </example>
+    /// </remarks>
+    class DeviceInfoModule : ReactContextNativeModuleBase
     {
-        private readonly ReactContext _reactContext;
-        private readonly IReadOnlyDictionary<string, object> _constants;
+        private readonly JObject _constants;
+
+        private readonly ConcurrentDictionary<ApplicationView, DeviceViewInfo> _registeredViews = new ConcurrentDictionary<ApplicationView, DeviceViewInfo>();
 
         /// <summary>
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
         /// </summary>
-        /// <param name="context">The React context.</param>
-        public DeviceInfoModule(ReactContext context)
+        /// <param name="reactContext">The React context.</param>
+        public DeviceInfoModule(ReactContext reactContext)
+            : base(reactContext)
         {
-            _reactContext = context;
-            _constants = new Dictionary<string, object>
+            _constants = new JObject
             {
-                { "Dimensions", GetDimensions() },
+                { "Dimensions", GetAllDimensions() },
             };
         }
 
@@ -33,13 +59,13 @@ namespace ReactNative.Modules.DeviceInfo
         /// </summary>
         public override string Name
         {
-            get { return "DeviceInfo"; }    
+            get { return "DeviceInfo"; }
         }
 
         /// <summary>
         /// Native module constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
@@ -48,36 +74,63 @@ namespace ReactNative.Modules.DeviceInfo
         }
 
         /// <summary>
-        /// Called when the application is suspended.
+        /// Register <paramref name="rootView"/> to keep track of his dimensions
         /// </summary>
-        public void OnSuspend()
+        /// <param name="rootView">The react root view</param>
+        /// <param name="tag">The react root view tag</param>
+        public void RegisterRootView(ReactRootView rootView, int tag)
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
+            DispatcherHelpers.AssertOnDispatcher(rootView);
+
+            var appView = ApplicationView.GetForCurrentView();
+
+            _registeredViews.AddOrUpdate(appView, (v) =>
+            {
+                // Register new view info and hook up for events
+                var displayInformation = DisplayInformation.GetForCurrentView();
+
+                var info = new DeviceViewInfo(appView, rootView, displayInformation, tag);
+
+                appView.VisibleBoundsChanged += OnVisibleBoundsChanged;
+                displayInformation.OrientationChanged += OnOrientationChanged;
+
+                return info;
+            },
+                (view, info) =>
+                {
+                    // View is already registered, just update tag in case view is being reregistered
+                    info.RootViewTag = tag;
+                    return info;
+                });
+
+            SendUpdateDimensionsEvent();
         }
 
         /// <summary>
-        /// Called when the application is resumed.
+        /// Unregister <paramref name="rootView"/> and stop keeping track of his dimensions
         /// </summary>
-        public void OnResume()
+        /// <param name="rootView">The react root view</param>
+        public void UnregisterRootView(ReactRootView rootView)
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged += OnBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
+            DispatcherHelpers.AssertOnDispatcher(rootView);
+
+            var info = _registeredViews.Values.SingleOrDefault(i => i.RootView == rootView);
+
+            if (info != null && _registeredViews.TryRemove(info.ApplicationView, out info))
+            {
+                info.ApplicationView.VisibleBoundsChanged -= OnVisibleBoundsChanged;
+                info.DisplayInformation.OrientationChanged -= OnOrientationChanged;
+            }
         }
 
-        /// <summary>
-        /// Called when the application is terminated.
-        /// </summary>
-        public void OnDestroy()
+        public void OnVisibleBoundsChanged(ApplicationView sender, object args)
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= OnBoundsChanged;
-            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
-        }
+            if (_registeredViews.ContainsKey(sender))
+            {
+                _registeredViews[sender].UpdateDisplayMetrics();
+            }
 
-        private void OnBoundsChanged(ApplicationView sender, object args)
-        {
-            _reactContext.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                .emit("didUpdateDimensions", GetDimensions());
+            SendUpdateDimensionsEvent();
         }
 
         private void OnOrientationChanged(DisplayInformation displayInformation, object args)
@@ -110,7 +163,7 @@ namespace ReactNative.Modules.DeviceInfo
 
             if (name != null)
             {
-                _reactContext.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                     .emit("namedOrientationDidChange", new JObject
                     {
                         { "name", name },
@@ -120,23 +173,43 @@ namespace ReactNative.Modules.DeviceInfo
             }
         }
 
-        private static IDictionary<string, object> GetDimensions()
+        private void SendUpdateDimensionsEvent()
         {
-            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-            var scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                .emit("didUpdateDimensions", GetAllDimensions());
+        }
 
-            return new Dictionary<string, object>
+        private JObject GetAllDimensions()
+        {
+            var dimensions = new JObject();
+
+            // Default metric for main window
+            // TODO It would make sense to make default actively focused window and not the main in the future
+            var mainView = _registeredViews.Values.FirstOrDefault(v => v.RootView.Dispatcher == DispatcherHelpers.MainDispatcher);
+            var defaultMetric = mainView == null ? DisplayMetrics.Empty : mainView.CurrentDisplayMetrics;
+            dimensions.Add("window", GetDimensions(defaultMetric));
+
+            foreach (var info in _registeredViews.Values)
             {
+                dimensions.Add($"{info.RootViewTag}", GetDimensions(info.CurrentDisplayMetrics));
+
+                if (info.RootViewId != null)
                 {
-                    "window",
-                    new Dictionary<string, object>
-                    {
-                        { "width", bounds.Width },
-                        { "height", bounds.Height },
-                        { "scale", scale },
-                        /* TODO: density and DPI needed? */
-                    }
-                },
+                    dimensions.Add($"{info.RootViewId}", GetDimensions(info.CurrentDisplayMetrics));
+                }
+            }
+
+            return dimensions;
+        }
+
+        private static JObject GetDimensions(DisplayMetrics displayMetrics)
+        {
+            return new JObject
+            {
+                { "width", displayMetrics.Width },
+                { "height", displayMetrics.Height },
+                { "scale", displayMetrics.Scale },
+                /* TODO: density and DPI needed? */
             };
         }
     }

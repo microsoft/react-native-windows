@@ -1,4 +1,9 @@
-﻿using FBCore.Common.References;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using FBCore.Common.References;
 using FBCore.DataSource;
 using ImagePipeline.Core;
 using ImagePipeline.Image;
@@ -7,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Network;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
@@ -29,7 +35,7 @@ namespace ReactNative.Modules.Image
         }
 
         [ReactMethod]
-        public void prefetchImage(string uriString, int requestId, IPromise promise)
+        public async void prefetchImage(string uriString, int requestId, IPromise promise)
         {
             if (string.IsNullOrEmpty(uriString))
             {
@@ -37,25 +43,51 @@ namespace ReactNative.Modules.Image
                 return;
             }
 
-            DispatcherHelpers.RunOnDispatcher(async () =>
+            try
             {
-                try
-                {
-                    var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
-                    var uri = new Uri(uriString);
+                var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
+                var uri = new Uri(uriString);
 
-                    await _prefetchRequests.AddAndInvokeAsync(
-                            requestId, 
-                            async token => await imagePipeline.PrefetchToDiskCacheAsync(uri, token).ConfigureAwait(false))
-                        .ConfigureAwait(false);
+                await _prefetchRequests.AddAndInvokeAsync(
+                        requestId, 
+                        async token => await imagePipeline.PrefetchToDiskCacheAsync(uri, token).ConfigureAwait(false))
+                    .ConfigureAwait(false);
 
-                    promise.Resolve(true);
-                }
-                catch (Exception ex)
-                {
-                    promise.Reject(ErrorPrefetchFailure, ex.Message);
-                }
-            });
+                promise.Resolve(true);
+            }
+            catch (Exception ex)
+            {
+                promise.Reject(ErrorPrefetchFailure, ex.Message);
+            }
+        }
+
+        [ReactMethod]
+        public async void prefetchImageAndGetCachedPath(string uriString, int requestId, IPromise promise)
+        {
+            if (string.IsNullOrEmpty(uriString))
+            {
+                promise.Reject(ErrorInvalidUri, "Cannot prefetch an image for an empty URI.");
+                return;
+            }
+
+            try
+            {
+                var imagePipeline = ImagePipelineFactory.Instance.GetImagePipeline();
+                var uri = new Uri(uriString);
+
+                await _prefetchRequests.AddAndInvokeAsync(
+                        requestId,
+                        async token =>
+                            await imagePipeline.PrefetchToDiskCacheAsync(uri, token).ConfigureAwait(false))
+                    .ConfigureAwait(false);
+
+                FileInfo file = await imagePipeline.GetFileCachePath(uri).ConfigureAwait(false);
+                promise.Resolve(file.FullName);
+            }
+            catch (Exception ex)
+            {
+                promise.Reject(ErrorPrefetchFailure, ex.Message);
+            }
         }
 
         [ReactMethod]
@@ -129,7 +161,7 @@ namespace ReactNative.Modules.Image
             foreach (var url in urls)
             {
                 var uri = new Uri(url);
-                if (imagePipeline.IsInBitmapMemoryCache(uri))
+                if (imagePipeline.IsInEncodedMemoryCache(uri))
                 {
                     result.Add(url, "memory");
                 }

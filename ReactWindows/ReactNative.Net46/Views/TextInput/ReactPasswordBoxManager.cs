@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using ReactNative.Views.Text;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,19 +37,19 @@ namespace ReactNative.Views.TextInput
         /// <summary>
         /// The exported custom bubbling event types.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants
+        public override JObject CustomBubblingEventTypeConstants
         {
             get
             {
-                return new Dictionary<string, object>()
+                return new JObject
                 {
                     {
                         "topSubmitEditing",
-                        new Dictionary<string, object>()
+                        new JObject
                         {
                             {
                                 "phasedRegistrationNames",
-                                new Dictionary<string, string>()
+                                new JObject
                                 {
                                     { "bubbled" , "onSubmitEditing" },
                                     { "captured" , "onSubmitEditingCapture" }
@@ -56,42 +59,14 @@ namespace ReactNative.Views.TextInput
                     },
                     {
                         "topEndEditing",
-                        new Dictionary<string, object>()
+                        new JObject
                         {
                             {
                                 "phasedRegistrationNames",
-                                new Dictionary<string, string>()
+                                new JObject
                                 {
                                     { "bubbled" , "onEndEditing" },
                                     { "captured" , "onEndEditingCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topFocus",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onFocus" },
-                                    { "captured" , "onFocusCapture" }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "topBlur",
-                        new Dictionary<string, object>()
-                        {
-                            {
-                                "phasedRegistrationNames",
-                                new Dictionary<string, string>()
-                                {
-                                    { "bubbled" , "onBlur" },
-                                    { "captured" , "onBlurCapture" }
                                 }
                             }
                         }
@@ -184,7 +159,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the default text placeholder property on the <see cref="PasswordBox"/>.
+        /// Sets the default text placeholder prop on the <see cref="PasswordBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="placeholder">The placeholder text.</param>
@@ -195,7 +170,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the placeholderTextColor property on the <see cref="ReactTextBox"/>.
+        /// Sets the placeholderTextColor prop on the <see cref="ReactTextBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="color">The placeholder text color.</param>
@@ -244,10 +219,11 @@ namespace ReactNative.Views.TextInput
         public void SetSelectionColor(PasswordBox view, uint color)
         {
             view.SelectionBrush = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.CaretBrush = new SolidColorBrush(ColorHelpers.Parse(color));
         }
 
         /// <summary>
-        /// Sets the text alignment property on the <see cref="PasswordBox"/>.
+        /// Sets the text alignment prop on the <see cref="PasswordBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="alignment">The text alignment.</param>
@@ -258,7 +234,7 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the editablity property on the <see cref="PasswordBox"/>.
+        /// Sets the editablity prop on the <see cref="PasswordBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="editable">The editable flag.</param>
@@ -269,7 +245,32 @@ namespace ReactNative.Views.TextInput
         }
 
         /// <summary>
-        /// Sets the max character length property on the <see cref="PasswordBox"/>.
+        /// Sets whether the view is a tab stop.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="isTabStop">
+        /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
+        /// </param>
+        /// 
+        [ReactProp("isTabStop")]
+        public void SetIsTabStop(PasswordBox view, bool isTabStop)
+        {
+            view.IsTabStop = isTabStop;
+        }
+
+        /// <summary>
+        /// Sets the tab index for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="tabIndex">The tab index.</param>
+        [ReactProp("tabIndex")]
+        public void SetTabIndex(PasswordBox view, int tabIndex)
+        {
+            view.TabIndex = tabIndex;
+        }
+
+        /// <summary>
+        /// Sets the max character length prop on the <see cref="PasswordBox"/>.
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="maxCharLength">The max length.</param>
@@ -398,10 +399,9 @@ namespace ReactNative.Views.TextInput
         /// <param name="dimensions">The output buffer.</param>
         public override void SetDimensions(PasswordBox view, Dimensions dimensions)
         {
-            Canvas.SetLeft(view, dimensions.X);
-            Canvas.SetTop(view, dimensions.Y);
-            view.Width = dimensions.Width;
-            view.Height = dimensions.Height;
+            base.SetDimensions(view, dimensions);
+            view.MinWidth = dimensions.Width;
+            view.MinHeight = dimensions.Height;
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
@@ -414,8 +414,6 @@ namespace ReactNative.Views.TextInput
                     new ReactTextChangedEvent(
                         textBox.GetTag(),
                         textBox.Password,
-                        textBox.ActualWidth,
-                        textBox.ActualHeight,
                         0));
         }
 
@@ -426,7 +424,7 @@ namespace ReactNative.Views.TextInput
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(
-                    new ReactTextInputFocusEvent(textBox.GetTag()));
+                    new FocusEvent(textBox.GetTag()));
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
@@ -437,7 +435,7 @@ namespace ReactNative.Views.TextInput
                 .EventDispatcher;
 
             eventDispatcher.DispatchEvent(
-                new ReactTextInputBlurEvent(textBox.GetTag()));
+                new BlurEvent(textBox.GetTag()));
 
             eventDispatcher.DispatchEvent(
                 new ReactTextInputEndEditingEvent(
@@ -447,9 +445,9 @@ namespace ReactNative.Views.TextInput
         
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            var textBox = (PasswordBox)sender;
             if (e.Key == Key.Enter)
             {
-                var textBox = (PasswordBox)sender;
                 e.Handled = true;
                 textBox.GetReactContext()
                     .GetNativeModule<UIManagerModule>()
@@ -458,6 +456,18 @@ namespace ReactNative.Views.TextInput
                         new ReactTextInputSubmitEditingEvent(
                             textBox.GetTag(),
                             textBox.Password));
+            }
+
+            if (!e.Handled)
+            {
+                textBox.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new KeyEvent(
+                            KeyEvent.KeyPressEventString,
+                            textBox.GetTag(),
+                            e.Key));
             }
         }
     }

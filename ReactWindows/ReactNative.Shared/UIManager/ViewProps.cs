@@ -1,10 +1,19 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Json;
 using System.Collections.Generic;
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Automation.Peers;
+#endif
 
 namespace ReactNative.UIManager
 {
     /// <summary>
-    /// Property keys for React views.
+    /// Prop keys for React views.
     /// </summary>
     public static class ViewProps
     {
@@ -12,7 +21,7 @@ namespace ReactNative.UIManager
         public const string ViewClassName = "RCTView";
 
         // Layout only (only affect positions of children, causes no drawing)
-        // !!! Keep in sync with s_layoutOnlyProperties below !!!
+        // !!! Keep in sync with s_layoutOnlyProps below !!!
         public const string AlignItems = "alignItems";
         public const string AlignSelf = "alignSelf";
         public const string AlignContent = "alignContent";
@@ -61,7 +70,7 @@ namespace ReactNative.UIManager
         // Props that sometimes may prevent us from collapsing views
         public static string PointerEvents = "pointerEvents";
 
-        // Properties that affect more than just layout
+        // Props that affect more than just layout
         public const string Disabled = "disabled";
         public const string BackgroundColor = "backgroundColor";
         public const string Color = "color";
@@ -78,6 +87,11 @@ namespace ReactNative.UIManager
         public const string TextAlignVertical = "textAlignVertical";
         public const string TextDecorationLine = "textDecorationLine";
         public const string AllowFontScaling = "allowFontScaling";
+
+        public const string AccessibilityTraits = "accessibilityTraits";
+        public const string AccessibilityLabel = "accessibilityLabel";
+        public const string ImportantForAccessibility = "importantForAccessibility";
+        public const string AccessibilityLiveRegion = "accessibilityLiveRegion";
 
         public const string BorderWidth = "borderWidth";
         public const string BorderLeftWidth = "borderLeftWidth";
@@ -135,7 +149,7 @@ namespace ReactNative.UIManager
                 EdgeSpacing.Bottom,
             };
 
-        private static readonly HashSet<string> s_layoutOnlyProperties =
+        private static readonly HashSet<string> s_layoutOnlyProps =
             new HashSet<string>
             {
                 AlignItems,
@@ -187,16 +201,16 @@ namespace ReactNative.UIManager
             };
 
         /// <summary>
-        /// Checks if the property key is layout-only.
+        /// Checks if the prop key is layout-only.
         /// </summary>
         /// <param name="props">The prop collection.</param>
         /// <param name="prop">The prop name.</param>
         /// <returns>
-        /// <b>true</b> if the property is layout-only, <b>false</b> otherwise.
+        /// <b>true</b> if the prop is layout-only, <b>false</b> otherwise.
         /// </returns>
-        public static bool IsLayoutOnly(ReactStylesDiffMap props, string prop)
+        public static bool IsLayoutOnly(JObject props, string prop)
         {
-            if (s_layoutOnlyProperties.Contains(prop))
+            if (s_layoutOnlyProps.Contains(prop))
             {
                 return true;
             }
@@ -204,6 +218,31 @@ namespace ReactNative.UIManager
             {
                 var value = props.GetProperty(prop).Value<string>();
                 return value == "auto" || value == "box-none";
+            }
+
+            // These are more aggressive optimizations based on property values.
+            // In RN Android there is a runtime check here. We omitted it because
+            // the check didn't inspire confidence in the optimizations that must be
+            // either correct or not.
+            {
+                var value = props[prop];
+
+                switch (prop)
+                {
+                    case AccessibilityTraits:
+                        return value == null || value is JArray array && array.Count == 0;
+
+                    case AccessibilityLabel:
+                        return value == null || value.Type == JTokenType.String && value.Value<string>().Length == 0;
+
+                    case ImportantForAccessibility:
+                        return value == null || value.Type == JTokenType.String &&
+                            (value.Value<string>().Length == 0 || value.Value<string>() == "auto");
+#if WINDOWS_UWP
+                    case AccessibilityLiveRegion:
+                        return value.Value<AutomationLiveSetting>() == AutomationLiveSetting.Off;
+#endif
+                }
             }
 
             return false;

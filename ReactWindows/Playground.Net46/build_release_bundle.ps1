@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 $root = (split-path -parent $MyInvocation.MyCommand.Definition) + '\..\..'
 
 Write-Host "Root is $root"

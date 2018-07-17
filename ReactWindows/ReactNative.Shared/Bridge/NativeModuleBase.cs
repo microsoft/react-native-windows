@@ -1,5 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
-using ReactNative.Reflection;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
@@ -34,21 +39,22 @@ namespace ReactNative.Bridge
     /// </remarks>
     public abstract class NativeModuleBase : INativeModule
     {
-        private static readonly IReadOnlyDictionary<string, object> s_emptyConstants
-            = new Dictionary<string, object>();
+        private static readonly IReactDelegateFactory s_defaultDelegateFactory =
+#if WINDOWS_UWP
+            ReflectionReactDelegateFactory.Instance;
+#else
+            CompiledReactDelegateFactory.Instance;
+#endif
 
         private readonly IReadOnlyDictionary<string, INativeMethod> _methods;
         private readonly IReactDelegateFactory _delegateFactory;
+        private readonly IActionQueue _actionQueue;
 
         /// <summary>
         /// Instantiates a <see cref="NativeModuleBase"/>.
         /// </summary>
         protected NativeModuleBase()
-#if WINDOWS_UWP
-            : this(ReflectionReactDelegateFactory.Instance)
-#else
-            : this(CompiledReactDelegateFactory.Instance)
-#endif
+            : this(s_defaultDelegateFactory)
         {
         }
 
@@ -59,9 +65,35 @@ namespace ReactNative.Bridge
         /// Factory responsible for creating delegates for method invocations.
         /// </param>
         protected NativeModuleBase(IReactDelegateFactory delegateFactory)
+            : this(delegateFactory, null)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="NativeModuleBase"/>.
+        /// </summary>
+        /// <param name="actionQueue">
+        /// The action queue that native modules should execute on.
+        /// </param>
+        protected NativeModuleBase(IActionQueue actionQueue)
+            : this(s_defaultDelegateFactory, actionQueue)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="NativeModuleBase"/>.
+        /// </summary>
+        /// <param name="delegateFactory">
+        /// Factory responsible for creating delegates for method invocations.
+        /// </param>
+        /// <param name="actionQueue">
+        /// The action queue that native modules should execute on.
+        /// </param>
+        protected NativeModuleBase(IReactDelegateFactory delegateFactory, IActionQueue actionQueue)
         {
             _delegateFactory = delegateFactory;
             _methods = InitializeMethods();
+            _actionQueue = actionQueue;
         }
 
         /// <summary>
@@ -80,13 +112,53 @@ namespace ReactNative.Bridge
         }
 
         /// <summary>
+        /// The action queue used by the native module.
+        /// </summary>
+        public IActionQueue ActionQueue
+        {
+            get
+            {
+                return _actionQueue;
+            }
+        }
+
+        /// <summary>
         /// The constants exported by this module.
         /// </summary>
+        [Obsolete("Please use `ModuleConstants` instead.")]
         public virtual IReadOnlyDictionary<string, object> Constants
         {
             get
             {
-                return s_emptyConstants;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// The constants exported by this module.
+        /// </summary>
+        public virtual JObject ModuleConstants
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        JObject INativeModule.Constants
+        {
+            get
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                var constants = Constants;
+#pragma warning restore CS0618 // Type or member is obsolete
+                var moduleConstants = ModuleConstants;
+                if (constants != null && moduleConstants != null)
+                {
+                    throw new NotSupportedException("Do not override both JObject and dictionary constants properties.");
+                }
+
+                return moduleConstants ?? (constants != null ? JObject.FromObject(constants) : new JObject());
             }
         }
 
@@ -137,26 +209,26 @@ namespace ReactNative.Bridge
         private IReadOnlyDictionary<string, INativeMethod> InitializeMethods()
         {
             var declaredMethods = GetType().GetTypeInfo().DeclaredMethods;
-            var exportedMethods = new List<MethodInfo>();
+            var exportedMethods = new List<Tuple<MethodInfo, ReactMethodAttribute>>();
             foreach (var method in declaredMethods)
             {
-                if (method.IsDefined(typeof(ReactMethodAttribute)))
+                var attribute = (ReactMethodAttribute)method.GetCustomAttribute(typeof(ReactMethodAttribute));
+                if (attribute != null)
                 {
-                    exportedMethods.Add(method);
+                    exportedMethods.Add(Tuple.Create(method, attribute));
                 }
             }
 
             var methodMap = new Dictionary<string, INativeMethod>(exportedMethods.Count);
-            foreach (var method in exportedMethods)
+            foreach (var methodData in exportedMethods)
             {
-                var existingMethod = default(INativeMethod);
-                if (methodMap.TryGetValue(method.Name, out existingMethod))
-                {
+                var method = methodData.Item1;
+                var attribute = methodData.Item2;
+                if (methodMap.TryGetValue(method.Name, out var existingMethod))
                     throw new NotSupportedException(
                         Invariant($"React module '{GetType()}' with name '{Name}' has more than one ReactMethod with the name '{method.Name}'."));
-                }
 
-                methodMap.Add(method.Name, new NativeMethod(this, method));
+                methodMap.Add(method.Name, new NativeMethod(this, method, attribute));
             }
 
             return methodMap;
@@ -164,17 +236,14 @@ namespace ReactNative.Bridge
 
         class NativeMethod : INativeMethod
         {
-            private readonly NativeModuleBase _instance;
-            private readonly Lazy<Action<INativeModule, IReactInstance, JArray>> _invokeDelegate;
+            private readonly Lazy<Func<IReactInstance, JArray, JToken>> _invokeDelegate;
 
-            public NativeMethod(NativeModuleBase instance, MethodInfo method)
+            public NativeMethod(NativeModuleBase instance, MethodInfo method, ReactMethodAttribute attribute)
             {
-                _instance = instance;
-
                 var delegateFactory = instance._delegateFactory;
-                delegateFactory.Validate(method);
-                _invokeDelegate = new Lazy<Action<INativeModule, IReactInstance, JArray>>(() => delegateFactory.Create(instance, method));
-                Type = delegateFactory.GetMethodType(method);
+                delegateFactory.Validate(method, attribute);
+                _invokeDelegate = new Lazy<Func<IReactInstance, JArray, JToken>>(() => delegateFactory.Create(instance, method));
+                Type = delegateFactory.GetMethodType(method, attribute);
             }
 
             public string Type
@@ -182,11 +251,11 @@ namespace ReactNative.Bridge
                 get;
             }
 
-            public void Invoke(IReactInstance reactInstance, JArray jsArguments)
+            public JToken Invoke(IReactInstance reactInstance, JArray jsArguments)
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod").Start())
                 {
-                    _invokeDelegate.Value(_instance, reactInstance, jsArguments);
+                    return _invokeDelegate.Value(reactInstance, jsArguments);
                 }
             }
         }

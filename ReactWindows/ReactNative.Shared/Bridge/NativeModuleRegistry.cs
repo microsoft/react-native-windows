@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Tracing;
 using System;
@@ -14,18 +19,24 @@ namespace ReactNative.Bridge
     /// </summary>
     public sealed class NativeModuleRegistry
     {
+        private readonly ReactContext _reactContext;
         private readonly IReadOnlyList<ModuleDefinition> _moduleTable;
         private readonly IReadOnlyDictionary<Type, INativeModule> _moduleInstances;
         private readonly IList<IOnBatchCompleteListener> _batchCompleteListenerModules;
 
         private NativeModuleRegistry(
+            ReactContext reactContext,
             IReadOnlyList<ModuleDefinition> moduleTable,
             IReadOnlyDictionary<Type, INativeModule> moduleInstances)
         {
+            _reactContext = reactContext;
             _moduleTable = moduleTable;
             _moduleInstances = moduleInstances;
             _batchCompleteListenerModules = _moduleTable
-                .Select(moduleDefinition => moduleDefinition.Target)
+                .Select(moduleDefinition =>
+                    moduleDefinition.Target is INativeModuleWrapper wrapper
+                        ? wrapper.Module
+                        : moduleDefinition.Target)
                 .OfType<IOnBatchCompleteListener>()
                 .ToList();
         }
@@ -48,10 +59,10 @@ namespace ReactNative.Bridge
         /// <returns>The module instance.</returns>
         public T GetModule<T>() where T : INativeModule
         {
-            var instance = default(INativeModule);
-            if (_moduleInstances.TryGetValue(typeof(T), out instance))
+            if (_moduleInstances.TryGetValue(typeof(T), out var instance))
             {
-                return (T)instance;
+                var wrapper = instance as INativeModuleWrapper;
+                return wrapper != null ? (T)wrapper.Module : (T)instance;
             }
 
             throw new InvalidOperationException("No module instance for type '{0}'.");
@@ -64,7 +75,7 @@ namespace ReactNative.Bridge
         {
             foreach (var module in _batchCompleteListenerModules)
             {
-                module.OnBatchComplete();
+                Dispatch((INativeModule)module, module.OnBatchComplete);
             }
         }
 
@@ -103,7 +114,42 @@ namespace ReactNative.Bridge
             if (_moduleTable.Count < moduleId)
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
 
-            _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            var actionQueue = _moduleTable[moduleId].Target.ActionQueue;
+            if (actionQueue != null)
+            {
+                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
+            }
+            else
+            {
+                _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            }
+        }
+
+        /// <summary>
+        /// Invoke the native method synchronously.
+        /// </summary>
+        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="moduleId">The module ID.</param>
+        /// <param name="methodId">The method ID.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The value returned from the method.</returns>
+        internal JToken InvokeSync(
+            IReactInstance reactInstance,
+            int moduleId,
+            int methodId,
+            JArray parameters)
+        {
+            if (moduleId < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Invalid module ID: " + moduleId);
+            }
+
+            if (_moduleTable.Count < moduleId)
+            {
+                throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
+            }
+
+            return _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
         }
 
         /// <summary>
@@ -112,12 +158,12 @@ namespace ReactNative.Bridge
         /// </summary>
         internal void NotifyReactInstanceInitialize()
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            _reactContext.AssertOnNativeModulesQueueThread();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize").Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {
-                    module.Initialize();
+                    Dispatch(module, module.Initialize);
                 }
             }
         }
@@ -128,13 +174,28 @@ namespace ReactNative.Bridge
         /// </summary>
         internal void NotifyReactInstanceDispose()
         {
-            DispatcherHelpers.AssertOnDispatcher();
+            _reactContext.AssertOnNativeModulesQueueThread();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy").Start())
             {
                 foreach (var module in _moduleInstances.Values)
                 {
-                    module.OnReactInstanceDispose();
+                    Dispatch(module, module.OnReactInstanceDispose);
+                    module.ActionQueue?.Dispose();
                 }
+            }
+        }
+
+        private static void Dispatch(INativeModule module, Action action)
+        {
+            // If the module has an action queue, dispatch there;
+            // otherwise execute inline.
+            if (module.ActionQueue != null)
+            {
+                module.ActionQueue.Dispatch(action);
+            }
+            else
+            {
+                action();
             }
         }
 
@@ -164,12 +225,12 @@ namespace ReactNative.Bridge
 
             public INativeModule Target { get; }
 
-            public void Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
+            public JToken Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
             {
                 var method = _methods[methodId];
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
                 {
-                    method.Method.Invoke(reactInstance, parameters);
+                    return method.Method.Invoke(reactInstance, parameters);
                 }
             }
 
@@ -177,7 +238,7 @@ namespace ReactNative.Bridge
             {
                 writer.WriteStartArray();
                 writer.WriteValue(Name);
-                JObject.FromObject(Target.Constants).WriteTo(writer);
+                Target.Constants.WriteTo(writer);
 
                 if (_methods.Count > 0)
                 {
@@ -247,6 +308,20 @@ namespace ReactNative.Bridge
             private readonly IDictionary<string, INativeModule> _modules = 
                 new Dictionary<string, INativeModule>();
 
+            private readonly ReactContext _reactContext;
+
+            /// <summary>
+            /// Instantiates the <see cref="Builder"/>.
+            /// </summary>
+            /// <param name="reactContext">The React context.</param>
+            public Builder(ReactContext reactContext)
+            {
+                if (reactContext == null)
+                    throw new ArgumentNullException(nameof(reactContext));
+
+                _reactContext = reactContext;
+            }
+
             /// <summary>
             /// Add a native module to the builder.
             /// </summary>
@@ -261,8 +336,7 @@ namespace ReactNative.Bridge
                         Invariant($"Native module '{module.GetType()}' cannot have a null `Name`."),
                         nameof(module));
 
-                var existing = default(INativeModule);
-                if (_modules.TryGetValue(module.Name, out existing) && !module.CanOverrideExistingModule)
+                if (_modules.TryGetValue(module.Name, out var existing) && !module.CanOverrideExistingModule)
                 {
                     throw new InvalidOperationException(
                         string.Format(
@@ -291,29 +365,15 @@ namespace ReactNative.Bridge
 
                 foreach (var module in _modules.Values)
                 {
-                    var name = NormalizeModuleName(module.Name);
+                    var name = module.Name;
                     var moduleDef = new ModuleDefinition(name, module);
                     moduleTable.Add(moduleDef);
-                    moduleInstances.Add(module.GetType(), module);
+                    var wrapper = module as INativeModuleWrapper;
+                    var type = (wrapper?.Module ?? module).GetType();
+                    moduleInstances.Add(type, module);
                 }
 
-                return new NativeModuleRegistry(moduleTable, moduleInstances);
-            }
-
-            private static string NormalizeModuleName(string name)
-            {
-                if (name.StartsWith("RCT"))
-                {
-                    return name.Substring(3);
-                }
-                else if (name.StartsWith("RK"))
-                {
-                    return name.Substring(2);
-                }
-                else
-                {
-                    return name;
-                }
+                return new NativeModuleRegistry(_reactContext, moduleTable, moduleInstances);
             }
         }
     }

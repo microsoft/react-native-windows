@@ -1,15 +1,21 @@
-﻿using Facebook.Yoga;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Facebook.Yoga;
 using Newtonsoft.Json.Linq;
 using ReactNative.Reflection;
 using ReactNative.UIManager.Annotations;
 using System;
+using System.Globalization;
 using static System.FormattableString;
 
 namespace ReactNative.UIManager
 {
     /// <summary>
     /// Shadow node subclass that supplies setters for base view layout
-    /// properties such as width, height, flex properties, borders, etc.
+    /// props such as width, height, flex props, borders, etc.
     /// </summary>
     public class LayoutShadowNode : ReactShadowNode
     {
@@ -26,8 +32,11 @@ namespace ReactNative.UIManager
         /// <param name="isVirtual">
         /// <code>true</code> if the node is virtual, otherwise <code>false</code>.
         /// </param>
-        public LayoutShadowNode(bool isVirtual)
-            : base(isVirtual)
+        /// <param name="isDelegatedLayout">
+        /// <code>true</code> if the node delegates the layout to the child.
+        /// </param>
+        public LayoutShadowNode(bool isVirtual, bool isDelegatedLayout)
+            : base(isVirtual, isDelegatedLayout)
         {
         }
 
@@ -38,7 +47,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Width, DefaultSingle = YogaConstants.Undefined)]
         public void SetWidth(JValue width)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -53,7 +62,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.MinWidth, DefaultSingle = YogaConstants.Undefined)]
         public void SetMinWidth(JValue minWidth)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -68,7 +77,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.MaxWidth, DefaultSingle = YogaConstants.Undefined)]
         public void SetMaxWidth(JValue maxWidth)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -83,7 +92,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Height, DefaultSingle = YogaConstants.Undefined)]
         public void SetHeight(JValue height)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -98,7 +107,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.MinHeight, DefaultSingle = YogaConstants.Undefined)]
         public void SetMinHeight(JValue minHeight)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -111,9 +120,9 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="maxHeight">The maximum height.</param>
         [ReactProp(ViewProps.MaxHeight, DefaultSingle = YogaConstants.Undefined)]
-        public void SetMaxHeight(JValue maxHeight)
+        public virtual void SetMaxHeight(JValue maxHeight)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -128,7 +137,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Flex, DefaultSingle = 0f)]
         public void SetFlex(float flex)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -143,7 +152,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexGrow, DefaultSingle = 0f)]
         public void SetFlexGrow(float flexGrow)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -158,7 +167,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexShrink, DefaultSingle = 0f)]
         public void SetFlexShrink(float flexShrink)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -173,7 +182,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexBasis, DefaultSingle = 0f)]
         public void SetFlexBasis(float flexBasis)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -188,6 +197,11 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AspectRatio, DefaultSingle = YogaConstants.Undefined)]
         public void SetAspectRatio(float aspectRatio)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+
             StyleAspectRatio = aspectRatio;
         }
 
@@ -198,7 +212,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.FlexDirection)]
         public void SetFlexDirection(string flexDirection)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -207,13 +221,13 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Sets the wrap property on the shadow node.
+        /// Sets the wrap prop on the shadow node.
         /// </summary>
         /// <param name="flexWrap">The wrap.</param>
         [ReactProp(ViewProps.FlexWrap)]
         public void SetFlexWrap(string flexWrap)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -224,11 +238,11 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Sets the self alignment of the shadow node.
         /// </summary>
-        /// <param name="alignSelf">The align self property.</param>
+        /// <param name="alignSelf">The align self prop.</param>
         [ReactProp(ViewProps.AlignSelf)]
         public void SetAlignSelf(string alignSelf)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -243,7 +257,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignItems)]
         public void SetAlignItems(string alignItems)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -258,7 +272,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.AlignContent)]
         public void SetAlignContent(string alignContent)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -273,7 +287,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.JustifyContent)]
         public void SetJustifyContent(string justifyContent)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -288,7 +302,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Overflow)]
         public void SetOverflow(string overflow)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -303,7 +317,7 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Display)]
         public void SetDisplay(string display)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -327,7 +341,7 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public void SetMargins(int index, JValue margin)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -351,11 +365,16 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public virtual void SetPaddings(int index, JValue padding)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+
             SetPadding(ViewProps.PaddingMarginSpacingTypes[index], ToYogaValue(padding));
         }
 
         /// <summary>
-        /// Sets the border width properties for the shadow node.
+        /// Sets the border width props for the shadow node.
         /// </summary>
         /// <param name="index">The border spacing type index.</param>
         /// <param name="borderWidth">The border width.</param>
@@ -368,6 +387,11 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public void SetBorderWidth(int index, float borderWidth)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+
             SetBorder(ViewProps.BorderSpacingTypes[index], borderWidth);
         }
 
@@ -384,7 +408,7 @@ namespace ReactNative.UIManager
             DefaultSingle = YogaConstants.Undefined)]
         public void SetPositionValues(int index, JValue position)
         {
-            if (IsVirtual)
+            if (IsVirtual || IsDelegatedLayout)
             {
                 return;
             }
@@ -399,6 +423,11 @@ namespace ReactNative.UIManager
         [ReactProp(ViewProps.Position)]
         public void SetPosition(string position)
         {
+            if (IsVirtual || IsDelegatedLayout)
+            {
+                return;
+            }
+            
             PositionType = EnumHelpers.ParseNullable<YogaPositionType>(position) ?? YogaPositionType.Relative;
         }
 
@@ -432,7 +461,7 @@ namespace ReactNative.UIManager
 
                 if (s.EndsWith("%"))
                 {
-                    return YogaValue.Percent(float.Parse(s.Substring(0, s.Length - 1)));
+                    return YogaValue.Percent(float.Parse(s.Substring(0, s.Length - 1), CultureInfo.InvariantCulture));
                 }
 
                 throw new InvalidOperationException(

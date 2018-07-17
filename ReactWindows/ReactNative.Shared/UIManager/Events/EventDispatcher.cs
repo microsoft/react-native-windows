@@ -1,13 +1,14 @@
-﻿using ReactNative.Bridge;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Media;
-#else
-using System.Windows.Media;
-#endif
 using static System.FormattableString;
 
 namespace ReactNative.UIManager.Events
@@ -119,6 +120,8 @@ namespace ReactNative.UIManager.Events
             {
                 _eventStaging.Add(@event);
             }
+
+            ReactChoreographer.Instance.ActivateCallback(nameof(EventDispatcher));
         }
 
         /// <summary>
@@ -144,14 +147,12 @@ namespace ReactNative.UIManager.Events
         /// </summary>
         public void OnResume()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-
             if (_rctEventEmitter == null)
             {
                 _rctEventEmitter = _reactContext.GetJavaScriptModule<RCTEventEmitter>();
             }
 
-            CompositionTarget.Rendering += ScheduleDispatcherSafe;
+            ReactChoreographer.Instance.JavaScriptEventsCallback += ScheduleDispatcherSafe;
         }
 
         /// <summary>
@@ -180,8 +181,7 @@ namespace ReactNative.UIManager.Events
 
         private void ClearCallback()
         {
-            DispatcherHelpers.AssertOnDispatcher();
-            CompositionTarget.Rendering -= ScheduleDispatcherSafe;
+            ReactChoreographer.Instance.JavaScriptEventsCallback -= ScheduleDispatcherSafe;
         }
 
         private void MoveStagedEventsToDispatchQueue()
@@ -201,9 +201,8 @@ namespace ReactNative.UIManager.Events
                         var eventCookie = GetEventCookie(@event.ViewTag, @event.EventName, @event.CoalescingKey);
                         var eventToAdd = default(Event);
                         var eventToDispose = default(Event);
-                        var lastEventIdx = default(int);
 
-                        if (!_eventCookieToLastEventIndex.TryGetValue(eventCookie, out lastEventIdx))
+                        if (!_eventCookieToLastEventIndex.TryGetValue(eventCookie, out var lastEventIdx))
                         {
                             eventToAdd = @event;
                             _eventCookieToLastEventIndex.Add(eventCookie, _eventsToDispatchSize);
@@ -238,13 +237,13 @@ namespace ReactNative.UIManager.Events
                 }
 
                 _eventStaging.Clear();
+                ReactChoreographer.Instance.DeactivateCallback(nameof(EventDispatcher));
             }
         }
 
         private long GetEventCookie(int viewTag, string eventName, short coalescingKey)
         {
-            var eventTypeId = default(short);
-            if (!_eventNameToEventId.TryGetValue(eventName, out eventTypeId))
+            if (!_eventNameToEventId.TryGetValue(eventName, out var eventTypeId))
             {
                 if (_eventNameToEventId.Count == short.MaxValue)
                 {
@@ -285,17 +284,29 @@ namespace ReactNative.UIManager.Events
 
             MoveStagedEventsToDispatchQueue();
 
-            if (!Volatile.Read(ref _hasDispatchScheduled))
+            bool shouldDispatch;
+            lock (_eventsToDispatchLock)
+            {
+                shouldDispatch = _eventsToDispatchSize > 0;
+            }
+
+            if (shouldDispatch && !Volatile.Read(ref _hasDispatchScheduled))
             {
                 _hasDispatchScheduled = true;
-                _reactContext.RunOnJavaScriptQueueThread(() => DispatchEvents(activity));
+                _reactContext.RunOnJavaScriptQueueThread(() =>
+                {
+                    DispatchEvents(activity);
+                    activity?.Dispose();
+                });
+
+                return;
             }
+
+            activity?.Dispose();
         }
 
         private void DispatchEvents(IDisposable activity)
         {
-            using (activity) { }
-
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "DispatchEvents").Start())
             {
                 _hasDispatchScheduled = false;

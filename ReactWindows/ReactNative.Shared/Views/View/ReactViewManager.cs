@@ -1,17 +1,22 @@
-﻿using ReactNative.Reflection;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using Newtonsoft.Json.Linq;
 #if WINDOWS_UWP
+using ReactNative.Accessibility;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Data;
 #endif
 
 namespace ReactNative.Views.View
@@ -21,66 +26,11 @@ namespace ReactNative.Views.View
     /// </summary>
     public class ReactViewManager : ViewParentManager<BorderedCanvas>
     {
-        private enum Radius
-        {
-            All,
-            TopLeft,
-            TopRight,
-            BottomLeft,
-            BottomRight,
-        }
-
-        /// <summary>
-        /// Default brush for the view borders.
-        /// </summary>
-        protected static readonly Brush s_defaultBorderBrush = new SolidColorBrush(Colors.Black);
-
         /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return "RCTView";
-            }
-        }
-
-        /// <summary>
-        /// Checks if the Canvas has a Border already.
-        /// </summary>
-        protected bool HasBorder(BorderedCanvas view)
-        {
-            return view.Border != null;
-        }
-
-        /// <summary>
-        /// Adds a Border to a Canvas if it hasn't been added already.
-        /// </summary>
-        protected Border GetOrCreateBorder(BorderedCanvas view)
-        {
-            if (view.Border == null)
-            {
-                view.Border = new Border { BorderBrush = s_defaultBorderBrush };
-
-                // Layout animations bypass SetDimensions, hence using XAML bindings.
-
-                view.Border.SetBinding(FrameworkElement.WidthProperty, new Binding
-                {
-                    Source = view,
-                    Path = new PropertyPath("Width")
-                });
-
-                view.Border.SetBinding(FrameworkElement.HeightProperty, new Binding
-                {
-                    Source = view,
-                    Path = new PropertyPath("Height")
-                });
-            }
-
-            return view.Border;
-        }
+        public override string Name => ViewProps.ViewClassName;
 
         /// <summary>
         /// Creates a new view instance of type <see cref="Canvas"/>.
@@ -90,6 +40,18 @@ namespace ReactNative.Views.View
         protected override BorderedCanvas CreateViewInstance(ThemedReactContext reactContext)
         {
             return new BorderedCanvas();
+        }
+
+        /// <summary>
+        /// Sets whether the view is collapsible.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="collapsible">The flag.</param>
+        [ReactProp(ViewProps.Collapsible)]
+        public void SetCollapsible(BorderedCanvas view, bool collapsible)
+        {
+            // no-op: it's here only so that "collapsable" prop is exported to JS. The value is actually
+            // handled in NativeViewHierarchyOptimizer
         }
 
         /// <summary>
@@ -119,11 +81,51 @@ namespace ReactNative.Views.View
             view.SetPointerEvents(pointerEvents);
         }
 
+#if WINDOWS_UWP
+        /// <summary>
+        /// Set accessibility traits for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="accessibilityTraitsValue">Can be <see cref="JArray"/> of objects or a single object.
+        ///     String representation of the object(s) is parsed as <see cref="AccessibilityTrait"/>.</param>
+        [ReactProp(ViewProps.AccessibilityTraits)]
+        public void SetAccessibilityTraits(BorderedCanvas view, object accessibilityTraitsValue)
+        {
+            AccessibilityHelper.SetAccessibilityTraits(view, accessibilityTraitsValue);
+        }
+
+        /// <summary>
+        /// Sets <see cref="ImportantForAccessibility"/> for the BorderedCanvas.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
+        [ReactProp(ViewProps.ImportantForAccessibility)]
+        public void SetImportantForAccessibility(BorderedCanvas view, string importantForAccessibilityValue)
+        {
+            var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue)
+                ?? ImportantForAccessibility.Auto;
+            AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+#endif
+
+        /// <summary>
+        /// Enum values correspond to positions of prop names in ReactPropGroup attribute
+        /// applied to <see cref="SetBorderRadius(BorderedCanvas, int, double)"/>
+        /// </summary>
+        private enum Radius
+        {
+            All,
+            TopLeft,
+            TopRight,
+            BottomLeft,
+            BottomRight,
+        }
+
         /// <summary>
         /// Sets the border radius of the view.
         /// </summary>
         /// <param name="view">The view panel.</param>
-        /// <param name="index">The property index.</param>
+        /// <param name="index">The prop index.</param>
         /// <param name="radius">The border radius value.</param>
         [ReactPropGroup(
             ViewProps.BorderRadius,
@@ -133,9 +135,7 @@ namespace ReactNative.Views.View
             ViewProps.BorderBottomRightRadius)]
         public void SetBorderRadius(BorderedCanvas view, int index, double radius)
         {
-            var border = GetOrCreateBorder(view);
-            var cornerRadius = border.CornerRadius == null ? new CornerRadius() : border.CornerRadius;
-
+            var cornerRadius = view.CornerRadius;
             switch ((Radius)index)
             {
                 case Radius.All:
@@ -154,8 +154,7 @@ namespace ReactNative.Views.View
                     cornerRadius.BottomRight = radius;
                     break;
             }
-
-            border.CornerRadius = cornerRadius;
+            view.CornerRadius = cornerRadius;
         }
 
         /// <summary>
@@ -165,12 +164,12 @@ namespace ReactNative.Views.View
         /// <param name="color">The masked color value.</param>
         [ReactProp(
             ViewProps.BackgroundColor,
-            CustomType = "Color",
-            DefaultUInt32 = ColorHelpers.Transparent)]
-        public void SetBackgroundColor(BorderedCanvas view, uint color)
+            CustomType = "Color")]
+        public void SetBackgroundColor(BorderedCanvas view, uint? color)
         {
-            var border = GetOrCreateBorder(view);
-            border.Background = new SolidColorBrush(ColorHelpers.Parse(color));
+            view.Background = color.HasValue
+                ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
+                : null;
         }
 
         /// <summary>
@@ -181,17 +180,16 @@ namespace ReactNative.Views.View
         [ReactProp("borderColor", CustomType = "Color")]
         public void SetBorderColor(BorderedCanvas view, uint? color)
         {
-            var border = GetOrCreateBorder(view);
-            border.BorderBrush = color.HasValue
+            view.BorderBrush = color.HasValue
                 ? new SolidColorBrush(ColorHelpers.Parse(color.Value))
-                : s_defaultBorderBrush;
+                : null;
         }
 
         /// <summary>
         /// Sets the border thickness of the view.
         /// </summary>
         /// <param name="view">The view panel.</param>
-        /// <param name="index">The property index.</param>
+        /// <param name="index">The prop index.</param>
         /// <param name="width">The border width in pixels.</param>
         [ReactPropGroup(
             ViewProps.BorderWidth,
@@ -201,20 +199,7 @@ namespace ReactNative.Views.View
             ViewProps.BorderBottomWidth)]
         public void SetBorderWidth(BorderedCanvas view, int index, double width)
         {
-            var border = GetOrCreateBorder(view);
-            border.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
-        }
-
-        /// <summary>
-        /// Sets whether the view is collapsible.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="collapsible">The flag.</param>
-        [ReactProp(ViewProps.Collapsible)]
-        public void SetCollapsible(BorderedCanvas view, bool collapsible)
-        {
-            // no-op: it's here only so that "collapsable" property is exported to JS. The value is actually
-            // handled in NativeViewHierarchyOptimizer
+            view.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
         }
 
         /// <summary>
@@ -225,13 +210,7 @@ namespace ReactNative.Views.View
         /// <param name="index">The index.</param>
         public override void AddView(BorderedCanvas parent, DependencyObject child, int index)
         {
-            if (HasBorder(parent))
-            {
-                index++;
-            }
-
-            var uiElementChild = child.As<UIElement>();
-            parent.Children.Insert(index, uiElementChild);
+            parent.Children.Insert(index, child.As<UIElement>());
         }
 
         /// <summary>
@@ -242,11 +221,6 @@ namespace ReactNative.Views.View
         /// <returns>The child view.</returns>
         public override DependencyObject GetChildAt(BorderedCanvas parent, int index)
         {
-            if (HasBorder(parent))
-            {
-                index++;
-            }
-
             return parent.Children[index];
         }
 
@@ -257,14 +231,7 @@ namespace ReactNative.Views.View
         /// <returns>The number of children.</returns>
         public override int GetChildCount(BorderedCanvas parent)
         {
-            var count = parent.Children.Count;
-
-            if (HasBorder(parent))
-            {
-                count--;
-            }
-
-            return count;
+            return parent.Children.Count;
         }
 
         /// <summary>
@@ -273,17 +240,7 @@ namespace ReactNative.Views.View
         /// <param name="parent">The view parent.</param>
         public override void RemoveAllChildren(BorderedCanvas parent)
         {
-            if (HasBorder(parent))
-            {
-                for (var i = parent.Children.Count - 1; i > 0; i--)
-                {
-                    parent.Children.RemoveAt(i);
-                }
-            }
-            else
-            {
-                parent.Children.Clear();
-            }
+            parent.Children.Clear();
         }
 
         /// <summary>
@@ -293,11 +250,6 @@ namespace ReactNative.Views.View
         /// <param name="index">The index.</param>
         public override void RemoveChildAt(BorderedCanvas parent, int index)
         {
-            if (HasBorder(parent))
-            {
-                index++;
-            }
-
             parent.Children.RemoveAt(index);
         }
     }

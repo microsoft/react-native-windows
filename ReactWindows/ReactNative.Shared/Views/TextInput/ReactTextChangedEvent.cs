@@ -1,6 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager.Events;
-using System;
 
 namespace ReactNative.Views.TextInput
 {
@@ -11,8 +15,6 @@ namespace ReactNative.Views.TextInput
     class ReactTextChangedEvent : Event
     {
         private readonly string _text;
-        private readonly double _contextWidth;
-        private readonly double _contentHeight;
         private readonly int _eventCount;
 
         /// <summary>
@@ -20,15 +22,11 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="viewTag">The view tag.</param>
         /// <param name="text">The text.</param>
-        /// <param name="contentWidth">The content width.</param>
-        /// <param name="contentHeight">The content height.</param>
         /// <param name="eventCount">The event count.</param>
-        public ReactTextChangedEvent(int viewTag, string text, double contentWidth, double contentHeight, int eventCount) 
+        public ReactTextChangedEvent(int viewTag, string text, int eventCount) 
             : base(viewTag)
         {
             _text = text;
-            _contextWidth = contentWidth;
-            _contentHeight = contentHeight;
             _eventCount = eventCount;
         }
 
@@ -63,16 +61,9 @@ namespace ReactNative.Views.TextInput
         /// <param name="rctEventEmitter">The event emitter.</param>
         public override void Dispatch(RCTEventEmitter rctEventEmitter)
         {
-            var contentSize = new JObject
-            {
-                { "width", _contextWidth },
-                { "height", _contentHeight },
-            };
-
             var eventData = new JObject
             {
                 { "text", _text },
-                { "contentSize", contentSize },
                 { "eventCount", _eventCount },
                 { "target", ViewTag },
             };

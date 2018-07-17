@@ -28,6 +28,9 @@ Then, specify:
 <!-- Which version of Visual Studio are you using? Specify Visual Studio 2015 or Visual Studio 2017 -->
 - Visual Studio Version:
 
+<!-- Which build configuration are you running? Choose from Debug, DebugBundle, Release, ReleaseBundle -->
+- Build Configuration:
+
 ### Steps to Reproduce
 
 <!--

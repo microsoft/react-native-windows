@@ -1,6 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Collections;
+using ReactNative.Json;
 using ReactNative.Modules.Core;
 using System;
 using System.Reactive.Disposables;
@@ -12,7 +17,7 @@ using static System.FormattableString;
 
 namespace ReactNative.Modules.Location
 {
-    class LocationModule : ReactContextNativeModuleBase, ILifecycleEventListener
+    class LocationModule : ReactContextNativeModuleBase
     {
         private readonly SerialDisposable _currentSubscription = new SerialDisposable();
 
@@ -138,15 +143,7 @@ namespace ReactNative.Modules.Location
             _currentSubscription.Disposable = Disposable.Empty;
         }
 
-        public void OnSuspend()
-        {        
-        }
-
-        public void OnResume()
-        {
-        }
-
-        public void OnDestroy()
+        public override void OnReactInstanceDispose()
         {
             _currentSubscription.Dispose();
         }

@@ -1,11 +1,8 @@
 {
   "name": "rnpm-plugin-wpf",
-  "version": "0.1.3",
+  "version": "0.2.9",
   "description": "rnpm plugin that generates a Windows template project with WPF",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "rnpm",
     "react-native",
@@ -24,8 +21,6 @@
     "react-native": ">=0.31.0"
   },
   "dependencies": {
-    "semver": "^5.0.3",
-    "chalk": "^1.1.3",
-    "node-fetch": "^1.3.3"
+    "rnpm-plugin-windows": ">=0.2.9"
   }
 }

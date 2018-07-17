@@ -1,11 +1,14 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
+ * Portions copyright for react-native-windows:
+ * 
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * 
  * @providesModule Picker
  * @flow
  */
@@ -38,14 +41,12 @@ var MODE_DROPDOWN = 'dropdown';
 /**
  * Individual selectable item in a Picker.
  */
-class PickerItem extends React.Component {
- props: {
-  label: string,
-  value?: any,
-  color?: ColorPropType,
-  testID?: string,
- };
-
+class PickerItem extends React.Component<{
+ label: string,
+ value?: any,
+ color?: ColorPropType,
+ testID?: string,
+}> {
  static propTypes = {
    /**
     * Text to display for this item.
@@ -83,18 +84,16 @@ class PickerItem extends React.Component {
  *       <Picker.Item label="JavaScript" value="js" />
  *     </Picker>
  */
-class Picker extends React.Component {
- props: {
-  style?: $FlowFixMe,
-  selectedValue?: any,
-  onValueChange?: Function,
-  enabled?: boolean,
-  mode?: 'dialog' | 'dropdown',
-  itemStyle?: $FlowFixMe,
-  prompt?: string,
-  testID?: string,
- };
-
+class Picker extends React.Component<{
+ style?: $FlowFixMe,
+ selectedValue?: any,
+ onValueChange?: Function,
+ enabled?: boolean,
+ mode?: 'dialog' | 'dropdown',
+ itemStyle?: $FlowFixMe,
+ prompt?: string,
+ testID?: string,
+}> {
  /**
   * On Android, display the options in a dialog.
   */
@@ -164,9 +163,9 @@ class Picker extends React.Component {
        // $FlowFixMe found when converting React.createClass to ES6
        return <PickerAndroid {...this.props}>{this.props.children}</PickerAndroid>;
      } else if (Platform.OS === 'windows') {
-       // $FlowFixMe found when converting React.createClass to ES6
-       return <PickerWindows {...this.props}>{this.props.children}</PickerWindows>;
-     } else {
+      // $FlowFixMe found when converting React.createClass to ES6
+      return <PickerWindows {...this.props}>{this.props.children}</PickerWindows>;
+    } else {
        return <UnimplementedView />;
      }
  }

@@ -1,6 +1,12 @@
-﻿using ReactNative.Bridge;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Bridge;
 using ReactNative.Modules.Core;
-using System.Collections.Generic;
+using ReactNative.UIManager;
 using System.Windows;
 
 namespace ReactNative.Modules.DeviceInfo
@@ -8,21 +14,20 @@ namespace ReactNative.Modules.DeviceInfo
     /// <summary>
     /// Native module that manages window dimension updates to JavaScript.
     /// </summary>
-    public class DeviceInfoModule : NativeModuleBase, ILifecycleEventListener
+    class DeviceInfoModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
-        private readonly ReactContext _reactContext;
         private readonly Window _window;
-        private readonly IReadOnlyDictionary<string, object> _constants;
+        private readonly JObject _constants;
 
         /// <summary>
         /// Instantiates the <see cref="DeviceInfoModule"/>. 
         /// </summary>
-        /// <param name="context">The React context.</param>
-        public DeviceInfoModule(ReactContext context)
+        /// <param name="reactContext">The React context.</param>
+        public DeviceInfoModule(ReactContext reactContext)
+            : base(reactContext)
         {
-            _reactContext = context;
             _window = Application.Current.MainWindow;
-            _constants = new Dictionary<string, object>
+            _constants = new JObject
             {
                 { "Dimensions", GetDimensions() },
             };
@@ -42,12 +47,20 @@ namespace ReactNative.Modules.DeviceInfo
         /// <summary>
         /// Native module constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
                 return _constants;
             }
+        }
+
+        /// <summary>
+        /// Called after the creation of a <see cref="IReactInstance"/>,
+        /// </summary>
+        public override void Initialize()
+        {
+            Context.AddLifecycleEventListener(this);
         }
 
         /// <summary>
@@ -76,24 +89,26 @@ namespace ReactNative.Modules.DeviceInfo
 
         private void OnBoundsChanged(object sender, SizeChangedEventArgs args)
         {
-            _reactContext.GetJavaScriptModule<RCTDeviceEventEmitter>()
+            Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
                 .emit("didUpdateDimensions", GetDimensions());
         }
 
-        private IDictionary<string, object> GetDimensions()
+        private JObject GetDimensions()
         {
-            var content = (FrameworkElement)_window.Content;
-            double scale = 1.0;
+            return GetDimensions(DisplayMetrics.GetForCurrentView());
+        }
 
-            return new Dictionary<string, object>
+        private JObject GetDimensions(DisplayMetrics displayMetrics)
+        {
+            return new JObject
             {
                 {
                     "window",
-                    new Dictionary<string, object>
+                    new JObject
                     {
-                        { "width", content?.ActualWidth ?? 0.0 },
-                        { "height", content?.ActualHeight ?? 0.0 },
-                        { "scale", scale },
+                        { "width", displayMetrics.Width },
+                        { "height", displayMetrics.Height },
+                        { "scale", displayMetrics.Scale },
                         /* TODO: density and DPI needed? */
                     }
                 },

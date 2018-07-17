@@ -1,4 +1,9 @@
-﻿using ReactNative.Modules.DevSupport;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+
+using ReactNative.Modules.DevSupport;
 using System.Collections.Generic;
 #if WINDOWS_UWP
 using Windows.Storage;

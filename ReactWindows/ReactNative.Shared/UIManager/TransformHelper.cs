@@ -1,5 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using System;
+using System.Globalization;
 using System.Linq;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Media.Media3D;
@@ -26,7 +32,7 @@ namespace ReactNative.UIManager
             {
                 var helperMatrix = Matrix3D.Identity;
                 var transformMap = (JObject)transform;
-                var transformType = transformMap.Properties().SingleOrDefault().Name;
+                var transformType = transformMap.Properties().Single().Name;
                 switch (transformType)
                 {
                     case "matrix":
@@ -114,7 +120,7 @@ namespace ReactNative.UIManager
                     stringValue = stringValue.Substring(0, stringValue.Length - 3);
                 }
 
-                value = double.Parse(stringValue);
+                value = double.Parse(stringValue, CultureInfo.InvariantCulture);
             }
             else
             {

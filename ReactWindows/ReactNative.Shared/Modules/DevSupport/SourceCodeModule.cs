@@ -1,6 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using System.Collections.Generic;
 
 namespace ReactNative.Modules.DevSupport
 {
@@ -31,18 +35,18 @@ namespace ReactNative.Modules.DevSupport
         {
             get
             {
-                return "RCTSourceCode";
+                return "SourceCode";
             }
         }
 
         /// <summary>
         /// The module constants.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> Constants
+        public override JObject ModuleConstants
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "scriptURL", _sourceUrl },
                 };

@@ -1,12 +1,7 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
  */
-
 'use strict';
 
 const fs = require('fs');
@@ -35,7 +30,7 @@ function getLatestVersion() {
     npm.packages.release('react-native-windows', 'latest', (err, releases) => {
       if (err) {
         reject(err);
-      } else if (releases.length === 0) {
+      } else if (!releases || releases.length === 0) {
         reject(new Error('Could not find react-native-windows@latest.'));
       } else {
         resolve(releases[0].version);
@@ -48,7 +43,7 @@ function getMatchingVersion(version) {
   console.log(`Checking for react-native-windows version matching ${version}...`);
   return new Promise(function (resolve, reject) {
     npm.packages.range('react-native-windows', version, (err, release) => {
-      if (err) {
+      if (err || !release) {
         return getLatestVersion()
           .then(latestVersion => {
             reject(new Error(`Could not find react-native-windows@${version}. ` +

@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using System;
 
@@ -12,7 +17,8 @@ namespace ReactNative.Bridge
     {
         private readonly IJavaScriptExecutor _jsExecutor;
         private readonly IReactCallback _reactCallback;
-        private readonly IMessageQueueThread _nativeModulesQueueThread;
+        private readonly IActionQueue _nativeModulesQueueThread;
+        private bool _batchHadNativeModuleCalls;
 
         /// <summary>
         /// Instantiates the <see cref="IReactBridge"/>.
@@ -25,7 +31,7 @@ namespace ReactNative.Bridge
         public ReactBridge(
             IJavaScriptExecutor executor,
             IReactCallback reactCallback,
-            IMessageQueueThread nativeModulesQueueThread)
+            IActionQueue nativeModulesQueueThread)
         {
             if (executor == null)
                 throw new ArgumentNullException(nameof(executor));
@@ -37,6 +43,8 @@ namespace ReactNative.Bridge
             _jsExecutor = executor;
             _reactCallback = reactCallback;
             _nativeModulesQueueThread = nativeModulesQueueThread;
+            _jsExecutor.SetCallSyncHook(_reactCallback.InvokeSync);
+            _jsExecutor.SetFlushQueueImmediate(ProcessResponseImmediate);
         }
 
         /// <summary>
@@ -48,7 +56,7 @@ namespace ReactNative.Bridge
         public void CallFunction(string moduleName, string method, JArray arguments)
         {
             var response = _jsExecutor.CallFunctionReturnFlushedQueue(moduleName, method, arguments);
-            ProcessResponse(response);
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -59,7 +67,7 @@ namespace ReactNative.Bridge
         public void InvokeCallback(int callbackId, JArray arguments)
         {
             var response = _jsExecutor.InvokeCallbackAndReturnFlushedQueue(callbackId, arguments);
-            ProcessResponse(response);
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -72,7 +80,7 @@ namespace ReactNative.Bridge
             if (propertyName == null)
                 throw new ArgumentNullException(nameof(propertyName));
 
-            _jsExecutor.SetGlobalVariable(propertyName, JToken.Parse(jsonEncodedArgument));
+            _jsExecutor.SetGlobalVariable(propertyName, jsonEncodedArgument);
         }
 
         /// <summary>
@@ -89,7 +97,7 @@ namespace ReactNative.Bridge
 
             _jsExecutor.RunScript(sourcePath, sourceUrl);
             var response = _jsExecutor.FlushedQueue();
-            ProcessResponse(response);
+            ProcessResponse(response, true);
         }
 
         /// <summary>
@@ -100,11 +108,42 @@ namespace ReactNative.Bridge
             _jsExecutor.Dispose();
         }
 
-        private void ProcessResponse(JToken response)
+        private void ProcessResponseImmediate(JToken response)
+        {
+            ProcessResponse(response, false);
+        }
+
+        private void ProcessResponse(JToken response, bool isEndOfBatch)
+        {
+            // Gets the number of native module calls and validates the batch.
+            var moduleCallCount = GetModuleCallCount(response);
+
+            _nativeModulesQueueThread.Dispatch(() =>
+            {
+                _batchHadNativeModuleCalls = _batchHadNativeModuleCalls || moduleCallCount > 0;
+
+                for (var i = 0; i < moduleCallCount; ++i)
+                {
+                    var call = GetModuleCall(response, i);
+                    _reactCallback.Invoke(call.ModuleId, call.MethodId, call.Arguments);
+                }
+
+                if (isEndOfBatch)
+                {
+                    if (_batchHadNativeModuleCalls)
+                    {
+                        _reactCallback.OnBatchComplete();
+                        _batchHadNativeModuleCalls = false;
+                    }
+                }
+            });
+        }
+
+        private static int GetModuleCallCount(JToken response)
         {
             if (response == null || response.Type == JTokenType.Null || response.Type == JTokenType.Undefined)
             {
-                return;
+                return 0;
             }
 
             var messages = response as JArray;
@@ -114,7 +153,11 @@ namespace ReactNative.Bridge
                     "Did not get valid calls back from JavaScript. Message type: " + response.Type);
             }
 
-            if (messages.Count < 3)
+            if (messages.Count == 0)
+            {
+                return 0;
+            }
+            else if (messages.Count < 3)
             {
                 throw new InvalidOperationException(
                     "Did not get valid calls back from JavaScript. Message count: " + messages.Count);
@@ -130,19 +173,24 @@ namespace ReactNative.Bridge
                     "Did not get valid calls back from JavaScript. JSON: " + response);
             }
 
-            _nativeModulesQueueThread.RunOnQueue(() =>
+            return moduleIds.Count;
+        }
+
+        private static ModuleCall GetModuleCall(JToken response, int index)
+        {
+            return new ModuleCall
             {
-                for (var i = 0; i < moduleIds.Count; ++i)
-                {
-                    var moduleId = moduleIds[i].Value<int>();
-                    var methodId = methodIds[i].Value<int>();
-                    var args = (JArray)paramsArray[i];
+                ModuleId = response[0][index].Value<int>(),
+                MethodId = response[1][index].Value<int>(),
+                Arguments = (JArray)response[2][index],
+            };
+        }
 
-                    _reactCallback.Invoke(moduleId, methodId, args);
-                };
-
-                _reactCallback.OnBatchComplete();
-            });
+        struct ModuleCall
+        {
+            public int ModuleId;
+            public int MethodId;
+            public JArray Arguments;
         }
     }
 }

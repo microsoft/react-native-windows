@@ -1,7 +1,9 @@
-﻿#include "pch.h"
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#include "pch.h"
 #include "ChakraHost.h"
 #include "JsIndexedModulesUnbundle.h"
-#include "JsStringify.h"
 #include "SerializedSourceContext.h"
 #include <stdint.h>
 
@@ -54,7 +56,13 @@ JsValueRef CALLBACK NativeLoggingCallback(JsValueRef callee, bool isConstructCal
     JsNumberToDouble(arguments[2], &logLevelIndex);
     swprintf(buff, 56, L"[JS %s] ", LogLevel((int)logLevelIndex));
     OutputDebugStringW(buff);
-    StringifyJsString(arguments[1]);
+    
+	// Memory is owned by JS engine and is GC'ed later.
+    const wchar_t* szResult;
+    size_t sResult;
+    JsStringToPointer(arguments[1], &szResult, &sResult);
+    OutputDebugStringW(szResult);
+
     OutputDebugStringW(L"\n");
 #endif
     return JS_INVALID_REFERENCE;
@@ -212,6 +220,81 @@ JsValueRef CALLBACK NativeRequire(JsValueRef callee, bool isConstructCall, JsVal
 	return JS_INVALID_REFERENCE;
 }
 
+JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+{
+    // cast the callback state to the ChakraHost instance
+    auto host = (ChakraHost*)callbackState;
+
+    // Assert the argument count.
+    if (argumentCount != 4)
+    {
+        ThrowException(L"Expected only three parameters to nativeCallSyncHook.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Assert the handler has been set.
+    if (host->callSyncHandler == nullptr)
+    {
+        ThrowException(L"Sync hook has not been set.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Get the module ID and method ID
+    double moduleId;
+    IfFailThrow(JsNumberToDouble(arguments[1], &moduleId), L"The moduleId parameter to nativeCallSyncHook must be a number.");
+    double methodId;
+    IfFailThrow(JsNumberToDouble(arguments[2], &methodId), L"The methodId parameter to nativeCallSyncHook must be a number.");
+
+    // Get the stringified arguments
+    JsValueRef stringifiedArgs;
+    IfFailThrow(host->JsonStringify(arguments[3], &stringifiedArgs), L"Could not stringify args parameter.");
+    const wchar_t* argsBuf;
+    size_t bufLen;
+    IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
+
+    // Invoke the sync callback
+    String^ result = host->callSyncHandler((int)moduleId, (int)methodId, ref new String(argsBuf, (unsigned int)bufLen));
+
+    // Return the parsed JSON result
+    JsValueRef stringifiedResult;
+    IfFailThrow(JsPointerToString(result->Data(), result->Length(), &stringifiedResult), L"Could not convert pointer to stringified result.");
+    JsValueRef jsonResult;
+    IfFailThrow(host->JsonParse(stringifiedResult, &jsonResult), L"Could not parse stringified result");
+    return jsonResult;
+}
+
+JsValueRef CALLBACK NativeFlushQueueImmediate(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
+{
+    // cast the callback state to the ChakraHost instance
+    auto host = (ChakraHost*)callbackState;
+
+    // Assert the argument count.
+    if (argumentCount != 2)
+    {
+        ThrowException(L"Expected only one parameter to nativeFlushQueueImmediate.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Assert the handler has been set.
+    if (host->flushQueueImmediateHandler == nullptr)
+    {
+        ThrowException(L"flushQueueImmediate callback has not been set.");
+        return JS_INVALID_REFERENCE;
+    }
+
+    // Get the stringified arguments.
+    JsValueRef stringifiedArgs;
+    IfFailThrow(host->JsonStringify(arguments[1], &stringifiedArgs), L"Could not stringify the args parameter.");
+    const wchar_t* argsBuf;
+    size_t bufLen;
+    IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
+
+    // Invoke the flushQueueImmediate callback.
+    host->flushQueueImmediateHandler(ref new String(argsBuf, (unsigned int)bufLen));
+
+    return JS_INVALID_REFERENCE;
+}
+
 bool HasMagicFileHeader(const wchar_t* szPath)
 {
 	FILE *file;
@@ -245,11 +328,8 @@ bool IsIndexedUnbundle(const wchar_t* szSourcePath)
 	return HasMagicFileHeader(szSourcePath);
 }
 
-JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
+JsErrorCode ChakraHost::SerializeScript(const wchar_t* szPath, const wchar_t* szSerializedPath)
 {
-    HANDLE hFile = NULL;
-    HANDLE hMap = NULL;
-    JsErrorCode status = JsNoError;
     ULONG bufferSize = 0L;
     BYTE* buffer = nullptr;
     wchar_t* szScriptBuffer = nullptr;
@@ -266,9 +346,25 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
         fwrite(buffer, sizeof(BYTE), bufferSize, file);
         fclose(file);
     }
+
+    return JsNoError;
+}
+
+JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
+{
+    HANDLE hFile = NULL;
+    HANDLE hMap = NULL;
+    BYTE* buffer = nullptr;
+    wchar_t* szScriptBuffer = nullptr;
+    IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
+
+    if (!CompareLastWrite(szSerializedPath, szPath))
+    {
+        return JsErrorBadSerializedScript;
+    }
     else
     {
-        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, false));
+        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, true));
     }
 
     SerializedSourceContext* context = new SerializedSourceContext();
@@ -277,8 +373,14 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     context->fileHandle = hFile;
     context->mapHandle = hMap;
 
-    IfFailRet(JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result));
-    return status;
+    JsErrorCode error = JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result);
+    if (error != JsNoError)
+    {
+        // UnloadSourceCallback is called even in error case (though LoadSourceCallback never is), so we can't fully delete the context
+        context->Dispose();
+        return error;
+    }
+    return JsNoError;
 }
 
 JsErrorCode ChakraHost::RunScript(const wchar_t* szFileName, const wchar_t* szSourceUri, JsValueRef* result)
@@ -352,6 +454,16 @@ JsErrorCode ChakraHost::SetGlobalVariable(const wchar_t* szPropertyName, JsValue
     return JsNoError;
 }
 
+void ChakraHost::SetCallSyncHook(ChakraBridge::CallSyncHandler^ handler)
+{
+    this->callSyncHandler = handler;
+}
+
+void ChakraHost::SetFlushQueueImmediate(ChakraBridge::FlushQueueImmediateHandler^ handler)
+{
+    this->flushQueueImmediateHandler = handler;
+}
+
 JsErrorCode ChakraHost::InitJson()
 {
     JsPropertyIdRef jsonPropertyId;
@@ -384,6 +496,20 @@ JsErrorCode ChakraHost::InitNativeRequire()
 	return JsNoError;
 }
 
+JsErrorCode ChakraHost::InitNativeCallSyncHook()
+{
+    IfFailRet(DefineHostCallback(globalObject, L"nativeCallSyncHook", NativeCallSyncHook, this));
+
+    return JsNoError;
+}
+
+JsErrorCode ChakraHost::InitFlushQueueImmediate()
+{
+    IfFailRet(DefineHostCallback(globalObject, L"nativeFlushQueueImmediate", NativeFlushQueueImmediate, this));
+
+    return JsNoError;
+}
+
 JsErrorCode ChakraHost::Init()
 {
     currentSourceContext = 0;
@@ -396,6 +522,8 @@ JsErrorCode ChakraHost::Init()
 
     IfFailRet(InitJson());
     IfFailRet(InitConsole());
+    IfFailRet(InitNativeCallSyncHook());
+    IfFailRet(InitFlushQueueImmediate());
 
     return JsNoError;
 }

@@ -1,4 +1,9 @@
-﻿using ReactNative.Bridge;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using ReactNative.Bridge;
 using System;
 using System.Globalization;
 using System.IO;
@@ -139,13 +144,14 @@ namespace ReactNative.DevSupport
         /// <summary>
         /// Checks if the packager is running.
         /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
         /// <returns>A task to await the packager status.</returns>
-        public async Task<bool> IsPackagerRunningAsync()
+        public async Task<bool> IsPackagerRunningAsync(CancellationToken token)
         {
             var statusUrl = CreatePackagerStatusUrl(DebugServerHost);
             try
             {
-                using (var response = await _client.GetAsync(statusUrl).ConfigureAwait(false))
+                using (var response = await _client.GetAsync(statusUrl, token).ConfigureAwait(false))
                 {
                     if (!response.IsSuccessStatusCode)
                     {

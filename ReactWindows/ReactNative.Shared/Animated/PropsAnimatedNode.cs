@@ -1,4 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
+using ReactNative.Common;
+using ReactNative.Tracing;
 using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
@@ -9,64 +16,96 @@ namespace ReactNative.Animated
     class PropsAnimatedNode : AnimatedNode
     {
         private readonly NativeAnimatedNodesManager _manager;
-        private readonly Dictionary<string, int> _propMapping;
+        private readonly UIImplementation _uiImplementation;
+        private readonly Dictionary<string, int> _propNodeMapping;
 
-        public PropsAnimatedNode(int tag, JObject config, NativeAnimatedNodesManager manager)
+        // We can mutate this to update instead of creating a new one for each update.
+        private readonly JObject _propMap;
+
+        private int _connectedViewTag = -1;
+
+        public PropsAnimatedNode(int tag, JObject config, NativeAnimatedNodesManager manager, UIImplementation uiImplementation)
             : base(tag)
         {
-            _manager = manager;
-
             var props = (JObject)config.GetValue("props", StringComparison.Ordinal);
-            _propMapping = new Dictionary<string, int>(props.Count);
+            _propNodeMapping = new Dictionary<string, int>(props.Count);
             foreach (var entry in props)
             {
-                _propMapping.Add(entry.Key, entry.Value.Value<int>());
+                _propNodeMapping.Add(entry.Key, entry.Value.Value<int>());
             }
+
+            _propMap = new JObject();
+            _manager = manager;
+            _uiImplementation = uiImplementation;
         }
 
-        public int ConnectedViewTag
+        public void ConnectToView(int viewTag)
         {
-            get;
-            set;
-        } = -1;
-
-        public void UpdateView(UIImplementation uiImplementation)
-        {
-            if (ConnectedViewTag == -1)
+            if (_connectedViewTag != -1)
             {
-                throw new InvalidOperationException("Node has not been attached to a view.");
+                throw new InvalidOperationException(
+                    Invariant($"Animated node {Tag} has already been attached to a view."));
             }
 
-            var propsMap = new JObject();
-            foreach (var entry in _propMapping)
+            _connectedViewTag = viewTag;
+        }
+
+        public void DisconnectFromView(int viewTag)
+        {
+            if (_connectedViewTag != viewTag)
+            {
+                throw new InvalidOperationException(
+                    Invariant($"Attempting to disconnect view that has not been connected with the given animated node."));
+            }
+
+            _connectedViewTag = -1;
+        }
+
+        public void RestoreDefaultValues()
+        {
+            foreach (var entry in _propMap)
+            {
+                _propMap[entry.Key] = null;
+            }
+
+            _uiImplementation.SynchronouslyUpdateViewOnDispatcherThread(
+                _connectedViewTag,
+                _propMap);
+        }
+
+        public void UpdateView()
+        {
+            if (_connectedViewTag == -1)
+            {
+                return;
+            }
+
+            foreach (var entry in _propNodeMapping)
             {
                 var node = _manager.GetNodeById(entry.Value);
-                var styleNode = node as StyleAnimatedNode;
-                var valueNode = default(ValueAnimatedNode);
-                if (styleNode != null)
+                if (node is StyleAnimatedNode styleNode)
                 {
-                    styleNode.CollectViewUpdates(propsMap);
+                    styleNode.CollectViewUpdates(_propMap);
                 }
-                else if ((valueNode = node as ValueAnimatedNode) != null)
+                else if (node is ValueAnimatedNode valueNode)
                 {
-                    propsMap.Add(entry.Key, valueNode.Value);
+                    _propMap[entry.Key] = valueNode.Value;
                 }
                 else
                 {
                     throw new InvalidOperationException(
-                        Invariant($"Unsupported type of node used in property node '{node.GetType()}'."));
+                        Invariant($"Unsupported type of node used in prop node '{node.GetType()}'."));
                 }
             }
 
-            // TODO: Reuse propsMap and stylesDiffMap objects - note that in
-            // subsequent animation steps for a given node most of the time
-            // will be creating the same set of props (just with different
-            // values). We can take advantage on that and optimize the way we
-            // allocate property maps (we also know that updating view props
-            // doesn't retain a reference to the styles object).
-            uiImplementation.SynchronouslyUpdateViewOnDispatcherThread(
-                ConnectedViewTag,
-                new ReactStylesDiffMap(propsMap));
+            var updated = _uiImplementation.SynchronouslyUpdateViewOnDispatcherThread(
+                _connectedViewTag,
+                _propMap);
+
+            if (!updated)
+            {
+                Tracer.Error(ReactConstants.Tag, "Native animation workaround, frame lost as result of race condition.", null);
+            }
         }
     }
 }

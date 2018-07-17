@@ -1,11 +1,14 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
+ * Portions copyright for react-native-windows:
+ * 
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * 
  * @providesModule Button
  * @flow
  */
@@ -20,8 +23,17 @@ const Text = require('Text');
 const TouchableNativeFeedback = require('TouchableNativeFeedback');
 const TouchableOpacity = require('TouchableOpacity');
 const View = require('View');
+const createFocusableComponent = require('FocusableWindows');
 
 const invariant = require('fbjs/lib/invariant');
+
+const FocusableView = createFocusableComponent(View);
+
+const KEY_CODE_ENTER = FocusableView.keys.Enter;
+const KEY_CODE_SPACE = FocusableView.keys.Space;
+
+const DOWN_KEYCODES = [KEY_CODE_SPACE, KEY_CODE_ENTER];
+const UP_KEYCODES = [KEY_CODE_SPACE];
 
 /**
  * A basic button component that should render nicely on any platform. Supports
@@ -38,6 +50,9 @@ const invariant = require('fbjs/lib/invariant');
  * Example usage:
  *
  * ```
+ * import { Button } from 'react-native';
+ * ...
+ *
  * <Button
  *   onPress={onPressLearnMore}
  *   title="Learn More"
@@ -48,17 +63,15 @@ const invariant = require('fbjs/lib/invariant');
  *
  */
 
-class Button extends React.Component {
-
-  props: {
-    title: string,
-    onPress: () => any,
-    color?: ?string,
-    accessibilityLabel?: ?string,
-    disabled?: ?boolean,
-    testID?: ?string,
-  };
-
+class Button extends React.Component<{
+  title: string,
+  onPress: () => any,
+  color?: ?string,
+  accessibilityLabel?: ?string,
+  disabled?: ?boolean,
+  testID?: ?string,
+  hasTVPreferredFocus?: ?boolean,
+}> {
   static propTypes = {
     /**
      * Text to display inside the button
@@ -84,6 +97,36 @@ class Button extends React.Component {
      * Used to locate this view in end-to-end tests.
      */
     testID: PropTypes.string,
+    /**
+     * *(Apple TV only)* TV preferred focus (see documentation for the View component).
+     *
+     * @platform ios
+     */
+    hasTVPreferredFocus: PropTypes.bool,
+    /**
+     * tabIndex:
+     * -1: Control is not keyboard focusable in any way
+     * 0 (default): Control is keyboard focusable in the normal order
+     * >0: Control is keyboard focusable in a priority order (starting with 1)
+     *
+     * @platform windows
+     */
+    tabIndex: PropTypes.number,
+    /**
+     * Controls whether control should use system default provided focus rects
+     * @platform windows
+     */
+    disableSystemFocusVisuals: PropTypes.bool,
+    /**
+     * Callback that is called when the text input is blurred
+     * @platform windows
+     */
+    onBlur: PropTypes.func,
+    /**
+     * Callback that is called when the text input is focused
+     * @platform windows
+     */
+    onFocus: PropTypes.func,
   };
 
   render() {
@@ -92,6 +135,7 @@ class Button extends React.Component {
       color,
       onPress,
       title,
+      hasTVPreferredFocus,
       disabled,
       testID,
     } = this.props;
@@ -116,19 +160,112 @@ class Button extends React.Component {
     );
     const formattedTitle = Platform.OS === 'android' ? title.toUpperCase() : title;
     const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+    let content;
+    if (Platform.OS === "windows") {
+      const tabIndex = this.props.tabIndex || 0;
+      const windowsTabFocusable = !disabled && tabIndex >= 0;
+      content =
+        <FocusableView
+          ref={this._setFocusableRef}
+          disabled={disabled}
+          isTabStop={windowsTabFocusable}
+          tabIndex={tabIndex}
+          disableSystemFocusVisuals={this.props.disableSystemFocusVisuals}
+          handledKeyDownKeys={DOWN_KEYCODES}
+          handledKeyUpKeys={UP_KEYCODES}
+          onKeyDown={this._onKeyDown}
+          onKeyUp={this._onKeyUp}
+          onFocus={this._onFocus}
+          onBlur={this._onBlur}
+          style={buttonStyles}
+          importantForAccessibility={'yes'}
+          accessibilityTraits={accessibilityTraits}
+          onAccessibilityTap={this._onAccessibilityTap}
+        >
+          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
+      </FocusableView>;
+    } else {
+      content =
+        <View style={buttonStyles}>
+          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
+        </View>;      
+    }
+
     return (
       <Touchable
         accessibilityComponentType="button"
         accessibilityLabel={accessibilityLabel}
         accessibilityTraits={accessibilityTraits}
+        hasTVPreferredFocus={hasTVPreferredFocus}
         testID={testID}
         disabled={disabled}
         onPress={onPress}>
-        <View style={buttonStyles}>
-          <Text style={textStyles} disabled={disabled}>{formattedTitle}</Text>
-        </View>
+        {content}
       </Touchable>
     );
+  }
+
+  _setFocusableRef = (ref): void => {
+    this._focusableRef = ref;
+  }
+
+  _onKeyDown = (e): void => {
+    if (!this.props.disabled) {
+      if (this.props.onPress) {
+        const key = e.nativeEvent.keyCode;
+        // ENTER triggers press on key down
+        if (key === KEY_CODE_ENTER) {
+          this.props.onPress(e);
+        }
+      }
+    }
+  }
+
+  _onKeyUp = (e): void => {
+    if (!this.props.disabled) {
+      if (this.props.onPress) {
+        const key = e.nativeEvent.keyCode;
+        // SPACE triggers press on key up
+        if (key === KEY_CODE_SPACE) {
+          this.props.onPress(e);
+        }
+      }
+    }
+  }
+
+  _onFocus = (e): void => {
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
+  }
+
+  _onBlur = (e): void => {
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  }
+
+  _onAccessibilityTap = (e): void => {
+    if (!this.props.disabled) {
+      if (this.props.onPress) {
+        this.props.onPress(e);
+      }
+    }
+  }
+
+  focus() {
+    if (!this.props.disabled &&
+        this._focusableRef &&
+        this._focusableRef.focus) {
+          this._focusableRef.focus();
+    }
+  }
+
+  blur() {
+    if (this._focusableRef &&
+        this._focusableRef.blur) {
+        this._focusableRef.blur();
+    }
   }
 }
 

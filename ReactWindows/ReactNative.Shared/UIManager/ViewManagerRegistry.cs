@@ -1,4 +1,9 @@
-﻿using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using static System.FormattableString;
 
@@ -10,7 +15,15 @@ namespace ReactNative.UIManager
     /// </summary>
     public class ViewManagerRegistry
     {
-        private readonly IDictionary<string, IViewManager> _registry;
+        /// <summary>
+        /// Map of view manager name to instance.
+        /// </summary>
+        /// <remarks>
+        /// This dictionary is accessed from both the main UI thread and the
+        /// JavaScript thread. We don't need to make it thread-safe because
+        /// only the UI thread writes to the dictionary.
+        /// </remarks>
+        private readonly IReadOnlyDictionary<string, IViewManager> _registry;
 
         /// <summary>
         /// Instantiates the <see cref="ViewManagerRegistry"/>.
@@ -23,11 +36,12 @@ namespace ReactNative.UIManager
             if (viewManagers == null)
                 throw new ArgumentNullException(nameof(viewManagers));
 
-            _registry = new Dictionary<string, IViewManager>();
+            var registry = new Dictionary<string, IViewManager>(viewManagers.Count);
+            _registry = registry;
 
             foreach (var viewManager in viewManagers)
             {
-                _registry.Add(viewManager.Name, viewManager);
+                registry.Add(viewManager.Name, viewManager);
             }
         }
 
@@ -41,8 +55,7 @@ namespace ReactNative.UIManager
             if (className == null)
                 throw new ArgumentNullException(nameof(className));
 
-            var viewManager = default(IViewManager);
-            if (_registry.TryGetValue(className, out viewManager))
+            if (_registry.TryGetValue(className, out var viewManager))
             {
                 return viewManager;
             }

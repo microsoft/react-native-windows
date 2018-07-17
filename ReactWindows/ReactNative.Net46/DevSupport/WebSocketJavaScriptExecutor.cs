@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Portions derived from React Native:
+// Copyright (c) 2015-present, Facebook, Inc.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Collections;
-using SocketMessaging;
+using ReactNative.Json;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -121,9 +124,17 @@ namespace ReactNative.DevSupport
             }
         }
 
-        public void SetGlobalVariable(string propertyName, JToken value)
+        public void SetFlushQueueImmediate(Action<JToken> flushQueueImmediate)
         {
-            _injectedObjects.Add(propertyName, value.ToString(Formatting.None));
+        }
+
+        public void SetGlobalVariable(string propertyName, string value)
+        {
+            _injectedObjects.Add(propertyName, value);
+        }
+
+        public void SetCallSyncHook(Func<int, int, JArray, JToken> nativeCallSyncHook)
+        {
         }
 
         public void Dispose()

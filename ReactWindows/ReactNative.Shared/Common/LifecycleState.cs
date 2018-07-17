@@ -1,4 +1,7 @@
-﻿namespace ReactNative.Common
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace ReactNative.Common
 {
     /// <summary>
     /// An enumeration to signify the current lifecycle state for a 
@@ -14,11 +17,16 @@
         /// <summary>
         /// Lifecycle state before an application is resumed.
         /// </summary>
-        BeforeResume,
+        Suspended,
 
         /// <summary>
-        /// Lifecycle state of a resumed application.
+        /// Lifecycle state of a foreground running application.
         /// </summary>
-        Resumed,
+        Foreground,
+
+        /// <summary>
+        /// Lifecycle state when the application is in the background.
+        /// </summary>
+        Background,
     }
 }

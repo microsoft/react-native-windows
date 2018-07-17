@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Web.Events;
 using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
 using System.Net.Http;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using static System.FormattableString;
 
@@ -38,11 +41,11 @@ namespace ReactNative.Views.Web
         /// <summary>
         /// The commands map for the webview manager.
         /// </summary>
-        public override IReadOnlyDictionary<string, object> CommandsMap
+        public override JObject ViewCommandsMap
         {
             get
             {
-                return new Dictionary<string, object>
+                return new JObject
                 {
                     { "goBack", CommandGoBack },
                     { "goForward", CommandGoForward },
@@ -112,13 +115,19 @@ namespace ReactNative.Views.Web
                 {
                     using (var request = new HttpRequestMessage())
                     {
-                        request.RequestUri = new Uri(uri);
+                        var sourceUri = new Uri(uri);
 
+                        //If the source URI has a file URL scheme, do not form the RequestUri.
+                        if (!sourceUri.IsFile)
+                        {
+                            request.RequestUri = sourceUri;
+                        }
+                      
                         var method = source.Value<string>("method");
                         var headers = (string)source.GetValue("headers", StringComparison.Ordinal);
                         var body = source.Value<Byte[]>("body");
 
-                        view.Navigate(uri, view.Name, body, headers);
+                        view.Navigate(sourceUri, view.Name, body, headers);
                         return;
                     }
                 }
@@ -165,7 +174,7 @@ namespace ReactNative.Views.Web
         {
             base.OnDropViewInstance(reactContext, view);
             view.LoadCompleted -= OnLoadCompleted;
-            view.Navigated -= OnNavigationStarting;
+            view.Navigating -= OnNavigationStarting;
         }
 
         /// <summary>
@@ -188,7 +197,7 @@ namespace ReactNative.Views.Web
         {
             base.AddEventEmitters(reactContext, view);
             view.LoadCompleted += OnLoadCompleted;
-            view.Navigated += OnNavigationStarting;
+            view.Navigating += OnNavigationStarting;
         }
 
         private void OnLoadCompleted(object sender, NavigationEventArgs e)
@@ -219,7 +228,7 @@ namespace ReactNative.Views.Web
             }
         }
 
-        private static void OnNavigationStarting(object sender, NavigationEventArgs e)
+        private static void OnNavigationStarting(object sender, NavigatingCancelEventArgs e)
         {
             var webView = (WebBrowser)sender;
 

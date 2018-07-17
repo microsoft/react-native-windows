@@ -1,5 +1,7 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -14,10 +16,6 @@ namespace ReactNative.UIManager
     /// </summary>
     public static class DependencyObjectExtensions
     {
-        private static readonly ConditionalWeakTable<DependencyObject, DependencyObjectData> s_properties =
-            new ConditionalWeakTable<DependencyObject, DependencyObjectData>();
-        private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();
-
         /// <summary>
         /// Sets the pointer events for the view.
         /// </summary>
@@ -25,10 +23,7 @@ namespace ReactNative.UIManager
         /// <param name="pointerEvents">The pointer events.</param>
         public static void SetPointerEvents(this DependencyObject view, PointerEvents pointerEvents)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            s_properties.GetOrCreateValue(view).PointerEvents = pointerEvents;
+            ViewExtensions.SetPointerEvents(view, pointerEvents);
         }
 
         /// <summary>
@@ -38,16 +33,7 @@ namespace ReactNative.UIManager
         /// <returns>The pointer events.</returns>
         public static PointerEvents GetPointerEvents(this DependencyObject view)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.PointerEvents.HasValue)
-            {
-                return PointerEvents.Auto;
-            }
-
-            return elementData.PointerEvents.Value;
+            return ViewExtensions.GetPointerEvents(view);
         }
 
         /// <summary>
@@ -57,10 +43,7 @@ namespace ReactNative.UIManager
         /// <param name="compoundView">The implementation of IReactCompoundView.</param>
         public static void SetReactCompoundView(this DependencyObject view, IReactCompoundView compoundView)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            s_properties.GetOrCreateValue(view).CompoundView = compoundView;
+            ViewExtensions.SetReactCompoundView(view, compoundView);
         }
 
         /// <summary>
@@ -74,28 +57,7 @@ namespace ReactNative.UIManager
         /// </returns>
         public static IReactCompoundView GetReactCompoundView(this DependencyObject view)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            var elementData = default(DependencyObjectData);
-            if (s_properties.TryGetValue(view, out elementData))
-            {
-                var compoundView = elementData.CompoundView;
-                if (compoundView != null)
-                {
-                    return compoundView;
-                }
-            }
-
-            return s_defaultCompoundView;
-        }
-
-        internal static void SetTag(this DependencyObject view, int tag)
-        {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            s_properties.GetOrCreateValue(view).Tag = tag;
+            return ViewExtensions.GetReactCompoundView(view);
         }
 
         /// <summary>
@@ -108,16 +70,7 @@ namespace ReactNative.UIManager
         /// </exception>
         public static int GetTag(this DependencyObject view)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
-            {
-                throw new InvalidOperationException("Could not get tag for view.");
-            }
-
-            return elementData.Tag.Value;
+            return ViewExtensions.GetTag(view);
         }
 
         /// <summary>
@@ -129,19 +82,7 @@ namespace ReactNative.UIManager
         /// </returns>
         public static bool HasTag(this DependencyObject view)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            var elementData = default(DependencyObjectData);
-            return s_properties.TryGetValue(view, out elementData) && elementData.Tag.HasValue;
-        }
-
-        internal static void SetReactContext(this DependencyObject view, ThemedReactContext context)
-        {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            s_properties.GetOrCreateValue(view).Context = context;
+            return ViewExtensions.HasTag(view);
         }
 
         /// <summary>
@@ -155,16 +96,7 @@ namespace ReactNative.UIManager
         /// </exception>
         public static ThemedReactContext GetReactContext(this DependencyObject view)
         {
-            if (view == null)
-                throw new ArgumentNullException(nameof(view));
-
-            var elementData = default(DependencyObjectData);
-            if (!s_properties.TryGetValue(view, out elementData) || !elementData.Tag.HasValue)
-            {
-                throw new InvalidOperationException("Could not get tag for view.");
-            }
-
-            return elementData.Context;
+            return ViewExtensions.GetReactContext(view);
         }
 
         internal static T As<T>(this DependencyObject view)
@@ -176,17 +108,6 @@ namespace ReactNative.UIManager
                 throw new ArgumentOutOfRangeException(Invariant($"Child of type '{view.GetType()}' is not assignable to '{typeof(T)}'."));
             }
             return convertedView;
-        }
-
-        class DependencyObjectData
-        {
-            public ThemedReactContext Context { get; set; }
-
-            public PointerEvents? PointerEvents { get; set; }
-
-            public int? Tag { get; set; }
-
-            public IReactCompoundView CompoundView { get; set; }
         }
     }
 }
