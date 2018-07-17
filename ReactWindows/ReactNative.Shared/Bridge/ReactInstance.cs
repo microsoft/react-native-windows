@@ -75,7 +75,7 @@ namespace ReactNative.Bridge
             return _registry.GetModule<T>();
         }
 
-        public void Initialize()
+        public async Task InitializeAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
             if (_initialized)
@@ -84,7 +84,7 @@ namespace ReactNative.Bridge
             }
 
             _initialized = true;
-            QueueConfiguration.NativeModulesQueue.Dispatch(_registry.NotifyReactInstanceInitialize);
+            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceInitializeAsync).Unwrap();
         }
 
         public async Task InitializeBridgeAsync(CancellationToken token)

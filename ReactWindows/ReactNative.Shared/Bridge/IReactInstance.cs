@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -29,8 +29,8 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Initializes the instance.
         /// </summary>
-        void Initialize();
-        
+        System.Threading.Tasks.Task InitializeAsync();
+
         /// <summary>
         /// Invokes a JavaScript function.
         /// </summary>
