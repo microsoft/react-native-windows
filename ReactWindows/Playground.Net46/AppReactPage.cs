@@ -4,6 +4,7 @@
 using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
+using System;
 using System.Collections.Generic;
 
 namespace Playground.Net46
