@@ -75,7 +75,7 @@ The GitHub issues are intended for bug reports and feature requests. For help an
 
 ## Contributing
 
-- Install the [requirements](#requirements)
+- Install the [system requirements](#system-requirements)
 - Check out the React Native Windows code itself and install npm dependencies
 ```
 git clone --recursive https://github.com/ReactWindows/react-native-windows.git
