@@ -373,7 +373,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                          tag,
                          WebViewLoadEvent.TopLoadingStart,
-                         e.Uri?.ToString(),
+                         e.Uri?.OriginalString,
                          true,
                          webView.DocumentTitle,
                          webView.CanGoBack,
@@ -417,7 +417,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                         webView.GetTag(),
                         WebViewLoadEvent.TopLoadingFinish,
-                        e.Uri?.ToString(),
+                        e.Uri?.OriginalString,
                         false,
                         webView.DocumentTitle,
                         webView.CanGoBack,
