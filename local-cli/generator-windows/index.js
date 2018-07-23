@@ -63,7 +63,7 @@ module.exports = yeoman.Base.extend({
         `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join('windows', this.name, this.name)}_TemporaryKey.pfx -Password $pwd`,
         '$cert.Thumbprint'
       ];
-      const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')], this.options.verbose ? { stdio: 'inherit' } : {});
+      const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
 
       if (certGenProcess.status === 0) {
         const certGenProcessOutput = certGenProcess.stdout.toString().trim().split('\n');
