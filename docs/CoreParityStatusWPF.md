@@ -1,10 +1,10 @@
 **Disclaimer:** these tables are not necessarily complete or up-to-date. Feel free to add information on missing features, components, and modules as you encounter them.
 
-## Components (UWP - Windows 10)
+## Components (WPF - Windows 7/8.1)
 
 | Name | Status | Notes |
 |------|--------|-------------|
-| ActivityIndicator | Ready |  |
+| ActivityIndicator | Not Started |  |
 | ARTGroup | Not Started |  |
 | ARTShape | Not Started |  |
 | ARTSurfaceView | Not Started |  |
@@ -12,24 +12,24 @@
 | Button | Ready |  |
 | DatePickerIOS | n/a | iOS-only. |
 | DrawerLayoutAndroid | n/a | Android-only. See [SplitViewWindows](../ReactWindows/ReactNative/Views/Split/ReactSplitViewManager.cs). |
-| Image | Partial | Missing tint color and background color ([#278](https://github.com/ReactWindows/react-native-windows/issues/278)), HTTP headers ([#689](https://github.com/ReactWindows/react-native-windows/issues/689)) |
+| Image | In Progress | Missing tint color and background color ([#278](https://github.com/ReactWindows/react-native-windows/issues/278)), HTTP headers ([#689](https://github.com/ReactWindows/react-native-windows/issues/689)) |
 | KeyboardAvoidingView | Not Started | Dependent on [#159](https://github.com/ReactWindows/react-native-windows/issues/159). |
-| ListView | Ready | RecyclerBackedScrollViewManager unavailable ([#186](https://github.com/ReactWindows/react-native-windows/issues/186)). |
+| ListView | Not Started | RecyclerBackedScrollViewManager unavailable ([#186](https://github.com/ReactWindows/react-native-windows/issues/186)). |
 | MapView | n/a | Deprecated in favor of [react-native-maps](https://github.com/airbnb/react-native-maps). |
 | Modal | Not Started | See [#618](https://github.com/ReactWindows/react-native-windows/issues/618). |
-| Navigator | Ready |  |
+| Navigator | Not Started |  |
 | NavigatorIOS | n/a | iOS-only. |
-| Picker | Partial | Missing dialog-driven picker ([#535](https://github.com/ReactWindows/react-native-windows/issues/535)). |
+| Picker | In Progress | Missing dialog-driven picker ([#535](https://github.com/ReactWindows/react-native-windows/issues/535)). |
 | PickerIOS | n/a | iOS-only. |
 | ProgressBarAndroid | n/a | Android-only. See [ProgressBarWindows](../ReactWindows/ReactNative/Views/Progress/ReactProgressBarViewManager.cs). |
 | ProgressViewIOS | n/a | iOS-only. See [ProgressBarWindows](../ReactWindows/ReactNative/Views/Progress/ReactProgressBarViewManager.cs). |
 | RefreshControl | Not Started | Consider building with [UWP Community Toolkit](https://github.com/Microsoft/UWPCommunityToolkit/tree/dev/Microsoft.Toolkit.Uwp.UI.Controls/PullToRefreshListView). |
 | ScrollView | Partial | Missing momentum scroll events ([#534](https://github.com/ReactWindows/react-native-windows/issues/534)). |
 | SegmentedControlIOS | n/a | iOS-only. |
-| Slider | Ready |  |
+| Slider | In Progress |  |
 | SnapshotViewIOS | n/a | iOS-only. |
-| StatusBar | Ready |  |
-| Switch | Ready |  |
+| StatusBar | Not Started |  |
+| Switch | In Progress |  |
 | TabBarIOS | n/a | iOS-only. |
 | TabBarIOS.Item | n/a | iOS-only. |
 | Text | Partial | Issue with measurement performance ([#106](https://github.com/ReactWindows/react-native-windows/issues/106)). Also missing background color and borders ([#698](https://github.com/ReactWindows/react-native-windows/issues/698)) and strike-through and underlining ([#709](https://github.com/ReactWindows/react-native-windows/issues/709)). |
@@ -41,13 +41,13 @@
 | TouchableWithoutFeedback | Ready |  |
 | View | Ready |  |
 | ViewPagerAndroid | n/a | Android-only. See [FlipViewWindows](../ReactWindows/ReactNative/Views/Flip/ReactFlipViewManager.cs). |
-| WebView | Partial | Missing ability to set User-Agent string ([#537](https://github.com/ReactWindows/react-native-windows/issues/537)). |
+| WebView | In Progress | Missing ability to set User-Agent string ([#537](https://github.com/ReactWindows/react-native-windows/issues/537)). |
 
 ## Modules
 
 | Name | Status | Notes |
 |------|--------|-------------|
-| Accessibility | Partial | Supported: `accessibilityLiveRegion`, `accessibilityLabel`, `importantForAccessibility`, `accessibilityTraits`. Not supported by design: `accessible` - use `importantForAccessibility` instead. In `accessibilityTraits` only `button` and `none` are supported. See [#918](https://github.com/ReactWindows/react-native-windows/issues/918). |
+| Accessibility | Partial | Only `accessibilityLiveRegion` and `accessibilityLabel` supported. See [#918](https://github.com/ReactWindows/react-native-windows/issues/918). |
 | ActionSheetIOS | n/a | iOS-only. |
 | AdSupportIOS | n/a | iOS-only. |
 | Alert | Ready | See [Source](../ReactWindows/ReactNative/Modules/Dialog/DialogModule.cs). |
@@ -56,13 +56,13 @@
 | AppRegistry | Ready |  |
 | AppState | Ready | See [Source](../ReactWindows/ReactNative/Modules/AppState/AppStateModule.cs). |
 | AsyncStorage | Ready | See [Source](../ReactWindows/ReactNative/Modules/Storage/AsyncStorageModule.cs). |
-| BackAndroid | Partial | Working, but intent is to create a Windows-specific version ([#538](https://github.com/ReactWindows/react-native-windows/issues/538)). |
+| BackAndroid | n/a | WPF devices typically do not have a dedicated back button. |
 | CameraRoll | Not Started | See [#183](https://github.com/ReactWindows/react-native-windows/issues/183). |
 | Clipboard | Ready | See [Source](../ReactWindows/ReactNative/Modules/Clipboard/ClipboardModule.cs). |
 | DatePickerAndroid | n/a | Android-only. |
 | Dimensions | Ready |  |
 | Easing | Ready |  |
-| Geolocation | Ready | See [Source](../ReactWindows/ReactNative/Modules/Location/LocationModule.cs). |
+| Geolocation | Not Started | See [Source](../ReactWindows/ReactNative/Modules/Location/LocationModule.cs). |
 | ImageEditor | Not Started |  |
 | ImagePickerIOS | n/a | iOS-only. |
 | ImageStore | Not Started |  |
@@ -83,6 +83,6 @@
 | StyleSheet | Ready |  |
 | TimePickerAndroid | n/a | Android-only. |
 | ToastAndroid | n/a | Android-only. |
-| Vibration | Ready | See [Source](../ReactWindows/ReactNative/Modules/Vibration/VibrationModule.cs). |
+| Vibration | Not Started | Will be no-op because most WPF devices do not have haptic feedback. |
 | VibrationIOS | n/a | iOS-only. |
 | Timers | Partial | `set[Interval|Timeout]` complete, missing `requestIdleCallback` ([#917](https://github.com/ReactWindows/react-native-windows/issues/917)) |
