@@ -29,11 +29,11 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The new value.</param>
         [ReactProp("date")]
-        public void SetDate(Windows.UI.Xaml.Controls.DatePicker view, DateTime? date)
+        public void SetDate(Windows.UI.Xaml.Controls.DatePicker view, long ?date)
         {
             if (date.HasValue)
             {
-                view.Date = date.Value;
+                view.Date = DateTimeOffset.FromUnixTimeMilliseconds(date.Value);
             }
         }
 
@@ -43,7 +43,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as maximum.</param>
         [ReactProp("maxYear")]
-        public void SetMaxYear(Windows.UI.Xaml.Controls.DatePicker view, DateTime? date) => view.MaxYear = date ?? DateTimeOffset.MaxValue;
+        public void SetMaxYear(Windows.UI.Xaml.Controls.DatePicker view, long? date) => view.MaxYear = date.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(date.Value) : DateTimeOffset.MaxValue;
 
         /// <summary>
         /// Sets the minimum allowed year of the picker.
@@ -51,7 +51,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as minimum.</param>
         [ReactProp("minYear")]
-        public void SetMinYear(Windows.UI.Xaml.Controls.DatePicker view, DateTime? date) => view.MinYear = date ?? DateTimeOffset.MinValue;
+        public void SetMinYear(Windows.UI.Xaml.Controls.DatePicker view, long? date) => view.MinYear = date.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(date.Value) : DateTimeOffset.MinValue;
 
         /// <summary>
         /// This method returns the <see cref="ReactDatePickerShadowNode"/>
@@ -116,11 +116,11 @@ namespace ReactNative.Views.DatePicker
         private void OnDateChanged(object sender, DatePickerValueChangedEventArgs e)
         {
             var datePicker = (Windows.UI.Xaml.Controls.DatePicker)sender;
-            DateTime newDate = e.NewDate.DateTime;
+            DateTimeOffset newDate = new DateTimeOffset(e.NewDate.DateTime);
 
             datePicker.GetReactContext().GetNativeModule<UIManagerModule>()
                 .EventDispatcher
-                .DispatchEvent(new ReactDatePickerEvent(datePicker.GetTag(), newDate));
+                .DispatchEvent(new ReactDatePickerEvent(datePicker.GetTag(), newDate.ToUnixTimeMilliseconds()));
         }
 
         /// <summary>
@@ -128,13 +128,13 @@ namespace ReactNative.Views.DatePicker
         /// </summary>
         class ReactDatePickerEvent : Event
         {
-            private readonly DateTime _date;
+            private readonly long _date;
             /// <summary>
             /// Creates an instance of the event.
             /// </summary>
             /// <param name="viewTag">The viewtag of the instantiating view.</param>
             /// <param name="date">Date to include in the event payload.</param>
-            public ReactDatePickerEvent(int viewTag, DateTime date) :
+            public ReactDatePickerEvent(int viewTag, long date) :
                 base(viewTag)
             {
                 _date = date;
