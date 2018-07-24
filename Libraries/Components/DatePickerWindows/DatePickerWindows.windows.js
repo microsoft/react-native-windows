@@ -60,12 +60,17 @@ class DatePickerWindows extends React.Component {
   }
 
   render(){
+    let {date, minYear, maxYear} = this.props;
+    date = date.getTime();
+    minYear = minYear ? minYear.getTime() : undefined;
+    maxYear = maxYear ? maxYear.getTime() : undefined;
+
     return <NativeWindowsDatePicker
               ref={DATEPICKER_REF}
               style={this.props.style}
-              date={this.props.date}
-              minYear={this.props.minYear}
-              maxYear={this.props.maxYear}
+              date={date}
+              minYear={minYear}
+              maxYear={maxYear}
               onChange={this._onChange}
             />
   }

@@ -29,9 +29,9 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The new value.</param>
         [ReactProp("date")]
-        public void SetDate(CalendarDatePicker view, DateTime? date)
+        public void SetDate(CalendarDatePicker view, long? date)
         {
-            view.Date = date ?? null;
+            view.Date = date.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(date.Value) : (DateTimeOffset?)null;
         }
 
 
@@ -41,7 +41,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as maximum.</param>
         [ReactProp("maxDate")]
-        public void SetMaxDate(CalendarDatePicker view, DateTime? date) => view.MaxDate = date ?? DateTimeOffset.MaxValue;
+        public void SetMaxDate(CalendarDatePicker view, long? date) => view.MaxDate = date.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(date.Value) : DateTimeOffset.MaxValue;
 
         /// <summary>
         /// Sets the minimum allowed date of the picker.
@@ -49,7 +49,7 @@ namespace ReactNative.Views.DatePicker
         /// <param name="view">The picker view element.</param>
         /// <param name="date">The value to set as minimum.</param>
         [ReactProp("minDate")]
-        public void SetMinDate(CalendarDatePicker view, DateTime? date) => view.MinDate = date ?? DateTimeOffset.MinValue;
+        public void SetMinDate(CalendarDatePicker view, long? date) => view.MinDate = date.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(date.Value) : DateTimeOffset.MinValue;
 
         /// <summary>
         /// Sets the placeholder text for the picker.
@@ -155,13 +155,11 @@ namespace ReactNative.Views.DatePicker
             }
 
             var datePicker = (CalendarDatePicker)sender;
-            DateTime? newDate;
-
-            newDate = e.NewDate.Value.DateTime;
+            DateTimeOffset newDate = new DateTimeOffset(e.NewDate.Value.DateTime);
             
             datePicker.GetReactContext().GetNativeModule<UIManagerModule>()
                 .EventDispatcher
-                .DispatchEvent(new ReactCalendarPickerEvent(datePicker.GetTag(), newDate));
+                .DispatchEvent(new ReactCalendarPickerEvent(datePicker.GetTag(), newDate.ToUnixTimeMilliseconds()));
         }
 
         /// <summary>
@@ -169,13 +167,13 @@ namespace ReactNative.Views.DatePicker
         /// </summary>
         class ReactCalendarPickerEvent : Event
         {
-            private readonly DateTime? _date;
+            private readonly long? _date;
             /// <summary>
             /// Creates an instance of the event
             /// </summary>
             /// <param name="viewTag">The viewtag of the instantiating view.</param>
             /// <param name="date">Date to include in the event payload.</param>
-            public ReactCalendarPickerEvent(int viewTag, DateTime? date) :
+            public ReactCalendarPickerEvent(int viewTag, long? date) :
                 base(viewTag)
             {
                 _date = date;

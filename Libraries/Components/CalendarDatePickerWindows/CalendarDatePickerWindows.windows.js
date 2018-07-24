@@ -78,12 +78,17 @@ class CalendarDatePickerWindows extends React.Component {
   }
 
   render(){
+    let {date, minDate, maxDate} = this.props;
+    date = date.getTime();
+    minDate = minDate ? minDate.getTime() : undefined;
+    maxDate = maxDate ? maxDate.getTime() : undefined;
+
     return <NativeWindowsCalendarDatePicker
               ref={CALENDARPICKER_REF}
               style={this.props.style}
-              date={this.props.date}
-              minDate={this.props.minDate}
-              maxDate={this.props.maxDate}
+              date={date}
+              minDate={minDate}
+              maxDate={maxDate}
               onChange={this._onChange}
               placeholderText={this.props.placeholderText}
               calendarIdentifier={this.props.calendarIdentifier}
