@@ -128,7 +128,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp(ViewProps.FontStyle)]
         public void SetFontStyle(string fontStyleSValue)
         {
-            var fontStyle = EnumHelpers.ParseNullable<FontStyle>(fontStyleSValue);
+            var fontStyle = FontStyleHelpers.ParseFontStyle(fontStyleSValue);
             if (_fontStyle != fontStyle)
             {
                 _fontStyle = fontStyle;

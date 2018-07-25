@@ -3,6 +3,7 @@
 
 #if WINDOWS_UWP
 using Windows.UI.Text;
+using ReactNative.Reflection;
 #else
 using System.Windows;
 #endif
@@ -11,6 +12,20 @@ namespace ReactNative.Views.Text
 {
     static class FontStyleHelpers
     {
+        public static FontStyle? ParseFontStyle(string fontStyleString)
+        {
+#if WINDOWS_UWP
+            return EnumHelpers.ParseNullable<FontStyle>(fontStyleString);
+#else
+            switch (fontStyleString)
+            {
+                case "normal": return FontStyles.Normal;  
+                case "italic": return FontStyles.Italic;
+                default: return null;
+            }
+#endif
+        }
+
         public static FontWeight? ParseFontWeight(string fontWeightString)
         {
             var fontWeightNumeric = fontWeightString != null
