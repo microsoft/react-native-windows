@@ -4,6 +4,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -141,6 +142,18 @@ namespace ReactNative.UIManager
         public void SetTooltip(TFrameworkElement view, string tooltip)
         {
             ToolTipService.SetToolTip(view, tooltip);
+        }
+
+        /// <summary>
+        /// Set the pointer events handling mode for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="pointerEventsValue">The pointerEvents mode.</param>
+        [ReactProp("pointerEvents")]
+        public void SetPointerEvents(TFrameworkElement view, string pointerEventsValue)
+        {
+            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
+            view.SetPointerEvents(pointerEvents);
         }
 
         /// <summary>

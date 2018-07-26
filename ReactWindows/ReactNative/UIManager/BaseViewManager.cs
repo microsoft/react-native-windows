@@ -6,11 +6,12 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Accessibility;
 using ReactNative.Reflection;
-using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -208,6 +209,35 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Set the pointer events handling mode for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="pointerEventsValue">The pointerEvents mode.</param>
+        [ReactProp("pointerEvents")]
+        public void SetPointerEvents(TFrameworkElement view, string pointerEventsValue)
+        {
+            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
+            view.SetPointerEvents(pointerEvents);
+
+            // When `pointerEvents: none`, set `IsHitTestVisible` to `false`.
+            view.IsHitTestVisible = pointerEvents != PointerEvents.None;
+
+            // When `pointerEvents: none|box-none`, unsubscribe the enter/leave events.
+            if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
+            {
+                view.PointerExited -= OnPointerExited;
+                view.PointerEntered -= OnPointerEntered;
+            }
+            else
+            {
+                view.PointerExited -= OnPointerExited;
+                view.PointerEntered -= OnPointerEntered;
+                view.PointerEntered += OnPointerEntered;
+                view.PointerExited += OnPointerExited;
+            }
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
@@ -284,13 +314,35 @@ namespace ReactNative.UIManager
         private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
         {
             var view = (TFrameworkElement)sender;
-            TouchHandler.OnPointerEntered(view, e);
+            var hasBoxOnlyParent = RootViewHelper.GetReactViewHierarchy(view)
+                .Skip(1) // Skip the current view
+                .Any(v => v.GetPointerEvents() == PointerEvents.BoxOnly);
+
+            if (!hasBoxOnlyParent)
+            {
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
+            }
         }
 
         private void OnPointerExited(object sender, PointerRoutedEventArgs e)
         {
             var view = (TFrameworkElement)sender;
-            TouchHandler.OnPointerExited(view, e);
+            var hasBoxOnlyParent = RootViewHelper.GetReactViewHierarchy(view)
+                .Skip(1) // Skip the current view
+                .Any(v => v.GetPointerEvents() == PointerEvents.BoxOnly);
+
+            if (!hasBoxOnlyParent)
+            {
+                view.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(
+                        new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
+            }
         }
 
         private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
@@ -433,6 +485,58 @@ namespace ReactNative.UIManager
             public bool OverflowHidden { get; set; }
 
             public JArray MatrixTransform { get; set; }
+        }
+
+        class PointerEnterExitEvent : Event
+        {
+            private readonly TouchEventType _touchEventType;
+
+            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag)
+                : base(viewTag)
+            {
+                _touchEventType = touchEventType;
+            }
+
+            public override string EventName
+            {
+                get
+                {
+                    return _touchEventType.GetJavaScriptEventName();
+                }
+            }
+
+            public override bool CanCoalesce
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public override void Dispatch(RCTEventEmitter eventEmitter)
+            {
+                var eventData = new JObject
+                {
+                    { "target", ViewTag },
+                };
+
+                var enterLeaveEventName = default(string);
+                if (_touchEventType == TouchEventType.Entered)
+                {
+                    enterLeaveEventName = "topMouseEnter";
+                }
+                else if (_touchEventType == TouchEventType.Exited)
+                {
+                    enterLeaveEventName = "topMouseLeave";
+                }
+
+                if (enterLeaveEventName != null)
+                {
+                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
+                }
+
+                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+            }
         }
     }
 }
