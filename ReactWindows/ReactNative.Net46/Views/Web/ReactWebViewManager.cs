@@ -203,7 +203,7 @@ namespace ReactNative.Views.Web
         private void OnLoadCompleted(object sender, NavigationEventArgs e)
         {
             var webView = (WebBrowser)sender;
-            LoadFinished(webView, e.Uri?.ToString());
+            LoadFinished(webView, e.Uri?.OriginalString);
 
             if (webView.IsLoaded)
             {
@@ -238,7 +238,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadingEvent(
                          webView.GetTag(),
                          "Start",
-                         e.Uri?.ToString(),
+                         e.Uri?.OriginalString,
                          true,
                          "Title Unavailable",
                          webView.CanGoBack,
