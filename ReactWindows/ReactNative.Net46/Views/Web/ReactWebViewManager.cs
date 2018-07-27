@@ -113,6 +113,12 @@ namespace ReactNative.Views.Web
                 var uri = source.Value<string>("uri");
                 if (uri != null)
                 {
+                    string previousUri = view.Source?.OriginalString;
+                    if (!String.IsNullOrWhiteSpace(previousUri) && previousUri.Equals(uri))
+                    {
+                        return;
+                    }
+
                     using (var request = new HttpRequestMessage())
                     {
                         var sourceUri = new Uri(uri);
