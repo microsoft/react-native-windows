@@ -164,14 +164,14 @@ namespace ReactNative.DevSupport
                 var lastNativeUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate.UtcDateTime;
                 var localFolder = ApplicationData.Current.LocalFolder.Path;
 #else
-                var lastNativeUpdateTime = File.GetLastWriteTime(Assembly.GetEntryAssembly().Location);
+                var lastNativeUpdateTime = File.GetLastWriteTimeUtc(Assembly.GetEntryAssembly().Location);
                 var localFolder = FileSystem.Current.LocalStorage.Path;
 #endif
                 var jsBundleFileName = Path.Combine(localFolder, JSBundleFileName);
 
                 if (File.Exists(jsBundleFileName))
                 {
-                    return File.GetLastWriteTime(jsBundleFileName) > lastNativeUpdateTime;
+                    return File.GetLastWriteTimeUtc(jsBundleFileName) > lastNativeUpdateTime;
                 }
             }
 
