@@ -32,7 +32,7 @@ namespace ReactNative.Animated
         public override void Update()
         {
             AnimatedNode toValue = _manager.GetNodeById(_toValueNode);
-            _animationConfig["toValue"] = (toValue as ValueAnimatedNode).Value;
+            _animationConfig["toValue"] = ((ValueAnimatedNode)toValue).Value;
             _manager.StartAnimatingNode(_animationId, _valueNode, _animationConfig, null);
         }
     }
