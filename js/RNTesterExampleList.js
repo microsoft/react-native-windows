@@ -29,6 +29,7 @@ type Props = {
   list: {
     ComponentExamples: Array<RNTesterExample>,
     APIExamples: Array<RNTesterExample>,
+    OtherExamples: Array<RNTesterExample>,
   },
   persister: PassProps<*>,
   searchTextInputStyle: DangerouslyImpreciseStyleProp,
@@ -90,6 +91,11 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
         data: this.props.list.APIExamples.filter(filter),
         title: 'APIS',
         key: 'a',
+      },
+      {
+        data: this.props.list.OtherExamples.filter(filter),
+        title: 'OTHERS',
+        key: 'b',
       },
     ];
     return (

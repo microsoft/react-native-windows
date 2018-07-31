@@ -24,6 +24,7 @@ namespace RNTesterApp
         protected override List<IReactPackage> Packages => new List<IReactPackage>
         {
             new MainReactPackage(),
+            new CrossWindowPackage(),
         };
     }
 }
