@@ -108,7 +108,9 @@ namespace ReactNative.UIManager
 #if WINDOWS_UWP
             CoreDispatcher dispatcher,
 #else
-            Dispatcher notUsed,
+#pragma warning disable CS1573
+            Dispatcher dispatcher,
+#pragma warning restore CS1573
 #endif
             Action<List<int>> onDropView
             )
