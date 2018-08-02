@@ -124,7 +124,8 @@ JsErrorCode ChakraHost::LoadFileContents(const wchar_t* szPath, wchar_t** pszDat
 	fread(rawBytes, sizeof(char), lengthBytes, file);
 	if (fclose(file))
 	{
-		return JsErrorFatal;
+        free(rawBytes);
+        return JsErrorFatal;
 	}
 
 	*pszData = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
@@ -333,21 +334,50 @@ JsErrorCode ChakraHost::SerializeScript(const wchar_t* szPath, const wchar_t* sz
     ULONG bufferSize = 0L;
     BYTE* buffer = nullptr;
     wchar_t* szScriptBuffer = nullptr;
+    wchar_t* szTmpSerializedPath = nullptr;
     IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
 
+    JsErrorCode status = JsNoError;
     if (!CompareLastWrite(szSerializedPath, szPath))
     {
-        IfFailRet(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
+        IfFailCleanup(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
         buffer = new BYTE[bufferSize];
-        IfFailRet(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
+        IfFailCleanup(JsSerializeScript(szScriptBuffer, buffer, &bufferSize));
+
+        size_t tmpFilePathSize = wcslen(szSerializedPath) + 4; // add string size of ".tmp"
+        szTmpSerializedPath = new wchar_t[tmpFilePathSize + 1];
+        swprintf(szTmpSerializedPath, tmpFilePathSize + 1, L"%ws.tmp", szSerializedPath);
 
         FILE* file;
-        _wfopen_s(&file, szSerializedPath, L"wb");
-        fwrite(buffer, sizeof(BYTE), bufferSize, file);
-        fclose(file);
-    }
+        errno_t err;
+        err = _wfopen_s(&file, szTmpSerializedPath, L"wb");
+        if (err != 0)
+        {
+            status = JsErrorFatal;
+            goto cleanup;
+        }
 
-    return JsNoError;
+        size_t nrBytes = fwrite(buffer, sizeof(BYTE), bufferSize, file);
+        if (nrBytes != bufferSize)
+        {
+            status = JsErrorFatal;
+            fclose(file);
+            goto cleanup;
+        }
+
+        fclose(file);
+
+        _wunlink(szSerializedPath);
+        if (0 != _wrename(szTmpSerializedPath, szSerializedPath))
+        {
+            goto cleanup;
+        }
+    }
+cleanup:
+    free(buffer);
+    free(szScriptBuffer);
+    free(szTmpSerializedPath);
+    return status;
 }
 
 JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t* szSerializedPath, const wchar_t* szSourceUri, JsValueRef* result)
@@ -358,13 +388,19 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     wchar_t* szScriptBuffer = nullptr;
     IfFailRet(LoadFileContents(szPath, &szScriptBuffer));
 
+    JsErrorCode error;
     if (!CompareLastWrite(szSerializedPath, szPath))
     {
-        return JsErrorBadSerializedScript;
+        error = JsErrorBadSerializedScript;
     }
     else
     {
-        IfFailRet(LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, true));
+        error = LoadByteCode(szSerializedPath, &buffer, &hFile, &hMap, true);
+    }
+    if (error != JsNoError)
+    {
+        free(szScriptBuffer);
+        return error;
     }
 
     SerializedSourceContext* context = new SerializedSourceContext();
@@ -373,7 +409,7 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     context->fileHandle = hFile;
     context->mapHandle = hMap;
 
-    JsErrorCode error = JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result);
+    error = JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result);
     if (error != JsNoError)
     {
         // UnloadSourceCallback is called even in error case (though LoadSourceCallback never is), so we can't fully delete the context
