@@ -157,5 +157,15 @@ namespace ReactNative.Modules.Storage
         {
             return GetError(key, "Invalid Value");
         }
+
+        public static JObject GetError(System.Exception ex)
+        {
+            return new JObject
+            {
+                { "hresult", ex.HResult.ToString("X8") },
+                { "message", ex.Message },
+                { "key", ex.GetType().Name },
+            };
+        }
     }
 }
