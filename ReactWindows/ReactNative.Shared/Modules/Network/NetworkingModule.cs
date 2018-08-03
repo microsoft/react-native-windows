@@ -423,7 +423,7 @@ namespace ReactNative.Modules.Network
                 requestId,
                 (int)response.StatusCode,
                 headerData,
-                response.RequestMessage.RequestUri.AbsolutePath,
+                response.RequestMessage.RequestUri.AbsoluteUri,
             };
 
             EventEmitter.emit("didReceiveNetworkResponse", args);
@@ -517,7 +517,7 @@ namespace ReactNative.Modules.Network
                 new HttpClient(
                     new HttpBaseProtocolFilter
                     {
-                        AllowAutoRedirect = false,
+                        AllowAutoRedirect = true,
                     }));
         }
     }
