@@ -277,6 +277,7 @@ namespace ReactNative.Modules.Storage
         {
             var error = default(JObject);
             var keys = new JArray();
+            var error = default(JObject);
 
             await _mutex.WaitAsync().ConfigureAwait(false);
             try
