@@ -262,7 +262,6 @@ namespace ReactNative.Modules.Storage
                 _mutex.Release();
             }
 
-
             if (error != null)
             {
                 callback.Invoke(error);
@@ -276,6 +275,7 @@ namespace ReactNative.Modules.Storage
         [ReactMethod]
         public async void getAllKeys(ICallback callback)
         {
+            var error = default(JObject);
             var keys = new JArray();
             var error = default(JObject);
 

@@ -49,7 +49,7 @@ namespace ReactNative.Modules.Launch
         /// The promise that should be resolved after the URL is opened.
         /// </param>
         [ReactMethod]
-        public async void openURL(string url, IPromise promise)
+        public void openURL(string url, IPromise promise)
         {
             if (url == null)
             {
@@ -76,7 +76,7 @@ namespace ReactNative.Modules.Launch
         /// The promise used to return the result of the check.
         /// </param>
         [ReactMethod]
-        public async void canOpenURL(string url, IPromise promise)
+        public void canOpenURL(string url, IPromise promise)
         {
             if (url == null)
             {

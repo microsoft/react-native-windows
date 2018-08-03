@@ -161,16 +161,17 @@ namespace ReactNative.DevSupport
             if (_isDevSupportEnabled)
             {
 #if WINDOWS_UWP
-                var lastUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate.UtcDateTime;
+                var lastNativeUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate.UtcDateTime;
                 var localFolder = ApplicationData.Current.LocalFolder.Path;
 #else
-                var lastUpdateTime = File.GetCreationTime(Assembly.GetExecutingAssembly().Location);
+                var lastNativeUpdateTime = File.GetLastWriteTimeUtc(Assembly.GetEntryAssembly().Location);
                 var localFolder = FileSystem.Current.LocalStorage.Path;
 #endif
-                var localFileName = Path.Combine(localFolder, JSBundleFileName);
-                if (File.Exists(localFileName))
+                var jsBundleFileName = Path.Combine(localFolder, JSBundleFileName);
+
+                if (File.Exists(jsBundleFileName))
                 {
-                    return File.GetLastWriteTimeUtc(localFileName) > lastUpdateTime;
+                    return File.GetLastWriteTimeUtc(jsBundleFileName) > lastNativeUpdateTime;
                 }
             }
 

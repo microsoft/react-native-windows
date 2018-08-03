@@ -163,9 +163,9 @@ namespace ReactNative.Modules.Storage
         {
             return new JObject
             {
+                { "hresult", ex.HResult.ToString("X8") },
                 { "message", ex.Message },
                 { "key", ex.GetType().Name },
-                { "stacktrace", ex.StackTrace },
             };
         }
     }
