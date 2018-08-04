@@ -625,7 +625,7 @@ namespace ReactNative.Tests.Modules.Network
                 if (name == "emit" && args.Length == 2)
                 {
                     var eventName = args[0] as string;
-                    if (eventName == "didReceiveNetworkData")
+                    if (eventName == "didReceiveNetworkResponse")
                     {
                         onReceivedData = args[1] as JArray;
                         onReceived.Set();
