@@ -158,7 +158,7 @@ This project uses [Newtonsoft Json.NET](http://www.newtonsoft.com/json) to provi
 The last step within .NET is to register the Module; this happens in the `CreateNativeModules` of your apps package. If a module is not registered it will not be available from JavaScript.
 
 ```csharp
-public class MainReactPackage : IReactPackage
+public class AnExampleReactPackage : IReactPackage
 {
     public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
     {
