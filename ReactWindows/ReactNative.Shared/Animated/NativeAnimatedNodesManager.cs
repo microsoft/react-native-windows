@@ -246,7 +246,7 @@ namespace ReactNative.Animated
         {
             if (_activeAnimations.TryGetValue(animationId, out var animation))
             {
-                animation.EndCallback.Invoke(new JObject
+                animation.EndCallback?.Invoke(new JObject
                 {
                     { "finished", false },
                 });
@@ -497,7 +497,7 @@ namespace ReactNative.Animated
                 if (animatedNode == animation.AnimatedValue)
                 {
                     // Invoke animation end callback with {finished: false}
-                    animation.EndCallback.Invoke(new JObject
+                    animation.EndCallback?.Invoke(new JObject
                     {
                         { "finished", false }, 
                     });
