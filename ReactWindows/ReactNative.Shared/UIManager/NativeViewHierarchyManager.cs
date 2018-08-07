@@ -663,6 +663,7 @@ namespace ReactNative.UIManager
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
 
+            // Keeping here for symmetry, tag on root views is set early, in UIManagerModule.AddMeasuredRootViewAsync
             ViewExtensions.SetTag(view, tag);
             ViewExtensions.SetReactContext(view, themedContext);
 #if WINDOWS_UWP

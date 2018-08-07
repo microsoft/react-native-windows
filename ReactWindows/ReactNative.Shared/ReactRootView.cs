@@ -167,7 +167,7 @@ namespace ReactNative
         /// <remarks>
         /// Has to be called under the dispatcher associated with the view.
         /// </remarks>
-        /// <returns>Aeaitable task.</returns>
+        /// <returns>Awaitable task.</returns>
         public async Task StopReactApplicationAsync()
         {
             DispatcherHelpers.AssertOnDispatcher(this);

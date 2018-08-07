@@ -133,7 +133,7 @@ namespace ReactNative.UIManager
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
-            // Set tag early to accomodate raceing removals done by DetachRootViewAsync
+            // Set tag early in case of concurrent DetachRootViewAsync
             rootView.SetTag(tag);
 
             var context = new ThemedReactContext(Context);
