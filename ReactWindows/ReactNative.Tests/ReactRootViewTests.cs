@@ -45,6 +45,41 @@ namespace ReactNative.Tests
             await DispatcherHelpers.CallOnDispatcherAsync(async () => await DisposeInstanceManager(manager));
         }
 
+        [TestMethod]
+        public async Task ReactRootView_SecondaryWindowStress()
+        {
+            var jsBundleFile = "ms-appx:///Resources/mwtest.js";
+            ReactInstanceManager manager = null;
+            await DispatcherHelpers.CallOnDispatcherAsync(() => manager = CreateReactInstanceManager(jsBundleFile));
+
+            var reactContext = await DispatcherHelpers.CallOnDispatcherAsync(
+                () => manager.CreateReactContextAsync(CancellationToken.None));
+
+            int currentDelay = 2000;
+
+            for (int i = 0; i < 30; i++)
+            {
+                currentDelay /= 2;
+
+                // Create a window
+                var dispatcher = await CreateView(() =>
+                {
+                    var rv = new ReactRootView();
+                    rv.StartReactApplication(
+                        manager,
+                        "alt_window",
+                        null);
+                    return rv;
+                });
+
+                await Task.Delay(currentDelay);
+
+                await CloseView(manager, dispatcher);
+            }
+
+            await DispatcherHelpers.CallOnDispatcherAsync(async () => await DisposeInstanceManager(manager));
+        }
+
         private static ReactInstanceManager CreateReactInstanceManager(string jsBundleFile, LifecycleState initialLifecycleState = LifecycleState.Foreground)
         {
             ReactNative.Bridge.DispatcherHelpers.Initialize();
