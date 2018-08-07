@@ -18,6 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>ReactNative.Tests_TemporaryKey.pfx</PackageCertificateKeyFile>
     <UnitTestPlatformVersion Condition="'$(UnitTestPlatformVersion)' == ''">14.0</UnitTestPlatformVersion>
+    <DependencyConfiguration>Debug</DependencyConfiguration>
     <PackageCertificateThumbprint>F0FB82837F45EE9E0EFC3B38576F3C1523EAC45A</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -111,6 +112,7 @@
     <Compile Include="Modules\Storage\AsyncStorageModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactInstanceManagerTests.cs" />
+    <Compile Include="ReactRootViewTests.cs" />
     <Compile Include="UIManager\BorderedCanvasTests.cs" />
     <Compile Include="UIManager\Events\EventDispatcherTests.cs" />
     <Compile Include="UIManager\Events\EventTests.cs" />
@@ -142,6 +144,7 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Resources\immediate.js" />
+    <Content Include="Resources\mwtest.js" />
     <Content Include="Resources\sync.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -157,6 +160,13 @@
       <Project>{c7673ad5-e3aa-468c-a5fd-fa38154e205c}</Project>
       <Name>ReactNative</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\Yoga\csharp\Yoga\bin\Universal\$(Platform)\$(DependencyConfiguration)\yoga.dll">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
   </ItemGroup>
   <Import Project="..\ReactNative.Shared.Tests\ReactNative.Shared.Tests.projitems" Label="Shared" />
   <ItemGroup>
