@@ -5,11 +5,13 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
@@ -156,15 +158,12 @@ namespace ReactNative.Bridge
         /// Hook to notify modules that the <see cref="IReactInstance"/> has
         /// been initialized.
         /// </summary>
-        internal void NotifyReactInstanceInitialize()
+        internal async Task NotifyReactInstanceInitializeAsync()
         {
             _reactContext.AssertOnNativeModulesQueueThread();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize").Start())
             {
-                foreach (var module in _moduleInstances.Values)
-                {
-                    Dispatch(module, module.Initialize);
-                }
+                await Task.WhenAll(_moduleInstances.Values.Select(module => RunAsync(module, module.Initialize)));
             }
         }
 
@@ -192,6 +191,20 @@ namespace ReactNative.Bridge
             if (module.ActionQueue != null)
             {
                 module.ActionQueue.Dispatch(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
+        private static async Task RunAsync(INativeModule module, Action action)
+        {
+            // If the module has an action queue, call there;
+            // otherwise execute inline.
+            if (module.ActionQueue != null)
+            {
+                await module.ActionQueue.RunAsync(action);
             }
             else
             {
