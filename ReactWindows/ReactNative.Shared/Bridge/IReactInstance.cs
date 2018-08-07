@@ -6,6 +6,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative.Bridge
 {
@@ -29,7 +30,7 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Initializes the instance.
         /// </summary>
-        System.Threading.Tasks.Task InitializeAsync();
+        Task InitializeAsync();
 
         /// <summary>
         /// Invokes a JavaScript function.
