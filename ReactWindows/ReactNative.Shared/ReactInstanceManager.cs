@@ -422,7 +422,7 @@ namespace ReactNative
             rootView.Children.Clear();
             ViewExtensions.ClearData(rootView);
 
-            await DispatcherHelpers.CallOnDispatcher(() =>
+            await DispatcherHelpers.CallOnDispatcher(async () =>
             {
                 _attachedRootViews.Add(rootView);
 
@@ -433,11 +433,11 @@ namespace ReactNative
                 var currentReactContext = _currentReactContext;
                 if (currentReactContext != null)
                 {
-                    AttachMeasuredRootViewToInstance(rootView, currentReactContext.ReactInstance);
+                    await AttachMeasuredRootViewToInstanceAsync(rootView, currentReactContext.ReactInstance);
                 }
 
                 return true;
-           }, true); // inlining allowed
+           }, true).Unwrap(); // inlining allowed
         }
 
         /// <summary>
@@ -591,7 +591,7 @@ namespace ReactNative
             try
             {
                 var reactContext = await CreateReactContextCoreAsync(jsExecutorFactory, jsBundleLoader, token);
-                SetupReactContext(reactContext);
+                await SetupReactContextAsync(reactContext);
                 return reactContext;
             }
             catch (OperationCanceledException)
@@ -607,7 +607,7 @@ namespace ReactNative
             return null;
         }
 
-        private void SetupReactContext(ReactContext reactContext)
+        private async Task SetupReactContextAsync(ReactContext reactContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
             if (_currentReactContext != null)
@@ -624,7 +624,7 @@ namespace ReactNative
 
             foreach (var rootView in _attachedRootViews)
             {
-                AttachMeasuredRootViewToInstance(rootView, reactInstance);
+                await AttachMeasuredRootViewToInstanceAsync(rootView, reactInstance);
             }
         }
 
@@ -634,13 +634,13 @@ namespace ReactNative
             _defaultBackButtonHandler?.Invoke();
         }
 
-        private void AttachMeasuredRootViewToInstance(
+        private async Task AttachMeasuredRootViewToInstanceAsync(
             ReactRootView rootView,
             IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            var rootTag = reactInstance.GetNativeModule<UIManagerModule>()
-                .AddMeasuredRootView(rootView);
+            var rootTag = await reactInstance.GetNativeModule<UIManagerModule>()
+                .AddMeasuredRootViewAsync(rootView);
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>
