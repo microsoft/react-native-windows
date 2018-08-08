@@ -106,6 +106,9 @@ namespace ReactNative.Animated
                 case "transform":
                     node = new TransformAnimatedNode(tag, config, this);
                     break;
+                case "tracking":
+                    node = new TrackingAnimatedNode(tag, config, this);
+                    break;
                 default:
                     throw new InvalidOperationException(Invariant($"Unsupported node type: '{type}'"));
             }
@@ -243,7 +246,7 @@ namespace ReactNative.Animated
         {
             if (_activeAnimations.TryGetValue(animationId, out var animation))
             {
-                animation.EndCallback.Invoke(new JObject
+                animation.EndCallback?.Invoke(new JObject
                 {
                     { "finished", false },
                 });
@@ -472,7 +475,7 @@ namespace ReactNative.Animated
                     var animation = _activeAnimations[animationId];
                     if (animation.HasFinished)
                     {
-                        animation.EndCallback.Invoke(new JObject
+                        animation.EndCallback?.Invoke(new JObject
                         {
                             { "finished", true },
                         });
@@ -494,7 +497,7 @@ namespace ReactNative.Animated
                 if (animatedNode == animation.AnimatedValue)
                 {
                     // Invoke animation end callback with {finished: false}
-                    animation.EndCallback.Invoke(new JObject
+                    animation.EndCallback?.Invoke(new JObject
                     {
                         { "finished", false }, 
                     });
