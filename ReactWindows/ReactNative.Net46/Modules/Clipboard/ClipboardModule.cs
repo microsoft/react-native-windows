@@ -82,7 +82,7 @@ namespace ReactNative.Modules.Clipboard
                 {
                     _clipboard.SetText(text);
                 }
-                catch (Exception)
+                catch
                 {
                     // Ignored
                 }
