@@ -450,12 +450,6 @@ namespace ReactNative.UIManager
             {
                 if (IsDelegatedLayout)
                 {
-                    if (!_hasChildLayoutChanged)
-                    {
-                        // We cache the "changed" value from the child Yoga node so we can mark
-                        // the current shadow node as seen separately from the child.
-                        _hasChildLayoutChanged = _yogaNode?.HasNewLayout ?? false;
-                    }
                     return _hasChildLayoutChanged;
                 }
                 return _yogaNode?.HasNewLayout ?? false;
@@ -574,6 +568,16 @@ namespace ReactNative.UIManager
                 }
 
                 _yogaNode.SetMeasureFunction(value);
+            }
+        }
+
+        public void BeforeDispatchUpdatesToDescendants()
+        {
+            if (IsDelegatedLayout)
+            {
+                // We cache the "changed" value from the child Yoga node so we can mark
+                // the current shadow node as seen separately from the child.
+                _hasChildLayoutChanged = _yogaNode?.HasNewLayout ?? false;
             }
         }
 
