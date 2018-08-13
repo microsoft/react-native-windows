@@ -46,7 +46,7 @@ const View = require('View');
 
 import type { RNTesterNavigationState } from './RNTesterNavigationReducer';
 
-const DRAWER_WIDTH_LEFT = 56;
+const DRAWER_WIDTH_LEFT = 400;
 
 type Props = {
   exampleFromAppetizeParams: string,
@@ -90,7 +90,7 @@ class RNTesterApp extends React.Component {
     return (
       <SplitViewWindows
         panePosition={SplitViewWindows.positions.Left}
-        paneWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
+        paneWidth={DRAWER_WIDTH_LEFT}
         keyboardDismissMode="on-drag"
         onPaneOpen={() => {
           this._overrideBackPressForPane = true;

@@ -183,6 +183,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CrossWindow\CrossWindowModule.cs" />
+    <Compile Include="CrossWindow\CrossWindowPackage.cs" />
     <Compile Include="MainReactNativeHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

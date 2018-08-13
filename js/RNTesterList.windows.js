@@ -194,15 +194,23 @@ const APIExamples = [
   },
 ];
 
+const OtherExamples = [
+  {
+    key: 'MultiWindowExample',
+    module: require('./MultiWindowExample'),
+  }  
+];
+
 const Modules = {};
 
-APIExamples.concat(ComponentExamples).forEach(Example => {
+APIExamples.concat(ComponentExamples).concat(OtherExamples).forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 
 const RNTesterList = {
   APIExamples,
   ComponentExamples,
+  OtherExamples,
   Modules,
 };
 
