@@ -1,6 +1,7 @@
 using ReactNative;
 using ReactNative.Bridge;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -36,11 +37,37 @@ namespace RNTesterApp
         [ReactMethod]
         public async void newWindow()
         {
-            await CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await openNewWindow(((App)(Application.Current)).Host.MainComponentName);
+        }
+
+        [ReactMethod]
+        public async void runStressOpenCloseTest(string appName, IPromise promise)
+        {
+            int currentDelay = 4000;
+            for (int i = 0; i < 30; i++)
+            {
+                currentDelay /= 2;
+
+                // Create a window
+                var dispatcher = await openNewWindow(appName);
+
+                await Task.Delay(currentDelay);
+
+                await await DispatcherHelpers.CallOnDispatcher(dispatcher, async () => await CloseWindow());
+            }
+
+            promise.Resolve(true);
+        }
+
+        private async Task<CoreDispatcher> openNewWindow(string reactApp)
+        {
+            var dispatcherTaskTask = DispatcherHelpers.CallOnDispatcher(async () =>
             {
                 CoreApplicationView newView = CoreApplication.CreateNewView();
                 int newViewId = 0;
-                await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                var dispatcher = newView.Dispatcher;
+
+                await DispatcherHelpers.CallOnDispatcher(dispatcher, () =>
                 {
                     Frame frame = new Frame();
 
@@ -50,7 +77,7 @@ namespace RNTesterApp
 
                     frame.Content = new Page
                     {
-                        Content = host.OnCreate(),
+                        Content = host.OnCreate(reactApp, null),
                     };
 
                     ApplicationView.GetForCurrentView().Consolidated += OnConsolidated;
@@ -59,12 +86,24 @@ namespace RNTesterApp
                     Window.Current.Activate();
 
                     newViewId = ApplicationView.GetForCurrentView().Id;
+
+                    return true;
                 });
+
                 bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+
+                return dispatcher;
             });
+
+            return await dispatcherTaskTask.Unwrap();
         }
 
         private async void OnConsolidated(ApplicationView appView, ApplicationViewConsolidatedEventArgs consolidatedArgs)
+        {
+            await CloseWindow();
+        }
+
+        private async Task CloseWindow()
         {
             // Cleanup the root view and close the Window
             var window = Window.Current;

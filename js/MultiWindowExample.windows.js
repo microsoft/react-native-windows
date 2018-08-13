@@ -26,6 +26,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  AppRegistry,
   Text,
   TouchableHighlight,
   View,
@@ -33,18 +34,62 @@ var {
   NativeModules
 } = ReactNative;
 
-class MultiWindowExampleBlock extends React.Component {
+class NewWindowExampleBlock extends React.Component {
   render() {
     return (
       <View>
         <TouchableHighlight style={styles.wrapper}
           onPress={() => NativeModules.CrossWindow.newWindow()}>
           <View style={styles.button}>
-            <Text>Alert (for now) with message and default button</Text>
+            <Text>Creates a new top level window (a clone of RNTester main window)</Text>
           </View>
         </TouchableHighlight>
       </View>
     );
+  }
+}
+
+class SecondaryWindow extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          This is a test secondary window!
+        </Text>
+        <Text style={styles.instructions}>
+          Please don't close it and let the test finish!
+        </Text>
+      </View>
+    );
+  }
+}
+
+class StressOpenCloseExampleBlock extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      status: 'Not running.'
+    };
+  }
+
+  render() {
+    return (
+      <View>
+        <TouchableHighlight style={styles.wrapper}
+          onPress={() => this.runStress()}>
+          <View style={styles.button}>
+            <Text>Start a sequence of rapidly opening/closing of some test windows</Text>
+          </View>
+        </TouchableHighlight>
+        <Text style={styles.status}> {this.state.status}</Text>
+      </View>
+    );
+  }
+
+  runStress() {
+    this.setState({status: 'Running...'});
+    NativeModules.CrossWindow.runStressOpenCloseTest('SecondaryWindow').then(() => this.setState({status: 'Not running.'}));
   }
 }
 
@@ -55,10 +100,18 @@ exports.examples = [
     title: 'New top level window',
     render: function() {
       return (
-        <MultiWindowExampleBlock />
+        <NewWindowExampleBlock />
       );
     }
-  }
+  },
+  {
+    title: 'Stress open/close',
+    render: function() {
+      return (
+        <StressOpenCloseExampleBlock />
+      );
+    }
+  },
 ];
 
 var styles = StyleSheet.create({
@@ -70,4 +123,25 @@ var styles = StyleSheet.create({
     backgroundColor: '#eeeeee',
     padding: 10,
   },
+  status: {
+    padding: 10,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  }
 });
+
+AppRegistry.registerComponent('SecondaryWindow', () => SecondaryWindow);
