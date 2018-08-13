@@ -877,6 +877,8 @@ namespace ReactNative.UIManager
             float absoluteX,
             float absoluteY)
         {
+            cssNode.BeforeDispatchUpdatesToDescendants();
+
             if (!cssNode.HasUpdates)
             {
                 return;
