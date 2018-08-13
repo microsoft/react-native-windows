@@ -75,7 +75,7 @@ namespace ReactNative.UIManager
         private readonly SimpleLockedDictionary<int, UIViewOperationQueueInstance> _reactTagToOperationQueue = new SimpleLockedDictionary<int, UIViewOperationQueueInstance>();
 
         // The _dispatcherToOperationQueueInfo (all entries but the main window related one) & _active combo are protected by this lock
-        // This allows for consistent lifecycle OnSuspend/OnResume events to e sent to each queue instance
+        // This allows for consistent lifecycle OnSuspend/OnResume events to be sent to each queue instance
         private readonly object _lock = new object();
 
         private bool _active;
