@@ -80,7 +80,7 @@ namespace ReactNative.Views.Text
         /// <returns>The view instance.</returns>
         protected override TextBlock CreateViewInstance(ThemedReactContext reactContext)
         {
-            var richTextBlock = new TextBlock
+            var textBlock = new TextBlock
             {
                 IsTextSelectionEnabled = false,
                 TextAlignment = TextAlignment.DetectFromContent,
@@ -88,7 +88,7 @@ namespace ReactNative.Views.Text
                 TextWrapping = TextWrapping.Wrap,
             };
 
-            return richTextBlock;
+            return textBlock;
         }
     }
 }
