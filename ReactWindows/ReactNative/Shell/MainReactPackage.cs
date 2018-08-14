@@ -83,7 +83,6 @@ namespace ReactNative.Shell
         {
             return new List<IViewManager>
             {
-                new ReactSimpleTextViewManager(),
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
                 new ReactProgressBarViewManager(),
