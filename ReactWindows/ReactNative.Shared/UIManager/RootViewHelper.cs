@@ -9,7 +9,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Media;
 #endif
 
@@ -105,24 +104,12 @@ namespace ReactNative.UIManager
 
             if (!findRoot)
             {
-                var frameworkElement = view as FrameworkElement;
-                if (frameworkElement != null)
-                {
-                    return frameworkElement.Parent;
-                }
-#if !WINDOWS_UWP
-
-                var frameworkContentElement = view as FrameworkContentElement;
-                if (frameworkContentElement != null)
-                {
-                    return frameworkContentElement.Parent;
-                }
-#endif
-
-                return null;
+                return (view as FrameworkElement)?.Parent;
             }
-
-            return VisualTreeHelper.GetParent(view);
+            else
+            {
+                return VisualTreeHelper.GetParent(view);
+            }
         }
     }
 }
