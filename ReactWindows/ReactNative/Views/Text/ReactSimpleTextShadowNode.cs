@@ -6,17 +6,18 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+using Windows.Foundation;
+using Windows.UI.Text;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.Text
 {
     /// <summary>
     /// The shadow node implementation for text views.
     /// </summary>
-    public class ReactTextShadowNode : LayoutShadowNode
+    public class ReactSimpleTextShadowNode : LayoutShadowNode
     {
         private int _letterSpacing;
         private int _numberOfLines;
@@ -24,36 +25,34 @@ namespace ReactNative.Views.Text
         private double? _fontSize;
         private double _lineHeight;
 
+        private bool _allowFontScaling;
+
         private FontStyle? _fontStyle;
         private FontWeight? _fontWeight;
-        private TextAlignment _textAlignment = TextAlignment.Left;
+        private TextAlignment _textAlignment = TextAlignment.DetectFromContent;
 
         private string _fontFamily;
 
-        private string _text;
+        private string _text = "";
 
         /// <summary>
         /// Instantiates a <see cref="ReactTextShadowNode"/>.
         /// </summary>
-        public ReactTextShadowNode()
+        public ReactSimpleTextShadowNode()
         {
             MeasureFunction = (node, width, widthMode, height, heightMode) =>
                 MeasureText(this, node, width, widthMode, height, heightMode);
         }
 
         /// <summary>
-        /// Sets the text for the node.
+        /// Sets the text on the view.
         /// </summary>
         /// <param name="text">The text.</param>
         [ReactProp("text")]
         public void SetText(string text)
         {
-            var nonNullText = text ?? "";
-            if (_text != nonNullText)
-            {
-                _text = nonNullText;
-                MarkUpdated();
-            }
+            _text = text ?? "";
+            MarkUpdated();
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace ReactNative.Views.Text
             var fontWeight = FontStyleHelpers.ParseFontWeight(fontWeightValue);
             if (_fontWeight.HasValue != fontWeight.HasValue ||
                 (_fontWeight.HasValue && fontWeight.HasValue &&
-                _fontWeight.Value != fontWeight.Value))
+                _fontWeight.Value.Weight != fontWeight.Value.Weight))
             {
                 _fontWeight = fontWeight;
                 MarkUpdated();
@@ -123,7 +122,7 @@ namespace ReactNative.Views.Text
         [ReactProp(ViewProps.LetterSpacing)]
         public void SetLetterSpacing(int letterSpacing)
         {
-            var spacing = 50*letterSpacing; // TODO: Find exact multiplier (50) to match iOS
+            var spacing = 50 * letterSpacing; // TODO: Find exact multiplier (50) to match iOS
 
             if (_letterSpacing != spacing)
             {
@@ -168,12 +167,26 @@ namespace ReactNative.Views.Text
         public void SetTextAlign(string textAlign)
         {
             var textAlignment = textAlign == "auto" || textAlign == null ?
-                TextAlignment.Left :
+                TextAlignment.DetectFromContent :
                 EnumHelpers.Parse<TextAlignment>(textAlign);
 
             if (_textAlignment != textAlignment)
             {
                 _textAlignment = textAlignment;
+                MarkUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Set fontScaling
+        /// </summary>
+        /// <param name="allowFontScaling">Max number of lines.</param>
+        [ReactProp(ViewProps.AllowFontScaling)]
+        public virtual void SetAllowFontScaling(bool allowFontScaling)
+        {
+            if (_allowFontScaling != allowFontScaling)
+            {
+                _allowFontScaling = allowFontScaling;
                 MarkUpdated();
             }
         }
@@ -202,7 +215,7 @@ namespace ReactNative.Views.Text
             dirty();
         }
 
-        private static YogaSize MeasureText(ReactTextShadowNode textNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
+        private static YogaSize MeasureText(ReactSimpleTextShadowNode textNode, YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
             // TODO: Measure text with DirectWrite or other API that does not
             // require dispatcher access. Currently, we're instantiating a
@@ -210,18 +223,12 @@ namespace ReactNative.Views.Text
             // its Dispatcher thread to calculate layout.
             var textBlock = new TextBlock
             {
-                TextAlignment = TextAlignment.Left,
                 TextWrapping = TextWrapping.Wrap,
+                TextAlignment = TextAlignment.DetectFromContent,
                 TextTrimming = TextTrimming.CharacterEllipsis,
             };
 
             textNode.UpdateTextBlockCore(textBlock, true);
-
-            for (var i = 0; i < textNode.ChildCount; ++i)
-            {
-                var child = textNode.GetChildAt(i);
-                textBlock.Inlines.Add(ReactInlineShadowNodeVisitor.Apply(child));
-            }
 
             var normalizedWidth = YogaConstants.IsUndefined(width) ? double.PositiveInfinity : width;
             var normalizedHeight = YogaConstants.IsUndefined(height) ? double.PositiveInfinity : height;
@@ -232,7 +239,7 @@ namespace ReactNative.Views.Text
         }
 
         /// <summary>
-        /// Updates the properties of a <see cref="TextBlock"/> view.
+        /// Updates the properties of a <see cref="RichTextBlock"/> view.
         /// </summary>
         /// <param name="textBlock">The view.</param>
         public void UpdateTextBlock(TextBlock textBlock)
@@ -242,32 +249,16 @@ namespace ReactNative.Views.Text
 
         private void UpdateTextBlockCore(TextBlock textBlock, bool measureOnly)
         {
-            if (ChildCount == 0 && _text != null)
-            {
-                textBlock.Text = _text;
-            }
-
-            textBlock.LineHeight = _lineHeight != 0 ? _lineHeight : double.NaN;
+            textBlock.CharacterSpacing = _letterSpacing;
+            textBlock.LineHeight = _lineHeight;
+            textBlock.MaxLines = _numberOfLines;
             textBlock.TextAlignment = _textAlignment;
+            textBlock.FontFamily = _fontFamily != null ? new FontFamily(_fontFamily) : FontFamily.XamlAutoFontFamily;
             textBlock.FontSize = _fontSize ?? 15;
-            textBlock.FontStyle = _fontStyle ?? new FontStyle();
+            textBlock.FontStyle = _fontStyle ?? FontStyle.Normal;
             textBlock.FontWeight = _fontWeight ?? FontWeights.Normal;
-
-            if (_fontFamily != null)
-            {
-                // convert font string into something WPF can use
-                // https://msdn.microsoft.com/en-us/library/ms753303(v=vs.110).aspx
-                // e.g. FontFamily(new System.Uri("pack://application:,,,/"), "./Assets/#fontname")
-                string[] path = _fontFamily.Split('/');
-                path = path.Take(path.Count() - 1).ToArray();
-                string cleanPath = "./" + string.Join("/", path) + "/";
-                string[] fontParts = _fontFamily.Split('#');
-                textBlock.FontFamily = new FontFamily(new System.Uri("pack://application:,,,/"), cleanPath + "#" + fontParts.Last());
-            }
-            else
-            {
-                textBlock.FontFamily = new FontFamily();
-            }
+            textBlock.IsTextScaleFactorEnabled = _allowFontScaling;
+            textBlock.Text = _text;
 
             if (!measureOnly)
             {
@@ -276,25 +267,6 @@ namespace ReactNative.Views.Text
                     GetPadding(YogaEdge.Top),
                     0,
                     0);
-            }
-        }
-
-        /// <summary>
-        /// This method will be called by <see cref="UIManagerModule"/> once
-        /// per batch, before calculating layout. This will only be called for
-        /// nodes that are marked as updated with <see cref="MarkUpdated"/> or
-        /// require layout (i.e., marked with <see cref="ReactShadowNode.dirty"/>).
-        /// </summary>
-        public override void OnBeforeLayout()
-        {
-            // Run flexbox on the children which are inline views.
-            for (var i = 0; i < ChildCount; ++i)
-            {
-                var child = GetChildAt(i);
-                if (!(child is ReactInlineShadowNode))
-                {
-                    child.CalculateLayout();
-                }
             }
         }
     }
