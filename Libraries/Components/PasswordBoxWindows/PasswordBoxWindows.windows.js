@@ -3,12 +3,12 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- * 
+ *
  * Portions copyright for react-native-windows:
- * 
+ *
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
- * 
+ *
  * @providesModule PasswordBoxWindows
  * @flow
  * @format
@@ -26,17 +26,15 @@ const ReactNative = require('ReactNative');
 const StyleSheet = require('StyleSheet');
 const Text = require('Text');
 const TextInputState = require('TextInputState');
-/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
- * found when Flow v0.54 was deployed. To see the error delete this comment and
- * run Flow. */
 const TimerMixin = require('react-timer-mixin');
 const TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 const ViewPropTypes = require('ViewPropTypes');
-const {ViewContextTypes} = require('ViewContext');
 
 const requireNativeComponent = require('requireNativeComponent');
 
-import type {ViewChildContext} from 'ViewContext';
+import type {ColorValue} from 'StyleSheetTypes';
+import type {TextStyleProp, ViewStyleProp} from 'StyleSheet';
+import type {ViewProps} from 'ViewPropTypes';
 
 var NativePasswordBox = requireNativeComponent('PasswordBoxWindows', null);
 
@@ -63,13 +61,16 @@ type Event = Object;
  * Two methods exposed via the native element are .focus() and .blur() that
  * will focus or blur the PasswordBox programmatically.
  */
+
 const PasswordBoxWindows = createReactClass({
   displayName: 'PasswordBoxWindows',
   statics: {
-    /* TODO(brentvatne) docs are needed for this */
-    State: TextInputState,
+    State: {
+      currentlyFocusedField: TextInputState.currentlyFocusedField,
+      focusTextInput: TextInputState.focusTextInput,
+      blurTextInput: TextInputState.blurTextInput,
+    },
   },
-
   propTypes: {
     ...ViewPropTypes,
     /**
@@ -96,15 +97,18 @@ const PasswordBoxWindows = createReactClass({
       'email-address',
       'numeric',
       'phone-pad',
+      'number-pad',
+      // iOS and Windows-only
+      'url',
+      'name-phone-pad',
+      'decimal-pad',
+      'web-search',
       // iOS-only
       'ascii-capable',
       'numbers-and-punctuation',
-      'url',
-      'number-pad',
-      'name-phone-pad',
-      'decimal-pad',
       'twitter',
-      'web-search',
+      // Android-only
+      'visible-password',
     ]),
     /**
      * Determines the color of the keyboard.
@@ -194,6 +198,7 @@ const PasswordBoxWindows = createReactClass({
      * Changed text is passed as an argument to the callback handler.
      */
     onChangeText: PropTypes.func,
+    onTextInput: PropTypes.func,
     /**
      * Callback that is called when text input ends.
      */
@@ -252,7 +257,7 @@ const PasswordBoxWindows = createReactClass({
      */
     selectionState: PropTypes.instanceOf(DocumentSelectionState),
     /**
-     * The value to show for the text input. `TextInput` is a controlled
+     * The value to show for the text input. `PasswordBox` is a controlled
      * component, which means the native value will be forced to match this
      * value prop if provided. For most uses, this works great, but in some
      * cases this may cause flickering - one common cause is preventing edits
@@ -269,7 +274,7 @@ const PasswordBoxWindows = createReactClass({
     defaultValue: PropTypes.string,
     /**
      * When the clear button should appear on the right side of the text view.
-     * This property is supported only for single-line TextInput component.
+     * This property is supported only for single-line PasswordBox component.
      * @platform ios
      */
     clearButtonMode: PropTypes.oneOf([
@@ -314,12 +319,15 @@ const PasswordBoxWindows = createReactClass({
      */
     style: Text.propTypes.style,
     /**
-     * The color of the textInput underline.
-     * @platform android
+     * tabIndex:
+     * -1: Control is not keyboard focusable in any way
+     * 0 (default): Control is keyboard focusable in the normal order
+     * >0: Control is keyboard focusable in a priority order (starting with 1)
+     *
+     *  @platform windows
      */
-    underlineColorAndroid: PropTypes.string,
+    tabIndex: PropTypes.number,
   },
-
   /**
    * `NativeMethodsMixin` will look for this when invoking `setNativeProps`. We
    * make `this` look like an actual native component class.
@@ -342,24 +350,31 @@ const PasswordBoxWindows = createReactClass({
 
   componentDidMount: function() {
     this._lastNativeText = this.props.value;
-    if (!this.context.focusEmitter) {
+    const tag = ReactNative.findNodeHandle(this._inputRef);
+    if (tag != null) {
+      // tag is null only in unit tests
+      TextInputState.registerInput(tag);
+    }
+
+
+    if (this.context.focusEmitter) {
+      this._focusSubscription = this.context.focusEmitter.addListener(
+        'focus',
+        el => {
+          if (this === el) {
+            this.requestAnimationFrame(this.focus);
+          } else if (this.isFocused()) {
+            this.blur();
+          }
+        },
+      );
+      if (this.props.autoFocus) {
+        this.context.onFocusRequested(this);
+      }
+    } else {
       if (this.props.autoFocus) {
         this.requestAnimationFrame(this.focus);
       }
-      return;
-    }
-    this._focusSubscription = this.context.focusEmitter.addListener(
-      'focus',
-      el => {
-        if (this === el) {
-          this.requestAnimationFrame(this.focus);
-        } else if (this.isFocused()) {
-          this.blur();
-        }
-      },
-    );
-    if (this.props.autoFocus) {
-      this.context.onFocusRequested(this);
     }
   },
 
@@ -368,18 +383,13 @@ const PasswordBoxWindows = createReactClass({
     if (this.isFocused()) {
       this.blur();
     }
+    const tag = ReactNative.findNodeHandle(this._inputRef);
+    if (tag != null) {
+      TextInputState.unregisterInput(tag);
+    }
   },
-
-  getChildContext(): ViewChildContext {
-    return {
-      isInAParentText: true,
-    };
-  },
-
-  childContextTypes: ViewContextTypes,
 
   contextTypes: {
-    ...ViewContextTypes,
     onFocusRequested: PropTypes.func,
     focusEmitter: PropTypes.instanceOf(EventEmitter),
   },
@@ -434,6 +444,7 @@ const PasswordBoxWindows = createReactClass({
         accessible={this.props.accessible}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityTraits={this.props.accessibilityTraits}
+        nativeID={this.props.nativeID}
         testID={this.props.testID}>
         {textContainer}
       </TouchableWithoutFeedback>
@@ -465,7 +476,7 @@ const PasswordBoxWindows = createReactClass({
       });
     }
 
-    var text = event.nativeEvent.text;
+    const text = event.nativeEvent.text;
     this.props.onChange && this.props.onChange(event);
     this.props.onChangeText && this.props.onChangeText(text);
 
