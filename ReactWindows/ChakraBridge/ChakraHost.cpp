@@ -409,11 +409,30 @@ JsErrorCode ChakraHost::RunSerializedScript(const wchar_t* szPath, const wchar_t
     context->fileHandle = hFile;
     context->mapHandle = hMap;
 
-    error = JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result);
+    __try
+    {
+        error = JsRunSerializedScriptWithCallback(&LoadSourceCallback, &UnloadSourceCallback, buffer, (JsSourceContext)context, szSourceUri, result);
+    }
+    __finally
+    {
+        if (AbnormalTermination())
+        {
+            // If JsRunSerializedScriptWithCallback threw any SEH exception (due to corrupted bytecode file that can't be safely caught by
+            // Chakra engine), we make sure we kill the bytecode so next run is fresh.
+            context->Dispose();
+            // This keeps the code clean even though we know app won't make it to the next if block..
+            context = NULL;
+            _wunlink(szSerializedPath);
+        }
+    }
+
     if (error != JsNoError)
     {
         // UnloadSourceCallback is called even in error case (though LoadSourceCallback never is), so we can't fully delete the context
-        context->Dispose();
+        if (context != NULL)
+        {
+            context->Dispose();
+        }
         return error;
     }
     return JsNoError;
