@@ -124,8 +124,8 @@ JsErrorCode ChakraHost::LoadFileContents(const wchar_t* szPath, wchar_t** pszDat
 	fread(rawBytes, sizeof(char), lengthBytes, file);
 	if (fclose(file))
 	{
-        free(rawBytes);
-        return JsErrorFatal;
+		free(rawBytes);
+		return JsErrorFatal;
 	}
 
 	*pszData = (wchar_t *)calloc(lengthBytes + 1, sizeof(wchar_t));
