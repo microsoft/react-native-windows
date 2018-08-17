@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -427,39 +427,27 @@ exports.examples = [
     return (
       <View>
         <Text numberOfLines={1}>
-          Maximum of one line no matter now much I write here. 
-          Maximum of one line no matter now much I write here. 
-          Maximum of one line no matter now much I write here.  
+          Maximum of one line no matter now much I write here.
+          Maximum of one line no matter now much I write here.
+          Maximum of one line no matter now much I write here.
           If I keep writing it{"'"}ll just truncate after one line
         </Text>
         <Text numberOfLines={2} style={{marginTop: 20}}>
-          Maximum of two lines no matter now much I write here. 
-          Maximum of two lines no matter now much I write here. 
-          Maximum of two lines no matter now much I write here. 
-          Maximum of two lines no matter now much I write here. 
+          Maximum of two lines no matter now much I write here.
+          Maximum of two lines no matter now much I write here.
+          Maximum of two lines no matter now much I write here.
+          Maximum of two lines no matter now much I write here.
           If I keep writing it{"'"}ll just truncate after two lines
         </Text>
         <Text style={{marginTop: 20}}>
-          No maximum lines specified no matter now much I write here. 
-          No maximum lines specified no matter now much I write here. 
-          No maximum lines specified no matter now much I write here. 
-          No maximum lines specified no matter now much I write here. 
-          No maximum lines specified no matter now much I write here. 
-          No maximum lines specified no matter now much I write here. 
-          No maximum lines specified no matter now much I write here. 
+          No maximum lines specified no matter now much I write here.
+          No maximum lines specified no matter now much I write here.
+          No maximum lines specified no matter now much I write here.
+          No maximum lines specified no matter now much I write here.
+          No maximum lines specified no matter now much I write here.
+          No maximum lines specified no matter now much I write here.
+          No maximum lines specified no matter now much I write here.
           If I keep writing it{"'"}ll just keep going and going
-        </Text>
-      </View>
-    );
-  },  
-}, {
-  title: 'Inline views',
-  render: function() {
-    return (
-      <View>
-        <Text>
-          This text contains an inline blue view <View style={{width: 25, height: 25, backgroundColor: 'steelblue'}} /> and
-          an inline image <Image source={require('./flux.png')} style={{width: 30, height: 11, resizeMode: 'cover'}}/>. Neat, huh?
         </Text>
       </View>
     );
