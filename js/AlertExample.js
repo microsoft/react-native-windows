@@ -29,13 +29,24 @@ var alertMessage = 'Credibly reintermediate next-generation potentialities after
  * Simple alert examples.
  */
 class SimpleAlertExampleBlock extends React.Component {
+  componentDidMount() {
+    // This is basically the tag of the RCTView corresponding to the non-collapsable View child
+    this._rootViewHint = ReactNative.findNodeHandle(this);
+  }
+
+  _getDefaultOptions() {
+    return  {rootViewHint: this._rootViewHint};
+  }
+
   render() {
     return (
-      <View>
+      <View collapsable={false}>
         <TouchableHighlight style={styles.wrapper}
           onPress={() => Alert.alert(
             'Alert Title',
             alertMessage,
+            [],
+            this._getDefaultOptions()
           )}>
           <View style={styles.button}>
             <Text>Alert with message and default button</Text>
@@ -47,7 +58,8 @@ class SimpleAlertExampleBlock extends React.Component {
             alertMessage,
             [
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
-            ]
+            ],
+            this._getDefaultOptions()
           )}>
           <View style={styles.button}>
             <Text>Alert with one button</Text>
@@ -60,7 +72,8 @@ class SimpleAlertExampleBlock extends React.Component {
             [
               {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
-            ]
+            ],
+            this._getDefaultOptions()
           )}>
           <View style={styles.button}>
             <Text>Alert with two buttons</Text>
@@ -74,7 +87,8 @@ class SimpleAlertExampleBlock extends React.Component {
               {text: 'Foo', onPress: () => console.log('Foo Pressed!')},
               {text: 'Bar', onPress: () => console.log('Bar Pressed!')},
               {text: 'Baz', onPress: () => console.log('Baz Pressed!')},
-            ]
+            ],
+            this._getDefaultOptions()
           )}>
           <View style={styles.button}>
             <Text>Alert with three buttons</Text>
@@ -87,7 +101,8 @@ class SimpleAlertExampleBlock extends React.Component {
             '..............'.split('').map((dot, index) => ({
               text: 'Button ' + index,
               onPress: () => console.log('Pressed ' + index)
-            }))
+            })),
+            this._getDefaultOptions()
           )}>
           <View style={styles.button}>
             <Text>Alert with too many buttons</Text>
@@ -100,9 +115,7 @@ class SimpleAlertExampleBlock extends React.Component {
             [
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
             ],
-            {
-              cancelable: false
-            }
+            { ...this._getDefaultOptions(), cancelable: false }
           )}>
           <View style={styles.button}>
             <Text>Alert that cannot be dismissed</Text>
@@ -114,7 +127,8 @@ class SimpleAlertExampleBlock extends React.Component {
             alertMessage,
             [
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
-            ]
+            ],
+            this._getDefaultOptions()
           )}>
           <View style={styles.button}>
             <Text>Alert without title</Text>
