@@ -329,6 +329,14 @@ bool IsIndexedUnbundle(const wchar_t* szSourcePath)
 	return HasMagicFileHeader(szSourcePath);
 }
 
+//
+// This function generates a bytecode file ("serialized script") based on the original JS bundle.
+// Subsequent applications launches get a speed benefit by directly executing this generasted file (with RunSerializedScript)
+//
+// Some care is taken to make sure there's a way out for any error/corruption that may happen. The first version of this code
+// used to write straight to the output file. Application being terminated before the operation ended triggered the generaion of incomplete files.
+// As a mitigation we use a "write to temp file + rename" pattern now.
+//
 JsErrorCode ChakraHost::SerializeScript(const wchar_t* szPath, const wchar_t* szSerializedPath)
 {
     ULONG bufferSize = 0L;
