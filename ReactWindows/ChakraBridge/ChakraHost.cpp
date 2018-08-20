@@ -349,8 +349,7 @@ JsErrorCode ChakraHost::SerializeScript(const wchar_t* szPath, const wchar_t* sz
         swprintf(szTmpSerializedPath, tmpFilePathSize + 1, L"%ws.tmp", szSerializedPath);
 
         FILE* file;
-        errno_t err;
-        err = _wfopen_s(&file, szTmpSerializedPath, L"wb");
+        auto err = _wfopen_s(&file, szTmpSerializedPath, L"wb");
         if (err != 0)
         {
             status = JsErrorFatal;
