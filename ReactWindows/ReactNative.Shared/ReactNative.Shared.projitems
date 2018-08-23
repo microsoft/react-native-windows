@@ -250,6 +250,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactRunShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactTextBlockSelectionEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactTextInlineViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\InputScopeHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactPasswordBoxShadowNode.cs" />
