@@ -241,7 +241,19 @@ namespace ReactNative.Views.Text
             TextPointer selectionStart = view.SelectionStart;
             TextPointer selectionEnd = view.SelectionEnd;
 
-            if (selectionStart == null || selectionEnd == null || selectionStart == selectionEnd)
+            return GetStringByStartAndEndPointers(view, selectionStart, selectionEnd);
+        }
+
+        /// <summary>
+        /// Returns a text representation of the elements between <paramref name="start"/> and <paramref name="end"/> in the RichTextBlock.
+        /// </summary>
+        /// <param name="view">The RichTextBlock.</param>
+        /// <param name="start">Start TextPointer.</param>
+        /// <param name="end">End TextPointer.</param>
+        /// <returns></returns>
+        public static string GetStringByStartAndEndPointers(RichTextBlock view, TextPointer start, TextPointer end)
+        {
+            if (start == null || end == null || start == end)
             {
                 return null;
             }
@@ -250,7 +262,7 @@ namespace ReactNative.Views.Text
             StringBuilder selectedText = new StringBuilder();
             Debug.Assert(view.Blocks.Count == 1, "RichTextBlock is expected to contain only one paragraph.");
             Paragraph paragraph = view.Blocks.First() as Paragraph;
-            ProcessSelectedInlines(paragraph.Inlines, selectedText, false, selectionStart, selectionEnd);
+            ProcessSelectedInlines(paragraph.Inlines, selectedText, false, start, end);
 
             return selectedText.ToString();
         }
@@ -264,7 +276,7 @@ namespace ReactNative.Views.Text
         /// <param name="selectionStart">TextPointer to selection start.</param>
         /// <param name="selectionEnd">TextPointer to selection end.</param>
         /// <returns>'true' if recursion terminal condition is met.</returns>
-        private bool ProcessSelectedInlines(
+        private static bool ProcessSelectedInlines(
             InlineCollection inlines,
             StringBuilder selectedText,
             bool accumulate,
