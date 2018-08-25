@@ -286,7 +286,20 @@ namespace ReactNative
                         "create context background call.");
                 }
 
-                return await CreateReactContextCoreAsync(token);
+                ReactContext context = null;
+                try
+                {
+                    context = await CreateReactContextCoreAsync(token);
+                }
+                finally
+                {
+                    if (context == null)
+                    {
+                        _hasStartedCreatingInitialContext = false;
+                    }
+                }
+
+                return context;
             }
         }
 
