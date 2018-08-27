@@ -172,6 +172,8 @@ namespace ReactNative
         {
             DispatcherHelpers.AssertOnDispatcher(this);
 
+            TouchHandler.Dispose();
+
             var reactInstanceManager = _reactInstanceManager;
             var attachScheduled = _attachScheduled;
             _attachScheduled = false;
