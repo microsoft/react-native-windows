@@ -601,9 +601,10 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="tag">The react tag which specifies view.</param>
         /// <param name="action">The action to invoke.</param>
-        public void InvokeAction(int tag, Action action)
+        public void InvokeAction(int? tag, Action action)
         {
-            DispatcherHelpers.RunOnDispatcher(GetQueueByTag(tag).Dispatcher,() => action());
+            DispatcherHelpers.RunOnDispatcher(
+                (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).Dispatcher,() => action());
         }
 
         /// <summary>
