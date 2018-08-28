@@ -29,12 +29,24 @@ export type Buttons = Array<{
 type Options = {
   cancelable?: ?boolean,
   onDismiss?: ?Function,
+  rootViewHint?: ?number,
 };
 
 /**
  * Launches an alert dialog with the specified title and message.
  *
  * See http://facebook.github.io/react-native/docs/alert.html
+ *
+ * ## Windows
+ *
+ * On Windows at most two buttons can be specified.
+ *
+ *   - If you specify one button, it will be the 'positive' one (such as 'OK')
+ *   - Two buttons mean 'negative', 'positive' (such as 'Cancel', 'OK')
+ *
+ * An optional parameter named `rootViewHint` (a tag of an element that can identify the window that should parent the alert)
+ * is also available
+ *
  */
 class Alert {
 
@@ -60,7 +72,7 @@ class Alert {
     } else if (Platform.OS === 'android') {
       AlertAndroid.alert(title, message, buttons, options);
     } else if (Platform.OS === 'windows') {
-      AlertWindows.alert(title, message, buttons);
+      AlertWindows.alert(title, message, buttons, options);
     }
   }
 }
@@ -128,6 +140,7 @@ class AlertWindows {
     title: ?string,
     message?: ?string,
     buttons?: Buttons,
+    options?: Options,
   ): void {
     var config = {
       title: title || '',
@@ -144,9 +157,12 @@ class AlertWindows {
     if (buttonPositive) {
       config = {...config, buttonPositive: buttonPositive.text || '' };
     }
+    if (options) {
+      config = {...config, rootViewHint: options.rootViewHint};
+    }
     NativeModules.DialogManagerWindows.showAlert(
       config,
-      (errorMessage) => console.warn(message),
+      (errorMessage) => console.warn(errorMessage),
       (action, buttonKey) => {
         if (action !== NativeModules.DialogManagerWindows.buttonClicked) {
           return;

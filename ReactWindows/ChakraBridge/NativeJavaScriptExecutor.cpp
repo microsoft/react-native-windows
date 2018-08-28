@@ -11,10 +11,18 @@ using namespace ChakraBridge;
 int NativeJavaScriptExecutor::InitializeHost()
 {
     return this->host.Init();
+
+    callFunctionMethod = JS_INVALID_REFERENCE;
+    invokeCallbackMethod = JS_INVALID_REFERENCE;
+    flushQueueMethod = JS_INVALID_REFERENCE;
 }
 
 int NativeJavaScriptExecutor::DisposeHost()
 {
+    SafeReleaseJsValueRef(callFunctionMethod);
+    SafeReleaseJsValueRef(invokeCallbackMethod);
+    SafeReleaseJsValueRef(flushQueueMethod);
+
     return this->host.Destroy();
 }
 
@@ -66,19 +74,13 @@ int NativeJavaScriptExecutor::RunSerializedScript(String^ source, String^ serial
     return JsNoError;
 }
 
+//
+// The next three methods do cache JS method references based on the assumption no underlying objects change until the bridge disposing.
+//
+
 ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(String^ moduleName, String^ methodName, String^ args)
 {
-    JsPropertyIdRef fbBridgeId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(BATCH_BRIDGE, &fbBridgeId));
-
-    JsValueRef fbBridgeObj;
-    IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
-
-    JsPropertyIdRef methodId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(L"callFunctionReturnFlushedQueue", &methodId));
-
-    JsValueRef method;
-    IfFailRetNullPtr(JsGetProperty(fbBridgeObj, methodId, &method));
+    CheckAndGetMethodRef(L"callFunctionReturnFlushedQueue", callFunctionMethod);
 
     JsValueRef moduleNameRef, methodNameRef;
     IfFailRetNullPtr(JsPointerToString(moduleName->Data(), moduleName->Length(), &moduleNameRef));
@@ -92,7 +94,7 @@ ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(S
 
     JsValueRef result;
     JsValueRef newArgs[4] = { host.globalObject, moduleNameRef, methodNameRef, jsonObj };
-    IfFailRetNullPtr(JsCallFunction(method, newArgs, 4, &result));
+    IfFailRetNullPtr(JsCallFunction(callFunctionMethod, newArgs, 4, &result));
 
     JsValueRef stringifiedResult;
     IfFailRetNullPtr(host.JsonStringify(result, &stringifiedResult));
@@ -107,17 +109,7 @@ ChakraStringResult NativeJavaScriptExecutor::CallFunctionAndReturnFlushedQueue(S
 
 ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue(int callbackId, String^ args)
 {
-    JsPropertyIdRef fbBridgeId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(BATCH_BRIDGE, &fbBridgeId));
-
-    JsValueRef fbBridgeObj;
-    IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
-
-    JsPropertyIdRef methodId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(L"invokeCallbackAndReturnFlushedQueue", &methodId));
-
-    JsValueRef method;
-    IfFailRetNullPtr(JsGetProperty(fbBridgeObj, methodId, &method));
+    CheckAndGetMethodRef(L"invokeCallbackAndReturnFlushedQueue", invokeCallbackMethod);
 
     JsValueRef callbackIdRef;
     IfFailRetNullPtr(JsIntToNumber(callbackId, &callbackIdRef));
@@ -130,7 +122,7 @@ ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue
 
     JsValueRef result;
     JsValueRef newArgs[3] = { host.globalObject, callbackIdRef, argsJson };
-    IfFailRetNullPtr(JsCallFunction(method, newArgs, 3, &result));
+    IfFailRetNullPtr(JsCallFunction(invokeCallbackMethod, newArgs, 3, &result));
 
     JsValueRef stringifiedResult;
     IfFailRetNullPtr(host.JsonStringify(result, &stringifiedResult));
@@ -145,21 +137,11 @@ ChakraStringResult NativeJavaScriptExecutor::InvokeCallbackAndReturnFlushedQueue
 
 ChakraStringResult NativeJavaScriptExecutor::FlushedQueue()
 {
-    JsPropertyIdRef fbBridgeId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(BATCH_BRIDGE, &fbBridgeId));
-
-    JsValueRef fbBridgeObj;
-    IfFailRetNullPtr(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
-
-    JsPropertyIdRef methodId;
-    IfFailRetNullPtr(JsGetPropertyIdFromName(L"flushedQueue", &methodId));
-
-    JsValueRef method;
-    IfFailRetNullPtr(JsGetProperty(fbBridgeObj, methodId, &method));
+    CheckAndGetMethodRef(L"flushedQueue", flushQueueMethod);
 
     JsValueRef result;
     JsValueRef newArgs[1] = { host.globalObject };
-    IfFailRetNullPtr(JsCallFunction(method, newArgs, 1, &result));
+    IfFailRetNullPtr(JsCallFunction(flushQueueMethod, newArgs, 1, &result));
 
     JsValueRef stringifiedResult;
     IfFailRetNullPtr(host.JsonStringify(result, &stringifiedResult));
@@ -181,3 +163,38 @@ void NativeJavaScriptExecutor::SetCallSyncHook(CallSyncHandler^ handler)
 {
     host.SetCallSyncHook(handler);
 }
+
+JsErrorCode NativeJavaScriptExecutor::CheckAndGetMethodRef(const wchar_t* methodName, JsValueRef &value)
+{
+    if (value != JS_INVALID_REFERENCE)
+    {
+        return JsNoError;
+    }
+
+    JsPropertyIdRef fbBridgeId;
+    IfFailRet(JsGetPropertyIdFromName(BATCH_BRIDGE, &fbBridgeId));
+
+    JsValueRef fbBridgeObj;
+    IfFailRet(JsGetProperty(host.globalObject, fbBridgeId, &fbBridgeObj));
+
+    JsPropertyIdRef methodId;
+    IfFailRet(JsGetPropertyIdFromName(methodName, &methodId));
+
+    JsValueRef method;
+    IfFailRet(JsGetProperty(fbBridgeObj, methodId, &method));
+
+    IfFailRet(JsAddRef(method, NULL));
+    value = method;
+
+    return JsNoError;
+}
+
+void NativeJavaScriptExecutor::SafeReleaseJsValueRef(JsValueRef &value)
+{
+    if (value != JS_INVALID_REFERENCE)
+    {
+        JsRelease(value, NULL);
+        value = JS_INVALID_REFERENCE;
+    }
+}
+

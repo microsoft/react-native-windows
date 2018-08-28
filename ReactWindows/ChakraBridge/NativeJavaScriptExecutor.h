@@ -116,7 +116,13 @@ public:
     /// </summary>
     void SetCallSyncHook(CallSyncHandler^ handler);
 private:
+    JsErrorCode CheckAndGetMethodRef(const wchar_t* methodName, JsValueRef &value);
+    void SafeReleaseJsValueRef(JsValueRef &value);
+
     ChakraHost host;
+    JsValueRef callFunctionMethod;
+    JsValueRef invokeCallbackMethod;
+    JsValueRef flushQueueMethod;
 };
 
 };

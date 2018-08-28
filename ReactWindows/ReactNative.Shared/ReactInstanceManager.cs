@@ -171,7 +171,20 @@ namespace ReactNative
                 }
                 _hasStartedCreatingInitialContext = true;
 
-                return await CreateReactContextCoreAsync(token);
+                ReactContext context = null;
+                try
+                {
+                    context = await CreateReactContextCoreAsync(token);
+                }
+                finally
+                {
+                    if (context == null)
+                    {
+                        _hasStartedCreatingInitialContext = false;
+                    }
+                }
+
+                return context;
             }
         }
 
@@ -199,6 +212,23 @@ namespace ReactNative
         }
 
         /// <summary>
+        /// Awaits the currently initializing React context, or returns null if context fails to initialize.
+        /// </summary>
+        /// <param name="token">A token to cancel the request.</param>
+        /// <returns>
+        /// A task to await the React context.
+        /// </returns>
+        public async Task<ReactContext> TryGetReactContextAsync(CancellationToken token)
+        {
+            DispatcherHelpers.AssertOnDispatcher();
+            using (await _lock.LockAsync())
+            {
+                // By this point context has already been created due to the serialized aspect of context initialization.
+                return _currentReactContext;
+            }
+        }
+
+        /// <summary>
         /// Awaits the currently initializing React context, or creates a new one.
         /// </summary>
         /// <param name="token">A token to cancel the request.</param>
@@ -219,7 +249,20 @@ namespace ReactNative
                 {
                     _hasStartedCreatingInitialContext = true;
 
-                    return await CreateReactContextCoreAsync(token);
+                    ReactContext context = null;
+                    try
+                    {
+                        context = await CreateReactContextCoreAsync(token);
+                    }
+                    finally
+                    {
+                        if (context == null)
+                        {
+                            _hasStartedCreatingInitialContext = false;
+                        }
+                    }
+
+                    return context;
                 }
             }
         }
@@ -243,7 +286,20 @@ namespace ReactNative
                         "create context background call.");
                 }
 
-                return await CreateReactContextCoreAsync(token);
+                ReactContext context = null;
+                try
+                {
+                    context = await CreateReactContextCoreAsync(token);
+                }
+                finally
+                {
+                    if (context == null)
+                    {
+                        _hasStartedCreatingInitialContext = false;
+                    }
+                }
+
+                return context;
             }
         }
 
@@ -379,7 +435,7 @@ namespace ReactNative
             rootView.Children.Clear();
             ViewExtensions.ClearData(rootView);
 
-            await DispatcherHelpers.CallOnDispatcher(() =>
+            await DispatcherHelpers.CallOnDispatcher(async () =>
             {
                 _attachedRootViews.Add(rootView);
 
@@ -390,11 +446,11 @@ namespace ReactNative
                 var currentReactContext = _currentReactContext;
                 if (currentReactContext != null)
                 {
-                    AttachMeasuredRootViewToInstance(rootView, currentReactContext.ReactInstance);
+                    await AttachMeasuredRootViewToInstanceAsync(rootView, currentReactContext.ReactInstance);
                 }
 
                 return true;
-           }, true); // inlining allowed
+           }, true).Unwrap(); // inlining allowed
         }
 
         /// <summary>
@@ -548,7 +604,7 @@ namespace ReactNative
             try
             {
                 var reactContext = await CreateReactContextCoreAsync(jsExecutorFactory, jsBundleLoader, token);
-                SetupReactContext(reactContext);
+                await SetupReactContextAsync(reactContext);
                 return reactContext;
             }
             catch (OperationCanceledException)
@@ -564,7 +620,7 @@ namespace ReactNative
             return null;
         }
 
-        private void SetupReactContext(ReactContext reactContext)
+        private async Task SetupReactContextAsync(ReactContext reactContext)
         {
             DispatcherHelpers.AssertOnDispatcher();
             if (_currentReactContext != null)
@@ -581,7 +637,7 @@ namespace ReactNative
 
             foreach (var rootView in _attachedRootViews)
             {
-                AttachMeasuredRootViewToInstance(rootView, reactInstance);
+                await AttachMeasuredRootViewToInstanceAsync(rootView, reactInstance);
             }
         }
 
@@ -591,13 +647,13 @@ namespace ReactNative
             _defaultBackButtonHandler?.Invoke();
         }
 
-        private void AttachMeasuredRootViewToInstance(
+        private async Task AttachMeasuredRootViewToInstanceAsync(
             ReactRootView rootView,
             IReactInstance reactInstance)
         {
             DispatcherHelpers.AssertOnDispatcher();
-            var rootTag = reactInstance.GetNativeModule<UIManagerModule>()
-                .AddMeasuredRootView(rootView);
+            var rootTag = await reactInstance.GetNativeModule<UIManagerModule>()
+                .AddMeasuredRootViewAsync(rootView);
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>
@@ -670,7 +726,9 @@ namespace ReactNative
                     _uiImplementationProvider,
                     _lazyViewManagersEnabled);
 
-                ProcessPackage(coreModulesPackage, reactContext, nativeRegistryBuilder);
+                var coreModulesPackageWrapper = new CoreModulesPackageWrapper(coreModulesPackage);
+
+                ProcessPackage(coreModulesPackageWrapper, reactContext, nativeRegistryBuilder);
             }
 
             foreach (var reactPackage in _packages)
@@ -706,12 +764,12 @@ namespace ReactNative
 
             reactContext.InitializeWithInstance(reactInstance);
 
-            reactInstance.Initialize();
-
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "RunJavaScriptBundle").Start())
             {
-                await reactInstance.InitializeBridgeAsync(token).ConfigureAwait(false);
+                await reactInstance.InitializeBridgeAsync(token);
             }
+
+            await reactInstance.InitializeAsync().ConfigureAwait(false);
 
             return reactContext;
         }

@@ -6,6 +6,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Modules.DeviceInfo;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
@@ -124,7 +125,7 @@ namespace ReactNative.UIManager
         /// JavaScript can use the returned tag with to add or remove children 
         /// to this view through <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>.
         /// </remarks>
-        public int AddMeasuredRootView(ReactRootView rootView)
+        public async Task<int> AddMeasuredRootViewAsync(ReactRootView rootView)
         {
             // Called on main dispatcher thread
             DispatcherHelpers.AssertOnDispatcher();
@@ -132,9 +133,12 @@ namespace ReactNative.UIManager
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
+            // Set tag early in case of concurrent DetachRootViewAsync
+            rootView.SetTag(tag);
+
             var context = new ThemedReactContext(Context);
 
-            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
+            await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
             {
                 var width = rootView.ActualWidth;
                 var height = rootView.ActualHeight;
@@ -161,7 +165,12 @@ namespace ReactNative.UIManager
                         }
                     });
                 });
- 
+
+#if WINDOWS_UWP
+                // Register view in DeviceInfoModule for tracking its dimensions
+                Context.GetNativeModule<DeviceInfoModule>().RegisterRootView(rootView, tag);
+#endif
+                return true;
             }, true); // Allow inlining
 
             return tag;
@@ -180,6 +189,10 @@ namespace ReactNative.UIManager
             await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
             {
                 rootView.RemoveSizeChanged();
+#if WINDOWS_UWP
+                // Unregister view from DeviceInfoModule
+                Context.GetNativeModule<DeviceInfoModule>().UnregisterRootView(rootView);
+#endif
                 return true;
             }, true); // allow inlining
 

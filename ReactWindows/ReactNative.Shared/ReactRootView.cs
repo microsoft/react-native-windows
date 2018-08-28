@@ -134,7 +134,9 @@ namespace ReactNative
 
             var getReactContextTaskTask =
                 DispatcherHelpers.CallOnDispatcher(async () => await _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None), true);
- 
+
+            await getReactContextTaskTask.Unwrap();
+
             // We need to wait for the initial `Measure` call, if this view has
             // not yet been measured, we set the `_attachScheduled` flag, which
             // will enable deferred attachment of the root node.
@@ -146,8 +148,6 @@ namespace ReactNative
             {
                 _attachScheduled = true;
             }
-
-            await getReactContextTaskTask.Unwrap();
         }
 
         /// <summary>
@@ -167,12 +167,17 @@ namespace ReactNative
         /// <remarks>
         /// Has to be called under the dispatcher associated with the view.
         /// </remarks>
+        /// <returns>Awaitable task.</returns>
         public async Task StopReactApplicationAsync()
         {
             DispatcherHelpers.AssertOnDispatcher(this);
 
+            TouchHandler.Dispose();
+
             var reactInstanceManager = _reactInstanceManager;
-            if (!_attachScheduled && reactInstanceManager != null)
+            var attachScheduled = _attachScheduled;
+            _attachScheduled = false;
+            if (!attachScheduled && reactInstanceManager != null)
             {
                 await reactInstanceManager.DetachRootViewAsync(this);
             }
@@ -239,10 +244,10 @@ namespace ReactNative
             _wasMeasured = true;
 
             var reactInstanceManager = _reactInstanceManager;
-            if (_attachScheduled && reactInstanceManager != null)
+            var attachScheduled = _attachScheduled;
+            _attachScheduled = false;
+            if (attachScheduled && reactInstanceManager != null)
             {
-                _attachScheduled = false;
-
                 await reactInstanceManager.AttachMeasuredRootViewAsync(this);
             }
         }

@@ -113,15 +113,27 @@ namespace ReactNative.Views.Web
                 var uri = source.Value<string>("uri");
                 if (uri != null)
                 {
+                    string previousUri = view.Source?.OriginalString;
+                    if (!String.IsNullOrWhiteSpace(previousUri) && previousUri.Equals(uri))
+                    {
+                        return;
+                    }
+
                     using (var request = new HttpRequestMessage())
                     {
-                        request.RequestUri = new Uri(uri);
+                        var sourceUri = new Uri(uri);
 
+                        //If the source URI has a file URL scheme, do not form the RequestUri.
+                        if (!sourceUri.IsFile)
+                        {
+                            request.RequestUri = sourceUri;
+                        }
+                      
                         var method = source.Value<string>("method");
                         var headers = (string)source.GetValue("headers", StringComparison.Ordinal);
                         var body = source.Value<Byte[]>("body");
 
-                        view.Navigate(uri, view.Name, body, headers);
+                        view.Navigate(sourceUri, view.Name, body, headers);
                         return;
                     }
                 }
@@ -197,7 +209,7 @@ namespace ReactNative.Views.Web
         private void OnLoadCompleted(object sender, NavigationEventArgs e)
         {
             var webView = (WebBrowser)sender;
-            LoadFinished(webView, e.Uri?.ToString());
+            LoadFinished(webView, e.Uri?.OriginalString);
 
             if (webView.IsLoaded)
             {
@@ -232,7 +244,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadingEvent(
                          webView.GetTag(),
                          "Start",
-                         e.Uri?.ToString(),
+                         e.Uri?.OriginalString,
                          true,
                          "Title Unavailable",
                          webView.CanGoBack,

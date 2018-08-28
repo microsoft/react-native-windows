@@ -18,61 +18,61 @@ namespace ReactNative.Tests.Bridge
         public void NativeModuleBase_ReactMethod_ArgumentCountChecks()
         {
             var module = new ArgumentCountTestNativeModule();
-            var reactInstance = new MockReactInstance();
+            var nopCallback = new InvokeCallback((_, __) => { });
             var args = Enumerable.Range(0, 17);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test0)].Invoke(reactInstance, JArray.FromObject(args.Take(0).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test0)].Invoke(nopCallback, JArray.FromObject(args.Take(0).ToArray()));
             Assert.AreEqual(1, module.test0Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test1)].Invoke(reactInstance, JArray.FromObject(args.Take(1).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test1)].Invoke(nopCallback, JArray.FromObject(args.Take(1).ToArray()));
             Assert.AreEqual(1, module.test1Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test2)].Invoke(reactInstance, JArray.FromObject(args.Take(2).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test2)].Invoke(nopCallback, JArray.FromObject(args.Take(2).ToArray()));
             Assert.AreEqual(1, module.test2Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test3)].Invoke(reactInstance, JArray.FromObject(args.Take(3).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test3)].Invoke(nopCallback, JArray.FromObject(args.Take(3).ToArray()));
             Assert.AreEqual(1, module.test3Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test4)].Invoke(reactInstance, JArray.FromObject(args.Take(4).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test4)].Invoke(nopCallback, JArray.FromObject(args.Take(4).ToArray()));
             Assert.AreEqual(1, module.test4Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test5)].Invoke(reactInstance, JArray.FromObject(args.Take(5).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test5)].Invoke(nopCallback, JArray.FromObject(args.Take(5).ToArray()));
             Assert.AreEqual(1, module.test5Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test6)].Invoke(reactInstance, JArray.FromObject(args.Take(6).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test6)].Invoke(nopCallback, JArray.FromObject(args.Take(6).ToArray()));
             Assert.AreEqual(1, module.test6Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test7)].Invoke(reactInstance, JArray.FromObject(args.Take(7).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test7)].Invoke(nopCallback, JArray.FromObject(args.Take(7).ToArray()));
             Assert.AreEqual(1, module.test7Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test8)].Invoke(reactInstance, JArray.FromObject(args.Take(8).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test8)].Invoke(nopCallback, JArray.FromObject(args.Take(8).ToArray()));
             Assert.AreEqual(1, module.test8Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test9)].Invoke(reactInstance, JArray.FromObject(args.Take(9).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test9)].Invoke(nopCallback, JArray.FromObject(args.Take(9).ToArray()));
             Assert.AreEqual(1, module.test9Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test10)].Invoke(reactInstance, JArray.FromObject(args.Take(10).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test10)].Invoke(nopCallback, JArray.FromObject(args.Take(10).ToArray()));
             Assert.AreEqual(1, module.test10Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test11)].Invoke(reactInstance, JArray.FromObject(args.Take(11).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test11)].Invoke(nopCallback, JArray.FromObject(args.Take(11).ToArray()));
             Assert.AreEqual(1, module.test11Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test12)].Invoke(reactInstance, JArray.FromObject(args.Take(12).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test12)].Invoke(nopCallback, JArray.FromObject(args.Take(12).ToArray()));
             Assert.AreEqual(1, module.test12Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test13)].Invoke(reactInstance, JArray.FromObject(args.Take(13).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test13)].Invoke(nopCallback, JArray.FromObject(args.Take(13).ToArray()));
             Assert.AreEqual(1, module.test13Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test14)].Invoke(reactInstance, JArray.FromObject(args.Take(14).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test14)].Invoke(nopCallback, JArray.FromObject(args.Take(14).ToArray()));
             Assert.AreEqual(1, module.test14Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test15)].Invoke(reactInstance, JArray.FromObject(args.Take(15).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test15)].Invoke(nopCallback, JArray.FromObject(args.Take(15).ToArray()));
             Assert.AreEqual(1, module.test15Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test16)].Invoke(reactInstance, JArray.FromObject(args.Take(16).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test16)].Invoke(nopCallback, JArray.FromObject(args.Take(16).ToArray()));
             Assert.AreEqual(1, module.test16Calls);
 
-            module.Methods[nameof(ArgumentCountTestNativeModule.test17)].Invoke(reactInstance, JArray.FromObject(args.Take(17).ToArray()));
+            module.Methods[nameof(ArgumentCountTestNativeModule.test17)].Invoke(nopCallback, JArray.FromObject(args.Take(17).ToArray()));
             Assert.AreEqual(1, module.test17Calls);
 
         }

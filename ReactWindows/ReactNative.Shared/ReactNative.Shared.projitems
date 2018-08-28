@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\PropsAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\SpringAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\StyleAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\TrackingAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
@@ -41,6 +42,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\ILifecycleEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModuleWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\InvokeCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IOnBatchCompleteListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
@@ -54,7 +57,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeArgumentsParseException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\NativeModuleWrapperBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Promise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\PromiseExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ActionQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\ActionQueueFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\Queue\IActionQueue.cs" />
@@ -106,6 +111,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\ReactConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WindowsPlatformHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreModulesPackageWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DebugServerException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevInternalSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DevSupport\DevServerHelper.cs" />

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -119,14 +120,39 @@ namespace ReactNative.Chakra.Executor
                     var srcFileInfo = new FileInfo(sourcePath);
                     var binFileInfo = new FileInfo(binPath);
 
+                    bool ranSuccessfully = false;
                     // The idea is to run the JS bundle and generate bytecode for it on a background thread.
                     // This eliminates the need to delay the first start when the app doesn't have bytecode.
                     // Next time the app starts, it checks if bytecode is still good and  runs it directly.
                     if (binFileInfo.Exists && binFileInfo.LastWriteTime > srcFileInfo.LastWriteTime)
                     {
-                        Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                        try
+                        {
+                            Native.ThrowIfError((JavaScriptErrorCode)_executor.RunSerializedScript(sourcePath, binPath, sourceUrl));
+                            ranSuccessfully = true;
+                        }
+                        catch (JavaScriptUsageException exc)
+                        {
+                            if (exc.ErrorCode == JavaScriptErrorCode.BadSerializedScript)
+                            {
+                                // Bytecode format is dependent on Chakra engine version, so an OS upgrade may require a recompilation
+                                Debug.WriteLine("Serialized bytecode script is corrupted or wrong format, will generate new one");
+                            }
+                            else
+                            {
+                                // Some more severe error. We still have a chance (recompiling), so we keep continuing.
+                                Debug.WriteLine($"Failed to run serialized bytecode script ({exc.ToString()}), will generate new one");
+                            }
+
+                            File.Delete(binPath);
+                        }
                     }
                     else
+                    {
+                        Debug.WriteLine("Serialized bytecode script doesn't exist or is obsolete, will generate one");
+                    }
+
+                    if (!ranSuccessfully)
                     {
                         Task.Run(() =>
                         {
@@ -141,8 +167,9 @@ namespace ReactNative.Chakra.Executor
                                 Native.ThrowIfError((JavaScriptErrorCode)rt.SerializeScript(sourcePath, binPath));
                                 Native.ThrowIfError((JavaScriptErrorCode)rt.DisposeHost());
                             }
-                            catch (Exception)
+                            catch (Exception ex)
                             {
+                                Debug.WriteLine($"Failed to generate serialized bytecode script ({ex.ToString()}).");
                                 // It's fine if the bytecode couldn't be generated: RN can still use the JS bundle.
                             }
                         });
@@ -187,7 +214,7 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(callSyncHook));
 
             _executor.SetCallSyncHook((moduleId, methodId, args) =>
-                callSyncHook(moduleId, methodId, JArray.Parse(args)).ToString(Formatting.None));
+                callSyncHook(moduleId, methodId, JArray.Parse(args))?.ToString(Formatting.None) ?? "null");
         }
 
         /// <summary>

@@ -156,19 +156,14 @@ namespace ReactNative.Accessibility
             return EnsureElementAccessibilityContext(element).Dirty;
         }
 
-        private static void MarkElementDirty(UIElement element, bool skipIfNoPeer = false)
+        private static void MarkElementDirty(UIElement element)
         {
             // Retrieve automation peer
             var peer = FrameworkElementAutomationPeer.FromElement(element);
 
             if (peer == null)
             {
-                if (skipIfNoPeer)
-                {
-                    return;
-                }
-
-                throw new InvalidOperationException("Element has no automation peer");
+                return;
             }
 
 #if PERF_LOG
@@ -224,7 +219,7 @@ namespace ReactNative.Accessibility
             SetCurrentlyHidingChildren(parent, ElementAccessibilityContext.HidingChildren.NotSure);
 
             // Mark the parent dirty (or skip if there is no associated peer available)
-            MarkElementDirty(parent, true);
+            MarkElementDirty(parent);
         }
 
         /// <summary>
@@ -238,7 +233,7 @@ namespace ReactNative.Accessibility
             parent.UpdateLayout();
 
             // Mark the parent dirty (or skip if there is no associated peer available)
-            MarkElementDirty(parent, true);
+            MarkElementDirty(parent);
         }
 
         /// <summary>
@@ -246,8 +241,33 @@ namespace ReactNative.Accessibility
         /// For example, it is used by <see cref="RichTextBlock"/> to notify when text or structure is changed inside the text block.
         /// </summary>
         /// <param name="uiElement">The <see cref="UIElement"/>.</param>
-        public static void OnElementChanged(UIElement uiElement)
+        /// <param name="dependencyProperty">The dependency property that changed. It's important to provide this parameter if possible.</param>
+        public static void OnElementChanged(UIElement uiElement, DependencyProperty dependencyProperty = null)
         {
+            if (ReferenceEquals(UIElement.VisibilityProperty, dependencyProperty))
+            {
+                // add/remove like
+                var fe = uiElement as FrameworkElement;
+                if (fe == null)
+                {
+                    return;
+                }
+                var parent = fe.Parent as UIElement;
+                if (parent == null)
+                {
+                    return;
+                }
+
+                if (uiElement.Visibility == Visibility.Visible)
+                {
+                    OnChildAdded(parent, fe);
+                }
+                else
+                {
+                    OnChildRemoved(parent);
+                }
+                return;
+            }
             // Mark the element dirty
             MarkElementDirty(uiElement);
         }
@@ -273,6 +293,16 @@ namespace ReactNative.Accessibility
         }
 
         /// <summary>
+        /// Gets the ImportantForAccessibility property for <paramref name="element"/>.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns>Null if the <paramref name="element"/> is not a React Native view, value of the property otherwise.</returns>
+        public static ImportantForAccessibility? GetImportantForAccessibility(UIElement element)
+        {
+            return element.HasTag() ? GetImportantForAccessibilityProp(element) : default(ImportantForAccessibility?);
+        }
+
+        /// <summary>
         /// Sets the AccessibilityLabel property for <paramref name="element"/>.
         /// It uses <see cref="AutomationProperties.NameProperty"/> to expose the element and its children
         /// to narrator. AccessibilityLabel value is stored as an attached-like property.
@@ -290,6 +320,16 @@ namespace ReactNative.Accessibility
 
             // Mark element as dirty
             MarkElementDirty(element);
+        }
+
+        /// <summary>
+        /// Gets the AccessibilityLabel property for <paramref name="element"/>.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns>Null if the <paramref name="element"/> is not a React Native view, value of the property otherwise.</returns>
+        public static string GetAccessibilityLabel(UIElement element)
+        {
+            return element.HasTag() ? GetAccessibilityLabelProp(element) : null;
         }
 
         /// <summary>
@@ -459,7 +499,6 @@ namespace ReactNative.Accessibility
             s_treeContext.Value.ProcessedNodesCount++;
 #endif
 
-            //
             // Phase 1: set correct AV for the current node
             if (hideNodes)
             {
@@ -475,6 +514,7 @@ namespace ReactNative.Accessibility
 
                     case ImportantForAccessibility.Auto when hasLabelSet:
                     case ImportantForAccessibility.Yes:
+                    case ImportantForAccessibility.YesDontHideDescendants:
                         AutomationProperties.SetAccessibilityView(element, AccessibilityView.Content);
                         break;
 
@@ -484,11 +524,10 @@ namespace ReactNative.Accessibility
                         break;
 
                     default:
-                        throw new NotImplementedException("Can't reach here");
+                        throw new NotImplementedException($"Unknown ImportantForAccessibility value [{importantForAccessibilityProp}]");
                 }
             }
 
-            //
             // Phase 2: go down the tree after deciding how
             // We can follow dirty nodes (may be none) or traverse all
             // We can switch to "hiding nodes", to "unhiding nodes", or not switch at all.
@@ -522,7 +561,9 @@ namespace ReactNative.Accessibility
             // Phase 3: set name if needed (all children nodes have been updated by this point)
             if (traverseAllChildren || GetDirty(element))
             {
-                if (importantForAccessibilityProp == ImportantForAccessibility.Yes && !hasLabelSet)
+                if (!hasLabelSet
+                    && (importantForAccessibilityProp == ImportantForAccessibility.Yes
+                        || importantForAccessibilityProp == ImportantForAccessibility.YesDontHideDescendants))
                 {
                     // Set generated name
                     SetName(element, GenerateNameFromPeer(elementPeer));
@@ -637,6 +678,7 @@ namespace ReactNative.Accessibility
                         childResult = GenerateNameFromChildren(child.GetChildren());
                         break;
                     case ImportantForAccessibility.Yes:
+                    case ImportantForAccessibility.YesDontHideDescendants:
                     case ImportantForAccessibility.Auto:
                         // Priority order is: AccessiblityLabel (if React element), control-provided name, children.
                         label = isReactChild ? GetAccessibilityLabelProp(childElement) : null;

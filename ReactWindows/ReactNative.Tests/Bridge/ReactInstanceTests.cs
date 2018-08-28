@@ -81,14 +81,14 @@ namespace ReactNative.Tests.Bridge
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
             reactContext.InitializeWithInstance(instance);
-            await DispatcherHelpers.RunOnDispatcherAsync(() => instance.Initialize());
+            await DispatcherHelpers.CallOnDispatcherAsync(async () => await instance.InitializeAsync());
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 try
                 {
-                    instance.Initialize();
+                    await instance.InitializeAsync();
                 }
                 catch (InvalidOperationException)
                 {

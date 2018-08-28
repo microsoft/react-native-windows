@@ -75,7 +75,7 @@ namespace ReactNative.Bridge
             return _registry.GetModule<T>();
         }
 
-        public void Initialize()
+        public async Task InitializeAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
             if (_initialized)
@@ -84,7 +84,7 @@ namespace ReactNative.Bridge
             }
 
             _initialized = true;
-            QueueConfiguration.NativeModulesQueue.Dispatch(_registry.NotifyReactInstanceInitialize);
+            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceInitializeAsync).Unwrap();
         }
 
         public async Task InitializeBridgeAsync(CancellationToken token)
@@ -281,7 +281,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                _parent._registry.Invoke(_parent, moduleId, methodId, parameters);
+                _parent._registry.Invoke(_parent.InvokeCallback, moduleId, methodId, parameters);
             }
 
             public JToken InvokeSync(int moduleId, int methodId, JArray parameters)
@@ -293,7 +293,7 @@ namespace ReactNative.Bridge
                     return null;
                 }
 
-                return _parent._registry.InvokeSync(_parent, moduleId, methodId, parameters);
+                return _parent._registry.InvokeSync(_parent.InvokeCallback, moduleId, methodId, parameters);
             }
 
             public void OnBatchComplete()

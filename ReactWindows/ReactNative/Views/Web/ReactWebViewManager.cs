@@ -77,6 +77,24 @@ namespace ReactNative.Views.Web
         }
 
         /// <summary>
+        /// Sets the background color for the <see cref="WebView"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
+        public void SetBackgroundColor(WebView view, uint? color)
+        {
+            if (color.HasValue)
+            {
+                view.DefaultBackgroundColor = ColorHelpers.Parse(color.Value);
+            }
+            else
+            {
+                view.ClearValue(WebView.DefaultBackgroundColorProperty);
+            }
+        }
+
+        /// <summary>
         /// Sets whether JavaScript is enabled or not.
         /// </summary>
         /// <param name="view">A webview instance.</param>
@@ -268,6 +286,12 @@ namespace ReactNative.Views.Web
                     // HTML files need to be loaded with the ms-appx-web schema.
                     uri = uri.Replace("ms-appx:", "ms-appx-web:");
 
+                    string previousUri = view.Source?.OriginalString;
+                    if (!String.IsNullOrWhiteSpace(previousUri) && previousUri.Equals(uri))
+                    {
+                        return;
+                    }
+
                     using (var request = new HttpRequestMessage())
                     {
                         request.RequestUri = new Uri(uri);
@@ -355,7 +379,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                          tag,
                          WebViewLoadEvent.TopLoadingStart,
-                         e.Uri?.ToString(),
+                         e.Uri?.OriginalString,
                          true,
                          webView.DocumentTitle,
                          webView.CanGoBack,
@@ -399,7 +423,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                         webView.GetTag(),
                         WebViewLoadEvent.TopLoadingFinish,
-                        e.Uri?.ToString(),
+                        e.Uri?.OriginalString,
                         false,
                         webView.DocumentTitle,
                         webView.CanGoBack,

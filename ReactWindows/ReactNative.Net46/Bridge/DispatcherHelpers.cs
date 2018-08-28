@@ -10,10 +10,16 @@ using System.Windows.Threading;
 
 namespace ReactNative.Bridge
 {
+    /// <summary>
+    /// A set of helpers for dispatcher access.
+    /// </summary>
     public static class DispatcherHelpers
     {
         private static Dispatcher s_mainDispatcher;
 
+        /// <summary>
+        /// Gets the main dispatcher for the app.
+        /// </summary>
         public static Dispatcher MainDispatcher
         {
             get
@@ -47,11 +53,21 @@ namespace ReactNative.Bridge
             s_mainDispatcher = Dispatcher.CurrentDispatcher;
         }
 
+        /// <summary>
+        /// Checks if the main dispatcher has been set
+        /// </summary>
+        /// <returns>
+        /// <code>true</code> if the dispatcher has been set,
+        /// otherwise <code>false</code>.
+        /// </returns>
         public static bool IsDispatcherSet()
         {
             return s_mainDispatcher != null;
         }
 
+        /// <summary>
+        /// Asserts that the current thread has dispatcher access.
+        /// </summary>
         public static void AssertOnDispatcher()
         {
             if (!IsOnDispatcher())
@@ -60,6 +76,13 @@ namespace ReactNative.Bridge
             }
         }
 
+        /// <summary>
+        /// Checks if the current thread has dispatcher access.
+        /// </summary>
+        /// <returns>
+        /// <code>true</code> if the current thread has main dispatcher access,
+        /// otherwise <code>false</code>.
+        /// </returns>
         public static bool IsOnDispatcher()
         {
             AssertDispatcherSet();
@@ -67,11 +90,23 @@ namespace ReactNative.Bridge
             return MainDispatcher.CheckAccess();
         }
 
+        /// <summary>
+        /// Checks if the current thread has access to the specified dispatcher.
+        /// </summary>
+        /// <param name="dispatcher">The dispatcher to be checked</param>
+        /// <returns>
+        /// <code>true</code> if the current thread has main dispatcher access,
+        /// otherwise <code>false</code>.
+        /// </returns>
         public static bool IsOnDispatcher(Dispatcher dispatcher)
         {
             return dispatcher.CheckAccess();
         }
 
+        /// <summary>
+        /// Asserts that the current thread has access to the dispatcher associated with the specified dependency object.
+        /// </summary>
+        /// <param name="dependencyObject">The dependency object who's dispatcher will be checked</param>
         public static void AssertOnDispatcher(DependencyObject dependencyObject)
         {
             AssertDispatcherSet();
@@ -82,6 +117,11 @@ namespace ReactNative.Bridge
             }
         }
 
+        /// <summary>
+        /// Invokes an action on the main dispatcher.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the main dispatcher.</param>
         public static void RunOnDispatcher(Action action, bool allowInlining = false)
         {
             AssertDispatcherSet();
@@ -89,6 +129,12 @@ namespace ReactNative.Bridge
             RunOnDispatcher(DispatcherPriority.Normal, action, allowInlining);
         }
 
+        /// <summary>
+        /// Invokes an action on the main dispatcher with custom priority.
+        /// </summary>
+        /// <param name="priority">The priority.</param>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the main dispatcher.</param>
         public static void RunOnDispatcher(DispatcherPriority priority, Action action, bool allowInlining = false)
         {
             AssertDispatcherSet();
@@ -108,11 +154,25 @@ namespace ReactNative.Bridge
             }
 
         }
+
+        /// <summary>
+        /// Invokes an action on a specified dispatcher.
+        /// </summary>
+        /// <param name="dispatcher">The dispatcher.</param>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
         public static void RunOnDispatcher(Dispatcher dispatcher, Action action, bool allowInlining = false)
         {
             RunOnDispatcher(dispatcher, DispatcherPriority.Normal, action, allowInlining);
         }
 
+        /// <summary>
+        /// Invokes an action on a specified dispatcher and priority
+        /// </summary>
+        /// <param name="dispatcher">The dispatcher.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="allowInlining">True if inlining is allowed when calling thread is on the same dispatcher as the one in the parameter.</param>
         public static void RunOnDispatcher(Dispatcher dispatcher, DispatcherPriority priority, Action action, bool allowInlining = false)
         {
             AssertDispatcherSet();
@@ -167,6 +227,12 @@ namespace ReactNative.Bridge
             }
         }
 
+        /// <summary>
+        /// Cleans up the dispatcher helpers.
+        /// </summary>
+        /// <remarks>
+        /// No-op on WPF
+        /// </remarks>
         public static void Reset()
         {
             // No-op on WPF

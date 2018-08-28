@@ -3,9 +3,9 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
-using ReactNative.Bridge.Queue;
 using ReactNative.Modules.Core;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -36,18 +36,53 @@ namespace ReactNative.UIManager
             public int rootViewCount;
         }
 
-        private UIViewOperationQueueInstance _mainUiViewOperationsQueueInstance;
+        // Thread safe dictionary using a single lock
+        private class SimpleLockedDictionary<TKey, TValue>
+        {
+            private readonly object _lock = new object();
+            private readonly Dictionary<TKey, TValue> _dict = new Dictionary<TKey, TValue>();
 
-        // Maps tags to corresponding UIViewOperationQueueInstance
-        private readonly IDictionary<int, UIViewOperationQueueInstance> _reactTagToOperationQueue = new Dictionary<int, UIViewOperationQueueInstance>();
+            public void Add(TKey key, TValue value)
+            {
+                lock(_lock)
+                {
+                    _dict.Add(key, value);
+                }
+            }
 
-        // Maps CoreDispatcher to corresponding UIViewOperationQueueInstance + rootView accounting
-        private readonly IDictionary<CoreDispatcher, QueueInstanceInfo> _dispatcherToOperationQueueInfo = new Dictionary<CoreDispatcher, QueueInstanceInfo>();
+            public bool TryGetValue(TKey key, out TValue value)
+            {
+                lock (_lock)
+                {
+                    return _dict.TryGetValue(key, out value);
+                }
+            }
 
-        // Action queue used by UIManagerModule
-        private IActionQueue _uiManagerActionQueue;
+            public void RemoveList(IList<TKey> keyList)
+            {
+                lock (_lock)
+                {
+                    foreach (var key in keyList)
+                    {
+                        _dict.Remove(key);
+                    }
+                }
+            }
+        }
+
+        // Maps tags to corresponding UIViewOperationQueueInstance.
+        // Uses a simple serialized Dictionary that depends on a single lock (rather than one per bucket), allows fast removal of list of keys, etc.
+        private readonly SimpleLockedDictionary<int, UIViewOperationQueueInstance> _reactTagToOperationQueue = new SimpleLockedDictionary<int, UIViewOperationQueueInstance>();
+
+        // The _dispatcherToOperationQueueInfo (all entries but the main window related one) & _active combo are protected by this lock
+        // This allows for consistent lifecycle OnSuspend/OnResume events to be sent to each queue instance
+        private readonly object _lock = new object();
 
         private bool _active;
+
+        // Maps CoreDispatcher to corresponding UIViewOperationQueueInstance + rootView accounting
+        // The concurrent dictionary allows for thread safe ".Values" calls, crash-safe enumerating, etc.
+        private readonly ConcurrentDictionary<CoreDispatcher, QueueInstanceInfo> _dispatcherToOperationQueueInfo = new ConcurrentDictionary<CoreDispatcher, QueueInstanceInfo>();
 
         /// <summary>
         /// Instantiates the <see cref="UIViewOperationQueue"/>.
@@ -73,14 +108,14 @@ namespace ReactNative.UIManager
                     ReactChoreographer.Instance)
             };
 
-            _dispatcherToOperationQueueInfo.Add(DispatcherHelpers.MainDispatcher, queueInfo);
-            _mainUiViewOperationsQueueInstance = queueInfo.queueInstance;
+            _dispatcherToOperationQueueInfo.AddOrUpdate(DispatcherHelpers.MainDispatcher, queueInfo, (k, v) => throw new InvalidOperationException("Duplicate key"));
+            MainUIViewOperationQueue = queueInfo.queueInstance;
         }
 
         /// <summary>
         /// The native view hierarchy manager.
         /// </summary>
-        internal UIViewOperationQueueInstance MainUIViewOperationQueue => _mainUiViewOperationsQueueInstance;
+        internal UIViewOperationQueueInstance MainUIViewOperationQueue { get; }
 
         /// <summary>
         /// Checks if the operation queue is empty.
@@ -134,14 +169,19 @@ namespace ReactNative.UIManager
                     rootViewCount = 1
                 };
 
-                // Add new tuple to map
-                _dispatcherToOperationQueueInfo.Add(rootViewDispatcher, queueInfo);
-
-                if (_active)
+                lock (_lock)
                 {
-                    // Simulate an OnResume from the correct dispatcher thread
-                    // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                    DispatcherHelpers.RunOnDispatcher(rootViewDispatcher, queueInfo.queueInstance.OnResume, true); // inlining allowed
+                    // Add new tuple to map
+                    _dispatcherToOperationQueueInfo.AddOrUpdate(rootViewDispatcher, queueInfo, (k, v) => throw new InvalidOperationException("Duplicate key"));
+
+                    if (_active)
+                    {
+                        // Simulate an OnResume from the correct dispatcher thread
+                        // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                        // (No inlining here so we don't hold lock during call outs. Not a big deal since inlining
+                        // is only useful for main UI thread, and this code is not executed for that one)
+                        DispatcherHelpers.RunOnDispatcher(rootViewDispatcher, queueInfo.queueInstance.OnResume);
+                    }
                 }
             }
             else
@@ -183,7 +223,7 @@ namespace ReactNative.UIManager
                 if (pair.Value.rootViewCount == 0)
                 {
                     // We can remove this queue and then destroy
-                    _dispatcherToOperationQueueInfo.Remove(pair.Key);
+                    _dispatcherToOperationQueueInfo.TryRemove(pair.Key, out _);
 
                     // Simulate an OnDestroy from the correct dispatcher thread
                     // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
@@ -441,12 +481,20 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnSuspend()
         {
-             _active = false;
-            foreach (var pair in _dispatcherToOperationQueueInfo)
+            MainUIViewOperationQueue.OnSuspend();
+
+            lock (_lock)
             {
-                // Simulate an OnSuspend from the correct dispatcher thread
-                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnSuspend, true); // inlining allowed
+                _active = false;
+                foreach (var pair in _dispatcherToOperationQueueInfo)
+                {
+                    if (pair.Key != MainUIViewOperationQueue.Dispatcher)
+                    {
+                        // Simulate an OnSuspend from the correct dispatcher thread
+                        // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                        DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnSuspend);
+                    }
+                }
             }
         }
 
@@ -455,12 +503,20 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnResume()
         {
-            _active = true;
-            foreach (var pair in _dispatcherToOperationQueueInfo)
+            MainUIViewOperationQueue.OnResume();
+
+            lock (_lock)
             {
-                // Simulate an OnResume from the correct dispatcher thread
-                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnResume, true); // inlining allowed
+                _active = true;
+                foreach (var pair in _dispatcherToOperationQueueInfo)
+                {
+                    if (pair.Key != MainUIViewOperationQueue.Dispatcher)
+                    {
+                        // Simulate an OnResume from the correct dispatcher thread
+                        // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                        DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnResume);
+                    }
+                }
             }
         }
 
@@ -469,12 +525,20 @@ namespace ReactNative.UIManager
         /// </summary>
         public void OnDestroy()
         {
-            _active = false;
-            foreach (var pair in _dispatcherToOperationQueueInfo)
+            MainUIViewOperationQueue.OnDestroy();
+
+            lock (_lock)
             {
-                // Simulate an OnDestroy from the correct dispatcher thread
-                // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
-                DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnDestroy, true); // inlining allowed
+                _active = false;
+                foreach (var pair in _dispatcherToOperationQueueInfo)
+                {
+                    if (pair.Key != MainUIViewOperationQueue.Dispatcher)
+                    {
+                        // Simulate an OnDestroy from the correct dispatcher thread
+                        // (OnResume/OnSuspend/OnDestroy have this thread affinity, all other methods do enqueuings in a thread safe manner)
+                        DispatcherHelpers.RunOnDispatcher(pair.Key, pair.Value.queueInstance.OnDestroy);
+                    }
+                }
             }
         }
 
@@ -532,6 +596,18 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Invokes the action to execute on dispatcher thread associated with view specified by <paramref name="tag" />.
+        /// Action is not queued on operation queue, but it goes to dispatcher directly.
+        /// </summary>
+        /// <param name="tag">The react tag which specifies view.</param>
+        /// <param name="action">The action to invoke.</param>
+        public void InvokeAction(int? tag, Action action)
+        {
+            DispatcherHelpers.RunOnDispatcher(
+                (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).Dispatcher,() => action());
+        }
+
+        /// <summary>
         /// Dispatches the view updates.
         /// </summary>
         /// <param name="batchId">The batch identifier.</param>
@@ -568,21 +644,7 @@ namespace ReactNative.UIManager
         /// <param name="tags">List of deleted tags..</param>
         private void OnViewsDropped(List<int> tags)
         {
-            //
-            // We synchronize access to _reactTagToOperationQueue by using same action queue used by the other code paths.
-            // Cleaning up can be done lazily, a way to mark this work unit as "Idle Scheduling" would benefit performance.
-            if (_uiManagerActionQueue == null)
-            {
-                _uiManagerActionQueue = _reactContext.GetNativeModule<UIManagerModule>().ActionQueue;
-            }
-
-            _uiManagerActionQueue.Dispatch(() =>
-            {
-                foreach (var tag in tags)
-                {
-                    _reactTagToOperationQueue.Remove(tag);
-                }
-            });
+            _reactTagToOperationQueue.RemoveList(tags);
         }
     }
 }

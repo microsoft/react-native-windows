@@ -5,11 +5,13 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ReactNative.Bridge.Queue;
 using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
@@ -33,7 +35,10 @@ namespace ReactNative.Bridge
             _moduleTable = moduleTable;
             _moduleInstances = moduleInstances;
             _batchCompleteListenerModules = _moduleTable
-                .Select(moduleDefinition => moduleDefinition.Target)
+                .Select(moduleDefinition =>
+                    moduleDefinition.Target is INativeModuleWrapper wrapper
+                        ? wrapper.Module
+                        : moduleDefinition.Target)
                 .OfType<IOnBatchCompleteListener>()
                 .ToList();
         }
@@ -58,7 +63,8 @@ namespace ReactNative.Bridge
         {
             if (_moduleInstances.TryGetValue(typeof(T), out var instance))
             {
-                return (T)instance;
+                var wrapper = instance as INativeModuleWrapper;
+                return wrapper != null ? (T)wrapper.Module : (T)instance;
             }
 
             throw new InvalidOperationException("No module instance for type '{0}'.");
@@ -95,12 +101,12 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Invoke a method on a native module.
         /// </summary>
-        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="invokeCallback">The invoke callback delegate.</param>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
         internal void Invoke(
-            IReactInstance reactInstance,
+            InvokeCallback invokeCallback,
             int moduleId,
             int methodId,
             JArray parameters)
@@ -113,24 +119,24 @@ namespace ReactNative.Bridge
             var actionQueue = _moduleTable[moduleId].Target.ActionQueue;
             if (actionQueue != null)
             {
-                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters));
+                actionQueue.Dispatch(() => _moduleTable[moduleId].Invoke(invokeCallback, methodId, parameters));
             }
             else
             {
-                _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+                _moduleTable[moduleId].Invoke(invokeCallback, methodId, parameters);
             }
         }
 
         /// <summary>
         /// Invoke the native method synchronously.
         /// </summary>
-        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="invokeCallback">The invoke callback delegate.</param>
         /// <param name="moduleId">The module ID.</param>
         /// <param name="methodId">The method ID.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The value returned from the method.</returns>
         internal JToken InvokeSync(
-            IReactInstance reactInstance,
+            InvokeCallback invokeCallback,
             int moduleId,
             int methodId,
             JArray parameters)
@@ -145,22 +151,19 @@ namespace ReactNative.Bridge
                 throw new ArgumentOutOfRangeException(nameof(moduleId), "Call to unknown module: " + moduleId);
             }
 
-            return _moduleTable[moduleId].Invoke(reactInstance, methodId, parameters);
+            return _moduleTable[moduleId].Invoke(invokeCallback, methodId, parameters);
         }
 
         /// <summary>
         /// Hook to notify modules that the <see cref="IReactInstance"/> has
         /// been initialized.
         /// </summary>
-        internal void NotifyReactInstanceInitialize()
+        internal async Task NotifyReactInstanceInitializeAsync()
         {
             _reactContext.AssertOnNativeModulesQueueThread();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceInitialize").Start())
             {
-                foreach (var module in _moduleInstances.Values)
-                {
-                    Dispatch(module, module.Initialize);
-                }
+                await Task.WhenAll(_moduleInstances.Values.Select(module => RunAsync(module, module.Initialize)));
             }
         }
 
@@ -195,6 +198,20 @@ namespace ReactNative.Bridge
             }
         }
 
+        private static async Task RunAsync(INativeModule module, Action action)
+        {
+            // If the module has an action queue, call there;
+            // otherwise execute inline.
+            if (module.ActionQueue != null)
+            {
+                await module.ActionQueue.RunAsync(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
         class ModuleDefinition
         {
             private readonly IList<MethodRegistration> _methods;
@@ -221,12 +238,12 @@ namespace ReactNative.Bridge
 
             public INativeModule Target { get; }
 
-            public JToken Invoke(IReactInstance reactInstance, int methodId, JArray parameters)
+            public JToken Invoke(InvokeCallback invokeCallback, int methodId, JArray parameters)
             {
                 var method = _methods[methodId];
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, method.TracingName).Start())
                 {
-                    return method.Method.Invoke(reactInstance, parameters);
+                    return method.Method.Invoke(invokeCallback, parameters);
                 }
             }
 
@@ -364,7 +381,9 @@ namespace ReactNative.Bridge
                     var name = module.Name;
                     var moduleDef = new ModuleDefinition(name, module);
                     moduleTable.Add(moduleDef);
-                    moduleInstances.Add(module.GetType(), module);
+                    var wrapper = module as INativeModuleWrapper;
+                    var type = (wrapper?.Module ?? module).GetType();
+                    moduleInstances.Add(type, module);
                 }
 
                 return new NativeModuleRegistry(_reactContext, moduleTable, moduleInstances);
