@@ -19,7 +19,7 @@ namespace ReactNative.Tests.Bridge
 
             var wrapper = new TestWrapper(new TestModule());
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullAction(), ex => Assert.AreEqual("action", ex.ParamName));
-            AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullCallbackInstance(), ex => Assert.AreEqual("instance", ex.ParamName));
+            AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullCallback(), ex => Assert.AreEqual("invokeCallback", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullFunc(), ex => Assert.AreEqual("func", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullTypeAction(), ex => Assert.AreEqual("type", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullTypeFunc(), ex => Assert.AreEqual("type", ex.ParamName));
@@ -72,15 +72,15 @@ namespace ReactNative.Tests.Bridge
 
             public void TestNullAction()
             {
-                var method = new NativeMethod("foo", default(Action<IReactInstance, JArray>));
+                var method = new NativeMethod("foo", default(Action<InvokeCallback, JArray>));
             }
 
             public void TestNullFunc()
             {
-                var method = new NativeMethod("foo", default(Func<IReactInstance, JArray, JToken>));
+                var method = new NativeMethod("foo", default(Func<InvokeCallback, JArray, JToken>));
             }
 
-            public void TestNullCallbackInstance()
+            public void TestNullCallback()
             {
                 var callback = new Callback(0, null);
             }

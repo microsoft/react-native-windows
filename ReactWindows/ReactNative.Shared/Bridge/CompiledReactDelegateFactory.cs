@@ -21,8 +21,8 @@ namespace ReactNative.Bridge
         private static readonly ConstructorInfo s_newArgumentNullException = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new ArgumentNullException(default(string)));
         private static readonly ConstructorInfo s_newNativeArgumentParseException = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new NativeArgumentsParseException(default(string), default(string)));
         private static readonly ConstructorInfo s_newNativeArgumentParseExceptionInner = (ConstructorInfo)ReflectionHelpers.InfoOf(() => new NativeArgumentsParseException(default(string), default(string), default(Exception)));
-        private static readonly MethodInfo s_createCallback = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreateCallback(default(JToken), default(IReactInstance))));
-        private static readonly MethodInfo s_createPromise = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreatePromise(default(JToken), default(JToken), default(IReactInstance))));
+        private static readonly MethodInfo s_createCallback = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreateCallback(default(JToken), default(InvokeCallback))));
+        private static readonly MethodInfo s_createPromise = ((MethodInfo)ReflectionHelpers.InfoOf(() => CreatePromise(default(JToken), default(JToken), default(InvokeCallback))));
         private static readonly MethodInfo s_toObject = ((MethodInfo)ReflectionHelpers.InfoOf((JToken token) => token.ToObject(typeof(Type))));
         private static readonly MethodInfo s_stringFormat = (MethodInfo)ReflectionHelpers.InfoOf(() => string.Format(default(IFormatProvider), default(string), default(object)));
         private static readonly MethodInfo s_getIndex = (MethodInfo)ReflectionHelpers.InfoOf((JArray arr) => arr[0]);
@@ -43,12 +43,12 @@ namespace ReactNative.Bridge
         /// <param name="module">The native module instance.</param>
         /// <param name="method">The method.</param>
         /// <returns>The invocation delegate.</returns>
-        public override Func<IReactInstance, JArray, JToken> Create(INativeModule module, MethodInfo method)
+        public override Func<InvokeCallback, JArray, JToken> Create(INativeModule module, MethodInfo method)
         {
             return GenerateExpression(module, method).Compile();
         }
 
-        private static Expression<Func<IReactInstance, JArray, JToken>> GenerateExpression(INativeModule module, MethodInfo method)
+        private static Expression<Func<InvokeCallback, JArray, JToken>> GenerateExpression(INativeModule module, MethodInfo method)
         {
             var parameterInfos = method.GetParameters();
 
@@ -62,7 +62,7 @@ namespace ReactNative.Bridge
             var extractExpressions = new Expression[n];
 
             var moduleInstanceConstant = Expression.Constant(module, typeof(INativeModule));
-            var reactInstanceParameter = Expression.Parameter(typeof(IReactInstance), "reactInstance");
+            var invokeCallbackParameter = Expression.Parameter(typeof(InvokeCallback), "invokeCallback");
             var jsArgumentsParameter = Expression.Parameter(typeof(JArray), "jsArguments");
 
             for (var i = 0; i < n; ++i)
@@ -75,7 +75,7 @@ namespace ReactNative.Bridge
                     parameterInfo.ParameterType,
                     parameterExpression,
                     jsArgumentsParameter,
-                    reactInstanceParameter,
+                    invokeCallbackParameter,
                     jsArgumentsParameter.Name,
                     module.Name,
                     method.Name,
@@ -86,10 +86,10 @@ namespace ReactNative.Bridge
             var blockStatements = new Expression[n + 5];
 
             //
-            // if (reactInstance == null)
-            //     throw new ArgumentNullException(nameof(reactInstance));
+            // if (invokeCallback == null)
+            //     throw new ArgumentNullException(nameof(invokeCallback));
             //
-            blockStatements[0] = CreateNullCheckExpression<IReactInstance>(reactInstanceParameter);
+            blockStatements[0] = CreateNullCheckExpression<IReactInstance>(invokeCallbackParameter);
 
             //
             // if (jsArguments == null)
@@ -179,9 +179,9 @@ namespace ReactNative.Bridge
                 blockStatements[blockStatements.Length - 1] = s_nullConstant;
             }
 
-            return Expression.Lambda<Func<IReactInstance, JArray, JToken>>(
+            return Expression.Lambda<Func<InvokeCallback, JArray, JToken>>(
                 Expression.Block(blockParameterExpressions, blockStatements),
-                reactInstanceParameter,
+                invokeCallbackParameter,
                 jsArgumentsParameter
             );
         }

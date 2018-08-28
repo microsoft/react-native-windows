@@ -3,13 +3,12 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
-using ReactNative.Reflection;
+using Newtonsoft.Json.Linq;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
-using Newtonsoft.Json.Linq;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
-using Windows.UI;
+using ReactNative.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -67,18 +66,6 @@ namespace ReactNative.Views.View
             // We need to have this stub for this prop so that Views which
             // specify the accessible prop aren't considered to be layout-only.
             // The proper implementation is still to be determined.
-        }
-
-        /// <summary>
-        /// Set the pointer events handling mode for the view.
-        /// </summary>
-        /// <param name="view">The view.</param>
-        /// <param name="pointerEventsValue">The pointerEvents mode.</param>
-        [ReactProp("pointerEvents")]
-        public void SetPointerEvents(BorderedCanvas view, string pointerEventsValue)
-        {
-            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
-            view.SetPointerEvents(pointerEvents);
         }
 
 #if WINDOWS_UWP

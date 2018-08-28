@@ -651,7 +651,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// <paramref name="reactTag"/> is only valid for UWP. For WPF it always runs on main dispatcher.
         /// </remarks>
-        public void RunOnDispatcherThread(int reactTag, Action action)
+        public void RunOnDispatcherThread(int? reactTag, Action action)
         {
             //runs on any thread
             _operationsQueue.InvokeAction(reactTag, action);
@@ -877,6 +877,8 @@ namespace ReactNative.UIManager
             float absoluteX,
             float absoluteY)
         {
+            cssNode.BeforeDispatchUpdatesToDescendants();
+
             if (!cssNode.HasUpdates)
             {
                 return;

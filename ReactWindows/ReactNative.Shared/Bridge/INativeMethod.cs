@@ -20,9 +20,9 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Invoke the native method.
         /// </summary>
-        /// <param name="reactInstance">The React instance.</param>
+        /// <param name="invokeCallback">The invoke callback delegate.</param>
         /// <param name="arguments">The arguments.</param>
         /// <returns>The native method result.</returns>
-        JToken Invoke(IReactInstance reactInstance, JArray arguments);
+        JToken Invoke(InvokeCallback invokeCallback, JArray arguments);
     }
 }

@@ -7,6 +7,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
@@ -37,7 +38,7 @@ namespace ReactNative.Touch
                 { UIElement.PointerMovedEvent, new PointerEventHandler(OnPointerMoved) },
                 { UIElement.PointerReleasedEvent, new PointerEventHandler(OnPointerReleased) },
                 { UIElement.PointerCanceledEvent, new PointerEventHandler(OnPointerCanceled) },
-                { UIElement.PointerCaptureLostEvent, new PointerEventHandler(OnPointerCaptureLost)}
+                { UIElement.PointerCaptureLostEvent, new PointerEventHandler(OnPointerCaptureLost) },
             };
 
             foreach (KeyValuePair<RoutedEvent, PointerEventHandler> handler in _pointerHandlers)
@@ -54,30 +55,6 @@ namespace ReactNative.Touch
             }
         }
 
-        public static void OnPointerEntered(DependencyObject view, PointerRoutedEventArgs e)
-        {
-            if (ShouldSendEnterLeaveEvent(view))
-            {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
-            }
-        }
-
-        public static void OnPointerExited(DependencyObject view, PointerRoutedEventArgs e)
-        {
-            if (ShouldSendEnterLeaveEvent(view))
-            {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
-            }
-        }
-
         private void OnPointerPressed(object sender, PointerRoutedEventArgs e)
         {
             var pointerId = e.Pointer.PointerId;
@@ -88,9 +65,7 @@ namespace ReactNative.Touch
 
             var originalSource = e.OriginalSource as DependencyObject;
             var rootPoint = e.GetCurrentPoint(_view);
-            var transform = ((UIElement)sender).TransformToVisual(Window.Current.Content);
-            Point p = transform.TransformPoint(rootPoint.Position);
-            var reactView = GetReactViewTarget(originalSource, p);
+            var reactView = GetReactViewTarget(e) as UIElement;
             if (reactView != null && _view.CapturePointer(e.Pointer))
             {
                 var viewPoint = e.GetCurrentPoint(reactView);
@@ -176,46 +151,63 @@ namespace ReactNative.Touch
             return -1;
         }
 
-        private UIElement GetReactViewTarget(DependencyObject originalSource, Point point)
+        private DependencyObject GetReactViewTarget(PointerRoutedEventArgs e)
         {
-            // If the target is not a child of the root view, then this pointer
-            // event does not belong to React.
-            if (!RootViewHelper.IsReactSubview(originalSource))
+            // Ensure the original source is a DependencyObject
+            var originalSource = e.OriginalSource as DependencyObject;
+            if (originalSource == null)
             {
                 return null;
             }
 
-            var adjustedPoint = AdjustPointForStatusBar(point);
-            var sources = VisualTreeHelper.FindElementsInHostCoordinates(adjustedPoint, _view);
+            // Get the React view hierarchy from the original source.
+            var enumerator = RootViewHelper.GetReactViewHierarchy(originalSource).GetEnumerator();
 
-            // Get the first React view that does not have pointer events set
-            // to 'none' or 'box-none', and is not a child of a view with 
-            // 'box-only' or 'none' settings for pointer events.
-
-            // TODO: use pooled data structure
-            var isBoxOnlyCache = new Dictionary<DependencyObject, bool>();
-            foreach (var source in sources)
+            // Try to get the first React view.
+            if (!enumerator.MoveNext())
             {
-                if (!source.HasTag())
-                {
-                    continue;
-                }
+                return null;
+            }
 
-                var pointerEvents = source.GetPointerEvents();
-                if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
-                {
-                    continue;
-                }
+            // If the first React view has `pointerEvents: box-none`, revert
+            // to using the `VisualTreeHelper` to find potentially occluded views.
+            // This condition should be rare.
+            if (enumerator.Current.GetPointerEvents() == PointerEvents.BoxNone)
+            {
+                var rootPoint = e.GetCurrentPoint(_view);
+                var transform = _view.TransformToVisual(Window.Current.Content);
+                var point = transform.TransformPoint(rootPoint.Position);
+                var adjustedPoint = AdjustPointForStatusBar(point);
 
-                var viewHierarchy = RootViewHelper.GetReactViewHierarchy(source);
-                var isBoxOnly = IsBoxOnlyWithCache(viewHierarchy, isBoxOnlyCache);
-                if (!isBoxOnly)
+                // Get the first view in at the pointer point that is not `box-none`.
+                var nonBoxOnlyView = VisualTreeHelper.FindElementsInHostCoordinates(adjustedPoint, _view)
+                    .First(v => v.HasTag() && v.GetPointerEvents() != PointerEvents.BoxNone);
+
+                // Update the enumerator for the non-`box-only` view.
+                enumerator = RootViewHelper.GetReactViewHierarchy(nonBoxOnlyView).GetEnumerator();
+                if (!enumerator.MoveNext())
                 {
-                    return source;
+                    return null;
                 }
             }
 
-            return null;
+            // Views with `pointerEvents: none` are not hit test enabled, so we
+            // will not encounter any view subtrees with this value. Given the
+            // prior conditional for `pointerEvents: box-none`, we only need to
+            // loop through the parents of the current React view target to
+            // check for uses of `pointerEvents: box-only`. If found, the
+            // parent becomes the new target.
+            var source = enumerator.Current;
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (source == null || current.GetPointerEvents() == PointerEvents.BoxOnly)
+                {
+                    source = current;
+                }
+            }
+
+            return source;
         }
 
         private void UpdatePointerForEvent(ReactPointer pointer, PointerRoutedEventArgs e)
@@ -265,64 +257,7 @@ namespace ReactNative.Touch
                 .EventDispatcher
                 .DispatchEvent(touchEvent);
         }
-
-        private static bool IsBoxOnlyWithCache(IEnumerable<DependencyObject> hierarchy, IDictionary<DependencyObject, bool> cache)
-        {
-            var enumerator = hierarchy.GetEnumerator();
-
-            // Skip the first element (only checking ancestors)
-            if (!enumerator.MoveNext())
-            {
-                return false;
-            }
-
-            return IsBoxOnlyWithCacheRecursive(enumerator, cache);
-        }
-
-        private static bool IsBoxOnlyWithCacheRecursive(IEnumerator<DependencyObject> enumerator, IDictionary<DependencyObject, bool> cache)
-        {
-            if (!enumerator.MoveNext())
-            {
-                return false;
-            }
-
-            var currentView = enumerator.Current;
-            if (!cache.TryGetValue(currentView, out var isBoxOnly))
-            {
-                var pointerEvents = currentView.GetPointerEvents();
-
-                isBoxOnly = pointerEvents == PointerEvents.BoxOnly 
-                    || pointerEvents == PointerEvents.None
-                    || IsBoxOnlyWithCacheRecursive(enumerator, cache);
-
-                cache.Add(currentView, isBoxOnly);
-            }
-
-            return isBoxOnly;
-        }
-
-        private static bool ShouldSendEnterLeaveEvent(DependencyObject view)
-        {
-            // If the target is not a child of the root view, then this pointer
-            // event does not belong to React.
-            if (!RootViewHelper.IsReactSubview(view))
-            {
-                return false;
-            }
-
-            var viewHierarchy = RootViewHelper.GetReactViewHierarchy(view);
-            foreach (var ancestor in viewHierarchy)
-            {
-                var pointerEvents = ancestor.GetPointerEvents();
-                if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
+        
         private static Point AdjustPointForStatusBar(Point point)
         {
             var currentOrientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
@@ -385,59 +320,7 @@ namespace ReactNative.Touch
                 eventEmitter.receiveTouches(EventName, _touches, _changedIndices);
             }
         }
-
-        class PointerEnterExitEvent : Event
-        {
-            private readonly TouchEventType _touchEventType;
-
-            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag) 
-                : base(viewTag)
-            {
-                _touchEventType = touchEventType;
-            }
-
-            public override string EventName
-            {
-                get
-                {
-                    return _touchEventType.GetJavaScriptEventName();
-                }
-            }
-
-            public override bool CanCoalesce
-            {
-                get
-                {
-                    return false;
-                }
-            }
-
-            public override void Dispatch(RCTEventEmitter eventEmitter)
-            {
-                var eventData = new JObject
-                {
-                    { "target", ViewTag },
-                };
-
-                var enterLeaveEventName = default(string);
-                if (_touchEventType == TouchEventType.Entered)
-                {
-                    enterLeaveEventName = "topMouseEnter";
-                }
-                else if (_touchEventType == TouchEventType.Exited)
-                {
-                    enterLeaveEventName = "topMouseLeave";
-                }
-               
-                if (enterLeaveEventName != null)
-                {
-                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
-                }
-
-                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
-            }
-        }
-
+        
         class ReactPointer
         {
             [JsonProperty(PropertyName = "target")]

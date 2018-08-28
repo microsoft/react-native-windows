@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
@@ -344,7 +344,7 @@ namespace ReactNative.Tests.Modules.Network
             var headerData = onReceivedData[2].Value<JObject>();
             Assert.AreEqual("bar", headerData.Value<string>("X-Foo"));
 
-            Assert.AreEqual(uri.AbsolutePath, onReceivedData[3].Value<string>());
+            Assert.AreEqual(uri.AbsoluteUri, onReceivedData[3].Value<string>());
 
             onComplete.WaitOne();
             Assert.IsNotNull(onCompleteData);
@@ -596,6 +596,48 @@ namespace ReactNative.Tests.Modules.Network
             Assert.IsNotNull(onCompleteData);
             AssertNotRequestError(onCompleteData);
             Assert.AreEqual(expected, builder.ToString());
+        }
+
+        [Test]
+        public void NetworkingModule_Response_RedirectedUrl()
+        {
+            var uri = new Uri("http://example.com");
+            var redirectedUri = new Uri("http://foo.com/api?bar=123&token=abcd");
+
+            var onReceived = new AutoResetEvent(false);
+            var onReceivedData = default(JArray);
+
+            var module = CreateNetworkingModule(new MockHttpClient(request =>
+            {
+                // simulating redirect
+                request.RequestUri = redirectedUri;
+#if WINDOWS_UWP
+                var response = new HttpResponseMessage(HttpStatusCode.Ok);
+#else
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+#endif
+                response.RequestMessage = request;
+
+                return response;
+            }),
+            new MockInvocationHandler((name, args) =>
+            {
+                if (name == "emit" && args.Length == 2)
+                {
+                    var eventName = args[0] as string;
+                    if (eventName == "didReceiveNetworkResponse")
+                    {
+                        onReceivedData = args[1] as JArray;
+                        onReceived.Set();
+                    }
+                }
+            }));
+
+            module.sendRequest("get", uri, 42, null, null, "text", false, 1000);
+
+            onReceived.WaitOne();
+            Assert.AreEqual(42, onReceivedData[0].Value<int>());
+            Assert.AreEqual(redirectedUri.AbsoluteUri, onReceivedData[3].Value<string>());
         }
 
         private static void AssertNotRequestError(JArray onCompleteData)

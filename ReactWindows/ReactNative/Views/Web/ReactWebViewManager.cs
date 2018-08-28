@@ -286,6 +286,12 @@ namespace ReactNative.Views.Web
                     // HTML files need to be loaded with the ms-appx-web schema.
                     uri = uri.Replace("ms-appx:", "ms-appx-web:");
 
+                    string previousUri = view.Source?.OriginalString;
+                    if (!String.IsNullOrWhiteSpace(previousUri) && previousUri.Equals(uri))
+                    {
+                        return;
+                    }
+
                     using (var request = new HttpRequestMessage())
                     {
                         request.RequestUri = new Uri(uri);
@@ -373,7 +379,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                          tag,
                          WebViewLoadEvent.TopLoadingStart,
-                         e.Uri?.ToString(),
+                         e.Uri?.OriginalString,
                          true,
                          webView.DocumentTitle,
                          webView.CanGoBack,
@@ -417,7 +423,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                         webView.GetTag(),
                         WebViewLoadEvent.TopLoadingFinish,
-                        e.Uri?.ToString(),
+                        e.Uri?.OriginalString,
                         false,
                         webView.DocumentTitle,
                         webView.CanGoBack,

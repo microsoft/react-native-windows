@@ -34,9 +34,19 @@ namespace ReactNative.Modules.NetInfo
         void Stop();
     }
 
+    /// <summary>
+    /// Describes a network connectivity change event
+    /// </summary>
     public class NetworkConnectivityChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the network is available
+        /// </summary>
         public bool IsAvailable { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value specifying additional network connectivity status
+        /// </summary>
         public string ConnectionStatus { get; set; }
     }
 }

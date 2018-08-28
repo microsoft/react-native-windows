@@ -55,7 +55,7 @@ namespace ReactNative
                     {
                         {
                             nameof(ReactNative.Modules.Core.DeviceEventManagerModule.invokeDefaultBackPressHandler),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.invokeDefaultBackPressHandler(
                                 )
                             )
@@ -96,7 +96,7 @@ namespace ReactNative
                     {
                         {
                             nameof(ReactNative.Modules.Core.ExceptionsManagerModule.reportFatalException),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.reportFatalException(
                                     args[0].ToObject<System.String>(),
                                     CastJToken<Newtonsoft.Json.Linq.JArray>(args[1]),
@@ -106,7 +106,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.Modules.Core.ExceptionsManagerModule.reportSoftException),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.reportSoftException(
                                     args[0].ToObject<System.String>(),
                                     CastJToken<Newtonsoft.Json.Linq.JArray>(args[1]),
@@ -116,7 +116,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.Modules.Core.ExceptionsManagerModule.updateExceptionMessage),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.updateExceptionMessage(
                                     args[0].ToObject<System.String>(),
                                     CastJToken<Newtonsoft.Json.Linq.JArray>(args[1]),
@@ -126,7 +126,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.Modules.Core.ExceptionsManagerModule.dismissRedbox),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.dismissRedbox(
                                 )
                             )
@@ -167,11 +167,11 @@ namespace ReactNative
                     {
                         {
                             nameof(ReactNative.Modules.DevSupport.SourceCodeModule.getScriptText),
-                            new NativeMethod("promise", (instance, args) =>
+                            new NativeMethod("promise", (invokeCallback, args) =>
                                 Module.getScriptText(
                                     new Promise(
-                                        new Callback(args[0].ToObject<int>(), instance),
-                                        new Callback(args[1].ToObject<int>(), instance)
+                                        new Callback(args[0].ToObject<int>(), invokeCallback),
+                                        new Callback(args[1].ToObject<int>(), invokeCallback)
                                     )
                                 )
                             )
@@ -195,7 +195,7 @@ namespace ReactNative
                     {
                         {
                             nameof(ReactNative.Modules.Core.Timing.createTimer),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.createTimer(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.Int32>(),
@@ -206,7 +206,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.Modules.Core.Timing.deleteTimer),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.deleteTimer(
                                     args[0].ToObject<System.Int32>()
                                 )
@@ -214,7 +214,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.Modules.Core.Timing.setSendIdleEvents),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.setSendIdleEvents(
                                     args[0].ToObject<System.Boolean>()
                                 )
@@ -239,7 +239,7 @@ namespace ReactNative
                     {
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.removeRootView),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.removeRootView(
                                     args[0].ToObject<System.Int32>()
                                 )
@@ -247,7 +247,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.createView),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.createView(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.String>(),
@@ -258,7 +258,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.updateView),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.updateView(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.String>(),
@@ -268,7 +268,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.manageChildren),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.manageChildren(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.Int32[]>(),
@@ -281,7 +281,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.setChildren),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.setChildren(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.Int32[]>()
@@ -290,7 +290,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.replaceExistingNonRootView),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.replaceExistingNonRootView(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.Int32>()
@@ -299,7 +299,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.removeSubviewsFromContainerWithID),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.removeSubviewsFromContainerWithID(
                                     args[0].ToObject<System.Int32>()
                                 )
@@ -307,56 +307,56 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.measure),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.measure(
                                     args[0].ToObject<System.Int32>(),
-                                    new Callback(args[1].ToObject<int>(), instance)
+                                    new Callback(args[1].ToObject<int>(), invokeCallback)
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.measureInWindow),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.measureInWindow(
                                     args[0].ToObject<System.Int32>(),
-                                    new Callback(args[1].ToObject<int>(), instance)
+                                    new Callback(args[1].ToObject<int>(), invokeCallback)
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.measureLayout),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.measureLayout(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.Int32>(),
-                                    new Callback(args[2].ToObject<int>(), instance),
-                                    new Callback(args[3].ToObject<int>(), instance)
+                                    new Callback(args[2].ToObject<int>(), invokeCallback),
+                                    new Callback(args[3].ToObject<int>(), invokeCallback)
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.measureLayoutRelativeToParent),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.measureLayoutRelativeToParent(
                                     args[0].ToObject<System.Int32>(),
-                                    new Callback(args[1].ToObject<int>(), instance),
-                                    new Callback(args[2].ToObject<int>(), instance)
+                                    new Callback(args[1].ToObject<int>(), invokeCallback),
+                                    new Callback(args[2].ToObject<int>(), invokeCallback)
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.findSubviewIn),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.findSubviewIn(
                                     args[0].ToObject<System.Int32>(),
                                     CastJToken<Newtonsoft.Json.Linq.JArray>(args[1]),
-                                    new Callback(args[2].ToObject<int>(), instance)
+                                    new Callback(args[2].ToObject<int>(), invokeCallback)
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.setJSResponder),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.setJSResponder(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.Boolean>()
@@ -365,14 +365,14 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.clearJSResponder),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.clearJSResponder(
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.dispatchViewManagerCommand),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.dispatchViewManagerCommand(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.Int32>(),
@@ -382,28 +382,28 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.showPopupMenu),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.showPopupMenu(
                                     args[0].ToObject<System.Int32>(),
                                     args[1].ToObject<System.String[]>(),
-                                    new Callback(args[2].ToObject<int>(), instance),
-                                    new Callback(args[3].ToObject<int>(), instance)
+                                    new Callback(args[2].ToObject<int>(), invokeCallback),
+                                    new Callback(args[3].ToObject<int>(), invokeCallback)
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.configureNextLayoutAnimation),
-                            new NativeMethod("async", (instance, args) =>
+                            new NativeMethod("async", (invokeCallback, args) =>
                                 Module.configureNextLayoutAnimation(
                                     CastJToken<Newtonsoft.Json.Linq.JObject>(args[0]),
-                                    new Callback(args[1].ToObject<int>(), instance),
-                                    new Callback(args[2].ToObject<int>(), instance)
+                                    new Callback(args[1].ToObject<int>(), invokeCallback),
+                                    new Callback(args[2].ToObject<int>(), invokeCallback)
                                 )
                             )
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.getConstantsForViewManager),
-                            new NativeMethod("sync", (instance, args) =>
+                            new NativeMethod("sync", (invokeCallback, args) =>
                                 Module.getConstantsForViewManager(
                                     args[0].ToObject<System.String>()
                                 )
@@ -411,7 +411,7 @@ namespace ReactNative
                         },
                         {
                             nameof(ReactNative.UIManager.UIManagerModule.getDefaultEventTypes),
-                            new NativeMethod("sync", (instance, args) =>
+                            new NativeMethod("sync", (invokeCallback, args) =>
                                 Module.getDefaultEventTypes(
                                 )
                             )

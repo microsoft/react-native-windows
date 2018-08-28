@@ -108,7 +108,9 @@ namespace ReactNative.UIManager
 #if WINDOWS_UWP
             CoreDispatcher dispatcher,
 #else
-            Dispatcher notUsed,
+#pragma warning disable CS1573
+            Dispatcher dispatcher,
+#pragma warning restore CS1573
 #endif
             Action<List<int>> onDropView
             )
@@ -661,6 +663,7 @@ namespace ReactNative.UIManager
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
 
+            // Keeping here for symmetry, tag on root views is set early, in UIManagerModule.AddMeasuredRootViewAsync
             ViewExtensions.SetTag(view, tag);
             ViewExtensions.SetReactContext(view, themedContext);
 #if WINDOWS_UWP

@@ -162,14 +162,52 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
+        /// Enum values correspond to positions of prop names in ReactPropGroup attribute
+        /// applied to <see cref="SetBorderRadius(Border, int, double)"/>
+        /// </summary>
+        private enum Radius
+        {
+            All,
+            TopLeft,
+            TopRight,
+            BottomLeft,
+            BottomRight,
+        }
+
+        /// <summary>
         /// The border radius of the <see cref="ReactRootView"/>.
         /// </summary>
         /// <param name="view">The image view instance.</param>
+        /// <param name="index">The prop index.</param>
         /// <param name="radius">The border radius value.</param>
-        [ReactProp("borderRadius")]
-        public void SetBorderRadius(Border view, double radius)
+        [ReactPropGroup(
+            ViewProps.BorderRadius,
+            ViewProps.BorderTopLeftRadius,
+            ViewProps.BorderTopRightRadius,
+            ViewProps.BorderBottomLeftRadius,
+            ViewProps.BorderBottomRightRadius)]
+        public void SetBorderRadius(Border view, int index, double radius)
         {
-            view.CornerRadius = new CornerRadius(radius);
+            var cornerRadius = view.CornerRadius;
+            switch ((Radius)index)
+            {
+                case Radius.All:
+                    cornerRadius = new CornerRadius(radius);
+                    break;
+                case Radius.TopLeft:
+                    cornerRadius.TopLeft = radius;
+                    break;
+                case Radius.TopRight:
+                    cornerRadius.TopRight = radius;
+                    break;
+                case Radius.BottomLeft:
+                    cornerRadius.BottomLeft = radius;
+                    break;
+                case Radius.BottomRight:
+                    cornerRadius.BottomRight = radius;
+                    break;
+            }
+            view.CornerRadius = cornerRadius;
         }
 
         /// <summary>
