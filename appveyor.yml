@@ -77,9 +77,9 @@ test_script:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
+      if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=reactnative.net46.tests.xml }
 
-      nunit3-console "ReactWindows\Playground.Net46.Tests\bin\$platform\$config\Playground.Net46.Tests.dll" --result=myresults.xml
+      if($platform -ne "ARM") { nunit3-console "ReactWindows\Playground.Net46.Tests\bin\$config\Playground.Net46.Tests.dll" --result=playground.net46.tests.xml }
 
   # Disabling for now
   #- npm run flow-check
@@ -97,7 +97,7 @@ after_test:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" ReactWindows\ReactNative.Net46.Tests\bin\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
+      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
 
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
