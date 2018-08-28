@@ -52,6 +52,32 @@ namespace ReactNative.Tests.Views.Text
             Assert.AreEqual(text, "Four");
         }
 
+        [UTFAC.UITestMethod]
+        public void ReactTextViewManager_Selection_BoldUnderlineText()
+        {
+            // <Bold><Run>Sample test text.</Run><Run>Second text.</Run></Bold><Run>Third text.</Run><Underline><Run>Fourth text.</Run></Underline>
+            Bold bold = new Bold();
+            Run run = new Run();
+            run.Text = "Sample test text.";
+            bold.Inlines.Add(run);
+            Run run1 = new Run();
+            run1.Text = "Second text.";
+            bold.Inlines.Add(run1);
+            Run run2 = new Run();
+            run2.Text = "Third text.";
+            Underline underline = new Underline();
+            Run run3 = new Run();
+            run3.Text = "Fourth text.";
+            underline.Inlines.Add(run3);
+
+            RichTextBlock rtb = CreateWithInlines(new Inline[] { bold, run2, underline });
+            Paragraph paragraph = rtb.Blocks.First() as Paragraph;
+            TextPointer start = paragraph.ContentStart.GetPositionAtOffset(50, LogicalDirection.Forward);
+            TextPointer end = paragraph.ContentStart.GetPositionAtOffset(54, LogicalDirection.Forward);
+            var text = ReactTextViewManager.GetStringByStartAndEndPointers(rtb, start, end);
+            Assert.AreEqual(text, "Four");
+        }
+
         private RichTextBlock CreateWithInlines(Inline[] inlines)
         {
             RichTextBlock rtb = new RichTextBlock();
