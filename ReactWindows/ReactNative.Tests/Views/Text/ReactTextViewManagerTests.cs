@@ -23,7 +23,7 @@ namespace ReactNative.Tests.Views.Text
             TextPointer start = paragraph.ContentStart.GetPositionAtOffset(8, LogicalDirection.Forward);
             TextPointer end = paragraph.ContentStart.GetPositionAtOffset(12, LogicalDirection.Forward);
             var text = ReactTextViewManager.GetStringByStartAndEndPointers(rtb, start, end);
-            Assert.AreEqual(text, "test");
+            Assert.AreEqual(text, @"test");
         }
 
         [UTFAC.UITestMethod]
@@ -49,7 +49,7 @@ namespace ReactNative.Tests.Views.Text
             TextPointer start = paragraph.ContentStart.GetPositionAtOffset(50, LogicalDirection.Forward);
             TextPointer end = paragraph.ContentStart.GetPositionAtOffset(54, LogicalDirection.Forward);
             var text = ReactTextViewManager.GetStringByStartAndEndPointers(rtb, start, end);
-            Assert.AreEqual(text, "Four");
+            Assert.AreEqual(text, @"Four");
         }
 
         [UTFAC.UITestMethod]
@@ -75,7 +75,7 @@ namespace ReactNative.Tests.Views.Text
             TextPointer start = paragraph.ContentStart.GetPositionAtOffset(50, LogicalDirection.Forward);
             TextPointer end = paragraph.ContentStart.GetPositionAtOffset(54, LogicalDirection.Forward);
             var text = ReactTextViewManager.GetStringByStartAndEndPointers(rtb, start, end);
-            Assert.AreEqual(text, "Four");
+            Assert.AreEqual(text, @"Four");
         }
 
         [UTFAC.UITestMethod]
@@ -102,6 +102,32 @@ namespace ReactNative.Tests.Views.Text
             TextPointer end = paragraph.ContentStart.GetPositionAtOffset(50, LogicalDirection.Forward);
             var text = ReactTextViewManager.GetStringByStartAndEndPointers(rtb, start, end);
             Assert.AreEqual(text, @"http://www.test.com/");
+        }
+
+        [UTFAC.UITestMethod]
+        public void ReactTextViewManager_Selection_InlineUIContainer()
+        {
+            // <Span><Run>Sample test text.</Run><Run>Second text.</Run></Span><Run>Third text.</Run><InlineUIContainer><TextBlock Text='InlineUIContainerText'/></InlineUIContainer>
+            Span span = new Span();
+            Run run = new Run();
+            run.Text = "Sample test text.";
+            span.Inlines.Add(run);
+            Run run1 = new Run();
+            run1.Text = "Second text.";
+            span.Inlines.Add(run1);
+            Run run2 = new Run();
+            run2.Text = "Third text.";
+            InlineUIContainer inlineUIContainer = new InlineUIContainer();
+            TextBlock tb = new TextBlock();
+            tb.Text = "InlineUIContainerText";
+            inlineUIContainer.Child = tb;
+
+            RichTextBlock rtb = CreateWithInlines(new Inline[] { span, run2, inlineUIContainer });
+            Paragraph paragraph = rtb.Blocks.First() as Paragraph;
+            TextPointer start = paragraph.ContentStart.GetPositionAtOffset(49, LogicalDirection.Forward);
+            TextPointer end = paragraph.ContentStart.GetPositionAtOffset(50, LogicalDirection.Forward);
+            var text = ReactTextViewManager.GetStringByStartAndEndPointers(rtb, start, end);
+            Assert.AreEqual(text, @"InlineUIContainerText");
         }
 
         private RichTextBlock CreateWithInlines(Inline[] inlines)
