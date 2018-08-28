@@ -48,8 +48,7 @@
     "prettier": "^1.9.1",
     "react": "^16.3.1",
     "react-devtools-core": "3.1.0",
-    "react-native": "~0.55.3",
-    "selenium-webdriver": "2.48.x"
+    "react-native": "~0.55.3"
   },
   "dependencies": {
     "chalk": "^1.1.1",

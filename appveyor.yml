@@ -39,7 +39,7 @@ install:
   - ps: Install-Product node $env:nodejs_version x64
   - appveyor-retry npm install -g npm@lts
   - appveyor-retry npm i
-  - appveyor-retry curl -L -o C:\WindowsApplicationDriver.msi https://github.com/Microsoft/WinAppDriver/releases/download/v1.0/WindowsApplicationDriver.msi
+  - appveyor-retry curl -L -o C:\WindowsApplicationDriver.msi https://github.com/Microsoft/WinAppDriver/releases/download/v1.1-RC/WindowsApplicationDriver.msi
   - ps: start C:\WindowsApplicationDriver.msi /passive
 
 clone_script:
@@ -97,7 +97,7 @@ after_test:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
+      if ($platform.value -ne "ARM") { ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" ReactWindows\ReactNative.Net46.Tests\bin\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
 
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
