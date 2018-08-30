@@ -280,6 +280,17 @@ namespace ReactNative.Views.TextInput
             view.MaxLength = maxCharLength;
         }
 
+		/// <summary>
+		/// Sets the password prop on the <see cref="PasswordBox"/>.
+		/// </summary>
+		/// <param name="view">The view instance.</param>
+		/// <param name="value">The value.</param>
+		[ReactProp("text")]
+		public void SetText(PasswordBox view, string value)
+		{
+			view.Password = value;
+		}
+
         /// <summary>
         /// Sets the keyboard type on the <see cref="PasswordBox"/>.
         /// </summary>
