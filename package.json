@@ -65,6 +65,10 @@
     "yeoman-generator": "^0.21.2"
   },
   "rnpm": {
+    "haste": {
+      "platforms": ["windows"],
+      "providesModuleNodeModules": ["react-native-windows"]
+    },
     "plugin": "./local-cli/index.js",
     "platform": "./local-cli/platform.js"
   }
