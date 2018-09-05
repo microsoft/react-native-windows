@@ -240,7 +240,8 @@ namespace ReactNative.UIManager
                             (value.Value<string>().Length == 0 || value.Value<string>() == "auto");
 #if WINDOWS_UWP
                     case AccessibilityLiveRegion:
-                        return value.Value<AutomationLiveSetting>() == AutomationLiveSetting.Off;
+                        return value == null || value.Type == JTokenType.String &&
+                            (value.Value<string>().Length == 0 || value.Value<string>() == "off");
 #endif
                 }
             }
