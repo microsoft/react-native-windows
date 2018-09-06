@@ -115,7 +115,7 @@ namespace ReactNative.UIManager
         /// </summary>
         public new void OnDestroy()
         {
-            DispatcherHelpers.RunOnDispatcher(base.OnDestroy);
+            DispatcherHelpers.RunOnDispatcher(base.OnDestroy, true);
         }
     }
 }
