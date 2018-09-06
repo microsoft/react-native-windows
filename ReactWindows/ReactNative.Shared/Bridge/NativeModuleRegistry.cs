@@ -171,16 +171,13 @@ namespace ReactNative.Bridge
         /// Hook to notify modules that the <see cref="IReactInstance"/> has
         /// been disposed.
         /// </summary>
-        internal void NotifyReactInstanceDispose()
+        /// <returns>Awaitable task.</returns>
+        internal async Task NotifyReactInstanceDisposeAsync()
         {
             _reactContext.AssertOnNativeModulesQueueThread();
             using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "NativeModuleRegistry_NotifyReactInstanceDestroy").Start())
             {
-                foreach (var module in _moduleInstances.Values)
-                {
-                    Dispatch(module, module.OnReactInstanceDispose);
-                    module.ActionQueue?.Dispose();
-                }
+                await Task.WhenAll(_moduleInstances.Values.Select(DisposeModuleAsync));
             }
         }
 
@@ -210,6 +207,18 @@ namespace ReactNative.Bridge
             {
                 action();
             }
+        }
+
+        private static Task DisposeModuleAsync(INativeModule module)
+        {
+            return module.ActionQueue != null
+                ? DisposeModuleOnActionQueueAsync(module)
+                : module.DisposeAsync();
+        }
+        private static async Task DisposeModuleOnActionQueueAsync(INativeModule module)
+        {
+            await module.ActionQueue.RunAsync(module.DisposeAsync).Unwrap();
+            module.ActionQueue.Dispose();
         }
 
         class ModuleDefinition

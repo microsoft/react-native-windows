@@ -404,7 +404,11 @@ namespace ReactNative.UIManager
             // Must be called in the context of the dispatcher thread corresponding to this queue
             _reactChoreographer.DispatchUICallback -= OnRenderingSafe;
 
-            (_reactChoreographer as IDisposable).Dispose();
+            // Don't dispose main choreographer, there's a great chance it will be reused
+            if (!_reactChoreographer.IsMainChoreographer())
+            {
+                (_reactChoreographer as IDisposable).Dispose();
+            }
         }
 
         /// <summary>

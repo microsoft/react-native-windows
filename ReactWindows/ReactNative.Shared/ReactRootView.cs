@@ -63,7 +63,7 @@ namespace ReactNative
         /// </summary>
         internal TouchHandler TouchHandler
         {
-            get;
+            get; private set;
         }
 
         /// <summary>
@@ -172,8 +172,6 @@ namespace ReactNative
         {
             DispatcherHelpers.AssertOnDispatcher(this);
 
-            TouchHandler.Dispose();
-
             var reactInstanceManager = _reactInstanceManager;
             var attachScheduled = _attachScheduled;
             _attachScheduled = false;
@@ -201,6 +199,23 @@ namespace ReactNative
             return result;
         }
 
+        internal void StartTouchHandling()
+        {
+            if (TouchHandler == null)
+            {
+                TouchHandler = new TouchHandler(this);
+            }
+        }
+
+        internal void StopTouchHandling()
+        {
+            if (TouchHandler != null)
+            {
+                TouchHandler.Dispose();
+                TouchHandler = null;
+            }
+        }
+
 #if WINDOWS_UWP
         /// <summary>
         /// Override ensuring the creation of an AutomationPeer for ReactRootView 
@@ -222,20 +237,6 @@ namespace ReactNative
             return peer;
         }
 #endif
-
-        internal void CleanupSafe()
-        {
-            // Inlining allowed
-            DispatcherHelpers.RunOnDispatcher(this.Dispatcher, Cleanup, true);
-        }
-
-        internal void Cleanup()
-        {
-            DispatcherHelpers.AssertOnDispatcher(this);
-
-            Children.Clear();
-            ViewExtensions.ClearData(this);
-        }
 
         private async Task MeasureOverrideHelperAsync()
         {

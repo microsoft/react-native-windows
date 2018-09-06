@@ -166,6 +166,8 @@ namespace ReactNative.UIManager
                     });
                 });
 
+                rootView.StartTouchHandling();
+
 #if WINDOWS_UWP
                 // Register view in DeviceInfoModule for tracking its dimensions
                 Context.GetNativeModule<DeviceInfoModule>().RegisterRootView(rootView, tag);
@@ -189,6 +191,8 @@ namespace ReactNative.UIManager
             await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
             {
                 rootView.RemoveSizeChanged();
+
+                rootView.StopTouchHandling();
 #if WINDOWS_UWP
                 // Unregister view from DeviceInfoModule
                 Context.GetNativeModule<DeviceInfoModule>().UnregisterRootView(rootView);
@@ -634,9 +638,11 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        public override void OnReactInstanceDispose()
+        public override Task OnReactInstanceDisposeAsync()
         {
+            _uiImplementation.OnDestroy();
             _eventDispatcher.OnReactInstanceDispose();
+            return Task.CompletedTask;
         }
 
         #endregion

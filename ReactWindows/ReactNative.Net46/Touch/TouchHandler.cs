@@ -323,7 +323,7 @@ namespace ReactNative.Touch
 
             var touchEvent = new TouchEvent(touchEventType, touches, changedIndices, coalescingKey);
 
-            _view.GetReactContext()
+            _view.GetReactContext()?
                 .GetNativeModule<UIManagerModule>()
                 .EventDispatcher
                 .DispatchEvent(touchEvent);
