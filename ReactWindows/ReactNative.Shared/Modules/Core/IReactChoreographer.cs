@@ -45,5 +45,11 @@ namespace ReactNative.Modules.Core
         /// </summary>
         /// <param name="callbackKey">The callback key.</param>
         void DeactivateCallback(string callbackKey);
+
+        /// <summary>
+        /// Returns true if the choreographer is associated with main I thread.
+        /// </summary>
+        /// <returns>true for the main choreographer</returns>
+        bool IsMainChoreographer();
     }
 }

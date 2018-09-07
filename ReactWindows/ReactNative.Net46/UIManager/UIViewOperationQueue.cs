@@ -109,5 +109,13 @@ namespace ReactNative.UIManager
         {
             DispatcherHelpers.RunOnDispatcher(action);
         }
+
+        /// <summary>
+        /// Called when the host is shutting down.
+        /// </summary>
+        public new void OnDestroy()
+        {
+            DispatcherHelpers.RunOnDispatcher(base.OnDestroy, true);
+        }
     }
 }
