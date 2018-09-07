@@ -183,11 +183,9 @@ namespace ReactNative.Tests.Bridge
                 OnInitialized?.Invoke();
             }
 
-            public override Task OnReactInstanceDisposeAsync()
+            public override void OnReactInstanceDispose()
             {
                 OnReactInstanceDisposeCalls++;
-
-                return Task.CompletedTask;
             }
         }
 
@@ -208,10 +206,9 @@ namespace ReactNative.Tests.Bridge
                 }
             }
 
-            public override Task OnReactInstanceDisposeAsync()
+            public override void OnReactInstanceDispose()
             {
                 _onDispose();
-                return Task.CompletedTask;
             }
         }
 

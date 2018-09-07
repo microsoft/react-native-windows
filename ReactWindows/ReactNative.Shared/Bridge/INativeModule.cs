@@ -18,7 +18,7 @@ namespace ReactNative.Bridge
     /// should extend <see cref="NativeModuleBase"/> or
     /// <see cref="ReactContextNativeModuleBase"/>.
     /// </remarks>
-    public interface INativeModule : IAsyncDisposable
+    public interface INativeModule
     {
         /// <summary>
         /// The action queue used by the native module.
@@ -63,5 +63,10 @@ namespace ReactNative.Bridge
         /// JavaScript modules.
         /// </summary>
         void Initialize();
+
+        /// <summary>
+        /// Called before a <see cref="IReactInstance"/> is disposed.
+        /// </summary>
+        void OnReactInstanceDispose();
     }
 }

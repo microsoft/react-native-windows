@@ -9,7 +9,6 @@ using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
@@ -34,7 +33,7 @@ namespace ReactNative.Bridge
     /// </summary>
     /// <remarks>
     /// Default implementations of <see cref="Initialize"/> and 
-    /// <see cref="OnReactInstanceDisposeAsync"/> are provided for convenience.
+    /// <see cref="OnReactInstanceDispose"/> are provided for convenience.
     /// Subclasses need not call these base methods should they choose to
     /// override them.
     /// </remarks>
@@ -203,34 +202,8 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        [Obsolete("Deprecated in favor of OnReactInstanceDisposeAsync")]
         public virtual void OnReactInstanceDispose()
         {
-        }
-
-        /// <summary>
-        /// Disposes the module before the <see cref="IReactInstance"/> is disposed.
-        /// </summary>
-        /// <returns>
-        /// A task to await the dispose operation.
-        /// </returns>
-        public Task DisposeAsync()
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            OnReactInstanceDispose();
-#pragma warning restore CS0618 // Type or member is obsolete
-            return OnReactInstanceDisposeAsync();
-        }
-
-        /// <summary>
-        /// Called before a <see cref="IReactInstance"/> is disposed.
-        /// </summary>
-        /// <returns>
-        /// A task to await the dispose operation.
-        /// </returns>
-        public virtual Task OnReactInstanceDisposeAsync()
-        {
-            return Task.CompletedTask;
         }
 
         private IReadOnlyDictionary<string, INativeMethod> InitializeMethods()

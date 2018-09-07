@@ -223,12 +223,11 @@ namespace ReactNative.Modules.Network
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        public override Task OnReactInstanceDisposeAsync()
+        public override void OnReactInstanceDispose()
         {
             _shuttingDown = true;
             _tasks.CancelAllTasks();
             _client.Dispose();
-            return Task.CompletedTask;
         }
 
         private async Task ProcessRequestFromUriAsync(

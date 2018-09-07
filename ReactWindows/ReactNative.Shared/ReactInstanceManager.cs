@@ -691,23 +691,13 @@ namespace ReactNative
 
             _lifecycleStateMachine.SetContext(null);
 
-            // Existing root views should be silenced before tearing down the context.
-            // Most of the work is done by the tearing down of the context itself, yet the native root views continue to exist,
-            // so things like "size changes" or touch handling should be stopped immediately.
             foreach (var rootView in _attachedRootViews)
             {
-                // Inlining allowed
-                DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
-                {
-                    rootView.RemoveSizeChanged();
-
-                    rootView.StopTouchHandling();
-                }, true);
+                rootView.CleanupSafe();
             }
 
             await reactContext.DisposeAsync();
             _devSupportManager.OnReactContextDestroyed(reactContext);
-
             // TODO: add memory pressure hooks
         }
 

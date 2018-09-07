@@ -174,10 +174,9 @@ namespace ReactNative.Modules.Image
             promise.Resolve(result);
         }
 
-        public override Task OnReactInstanceDisposeAsync()
+        public override void OnReactInstanceDispose()
         {
             _prefetchRequests.CancelAllTasks();
-            return Task.CompletedTask;
         }
     }
 }

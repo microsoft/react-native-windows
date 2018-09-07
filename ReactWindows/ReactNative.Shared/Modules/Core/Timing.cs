@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ReactNative.Modules.Core
 {
@@ -200,10 +199,9 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        public override Task OnReactInstanceDisposeAsync()
+        public override void OnReactInstanceDispose()
         {
             _idleCancellationDisposable.Dispose();
-            return Task.CompletedTask;
         }
 
         private void DoFrameSafe(object sender, object e)

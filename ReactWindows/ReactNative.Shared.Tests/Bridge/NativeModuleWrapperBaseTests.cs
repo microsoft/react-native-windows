@@ -6,7 +6,6 @@ using NUnit.Framework;
 using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ReactNative.Tests.Bridge
 {
@@ -27,7 +26,7 @@ namespace ReactNative.Tests.Bridge
         }
 
         [Test]
-        public async Task NativeModuleWrapperBase_ProxiedValues()
+        public void NativeModuleWrapperBase_ProxiedValues()
         {
             var initialized = 0;
             var disposed = 0;
@@ -46,7 +45,7 @@ namespace ReactNative.Tests.Bridge
 
             wrapper.Initialize();
             Assert.AreEqual(1, initialized);
-            await wrapper.DisposeAsync();
+            wrapper.OnReactInstanceDispose();
             Assert.AreEqual(1, disposed);
         }
 
@@ -107,10 +106,10 @@ namespace ReactNative.Tests.Bridge
 
             public Action OnOnReactInstanceDispose;
 
-            public override Task OnReactInstanceDisposeAsync()
+            public override void OnReactInstanceDispose()
             {
                 OnOnReactInstanceDispose?.Invoke();
-                return base.OnReactInstanceDisposeAsync();
+                base.OnReactInstanceDispose();
             }
         }
     }

@@ -97,15 +97,6 @@ namespace ReactNative.Modules.Core
             }
         }
 
-        /// <summary>
-        /// Returns true if the choreographer is associated with main UI thread.
-        /// </summary>
-        /// <returns>true for the main choreographer</returns>
-        public bool IsMainChoreographer()
-        {
-            return this == s_instance;
-        }
-
 #if WINDOWS_UWP
         /// <summary>
         /// Factory for choreographer instances associated with non main-view dispatchers.

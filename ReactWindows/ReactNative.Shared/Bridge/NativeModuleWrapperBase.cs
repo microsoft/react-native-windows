@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ReactNative.Bridge
 {
@@ -79,12 +78,9 @@ namespace ReactNative.Bridge
         public void Initialize() => Module.Initialize();
 
         /// <summary>
-        /// Disposes the module before the <see cref="IReactInstance"/> is disposed.
+        /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        /// <returns>
-        /// A task to await the dispose operation.
-        /// </returns>
-        public Task DisposeAsync() => Module.DisposeAsync();
+        public void OnReactInstanceDispose() => Module.OnReactInstanceDispose();
 
         INativeModule INativeModuleWrapper.Module => Module;
 

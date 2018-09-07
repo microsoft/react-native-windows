@@ -317,11 +317,9 @@ namespace ReactNative.Modules.Storage
             }
         }
 
-        public override Task OnReactInstanceDisposeAsync()
+        public override void OnReactInstanceDispose()
         {
             _mutex.Dispose();
-
-            return Task.CompletedTask;
         }
 
         private async Task<string> GetAsync(string key)

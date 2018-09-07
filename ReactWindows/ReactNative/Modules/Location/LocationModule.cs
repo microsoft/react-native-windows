@@ -143,10 +143,9 @@ namespace ReactNative.Modules.Location
             _currentSubscription.Disposable = Disposable.Empty;
         }
 
-        public override Task OnReactInstanceDisposeAsync()
+        public override void OnReactInstanceDispose()
         {
             _currentSubscription.Dispose();
-            return Task.CompletedTask;
         }
 
         private static JObject ConvertGeoposition(Geoposition geoposition)
