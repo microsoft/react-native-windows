@@ -253,15 +253,23 @@ namespace ReactNative.Views.Text
         /// <returns></returns>
         public static string GetStringByStartAndEndPointers(RichTextBlock view, TextPointer start, TextPointer end)
         {
-            if (start == null || end == null || start == end)
+            if (start == null || end == null)
             {
                 return null;
+            }
+            else if (start == end)
+            {
+                return string.Empty;
             }
 
             // Parse the RichTextBlock contents.
             StringBuilder selectedText = new StringBuilder();
             Debug.Assert(view.Blocks.Count == 1, "RichTextBlock is expected to contain only one paragraph.");
-            Paragraph paragraph = view.Blocks.First() as Paragraph;
+            Paragraph paragraph = view?.Blocks?.First() as Paragraph;
+            if (paragraph == null)
+            {
+                return null;
+            }
             ProcessSelectedInlines(paragraph.Inlines, selectedText, false, start, end);
 
             return selectedText.ToString();
@@ -269,6 +277,22 @@ namespace ReactNative.Views.Text
 
         /// <summary>
         /// Recursively processes InlineCollection and builds text representation of the RichTextBlock selected content.
+        /// InlineCollection can contain the following inlines: Hyperlink, Bold, Italic, Underline, Span, Run, LineBreak or InlineUIContainer.
+        /// All types of inlines except InlineUIContainer are processed recursively for the full tree depth.
+        /// InlineUIContainer processing is limited only to the children of type TextBlock and RichTextBlock since for practical purposes
+        /// only these UIElements can be easily converted to text.
+        /// E.g. React.js markup that results in creation of InlineUIContainer:
+        /// <![CDATA[
+        ///     <Text>
+        ///         Some text
+        ///         <Text>Red text</Text>
+        ///         <View>
+        ///             <Image />
+        ///             <Text>Image description</Text>
+        ///         </View>
+        ///     </Text>]]>
+        /// The image and the image description will be placed in an InlineUIContainer.
+        /// To simplify processing entire content of Hyperlink and InlineUIContainer is considered selected if <paramref name="selectionEnd"/> is somewhere in the element content.
         /// </summary>
         /// <param name="inlines">InlineCollection to be processed.</param>
         /// <param name="selectedText">Will contain the text representation upon procedure completion.</param>
@@ -352,23 +376,16 @@ namespace ReactNative.Views.Text
                     case InlineUIContainer inlineUIContainer:
                         if (accumulate)
                         {
-                            // Since InlineUIContainer can contain any UIElement as a child, we'll make some assumptions in order to simplify processing.
-                            // 1. Entire InlineUIContainer content is considered selected.
-                            // 2. If the child is a TextBlock, its Text property returns the entire content properly (since it can't contain InlineUIContainers).
-                            // 3. If the InlineUIContainer Child is a Panel, we process only TextBlock children (and not RichTextBlocks) so that we limit recursion.
-                            if (inlineUIContainer.Child is TextBlock textBlock)
-                            {
-                                selectedText.Append(textBlock.Text);
-                            }
-                            else if (inlineUIContainer.Child is Panel panel)
+                            if (inlineUIContainer.Child is Panel panel)
                             {
                                 foreach (UIElement uiElement in panel.Children)
                                 {
-                                    if (uiElement is TextBlock panelTextBlock)
-                                    {
-                                        selectedText.Append(panelTextBlock.Text);
-                                    }
+                                    ProcessInlineContainerUIElement(uiElement, selectedText);
                                 }
+                            }
+                            else
+                            {
+                                ProcessInlineContainerUIElement(inlineUIContainer.Child, selectedText);
                             }
                         }
                         break;
@@ -382,8 +399,28 @@ namespace ReactNative.Views.Text
                     return true;
                 }
             }
-
             return false;
+        }
+
+        /// <summary>
+        /// Processes an InlineUIContainer child by adding its string representation to <paramref name="selectedText"/>. Only TextBlock and RichTextBlock are considered.
+        /// </summary>
+        /// <param name="uiElement">UIElement child of InlineUIContainer.</param>
+        /// <param name="selectedText">StringBuilder where the text representation is appended.</param>
+        private static void ProcessInlineContainerUIElement(UIElement uiElement, StringBuilder selectedText)
+        {
+            if (uiElement is TextBlock textBlock)
+            {
+                selectedText.Append(textBlock.Text);
+            }
+            else if (uiElement is RichTextBlock richTextBlock)
+            {
+                string richTextBlockText = GetStringByStartAndEndPointers(richTextBlock, richTextBlock.ContentStart, richTextBlock.ContentEnd);
+                if (richTextBlockText != null)
+                {
+                    selectedText.Append(richTextBlockText);
+                }
+            }
         }
     }
 }
