@@ -7,7 +7,9 @@ using ReactNative.Accessibility;
 using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
@@ -184,6 +186,241 @@ namespace ReactNative.Views.Text
             richTextBlock.SetReactCompoundView(s_compoundView);
 
             return richTextBlock;
+        }
+
+        /// <summary>
+        /// Installing the event emitters for the RichTextBlock control.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The RichTextBlock view instance.</param>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, RichTextBlock view)
+        {
+            base.AddEventEmitters(reactContext, view);
+            view.SelectionChanged += OnSelectionChanged;
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="ReactTextViewManager"/>.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, RichTextBlock view)
+        {
+            base.OnDropViewInstance(reactContext, view);
+            view.SelectionChanged -= OnSelectionChanged;
+        }
+
+        /// <summary>
+        /// Called when selection changes for the RichTextBlock.
+        /// </summary>
+        /// <param name="sender">The RichTextBlock that is the source of the event.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            RichTextBlock view = sender as RichTextBlock;
+            string selection = GetSelectedString(view);
+
+            // Fire the event.
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactTextBlockSelectionEvent(
+                        view.GetTag(),
+                        selection));
+        }
+
+        /// <summary>
+        /// Returns a text representation of the selection in the RichTextBlock.
+        /// </summary>
+        /// <param name="view">The RichTextBlock.</param>
+        /// <returns>Text representation of the selection.</returns>
+        private string GetSelectedString(RichTextBlock view)
+        {
+            TextPointer selectionStart = view.SelectionStart;
+            TextPointer selectionEnd = view.SelectionEnd;
+
+            return GetStringByStartAndEndPointers(view, selectionStart, selectionEnd);
+        }
+
+        /// <summary>
+        /// Returns a text representation of the elements between <paramref name="start"/> and <paramref name="end"/> in the RichTextBlock.
+        /// </summary>
+        /// <param name="view">The RichTextBlock.</param>
+        /// <param name="start">Start TextPointer.</param>
+        /// <param name="end">End TextPointer.</param>
+        /// <returns></returns>
+        public static string GetStringByStartAndEndPointers(RichTextBlock view, TextPointer start, TextPointer end)
+        {
+            if (start == null || end == null)
+            {
+                return null;
+            }
+            else if (start == end)
+            {
+                return string.Empty;
+            }
+
+            // Parse the RichTextBlock contents.
+            StringBuilder selectedText = new StringBuilder();
+            Debug.Assert(view.Blocks.Count == 1, "RichTextBlock is expected to contain only one paragraph.");
+            Paragraph paragraph = view?.Blocks?.First() as Paragraph;
+            if (paragraph == null)
+            {
+                return null;
+            }
+            ProcessSelectedInlines(paragraph.Inlines, selectedText, false, start, end);
+
+            return selectedText.ToString();
+        }
+
+        /// <summary>
+        /// Recursively processes InlineCollection and builds text representation of the RichTextBlock selected content.
+        /// InlineCollection can contain the following inlines: Hyperlink, Bold, Italic, Underline, Span, Run, LineBreak or InlineUIContainer.
+        /// All types of inlines except InlineUIContainer are processed recursively for the full tree depth.
+        /// InlineUIContainer processing is limited only to the children of type TextBlock and RichTextBlock since for practical purposes
+        /// only these UIElements can be easily converted to text.
+        /// E.g. React.js markup that results in creation of InlineUIContainer:
+        /// <![CDATA[
+        ///     <Text>
+        ///         Some text
+        ///         <Text>Red text</Text>
+        ///         <View>
+        ///             <Image />
+        ///             <Text>Image description</Text>
+        ///         </View>
+        ///     </Text>]]>
+        /// The image and the image description will be placed in an InlineUIContainer.
+        /// To simplify processing entire content of Hyperlink and InlineUIContainer is considered selected if <paramref name="selectionEnd"/> is somewhere in the element content.
+        /// </summary>
+        /// <param name="inlines">InlineCollection to be processed.</param>
+        /// <param name="selectedText">Will contain the text representation upon procedure completion.</param>
+        /// <param name="accumulate">If 'true', includes inlines as part of the processed selection.</param>
+        /// <param name="selectionStart">TextPointer to selection start.</param>
+        /// <param name="selectionEnd">TextPointer to selection end.</param>
+        /// <returns>'true' if recursion terminal condition is met.</returns>
+        private static bool ProcessSelectedInlines(
+            InlineCollection inlines,
+            StringBuilder selectedText,
+            bool accumulate,
+            TextPointer selectionStart,
+            TextPointer selectionEnd)
+        {
+            foreach (Inline inline in inlines)
+            {
+                // Begin building the string from selectionStart.
+                if (!accumulate && (object.ReferenceEquals(inline, selectionStart.Parent) || selectionStart.Offset <= inline.ContentEnd.Offset))
+                {
+                    accumulate = true;
+                }
+
+                // Check for terminal condition.
+                if (inline.ContentStart.Offset > selectionEnd.Offset)
+                {
+                    return true;
+                }
+
+                switch (inline)
+                {
+                    case Hyperlink hyperlink:
+                        if (hyperlink.NavigateUri != null)
+                        {
+                            if (accumulate)
+                            {
+                                selectedText.Append(hyperlink.NavigateUri.ToString());
+                            }
+                        }
+                        else
+                        {
+                            if (ProcessSelectedInlines(hyperlink.Inlines, selectedText, accumulate, selectionStart, selectionEnd))
+                            {
+                                return true;
+                            }
+                        }
+                        break;
+                    // Also covers Bold, Italic, Underline.
+                    case Span span:
+                        if (ProcessSelectedInlines(span.Inlines, selectedText, accumulate, selectionStart, selectionEnd))
+                        {
+                            return true;
+                        }
+                        break;
+                    case Run run:
+                        if (accumulate)
+                        {
+                            int rangeStart = 0;
+                            // Check for selection start in this run.
+                            if (object.ReferenceEquals(inline, selectionStart.Parent))
+                            {
+                                rangeStart = selectionStart.Offset - inline.ContentStart.Offset;
+                            }
+                            // Check for selection end in this run.
+                            if (object.ReferenceEquals(inline, selectionEnd.Parent))
+                            {
+                                int rangeEnd = selectionEnd.Offset - inline.ContentStart.Offset;
+                                selectedText.Append(run.Text.Substring(rangeStart, rangeEnd - rangeStart));
+                            }
+                            else
+                            {
+                                selectedText.Append(run.Text.Substring(rangeStart));
+                            }
+                        }
+                        break;
+                    case LineBreak lineBreak:
+                        if (accumulate)
+                        {
+                            selectedText.AppendLine();
+                        }
+                        break;
+                    case InlineUIContainer inlineUIContainer:
+                        if (accumulate)
+                        {
+                            if (inlineUIContainer.Child is Panel panel)
+                            {
+                                foreach (UIElement uiElement in panel.Children)
+                                {
+                                    ProcessInlineContainerUIElement(uiElement, selectedText);
+                                }
+                            }
+                            else
+                            {
+                                ProcessInlineContainerUIElement(inlineUIContainer.Child, selectedText);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                // Check for terminal condition.
+                if (object.ReferenceEquals(inline, selectionEnd.Parent))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Processes an InlineUIContainer child by adding its string representation to <paramref name="selectedText"/>. Only TextBlock and RichTextBlock are considered.
+        /// </summary>
+        /// <param name="uiElement">UIElement child of InlineUIContainer.</param>
+        /// <param name="selectedText">StringBuilder where the text representation is appended.</param>
+        private static void ProcessInlineContainerUIElement(UIElement uiElement, StringBuilder selectedText)
+        {
+            if (uiElement is TextBlock textBlock)
+            {
+                selectedText.Append(textBlock.Text);
+            }
+            else if (uiElement is RichTextBlock richTextBlock)
+            {
+                string richTextBlockText = GetStringByStartAndEndPointers(richTextBlock, richTextBlock.ContentStart, richTextBlock.ContentEnd);
+                if (richTextBlockText != null)
+                {
+                    selectedText.Append(richTextBlockText);
+                }
+            }
         }
     }
 }
