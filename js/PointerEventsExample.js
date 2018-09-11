@@ -70,6 +70,13 @@ class NoneExample extends React.Component<$FlowFixMeProps> {
           A: unspecified
         </DemoText>
         <View
+          onTouchStart={() => this.props.onLog('D unspecified touched')}
+          style={[styles.box, styles.overlappingBox]}>
+          <DemoText style={[styles.text]}>
+            D (child of A): unspecified
+          </DemoText>
+        </View>
+        <View
           pointerEvents="none"
           onTouchStart={() => this.props.onLog('B none touched')}
           style={[styles.box, styles.boxPassedThrough]}>
@@ -116,6 +123,13 @@ class BoxNoneExample extends React.Component<$FlowFixMeProps> {
           A: unspecified
         </DemoText>
         <View
+          onTouchStart={() => this.props.onLog('D unspecified touched')}
+          style={[styles.box, styles.overlappingBox]}>
+          <DemoText style={[styles.text]}>
+            D (child of A): unspecified
+          </DemoText>
+        </View>
+        <View
           pointerEvents="box-none"
           onTouchStart={() => this.props.onLog('B box-none touched')}
           style={[styles.box, styles.boxPassedThrough]}>
@@ -152,6 +166,13 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
         <DemoText style={styles.text}>
           A: unspecified
         </DemoText>
+        <View
+          onTouchStart={() => this.props.onLog('D unspecified touched')}
+          style={[styles.box, styles.overlappingBox]}>
+          <DemoText style={[styles.text]}>
+            D (child of A): unspecified
+          </DemoText>
+        </View>
         <View
           pointerEvents="box-only"
           onTouchStart={() => this.props.onLog('B box-only touched')}
@@ -229,8 +250,16 @@ var styles = StyleSheet.create({
     padding: 10,
     margin: 5,
   },
+  overlappingBox: {
+    padding: 20,
+    marginLeft: 80,
+    marginTop: 0,
+    marginRight: 20,
+    marginBottom: -20
+  },  
   boxPassedThrough: {
     borderColor: '#99bbee',
+    backgroundColor: '#aaccff80'
   },
   logText: {
     fontSize: 9,
