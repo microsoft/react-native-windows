@@ -22,8 +22,11 @@ class ExampleBox extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
     log: [],
   };
 
-  handleLog = (msg) => {
+  handleLog = (msg, force) => {
     this.state.log = this.state.log.concat([msg]);
+    if (force) {
+      this.flushReactChanges();
+    }
   };
 
   flushReactChanges = () => {
@@ -34,16 +37,23 @@ class ExampleBox extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
    * Capture phase of bubbling to append separator before any of the bubbling
    * happens.
    */
-  handleTouchCapture = () => {
+  handleSeparator = () => {
     this.state.log = this.state.log.concat(['---']);
   };
+
+  flushAndSeparator = (msg) => {
+    this.flushReactChanges();
+    this.handleSeparator();
+  }
 
   render() {
     return (
       <View>
         <View
-          onTouchEndCapture={this.handleTouchCapture}
-          onTouchStart={this.flushReactChanges}>
+          onTouchEndCapture={this.handleSeparator}
+          onTouchStart={this.flushReactChanges}
+          onMouseOver={this.flushAndSeparator}
+          onMouseOut={this.flushAndSeparator}>
           {/* $FlowFixMe(>=0.53.0 site=react_native_fb,react_native_oss) This
             * comment suppresses an error when upgrading Flow's support for
             * React. To see the error delete this comment and run Flow. */}
@@ -65,12 +75,20 @@ class NoneExample extends React.Component<$FlowFixMeProps> {
     return (
       <View
         onTouchStart={() => this.props.onLog('A unspecified touched')}
+        onMouseEnter={() => this.props.onLog('A unspecified mouse enter',true)}
+        onMouseLeave={() => this.props.onLog('A unspecified mouse leave',true)}
+        onMouseOver={() => this.props.onLog('A unspecified mouse over')}
+        onMouseOut={() => this.props.onLog('A unspecified mouse out')}
         style={styles.box}>
         <DemoText style={styles.text}>
           A: unspecified
         </DemoText>
         <View
           onTouchStart={() => this.props.onLog('D unspecified touched')}
+          onMouseEnter={() => this.props.onLog('D unspecified mouse enter',true)}
+          onMouseLeave={() => this.props.onLog('D unspecified mouse leave',true)}
+          onMouseOver={() => this.props.onLog('D unspecified mouse over')}
+          onMouseOut={() => this.props.onLog('D unspecified mouse out')}
           style={[styles.box, styles.overlappingBox]}>
           <DemoText style={[styles.text]}>
             D (child of A): unspecified
@@ -79,12 +97,21 @@ class NoneExample extends React.Component<$FlowFixMeProps> {
         <View
           pointerEvents="none"
           onTouchStart={() => this.props.onLog('B none touched')}
+          onMouseEnter={() => this.props.onLog('B none mouse enter',true)}
+          onMouseLeave={() => this.props.onLog('B none mouse leave',true)}
+          onMouseOver={() => this.props.onLog('B none mouse over')}
+          onMouseOut={() => this.props.onLog('B none mouse out')}
           style={[styles.box, styles.boxPassedThrough]}>
           <DemoText style={[styles.text, styles.textPassedThrough]}>
             B: none
           </DemoText>
           <View
             onTouchStart={() => this.props.onLog('C unspecified touched')}
+            onTouchStart={() => this.props.onLog('C unspecified touched')}
+            onMouseEnter={() => this.props.onLog('C unspecified mouse enter',true)}
+            onMouseLeave={() => this.props.onLog('C unspecified mouse leave',true)}
+            onMouseOver={() => this.props.onLog('C unspecified mouse over')}
+            onMouseOut={() => this.props.onLog('C unspecified mouse out')}
             style={[styles.box, styles.boxPassedThrough]}>
             <DemoText style={[styles.text, styles.textPassedThrough]}>
               C: unspecified
@@ -118,12 +145,20 @@ class BoxNoneExample extends React.Component<$FlowFixMeProps> {
     return (
       <View
         onTouchStart={() => this.props.onLog('A unspecified touched')}
+        onMouseEnter={() => this.props.onLog('A unspecified mouse enter',true)}
+        onMouseLeave={() => this.props.onLog('A unspecified mouse leave',true)}
+        onMouseOver={() => this.props.onLog('A unspecified mouse over')}
+        onMouseOut={() => this.props.onLog('A unspecified mouse out')}
         style={styles.box}>
         <DemoText style={styles.text}>
           A: unspecified
         </DemoText>
         <View
           onTouchStart={() => this.props.onLog('D unspecified touched')}
+          onMouseEnter={() => this.props.onLog('D unspecified mouse enter',true)}
+          onMouseLeave={() => this.props.onLog('D unspecified mouse leave',true)}
+          onMouseOver={() => this.props.onLog('D unspecified mouse over')}
+          onMouseOut={() => this.props.onLog('D unspecified mouse out')}
           style={[styles.box, styles.overlappingBox]}>
           <DemoText style={[styles.text]}>
             D (child of A): unspecified
@@ -132,12 +167,20 @@ class BoxNoneExample extends React.Component<$FlowFixMeProps> {
         <View
           pointerEvents="box-none"
           onTouchStart={() => this.props.onLog('B box-none touched')}
+          onMouseEnter={() => this.props.onLog('B box-none mouse enter',true)}
+          onMouseLeave={() => this.props.onLog('B box-none mouse leave',true)}
+          onMouseOver={() => this.props.onLog('B box-none mouse over')}
+          onMouseOut={() => this.props.onLog('B box-none mouse out')}
           style={[styles.box, styles.boxPassedThrough]}>
           <DemoText style={[styles.text, styles.textPassedThrough]}>
             B: box-none
           </DemoText>
           <View
             onTouchStart={() => this.props.onLog('C unspecified touched')}
+            onMouseEnter={() => this.props.onLog('C unspecified mouse enter',true)}
+            onMouseLeave={() => this.props.onLog('C unspecified mouse leave',true)}
+            onMouseOver={() => this.props.onLog('C unspecified mouse over')}
+            onMouseOut={() => this.props.onLog('C unspecified mouse out')}
             style={styles.box}>
             <DemoText style={styles.text}>
               C: unspecified
@@ -146,6 +189,10 @@ class BoxNoneExample extends React.Component<$FlowFixMeProps> {
           <View
             pointerEvents="auto"
             onTouchStart={() => this.props.onLog('C explicitly unspecified touched')}
+            onMouseEnter={() => this.props.onLog('C explicitly unspecified mouse enter',true)}
+            onMouseLeave={() => this.props.onLog('C explicitly unspecified mouse leave',true)}
+            onMouseOver={() => this.props.onLog('C explicitly unspecified mouse over')}
+            onMouseOut={() => this.props.onLog('C explicitly unspecified mouse out')}
             style={[styles.box]}>
             <DemoText style={[styles.text]}>
               C: explicitly unspecified
@@ -162,12 +209,22 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
     return (
       <View
         onTouchStart={() => this.props.onLog('A unspecified touched')}
+        onTouchStart={() => this.props.onLog('A unspecified touched')}
+        onMouseEnter={() => this.props.onLog('A unspecified mouse enter',true)}
+        onMouseLeave={() => this.props.onLog('A unspecified mouse leave',true)}
+        onMouseOver={() => this.props.onLog('A unspecified mouse over')}
+        onMouseOut={() => this.props.onLog('A unspecified mouse out')}
         style={styles.box}>
         <DemoText style={styles.text}>
           A: unspecified
         </DemoText>
         <View
           onTouchStart={() => this.props.onLog('D unspecified touched')}
+          onTouchStart={() => this.props.onLog('D unspecified touched')}
+          onMouseEnter={() => this.props.onLog('D unspecified mouse enter',true)}
+          onMouseLeave={() => this.props.onLog('D unspecified mouse leave',true)}
+          onMouseOver={() => this.props.onLog('D unspecified mouse over')}
+          onMouseOut={() => this.props.onLog('D unspecified mouse out')}
           style={[styles.box, styles.overlappingBox]}>
           <DemoText style={[styles.text]}>
             D (child of A): unspecified
@@ -176,12 +233,22 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
         <View
           pointerEvents="box-only"
           onTouchStart={() => this.props.onLog('B box-only touched')}
+          onTouchStart={() => this.props.onLog('B box-only touched')}
+          onMouseEnter={() => this.props.onLog('B box-only mouse enter',true)}
+          onMouseLeave={() => this.props.onLog('B box-only mouse leave',true)}
+          onMouseOver={() => this.props.onLog('B box-only mouse over')}
+          onMouseOut={() => this.props.onLog('B box-only mouse out')}
           style={styles.box}>
           <DemoText style={styles.text}>
             B: box-only
           </DemoText>
           <View
             onTouchStart={() => this.props.onLog('C unspecified touched')}
+            onTouchStart={() => this.props.onLog('C unspecified touched')}
+            onMouseEnter={() => this.props.onLog('C unspecified mouse enter',true)}
+            onMouseLeave={() => this.props.onLog('C unspecified mouse leave',true)}
+            onMouseOver={() => this.props.onLog('C unspecified mouse over')}
+            onMouseOut={() => this.props.onLog('C unspecified mouse out')}
             style={[styles.box, styles.boxPassedThrough]}>
             <DemoText style={[styles.text, styles.textPassedThrough]}>
               C: unspecified
@@ -190,6 +257,11 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
           <View
             pointerEvents="auto"
             onTouchStart={() => this.props.onLog('C explicitly unspecified touched')}
+            onTouchStart={() => this.props.onLog('C explicitly unspecified touched')}
+            onMouseEnter={() => this.props.onLog('C explicitly unspecified mouse enter',true)}
+            onMouseLeave={() => this.props.onLog('C explicitly unspecified mouse leave',true)}
+            onMouseOver={() => this.props.onLog('C explicitly unspecified mouse over')}
+            onMouseOut={() => this.props.onLog('C explicitly unspecified mouse out')}
             style={[styles.box, styles.boxPassedThrough]}>
             <DemoText style={[styles.text, styles.textPassedThrough]}>
               C: explicitly unspecified
