@@ -105,7 +105,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// <paramref name="tag"/> is not used, always runs on main dispatcher.
         /// </remarks>
-        public void InvokeAction(int tag, Action action)
+        public void InvokeAction(int? tag, Action action)
         {
             DispatcherHelpers.RunOnDispatcher(action);
         }

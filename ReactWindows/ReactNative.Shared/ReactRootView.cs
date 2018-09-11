@@ -63,7 +63,7 @@ namespace ReactNative
         /// </summary>
         internal TouchHandler TouchHandler
         {
-            get;
+            get; private set;
         }
 
         /// <summary>
@@ -173,12 +173,12 @@ namespace ReactNative
             DispatcherHelpers.AssertOnDispatcher(this);
 
             var reactInstanceManager = _reactInstanceManager;
-            if (!_attachScheduled && reactInstanceManager != null)
+            var attachScheduled = _attachScheduled;
+            _attachScheduled = false;
+            if (!attachScheduled && reactInstanceManager != null)
             {
                 await reactInstanceManager.DetachRootViewAsync(this);
             }
-
-            _attachScheduled = false;
         }
 
         /// <summary>
@@ -197,6 +197,23 @@ namespace ReactNative
             Forget(MeasureOverrideHelperAsync());
 
             return result;
+        }
+
+        internal void StartTouchHandling()
+        {
+            if (TouchHandler == null)
+            {
+                TouchHandler = new TouchHandler(this);
+            }
+        }
+
+        internal void StopTouchHandling()
+        {
+            if (TouchHandler != null)
+            {
+                TouchHandler.Dispose();
+                TouchHandler = null;
+            }
         }
 
 #if WINDOWS_UWP
@@ -221,20 +238,6 @@ namespace ReactNative
         }
 #endif
 
-        internal void CleanupSafe()
-        {
-            // Inlining allowed
-            DispatcherHelpers.RunOnDispatcher(this.Dispatcher, Cleanup, true);
-        }
-
-        internal void Cleanup()
-        {
-            DispatcherHelpers.AssertOnDispatcher(this);
-
-            Children.Clear();
-            ViewExtensions.ClearData(this);
-        }
-
         private async Task MeasureOverrideHelperAsync()
         {
             DispatcherHelpers.AssertOnDispatcher(this);
@@ -242,11 +245,11 @@ namespace ReactNative
             _wasMeasured = true;
 
             var reactInstanceManager = _reactInstanceManager;
-            if (_attachScheduled && reactInstanceManager != null)
+            var attachScheduled = _attachScheduled;
+            _attachScheduled = false;
+            if (attachScheduled && reactInstanceManager != null)
             {
                 await reactInstanceManager.AttachMeasuredRootViewAsync(this);
-
-                _attachScheduled = false;
             }
         }
 

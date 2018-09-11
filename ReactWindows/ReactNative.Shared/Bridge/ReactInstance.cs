@@ -174,7 +174,7 @@ namespace ReactNative.Bridge
 
             IsDisposed = true;
 
-            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDispose).ConfigureAwait(false);
+            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDisposeAsync).Unwrap().ConfigureAwait(false);
             await QueueConfiguration.JavaScriptQueue.RunAsync(() => _bridge?.Dispose()).ConfigureAwait(false);
             QueueConfiguration.Dispose();
         }

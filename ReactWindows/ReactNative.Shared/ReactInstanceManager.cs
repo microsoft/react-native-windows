@@ -286,7 +286,20 @@ namespace ReactNative
                         "create context background call.");
                 }
 
-                return await CreateReactContextCoreAsync(token);
+                ReactContext context = null;
+                try
+                {
+                    context = await CreateReactContextCoreAsync(token);
+                }
+                finally
+                {
+                    if (context == null)
+                    {
+                        _hasStartedCreatingInitialContext = false;
+                    }
+                }
+
+                return context;
             }
         }
 
@@ -678,13 +691,23 @@ namespace ReactNative
 
             _lifecycleStateMachine.SetContext(null);
 
+            // Existing root views should be silenced before tearing down the context.
+            // Most of the work is done by the tearing down of the context itself, yet the native root views continue to exist,
+            // so things like "size changes" or touch handling should be stopped immediately.
             foreach (var rootView in _attachedRootViews)
             {
-                rootView.CleanupSafe();
+                // Inlining allowed
+                DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
+                {
+                    rootView.RemoveSizeChanged();
+
+                    rootView.StopTouchHandling();
+                }, true);
             }
 
             await reactContext.DisposeAsync();
             _devSupportManager.OnReactContextDestroyed(reactContext);
+
             // TODO: add memory pressure hooks
         }
 
