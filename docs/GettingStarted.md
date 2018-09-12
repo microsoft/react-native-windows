@@ -54,6 +54,8 @@ yarn add rnpm-plugin-windows --dev
 
 #### Initialize your project
 
+***temporary workaround***: At this time, there is a new bug that will prevent the next step from working. From your project directory, delete `package-lock.json`, open `package.json` in a text editor and change the `"dependencies"` section for `react-native` to: `"react-native": "0.55.*"`, then save & close. Next, delete the entire `node_modules` directory in your project directory and run, `npm install` from your project directory. You can then proceed to the next intended step for this guide.  
+
 Initialize your React Native Windows project in the project directory by running:
 ```
 react-native windows
