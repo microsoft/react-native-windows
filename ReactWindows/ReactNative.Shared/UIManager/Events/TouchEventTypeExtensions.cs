@@ -26,7 +26,7 @@ namespace ReactNative.UIManager.Events
                 case TouchEventType.Exited:
                     return "topMouseOut";
                 case TouchEventType.PointerMove:
-                    return "topMouseMoveCustom"; // TBA
+                    return "topMouseMoveCustom"; // Using a non-clashing name until this one propagates: https://github.com/facebook/react/commit/e96dc140599363029bd05565d58bcd4a432db370
                 default:
                     throw new NotSupportedException("Unsupported touch event type.");
             }

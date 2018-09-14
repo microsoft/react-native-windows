@@ -240,8 +240,22 @@ namespace ReactNative.Touch
        
         private void UpdatePointersInViews(UIElement reactView, PointerPoint rootPoint, PointerRoutedEventArgs e)
         {
-            // Create list of react views that should be tracked
-            var newViews = reactView != null ? new HashSet<DependencyObject>(RootViewHelper.GetReactViewHierarchy(reactView)) :
+            // Create list of react views that should be tracked based on the
+            // view hierarchy starting from reactView, keeping in just the views that intersect the rootPoint
+            var newViews = reactView != null ? new HashSet<DependencyObject>(
+                    RootViewHelper.GetReactViewHierarchy(reactView).Where((v) =>
+                    {
+                        if (v is FrameworkElement element)
+                        {
+                            var viewPoint = e.GetCurrentPoint(element);
+                            return viewPoint.Position.X >= 0 && viewPoint.Position.X < element.ActualWidth &&
+                                    viewPoint.Position.Y >= 0 && viewPoint.Position.Y < element.ActualHeight;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    })) :
                 new HashSet<DependencyObject>();
 
             // Get existing list of react views for the pointer id
@@ -266,8 +280,7 @@ namespace ReactNative.Touch
                     existingView.HasTag() &&
                     ShouldSendPointerEnterLeaveOverOutEvent(existingView, out var enterOrLeave, out var overOrOut))
                 {
-                    // XXX pass granular enterOrLeave/overOrOut
-                    OnPointerEnteredExited(TouchEventType.Exited, (UIElement)existingView, rootPoint, e);
+                    OnPointerEnteredExited(TouchEventType.Exited, (UIElement)existingView, rootPoint, e, enterOrLeave, overOrOut);
                 }
             }
 
@@ -278,8 +291,7 @@ namespace ReactNative.Touch
                 if (!existingViews.Contains(newView) &&
                     ShouldSendPointerEnterLeaveOverOutEvent(newView, out var enterOrLeave, out var overOrOut))
                 {
-                    // TBA
-                    OnPointerEnteredExited(TouchEventType.Entered, (UIElement)newView, rootPoint, e);
+                    OnPointerEnteredExited(TouchEventType.Entered, (UIElement)newView, rootPoint, e, enterOrLeave, overOrOut);
                 }
             }
 
@@ -310,14 +322,14 @@ namespace ReactNative.Touch
             return pointer;
         }
 
-        private void OnPointerEnteredExited(TouchEventType eventType, UIElement view, PointerPoint rootPoint, PointerRoutedEventArgs e)
+        private void OnPointerEnteredExited(TouchEventType eventType, UIElement view, PointerPoint rootPoint, PointerRoutedEventArgs e, bool sendDirect, bool sendBubbled)
         {
             var pointer = CreateReactPointer(view, rootPoint, e, false);
             view.GetReactContext()?
                     .GetNativeModule<UIManagerModule>()
                     .EventDispatcher
                     .DispatchEvent(
-                        new PointerEnterExitEvent(eventType, view.GetTag(), pointer));
+                        new PointerEnterExitEvent(eventType, view.GetTag(), pointer, sendDirect, sendBubbled));
             // Keeps resetting the identifier if no other non-moving pointer is present
             if (_pointers.Count == 0)
             {
@@ -475,12 +487,16 @@ namespace ReactNative.Touch
         {
             private readonly TouchEventType _touchEventType;
             private readonly ReactPointer _pointer;
+            private readonly bool _sendDirect;
+            private readonly bool _sendBubbled;
 
-            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag, ReactPointer pointer)
+            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag, ReactPointer pointer, bool sendDirect, bool sendBubbled)
                 : base(viewTag)
             {
                 _touchEventType = touchEventType;
                 _pointer = pointer;
+                _sendDirect = sendDirect;
+                _sendBubbled = sendBubbled;
             }
 
             public override string EventName
@@ -513,12 +529,18 @@ namespace ReactNative.Touch
                     enterLeaveEventName = "topMouseLeave";
                 }
 
-                if (enterLeaveEventName != null)
+                if (_sendDirect)
                 {
-                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
+                    if (enterLeaveEventName != null)
+                    {
+                        eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
+                    }
                 }
 
-                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+                if (_sendBubbled)
+                {
+                    eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+                }
             }
         }
 
