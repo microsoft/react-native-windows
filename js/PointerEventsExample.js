@@ -107,7 +107,6 @@ class NoneExample extends React.Component<$FlowFixMeProps> {
           </DemoText>
           <View
             onTouchStart={() => this.props.onLog('C unspecified touched')}
-            onTouchStart={() => this.props.onLog('C unspecified touched')}
             onMouseEnter={() => this.props.onLog('C unspecified mouse enter',true)}
             onMouseLeave={() => this.props.onLog('C unspecified mouse leave',true)}
             onMouseOver={() => this.props.onLog('C unspecified mouse over')}
@@ -209,7 +208,6 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
     return (
       <View
         onTouchStart={() => this.props.onLog('A unspecified touched')}
-        onTouchStart={() => this.props.onLog('A unspecified touched')}
         onMouseEnter={() => this.props.onLog('A unspecified mouse enter',true)}
         onMouseLeave={() => this.props.onLog('A unspecified mouse leave',true)}
         onMouseOver={() => this.props.onLog('A unspecified mouse over')}
@@ -219,7 +217,6 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
           A: unspecified
         </DemoText>
         <View
-          onTouchStart={() => this.props.onLog('D unspecified touched')}
           onTouchStart={() => this.props.onLog('D unspecified touched')}
           onMouseEnter={() => this.props.onLog('D unspecified mouse enter',true)}
           onMouseLeave={() => this.props.onLog('D unspecified mouse leave',true)}
@@ -233,7 +230,6 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
         <View
           pointerEvents="box-only"
           onTouchStart={() => this.props.onLog('B box-only touched')}
-          onTouchStart={() => this.props.onLog('B box-only touched')}
           onMouseEnter={() => this.props.onLog('B box-only mouse enter',true)}
           onMouseLeave={() => this.props.onLog('B box-only mouse leave',true)}
           onMouseOver={() => this.props.onLog('B box-only mouse over')}
@@ -243,7 +239,6 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
             B: box-only
           </DemoText>
           <View
-            onTouchStart={() => this.props.onLog('C unspecified touched')}
             onTouchStart={() => this.props.onLog('C unspecified touched')}
             onMouseEnter={() => this.props.onLog('C unspecified mouse enter',true)}
             onMouseLeave={() => this.props.onLog('C unspecified mouse leave',true)}
@@ -256,7 +251,6 @@ class BoxOnlyExample extends React.Component<$FlowFixMeProps> {
           </View>
           <View
             pointerEvents="auto"
-            onTouchStart={() => this.props.onLog('C explicitly unspecified touched')}
             onTouchStart={() => this.props.onLog('C explicitly unspecified touched')}
             onMouseEnter={() => this.props.onLog('C explicitly unspecified mouse enter',true)}
             onMouseLeave={() => this.props.onLog('C explicitly unspecified mouse leave',true)}
