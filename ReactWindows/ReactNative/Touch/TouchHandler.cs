@@ -364,7 +364,7 @@ namespace ReactNative.Touch
 
         private static bool ShouldSendPointerMoveEvent(DependencyObject view)
         {
-            // This is a bubbling event, so we have to check if mouse move hanlder is hooked to any ancestor 
+            // This is a bubbling event, so we have to check if mouse move handler is hooked to any ancestor 
             return RootViewHelper.GetReactViewHierarchy(view).Any(
                 v => v.GetMouseHandlerPresent(
                     ViewExtensions.MouseHandlerMask.MouseMove |
@@ -543,7 +543,6 @@ namespace ReactNative.Touch
                 }
             }
         }
-
 
         class ReactPointer
         {

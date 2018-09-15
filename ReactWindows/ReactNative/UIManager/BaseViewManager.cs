@@ -438,57 +438,5 @@ namespace ReactNative.UIManager
 
             public JArray MatrixTransform { get; set; }
         }
-
-        class PointerEnterExitEvent : Event
-        {
-            private readonly TouchEventType _touchEventType;
-
-            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag)
-                : base(viewTag)
-            {
-                _touchEventType = touchEventType;
-            }
-
-            public override string EventName
-            {
-                get
-                {
-                    return _touchEventType.GetJavaScriptEventName();
-                }
-            }
-
-            public override bool CanCoalesce
-            {
-                get
-                {
-                    return false;
-                }
-            }
-
-            public override void Dispatch(RCTEventEmitter eventEmitter)
-            {
-                var eventData = new JObject
-                {
-                    { "target", ViewTag },
-                };
-
-                var enterLeaveEventName = default(string);
-                if (_touchEventType == TouchEventType.Entered)
-                {
-                    enterLeaveEventName = "topMouseEnter";
-                }
-                else if (_touchEventType == TouchEventType.Exited)
-                {
-                    enterLeaveEventName = "topMouseLeave";
-                }
-
-                if (enterLeaveEventName != null)
-                {
-                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
-                }
-
-                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
-            }
-        }
     }
 }
