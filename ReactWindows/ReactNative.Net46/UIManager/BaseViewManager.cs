@@ -277,27 +277,6 @@ namespace ReactNative.UIManager
             view.Effect = effect;
         }
 
-        /// <summary>
-        /// Detects the presence of a various mouse view handler for the view.
-        /// </summary>
-        /// <param name="view">The view instance.</param>
-        /// <param name="index">The prop index.</param>
-        /// <param name="handlerPresent">true if a mouse move handler is present.</param>
-        [ReactPropGroup(
-            "onMouseMove",
-            "onMouseMoveCapture",
-            "onMouseOver",
-            "onMouseOverCapture",
-            "onMouseOut",
-            "onMouseOutCapture",
-            "onMouseEnter",
-            "onMouseOutLeave")]
-        public void SetOnMouseHandler(TFrameworkElement view, int index, bool handlerPresent)
-        {
-            // The order of handler names HAS TO match order in ViewExtensions.MouseHandlerMask
-            view.SetMouseHandlerPresent((ViewExtensions.MouseHandlerMask)(1 << index), handlerPresent);
-        }
-
         private static void SetProjectionMatrix(TFrameworkElement view, Dimensions dimensions, JArray transforms)
         {
             var transformMatrix = TransformHelper.ProcessTransform(transforms);
