@@ -242,6 +242,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderChangeEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderCompleteEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Slider\ReactSliderShadowNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ClearButtonModeType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextInputContentSizeChangedEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\FontStyleHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactInlineShadowNode.cs" />
