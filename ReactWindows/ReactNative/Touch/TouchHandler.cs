@@ -208,8 +208,9 @@ namespace ReactNative.Touch
                 var adjustedPoint = AdjustPointForStatusBar(point);
 
                 // Get the first view in at the pointer point that is not `box-none`.
+                // Note: Rounding related errors can keep the position outside all react views, hence using FirstOrDefault.
                 var nonBoxOnlyView = VisualTreeHelper.FindElementsInHostCoordinates(adjustedPoint, _view)
-                    .First(v => v.HasTag() && v.GetPointerEvents() != PointerEvents.BoxNone);
+                    .FirstOrDefault(v => v.HasTag() && v.GetPointerEvents() != PointerEvents.BoxNone);
 
                 // Update the enumerator for the non-`box-only` view.
                 enumerator = RootViewHelper.GetReactViewHierarchy(nonBoxOnlyView).GetEnumerator();
