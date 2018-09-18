@@ -4,26 +4,21 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule AlertExample
+ * @format
  */
 
 'use strict';
 
 var React = require('react');
 var ReactNative = require('react-native');
-var {
-  Alert,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} = ReactNative;
+var {Alert, StyleSheet, Text, TouchableHighlight, View} = ReactNative;
 
 var RNTesterBlock = require('./RNTesterBlock');
 
 // corporate ipsum > lorem ipsum
-var alertMessage = 'Credibly reintermediate next-generation potentialities after goal-oriented ' +
-                   'catalysts for change. Dynamically revolutionize.';
+var alertMessage =
+  'Credibly reintermediate next-generation potentialities after goal-oriented ' +
+  'catalysts for change. Dynamically revolutionize.';
 
 /**
  * Simple alert examples.
@@ -41,7 +36,8 @@ class SimpleAlertExampleBlock extends React.Component {
   render() {
     return (
       <View collapsable={false}>
-        <TouchableHighlight style={styles.wrapper}
+        <TouchableHighlight
+          style={styles.wrapper}
           onPress={() => Alert.alert(
             'Alert Title',
             alertMessage,
@@ -52,11 +48,10 @@ class SimpleAlertExampleBlock extends React.Component {
             <Text>Alert with message and default button</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.wrapper}
-          onPress={() => Alert.alert(
-            'Alert Title',
-            alertMessage,
-            [
+        <TouchableHighlight
+          style={styles.wrapper}
+          onPress={() =>
+            Alert.alert('Alert Title', alertMessage, [
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
             ],
             this._getDefaultOptions()
@@ -65,11 +60,10 @@ class SimpleAlertExampleBlock extends React.Component {
             <Text>Alert with one button</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.wrapper}
-          onPress={() => Alert.alert(
-            'Alert Title',
-            alertMessage,
-            [
+        <TouchableHighlight
+          style={styles.wrapper}
+          onPress={() =>
+            Alert.alert('Alert Title', alertMessage, [
               {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
             ],
@@ -79,11 +73,10 @@ class SimpleAlertExampleBlock extends React.Component {
             <Text>Alert with two buttons</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.wrapper}
-          onPress={() => Alert.alert(
-            'Alert Title',
-            null,
-            [
+        <TouchableHighlight
+          style={styles.wrapper}
+          onPress={() =>
+            Alert.alert('Alert Title', null, [
               {text: 'Foo', onPress: () => console.log('Foo Pressed!')},
               {text: 'Bar', onPress: () => console.log('Bar Pressed!')},
               {text: 'Baz', onPress: () => console.log('Baz Pressed!')},
@@ -94,7 +87,8 @@ class SimpleAlertExampleBlock extends React.Component {
             <Text>Alert with three buttons</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.wrapper}
+        <TouchableHighlight
+          style={styles.wrapper}
           onPress={() => Alert.alert(
             'Foo Title',
             alertMessage,
@@ -108,7 +102,8 @@ class SimpleAlertExampleBlock extends React.Component {
             <Text>Alert with too many buttons</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.wrapper}
+        <TouchableHighlight
+          style={styles.wrapper}
           onPress={() => Alert.alert(
             'Alert Title',
             null,
@@ -121,11 +116,10 @@ class SimpleAlertExampleBlock extends React.Component {
             <Text>Alert that cannot be dismissed</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.wrapper}
-          onPress={() => Alert.alert(
-            '',
-            alertMessage,
-            [
+        <TouchableHighlight
+          style={styles.wrapper}
+          onPress={() =>
+            Alert.alert('', alertMessage, [
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
             ],
             this._getDefaultOptions()
@@ -142,8 +136,9 @@ class SimpleAlertExampleBlock extends React.Component {
 class AlertExample extends React.Component {
   static title = 'Alert';
 
-  static description = 'Alerts display a concise and informative message ' +
-  'and prompt the user to make a decision.';
+  static description =
+    'Alerts display a concise and informative message ' +
+    'and prompt the user to make a decision.';
 
   render() {
     return (

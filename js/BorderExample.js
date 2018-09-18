@@ -4,16 +4,14 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule BorderExample
+ * @format
  */
+
 'use strict';
 
 var React = require('react');
 var ReactNative = require('react-native');
-var {
-  StyleSheet,
-  View
-} = ReactNative;
+var {StyleSheet, View} = ReactNative;
 
 var styles = StyleSheet.create({
   box: {
@@ -85,7 +83,7 @@ var styles = StyleSheet.create({
   border7_inner: {
     backgroundColor: 'blue',
     width: 100,
-    height: 100
+    height: 100,
   },
   border8: {
     width: 60,
@@ -159,25 +157,26 @@ var styles = StyleSheet.create({
     borderTopRightRadius: 40,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 40,
-  }
+  },
 });
 
 exports.title = 'Border';
-exports.description = 'Demonstrates some of the border styles available to Views.';
+exports.description =
+  'Demonstrates some of the border styles available to Views.';
 exports.examples = [
   {
     title: 'Equal-Width / Same-Color',
     description: 'borderWidth & borderColor',
     render() {
       return <View style={[styles.box, styles.border1]} />;
-    }
+    },
   },
   {
     title: 'Equal-Width / Same-Color',
     description: 'borderWidth & borderColor & borderRadius',
     render() {
       return <View style={[styles.box, styles.borderRadius]} />;
-    }
+    },
   },
   {
     title: 'Equal-Width Borders',
@@ -185,14 +184,14 @@ exports.examples = [
     platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.box, styles.border2]} />;
-    }
+    },
   },
   {
     title: 'Same-Color Borders',
     description: 'border*Width & borderColor',
     render() {
       return <View style={[styles.box, styles.border3]} />;
-    }
+    },
   },
   {
     title: 'Custom Borders',
@@ -200,7 +199,7 @@ exports.examples = [
     platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.box, styles.border4]} />;
-    }
+    },
   },
   {
     title: 'Custom Borders',
@@ -208,7 +207,7 @@ exports.examples = [
     platform: 'ios',
     render() {
       return <View style={[styles.box, styles.border5]} />;
-    }
+    },
   },
   {
     title: 'Custom Borders',
@@ -216,7 +215,7 @@ exports.examples = [
     platform: 'ios',
     render() {
       return <View style={[styles.box, styles.border6]} />;
-    }
+    },
   },
   {
     title: 'Custom Borders',
@@ -228,7 +227,7 @@ exports.examples = [
           <View style={styles.border7_inner} />
         </View>
       );
-    }
+    },
   },
   {
     title: 'Single Borders',
@@ -242,7 +241,7 @@ exports.examples = [
           <View style={[styles.box, styles.border8, {borderRightWidth: 5}]} />
         </View>
       );
-    }
+    },
   },
   {
     title: 'Corner Radii',
@@ -250,7 +249,7 @@ exports.examples = [
     platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.box, styles.border9]} />;
-    }
+    },
   },
   {
     title: 'Corner Radii / Elevation',
@@ -258,7 +257,7 @@ exports.examples = [
     platform: 'android',
     render() {
       return <View style={[styles.box, styles.border10]} />;
-    }
+    },
   },
   {
     title: 'CSS Trick - Triangle',
@@ -266,27 +265,27 @@ exports.examples = [
     platforms: ['android', 'ios'],
     render() {
       return <View style={[styles.border11]} />;
-    }
+    },
   },
   {
     title: 'Curved border(Left|Right|Bottom|Top)Width',
     description: 'Make a non-uniform width curved border',
     render() {
       return <View style={[styles.box, styles.border12]} />;
-    }
+    },
   },
   {
     title: 'Curved border(Left|Right|Bottom|Top)Color',
     description: 'Make a non-uniform color curved border',
     render() {
       return <View style={[styles.box, styles.border13]} />;
-    }
+    },
   },
   {
     title: 'Curved border(Top|Bottom)(Left|Right)Radius',
     description: 'Make a non-uniform radius curved border',
     render() {
       return <View style={[styles.box, styles.border14]} />;
-    }
-  }
+    },
+  },
 ];
