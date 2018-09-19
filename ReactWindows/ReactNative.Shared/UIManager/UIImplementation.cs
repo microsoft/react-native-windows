@@ -601,21 +601,23 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues UI block to be executed.
+        /// Enqueues UI block to be executed on dispatcher thread associated with a react tag hint.
         /// </summary>
         /// <param name="block">The UI block.</param>
-        public void AddUIBlock(IUIBlock block)
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void AddUIBlock(IUIBlock block, int? tag)
         {
-            _operationsQueue.EnqueueUIBlock(block);
+            _operationsQueue.EnqueueUIBlock(block, tag);
         }
 
         /// <summary>
-        /// Prepens the UI block to be executed.
+        /// Prepens the UI block to be executed on main dispatcher thread.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void PrependUIBlock(IUIBlock block)
         {
-            _operationsQueue.PrependUIBlock(block);
+            // Always uses main dispatcher thread
+            _operationsQueue.PrependUIBlock(block, null);
         }
 
         /// <summary>
@@ -640,21 +642,6 @@ namespace ReactNative.UIManager
         public void OnDestroy()
         {
             _operationsQueue.OnDestroy();
-        }
-
-        /// <summary>
-        /// Runs action on dispatcher thread associated with view specified by <paramref name="reactTag" />.
-        /// Action is not queued on operation queue, but it goes to dispatcher directly.
-        /// </summary>
-        /// <param name="reactTag">The react tag which specifies view.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <remarks>
-        /// <paramref name="reactTag"/> is only valid for UWP. For WPF it always runs on main dispatcher.
-        /// </remarks>
-        public void RunOnDispatcherThread(int? reactTag, Action action)
-        {
-            //runs on any thread
-            _operationsQueue.InvokeAction(reactTag, action);
         }
 
         private void UpdateViewHierarchy()

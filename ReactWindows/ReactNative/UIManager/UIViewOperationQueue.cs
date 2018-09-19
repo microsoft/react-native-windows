@@ -288,26 +288,24 @@ namespace ReactNative.UIManager
         /// Enqueues a operation to execute a UIBlock.
         /// </summary>
         /// <param name="block">The UI block.</param>
-        public void EnqueueUIBlock(IUIBlock block)
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void EnqueueUIBlock(IUIBlock block, int? tag)
         {
             // Called on layout manager thread
 
-            // Native animation module is synchronized to the main dispatcher thread.
-            // Always forward to the main queue
-            MainUIViewOperationQueue.EnqueueUIBlock(block);
+            (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).EnqueueUIBlock(block);
         }
 
         /// <summary>
         /// Enqueues a operation to execute a UIBlock.
         /// </summary>
         /// <param name="block">The UI block.</param>
-        public void PrependUIBlock(IUIBlock block)
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void PrependUIBlock(IUIBlock block, int? tag)
         {
             // Called on layout manager thread
 
-            // Native animation module is synchronized to the main dispatcher thread.
-            // Always forward to the main queue
-            MainUIViewOperationQueue.PrependUIBlock(block);
+            (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).PrependUIBlock(block);
         }
 
         /// <summary>
@@ -593,18 +591,6 @@ namespace ReactNative.UIManager
                 });
             }
             return true;
-        }
-
-        /// <summary>
-        /// Invokes the action to execute on dispatcher thread associated with view specified by <paramref name="tag" />.
-        /// Action is not queued on operation queue, but it goes to dispatcher directly.
-        /// </summary>
-        /// <param name="tag">The react tag which specifies view.</param>
-        /// <param name="action">The action to invoke.</param>
-        public void InvokeAction(int? tag, Action action)
-        {
-            DispatcherHelpers.RunOnDispatcher(
-                (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).Dispatcher,() => action());
         }
 
         /// <summary>
