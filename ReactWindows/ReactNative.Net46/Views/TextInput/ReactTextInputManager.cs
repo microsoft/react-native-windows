@@ -383,7 +383,7 @@ namespace ReactNative.Views.TextInput
         [ReactProp("clearButtonMode")]
         public void SetClearButtonMode(ReactTextBox view, string clearButtonMode)
         {
-            view.ClearButtonMode = EnumHelpers.ParseNullable<ClearButtonModeType>(clearButtonMode) ?? ClearButtonModeType.Default;
+            // Ignored, there's no X shown in WPF
         }
 
         /// <summary>
