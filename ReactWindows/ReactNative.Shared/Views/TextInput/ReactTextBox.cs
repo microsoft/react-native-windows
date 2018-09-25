@@ -164,6 +164,7 @@ namespace ReactNative.Views.TextInput
             DeleteButtonVisibilityToken = _deleteButton.RegisterPropertyChangedCallback(Button.VisibilityProperty, (DependencyObject d, DependencyProperty dp) => UpdateDeleteButtonVisibility());
 #endif
             TextChanged += OnTextChanged;
+            UpdateDeleteButtonVisibility();
         }
 
         private void UpdateDeleteButtonVisibility()
