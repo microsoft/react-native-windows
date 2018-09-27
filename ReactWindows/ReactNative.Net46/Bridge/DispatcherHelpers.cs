@@ -211,7 +211,15 @@ namespace ReactNative.Bridge
         {
             if (allowInlining && IsOnDispatcher(dispatcher))
             {
-                return Task.FromResult(func());
+                try
+                {
+                    T result = func();
+                    return Task.FromResult(result);
+                }
+                catch (Exception ex)
+                {
+                    return Task.FromException<T>(ex);
+                }
             }
             else
             {
@@ -219,8 +227,18 @@ namespace ReactNative.Bridge
 
                 RunOnDispatcher(dispatcher, DispatcherPriority.Normal, () =>
                 {
-                    var result = func();
-                    taskCompletionSource.SetResult(result);
+                    RunOnDispatcher(dispatcher, () =>
+                    {
+                        try
+                        {
+                            var result = func();
+                            taskCompletionSource.SetResult(result);
+                        }
+                        catch (Exception ex)
+                        {
+                            taskCompletionSource.SetException(ex);
+                        }
+                    });
                 });
 
                 return taskCompletionSource.Task;
