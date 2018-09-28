@@ -270,7 +270,7 @@ namespace ReactNative.Views.Text
             {
                 return null;
             }
-            ProcessSelectedInlines(paragraph.Inlines, selectedText, false, start, end);
+            ProcessSelectedInlines(paragraph.Inlines, selectedText, start, end);
 
             return selectedText.ToString();
         }
@@ -296,29 +296,27 @@ namespace ReactNative.Views.Text
         /// </summary>
         /// <param name="inlines">InlineCollection to be processed.</param>
         /// <param name="selectedText">Will contain the text representation upon procedure completion.</param>
-        /// <param name="accumulate">If 'true', includes inlines as part of the processed selection.</param>
         /// <param name="selectionStart">TextPointer to selection start.</param>
         /// <param name="selectionEnd">TextPointer to selection end.</param>
         /// <returns>'true' if recursion terminal condition is met.</returns>
         private static bool ProcessSelectedInlines(
             InlineCollection inlines,
             StringBuilder selectedText,
-            bool accumulate,
             TextPointer selectionStart,
             TextPointer selectionEnd)
         {
             foreach (Inline inline in inlines)
             {
-                // Begin building the string from selectionStart.
-                if (!accumulate && (object.ReferenceEquals(inline, selectionStart.Parent) || selectionStart.Offset <= inline.ContentEnd.Offset))
-                {
-                    accumulate = true;
-                }
-
                 // Check for terminal condition.
                 if (inline.ContentStart.Offset > selectionEnd.Offset)
                 {
                     return true;
+                }
+
+                // If the inline ends before the selection start, continue with processing the next inline.
+                if (inline.ContentEnd.Offset < selectionStart.Offset)
+                {
+                    continue;
                 }
 
                 switch (inline)
@@ -326,14 +324,11 @@ namespace ReactNative.Views.Text
                     case Hyperlink hyperlink:
                         if (hyperlink.NavigateUri != null)
                         {
-                            if (accumulate)
-                            {
-                                selectedText.Append(hyperlink.NavigateUri.ToString());
-                            }
+                            selectedText.Append(hyperlink.NavigateUri.ToString());
                         }
                         else
                         {
-                            if (ProcessSelectedInlines(hyperlink.Inlines, selectedText, accumulate, selectionStart, selectionEnd))
+                            if (ProcessSelectedInlines(hyperlink.Inlines, selectedText, selectionStart, selectionEnd))
                             {
                                 return true;
                             }
@@ -341,64 +336,50 @@ namespace ReactNative.Views.Text
                         break;
                     // Also covers Bold, Italic, Underline.
                     case Span span:
-                        if (ProcessSelectedInlines(span.Inlines, selectedText, accumulate, selectionStart, selectionEnd))
+                        if (ProcessSelectedInlines(span.Inlines, selectedText, selectionStart, selectionEnd))
                         {
                             return true;
                         }
                         break;
                     case Run run:
-                        if (accumulate)
+                        int rangeStart = 0;
+                        // Check for selection start in this run.
+                        if (object.ReferenceEquals(inline, selectionStart.Parent))
                         {
-                            int rangeStart = 0;
-                            // Check for selection start in this run.
-                            if (object.ReferenceEquals(inline, selectionStart.Parent))
-                            {
-                                rangeStart = selectionStart.Offset - inline.ContentStart.Offset;
-                            }
-                            // Check for selection end in this run.
-                            if (object.ReferenceEquals(inline, selectionEnd.Parent))
-                            {
-                                int rangeEnd = selectionEnd.Offset - inline.ContentStart.Offset;
-                                selectedText.Append(run.Text.Substring(rangeStart, rangeEnd - rangeStart));
-                            }
-                            else
-                            {
-                                selectedText.Append(run.Text.Substring(rangeStart));
-                            }
+                            rangeStart = selectionStart.Offset - inline.ContentStart.Offset;
+                        }
+                        // Check for selection end in this run.
+                        if (object.ReferenceEquals(inline, selectionEnd.Parent))
+                        {
+                            int rangeEnd = selectionEnd.Offset - inline.ContentStart.Offset;
+                            selectedText.Append(run.Text.Substring(rangeStart, rangeEnd - rangeStart));
+                        }
+                        else
+                        {
+                            selectedText.Append(run.Text.Substring(rangeStart));
                         }
                         break;
                     case LineBreak lineBreak:
-                        if (accumulate)
-                        {
-                            selectedText.AppendLine();
-                        }
+                        selectedText.AppendLine();
                         break;
                     case InlineUIContainer inlineUIContainer:
-                        if (accumulate)
+                        if (inlineUIContainer.Child is Panel panel)
                         {
-                            if (inlineUIContainer.Child is Panel panel)
+                            foreach (UIElement uiElement in panel.Children)
                             {
-                                foreach (UIElement uiElement in panel.Children)
-                                {
-                                    ProcessInlineContainerUIElement(uiElement, selectedText);
-                                }
+                                ProcessInlineContainerUIElement(uiElement, selectedText);
                             }
-                            else
-                            {
-                                ProcessInlineContainerUIElement(inlineUIContainer.Child, selectedText);
-                            }
+                        }
+                        else
+                        {
+                            ProcessInlineContainerUIElement(inlineUIContainer.Child, selectedText);
                         }
                         break;
                     default:
                         break;
                 }
-
-                // Check for terminal condition.
-                if (object.ReferenceEquals(inline, selectionEnd.Parent))
-                {
-                    return true;
-                }
             }
+
             return false;
         }
 
