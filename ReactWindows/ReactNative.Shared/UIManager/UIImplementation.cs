@@ -611,7 +611,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Prepens the UI block to be executed on main dispatcher thread.
+        /// Prepends the UI block to be executed on main dispatcher thread.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void PrependUIBlock(IUIBlock block)
