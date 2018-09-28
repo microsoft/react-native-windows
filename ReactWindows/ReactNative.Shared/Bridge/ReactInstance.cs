@@ -121,7 +121,7 @@ namespace ReactNative.Bridge
         {
             if (IsDisposed)
             {
-                Tracer.Write(ReactConstants.Tag, "Invoking JS callback after bridge has been destroyed.");
+                RnLog.Warn(ReactConstants.RNW, $"Invoking JS callback after bridge has been destroyed.");
                 return;
             }
 
@@ -155,7 +155,8 @@ namespace ReactNative.Bridge
                 {
                     if (_bridge == null)
                     {
-                        throw new InvalidOperationException("Bridge has not been initialized.");
+                        RnLog.Error(ReactConstants.RNW, $"Invoking JS callback before bridge has been initialized. tracingName:{tracingName}.");
+                        throw new InvalidOperationException($"Bridge has not been initialized. tracingName:{tracingName}.");
                     }
 
                     _bridge.CallFunction(module, method, arguments);

@@ -74,9 +74,7 @@ namespace ReactNative.Modules.WebSocket
         {
             if (!_webSocketConnections.TryGetValue(id, out var webSocket))
             {
-                Tracer.Write(
-                    ReactConstants.Tag,
-                    Invariant($"Cannot close WebSocket. Unknown WebSocket id {id}."));
+                RnLog.Warn(ReactConstants.RNW, $"Cannot close WebSocket. Unknown WebSocket id {id}.");
 
                 return;
             }
@@ -91,10 +89,7 @@ namespace ReactNative.Modules.WebSocket
             }
             catch (Exception ex)
             {
-                Tracer.Error(
-                    ReactConstants.Tag,
-                    Invariant($"Could not close WebSocket connection for id '{id}'."),
-                    ex);
+                RnLog.Error(ReactConstants.RNW, ex, $"Could not close WebSocket connection for id '{id}'.");
             }
         }
 

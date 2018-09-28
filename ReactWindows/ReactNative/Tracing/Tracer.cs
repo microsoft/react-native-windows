@@ -7,7 +7,8 @@ using Windows.Foundation.Diagnostics;
 namespace ReactNative.Tracing
 {
     /// <summary>
-    /// Tracing helpers for the application.
+    /// Tracing helpers for understanding the performance of React Native Windows
+    /// internals.
     /// </summary>
     static class Tracer
     {

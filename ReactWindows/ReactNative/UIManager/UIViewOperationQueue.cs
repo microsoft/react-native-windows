@@ -4,6 +4,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
+using ReactNative.Tracing;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -586,7 +587,7 @@ namespace ReactNative.UIManager
                     }
                     else
                     {
-                        Debug.WriteLine($"View with tag {tag} not found due to race condition");
+                        RnLog.Warn(nameof(UIViewOperationQueue), $"View with tag '{tag}' not found due to race condition");
                     }
                 });
             }

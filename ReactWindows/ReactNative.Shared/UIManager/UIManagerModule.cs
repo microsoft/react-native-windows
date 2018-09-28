@@ -6,6 +6,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Common;
 using ReactNative.Modules.DeviceInfo;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
@@ -207,7 +208,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// Schedule a block to be executed on the main UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>
         /// <param name="block">The UI block.</param>
@@ -217,7 +218,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// Schedule a block to be executed on a UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>
         /// <param name="block">The UI block.</param>
@@ -228,7 +229,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// Schedule a block to be executed on the main UI thread. Useful if you need to execute
         /// need view logic before all currently queued view updates have completed.
         /// </summary>
         /// <param name="block">The UI block.</param>
@@ -268,6 +269,8 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public async void removeRootView(int rootViewTag)
         {
+            RnLog.Info(ReactConstants.RNW, $"UIManagerModule: removeRootView ({rootViewTag}) - entry");
+
             // A cleanup task should be waiting here
             if (!_rootViewCleanupTasks.TryRemove(rootViewTag, out var cleanupTask))
             {
@@ -277,6 +280,7 @@ namespace ReactNative.UIManager
             await _uiImplementation.RemoveRootViewAsync(rootViewTag);
 
             cleanupTask.SetResult(true);
+            RnLog.Info(ReactConstants.RNW, $"UIManagerModule: removeRootView ({rootViewTag}) - done");
         }
 
         /// <summary>

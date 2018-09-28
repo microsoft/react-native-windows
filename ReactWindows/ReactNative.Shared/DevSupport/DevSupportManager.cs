@@ -12,7 +12,7 @@ using ReactNative.Tracing;
 using System;
 using System.IO;
 using System.Reactive.Disposables;
-using System.Runtime.ExceptionServices;
+
 using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
@@ -152,7 +152,7 @@ namespace ReactNative.DevSupport
             }
             else
             {
-                ExceptionDispatchInfo.Capture(exception).Throw();
+                RnLog.Fatal(ReactConstants.RNW, exception, $"Exception caught in top handler");
             }
         }
 
@@ -187,7 +187,6 @@ namespace ReactNative.DevSupport
             }
             else
             {
-                Tracer.Error(ReactConstants.Tag, "Exception in native call from JavaScript.", exception);
                 ShowNewError(message, StackTraceHelper.ConvertNativeStackTrace(exception), NativeErrorCookie);
             }
         }
@@ -412,9 +411,12 @@ namespace ReactNative.DevSupport
 
         public async void HandleReloadJavaScript()
         {
+            RnLog.Info(ReactConstants.RNW, $"DevSupportManager: HandleReloadJavaScript - entry");
             using (await _reactInstanceCommandsHandler.LockAsync())
             {
+                RnLog.Info(ReactConstants.RNW, $"DevSupportManager: HandleReloadJavaScript - execute");
                 await CreateReactContextFromPackagerAsync(CancellationToken.None);
+                RnLog.Info(ReactConstants.RNW, $"DevSupportManager: HandleReloadJavaScript - done");
             }
         }
 
@@ -476,6 +478,8 @@ namespace ReactNative.DevSupport
 
         private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
+            RnLog.Error(ReactConstants.RNW, $"Showing RedBox with message: {message}");
+
             DispatcherHelpers.RunOnDispatcher(() =>
             {
                 if (_redBoxDialog == null)
