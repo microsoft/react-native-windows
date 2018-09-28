@@ -155,7 +155,7 @@ namespace ReactNative.Modules.Dialog
             var uiManager = Context.GetNativeModule<UIManagerModule>();
             try
             {
-                uiManager.UIImplementation.RunOnDispatcherThread(dialog.RootViewHint, async () =>
+                uiManager.AddUIBlock(new UIBlock(async () =>
                 {
                     if (CoreApplication.GetCurrentView().CoreWindow == null)
                     {
@@ -165,12 +165,28 @@ namespace ReactNative.Modules.Dialog
                     }
 
                     await dialog.MessageDialog.ShowAsync();
-                });
+                }
+                ), dialog.RootViewHint);
             }
             catch (InvalidOperationException)
             {
                 // RootViewHint is bogus, i.e. no Dispatcher thread was found
                 dialog.ErrorCallback($"Alert failed: RootViewHint {dialog.RootViewHint} can't be mapped to a CoreApplicationView");
+            }
+        }
+
+        class UIBlock : IUIBlock
+        {
+            private readonly Action _action;
+
+            public UIBlock(Action action)
+            {
+                _action = action;
+            }
+
+            public void Execute(NativeViewHierarchyManager nativeViewHierarchyManager)
+            {
+                _action();
             }
         }
     }

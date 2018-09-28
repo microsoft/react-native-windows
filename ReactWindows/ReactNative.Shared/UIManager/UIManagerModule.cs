@@ -213,7 +213,18 @@ namespace ReactNative.UIManager
         /// <param name="block">The UI block.</param>
         public void AddUIBlock(IUIBlock block)
         {
-            _uiImplementation.AddUIBlock(block);
+            AddUIBlock(block, null);
+        }
+
+        /// <summary>
+        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// view logic after all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void AddUIBlock(IUIBlock block, int? tag)
+        {
+            _uiImplementation.AddUIBlock(block, tag);
         }
 
         /// <summary>
