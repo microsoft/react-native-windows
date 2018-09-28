@@ -386,6 +386,30 @@ exports.examples = [
     }
   },
   {
+    title: 'Clear button mode',
+    render: function() {
+      return (
+        <View>
+          <WithLabel label="never">
+            <TextInput style={styles.default} clearButtonMode="never" />
+          </WithLabel>
+          <WithLabel label="while editing">
+            <TextInput style={styles.default} clearButtonMode="while-editing" />
+          </WithLabel>
+          <WithLabel label="unless editing">
+            <TextInput
+              style={styles.default}
+              clearButtonMode="unless-editing"
+            />
+          </WithLabel>
+          <WithLabel label="always">
+            <TextInput style={styles.default} clearButtonMode="always" />
+          </WithLabel>
+        </View>
+      );
+    },
+  },
+  {
     title: 'Clear and select',
     render: function() {
       return (
