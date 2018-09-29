@@ -10,7 +10,7 @@ namespace ReactNative.Tracing
     /// The interface is designed to be able to integrate other logging
     /// frameworks like nlog, log4net, etc
     /// </summary>
-    public abstract class LogTracerBase
+    public abstract class LogTracerBase: IDisposable
     {
         private EventLevel _verbosityLevel = EventLevel.Verbose;
 
@@ -101,6 +101,17 @@ namespace ReactNative.Tracing
             {
                 return ex.ToString();
             }
+        }
+
+        /// <summary>
+        /// Disposes the log tracer.
+        /// </summary>
+        /// <remarks>
+        /// The current implementation does a Flush
+        /// </remarks>
+        public virtual void Dispose()
+        {
+            Flush();
         }
     }
 }

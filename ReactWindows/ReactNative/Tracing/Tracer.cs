@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -50,36 +50,6 @@ namespace ReactNative.Tracing
             else
             {
                 return null;
-            }
-        }
-
-        /// <summary>
-        /// Write an event.
-        /// </summary>
-        /// <param name="tag">The trace tag.</param>
-        /// <param name="eventName">The event name.</param>
-        public static void Write(int tag, string eventName)
-        {
-            if (Instance.Enabled)
-            {
-                Instance.LogEvent(eventName, null, LoggingLevel.Information, new LoggingOptions
-                {
-                    Tags = tag
-                });
-            }
-        }
-
-        /// <summary>
-        /// Write an error event.
-        /// </summary>
-        /// <param name="tag">The trace tag.</param>
-        /// <param name="eventName">The event name.</param>
-        /// <param name="ex">The exception.</param>
-        public static void Error(int tag, string eventName, Exception ex)
-        {
-            if (Instance.Enabled)
-            {
-                Instance.LogEvent(eventName, null, LoggingLevel.Error);
             }
         }
     }

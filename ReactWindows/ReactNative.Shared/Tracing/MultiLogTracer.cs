@@ -35,6 +35,21 @@ namespace ReactNative.Tracing
             }
         }
 
+        /// <summary>
+        /// Disposes the log tracer.
+        /// </summary>
+        /// <remarks>
+        /// The current implementation defers to the list of log tracers
+        /// </remarks>
+        public override void Dispose()
+        {
+            foreach (var tracer in _tracers)
+            {
+                tracer.Dispose();
+            }
+            _tracers.Clear();
+        }
+
         /// <inheritdoc />
         protected override void AppendInternal(EventLevel eventLevel, string eventName, FormattableString message, Exception exception)
         {

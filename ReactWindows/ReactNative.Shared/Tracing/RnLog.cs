@@ -151,18 +151,9 @@ namespace ReactNative.Tracing
         /// <param name="message">The message to log/include in crash report.</param>
         public static void Fatal(string tag, Exception exception, FormattableString message)
         {
-            Error(tag, exception, message);
+            WriteLogLine(EventLevel.Critical, tag, message, exception);
             Flush();
             logTracer.CrashApplication(message, exception);
-        }
-
-        /// <summary>
-        /// Crash the application (legacy, to be removed)
-        /// </summary>
-        /// <param name="exception">Exception to include with crash report.</param>
-        public static void CrashApplication(Exception exception)
-        {
-            Fatal("Legacy", exception, $"{ exception.Message}");
         }
 
         /// <summary>

@@ -47,5 +47,17 @@ namespace ReactNative.Tracing
                     exception = FormatException(exception)
                 });
         }
+
+        /// <summary>
+        /// Disposes the log tracer.
+        /// </summary>
+        /// <remarks>
+        /// The current implementation disposes the event source
+        /// </remarks>
+        public override void Dispose()
+        {
+            eventSource.Dispose();
+            eventSource = null;
+        }
     }
 }
