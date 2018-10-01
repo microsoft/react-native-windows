@@ -55,7 +55,6 @@ namespace ReactNative
         // - The "scope" of this AsyncLock extends to the DevSupportManager as well, all the private methods involved in creating a React context
         // in any way are called with the AsyncLock held.
         //
-        private bool _hasStartedCreatingInitialContext;
         private ReactContext _currentReactContext;
         private readonly List<ReactRootView> _attachedRootViews = new List<ReactRootView>();
 
@@ -166,30 +165,18 @@ namespace ReactNative
             using (await _lock.LockAsync())
             {
                 RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: CreateReactContextAsync - execute");
-                if (_hasStartedCreatingInitialContext)
+                if (_currentReactContext != null)
                 {
                     throw new InvalidOperationException(
                             "React context creation should only be called when creating the React " +
                             "application for the first time. When reloading JavaScript, e.g., from " +
                             "a new file, explicitly, use the re-create method.");
                 }
-                _hasStartedCreatingInitialContext = true;
 
-                ReactContext context = null;
-                try
-                {
-                    context = await CreateReactContextCoreAsync(token);
-                }
-                finally
-                {
-                    if (context == null)
-                    {
-                        _hasStartedCreatingInitialContext = false;
-                    }
-                }
+                await CreateReactContextCoreAsync(token);
 
-                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: CreateReactContextAsync - returning {(context==null ? "null" : "valid")} context");
-                return context;
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: CreateReactContextAsync - returning {(_currentReactContext == null ? "null" : "valid")} context");
+                return _currentReactContext;
             }
         }
 
@@ -207,7 +194,7 @@ namespace ReactNative
             using (await _lock.LockAsync())
             {
                 RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetReactContextAsync - execute");
-                if (!_hasStartedCreatingInitialContext)
+                if (_currentReactContext == null)
                 {
                     throw new InvalidOperationException(
                         "Use the create method to start initializing the React context.");
@@ -252,7 +239,7 @@ namespace ReactNative
             using (await _lock.LockAsync())
             {
                 RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - execute");
-                if (_hasStartedCreatingInitialContext)
+                if (_currentReactContext != null)
                 {
                     // By this point context has already been created due to the serialized aspect of context initialization.
                     RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - returning existing {(_currentReactContext == null ? "null" : "valid")} context");
@@ -260,23 +247,10 @@ namespace ReactNative
                 }
                 else
                 {
-                    _hasStartedCreatingInitialContext = true;
+                    await CreateReactContextCoreAsync(token);
 
-                    ReactContext context = null;
-                    try
-                    {
-                        context = await CreateReactContextCoreAsync(token);
-                    }
-                    finally
-                    {
-                        if (context == null)
-                        {
-                            _hasStartedCreatingInitialContext = false;
-                        }
-                    }
-
-                    RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - returning {(context == null ? "null" : "valid")} context");
-                    return context;
+                    RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - returning {(_currentReactContext == null ? "null" : "valid")} context");
+                    return _currentReactContext;
                 }
             }
         }
@@ -295,28 +269,17 @@ namespace ReactNative
             using (await _lock.LockAsync())
             {
                 RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: RecreateReactContextAsync - execute");
-                if (!_hasStartedCreatingInitialContext)
+                if (_currentReactContext == null)
                 {
                     throw new InvalidOperationException(
                         "React context re-creation should only be called after the initial " +
                         "create context background call.");
                 }
 
-                ReactContext context = null;
-                try
-                {
-                    context = await CreateReactContextCoreAsync(token);
-                }
-                finally
-                {
-                    if (context == null)
-                    {
-                        _hasStartedCreatingInitialContext = false;
-                    }
-                }
+                await CreateReactContextCoreAsync(token);
 
-                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: RecreateReactContextAsync - returning {(context == null ? "null" : "valid")} context");
-                return context;
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: RecreateReactContextAsync - returning {(_currentReactContext == null ? "null" : "valid")} context");
+                return _currentReactContext;
             }
         }
 
@@ -423,7 +386,6 @@ namespace ReactNative
                 {
                     await currentReactContext.DisposeAsync();
                     _currentReactContext = null;
-                    _hasStartedCreatingInitialContext = false;
                 }
 
                 ReactChoreographer.Dispose();
