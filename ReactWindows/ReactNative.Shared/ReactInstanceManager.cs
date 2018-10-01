@@ -41,11 +41,6 @@ namespace ReactNative
         // Awaitable lock syncronizing the entire initialization of ReactContext
         private readonly AsyncLock _lock = new AsyncLock();
 
-        // State:
-        // - _hasStartedCreatingInitialContext == false:                                    Not initialized
-        // - _hasStartedCreatingInitialContext == true && _currentReactContext == null:     Initializing (always by main dispatcher thread)
-        // - _hasStartedCreatingInitialContext == true && _currentReactContext != null:     Initialized (any dispatcher thread can use the context)
-        //
         // Threading
         // - Most of public APIs have to be called on main dispatcher thread, with the exception of
         // AttachMeasuredRootViewAsync and DetachRootViewAsync (called under the dispatcher corresponding to the
