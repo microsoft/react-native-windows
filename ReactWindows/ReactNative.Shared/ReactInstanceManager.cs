@@ -87,6 +87,8 @@ namespace ReactNative
             Action<Exception> nativeModuleCallExceptionHandler,
             bool lazyViewManagersEnabled)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: constructor");
+
             if (packages == null)
                 throw new ArgumentNullException(nameof(packages));
             if (uiImplementationProvider == null)
@@ -159,9 +161,11 @@ namespace ReactNative
         /// <returns>A task to await the result.</returns>
         public async Task<ReactContext> CreateReactContextAsync(CancellationToken token)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: CreateReactContextAsync - entry");
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: CreateReactContextAsync - execute");
                 if (_hasStartedCreatingInitialContext)
                 {
                     throw new InvalidOperationException(
@@ -184,6 +188,7 @@ namespace ReactNative
                     }
                 }
 
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: CreateReactContextAsync - returning {(context==null ? "null" : "valid")} context");
                 return context;
             }
         }
@@ -197,9 +202,11 @@ namespace ReactNative
         /// </returns>
         public async Task<ReactContext> GetReactContextAsync(CancellationToken token)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetReactContextAsync - entry");
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetReactContextAsync - execute");
                 if (!_hasStartedCreatingInitialContext)
                 {
                     throw new InvalidOperationException(
@@ -207,6 +214,7 @@ namespace ReactNative
                 }
 
                 // By this point context has already been created due to the serialized aspect of context initialization.
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetReactContextAsync - returning existing {(_currentReactContext == null ? "null" : "valid")} context");
                 return _currentReactContext;
             }
         }
@@ -220,10 +228,12 @@ namespace ReactNative
         /// </returns>
         public async Task<ReactContext> TryGetReactContextAsync(CancellationToken token)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: TryGetReactContextAsync - entry");
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
                 // By this point context has already been created due to the serialized aspect of context initialization.
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: TryGetReactContextAsync - execute/returning existing {(_currentReactContext == null ? "null" : "valid")} context");
                 return _currentReactContext;
             }
         }
@@ -237,12 +247,15 @@ namespace ReactNative
         /// </returns>
         public async Task<ReactContext> GetOrCreateReactContextAsync(CancellationToken token)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - entry");
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - execute");
                 if (_hasStartedCreatingInitialContext)
                 {
                     // By this point context has already been created due to the serialized aspect of context initialization.
+                    RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - returning existing {(_currentReactContext == null ? "null" : "valid")} context");
                     return _currentReactContext;
                 }
                 else
@@ -262,6 +275,7 @@ namespace ReactNative
                         }
                     }
 
+                    RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: GetOrCreateReactContextAsync - returning {(context == null ? "null" : "valid")} context");
                     return context;
                 }
             }
@@ -276,9 +290,11 @@ namespace ReactNative
         /// <returns>A task to await the result.</returns>
         public async Task<ReactContext> RecreateReactContextAsync(CancellationToken token)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: RecreateReactContextAsync - entry");
             DispatcherHelpers.AssertOnDispatcher();
             using (await _lock.LockAsync())
             {
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: RecreateReactContextAsync - execute");
                 if (!_hasStartedCreatingInitialContext)
                 {
                     throw new InvalidOperationException(
@@ -299,6 +315,7 @@ namespace ReactNative
                     }
                 }
 
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: RecreateReactContextAsync - returning {(context == null ? "null" : "valid")} context");
                 return context;
             }
         }
@@ -315,7 +332,7 @@ namespace ReactNative
             var reactContext = _currentReactContext;
             if (reactContext == null)
             {
-                Tracer.Write(ReactConstants.Tag, "Instance detached from instance manager.");
+                RnLog.Warn(ReactConstants.RNW, $"ReactInstanceManager: OnBackPressed: Instance detached from instance manager.");
                 InvokeDefaultOnBackPressed();
             }
             else
@@ -610,10 +627,12 @@ namespace ReactNative
             catch (OperationCanceledException)
             when (token.IsCancellationRequested)
             {
+                RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: Creating React context has been canceled");
                 throw;
             }
             catch (Exception ex)
             {
+                RnLog.Error(ReactConstants.RNW, ex, $"ReactInstanceManager: Exception when creating React context: {ex.Message}");
                 _devSupportManager.HandleException(ex);
             }
 
@@ -622,6 +641,7 @@ namespace ReactNative
 
         private async Task SetupReactContextAsync(ReactContext reactContext)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: Setting up React context - entry");
             DispatcherHelpers.AssertOnDispatcher();
             if (_currentReactContext != null)
             {
@@ -639,6 +659,7 @@ namespace ReactNative
             {
                 await AttachMeasuredRootViewToInstanceAsync(rootView, reactInstance);
             }
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: Setting up React context - done");
         }
 
         private void InvokeDefaultOnBackPressed()
@@ -651,9 +672,13 @@ namespace ReactNative
             ReactRootView rootView,
             IReactInstance reactInstance)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: AttachMeasuredRootViewToInstanceAsync ({rootView.JavaScriptModuleName}) - entry");
+
             DispatcherHelpers.AssertOnDispatcher();
             var rootTag = await reactInstance.GetNativeModule<UIManagerModule>()
                 .AddMeasuredRootViewAsync(rootView);
+
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: AttachMeasuredRootViewToInstanceAsync ({rootView.JavaScriptModuleName}) - added to UIManager (tag: {rootTag}), starting React app");
 
             var jsAppModuleName = rootView.JavaScriptModuleName;
             var appParameters = new Dictionary<string, object>
@@ -663,12 +688,14 @@ namespace ReactNative
             };
 
             reactInstance.GetJavaScriptModule<AppRegistry>().runApplication(jsAppModuleName, appParameters);
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: AttachMeasuredRootViewToInstanceAsync ({rootView.JavaScriptModuleName}) - done");
         }
 
         private async Task DetachViewFromInstanceAsync(
             ReactRootView rootView,
             IReactInstance reactInstance)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: DetachViewFromInstanceAsync ({rootView.JavaScriptModuleName}) - entry");
             DispatcherHelpers.AssertOnDispatcher();
 
             // Detaches ReactRootView from instance manager root view list and size change monitoring.
@@ -680,11 +707,16 @@ namespace ReactNative
 
             reactInstance.GetJavaScriptModule<AppRegistry>().unmountApplicationComponentAtRootTag(rootView.GetTag());
 
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: DetachViewFromInstanceAsync ({rootView.JavaScriptModuleName}) - waiting for removeRootView({rootView.GetTag()})");
+
             await rootViewRemovedTask;
+
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: DetachViewFromInstanceAsync ({rootView.JavaScriptModuleName}) - done");
         }
 
         private async Task TearDownReactContextAsync(ReactContext reactContext, CancellationToken token)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: Tearing down React context - entry");
             token.ThrowIfCancellationRequested();
 
             DispatcherHelpers.AssertOnDispatcher();
@@ -709,6 +741,7 @@ namespace ReactNative
             _devSupportManager.OnReactContextDestroyed(reactContext);
 
             // TODO: add memory pressure hooks
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: Tearing down React context - done");
         }
 
         private async Task<ReactContext> CreateReactContextCoreAsync(
@@ -716,7 +749,7 @@ namespace ReactNative
             JavaScriptBundleLoader jsBundleLoader,
             CancellationToken token)
         {
-            Tracer.Write(ReactConstants.Tag, "Creating React context.");
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: Creating React context - entry");
 
             _sourceUrl = jsBundleLoader.SourceUrl;
 
@@ -781,6 +814,7 @@ namespace ReactNative
 
             await reactInstance.InitializeAsync().ConfigureAwait(false);
 
+            RnLog.Info(ReactConstants.RNW, $"ReactInstanceManager: Creating React context - done");
             return reactContext;
         }
 

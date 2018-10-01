@@ -140,6 +140,7 @@
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
+    <Compile Include="Tracing\EtwLogTracer.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
     <Compile Include="Tracing\LoggingActivityBuilderExtensions.generated.cs">
       <AutoGen>True</AutoGen>

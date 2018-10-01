@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
+using ReactNative.Tracing;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -324,11 +325,11 @@ namespace ReactNative.Chakra.Executor
             {
                 var message = arguments[1].ToString();
                 var logLevel = (LogLevel)(int)arguments[2].ToDouble();
-                Debug.WriteLine($"[JS {logLevel}] {message}");
+                RnLog.Info("JS", $"{logLevel} {message}");
             }
             catch
             {
-                Debug.WriteLine("Unable to process JavaScript console statement");
+                RnLog.Error("JS", $"Unable to process JavaScript console statement");
             }
 
             return JavaScriptValue.Undefined;

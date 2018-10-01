@@ -13,6 +13,32 @@ using namespace Platform;
 
 namespace ChakraBridge {
 
+public enum class LogLevel {
+    Trace = 0,
+    Info,
+    Warning,
+    Error
+};
+
+inline LogLevel LogLevelToEnum(int loglevel)
+{
+    switch (loglevel)
+    {
+    case 0:
+        return LogLevel::Trace;
+    case 1:
+        return LogLevel::Info;
+    case 2:
+        return LogLevel::Warning;
+    case 3:
+        return LogLevel::Error;
+    default:
+        return LogLevel::Info;
+    }
+}
+
+public delegate void NewLogLine(LogLevel logLevel, Platform::String^ logline);
+
 /// <summary>
 /// This class interfaces with the unmanaged JSRT Chakra Host.
 /// </summary>
@@ -107,7 +133,42 @@ public:
     ChakraStringResult FlushedQueue();
 
     /// <summary>
-    /// Sets the flush queue immediately hook.
+    /// Event to provide a callback for logging
+    /// </summary>
+    static event NewLogLine^ OnNewLogLine
+    {
+        Windows::Foundation::EventRegistrationToken add(NewLogLine^ handler) {
+            onNewLogLineAssigned = true;
+
+            g_loggingCallback = [=](int level, const wchar_t *logline)
+            {
+                if (onNewLogLineAssigned)
+                {
+                    onNewLogLine(LogLevelToEnum(level), ref new Platform::String(logline));
+                }
+#ifdef _DEBUG
+                else
+                {
+                    OutputDebugStringW(LogLevelToString(level));
+                    OutputDebugStringW(logline);
+                    OutputDebugStringW(L"\n");
+                }
+#endif
+            };
+            g_isLoggingEnabled = true;
+
+            return onNewLogLine += handler;
+        }
+        void remove(Windows::Foundation::EventRegistrationToken token) {
+            onNewLogLine -= token;
+        }
+        void raise(LogLevel logLevel, Platform::String^ logLine) {
+            return onNewLogLine(logLevel, logLine);
+        }
+    };
+
+    /// <summary>
+    /// Sets the flush queue immediately hook
     /// </summary>
     void SetFlushQueueImmediate(FlushQueueImmediateHandler^ handler);
 
@@ -120,9 +181,13 @@ private:
     void SafeReleaseJsValueRef(JsValueRef &value);
 
     ChakraHost host;
+    static event NewLogLine^ onNewLogLine;
+    static bool onNewLogLineAssigned;
     JsValueRef callFunctionMethod;
     JsValueRef invokeCallbackMethod;
     JsValueRef flushQueueMethod;
 };
+
+bool NativeJavaScriptExecutor::onNewLogLineAssigned = false;
 
 };

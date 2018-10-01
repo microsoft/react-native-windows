@@ -5,9 +5,10 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Modules.DevSupport;
+using ReactNative.Tracing;
 using System;
-using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -75,7 +76,7 @@ namespace ReactNative.DevSupport
 
         public void HandleException(Exception exception)
         {
-            DispatcherHelpers.RunOnDispatcher(() => ExceptionDispatchInfo.Capture(exception).Throw());
+            RnLog.Fatal(ReactConstants.RNW, exception, $"Exception caught in top handler");
         }
 
         public void HandleReloadJavaScript()

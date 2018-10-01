@@ -69,7 +69,7 @@ namespace ReactNative.Modules.Core
         public void reportSoftException(string title, JArray details, int exceptionId)
         {
             var stackTrace = StackTraceHelper.ConvertJavaScriptStackTrace(details);
-            Tracer.Write(ReactConstants.Tag, title + Environment.NewLine + stackTrace.PrettyPrint());
+            RnLog.Warn(ReactConstants.RNW, $"Soft Exception: {title}\n{stackTrace.PrettyPrint()}");
         }
 
         /// <summary>
@@ -109,7 +109,10 @@ namespace ReactNative.Modules.Core
             else
             {
                 var stackTrace = StackTraceHelper.ConvertJavaScriptStackTrace(details);
-                throw new JavaScriptException(title, stackTrace.PrettyPrint());
+
+                // JavaScriptAppException type can be used by custom implementations of RnLog.Fatal
+                // to detect the Javascript exception scenario for reporting purposes. 
+                throw new JavaScriptAppException(title, stackTrace);
             }
         }
 

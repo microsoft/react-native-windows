@@ -105,6 +105,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncLock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptAppException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleStateMachine.cs" />
@@ -163,6 +164,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\DebugLogTracer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\LogTracerBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\MultiLogTracer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\RnLog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />

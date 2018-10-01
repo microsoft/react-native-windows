@@ -9,7 +9,8 @@ using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 #if PERF_LOG
-using System.Diagnostics;
+using ReactNative.Common;
+using ReactNative.Tracing;
 #endif
 using System.Linq;
 using System.Text;
@@ -456,11 +457,11 @@ namespace ReactNative.Accessibility
             s_treeContext.Value.Dirty = false;
 
 #if PERF_LOG
-            Debug.WriteLine($"Stats: ElementCount: {s_treeContext.Value.ElementCount}, " +
-                                   $"MarkedDirtyNodesCount: {s_treeContext.Value.MarkedDirtyNodesCount}, " +
-                                   $"DirtyNodesCount(before): {savedDirtyNodesCount}, " +
-                                   $"DirtyNodesCount(after): {s_treeContext.Value.DirtyNodesCount}, " +
-                                   $"ProcessedNodesCount: {s_treeContext.Value.ProcessedNodesCount}");
+            RnLog.Info(ReactConstants.RNW, $"Stats: ElementCount: {s_treeContext.Value.ElementCount}, " +
+                                           $"MarkedDirtyNodesCount: {s_treeContext.Value.MarkedDirtyNodesCount}, " +
+                                           $"DirtyNodesCount(before): {savedDirtyNodesCount}, " +
+                                           $"DirtyNodesCount(after): {s_treeContext.Value.DirtyNodesCount}, " +
+                                           $"ProcessedNodesCount: {s_treeContext.Value.ProcessedNodesCount}");
             s_treeContext.Value.MarkedDirtyNodesCount = 0;
 #endif
         }
