@@ -186,7 +186,7 @@ namespace ReactNative.Modules.DeviceInfo
             // Default metric for main window
             // TODO It would make sense to make default actively focused window and not the main in the future
             var mainView = _registeredViews.Values.FirstOrDefault(v => v.RootView.Dispatcher == DispatcherHelpers.MainDispatcher);
-            var defaultMetric = mainView == null ? DisplayMetrics.Empty : mainView.CurrentDisplayMetrics;
+            var defaultMetric = mainView == null ? DisplayMetrics.GetForCurrentView() : mainView.CurrentDisplayMetrics;
             dimensions.Add("window", GetDimensions(defaultMetric));
 
             foreach (var info in _registeredViews.Values)
