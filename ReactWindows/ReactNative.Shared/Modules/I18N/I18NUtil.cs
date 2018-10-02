@@ -91,7 +91,12 @@ namespace ReactNative.Modules.I18N
                 // We use GetForViewIndependentUse because the customary GetForCurrentView throws exception when
                 // an associated CoreWindow is not present, condition that happens during background activation scenarios.
                 // GetForViewIndependentUse is good enough for the LayoutDirection resource (it's not view or display dependent)
-                return ResourceContext.GetForViewIndependentUse().QualifierValues["LayoutDirection"] == "RTL";
+
+                // More, sometimes the retrieval of the "LayoutDirection" values fails with "UnauthorizedAccessException"
+                // because of a peculiarity of the QualifierValues on some OS'es (it keeps just a weak reference to the ResourceContext)
+                // We mitigate by pinning ResourceContext locally
+                var context = ResourceContext.GetForViewIndependentUse();
+                return context.QualifierValues["LayoutDirection"] == "RTL";
 #else
                 return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
 #endif
