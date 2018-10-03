@@ -10,6 +10,7 @@ using ReactNative.UIManager.LayoutAnimation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ReactNative.Modules.I18N;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
 using Windows.Foundation;
@@ -501,6 +502,20 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        public void UpdateRootViewNodesDirection()
+        {
+            foreach (var tag in _rootTags.Keys.ToList())
+            {
+                if (_tagsToViews[tag] is FrameworkElement element)
+                {
+                    element.FlowDirection = I18NUtil.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                }
+            }
+        }
+
+        /// <summary>
         /// Find the view target for touch coordinates.
         /// </summary>
         /// <param name="reactTag">The view tag.</param>
@@ -666,6 +681,9 @@ namespace ReactNative.UIManager
             // Keeping here for symmetry, tag on root views is set early, in UIManagerModule.AddMeasuredRootViewAsync
             ViewExtensions.SetTag(view, tag);
             ViewExtensions.SetReactContext(view, themedContext);
+
+            // Initialize the top level Xaml Flow Direction
+            view.FlowDirection = I18NUtil.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 #if WINDOWS_UWP
             AccessibilityHelper.OnRootViewAdded(view);
 #endif

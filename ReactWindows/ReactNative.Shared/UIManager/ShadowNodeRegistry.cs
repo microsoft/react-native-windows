@@ -3,6 +3,7 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using Facebook.Yoga;
 using System;
 using System.Collections.Generic;
 using static System.FormattableString;
@@ -87,6 +88,17 @@ namespace ReactNative.UIManager
             }
 
             _tagsToCssNodes.Remove(tag);
+        }
+
+        /// <summary>
+        /// Refreshes the FlowDirection on all root nodes.
+        /// </summary>
+        public void UpdateRootNodesDirection(YogaDirection yogaDirection)
+        {
+            foreach(var rootTag in _rootTags)
+            {
+                _tagsToCssNodes[rootTag.Key].LayoutDirection = yogaDirection;
+            }
         }
 
         /// <summary>

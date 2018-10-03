@@ -247,6 +247,20 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        public void UpdateRootViewNodesDirection()
+        {
+            // Called on layout manager thread
+
+            // Dispatch to all queues
+            foreach (var queue in _dispatcherToOperationQueueInfo.Values)
+            {
+                queue.queueInstance.UpdateRootViewNodesDirection();
+            }
+        }
+
+        /// <summary>
         /// Enqueues an operation to dispatch a command.
         /// </summary>
         /// <param name="tag">The view tag.</param>

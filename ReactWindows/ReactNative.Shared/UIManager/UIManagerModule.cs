@@ -8,6 +8,7 @@ using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Common;
 using ReactNative.Modules.DeviceInfo;
+using ReactNative.Modules.I18N;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
@@ -208,6 +209,15 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        ///
+        internal void UpdateAllRootViewsDirection()
+        {
+            _layoutActionQueue.Dispatch(() => _uiImplementation.UpdateAllRootViewsDirection());
+        }
+
+        /// <summary>
         /// Schedule a block to be executed on the main UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>
@@ -260,7 +270,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        #region React Methods
+#region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -565,9 +575,9 @@ namespace ReactNative.UIManager
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
-        #endregion
+#endregion
 
-        #region Sync React Methods
+#region Sync React Methods
 
         /// <summary>
         /// Gets the constants for the view manager.
@@ -601,9 +611,9 @@ namespace ReactNative.UIManager
             return GetDefaultExportableEventTypes();
         }
 
-        #endregion
+#endregion
 
-        #region ILifecycleEventListener
+#region ILifecycleEventListener
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -630,9 +640,9 @@ namespace ReactNative.UIManager
             _uiImplementation.OnDestroy();
         }
 
-        #endregion
+#endregion
 
-        #region IOnBatchCompleteListener
+#region IOnBatchCompleteListener
 
         /// <summary>
         /// To implement the transactional requirement, UI changes are only
@@ -646,9 +656,9 @@ namespace ReactNative.UIManager
             _uiImplementation.DispatchViewUpdates(batchId);
         }
 
-        #endregion
+#endregion
 
-        #region NativeModuleBase
+#region NativeModuleBase
 
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
@@ -660,15 +670,15 @@ namespace ReactNative.UIManager
             return Task.CompletedTask;
         }
 
-        #endregion
+#endregion
 
-        #region Options
+#region Options
 
         private static bool IsLazyViewManagersEnabled(UIManagerModuleOptions options)
         {
             return (options & UIManagerModuleOptions.LazyViewManagers) == UIManagerModuleOptions.LazyViewManagers;
         }
 
-        #endregion
+#endregion
     }
 }
