@@ -152,9 +152,9 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Refreshes RTL/LTR direction on all root views.
         /// </summary>
-        public void UpdateAllRootViewsDirection()
+        public void UpdateLayoutDirection()
         {
-            _shadowNodeRegistry.UpdateRootNodesDirection(I18NUtil.IsRightToLeft ? YogaDirection.RTL : YogaDirection.LTR);
+            // RTL/LTR is implemented through Xaml FlowDirection, so we keep Yoga oblivious of this.
             _operationsQueue.UpdateRootViewNodesDirection();
             if (_operationsQueue.IsEmpty())
             {
@@ -690,7 +690,7 @@ namespace ReactNative.UIManager
         private ReactShadowNode CreateRootShadowNode()
         {
             var rootCssNode = new ReactShadowNode();
-            rootCssNode.LayoutDirection = I18NUtil.IsRightToLeft ? YogaDirection.RTL : YogaDirection.LTR;
+            // RTL/LTR is implemented through Xaml FlowDirection, so we keep Yoga oblivious of this.
 
             rootCssNode.ViewClass = "Root";
             return rootCssNode;

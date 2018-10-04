@@ -212,9 +212,9 @@ namespace ReactNative.UIManager
         /// Refreshes RTL/LTR direction on all root views.
         /// </summary>
         ///
-        internal void UpdateAllRootViewsDirection()
+        internal void UpdateLayoutDirection()
         {
-            _layoutActionQueue.Dispatch(() => _uiImplementation.UpdateAllRootViewsDirection());
+            _layoutActionQueue.Dispatch(() => _uiImplementation.UpdateLayoutDirection());
         }
 
         /// <summary>

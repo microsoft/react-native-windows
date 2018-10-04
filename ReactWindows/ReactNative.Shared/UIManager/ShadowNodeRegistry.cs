@@ -91,17 +91,6 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Refreshes the FlowDirection on all root nodes.
-        /// </summary>
-        public void UpdateRootNodesDirection(YogaDirection yogaDirection)
-        {
-            foreach(var rootTag in _rootTags)
-            {
-                _tagsToCssNodes[rootTag.Key].LayoutDirection = yogaDirection;
-            }
-        }
-
-        /// <summary>
         /// Retrieve a React shadow node.
         /// </summary>
         /// <param name="tag">The tag of the node to retrieve.</param>

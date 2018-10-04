@@ -63,7 +63,7 @@ namespace ReactNative.Modules.I18N
         {
             I18NUtil.IsRightToLeftAllowed = value;
 
-            Context.GetNativeModule<UIManagerModule>().UpdateAllRootViewsDirection();
+            Context.GetNativeModule<UIManagerModule>().UpdateLayoutDirection();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace ReactNative.Modules.I18N
         {
             I18NUtil.IsRightToLeftForced = value;
 
-            Context.GetNativeModule<UIManagerModule>().UpdateAllRootViewsDirection();
+            Context.GetNativeModule<UIManagerModule>().UpdateLayoutDirection();
         }
     }
 }
