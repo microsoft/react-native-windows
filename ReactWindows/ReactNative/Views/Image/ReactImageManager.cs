@@ -32,7 +32,6 @@ namespace ReactNative.Views.Image
         private readonly ThreadLocal<ScaleTransform> _rtlScaleTransform = new ThreadLocal<ScaleTransform>(() => new ScaleTransform
         {
             CenterX = 0.5,
-            CenterY = 0.5,
             ScaleX = -1
         });
 
