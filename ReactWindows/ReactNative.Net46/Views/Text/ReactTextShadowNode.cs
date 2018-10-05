@@ -254,8 +254,8 @@ namespace ReactNative.Views.Text
                 textBlock.Padding = new Thickness(
                     GetPadding(YogaEdge.Left),
                     GetPadding(YogaEdge.Top),
-                    0,
-                    0);
+                    GetPadding(YogaEdge.Right),
+                    GetPadding(YogaEdge.Bottom));
             }
         }
 
