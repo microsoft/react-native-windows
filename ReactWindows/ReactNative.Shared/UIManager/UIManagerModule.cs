@@ -417,6 +417,13 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactTag">The view tag to measure.</param>
         /// <param name="callback">The callback.</param>
+        /// <remarks>
+        /// The top level Xaml element (Window.Current.Content) that drives the window orientation
+        /// and the root view the element with reactTag is associated with have to
+        /// have consistent FlowDirection for the result to be fully correct
+        /// (The FlowDirection of the root view is driven by I18NUtil.IsRightToLeft, whereas
+        /// the top level element/window one is under the control of the hosting application)
+        /// </remarks>
         [ReactMethod]
         public void measureInWindow(int reactTag, ICallback callback)
         {

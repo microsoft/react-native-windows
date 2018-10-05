@@ -474,6 +474,10 @@ namespace ReactNative.UIManager
                     Invariant($"Could not find view manager for tag '{tag}."));
             }
 
+            //
+            // The top level Xaml element (Window.Current.Content) and the root view the element with tag is associated with have to
+            // have consistent FlowDirection for the result to be fully correct
+            //
             var uiElement = ViewConversion.GetDependencyObject<UIElement>(view);
 #if WINDOWS_UWP
             var windowTransform = uiElement.TransformToVisual(Window.Current.Content);
