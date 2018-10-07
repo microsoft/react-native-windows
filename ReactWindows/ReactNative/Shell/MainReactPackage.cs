@@ -24,6 +24,7 @@ using ReactNative.UIManager;
 using ReactNative.Views.ControlView;
 using ReactNative.Views.Flip;
 using ReactNative.Views.Image;
+using ReactNative.Views.Modal;
 using ReactNative.Views.Picker;
 using ReactNative.Views.Progress;
 using ReactNative.Views.Scroll;
@@ -85,6 +86,7 @@ namespace ReactNative.Shell
             {
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
+                new ReactModalViewManager(),
                 new ReactProgressBarViewManager(),
                 new ReactProgressRingViewManager(),
                 new ReactPickerManager(),
