@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 #if WINDOWS_UWP
+using System;
+using Windows.System;
 using Windows.UI;
 using ReactNative.Accessibility;
 using Windows.UI.Xaml;
@@ -22,19 +24,21 @@ namespace ReactNative.Views.Modal
     /// A native control with a single ContentDialog child.
     /// </summary>
 #if WINDOWS_UWP
-    public class ReactModalHostView : UserControl, IAccessible
+    public class ReactModalHostView : FrameworkElement, IAccessible
 #else
     public class ReactModalHostView : UserControl
 #endif
     {
-        private readonly ContentDialog _contentDialog;
+        private ContentDialog _contentDialog;
 
         private TouchHandler _touchHandler;
+
+        private bool _isLoaded;
 
         /// <summary>
         /// The current dialog content
         /// </summary>
-        public new DependencyObject Content
+        public DependencyObject Content
         {
             get
             {
@@ -60,10 +64,43 @@ namespace ReactNative.Views.Modal
         }
 
         /// <summary>
+        /// If the modal will render over a transparent background
+        /// </summary>
+        public bool Transparent { get; set; }
+
+        /// <summary>
+        /// Called when the user taps the hardware back button
+        /// </summary>
+        public event Action<DependencyObject> OnRequestCloseListener;
+
+        /// <summary>
+        /// Called once the modal has been shown
+        /// </summary>
+        public event Action<DependencyObject> OnShowListener;
+
+        /// <summary>
         /// Instantiates the <see cref="ReactModalHostView"/>. 
         /// </summary>
         public ReactModalHostView()
         {
+            Loaded += (sender, args) =>
+            {
+                _isLoaded = true;
+                Show();
+            };
+        }
+
+        /// <summary>
+        /// Shows the dialog if not visible otherwise updates it's properties
+        /// </summary>
+        public void ShowOrUpdate()
+        {
+            if (this._contentDialog != null)
+            {
+                UpdateProperties();
+                return;
+            }
+            
             _contentDialog = new ContentDialog
             {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -76,20 +113,45 @@ namespace ReactNative.Views.Modal
                 }
             };
 
-            Loaded += (sender, args) =>
+            _contentDialog.KeyUp += (o, eventArgs) =>
             {
-                this._contentDialog.ShowAsync().GetResults();
+                if (eventArgs.Key == VirtualKey.Back)
+                {
+                    OnRequestCloseListener?.Invoke(Content);
+                    eventArgs.Handled = true;
+                }
             };
 
-#if WINDOWS_UWP
-            UseSystemFocusVisuals = true;
-#endif
+            UpdateProperties();
+
+            if (_isLoaded)
+            {
+                Show();
+            }
         }
 
-        public void Hide()
+        /// <summary>
+        /// Closes the dialog
+        /// </summary>
+        public void Close()
         {
             _contentDialog.Hide();
             _touchHandler.Dispose();
+        }
+
+        private void Show()
+        {
+            _contentDialog.ShowAsync().GetResults();
+            OnShowListener?.Invoke(Content);
+        }
+
+        private void UpdateProperties()
+        {
+            if (Transparent)
+            {
+                _contentDialog.Background = new SolidColorBrush(Colors.Transparent);
+                _contentDialog.Resources["ContentDialogBorderWidth"] = "0";
+            }
         }
 
 #if WINDOWS_UWP

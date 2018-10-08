@@ -5,6 +5,9 @@ using System;
 using ReactNative.UIManager;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Newtonsoft.Json.Linq;
+using ReactNative.UIManager.Annotations;
+using ReactNative.UIManager.Events;
 using static System.FormattableString;
 
 namespace ReactNative.Views.Modal
@@ -15,6 +18,33 @@ namespace ReactNative.Views.Modal
     public class ReactModalViewManager : ViewParentManager<ReactModalHostView, ReactModalShadowNode>
     {
         /// <summary>
+        /// The view manager event constants.
+        /// </summary>
+        public override JObject CustomDirectEventTypeConstants
+        {
+            get
+            {
+                return new JObject
+                {
+                    {
+                        "topRequestClose",
+                        new JObject
+                        {
+                            { "registrationName", "onRequestClose" },
+                        }
+                    },
+                    {
+                        "topShow",
+                        new JObject
+                        {
+                            { "registrationName", "onShow" },
+                        }
+                    },
+                };
+            }
+        }
+
+        /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
         /// </summary>
@@ -24,6 +54,41 @@ namespace ReactNative.Views.Modal
             {
                 return "RCTModalHostView";
             }
+        }
+
+        /// <summary>
+        /// Determines whether your modal will fill the entire view
+        /// </summary>
+        /// <param name="view">A ReactModalHostView view.</param>
+        /// <param name="transparent">
+        /// Setting this to true will render the modal over a transparent background.
+        /// </param>
+        [ReactProp("transparent")]
+        public void SetTransparent(ReactModalHostView view, bool transparent)
+        {
+            view.Transparent = transparent;
+        }
+
+        /// <summary>
+        /// Subclasses can override this method to install custom event 
+        /// emitters on the given view.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view instance.</param>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, ReactModalHostView view)
+        {
+            base.AddEventEmitters(reactContext, view);
+
+            var dispatcher = reactContext.GetNativeModule<UIManagerModule>().EventDispatcher;
+
+            view.OnRequestCloseListener += content =>
+            {
+                dispatcher.DispatchEvent(new RequestCloseEvent(content.GetTag()));
+            };
+            view.OnShowListener += content =>
+            {
+                dispatcher.DispatchEvent(new ShowEvent(content.GetTag()));
+            };
         }
 
         /// <summary>
@@ -84,6 +149,16 @@ namespace ReactNative.Views.Modal
         }
 
         /// <summary>
+        /// Callback that will be triggered after all props are updated         
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        protected override void OnAfterUpdateTransaction(ReactModalHostView view)
+        {
+            base.OnAfterUpdateTransaction(view);
+            view.ShowOrUpdate();
+        }
+
+        /// <summary>
         /// Called when view is detached from view hierarchy and allows for 
         /// additional cleanup.
         /// </summary>
@@ -93,7 +168,7 @@ namespace ReactNative.Views.Modal
         {
             base.OnDropViewInstance(reactContext, view);
 
-            view.Hide();
+            view.Close();
         }
 
         /// <summary>
@@ -146,6 +221,64 @@ namespace ReactNative.Views.Modal
             }
 
             return dependencyObject;
+        }
+    }
+
+    /// <summary>
+    /// Event fired when the dialog tries to close.
+    /// </summary>
+    class RequestCloseEvent : Event
+    {
+        public RequestCloseEvent(int viewTag)
+            : base(viewTag)
+        {
+        }
+
+        public override string EventName
+        {
+            get
+            {
+                return "topRequestClose";
+            }
+        }
+
+        public override void Dispatch(RCTEventEmitter eventEmitter)
+        {
+            var eventData = new JObject
+            {
+                { "target", ViewTag }
+            };
+
+            eventEmitter.receiveEvent(ViewTag, EventName, eventData);
+        }
+    }
+
+    /// <summary>
+    /// Event fired when the dialog is shown.
+    /// </summary>
+    class ShowEvent : Event
+    {
+        public ShowEvent(int viewTag)
+            : base(viewTag)
+        {
+        }
+
+        public override string EventName
+        {
+            get
+            {
+                return "topShow";
+            }
+        }
+
+        public override void Dispatch(RCTEventEmitter eventEmitter)
+        {
+            var eventData = new JObject
+            {
+                { "target", ViewTag }
+            };
+
+            eventEmitter.receiveEvent(ViewTag, EventName, eventData);
         }
     }
 }
