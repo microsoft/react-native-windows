@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Modules.Core;
 using ReactNative.UIManager;
 using System.Globalization;
 
@@ -18,6 +19,8 @@ namespace ReactNative.Modules.I18N
         private const string ModuleName = "I18nManager";
         private const string IsRtl = "isRTL";
         private const string LocalIdentifier = "localeIdentifier";
+
+        private bool _latestRightToLeft = false;
 
         /// <summary>
         /// Instantiates the <see cref="I18NModule"/>. 
@@ -46,9 +49,11 @@ namespace ReactNative.Modules.I18N
         {
             get
             {
+                // The reading of the constants is a good initialization point for _latestRightToLeft
+                _latestRightToLeft = I18NUtil.IsRightToLeft;
                 return new JObject
                 {
-                    { IsRtl, I18NUtil.IsRightToLeft },
+                    { IsRtl, _latestRightToLeft },
                     { LocalIdentifier, CultureInfo.CurrentCulture.Name }
                 };
             }
@@ -63,7 +68,7 @@ namespace ReactNative.Modules.I18N
         {
             I18NUtil.IsRightToLeftAllowed = value;
 
-            Context.GetNativeModule<UIManagerModule>().UpdateLayoutDirection();
+            NotifyIfNeeded();
         }
 
         /// <summary>
@@ -75,7 +80,34 @@ namespace ReactNative.Modules.I18N
         {
             I18NUtil.IsRightToLeftForced = value;
 
-            Context.GetNativeModule<UIManagerModule>().UpdateLayoutDirection();
+            NotifyIfNeeded();
+        }
+
+        /// <summary>
+        /// Gets the current state of right to left consolidated value
+        /// </summary>
+        /// <param name="promise">Promise for the result.</param>
+        [ReactMethod]
+        public void isCurrentRTL(IPromise promise)
+        {
+            promise.Resolve(I18NUtil.IsRightToLeft);
+        }
+
+        private void NotifyIfNeeded()
+        {
+            var currentRightToLeft = I18NUtil.IsRightToLeft;
+            if (currentRightToLeft != _latestRightToLeft)
+            {
+                _latestRightToLeft = currentRightToLeft;
+
+                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
+                    .emit("isRTLChanged", new JObject
+                    {
+                        { "isRTL", _latestRightToLeft },
+                    });
+
+                Context.GetNativeModule<UIManagerModule>().UpdateLayoutDirection();
+            }
         }
     }
 }
