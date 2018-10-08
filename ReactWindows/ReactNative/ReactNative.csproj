@@ -157,6 +157,7 @@
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
+    <Compile Include="Views\Modal\ReactModalHostView.cs" />
     <Compile Include="Views\Modal\ReactModalShadowNode.cs" />
     <Compile Include="Views\Modal\ReactModalViewManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
