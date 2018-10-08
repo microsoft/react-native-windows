@@ -3,6 +3,7 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
+using ReactNative.Modules.I18N;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -26,6 +27,12 @@ namespace ReactNative.Views.Image
 
         private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
             new Dictionary<int, List<KeyValuePair<string, double>>>();
+
+        private readonly Lazy<ScaleTransform> _rtlScaleTransform = new Lazy<ScaleTransform>(() => new ScaleTransform
+        {
+            CenterX = 0.5,
+            ScaleX = -1
+        });
 
         /// <summary>
         /// The view manager name.
@@ -226,13 +233,24 @@ namespace ReactNative.Views.Image
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new Border
+            var border = new Border
             {
                 Background = new ImageBrush
                 {
                     Stretch = Stretch.UniformToFill,
                 },
             };
+
+            // Using a Border instead of a native Image has its advantages (round corner support, etc.), but
+            // we have to take into account the automatic flipping that happens in RTL mode. We use a transform
+            // to negate that flipping.
+            // NOTE: This WPF implementation doesn't support updating this on the fly
+            if (I18NUtil.IsRightToLeft)
+            {
+                border.Background.RelativeTransform = _rtlScaleTransform.Value;
+            }
+
+            return border;
         }
 
         /// <summary>

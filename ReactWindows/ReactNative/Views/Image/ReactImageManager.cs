@@ -6,6 +6,7 @@
 using ImagePipeline.Core;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
+using ReactNative.Modules.I18N;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
@@ -27,6 +28,12 @@ namespace ReactNative.Views.Image
     {
         private readonly ConcurrentDictionary<Border, List<KeyValuePair<string, double>>> _imageSources =
             new ConcurrentDictionary<Border, List<KeyValuePair<string, double>>>();
+
+        private readonly ThreadLocal<ScaleTransform> _rtlScaleTransform = new ThreadLocal<ScaleTransform>(() => new ScaleTransform
+        {
+            CenterX = 0.5,
+            ScaleX = -1
+        });
 
         /// <summary>
         /// The view manager name.
@@ -261,13 +268,37 @@ namespace ReactNative.Views.Image
         /// <returns>The image view instance.</returns>
         protected override Border CreateViewInstance(ThemedReactContext reactContext)
         {
-            return new Border
+            var border = new Border
             {
                 Background = new ImageBrush
                 {
-                    Stretch = Stretch.UniformToFill,
+                    Stretch = Stretch.UniformToFill
                 },
             };
+
+            // Using a Border instead of a native Image has its advantages (round corner support, etc.), but
+            // we have to take into account the automatic flipping that happens in RTL mode. We use a transform
+            // to negate that flipping.
+            // Control starts as LeftToRight in isolation, but we hook to the FlowDirection property change to get
+            // the correct value when attached to component tree and the further changes.
+
+            border.RegisterPropertyChangedCallback(FrameworkElement.FlowDirectionProperty, FlowDirectionChanged);
+            return border;
+        }
+
+        private void FlowDirectionChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (sender is Border border)
+            {
+                if (I18NUtil.IsRightToLeft)
+                {
+                    border.Background.RelativeTransform = _rtlScaleTransform.Value;
+                }
+                else
+                {
+                    border.Background.ClearValue(Brush.RelativeTransformProperty);
+                }
+            }
         }
 
         /// <summary>
