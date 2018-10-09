@@ -8,6 +8,7 @@ using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
 using ReactNative.Common;
 using ReactNative.Modules.DeviceInfo;
+using ReactNative.Modules.I18N;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
@@ -208,6 +209,15 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        ///
+        internal void UpdateLayoutDirection()
+        {
+            _layoutActionQueue.Dispatch(() => _uiImplementation.UpdateLayoutDirection());
+        }
+
+        /// <summary>
         /// Schedule a block to be executed on the main UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>
@@ -260,7 +270,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        #region React Methods
+#region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -407,6 +417,13 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactTag">The view tag to measure.</param>
         /// <param name="callback">The callback.</param>
+        /// <remarks>
+        /// The top level Xaml element (Window.Current.Content) that drives the window orientation
+        /// and the root view the element with reactTag is associated with have to
+        /// have consistent FlowDirection for the result to be fully correct
+        /// (The FlowDirection of the root view is driven by I18NUtil.IsRightToLeft, whereas
+        /// the top level element/window one is under the control of the hosting application)
+        /// </remarks>
         [ReactMethod]
         public void measureInWindow(int reactTag, ICallback callback)
         {
@@ -565,9 +582,9 @@ namespace ReactNative.UIManager
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
-        #endregion
+#endregion
 
-        #region Sync React Methods
+#region Sync React Methods
 
         /// <summary>
         /// Gets the constants for the view manager.
@@ -601,9 +618,9 @@ namespace ReactNative.UIManager
             return GetDefaultExportableEventTypes();
         }
 
-        #endregion
+#endregion
 
-        #region ILifecycleEventListener
+#region ILifecycleEventListener
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -630,9 +647,9 @@ namespace ReactNative.UIManager
             _uiImplementation.OnDestroy();
         }
 
-        #endregion
+#endregion
 
-        #region IOnBatchCompleteListener
+#region IOnBatchCompleteListener
 
         /// <summary>
         /// To implement the transactional requirement, UI changes are only
@@ -646,9 +663,9 @@ namespace ReactNative.UIManager
             _uiImplementation.DispatchViewUpdates(batchId);
         }
 
-        #endregion
+#endregion
 
-        #region NativeModuleBase
+#region NativeModuleBase
 
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
@@ -660,15 +677,15 @@ namespace ReactNative.UIManager
             return Task.CompletedTask;
         }
 
-        #endregion
+#endregion
 
-        #region Options
+#region Options
 
         private static bool IsLazyViewManagersEnabled(UIManagerModuleOptions options)
         {
             return (options & UIManagerModuleOptions.LazyViewManagers) == UIManagerModuleOptions.LazyViewManagers;
         }
 
-        #endregion
+#endregion
     }
 }
