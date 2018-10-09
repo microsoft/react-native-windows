@@ -1,39 +1,36 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if WINDOWS_UWP
 using System;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using ReactNative.Modules.Core;
 using ReactNative.Touch;
 using ReactNative.UIManager;
-
-#else
-using System.Windows;
-using System.Windows.Controls;
-#endif
 
 namespace ReactNative.Views.Modal
 {
     /// <summary>
     /// A native control with a single ContentDialog child.
     /// </summary>
-#if WINDOWS_UWP
     public class ReactModalHostView : FrameworkElement, IAccessible
-#else
-    public class ReactModalHostView : UserControl
-#endif
     {
         private ContentDialog _contentDialog;
 
+        private bool _isLoaded;
+
+        private bool _isClosing;
+
         private TouchHandler _touchHandler;
 
-        private bool _isLoaded;
+        /// <inheritdoc />                                                    
+        public AccessibilityTrait[] AccessibilityTraits { get; set; }
 
         /// <summary>
         /// The current dialog content
@@ -48,11 +45,6 @@ namespace ReactNative.Views.Modal
             {
                 if (value is FrameworkElement element)
                 {
-                    element.VerticalAlignment = VerticalAlignment.Top;
-                    element.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    element.Height = double.NaN;
-                    element.Width = double.NaN;
-
                     if (value is BorderedCanvas canvas)
                         canvas.Background = new SolidColorBrush(Colors.Transparent);
 
@@ -71,12 +63,12 @@ namespace ReactNative.Views.Modal
         /// <summary>
         /// Called when the user taps the hardware back button
         /// </summary>
-        public event Action<DependencyObject> OnRequestCloseListener;
+        public event Action<ReactModalHostView> OnRequestCloseListener;
 
         /// <summary>
         /// Called once the modal has been shown
         /// </summary>
-        public event Action<DependencyObject> OnShowListener;
+        public event Action<ReactModalHostView> OnShowListener;
 
         /// <summary>
         /// Instantiates the <see cref="ReactModalHostView"/>. 
@@ -100,25 +92,40 @@ namespace ReactNative.Views.Modal
                 UpdateProperties();
                 return;
             }
-            
+
             _contentDialog = new ContentDialog
             {
+                FullSizeDesired = true,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
                 Resources =
                 {
-                    ["ContentDialogContentScrollViewerMargin"] = "0",
+                    ["ContentDialogBorderWidth"] = new Thickness(0),
+                    ["ContentDialogContentMargin"] = new Thickness(0),
+                    ["ContentDialogContentScrollViewerMargin"] = new Thickness(0),
                     ["ContentDialogMaxHeight"] = double.NaN,
-                    ["ContentDialogMaxWidth"] = double.NaN
-                }
+                    ["ContentDialogMaxWidth"] = double.NaN,
+                    ["ContentDialogMinHeight"] = 0.0,
+                    ["ContentDialogMinWidth"] = 0.0,
+                    ["ContentDialogPadding"] = new Thickness(0)
+                },
             };
 
-            _contentDialog.KeyUp += (o, eventArgs) =>
+            _contentDialog.Opened += (sender, e) =>
             {
-                if (eventArgs.Key == VirtualKey.Back)
+                OnShowListener?.Invoke(this);
+            };
+
+            _contentDialog.Closing += (sender, e) =>
+            {
+                if (_isClosing)
                 {
-                    OnRequestCloseListener?.Invoke(Content);
-                    eventArgs.Handled = true;
+                    _isClosing = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                    OnRequestCloseListener?.Invoke(this);
                 }
             };
 
@@ -135,14 +142,33 @@ namespace ReactNative.Views.Modal
         /// </summary>
         public void Close()
         {
+            _isClosing = true;
             _contentDialog.Hide();
             _touchHandler.Dispose();
+            Window.Current.CoreWindow.KeyDown -= CoreWindowOnKeyDown;
+            this.GetReactContext().GetNativeModule<ExceptionsManagerModule>().BeforeShowDevOptionsDialog -= Close;
+        }
+
+        /// <inheritdoc />                                              
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new DynamicAutomationPeer<ReactModalHostView>(this);
         }
 
         private void Show()
         {
             _contentDialog.ShowAsync().GetResults();
-            OnShowListener?.Invoke(Content);
+
+            Window.Current.CoreWindow.KeyDown += CoreWindowOnKeyDown;
+            this.GetReactContext().GetNativeModule<ExceptionsManagerModule>().BeforeShowDevOptionsDialog += Close;
+        }
+
+        private void CoreWindowOnKeyDown(CoreWindow sender, KeyEventArgs e)
+        {
+            if (e.VirtualKey == VirtualKey.Escape && !e.Handled)
+            {
+                _contentDialog.Hide();
+            }
         }
 
         private void UpdateProperties()
@@ -150,20 +176,7 @@ namespace ReactNative.Views.Modal
             if (Transparent)
             {
                 _contentDialog.Background = new SolidColorBrush(Colors.Transparent);
-                _contentDialog.Resources["ContentDialogBorderWidth"] = "0";
             }
         }
-
-#if WINDOWS_UWP
-        /// <inheritdoc />                                              
-        protected override AutomationPeer OnCreateAutomationPeer()
-        {
-            return new DynamicAutomationPeer<ReactModalHostView>(this);
-        }
-
-        // TODO: implement runtime change raising event to screen reader #1562
-        /// <inheritdoc />                                                    
-        public AccessibilityTrait[] AccessibilityTraits { get; set; }
-#endif
     }
 }

@@ -79,16 +79,8 @@ namespace ReactNative.Views.Modal
         {
             base.AddEventEmitters(reactContext, view);
 
-            var dispatcher = reactContext.GetNativeModule<UIManagerModule>().EventDispatcher;
-
-            view.OnRequestCloseListener += content =>
-            {
-                dispatcher.DispatchEvent(new RequestCloseEvent(content.GetTag()));
-            };
-            view.OnShowListener += content =>
-            {
-                dispatcher.DispatchEvent(new ShowEvent(content.GetTag()));
-            };
+            view.OnRequestCloseListener += OnRequestCloseListener;
+            view.OnShowListener += OnShowListener;
         }
 
         /// <summary>
@@ -166,9 +158,11 @@ namespace ReactNative.Views.Modal
         /// <param name="view">The view.</param>
         public override void OnDropViewInstance(ThemedReactContext reactContext, ReactModalHostView view)
         {
-            base.OnDropViewInstance(reactContext, view);
-
+            view.OnRequestCloseListener -= OnRequestCloseListener;
+            view.OnShowListener -= OnShowListener;
             view.Close();
+
+            base.OnDropViewInstance(reactContext, view);
         }
 
         /// <summary>
@@ -206,6 +200,22 @@ namespace ReactNative.Views.Modal
             return new ReactModalHostView();
         }
 
+        private static void OnRequestCloseListener(ReactModalHostView view)
+        {
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new RequestCloseEvent(view.GetTag()));
+        }
+
+        private static void OnShowListener(ReactModalHostView view)
+        {
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(new ShowEvent(view.GetTag()));
+        }
+
         private static DependencyObject EnsureChild(ReactModalHostView view)
         {
             var child = view.Content;
@@ -214,13 +224,7 @@ namespace ReactNative.Views.Modal
                 throw new InvalidOperationException(Invariant($"{nameof(ContentDialog)} does not have any children."));
             }
 
-            var dependencyObject = child as DependencyObject;
-            if (dependencyObject == null)
-            {
-                throw new InvalidOperationException(Invariant($"Invalid child element in {nameof(ContentDialog)}."));
-            }
-
-            return dependencyObject;
+            return child;
         }
     }
 
