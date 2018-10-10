@@ -279,8 +279,10 @@ namespace ReactNative.Views.Image
             // Using a Border instead of a native Image has its advantages (round corner support, etc.), but
             // we have to take into account the automatic flipping that happens in RTL mode. We use a transform
             // to negate that flipping.
-            // Control starts as LeftToRight in isolation, but we hook to the FlowDirection property change to get
-            // the correct value when attached to component tree and the further changes.
+            if (I18NUtil.IsRightToLeft)
+            {
+                border.Background.RelativeTransform = _rtlScaleTransform.Value;
+            }
 
             border.RegisterPropertyChangedCallback(FrameworkElement.FlowDirectionProperty, FlowDirectionChanged);
             return border;
