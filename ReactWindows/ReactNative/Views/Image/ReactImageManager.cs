@@ -6,12 +6,10 @@
 using ImagePipeline.Core;
 using Newtonsoft.Json.Linq;
 using ReactNative.Collections;
-using ReactNative.Modules.I18N;
 using ReactNative.Modules.Image;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using Windows.ApplicationModel.Core;
@@ -276,30 +274,32 @@ namespace ReactNative.Views.Image
                 },
             };
 
+            border.Loaded += OnLoaded;
+
+            return border;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
             // Using a Border instead of a native Image has its advantages (round corner support, etc.), but
             // we have to take into account the automatic flipping that happens in RTL mode. We use a transform
             // to negate that flipping.
-            if (I18NUtil.IsRightToLeft)
-            {
-                border.Background.RelativeTransform = _rtlScaleTransform.Value;
-            }
+            var border = (Border)sender;
 
             border.RegisterPropertyChangedCallback(FrameworkElement.FlowDirectionProperty, FlowDirectionChanged);
-            return border;
+            FlowDirectionChanged(border, null);
         }
 
         private void FlowDirectionChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if (sender is Border border)
+            var border = (Border)sender;
+            if (border.FlowDirection == FlowDirection.RightToLeft)
             {
-                if (I18NUtil.IsRightToLeft)
-                {
-                    border.Background.RelativeTransform = _rtlScaleTransform.Value;
-                }
-                else
-                {
-                    border.Background.ClearValue(Brush.RelativeTransformProperty);
-                }
+                border.Background.RelativeTransform = _rtlScaleTransform.Value;
+            }
+            else
+            {
+                border.Background.ClearValue(Brush.RelativeTransformProperty);
             }
         }
 
