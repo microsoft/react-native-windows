@@ -17,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Storage;
+using Windows.ApplicationModel.Core;
 #else
 using PCLStorage;
 using System.Reflection;
@@ -52,6 +53,11 @@ namespace ReactNative.DevSupport
         private DevOptionDialog _devOptionsDialog;
         private Action _dismissDevOptionsDialog;
         private bool _devOptionsDialogOpen;
+
+        private class NoopDisposable : IDisposable
+        {
+            public void Dispose() { }
+        }
 
         public DevSupportManager(
             IReactInstanceDevCommandsHandler reactInstanceCommandsHandler,
@@ -449,6 +455,12 @@ namespace ReactNative.DevSupport
         private Action ShowProgressDialog(ProgressDialog progressDialog)
         {
 #if WINDOWS_UWP
+            if (CoreApplication.GetCurrentView().CoreWindow == null)
+            {
+            	// Main UI thread has no CoreWindow, so we can't parent a dialog box
+                RnLog.Info(ReactConstants.RNW, $"ProgressDialog can't be shown due to the lack of a CoreWindow");
+                return null;
+            }
             var operation = progressDialog.ShowAsync();
             return operation.Cancel;
 #else
@@ -482,6 +494,15 @@ namespace ReactNative.DevSupport
 
             DispatcherHelpers.RunOnDispatcher(() =>
             {
+#if WINDOWS_UWP
+                if (CoreApplication.GetCurrentView().CoreWindow == null)
+                {
+                    // Main UI thread has no CoreWindow, so we can't parent a dialog box
+                    RnLog.Info(ReactConstants.RNW, $"RedBox can't be shown due to the lack of a CoreWindow");
+                    return;
+                }
+#endif
+
                 if (_redBoxDialog == null)
                 {
                     _redBoxDialog = new RedBoxDialog(HandleReloadJavaScript);
@@ -641,7 +662,7 @@ namespace ReactNative.DevSupport
             var hideProgress = ShowProgressDialog(progressDialog);
             using (var cancellationDisposable = new CancellationDisposable())
             using (token.Register(cancellationDisposable.Dispose))
-            using (progressDialog.Token.Register(cancellationDisposable.Dispose))
+            using (hideProgress != null ? (IDisposable)progressDialog.Token.Register(cancellationDisposable.Dispose) : new NoopDisposable())
             {
                 try
                 {
@@ -659,7 +680,7 @@ namespace ReactNative.DevSupport
                 }
                 finally
                 {
-                    hideProgress();
+                    hideProgress?.Invoke();
                 }
             }
 
