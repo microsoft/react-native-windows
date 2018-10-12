@@ -30,11 +30,6 @@ namespace ReactNative.DevSupport
         private const int NativeErrorCookie = -1;
         private const string JSBundleFileName = "ReactNativeDevBundle.js";
 
-#if WINDOWS_UWP
-        private readonly ShakeAccelerometer _accelerometer = ShakeAccelerometer.Instance;
-        private bool _isShakeDetectorRegistered;
-#endif
-
         private readonly SerialDisposable _pollingDisposable = new SerialDisposable();
 
         private readonly IReactInstanceDevCommandsHandler _reactInstanceCommandsHandler;
@@ -374,9 +369,6 @@ namespace ReactNative.DevSupport
         {
             if (_isDevSupportEnabled)
             {
-#if WINDOWS_UWP
-                RegisterDevOptionsMenuTriggers();
-#endif
                 if (_devSettings.IsReloadOnJavaScriptChangeEnabled)
                 {
                     _pollingDisposable.Disposable =
@@ -390,10 +382,6 @@ namespace ReactNative.DevSupport
             }
             else
             {
-#if WINDOWS_UWP
-                UnregisterDevOptionsMenuTriggers();
-#endif
-
                 if (_redBoxDialog != null)
                 {
                     _dismissRedBoxDialog();
@@ -665,31 +653,6 @@ namespace ReactNative.DevSupport
 
             return false;
         }
-
-#if WINDOWS_UWP
-        private void RegisterDevOptionsMenuTriggers()
-        {
-            if (!_isShakeDetectorRegistered && _accelerometer != null)
-            {
-                _isShakeDetectorRegistered = true;
-                _accelerometer.Shaken += OnAccelerometerShake;
-            }
-        }
-
-        private void UnregisterDevOptionsMenuTriggers()
-        {
-            if (_isShakeDetectorRegistered && _accelerometer != null)
-            {
-                _accelerometer.Shaken -= OnAccelerometerShake;
-                _isShakeDetectorRegistered = false;
-            }
-        }
-
-        private void OnAccelerometerShake(object sender, EventArgs args)
-        {
-            ShowDevOptionsDialog();
-        }
-#endif
 
         class DevOptionHandler
         {
