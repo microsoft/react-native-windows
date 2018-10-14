@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Windows.UI.ViewManagement;
-using Facebook.Yoga;
 using ReactNative.UIManager;
 
 namespace ReactNative.Views.Modal
 {
     /// <summary>
-    /// The shadow node implementation for Picker views.
+    /// The shadow node implementation for modal views.
     /// </summary>
     public class ReactModalShadowNode : LayoutShadowNode
     {
@@ -18,17 +18,6 @@ namespace ReactNative.Views.Modal
         public ReactModalShadowNode()
             : base(false, true)
         {
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged += ApplicationViewOnVisibleBoundsChanged;
-        }
-
-        /// <summary>
-        /// Disposes the shadow node.
-        /// </summary>
-        public override void Dispose()
-        {
-            base.Dispose();
-
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged -= ApplicationViewOnVisibleBoundsChanged;
         }
 
         /// <summary>
@@ -40,20 +29,12 @@ namespace ReactNative.Views.Modal
         {
             base.AddChildAt(child, index);
 
-            UpdateSize(child);
-        }
-
-        private void ApplicationViewOnVisibleBoundsChanged(ApplicationView sender, object args)
-        {
-            for (var i = 0; i < ChildCount; i++)
-                UpdateSize(GetChildAt(i));
-        }
-
-        private static void UpdateSize(ReactShadowNode child)
-        {
+            // Set both the width & height to the longest dimension, this lets the modal
+            // fill the screen after a device rotation
             var screenBounds = ApplicationView.GetForCurrentView().VisibleBounds;
-            child.StyleHeight = YogaValue.Point((float)screenBounds.Height);
-            child.StyleWidth = YogaValue.Point((float)screenBounds.Width);
+            var longestDimension = Math.Max(screenBounds.Width, screenBounds.Height);
+            child.StyleHeight = (float)longestDimension;
+            child.StyleWidth = (float)longestDimension;
         }
     }
 }

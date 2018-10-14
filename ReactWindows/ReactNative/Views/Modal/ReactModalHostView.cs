@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Windows.Graphics.Display;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using ReactNative.Accessibility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
@@ -26,6 +28,8 @@ namespace ReactNative.Views.Modal
         private bool _isLoaded;
 
         private bool _isClosing;
+
+        private int _resizeCount;
 
         private TouchHandler _touchHandler;
 
@@ -95,7 +99,6 @@ namespace ReactNative.Views.Modal
 
             _contentDialog = new ContentDialog
             {
-                FullSizeDesired = true,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
                 Resources =
@@ -114,6 +117,11 @@ namespace ReactNative.Views.Modal
             _contentDialog.Opened += (sender, e) =>
             {
                 OnShowListener?.Invoke(this);
+            };
+
+            _contentDialog.SizeChanged += (sender, args) =>
+            {
+                SetContentSize();
             };
 
             _contentDialog.Closing += (sender, e) =>
@@ -146,6 +154,11 @@ namespace ReactNative.Views.Modal
             _contentDialog.Hide();
             _touchHandler.Dispose();
             Window.Current.CoreWindow.KeyDown -= CoreWindowOnKeyDown;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
+            DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
+            var inputPane = InputPane.GetForCurrentView();
+            inputPane.Hiding -= InputPaneOnHideOrShow;
+            inputPane.Showing -= InputPaneOnHideOrShow;
             this.GetReactContext().GetNativeModule<ExceptionsManagerModule>().BeforeShowDevOptionsDialog -= Close;
         }
 
@@ -160,6 +173,11 @@ namespace ReactNative.Views.Modal
             _contentDialog.ShowAsync().GetResults();
 
             Window.Current.CoreWindow.KeyDown += CoreWindowOnKeyDown;
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+            DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
+            var inputPane = InputPane.GetForCurrentView();
+            inputPane.Hiding += InputPaneOnHideOrShow;
+            inputPane.Showing += InputPaneOnHideOrShow;
             this.GetReactContext().GetNativeModule<ExceptionsManagerModule>().BeforeShowDevOptionsDialog += Close;
         }
 
@@ -169,6 +187,44 @@ namespace ReactNative.Views.Modal
             {
                 _contentDialog.Hide();
             }
+        }
+
+        private void InputPaneOnHideOrShow(InputPane sender, InputPaneVisibilityEventArgs args)
+        {
+            SetContentSize();
+        }
+
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+            _contentDialog.Hide();
+        }
+
+        private void OnOrientationChanged(DisplayInformation sender, object args)
+        {
+            SetContentSize();
+        }
+
+        /// <summary>
+        /// Size the dialog content to fill the entire screen
+        /// </summary>
+        private void SetContentSize()
+        {
+            var uiManagerModule = this.GetReactContext().GetNativeModule<UIManagerModule>();
+            var tag = Content.GetTag();
+            var currentCount = ++_resizeCount;
+
+            var contentSize = ApplicationView.GetForCurrentView().VisibleBounds;
+            contentSize.Height -= InputPane.GetForCurrentView().OccludedRect.Height;
+
+            uiManagerModule.ActionQueue.Dispatch(() =>
+            {
+                // If multiple events have been dispatched, ignore all but the newest
+                if (currentCount == _resizeCount)
+                {
+                    uiManagerModule.UIImplementation.UpdateRootNodeSize(tag, contentSize.Width, contentSize.Height);
+                }
+            });
         }
 
         private void UpdateProperties()

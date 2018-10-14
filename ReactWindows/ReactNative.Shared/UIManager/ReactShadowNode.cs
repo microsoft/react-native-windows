@@ -1188,7 +1188,7 @@ namespace ReactNative.UIManager
         /// <summary>
         /// Disposes the shadow node.
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
             YogaNode nodeToDispose = (IsDelegatedLayout && _initialYogaNode != null) ? _initialYogaNode : _yogaNode;
 
