@@ -54,11 +54,6 @@ namespace ReactNative.DevSupport
         private Action _dismissDevOptionsDialog;
         private bool _devOptionsDialogOpen;
 
-        private class NoopDisposable : IDisposable
-        {
-            public void Dispose() { }
-        }
-
         public DevSupportManager(
             IReactInstanceDevCommandsHandler reactInstanceCommandsHandler,
             bool shouldLoadFromPackagerServer,
@@ -662,7 +657,7 @@ namespace ReactNative.DevSupport
             var hideProgress = ShowProgressDialog(progressDialog);
             using (var cancellationDisposable = new CancellationDisposable())
             using (token.Register(cancellationDisposable.Dispose))
-            using (hideProgress != null ? (IDisposable)progressDialog.Token.Register(cancellationDisposable.Dispose) : new NoopDisposable())
+            using (hideProgress != null ? (IDisposable)progressDialog.Token.Register(cancellationDisposable.Dispose) : Disposable.Empty)
             {
                 try
                 {
