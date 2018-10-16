@@ -111,7 +111,6 @@
     <Compile Include="DevSupport\RedBoxDialog.xaml.cs">
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DevSupport\ShakeAccelerometer.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="IReactApplication.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
