@@ -9,7 +9,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
-using System.Collections.Concurrent;
 using System.Reflection;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -27,8 +26,8 @@ namespace ReactNative.Views.Scroll
     {
         private const int CommandScrollTo = 1;
 
-        private readonly ConcurrentDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
-            new ConcurrentDictionary<ScrollViewer, ScrollViewerData>();
+        private readonly ViewKeyedDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
+            new ViewKeyedDictionary<ScrollViewer, ScrollViewerData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -353,7 +352,7 @@ namespace ReactNative.Views.Scroll
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _scrollViewerData.TryRemove(view, out _);
+            _scrollViewerData.Remove(view);
 
             view.ViewChanging -= OnViewChanging;
             view.DirectManipulationStarted -= OnDirectManipulationStarted;
@@ -407,7 +406,7 @@ namespace ReactNative.Views.Scroll
             };
             SetContentWrapperFor(scrollViewer);
 
-            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => scrollViewerData);
+            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData);
 
             return scrollViewer;
         }

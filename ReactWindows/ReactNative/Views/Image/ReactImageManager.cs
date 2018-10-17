@@ -25,8 +25,14 @@ namespace ReactNative.Views.Image
     /// </summary>
     public class ReactImageManager : SimpleViewManager<Border>
     {
-        private readonly ConcurrentDictionary<Border, List<KeyValuePair<string, double>>> _imageSources =
-            new ConcurrentDictionary<Border, List<KeyValuePair<string, double>>>();
+        private readonly ViewKeyedDictionary<Border, List<KeyValuePair<string, double>>> _imageSources =
+            new ViewKeyedDictionary<Border, List<KeyValuePair<string, double>>>();
+
+        private readonly ViewKeyedDictionary<Border, CornerRadiusManager> _borderToRadii =
+            new ViewKeyedDictionary<Border, CornerRadiusManager>();
+
+        private readonly ViewKeyedDictionary<Border, ThicknessManager> _borderToThickness =
+            new ViewKeyedDictionary<Border, ThicknessManager>();
 
         private readonly ThreadLocal<ScaleTransform> _rtlScaleTransform = new ThreadLocal<ScaleTransform>(() => new ScaleTransform
         {
@@ -143,7 +149,7 @@ namespace ReactNative.Views.Image
                 else
                 {
                     viewSources = new List<KeyValuePair<string, double>>(count);
-                    _imageSources.AddOrUpdate(view, viewSources, (k, v) => viewSources);
+                    _imageSources.AddOrUpdate(view, viewSources);
                 }
 
                 foreach (var source in sources)
@@ -169,7 +175,7 @@ namespace ReactNative.Views.Image
 
         /// <summary>
         /// Enum values correspond to positions of prop names in ReactPropGroup attribute
-        /// applied to <see cref="SetBorderRadius(Border, int, double)"/>
+        /// applied to <see cref="SetBorderRadius(Border, int, double?)"/>
         /// </summary>
         private enum Radius
         {
@@ -192,28 +198,33 @@ namespace ReactNative.Views.Image
             ViewProps.BorderTopRightRadius,
             ViewProps.BorderBottomLeftRadius,
             ViewProps.BorderBottomRightRadius)]
-        public void SetBorderRadius(Border view, int index, double radius)
+        public void SetBorderRadius(Border view, int index, double? radius)
         {
-            var cornerRadius = view.CornerRadius;
+            if (!_borderToRadii.TryGetValue(view, out var cornerRadiusManager))
+            {
+                cornerRadiusManager = new CornerRadiusManager();
+                _borderToRadii.AddOrUpdate(view, cornerRadiusManager);
+            }
+
             switch ((Radius)index)
             {
                 case Radius.All:
-                    cornerRadius = new CornerRadius(radius);
+                    cornerRadiusManager.Set(CornerRadiusManager.All, radius);
                     break;
                 case Radius.TopLeft:
-                    cornerRadius.TopLeft = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.TopLeft, radius);
                     break;
                 case Radius.TopRight:
-                    cornerRadius.TopRight = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.TopRight, radius);
                     break;
                 case Radius.BottomLeft:
-                    cornerRadius.BottomLeft = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.BottomLeft, radius);
                     break;
                 case Radius.BottomRight:
-                    cornerRadius.BottomRight = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.BottomRight, radius);
                     break;
             }
-            view.CornerRadius = cornerRadius;
+            view.CornerRadius = cornerRadiusManager.AsCornerRadius();
         }
 
         /// <summary>
@@ -230,6 +241,19 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
+        /// Enum values correspond to positions of prop names in ReactPropGroup attribute
+        /// applied to <see cref="SetBorderWidth(Border, int, double?)"/>
+        /// </summary>
+        private enum Width
+        {
+            All,
+            Left,
+            Right,
+            Top,
+            Bottom,
+        }
+
+        /// <summary>
         /// Sets the border thickness of the image view.
         /// </summary>
         /// <param name="view">The image view instance.</param>
@@ -240,11 +264,34 @@ namespace ReactNative.Views.Image
             ViewProps.BorderLeftWidth,
             ViewProps.BorderRightWidth,
             ViewProps.BorderTopWidth,
-            ViewProps.BorderBottomWidth,
-            DefaultDouble = double.NaN)]
-        public void SetBorderWidth(Border view, int index, double width)
+            ViewProps.BorderBottomWidth)]
+        public void SetBorderWidth(Border view, int index, double? width)
         {
-            view.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
+            if (!_borderToThickness.TryGetValue(view, out var thicknessManager))
+            {
+                thicknessManager = new ThicknessManager();
+                _borderToThickness.AddOrUpdate(view, thicknessManager);
+            }
+
+            switch ((Width)index)
+            {
+                case Width.All:
+                    thicknessManager.Set(ThicknessManager.All, width);
+                    break;
+                case Width.Left:
+                    thicknessManager.Set(ThicknessManager.Left, width);
+                    break;
+                case Width.Right:
+                    thicknessManager.Set(ThicknessManager.Right, width);
+                    break;
+                case Width.Top:
+                    thicknessManager.Set(ThicknessManager.Top, width);
+                    break;
+                case Width.Bottom:
+                    thicknessManager.Set(ThicknessManager.Bottom, width);
+                    break;
+            }
+            view.BorderThickness = thicknessManager.AsThickness();
         }
 
         /// <summary>
@@ -257,7 +304,9 @@ namespace ReactNative.Views.Image
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _imageSources.TryRemove(view, out _);
+            _imageSources.Remove(view);
+            _borderToRadii.Remove(view);
+            _borderToThickness.Remove(view);
         }
 
         /// <summary>

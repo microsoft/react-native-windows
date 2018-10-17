@@ -105,7 +105,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\HeapBasedPriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncLock.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptAppException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InetHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LifecycleStateMachine.cs" />
@@ -132,6 +131,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\FrameEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IMutableFrameEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IReactChoreographer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptAppException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitter.cs" />
@@ -173,8 +173,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\CornerRadiusManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\BlurEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\FocusEvent.cs" />
@@ -183,6 +183,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropSetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ThicknessManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewKeyedDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewConversion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewExtensions.cs" />
