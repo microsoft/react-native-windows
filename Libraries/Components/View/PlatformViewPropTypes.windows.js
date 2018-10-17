@@ -7,6 +7,9 @@
  */
 
 const PropTypes = require('prop-types');
+const { AccessibilityTraits } = require('ViewAccessibility');
+
+const WindowsAccessibilityTraits = Array.from(AccessibilityTraits).concat(['listItem']);
 
 module.exports = {
   /**
@@ -60,6 +63,21 @@ module.exports = {
     'no',
     'no-hide-descendants',
     'yes-dont-hide-descendants',
+  ]),
+
+  /**
+   * Provides additional traits to screen reader. By default no traits are
+   * provided unless specified otherwise in element.
+   *
+   * You can provide one trait or an array of many traits.
+   *
+   * @platform windows
+   *
+   * See http://facebook.github.io/react-native/docs/view.html#accessibilitytraits
+   */
+  accessibilityTraits: PropTypes.oneOfType([
+    PropTypes.oneOf(WindowsAccessibilityTraits),
+    PropTypes.arrayOf(PropTypes.oneOf(WindowsAccessibilityTraits)),
   ]),
 
   /**
