@@ -361,6 +361,22 @@ namespace ReactNative.Accessibility
             view.AccessibilityTraits = result;
         }
 
+        /// <summary>
+        /// Makes screen reader announce the element if <see cref="AutomationProperties.LiveSettingProperty"/>
+        /// is not <see cref="AutomationLiveSetting.Off"/> and <see cref="AutomationProperties.NameProperty"/>
+        /// is not null or empty, by rising the <see cref="AutomationEvents.LiveRegionChanged"/> event.
+        /// </summary>
+        /// <param name="element"></param>
+        public static void AnnounceIfNeeded(UIElement element)
+        {
+            if (AutomationProperties.GetLiveSetting(element) != AutomationLiveSetting.Off
+                && !string.IsNullOrEmpty(AutomationProperties.GetName(element)))
+            {
+                var peer = FrameworkElementAutomationPeer.FromElement(element);
+                peer?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
+            }
+        }
+
 #endregion
 
 #region Internal entry points
@@ -490,7 +506,7 @@ namespace ReactNative.Accessibility
         /// <param name="element"></param>
         /// <param name="elementPeer"></param>
         /// <param name="hideNodes"></param>
-         private static void UpdateAccessibilityViewAndNameForUIElement(UIElement element, AutomationPeer elementPeer, bool hideNodes)
+        private static void UpdateAccessibilityViewAndNameForUIElement(UIElement element, AutomationPeer elementPeer, bool hideNodes)
         {
             var importantForAccessibilityProp = GetImportantForAccessibilityProp(element);
             var accessibilityLabelProp = GetAccessibilityLabelProp(element);
@@ -621,6 +637,7 @@ namespace ReactNative.Accessibility
             {
                 element.ClearValue(AutomationProperties.NameProperty);
             }
+            AnnounceIfNeeded(element);
         }
 
         /// <summary>

@@ -184,6 +184,7 @@ namespace ReactNative.UIManager
             }
 
             AutomationProperties.SetLiveSetting(view, liveSetting);
+            AccessibilityHelper.AnnounceIfNeeded(view);
         }
 
         /// <summary>
