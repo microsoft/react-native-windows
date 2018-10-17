@@ -104,6 +104,31 @@ public void SetSource(Border view, string source)
 }
 ```
 
+Sometimes the native view class you use is `sealed` but you need to have a custom state associated with the view instance. In this case a common pattern is to have a dictionary with view instances as keys and the custom state as values. Add key+state when needed, remove key when the view is removed from hierarchy. Don't forget that there can be multiple windows and so multiple UI dispatchers (running code on dedicated UI threads), so the custom state code must be thread safe. You can use `ViewKeyedDictionary<TKey, TValue>` as a dictionary that is thread safe with assumption that all the calls that have a view as a parameter are made on the thread the view has affinity to.
+
+```csharp
+private readonly ViewKeyedDictionary<Border, List<KeyValuePair<string, double>>> _imageSources =
+    new ViewKeyedDictionary<Border, List<KeyValuePair<string, double>>>();
+
+[ReactProp("src")]
+public void SetSource(Border view, JArray sources)
+{
+    //...
+    _imageSources.TryGetValue(view, out var viewSources)
+    //...
+    _imageSources.AddOrUpdate(view, viewSources);
+    //...
+}
+
+public override void OnDropViewInstance(ThemedReactContext reactContext, Border view)
+{
+    base.OnDropViewInstance(reactContext, view);
+    _imageSources.Remove(view);
+    //...
+}
+
+```
+
 ## 4. Register the `ViewManager`
 
 The final step is to register the ViewManager to the application, this happens in a similar way to [Native Modules](docs/native-modules-windows.html), via the applications package member function `CreateViewManagers.`

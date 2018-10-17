@@ -25,6 +25,12 @@ namespace ReactNative.Views.View
     /// </summary>
     public class ReactViewManager : ViewParentManager<BorderedCanvas>
     {
+        private readonly ViewKeyedDictionary<BorderedCanvas, CornerRadiusManager> _borderedCanvasToRadii =
+            new ViewKeyedDictionary<BorderedCanvas, CornerRadiusManager>();
+
+        private readonly ViewKeyedDictionary<BorderedCanvas, ThicknessManager> _borderedCanvasToThickness =
+            new ViewKeyedDictionary<BorderedCanvas, ThicknessManager>();
+
         /// <summary>
         /// The name of this view manager. This will be the name used to 
         /// reference this view manager from JavaScript.
@@ -97,7 +103,7 @@ namespace ReactNative.Views.View
 
         /// <summary>
         /// Enum values correspond to positions of prop names in ReactPropGroup attribute
-        /// applied to <see cref="SetBorderRadius(BorderedCanvas, int, double)"/>
+        /// applied to <see cref="SetBorderRadius(BorderedCanvas, int, double?)"/>
         /// </summary>
         private enum Radius
         {
@@ -120,28 +126,33 @@ namespace ReactNative.Views.View
             ViewProps.BorderTopRightRadius,
             ViewProps.BorderBottomLeftRadius,
             ViewProps.BorderBottomRightRadius)]
-        public void SetBorderRadius(BorderedCanvas view, int index, double radius)
+        public void SetBorderRadius(BorderedCanvas view, int index, double? radius)
         {
-            var cornerRadius = view.CornerRadius;
+            if (!_borderedCanvasToRadii.TryGetValue(view, out var cornerRadiusManager))
+            {
+                cornerRadiusManager = new CornerRadiusManager();
+                _borderedCanvasToRadii.AddOrUpdate(view, cornerRadiusManager);
+            }
+
             switch ((Radius)index)
             {
                 case Radius.All:
-                    cornerRadius = new CornerRadius(radius);
+                    cornerRadiusManager.Set(CornerRadiusManager.All, radius);
                     break;
                 case Radius.TopLeft:
-                    cornerRadius.TopLeft = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.TopLeft, radius);
                     break;
                 case Radius.TopRight:
-                    cornerRadius.TopRight = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.TopRight, radius);
                     break;
                 case Radius.BottomLeft:
-                    cornerRadius.BottomLeft = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.BottomLeft, radius);
                     break;
                 case Radius.BottomRight:
-                    cornerRadius.BottomRight = radius;
+                    cornerRadiusManager.Set(CornerRadiusManager.BottomRight, radius);
                     break;
             }
-            view.CornerRadius = cornerRadius;
+            view.CornerRadius = cornerRadiusManager.AsCornerRadius();
         }
 
         /// <summary>
@@ -173,6 +184,19 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
+        /// Enum values correspond to positions of prop names in ReactPropGroup attribute
+        /// applied to <see cref="SetBorderWidth(BorderedCanvas, int, double?)"/>
+        /// </summary>
+        private enum Width
+        {
+            All,
+            Left,
+            Right,
+            Top,
+            Bottom,
+        }
+
+        /// <summary>
         /// Sets the border thickness of the view.
         /// </summary>
         /// <param name="view">The view panel.</param>
@@ -184,9 +208,47 @@ namespace ReactNative.Views.View
             ViewProps.BorderRightWidth,
             ViewProps.BorderTopWidth,
             ViewProps.BorderBottomWidth)]
-        public void SetBorderWidth(BorderedCanvas view, int index, double width)
+        public void SetBorderWidth(BorderedCanvas view, int index, double? width)
         {
-            view.SetBorderWidth(ViewProps.BorderSpacingTypes[index], width);
+            if (!_borderedCanvasToThickness.TryGetValue(view, out var thicknessManager))
+            {
+                thicknessManager = new ThicknessManager();
+                _borderedCanvasToThickness.AddOrUpdate(view, thicknessManager);
+            }
+
+            switch ((Width)index)
+            {
+                case Width.All:
+                    thicknessManager.Set(ThicknessManager.All, width);
+                    break;
+                case Width.Left:
+                    thicknessManager.Set(ThicknessManager.Left, width);
+                    break;
+                case Width.Right:
+                    thicknessManager.Set(ThicknessManager.Right, width);
+                    break;
+                case Width.Top:
+                    thicknessManager.Set(ThicknessManager.Top, width);
+                    break;
+                case Width.Bottom:
+                    thicknessManager.Set(ThicknessManager.Bottom, width);
+                    break;
+            }
+            view.BorderThickness = thicknessManager.AsThickness();
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, BorderedCanvas view)
+        {
+            base.OnDropViewInstance(reactContext, view);
+
+            _borderedCanvasToRadii.Remove(view);
+            _borderedCanvasToThickness.Remove(view);
         }
 
         /// <summary>
