@@ -1,4 +1,4 @@
-﻿# React Native plugin for Universal Windows Platform (UWP)
+﻿# React Native plugin for Universal Windows Platform (UWP) and Windows Presentation Foundation (WPF)
 
 ![Hero Image with Logo](./.github/hero.png)
 
@@ -8,6 +8,11 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 * Windows 10
 * Windows 10 Mobile
 * [Xbox One (UWP)](https://msdn.microsoft.com/en-us/windows/uwp/xbox-apps/index)
+
+Additionally you can build WPF (.NET 4.6) apps for:
+* Windows 7
+* Windows 8
+* Windows 10
 
 ## Quick Links
 
