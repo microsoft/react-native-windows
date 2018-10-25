@@ -8,6 +8,7 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Diagnostics;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using Windows.UI.Xaml;
@@ -23,6 +24,10 @@ namespace ReactNative.Views.Text
     public class ReactTextViewManager : ViewParentManager<RichTextBlock, ReactTextShadowNode>
     {
         private static readonly IReactCompoundView s_compoundView = new ReactTextCompoundView();
+
+        // Using ConcurrentDictionary instead of ViewKeyedDictionary due to the use of TryRemove with "out" parameter
+        private readonly ConcurrentDictionary<RichTextBlock, RichTextBlockData> _richTextBlockData =
+            new ConcurrentDictionary<RichTextBlock, RichTextBlockData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -57,6 +62,30 @@ namespace ReactNative.Views.Text
         public void SetSelectable(RichTextBlock view, bool selectable)
         {
             view.IsTextSelectionEnabled = selectable;
+        }
+
+        /// <summary>
+        /// Sets whether or not the default context menu should be shown.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="disabled">A flag indicating whether or not the default context menu should be shown.</param>
+        [ReactProp("disableContextMenu")]
+        public void SetDisableContextMenu(RichTextBlock view, bool disabled)
+        {
+            if (disabled)
+            {
+                var data = _richTextBlockData.GetOrAdd(view, new RichTextBlockData() { IsDefaultContextMenuDisabled = false });
+                if (!data.IsDefaultContextMenuDisabled)
+                {
+                    view.ContextMenuOpening += OnContextMenuOpening;
+                    data.IsDefaultContextMenuDisabled = true;
+                }
+            }
+            else
+            {
+                _richTextBlockData.TryRemove(view, out _);
+                view.ContextMenuOpening -= OnContextMenuOpening;
+            }
         }
 
         /// <summary>
@@ -209,6 +238,11 @@ namespace ReactNative.Views.Text
         {
             base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
+
+            if (_richTextBlockData.TryRemove(view, out var data) && data.IsDefaultContextMenuDisabled)
+            {
+                view.ContextMenuOpening -= OnContextMenuOpening;
+            }
         }
 
         /// <summary>
@@ -402,6 +436,17 @@ namespace ReactNative.Views.Text
                     selectedText.Append(richTextBlockText);
                 }
             }
+        }
+
+        private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            // Prevent the opening of the context menu
+            e.Handled = true;
+        }
+
+        private class RichTextBlockData
+        {
+            public bool IsDefaultContextMenuDisabled;
         }
     }
 }
