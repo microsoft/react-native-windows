@@ -25,9 +25,8 @@ namespace ReactNative.Views.Text
     {
         private static readonly IReactCompoundView s_compoundView = new ReactTextCompoundView();
 
-        // Using ConcurrentDictionary instead of ViewKeyedDictionary due to the use of TryRemove with "out" parameter
-        private readonly ConcurrentDictionary<RichTextBlock, RichTextBlockData> _richTextBlockData =
-            new ConcurrentDictionary<RichTextBlock, RichTextBlockData>();
+        private readonly ViewKeyedDictionary<RichTextBlock, RichTextBlockData> _richTextBlockData =
+            new ViewKeyedDictionary<RichTextBlock, RichTextBlockData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -74,7 +73,12 @@ namespace ReactNative.Views.Text
         {
             if (disabled)
             {
-                var data = _richTextBlockData.GetOrAdd(view, new RichTextBlockData() { IsDefaultContextMenuDisabled = false });
+                var found = _richTextBlockData.TryGetValue(view, out var data);
+                if (!found)
+                {
+                    data = new RichTextBlockData() { IsDefaultContextMenuDisabled = false };
+                    _richTextBlockData.AddOrUpdate(view, data);
+                }
                 if (!data.IsDefaultContextMenuDisabled)
                 {
                     view.ContextMenuOpening += OnContextMenuOpening;
@@ -83,7 +87,7 @@ namespace ReactNative.Views.Text
             }
             else
             {
-                _richTextBlockData.TryRemove(view, out _);
+                _richTextBlockData.Remove(view);
                 view.ContextMenuOpening -= OnContextMenuOpening;
             }
         }
@@ -239,10 +243,8 @@ namespace ReactNative.Views.Text
             base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
 
-            if (_richTextBlockData.TryRemove(view, out var data) && data.IsDefaultContextMenuDisabled)
-            {
-                view.ContextMenuOpening -= OnContextMenuOpening;
-            }
+            _richTextBlockData.Remove(view);
+            view.ContextMenuOpening -= OnContextMenuOpening;
         }
 
         /// <summary>

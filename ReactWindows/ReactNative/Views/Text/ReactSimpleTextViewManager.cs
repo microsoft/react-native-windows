@@ -18,9 +18,8 @@ namespace ReactNative.Views.Text
     /// </summary>
     public class ReactSimpleTextViewManager : BaseViewManager<TextBlock, ReactSimpleTextShadowNode>
     {
-        // Using ConcurrentDictionary instead of ViewKeyedDictionary due to the use of TryRemove with "out" parameter
-        private readonly ConcurrentDictionary<TextBlock, TextBlockData> _textBlockData =
-           new ConcurrentDictionary<TextBlock, TextBlockData>();
+        private readonly ViewKeyedDictionary<TextBlock, TextBlockData> _textBlockData =
+           new ViewKeyedDictionary<TextBlock, TextBlockData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -88,7 +87,12 @@ namespace ReactNative.Views.Text
         {
             if (disabled)
             {
-                var data = _textBlockData.GetOrAdd(view, new TextBlockData() { IsDefaultContextMenuDisabled = false });
+                var found = _textBlockData.TryGetValue(view, out var data);
+                if (!found)
+                {
+                    data = new TextBlockData() { IsDefaultContextMenuDisabled = false };
+                    _textBlockData.AddOrUpdate(view, data);
+                }
                 if (!data.IsDefaultContextMenuDisabled)
                 {
                     view.ContextMenuOpening += OnContextMenuOpening;
@@ -97,7 +101,7 @@ namespace ReactNative.Views.Text
             }
             else
             {
-                _textBlockData.TryRemove(view, out _);
+                _textBlockData.Remove(view);
                 view.ContextMenuOpening -= OnContextMenuOpening;
             }
         }
@@ -156,10 +160,8 @@ namespace ReactNative.Views.Text
             base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
 
-            if (_textBlockData.TryRemove(view, out var data) && data.IsDefaultContextMenuDisabled)
-            {
-                view.ContextMenuOpening -= OnContextMenuOpening;
-            }
+            _textBlockData.Remove(view);
+            view.ContextMenuOpening -= OnContextMenuOpening;
         }
 
         private void OnSelectionChanged(object sender, RoutedEventArgs e)
