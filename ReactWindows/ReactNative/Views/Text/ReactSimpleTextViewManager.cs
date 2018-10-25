@@ -18,6 +18,7 @@ namespace ReactNative.Views.Text
     /// </summary>
     public class ReactSimpleTextViewManager : BaseViewManager<TextBlock, ReactSimpleTextShadowNode>
     {
+        // Using ConcurrentDictionary instead of ViewKeyedDictionary due to the use of TryRemove with "out" parameter
         private readonly ConcurrentDictionary<TextBlock, TextBlockData> _textBlockData =
            new ConcurrentDictionary<TextBlock, TextBlockData>();
 
