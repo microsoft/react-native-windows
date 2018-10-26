@@ -7,6 +7,7 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 
 namespace ReactNative.Views.Text
@@ -102,6 +103,55 @@ namespace ReactNative.Views.Text
             };
 
             return textBlock;
+        }
+
+        /// <summary>
+        /// Installing the event emitters for the TextBlock control.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The TextBlock view instance.</param>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, TextBlock view)
+        {
+            base.AddEventEmitters(reactContext, view);
+            view.SelectionChanged += OnSelectionChanged;
+        }
+
+        /// <summary>
+        /// Called when view is detached from view hierarchy and allows for 
+        /// additional cleanup by the <see cref="ReactSimpleTextViewManager"/>.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view.</param>
+        public override void OnDropViewInstance(ThemedReactContext reactContext, TextBlock view)
+        {
+            base.OnDropViewInstance(reactContext, view);
+            view.SelectionChanged -= OnSelectionChanged;
+        }
+
+        private void OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            TextBlock view = sender as TextBlock;
+            string selection;
+
+            TextPointer selectionStart = view.SelectionStart;
+            TextPointer selectionEnd = view.SelectionEnd;
+            if (selectionStart == null || selectionEnd == null || selectionStart == selectionEnd)
+            {
+                selection = null;
+            }
+            else
+            {
+                selection = view.SelectedText;
+            }
+
+            // Fire the event.
+            view.GetReactContext()
+                .GetNativeModule<UIManagerModule>()
+                .EventDispatcher
+                .DispatchEvent(
+                    new ReactTextBlockSelectionEvent(
+                        view.GetTag(),
+                        selection));
         }
     }
 }
