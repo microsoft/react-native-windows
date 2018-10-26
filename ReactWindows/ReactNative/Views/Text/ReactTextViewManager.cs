@@ -8,7 +8,6 @@ using ReactNative.Reflection;
 using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using System.Diagnostics;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using Windows.UI.Xaml;
