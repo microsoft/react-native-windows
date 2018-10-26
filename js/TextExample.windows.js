@@ -291,6 +291,20 @@ exports.examples = [
     );
   },
 }, {
+  title: 'Selectable',
+  render: function() {
+    return (
+      <View>
+        <Text selectable={true}>
+          This text is <Text style={{fontWeight: 'bold'}}>selectable</Text> and has a default context menu.
+        </Text>
+        <Text selectable={true} disableContextMenu={true}>
+          This text is <Text style={{fontWeight: 'bold'}}>selectable</Text> and has no context menu.
+        </Text>
+      </View>
+    );
+  },
+}, {
   title: 'Text Decoration',
   render: function() {
     return (
