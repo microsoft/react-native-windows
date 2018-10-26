@@ -69,6 +69,7 @@ const viewConfig = {
     adjustsFontSizeToFit: true,
     minimumFontScale: true,
     textBreakStrategy: true,
+    disableContextMenu: true,
   },
   uiViewClassName: 'RCTText',
 };
@@ -87,6 +88,7 @@ const simpleViewConfig = {
     minimumFontScale: true,
     textBreakStrategy: true,
     text: true,
+    disableContextMenu: true,
   },
   uiViewClassName: 'RCTSimpleText',
 };

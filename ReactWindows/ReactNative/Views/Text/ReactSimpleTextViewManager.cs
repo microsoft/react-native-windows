@@ -17,6 +17,9 @@ namespace ReactNative.Views.Text
     /// </summary>
     public class ReactSimpleTextViewManager : BaseViewManager<TextBlock, ReactSimpleTextShadowNode>
     {
+        private readonly ViewKeyedDictionary<TextBlock, TextBlockData> _textBlockData =
+           new ViewKeyedDictionary<TextBlock, TextBlockData>();
+
         /// <summary>
         /// The name of the view manager.
         /// </summary>
@@ -72,6 +75,35 @@ namespace ReactNative.Views.Text
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
             AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
         }
+        
+        /// <summary>
+        /// Sets whether or not the default context menu should be shown.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="disabled">A flag indicating whether or not the default context menu should be shown.</param>
+        [ReactProp("disableContextMenu")]
+        public void SetDisableContextMenu(TextBlock view, bool disabled)
+        {
+            if (disabled)
+            {
+                var found = _textBlockData.TryGetValue(view, out var data);
+                if (!found)
+                {
+                    data = new TextBlockData() { IsDefaultContextMenuDisabled = false };
+                    _textBlockData.AddOrUpdate(view, data);
+                }
+                if (!data.IsDefaultContextMenuDisabled)
+                {
+                    view.ContextMenuOpening += OnContextMenuOpening;
+                    data.IsDefaultContextMenuDisabled = true;
+                }
+            }
+            else
+            {
+                _textBlockData.Remove(view);
+                view.ContextMenuOpening -= OnContextMenuOpening;
+            }
+        }
 
         /// <summary>
         /// Receive extra updates from the shadow node.
@@ -126,6 +158,9 @@ namespace ReactNative.Views.Text
         {
             base.OnDropViewInstance(reactContext, view);
             view.SelectionChanged -= OnSelectionChanged;
+
+            _textBlockData.Remove(view);
+            view.ContextMenuOpening -= OnContextMenuOpening;
         }
 
         private void OnSelectionChanged(object sender, RoutedEventArgs e)
@@ -152,6 +187,17 @@ namespace ReactNative.Views.Text
                     new ReactTextBlockSelectionEvent(
                         view.GetTag(),
                         selection));
+        }
+
+        private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            // Prevent the opening of the context menu
+            e.Handled = true;
+        }
+
+        private class TextBlockData
+        {
+            public bool IsDefaultContextMenuDisabled;
         }
     }
 }
