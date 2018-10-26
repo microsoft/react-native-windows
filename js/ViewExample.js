@@ -299,4 +299,66 @@ exports.examples = [
       return <ZIndexExample />;
     },
   },
+  {
+    title: 'Switching related styles (borderRadius vs. per border<corner>Radius)',
+    render() {
+      type Props = $ReadOnly<{||}>;
+      type State = {|
+        fullyRound: boolean,
+      |};
+
+      const styles = StyleSheet.create({
+        base: {
+          width: 20,
+          height: 20,
+          backgroundColor: '#81C784',
+        },
+        on: {
+          borderRadius: 10,
+        },
+        off: {
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: 10,          
+        }
+      });
+
+      class SwitchingStylesExample extends React.Component<Props, State> {
+        state = {
+          fullyRound: true,
+        };
+
+        render() {
+          const testStyle = this.state.fullyRound ? styles.on : styles.off;
+          const description = this.state.fullyRound ? "(fully round)" : "(round at bottom)";
+          return (
+            <TouchableWithoutFeedback onPress={this._handlePress}>
+              <View>
+                <Text style={{paddingBottom: 10}}>
+                  Tap to switch between styles
+                </Text>
+                <View style={{flexDirection: "row"}}>
+                  <View
+                    style={[
+                      styles.base,
+                      testStyle,
+                    ]}>
+                  </View>
+                  <Text style={{paddingLeft: 10}}>
+                    {description}
+                  </Text>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        }
+
+        _handlePress = () => {
+          this.setState({fullyRound: !this.state.fullyRound});
+        };
+      }
+      return <SwitchingStylesExample />;
+    },
+  },  
 ];
