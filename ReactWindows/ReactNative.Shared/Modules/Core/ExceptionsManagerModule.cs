@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -63,13 +63,20 @@ namespace ReactNative.Modules.Core
         /// <param name="details">The exception stack trace.</param>
         /// <param name="exceptionId">An identifier for the exception.</param>
         /// <remarks>
-        /// Should not trigger a red box dialog or runtime exception.
+        /// Will either trigger a dismissable red box dialog or a log line.
         /// </remarks>
         [ReactMethod]
         public void reportSoftException(string title, JArray details, int exceptionId)
         {
-            var stackTrace = StackTraceHelper.ConvertJavaScriptStackTrace(details);
-            RnLog.Warn(ReactConstants.RNW, $"Soft Exception: {title}\n{stackTrace.PrettyPrint()}");
+            if (_devSupportManager.IsEnabled)
+            {
+                _devSupportManager.ShowNewJavaScriptError(title, details, exceptionId);
+            }
+            else
+            {
+                var stackTrace = StackTraceHelper.ConvertJavaScriptStackTrace(details);
+                RnLog.Warn(ReactConstants.RNW, $"Soft Exception: {title}\n{stackTrace.PrettyPrint()}");
+            }
         }
 
         /// <summary>

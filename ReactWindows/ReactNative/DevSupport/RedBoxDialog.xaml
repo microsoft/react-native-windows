@@ -8,7 +8,8 @@
     mc:Ignorable="d"
     Background="#E80000"
     PrimaryButtonText="Reload JavaScript"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    Loaded="ContentDialog_Loaded">
     <ContentDialog.Resources>
         <DataTemplate x:Key="StackFrameTemplate"
                       x:DataType="devsupport:IStackFrame">

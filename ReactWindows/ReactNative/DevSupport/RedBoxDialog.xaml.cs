@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.Foundation.Metadata;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The Content Dialog item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -79,6 +81,22 @@ namespace ReactNative.DevSupport
             {
                 _stackTrace = value;
                 OnNotifyPropertyChanged();
+            }
+        }
+
+        private void ContentDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ContentDialog dialog)
+            {
+                // To be uncommented when target SDK is at least RS2
+                // if (ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Controls.ContentDialog", "CloseButtonText"))
+                // {
+                //    dialog.CloseButtonText = "Dismiss";
+                // }
+                // else
+                {
+                    dialog.SecondaryButtonText = "Dismiss";
+                }
             }
         }
 
