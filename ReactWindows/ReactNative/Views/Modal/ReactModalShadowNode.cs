@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Windows.UI.ViewManagement;
 using ReactNative.UIManager;
 
 namespace ReactNative.Views.Modal
@@ -29,12 +27,13 @@ namespace ReactNative.Views.Modal
         {
             base.AddChildAt(child, index);
 
-            // Set both the width & height to the longest dimension, this lets the modal
-            // fill the screen after a device rotation
-            var screenBounds = ApplicationView.GetForCurrentView().VisibleBounds;
-            var longestDimension = Math.Max(screenBounds.Width, screenBounds.Height);
-            child.StyleHeight = (float)longestDimension;
-            child.StyleWidth = (float)longestDimension;
+            // Fixes a issue on Windows phone where rotating from horizontal to
+            // vertical would leave a gap between the modal bottom and the screen edge.
+            // This is set to the proper screen height when loading the modal in
+            // ReactModalHostView.SetContentSize. The actual screen height cannot be
+            // set here due to it being run by the layout manager thread which has no
+            // active window and only mimics the main view bounds.
+            child.StyleHeight = int.MaxValue;
         }
     }
 }

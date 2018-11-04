@@ -157,8 +157,8 @@ namespace ReactNative.Views.Modal
             SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
             DisplayInformation.GetForCurrentView().OrientationChanged -= OnOrientationChanged;
             var inputPane = InputPane.GetForCurrentView();
-            inputPane.Hiding -= InputPaneOnHideOrShow;
-            inputPane.Showing -= InputPaneOnHideOrShow;
+            inputPane.Hiding -= InputPaneOnHidingOrShowing;
+            inputPane.Showing -= InputPaneOnHidingOrShowing;
             this.GetReactContext().GetNativeModule<ExceptionsManagerModule>().BeforeShowDevOptionsDialog -= Close;
         }
 
@@ -176,8 +176,8 @@ namespace ReactNative.Views.Modal
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
             DisplayInformation.GetForCurrentView().OrientationChanged += OnOrientationChanged;
             var inputPane = InputPane.GetForCurrentView();
-            inputPane.Hiding += InputPaneOnHideOrShow;
-            inputPane.Showing += InputPaneOnHideOrShow;
+            inputPane.Hiding += InputPaneOnHidingOrShowing;
+            inputPane.Showing += InputPaneOnHidingOrShowing;
             this.GetReactContext().GetNativeModule<ExceptionsManagerModule>().BeforeShowDevOptionsDialog += Close;
         }
 
@@ -189,9 +189,13 @@ namespace ReactNative.Views.Modal
             }
         }
 
-        private void InputPaneOnHideOrShow(InputPane sender, InputPaneVisibilityEventArgs args)
+        private async void InputPaneOnHidingOrShowing(InputPane sender, InputPaneVisibilityEventArgs args)
         {
-            SetContentSize();
+            // Delay until the input pane has finished hiding or showing
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                SetContentSize();
+            });
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
@@ -215,7 +219,12 @@ namespace ReactNative.Views.Modal
             var currentCount = ++_resizeCount;
 
             var contentSize = ApplicationView.GetForCurrentView().VisibleBounds;
-            contentSize.Height -= InputPane.GetForCurrentView().OccludedRect.Height;
+            var inputPane = InputPane.GetForCurrentView();
+
+            // Windows phone has resize issues if you make the modal less then half
+            // the screen size and then rotate the phone
+            if (inputPane.OccludedRect.Height < contentSize.Height / 2)
+                contentSize.Height -= inputPane.OccludedRect.Height;
 
             uiManagerModule.ActionQueue.Dispatch(() =>
             {
