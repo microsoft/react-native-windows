@@ -87,7 +87,7 @@ namespace ReactNative.Views.Modal
         }
 
         /// <summary>
-        /// Shows the dialog if not visible otherwise updates it's properties
+        /// Shows the dialog if not visible otherwise updates its properties
         /// </summary>
         public void ShowOrUpdate()
         {
@@ -215,7 +215,7 @@ namespace ReactNative.Views.Modal
         private void SetContentSize()
         {
             var uiManagerModule = this.GetReactContext().GetNativeModule<UIManagerModule>();
-            var tag = Content.GetTag();
+            var contentTag = Content.GetTag();
             var currentCount = ++_resizeCount;
 
             var contentSize = ApplicationView.GetForCurrentView().VisibleBounds;
@@ -231,7 +231,9 @@ namespace ReactNative.Views.Modal
                 // If multiple events have been dispatched, ignore all but the newest
                 if (currentCount == _resizeCount)
                 {
-                    uiManagerModule.UIImplementation.UpdateRootNodeSize(tag, contentSize.Width, contentSize.Height);
+                    // The modal content isn't a root node, but behaves similar to one
+                    // in that it fills the entire window
+                    uiManagerModule.UIImplementation.UpdateRootNodeSize(contentTag, contentSize.Width, contentSize.Height);
                 }
             });
         }

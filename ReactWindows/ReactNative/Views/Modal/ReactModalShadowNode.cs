@@ -14,7 +14,6 @@ namespace ReactNative.Views.Modal
         /// Instantiates the <see cref="ReactModalShadowNode"/>.
         /// </summary>
         public ReactModalShadowNode()
-            : base(false, true)
         {
         }
 
