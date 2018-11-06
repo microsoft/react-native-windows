@@ -74,6 +74,8 @@ namespace ReactNative.DevSupport
             }
         }
 
+        public event Action BeforeShowDevOptionsDialog;
+
         public void HandleException(Exception exception)
         {
             RnLog.Fatal(ReactConstants.RNW, exception, $"Exception caught in top handler");

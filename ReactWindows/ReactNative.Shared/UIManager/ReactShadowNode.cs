@@ -815,7 +815,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="child">The child.</param>
         /// <param name="index">The index.</param>
-        public void AddChildAt(ReactShadowNode child, int index)
+        public virtual void AddChildAt(ReactShadowNode child, int index)
         {
             if (child._parent != null)
             {

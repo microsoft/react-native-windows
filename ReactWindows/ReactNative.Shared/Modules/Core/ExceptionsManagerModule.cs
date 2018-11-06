@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -38,6 +38,21 @@ namespace ReactNative.Modules.Core
             get
             {
                 return "ExceptionsManager";
+            }
+        }
+
+        /// <summary>
+        /// Called before the dev options dialog is opened
+        /// </summary>
+        public event Action BeforeShowDevOptionsDialog
+        {
+            add
+            {
+                _devSupportManager.BeforeShowDevOptionsDialog += value;
+            }
+            remove
+            {
+                _devSupportManager.BeforeShowDevOptionsDialog -= value;
             }
         }
 

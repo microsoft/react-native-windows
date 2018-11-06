@@ -62,6 +62,8 @@ namespace ReactNative.DevSupport
             ReloadSettings();
         }
 
+        public event Action BeforeShowDevOptionsDialog;
+
         public IDeveloperSettings DevSettings
         {
             get
@@ -287,6 +289,8 @@ namespace ReactNative.DevSupport
                 {
                     _dismissRedBoxDialog();
                 }
+
+                BeforeShowDevOptionsDialog?.Invoke();
 
 #if WINDOWS_UWP
                 var asyncInfo = _devOptionsDialog.ShowAsync();
