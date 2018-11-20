@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Common;
+using ReactNative.Tracing;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -40,6 +41,7 @@ namespace ReactNative.Chakra.Executor
         private JavaScriptValue _callFunctionAndReturnFlushedQueueFunction;
         private JavaScriptValue _invokeCallbackAndReturnFlushedQueueFunction;
         private JavaScriptValue _flushedQueueFunction;
+        private JavaScriptValue _fbBatchedBridge;
 
 #if !NATIVE_JSON_MARSHALING
         private JavaScriptValue _parseFunction;
@@ -227,6 +229,7 @@ namespace ReactNative.Chakra.Executor
         {
             JavaScriptContext.Current = JavaScriptContext.Invalid;
             _runtime.Dispose();
+            _unbundle?.Dispose();
         }
 
         private void InitializeChakra()
@@ -283,7 +286,7 @@ namespace ReactNative.Chakra.Executor
 #else
         private JavaScriptValue ConvertJson(JToken token)
         {
-            var jsonString = token.ToString(Formatting.None);
+            var jsonString = token?.ToString(Formatting.None) ?? "null";
             return ConvertJson(jsonString);
         }
 
@@ -322,11 +325,11 @@ namespace ReactNative.Chakra.Executor
             {
                 var message = arguments[1].ToString();
                 var logLevel = (LogLevel)(int)arguments[2].ToDouble();
-                Debug.WriteLine($"[JS {logLevel}] {message}");
+                RnLog.Info("JS", $"{logLevel} {message}");
             }
             catch
             {
-                Debug.WriteLine("Unable to process JavaScript console statement");
+                RnLog.Error("JS", $"Unable to process JavaScript console statement");
             }
 
             return JavaScriptValue.Undefined;
@@ -445,16 +448,21 @@ namespace ReactNative.Chakra.Executor
 
         private JavaScriptValue EnsureBatchedBridge()
         {
-            var globalObject = EnsureGlobalObject();
-            var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
-            var fbBatchedBridge = globalObject.GetProperty(propertyId);
-            if (fbBatchedBridge.ValueType != JavaScriptValueType.Object)
+            if (!_fbBatchedBridge.IsValid)
             {
-                throw new InvalidOperationException(
-                    Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' object.  Check the JavaScript bundle to ensure it is generated correctly."));
+                var globalObject = EnsureGlobalObject();
+                var propertyId = JavaScriptPropertyId.FromString(FBBatchedBridgeVariableName);
+                var fbBatchedBridge = globalObject.GetProperty(propertyId);
+                if (fbBatchedBridge.ValueType != JavaScriptValueType.Object)
+                {
+                    throw new InvalidOperationException(
+                        Invariant($"Could not resolve '{FBBatchedBridgeVariableName}' object.  Check the JavaScript bundle to ensure it is generated correctly."));
+                }
+
+                _fbBatchedBridge = fbBatchedBridge;
             }
 
-            return fbBatchedBridge;
+            return _fbBatchedBridge;
         }
 
         private JavaScriptValue EnsureStringifyFunction()

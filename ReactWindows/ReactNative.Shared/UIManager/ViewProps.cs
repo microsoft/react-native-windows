@@ -6,6 +6,9 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Json;
 using System.Collections.Generic;
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Automation.Peers;
+#endif
 
 namespace ReactNative.UIManager
 {
@@ -84,6 +87,11 @@ namespace ReactNative.UIManager
         public const string TextAlignVertical = "textAlignVertical";
         public const string TextDecorationLine = "textDecorationLine";
         public const string AllowFontScaling = "allowFontScaling";
+
+        public const string AccessibilityTraits = "accessibilityTraits";
+        public const string AccessibilityLabel = "accessibilityLabel";
+        public const string ImportantForAccessibility = "importantForAccessibility";
+        public const string AccessibilityLiveRegion = "accessibilityLiveRegion";
 
         public const string BorderWidth = "borderWidth";
         public const string BorderLeftWidth = "borderLeftWidth";
@@ -210,6 +218,32 @@ namespace ReactNative.UIManager
             {
                 var value = props.GetProperty(prop).Value<string>();
                 return value == "auto" || value == "box-none";
+            }
+
+            // These are more aggressive optimizations based on property values.
+            // In RN Android there is a runtime check here. We omitted it because
+            // the check didn't inspire confidence in the optimizations that must be
+            // either correct or not.
+            {
+                var value = props[prop];
+
+                switch (prop)
+                {
+                    case AccessibilityTraits:
+                        return value == null || value is JArray array && array.Count == 0;
+
+                    case AccessibilityLabel:
+                        return value == null || value.Type == JTokenType.String && value.Value<string>().Length == 0;
+
+                    case ImportantForAccessibility:
+                        return value == null || value.Type == JTokenType.String &&
+                            (value.Value<string>().Length == 0 || value.Value<string>() == "auto");
+#if WINDOWS_UWP
+                    case AccessibilityLiveRegion:
+                        return value == null || value.Type == JTokenType.String &&
+                            (value.Value<string>().Length == 0 || value.Value<string>() == "off");
+#endif
+                }
             }
 
             return false;

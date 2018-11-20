@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Media;
 #else
 using ReactNative.Reflection;
 using System.Collections;
-using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;

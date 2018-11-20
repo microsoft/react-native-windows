@@ -7,6 +7,9 @@
  */
 
 const PropTypes = require('prop-types');
+const { AccessibilityTraits } = require('ViewAccessibility');
+
+const WindowsAccessibilityTraits = Array.from(AccessibilityTraits).concat(['listItem']);
 
 module.exports = {
   /**
@@ -44,4 +47,108 @@ module.exports = {
    * @platform windows
    */
   tooltip: PropTypes.string,
+
+  /**
+   * Controls how view is important for accessibility which is if it
+   * fires accessibility events and if it is reported to accessibility services
+   * that query the screen. Works for Android only.
+   *
+   * @platform windows
+   *
+   * See http://facebook.github.io/react-native/docs/view.html#importantforaccessibility
+   */
+  importantForAccessibility: PropTypes.oneOf([
+    'auto',
+    'yes',
+    'no',
+    'no-hide-descendants',
+    'yes-dont-hide-descendants',
+  ]),
+
+  /**
+   * Provides additional traits to screen reader. By default no traits are
+   * provided unless specified otherwise in element.
+   *
+   * You can provide one trait or an array of many traits.
+   *
+   * @platform windows
+   *
+   * See http://facebook.github.io/react-native/docs/view.html#accessibilitytraits
+   */
+  accessibilityTraits: PropTypes.oneOfType([
+    PropTypes.oneOf(WindowsAccessibilityTraits),
+    PropTypes.arrayOf(PropTypes.oneOf(WindowsAccessibilityTraits)),
+  ]),
+
+  /**
+   * Mouse move handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseMove: PropTypes.func,
+
+  /**
+   * Mouse move (capturing phase) handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseMoveCapture: PropTypes.func,  
+
+  /**
+   * Mouse over handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseOver: PropTypes.func,
+
+  /**
+   * Mouse over (capturing phase) handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseOverCapture: PropTypes.func,  
+
+  /**
+   * Mouse out handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseOut: PropTypes.func,
+
+  /**
+   * Mouse out (capturing phase) handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseOutCapture: PropTypes.func,  
+
+  /**
+   * Mouse enter handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+
+  onMouseEnter: PropTypes.func,
+  /**
+   * Mouse leave handler. 
+   * This is explicitly defined here in order to be able to have an associated "handler detection" property 
+   * on the native side
+   *
+   * @platform windows
+   */
+  onMouseLeave: PropTypes.func,
 };

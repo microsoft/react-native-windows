@@ -13,6 +13,11 @@ namespace ReactNative.Common
         /// <summary>
         /// Trace tag for React components.
         /// </summary>
-        public const int Tag = 0; 
+        public const int Tag = 0;
+
+        /// <summary>
+        /// Trace tag (RnLog style) for React components.
+        /// </summary>
+        public const string RNW = "RNW";
     }
 }

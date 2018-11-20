@@ -4,8 +4,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
+using ReactNative.Tracing;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -21,6 +22,14 @@ namespace ReactNative.Chakra.Executor
 
         private readonly ChakraBridge.NativeJavaScriptExecutor _executor;
         private readonly bool _useSerialization;
+
+        /// <summary>
+        /// Initializes the hooking of JS logging to RnLog.
+        /// </summary>
+        static public void StartRnLogging()
+        {
+            ChakraBridge.NativeJavaScriptExecutor.OnNewLogLine += JsExecutorOnNewLogLine;
+        }
 
         /// <summary>
         /// Instantiates the <see cref="NativeJavaScriptExecutor"/>.
@@ -40,6 +49,29 @@ namespace ReactNative.Chakra.Executor
             _executor = new ChakraBridge.NativeJavaScriptExecutor();
             Native.ThrowIfError((JavaScriptErrorCode)_executor.InitializeHost());
             _useSerialization = useSerialization;
+        }
+
+        private static void JsExecutorOnNewLogLine(ChakraBridge.LogLevel logLevel, string logline)
+        {
+            // ChakraBridge.LogLevel value is lost when it gets marshaled to .Net native optimized code,
+            // we need to do a proper marshaling to get actual value
+            // Also, JavaScript already has a log level in the message, hence just RnLog.Info
+            string tag = "JS";
+            FormattableString message = $"{logline}";
+
+            switch (logLevel)
+            {
+                case ChakraBridge.LogLevel.Error:
+                    RnLog.Error(tag, message);
+                    break;
+                case ChakraBridge.LogLevel.Warning:
+                    RnLog.Warn(tag, message);
+                    break;
+                case ChakraBridge.LogLevel.Info:
+                case ChakraBridge.LogLevel.Trace:
+                    RnLog.Info(tag, message);
+                    break;
+            }
         }
 
         /// <summary>
@@ -136,12 +168,12 @@ namespace ReactNative.Chakra.Executor
                             if (exc.ErrorCode == JavaScriptErrorCode.BadSerializedScript)
                             {
                                 // Bytecode format is dependent on Chakra engine version, so an OS upgrade may require a recompilation
-                                Debug.WriteLine("Serialized bytecode script is corrupted or wrong format, will generate new one");
+                                RnLog.Warn(ReactConstants.RNW, $"Serialized bytecode script is corrupted or wrong format, will generate new one");
                             }
                             else
                             {
                                 // Some more severe error. We still have a chance (recompiling), so we keep continuing.
-                                Debug.WriteLine($"Failed to run serialized bytecode script ({exc.ToString()}), will generate new one");
+                                RnLog.Error(ReactConstants.RNW, exc, $"Failed to run serialized bytecode script, will generate new one");
                             }
 
                             File.Delete(binPath);
@@ -149,7 +181,7 @@ namespace ReactNative.Chakra.Executor
                     }
                     else
                     {
-                        Debug.WriteLine("Serialized bytecode script doesn't exist or is obsolete, will generate one");
+                        RnLog.Info(ReactConstants.RNW, $"Serialized bytecode script doesn't exist or is obsolete, will generate one");
                     }
 
                     if (!ranSuccessfully)
@@ -169,7 +201,7 @@ namespace ReactNative.Chakra.Executor
                             }
                             catch (Exception ex)
                             {
-                                Debug.WriteLine($"Failed to generate serialized bytecode script ({ex.ToString()}).");
+                                RnLog.Error(ReactConstants.RNW, ex, $"Failed to generate serialized bytecode script.");
                                 // It's fine if the bytecode couldn't be generated: RN can still use the JS bundle.
                             }
                         });
@@ -214,7 +246,7 @@ namespace ReactNative.Chakra.Executor
                 throw new ArgumentNullException(nameof(callSyncHook));
 
             _executor.SetCallSyncHook((moduleId, methodId, args) =>
-                callSyncHook(moduleId, methodId, JArray.Parse(args)).ToString(Formatting.None));
+                callSyncHook(moduleId, methodId, JArray.Parse(args))?.ToString(Formatting.None) ?? "null");
         }
 
         /// <summary>

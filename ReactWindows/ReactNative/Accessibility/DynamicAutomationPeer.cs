@@ -17,9 +17,26 @@ namespace ReactNative.Accessibility
         where T : FrameworkElement, IAccessible
     {
         /// <summary>
-        /// Hides base UIElement Owner to provide stronger-typed T Owner.
+        /// Gets typed owner of this peer.
         /// </summary>
-        private new T Owner => (T)base.Owner;
+        /// <returns>Owner of this peer. Null if the owner does not exist or is invalid.</returns>
+        private T GetOwner()
+        {
+            T owner = null;
+            try
+            {
+                owner = (T)base.Owner;
+            }
+            catch
+            {
+                // base.Owner getter will throw an exception constructed
+                // from HRESULT UIA_E_ELEMENTNOTAVAILABLE = -2147220991; 0x80040201
+                // if the owner UIElement is already garbage collected or otherwise invalid.
+                // We swallow it not to report error to screen reader which in our
+                // testing sometimes gets confused and stops reading the app at all.
+            }
+            return owner;
+        }
 
         /// <inheritdoc />
         public DynamicAutomationPeer(T owner)
@@ -30,28 +47,51 @@ namespace ReactNative.Accessibility
         /// <inheritdoc />
         protected override AutomationControlType GetAutomationControlTypeCore()
         {
-            if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
+            T owner = GetOwner();
+            if (owner != null)
             {
-                return AutomationControlType.ListItem;
+                if (owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
+                {
+                    return AutomationControlType.ListItem;
+                }
+                if (owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
+                {
+                    return AutomationControlType.Button;
+                }
+
+                // We expose a view that hides all children but makes itself visible to screen reader
+                // with an (expected) accessible name as Text control type instead of Group to avoid
+                // "group" suffix screen reader appends to the name.
+                // Another argument for this is that it's not ideal to tell user that something without children
+                // is a "group".
+                var isLabelSet = !string.IsNullOrEmpty(AccessibilityHelper.GetAccessibilityLabel(owner));
+                var i4a = AccessibilityHelper.GetImportantForAccessibility(owner);
+                if (i4a == ImportantForAccessibility.Yes
+                    || (i4a == ImportantForAccessibility.Auto && isLabelSet))
+                {
+                    return AutomationControlType.Text;
+                }
+
+                return AutomationControlType.Group;
             }
-            if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
-            {
-                return AutomationControlType.Button;
-            }
-            return AutomationControlType.Group;
+            return AutomationControlType.Text;
         }
 
         /// <inheritdoc />
         protected override object GetPatternCore(PatternInterface patternInterface)
         {
-            if (patternInterface == PatternInterface.Invoke
-                && Owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
+            T owner = GetOwner();
+            if (owner != null)
             {
-                return this;
-            }
-            if (Owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
-            {
-                return base.GetPatternCore(patternInterface);
+                if (patternInterface == PatternInterface.Invoke
+                    && owner.AccessibilityTraits?.Contains(AccessibilityTrait.Button) == true)
+                {
+                    return this;
+                }
+                if (owner.AccessibilityTraits?.Contains(AccessibilityTrait.ListItem) == true)
+                {
+                    return base.GetPatternCore(patternInterface);
+                }
             }
             return null;
         }
@@ -59,10 +99,14 @@ namespace ReactNative.Accessibility
         /// <inheritdoc />
         public void Invoke()
         {
-            Owner.GetReactContext()
-                .GetNativeModule<UIManagerModule>()
-                .EventDispatcher
-                .DispatchEvent(new AccessibilityTapEvent(Owner.GetTag()));
+            T owner = GetOwner();
+            if (owner != null)
+            {
+                owner.GetReactContext()
+                    .GetNativeModule<UIManagerModule>()
+                    .EventDispatcher
+                    .DispatchEvent(new AccessibilityTapEvent(owner.GetTag()));
+            }
         }
     }
 }

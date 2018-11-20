@@ -52,7 +52,7 @@ namespace ReactNative.Shell
                 new ClipboardModule(),
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
-                new I18NModule(),
+                new I18NModule(reactContext),
                 new LauncherModule(reactContext),
                 //new LocationModule(reactContext),
                 new NativeAnimatedModule(reactContext),
@@ -75,6 +75,7 @@ namespace ReactNative.Shell
         {
             return new List<IViewManager>
             {
+                new ReactSimpleTextViewManager(),
                 //new ReactFlipViewManager(),
                 new ReactImageManager(),
                 new ReactProgressBarViewManager(),

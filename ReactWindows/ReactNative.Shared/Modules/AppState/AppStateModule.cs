@@ -5,7 +5,9 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Modules.Core;
+using ReactNative.Tracing;
 
 namespace ReactNative.Modules.AppState
 {
@@ -53,9 +55,11 @@ namespace ReactNative.Modules.AppState
         {
             get
             {
+                var currentAppState = _appState;
+                RnLog.Info(ReactConstants.RNW, $"AppStateModule: initial appState is {currentAppState}");
                 return new JObject
                 {
-                    { "initialAppState", _appState }
+                    { "initialAppState", currentAppState }
                 };
             }
         }
@@ -101,21 +105,25 @@ namespace ReactNative.Modules.AppState
         [ReactMethod]
         public void getCurrentAppState(ICallback success, ICallback error)
         {
-            success.Invoke(CreateAppStateEventMap());
+            var currentAppState = _appState;
+            RnLog.Info(ReactConstants.RNW, $"AppStateModule: getCurrentAppState returned {currentAppState}");
+            success.Invoke(CreateAppStateEventMap(currentAppState));
         }
 
-        private JObject CreateAppStateEventMap()
+        private JObject CreateAppStateEventMap(string currentAppState)
         {
             return new JObject
             {
-                { "app_state", _appState },
+                { "app_state", currentAppState },
             };
         }
 
         private void SendAppStateChangeEvent()
         {
+            var currentAppState = _appState;
+            RnLog.Info(ReactConstants.RNW, $"AppStateModule: appStateDidChange to {currentAppState}");
             Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                .emit("appStateDidChange", CreateAppStateEventMap());
+                .emit("appStateDidChange", CreateAppStateEventMap(currentAppState));
         }
     }
 }

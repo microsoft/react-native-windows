@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -88,7 +88,15 @@ namespace ReactNative.Modules.I18N
             get
             {
 #if WINDOWS_UWP
-                return ResourceContext.GetForCurrentView().QualifierValues["LayoutDirection"] == "RTL";
+                // We use GetForViewIndependentUse because the customary GetForCurrentView throws exception when
+                // an associated CoreWindow is not present, condition that happens during background activation scenarios.
+                // GetForViewIndependentUse is good enough for the LayoutDirection resource (it's not view or display dependent)
+
+                // More, sometimes the retrieval of the "LayoutDirection" values fails with "UnauthorizedAccessException"
+                // because of a peculiarity of the QualifierValues on some OS'es (it keeps just a weak reference to the ResourceContext)
+                // We mitigate by pinning ResourceContext locally
+                var context = ResourceContext.GetForViewIndependentUse();
+                return context.QualifierValues["LayoutDirection"] == "RTL";
 #else
                 return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
 #endif

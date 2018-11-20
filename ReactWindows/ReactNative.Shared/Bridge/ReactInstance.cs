@@ -75,7 +75,7 @@ namespace ReactNative.Bridge
             return _registry.GetModule<T>();
         }
 
-        public void Initialize()
+        public async Task InitializeAsync()
         {
             DispatcherHelpers.AssertOnDispatcher();
             if (_initialized)
@@ -84,7 +84,7 @@ namespace ReactNative.Bridge
             }
 
             _initialized = true;
-            QueueConfiguration.NativeModulesQueue.Dispatch(_registry.NotifyReactInstanceInitialize);
+            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceInitializeAsync).Unwrap();
         }
 
         public async Task InitializeBridgeAsync(CancellationToken token)
@@ -121,7 +121,7 @@ namespace ReactNative.Bridge
         {
             if (IsDisposed)
             {
-                Tracer.Write(ReactConstants.Tag, "Invoking JS callback after bridge has been destroyed.");
+                RnLog.Warn(ReactConstants.RNW, $"Invoking JS callback after bridge has been destroyed.");
                 return;
             }
 
@@ -155,7 +155,8 @@ namespace ReactNative.Bridge
                 {
                     if (_bridge == null)
                     {
-                        throw new InvalidOperationException("Bridge has not been initialized.");
+                        RnLog.Error(ReactConstants.RNW, $"Invoking JS callback before bridge has been initialized. tracingName:{tracingName}.");
+                        throw new InvalidOperationException($"Bridge has not been initialized. tracingName:{tracingName}.");
                     }
 
                     _bridge.CallFunction(module, method, arguments);
@@ -174,7 +175,7 @@ namespace ReactNative.Bridge
 
             IsDisposed = true;
 
-            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDispose).ConfigureAwait(false);
+            await QueueConfiguration.NativeModulesQueue.RunAsync(_registry.NotifyReactInstanceDisposeAsync).Unwrap().ConfigureAwait(false);
             await QueueConfiguration.JavaScriptQueue.RunAsync(() => _bridge?.Dispose()).ConfigureAwait(false);
             QueueConfiguration.Dispose();
         }
@@ -281,7 +282,7 @@ namespace ReactNative.Bridge
                     return;
                 }
 
-                _parent._registry.Invoke(_parent, moduleId, methodId, parameters);
+                _parent._registry.Invoke(_parent.InvokeCallback, moduleId, methodId, parameters);
             }
 
             public JToken InvokeSync(int moduleId, int methodId, JArray parameters)
@@ -293,7 +294,7 @@ namespace ReactNative.Bridge
                     return null;
                 }
 
-                return _parent._registry.InvokeSync(_parent, moduleId, methodId, parameters);
+                return _parent._registry.InvokeSync(_parent.InvokeCallback, moduleId, methodId, parameters);
             }
 
             public void OnBatchComplete()

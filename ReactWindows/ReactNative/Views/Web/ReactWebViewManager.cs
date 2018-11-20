@@ -11,7 +11,6 @@ using ReactNative.UIManager.Annotations;
 using ReactNative.Views.Web.Events;
 using ReactNativeWebViewBridge;
 using System;
-using System.Collections.Concurrent;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using static System.FormattableString;
@@ -34,7 +33,7 @@ namespace ReactNative.Views.Web
 
         private const string BridgeName = "__REACT_WEB_VIEW_BRIDGE";
 
-        private readonly ConcurrentDictionary<WebView, WebViewData> _webViewData = new ConcurrentDictionary<WebView, WebViewData>();
+        private readonly ViewKeyedDictionary<WebView, WebViewData> _webViewData = new ViewKeyedDictionary<WebView, WebViewData>();
         private readonly ReactContext _context;
 
         /// <summary>
@@ -73,6 +72,24 @@ namespace ReactNative.Views.Web
                     { "postMessage", CommandPostMessage },
                     { "injectJavaScript", CommandInjectJavaScript },
                 };
+            }
+        }
+
+        /// <summary>
+        /// Sets the background color for the <see cref="WebView"/>.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="color">The masked color value.</param>
+        [ReactProp(ViewProps.BackgroundColor, CustomType = "Color")]
+        public void SetBackgroundColor(WebView view, uint? color)
+        {
+            if (color.HasValue)
+            {
+                view.DefaultBackgroundColor = ColorHelpers.Parse(color.Value);
+            }
+            else
+            {
+                view.ClearValue(WebView.DefaultBackgroundColorProperty);
             }
         }
 
@@ -198,7 +215,7 @@ namespace ReactNative.Views.Web
             view.NavigationFailed -= OnNavigationFailed;
             view.NavigationCompleted -= OnNavigationCompleted;
 
-            _webViewData.TryRemove(view, out _);
+            _webViewData.Remove(view);
         }
 
         /// <summary>
@@ -210,7 +227,7 @@ namespace ReactNative.Views.Web
         {
             var view = new WebView(WebViewExecutionMode.SeparateThread);
             var data = new WebViewData();
-            _webViewData.AddOrUpdate(view, data, (k, v) => data);
+            _webViewData.AddOrUpdate(view, data);
             return view;
         }
 
@@ -267,6 +284,12 @@ namespace ReactNative.Views.Web
                 {
                     // HTML files need to be loaded with the ms-appx-web schema.
                     uri = uri.Replace("ms-appx:", "ms-appx-web:");
+
+                    string previousUri = view.Source?.OriginalString;
+                    if (!String.IsNullOrWhiteSpace(previousUri) && previousUri.Equals(uri))
+                    {
+                        return;
+                    }
 
                     using (var request = new HttpRequestMessage())
                     {
@@ -355,7 +378,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                          tag,
                          WebViewLoadEvent.TopLoadingStart,
-                         e.Uri?.ToString(),
+                         e.Uri?.OriginalString,
                          true,
                          webView.DocumentTitle,
                          webView.CanGoBack,
@@ -399,7 +422,7 @@ namespace ReactNative.Views.Web
                     new WebViewLoadEvent(
                         webView.GetTag(),
                         WebViewLoadEvent.TopLoadingFinish,
-                        e.Uri?.ToString(),
+                        e.Uri?.OriginalString,
                         false,
                         webView.DocumentTitle,
                         webView.CanGoBack,

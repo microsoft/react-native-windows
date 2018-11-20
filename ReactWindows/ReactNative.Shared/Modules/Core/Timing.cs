@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ReactNative.Modules.Core
 {
@@ -29,7 +30,7 @@ namespace ReactNative.Modules.Core
 
         private readonly SerialDisposable _idleCancellationDisposable = new SerialDisposable();
 
-        private JSTimers _jsTimersModule;
+        private readonly Lazy<JSTimers> _jsTimersModule;
         private bool _suspended;
 
         private bool _sendIdleEvents;
@@ -44,6 +45,7 @@ namespace ReactNative.Modules.Core
             _timers = new HeapBasedPriorityQueue<TimerData>(
                 Comparer<TimerData>.Create((x, y) => 
                     x.TargetTime.CompareTo(y.TargetTime)));
+            _jsTimersModule = new Lazy<JSTimers>(() => Context.GetJavaScriptModule<JSTimers>());
         }
 
         /// <summary>
@@ -62,7 +64,6 @@ namespace ReactNative.Modules.Core
         /// </summary>
         public override void Initialize()
         {
-            _jsTimersModule = Context.GetJavaScriptModule<JSTimers>();
             Context.AddLifecycleEventListener(this);
         }
 
@@ -136,7 +137,7 @@ namespace ReactNative.Modules.Core
         {
             if (duration == 0 && !repeat)
             {
-                _jsTimersModule.callTimers(new[] { callbackId });
+                _jsTimersModule.Value.callTimers(new[] { callbackId });
                 return;
             }
 
@@ -199,9 +200,10 @@ namespace ReactNative.Modules.Core
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        public override void OnReactInstanceDispose()
+        public override Task OnReactInstanceDisposeAsync()
         {
             _idleCancellationDisposable.Dispose();
+            return Task.CompletedTask;
         }
 
         private void DoFrameSafe(object sender, object e)
@@ -248,7 +250,7 @@ namespace ReactNative.Modules.Core
 
             if (ready.Count > 0)
             {
-                _jsTimersModule.callTimers(ready);
+                _jsTimersModule.Value.callTimers(ready);
             }
         }
 

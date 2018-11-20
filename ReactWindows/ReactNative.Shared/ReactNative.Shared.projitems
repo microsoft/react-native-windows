@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\PropsAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\SpringAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\StyleAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\TrackingAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\CompiledReactDelegateFactory.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\INativeModuleWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bridge\InvokeCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IOnBatchCompleteListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bridge\IReactBridge.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\FrameEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IMutableFrameEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\IReactChoreographer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptAppException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JavaScriptException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\JSTimers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Core\RCTDeviceEventEmitter.cs" />
@@ -161,13 +164,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\EnumHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ExpressionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\DebugLogTracer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\LogTracerBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\MultiLogTracer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tracing\RnLog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropBaseAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Annotations\ReactPropGroupAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\AppRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderedCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UIManager\BorderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ColorHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\CornerRadiusManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\DependencyObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\BlurEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\FocusEvent.cs" />
@@ -176,6 +183,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropSetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ThicknessManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewKeyedDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewConversion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewExtensions.cs" />
@@ -248,7 +257,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactRunShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactSpanViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactTextBlockSelectionEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Text\ReactTextInlineViewManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ClearButtonModeType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\InputScopeHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactPasswordBoxShadowNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TextInput\ReactTextBox.cs" />

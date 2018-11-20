@@ -6,6 +6,7 @@ using NUnit.Framework;
 using ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative.Tests.Bridge
 {
@@ -19,14 +20,14 @@ namespace ReactNative.Tests.Bridge
 
             var wrapper = new TestWrapper(new TestModule());
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullAction(), ex => Assert.AreEqual("action", ex.ParamName));
-            AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullCallbackInstance(), ex => Assert.AreEqual("instance", ex.ParamName));
+            AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullCallback(), ex => Assert.AreEqual("invokeCallback", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullFunc(), ex => Assert.AreEqual("func", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullTypeAction(), ex => Assert.AreEqual("type", ex.ParamName));
             AssertEx.Throws<ArgumentNullException>(() => wrapper.TestNullTypeFunc(), ex => Assert.AreEqual("type", ex.ParamName));
         }
 
         [Test]
-        public void NativeModuleWrapperBase_ProxiedValues()
+        public async Task NativeModuleWrapperBase_ProxiedValues()
         {
             var initialized = 0;
             var disposed = 0;
@@ -45,7 +46,7 @@ namespace ReactNative.Tests.Bridge
 
             wrapper.Initialize();
             Assert.AreEqual(1, initialized);
-            wrapper.OnReactInstanceDispose();
+            await wrapper.DisposeAsync();
             Assert.AreEqual(1, disposed);
         }
 
@@ -72,15 +73,15 @@ namespace ReactNative.Tests.Bridge
 
             public void TestNullAction()
             {
-                var method = new NativeMethod("foo", default(Action<IReactInstance, JArray>));
+                var method = new NativeMethod("foo", default(Action<InvokeCallback, JArray>));
             }
 
             public void TestNullFunc()
             {
-                var method = new NativeMethod("foo", default(Func<IReactInstance, JArray, JToken>));
+                var method = new NativeMethod("foo", default(Func<InvokeCallback, JArray, JToken>));
             }
 
-            public void TestNullCallbackInstance()
+            public void TestNullCallback()
             {
                 var callback = new Callback(0, null);
             }
@@ -106,10 +107,10 @@ namespace ReactNative.Tests.Bridge
 
             public Action OnOnReactInstanceDispose;
 
-            public override void OnReactInstanceDispose()
+            public override Task OnReactInstanceDisposeAsync()
             {
                 OnOnReactInstanceDispose?.Invoke();
-                base.OnReactInstanceDispose();
+                return base.OnReactInstanceDisposeAsync();
             }
         }
     }

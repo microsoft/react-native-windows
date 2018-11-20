@@ -24,6 +24,7 @@ using ReactNative.UIManager;
 using ReactNative.Views.ControlView;
 using ReactNative.Views.Flip;
 using ReactNative.Views.Image;
+using ReactNative.Views.Modal;
 using ReactNative.Views.Picker;
 using ReactNative.Views.Progress;
 using ReactNative.Views.Scroll;
@@ -60,7 +61,7 @@ namespace ReactNative.Shell
                 new ClipboardModule(),
                 new DialogModule(reactContext),
                 new ImageLoaderModule(),
-                new I18NModule(),
+                new I18NModule(reactContext),
                 new LauncherModule(reactContext),
                 new LocationModule(reactContext),
                 new NativeAnimatedModule(reactContext),
@@ -83,8 +84,10 @@ namespace ReactNative.Shell
         {
             return new List<IViewManager>
             {
+                new ReactSimpleTextViewManager(),
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
+                new ReactModalViewManager(),
                 new ReactProgressBarViewManager(),
                 new ReactProgressRingViewManager(),
                 new ReactPickerManager(),

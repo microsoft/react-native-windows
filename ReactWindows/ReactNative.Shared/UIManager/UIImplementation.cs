@@ -150,6 +150,19 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        public void UpdateLayoutDirection()
+        {
+            // RTL/LTR is implemented through Xaml FlowDirection, so we keep Yoga oblivious of this.
+            _operationsQueue.UpdateRootViewNodesDirection();
+            if (_operationsQueue.IsEmpty())
+            {
+                DispatchViewUpdates(-1 /* no associated batch id */);
+            }
+        }
+
+        /// <summary>
         /// Invoked by React to create a new node with the given tag, class
         /// name, and props.
         /// </summary>
@@ -601,21 +614,23 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Enqueues UI block to be executed.
+        /// Enqueues UI block to be executed on dispatcher thread associated with a react tag hint.
         /// </summary>
         /// <param name="block">The UI block.</param>
-        public void AddUIBlock(IUIBlock block)
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void AddUIBlock(IUIBlock block, int? tag)
         {
-            _operationsQueue.EnqueueUIBlock(block);
+            _operationsQueue.EnqueueUIBlock(block, tag);
         }
 
         /// <summary>
-        /// Prepens the UI block to be executed.
+        /// Prepends the UI block to be executed on main dispatcher thread.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void PrependUIBlock(IUIBlock block)
         {
-            _operationsQueue.PrependUIBlock(block);
+            // Always uses main dispatcher thread
+            _operationsQueue.PrependUIBlock(block, null);
         }
 
         /// <summary>
@@ -675,10 +690,7 @@ namespace ReactNative.UIManager
         private ReactShadowNode CreateRootShadowNode()
         {
             var rootCssNode = new ReactShadowNode();
-            if (I18NUtil.IsRightToLeft)
-            {
-                rootCssNode.LayoutDirection = YogaDirection.RTL;
-            }
+            // RTL/LTR is implemented through Xaml FlowDirection, so we keep Yoga oblivious of this.
 
             rootCssNode.ViewClass = "Root";
             return rootCssNode;
@@ -862,6 +874,8 @@ namespace ReactNative.UIManager
             float absoluteX,
             float absoluteY)
         {
+            cssNode.BeforeDispatchUpdatesToDescendants();
+
             if (!cssNode.HasUpdates)
             {
                 return;

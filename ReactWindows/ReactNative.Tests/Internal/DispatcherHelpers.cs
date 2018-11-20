@@ -9,16 +9,26 @@ namespace ReactNative.Tests
 {
     static class DispatcherHelpers
     {
-        public static async Task RunOnDispatcherAsync(Action action)
+        public static Task RunOnDispatcherAsync(Action action)
         {
-            await App.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action)).AsTask().ConfigureAwait(false);
+            return RunOnDispatcherAsync(App.Dispatcher, action);
         }
 
-        public static async Task<T> CallOnDispatcherAsync<T>(Func<T> func)
+        public static async Task RunOnDispatcherAsync(CoreDispatcher dispatcher, Action action)
+        {
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action)).AsTask().ConfigureAwait(false);
+        }
+
+        public static Task<T> CallOnDispatcherAsync<T>(Func<T> func)
+        {
+            return CallOnDispatcherAsync<T>(App.Dispatcher, func);
+        }
+
+        public static async Task<T> CallOnDispatcherAsync<T>(CoreDispatcher dispatcher, Func<T> func)
         {
             var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            await RunOnDispatcherAsync(() =>
+            await RunOnDispatcherAsync(dispatcher, () =>
             {
                 try
                 {
@@ -34,11 +44,16 @@ namespace ReactNative.Tests
             return await tcs.Task.ConfigureAwait(false);
         }
 
-        public static async Task CallOnDispatcherAsync(Func<Task> asyncFunc)
+        public static Task CallOnDispatcherAsync(Func<Task> asyncFunc)
+        {
+            return CallOnDispatcherAsync(App.Dispatcher, asyncFunc);
+        }
+
+        public static async Task CallOnDispatcherAsync(CoreDispatcher dispatcher, Func<Task> asyncFunc)
         {
             var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            await RunOnDispatcherAsync(async () =>
+            await RunOnDispatcherAsync(dispatcher, async () =>
             {
                 try
                 {
@@ -54,11 +69,16 @@ namespace ReactNative.Tests
             await tcs.Task.ConfigureAwait(false);
         }
 
-        public static async Task<T> CallOnDispatcherAsync<T>(Func<Task<T>> asyncFunc)
+        public static Task<T> CallOnDispatcherAsync<T>(Func<Task<T>> asyncFunc)
+        {
+            return CallOnDispatcherAsync(App.Dispatcher, asyncFunc);
+        }
+
+        public static async Task<T> CallOnDispatcherAsync<T>(CoreDispatcher dispatcher, Func<Task<T>> asyncFunc)
         {
             var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            await RunOnDispatcherAsync(async () =>
+            await RunOnDispatcherAsync(dispatcher, async () =>
             {
                 try
                 {

@@ -9,6 +9,7 @@ using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using static System.FormattableString;
 
 namespace ReactNative.Bridge
@@ -33,7 +34,7 @@ namespace ReactNative.Bridge
     /// </summary>
     /// <remarks>
     /// Default implementations of <see cref="Initialize"/> and 
-    /// <see cref="OnReactInstanceDispose"/> are provided for convenience.
+    /// <see cref="OnReactInstanceDisposeAsync"/> are provided for convenience.
     /// Subclasses need not call these base methods should they choose to
     /// override them.
     /// </remarks>
@@ -202,8 +203,34 @@ namespace ReactNative.Bridge
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
+        [Obsolete("Deprecated in favor of OnReactInstanceDisposeAsync")]
         public virtual void OnReactInstanceDispose()
         {
+        }
+
+        /// <summary>
+        /// Disposes the module before the <see cref="IReactInstance"/> is disposed.
+        /// </summary>
+        /// <returns>
+        /// A task to await the dispose operation.
+        /// </returns>
+        public Task DisposeAsync()
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            OnReactInstanceDispose();
+#pragma warning restore CS0618 // Type or member is obsolete
+            return OnReactInstanceDisposeAsync();
+        }
+
+        /// <summary>
+        /// Called before a <see cref="IReactInstance"/> is disposed.
+        /// </summary>
+        /// <returns>
+        /// A task to await the dispose operation.
+        /// </returns>
+        public virtual Task OnReactInstanceDisposeAsync()
+        {
+            return Task.CompletedTask;
         }
 
         private IReadOnlyDictionary<string, INativeMethod> InitializeMethods()
@@ -236,13 +263,13 @@ namespace ReactNative.Bridge
 
         class NativeMethod : INativeMethod
         {
-            private readonly Lazy<Func<IReactInstance, JArray, JToken>> _invokeDelegate;
+            private readonly Lazy<Func<InvokeCallback, JArray, JToken>> _invokeDelegate;
 
             public NativeMethod(NativeModuleBase instance, MethodInfo method, ReactMethodAttribute attribute)
             {
                 var delegateFactory = instance._delegateFactory;
                 delegateFactory.Validate(method, attribute);
-                _invokeDelegate = new Lazy<Func<IReactInstance, JArray, JToken>>(() => delegateFactory.Create(instance, method));
+                _invokeDelegate = new Lazy<Func<InvokeCallback, JArray, JToken>>(() => delegateFactory.Create(instance, method));
                 Type = delegateFactory.GetMethodType(method, attribute);
             }
 
@@ -251,11 +278,11 @@ namespace ReactNative.Bridge
                 get;
             }
 
-            public JToken Invoke(IReactInstance reactInstance, JArray jsArguments)
+            public JToken Invoke(InvokeCallback invokeCallback, JArray jsArguments)
             {
                 using (Tracer.Trace(Tracer.TRACE_TAG_REACT_BRIDGE, "callNativeModuleMethod").Start())
                 {
-                    return _invokeDelegate.Value(reactInstance, jsArguments);
+                    return _invokeDelegate.Value(invokeCallback, jsArguments);
                 }
             }
         }

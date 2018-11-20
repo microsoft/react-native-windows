@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using ReactNative.Bridge.Queue;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReactNative.Bridge
 {
@@ -78,9 +79,12 @@ namespace ReactNative.Bridge
         public void Initialize() => Module.Initialize();
 
         /// <summary>
-        /// Called before a <see cref="IReactInstance"/> is disposed.
+        /// Disposes the module before the <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        public void OnReactInstanceDispose() => Module.OnReactInstanceDispose();
+        /// <returns>
+        /// A task to await the dispose operation.
+        /// </returns>
+        public Task DisposeAsync() => Module.DisposeAsync();
 
         INativeModule INativeModuleWrapper.Module => Module;
 
@@ -109,15 +113,15 @@ namespace ReactNative.Bridge
         {
             private static readonly JToken s_null = JValue.CreateNull();
 
-            private readonly Func<IReactInstance, JArray, JToken> _func;
+            private readonly Func<InvokeCallback, JArray, JToken> _func;
 
             /// <summary>
             /// Instantiates the <see cref="NativeMethod"/>.
             /// </summary>
             /// <param name="type">Type of native method.</param>
             /// <param name="action">Delegate to invoke the native method.</param>
-            public NativeMethod(string type, Action<IReactInstance, JArray> action)
-                : this(type, (instance, args) => { action(instance, args); return s_null; })
+            public NativeMethod(string type, Action<InvokeCallback, JArray> action)
+                : this(type, (invokeCallback, args) => { action(invokeCallback, args); return s_null; })
             {
                 if (action == null)
                     throw new ArgumentNullException(nameof(action));
@@ -128,7 +132,7 @@ namespace ReactNative.Bridge
             /// </summary>
             /// <param name="type">Type of native method.</param>
             /// <param name="func">Delegate to invoke the native method.</param>
-            public NativeMethod(string type, Func<IReactInstance, JArray, JToken> func)
+            public NativeMethod(string type, Func<InvokeCallback, JArray, JToken> func)
             {
                 if (type == null)
                     throw new ArgumentNullException(nameof(type));
@@ -150,7 +154,7 @@ namespace ReactNative.Bridge
             /// <param name="reactInstance">The React instance.</param>
             /// <param name="arguments">The arguments.</param>
             /// <returns>The native method result.</returns>
-            public JToken Invoke(IReactInstance reactInstance, JArray arguments)
+            public JToken Invoke(InvokeCallback reactInstance, JArray arguments)
             {
                 return _func(reactInstance, arguments);
             }
@@ -164,20 +168,20 @@ namespace ReactNative.Bridge
             private static readonly JArray s_empty = new JArray();
 
             private readonly int _id;
-            private readonly IReactInstance _instance;
+            private readonly InvokeCallback _invokeCallback;
 
             /// <summary>
             /// Instantiates the <see cref="Callback"/>.
             /// </summary>
             /// <param name="id">The callback ID.</param>
-            /// <param name="instance">The React instance.</param>
-            public Callback(int id, IReactInstance instance)
+            /// <param name="invokeCallback">The React instance.</param>
+            public Callback(int id, InvokeCallback invokeCallback)
             {
-                if (instance == null)
-                    throw new ArgumentNullException(nameof(instance));
+                if (invokeCallback == null)
+                    throw new ArgumentNullException(nameof(invokeCallback));
 
                 _id = id;
-                _instance = instance;
+                _invokeCallback = invokeCallback;
             }
 
             /// <summary>
@@ -186,7 +190,7 @@ namespace ReactNative.Bridge
             /// <param name="arguments">The callback arguments.</param>
             public void Invoke(params object[] arguments)
             {
-                _instance.InvokeCallback(_id, arguments != null ? JArray.FromObject(arguments) : s_empty);
+                _invokeCallback(_id, arguments != null ? JArray.FromObject(arguments) : s_empty);
             }
         }
 

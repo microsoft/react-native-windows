@@ -7,9 +7,11 @@ Before submitting a PR to React Native Windows, make sure the unit tests pass lo
 
 #### But how?
 ![Run All Tests](docs/img/RunTests.png)
-1. In the top toolbar, click "Test"
-2. Select "Run"
-3. Select "All Tests"
+1. Open ReactNative solution file (react-native-windows\ReactWindows\ReactNative.sln)
+2. Set the Solution Configuration to "Debug" and the Solution Platforms to "x86"
+3. In the top toolbar, click "Test"
+4. Select "Run"
+5. Select "All Tests"
 
 #### Troubleshooting:
 ##### Error:
@@ -29,16 +31,17 @@ RNTester is a React Native Windows app that demonstrates the implemented views a
 You can use it to test your changes to React Native Windows by making sure your changes haven't broken the views and modules.
 
 #### But How?
-Before starting make sure you have run `npm install` in the react-native-windows directory. Additionally, make sure the RNTester submodule is up to date by running `git pull --recursive-submodules` from the react-native-windows directory.
+Before starting make sure you have run `npm install` in the react-native-windows directory. Additionally, make sure the RNTester submodule is up to date by running `git pull --recurse-submodules` from the react-native-windows directory.
 
 Use Visual Studio 2017 or higher, with the Windows 10 SDK 10.0.14393 or higher.
 
-1. Open the RNTester solution file (react-native-windows/RNTester/RNTester.sln) in Visual Studio
+1. Open the RNTester solution file (react-native-windows\RNTester\RNTester.sln) in Visual Studio
 2. Set RNTesterApp as the StartUp project
 3. Set the Solution Configuration to "Debug" and the Solution Platforms to "x86"
 4. Run the project on the local machine by clicking the run button or by pressing F5
 
 A Windows app will open, and it may have a red box dialog stating `Unable to download JS bundle. Did you forget to start the development server or connect your device?` We still need to start the dev server!
+
 5. In your command line, make sure that you are in the react-native-windows directory and run then `react-native start`
 6. Reload the bundle in the app by clicking "Reload JavaScript" or by pressing Ctrl+R
 

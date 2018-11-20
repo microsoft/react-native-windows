@@ -81,14 +81,14 @@ namespace ReactNative.Tests.Bridge
 
             var instance = await DispatcherHelpers.CallOnDispatcherAsync(() => builder.Build());
             reactContext.InitializeWithInstance(instance);
-            await DispatcherHelpers.RunOnDispatcherAsync(() => instance.Initialize());
+            await DispatcherHelpers.CallOnDispatcherAsync(async () => await instance.InitializeAsync());
 
             var caught = false;
-            await DispatcherHelpers.RunOnDispatcherAsync(() =>
+            await DispatcherHelpers.CallOnDispatcherAsync(async () =>
             {
                 try
                 {
-                    instance.Initialize();
+                    await instance.InitializeAsync();
                 }
                 catch (InvalidOperationException)
                 {
@@ -183,9 +183,11 @@ namespace ReactNative.Tests.Bridge
                 OnInitialized?.Invoke();
             }
 
-            public override void OnReactInstanceDispose()
+            public override Task OnReactInstanceDisposeAsync()
             {
                 OnReactInstanceDisposeCalls++;
+
+                return Task.CompletedTask;
             }
         }
 
@@ -206,9 +208,10 @@ namespace ReactNative.Tests.Bridge
                 }
             }
 
-            public override void OnReactInstanceDispose()
+            public override Task OnReactInstanceDisposeAsync()
             {
                 _onDispose();
+                return Task.CompletedTask;
             }
         }
 

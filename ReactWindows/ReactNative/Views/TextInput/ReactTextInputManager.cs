@@ -506,11 +506,22 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="importantForAccessibilityValue">The string to be parsed as <see cref="ImportantForAccessibility"/>.</param>
-        [ReactProp("importantForAccessibility")]
+        [ReactProp(ViewProps.ImportantForAccessibility)]
         public void SetImportantForAccessibility(ReactTextBox view, string importantForAccessibilityValue)
         {
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
             AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+
+        /// <summary>
+        /// Controls the visibility of the DeleteButton.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="clearButtonMode">Visibility of the DeleteButton.</param>
+        [ReactProp("clearButtonMode")]
+        public void SetClearButtonMode(ReactTextBox view, string clearButtonMode)
+        {
+            view.ClearButtonMode = EnumHelpers.ParseNullable<ClearButtonModeType>(clearButtonMode) ?? ClearButtonModeType.Default;
         }
 
         /// <summary>

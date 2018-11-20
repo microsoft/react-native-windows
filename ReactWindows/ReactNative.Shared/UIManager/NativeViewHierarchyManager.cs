@@ -10,6 +10,7 @@ using ReactNative.UIManager.LayoutAnimation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ReactNative.Modules.I18N;
 #if WINDOWS_UWP
 using ReactNative.Accessibility;
 using Windows.Foundation;
@@ -108,7 +109,9 @@ namespace ReactNative.UIManager
 #if WINDOWS_UWP
             CoreDispatcher dispatcher,
 #else
-            Dispatcher notUsed,
+#pragma warning disable CS1573
+            Dispatcher dispatcher,
+#pragma warning restore CS1573
 #endif
             Action<List<int>> onDropView
             )
@@ -471,6 +474,10 @@ namespace ReactNative.UIManager
                     Invariant($"Could not find view manager for tag '{tag}."));
             }
 
+            //
+            // The top level Xaml element (Window.Current.Content) and the root view the element with tag is associated with have to
+            // have consistent FlowDirection for the result to be fully correct
+            //
             var uiElement = ViewConversion.GetDependencyObject<UIElement>(view);
 #if WINDOWS_UWP
             var windowTransform = uiElement.TransformToVisual(Window.Current.Content);
@@ -496,6 +503,20 @@ namespace ReactNative.UIManager
         public void AddRootView(int tag, SizeMonitoringCanvas view, ThemedReactContext themedContext)
         {
             AddRootViewParent(tag, view, themedContext);
+        }
+
+        /// <summary>
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        public void UpdateRootViewNodesDirection()
+        {
+            foreach (var tag in _rootTags.Keys.ToList())
+            {
+                if (_tagsToViews[tag] is FrameworkElement element)
+                {
+                    element.FlowDirection = I18NUtil.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                }
+            }
         }
 
         /// <summary>
@@ -661,8 +682,12 @@ namespace ReactNative.UIManager
             _tagsToViewManagers.Add(tag, _rootViewManager);
             _rootTags.Add(tag, true);
 
+            // Keeping here for symmetry, tag on root views is set early, in UIManagerModule.AddMeasuredRootViewAsync
             ViewExtensions.SetTag(view, tag);
             ViewExtensions.SetReactContext(view, themedContext);
+
+            // Initialize the top level Xaml Flow Direction
+            view.FlowDirection = I18NUtil.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 #if WINDOWS_UWP
             AccessibilityHelper.OnRootViewAdded(view);
 #endif

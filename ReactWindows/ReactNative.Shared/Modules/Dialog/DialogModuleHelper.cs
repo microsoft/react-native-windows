@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace ReactNative.Modules.Dialog
@@ -13,5 +13,7 @@ namespace ReactNative.Modules.Dialog
 
         public const int KeyButtonPositiveValue = 0;
         public const int KeyButtonNegativeValue = 1;
+
+        public const string RootViewHint = "rootViewHint";
     }
 }

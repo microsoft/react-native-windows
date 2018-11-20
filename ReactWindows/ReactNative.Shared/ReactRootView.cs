@@ -5,7 +5,9 @@
 
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
 using ReactNative.Touch;
+using ReactNative.Tracing;
 using ReactNative.UIManager;
 using System;
 using System.Diagnostics;
@@ -63,7 +65,7 @@ namespace ReactNative
         /// </summary>
         internal TouchHandler TouchHandler
         {
-            get;
+            get; private set;
         }
 
         /// <summary>
@@ -120,6 +122,7 @@ namespace ReactNative
 
         private async Task StartReactApplicationAsync(ReactInstanceManager reactInstanceManager, string moduleName, JObject initialProps)
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactRootView: StartReactApplicationAsync ({moduleName}) - entry");
             // This is called under the dispatcher associated with the view.
             DispatcherHelpers.AssertOnDispatcher(this);
 
@@ -134,7 +137,9 @@ namespace ReactNative
 
             var getReactContextTaskTask =
                 DispatcherHelpers.CallOnDispatcher(async () => await _reactInstanceManager.GetOrCreateReactContextAsync(CancellationToken.None), true);
- 
+
+            await getReactContextTaskTask.Unwrap();
+
             // We need to wait for the initial `Measure` call, if this view has
             // not yet been measured, we set the `_attachScheduled` flag, which
             // will enable deferred attachment of the root node.
@@ -147,7 +152,7 @@ namespace ReactNative
                 _attachScheduled = true;
             }
 
-            await getReactContextTaskTask.Unwrap();
+            RnLog.Info(ReactConstants.RNW, $"ReactRootView: StartReactApplicationAsync ({moduleName}) - done ({(_attachScheduled ? "with scheduled work" : "completely")})");
         }
 
         /// <summary>
@@ -167,15 +172,21 @@ namespace ReactNative
         /// <remarks>
         /// Has to be called under the dispatcher associated with the view.
         /// </remarks>
+        /// <returns>Awaitable task.</returns>
         public async Task StopReactApplicationAsync()
         {
+            RnLog.Info(ReactConstants.RNW, $"ReactRootView: StopReactApplicationAsync ({JavaScriptModuleName}) - entry");
             DispatcherHelpers.AssertOnDispatcher(this);
 
             var reactInstanceManager = _reactInstanceManager;
-            if (!_attachScheduled && reactInstanceManager != null)
+            var attachScheduled = _attachScheduled;
+            _attachScheduled = false;
+            if (!attachScheduled && reactInstanceManager != null)
             {
                 await reactInstanceManager.DetachRootViewAsync(this);
             }
+
+            RnLog.Info(ReactConstants.RNW, $"ReactRootView: StopReactApplicationAsync ({JavaScriptModuleName}) - done");
         }
 
         /// <summary>
@@ -194,6 +205,23 @@ namespace ReactNative
             Forget(MeasureOverrideHelperAsync());
 
             return result;
+        }
+
+        internal void StartTouchHandling()
+        {
+            if (TouchHandler == null)
+            {
+                TouchHandler = new TouchHandler(this);
+            }
+        }
+
+        internal void StopTouchHandling()
+        {
+            if (TouchHandler != null)
+            {
+                TouchHandler.Dispose();
+                TouchHandler = null;
+            }
         }
 
 #if WINDOWS_UWP
@@ -218,20 +246,6 @@ namespace ReactNative
         }
 #endif
 
-        internal void CleanupSafe()
-        {
-            // Inlining allowed
-            DispatcherHelpers.RunOnDispatcher(this.Dispatcher, Cleanup, true);
-        }
-
-        internal void Cleanup()
-        {
-            DispatcherHelpers.AssertOnDispatcher(this);
-
-            Children.Clear();
-            ViewExtensions.ClearData(this);
-        }
-
         private async Task MeasureOverrideHelperAsync()
         {
             DispatcherHelpers.AssertOnDispatcher(this);
@@ -239,10 +253,10 @@ namespace ReactNative
             _wasMeasured = true;
 
             var reactInstanceManager = _reactInstanceManager;
-            if (_attachScheduled && reactInstanceManager != null)
+            var attachScheduled = _attachScheduled;
+            _attachScheduled = false;
+            if (attachScheduled && reactInstanceManager != null)
             {
-                _attachScheduled = false;
-
                 await reactInstanceManager.AttachMeasuredRootViewAsync(this);
             }
         }
@@ -252,7 +266,7 @@ namespace ReactNative
             task.ContinueWith(
                 t =>
                 {
-                    Debug.Fail("Exception in fire and forget asynchronous function", t.Exception.ToString());
+                    RnLog.Fatal(ReactConstants.RNW, t.Exception, $"Exception in fire and forget asynchronous function");
                 },
                 TaskContinuationOptions.OnlyOnFaulted);
         }

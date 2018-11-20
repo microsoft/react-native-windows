@@ -6,6 +6,9 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Bridge.Queue;
+using ReactNative.Common;
+using ReactNative.Modules.DeviceInfo;
+using ReactNative.Modules.I18N;
 using ReactNative.Tracing;
 using ReactNative.UIManager.Events;
 using System;
@@ -124,7 +127,7 @@ namespace ReactNative.UIManager
         /// JavaScript can use the returned tag with to add or remove children 
         /// to this view through <see cref="manageChildren(int, int[], int[], int[], int[], int[])"/>.
         /// </remarks>
-        public int AddMeasuredRootView(ReactRootView rootView)
+        public async Task<int> AddMeasuredRootViewAsync(ReactRootView rootView)
         {
             // Called on main dispatcher thread
             DispatcherHelpers.AssertOnDispatcher();
@@ -132,9 +135,12 @@ namespace ReactNative.UIManager
             var tag = _nextRootTag;
             _nextRootTag += RootViewTagIncrement;
 
+            // Set tag early in case of concurrent DetachRootViewAsync
+            rootView.SetTag(tag);
+
             var context = new ThemedReactContext(Context);
 
-            DispatcherHelpers.RunOnDispatcher(rootView.Dispatcher, () =>
+            await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
             {
                 var width = rootView.ActualWidth;
                 var height = rootView.ActualHeight;
@@ -161,7 +167,14 @@ namespace ReactNative.UIManager
                         }
                     });
                 });
- 
+
+                rootView.StartTouchHandling();
+
+#if WINDOWS_UWP
+                // Register view in DeviceInfoModule for tracking its dimensions
+                Context.GetNativeModule<DeviceInfoModule>().RegisterRootView(rootView, tag);
+#endif
+                return true;
             }, true); // Allow inlining
 
             return tag;
@@ -180,6 +193,12 @@ namespace ReactNative.UIManager
             await DispatcherHelpers.CallOnDispatcher(rootView.Dispatcher, () =>
             {
                 rootView.RemoveSizeChanged();
+
+                rootView.StopTouchHandling();
+#if WINDOWS_UWP
+                // Unregister view from DeviceInfoModule
+                Context.GetNativeModule<DeviceInfoModule>().UnregisterRootView(rootView);
+#endif
                 return true;
             }, true); // allow inlining
 
@@ -190,17 +209,37 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        ///
+        internal void UpdateLayoutDirection()
+        {
+            _layoutActionQueue.Dispatch(() => _uiImplementation.UpdateLayoutDirection());
+        }
+
+        /// <summary>
+        /// Schedule a block to be executed on the main UI thread. Useful if you need to execute
         /// view logic after all currently queued view updates have completed.
         /// </summary>
         /// <param name="block">The UI block.</param>
         public void AddUIBlock(IUIBlock block)
         {
-            _uiImplementation.AddUIBlock(block);
+            AddUIBlock(block, null);
         }
 
         /// <summary>
-        /// Schedule a block to be executed on the UI thread. Useful if you need to execute
+        /// Schedule a block to be executed on a UI thread. Useful if you need to execute
+        /// view logic after all currently queued view updates have completed.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void AddUIBlock(IUIBlock block, int? tag)
+        {
+            _uiImplementation.AddUIBlock(block, tag);
+        }
+
+        /// <summary>
+        /// Schedule a block to be executed on the main UI thread. Useful if you need to execute
         /// need view logic before all currently queued view updates have completed.
         /// </summary>
         /// <param name="block">The UI block.</param>
@@ -231,7 +270,7 @@ namespace ReactNative.UIManager
             }
         }
 
-        #region React Methods
+#region React Methods
 
         /// <summary>
         /// Removes the root view.
@@ -240,6 +279,8 @@ namespace ReactNative.UIManager
         [ReactMethod]
         public async void removeRootView(int rootViewTag)
         {
+            RnLog.Info(ReactConstants.RNW, $"UIManagerModule: removeRootView ({rootViewTag}) - entry");
+
             // A cleanup task should be waiting here
             if (!_rootViewCleanupTasks.TryRemove(rootViewTag, out var cleanupTask))
             {
@@ -249,6 +290,7 @@ namespace ReactNative.UIManager
             await _uiImplementation.RemoveRootViewAsync(rootViewTag);
 
             cleanupTask.SetResult(true);
+            RnLog.Info(ReactConstants.RNW, $"UIManagerModule: removeRootView ({rootViewTag}) - done");
         }
 
         /// <summary>
@@ -375,6 +417,13 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="reactTag">The view tag to measure.</param>
         /// <param name="callback">The callback.</param>
+        /// <remarks>
+        /// The top level Xaml element (Window.Current.Content) that drives the window orientation
+        /// and the root view the element with reactTag is associated with have to
+        /// have consistent FlowDirection for the result to be fully correct
+        /// (The FlowDirection of the root view is driven by I18NUtil.IsRightToLeft, whereas
+        /// the top level element/window one is under the control of the hosting application)
+        /// </remarks>
         [ReactMethod]
         public void measureInWindow(int reactTag, ICallback callback)
         {
@@ -533,9 +582,9 @@ namespace ReactNative.UIManager
             _uiImplementation.ConfigureNextLayoutAnimation(config, success, error);
         }
 
-        #endregion
+#endregion
 
-        #region Sync React Methods
+#region Sync React Methods
 
         /// <summary>
         /// Gets the constants for the view manager.
@@ -569,9 +618,9 @@ namespace ReactNative.UIManager
             return GetDefaultExportableEventTypes();
         }
 
-        #endregion
+#endregion
 
-        #region ILifecycleEventListener
+#region ILifecycleEventListener
 
         /// <summary>
         /// Called when the host receives the suspend event.
@@ -598,9 +647,9 @@ namespace ReactNative.UIManager
             _uiImplementation.OnDestroy();
         }
 
-        #endregion
+#endregion
 
-        #region IOnBatchCompleteListener
+#region IOnBatchCompleteListener
 
         /// <summary>
         /// To implement the transactional requirement, UI changes are only
@@ -614,27 +663,29 @@ namespace ReactNative.UIManager
             _uiImplementation.DispatchViewUpdates(batchId);
         }
 
-        #endregion
+#endregion
 
-        #region NativeModuleBase
+#region NativeModuleBase
 
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        public override void OnReactInstanceDispose()
+        public override Task OnReactInstanceDisposeAsync()
         {
+            DispatcherHelpers.RunOnDispatcher(_uiImplementation.OnDestroy);
             _eventDispatcher.OnReactInstanceDispose();
+            return Task.CompletedTask;
         }
 
-        #endregion
+#endregion
 
-        #region Options
+#region Options
 
         private static bool IsLazyViewManagersEnabled(UIManagerModuleOptions options)
         {
             return (options & UIManagerModuleOptions.LazyViewManagers) == UIManagerModuleOptions.LazyViewManagers;
         }
 
-        #endregion
+#endregion
     }
 }

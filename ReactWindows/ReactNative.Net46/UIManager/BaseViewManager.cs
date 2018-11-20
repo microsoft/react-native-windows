@@ -4,6 +4,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json.Linq;
+using ReactNative.Reflection;
 using ReactNative.Touch;
 using ReactNative.UIManager.Annotations;
 using System;
@@ -29,8 +30,8 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly IDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
-            new Dictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
+        private readonly ViewKeyedDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
+            new ViewKeyedDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
 
         /// <summary>
         /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
@@ -42,9 +43,12 @@ namespace ReactNative.UIManager
         [ReactProp("transform")]
         public void SetTransform(TFrameworkElement view, JArray transforms)
         {
-            if (transforms == null && _transforms.Remove(view))
+            if (transforms == null)
             {
-                ResetProjectionMatrix(view);
+                if (_transforms.Remove(view))
+                {
+                    ResetProjectionMatrix(view);
+                }
             }
             else
             {
@@ -110,7 +114,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="label">The label.</param>
-        [ReactProp("accessibilityLabel")]
+        [ReactProp(ViewProps.AccessibilityLabel)]
         public void SetAccessibilityLabel(TFrameworkElement view, string label)
         {
             AutomationProperties.SetName(view, label ?? "");
@@ -138,6 +142,18 @@ namespace ReactNative.UIManager
         public void SetTooltip(TFrameworkElement view, string tooltip)
         {
             ToolTipService.SetToolTip(view, tooltip);
+        }
+
+        /// <summary>
+        /// Set the pointer events handling mode for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="pointerEventsValue">The pointerEvents mode.</param>
+        [ReactProp("pointerEvents")]
+        public void SetPointerEvents(TFrameworkElement view, string pointerEventsValue)
+        {
+            var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
+            view.SetPointerEvents(pointerEvents);
         }
 
         /// <summary>

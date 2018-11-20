@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
@@ -42,6 +42,21 @@ namespace ReactNative.Modules.Core
         }
 
         /// <summary>
+        /// Called before the dev options dialog is opened
+        /// </summary>
+        public event Action BeforeShowDevOptionsDialog
+        {
+            add
+            {
+                _devSupportManager.BeforeShowDevOptionsDialog += value;
+            }
+            remove
+            {
+                _devSupportManager.BeforeShowDevOptionsDialog -= value;
+            }
+        }
+
+        /// <summary>
         /// Report a fatal exception from JavaScript.
         /// </summary>
         /// <param name="title">The exception message.</param>
@@ -69,7 +84,7 @@ namespace ReactNative.Modules.Core
         public void reportSoftException(string title, JArray details, int exceptionId)
         {
             var stackTrace = StackTraceHelper.ConvertJavaScriptStackTrace(details);
-            Tracer.Write(ReactConstants.Tag, title + Environment.NewLine + stackTrace.PrettyPrint());
+            RnLog.Warn(ReactConstants.RNW, $"Soft Exception: {title}\n{stackTrace.PrettyPrint()}");
         }
 
         /// <summary>
@@ -109,7 +124,10 @@ namespace ReactNative.Modules.Core
             else
             {
                 var stackTrace = StackTraceHelper.ConvertJavaScriptStackTrace(details);
-                throw new JavaScriptException(title, stackTrace.PrettyPrint());
+
+                // JavaScriptAppException type can be used by custom implementations of RnLog.Fatal
+                // to detect the Javascript exception scenario for reporting purposes. 
+                throw new JavaScriptAppException(title, stackTrace);
             }
         }
 

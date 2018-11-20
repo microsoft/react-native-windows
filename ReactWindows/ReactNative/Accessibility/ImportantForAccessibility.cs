@@ -9,26 +9,38 @@ namespace ReactNative.Accessibility
     public enum ImportantForAccessibility
     {
         /// <summary>
-        /// Platform decides which views are important for accessibility and brings
-        /// the screen reader focus on those views
+        /// Platform decides if the view and/or its children are visible to screen reader.
         /// </summary>
         Auto = 0,
 
         /// <summary>
-        /// Groups all subviews under the view, allowing the screen reader to focus
-        /// just this view; if the accessibilityLabel is specified, it is announced; 
-        /// otherwise, the labels of its children are used
+        /// This view is visible to screen reader.
+        /// All children of this view are NOT visible to screen reader.
+        /// If the accessibilityLabel is specified, it is used by screen reader; 
+        /// otherwise, a text generated from the children using algorithm described 
+        /// at https://www.w3.org/TR/accname-1.1/#mapping_additional_nd_te is used by screen reader.
         /// </summary>
         Yes,
 
         /// <summary>
-        /// Tells the screen reader that it can focus the subviews of this view
+        /// This view is NOT visible to screen reader.
+        /// Decision on visibility of children to screen reader is deferred to the children.
         /// </summary>
         No,
 
         /// <summary>
-        /// Hides the view and its subviews from the screen reader
+        /// This view is NOT visible to screen reader.
+        /// All children of this view are NOT visible to screen reader.
         /// </summary>
         NoHideDescendants,
+
+        /// <summary>
+        /// This view is visible to screen reader.
+        /// Decision on visibility of children to screen reader is deferred to the children.
+        /// If the accessibilityLabel is specified, it is used by screen reader; 
+        /// otherwise, a text generated from the children using algorithm described 
+        /// at https://www.w3.org/TR/accname-1.1/#mapping_additional_nd_te is used by screen reader.
+        /// </summary>
+        YesDontHideDescendants,
     }
 }
