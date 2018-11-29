@@ -13,6 +13,7 @@ using ReactNative.Views.Text;
 using System;
 using Windows.System;
 using Windows.UI.Text;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -547,6 +548,12 @@ namespace ReactNative.Views.TextInput
             if (commandId == FocusTextInput)
             {
                 view.Focus(FocusState.Programmatic);
+                
+                // Open the touch keyboard if the device is in touch mode
+                if (UIViewSettings.GetForCurrentView().UserInteractionMode == UserInteractionMode.Touch)
+                {
+                    InputPane.GetForCurrentView().TryShow();
+                }
             }
             else if (commandId == BlurTextInput)
             {
