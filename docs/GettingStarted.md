@@ -83,6 +83,7 @@ React Native Windows is not currently supported by Expo. If you have a React Nat
         - Retarget by right clicking on the ChakraBridge project in the Solution Explorer and selecting `Retarget Projects` and pressing `OK` on the popup dialog (Platform Toolset should say `Upgrade to v141` in the dialog).
 - Select the `Debug` configuration and the `x64` platform from the combo box controls to the left of the `Run` button and underneath the `Team` and `Tools` menu item.
 	- *Note:* If you are running on, or targeting, an x86 platform select `x86` instead. If you are deploying to Windows 10 Phone, select `ARM`.
+- Double click Package.appxmanifest in your project folder, go to Capabilities, and make sure Private Networks (Client & Server) is checked.
 - Run `react-native start` from your project directory, and wait for the React Native packager to report success.
 - Click the `Run` button to the right of the platform combo box control, or select the `Debug`->`Start without Debugging` menu item. You now see your new app! :tada:
 
