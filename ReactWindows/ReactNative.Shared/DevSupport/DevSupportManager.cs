@@ -162,7 +162,7 @@ namespace ReactNative.DevSupport
 
         public bool HasUpToDateBundleInCache()
         {
-            if (_isDevSupportEnabled)
+            if (_isDevSupportEnabled && !IsRemoteDebuggingEnabled)
             {
 #if WINDOWS_UWP
                 var lastNativeUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate.UtcDateTime;
