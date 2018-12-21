@@ -485,6 +485,32 @@ namespace ReactNative.Modules.Network
                 var key = header[0];
                 switch (key.ToLowerInvariant())
                 {
+                     case "authorization":
+                        //create scheme from user's Authorization first word
+                        string createScheme = header[1].Split(' ')[0];
+
+                        //Remove above added scheme from authorization because it's already added
+                        string completeToken = header[1].Replace(header[1].Split(' ')[0], "");
+
+                        //To create HttpCredentialHedaerValue scheme should not be empty 
+                        if (createScheme.Trim().Length > 0 && completeToken.Contains("\""))
+                        {
+                            /*
+                             * If Header is in format of RFC 2617
+                             * The below code will not remove double quotes from the value.
+                             * This will re-create auth header with double quotes.
+                             */
+                            var authHdr = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue(createScheme.Trim(), completeToken);
+                            request.Headers.Authorization = authHdr;
+
+                        }
+                        else
+                        {
+                            //If other diffrent types of Authorization header which does not belongs to RFC2617.
+                            request.Headers.Add(key, header[1]);
+                        }
+ 
+                        break;
                     case "content-encoding":
                     case "content-length":
                     case "content-type":
