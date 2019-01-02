@@ -30,6 +30,8 @@ namespace ReactNative.Views.Text
 
         private string _fontFamily;
 
+        private string _text;
+
         /// <summary>
         /// Instantiates a <see cref="ReactTextShadowNode"/>.
         /// </summary>
@@ -37,6 +39,21 @@ namespace ReactNative.Views.Text
         {
             MeasureFunction = (node, width, widthMode, height, heightMode) =>
                 MeasureText(this, node, width, widthMode, height, heightMode);
+        }
+
+        /// <summary>
+        /// Sets the text for the node.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        [ReactProp("text")]
+        public void SetText(string text)
+        {
+            var nonNullText = text ?? "";
+            if (_text != nonNullText)
+            {
+                _text = nonNullText;
+                MarkUpdated();
+            }
         }
 
         /// <summary>
@@ -225,8 +242,11 @@ namespace ReactNative.Views.Text
 
         private void UpdateTextBlockCore(TextBlock textBlock, bool measureOnly)
         {
-            //textBlock.CharacterSpacing = _letterSpacing;
-            //textBlock.MaxLines = _numberOfLines;
+            if (ChildCount == 0 && _text != null)
+            {
+                textBlock.Text = _text;
+            }
+
             textBlock.LineHeight = _lineHeight != 0 ? _lineHeight : double.NaN;
             textBlock.TextAlignment = _textAlignment;
             textBlock.FontSize = _fontSize ?? 15;
@@ -254,8 +274,8 @@ namespace ReactNative.Views.Text
                 textBlock.Padding = new Thickness(
                     GetPadding(YogaEdge.Left),
                     GetPadding(YogaEdge.Top),
-                    0,
-                    0);
+                    GetPadding(YogaEdge.Right),
+                    GetPadding(YogaEdge.Bottom));
             }
         }
 

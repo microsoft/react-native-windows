@@ -34,8 +34,8 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
-            new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
+        private readonly ViewKeyedDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
+            new ViewKeyedDictionary<TFrameworkElement, DimensionBoundProperties>();
 
         /// <summary>
         /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
@@ -184,6 +184,7 @@ namespace ReactNative.UIManager
             }
 
             AutomationProperties.SetLiveSetting(view, liveSetting);
+            AccessibilityHelper.AnnounceIfNeeded(view);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace ReactNative.UIManager
         /// </remarks>
         public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
         {
-            _dimensionBoundProperties.TryRemove(view, out _);
+            _dimensionBoundProperties.Remove(view);
         }
 
         /// <summary>
@@ -312,7 +313,7 @@ namespace ReactNative.UIManager
             if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
+                _dimensionBoundProperties.AddOrUpdate(view, properties);
             }
 
             return properties;

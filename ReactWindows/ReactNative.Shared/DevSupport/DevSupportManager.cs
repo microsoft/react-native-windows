@@ -12,11 +12,12 @@ using ReactNative.Tracing;
 using System;
 using System.IO;
 using System.Reactive.Disposables;
-using System.Runtime.ExceptionServices;
+
 using System.Threading;
 using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.Storage;
+using Windows.ApplicationModel.Core;
 #else
 using PCLStorage;
 using System.Reflection;
@@ -29,11 +30,6 @@ namespace ReactNative.DevSupport
     {
         private const int NativeErrorCookie = -1;
         private const string JSBundleFileName = "ReactNativeDevBundle.js";
-
-#if WINDOWS_UWP
-        private readonly ShakeAccelerometer _accelerometer = ShakeAccelerometer.Instance;
-        private bool _isShakeDetectorRegistered;
-#endif
 
         private readonly SerialDisposable _pollingDisposable = new SerialDisposable();
 
@@ -65,6 +61,8 @@ namespace ReactNative.DevSupport
             _devServerHelper = new DevServerHelper(_devSettings);
             ReloadSettings();
         }
+
+        public event Action BeforeShowDevOptionsDialog;
 
         public IDeveloperSettings DevSettings
         {
@@ -152,7 +150,7 @@ namespace ReactNative.DevSupport
             }
             else
             {
-                ExceptionDispatchInfo.Capture(exception).Throw();
+                RnLog.Fatal(ReactConstants.RNW, exception, $"Exception caught in top handler");
             }
         }
 
@@ -187,7 +185,6 @@ namespace ReactNative.DevSupport
             }
             else
             {
-                Tracer.Error(ReactConstants.Tag, "Exception in native call from JavaScript.", exception);
                 ShowNewError(message, StackTraceHelper.ConvertNativeStackTrace(exception), NativeErrorCookie);
             }
         }
@@ -293,6 +290,8 @@ namespace ReactNative.DevSupport
                     _dismissRedBoxDialog();
                 }
 
+                BeforeShowDevOptionsDialog?.Invoke();
+
 #if WINDOWS_UWP
                 var asyncInfo = _devOptionsDialog.ShowAsync();
                 _dismissDevOptionsDialog = asyncInfo.Cancel;
@@ -375,9 +374,6 @@ namespace ReactNative.DevSupport
         {
             if (_isDevSupportEnabled)
             {
-#if WINDOWS_UWP
-                RegisterDevOptionsMenuTriggers();
-#endif
                 if (_devSettings.IsReloadOnJavaScriptChangeEnabled)
                 {
                     _pollingDisposable.Disposable =
@@ -391,10 +387,6 @@ namespace ReactNative.DevSupport
             }
             else
             {
-#if WINDOWS_UWP
-                UnregisterDevOptionsMenuTriggers();
-#endif
-
                 if (_redBoxDialog != null)
                 {
                     _dismissRedBoxDialog();
@@ -412,9 +404,12 @@ namespace ReactNative.DevSupport
 
         public async void HandleReloadJavaScript()
         {
+            RnLog.Info(ReactConstants.RNW, $"DevSupportManager: HandleReloadJavaScript - entry");
             using (await _reactInstanceCommandsHandler.LockAsync())
             {
+                RnLog.Info(ReactConstants.RNW, $"DevSupportManager: HandleReloadJavaScript - execute");
                 await CreateReactContextFromPackagerAsync(CancellationToken.None);
+                RnLog.Info(ReactConstants.RNW, $"DevSupportManager: HandleReloadJavaScript - done");
             }
         }
 
@@ -447,6 +442,12 @@ namespace ReactNative.DevSupport
         private Action ShowProgressDialog(ProgressDialog progressDialog)
         {
 #if WINDOWS_UWP
+            if (CoreApplication.GetCurrentView().CoreWindow == null)
+            {
+            	// Main UI thread has no CoreWindow, so we can't parent a dialog box
+                RnLog.Info(ReactConstants.RNW, $"ProgressDialog can't be shown due to the lack of a CoreWindow");
+                return null;
+            }
             var operation = progressDialog.ShowAsync();
             return operation.Cancel;
 #else
@@ -476,8 +477,19 @@ namespace ReactNative.DevSupport
 
         private void ShowNewError(string message, IStackFrame[] stack, int errorCookie)
         {
+            RnLog.Error(ReactConstants.RNW, $"Showing RedBox with message: {message}");
+
             DispatcherHelpers.RunOnDispatcher(() =>
             {
+#if WINDOWS_UWP
+                if (CoreApplication.GetCurrentView().CoreWindow == null)
+                {
+                    // Main UI thread has no CoreWindow, so we can't parent a dialog box
+                    RnLog.Info(ReactConstants.RNW, $"RedBox can't be shown due to the lack of a CoreWindow");
+                    return;
+                }
+#endif
+
                 if (_redBoxDialog == null)
                 {
                     _redBoxDialog = new RedBoxDialog(HandleReloadJavaScript);
@@ -637,7 +649,7 @@ namespace ReactNative.DevSupport
             var hideProgress = ShowProgressDialog(progressDialog);
             using (var cancellationDisposable = new CancellationDisposable())
             using (token.Register(cancellationDisposable.Dispose))
-            using (progressDialog.Token.Register(cancellationDisposable.Dispose))
+            using (hideProgress != null ? (IDisposable)progressDialog.Token.Register(cancellationDisposable.Dispose) : Disposable.Empty)
             {
                 try
                 {
@@ -655,37 +667,12 @@ namespace ReactNative.DevSupport
                 }
                 finally
                 {
-                    hideProgress();
+                    hideProgress?.Invoke();
                 }
             }
 
             return false;
         }
-
-#if WINDOWS_UWP
-        private void RegisterDevOptionsMenuTriggers()
-        {
-            if (!_isShakeDetectorRegistered && _accelerometer != null)
-            {
-                _isShakeDetectorRegistered = true;
-                _accelerometer.Shaken += OnAccelerometerShake;
-            }
-        }
-
-        private void UnregisterDevOptionsMenuTriggers()
-        {
-            if (_isShakeDetectorRegistered && _accelerometer != null)
-            {
-                _accelerometer.Shaken -= OnAccelerometerShake;
-                _isShakeDetectorRegistered = false;
-            }
-        }
-
-        private void OnAccelerometerShake(object sender, EventArgs args)
-        {
-            ShowDevOptionsDialog();
-        }
-#endif
 
         class DevOptionHandler
         {

@@ -4,6 +4,7 @@
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
 using ReactNative.Modules.Core;
+using ReactNative.Tracing;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -246,6 +247,20 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
+        /// Refreshes RTL/LTR direction on all root views.
+        /// </summary>
+        public void UpdateRootViewNodesDirection()
+        {
+            // Called on layout manager thread
+
+            // Dispatch to all queues
+            foreach (var queue in _dispatcherToOperationQueueInfo.Values)
+            {
+                queue.queueInstance.UpdateRootViewNodesDirection();
+            }
+        }
+
+        /// <summary>
         /// Enqueues an operation to dispatch a command.
         /// </summary>
         /// <param name="tag">The view tag.</param>
@@ -288,26 +303,24 @@ namespace ReactNative.UIManager
         /// Enqueues a operation to execute a UIBlock.
         /// </summary>
         /// <param name="block">The UI block.</param>
-        public void EnqueueUIBlock(IUIBlock block)
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void EnqueueUIBlock(IUIBlock block, int? tag)
         {
             // Called on layout manager thread
 
-            // Native animation module is synchronized to the main dispatcher thread.
-            // Always forward to the main queue
-            MainUIViewOperationQueue.EnqueueUIBlock(block);
+            (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).EnqueueUIBlock(block);
         }
 
         /// <summary>
         /// Enqueues a operation to execute a UIBlock.
         /// </summary>
         /// <param name="block">The UI block.</param>
-        public void PrependUIBlock(IUIBlock block)
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        public void PrependUIBlock(IUIBlock block, int? tag)
         {
             // Called on layout manager thread
 
-            // Native animation module is synchronized to the main dispatcher thread.
-            // Always forward to the main queue
-            MainUIViewOperationQueue.PrependUIBlock(block);
+            (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).PrependUIBlock(block);
         }
 
         /// <summary>
@@ -588,23 +601,11 @@ namespace ReactNative.UIManager
                     }
                     else
                     {
-                        Debug.WriteLine($"View with tag {tag} not found due to race condition");
+                        RnLog.Warn(nameof(UIViewOperationQueue), $"View with tag '{tag}' not found due to race condition");
                     }
                 });
             }
             return true;
-        }
-
-        /// <summary>
-        /// Invokes the action to execute on dispatcher thread associated with view specified by <paramref name="tag" />.
-        /// Action is not queued on operation queue, but it goes to dispatcher directly.
-        /// </summary>
-        /// <param name="tag">The react tag which specifies view.</param>
-        /// <param name="action">The action to invoke.</param>
-        public void InvokeAction(int? tag, Action action)
-        {
-            DispatcherHelpers.RunOnDispatcher(
-                (tag.HasValue ? GetQueueByTag(tag.Value) : MainUIViewOperationQueue).Dispatcher,() => action());
         }
 
         /// <summary>

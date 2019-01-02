@@ -6,6 +6,7 @@ using ReactNative.Bridge;
 using ReactNative.Modules.Core;
 using System;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using Windows.System;
 using static System.FormattableString;
 
@@ -16,10 +17,14 @@ namespace ReactNative.Modules.Launch
     /// </summary>
     public class LauncherModule : ReactContextNativeModuleBase, ILifecycleEventListener
     {
-        private static string s_activatedUrl;
+        private static readonly object s_lock = new object();
+        // When using these statics, must hold `s_lock`.
+        private static string s_pendingActivatedUrl;
+        private static LauncherModule s_currentInstance;
 
         private readonly Subject<string> _urlSubject = new Subject<string>();
 
+        private volatile string _activatedUrl;
         private bool _initialized;
         private IDisposable _subscription;
 
@@ -30,6 +35,12 @@ namespace ReactNative.Modules.Launch
         public LauncherModule(ReactContext reactContext) 
             : base(reactContext)
         {
+            lock (s_lock)
+            {
+                _activatedUrl = s_pendingActivatedUrl;
+                s_pendingActivatedUrl = null;
+                s_currentInstance = this;
+            }
         }
 
         /// <summary>
@@ -121,7 +132,7 @@ namespace ReactNative.Modules.Launch
         [ReactMethod]
         public void getInitialURL(IPromise promise)
         {
-            promise.Resolve(s_activatedUrl);
+            promise.Resolve(_activatedUrl);
         }
 
         /// <summary>
@@ -162,6 +173,24 @@ namespace ReactNative.Modules.Launch
         }
 
         /// <summary>
+        /// Called before a <see cref="IReactInstance"/> is disposed.
+        /// </summary>
+        /// <returns>
+        /// A task to await the dispose operation.
+        /// </returns>
+        public override Task OnReactInstanceDisposeAsync()
+        {
+            lock (s_lock)
+            {
+                if (this == s_currentInstance)
+                {
+                    s_currentInstance = null;
+                }
+            }
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
         /// Called whenever a protocol activation occurs.
         /// </summary>
         /// <param name="url">The URL.</param>
@@ -176,7 +205,36 @@ namespace ReactNative.Modules.Launch
         /// <param name="url">The URL.</param>
         public static void SetActivatedUrl(string url)
         {
-            s_activatedUrl = url;
+            // Static state doesn't work well in RNW modules for scenarios that involve creating multiple instances of a
+            // module during the lifetime of the application. Examples:
+            //   1. An app creates multiple RNW bridges in which case each module will have multiple instances living at
+            //      the same time.
+            //   2. An app recreates the RNW context in which case each module will have multiple instances but
+            //      their lifetimes won't overlap.
+            // 
+            // This method is designed to work for (2). The idea is that `url` is intended for 1 module instance.
+            // If the instance is already around, the activated URL will be given to it. Otherwise, the module
+            // instance will *consume* the activated URL during initialization. Once consumed, the URL won't
+            // be around for other instances to consume during their initialization.
+            //
+            // The right behavior for (1) isn't clear.
+            //
+            // Ideally, the app would pass the activated URL directly to the appropriate instance so RNW doesn't
+            // have to guess which module instance the activated URL was intended for. However, there are some
+            // challenges around the right way to plumb this during initialization and some potential races of
+            // getting this to the right place before JavaScript calls `getInitialURL`.
+
+            lock (s_lock)
+            {
+                if (s_currentInstance != null)
+                {
+                    s_currentInstance._activatedUrl = url;
+                }
+                else
+                {
+                    s_pendingActivatedUrl = url;
+                }
+            }
         }
 
         private IDisposable CreateUrlSubscription()

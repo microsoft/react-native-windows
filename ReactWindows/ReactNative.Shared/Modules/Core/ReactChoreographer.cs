@@ -3,6 +3,7 @@
 
 using ReactNative.Bridge;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -24,6 +25,8 @@ namespace ReactNative.Modules.Core
         private const CoreDispatcherPriority ActivatePriority = CoreDispatcherPriority.High;
         private readonly CoreApplicationView _applicationView;
         private readonly CoreDispatcher _coreDispatcher;
+        private static ConcurrentDictionary<CoreDispatcher, ReactChoreographer> s_threadInstanceMap =
+            new ConcurrentDictionary<CoreDispatcher, ReactChoreographer>();
 #else
         private const DispatcherPriority ActivatePriority = DispatcherPriority.Send;
 #endif
@@ -55,9 +58,40 @@ namespace ReactNative.Modules.Core
             // main dispatcher or layout manager), yet it may not be yet accessible from the thread pool threads that'll soon
             // call ActivateCallback.
             _coreDispatcher = applicationView.Dispatcher;
+
+            if (!s_threadInstanceMap.TryAdd(_coreDispatcher, this))
+            {
+                throw new InvalidOperationException("Dispatcher thread already has a choreogrpaher");
+            }
+        }
+
+        /// <summary>
+        /// The choreographer instance corresponding to the calling dispatcher thread
+        /// </summary>
+        public static IReactChoreographer ThreadInstance
+        {
+            get
+            {
+                var currentView = CoreApplication.GetCurrentView();
+                if (currentView == null)
+                {
+                    throw new InvalidOperationException("ThreadInstance called from a non-dispatcher thread");
+                }
+
+                if (!s_threadInstanceMap.TryGetValue(currentView.Dispatcher, out var instance))
+                {
+                    throw new InvalidOperationException("Dispatcher thread has no choreographer");
+                }
+                return instance;
+            }
         }
 #else
         private ReactChoreographer() { }
+
+        /// <summary>
+        /// The choreographer instance (returns same as Instance for WPF)
+        /// </summary>
+       public static IReactChoreographer ThreadInstance => s_instance;
 #endif
 
         /// <summary>
@@ -82,7 +116,7 @@ namespace ReactNative.Modules.Core
         public event EventHandler<FrameEventArgs> IdleCallback;
 
         /// <summary>
-        /// The choreographer instance.
+        /// The choreographer main instance.
         /// </summary>
         public static IReactChoreographer Instance
         {
@@ -223,6 +257,9 @@ namespace ReactNative.Modules.Core
             {
                 Unsubscribe();
             }
+#if WINDOWS_UWP
+            s_threadInstanceMap.TryRemove(_coreDispatcher, out _);
+#endif
         }
 
         private void Subscribe()

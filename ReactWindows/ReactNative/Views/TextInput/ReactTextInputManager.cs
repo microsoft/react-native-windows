@@ -222,6 +222,10 @@ namespace ReactNative.Views.TextInput
         [ReactProp("selection")]
         public void SetSelection(ReactTextBox view, JObject selection)
         {
+            if (selection == null) {
+                return;
+            }
+
             var start = selection.Value<int>("start");
             var textLength = view.Text?.Length ?? 0;
             var normalizedStart = Math.Min(start, textLength);
@@ -511,6 +515,17 @@ namespace ReactNative.Views.TextInput
         {
             var importantForAccessibility = EnumHelpers.ParseNullable<ImportantForAccessibility>(importantForAccessibilityValue) ?? ImportantForAccessibility.Auto;
             AccessibilityHelper.SetImportantForAccessibility(view, importantForAccessibility);
+        }
+
+        /// <summary>
+        /// Controls the visibility of the DeleteButton.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="clearButtonMode">Visibility of the DeleteButton.</param>
+        [ReactProp("clearButtonMode")]
+        public void SetClearButtonMode(ReactTextBox view, string clearButtonMode)
+        {
+            view.ClearButtonMode = EnumHelpers.ParseNullable<ClearButtonModeType>(clearButtonMode) ?? ClearButtonModeType.Default;
         }
 
         /// <summary>

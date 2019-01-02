@@ -130,6 +130,31 @@ namespace ReactNative.Tests.Views.Text
             Assert.AreEqual(text, @"InlineUIContainerText");
         }
 
+        [UTFAC.UITestMethod]
+        public void ReactTextViewManager_Selection_EmbeddedSpan()
+        {
+            // <Span><Run>@</Run><Span><Run>First text.</Run></Span><Run>Third text.</Run></Span>
+            Span span = new Span();
+            Run run = new Run();
+            run.Text = "@";
+            span.Inlines.Add(run);
+            Span span1 = new Span();
+            Run run1 = new Run();
+            run1.Text = "First text.";
+            span1.Inlines.Add(run1);
+            span.Inlines.Add(span1);
+            Run run2 = new Run();
+            run2.Text = "Third text.";
+            span.Inlines.Add(run2);
+
+            RichTextBlock rtb = CreateWithInlines(new Inline[] { span });
+            Paragraph paragraph = rtb.Blocks.First() as Paragraph;
+            TextPointer start = paragraph.ContentStart.GetPositionAtOffset(7, LogicalDirection.Forward);
+            TextPointer end = paragraph.ContentStart.GetPositionAtOffset(8, LogicalDirection.Forward);
+            var text = ReactTextViewManager.GetStringByStartAndEndPointers(rtb, start, end);
+            Assert.AreEqual(text, @"i");
+        }
+
         private RichTextBlock CreateWithInlines(Inline[] inlines)
         {
             RichTextBlock rtb = new RichTextBlock();
