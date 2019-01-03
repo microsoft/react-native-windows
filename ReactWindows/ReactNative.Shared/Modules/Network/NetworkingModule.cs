@@ -486,6 +486,7 @@ namespace ReactNative.Modules.Network
                 switch (key.ToLowerInvariant())
                 {
                      case "authorization":
+#if WINDOWS_UWP
                         //create scheme from user's Authorization first word
                         string createScheme = header[1].Split(' ')[0];
 
@@ -509,7 +510,9 @@ namespace ReactNative.Modules.Network
                             //If other diffrent types of Authorization header which does not belongs to RFC2617.
                             request.Headers.Add(key, header[1]);
                         }
- 
+#else
+                        request.Headers.Add(key, header[1]);
+#endif
                         break;
                     case "content-encoding":
                     case "content-length":
