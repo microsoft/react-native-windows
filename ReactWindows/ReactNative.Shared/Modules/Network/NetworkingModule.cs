@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 #if WINDOWS_UWP
 using Windows.Storage;
 using Windows.Web.Http;
@@ -485,29 +486,19 @@ namespace ReactNative.Modules.Network
                 var key = header[0];
                 switch (key.ToLowerInvariant())
                 {
-                     case "authorization":
+                    case "authorization":
 #if WINDOWS_UWP
-                        //create scheme from user's Authorization first word
-                        string createScheme = header[1].Split(' ')[0];
-
-                        //Remove above added scheme from authorization because it's already added
-                        string completeToken = header[1].Replace(header[1].Split(' ')[0], "");
-
-                        //To create HttpCredentialHedaerValue scheme should not be empty 
-                        if (createScheme.Trim().Length > 0 && completeToken.Contains("\""))
+                        // Regex for RFC 2617
+                        var regex = new Regex(@"^(?<scheme>\w+)\s*(?<token>(\w+\s*[=:]\s*""?[^,""]*""?\s*,?\s*)+)$");
+                        var match = regex.Match(header[1].Trim());
+                        if (match.Success)
                         {
-                            /*
-                             * If Header is in format of RFC 2617
-                             * The below code will not remove double quotes from the value.
-                             * This will re-create auth header with double quotes.
-                             */
-                            var authHdr = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue(createScheme.Trim(), completeToken);
-                            request.Headers.Authorization = authHdr;
-
+                            var authHeader = new HttpCredentialsHeaderValue(match.Groups["scheme"].Value, match.Groups["token"].Value);
+                            request.Headers.Authorization = authHeader;
                         }
                         else
                         {
-                            //If other diffrent types of Authorization header which does not belongs to RFC2617.
+                            //If other different types of Authorization header which does not belongs to RFC2617.
                             request.Headers.Add(key, header[1]);
                         }
 #else
