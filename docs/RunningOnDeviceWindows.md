@@ -63,7 +63,7 @@ If you generated your project using `rnpm-plugin-windows`, the solution is alrea
 Before deploying with this configuration, you'll have to generate the `index.windows.bundle` file with the following command:
 
 ```
-react-native bundle --platform windows --entry-file index.windows.js
+react-native bundle --platform windows --entry-file index.js
     --bundle-output windows\myapp\ReactAssets\index.windows.bundle
     --assets-dest windows\myapp\ReactAssets
 ```
@@ -71,7 +71,7 @@ react-native bundle --platform windows --entry-file index.windows.js
 To generate the release (minified) bundle, add the `--dev false`:
 
 ```
-react-native bundle --platform windows --entry-file index.windows.js
+react-native bundle --platform windows --entry-file index.js
     --bundle-output windows\myapp\ReactAssets\index.windows.bundle
     --assets-dest windows\myapp\ReactAssets
     --dev false
