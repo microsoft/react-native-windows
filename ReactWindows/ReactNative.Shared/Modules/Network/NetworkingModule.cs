@@ -487,8 +487,16 @@ namespace ReactNative.Modules.Network
                 {
 #if WINDOWS_UWP
                     case "authorization":
-                        var headerParts = header[1].Trim().Split(new[] { ' ' }, 2);
-                        request.Headers.Authorization = new HttpCredentialsHeaderValue(headerParts[0].Trim(), headerParts[1].Trim());
+                        var authParts = header[1].Trim().Split(new[] { ' ' }, 2);
+                        if (authParts.Length == 2)
+                        {
+                            request.Headers.Authorization = new HttpCredentialsHeaderValue(authParts[0].Trim(), authParts[1].Trim());
+                        }
+                        else
+                        {
+                            request.Headers.Add(key, header[1]);
+                        }
+                        
                         break;
 #endif
                     case "content-encoding":
