@@ -488,19 +488,8 @@ namespace ReactNative.Modules.Network
                 {
 #if WINDOWS_UWP
                     case "authorization":
-                        // Regex for RFC 2617
-                        var regex = new Regex(@"^(?<scheme>\w+)\s*(?<token>(\w+\s*[=:]\s*""?[^,""]*""?\s*,?\s*)+)$");
-                        var match = regex.Match(header[1].Trim());
-                        if (match.Success)
-                        {
-                            var authHeader = new HttpCredentialsHeaderValue(match.Groups["scheme"].Value, match.Groups["token"].Value);
-                            request.Headers.Authorization = authHeader;
-                        }
-                        else
-                        {
-                            request.Headers.Add(key, header[1]);
-                        }
-
+                        var headerParts = header[1].Trim().Split(new[] { ' ' }, 2);
+                        request.Headers.Authorization = new HttpCredentialsHeaderValue(headerParts[0].Trim(), headerParts[1].Trim());
                         break;
 #endif
                     case "content-encoding":
