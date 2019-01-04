@@ -14,7 +14,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 #if WINDOWS_UWP
 using Windows.Storage;
 using Windows.Web.Http;
