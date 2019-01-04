@@ -9,7 +9,6 @@ using ReactNative.UIManager;
 using ReactNative.UIManager.Annotations;
 using ReactNative.UIManager.Events;
 using System;
-using System.Collections.Concurrent;
 using System.Reflection;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -27,8 +26,8 @@ namespace ReactNative.Views.Scroll
     {
         private const int CommandScrollTo = 1;
 
-        private readonly ConcurrentDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
-            new ConcurrentDictionary<ScrollViewer, ScrollViewerData>();
+        private readonly ViewKeyedDictionary<ScrollViewer, ScrollViewerData> _scrollViewerData =
+            new ViewKeyedDictionary<ScrollViewer, ScrollViewerData>();
 
         /// <summary>
         /// The name of the view manager.
@@ -256,14 +255,7 @@ namespace ReactNative.Views.Scroll
             var disabledValue = disabled ?? false;
             if (_scrollViewerData[view].DisableArrowNavigation != disabledValue)
             {
-                if (_scrollViewerData[view].IsControlLoaded)
-                {
-                    UpdateDisableKeyboardBasedScrolling(view, disabledValue);
-                }
-                else
-                {
-                    _scrollViewerData[view].DisableArrowNavigation = disabledValue;
-                }
+                UpdateDisableKeyboardBasedScrolling(view, disabledValue);
             }
         }
 
@@ -283,14 +275,14 @@ namespace ReactNative.Views.Scroll
                 throw new ArgumentOutOfRangeException(nameof(index), Invariant($"{nameof(ScrollViewer)} currently only supports one child."));
             }
 
-            if (parent.Content != null)
+            if (GetContentWrapperFor(parent).Child != null)
             {
                 throw new InvalidOperationException(Invariant($"{nameof(ScrollViewer)} already has a child element."));
             }
 
             child.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
             child.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
-            parent.Content = child;
+            GetContentWrapperFor(parent).Child = (UIElement)child;
         }
 
         /// <summary>
@@ -319,7 +311,7 @@ namespace ReactNative.Views.Scroll
         /// <returns>The number of children.</returns>
         public override int GetChildCount(ScrollViewer parent)
         {
-            return parent.Content != null ? 1 : 0;
+            return GetContentWrapperFor(parent).Child != null ? 1 : 0;
         }
 
         /// <summary>
@@ -328,7 +320,7 @@ namespace ReactNative.Views.Scroll
         /// <param name="parent">The view parent.</param>
         public override void RemoveAllChildren(ScrollViewer parent)
         {
-            parent.Content = null;
+            GetContentWrapperFor(parent).Child = null;
         }
 
         /// <summary>
@@ -360,9 +352,8 @@ namespace ReactNative.Views.Scroll
         {
             base.OnDropViewInstance(reactContext, view);
 
-            _scrollViewerData.TryRemove(view, out _);
+            _scrollViewerData.Remove(view);
 
-            view.Loaded -= OnLoaded;
             view.ViewChanging -= OnViewChanging;
             view.DirectManipulationStarted -= OnDirectManipulationStarted;
             view.DirectManipulationCompleted -= OnDirectManipulationCompleted;
@@ -413,8 +404,9 @@ namespace ReactNative.Views.Scroll
                 // We force a better default, at least until we start supporting TabIndex/IsTabStop properties on RCTScrollView.
                 TabIndex = 0,
             };
+            SetContentWrapperFor(scrollViewer);
 
-            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData, (k, v) => scrollViewerData);
+            _scrollViewerData.AddOrUpdate(scrollViewer, scrollViewerData);
 
             return scrollViewer;
         }
@@ -430,7 +422,6 @@ namespace ReactNative.Views.Scroll
             view.DirectManipulationCompleted += OnDirectManipulationCompleted;
             view.DirectManipulationStarted += OnDirectManipulationStarted;
             view.ViewChanging += OnViewChanging;
-            view.Loaded += OnLoaded;
         }
 
         private void OnDirectManipulationCompleted(object sender, object e)
@@ -526,37 +517,15 @@ namespace ReactNative.Views.Scroll
                         }));
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var scrollViewer = (ScrollViewer)sender;
-            _scrollViewerData[scrollViewer].IsControlLoaded = true;
-
-            UpdateDisableKeyboardBasedScrolling(scrollViewer, _scrollViewerData[scrollViewer].DisableArrowNavigation);
-        }
-
         private void UpdateDisableKeyboardBasedScrolling(ScrollViewer view, bool disable)
         {
-            ScrollContentPresenter contentPresenter = _scrollViewerData[view].ContentPresenter;
             if (disable)
             {
-                if (contentPresenter == null)
-                {
-                    contentPresenter = FindChild<ScrollContentPresenter>(view);
-                    if (contentPresenter == null)
-                    {
-                        throw new InvalidOperationException("ScrollViewer doesn't seem to contain a ScrollContentPresenter");
-                    }
-                    _scrollViewerData[view].ContentPresenter = contentPresenter;
-                }
-
-                contentPresenter.KeyDown += OnPresenterKeyDown;
+                GetContentWrapperFor(view).KeyDown += OnPresenterKeyDown;
             }
             else
             {
-                if (contentPresenter != null)
-                {
-                    contentPresenter.KeyDown -= OnPresenterKeyDown;
-                }
+                GetContentWrapperFor(view).KeyDown -= OnPresenterKeyDown;
             }
 
             _scrollViewerData[view].DisableArrowNavigation = disable;
@@ -593,7 +562,7 @@ namespace ReactNative.Views.Scroll
 
         private static DependencyObject EnsureChild(ScrollViewer view)
         {
-            var child = view.Content;
+            var child = GetContentWrapperFor(view).Child;
             if (child == null)
             {
                 throw new InvalidOperationException(Invariant($"{nameof(ScrollViewer)} does not have any children."));
@@ -612,6 +581,9 @@ namespace ReactNative.Views.Scroll
         {
             scrollView.ChangeView(x, y, null, !animated);
         }
+
+        private static Border GetContentWrapperFor(ScrollViewer scrollViewer) => (Border)scrollViewer.Content;
+        private static void SetContentWrapperFor(ScrollViewer scrollViewer) => scrollViewer.Content = new Border();
 
         class ScrollEvent : Event
         {
@@ -642,10 +614,7 @@ namespace ReactNative.Views.Scroll
         class ScrollViewerData
         {
             public ScrollMode HorizontalScrollMode = ScrollMode.Disabled;
-
-            public bool IsControlLoaded;
             public bool DisableArrowNavigation;
-            public ScrollContentPresenter ContentPresenter;
         }
     }
 }

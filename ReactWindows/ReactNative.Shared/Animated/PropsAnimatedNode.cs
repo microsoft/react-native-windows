@@ -104,7 +104,7 @@ namespace ReactNative.Animated
 
             if (!updated)
             {
-                Tracer.Error(ReactConstants.Tag, "Native animation workaround, frame lost as result of race condition.", null);
+                RnLog.Warn(ReactConstants.RNW, $"Native animation workaround, frame lost as result of race condition.");
             }
         }
     }

@@ -6,6 +6,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactNative.Bridge;
+using ReactNative.Common;
+using ReactNative.Tracing;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,6 +67,7 @@ namespace ReactNative.Modules.Storage
 
             if (error != null)
             {
+                RnLog.Warn(ReactConstants.RNW, $"Error in AsyncStorageModule.multiGet: {error}");
                 callback.Invoke(error);
             }
             else
@@ -125,6 +128,7 @@ namespace ReactNative.Modules.Storage
 
             if (error != null)
             {
+                RnLog.Warn(ReactConstants.RNW, $"Error in AsyncStorageModule.multiSet: {error}");
                 callback.Invoke(error);
             }
             else
@@ -173,6 +177,7 @@ namespace ReactNative.Modules.Storage
 
             if (error != null)
             {
+                RnLog.Warn(ReactConstants.RNW, $"Error in AsyncStorageModule.multiRemove: {error}");
                 callback.Invoke(error);
             }
             else
@@ -233,6 +238,7 @@ namespace ReactNative.Modules.Storage
 
             if (error != null)
             {
+                RnLog.Warn(ReactConstants.RNW, $"Error in AsyncStorageModule.multiMerge: {error}");
                 callback.Invoke(error);
             }
             else
@@ -267,6 +273,7 @@ namespace ReactNative.Modules.Storage
 
             if (error != null)
             {
+                RnLog.Warn(ReactConstants.RNW, $"Error in AsyncStorageModule.clear: {error}");
                 callback.Invoke(error);
             }
             else
@@ -309,6 +316,7 @@ namespace ReactNative.Modules.Storage
 
             if (error != null)
             {
+                RnLog.Warn(ReactConstants.RNW, $"Error in AsyncStorageModule.getAllKeys: {error}");
                 callback.Invoke(error);
             }
             else
@@ -317,9 +325,11 @@ namespace ReactNative.Modules.Storage
             }
         }
 
-        public override void OnReactInstanceDispose()
+        public override Task OnReactInstanceDisposeAsync()
         {
             _mutex.Dispose();
+
+            return Task.CompletedTask;
         }
 
         private async Task<string> GetAsync(string key)

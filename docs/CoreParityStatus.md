@@ -16,7 +16,7 @@
 | KeyboardAvoidingView | Not Started | Dependent on [#159](https://github.com/ReactWindows/react-native-windows/issues/159). |
 | ListView | Ready | RecyclerBackedScrollViewManager unavailable ([#186](https://github.com/ReactWindows/react-native-windows/issues/186)). |
 | MapView | n/a | Deprecated in favor of [react-native-maps](https://github.com/airbnb/react-native-maps). |
-| Modal | Not Started | See [#618](https://github.com/ReactWindows/react-native-windows/issues/618). |
+| Modal | Beta | See [#618](https://github.com/ReactWindows/react-native-windows/issues/618). |
 | Navigator | Ready |  |
 | NavigatorIOS | n/a | iOS-only. |
 | Picker | Partial | Missing dialog-driven picker ([#535](https://github.com/ReactWindows/react-native-windows/issues/535)). |

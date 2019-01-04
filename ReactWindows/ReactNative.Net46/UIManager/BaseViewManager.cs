@@ -30,8 +30,8 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly IDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
-            new Dictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
+        private readonly ViewKeyedDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>> _transforms =
+            new ViewKeyedDictionary<TFrameworkElement, Action<TFrameworkElement, Dimensions>>();
 
         /// <summary>
         /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.

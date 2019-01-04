@@ -223,11 +223,12 @@ namespace ReactNative.Modules.Network
         /// <summary>
         /// Called before a <see cref="IReactInstance"/> is disposed.
         /// </summary>
-        public override void OnReactInstanceDispose()
+        public override Task OnReactInstanceDisposeAsync()
         {
             _shuttingDown = true;
             _tasks.CancelAllTasks();
             _client.Dispose();
+            return Task.CompletedTask;
         }
 
         private async Task ProcessRequestFromUriAsync(
@@ -484,6 +485,20 @@ namespace ReactNative.Modules.Network
                 var key = header[0];
                 switch (key.ToLowerInvariant())
                 {
+#if WINDOWS_UWP
+                    case "authorization":
+                        var authParts = header[1].Trim().Split(new[] { ' ' }, 2);
+                        if (authParts.Length == 2)
+                        {
+                            request.Headers.Authorization = new HttpCredentialsHeaderValue(authParts[0].Trim(), authParts[1].Trim());
+                        }
+                        else
+                        {
+                            request.Headers.Add(key, header[1]);
+                        }
+                        
+                        break;
+#endif
                     case "content-encoding":
                     case "content-length":
                     case "content-type":

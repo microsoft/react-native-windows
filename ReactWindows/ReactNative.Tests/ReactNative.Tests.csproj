@@ -127,6 +127,7 @@
     <Compile Include="UnitTestApp.xaml.cs">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Text\ReactTextViewManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml">

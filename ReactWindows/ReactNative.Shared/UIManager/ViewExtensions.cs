@@ -15,6 +15,19 @@ namespace ReactNative.UIManager
             new ConcurrentDictionary<object, ViewData>();
         private static readonly IReactCompoundView s_defaultCompoundView = new ReactDefaultCompoundView();
 
+        [Flags]
+        public enum MouseHandlerMask
+        {
+            MouseMove =        0x01,
+            MouseMoveCapture = 0x02,
+            MouseOver =        0x04,
+            MouseOverCapture = 0x08,
+            MouseOut =         0x10,
+            MouseOutCapture =  0x20,
+            MouseEnter =       0x40,
+            MouseLeave =       0x80
+        }
+
         /// <summary>
         /// Sets the pointer events for the view.
         /// </summary>
@@ -159,6 +172,50 @@ namespace ReactNative.UIManager
             return elementData.Context;
         }
 
+        /// <summary>
+        /// Sets mouse handler presence for the view. Tracks multiple handlers, whereas the getter returns an "OR" value.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="handlerMask">Affected handlers.</param>
+        /// <param name="handlerPresent">true if handler present, false otherwise.</param>
+        internal static void SetMouseHandlerPresent(this object view, MouseHandlerMask handlerMask, bool handlerPresent)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            var data = s_properties.GetOrAdd(view, (v) => new ViewData());
+            if (handlerPresent)
+            {
+                data.MouseHandlers |= handlerMask;
+            }
+            else
+            {
+                data.MouseHandlers &= ~handlerMask;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mouse handler presence for the view.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="handlerMask">Affected handlers.</param>
+        /// <returns>
+        /// true if a any handler from the handlerMask is enabled on the view, false otherwise.
+        /// </returns>
+        public static bool GetMouseHandlerPresent(this object view, MouseHandlerMask handlerMask)
+        {
+            if (view == null)
+                throw new ArgumentNullException(nameof(view));
+
+            if (s_properties.TryGetValue(view, out var elementData))
+            {
+                return (elementData.MouseHandlers & handlerMask) != 0;
+            }
+
+            return false;
+        }
+
+
         internal static void ClearData(this object view)
         {
             s_properties.TryRemove(view, out _);
@@ -173,6 +230,8 @@ namespace ReactNative.UIManager
             public int? Tag { get; set; }
 
             public IReactCompoundView CompoundView { get; set; }
+
+            public MouseHandlerMask MouseHandlers { get; set; }
         }
     }
 }

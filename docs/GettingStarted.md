@@ -83,9 +83,8 @@ React Native Windows is not currently supported by Expo. If you have a React Nat
         - Retarget by right clicking on the ChakraBridge project in the Solution Explorer and selecting `Retarget Projects` and pressing `OK` on the popup dialog (Platform Toolset should say `Upgrade to v141` in the dialog).
 - Select the `Debug` configuration and the `x64` platform from the combo box controls to the left of the `Run` button and underneath the `Team` and `Tools` menu item.
 	- *Note:* If you are running on, or targeting, an x86 platform select `x86` instead. If you are deploying to Windows 10 Phone, select `ARM`.
-- Click the `Run` button to the right of the platform combo box control, or select the `Debug`->`Start without Debugging` menu item.
-- You should now see a typical React Native app running on Windows that is showing an error saying it needs to contact the dev server. Almost there!
-- Run `react-native start` from your project directory, and wait for the React Native packager to report success. Then, press control+R (or click `Reload` button) in your running app. You now see your new app! :tada:
+- Run `react-native start` from your project directory, and wait for the React Native packager to report success.
+- Click the `Run` button to the right of the platform combo box control, or select the `Debug`->`Start without Debugging` menu item. You now see your new app! :tada:
 
 *Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](http://github.com/Microsoft/react-native-windows#extending-react-native)
 

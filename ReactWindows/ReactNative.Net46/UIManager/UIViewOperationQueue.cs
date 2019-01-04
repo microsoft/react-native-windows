@@ -98,16 +98,33 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Invokes action on MainDispatcher.
+        /// Enqueues a operation to execute a UIBlock.
         /// </summary>
-        /// <param name="tag">The react tag which specifies view.</param>
-        /// <param name="action">The action to invoke.</param>
+        /// <param name="block">The UI block.</param>
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
         /// <remarks>
         /// <paramref name="tag"/> is not used, always runs on main dispatcher.
         /// </remarks>
-        public void InvokeAction(int tag, Action action)
+        public void EnqueueUIBlock(IUIBlock block, int? tag)
         {
-            DispatcherHelpers.RunOnDispatcher(action);
+            // Called on layout manager thread
+
+            EnqueueUIBlock(block);
+        }
+
+        /// <summary>
+        /// Enqueues a operation to execute a UIBlock.
+        /// </summary>
+        /// <param name="block">The UI block.</param>
+        /// <param name="tag">Optional react tag hint that triggers the choice of the dispatcher thread that executes the block .</param>
+        /// <remarks>
+        /// <paramref name="tag"/> is not used, always runs on main dispatcher.
+        /// </remarks>
+        public void PrependUIBlock(IUIBlock block, int? tag)
+        {
+            // Called on layout manager thread
+
+            PrependUIBlock(block);
         }
     }
 }

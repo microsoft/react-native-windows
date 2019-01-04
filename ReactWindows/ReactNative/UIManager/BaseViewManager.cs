@@ -34,8 +34,8 @@ namespace ReactNative.UIManager
         where TFrameworkElement : FrameworkElement
         where TLayoutShadowNode : LayoutShadowNode
     {
-        private readonly ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
-            new ConcurrentDictionary<TFrameworkElement, DimensionBoundProperties>();
+        private readonly ViewKeyedDictionary<TFrameworkElement, DimensionBoundProperties> _dimensionBoundProperties =
+            new ViewKeyedDictionary<TFrameworkElement, DimensionBoundProperties>();
 
         /// <summary>
         /// Sets the 3D tranform on the <typeparamref name="TFrameworkElement"/>.
@@ -184,6 +184,7 @@ namespace ReactNative.UIManager
             }
 
             AutomationProperties.SetLiveSetting(view, liveSetting);
+            AccessibilityHelper.AnnounceIfNeeded(view);
         }
 
         /// <summary>
@@ -221,20 +222,27 @@ namespace ReactNative.UIManager
 
             // When `pointerEvents: none`, set `IsHitTestVisible` to `false`.
             view.IsHitTestVisible = pointerEvents != PointerEvents.None;
+        }
 
-            // When `pointerEvents: none|box-none`, unsubscribe the enter/leave events.
-            if (pointerEvents == PointerEvents.None || pointerEvents == PointerEvents.BoxNone)
-            {
-                view.PointerExited -= OnPointerExited;
-                view.PointerEntered -= OnPointerEntered;
-            }
-            else
-            {
-                view.PointerExited -= OnPointerExited;
-                view.PointerEntered -= OnPointerEntered;
-                view.PointerEntered += OnPointerEntered;
-                view.PointerExited += OnPointerExited;
-            }
+        /// <summary>
+        /// Detects the presence of a various mouse view handler for the view.
+        /// </summary>
+        /// <param name="view">The view instance.</param>
+        /// <param name="index">The prop index.</param>
+        /// <param name="handlerPresent">true if a mouse move handler is present.</param>
+        [ReactPropGroup(
+            "onMouseMove",
+            "onMouseMoveCapture",
+            "onMouseOver",
+            "onMouseOverCapture",
+            "onMouseOut",
+            "onMouseOutCapture",
+            "onMouseEnter",
+            "onMouseLeave")]
+        public void SetOnMouseHandler(TFrameworkElement view, int index, bool handlerPresent)
+        {
+            // The order of handler names HAS TO match order in ViewExtensions.MouseHandlerMask
+            view.SetMouseHandlerPresent((ViewExtensions.MouseHandlerMask)(1 << index), handlerPresent);
         }
 
         /// <summary>
@@ -249,9 +257,7 @@ namespace ReactNative.UIManager
         /// </remarks>
         public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
         {
-            view.PointerEntered -= OnPointerEntered;
-            view.PointerExited -= OnPointerExited;
-            _dimensionBoundProperties.TryRemove(view, out _);
+            _dimensionBoundProperties.Remove(view);
         }
 
         /// <summary>
@@ -283,25 +289,6 @@ namespace ReactNative.UIManager
             }
         }
 
-        /// <summary>
-        /// Subclasses can override this method to install custom event 
-        /// emitters on the given view.
-        /// </summary>
-        /// <param name="reactContext">The React context.</param>
-        /// <param name="view">The view instance.</param>
-        /// <remarks>
-        /// Consider overriding this method if your view needs to emit events
-        /// besides basic touch events to JavaScript (e.g., scroll events).
-        /// 
-        /// Make sure you call the base implementation to ensure base pointer
-        /// event handlers are subscribed.
-        /// </remarks>
-        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
-        {
-            view.PointerEntered += OnPointerEntered;
-            view.PointerExited += OnPointerExited;
-        }
-
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var view = (TFrameworkElement)sender;
@@ -309,40 +296,6 @@ namespace ReactNative.UIManager
             {
                 Rect = new Rect(0, 0, e.NewSize.Width, e.NewSize.Height),
             };
-        }
-
-        private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            var view = (TFrameworkElement)sender;
-            var hasBoxOnlyParent = RootViewHelper.GetReactViewHierarchy(view)
-                .Skip(1) // Skip the current view
-                .Any(v => v.GetPointerEvents() == PointerEvents.BoxOnly);
-
-            if (!hasBoxOnlyParent)
-            {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Entered, view.GetTag()));
-            }
-        }
-
-        private void OnPointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            var view = (TFrameworkElement)sender;
-            var hasBoxOnlyParent = RootViewHelper.GetReactViewHierarchy(view)
-                .Skip(1) // Skip the current view
-                .Any(v => v.GetPointerEvents() == PointerEvents.BoxOnly);
-
-            if (!hasBoxOnlyParent)
-            {
-                view.GetReactContext()
-                    .GetNativeModule<UIManagerModule>()
-                    .EventDispatcher
-                    .DispatchEvent(
-                        new PointerEnterExitEvent(TouchEventType.Exited, view.GetTag()));
-            }
         }
 
         private DimensionBoundProperties GetDimensionBoundProperties(TFrameworkElement view)
@@ -360,7 +313,7 @@ namespace ReactNative.UIManager
             if (!_dimensionBoundProperties.TryGetValue(view, out var properties))
             {
                 properties = new DimensionBoundProperties();
-                _dimensionBoundProperties.AddOrUpdate(view, properties, (k, v) => properties);
+                _dimensionBoundProperties.AddOrUpdate(view, properties);
             }
 
             return properties;
@@ -485,58 +438,6 @@ namespace ReactNative.UIManager
             public bool OverflowHidden { get; set; }
 
             public JArray MatrixTransform { get; set; }
-        }
-
-        class PointerEnterExitEvent : Event
-        {
-            private readonly TouchEventType _touchEventType;
-
-            public PointerEnterExitEvent(TouchEventType touchEventType, int viewTag)
-                : base(viewTag)
-            {
-                _touchEventType = touchEventType;
-            }
-
-            public override string EventName
-            {
-                get
-                {
-                    return _touchEventType.GetJavaScriptEventName();
-                }
-            }
-
-            public override bool CanCoalesce
-            {
-                get
-                {
-                    return false;
-                }
-            }
-
-            public override void Dispatch(RCTEventEmitter eventEmitter)
-            {
-                var eventData = new JObject
-                {
-                    { "target", ViewTag },
-                };
-
-                var enterLeaveEventName = default(string);
-                if (_touchEventType == TouchEventType.Entered)
-                {
-                    enterLeaveEventName = "topMouseEnter";
-                }
-                else if (_touchEventType == TouchEventType.Exited)
-                {
-                    enterLeaveEventName = "topMouseLeave";
-                }
-
-                if (enterLeaveEventName != null)
-                {
-                    eventEmitter.receiveEvent(ViewTag, enterLeaveEventName, eventData);
-                }
-
-                eventEmitter.receiveEvent(ViewTag, EventName, eventData);
-            }
         }
     }
 }

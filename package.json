@@ -31,28 +31,27 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": "^16.3.0-alpha.1",
-    "react-native": "~0.55.0"
+    "react": "16.5.0",
+    "react-native": "~0.57.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "eslint": "^4.17.0",
-    "eslint-config-fb-strict": "^22.1.0",
-    "eslint-config-fbjs": "^2.0.1",
+    "babel-eslint": "9.0.0-beta.2",
+    "eslint": "5.1.0",
+    "eslint-config-fb-strict": "22.1.0",
+    "eslint-config-fbjs": "2.0.1",
     "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-flowtype": "^2.43.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.6.1",
-    "flow-bin": "^0.67.1",
-    "https-proxy-agent": "^1.0.0",
+    "eslint-plugin-flowtype": "2.43.0",
+    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-react": "7.8.2",
+    "flow-bin": "^0.78.0",
+    "https-proxy-agent": "^2.2.1",
     "jasmine": "^2.6.0",
     "jasmine-reporters": "^2.2.1",
     "minimist": "^1.2.0",
-    "prettier": "^1.9.1",
-    "react": "^16.3.0-alpha.1",
-    "react-devtools-core": "3.1.0",
-    "react-native": "~0.55.0",
-    "selenium-webdriver": "2.48.x"
+    "prettier": "1.13.6",
+    "react": "16.5.0",
+    "react-devtools-core": "^3.3.4",
+    "react-native": "~0.57.0"
   },
   "dependencies": {
     "chalk": "^1.1.1",
@@ -65,6 +64,10 @@
     "yeoman-generator": "^0.21.2"
   },
   "rnpm": {
+    "haste": {
+      "platforms": ["windows"],
+      "providesModuleNodeModules": ["react-native-windows"]
+    },
     "plugin": "./local-cli/index.js",
     "platform": "./local-cli/platform.js"
   }

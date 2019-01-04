@@ -4,10 +4,11 @@
 // Licensed under the MIT License.
 
 using ReactNative.Bridge.Queue;
+using ReactNative.Common;
+using ReactNative.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -450,7 +451,7 @@ namespace ReactNative.Bridge
             }
             else
             {
-                ExceptionDispatchInfo.Capture(exception).Throw();
+                RnLog.Fatal(ReactConstants.RNW, exception, $"Unhandled Exception in React Context");
             }
         }
 

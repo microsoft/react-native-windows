@@ -69,6 +69,8 @@ namespace ReactNative.Tests.UIManager
                 Assert.AreEqual("onMouseOverCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOver").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
                 Assert.AreEqual("onMouseOut", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
                 Assert.AreEqual("onMouseOutCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseOut").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
+                Assert.AreEqual("onMouseMove", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseMoveCustom").GetMap("phasedRegistrationNames").GetValue("bubbled").Value<string>());
+                Assert.AreEqual("onMouseMoveCapture", constants.GetMap("genericBubblingEventTypes").GetMap("topMouseMoveCustom").GetMap("phasedRegistrationNames").GetValue("captured").Value<string>());
 
                 Assert.AreEqual("onSelectionChange", constants.GetMap("genericDirectEventTypes").GetMap("topSelectionChange").GetValue("registrationName").Value<string>());
                 Assert.AreEqual("onLoadingStart", constants.GetMap("genericDirectEventTypes").GetMap("topLoadingStart").GetValue("registrationName").Value<string>());

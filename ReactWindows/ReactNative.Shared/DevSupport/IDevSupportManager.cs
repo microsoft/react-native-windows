@@ -60,6 +60,11 @@ namespace ReactNative.DevSupport
         string JavaScriptBundleUrlForRemoteDebugging { get; }
 
         /// <summary>
+        /// Called before the dev options dialog is opened
+        /// </summary>
+        event Action BeforeShowDevOptionsDialog;
+
+        /// <summary>
         /// Handle a native exception.
         /// </summary>
         /// <param name="exception">The exception.</param>

@@ -76,7 +76,7 @@ namespace ReactNative.DevSupport
                 }
                 catch (JsonException ex)
                 {
-                    Tracer.Error(ReactConstants.Tag, "Failure deserializing debug server exception message.", ex);
+                    RnLog.Error(ReactConstants.RNW, ex, $"Failure deserializing debug server exception message.");
                 }
             }
 

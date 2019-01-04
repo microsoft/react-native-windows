@@ -111,7 +111,6 @@
     <Compile Include="DevSupport\RedBoxDialog.xaml.cs">
       <DependentUpon>RedBoxDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DevSupport\ShakeAccelerometer.cs" />
     <Compile Include="DevSupport\WebSocketJavaScriptExecutor.cs" />
     <Compile Include="IReactApplication.cs" />
     <Compile Include="Modules\AccessibilityInfo\AccessibilityInfoModule.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="ReactRootViewExtensions.cs" />
     <Compile Include="Touch\PointerDeviceTypeExtensions.cs" />
     <Compile Include="Touch\TouchHandler.cs" />
+    <Compile Include="Tracing\EtwLogTracer.cs" />
     <Compile Include="Tracing\LoggingActivityBuilder.cs" />
     <Compile Include="Tracing\LoggingActivityBuilderExtensions.generated.cs">
       <AutoGen>True</AutoGen>
@@ -156,6 +156,9 @@
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
+    <Compile Include="Views\Modal\ReactModalHostView.cs" />
+    <Compile Include="Views\Modal\ReactModalShadowNode.cs" />
+    <Compile Include="Views\Modal\ReactModalViewManager.cs" />
     <Compile Include="Views\Progress\ReactProgressBarViewManager.cs" />
     <Compile Include="Views\Progress\ProgressBarShadowNode.cs" />
     <Compile Include="Views\Progress\ReactProgressRingManager.cs" />
@@ -171,6 +174,8 @@
     <Compile Include="Views\Switch\ReactSwitchShadowNode.cs" />
     <Compile Include="Views\TextInput\ReactPasswordBoxManager.cs" />
     <Compile Include="Views\TextInput\ReactTextInputManager.cs" />
+    <Compile Include="Views\Text\ReactSimpleTextShadowNode.cs" />
+    <Compile Include="Views\Text\ReactSimpleTextViewManager.cs" />
     <Compile Include="Views\Text\ReactTextCompoundView.cs" />
     <Compile Include="Views\Text\ReactTextShadowNode.cs" />
     <Compile Include="Views\Text\ReactTextViewManager.cs" />

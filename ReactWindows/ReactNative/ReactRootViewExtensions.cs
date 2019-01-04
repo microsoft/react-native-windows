@@ -42,14 +42,13 @@ namespace ReactNative
                 {
                     if (e.VirtualKey == VirtualKey.Shift)
                     {
-                        s_isShiftKeyDown = e.EventType == CoreAcceleratorKeyEventType.KeyDown;
+                        s_isShiftKeyDown = IsKeyDown(e.EventType);
                     }
                     else if (e.VirtualKey == VirtualKey.Control)
                     {
-                        s_isControlKeyDown = e.EventType == CoreAcceleratorKeyEventType.KeyDown;
+                        s_isControlKeyDown = IsKeyDown(e.EventType);
                     }
-                    else if ((s_isShiftKeyDown && e.VirtualKey == VirtualKey.F10) ||
-                              (e.EventType == CoreAcceleratorKeyEventType.KeyDown && e.VirtualKey == VirtualKey.Menu))
+                    else if (IsKeyDown(e.EventType) && s_isShiftKeyDown && e.VirtualKey == VirtualKey.F10)
                     {
                         reactInstanceManager.DevSupportManager.ShowDevOptionsDialog();
                     }
@@ -59,6 +58,11 @@ namespace ReactNative
                     }
                 }
             }
+        }
+
+        private static bool IsKeyDown(CoreAcceleratorKeyEventType t)
+        {
+            return t == CoreAcceleratorKeyEventType.KeyDown || t == CoreAcceleratorKeyEventType.SystemKeyDown;
         }
     }
 }
