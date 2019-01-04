@@ -486,8 +486,8 @@ namespace ReactNative.Modules.Network
                 var key = header[0];
                 switch (key.ToLowerInvariant())
                 {
-                    case "authorization":
 #if WINDOWS_UWP
+                    case "authorization":
                         // Regex for RFC 2617
                         var regex = new Regex(@"^(?<scheme>\w+)\s*(?<token>(\w+\s*[=:]\s*""?[^,""]*""?\s*,?\s*)+)$");
                         var match = regex.Match(header[1].Trim());
@@ -498,13 +498,11 @@ namespace ReactNative.Modules.Network
                         }
                         else
                         {
-                            //If other different types of Authorization header which does not belongs to RFC2617.
                             request.Headers.Add(key, header[1]);
                         }
-#else
-                        request.Headers.Add(key, header[1]);
-#endif
+
                         break;
+#endif
                     case "content-encoding":
                     case "content-length":
                     case "content-type":
