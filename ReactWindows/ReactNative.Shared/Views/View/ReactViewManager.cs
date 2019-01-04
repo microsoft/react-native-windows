@@ -32,7 +32,7 @@ namespace ReactNative.Views.View
             new ViewKeyedDictionary<BorderedCanvas, ThicknessManager>();
 
         /// <summary>
-        /// The name of this view manager. This will be the name used to 
+        /// The name of this view manager. This will be the name used to
         /// reference this view manager from JavaScript.
         /// </summary>
         public override string Name => ViewProps.ViewClassName;
@@ -175,7 +175,7 @@ namespace ReactNative.Views.View
         /// </summary>
         /// <param name="view">The view panel.</param>
         /// <param name="color">The color hex code.</param>
-        [ReactProp("borderColor", CustomType = "Color")]
+        [ReactProp(ViewProps.BorderColor, CustomType = "Color")]
         public void SetBorderColor(BorderedCanvas view, uint? color)
         {
             view.BorderBrush = color.HasValue
@@ -238,7 +238,7 @@ namespace ReactNative.Views.View
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup.
         /// </summary>
         /// <param name="reactContext">The React context.</param>

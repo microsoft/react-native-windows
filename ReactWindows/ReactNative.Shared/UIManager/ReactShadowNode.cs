@@ -1334,10 +1334,7 @@ namespace ReactNative.UIManager
                         YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.All)))
                     {
                         SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
-                    }
-                    else
-                    {
-                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
+                        continue;
                     }
                 }
                 else if (spacingType == EdgeSpacing.Top || spacingType == EdgeSpacing.Bottom)
@@ -1347,10 +1344,7 @@ namespace ReactNative.UIManager
                         YogaConstants.IsUndefined(_padding.GetRaw(EdgeSpacing.All)))
                     {
                         SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
-                    }
-                    else
-                    {
-                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
+                        continue;
                     }
                 }
                 else
@@ -1358,12 +1352,11 @@ namespace ReactNative.UIManager
                     if (YogaConstants.IsUndefined(_padding.GetRaw(spacingType)))
                     {
                         SetPadding(_yogaNode, spacingType, _defaultPadding.GetRaw(spacingType));
-                    }
-                    else
-                    {
-                        SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
+                        continue;
                     }
                 }
+
+                SetPadding(_yogaNode, spacingType, _padding.GetRaw(spacingType));
             }
         }
 
