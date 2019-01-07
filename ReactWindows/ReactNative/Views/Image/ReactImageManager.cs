@@ -97,7 +97,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="resizeMode">The scaling mode.</param>
-        [ReactProp("resizeMode")]
+        [ReactProp(ViewProps.ResizeMode)]
         public void SetResizeMode(Border view, string resizeMode)
         {
             if (resizeMode != null)
@@ -232,7 +232,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="color">The masked color value.</param>
-        [ReactProp("borderColor", CustomType = "Color")]
+        [ReactProp(ViewProps.BorderColor, CustomType = "Color")]
         public void SetBorderColor(Border view, uint? color)
         {
             view.BorderBrush = color.HasValue
@@ -295,7 +295,7 @@ namespace ReactNative.Views.Image
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup.
         /// </summary>
         /// <param name="reactContext">The React context.</param>

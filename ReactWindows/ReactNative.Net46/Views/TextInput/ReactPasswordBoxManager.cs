@@ -189,7 +189,7 @@ namespace ReactNative.Views.TextInput
         /// </summary>
         /// <param name="view">The view instance</param>
         /// <param name="color">The masked color value.</param>
-        [ReactProp("borderColor", CustomType = "Color")]
+        [ReactProp(ViewProps.BorderColor, CustomType = "Color")]
         public void SetBorderColor(PasswordBox view, uint? color)
         {
             view.BorderBrush = color.HasValue
@@ -251,7 +251,6 @@ namespace ReactNative.Views.TextInput
         /// <param name="isTabStop">
         /// <code>true</code> if the view is a tab stop, otherwise <code>false</code> (control can't get keyboard focus or accept keyboard input in this case).
         /// </param>
-        /// 
         [ReactProp("isTabStop")]
         public void SetIsTabStop(PasswordBox view, bool isTabStop)
         {
@@ -442,7 +441,7 @@ namespace ReactNative.Views.TextInput
                       textBox.GetTag(),
                       textBox.Password));
         }
-        
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             var textBox = (PasswordBox)sender;
