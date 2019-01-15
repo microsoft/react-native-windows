@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile><%=name%>_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <% if (certificateThumbprint) { %><PackageCertificateThumbprint><%=certificateThumbprint%></PackageCertificateThumbprint><% } %>
+    <%=certificateThumbprint%>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <DependencyConfiguration>Debug</DependencyConfiguration>
   </PropertyGroup>
@@ -188,7 +188,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="<%= name %>_TemporaryKey.pfx" />
+    <None Include="<%=name%>_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
