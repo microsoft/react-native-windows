@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const yeoman = require('yeoman-environment');
+const copyProjectTemplateAndReplace = require('./generator-windows').copyProjectTemplateAndReplace;
 
 /**
  * Simple utility for running the Windows yeoman generator.
@@ -13,18 +13,15 @@ const yeoman = require('yeoman-environment');
  * @param  {Boolean} verbose   enables logging for your project
  */
 function generateWindows (projectDir, name, ns, verbose) {
-  const oldCwd = process.cwd();
-
   if (!fs.existsSync(projectDir)) {
     fs.mkdirSync(projectDir);
   }
-  const env = yeoman.createEnv();
-  const generatorPath = path.join(__dirname, 'generator-windows');
-  env.register(generatorPath, 'react:windows');
-  const args = ['react:windows', name, ns].concat(process.argv.slice(4));
-  env.run(args, { ns: ns, verbose: verbose}, function () {
-    process.chdir(oldCwd);
-  });
+  copyProjectTemplateAndReplace(
+    path.join(__dirname, 'generator-windows', 'templates'),
+    projectDir,
+    name,
+    { ns, verbose }
+  );
 }
 
 module.exports = generateWindows;
