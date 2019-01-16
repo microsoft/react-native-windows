@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace <%= name %>.Properties {
+namespace <%=name%>.Properties {
 
 
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= name %>", "<%= name %>\<%= name %>.csproj", "{9840FE11-9B72-467E-999E-3C2BB65D5BEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%=name%>", "<%=name%>\<%=name%>.csproj", "{9840FE11-9B72-467E-999E-3C2BB65D5BEA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5} = {0446C86B-F47B-4C46-B673-C7AE0CFF35D5}
 	EndProjectSectionEndProject

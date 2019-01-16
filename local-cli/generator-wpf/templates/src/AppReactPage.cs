@@ -4,11 +4,11 @@ using ReactNative.Shell;
 using System;
 using System.Collections.Generic;
 
-namespace <%= ns %>
+namespace <%=ns%>
 {
     internal class AppReactPage : ReactPage
     {
-        public override string MainComponentName => "<%= name %>";
+        public override string MainComponentName => "<%=name%>";
 
         public override string JavaScriptMainModuleName => "index";
 
