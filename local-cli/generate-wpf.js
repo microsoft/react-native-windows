@@ -2,29 +2,25 @@
 
 const fs = require('fs');
 const path = require('path');
-const yeoman = require('yeoman-environment');
+const copyProjectTemplateAndReplace = require('./generator-wpf').copyProjectTemplateAndReplace;
 
 /**
- * Simple utility for running the Windows yeoman generator.
+ * Simple utility for running the Windows generator.
  *
  * @param  {String} projectDir root project directory (i.e. contains index.js)
  * @param  {String} name       name of the root JS module for this app
  * @param  {String} ns         namespace for the project
  */
 function generateWindows (projectDir, name, ns) {
-  const oldCwd = process.cwd();
-
   if (!fs.existsSync(projectDir)) {
     fs.mkdirSync(projectDir);
   }
-
-  const env = yeoman.createEnv();
-  const generatorPath = path.join(__dirname, 'generator-wpf');
-  env.register(generatorPath, 'react:wpf');
-  const args = ['react:wpf', name, ns].concat(process.argv.slice(4));
-  env.run(args, { ns: ns }, function () {
-    process.chdir(oldCwd);
-  });
+  copyProjectTemplateAndReplace(
+    path.join(__dirname, 'generator-wpf', 'templates'),
+    projectDir,
+    name,
+    { ns }
+  );
 }
 
 module.exports = generateWindows;
