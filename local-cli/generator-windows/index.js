@@ -10,6 +10,10 @@ const uuid = require('uuid');
 const childProcess = require('child_process');
 const os = require('os');
 
+const windowsDir = 'windows';
+const reactAssetsDir = 'ReactAssets';
+const projDir = 'proj';
+
 function createDir(destPath) {
   if (!fs.existsSync(destPath)) {
     fs.mkdirSync(destPath);
@@ -50,8 +54,8 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
     const certGenCommand = [
       `$cert = New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject "CN=${currentUser}" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}Subject Type:End Entity") -CertStoreLocation "Cert:\\CurrentUser\\My"`,
       '$pwd = ConvertTo-SecureString -String password -Force -AsPlainText',
-      `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join('windows', newProjectName)}`,
-      `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join('windows', newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd`,
+      `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join(windowsDir, newProjectName)}`,
+      `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd`,
       '$cert.Thumbprint'
     ];
     const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
@@ -72,7 +76,7 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
     copyAndReplaceWithChangedCallback(
       path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
       destPath,
-      path.join('windows', newProjectName, newProjectName + '_TemporaryKey.pfx'));
+      path.join(windowsDir, newProjectName, newProjectName + '_TemporaryKey.pfx'));
   }
 }
 
@@ -107,21 +111,21 @@ function copyProjectTemplateAndReplace(
     '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : ''
   };
 
-  createDir(path.join(destPath, 'windows'));
-  createDir(path.join(destPath, 'windows', newProjectName));
-  createDir(path.join(destPath, 'windows', newProjectName, 'ReactAssets'));
+  createDir(path.join(destPath, windowsDir));
+  createDir(path.join(destPath, windowsDir, newProjectName));
+  createDir(path.join(destPath, windowsDir, newProjectName, reactAssetsDir));
 
   [
     { from: path.join(srcPath, 'App.windows.js'), to: 'App.windows.js' },
-    { from: path.join(srcPath, 'proj', 'MyApp.sln'), to: path.join('windows', newProjectName + '.sln') },
-    { from: path.join(srcPath, 'proj', 'MyApp.csproj'), to: path.join('windows', newProjectName, newProjectName + '.csproj') },
-    { from: path.join(srcPath, '_gitignore'), to: path.join('windows', '.gitignore') },
-    { from: path.join(srcPath, 'ra_gitignore'), to: path.join('windows', newProjectName, 'ReactAssets', '.gitignore') },
-    { from: path.join(srcPath, 'index.windows.bundle'), to: path.join('windows', newProjectName, 'ReactAssets', 'index.windows.bundle') },
+    { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
+    { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
+    { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
+    { from: path.join(srcPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
+    { from: path.join(srcPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'index.windows.bundle') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars));
 
-  copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join('windows', newProjectName, 'Assets'), templateVars);
-  copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join('windows', newProjectName), templateVars);
+  copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars);
+  copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars);
 
   console.log(chalk.white.bold('To run your app on UWP:'));
   console.log(chalk.white('   react-native run-windows'));

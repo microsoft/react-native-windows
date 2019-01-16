@@ -7,6 +7,10 @@ const walk = require('react-native-local-cli/util/walk');
 const prompt = require('react-native-local-cli/generator/promptSync')();
 const uuid = require('uuid');
 
+const wpfDir = 'wpf';
+const reactAssetsDir = 'ReactAssets';
+const projDir = 'proj';
+
 function createDir(destPath) {
   if (!fs.existsSync(destPath)) {
     fs.mkdirSync(destPath);
@@ -66,9 +70,6 @@ function copyProjectTemplateAndReplace(
     '<%=projectGuid%>': projectGuid,
     '<%=packageGuid%>': packageGuid
   };
-  const wpfDir = 'wpf';
-  const reactAssetsDir = 'ReactAssets';
-  const projDir = 'proj';
 
   createDir(path.join(destPath, wpfDir));
   createDir(path.join(destPath, wpfDir, newProjectName));
