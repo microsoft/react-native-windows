@@ -122,6 +122,9 @@ function copyProjectTemplateAndReplace(
 
   copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join('windows', newProjectName, 'Assets'), templateVars);
   copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join('windows', newProjectName), templateVars);
+
+  console.log(chalk.white.bold('To run your app on UWP:'));
+  console.log(chalk.white('   react-native run-windows'));
 }
 
 function upgradeFileContentChangedCallback(

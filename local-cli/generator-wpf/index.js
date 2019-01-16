@@ -87,6 +87,9 @@ function copyProjectTemplateAndReplace(
 
   copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(wpfDir, newProjectName, 'Assets'), templateVars);
   copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(wpfDir, newProjectName), templateVars);
+
+  console.log(chalk.white.bold('To run your app on WPF:'));
+  console.log(chalk.white('   react-native run-wpf'));
 }
 
 function upgradeFileContentChangedCallback(
