@@ -5,7 +5,7 @@ const path = require('path');
 const copyProjectTemplateAndReplace = require('./generator-windows').copyProjectTemplateAndReplace;
 
 /**
- * Simple utility for running the Windows yeoman generator.
+ * Simple utility for running the Windows generator.
  *
  * @param  {String} projectDir root project directory (i.e. contains index.js)
  * @param  {String} name       name of the root JS module for this app
