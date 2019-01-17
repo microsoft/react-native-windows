@@ -27,13 +27,13 @@ namespace ReactNative.Views.Image
 
         private readonly Dictionary<int, List<KeyValuePair<string, double>>> _imageSources =
             new Dictionary<int, List<KeyValuePair<string, double>>>();
-            
+
         private readonly ViewKeyedDictionary<Border, CornerRadiusManager> _borderToRadii =
             new ViewKeyedDictionary<Border, CornerRadiusManager>();
 
         private readonly ViewKeyedDictionary<Border, ThicknessManager> _borderToThickness =
             new ViewKeyedDictionary<Border, ThicknessManager>();
-            
+
         private readonly Lazy<ScaleTransform> _rtlScaleTransform = new Lazy<ScaleTransform>(() => new ScaleTransform
         {
             CenterX = 0.5,
@@ -90,7 +90,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="resizeMode">The scaling mode.</param>
-        [ReactProp("resizeMode")]
+        [ReactProp(ViewProps.ResizeMode)]
         public void SetResizeMode(Border view, string resizeMode)
         {
             if (resizeMode !=  null)
@@ -228,7 +228,7 @@ namespace ReactNative.Views.Image
         /// </summary>
         /// <param name="view">The image view instance.</param>
         /// <param name="color">The masked color value.</param>
-        [ReactProp("borderColor", CustomType = "Color")]
+        [ReactProp(ViewProps.BorderColor, CustomType = "Color")]
         public void SetBorderColor(Border view, uint? color)
         {
             view.BorderBrush = color.HasValue

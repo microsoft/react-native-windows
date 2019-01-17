@@ -98,8 +98,14 @@ namespace ReactNative.DevSupport
 
         public bool IsRemoteDebuggingEnabled
         {
-            get;
-            set;
+            get
+            {
+                return _devSettings.IsRemoteDebuggingEnabled;
+            }
+            set
+            {
+                _devSettings.IsRemoteDebuggingEnabled = value;
+            }
         }
 
         public bool IsProgressDialogEnabled
@@ -156,7 +162,7 @@ namespace ReactNative.DevSupport
 
         public bool HasUpToDateBundleInCache()
         {
-            if (_isDevSupportEnabled)
+            if (_isDevSupportEnabled && !IsRemoteDebuggingEnabled)
             {
 #if WINDOWS_UWP
                 var lastNativeUpdateTime = Windows.ApplicationModel.Package.Current.InstalledDate.UtcDateTime;

@@ -63,7 +63,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="opacity">The opacity value.</param>
-        [ReactProp("opacity", DefaultDouble = 1.0)]
+        [ReactProp(ViewProps.Opacity, DefaultDouble = 1.0)]
         public void SetOpacity(TFrameworkElement view, double opacity)
         {
             view.Opacity = opacity;
@@ -74,10 +74,10 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view instance.</param>
         /// <param name="overflow">The overflow value.</param>
-        [ReactProp("overflow")]
+        [ReactProp(ViewProps.Overflow)]
         public void SetOverflow(TFrameworkElement view, string overflow)
         {
-            if (overflow == "hidden")
+            if (overflow == ViewProps.Hidden)
             {
                 view.ClipToBounds = true;
             }
@@ -149,7 +149,7 @@ namespace ReactNative.UIManager
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="pointerEventsValue">The pointerEvents mode.</param>
-        [ReactProp("pointerEvents")]
+        [ReactProp(ViewProps.PointerEvents)]
         public void SetPointerEvents(TFrameworkElement view, string pointerEventsValue)
         {
             var pointerEvents = EnumHelpers.ParseNullable<PointerEvents>(pointerEventsValue) ?? PointerEvents.Auto;
@@ -157,13 +157,13 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Called when view is detached from view hierarchy and allows for 
+        /// Called when view is detached from view hierarchy and allows for
         /// additional cleanup by the <see cref="IViewManager"/> subclass.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
         /// <param name="view">The view.</param>
         /// <remarks>
-        /// Be sure to call this base class method to register for pointer 
+        /// Be sure to call this base class method to register for pointer
         /// entered and pointer exited events.
         /// </remarks>
         public override void OnDropViewInstance(ThemedReactContext reactContext, TFrameworkElement view)
@@ -175,7 +175,7 @@ namespace ReactNative.UIManager
         }
 
         /// <summary>
-        /// Subclasses can override this method to install custom event 
+        /// Subclasses can override this method to install custom event
         /// emitters on the given view.
         /// </summary>
         /// <param name="reactContext">The React context.</param>
@@ -183,7 +183,7 @@ namespace ReactNative.UIManager
         /// <remarks>
         /// Consider overriding this method if your view needs to emit events
         /// besides basic touch events to JavaScript (e.g., scroll events).
-        /// 
+        ///
         /// Make sure you call the base implementation to ensure base pointer
         /// event handlers are subscribed.
         /// </remarks>

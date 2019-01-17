@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace <%= ns %>
+namespace <%=ns%>
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -49,7 +49,7 @@ namespace <%= ns %>
                 {
                     ShowActivated = true,
                     ShowInTaskbar = true,
-                    Title = "<%= ns %>",
+                    Title = "<%=ns%>",
                     Height = 768,
                     Width = 1024,
                     WindowStartupLocation = WindowStartupLocation.CenterScreen

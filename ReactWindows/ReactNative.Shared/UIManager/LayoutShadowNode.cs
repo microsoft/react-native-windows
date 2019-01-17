@@ -334,10 +334,12 @@ namespace ReactNative.UIManager
             ViewProps.Margin,
             ViewProps.MarginVertical,
             ViewProps.MarginHorizontal,
-            ViewProps.MarginLeft,
-            ViewProps.MarginRight,
+            ViewProps.MarginStart,
+            ViewProps.MarginEnd,
             ViewProps.MarginTop,
             ViewProps.MarginBottom,
+            ViewProps.MarginLeft,
+            ViewProps.MarginRight,
             DefaultSingle = YogaConstants.Undefined)]
         public void SetMargins(int index, JValue margin)
         {
@@ -358,10 +360,12 @@ namespace ReactNative.UIManager
             ViewProps.Padding,
             ViewProps.PaddingVertical,
             ViewProps.PaddingHorizontal,
-            ViewProps.PaddingLeft,
-            ViewProps.PaddingRight,
+            ViewProps.PaddingStart,
+            ViewProps.PaddingEnd,
             ViewProps.PaddingTop,
             ViewProps.PaddingBottom,
+            ViewProps.PaddingLeft,
+            ViewProps.PaddingRight,
             DefaultSingle = YogaConstants.Undefined)]
         public virtual void SetPaddings(int index, JValue padding)
         {
@@ -401,6 +405,8 @@ namespace ReactNative.UIManager
         /// <param name="index">The spacing type index.</param>
         /// <param name="position">The position value.</param>
         [ReactPropGroup(
+            ViewProps.Start,
+            ViewProps.End,
             ViewProps.Left,
             ViewProps.Right,
             ViewProps.Top,
@@ -437,7 +443,7 @@ namespace ReactNative.UIManager
         /// <param name="shouldNotifyOnLayout">
         /// The flag signaling if the view should sent an event on layout.
         /// </param>
-        [ReactProp("onLayout")]
+        [ReactProp(ViewProps.OnLayout)]
         public void SetShouldNotifyOnLayout(bool shouldNotifyOnLayout)
         {
             ShouldNotifyOnLayout = shouldNotifyOnLayout;
