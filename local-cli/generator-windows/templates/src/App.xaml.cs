@@ -1,6 +1,6 @@
 ﻿using ReactNative;
 
-namespace <%= ns %>
+namespace <%=ns%>
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

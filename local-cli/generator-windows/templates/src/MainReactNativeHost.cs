@@ -3,11 +3,11 @@ using ReactNative.Modules.Core;
 using ReactNative.Shell;
 using System.Collections.Generic;
 
-namespace <%= ns %>
+namespace <%=ns%>
 {
     class MainReactNativeHost : ReactNativeHost
     {
-        public override string MainComponentName => "<%= name %>";
+        public override string MainComponentName => "<%=name%>";
 
 #if !BUNDLE || DEBUG
         public override bool UseDeveloperSupport => true;

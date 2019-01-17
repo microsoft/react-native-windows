@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= name %>", "<%= name %>\<%= name %>.csproj", "{<%= projectGuid %>}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%=name%>", "<%=name%>\<%=name%>.csproj", "{<%=projectGuid%>}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2EACF721-73B5-46AE-9775-4A8674D05A9C} = {2EACF721-73B5-46AE-9775-4A8674D05A9C}
 	EndProjectSection
@@ -42,42 +42,42 @@ Global
 		ReleaseBundle|x86 = ReleaseBundle|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{<%= projectGuid %>}.Debug|ARM.ActiveCfg = Debug|ARM
-		{<%= projectGuid %>}.Debug|ARM.Build.0 = Debug|ARM
-		{<%= projectGuid %>}.Debug|ARM.Deploy.0 = Debug|ARM
-		{<%= projectGuid %>}.Debug|x64.ActiveCfg = Debug|x64
-		{<%= projectGuid %>}.Debug|x64.Build.0 = Debug|x64
-		{<%= projectGuid %>}.Debug|x64.Deploy.0 = Debug|x64
-		{<%= projectGuid %>}.Debug|x86.ActiveCfg = Debug|x86
-		{<%= projectGuid %>}.Debug|x86.Build.0 = Debug|x86
-		{<%= projectGuid %>}.Debug|x86.Deploy.0 = Debug|x86
-		{<%= projectGuid %>}.DebugBundle|ARM.ActiveCfg = DebugBundle|ARM
-		{<%= projectGuid %>}.DebugBundle|ARM.Build.0 = DebugBundle|ARM
-		{<%= projectGuid %>}.DebugBundle|ARM.Deploy.0 = DebugBundle|ARM
-		{<%= projectGuid %>}.DebugBundle|x64.ActiveCfg = DebugBundle|x64
-		{<%= projectGuid %>}.DebugBundle|x64.Build.0 = DebugBundle|x64
-		{<%= projectGuid %>}.DebugBundle|x64.Deploy.0 = DebugBundle|x64
-		{<%= projectGuid %>}.DebugBundle|x86.ActiveCfg = DebugBundle|x86
-		{<%= projectGuid %>}.DebugBundle|x86.Build.0 = DebugBundle|x86
-		{<%= projectGuid %>}.DebugBundle|x86.Deploy.0 = DebugBundle|x86
-		{<%= projectGuid %>}.Release|ARM.ActiveCfg = Release|ARM
-		{<%= projectGuid %>}.Release|ARM.Build.0 = Release|ARM
-		{<%= projectGuid %>}.Release|ARM.Deploy.0 = Release|ARM
-		{<%= projectGuid %>}.Release|x64.ActiveCfg = Release|x64
-		{<%= projectGuid %>}.Release|x64.Build.0 = Release|x64
-		{<%= projectGuid %>}.Release|x64.Deploy.0 = Release|x64
-		{<%= projectGuid %>}.Release|x86.ActiveCfg = Release|x86
-		{<%= projectGuid %>}.Release|x86.Build.0 = Release|x86
-		{<%= projectGuid %>}.Release|x86.Deploy.0 = Release|x86
-		{<%= projectGuid %>}.ReleaseBundle|ARM.ActiveCfg = ReleaseBundle|ARM
-		{<%= projectGuid %>}.ReleaseBundle|ARM.Build.0 = ReleaseBundle|ARM
-		{<%= projectGuid %>}.ReleaseBundle|ARM.Deploy.0 = ReleaseBundle|ARM
-		{<%= projectGuid %>}.ReleaseBundle|x64.ActiveCfg = ReleaseBundle|x64
-		{<%= projectGuid %>}.ReleaseBundle|x64.Build.0 = ReleaseBundle|x64
-		{<%= projectGuid %>}.ReleaseBundle|x64.Deploy.0 = ReleaseBundle|x64
-		{<%= projectGuid %>}.ReleaseBundle|x86.ActiveCfg = ReleaseBundle|x86
-		{<%= projectGuid %>}.ReleaseBundle|x86.Build.0 = ReleaseBundle|x86
-		{<%= projectGuid %>}.ReleaseBundle|x86.Deploy.0 = ReleaseBundle|x86
+		{<%=projectGuid%>}.Debug|ARM.ActiveCfg = Debug|ARM
+		{<%=projectGuid%>}.Debug|ARM.Build.0 = Debug|ARM
+		{<%=projectGuid%>}.Debug|ARM.Deploy.0 = Debug|ARM
+		{<%=projectGuid%>}.Debug|x64.ActiveCfg = Debug|x64
+		{<%=projectGuid%>}.Debug|x64.Build.0 = Debug|x64
+		{<%=projectGuid%>}.Debug|x64.Deploy.0 = Debug|x64
+		{<%=projectGuid%>}.Debug|x86.ActiveCfg = Debug|x86
+		{<%=projectGuid%>}.Debug|x86.Build.0 = Debug|x86
+		{<%=projectGuid%>}.Debug|x86.Deploy.0 = Debug|x86
+		{<%=projectGuid%>}.DebugBundle|ARM.ActiveCfg = DebugBundle|ARM
+		{<%=projectGuid%>}.DebugBundle|ARM.Build.0 = DebugBundle|ARM
+		{<%=projectGuid%>}.DebugBundle|ARM.Deploy.0 = DebugBundle|ARM
+		{<%=projectGuid%>}.DebugBundle|x64.ActiveCfg = DebugBundle|x64
+		{<%=projectGuid%>}.DebugBundle|x64.Build.0 = DebugBundle|x64
+		{<%=projectGuid%>}.DebugBundle|x64.Deploy.0 = DebugBundle|x64
+		{<%=projectGuid%>}.DebugBundle|x86.ActiveCfg = DebugBundle|x86
+		{<%=projectGuid%>}.DebugBundle|x86.Build.0 = DebugBundle|x86
+		{<%=projectGuid%>}.DebugBundle|x86.Deploy.0 = DebugBundle|x86
+		{<%=projectGuid%>}.Release|ARM.ActiveCfg = Release|ARM
+		{<%=projectGuid%>}.Release|ARM.Build.0 = Release|ARM
+		{<%=projectGuid%>}.Release|ARM.Deploy.0 = Release|ARM
+		{<%=projectGuid%>}.Release|x64.ActiveCfg = Release|x64
+		{<%=projectGuid%>}.Release|x64.Build.0 = Release|x64
+		{<%=projectGuid%>}.Release|x64.Deploy.0 = Release|x64
+		{<%=projectGuid%>}.Release|x86.ActiveCfg = Release|x86
+		{<%=projectGuid%>}.Release|x86.Build.0 = Release|x86
+		{<%=projectGuid%>}.Release|x86.Deploy.0 = Release|x86
+		{<%=projectGuid%>}.ReleaseBundle|ARM.ActiveCfg = ReleaseBundle|ARM
+		{<%=projectGuid%>}.ReleaseBundle|ARM.Build.0 = ReleaseBundle|ARM
+		{<%=projectGuid%>}.ReleaseBundle|ARM.Deploy.0 = ReleaseBundle|ARM
+		{<%=projectGuid%>}.ReleaseBundle|x64.ActiveCfg = ReleaseBundle|x64
+		{<%=projectGuid%>}.ReleaseBundle|x64.Build.0 = ReleaseBundle|x64
+		{<%=projectGuid%>}.ReleaseBundle|x64.Deploy.0 = ReleaseBundle|x64
+		{<%=projectGuid%>}.ReleaseBundle|x86.ActiveCfg = ReleaseBundle|x86
+		{<%=projectGuid%>}.ReleaseBundle|x86.Build.0 = ReleaseBundle|x86
+		{<%=projectGuid%>}.ReleaseBundle|x86.Deploy.0 = ReleaseBundle|x86
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|ARM.ActiveCfg = Debug|ARM
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|ARM.Build.0 = Debug|ARM
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|x64.ActiveCfg = Debug|x64

@@ -56,12 +56,11 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "glob": "^7.1.1",
+    "react-native-local-cli": "^1.0.0-alpha.5",
     "shelljs": "^0.7.8",
     "username": "^3.0.0",
     "uuid": "^2.0.1",
-    "xml-parser": "^1.2.1",
-    "yeoman-environment": "^1.5.3",
-    "yeoman-generator": "^0.21.2"
+    "xml-parser": "^1.2.1"
   },
   "rnpm": {
     "haste": {
