@@ -57,12 +57,18 @@ function copyProjectTemplateAndReplace(
   if (!srcPath) {
     throw new Error('Need a path to copy from');
   }
+
   if (!destPath) {
     throw new Error('Need a path to copy to');
   }
+
   if (!newProjectName) {
     throw new Error('Need a project name');
   }
+
+  createDir(path.join(destPath, windowsDir));
+  createDir(path.join(destPath, windowsDir, newProjectName));
+  createDir(path.join(destPath, windowsDir, newProjectName, reactAssetsDir));
 
   const ns = options.ns || newProjectName;
   const projectGuid = uuid.v4();
@@ -78,10 +84,6 @@ function copyProjectTemplateAndReplace(
     '<%=currentUser%>': currentUser,
     '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : ''
   };
-
-  createDir(path.join(destPath, windowsDir));
-  createDir(path.join(destPath, windowsDir, newProjectName));
-  createDir(path.join(destPath, windowsDir, newProjectName, reactAssetsDir));
 
   [
     { from: path.join(srcPath, 'App.windows.js'), to: 'App.windows.js' },
