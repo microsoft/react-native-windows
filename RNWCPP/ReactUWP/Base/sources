@@ -1,0 +1,7 @@
+LIBLETNAME = ReactUWP_Base
+
+!include ..\make.inc
+
+SOURCES =  \
+	InstanceFactory.cpp \
+	UwpReactInstance.cpp \

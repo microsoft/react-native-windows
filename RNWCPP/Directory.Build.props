@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
+
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Configuration">
+    <PlatformToolset>v141</PlatformToolset>
+    <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
+
+    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
+    <!-- NOTE: This assignment of `Platform` won't persist thourgh the build. -->
+    <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
+    <BaseIntDir>$(SolutionDir)build\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseOutDir>$(SolutionDir)target\$(Platform)\$(Configuration)</BaseOutDir>
+
+    <!-- Windows Desktop -->
+    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
+    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <FollyDir>$(SolutionDir)\node_modules\@microsoft\react-native\folly</FollyDir>
+    <ReactNativeDir>$(SolutionDir)\node_modules\@microsoft\react-native</ReactNativeDir>
+    <YogaDir>$(SolutionDir)\node_modules\@microsoft\react-native\ReactCommon\yoga</YogaDir>
+  </PropertyGroup>
+
+<!-- Uncomment this (and modify the path below) to build react-native-win against a public version of react-native -->
+<!--
+  <PropertyGroup>
+	  <ReactNativeDir>G:\repos\react-native-github</ReactNativeDir>
+      <OSS_RN>true</OSS_RN>
+  </PropertyGroup>
+-->
+
+</Project>

@@ -1,0 +1,9 @@
+DIRS = \
+	chakra{!droidarm,!droidx86} \
+	reactcommon{!droidarm,!droidx86} \
+	desktop{!arm,!droidarm,!droidx86} \
+	reactwindowscore{!droidarm,!droidx86} \
+	reactuwp{arm,x64,x86} \
+	shared{!droidarm,!droidx86} \
+	win32 \
+
