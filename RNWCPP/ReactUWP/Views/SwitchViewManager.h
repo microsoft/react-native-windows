@@ -15,7 +15,7 @@ public:
 
   const char* GetName() const override;
   folly::dynamic GetNativeProps() const override;
-  facebook::react::ShadowNode* createShadow() const;
+  facebook::react::ShadowNode* createShadow() const override;
   void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap) override;
 
 protected:

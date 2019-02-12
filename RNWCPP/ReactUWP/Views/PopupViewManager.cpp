@@ -5,12 +5,11 @@
 
 #include "PopupViewManager.h"
 #include "ShadowNodeBase.h"
+#include "TouchEventHandler.h"
 
 #include <Utils/ValueUtils.h>
-
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-
 
 namespace winrt {
   using namespace Windows::UI::Xaml;
@@ -25,13 +24,21 @@ class PopupShadowNode : public ShadowNodeBase
   using Super = ShadowNodeBase;
 public:
   PopupShadowNode() = default;
+  virtual ~PopupShadowNode();
   void createView() override;
+  void AddView(ShadowNode& child, int64_t index) override;
   void updateProperties(const folly::dynamic&& props) override;
   static void OnPopupClosed(IReactInstance& instance, int64_t tag, bool newValue);
 
 private:
   bool m_updating = false;
+  std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
 };
+
+PopupShadowNode::~PopupShadowNode()
+{
+  m_touchEventHanadler->RemoveTouchHandlers();
+}
 
 void PopupShadowNode::createView()
 {
@@ -39,13 +46,22 @@ void PopupShadowNode::createView()
 
   auto popup = GetView().as<winrt::Popup>();
   auto wkinstance = static_cast<PopupViewManager*>(GetViewManager())->m_wkReactInstance;
-
+  m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
+  
   popup.Closed([=](auto&&, auto&&)
   {
     auto instance = wkinstance.lock();
     if (!m_updating && instance != nullptr)
       OnPopupClosed(*instance, m_tag, false);
   });
+}
+
+void PopupShadowNode::AddView(ShadowNode& child, int64_t index)
+{
+  Super::AddView(child, index);
+  
+  auto childView = static_cast<ShadowNodeBase&>(child).GetView();
+  m_touchEventHanadler->AddTouchHandlers(childView);
 }
 
 void PopupShadowNode::updateProperties(const folly::dynamic&& props)
@@ -100,6 +116,7 @@ XamlView PopupViewManager::CreateViewCore(int64_t tag)
 void PopupViewManager::AddView(XamlView parent, XamlView child, int64_t index)
 {
   assert(index == 0);
+
   auto popup = parent.as<winrt::Popup>();
   if (popup != nullptr)
     popup.Child(child.as<winrt::UIElement>());

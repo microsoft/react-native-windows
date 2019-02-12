@@ -26,10 +26,10 @@
 
 #include <future>
 
-//#if _MSC_VER == 1900
-// VC 19 (2015) cannot optimize coroutines well
+#if _MSC_VER <= 1913
+// VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize( "", off )
-//#endif
+#endif
 
 using namespace facebook::react;
 

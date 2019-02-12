@@ -48,24 +48,36 @@ class PopupButton extends Component {
     this._onPress = this._onPress.bind(this);
     this._onPopupButtonPressed = this._onPopupButtonPressed.bind(this);
     this._onPopupDismissed = this._onPopupDismissed.bind(this);
-    this.state = { buttonTitle: 'Open Flyout', isFlyoutVisible: false, popupButtonTitle: "click button" };
+    this.state = {
+      buttonTitle: 'Open Flyout',
+      isFlyoutVisible: false,
+      popupCheckBoxState: true,
+      isLightDismissEnabled: false
+    };
   }
 
   render() {
     return (
-      <View style={{ padding: 20 }}>
+      <View style={{ flexDirection: 'row', padding: 20 }}>
+        <Text style={{ padding: 5 }}>isLightDismissEnabled: </Text>
+        <CheckBox
+          checked={this.state.isLightDismissEnabled}
+          onValueChange={value => this.setState({ isLightDismissEnabled: value })} />
         <Button onPress={this._onPress} title={this.state.buttonTitle} />
         <Popup
           isOpen={this.state.isFlyoutVisible}
-          isLightDismissEnabled={true}
-          verticalOffset={-100}
-          horizontalOffset={150}
+          isLightDismissEnabled={this.state.isLightDismissEnabled}
+          verticalOffset={50}
+          horizontalOffset={350}
           onDismiss={this._onPopupDismissed}
         >
-          <View style={{ backgroundColor: 'lightgray', minWidth: 200, minHeight: 300 }}>
+          <View style={{ backgroundColor: 'lightgray', width: 200, height: 300 }}>
             <Text style={{ justifyContent: 'center', paddingTop: 10 }}>This is a flyout</Text>
-            <CheckBox style={{ justifyContent: 'center', padding: 50 }} />
-            <Button onPress={this._onPopupButtonPressed} title={this.state.popupButtonTitle} />
+            <CheckBox
+              style={{ justifyContent: 'center', padding: 20 }}
+              checked={this.state.popupCheckBoxState}
+              onValueChange={value => this.setState({ popupCheckBoxState: value })} />
+            <Button onPress={this._onPopupButtonPressed} title="Close" />
           </View>
         </Popup>
       </View>
@@ -77,7 +89,7 @@ class PopupButton extends Component {
   }
 
   _onPopupButtonPressed(e) {
-    this.setState({ popupButtonTitle: 'Button clicked' });
+    this.setState({ buttonTitle: 'Open Flyout', isFlyoutVisible: false });
   }
 
   _onPopupDismissed(event) {
@@ -225,7 +237,7 @@ export default class Bootstrap extends Component {
             <Button title="Clear selection" onPress={this.pickerClearSelection} />
           </View>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+          <View style={{ alignItems: 'center', padding: 10 }}>
             <Text>Test Popup: </Text>
             <PopupButton />
           </View>
@@ -287,7 +299,21 @@ export default class Bootstrap extends Component {
               onEndEditing={this.endEditingTextInputHandler}
               onContentSizeChange={this.contentSizeChangeTextInputHandler}
               selectionColor={"red"}
-              clearTextOnFocus={true}
+              clearTextOnFocus={false}
+              selectTextOnFocus={true}
+              style={{ height: 30 }}
+            />
+            <TextInput
+              ref={c => (this._input = c)}
+              defaultValue={"Test"}
+              placeholderTextColor={"hotpink"}
+              onChangeText={this.changeTextHandler}
+              onFocus={this.focusTextInputHandler}
+              onBlur={this.blurTextInputHandler}
+              onSelectionChange={this.selectionChangeTextInputHandler}
+              onEndEditing={this.endEditingTextInputHandler}
+              onContentSizeChange={this.contentSizeChangeTextInputHandler}
+              selectionColor={"red"}
               style={{ height: 30 }}
             />
           </View>

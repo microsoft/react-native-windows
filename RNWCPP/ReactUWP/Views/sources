@@ -18,6 +18,7 @@ SOURCES =  \
 	SwitchViewManager.cpp \
 	TextInputViewManager.cpp \
 	TextViewManager.cpp \
+	ToucheventHandler.cpp \
 	ViewManagerBase.cpp \
 	ViewPanel.cpp \
 	ViewViewManager.cpp \

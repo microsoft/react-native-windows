@@ -1,20 +1,16 @@
-# Note - ONLY CURRENTLY BUILDABLE USING INTERNAL CREDS
-We are actively working on removing all internal dependencies.  This should be completely in the coming months.
+# ReactNative for Windows 10 (C++)
+See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React-Native. The [master branch of this repository]( https://github.com/Microsoft/react-native-windows) adds support for React-Native for Windows10 implemented from scratch in C#. It reimplemented the JS<->Native bridge in C#, and shared the JS with Facebook's implementation of React-Native.  The current direction of React-Native involves a closer interaction between C++ and JS which is hard to achieve with a separate C# implementation.
 
-# Intro
-The original react-native-windows implementation was written from scratch in C#.  It reimplemented the JS<->Native bridge in C#, and shared the JS with facebook's implementation of React-Native.  The current direction of react-native involves a closer interaction between C++ and JS which is hard to achieve with this seperate C# implementation.
+In this branch, we are working on a rewrite of React-Native for Windows10 built in C++ that reuses the C++ core bridge implementation from Facebook’s React-Native.  This will allow React-Native for Windows10 to innovate and provide features by sharing the same core as Facebook’s React-Native.
 
-This is a rewrite of react-native-windows built in C++ that reuses the C++ core bridge implementation in react-native.  This will allow react-native-windows to innovate and provide features that will only be possible by sharing the same core as react-native.
+### Note - ONLY CURRENTLY BUILDABLE USING INTERNAL CREDS
+We are actively working on removing all dependencies internal to Microsoft. This should be completed in the next month.
 
-# Building
+# Getting Started
+This is a summary of setup steps needed to install and work with React-Native for Windows10 (C++). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details.
 
-## Prerequisites
-* [Git](https://git-scm.com/download/win)
-* [Node.js](https://nodejs.org)
-* [NuGet](https://dist.nuget.org/index.html)<br/>
-  Add `NuGet.exe`'s location to `PATH`.
-* [NuGet Credential Provider](https://nuget.pkgs.visualstudio.com/_apis/public/nuget/client/CredentialProviderBundle.zip)<br/>
-  Add `CredentialProvider.VSS.exe`'s location to `PATH`.
+## System requirements
+* You can run React-Native for Windows10 apps only on Windows 10 devices; sdk version: 10.0.14393.795 or higher.
 * [Visual Studio 2017](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
@@ -27,14 +23,24 @@ This is a rewrite of react-native-windows built in C++ that reuses the C++ core 
       * Windows 10 SDK (10.0.14393.0)
       * Windows 10 SDK (10.0.17763.0)
 
+## Install dependencies
+* [Git](https://git-scm.com/download/win)
+* [Node.js](https://nodejs.org) (last verified with version 8.14.0)
+* [NuGet](https://dist.nuget.org/index.html)<br/>
+  Add `NuGet.exe`'s location to `PATH`.
+* [NuGet Credential Provider](https://nuget.pkgs.visualstudio.com/_apis/public/nuget/client/CredentialProviderBundle.zip)<br/>
+  Add `CredentialProvider.VSS.exe`'s location to `PATH`.
+
+
 ## Build Steps
-1. Install dependencies. This step may take a while on the first run due to dependency download.
+1. Clone the repo [https://github.com/Microsoft/react-native-windows.git]
+2. Install dependencies. This step may take a while on the first run due to dependency download.
     ```cmd
+    cd RNWCPP
     npm install
-    nuget restore
     ```
 
-    If the above command results in an error message indicating missing authentication crendentials (e.g.
+    If the above command results in an error message indicating missing authentication credentials (e.g.
     `... npm ERR! This request requires auth credentials ...`), run
 
     ```cmd
@@ -52,9 +58,8 @@ This is a rewrite of react-native-windows built in C++ that reuses the C++ core 
       1. Open `ReactWindows.sln`.
       1. Select `Project / Build Solution (Ctrl+Shift+B)`
 
-# Testing
 
-## Sample Universal Windows App
+## Running the Sample Universal Windows App
 1. Run `npm run build`.
 1. Run `Scripts\launchPackager.bat`.
 1. In Visual Studio, set React.Windows.Universal.SampleApp as the StartUp Project.
@@ -77,3 +82,4 @@ Browser should open showing a page for the React Native JS tools. Press F12 to o
 1. In the `Test Explorer` window, select and run any desired tests.
 
 Defaults for platform and configuration are `x64`, `Debug`.
+

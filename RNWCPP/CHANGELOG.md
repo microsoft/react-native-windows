@@ -1,6 +1,71 @@
 # Change Log - react-native-win
 
-This log was last generated on Tue, 05 Feb 2019 22:12:35 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Feb 2019 04:48:47 GMT and should not be manually modified.
+
+## 0.5.47
+Tue, 12 Feb 2019 04:48:47 GMT
+
+*Version update only*
+
+## 0.5.46
+Tue, 12 Feb 2019 03:23:22 GMT
+
+*Version update only*
+
+## 0.5.45
+Tue, 12 Feb 2019 02:09:18 GMT
+
+*Version update only*
+
+## 0.5.44
+Mon, 11 Feb 2019 23:42:33 GMT
+
+### Patches
+
+- Adding shadow nodes to text input 
+
+## 0.5.43
+Sat, 09 Feb 2019 08:08:20 GMT
+
+*Version update only*
+
+## 0.5.42
+Fri, 08 Feb 2019 18:49:59 GMT
+
+### Patches
+
+- Add Popup interactions
+
+## 0.5.41
+Thu, 07 Feb 2019 20:51:50 GMT
+
+*Version update only*
+
+## 0.5.40
+Thu, 07 Feb 2019 15:45:23 GMT
+
+### Patches
+
+- OACR fixes
+
+## 0.5.39
+Thu, 07 Feb 2019 01:27:00 GMT
+
+### Patches
+
+- uwp - fix Picker bug with selection getting lost on items change
+
+## 0.5.38
+Wed, 06 Feb 2019 22:26:22 GMT
+
+*Version update only*
+
+## 0.5.37
+Wed, 06 Feb 2019 02:28:07 GMT
+
+### Patches
+
+- Support pnpm
 
 ## 0.5.36
 Tue, 05 Feb 2019 22:12:35 GMT

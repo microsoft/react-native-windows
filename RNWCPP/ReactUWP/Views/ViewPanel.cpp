@@ -52,6 +52,13 @@ void ViewPanel::VisualPropertyChanged(winrt::DependencyObject sender, winrt::Dep
     panel->m_propertiesChanged = true;
 }
 
+void ViewPanel::PositionPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
+{
+  auto element { sender.as<winrt::UIElement>() };
+  if (element != nullptr)
+    element.InvalidateArrange();
+}
+
 winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
 {
   static winrt::DependencyProperty s_borderThicknessProperty =
@@ -62,7 +69,7 @@ winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
       winrt::PropertyMetadata(
         winrt::box_value(winrt::Thickness()),
         ViewPanel::VisualPropertyChanged)
-  );
+    );
 
   return s_borderThicknessProperty;
 }
@@ -77,7 +84,7 @@ winrt::DependencyProperty ViewPanel::BorderBrushProperty()
       winrt::PropertyMetadata(
         winrt::SolidColorBrush(),
         ViewPanel::VisualPropertyChanged)
-  );
+    );
 
   return s_borderBrushProperty;
 }
@@ -92,9 +99,51 @@ winrt::DependencyProperty ViewPanel::CornerRadiusProperty()
       winrt::PropertyMetadata(
         winrt::box_value(winrt::CornerRadius()),
         ViewPanel::VisualPropertyChanged)
-  );
+    );
 
   return s_cornerRadiusProperty;
+}
+
+winrt::DependencyProperty ViewPanel::TopProperty()
+{
+  static winrt::DependencyProperty s_topProperty =
+    winrt::DependencyProperty::RegisterAttached(
+      L"Top",
+      winrt::xaml_typename<double>(),
+      viewPanelTypeName,
+      winrt::PropertyMetadata(
+        winrt::box_value((double)0),
+        ViewPanel::PositionPropertyChanged)
+    );
+
+  return s_topProperty;
+}
+
+winrt::DependencyProperty ViewPanel::LeftProperty()
+{
+  static winrt::DependencyProperty s_topProperty =
+    winrt::DependencyProperty::RegisterAttached(
+      L"Left",
+      winrt::xaml_typename<double>(),
+      viewPanelTypeName,
+      winrt::PropertyMetadata(
+        winrt::box_value((double)0),
+        ViewPanel::PositionPropertyChanged)
+    );
+
+  return s_topProperty;
+}
+
+void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement& element, double value)
+{
+  element.SetValue(TopProperty(), winrt::box_value<double>(value));
+  element.InvalidateArrange();
+}
+
+void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double value)
+{
+  element.SetValue(LeftProperty(), winrt::box_value<double>(value));
+  element.InvalidateArrange();
 }
 
 winrt::Size ViewPanel::MeasureOverride(winrt::Size availableSize)
@@ -114,8 +163,8 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
 {
   for (winrt::UIElement child : Children())
   {
-    float left = (float)winrt::Canvas::GetLeft(child);
-    float top =  (float)winrt::Canvas::GetTop(child);
+    float left = (float)ViewPanel::GetLeft(child);
+    float top =  (float)ViewPanel::GetTop(child);
 
     auto width = child.DesiredSize().Width;
     auto height = child.DesiredSize().Height;

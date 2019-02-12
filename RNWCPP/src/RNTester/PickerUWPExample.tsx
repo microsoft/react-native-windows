@@ -5,7 +5,7 @@
 /* tslint:disable */
 
 import React = require('react');
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { Picker } from '../../src/index.uwp';
 
 interface MakesModels {
@@ -168,6 +168,53 @@ class PickerStyleExample extends React.Component<{}, any> {
   }
 }
 
+class PickerUpdateItemsExample extends React.Component<{}, any> {
+  public state = {
+    selected: '111',
+    items: ['111','222','333','444','555','666'],
+  };
+
+  public render() {
+    return (
+      <View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Button title='Remove first item' onPress={
+            () => {
+              let selected = this.state.selected;
+              if (this.state.items.length > 1 && this.state.items[0] === selected)
+                selected = this.state.items[1];
+              this.setState({items: this.state.items.slice(1), selected})
+            }}
+          />
+          <Button title='Remove last item' onPress={
+            () => {
+              let selected = this.state.selected;
+              if (this.state.items.length > 1 && this.state.items[this.state.items.length-1] === selected)
+                selected = this.state.items[this.state.items.length-2];
+              this.setState({items: this.state.items.slice(0, this.state.items.length-1), selected})
+            }}
+          />
+          <Button title='Reset' onPress={
+            () => this.setState({selected: '111', items: ['111','222','333','444','555','666']})
+            }/>
+        </View>
+        <Picker
+          selectedValue={this.state.selected}
+          onValueChange={(selected: string) => this.setState({selected})}>
+          {this.state.items.map(item => (
+            <Picker.Item
+              key={item}
+              value={item}
+              label={item}
+            />
+          ))}
+        </Picker>
+        <Text>You selected: {this.state.selected}</Text>
+      </View>
+    );
+  }
+}
+
 export const displayName = (_undefined?: string) => {};
 export const title = '<Picker> UWP';
 export const description = 'Render lists of selectable options with uwp ComboBox.';
@@ -184,4 +231,10 @@ export const examples = [
       return <PickerStyleExample />;
     },
   },
+  {
+    title: '<Picker> update items maintains selection test',
+    render: function(): JSX.Element {
+      return <PickerUpdateItemsExample />;
+    }
+  }
 ];

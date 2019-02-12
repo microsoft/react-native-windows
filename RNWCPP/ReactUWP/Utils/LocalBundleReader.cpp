@@ -7,6 +7,11 @@
 #include "UnicodeConversion.h"
 #include <winrt/Windows.Storage.h>
 
+#if _MSC_VER <= 1913
+// VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
+#pragma optimize( "", off )
+#endif
+
 namespace react { namespace uwp {
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string& bundleUri)

@@ -9,7 +9,6 @@
 #include <cxxreact/RAMBundleRegistry.h>
 #include <folly/dynamic.h>
 #include <folly/json.h>
-#include <agents.h>
 
 using namespace folly;
 using namespace Concurrency;
@@ -17,6 +16,7 @@ using namespace Concurrency;
 using std::lock_guard;
 using std::move;
 using std::mutex;
+using std::promise;
 using std::shared_ptr;
 using std::string;
 using std::unique_ptr;
@@ -51,13 +51,13 @@ void WebSocketJSExecutor::loadApplicationScript(unique_ptr<const JSBigString> sc
 )
 {
   int requestId = ++m_requestId;
-  task_completion_event<string> callback;
+  promise<string> requestPromise;
   {
-    lock_guard<mutex> lock(m_lockCallbacks);
-    m_callbacks.emplace(requestId, callback);
+    lock_guard<mutex> lock(m_lockPromises);
+    m_promises.emplace(requestId, std::move(requestPromise));
   }
   dynamic request = dynamic::object
-  ("id", requestId)
+    ("id", requestId)
     ("method", "executeApplicationScript")
     ("url", script->c_str())
     ("inject", m_injectedObjects);
@@ -68,7 +68,7 @@ void WebSocketJSExecutor::loadApplicationScript(unique_ptr<const JSBigString> sc
     if (State::Running != m_state)
       throw std::exception("Executor instance not connected to a WebSocket endpoint.");
 
-    SendMessageAsync(requestId, move(str)).get();
+    SendMessageAsync(requestId, std::move(str)).get();
     if (State::Error == m_state)
       throw std::exception("Failed write.");
 
@@ -98,7 +98,7 @@ void WebSocketJSExecutor::callFunction(const string& moduleId, const string& met
   auto calls = Call("callFunctionReturnFlushedQueue", jArray);
   if (m_delegate && !IsInError())
   {
-    m_delegate->callNativeModules(*this, parseJson(move(calls)), true);
+    m_delegate->callNativeModules(*this, parseJson(std::move(calls)), true);
   }
 }
 
@@ -108,7 +108,7 @@ void WebSocketJSExecutor::invokeCallback(const double callbackId, const dynamic&
   auto calls = Call("invokeCallbackAndReturnFlushedQueue", jArray);
   if (m_delegate && !IsInError())
   {
-    m_delegate->callNativeModules(*this, parseJson(move(calls)), true);
+    m_delegate->callNativeModules(*this, parseJson(std::move(calls)), true);
   }
 }
 
@@ -143,37 +143,13 @@ void WebSocketJSExecutor::destroy()
 
 #pragma endregion
 
-template <typename Func>
-auto create_delayed_task(std::chrono::milliseconds delay, Func func, concurrency::cancellation_token token = concurrency::cancellation_token::none()) -> decltype(create_task(func))
+std::future<bool> WebSocketJSExecutor::ConnectAsync(const string& webSocketServerUrl, const std::function<void(string)>& errorCallback)
 {
-  concurrency::task_completion_event<void> tce;
-
-  auto pCallback = new concurrency::call<int>([tce](int)
-  {
-    tce.set();
-  });
-  auto pTimer = new concurrency::timer<int>(static_cast<int>(delay.count()), 0, pCallback, false);
-
-  pTimer->start();
-  token.register_callback([tce]()
-  {
-    tce.set();
-  });
-
-  return create_task(tce).then([pCallback, pTimer]()
-  {
-    delete pCallback;
-    delete pTimer;
-  }).then(func, token);
-}
-
-task<bool> WebSocketJSExecutor::ConnectAsync(const string& webSocketServerUrl, const std::function<void(string)>& errorCallback)
-{
-  m_errorCallback = move(errorCallback);
-  auto t = task_from_result();
+  promise<bool> resultPromise;
+  m_errorCallback = std::move(errorCallback);
 
   m_webSocket = IWebSocket::Make(webSocketServerUrl);
-  m_webSocket->SetOnMessage([this](size_t length, const string& message)
+  m_webSocket->SetOnMessage([this](size_t /*length*/, const string& message)
   {
     this->OnMessageReceived(message);
   });
@@ -182,57 +158,58 @@ task<bool> WebSocketJSExecutor::ConnectAsync(const string& webSocketServerUrl, c
     this->SetState(State::Error);
   });
 
-  return t.then([=]() -> bool
+  try
   {
+    promise<void> connectPromise;
+    if (!IsConnected())
+    {
+      m_webSocket->SetOnConnect([&connectPromise]()
+      {
+        connectPromise.set_value();
+      });
+
+      m_webSocket->Connect({} /*protocols*/, {} /*options*/);
+    }
+    else
+    {
+      connectPromise.set_value();
+    }
+
+    auto status = connectPromise.get_future().wait_for(std::chrono::milliseconds(ConnectTimeoutMilliseconds));
+    if (std::future_status::ready != status)
+    {
+      m_errorCallback("Timeout: Failed to connect to the dev server");
+      m_webSocket->Close(IWebSocket::CloseCode::GoingAway, "Timed out");
+
+      resultPromise.set_value(false);
+      return resultPromise.get_future();
+      //return false;//TODO: Return?
+    }
+
+    SetState(State::Connected);
+    PrepareJavaScriptRuntime();
+    SetState(State::Running);
+
+    resultPromise.set_value(IsRunning());
+    return resultPromise.get_future(); //TODO: Return bool instead?
+  }
+  catch (const std::exception&)
+  {
+    m_errorCallback(IsConnected() ? "Timeout: preparing JS runtime" : "Timeout: Failed to connect to the dev server");
+
     try
     {
-      cancellation_token_source timer_cts;
-      auto timeoutT = create_delayed_task(std::chrono::milliseconds(ConnectTimeoutMilliseconds), [=]() -> string
-      {
-        throw std::runtime_error("timeout");
-      }, timer_cts.get_token());
-
-      if (!IsConnected())
-      {
-        m_webSocket->SetOnConnect([this, &timer_cts]()
-        {
-          this->SetState(State::Connected);
-          timer_cts.cancel();
-        });
-
-        m_webSocket->Connect({} /*protocols*/, {} /*options*/);
-      }
-
-      auto status = timeoutT.wait();
-      if (status != canceled)
-        throw new std::exception("Timeout");
-
-      if (IsConnected())
-      {
-        PrepareJavaScriptRuntime();
-        SetState(State::Running);
-      }
-
-      return IsRunning();
+      m_webSocket->Close(IWebSocket::CloseCode::GoingAway, "Timed out");
     }
     catch (const std::exception&)
     {
-      m_errorCallback(IsConnected() ? "Timeout: preparing JS runtime" : "Timeout: Failed to connect to dev server");
-      SetState(State::Error);
+      // Nothing left to do. Aborting operation.
+    }
+  } // try m_webSocket->Connect()
 
-      try
-      {
-        //TODO: Research appropriate close_code value.
-        m_webSocket->Close(IWebSocket::CloseCode::GoingAway, "Timed out.");
-      }
-      catch (const std::exception&)
-      {
-        // Nothing left to do. Aborting operation.
-      }
-
-      return false;
-    }// try m_webSocket->Connect()
-  });// t.then [=]() -> bool
+  // Default: not connected.
+  resultPromise.set_value(false);
+  return resultPromise.get_future();
 }
 
 #pragma region private members
@@ -241,11 +218,11 @@ task<bool> WebSocketJSExecutor::ConnectAsync(const string& webSocketServerUrl, c
 
 void WebSocketJSExecutor::PrepareJavaScriptRuntime()
 {
-  task_completion_event<string> callback;
+  promise<string> requestPromise;
   int requestId = ++m_requestId;
   {
-    lock_guard<mutex> lock(m_lockCallbacks);
-    m_callbacks.emplace(requestId, callback);
+    lock_guard<mutex> lock(m_lockPromises);
+    m_promises.emplace(requestId, std::move(requestPromise));
   }
 
   dynamic request = dynamic::object
@@ -253,7 +230,7 @@ void WebSocketJSExecutor::PrepareJavaScriptRuntime()
     ("method", "prepareJSRuntime");
   string str = toJson(request);
 
-  SendMessageAsync(requestId, move(str)).get();
+  SendMessageAsync(requestId, std::move(str)).get();
   if (State::Error == m_state)
     throw std::exception("Failed write.");
 }
@@ -261,16 +238,16 @@ void WebSocketJSExecutor::PrepareJavaScriptRuntime()
 string WebSocketJSExecutor::Call(const string& methodName, dynamic& arguments)
 {
   int requestId = ++m_requestId;
-  task_completion_event<string> callback;
+  promise<string> requestPromise;
   {
-    lock_guard<mutex> lock(m_lockCallbacks);
-    m_callbacks.emplace(requestId, callback);
+    lock_guard<mutex> lock(m_lockPromises);
+    m_promises.emplace(requestId, std::move(requestPromise));
   }
 
   dynamic request = dynamic::object
     ("id", requestId)
     ("method", methodName)
-    ("arguments", move(arguments));
+    ("arguments", std::move(arguments));
   string str = toJson(request);
 
   try
@@ -278,7 +255,7 @@ string WebSocketJSExecutor::Call(const string& methodName, dynamic& arguments)
     if (State::Running != m_state)
       throw std::exception("Executor instance not connected to a WebSocket endpoint.");
 
-    auto message { SendMessageAsync(requestId, move(str)).get() };
+    auto message { SendMessageAsync(requestId, std::move(str)).get() };
     if (State::Error == m_state)
       throw std::exception("Error on read or write.");
 
@@ -294,31 +271,30 @@ string WebSocketJSExecutor::Call(const string& methodName, dynamic& arguments)
   }
 }
 
-task<string> WebSocketJSExecutor::SendMessageAsync(int requestId, const string&& message)
+std::future<string> WebSocketJSExecutor::SendMessageAsync(int requestId, string&& message)
 {
   if (!IsDisposed())
   {
-    m_webSocket->Send(move(message));
-
-    auto itr = m_callbacks.find(requestId);
-    if (itr != std::end(m_callbacks))
-      return task<string>(itr->second);
+    m_webSocket->Send(std::move(message));
+    auto itr = m_promises.find(requestId);
+    if (itr != m_promises.end())
+      return itr->second.get_future();
   }
   else
   {
-    lock_guard<mutex> lock(m_lockCallbacks);
-    auto itr = m_callbacks.find(requestId);
-    if (itr != m_callbacks.end())
+    lock_guard<mutex> lock(m_lockPromises);
+    auto itr = m_promises.find(requestId);
+    if (itr != m_promises.end())
     {
-      itr->second.set("");
-      return task<string>(itr->second);
+      itr->second.set_value("");
+      return itr->second.get_future();
     }
   }
 
-  return task<string>([]()
-  {
-    return string();
-  });
+  promise<string> emptyPromise;
+  emptyPromise.set_value("");
+
+  return emptyPromise.get_future();
 }
 
 void WebSocketJSExecutor::OnMessageReceived(const string& msg)
@@ -330,21 +306,22 @@ void WebSocketJSExecutor::OnMessageReceived(const string& msg)
   {
     auto replyId = it_parsed->second.getInt();
 
-    lock_guard<mutex> lock(m_lockCallbacks);
-    auto it_callback = m_callbacks.find(static_cast<int>(replyId));
-    if (it_callback != m_callbacks.end())
+    lock_guard<mutex> lock(m_lockPromises);
+    auto it_promise = m_promises.find(static_cast<int>(replyId));
+    if (it_promise != m_promises.end())
     {
       it_parsed = parsed.find("result");
       if (it_parsed != it_end && it_parsed->second != nullptr)
       {
-        string result = it_parsed->second.asString();
-        it_callback->second.set(result);
+        auto result = it_parsed->second.asString();
+        it_promise->second.set_value(result);
       }
       else
       {
-        it_callback->second.set("");
+        it_promise->second.set_value("");
       }
-    } // it_callback != m_callbacks.end
+    } // it_promise != m_promises.end
+
   } // it_parsed != it_end
 
   // If an error is found in the payload, propagate and return;
@@ -370,7 +347,7 @@ void WebSocketJSExecutor::flush()
   auto calls = Call("flushedQueue", jArray);
   if (m_delegate && !IsInError())
   {
-    m_delegate->callNativeModules(*this, parseJson(move(calls)), true);
+    m_delegate->callNativeModules(*this, parseJson(std::move(calls)), true);
   }
 }
 

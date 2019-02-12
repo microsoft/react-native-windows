@@ -17,18 +17,15 @@ public:
   folly::dynamic GetCommands() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  facebook::react::ShadowNode* createShadow() const override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap) override;
   void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
-
-private:
-  bool m_shouldClearTextOnFocus = false;
-  bool m_shouldSelectTextOnFocus = false;
+  friend class TextInputShadowNode;
 };
 
 } }

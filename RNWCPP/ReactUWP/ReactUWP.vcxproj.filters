@@ -185,6 +185,9 @@
     <ClCompile Include="Views\PopupViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\TouchEventHandler.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\AppStateModule.h">
@@ -353,6 +356,9 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\PopupViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\TouchEventHandler.h">
       <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>

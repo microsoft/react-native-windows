@@ -6,17 +6,17 @@
 #include "ViewManagerBase.h"
 
 #include "ShadowNodeBase.h"
+#include "ViewPanel.h"
 
 #include <Modules/NativeUIManager.h>
 
 #include <IXamlRootView.h>
 #include <winrt/Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 
 using namespace folly;
+
 namespace winrt {
 using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
 }
 
 namespace react { namespace uwp {
@@ -256,14 +256,15 @@ void ViewManagerBase::SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView view
     return;
   }
 
-  // TODO: Check if parent is indeed a Canvas
-  winrt::Canvas::SetLeft(element, left);
-  winrt::Canvas::SetTop(element, top);
+  // Set Position & Size Properties
+  ViewPanel::SetLeft(element, left);
+  ViewPanel::SetTop(element, top);
 
   auto fe = element.as<winrt::FrameworkElement>();
   fe.Width(width);
   fe.Height(height);
 
+  // Fire Events
   if (nodeToUpdate.m_onLayout)
   {
     int64_t tag = GetTag(viewToUpdate);

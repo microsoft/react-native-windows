@@ -1,6 +1,6 @@
 {
   "name": "react-native-win",
-  "version": "0.5.36",
+  "version": "0.5.47",
   "license": "MIT",
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",
@@ -33,7 +33,7 @@
     }
   },
   "dependencies": {
-    "@microsoft/react-native": "0.0.3",
+    "@microsoft/react-native": "0.0.11",
     "create-react-class": "^15.6.3",
     "fbjs": "0.8.17",
     "prop-types": "^15.5.8",

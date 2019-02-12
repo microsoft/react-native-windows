@@ -26,23 +26,23 @@ interface IRNTesterModuleExample {
 const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'ActivityIndicatorExample',
-    module: require('@microsoft/react-native/RNTester/js/ActivityIndicatorExample'),
+    module: require('react-native/RNTester/js/ActivityIndicatorExample'),
   },
   {
     key: 'ButtonExample',
-    module: require('@microsoft/react-native/RNTester/js/ButtonExample'),
+    module: require('react-native/RNTester/js/ButtonExample'),
   },
   {
     key: 'FlatListExample',
-    module: require('@microsoft/react-native/RNTester/js/FlatListExample'),
+    module: require('react-native/RNTester/js/FlatListExample'),
   },
   {
     key: 'ImageExample',
-    module: require('@microsoft/react-native/RNTester/js/ImageExample'),
+    module: require('react-native/RNTester/js/ImageExample'),
   },
   {
     key: 'LayoutEventsExample',
-    module: require('@microsoft/react-native/RNTester/js/LayoutEventsExample'),
+    module: require('react-native/RNTester/js/LayoutEventsExample'),
   },
   {
     key: 'PickerUWPExample',
@@ -50,17 +50,17 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'ScrollViewSimpleExample',
-    module: require('@microsoft/react-native/RNTester/js/ScrollViewSimpleExample')
+    module: require('react-native/RNTester/js/ScrollViewSimpleExample')
   },
   /*  TODO: Enable SectionList when Animation is supported
   {
     key: 'SectionListExample',
-    module: require('@microsoft/react-native/RNTester/js/SectionListExample'),
+    module: require('react-native/RNTester/js/SectionListExample'),
   },
   */
   {
     key: 'SwitchExample',
-    module: require('@microsoft/react-native/RNTester/js/SwitchExample'),
+    module: require('react-native/RNTester/js/SwitchExample'),
   },
   {
     key: 'TextExample',
@@ -72,80 +72,80 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'TouchableExample',
-    module: require('@microsoft/react-native/RNTester/js/TouchableExample'),
+    module: require('react-native/RNTester/js/TouchableExample'),
   },
   {
     key: 'TransparentHitTestExample',
-    module: require('@microsoft/react-native/RNTester/js/TransparentHitTestExample'),
+    module: require('react-native/RNTester/js/TransparentHitTestExample'),
   },
   {
     key: 'ViewExample',
-    module: require('@microsoft/react-native/RNTester/js/ViewExample'),
+    module: require('react-native/RNTester/js/ViewExample'),
   },
   /* TODO: Not enough of WebView is implemented to load the Example
   {
     key: 'WebViewExample',
-    module: require('@microsoft/react-native/RNTester/js/WebViewExample'),
+    module: require('react-native/RNTester/js/WebViewExample'),
   },*/
 ];
 
 const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'AppStateExample',
-    module: require('@microsoft/react-native/RNTester/js/AppStateExample')
+    module: require('react-native/RNTester/js/AppStateExample')
   },
   {
     key: 'BorderExample',
-    module: require('@microsoft/react-native/RNTester/js/BorderExample'),
+    module: require('react-native/RNTester/js/BorderExample'),
   },
   {
     key: 'BoxShadowExample - UWP NotYetImplemented',
-    module: require('@microsoft/react-native/RNTester/js/BoxShadowExample'),
+    module: require('react-native/RNTester/js/BoxShadowExample'),
   },
   {
     key: 'ClipboardExample',
-    module: require('@microsoft/react-native/RNTester/js/ClipboardExample'),
+    module: require('react-native/RNTester/js/ClipboardExample'),
   },
   {
     key: 'Dimensions',
-    module: require('@microsoft/react-native/RNTester/js/DimensionsExample'),
+    module: require('react-native/RNTester/js/DimensionsExample'),
   },
   {
     key: 'GeolocationExample',
-    module: require('@microsoft/react-native/RNTester/js/GeolocationExample'),
+    module: require('react-native/RNTester/js/GeolocationExample'),
   },
   {
     key: 'LayoutExample',
-    module: require('@microsoft/react-native/RNTester/js/LayoutExample'),
+    module: require('react-native/RNTester/js/LayoutExample'),
   },
   {
     key: 'LinkingExample',
-    module: require('@microsoft/react-native/RNTester/js/LinkingExample'),
+    module: require('react-native/RNTester/js/LinkingExample'),
   },
   {
     key: 'PanResponderExample',
-    module: require('@microsoft/react-native/RNTester/js/PanResponderExample'),
+    module: require('react-native/RNTester/js/PanResponderExample'),
   },
   {
     key: 'PointerEventsExample',
-    module: require('@microsoft/react-native/RNTester/js/PointerEventsExample'),
+    module: require('react-native/RNTester/js/PointerEventsExample'),
   },
   {
     key: 'RTLExample',
-    module: require('@microsoft/react-native/RNTester/js/RTLExample'),
+    module: require('react-native/RNTester/js/RTLExample'),
   },
   {
     key: 'TimerExample',
-    module: require('@microsoft/react-native/RNTester/js/TimerExample'),
+    module: require('react-native/RNTester/js/TimerExample'),
   },
   {
     key: 'WebSocketExample',
-    module: require('@microsoft/react-native/RNTester/js/WebSocketExample'),
+    module: require('react-native/RNTester/js/WebSocketExample'),
   },
   /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',
-    module: require('@microsoft/react-native/RNTester/js/XHRExample'),
+    module: require('react-native/RNTester/js/XHRExample'),
   },*/
 ];
 

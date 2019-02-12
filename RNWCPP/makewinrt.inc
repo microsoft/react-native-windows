@@ -1,6 +1,6 @@
 ###########################################################
 #
-#  Common include file for NMAKE 
+#  Common include file for NMAKE
 #  Need to keep consistent with the reactUWP.vcxproj
 #
 ###########################################################
@@ -53,5 +53,5 @@ C_DEFINES = $(C_DEFINES) -D NOJSC
 C_DEFINES = $(C_DEFINES) -D _HAS_AUTO_PTR_ETC
 
 
-C_FLAGS = $(C_FLAGS) -wd4068 -wd4146 -wd4189 -wd4100 -wd4290 -wd4239 -wd4458 -wd4244 -wd4456 -wd4267 -wd4018 -wd4457
+C_FLAGS = $(C_FLAGS) -wd4068 -wd4189 -wd4100 -wd4239 -wd4458 -wd4244 -wd4456
 C_FLAGS = $(C_FLAGS) /bigobj

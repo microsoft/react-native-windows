@@ -48,6 +48,7 @@ set(SOURCES
 	Views/SwitchViewManager.cpp
 	Views/TextInputViewManager.cpp
 	Views/TextViewManager.cpp
+	Views/TouchEventHandler.cpp
 	Views/ViewManagerBase.cpp
 	Views/ViewPanel.cpp
 	Views/ViewViewManager.cpp

@@ -2,6 +2,158 @@
   "name": "react-native-win",
   "entries": [
     {
+      "version": "0.5.47",
+      "tag": "react-native-win_v0.5.47",
+      "date": "Tue, 12 Feb 2019 04:48:47 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.10` to `0.0.11`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.46",
+      "tag": "react-native-win_v0.5.46",
+      "date": "Tue, 12 Feb 2019 03:23:22 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.9` to `0.0.10`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.45",
+      "tag": "react-native-win_v0.5.45",
+      "date": "Tue, 12 Feb 2019 02:09:18 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.8` to `0.0.9`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.44",
+      "tag": "react-native-win_v0.5.44",
+      "date": "Mon, 11 Feb 2019 23:42:33 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Adding shadow nodes to text input ",
+            "author": "Ravi Teja Koganti <rakogan@microsoft.com>",
+            "commit": "d6d9c4a2e8ffe570f69fcabee6ba0227e0871df5"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.43",
+      "tag": "react-native-win_v0.5.43",
+      "date": "Sat, 09 Feb 2019 08:08:20 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.7` to `0.0.8`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.42",
+      "tag": "react-native-win_v0.5.42",
+      "date": "Fri, 08 Feb 2019 18:49:59 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add Popup interactions",
+            "author": "Ashita Khetan <askhetan@microsoft.com>",
+            "commit": "f25a25ea4d22ab080330e76b9ec60d9cf5d2413d"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.41",
+      "tag": "react-native-win_v0.5.41",
+      "date": "Thu, 07 Feb 2019 20:51:50 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.6` to `0.0.7`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.40",
+      "tag": "react-native-win_v0.5.40",
+      "date": "Thu, 07 Feb 2019 15:45:23 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "OACR fixes",
+            "author": "Andrew Coates (REDMOND) <acoates@microsoft.com>",
+            "commit": "27e4dc618a130737817ba27361259f14a6cb4a13"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.5` to `0.0.6`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.39",
+      "tag": "react-native-win_v0.5.39",
+      "date": "Thu, 07 Feb 2019 01:27:00 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - fix Picker bug with selection getting lost on items change",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "0e0ef4bdf39ade01121759370b55d9c433a0f735"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.38",
+      "tag": "react-native-win_v0.5.38",
+      "date": "Wed, 06 Feb 2019 22:26:22 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.4` to `0.0.5`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.37",
+      "tag": "react-native-win_v0.5.37",
+      "date": "Wed, 06 Feb 2019 02:28:07 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Support pnpm",
+            "author": "Andrew Coates (REDMOND) <acoates@microsoft.com>",
+            "commit": "1170eff0e47fb3980b375f9d0380b7f78e9fe79d"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.3` to `0.0.4`"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.36",
       "tag": "react-native-win_v0.5.36",
       "date": "Tue, 05 Feb 2019 22:12:35 GMT",

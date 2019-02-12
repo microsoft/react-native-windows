@@ -36,8 +36,10 @@ public:
 private:
   void RepopulateItems();
   static void OnSelectionChanged(IReactInstance& instance, int64_t tag, folly::dynamic&& value, int32_t selectedIndex);
+
   bool m_updating = false;
   folly::dynamic m_items;
+  int32_t m_selectedIndex;
 };
 
 void PickerShadowNode::createView()
@@ -52,7 +54,7 @@ void PickerShadowNode::createView()
     {
       int32_t index = combobox.SelectedIndex();
       folly::dynamic value;
-      if (index >= 0 && index < m_items.size())
+      if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
         value = m_items.at(index)["value"];
       OnSelectionChanged(*instance, m_tag, std::move(value), index);
     }
@@ -62,6 +64,8 @@ void PickerShadowNode::createView()
 void PickerShadowNode::updateProperties(const folly::dynamic&& props)
 {
   m_updating = true;
+
+  bool updateSelectedIndex = false;
   auto combobox = GetView().as<winrt::ComboBox>();
   for (auto& pair : props.items())
   {
@@ -76,7 +80,10 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
     else if (propertyName.asString() == "selectedIndex")
     {
       if (propertyValue.isNumber())
-        combobox.SelectedIndex(propertyValue.asInt());
+      {
+        m_selectedIndex = propertyValue.asInt();
+        updateSelectedIndex = true;
+      }
     }
     else if (propertyName.asString() == "items")
     {
@@ -87,6 +94,10 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
       }
     }
   }
+
+  // Update selectedIndex last, in case items and selectedIndex were both changing
+  if (updateSelectedIndex)
+    combobox.SelectedIndex(m_selectedIndex);
 
   Super::updateProperties(std::move(props));
   m_updating = false;
@@ -110,6 +121,8 @@ void PickerShadowNode::RepopulateItems()
       comboBoxItems.Append(comboboxItem);
     }
   }
+  if (m_selectedIndex < static_cast<int32_t>(m_items.size()))
+    combobox.SelectedIndex(m_selectedIndex);
 }
 
 /*static*/ void PickerShadowNode::OnSelectionChanged(IReactInstance& instance, int64_t tag, folly::dynamic&& value, int32_t selectedIndex)

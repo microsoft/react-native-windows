@@ -185,6 +185,7 @@
     <ClInclude Include="Views\SwitchViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />
+    <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewManagerBase.h" />
     <ClInclude Include="Views\ViewPanel.h" />
     <ClInclude Include="Views\ViewViewManager.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="Views\SwitchViewManager.cpp" />
     <ClCompile Include="Views\TextInputViewManager.cpp" />
     <ClCompile Include="Views\TextViewManager.cpp" />
+    <ClCompile Include="Views\TouchEventHandler.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />
     <ClCompile Include="Views\ViewPanel.cpp" />
     <ClCompile Include="Views\ViewViewManager.cpp" />

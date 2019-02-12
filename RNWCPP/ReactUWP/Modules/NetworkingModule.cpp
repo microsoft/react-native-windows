@@ -18,8 +18,8 @@
 #include <cxxreact/JsArgumentHelpers.h>
 #pragma warning(pop)
 
-#if _MSC_VER <= 1912
-// VC 19 (2015-2017.5) cannot optimize coroutines with LTCG enabled
+#if _MSC_VER <= 1913
+// VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize( "", off )
 #endif
 

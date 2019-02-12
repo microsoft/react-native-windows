@@ -8,8 +8,8 @@
 
 import React = require('react');
 import { /*Image,*/ StyleSheet, Text, View, TextStyle } from 'react-native';
-const RNTesterBlock = require('@microsoft/react-native/RNTester/js/RNTesterBlock');
-const RNTesterPage = require('@microsoft/react-native/RNTester/js/RNTesterPage');
+const RNTesterBlock = require('react-native/RNTester/js/RNTesterBlock');
+const RNTesterPage = require('react-native/RNTester/js/RNTesterPage');
 
 export class Entity extends React.Component<{}> {
   public render() {

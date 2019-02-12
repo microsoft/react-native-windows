@@ -6,7 +6,10 @@
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/JSModulesUnbundle.h>
 #include <IWebSocket.h>
-#include <ppltasks.h>
+
+// Standard Library
+#include <future>
+#include <unordered_map>
 
 // OFFICEDEV: Ignore warnings
 #pragma warning( push )
@@ -48,12 +51,12 @@ public:
 
   #pragma endregion // JSExecutor members
 
-  Concurrency::task<bool> ConnectAsync(const std::string& webSocketServerUrl, const std::function<void(std::string)>& errorCallback);
+  std::future<bool> ConnectAsync(const std::string& webSocketServerUrl, const std::function<void(std::string)>& errorCallback);
 
 private:
   void PrepareJavaScriptRuntime();
   std::string Call(const std::string& methodName, folly::dynamic& arguments);
-  Concurrency::task<std::string> SendMessageAsync(int requestId, const std::string&& message);
+  std::future<std::string> SendMessageAsync(int requestId, std::string&& message);
   void OnMessageReceived(const std::string& msg);
   void flush();
 
@@ -65,8 +68,8 @@ private:
   folly::dynamic m_injectedObjects = folly::dynamic::object;
   std::function<void(std::string)> m_errorCallback;
 
-  std::mutex m_lockCallbacks;
-  std::map<int, Concurrency::task_completion_event<std::string>> m_callbacks;
+  std::mutex m_lockPromises;
+  std::unordered_map<int, std::promise<std::string>> m_promises;
 
   enum class State
   {

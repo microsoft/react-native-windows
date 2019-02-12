@@ -48,10 +48,20 @@ public:
   void ClipChildren(bool value);
 
 public:
+  // ViewPanel Properties
   static winrt::Windows::UI::Xaml::DependencyProperty BorderBrushProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty BorderThicknessProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty CornerRadiusProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty BackgroundProperty();
+
+  // Attached Properties
+  static winrt::Windows::UI::Xaml::DependencyProperty TopProperty();
+  static void SetTop(winrt::Windows::UI::Xaml::UIElement& element, double value);
+  static double GetTop(winrt::Windows::UI::Xaml::UIElement& element) { return winrt::unbox_value<double>(element.GetValue(TopProperty())); }
+
+  static winrt::Windows::UI::Xaml::DependencyProperty LeftProperty();
+  static void SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double value);
+  static double GetLeft(winrt::Windows::UI::Xaml::UIElement& element) { return winrt::unbox_value<double>(element.GetValue(LeftProperty())); }
 
 private:
   // Managing the Border & Background Elements
@@ -76,6 +86,7 @@ private:
 
 private:
   static void VisualPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
+  static void PositionPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
 };
 
 } }

@@ -43,7 +43,7 @@ namespace react {
 template<>
 struct json_type_traits<react::uwp::Selection>
 {
-  static react::uwp::Selection parseJson(folly::dynamic& json)
+  static react::uwp::Selection parseJson(const folly::dynamic& json)
   {
     react::uwp::Selection selection;
     for (auto& item : json.items())
@@ -59,79 +59,37 @@ struct json_type_traits<react::uwp::Selection>
 
 namespace react { namespace uwp {
 
+class TextInputShadowNode : public ShadowNodeBase
+{
+  using Super = ShadowNodeBase;
+public:
+  TextInputShadowNode() = default;
+  void createView() override;
+  void updateProperties(const folly::dynamic&& props) override;
+
+private:
+  bool m_shouldClearTextOnFocus = false;
+  bool m_shouldSelectTextOnFocus = false;
+  bool m_updating = false;
+};
 enum class TextInputCommands
 {
   SetFocus = 1,
   Blur = 2,
 };
 
-TextInputViewManager::TextInputViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+void TextInputShadowNode::createView()
 {
-}
+  Super::createView();
 
-const char* TextInputViewManager::GetName() const
-{
-  return "RCTTextInput";
-}
-
-folly::dynamic TextInputViewManager::GetCommands() const
-{
-  auto commands = Super::GetCommands();
-  commands.update(folly::dynamic::object
-    ("SetFocus", static_cast<std::underlying_type_t<TextInputCommands>>(TextInputCommands::SetFocus))
-  );
-  commands.update(folly::dynamic::object
-    ("Blur", static_cast<std::underlying_type_t<TextInputCommands>>(TextInputCommands::Blur))
-  );
-  return commands;
-}
-
-folly::dynamic TextInputViewManager::GetNativeProps() const
-{
-  auto props = Super::GetNativeProps();
-
-  props.update(folly::dynamic::object
-    ("allowFontScaling", "boolean")
-    ("clearTextOnFocus", "boolean")
-    ("editable", "boolean")
-    ("maxLength", "int")
-    ("multiline", "boolean")
-    ("placeholder", "string")
-    ("placeholderTextColor", "Color")
-    ("scrollEnabled", "boolean")
-    ("selection", "Map")
-    ("selectionColor", "Color")
-    ("selectTextOnFocus", "boolean")
-    ("spellCheck", "boolean")
-    ("text", "string")
-  );
-
-  return props;
-}
-
-folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants() const
-{
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topTextInputChange"] = folly::dynamic::object("registrationName", "onChange");
-  directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
-  directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
-  directEvents["topTextInputEndEditing"] = folly::dynamic::object("registrationName", "onEndEditing");
-  directEvents["topTextInputSelectionChange"] = folly::dynamic::object("registrationName", "onSelectionChange");
-  directEvents["topTextInputContentSizeChange"] = folly::dynamic::object("registrationName", "onContentSizeChange");
-
-  return directEvents;
-}
-
-XamlView TextInputViewManager::CreateViewCore(int64_t tag)
-{
-  winrt::TextBox textBox;
-
+  auto textBox = GetView().as<winrt::TextBox>();
+  auto wkinstance = static_cast<TextInputViewManager*>(GetViewManager())->m_wkReactInstance;
+  auto tag = m_tag;
   textBox.TextChanged([=](auto &&, auto &&)
   {
-    auto instance = m_wkReactInstance.lock();
+    auto instance = wkinstance.lock();
     folly::dynamic eventData = folly::dynamic::object("target", tag)("text", HstringToDynamic(textBox.Text()));
-    if (instance != nullptr)
+    if (!m_updating && instance != nullptr)
       instance->DispatchEvent(tag, "topTextInputChange", std::move(eventData));
   });
 
@@ -143,18 +101,18 @@ XamlView TextInputViewManager::CreateViewCore(int64_t tag)
     if (m_shouldSelectTextOnFocus)
       textBox.SelectAll();
 
-    auto instance = m_wkReactInstance.lock();
+    auto instance = wkinstance.lock();
     folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (instance != nullptr)
+    if (!m_updating && instance != nullptr)
       instance->DispatchEvent(tag, "topTextInputFocus", std::move(eventData));
   });
 
   textBox.LostFocus([=](auto &&, auto &&)
   {
-    auto instance = m_wkReactInstance.lock();
+    auto instance = wkinstance.lock();
     folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
     folly::dynamic eventDataEndEditing = folly::dynamic::object("target", tag)("text", HstringToDynamic(textBox.Text()));
-    if (instance != nullptr)
+    if (!m_updating && instance != nullptr)
     {
       instance->DispatchEvent(tag, "topTextInputBlur", std::move(eventDataBlur));
       instance->DispatchEvent(tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
@@ -163,10 +121,10 @@ XamlView TextInputViewManager::CreateViewCore(int64_t tag)
 
   textBox.SelectionChanged([=](auto &&, auto &&)
   {
-    auto instance = m_wkReactInstance.lock();
+    auto instance = wkinstance.lock();
     folly::dynamic selectionData = folly::dynamic::object("start", textBox.SelectionStart())("end", textBox.SelectionStart() + textBox.SelectionLength());
     folly::dynamic eventData = folly::dynamic::object("target", tag)("selection", std::move(selectionData));
-    if (instance != nullptr)
+    if (!m_updating && instance != nullptr)
       instance->DispatchEvent(tag, "topTextInputSelectionChange", std::move(eventData));
   });
 
@@ -174,25 +132,23 @@ XamlView TextInputViewManager::CreateViewCore(int64_t tag)
   {
     if (textBox.TextWrapping() == winrt::TextWrapping::Wrap)
     {
-      auto instance = m_wkReactInstance.lock();
+      auto instance = wkinstance.lock();
       folly::dynamic contentSizeData = folly::dynamic::object("width", args.NewSize().Width)("height", args.NewSize().Height);
       folly::dynamic eventData = folly::dynamic::object("target", tag)("contentSize", std::move(contentSizeData));
-      if (instance != nullptr)
+      if (!m_updating && instance != nullptr)
         instance->DispatchEvent(tag, "topTextInputContentSizeChange", std::move(eventData));
     }
   });
-
-  return textBox;
 }
-
-void TextInputViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
 {
-  auto textBox = viewToUpdate.as<winrt::TextBox>();
+  m_updating = true;
+  auto textBox = GetView().as<winrt::TextBox>();
   if (textBox == nullptr)
     return;
 
   auto control = textBox.as<winrt::Control>();
-  for (auto& pair : reactDiffMap.items())
+  for (auto& pair : props.items())
   {
     // FUTURE: In the future cppwinrt will generate code where static methods on base types can
     // be called.  For now we specify the base type explicitly
@@ -204,7 +160,7 @@ void TextInputViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlVi
     {
       continue;
     }
-    else if (TryUpdatePadding(nodeToUpdate, textBox, pair.first, pair.second))
+    else if (TryUpdatePadding(this, textBox, pair.first, pair.second))
     {
       continue;
     }
@@ -224,7 +180,7 @@ void TextInputViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlVi
     }
     // FUTURE: In the future cppwinrt will generate code where static methods on base types can
     // be called.  For now we specify the base type explicitly
-    else if (TryUpdateBorderProperties(nodeToUpdate, control, pair.first, pair.second))
+    else if (TryUpdateBorderProperties(this, control, pair.first, pair.second))
     {
       continue;
     }
@@ -308,7 +264,77 @@ void TextInputViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlVi
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::updateProperties(std::move(props));
+  m_updating = false;
+}
+
+TextInputViewManager::TextInputViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
+  : FrameworkElementViewManager(reactInstance)
+{
+}
+
+const char* TextInputViewManager::GetName() const
+{
+  return "RCTTextInput";
+}
+
+folly::dynamic TextInputViewManager::GetCommands() const
+{
+  auto commands = Super::GetCommands();
+  commands.update(folly::dynamic::object
+    ("SetFocus", static_cast<std::underlying_type_t<TextInputCommands>>(TextInputCommands::SetFocus))
+  );
+  commands.update(folly::dynamic::object
+    ("Blur", static_cast<std::underlying_type_t<TextInputCommands>>(TextInputCommands::Blur))
+  );
+  return commands;
+}
+
+folly::dynamic TextInputViewManager::GetNativeProps() const
+{
+  auto props = Super::GetNativeProps();
+
+  props.update(folly::dynamic::object
+    ("allowFontScaling", "boolean")
+    ("clearTextOnFocus", "boolean")
+    ("editable", "boolean")
+    ("maxLength", "int")
+    ("multiline", "boolean")
+    ("placeholder", "string")
+    ("placeholderTextColor", "Color")
+    ("scrollEnabled", "boolean")
+    ("selection", "Map")
+    ("selectionColor", "Color")
+    ("selectTextOnFocus", "boolean")
+    ("spellCheck", "boolean")
+    ("text", "string")
+  );
+
+  return props;
+}
+
+folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants() const
+{
+  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
+  directEvents["topTextInputChange"] = folly::dynamic::object("registrationName", "onChange");
+  directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
+  directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
+  directEvents["topTextInputEndEditing"] = folly::dynamic::object("registrationName", "onEndEditing");
+  directEvents["topTextInputSelectionChange"] = folly::dynamic::object("registrationName", "onSelectionChange");
+  directEvents["topTextInputContentSizeChange"] = folly::dynamic::object("registrationName", "onContentSizeChange");
+
+  return directEvents;
+}
+
+facebook::react::ShadowNode* TextInputViewManager::createShadow() const
+{
+  return new TextInputShadowNode();
+}
+
+XamlView TextInputViewManager::CreateViewCore(int64_t tag)
+{
+  winrt::TextBox textBox;
+  return textBox;
 }
 
 void TextInputViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)
