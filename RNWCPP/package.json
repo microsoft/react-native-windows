@@ -1,6 +1,6 @@
 {
   "name": "react-native-win",
-  "version": "0.5.47",
+  "version": "0.5.49",
   "license": "MIT",
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",

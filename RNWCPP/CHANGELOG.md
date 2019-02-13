@@ -1,6 +1,21 @@
 # Change Log - react-native-win
 
-This log was last generated on Tue, 12 Feb 2019 04:48:47 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Feb 2019 01:52:33 GMT and should not be manually modified.
+
+## 0.5.49
+Wed, 13 Feb 2019 01:52:33 GMT
+
+### Patches
+
+- uwp - add accessibilityHint support, initial accessibilityexample in RNTester
+- uwp - fix mouse/touch input after live reload
+
+## 0.5.48
+Tue, 12 Feb 2019 19:53:26 GMT
+
+### Patches
+
+- uwp - update version checks for disabling compiler optimizations
 
 ## 0.5.47
 Tue, 12 Feb 2019 04:48:47 GMT

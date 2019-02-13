@@ -2,6 +2,39 @@
   "name": "react-native-win",
   "entries": [
     {
+      "version": "0.5.49",
+      "tag": "react-native-win_v0.5.49",
+      "date": "Wed, 13 Feb 2019 01:52:33 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - add accessibilityHint support, initial accessibilityexample in RNTester",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "cfeb82cf75fcc5472dfd9c0928df2f61ba66c015"
+          },
+          {
+            "comment": "uwp - fix mouse/touch input after live reload",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "25c6d86526a064a8c455e0a1a83811334bbd46e6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.48",
+      "tag": "react-native-win_v0.5.48",
+      "date": "Tue, 12 Feb 2019 19:53:26 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - update version checks for disabling compiler optimizations",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "58992f15061da1065ce345c4b17f6b2ee02dd8e3"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.47",
       "tag": "react-native-win_v0.5.47",
       "date": "Tue, 12 Feb 2019 04:48:47 GMT",

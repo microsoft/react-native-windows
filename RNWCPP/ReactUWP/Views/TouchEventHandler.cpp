@@ -66,7 +66,7 @@ void TouchEventHandler::OnPointerPressed(const winrt::IInspectable& sender, cons
 {
   // Short circuit all of this if we are in an error state
   auto instance = m_wkReactInstance.lock();
-  if (instance->IsInError())
+  if (!instance || instance->IsInError())
     return;
 
   if (IndexOfPointerWithId(args.Pointer().PointerId()) != s_InvalidPointerId)
@@ -116,7 +116,7 @@ void TouchEventHandler::OnPointerMoved(const winrt::IInspectable& sender, const 
 {
   // Short circuit all of this if we are in an error state
   auto instance = m_wkReactInstance.lock();
-  if (instance->IsInError())
+  if (!instance || instance->IsInError())
     return;
 
   // Only if the view has a Tag can we process this
@@ -144,7 +144,7 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
 {
   // Short circuit all of this if we are in an error state
   auto instance = m_wkReactInstance.lock();
-  if (instance->IsInError())
+  if (!instance || instance->IsInError())
     return;
 
   size_t pointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
@@ -223,6 +223,10 @@ size_t TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId)
 
 void TouchEventHandler::UpdatePointersInViews(const winrt::PointerRoutedEventArgs& args, int64_t tag, winrt::FrameworkElement sourceElement)
 {
+  auto instance = m_wkReactInstance.lock();
+  if (!instance || instance->IsInError())
+    return;
+
   int32_t pointerId = args.Pointer().PointerId();
   size_t pointerIndex = IndexOfPointerWithId(pointerId);
   ReactPointer pointer = (pointerIndex == s_InvalidPointerId) ? CreateReactPointer(args, tag, sourceElement) : m_pointers[pointerIndex];
@@ -241,7 +245,6 @@ void TouchEventHandler::UpdatePointersInViews(const winrt::PointerRoutedEventArg
   if (newViews == existingViews)
     return;
 
-  auto instance = m_wkReactInstance.lock();
   auto nativeUiManager = static_cast<NativeUIManager*>(instance->NativeUIManager());
   facebook::react::INativeUIManagerHost* puiManagerHost = nativeUiManager->getHost();
 
@@ -272,7 +275,6 @@ void TouchEventHandler::UpdatePointersInViews(const winrt::PointerRoutedEventArg
 
 void TouchEventHandler::SendPointerMove(const winrt::PointerRoutedEventArgs& args, int64_t tag, winrt::FrameworkElement sourceElement)
 {
-
   auto instance = m_wkReactInstance.lock();
   auto nativeUiManager = static_cast<NativeUIManager*>(instance->NativeUIManager());
   facebook::react::INativeUIManagerHost* puiManagerHost = nativeUiManager->getHost();

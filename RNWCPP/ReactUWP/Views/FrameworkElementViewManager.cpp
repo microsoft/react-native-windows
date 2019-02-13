@@ -30,6 +30,7 @@ folly::dynamic FrameworkElementViewManager::GetNativeProps() const
 {
   folly::dynamic props = Super::GetNativeProps();
   props.update(folly::dynamic::object
+    ("accessibilityHint", "string")
     ("accessibilityLabel", "string")
     ("testID", "string")
   );
@@ -124,6 +125,13 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           element.MaxHeight(maxHeight);
         // else
         // TODO report error
+      }
+      else if (propertyName == "accessibilityHint")
+      {
+         auto value = react::uwp::asHstring(propertyValue);
+        auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
+
+        element.SetValue(winrt::AutomationProperties::HelpTextProperty(), boxedValue);
       }
       else if (propertyName == "accessibilityLabel")
       {

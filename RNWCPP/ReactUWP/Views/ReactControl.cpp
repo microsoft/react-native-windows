@@ -121,12 +121,12 @@ void ReactControl::DetachRoot() noexcept
 {
   if (!m_isAttached)
     return;
-  
+
   if (m_touchEventHandler != nullptr)
   {
     m_touchEventHandler->RemoveTouchHandlers();
   }
-  
+
   if (m_reactInstance != nullptr)
   {
     m_reactInstance->DetachRootView(m_pParent);
@@ -153,6 +153,9 @@ void ReactControl::DetachInstance()
     m_reactInstance->UnregisterLiveReloadCallback(m_liveReloadCallbackCookie);
     m_reactInstance->UnregisterErrorCallback(m_errorCallbackCookie);
     m_reactInstance.reset();
+
+    // Clear members with a dependency on the reactInstance
+    m_touchEventHandler.reset();
   }
 }
 
