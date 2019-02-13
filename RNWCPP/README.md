@@ -1,13 +1,13 @@
 # ReactNative for Windows 10 (C++)
-See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React-Native. The [master branch of this repository]( https://github.com/Microsoft/react-native-windows) adds support for React-Native for Windows10 implemented from scratch in C#. It reimplemented the JS<->Native bridge in C#, and shared the JS with Facebook's implementation of React-Native.  The current direction of React-Native involves a closer interaction between C++ and JS which is hard to achieve with a separate C# implementation.
+See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native. The [master branch of this repository]( https://github.com/Microsoft/react-native-windows) adds support for React Native for Windows10 implemented from scratch in C#. It reimplemented the JS<->Native bridge in C#, and shared the JS with Facebook's implementation of React Native.  The current direction of React Native involves a closer interaction between C++ and JS which is hard to achieve with a separate C# implementation.
 
-In this branch, we are working on a rewrite of React-Native for Windows10 built in C++ that reuses the C++ core bridge implementation from Facebook’s React-Native.  This will allow React-Native for Windows10 to innovate and provide features by sharing the same core as Facebook’s React-Native.
+In this branch, we are working on a rewrite of React Native for Windows10 built in C++ that reuses the C++ core bridge implementation from Facebook’s React Native.  This will allow React Native for Windows10 to innovate and provide features by sharing the same core as Facebook’s React Native.
 
 ### Note - ONLY CURRENTLY BUILDABLE USING INTERNAL CREDS
 We are actively working on removing all dependencies internal to Microsoft. This should be completed in the next month.
 
 # Getting Started
-This is a summary of setup steps needed to install and work with React-Native for Windows10 (C++). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details.
+This is a summary of setup steps needed to install and work with React Native for Windows10 (C++). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details.
 
 ## System requirements
 * You can run React-Native for Windows10 apps only on Windows 10 devices; sdk version: 10.0.14393.795 or higher.
