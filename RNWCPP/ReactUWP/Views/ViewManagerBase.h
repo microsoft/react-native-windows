@@ -51,12 +51,11 @@ public:
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
   virtual void AddView(XamlView parent, XamlView child, int64_t index);
-  virtual XamlView GetChildAt(XamlView parent, int64_t index);
-  virtual int64_t GetChildCount(XamlView parent);
   virtual void RemoveAllChildren(XamlView parent);
   virtual void RemoveChildAt(XamlView parent, int64_t index);
+  virtual void ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild);
 
-  virtual void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap);
+  virtual void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap);
 
   virtual void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs);
 
@@ -70,6 +69,7 @@ public:
 
 protected:
   virtual XamlView CreateViewCore(int64_t tag) = 0;
+  virtual void TransferProperties(XamlView oldView, XamlView newView);
 
 protected:
   std::weak_ptr<IReactInstance> m_wkReactInstance;

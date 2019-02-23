@@ -132,6 +132,10 @@ void TestNativeUIManager::RemoveView(facebook::react::ShadowNode& shadowNode, bo
 {
 }
 
+void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode)
+{
+}
+
 void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props)
 {
 }

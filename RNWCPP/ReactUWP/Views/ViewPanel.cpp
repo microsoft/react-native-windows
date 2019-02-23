@@ -156,7 +156,7 @@ winrt::Size ViewPanel::MeasureOverride(winrt::Size availableSize)
     auto height = child.DesiredSize().Height;
   }
 
-  return winrt::Size(0.0f, 0.0f);
+  return winrt::Size(availableSize.Width == INFINITY ? 0.0f : availableSize.Width, availableSize.Height == INFINITY ? 0.0f : availableSize.Height);
 }
 
 winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
@@ -248,26 +248,9 @@ uint32_t ViewPanel::Size() const
   }
 }
 
-void ViewPanel::ClearValue(winrt::DependencyProperty dp) const
-{
-  // Catch any clearing of the Background property so we can clear it wherever we might have
-  //  visualized it. All other properties receive the base implementation.
-  if (dp == BackgroundProperty())
-  {
-    auto self = const_cast<ViewPanel*>(this);
-    self->m_optBackgroundBrush.reset();
-    self->m_propertiesChanged = true;
-  }
-  else
-  {
-    Super::ClearValue(dp);
-  }
-}
-
 void ViewPanel::Background(winrt::Brush const& value)
 {
-  m_optBackgroundBrush = value;
-  m_propertiesChanged = true;
+  SetValue(BackgroundProperty(), winrt::box_value(value));
 }
 
 void ViewPanel::BorderThickness(winrt::Thickness const& value)
@@ -341,14 +324,10 @@ void ViewPanel::FinalizeProperties()
   //  2. Do we need a Border? NOTE: Includes any time we need an inner panel!
   //  3. Where do we apply the background? (implied by #1)
 
-  auto borderBrush = BorderBrush();
-  auto borderThickness = BorderThickness();
-  auto cornerRadius = CornerRadius();
-
-  bool hasBackground = m_optBackgroundBrush.has_value();
-  bool hasBorderThickness = borderThickness != winrt::Thickness();
-  bool hasBorderBrush = borderBrush != winrt::SolidColorBrush();
-  bool hasCornerRadius = cornerRadius != winrt::CornerRadius();
+  bool hasBackground = ReadLocalValue(BackgroundProperty()) != nullptr;
+  bool hasBorderBrush = ReadLocalValue(BorderBrushProperty()) != nullptr;
+  bool hasBorderThickness = ReadLocalValue(BorderThicknessProperty()) != nullptr;
+  bool hasCornerRadius = ReadLocalValue(CornerRadiusProperty()) != nullptr;
 
   bool needInnerPanel = hasCornerRadius && m_clipChildren;
   bool needBorder = needInnerPanel || hasCornerRadius || (hasBorderThickness && hasBorderBrush);
@@ -359,18 +338,19 @@ void ViewPanel::FinalizeProperties()
     // Ensure Border is created and set properties
     EnsureBorder();
 
+    // TODO: Can Binding be used here?
     if (hasBorderBrush)
-      m_border.BorderBrush(borderBrush);
+      m_border.BorderBrush(BorderBrush());
     else
       m_border.ClearValue(winrt::Border::BorderBrushProperty());
 
     if (hasBorderThickness)
-      m_border.BorderThickness(borderThickness);
+      m_border.BorderThickness(BorderThickness());
     else
       m_border.ClearValue(winrt::Border::BorderThicknessProperty());
 
     if (hasCornerRadius)
-      m_border.CornerRadius(cornerRadius);
+      m_border.CornerRadius(CornerRadius());
     else
       m_border.ClearValue(winrt::Border::CornerRadiusProperty());
   }
@@ -412,9 +392,9 @@ void ViewPanel::FinalizeProperties()
 
     // Set any background on this Panel
     if (hasBackground)
-      Super::Background(Background());
+      SetValue(winrt::Panel::BackgroundProperty(), Background());
     else
-      Super::ClearValue(winrt::Panel::BackgroundProperty());
+      ClearValue(winrt::Panel::BackgroundProperty());
   }
 
   m_propertiesChanged = false;

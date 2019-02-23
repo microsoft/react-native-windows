@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include "FrameworkElementViewManager.h"
+#include "ControlViewManager.h"
 
 namespace react { namespace uwp {
 
-class TextInputViewManager : public FrameworkElementViewManager
+class TextInputViewManager : public ControlViewManager
 {
-  using Super = FrameworkElementViewManager;
+  using Super = ControlViewManager;
 public:
   TextInputViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 

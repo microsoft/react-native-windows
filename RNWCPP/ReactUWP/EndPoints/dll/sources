@@ -11,6 +11,7 @@ SOLUTION_DIR = $(PROJROOT)\OfficeISS\ReactWindows\ReactUWP
 INCLUDES = $(INCLUDES); \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ReactUWP\Pch; \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactCommon\yoga; \
+	$(OTOOLSINCROOT)\cppwinrt; \
 
 DLLDEF = react-native-uwp.$(PLATFORM).def \
 

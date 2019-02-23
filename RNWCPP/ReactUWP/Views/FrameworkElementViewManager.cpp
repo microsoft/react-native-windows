@@ -22,8 +22,34 @@ using namespace Windows::UI::Xaml::Automation;
 namespace react { namespace uwp {
 
 FrameworkElementViewManager::FrameworkElementViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : ViewManagerBase(reactInstance)
+  : Super(reactInstance)
 {
+}
+
+void FrameworkElementViewManager::TransferProperty(XamlView oldView, XamlView newView, winrt::DependencyProperty dp)
+{
+  auto oldValue = oldView.ReadLocalValue(dp);
+  if (oldValue != nullptr)
+    newView.SetValue(dp, oldValue);
+}
+
+void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView newView)
+{
+  // Render Properties
+  TransferProperty(oldView, newView, winrt::UIElement::OpacityProperty());
+
+  // Layout Properties
+  TransferProperty(oldView, newView, winrt::FrameworkElement::WidthProperty());
+  TransferProperty(oldView, newView, winrt::FrameworkElement::HeightProperty());
+  TransferProperty(oldView, newView, winrt::FrameworkElement::MinWidthProperty());
+  TransferProperty(oldView, newView, winrt::FrameworkElement::MinHeightProperty());
+  TransferProperty(oldView, newView, winrt::FrameworkElement::MaxWidthProperty());
+  TransferProperty(oldView, newView, winrt::FrameworkElement::MaxHeightProperty());
+
+  // Accessibility Properties
+  TransferProperty(oldView, newView, winrt::AutomationProperties::NameProperty());
+  auto accessibilityView = winrt::AutomationProperties::GetAccessibilityView(oldView);
+  winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
 }
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const
@@ -33,15 +59,15 @@ folly::dynamic FrameworkElementViewManager::GetNativeProps() const
     ("accessibilityHint", "string")
     ("accessibilityLabel", "string")
     ("testID", "string")
+    ("tooltip", "string")
   );
   return props;
 }
 
 
-void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto element(viewToUpdate.as<winrt::FrameworkElement>());
-
+  auto element(nodeToUpdate->GetView().as<winrt::FrameworkElement>());
   if (element != nullptr)
   {
     for (auto& pair : reactDiffMap.items())
@@ -51,94 +77,146 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
 
       if (propertyName == "opacity")
       {
-        if (!propertyValue.isNumber())
+        if (propertyValue.isNumber())
+        {
+          double opacity = propertyValue.asDouble();
+          if (opacity >= 0 && opacity <= 1)
+            element.Opacity(opacity);
+          // else
+          // TODO report error
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::UIElement::OpacityProperty());
           continue;
-
-        double opacity = propertyValue.asDouble();
-        if (opacity >= 0 && opacity <= 1)
-          element.Opacity(opacity);
-        // else
-        // TODO report error
+        }
       }
       else if (propertyName == "width")
       {
-        if (!propertyValue.isNumber())
+        if (propertyValue.isNumber())
+        {
+          double width = propertyValue.asDouble();
+          if (width >= 0)
+            element.Width(width);
+          // else
+          // TODO report error
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::FrameworkElement::WidthProperty());
           continue;
+        }
 
-        double width = propertyValue.asDouble();
-        if (width >= 0)
-          element.Width(width);
-        // else
-        // TODO report error
       }
       else if (propertyName == "height")
       {
-        if (!propertyValue.isNumber())
+        if (propertyValue.isNumber())
+        {
+          double height = propertyValue.asDouble();
+          if (height >= 0)
+            element.Height(height);
+          // else
+          // TODO report error
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::FrameworkElement::HeightProperty());
           continue;
-
-        double height = propertyValue.asDouble();
-        if (height >= 0)
-          element.Height(height);
-        // else
-        // TODO report error
+        }
       }
       else if (propertyName == "minWidth")
       {
-        if (!propertyValue.isNumber())
+        if (propertyValue.isNumber())
+        {
+          double minWidth = propertyValue.asDouble();
+          if (minWidth >= 0)
+            element.MinWidth(minWidth);
+          // else
+          // TODO report error
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::FrameworkElement::MinWidthProperty());
           continue;
-
-        double minWidth = propertyValue.asDouble();
-        if (minWidth >= 0)
-          element.MinWidth(minWidth);
-        // else
-        // TODO report error
+        }
       }
       else if (propertyName == "maxWidth")
       {
-        if (!propertyValue.isNumber())
+        if (propertyValue.isNumber())
+        {
+          double maxWidth = propertyValue.asDouble();
+          if (maxWidth >= 0)
+            element.MaxWidth(maxWidth);
+          // else
+          // TODO report error
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::FrameworkElement::MaxWidthProperty());
           continue;
+        }
 
-        double maxWidth = propertyValue.asDouble();
-        if (maxWidth >= 0)
-          element.MaxWidth(maxWidth);
-        // else
-        // TODO report error
       }
       else if (propertyName == "minHeight")
       {
-        if (!propertyValue.isNumber())
+        if (propertyValue.isNumber())
+        {
+          double minHeight = propertyValue.asDouble();
+          if (minHeight >= 0)
+            element.MinHeight(minHeight);
+          // else
+          // TODO report error
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::FrameworkElement::MinHeightProperty());
           continue;
-
-        double minHeight = propertyValue.asDouble();
-        if (minHeight >= 0)
-          element.MinHeight(minHeight);
-        // else
-        // TODO report error
+        }
       }
       else if (propertyName == "maxHeight")
       {
-        if (!propertyValue.isNumber())
+        if (propertyValue.isNumber())
+        {
+          double maxHeight = propertyValue.asDouble();
+          if (maxHeight >= 0)
+            element.MaxHeight(maxHeight);
+          // else
+          // TODO report error
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::FrameworkElement::MaxHeightProperty());
           continue;
+        }
 
-        double maxHeight = propertyValue.asDouble();
-        if (maxHeight >= 0)
-          element.MaxHeight(maxHeight);
-        // else
-        // TODO report error
       }
       else if (propertyName == "accessibilityHint")
       {
-         auto value = react::uwp::asHstring(propertyValue);
-        auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
+        if (propertyValue.isString())
+        {
+          auto value = react::uwp::asHstring(propertyValue);
+          auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
 
-        element.SetValue(winrt::AutomationProperties::HelpTextProperty(), boxedValue);
+          element.SetValue(winrt::AutomationProperties::HelpTextProperty(), boxedValue);
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::AutomationProperties::HelpTextProperty());
+        }
       }
       else if (propertyName == "accessibilityLabel")
       {
-        auto value = react::uwp::asHstring(propertyValue);
-        auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
+        if (propertyValue.isString())
+        {
+          auto value = react::uwp::asHstring(propertyValue);
+          auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
 
-        element.SetValue(winrt::AutomationProperties::NameProperty(), boxedValue);
+          element.SetValue(winrt::AutomationProperties::NameProperty(), boxedValue);
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::AutomationProperties::NameProperty());
+        }
       }
       else if (propertyName == "accessible")
       {
@@ -150,10 +228,26 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       }
       else if (propertyName == "testID")
       {
-        auto value = react::uwp::asHstring(propertyValue);
-        auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
+        if (propertyValue.isString())
+        {
+          auto value = react::uwp::asHstring(propertyValue);
+          auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
 
-        element.SetValue(winrt::AutomationProperties::AutomationIdProperty(), boxedValue);
+          element.SetValue(winrt::AutomationProperties::AutomationIdProperty(), boxedValue);
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::AutomationProperties::AutomationIdProperty());
+        }
+      }
+      else if (propertyName == "tooltip")
+      {
+        if (propertyValue.isString())
+        {
+          winrt::TextBlock tooltip = winrt::TextBlock();
+          tooltip.Text(asHstring(propertyValue));
+          winrt::ToolTipService::SetToolTip(element, tooltip);
+        }
       }
       else if (TryUpdateFlowDirection(element, propertyName, propertyValue))
       {
@@ -162,7 +256,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 } }

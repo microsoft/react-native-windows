@@ -72,7 +72,7 @@ void CheckBoxShadowNode::updateProperties(const folly::dynamic&& props)
 
 
 CheckBoxViewManager::CheckBoxViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -113,9 +113,9 @@ XamlView CheckBoxViewManager::CreateViewCore(int64_t tag)
   return checkbox;
 }
 
-void CheckBoxViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void CheckBoxViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto checkbox = viewToUpdate.as<winrt::CheckBox>();
+  auto checkbox = nodeToUpdate->GetView().as<winrt::CheckBox>();
   if (checkbox == nullptr)
     return;
 
@@ -126,17 +126,21 @@ void CheckBoxViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlVie
 
    if (propertyName.asString() == "disabled")
    {
-      if (propertyValue.isBool())
-        checkbox.IsEnabled(!propertyValue.asBool());
+     if (propertyValue.isBool())
+       checkbox.IsEnabled(!propertyValue.asBool());
+     else if (pair.second.isNull())
+       checkbox.ClearValue(winrt::Control::IsEnabledProperty());
    }
    else if (propertyName.asString() == "checked")
    {
      if (propertyValue.isBool())
        checkbox.IsChecked(propertyValue.asBool());
+     else if (pair.second.isNull())
+       checkbox.ClearValue(winrt::Primitives::ToggleButton::IsCheckedProperty());
    }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void CheckBoxViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)

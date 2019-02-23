@@ -22,7 +22,7 @@ using namespace Windows::UI::Xaml::Documents;
 namespace react { namespace uwp {
 
 VirtualTextViewManager::VirtualTextViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : ViewManagerBase(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -36,9 +36,9 @@ XamlView VirtualTextViewManager::CreateViewCore(int64_t tag)
   return winrt::Span();
 }
 
-void VirtualTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void VirtualTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto span = viewToUpdate.as<winrt::Span>();
+  auto span = nodeToUpdate->GetView().as<winrt::Span>();
   if (span == nullptr)
     return;
 
@@ -50,17 +50,17 @@ void VirtualTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, Xaml
     {
       continue;
     }
-    else if (TryUpdateFontProperties(span, pair.first, pair.second))
+    else if (TryUpdateFontProperties<winrt::TextElement>(span, pair.first, pair.second))
     {
       continue;
     }
-    else if (TryUpdateCharacterSpacing(span, pair.first, pair.second))
+    else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, pair.first, pair.second))
     {
       continue;
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void VirtualTextViewManager::AddView(XamlView parent, XamlView child, int64_t index)
@@ -68,18 +68,6 @@ void VirtualTextViewManager::AddView(XamlView parent, XamlView child, int64_t in
   auto span(parent.as<winrt::Span>());
   auto childInline(child.as<winrt::Inline>());
   span.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);
-}
-
-XamlView VirtualTextViewManager::GetChildAt(XamlView parent, int64_t index)
-{
-  auto span(parent.as<winrt::Span>());
-  return span.Inlines().GetAt(static_cast<uint32_t>(index));
-}
-
-int64_t VirtualTextViewManager::GetChildCount(XamlView parent)
-{
-  auto span(parent.as<winrt::Span>());
-  return span.Inlines().Size();
 }
 
 void VirtualTextViewManager::RemoveAllChildren(XamlView parent)

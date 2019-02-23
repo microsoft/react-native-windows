@@ -14,7 +14,7 @@ ShadowNodeBase::ShadowNodeBase()
 
 void ShadowNodeBase::updateProperties(const folly::dynamic&& props)
 {
-  GetViewManager()->UpdateProperties(this, m_view, props);
+  GetViewManager()->UpdateProperties(this, props);
 }
 
 void ShadowNodeBase::createView()
@@ -44,6 +44,18 @@ void ShadowNodeBase::RemoveChildAt(int64_t indexToRemove)
 
 void ShadowNodeBase::onDropViewInstance()
 {
+}
+
+void ShadowNodeBase::ReplaceView(XamlView view)
+{
+  SetTag(view, GetTag(m_view));
+
+  m_view = view;
+}
+
+void ShadowNodeBase::ReplaceChild(XamlView oldChildView, XamlView newChildView)
+{
+  GetViewManager()->ReplaceChild(m_view, oldChildView, newChildView);
 }
 
 }}

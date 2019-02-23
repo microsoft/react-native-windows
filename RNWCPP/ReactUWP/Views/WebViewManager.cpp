@@ -5,6 +5,8 @@
 
 #include "WebViewManager.h"
 
+#include "ShadowNodeBase.h"
+
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.Foundation.h>
@@ -22,7 +24,7 @@ using namespace Windows::UI::Xaml::Controls;
 namespace react { namespace uwp {
 
   WebViewManager::WebViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-    : FrameworkElementViewManager(reactInstance)
+    : Super(reactInstance)
   {
     SetupPropertyHandlersInternal();
   }
@@ -37,10 +39,11 @@ namespace react { namespace uwp {
     return winrt::WebView();
   }
 
-  void WebViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+  void WebViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
   {
-    UpdatePropertiesInternal(viewToUpdate, reactDiffMap);
-    Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+    XamlView view = nodeToUpdate->GetView();
+    UpdatePropertiesInternal(view, reactDiffMap);
+    Super::UpdateProperties(nodeToUpdate, reactDiffMap);
   }
 
   void WebViewManager::setSource(XamlView viewToUpdate, const WebSource& source) {

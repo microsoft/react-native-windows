@@ -11,9 +11,8 @@ namespace facebook { namespace react {
 // AppState
 //
 
-AppState::AppState()
-{
-}
+AppState::AppState() = default;
+AppState::~AppState() = default;
 
 // TODO: real implementation
 const char* AppState::getState()
@@ -26,7 +25,7 @@ const char* AppState::getState()
 //
 const char* AppStateModule::name = "RCTAppState";
 
-AppStateModule::AppStateModule(std::unique_ptr<AppState>&& appState)
+AppStateModule::AppStateModule(std::shared_ptr<AppState>&& appState)
   : m_appState(std::move(appState))
 {
 }

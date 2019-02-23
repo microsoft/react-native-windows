@@ -5,6 +5,8 @@
 
 #include "TextViewManager.h"
 
+#include "ShadowNodeBase.h"
+
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
@@ -22,7 +24,7 @@ using namespace Windows::UI::Xaml::Documents;
 namespace react { namespace uwp {
 
 TextViewManager::TextViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -38,9 +40,9 @@ XamlView TextViewManager::CreateViewCore(int64_t tag)
   return textBlock;
 }
 
-void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto textBlock = viewToUpdate.as<winrt::TextBlock>();
+  auto textBlock = nodeToUpdate->GetView().as<winrt::TextBlock>();
   if (textBlock == nullptr)
     return;
 
@@ -78,15 +80,19 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView vi
     {
       if (pair.second.isInt())
         textBlock.MaxLines(static_cast<int32_t>(pair.second.getInt()));
+      else if (pair.second.isNull())
+        textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
     }
     else if (pair.first == "lineHeight")
     {
       if (pair.second.isNumber())
         textBlock.LineHeight(static_cast<int32_t>(pair.second.asDouble()));
+      else if (pair.second.isNull())
+        textBlock.ClearValue(winrt::TextBlock::LineHeightProperty());
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void TextViewManager::AddView(XamlView parent, XamlView child, int64_t index)
@@ -94,18 +100,6 @@ void TextViewManager::AddView(XamlView parent, XamlView child, int64_t index)
   auto textBlock(parent.as<winrt::TextBlock>());
   auto childInline(child.as<winrt::Inline>());
   textBlock.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);
-}
-
-XamlView TextViewManager::GetChildAt(XamlView parent, int64_t index)
-{
-  auto textBlock(parent.as<winrt::TextBlock>());
-  return textBlock.Inlines().GetAt(static_cast<uint32_t>(index));
-}
-
-int64_t TextViewManager::GetChildCount(XamlView parent)
-{
-  auto textBlock(parent.as<winrt::TextBlock>());
-  return textBlock.Inlines().Size();
 }
 
 void TextViewManager::RemoveAllChildren(XamlView parent)

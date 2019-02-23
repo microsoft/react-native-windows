@@ -101,6 +101,7 @@
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="LazyDevSupportManager.cpp" />
+    <ClCompile Include="LegacyWebSocket.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="pch.cpp">
@@ -120,6 +121,7 @@
   <ItemGroup>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
+    <ClInclude Include="LegacyWebSocket.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="NativeModuleFactories.h" />

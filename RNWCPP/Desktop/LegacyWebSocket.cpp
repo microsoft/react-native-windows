@@ -6,7 +6,7 @@
 #pragma warning( push )
 #pragma warning( disable : 4996 )  // std::copy::_Unchecked_iterators::_Deprecate
 
-#include "WebSocket.h"
+#include "LegacyWebSocket.h"
 
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/binary_from_base64.hpp>
@@ -27,35 +27,32 @@ using boost::asio::ip::tcp;
 using std::make_unique;
 using std::size_t;
 using std::string;
-using std::unique_ptr;
 
 using boostecr = boost::system::error_code const&;
 
 namespace facebook {
 namespace react {
 
-#pragma region BaseWebSocket members
+#pragma region LegacyBaseWebSocket members
 
 template<typename Protocol, typename Socket, typename Resolver>
-BaseWebSocket<Protocol, Socket, Resolver>::BaseWebSocket(Url&& url)
-  : m_url { std::move(url) }
+LegacyBaseWebSocket<Protocol, Socket, Resolver>::LegacyBaseWebSocket(Url&& url)
+  : m_readyState { ReadyState::Connecting }
+  , m_resolver { m_context }
+  , m_url { std::move(url) }
+  , m_closing { false }
 {
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-BaseWebSocket<Protocol, Socket, Resolver>::~BaseWebSocket()
+LegacyBaseWebSocket<Protocol, Socket, Resolver>::~LegacyBaseWebSocket()
 {
   if (!m_context.stopped())
-  {
-    if (!m_closeRequested)
-      Close(CloseCode::GoingAway, "Terminating instance");
-    else if (!m_closeInProgress)
-      PerformClose();
-  }
+    Close(CloseCode::GoingAway, "Terminating instance");
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Options& options)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Options& options)
 {
   m_stream->async_handshake_ex(m_url.host, m_url.Target(),
     // Header handler
@@ -77,34 +74,18 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Opti
     }
     else
     {
-      m_handshakePerformed = true;
       m_readyState = ReadyState::Open;
 
       if (m_connectHandler)
         m_connectHandler();
-
-      // Start read cycle.
-      PerformRead();
-
-      // Perform writes, if enqueued.
-      if (!m_writeRequests.empty())
-        PerformWrite();
-
-      // Perform pings, if enqueued.
-      if (m_pingRequests > 0)
-        PerformPing();
-
-      // Perform close, if requested.
-      if (m_closeRequested && !m_closeInProgress)
-        PerformClose();
     }
   }); // async_handshake_ex
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformRead()
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Read()
 {
-  if (ReadyState::Closing == m_readyState || ReadyState::Closed == m_readyState)
+  if (ReadyState::Open != m_readyState || m_closing)
   {
     return;
   }
@@ -114,7 +95,7 @@ void BaseWebSocket<Protocol, Socket, Resolver>::PerformRead()
   {
     if (error::operation_aborted == ec)
     {
-      // Nothing to do.
+      // Nothing to do. Return.
     }
     else if (ec)
     {
@@ -143,22 +124,21 @@ void BaseWebSocket<Protocol, Socket, Resolver>::PerformRead()
         m_readHandler(size, std::move(message));
 
       m_bufferIn.consume(size);
-    }// if (ec)
 
-    // Enqueue another read.
-    PerformRead();
+      Read();
+    }// if (ec)
   });// async_read
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformWrite()
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::PerformWrite()
 {
-  assert(!m_writeRequests.empty());
+  assert(!m_requests.empty());
   assert(!m_writeInProgress);
   m_writeInProgress = true;
 
-  std::pair<string, bool> request = m_writeRequests.front();
-  m_writeRequests.pop();
+  std::pair<std::string, bool> request = m_requests.front();
+  m_requests.pop();
 
   m_stream->binary(request.second);
 
@@ -181,86 +161,21 @@ void BaseWebSocket<Protocol, Socket, Resolver>::PerformWrite()
 
     m_writeInProgress = false;
 
-    if (!m_writeRequests.empty())
+    if (!m_requests.empty())
       PerformWrite();
   });
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformPing()
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::EnqueueWrite(const std::string& message, bool binary)
 {
-  assert(m_pingRequests > 0);
-  assert(!m_pingInProgress);
-  m_pingInProgress = true;
-
-  --m_pingRequests;
-
-  m_stream->async_ping(websocket::ping_data(), [this](boostecr ec)
-  {
-    if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler({ ec.message(), ErrorType::Ping });
-    }
-    else if (m_pingHandler)
-      m_pingHandler();
-
-    m_pingInProgress = false;
-
-    if (m_pingRequests > 0)
-      PerformPing();
-  });
+  m_requests.emplace(std::make_pair<std::string, bool>(std::move(std::string(message)), std::move(binary)));
+  if (!m_writeInProgress)
+    PerformWrite();
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformClose()
-{
-  m_closeInProgress = true;
-  m_readyState = ReadyState::Closing;
-
-  m_stream->async_close(ToBeastCloseCode(m_closeCodeRequest), [this](boostecr ec)
-  {
-    if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler({ ec.message(), ErrorType::Close });
-    }
-    else
-    {
-      m_readyState = ReadyState::Closed;
-
-      if (m_closeHandler)
-        m_closeHandler(m_closeCodeRequest, m_closeReasonRequest);
-    }
-  });
-
-  // Synchronize context thread.
-  Stop();
-}
-
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Stop()
-{
-  if (m_workGuard)
-    m_workGuard->reset();
-
-  if (m_contextThread.joinable() && std::this_thread::get_id() != m_contextThread.get_id())
-    m_contextThread.join();
-}
-
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::EnqueueWrite(const string& message, bool binary)
-{
-    m_writeRequests.emplace(std::move(message), binary);
-    if (!m_writeInProgress && ReadyState::Open == m_readyState)
-      post(m_context, [this]()
-      {
-        PerformWrite();
-      });
-}
-
-template<typename Protocol, typename Socket, typename Resolver>
-websocket::close_code BaseWebSocket<Protocol, Socket, Resolver>::ToBeastCloseCode(IWebSocket::CloseCode closeCode)
+websocket::close_code LegacyBaseWebSocket<Protocol, Socket, Resolver>::ToBeastCloseCode(IWebSocket::CloseCode closeCode)
 {
   static_assert(static_cast<uint16_t>(IWebSocket::CloseCode::Abnormal) == static_cast<uint16_t>(websocket::close_code::abnormal), "Exception type enums don't match");
   static_assert(static_cast<uint16_t>(IWebSocket::CloseCode::BadPayload) == static_cast<uint16_t>(websocket::close_code::bad_payload), "Exception type enums don't match");
@@ -286,8 +201,22 @@ websocket::close_code BaseWebSocket<Protocol, Socket, Resolver>::ToBeastCloseCod
 #pragma region IWebSocket members
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Connect(const Protocols& protocols, const Options& options)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Connect(const Protocols& protocols, const Options& options)
 {
+  m_stream->control_callback([this](websocket::frame_type type, boost::string_view view)
+  {
+   switch (type)
+   {
+     case websocket::frame_type::ping:
+       break;
+
+     case websocket::frame_type::pong:
+       break;
+
+     case websocket::frame_type::close:
+       break;
+   }
+  });
   // "Cannot call Connect more than once");
   assert(ReadyState::Connecting == m_readyState);
 
@@ -299,65 +228,87 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Connect(const Protocols& protoco
     }
   }
 
-  Resolver resolver(m_context);
-  resolver.async_resolve(m_url.host, m_url.port, [this, options = std::move(options)](boostecr ec, Resolver::results_type results)
+  m_resolver.async_resolve(m_url.host, m_url.port, [this, options = std::move(options)](boostecr ec, Resolver::results_type results)
   {
     if (ec)
     {
       if (m_errorHandler)
         m_errorHandler({ ec.message(), ErrorType::Resolution });
-
-      return;
     }
-
-    // Connect
-    async_connect(m_stream->lowest_layer(), results.begin(), results.end(), [this, options = std::move(options)](boostecr ec, const basic_resolver_iterator<Protocol>&)
+    else
     {
-      if (ec)
+      // Connect
+      async_connect(m_stream->lowest_layer(), results.begin(), results.end(), [this, options = std::move(options)](boostecr ec, const basic_resolver_iterator<Protocol>&)
       {
-        if (m_errorHandler)
-          m_errorHandler({ ec.message(), ErrorType::Connection });
-      }
-      else
-      {
-        Handshake(std::move(options));
-      }
-    }); // async_connect
+        if (ec)
+        {
+          if (m_errorHandler)
+            m_errorHandler({ ec.message(), ErrorType::Connection });
+        }
+        else
+        {
+          Handshake(std::move(options));
+        }
+      }); // async_connect
+    }
   }); // async_resolve
+
+  m_context.run();
+
+  // Proceed only if a connection was successful.
+  if (ReadyState::Open != m_readyState)
+    return;
 
   m_contextThread = std::thread([this]()
   {
+    m_context.restart();
     m_workGuard = make_unique<executor_work_guard<io_context::executor_type>>(make_work_guard(m_context));
+    Read();
     m_context.run();
   });
 }// void Connect
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Close(CloseCode code, const string& reason)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Close(CloseCode code, const string& reason)
 {
-  if (m_closeRequested)
+  if (ReadyState::Closing == m_readyState || ReadyState::Closed == m_readyState)
     return;
 
-  m_closeRequested = true;
-  m_closeCodeRequest = code;
-  m_closeReasonRequest = std::move(reason);
+  m_readyState = ReadyState::Closing;
 
-  assert(!m_closeInProgress);
-  // Give priority to Connect().
-  if (m_handshakePerformed)
-    PerformClose();
-  else
-    Stop(); // Synchronize the context thread.
+  m_stream->async_close(ToBeastCloseCode(code), [this, code, reason](boostecr ec)
+  {
+    m_closing = true;
+
+    if (ec)
+    {
+      if (m_errorHandler)
+        m_errorHandler({ ec.message(), ErrorType::Close });
+    }
+    else
+    {
+      m_readyState = ReadyState::Closed;
+
+      if (m_closeHandler)
+        m_closeHandler(code, reason);
+    }
+  });
+
+  if (m_workGuard)
+    m_workGuard->reset();
+
+  if (m_contextThread.joinable() && std::this_thread::get_id() != m_contextThread.get_id())
+    m_contextThread.join();
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Send(const string& message)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Send(const string& message)
 {
   EnqueueWrite(std::move(message), false);
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SendBinary(const string& base64String)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::SendBinary(const string& base64String)
 {
   m_stream->binary(true);
 
@@ -382,14 +333,18 @@ void BaseWebSocket<Protocol, Socket, Resolver>::SendBinary(const string& base64S
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Ping()
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Ping()
 {
-  if (ReadyState::Closed == m_readyState)
-    return;
-
-  ++m_pingRequests;
-  if (!m_pingInProgress && ReadyState::Open == m_readyState)
-    PerformPing();
+  m_stream->async_ping(websocket::ping_data(), [this](boostecr ec)
+  {
+    if (ec)
+    {
+      if (m_errorHandler)
+        m_errorHandler({ ec.message(), ErrorType::Ping });
+    }
+    else if (m_pingHandler)
+      m_pingHandler();
+  });
 }
 
 #pragma endregion // IWebSocket members
@@ -397,71 +352,71 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Ping()
 #pragma region Handler setters
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnConnect(std::function<void()>&& handler)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::SetOnConnect(std::function<void()>&& handler)
 {
   m_connectHandler = handler;
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnPing(std::function<void()>&& handler)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::SetOnPing(std::function<void()>&& handler)
 {
   m_pingHandler = handler;
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnSend(std::function<void(size_t)>&& handler)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::SetOnSend(std::function<void(size_t)>&& handler)
 {
   m_writeHandler = handler;
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnMessage(std::function<void(size_t, const string&)>&& handler)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::SetOnMessage(std::function<void(size_t, const string&)>&& handler)
 {
   m_readHandler = handler;
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnClose(std::function<void(CloseCode, const string&)>&& handler)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::SetOnClose(std::function<void(CloseCode, const std::string&)>&& handler)
 {
   m_closeHandler = handler;
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnError(std::function<void(Error&&)>&& handler)
+void LegacyBaseWebSocket<Protocol, Socket, Resolver>::SetOnError(std::function<void(Error&&)>&& handler)
 {
   m_errorHandler = handler;
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-IWebSocket::ReadyState BaseWebSocket<Protocol, Socket, Resolver>::GetReadyState() const
+IWebSocket::ReadyState LegacyBaseWebSocket<Protocol, Socket, Resolver>::GetReadyState() const
 {
   return m_readyState;
 }
 
 #pragma endregion // Handler setters
 
-#pragma endregion // BaseWebSocket members
+#pragma endregion // LegacyBaseWebSocket members
 
-#pragma region WebSocket members
+#pragma region LegacyWebSocket members
 
 template<typename Protocol, typename Socket, typename Resolver>
-WebSocket<Protocol, Socket, Resolver>::WebSocket(Url&& url)
-  : BaseWebSocket<Protocol, Socket, Resolver>(std::move(url))
+LegacyWebSocket<Protocol, Socket, Resolver>::LegacyWebSocket(Url&& url)
+  : LegacyBaseWebSocket<Protocol, Socket, Resolver>(std::move(url))
 {
   this->m_stream = make_unique<websocket::stream<Socket>>(this->m_context);
   this->m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
 }
 
 // Define the default implementation.
-template class WebSocket<boost::asio::ip::tcp>;
+template class LegacyWebSocket<boost::asio::ip::tcp>;
 
 #pragma endregion
 
-#pragma region SecureWebSocket members
+#pragma region LegacySecureWebSocket members
 
 template<typename Protocol, typename Socket, typename Resolver>
-SecureWebSocket<Protocol, Socket, Resolver>::SecureWebSocket(Url&& url)
-  : BaseWebSocket<Protocol, Socket, Resolver>(std::move(url))
+LegacySecureWebSocket<Protocol, Socket, Resolver>::LegacySecureWebSocket(Url&& url)
+  : LegacyBaseWebSocket<Protocol, Socket, Resolver>(std::move(url))
 {
   auto ssl = ssl::context(ssl::context::sslv23_client);
   this->m_stream = make_unique<websocket::stream<Socket>>(this->m_context, ssl);
@@ -469,7 +424,7 @@ SecureWebSocket<Protocol, Socket, Resolver>::SecureWebSocket(Url&& url)
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
-void SecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Options& options)
+void LegacySecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Options& options)
 {
   this->m_stream->next_layer().async_handshake(ssl::stream_base::client, [this, options = std::move(options)](boostecr ec)
   {
@@ -479,18 +434,18 @@ void SecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Op
     }
     else
     {
-      BaseWebSocket<Protocol, Socket, Resolver>::Handshake(std::move(options));
+      LegacyBaseWebSocket<Protocol, Socket, Resolver>::Handshake(std::move(options));
     }
   });
 }
 
-template class SecureWebSocket<tcp, ssl::stream<tcp::socket>>;
+template class LegacySecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 
-#pragma endregion // SecureWebSocket members
+#pragma endregion // LegacySecureWebSocket members
 
 #pragma region IWebSocket static members
 
-/*static*/ unique_ptr<IWebSocket> IWebSocket::Make(const string& urlString)
+/*static*/ std::unique_ptr<IWebSocket> IWebSocket::MakeLegacy(const string& urlString)
 {
   Url url(urlString);
 
@@ -499,14 +454,14 @@ template class SecureWebSocket<tcp, ssl::stream<tcp::socket>>;
     if (url.port.empty())
       url.port = "80";
 
-    return unique_ptr<IWebSocket>(new WebSocket<tcp>(std::move(url)));
+    return std::unique_ptr<IWebSocket>(new LegacyWebSocket<tcp>(std::move(url)));
   }
   else if (url.scheme == "wss")
   {
     if (url.port.empty())
       url.port = "443";
 
-    return unique_ptr<IWebSocket>(new SecureWebSocket<tcp, ssl::stream<tcp::socket>>(std::move(url)));
+    return std::unique_ptr<IWebSocket>(new LegacySecureWebSocket<tcp, ssl::stream<tcp::socket>>(std::move(url)));
   }
   else
     throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());

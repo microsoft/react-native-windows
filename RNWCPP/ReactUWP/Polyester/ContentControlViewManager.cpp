@@ -66,7 +66,7 @@ void ContentControlShadowNode::createView()
 }
 
 ContentControlViewManager::ContentControlViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -88,24 +88,6 @@ void ContentControlViewManager::AddView(XamlView parent, XamlView child, int64_t
   auto contentControl(parent.as<winrt::ContentControl>());
   if (contentControl != nullptr)
     contentControl.Content(child.as<winrt::IInspectable>());
-}
-
-XamlView ContentControlViewManager::GetChildAt(XamlView parent, int64_t index)
-{
-  if (index != 0)
-    return nullptr;
-
-  auto contentControl(parent.as<winrt::ContentControl>());
-  if (contentControl != nullptr)
-    return contentControl.Content().as<XamlView>();
-
-  return nullptr;
-}
-
-int64_t ContentControlViewManager::GetChildCount(XamlView parent)
-{
-  auto contentControl(parent.as<winrt::ContentControl>());
-  return ((contentControl != nullptr) && (contentControl.Content() == nullptr)) ? 1 : 0;
 }
 
 void ContentControlViewManager::RemoveAllChildren(XamlView parent)

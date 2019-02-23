@@ -151,7 +151,7 @@ private:
   void callNativeModules(ChakraValue&&);
 #if !defined(USE_EDGEMODE_JSRT)
   JsErrorCode enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,
-    std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService) throw(ChakraJSException);
+    std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService);
   static void CHAKRA_CALLBACK ProcessDebuggerCommandQueueCallback(void* callbackState);
   void ProcessDebuggerCommandQueue();
 #endif

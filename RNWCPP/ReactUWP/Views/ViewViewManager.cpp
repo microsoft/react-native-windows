@@ -9,6 +9,8 @@
 
 #include <Utils/PropertyUtils.h>
 
+#include <INativeUIManager.h>
+
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
@@ -29,8 +31,88 @@ using namespace Windows::UI::Xaml::Media;
 
 namespace react { namespace uwp {
 
+class ViewShadowNode : public ShadowNodeBase
+{
+public:
+  ViewShadowNode() = default;
+
+  bool IsControl() { return m_isControl; }
+  void IsControl(bool isControl) { m_isControl = isControl; }
+
+  bool EnableFocusRing() { return m_enableFocusRing; }
+  void EnableFocusRing(bool enable)
+  {
+    m_enableFocusRing = enable;
+
+    if (IsControl())
+      GetControl().UseSystemFocusVisuals(m_enableFocusRing);
+  }
+
+  void AddView(ShadowNode& child, int64_t index) override
+  {
+    GetViewPanel()->InsertAt(static_cast<uint32_t>(index), static_cast<ShadowNodeBase&>(child).GetView().as<winrt::UIElement>());
+  }
+
+  void RemoveChildAt(int64_t indexToRemove) override
+  {
+    GetViewPanel()->RemoveAt(indexToRemove);
+  }
+
+  void removeAllChildren() override
+  {
+    GetViewPanel()->Clear();
+  }
+
+  void ReplaceChild(XamlView oldChildView, XamlView newChildView) override
+  {
+    auto pPanel = GetViewPanel();
+    if (pPanel != nullptr)
+    {
+      uint32_t index;
+      if (pPanel->Children().IndexOf(oldChildView.as<winrt::UIElement>(), index))
+      {
+        pPanel->RemoveAt(index);
+        pPanel->InsertAt(index, newChildView.as<winrt::UIElement>());
+      }
+      else
+      {
+        assert(false);
+      }
+    }
+  }
+
+  void RefreshProperties()
+  {
+    // The view may have been replaced, so transfer properties stored on the shadow node to the view
+    EnableFocusRing(EnableFocusRing());
+  }
+
+  ViewPanel* GetViewPanel()
+  {
+    if (IsControl())
+    {
+      auto contentControl = m_view.as<winrt::ContentControl>();
+      return contentControl.Content().as<ViewPanel>().get();
+    }
+    else
+    {
+      return m_view.as<ViewPanel>().get();
+    }
+  }
+
+  winrt::ContentControl GetControl()
+  {
+    return IsControl() ? m_view.as<winrt::ContentControl>() : winrt::ContentControl(nullptr);
+  }
+
+private:
+  bool m_isControl = false;
+  bool m_enableFocusRing = true;
+};
+
+
 ViewViewManager::ViewViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -39,28 +121,77 @@ const char* ViewViewManager::GetName() const
   return "RCTView";
 }
 
-XamlView ViewViewManager::CreateViewCore(int64_t tag)
+folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants() const
 {
-  ViewPanel *pPanel = new ViewPanel();
+  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
+  directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
+  directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
 
-  pPanel->VerticalAlignment(winrt::VerticalAlignment::Top);
+  return directEvents;
+}
 
+facebook::react::ShadowNode* ViewViewManager::createShadow() const
+{
+  return new ViewShadowNode();
+}
 
-#if defined(_DEBUG)
-  pPanel->Tag(winrt::Windows::Foundation::PropertyValue::CreateInt64(tag));
-#endif
+void ViewViewManager::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData)
+{
+    auto instance = m_wkReactInstance.lock();
+    if (instance != nullptr)
+      instance->DispatchEvent(viewTag, eventName, std::move(eventData));
+}
+
+XamlView ViewViewManager::CreateViewPanel(int64_t tag)
+{
+  XamlView newViewPanelXamlView((new ViewPanel())->try_as<XamlView>());
+  auto panel = newViewPanelXamlView.try_as<ViewPanel>().get();
+  panel->VerticalAlignment(winrt::VerticalAlignment::Top);
 
   // TODO: Remove once existing clients stop using TouchableNativeFeedback.uwp
-  pPanel->Tapped([=](auto &&, auto &&args)
+  panel->Tapped([=](auto &&, auto &&args)
   {
-    auto instance = m_wkReactInstance.lock();
-    folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (instance != nullptr)
-      instance->DispatchEvent(tag, "topPress", std::move(eventData));
+    DispatchEvent(tag, "topPress", std::move(folly::dynamic::object("target", tag)));
     args.Handled(true);
   });
 
-  return pPanel->try_as<XamlView>();
+  return panel->try_as<XamlView>();
+}
+
+XamlView ViewViewManager::CreateViewControl(int64_t tag)
+{
+  // Create the ViewPanel which will be nested under the ContentControl
+  XamlView newViewPanelXamlView((new ViewPanel())->try_as<XamlView>());
+  auto panel = newViewPanelXamlView.try_as<ViewPanel>().get();
+  panel->VerticalAlignment(winrt::VerticalAlignment::Top);
+
+  // Create the ContentControl as the outer/containing element, nest the ViewPanel, set default properties
+  winrt::ContentControl contentControl;
+  contentControl.Content(newViewPanelXamlView);
+
+  // TODO: Remove once existing clients stop using TouchableNativeFeedback.uwp
+  contentControl.Tapped([=](auto &&, auto &&args)
+  {
+    DispatchEvent(tag, "topPress", std::move(folly::dynamic::object("target", tag)));
+    args.Handled(true);
+  });
+
+  contentControl.GotFocus([=](auto &&, auto &&)
+  {
+    DispatchEvent(tag, "topTextInputFocus", std::move(folly::dynamic::object("target", tag)));
+  });
+
+  contentControl.LostFocus([=](auto &&, auto &&)
+  {
+    DispatchEvent(tag, "topTextInputBlur", std::move(folly::dynamic::object("target", tag)));
+  });
+
+  return contentControl.try_as<XamlView>();
+}
+
+XamlView ViewViewManager::CreateViewCore(int64_t tag)
+{
+  return CreateViewPanel(tag);
 }
 
 folly::dynamic ViewViewManager::GetNativeProps() const
@@ -68,18 +199,23 @@ folly::dynamic ViewViewManager::GetNativeProps() const
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object
+    ("accessible", "boolean")
     ("pointerEvents", "string")
     ("onMouseEnter", "function")
     ("onMouseLeave", "function")
 //  ("onMouseMove", "function")
+    ("enableFocusRing", "boolean")
   );
 
   return props;
 }
 
-void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto pPanel = viewToUpdate.as<ViewPanel>().get();
+  auto* pViewShadowNode = static_cast<ViewShadowNode*>(nodeToUpdate);
+  bool shouldBeControl = pViewShadowNode->IsControl();
+
+  auto* pPanel = pViewShadowNode->GetViewPanel();
   if (pPanel != nullptr)
   {
     for (auto& pair : reactDiffMap.items())
@@ -122,48 +258,92 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView vi
           pPanel->IsHitTestVisible(hitTestable);
         }
       }
+      else if (pair.first == "accessible")
+      {
+        if (pair.second.isBool())
+          shouldBeControl = pair.second.asBool();
+      }
+      else if (pair.first == "enableFocusRing")
+      {
+        if (propertyValue.isBool())
+          pViewShadowNode->EnableFocusRing(propertyValue.asBool());
+        else if (propertyValue.isNull())
+          pViewShadowNode->EnableFocusRing(false);
+      }
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 
   pPanel->FinalizeProperties();
+
+  if (shouldBeControl != pViewShadowNode->IsControl())
+    ReplaceView(pViewShadowNode, shouldBeControl);
 }
 
-void ViewViewManager::AddView(XamlView parent, XamlView child, int64_t index)
+XamlView GetPanel(XamlView view)
 {
-  auto pPanel = parent.as<ViewPanel>().get();
-  if (pPanel != nullptr)
-    pPanel->InsertAt(static_cast<uint32_t>(index), child.as<winrt::UIElement>());
-}
-
-XamlView ViewViewManager::GetChildAt(XamlView parent, int64_t index)
-{
-  auto pPanel = parent.as<ViewPanel>().get();
-  if (pPanel != nullptr)
-    return pPanel->GetAt(static_cast<uint32_t>(index));
+  // If the view is a ContentControl then its content is the ViewPanel else it is a ViewPanel
+  winrt::ContentControl contentControl(nullptr);
+  if (view.try_as<winrt::ContentControl>(contentControl))
+    return contentControl.Content().as<winrt::FrameworkElement>();
   else
-    return nullptr;
+    return view;
 }
 
-int64_t ViewViewManager::GetChildCount(XamlView parent)
+void ViewViewManager::TransferProperties(XamlView oldView, XamlView newView)
 {
-  auto pPanel = parent.as<ViewPanel>().get();
-  return (pPanel != nullptr) ? pPanel->Size() : 0;
+  Super::TransferProperties(oldView, newView);
+
+  // Retrieve the ViewPanels for use in these transfers since they are the elements that take all the properties
+  XamlView oldPanel = GetPanel(oldView);
+  XamlView newPanel = GetPanel(newView);
+
+  TransferProperty(oldPanel, newPanel, ViewPanel::BackgroundProperty());
+  TransferProperty(oldPanel, newPanel, ViewPanel::BorderBrushProperty());
+  TransferProperty(oldPanel, newPanel, ViewPanel::BorderThicknessProperty());
 }
 
-void ViewViewManager::RemoveAllChildren(XamlView parent)
+void ViewViewManager::ReplaceView(ViewShadowNode* pViewShadowNode, bool useControl)
 {
-  auto pPanel = parent.as<ViewPanel>().get();
-  if (pPanel != nullptr)
-    pPanel->Clear();
-}
+    auto instance = m_wkReactInstance.lock();
+    if (instance != nullptr)
+    {
+      int64_t tag = pViewShadowNode->m_tag;
 
-void ViewViewManager::RemoveChildAt(XamlView parent, int64_t index)
-{
-  auto pPanel = parent.as<ViewPanel>().get();
-  if (pPanel != nullptr)
-    pPanel->RemoveAt(static_cast<uint32_t>(index));
+      // Create the ViewPanel we know we'll need either way
+      XamlView newXamlView(nullptr);
+
+      // If we need a Control then create a ContentControl and nest the ViewPanel inside it
+      if (useControl)
+        newXamlView = CreateViewControl(tag);
+      // Else just use the ViewPanel (already created)
+      else
+        newXamlView = CreateViewPanel(tag);
+
+      XamlView oldXamlView(pViewShadowNode->GetView());
+
+      // Transfer properties from old XamlView to the new one
+      TransferProperties(oldXamlView, newXamlView);
+
+      // Update the ShadowNode with the new XamlView
+      pViewShadowNode->ReplaceView(newXamlView);
+      pViewShadowNode->IsControl(useControl);
+      pViewShadowNode->RefreshProperties();
+
+      // Inform the parent ShadowNode of this change so the hierarchy can be updated
+      int64_t parentTag = pViewShadowNode->GetParent();
+      auto host = static_cast<facebook::react::INativeUIManager*>(instance->NativeUIManager())->getHost();
+      auto *pParentNode = static_cast<ShadowNodeBase*>(host->FindShadowNodeForTag(parentTag));
+      if (pParentNode != nullptr)
+        pParentNode->ReplaceChild(oldXamlView, newXamlView);
+
+      // Since we transferred properties to the new view we need to make the call to finalize
+      pViewShadowNode->GetViewPanel()->FinalizeProperties();
+
+      // Inform the NativeUIManager of this change so the yoga layout can be updated
+      static_cast<facebook::react::INativeUIManager*>(instance->NativeUIManager())->ReplaceView(*pViewShadowNode);
+    }
 }
 
 } }

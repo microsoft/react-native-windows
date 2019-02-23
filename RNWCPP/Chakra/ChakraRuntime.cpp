@@ -187,7 +187,7 @@ namespace facebook { namespace react { namespace chakra {
 
         std::shared_ptr<MemoryTracker> memoryTracker_;
 
-        static JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(JsValueRef callee, bool isConstructCall, JsValueRef *argumentsIncThis, unsigned short argumentCountIncThis, void *callbackState);
+        static JsValueRef CALLBACK HostFunctionCall(JsValueRef callee, bool isConstructCall, JsValueRef *argumentsIncThis, unsigned short argumentCountIncThis, void *callbackState);
 
         // String helpers
         static std::wstring JSStringToSTLWString(JsValueRef str);

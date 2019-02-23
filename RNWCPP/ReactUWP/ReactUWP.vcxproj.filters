@@ -188,11 +188,14 @@
     <ClCompile Include="Views\TouchEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AppStateModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ControlViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Modules\AppStateModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\DeviceInfoModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -360,6 +363,15 @@
     </ClInclude>
     <ClInclude Include="Views\TouchEventHandler.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AppStateModuleUwp.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ControlViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\PropertyHandlerUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -314,13 +314,24 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
 
   if (propertyName == "fontSize")
   {
-    // Convert from pt to px (72dpi->96dpi)
-    double fontSizePx = static_cast<double>(propertyValue.getInt()) / 0.75;
-    element.FontSize(fontSizePx);
+    if (propertyValue.isNumber())
+    {
+      // Convert from pt to px (72dpi->96dpi)
+      double fontSizePx = static_cast<double>(propertyValue.getInt()) / 0.75;
+      element.FontSize(fontSizePx);
+    }
+    else if (propertyValue.isNull())
+    {
+      element.ClearValue(T::FontSizeProperty());
+    }
+
   }
   else if (propertyName == "fontFamily")
   {
-    element.FontFamily(winrt::Windows::UI::Xaml::Media::FontFamily(asWStr(propertyValue)));
+    if (propertyValue.isString())
+      element.FontFamily(winrt::Windows::UI::Xaml::Media::FontFamily(asWStr(propertyValue)));
+    else if (propertyValue.isNull())
+      element.ClearValue(T::FontFamilyProperty());
   }
   else if (propertyName == "fontWeight")
   {
@@ -355,6 +366,11 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
 
       element.FontWeight(fontWeight);
     }
+    else if (propertyValue.isNull())
+    {
+      element.ClearValue(T::FontWeightProperty());
+    }
+
   }
   else if (propertyName == "fontStyle")
   {
@@ -364,6 +380,11 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
         ? winrt::Windows::UI::Text::FontStyle::Italic
         : winrt::Windows::UI::Text::FontStyle::Normal);
     }
+    else if (propertyValue.isNull())
+    {
+      element.ClearValue(T::FontStyleProperty());
+    }
+
   }
   else
   {
@@ -398,6 +419,10 @@ bool TryUpdateTextAlignment(const T& element, const folly::dynamic& propertyName
       auto value = propertyValue.asString();
       SetTextAlignment(element, value);
     }
+    else if (propertyValue.isNull())
+    {
+      element.ClearValue(T::TextAlignmentProperty());
+    }
 
     return true;
   }
@@ -429,6 +454,10 @@ bool TryUpdateTextTrimming(const T& element, const folly::dynamic& propertyName,
       auto value = propertyValue.asString();
       SetTextTrimming(element, value);
     }
+    else if (propertyValue.isNull())
+    {
+      element.ClearValue(T::TextTrimmingProperty());
+    }
 
     return true;
   }
@@ -441,6 +470,11 @@ bool TryUpdateTextDecorationLine(const T& element, const folly::dynamic& propert
 {
   if (propertyName == "textDecorationLine")
   {
+    // FUTURE: remove when SDK target minVer >= 10.0.15063.0
+    static bool isTextDecorationsSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(L"Windows.UI.Xaml.Controls.TextBlock", L"TextDecorations");
+    if (!isTextDecorationsSupported)
+      return true;
+
     if (propertyValue.isString())
     {
       using winrt::Windows::UI::Text::TextDecorations;
@@ -456,10 +490,11 @@ bool TryUpdateTextDecorationLine(const T& element, const folly::dynamic& propert
       else if (value == "underline line-through")
         decorations = TextDecorations::Underline | TextDecorations::Strikethrough;
 
-      // FUTURE: remove when SDK target minVer >= 10.0.15063.0
-      static bool isTextDecorationsSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(L"Windows.UI.Xaml.Controls.TextBlock", L"TextDecorations");
-      if (isTextDecorationsSupported)
-        element.TextDecorations(decorations);
+      element.TextDecorations(decorations);
+    }
+    else if (propertyValue.isNull())
+    {
+      element.ClearValue(T::TextDecorationsProperty());
     }
 
     return true;
@@ -489,6 +524,10 @@ bool TryUpdateFlowDirection(const T& element, const folly::dynamic& propertyName
       auto value = propertyValue.asString();
       SetFlowDirection(element, value);
     }
+    else if (propertyValue.isNull())
+    {
+      element.ClearValue(T::FlowDirectionProperty());
+    }
 
     return true;
   }
@@ -503,6 +542,8 @@ bool TryUpdateCharacterSpacing(const T& element, const folly::dynamic& propertyN
   {
     if (propertyValue.isNumber())
       element.CharacterSpacing(static_cast<int32_t>(propertyValue.asInt()));
+    else if (propertyValue.isNull())
+      element.ClearValue(T::CharacterSpacingProperty());
 
     return true;
   }
@@ -515,7 +556,11 @@ bool TryUpdateOrientation(const T& element, const folly::dynamic& propertyName, 
 {
   if (propertyName == "orientation")
   {
-    if (propertyValue.isString())
+    if (propertyValue.isNull())
+    {
+      element.ClearValue(T::OrientationProperty());
+    }
+    else if (propertyValue.isString())
     {
       auto valueString = propertyValue.asString();
       if (valueString == "horizontal")

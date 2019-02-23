@@ -43,7 +43,7 @@
 // Modules
 #include <AsyncStorageModule.h>
 #include <SourceCodeModule.h>
-#include <Modules/AppStateModule.h>
+#include <Modules/AppStateModuleUwp.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
@@ -127,7 +127,8 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   const std::shared_ptr<facebook::react::MessageQueueThread>& messageQueue,
   std::shared_ptr<DeviceInfo> deviceInfo,
   std::shared_ptr<facebook::react::DevSettings> devSettings,
-  const I18nModule::I18nInfo&& i18nInfo)
+  const I18nModule::I18nInfo&& i18nInfo,
+  std::shared_ptr<facebook::react::AppState> appstate)
 {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -172,10 +173,9 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
     [messageQueue]() { return std::make_unique<LocationObserverModule>(messageQueue); },
     std::make_shared<WorkerMessageQueueThread>()); // TODO: figure out threading
 
-  // TODO: Real implementation of AppStateModule probably needs to go through uiQueue
   modules.emplace_back(
     facebook::react::AppStateModule::name,
-    []() { return std::make_unique<facebook::react::AppStateModule>(std::make_unique<facebook::react::AppState>()); },
+    [appstate = std::move(appstate)]() mutable { return std::make_unique<facebook::react::AppStateModule>(std::move(appstate)); },
     std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
@@ -190,7 +190,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
     "AsyncLocalStorage",
-    []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage.txt"); },
+    []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
     std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
@@ -218,13 +218,16 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
   m_uiDispatcher = Windows::UI::Core::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
 
-  std::shared_ptr<DeviceInfo> deviceInfo = std::make_unique<DeviceInfo>();
+  // Objects that must be created on the UI thread
+  std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
+  std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
   std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
 
   // TODO: Figure out threading. What thread should this really be on?
   m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(m_initThread);
-  m_initThread->runOnQueueSync([this, spThis, deviceInfo, settings, i18nInfo = std::move(i18nInfo)]() mutable
+  m_initThread->runOnQueueSync(
+    [this, spThis, deviceInfo, settings, i18nInfo = std::move(i18nInfo), appstate = std::move(appstate)]() mutable
   {
     // Setup DevSettings based on our own internal structure
     auto devSettings(std::make_shared<facebook::react::DevSettings>());
@@ -263,7 +266,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     m_uiManager = CreateUIManager(spThis);
 
     // Acquire default modules and then populate with custom modules
-    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo));
+    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate));
 
     if (m_moduleProvider != nullptr)
     {

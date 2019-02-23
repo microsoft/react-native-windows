@@ -19,7 +19,7 @@ public:
   facebook::react::ShadowNode* createShadow() const override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
 protected:

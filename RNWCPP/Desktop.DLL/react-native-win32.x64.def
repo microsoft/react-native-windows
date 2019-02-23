@@ -35,6 +35,7 @@ EXPORTS
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QEAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?Make@JSBigStringResourceDll@react@facebook@@SA?AV?$unique_ptr@$$CBVJSBigStringResourceDll@react@facebook@@U?$default_delete@$$CBVJSBigStringResourceDll@react@facebook@@@std@@@std@@PEAUHINSTANCE__@@PEAUHRSRC__@@@Z
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
+?MakeLegacy@IWebSocket@react@facebook@@SA?AV?$unique_ptr@UIWebSocket@react@facebook@@U?$default_delete@UIWebSocket@react@facebook@@@std@@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
 ?setGlobalVariable@Instance@react@facebook@@UEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
 ?size@dynamic@folly@@QEBA_KXZ

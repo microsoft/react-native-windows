@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include <Views/FrameworkElementViewManager.h>
+#include <Views/ControlViewManager.h>
 
 namespace react { namespace uwp {
 
-class PickerViewManager : public FrameworkElementViewManager
+class PickerViewManager : public ControlViewManager
 {
-  using Super = FrameworkElementViewManager;
+  using Super = ControlViewManager;
 public:
   PickerViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 

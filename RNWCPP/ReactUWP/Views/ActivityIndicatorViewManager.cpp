@@ -17,7 +17,7 @@ namespace winrt {
 namespace react { namespace uwp {
 
 ActivityIndicatorViewManager::ActivityIndicatorViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -43,9 +43,9 @@ XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag)
   return progressRing;
 }
 
-void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto progressRing = viewToUpdate.as<winrt::ProgressRing>();
+  auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
   if (progressRing == nullptr)
     return;
 
@@ -58,16 +58,12 @@ void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate
    {
       if (propertyValue.isBool())
         progressRing.IsActive(propertyValue.asBool());
-   }
-   // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-   // be called.  For now we specify the base type explicitly
-   else if (TryUpdateForeground<winrt::Control>(progressRing, pair.first, pair.second))
-   {
-     continue;
+      else if (pair.second.isNull())
+        progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
    }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 }}

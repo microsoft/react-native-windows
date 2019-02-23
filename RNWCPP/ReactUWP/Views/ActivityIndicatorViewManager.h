@@ -3,20 +3,20 @@
 
 #pragma once
 
-#include <Views/FrameworkElementViewManager.h>
+#include <Views/ControlViewManager.h>
 
 namespace react { namespace uwp {
 
-class ActivityIndicatorViewManager : public FrameworkElementViewManager
+class ActivityIndicatorViewManager : public ControlViewManager
 {
-  using Super = FrameworkElementViewManager;
+  using Super = ControlViewManager;
 public:
   ActivityIndicatorViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
   const char* GetName() const override;
   folly::dynamic GetNativeProps() const override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;

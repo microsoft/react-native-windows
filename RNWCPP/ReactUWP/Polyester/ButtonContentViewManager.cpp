@@ -20,7 +20,7 @@ using namespace ::Windows::UI::Xaml::Media;
 namespace react { namespace uwp { namespace polyester {
 
 ButtonContentViewManager::ButtonContentViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -31,21 +31,6 @@ void ButtonContentViewManager::AddView(XamlView parent, XamlView child, int64_t 
   {
       stackPanel.Children().InsertAt(static_cast<uint32_t>(index), child.as<UIElement>());
   }
-}
-
-XamlView ButtonContentViewManager::GetChildAt(XamlView parent, int64_t index)
-{
-  auto stackPanel(parent.as<StackPanel>());
-  if (stackPanel != nullptr)
-    return stackPanel.Children().GetAt(static_cast<uint32_t>(index)).as<XamlView>();
-
-  return nullptr;
-}
-
-int64_t ButtonContentViewManager::GetChildCount(XamlView parent)
-{
-  auto stackPanel(parent.as<StackPanel>());
-  return ((stackPanel != nullptr) && (stackPanel.Children() == nullptr)) ? stackPanel.Children().Size() : 0;
 }
 
 void ButtonContentViewManager::RemoveAllChildren(XamlView parent)

@@ -60,6 +60,7 @@ public:
   void CreateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) override;
   void AddView(facebook::react::ShadowNode& parentShadowNode, facebook::react::ShadowNode& childShadowNode, uint64_t index) override;
   void RemoveView(facebook::react::ShadowNode& shadowNode, bool removeChildren = true) override;
+  void ReplaceView(facebook::react::ShadowNode& shadowNode) override;
   void UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) override;
   void onBatchComplete() override;
   void ensureInBatch() override;

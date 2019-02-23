@@ -16,6 +16,12 @@ class AccessibilityBaseExample extends React.Component {
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
         />
+        <Text>The following has accessible and accessibilityLabel:</Text>
+        <View
+          style={{ width: 50, height: 50, backgroundColor: 'red' }}
+          accessible={true}
+          accessibilityLabel="A hint for the red box."
+        />
       </View>
     );
   }

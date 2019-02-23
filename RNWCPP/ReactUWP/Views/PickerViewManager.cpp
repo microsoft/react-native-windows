@@ -135,7 +135,7 @@ void PickerShadowNode::RepopulateItems()
 }
 
 PickerViewManager::PickerViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 

@@ -58,9 +58,13 @@ struct ShadowNodeBase : public facebook::react::ShadowNode
 
   virtual void updateProperties(const folly::dynamic&& props) override;
 
+  virtual void ReplaceChild(XamlView oldChildView, XamlView newChildView);
+
   ViewManagerBase* GetViewManager() const { return static_cast<ViewManagerBase*>(m_viewManager); }
   XamlView GetView() const { return m_view; }
   int64_t GetParent() const { return m_parent; }
+
+  void ReplaceView(XamlView view);
 
   // Extra layout handling
   virtual bool IsExternalLayoutDirty() const { return false; }
@@ -68,6 +72,7 @@ struct ShadowNodeBase : public facebook::react::ShadowNode
 
 protected:
   XamlView m_view;
+
 public:
   double m_padding[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
   double m_border[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;

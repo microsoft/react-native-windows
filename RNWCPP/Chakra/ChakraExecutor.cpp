@@ -375,7 +375,7 @@ void ChakraExecutor::terminateOnJSVMThread()
 
 #if !defined(USE_EDGEMODE_JSRT)
 JsErrorCode ChakraExecutor::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,
-  std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService) throw(ChakraJSException)
+  std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService)
 {
   SystraceSection s("ChakraExecutor.enableDebugging");
 

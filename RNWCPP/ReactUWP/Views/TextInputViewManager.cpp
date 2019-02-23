@@ -150,17 +150,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
   auto control = textBox.as<winrt::Control>();
   for (auto& pair : props.items())
   {
-    // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-    // be called.  For now we specify the base type explicitly
-    if (TryUpdateForeground<winrt::Control>(textBox, pair.first, pair.second))
-    {
-      continue;
-    }
-    else if (TryUpdateFontProperties(textBox, pair.first, pair.second))
-    {
-      continue;
-    }
-    else if (TryUpdatePadding(this, textBox, pair.first, pair.second))
+    if (TryUpdateFontProperties(control, pair.first, pair.second))
     {
       continue;
     }
@@ -168,19 +158,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     {
       continue;
     }
-    else if (TryUpdateCharacterSpacing(textBox, pair.first, pair.second))
-    {
-      continue;
-    }
-    // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-    // be called.  For now we specify the base type explicitly
-    else if (TryUpdateBackgroundBrush(control, pair.first, pair.second))
-    {
-      continue;
-    }
-    // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-    // be called.  For now we specify the base type explicitly
-    else if (TryUpdateBorderProperties(this, control, pair.first, pair.second))
+    else if (TryUpdateCharacterSpacing(control, pair.first, pair.second))
     {
       continue;
     }
@@ -188,11 +166,15 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (pair.second.isBool())
         textBox.TextWrapping(pair.second.asBool() ? winrt::TextWrapping::Wrap : winrt::TextWrapping::NoWrap);
+      else if (pair.second.isNull())
+        textBox.ClearValue(winrt::TextBox::TextWrappingProperty());
     }
     else if (pair.first == "allowFontScaling")
     {
       if (pair.second.isBool())
         textBox.IsTextScaleFactorEnabled(pair.second.asBool());
+      else if (pair.second.isNull())
+        textBox.ClearValue(winrt::Control::IsTextScaleFactorEnabledProperty());
     }
     else if (pair.first == "clearTextOnFocus")
     {
@@ -203,16 +185,22 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (pair.second.isBool())
         textBox.IsReadOnly(!pair.second.asBool());
+      else if (pair.second.isNull())
+        textBox.ClearValue(winrt::TextBox::IsReadOnlyProperty());
     }
     else if (pair.first == "maxLength")
     {
       if (pair.second.isInt())
         textBox.MaxLength(static_cast<int32_t>(pair.second.asInt()));
+      else if (pair.second.isNull())
+        textBox.ClearValue(winrt::TextBox::MaxLengthProperty());
     }
     else if (pair.first == "placeholder")
     {
       if (pair.second.isString())
         textBox.PlaceholderText(asHstring(pair.second));
+      else if (pair.second.isNull())
+        textBox.ClearValue(winrt::TextBox::PlaceholderTextProperty());
     }
     else if (pair.first == "placeholderTextColor")
     {
@@ -256,11 +244,15 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (pair.second.isBool())
         textBox.IsSpellCheckEnabled(pair.second.asBool());
+      else if (pair.second.isNull())
+        textBox.ClearValue(winrt::TextBox::IsSpellCheckEnabledProperty());
     }
     else if (pair.first == "text")
     {
       if (pair.second.isString())
         textBox.Text(asHstring(pair.second));
+      else if (pair.second.isNull())
+        textBox.ClearValue(winrt::TextBox::TextProperty());
     }
   }
 
@@ -269,7 +261,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
 }
 
 TextInputViewManager::TextInputViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
