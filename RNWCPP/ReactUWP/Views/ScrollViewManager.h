@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include "FrameworkElementViewManager.h"
+#include "ControlViewManager.h"
 
 namespace react { namespace uwp {
 
-class ScrollViewManager : public FrameworkElementViewManager
+class ScrollViewManager : public ControlViewManager
 {
-  using Super = FrameworkElementViewManager;
+  using Super = ControlViewManager;
 public:
   ScrollViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
@@ -19,12 +19,10 @@ public:
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
-  XamlView GetChildAt(XamlView parent, int64_t index) override;
-  int64_t GetChildCount(XamlView parent) override;
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
   void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
 
 protected:

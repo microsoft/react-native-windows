@@ -136,7 +136,7 @@ void WebSocketJSExecutor::handleMemoryPressure(int pressureLevel)
 void WebSocketJSExecutor::destroy()
 {
   if (State::Connected == m_state || State::Running == m_state)
-    m_webSocket->Close(/*closeCode*/ IWebSocket::CloseCode::Normal, "Disposed");
+    m_webSocket->Close(IWebSocket::CloseCode::GoingAway, "Disposed");
 
   SetState(State::Disposed);
 }
@@ -179,7 +179,7 @@ std::future<bool> WebSocketJSExecutor::ConnectAsync(const string& webSocketServe
     if (std::future_status::ready != status)
     {
       m_errorCallback("Timeout: Failed to connect to the dev server");
-      m_webSocket->Close(IWebSocket::CloseCode::GoingAway, "Timed out");
+      m_webSocket->Close(IWebSocket::CloseCode::ProtocolError, "Timed out");
 
       resultPromise.set_value(false);
       return resultPromise.get_future();
@@ -199,7 +199,7 @@ std::future<bool> WebSocketJSExecutor::ConnectAsync(const string& webSocketServe
 
     try
     {
-      m_webSocket->Close(IWebSocket::CloseCode::GoingAway, "Timed out");
+      m_webSocket->Close(IWebSocket::CloseCode::ProtocolError, "Timed out");
     }
     catch (const std::exception&)
     {

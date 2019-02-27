@@ -20,4 +20,14 @@ inline int64_t GetTag(XamlView view)
   return view.GetValue(winrt::FrameworkElement::TagProperty()).as<winrt::IPropertyValue>().GetInt64();
 }
 
+inline void SetTag(XamlView view, int64_t tag)
+{
+  view.SetValue(winrt::FrameworkElement::TagProperty(), winrt::PropertyValue::CreateInt64(tag));
+}
+
+inline void SetTag(XamlView view, winrt::IInspectable tag)
+{
+  SetTag(view, tag.as<winrt::IPropertyValue>().GetInt64());
+}
+
 } }

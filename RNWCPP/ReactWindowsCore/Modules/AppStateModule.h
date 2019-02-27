@@ -14,14 +14,15 @@ class AppState
 {
 public:
   AppState();
+  virtual ~AppState();
 
-  const char* getState();
+  virtual const char* getState();
 };
 
 class AppStateModule : public facebook::xplat::module::CxxModule
 {
 public:
-  AppStateModule(std::unique_ptr<AppState>&& appState);
+  AppStateModule(std::shared_ptr<AppState>&& appState);
 
   static const char* name;
 
@@ -31,7 +32,7 @@ public:
   auto getMethods() -> std::vector<Method> override;
 
 private:
-  std::unique_ptr<AppState> m_appState;
+  std::shared_ptr<AppState> m_appState;
 };
 
 } } // namespace facebook::react

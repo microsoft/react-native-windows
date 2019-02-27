@@ -13,6 +13,7 @@ SOURCES_SHARED = \
 	..\HttpResource.cpp \
 	..\JsBigStringResourceDll.cpp \
 	..\LazyDevSupportManager.cpp \
+	..\LegacyWebSocket.cpp \
 	..\TimingModule.cpp \
 	..\WebSocket.cpp \
 	..\WebSocketModule.cpp \

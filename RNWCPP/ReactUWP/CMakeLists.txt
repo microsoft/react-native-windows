@@ -11,6 +11,7 @@ set(SOURCES
 	EndPoints/dll/JSCGlue.cpp
 	Executors/WebSocketJSExecutorFactory.cpp
 	Executors/WebSocketJSExecutorUwp.cpp
+	Modules/AppStateModuleUwp.cpp
 	Modules/ClipboardModule.cpp
 	Modules/DeviceInfoModule.cpp
 	Modules/DevSupportManagerUwp.cpp
@@ -35,6 +36,7 @@ set(SOURCES
 	Utils/ValueUtils.cpp
 	Views/ActivityIndicatorViewManager.cpp
 	Views/CheckboxViewManager.cpp
+	Views/ControlViewManager.cpp
 	Views/FrameworkElementViewManager.cpp
 	Views/ImageViewManager.cpp
 	Views/PickerViewManager.cpp

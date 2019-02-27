@@ -146,7 +146,7 @@
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
-    <ClInclude Include="Modules\AppStateModule.h" />
+    <ClInclude Include="Modules\AppStateModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
@@ -169,10 +169,12 @@
     <ClInclude Include="Threading\UIMessageQueueThread.h" />
     <ClInclude Include="Threading\WorkerMessageQueueThread.h" />
     <ClInclude Include="Utils\LocalBundleReader.h" />
+    <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\ControlViewManager.h" />
     <ClInclude Include="Views\FrameworkElementViewManager.h" />
     <ClInclude Include="Views\ImageViewManager.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
@@ -212,6 +214,7 @@
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
+    <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
@@ -239,6 +242,7 @@
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
+    <ClCompile Include="Views\ControlViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
     <ClCompile Include="Views\ImageViewManager.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />

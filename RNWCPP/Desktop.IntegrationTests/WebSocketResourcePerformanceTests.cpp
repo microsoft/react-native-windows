@@ -10,6 +10,7 @@
 
 // Standard library includes
 #include <atomic>
+#include <future>
 #include <math.h>
 
 using namespace facebook::react;
@@ -49,7 +50,7 @@ TEST_CLASS(WebSocketResourcePerformanceTest)
   ///
   TEST_METHOD(ProcessThreadsPerResource)
   {
-    const int resourceTotal = 50; // About 00:55 seconds total running time.
+    const int resourceTotal = 50; // About 3 seconds total running time. 6 if we increase this value to 100.
     const int maxWriteCount = 10;
     const int expectedThreadsPerResource = 3;
     const int startThreadCount = GetCurrentThreadCount();

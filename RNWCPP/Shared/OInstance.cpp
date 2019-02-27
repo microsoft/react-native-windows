@@ -487,7 +487,7 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
         jsBundleRelativePath,
         false /*synchronously*/
 #if !defined(OSS_RN)
-        , std::move(bytecodeFileNameCopy)
+        , "" /*bytecodeFileName*/ // No bytecode is used during Live Reload
 #endif
       );
   }

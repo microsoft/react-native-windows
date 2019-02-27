@@ -1,6 +1,135 @@
 # Change Log - react-native-win
 
-This log was last generated on Wed, 13 Feb 2019 01:52:33 GMT and should not be manually modified.
+This log was last generated on Sat, 23 Feb 2019 01:53:38 GMT and should not be manually modified.
+
+## 0.5.72
+Sat, 23 Feb 2019 01:53:38 GMT
+
+*Version update only*
+
+## 0.5.71
+Sat, 23 Feb 2019 00:46:26 GMT
+
+### Patches
+
+- Pinned 'just-task' to "0.7.6" so that we stop picking up the latest version
+
+## 0.5.70
+Thu, 21 Feb 2019 13:47:23 GMT
+
+*Version update only*
+
+## 0.5.69
+Thu, 21 Feb 2019 12:43:12 GMT
+
+### Patches
+
+- move react to peerDependencies
+
+## 0.5.68
+Wed, 20 Feb 2019 23:15:50 GMT
+
+### Patches
+
+- uwp - implement unsetting for most properties that were missing it
+
+## 0.5.67
+Wed, 20 Feb 2019 18:10:08 GMT
+
+*Version update only*
+
+## 0.5.66
+Tue, 19 Feb 2019 20:49:32 GMT
+
+*Version update only*
+
+## 0.5.65
+Tue, 19 Feb 2019 13:29:59 GMT
+
+*Version update only*
+
+## 0.5.64
+Tue, 19 Feb 2019 09:40:39 GMT
+
+*Version update only*
+
+## 0.5.63
+Tue, 19 Feb 2019 08:29:15 GMT
+
+*Version update only*
+
+## 0.5.62
+Mon, 18 Feb 2019 03:12:33 GMT
+
+*Version update only*
+
+## 0.5.61
+Sat, 16 Feb 2019 20:22:10 GMT
+
+*Version update only*
+
+## 0.5.60
+Sat, 16 Feb 2019 19:08:58 GMT
+
+*Version update only*
+
+## 0.5.59
+Sat, 16 Feb 2019 00:19:15 GMT
+
+### Patches
+
+- uwp - fix devmain break from pch change
+
+## 0.5.58
+Fri, 15 Feb 2019 14:47:27 GMT
+
+*Version update only*
+
+## 0.5.57
+Fri, 15 Feb 2019 04:26:38 GMT
+
+### Patches
+
+- Fix Live Reload
+
+## 0.5.56
+Fri, 15 Feb 2019 01:52:14 GMT
+
+### Patches
+
+- uwp - implement AppState state change events, tooltip prop, rename asyncstorage folder to react-native
+
+## 0.5.55
+Thu, 14 Feb 2019 23:44:36 GMT
+
+*Version update only*
+
+## 0.5.54
+Thu, 14 Feb 2019 22:36:25 GMT
+
+*Version update only*
+
+## 0.5.53
+Thu, 14 Feb 2019 21:21:36 GMT
+
+*Version update only*
+
+## 0.5.52
+Thu, 14 Feb 2019 03:07:44 GMT
+
+### Patches
+
+- uwp - create ControlViewManager base class for Xaml IControl's to share
+
+## 0.5.51
+Wed, 13 Feb 2019 23:20:09 GMT
+
+*Version update only*
+
+## 0.5.50
+Wed, 13 Feb 2019 20:29:56 GMT
+
+*Version update only*
 
 ## 0.5.49
 Wed, 13 Feb 2019 01:52:33 GMT

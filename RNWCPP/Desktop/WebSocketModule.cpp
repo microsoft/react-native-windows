@@ -13,7 +13,6 @@
 using namespace facebook::xplat;
 using namespace folly;
 
-using std::move;
 using std::string;
 
 namespace facebook { namespace react {
@@ -61,9 +60,18 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 
         this->GetWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0))->Connect(protocols, options);
       }),
-    Method("close", [this](dynamic args) // int64_t id
+    Method("close", [this](dynamic args) // [int64_t code, string reason,] int64_t id
       {
-        this->GetWebSocket(jsArgAsInt(args, 0))->Close(IWebSocket::CloseCode::Normal, "WebSocketModule closing");
+        // See react-native\Libraries\WebSocket\WebSocket.js:_close
+        if (args.size() == 3)      // WebSocketModule.close(statusCode, closeReason, this._socketId);
+          this->GetWebSocket(jsArgAsInt(args, 2))->Close(static_cast<IWebSocket::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
+        else if (args.size() == 1) // WebSocketModule.close(this._socketId);
+          this->GetWebSocket(jsArgAsInt(args, 0))->Close(IWebSocket::CloseCode::Normal, {});
+        else
+        {
+          auto errorObj = dynamic::object("id", -1)("message", "Incorrect number of parameters");
+          this->SendEvent("websocketFailed", std::move(errorObj));
+        }
       }),
     Method("send", [this](dynamic args) // const string& message, int64_t id
       {
@@ -86,7 +94,7 @@ void WebSocketModule::SendEvent(string&& eventName, dynamic&& args)
 {
   auto instance = this->getInstance().lock();
   if (instance)
-    instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(move(eventName), move(args)));
+    instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
 }
 
 IWebSocket* WebSocketModule::GetWebSocket(int64_t id, string&& url)
@@ -94,7 +102,7 @@ IWebSocket* WebSocketModule::GetWebSocket(int64_t id, string&& url)
   IWebSocket* ptr = nullptr;
   if (m_webSockets.find(id) == m_webSockets.end())
   {
-    auto ws = IWebSocket::Make(move(url));
+    auto ws = IWebSocket::Make(std::move(url));
     ws->SetOnError([this, id](const IWebSocket::Error& err)
     {
       auto errorObj = dynamic::object("id", id)("message", err.Message);
@@ -103,21 +111,21 @@ IWebSocket* WebSocketModule::GetWebSocket(int64_t id, string&& url)
     ws->SetOnConnect([this, id]()
     {
       dynamic args = dynamic::object("id", id);
-      this->SendEvent("websocketOpen", move(args));
+      this->SendEvent("websocketOpen", std::move(args));
     });
     ws->SetOnMessage([this, id](size_t length, const string& message)
     {
       dynamic args = dynamic::object("id", id)("data", message)("type", "text");
-      this->SendEvent("websocketMessage", move(args));
+      this->SendEvent("websocketMessage", std::move(args));
     });
     ws->SetOnClose([this, id](IWebSocket::CloseCode code, const string& reason)
     {
       dynamic args = dynamic::object("id", id)("code", static_cast<uint16_t>(code))("reason", reason);
-      this->SendEvent("websocketClosed", move(args));
+      this->SendEvent("websocketClosed", std::move(args));
     });
 
     ptr = ws.get();
-    m_webSockets.emplace(id, move(ws));
+    m_webSockets.emplace(id, std::move(ws));
   }
   else
   {

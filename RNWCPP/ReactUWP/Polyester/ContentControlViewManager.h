@@ -16,8 +16,6 @@ public:
   facebook::react::ShadowNode* createShadow() const override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
-  XamlView GetChildAt(XamlView parent, int64_t index) override;
-  int64_t GetChildCount(XamlView parent) override;
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
 };

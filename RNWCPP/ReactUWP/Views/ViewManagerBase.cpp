@@ -186,9 +186,7 @@ XamlView ViewManagerBase::CreateView(int64_t tag)
   XamlView view = CreateViewCore(tag);
 
   // Set the tag if the element type supports it
-  auto obj = view.try_as<winrt::DependencyObject>();
-  if (obj != nullptr)
-    obj.SetValue(winrt::FrameworkElement::TagProperty(), winrt::PropertyValue::CreateInt64(tag));
+  SetTag(view, tag);
 
   return view;
 }
@@ -199,34 +197,28 @@ void ViewManagerBase::AddView(XamlView parent, XamlView child, int64_t index)
   assert(false);
 }
 
-XamlView ViewManagerBase::GetChildAt(XamlView parent, int64_t index)
-{
-  // ASSERT: Child must either implement or not allow children.
-  assert(false);
-  return nullptr;
-}
-
-void ViewManagerBase::RemoveAllChildren(XamlView parent)
-{
-}
-
 void ViewManagerBase::RemoveChildAt(XamlView parent, int64_t index)
 {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
 
-int64_t ViewManagerBase::GetChildCount(XamlView parent)
+void ViewManagerBase::RemoveAllChildren(XamlView parent)
 {
-  return 0;
 }
 
-void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, dynamic reactDiffMap)
+void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild)
+{
+  // ASSERT: Child must either implement or not allow children.
+  assert(false);
+}
+
+void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, dynamic reactDiffMap)
 {
   // Directly dirty this node since non-layout changes like the text property do not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate the ancestors which
   //  will include the containing Text element. And that's what matters.
-  int64_t tag = GetTag(viewToUpdate);
+  int64_t tag = GetTag(nodeToUpdate->GetView());
   auto instance = m_wkReactInstance.lock();
   if (instance != nullptr)
     static_cast<NativeUIManager*>(instance->NativeUIManager())->DirtyYogaNode(tag);
@@ -241,6 +233,10 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView vi
       nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
     }
   }
+}
+
+void ViewManagerBase::TransferProperties(XamlView /*oldView*/, XamlView /*newView*/)
+{
 }
 
 void ViewManagerBase::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)

@@ -13,7 +13,7 @@ namespace facebook {
 namespace react {
 
 template<typename Protocol, typename Socket, typename Resolver>
-class BaseWebSocket : public IWebSocket
+class LegacyBaseWebSocket : public IWebSocket
 {
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
@@ -22,45 +22,29 @@ class BaseWebSocket : public IWebSocket
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
 
   Url m_url;
-  ReadyState m_readyState { ReadyState::Connecting };
+  ReadyState m_readyState;
   boost::beast::multi_buffer m_bufferIn;
+  std::atomic_bool m_closing;
   std::thread m_contextThread;
-
-  std::atomic_size_t m_pingRequests { 0 };
-  std::queue<std::pair<std::string, bool>> m_writeRequests;
-  CloseCode m_closeCodeRequest { CloseCode::None };
-  std::string m_closeReasonRequest;
-
-  // Internal status flags.
-  std::atomic_bool m_handshakePerformed { false };
-  std::atomic_bool m_closeRequested { false };
-  std::atomic_bool m_closeInProgress { false };
-  std::atomic_bool m_pingInProgress { false };
+  std::queue<std::pair<std::string, bool>> m_requests;
   std::atomic_bool m_writeInProgress { false };
 
-  void EnqueueWrite(const std::string& message, bool binary);
+  void Read();
   void PerformWrite();
-  void PerformRead();
-  void PerformPing();
-  void PerformClose();
-
-  ///
-  // Synchronizes the context thread and allows the io_context to stop dispatching tasks.
-  ///
-  void Stop();
-
+  void EnqueueWrite(const std::string& message, bool binary);
   boost::beast::websocket::close_code ToBeastCloseCode(IWebSocket::CloseCode closeCode);
 
 protected:
   std::function<void(Error&&)> m_errorHandler;
 
   boost::asio::io_context m_context;
+  Resolver m_resolver;
   std::unique_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> m_workGuard;
   std::unique_ptr<boost::beast::websocket::stream<Socket>> m_stream;
 
-  BaseWebSocket(Url&& url);
+  LegacyBaseWebSocket(Url&& url);
 
-  ~BaseWebSocket() override;
+  ~LegacyBaseWebSocket() override;
 
   virtual void Handshake(const IWebSocket::Options& options);
 
@@ -86,23 +70,23 @@ public:
 };
 
 template<typename Protocol, typename Socket = boost::asio::basic_stream_socket<Protocol>, typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
-class WebSocket : public BaseWebSocket<Protocol, Socket, Resolver>
+class LegacyWebSocket : public LegacyBaseWebSocket<Protocol, Socket, Resolver>
 {
 public:
-  WebSocket(Url&& url);
+  LegacyWebSocket(Url&& url);
 };
 
 template<typename Protocol, typename Socket, typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
-class SecureWebSocket : public BaseWebSocket<Protocol, Socket, Resolver>
+class LegacySecureWebSocket : public LegacyBaseWebSocket<Protocol, Socket, Resolver>
 {
-  #pragma region BaseWebSocket overrides
+  #pragma region LegacyBaseWebSocket overrides
 
   void Handshake(const IWebSocket::Options& options) override;
 
   #pragma endregion
 
 public:
-  SecureWebSocket(Url&& url);
+  LegacySecureWebSocket(Url&& url);
 };
 
 } } // namespace facebook::react

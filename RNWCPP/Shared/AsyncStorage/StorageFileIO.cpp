@@ -29,7 +29,7 @@ namespace facebook {
 
 #ifdef WINRT
       const std::wstring localFolder = std::wstring(winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path());
-      const std::wstring strStorageFolderFullPath = localFolder + L"\\SDXStorage";
+      const std::wstring strStorageFolderFullPath = localFolder + L"\\react-native";
       const std::wstring strStorageFileFullPath = strStorageFolderFullPath + L"\\" + storageFileName + L".txt";
 #else
       WCHAR wzMyAppDataDirPathArr[MAX_PATH];

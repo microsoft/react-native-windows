@@ -6,6 +6,7 @@
 #include "ButtonViewManager.h"
 
 #include <Utils/ValueUtils.h>
+#include <Views/ShadowNodeBase.h>
 
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
@@ -67,9 +68,9 @@ XamlView ButtonViewManager::CreateViewCore(int64_t tag)
   return button;
 }
 
-void ButtonViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void ButtonViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto button = viewToUpdate.as<winrt::Button>();
+  auto button = nodeToUpdate->GetView().as<winrt::Button>();
   if (button == nullptr)
     return;
 
@@ -87,6 +88,6 @@ void ButtonViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView 
     continue;
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 }}}

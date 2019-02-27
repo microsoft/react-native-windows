@@ -4,6 +4,7 @@ set(SOURCES
 	HttpResource.cpp
 	JSBigStringResourceDll.cpp
 	LazyDevSupportManager.cpp
+ 	LegacyWebSocket.cpp
 	Modules/NetworkingModule.cpp
 	Sandbox/DevSupportManagerSandbox.cpp
 	Sandbox/SandboxBridge.cpp

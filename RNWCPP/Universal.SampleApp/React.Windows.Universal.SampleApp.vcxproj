@@ -102,6 +102,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="accessible.uwp.js" />
     <None Include="bundle.js" />
     <None Include="bundle.meta" />
     <None Include="Bundle\index.uwp.bundle">
@@ -109,6 +110,7 @@
     </None>
     <None Include="index.uwp.js" />
     <None Include="packages.config" />
+    <None Include="simple.uwp.js" />
     <None Include="text.uwp.js" />
     <None Include="WindowsSampleApp_TemporaryKey.pfx" />
   </ItemGroup>

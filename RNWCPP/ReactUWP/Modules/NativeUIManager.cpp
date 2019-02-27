@@ -742,6 +742,35 @@ void NativeUIManager::RemoveView(facebook::react::ShadowNode& shadowNode, bool r
   m_tagsToYogaContext.erase(node.m_tag);
 }
 
+void NativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode)
+{
+  ShadowNodeBase& node = static_cast<ShadowNodeBase&>(shadowNode);
+  auto* pViewManager = node.GetViewManager();
+
+  if (pViewManager->RequiresYogaNode())
+  {
+    auto it = m_tagsToYogaNodes.find(node.m_tag);
+    if (it != m_tagsToYogaNodes.end())
+    {
+      YGNodeRef yogaNode = it->second.get();
+
+      YGMeasureFunc func = pViewManager->GetYogaCustomMeasureFunc();
+      if (func != nullptr)
+      {
+        auto context = std::make_unique<YogaContext>(node.GetView());
+        YGNodeSetContext(yogaNode, reinterpret_cast<void*>(context.get()));
+
+        m_tagsToYogaContext.emplace(node.m_tag, std::move(context));
+      }
+    }
+    else
+    {
+      assert(false);
+      return;
+    }
+  }
+}
+
 void NativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props)
 {
   ShadowNodeBase& node = static_cast<ShadowNodeBase&>(shadowNode);

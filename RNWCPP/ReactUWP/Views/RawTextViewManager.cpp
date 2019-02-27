@@ -5,6 +5,8 @@
 
 #include "RawTextViewManager.h"
 
+#include "ShadowNodeBase.h"
+
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.Foundation.h>
@@ -23,7 +25,7 @@ using namespace Windows::UI::Xaml::Media;
 namespace react { namespace uwp {
 
 RawTextViewManager::RawTextViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : ViewManagerBase(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -38,9 +40,9 @@ XamlView RawTextViewManager::CreateViewCore(int64_t tag)
   return run;
 }
 
-void RawTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void RawTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto run = viewToUpdate.as<winrt::Run>();
+  auto run = nodeToUpdate->GetView().as<winrt::Run>();
   if (run == nullptr)
     return;
 
@@ -51,7 +53,7 @@ void RawTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView
       run.Text(asHstring(pair.second));
     }
   }
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void RawTextViewManager::SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height)

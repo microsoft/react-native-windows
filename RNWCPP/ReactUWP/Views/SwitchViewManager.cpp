@@ -56,7 +56,7 @@ void SwitchShadowNode::updateProperties(const folly::dynamic&& props)
 }
 
 SwitchViewManager::SwitchViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -89,9 +89,9 @@ XamlView SwitchViewManager::CreateViewCore(int64_t tag)
   return toggleSwitch;
 }
 
-void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto toggleSwitch = viewToUpdate.as<winrt::ToggleSwitch>();
+  auto toggleSwitch = nodeToUpdate->GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
     return;
 
@@ -104,15 +104,19 @@ void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView 
    {
       if (propertyValue.isBool())
         toggleSwitch.IsEnabled(!propertyValue.asBool());
+      else if (pair.second.isNull())
+        toggleSwitch.ClearValue(winrt::Control::IsEnabledProperty());
    }
    else if (propertyName.asString() == "value")
    {
      if (propertyValue.isBool())
        toggleSwitch.IsOn(propertyValue.asBool());
+     else if (pair.second.isNull())
+       toggleSwitch.ClearValue(winrt::ToggleSwitch::IsOnProperty());
    }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 }}

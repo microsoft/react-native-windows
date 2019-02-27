@@ -10,6 +10,7 @@
 #include "IconViewManager.h"
 
 #include <Utils/ValueUtils.h>
+#include <Views/ShadowNodeBase.h>
 
 #include <winrt/Windows.UI.Xaml.Documents.h>
 #include <winrt/Windows.UI.ViewManagement.h>
@@ -25,7 +26,7 @@ using namespace Windows::UI::Xaml::Media;
 namespace react { namespace uwp { namespace polyester {
 
 IconViewManager::IconViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -56,9 +57,9 @@ XamlView IconViewManager::CreateViewCore(int64_t tag)
   return glyphs;
 }
 
-void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto glyphs = viewToUpdate.as<winrt::Glyphs>();
+  auto glyphs = nodeToUpdate->GetView().as<winrt::Glyphs>();
   if (glyphs == nullptr)
     return;
 
@@ -103,7 +104,7 @@ void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView vi
     continue;
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 /*static*/ void IconViewManager::UpdateFontColorProps(winrt::Glyphs glyphs)

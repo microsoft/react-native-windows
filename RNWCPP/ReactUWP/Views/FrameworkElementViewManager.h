@@ -14,7 +14,12 @@ public:
   FrameworkElementViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
   folly::dynamic GetNativeProps() const override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
+
+protected:
+  virtual void TransferProperties(XamlView oldView, XamlView newView) override;
+
+  void TransferProperty(XamlView oldView, XamlView newView, winrt::Windows::UI::Xaml::DependencyProperty dp);
 };
 
 } }

@@ -7,6 +7,8 @@
 
 namespace react { namespace uwp {
 
+class ViewShadowNode;
+
 class ViewViewManager : public FrameworkElementViewManager
 {
   using Super = FrameworkElementViewManager;
@@ -16,16 +18,21 @@ public:
   const char* GetName() const override;
 
   folly::dynamic GetNativeProps() const override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap) override;
+  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  facebook::react::ShadowNode* createShadow() const override;
 
-  void AddView(XamlView parent, XamlView child, int64_t index) override;
-  XamlView GetChildAt(XamlView parent, int64_t index) override;
-  int64_t GetChildCount(XamlView parent) override;
-  void RemoveAllChildren(XamlView parent) override;
-  void RemoveChildAt(XamlView parent, int64_t index) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
+  void ReplaceView(ViewShadowNode* viewShadowNode, bool useControl);
+  void TransferProperties(XamlView oldView, XamlView newView) override;
+
+private:
+  void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData);
+
+  XamlView CreateViewPanel(int64_t tag);
+  XamlView CreateViewControl(int64_t tag);
 };
 
 } }

@@ -2,6 +2,296 @@
   "name": "react-native-win",
   "entries": [
     {
+      "version": "0.5.72",
+      "tag": "react-native-win_v0.5.72",
+      "date": "Sat, 23 Feb 2019 01:53:38 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.1` to `0.3.2`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.71",
+      "tag": "react-native-win_v0.5.71",
+      "date": "Sat, 23 Feb 2019 00:46:26 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Pinned 'just-task' to \"0.7.6\" so that we stop picking up the latest version",
+            "author": "Tom Underhill <tomun@microsoft.com>",
+            "commit": "e40e54e9df58b3cdd04cbe939121092dbf23485a"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.70",
+      "tag": "react-native-win_v0.5.70",
+      "date": "Thu, 21 Feb 2019 13:47:23 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.0` to `0.3.1`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.69",
+      "tag": "react-native-win_v0.5.69",
+      "date": "Thu, 21 Feb 2019 12:43:12 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "move react to peerDependencies",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "8511787b4e9da71ec2aa0194e693ca632cd31951"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.68",
+      "tag": "react-native-win_v0.5.68",
+      "date": "Wed, 20 Feb 2019 23:15:50 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - implement unsetting for most properties that were missing it",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "17be3c9ac4f6e6e0a1222427998aecaceeec6118"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.67",
+      "tag": "react-native-win_v0.5.67",
+      "date": "Wed, 20 Feb 2019 18:10:08 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.8` to `0.3.0`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.66",
+      "tag": "react-native-win_v0.5.66",
+      "date": "Tue, 19 Feb 2019 20:49:32 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.7` to `0.2.8`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.65",
+      "tag": "react-native-win_v0.5.65",
+      "date": "Tue, 19 Feb 2019 13:29:59 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.6` to `0.2.7`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.64",
+      "tag": "react-native-win_v0.5.64",
+      "date": "Tue, 19 Feb 2019 09:40:39 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.5` to `0.2.6`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.63",
+      "tag": "react-native-win_v0.5.63",
+      "date": "Tue, 19 Feb 2019 08:29:15 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.4` to `0.2.5`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.62",
+      "tag": "react-native-win_v0.5.62",
+      "date": "Mon, 18 Feb 2019 03:12:33 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.3` to `0.2.4`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.61",
+      "tag": "react-native-win_v0.5.61",
+      "date": "Sat, 16 Feb 2019 20:22:10 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.2` to `0.2.3`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.60",
+      "tag": "react-native-win_v0.5.60",
+      "date": "Sat, 16 Feb 2019 19:08:58 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.1` to `0.2.2`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.59",
+      "tag": "react-native-win_v0.5.59",
+      "date": "Sat, 16 Feb 2019 00:19:15 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - fix devmain break from pch change",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "e8c191272d598783eab09a1f718e08b603efcc5c"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.58",
+      "tag": "react-native-win_v0.5.58",
+      "date": "Fri, 15 Feb 2019 14:47:27 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.2.0` to `0.2.1`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.57",
+      "tag": "react-native-win_v0.5.57",
+      "date": "Fri, 15 Feb 2019 04:26:38 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Live Reload",
+            "author": "Nikolai Aristov <Nikolai.Aristov@microsoft.com>",
+            "commit": "0bc917ad22f6fb6bb8857c9ccc38ff37fb56d72b"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.56",
+      "tag": "react-native-win_v0.5.56",
+      "date": "Fri, 15 Feb 2019 01:52:14 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - implement AppState state change events, tooltip prop, rename asyncstorage folder to react-native",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "ae22a3ff41257d61c61da90f28ff78cd9210abed"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.55",
+      "tag": "react-native-win_v0.5.55",
+      "date": "Thu, 14 Feb 2019 23:44:36 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.1.2` to `0.2.0`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.54",
+      "tag": "react-native-win_v0.5.54",
+      "date": "Thu, 14 Feb 2019 22:36:25 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.1.1` to `0.1.2`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.53",
+      "tag": "react-native-win_v0.5.53",
+      "date": "Thu, 14 Feb 2019 21:21:36 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.1.0` to `0.1.1`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.52",
+      "tag": "react-native-win_v0.5.52",
+      "date": "Thu, 14 Feb 2019 03:07:44 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - create ControlViewManager base class for Xaml IControl's to share",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "66819ee06b3d37612d855e94c575760ee9430e34"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.51",
+      "tag": "react-native-win_v0.5.51",
+      "date": "Wed, 13 Feb 2019 23:20:09 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.12` to `0.1.0`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.50",
+      "tag": "react-native-win_v0.5.50",
+      "date": "Wed, 13 Feb 2019 20:29:56 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.0.11` to `0.0.12`"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.49",
       "tag": "react-native-win_v0.5.49",
       "date": "Wed, 13 Feb 2019 01:52:33 GMT",

@@ -31,9 +31,7 @@ public:
   void FinalizeProperties();
 
   // Public Properties
-  void ClearValue(winrt::Windows::UI::Xaml::DependencyProperty dp) const;
-
-  winrt::Windows::UI::Xaml::Media::Brush Background() { return m_optBackgroundBrush.has_value() ? m_optBackgroundBrush.value() : winrt::Windows::UI::Xaml::Media::SolidColorBrush(); }
+  winrt::Windows::UI::Xaml::Media::Brush Background() { return GetValue(BackgroundProperty()).try_as<winrt::Windows::UI::Xaml::Media::Brush>(); }
   void Background(winrt::Windows::UI::Xaml::Media::Brush const& value);
 
   winrt::Windows::UI::Xaml::Thickness BorderThickness() { return winrt::unbox_value<winrt::Windows::UI::Xaml::Thickness>(GetValue(BorderThicknessProperty())); }
@@ -76,7 +74,7 @@ private:
 private:
 
   // Properties: Background is not managed as a DP so it won't conflict with the parent Background property.
-  std::optional<winrt::Windows::UI::Xaml::Media::Brush> m_optBackgroundBrush;
+  //std::optional<winrt::Windows::UI::Xaml::Media::Brush> m_optBackgroundBrush;
   bool m_clipChildren { false };
   bool m_propertiesChanged { false };
 

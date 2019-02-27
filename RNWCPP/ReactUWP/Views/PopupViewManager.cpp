@@ -8,6 +8,7 @@
 #include "TouchEventHandler.h"
 
 #include <Utils/ValueUtils.h>
+
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
@@ -47,7 +48,7 @@ void PopupShadowNode::createView()
   auto popup = GetView().as<winrt::Popup>();
   auto wkinstance = static_cast<PopupViewManager*>(GetViewManager())->m_wkReactInstance;
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
-  
+
   popup.Closed([=](auto&&, auto&&)
   {
     auto instance = wkinstance.lock();
@@ -59,7 +60,7 @@ void PopupShadowNode::createView()
 void PopupShadowNode::AddView(ShadowNode& child, int64_t index)
 {
   Super::AddView(child, index);
-  
+
   auto childView = static_cast<ShadowNodeBase&>(child).GetView();
   m_touchEventHanadler->AddTouchHandlers(childView);
 }
@@ -79,7 +80,7 @@ void PopupShadowNode::updateProperties(const folly::dynamic&& props)
 
 
 PopupViewManager::PopupViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -122,9 +123,9 @@ void PopupViewManager::AddView(XamlView parent, XamlView child, int64_t index)
     popup.Child(child.as<winrt::UIElement>());
 }
 
-void PopupViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void PopupViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto popup = viewToUpdate.as<winrt::Popup>();
+  auto popup = nodeToUpdate->GetView().as<winrt::Popup>();
   if (popup == nullptr)
     return;
 
@@ -137,25 +138,33 @@ void PopupViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView v
    {
       if (propertyValue.isBool())
         popup.IsOpen(propertyValue.asBool());
+     else if (propertyValue.isNull())
+       popup.ClearValue(winrt::Popup::IsOpenProperty());
    }
    else if (propertyName.asString() == "isLightDismissEnabled")
    {
      if (propertyValue.isBool())
        popup.IsLightDismissEnabled(propertyValue.asBool());
+     else if (propertyValue.isNull())
+       popup.ClearValue(winrt::Popup::IsLightDismissEnabledProperty());
    }
    else if (propertyName.asString() == "horizontalOffset")
    {
      if (propertyValue.isInt())
        popup.HorizontalOffset(propertyValue.asInt());
+     else if (propertyValue.isNull())
+       popup.ClearValue(winrt::Popup::HorizontalOffsetProperty());
    }
    else if (propertyName.asString() == "verticalOffset")
    {
      if (propertyValue.isInt())
        popup.VerticalOffset(propertyValue.asInt());
+     else if (propertyValue.isNull())
+       popup.ClearValue(winrt::Popup::VerticalOffsetProperty());
    }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 folly::dynamic PopupViewManager::GetExportedCustomDirectEventTypeConstants() const

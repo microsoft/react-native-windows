@@ -21,7 +21,6 @@ using std::unique_ptr;
 TEST_CLASS(WebSocketJSExecutorIntegrationTest)
 {
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncSucceeds)
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectAsyncSucceeds)
   {
@@ -42,7 +41,6 @@ TEST_CLASS(WebSocketJSExecutorIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncFails)
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectAsyncFails)
   {
@@ -63,7 +61,6 @@ TEST_CLASS(WebSocketJSExecutorIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(LoadApplicationScriptSucceeds)
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(LoadApplicationScriptSucceeds)
   {

@@ -6,6 +6,7 @@
 #include "HyperlinkViewManager.h"
 
 #include <Utils/ValueUtils.h>
+#include <Views/ShadowNodeBase.h>
 
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
@@ -66,9 +67,9 @@ folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants()
   return directEvents;
 }
 
-void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto button = viewToUpdate.as<winrt::HyperlinkButton>();
+  auto button = nodeToUpdate->GetView().as<winrt::HyperlinkButton>();
   if (button == nullptr)
     return;
 
@@ -98,7 +99,7 @@ void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlVi
    }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 }}}

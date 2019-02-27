@@ -27,7 +27,7 @@ enum class ScrollViewCommands
 };
 
 ScrollViewManager::ScrollViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : FrameworkElementViewManager(reactInstance)
+  : Super(reactInstance)
 {
 }
 
@@ -175,26 +175,6 @@ void ScrollViewManager::AddView(XamlView parent, XamlView child, int64_t index)
     scrollViewer.Content(child);
 }
 
-XamlView ScrollViewManager::GetChildAt(XamlView parent, int64_t index)
-{
-  assert(index == 0);
-  auto scrollViewer = parent.as<winrt::ScrollViewer>();
-  if (scrollViewer != nullptr)
-  {
-    auto c = scrollViewer.Content();
-    return c.as<XamlView>();
-  }
-
-  return nullptr;
-}
-
-int64_t ScrollViewManager::GetChildCount(XamlView parent)
-{
-  auto scrollViewer = parent.as<winrt::ScrollViewer>();
-
-  return (scrollViewer != nullptr && scrollViewer.Content() != nullptr) ? 1 : 0;
-}
-
 void ScrollViewManager::RemoveAllChildren(XamlView parent)
 {
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
@@ -210,46 +190,16 @@ void ScrollViewManager::RemoveChildAt(XamlView parent, int64_t index)
     scrollViewer.Content() = nullptr;
 }
 
-void ScrollViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+void ScrollViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
-  auto scrollViewer = viewToUpdate.as<winrt::ScrollViewer>();
+  auto scrollViewer = nodeToUpdate->GetView().as<winrt::ScrollViewer>();
   if (scrollViewer == nullptr)
     return;
 
   auto control = scrollViewer.as<winrt::Control>();
   for (auto& pair : reactDiffMap.items())
   {
-    // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-    // be called.  For now we specify the base type explicitly
-    if (TryUpdateForeground<winrt::Control>(scrollViewer, pair.first, pair.second))
-    {
-      continue;
-    }
-    else if (TryUpdateFontProperties(scrollViewer, pair.first, pair.second))
-    {
-      continue;
-    }
-    else if (TryUpdatePadding(nodeToUpdate, scrollViewer, pair.first, pair.second))
-    {
-      continue;
-    }
-    else if (TryUpdateCharacterSpacing(scrollViewer, pair.first, pair.second))
-    {
-      continue;
-    }
-    // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-    // be called.  For now we specify the base type explicitly
-    else if (TryUpdateBackgroundBrush(control, pair.first, pair.second))
-    {
-      continue;
-    }
-    // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-    // be called.  For now we specify the base type explicitly
-    else if (TryUpdateBorderProperties(nodeToUpdate, control, pair.first, pair.second))
-    {
-      continue;
-    }
-    else if (pair.first == "horizontal")
+    if (pair.first == "horizontal")
     {
       if (pair.second.isBool())
       {
@@ -286,7 +236,7 @@ void ScrollViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView 
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void ScrollViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)

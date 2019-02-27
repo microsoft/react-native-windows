@@ -10,6 +10,8 @@
 
 #include "ImageViewManager.h"
 
+#include "ShadowNodeBase.h"
+
 #include <Utils/ValueUtils.h>
 #include <Utils/PropertyHandlerUtils.h>
 
@@ -114,7 +116,7 @@ struct json_type_traits<winrt::Windows::UI::Xaml::Media::Stretch>
 namespace react { namespace uwp {
 
   ImageViewManager::ImageViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-    : FrameworkElementViewManager(reactInstance)
+    : Super(reactInstance)
   {
   }
 
@@ -130,9 +132,9 @@ namespace react { namespace uwp {
     return image;
   }
 
-  void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, XamlView viewToUpdate, folly::dynamic reactDiffMap)
+  void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
   {
-    auto image = viewToUpdate.as<winrt::Image>();
+    auto image = nodeToUpdate->GetView().as<winrt::Image>();
     if (image == nullptr)
       return;
 
@@ -151,7 +153,7 @@ namespace react { namespace uwp {
       // TODO: overflow
     }
 
-    Super::UpdateProperties(nodeToUpdate, viewToUpdate, reactDiffMap);
+    Super::UpdateProperties(nodeToUpdate, reactDiffMap);
   }
 
   void EmitImageEvent(const std::shared_ptr<react::uwp::IReactInstance> &reactInstance, winrt::Image image, const char* eventName, ImageSource& source)
