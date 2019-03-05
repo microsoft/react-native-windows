@@ -39,7 +39,7 @@ function getLatestVersion() {
   });
 }
 
-function getMatchingVersion(version) {
+function getMatchingVersion(version, prereleaseTag) {
   console.log(`Checking for react-native-windows version matching ${version}...`);
   return new Promise(function (resolve, reject) {
     npm.packages.range('react-native-windows', version, (err, release) => {
@@ -50,16 +50,27 @@ function getMatchingVersion(version) {
               `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
               `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
             }).catch(error => reject(new Error(`Could not find react-native-windows@${version}.`)));
-      } else {
+      } else if (!prereleaseTag) {
         resolve(release.version);
+      } else {
+        var versions = Object.keys(release.versions);
+        var major = semver.major(version);
+        var minor = semver.minor(version);
+        var regex = new RegExp(`${major}\\.${minor}\\.\\d+-${prereleaseTag}\\.\\d+`);
+        var candidates = versions.filter(v => regex.test(v)).sort((x, y) => semver.lt(x, y));
+        if (candidates.length === 0) {
+          reject(new Error(`Could not find react-native-windows@${version}-${prereleaseTag}.*.`));
+        }
+
+        resolve(candidates[0]);
       }
     });
   });
 }
 
-const getInstallPackage = function (version) {
-  let packageToInstall = 'react-native-windows';
-
+const getInstallPackage = function (options) {
+  const packageToInstall = 'react-native-windows';
+  const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
   const validVersion = semver.valid(version);
   const validRange = semver.validRange(version);
   if ((validVersion && !semver.gtr(validVersion, '0.26.*')) ||
@@ -71,7 +82,7 @@ const getInstallPackage = function (version) {
   }
 
   if (validVersion || validRange) {
-    return getMatchingVersion(version)
+    return getMatchingVersion(version, options.vnext ? 'vnext' : null)
       .then(resultVersion => packageToInstall + '@' + resultVersion);
   } else {
     return Promise.resolve(version);

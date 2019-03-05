@@ -10,8 +10,12 @@ module.exports = [{
     description: 'The native project namespace.'
   }, {
     command: '--verbose',
-    description: 'Enables logging',
+    description: 'Enables logging.',
     default: false,
+  }, {
+    command: '--vnext',
+    description: 'Uses the RNWCPP bridge.',
+    default: false
   }]
 },{
   func: require('./src/wpf'),
@@ -25,7 +29,7 @@ module.exports = [{
     description: 'The native project namespace.'
   }, {
     command: '--verbose',
-    description: 'Enables logging',
+    description: 'Enables logging.',
     default: false,
   }]
 }

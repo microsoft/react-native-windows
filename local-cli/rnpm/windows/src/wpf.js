@@ -22,9 +22,8 @@ const REACT_NATIVE_WPF_GENERATE_PATH = function() {
 module.exports = function windows(config, args, options) {
   const name = args[0] ? args[0] : Common.getReactNativeAppName();
   const ns = options.namespace ? options.namespace : name;
-  const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
 
-  return Common.getInstallPackage(version)
+  return Common.getInstallPackage(options)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
       const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
