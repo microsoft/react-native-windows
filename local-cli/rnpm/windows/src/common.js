@@ -50,19 +50,18 @@ function getMatchingVersion(version, prereleaseTag) {
               `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
               `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
             }).catch(error => reject(new Error(`Could not find react-native-windows@${version}.`)));
-      } else if (!prereleaseTag) {
-        resolve(release.version);
-      } else {
-        var versions = Object.keys(release.versions);
+      } else if (prereleaseTag && release.version !== version) {
         var major = semver.major(version);
         var minor = semver.minor(version);
         var regex = new RegExp(`${major}\\.${minor}\\.\\d+-${prereleaseTag}\\.\\d+`);
+        var versions = Object.keys(release.versions);
         var candidates = versions.filter(v => regex.test(v)).sort((x, y) => semver.lt(x, y));
         if (candidates.length === 0) {
           reject(new Error(`Could not find react-native-windows@${version}-${prereleaseTag}.*.`));
         }
-
         resolve(candidates[0]);
+      } else {
+        resolve(release.version);
       }
     });
   });
