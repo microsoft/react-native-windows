@@ -150,9 +150,18 @@ void ReactControl::DetachInstance()
 {
   if (m_reactInstance != nullptr)
   {
+    std::shared_ptr<IReactInstance> instance = m_reactInstance;
+
     m_reactInstance->UnregisterLiveReloadCallback(m_liveReloadCallbackCookie);
     m_reactInstance->UnregisterErrorCallback(m_errorCallbackCookie);
     m_reactInstance.reset();
+
+    // Keep instance alive by capturing and queuing an empty func.
+    // This extends the lifetime of NativeModules which may have
+    // pending calls in these queues.
+    // TODO prevent or check if even more is queued while these drain.
+    CreateWorkerMessageQueue()->runOnQueue([instance](){});
+    instance->DefaultNativeMessageQueueThread()->runOnQueue([instance](){});
 
     // Clear members with a dependency on the reactInstance
     m_touchEventHandler.reset();

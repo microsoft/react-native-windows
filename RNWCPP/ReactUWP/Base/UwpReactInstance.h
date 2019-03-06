@@ -17,6 +17,9 @@
 namespace facebook { namespace react {
 struct NativeModuleProvider;
 }}
+namespace react { namespace uwp {
+struct ViewManagerProvider;
+}}
 
 namespace react { namespace uwp {
 
@@ -24,7 +27,9 @@ class UwpReactInstance : public IReactInstance, public ::std::enable_shared_from
 {
 public:
   // Creation
-  UwpReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider);
+  UwpReactInstance(
+    const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider
+  , const std::shared_ptr<ViewManagerProvider>& viewManagerProvider = nullptr);
 
   void Start(const std::shared_ptr<IReactInstance>& spThis, const ReactInstanceSettings& settings) override;
 
@@ -61,6 +66,7 @@ private:
   std::shared_ptr<facebook::react::InstanceWrapper> m_instanceWrapper;
   winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{ nullptr };
   std::shared_ptr<facebook::react::NativeModuleProvider> m_moduleProvider;
+  std::shared_ptr<ViewManagerProvider> m_viewManagerProvider;
   std::map<LiveReloadCallbackCookie, std::function<void()>> m_liveReloadCallbacks;
   std::map<ErrorCallbackCookie, std::function<void()>> m_errorCallbacks;
   bool m_needsReload { false };

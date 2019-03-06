@@ -28,6 +28,8 @@ inline BYTE GetRFromArgb(DWORD v) { return ((BYTE)((v & 0x00FF0000) >> 16)); }
 inline BYTE GetGFromArgb(DWORD v) { return ((BYTE)((v & 0x0000FF00) >> 8)); }
 inline BYTE GetBFromArgb(DWORD v) { return ((BYTE)((v & 0x000000FF))); }
 
+const auto dateTimeFormatISO8601 = "%Y-%m-%dT%H:%M:%S";
+
 winrt::Color ColorFrom(const folly::dynamic& d)
 {
   UINT argb = static_cast<UINT>(d.getInt());
@@ -76,6 +78,34 @@ winrt::VerticalAlignment VerticalAlignmentFrom(const folly::dynamic& d)
   // ASSERT: Invalid value for VerticalAlignment. Shouldn't get this far.
   assert(false);
   return winrt::VerticalAlignment::Stretch;
+}
+
+winrt::Windows::Foundation::DateTime DateTimeFrom(const folly::dynamic& d)
+{
+  winrt::Windows::Foundation::DateTime dateTime;
+  std::tm tm;
+  std::stringstream dateTimeStream(d.asString());
+  dateTimeStream >> std::get_time(&tm, dateTimeFormatISO8601);
+  
+  if (!dateTimeStream.fail())
+    dateTime = winrt::clock::from_time_t(std::mktime(&tm));
+
+  return dateTime;
+}
+
+folly::dynamic DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime)
+{
+  folly::dynamic strDateTime;
+  char buff[100];
+  struct tm newtime;
+  time_t tt = winrt::clock::to_time_t(dateTime);
+  localtime_s(&newtime, &tt);
+  auto isformatted = strftime(buff, sizeof(buff), dateTimeFormatISO8601, &newtime);
+
+  if (isformatted)
+    strDateTime = folly::dynamic(std::string(buff));
+
+  return strDateTime;
 }
 
 std::wstring asWStr(const folly::dynamic& d)

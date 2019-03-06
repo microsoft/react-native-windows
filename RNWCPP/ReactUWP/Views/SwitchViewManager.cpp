@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "SwitchViewManager.h"
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
@@ -25,7 +25,6 @@ public:
 
 private:
   static void OnToggled(IReactInstance& instance, int64_t tag, bool newValue);
-  bool m_updating = false;
 };
 
 void SwitchShadowNode::createView()
@@ -33,7 +32,7 @@ void SwitchShadowNode::createView()
   Super::createView();
 
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
-  auto wkinstance = static_cast<SwitchViewManager*>(GetViewManager())->m_wkReactInstance;
+  auto wkinstance = GetViewManager()->GetReactInstance();
   toggleSwitch.Toggled([=](auto&&, auto&&)
   {
     auto instance = wkinstance.lock();
@@ -85,6 +84,8 @@ facebook::react::ShadowNode* SwitchViewManager::createShadow() const
 XamlView SwitchViewManager::CreateViewCore(int64_t tag)
 {
   auto toggleSwitch = winrt::ToggleSwitch();
+  toggleSwitch.OnContent(nullptr);
+  toggleSwitch.OffContent(nullptr);
 
   return toggleSwitch;
 }

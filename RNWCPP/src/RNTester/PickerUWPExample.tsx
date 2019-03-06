@@ -215,6 +215,42 @@ class PickerUpdateItemsExample extends React.Component<{}, any> {
   }
 }
 
+class PickerEditableExample extends React.Component<{}, any> {
+  public state = {
+    selected: '111',
+    text: 'n',
+    items: ['111','222','333','444','555','666'],
+  };
+
+  public render() {
+    return (
+      <View style={{flexDirection: 'column'}}>
+        <Text>You selected:{this.state.selected}</Text>
+        <Text>Text change:{this.state.text}</Text>
+        <Picker
+          editable={true}
+          selectedValue={this.state.selected}
+          text={this.state.text}
+          onValueChange={this.onValueChange}
+          >
+          {this.state.items.map(item => (
+            <Picker.Item
+              key={item}
+              value={item}
+              label={item}
+            />
+          ))}
+        </Picker>
+      </View>
+    );
+  }
+
+  private onValueChange = (selected: string, _index: number, text: string) => {
+    this.setState({selected, text});
+  }
+}
+
+
 export const displayName = (_undefined?: string) => {};
 export const title = '<Picker> UWP';
 export const description = 'Render lists of selectable options with uwp ComboBox.';
@@ -236,5 +272,11 @@ export const examples = [
     render: function(): JSX.Element {
       return <PickerUpdateItemsExample />;
     }
-  }
+  },
+  {
+    title: '<Picker> editable combobox example',
+    render: function(): JSX.Element {
+      return <PickerEditableExample />;
+    }
+  },
 ];

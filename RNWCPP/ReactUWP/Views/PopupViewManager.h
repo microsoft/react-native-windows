@@ -19,14 +19,11 @@ public:
   facebook::react::ShadowNode* createShadow() const override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
-
   friend class PopupShadowNode;
-
 };
 
 } }

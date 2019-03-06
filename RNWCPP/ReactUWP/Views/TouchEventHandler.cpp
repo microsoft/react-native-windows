@@ -3,7 +3,7 @@
 
 #include <pch.h>
 #include "TouchEventHandler.h"
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>

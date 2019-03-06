@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 
 namespace react { namespace uwp {
 

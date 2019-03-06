@@ -24,6 +24,7 @@
       <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="HostingPane.xaml.cpp" />
+    <ClCompile Include="CustomViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -34,6 +35,7 @@
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="HostingPane.xaml.h" />
+    <ClInclude Include="CustomViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">

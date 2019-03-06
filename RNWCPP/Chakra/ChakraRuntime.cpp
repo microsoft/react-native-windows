@@ -7,15 +7,15 @@
 #if (defined(_MSC_VER) && !defined(WINRT))
 
 #include <ChakraCore.h>
-#include "ChakraCoreDebugger.h"
 
+#ifndef JSI_CORE
+#include "ChakraCoreDebugger.h"
 #include "ChakraInstanceArgs.h"
+#include "ChakraUtils.h"
+#endif // JSI_CORE
 
 #include <jsi/jsi.h>
 #include "ChakraRuntime.h"
-
-
-#include "ChakraUtils.h"
 
 #include <sstream>
 #include "UnicodeConversion.h"
@@ -24,7 +24,7 @@ namespace facebook { namespace react { namespace chakra {
 
       class ChakraRuntime : public jsi::Runtime {
       public:
-        ChakraRuntime(ChakraInstanceArgs&& args, std::shared_ptr<MessageQueueThread>&& jsQueue, Logger&& logger);
+        ChakraRuntime();
         ~ChakraRuntime();
 
         void evaluateJavaScript(std::unique_ptr<const jsi::Buffer> buffer, const std::string& sourceURL) override;
@@ -142,12 +142,6 @@ namespace facebook { namespace react { namespace chakra {
         bool strictEquals(const jsi::Object& a, const jsi::Object& b) const override;
         bool instanceOf(const jsi::Object& o, const jsi::Function& f) override;
 
-        JsErrorCode enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port, std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService);
-        void ProcessDebuggerCommandQueue();
-
-        static void CHAKRA_CALLBACK ProcessDebuggerCommandQueueCallback(void* callbackState);
-
-
       private:
         // Basically convenience casts
         static JsValueRef stringRef(const jsi::String& str);
@@ -167,6 +161,56 @@ namespace facebook { namespace react { namespace chakra {
         inline void checkException(JsErrorCode res);
         inline void checkException(JsErrorCode res, const char* msg);
 
+        JsRuntimeHandle runtime_;
+        JsContextRef ctx_;
+        std::string desc_;
+
+        static JsValueRef CALLBACK HostFunctionCall(JsValueRef callee, bool isConstructCall, JsValueRef *argumentsIncThis, unsigned short argumentCountIncThis, void *callbackState);
+
+        // String helpers
+        static std::wstring JSStringToSTLWString(JsValueRef str);
+        static std::string JSStringToSTLString(JsValueRef str);
+
+#ifndef JSI_CORE
+        friend class ChakraRuntimeWithDebugger;
+#else // JSI_CORE
+        friend class ChakraRuntimeWithNativeAsync;
+#endif // JSI_CORE
+      };
+
+      ChakraRuntime::ChakraRuntime() {
+        JsRuntimeAttributes RuntimeAttributes = JsRuntimeAttributeNone;
+        if (JsCreateRuntime(JsRuntimeAttributeNone, nullptr, &runtime_) != JsNoError) {
+          throw jsi::JSError(*this, "Chakra Runtime creation failed.");
+        }
+
+        // Create an execution context
+        JsCreateContext(runtime_, &ctx_);
+        JsAddRef(ctx_, nullptr);
+
+        // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
+        JsSetCurrentContext(ctx_);
+      }
+
+      ChakraRuntime::~ChakraRuntime() {
+        JsSetCurrentContext(JS_INVALID_REFERENCE);
+        JsRelease(ctx_, nullptr);
+
+        JsDisposeRuntime(runtime_);
+      }
+
+#ifndef JSI_CORE
+      class ChakraRuntimeWithDebugger : public ChakraRuntime {
+      public:
+        ChakraRuntimeWithDebugger(ChakraInstanceArgs&& args, std::shared_ptr<MessageQueueThread>&& jsQueue, Logger&& logger);
+        ~ChakraRuntimeWithDebugger();
+
+      private:
+        JsErrorCode enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port, std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService);
+        void ProcessDebuggerCommandQueue();
+
+        static void CHAKRA_CALLBACK ProcessDebuggerCommandQueueCallback(void* callbackState);
+
         constexpr static char DEBUGGER_DEFAULT_RUNTIME_NAME[] = "runtime1";
         constexpr static int DEBUGGER_DEFAULT_PORT = 9229;
 
@@ -176,34 +220,19 @@ namespace facebook { namespace react { namespace chakra {
 
         std::shared_ptr<MessageQueueThread> jsQueue_;
 
-        JsRuntimeHandle runtime_;
-        JsContextRef ctx_;
-        std::string desc_;
-
         std::string debugRuntimeName_;
-        int debugPort_{ 0 };
+        int debugPort_ { 0 };
         std::unique_ptr<DebugProtocolHandler> debugProtocolHandler_;
         std::unique_ptr<DebugService> debugService_;
 
         std::shared_ptr<MemoryTracker> memoryTracker_;
-
-        static JsValueRef CALLBACK HostFunctionCall(JsValueRef callee, bool isConstructCall, JsValueRef *argumentsIncThis, unsigned short argumentCountIncThis, void *callbackState);
-
-        // String helpers
-        static std::wstring JSStringToSTLWString(JsValueRef str);
-        static std::string JSStringToSTLString(JsValueRef str);
       };
 
-      ChakraRuntime::ChakraRuntime(ChakraInstanceArgs&& args, std::shared_ptr<MessageQueueThread>&& jsQueue, Logger&& logger)
-        : args_(std::move(args)), logger_(std::move(logger)), jsQueue_(std::move(jsQueue)){
-
+      ChakraRuntimeWithDebugger::ChakraRuntimeWithDebugger(ChakraInstanceArgs&& args, std::shared_ptr<MessageQueueThread>&& jsQueue, Logger&& logger)
+        : ChakraRuntime(), args_(std::move(args)), logger_(std::move(logger)), jsQueue_(std::move(jsQueue))
+      {
         bool enableDebugging = args_.EnableDebugging;
         bool breakOnNextLine = args_.DebuggerBreakOnNextLine;
-
-        JsRuntimeAttributes RuntimeAttributes = JsRuntimeAttributeNone;
-        if (JsCreateRuntime(JsRuntimeAttributeNone, nullptr, &runtime_) != JsNoError) {
-          throw jsi::JSError(*this, "Chakra Runtime creation failed.");
-        }
 
         if (enableDebugging)
         {
@@ -261,14 +290,6 @@ namespace facebook { namespace react { namespace chakra {
           }
         );
 
-
-        // Create an execution context
-        JsCreateContext(runtime_, &ctx_);
-        JsAddRef(ctx_, nullptr);
-
-        // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
-        JsSetCurrentContext(ctx_);
-
         if (breakOnNextLine && debugProtocolHandler_)
         {
           logger_("Waiting for debugger to connect...", 0);
@@ -277,7 +298,7 @@ namespace facebook { namespace react { namespace chakra {
         }
       }
 
-      ChakraRuntime::~ChakraRuntime() {
+      ChakraRuntimeWithDebugger::~ChakraRuntimeWithDebugger() {
         if (debugService_)
         {
           JsErrorCode result = debugService_->Close();
@@ -290,15 +311,11 @@ namespace facebook { namespace react { namespace chakra {
         debugService_ = nullptr;
         debugProtocolHandler_ = nullptr;
 
-        JsSetCurrentContext(JS_INVALID_REFERENCE);
-        JsRelease(ctx_, nullptr);
-
+        // TODO: Does order matter here? Should this be after release context and before disposeruntime?
         JsSetRuntimeMemoryAllocationCallback(runtime_, nullptr, nullptr);
-
-        JsDisposeRuntime(runtime_);
       }
 
-      JsErrorCode ChakraRuntime::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,
+      JsErrorCode ChakraRuntimeWithDebugger::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,
         std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService)
       {
         JsErrorCode result = JsNoError;
@@ -331,9 +348,9 @@ namespace facebook { namespace react { namespace chakra {
         return result;
       }
 
-      /* static */ void ChakraRuntime::ProcessDebuggerCommandQueueCallback(void* callbackState)
+      /* static */ void ChakraRuntimeWithDebugger::ProcessDebuggerCommandQueueCallback(void* callbackState)
       {
-        ChakraRuntime* runtime= reinterpret_cast<ChakraRuntime*>(callbackState);
+        ChakraRuntimeWithDebugger* runtime= reinterpret_cast<ChakraRuntimeWithDebugger*>(callbackState);
 
         if (runtime)
         {
@@ -341,7 +358,7 @@ namespace facebook { namespace react { namespace chakra {
         }
       }
 
-      void ChakraRuntime::ProcessDebuggerCommandQueue()
+      void ChakraRuntimeWithDebugger::ProcessDebuggerCommandQueue()
       {
         if (jsQueue_.get())
         {
@@ -354,6 +371,41 @@ namespace facebook { namespace react { namespace chakra {
           });
         }
       }
+
+#else // JSI_CORE
+
+      class ChakraRuntimeWithNativeAsync : public ChakraRuntime {
+      public:
+        ChakraRuntimeWithNativeAsync(IPromiseContinuation* promiseContinuation = nullptr);
+
+        void promiseContinuation(JsValueRef value);
+
+      private:
+        IPromiseContinuation* _promiseContinuation;
+      };
+
+      // ES6 Promise callback
+      void CALLBACK PromiseContinuationCallback(JsValueRef funcRef, void* callbackState)
+      {
+        ChakraRuntimeWithNativeAsync* runtime = static_cast<ChakraRuntimeWithNativeAsync*>(callbackState);
+        runtime->promiseContinuation(funcRef);
+      }
+
+      void ChakraRuntimeWithNativeAsync::promiseContinuation(JsValueRef funcRef)
+      {
+        _promiseContinuation->registerPromise(createObject(funcRef).getFunction(*this));
+      }
+
+      ChakraRuntimeWithNativeAsync::ChakraRuntimeWithNativeAsync(IPromiseContinuation* promiseContinuation)
+        : ChakraRuntime()
+      {
+        if (promiseContinuation)
+        {
+          _promiseContinuation = promiseContinuation;
+          JsSetPromiseContinuationCallback(PromiseContinuationCallback, this);
+        }
+      }
+#endif // JSI_CORE
 
       void ChakraRuntime::evaluateJavaScript(
         std::unique_ptr<const jsi::Buffer> buffer,
@@ -739,7 +791,7 @@ namespace facebook { namespace react { namespace chakra {
           }
           args = stackArgs;
         }
-        JsValueRef res{0};
+        JsValueRef res { JS_INVALID_REFERENCE };
         jsi::Value thisVal(hostFuncProxy.getRuntime().createObject(argumentsIncThis[0]));
         try {
           jsi::Value retVal = hostFuncProxy.getHostFunction()(hostFuncProxy.getRuntime(), thisVal, args, argumentCount);
@@ -1033,33 +1085,47 @@ namespace facebook { namespace react { namespace chakra {
           errorStream << "ChakraCore API Error :" << std::hex << result << ". ";
         }
 
-        if (hasException)
+        if (hasException || result == JsErrorScriptException)
         {
-          errorStream << "JS exception found. ";
+          errorStream << "JS exception found: ";
 
           JsValueRef exn;
           JsGetAndClearException(&exn);
 
-          JsValueRef stringValue;
-          JsErrorCode convertRes = JsConvertValueToString(exn, &stringValue);
-          if (convertRes != JsNoError) {
-            errorStream << "Unable to describe JS exception. ";
+          JsPropertyIdRef messageName;
+          JsGetPropertyIdFromName(L"stack", &messageName);
+
+          JsValueRef messageValue;
+          if (JsGetProperty(exn, messageName, &messageValue) == JsNoError)
+          {
+            if (JsConvertValueToString(exn, &messageValue) != JsNoError) {
+              errorStream << "Unable to retrieve JS exception stack";
+            }
+            else {
+              errorStream << JSStringToSTLString(messageValue);
+            }
           }
-          else {
-            errorStream << JSStringToSTLString(stringValue);
+          else
+          {
+            JsValueRef exnJStr;
+            if (JsConvertValueToString(exn, &exnJStr) != JsNoError) {
+              errorStream << "Unable to describe JS exception";
+            }
+            else {
+              errorStream << JSStringToSTLString(exnJStr);
+            }
           }
         }
 
-        // TODO :: Add exception origin and stack.
-
-        throw jsi::JSError(*this, errorStream.str().c_str());
+        std::string errorString = errorStream.str();
+        throw jsi::JSError(*this, createStringFromAscii(errorString.c_str(), errorString.length()));
       }
 
       std::wstring ChakraRuntime::JSStringToSTLWString(JsValueRef str) {
         std::wstring result;
         size_t length;
         JsCopyStringUtf16(str, 0, 256 /*TODO*/, nullptr, &length);
-        result.resize(length);
+        result.resize(length + 1);
         JsCopyStringUtf16(str, 0, length, reinterpret_cast<uint16_t*>(&result[0]), nullptr);
         return result;
       }
@@ -1069,14 +1135,29 @@ namespace facebook { namespace react { namespace chakra {
         size_t length;
 
         JsCopyString(str, nullptr, 0, &length);
-        result.resize(length);
+        result.resize(length + 1);
         JsCopyString(str, &result[0], length, nullptr);
         return result;
       }
 
+#ifndef JSI_CORE
+
       std::unique_ptr<jsi::Runtime> makeChakraRuntime(ChakraInstanceArgs&& args, std::shared_ptr<MessageQueueThread> jsQueue, Logger logger) {
-        return std::make_unique<ChakraRuntime>(std::move(args), std::move(jsQueue), std::move(logger));
+        return std::make_unique<ChakraRuntimeWithDebugger>(std::move(args), std::move(jsQueue), std::move(logger));
       }
+
+#else // JSI_CORE
+
+      std::unique_ptr<jsi::Runtime> makeChakraRuntime() {
+        return std::make_unique<chakra::ChakraRuntime>();
+      }
+
+      std::unique_ptr<jsi::Runtime> makeChakraRuntime(IPromiseContinuation& promiseContinuation) {
+        return std::make_unique<chakra::ChakraRuntimeWithNativeAsync>(&promiseContinuation);
+      }
+
+#endif // JSI_CORE
+
     } // namespace chakra
   } // namespace react
 } // namespace facebook

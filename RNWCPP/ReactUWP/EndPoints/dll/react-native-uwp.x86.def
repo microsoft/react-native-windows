@@ -30,11 +30,8 @@ EXPORTS
 
 ??0AppState@react@facebook@@QAE@XZ
 ?update@DeviceInfo@uwp@react@@QAEXXZ
-
 ??0DeviceInfoModule@uwp@react@@QAE@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
-?UnSafeCreateReactInstance@uwp@react@@YGPAUIReactInstance@12@ABV?$shared_ptr@UNativeModuleProvider@react@facebook@@@std@@@Z
-?CreateReactRootView@uwp@react@@YG?AV?$shared_ptr@UIXamlRootView@uwp@react@@@std@@UDependencyObject@Xaml@UI@Windows@winrt@@PB_WABV?$shared_ptr@UIReactInstanceCreator@uwp@react@@@4@@Z
-?CreateReactInstance@uwp@react@@YG?AV?$shared_ptr@UIReactInstance@uwp@react@@@std@@ABV?$shared_ptr@UNativeModuleProvider@react@facebook@@@4@@Z
+
 ?UpdateDevSettings@uwp@react@@YGX_N00@Z
 ??1DevSupportManager@uwp@react@@QAE@XZ
 ??0LocationObserverModule@uwp@react@@QAE@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z

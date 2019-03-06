@@ -13,6 +13,8 @@
 
 #include <map>
 
+#include <ReactWindowsCore/ReactWindowsAPI.h>
+
 namespace facebook { namespace react {
 struct ShadowNode;
 } } // facebook::react
@@ -29,9 +31,12 @@ struct YogaContext
   XamlView view;
 };
 
-YGSize DefaultYogaSelfMeasureFunc(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode);
+REACTWINDOWS_EXPORT YGSize DefaultYogaSelfMeasureFunc(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode);
 
-class ViewManagerBase : public facebook::react::IViewManager
+#pragma warning(push)
+#pragma warning(disable: 4275) // base is not DLL exported
+#pragma warning(disable: 4251) // member is not DLL exported
+class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
 {
 public:
   ViewManagerBase(const std::shared_ptr<IReactInstance>& reactInstance);
@@ -74,5 +79,6 @@ protected:
 protected:
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };
+#pragma warning(pop)
 
 } }

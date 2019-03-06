@@ -19,7 +19,11 @@ export interface IPickerProps extends ViewProps {
   testID?: string;
   onChange?: (event: IPickerChangeEvent) => void;
   // tslint:disable-next-line:no-any
-  onValueChange?: (value: any, itemIndex: number) => void;
+  onValueChange?: (value: any, itemIndex: number, text: string) => void;
+
+  // Editable support
+  editable?: boolean;
+  text?: string;
 }
 
 export interface IPickerChangeEvent {
@@ -27,5 +31,6 @@ export interface IPickerChangeEvent {
       // tslint:disable-next-line:no-any
       value: any;
       itemIndex: number;
+      text: string;
   };
 }

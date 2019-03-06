@@ -24,9 +24,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FollyDir>$(SolutionDir)\node_modules\@microsoft\react-native\folly</FollyDir>
-    <ReactNativeDir>$(SolutionDir)\node_modules\@microsoft\react-native</ReactNativeDir>
-    <YogaDir>$(SolutionDir)\node_modules\@microsoft\react-native\ReactCommon\yoga</YogaDir>
+    <FollyDir>$(SolutionDir)\node_modules\react-native\folly</FollyDir>
+    <ReactNativeDir>$(SolutionDir)\node_modules\react-native</ReactNativeDir>
+    <YogaDir>$(SolutionDir)\node_modules\react-native\ReactCommon\yoga</YogaDir>
   </PropertyGroup>
 
 <!-- Uncomment this (and modify the path below) to build react-native-win against a public version of react-native -->

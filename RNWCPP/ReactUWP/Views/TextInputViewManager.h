@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "ControlViewManager.h"
+#include <Views/ControlViewManager.h>
 
 namespace react { namespace uwp {
 

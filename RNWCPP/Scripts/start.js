@@ -7,7 +7,7 @@ const { resolve } = require('path');
 
 // sdx-platform needs to specify the config file since rn has issues with symlinked node_modules
 execSync(
-  `node node_modules/@microsoft/react-native/local-cli/cli.js start --config ${realpathSync(
+  `node node_modules/react-native/local-cli/cli.js start --config ${realpathSync(
     resolve(__dirname, '../rn-cli.config.js')
   )}`,
   { stdio: 'inherit' }

@@ -49,7 +49,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(SolutionDir)ReactWindowsCore;$(SolutionDir)Desktop;$(SolutionDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(SolutionDir)ReactWindowsCore;$(SolutionDir)include\ReactWindowsCore;$(SolutionDir)Desktop;$(SolutionDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>

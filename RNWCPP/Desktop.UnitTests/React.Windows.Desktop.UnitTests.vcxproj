@@ -48,7 +48,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)Desktop;$(FollyDir);$(SolutionDir)stubs;$(SolutionDir)Shared;$(SolutionDir)ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Desktop;$(FollyDir);$(SolutionDir)stubs;$(SolutionDir)Shared;$(SolutionDir)ReactWindowsCore;$(SolutionDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>

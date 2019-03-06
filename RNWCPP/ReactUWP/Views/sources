@@ -4,7 +4,9 @@ LIBLETNAME = ReactUWP_Views
 
 SOURCES =  \
 	ActivityIndicatorViewManager.cpp \
+	CalendarViewViewManager.cpp \
 	CheckboxViewManager.cpp \
+	DatePickerViewManager.cpp \
 	ControlViewManager.cpp \
 	FrameworkElementViewManager.cpp \
 	ImageViewManager.cpp \

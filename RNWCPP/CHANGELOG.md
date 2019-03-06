@@ -1,6 +1,91 @@
 # Change Log - react-native-win
 
-This log was last generated on Sat, 23 Feb 2019 01:53:38 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Mar 2019 20:54:55 GMT and should not be manually modified.
+
+## 0.5.85
+Tue, 05 Mar 2019 20:54:55 GMT
+
+*Version update only*
+
+## 0.5.84
+Tue, 05 Mar 2019 07:11:26 GMT
+
+*Version update only*
+
+## 0.5.83
+Tue, 05 Mar 2019 05:02:15 GMT
+
+### Patches
+
+- uwp - keep instance alive longer in live reload/shutdown
+
+## 0.5.82
+Tue, 05 Mar 2019 02:31:33 GMT
+
+### Patches
+
+- Fix color properties of CalendarView plus enable null values for all properties but callbacks (resetting to defaults via ClearValue)
+- uwp - add editable support to PickerUWP, fix DatePicker export
+- Introduce CalendarView for UWP only (no Android, no JS, no Apple updates)
+- Fix OnDateChanged event for DatePicker
+- Popup positioning
+- Fire onClick for View on SPACE or ENTER.
+- JSICore (react-free) libraries
+- Stop writing to console in logMarker
+
+## 0.5.80
+Thu, 28 Feb 2019 04:47:08 GMT
+
+### Patches
+
+- Turn off OnContent/OffContent for Switch view.
+
+## 0.5.79
+Thu, 28 Feb 2019 03:36:47 GMT
+
+### Patches
+
+- uwp - fix WebSocketModuleUwp build against non-final RS5 SDK
+- uwp - fix ViewPanel leak
+
+## 0.5.78
+Wed, 27 Feb 2019 20:16:40 GMT
+
+### Patches
+
+- Implement acceptsKeyboardFocus on View.
+
+## 0.5.77
+Tue, 26 Feb 2019 20:40:42 GMT
+
+*Version update only*
+
+## 0.5.76
+Tue, 26 Feb 2019 08:18:38 GMT
+
+### Patches
+
+- uwp - avoid exceptions being thrown in WebSocketModule connect
+- Add DatePicker uwp component
+- Merge with master and resolve review comments for datepicker
+
+## 0.5.75
+Tue, 26 Feb 2019 05:55:00 GMT
+
+*Version update only*
+
+## 0.5.74
+Tue, 26 Feb 2019 03:39:43 GMT
+
+### Patches
+
+- fix move case in UIManager::manageChildren
+- TextInput onScroll onKeyPress
+
+## 0.5.73
+Sat, 23 Feb 2019 22:42:46 GMT
+
+*Version update only*
 
 ## 0.5.72
 Sat, 23 Feb 2019 01:53:38 GMT

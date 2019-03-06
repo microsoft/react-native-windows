@@ -75,7 +75,10 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- 
+        REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
+      -->
+      <PreprocessorDefinitions>REACTWINDOWS_BUILD;RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Pch;$(SolutionDir)ReactUWP\GeneratedWinmdHeader;$(SolutionDir)ReactWindowsCore;$(SolutionDir)include\ReactWindowsCore;$(SolutionDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(SolutionDir)include;$(SolutionDir)stubs;$(SolutionDir)Shared;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/await /permissive- %(AdditionalOptions)</AdditionalOptions>
@@ -173,8 +176,10 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
+    <ClInclude Include="Views\CalendarViewViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\ControlViewManager.h" />
+    <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\FrameworkElementViewManager.h" />
     <ClInclude Include="Views\ImageViewManager.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
@@ -241,8 +246,10 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
+    <ClCompile Include="Views\CalendarViewViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
+    <ClCompile Include="Views\DatePickerViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
     <ClCompile Include="Views\ImageViewManager.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />

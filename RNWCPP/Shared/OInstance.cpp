@@ -57,64 +57,103 @@
 namespace {
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-  std::string GetFullBundlePath(const std::string& jsBundleBasePath, const std::string& jsBundleRelativePath) noexcept
+
+std::string GetJSBundleDirectory(const std::string& jsBundleBasePath, const std::string& jsBundleRelativePath) noexcept
+{
+  // If there is a base path, use that to calculate the absolute path.
+  if (jsBundleBasePath.length() > 0)
   {
-    // If there is a base path, use that to calculate the absolute path.
-    if (jsBundleBasePath.length() > 0)
-    {
-      std::string bundlePath = jsBundleBasePath;
-      if (bundlePath.back() != '\\')
-        bundlePath += '\\';
+    std::string jsBundleDirectory = jsBundleBasePath;
+    if (jsBundleDirectory.back() != '\\')
+      jsBundleDirectory += '\\';
 
-      return bundlePath += jsBundleRelativePath;
+    return jsBundleDirectory += jsBundleRelativePath;
+  }
+  // Otherwise use the path of the executable file to construct the absolute path.
+  else
+  {
+    wchar_t modulePath[MAX_PATH];
+
+    auto len = GetModuleFileNameW(nullptr, modulePath, _countof(modulePath));
+
+    if (len == 0 || (len == _countof(modulePath) && GetLastError() == ERROR_INSUFFICIENT_BUFFER))
+      return jsBundleRelativePath;
+
+    // remove the trailing filename as we are interested in only the path
+    auto succeeded = PathRemoveFileSpecW(modulePath);
+    if (!succeeded)
+      return jsBundleRelativePath;
+
+    std::string jsBundlePath = facebook::react::UnicodeConversion::Utf16ToUtf8(modulePath, wcslen(modulePath));
+    if (!jsBundlePath.empty() && jsBundlePath.back() != '\\')
+      jsBundlePath += '\\';
+
+    return jsBundlePath += jsBundleRelativePath;
+  }
+}
+
+std::string GetJSBundleFilePath(const std::string& jsBundleBasePath, const std::string& jsBundleRelativePath)
+{
+  auto jsBundleFilePath = GetJSBundleDirectory(jsBundleBasePath, jsBundleRelativePath);
+
+  // Usually, the module name: "module name" + "." + "platform name", for example "lpc.win32".
+  // If we can not find the the bundle.js file under the normal folder,
+  // we are trying to find it under the folder without the dot (e.g. "lpcwin32").
+  // VSO:1997035 remove this code after we have better name convension
+  if (PathFileExistsA((jsBundleFilePath + "\\bundle.js").c_str()))
+  {
+    jsBundleFilePath += "\\bundle.js";
+  }
+  else
+  {
+    // remove the dot only if is belongs to the bundle file name.
+    size_t lastDotPosition = jsBundleFilePath.find_last_of('.');
+    size_t bundleFilePosition = jsBundleFilePath.find_last_of('\\');
+    if (lastDotPosition != std::string::npos && (bundleFilePosition == std::string::npos || lastDotPosition > bundleFilePosition))
+    {
+      jsBundleFilePath.erase(lastDotPosition, 1);
     }
-    // Otherwise use the path of the executable file to construct the absolute path.
-    else
+
+    jsBundleFilePath += "\\bundle.js";
+
+    // Back before we have base path plumbed through, we made win32 force a seperate folder for each bundle by appending bundle.js
+    // Now that we have base path, we can handle multiple SDXs with the same index name so we should switch to using the same scheme
+    // as all the other platforms (and the bundle server)
+    // TODO: We should remove all the previous logic and use the same names as the other platforms...
+    if (!PathFileExistsA(jsBundleFilePath.c_str()))
     {
-      wchar_t modulePath[MAX_PATH];
-
-      auto len = GetModuleFileNameW(nullptr, modulePath, _countof(modulePath));
-
-      if (len == 0 || (len == _countof(modulePath) && GetLastError() == ERROR_INSUFFICIENT_BUFFER))
-        return jsBundleRelativePath;
-
-      // remove the trailing filename as we are interested in only the path
-      auto succeeded = PathRemoveFileSpecW(modulePath);
-      if (!succeeded)
-        return jsBundleRelativePath;
-
-      std::string bundlePath = facebook::react::UnicodeConversion::Utf16ToUtf8(modulePath, wcslen(modulePath));
-      if (!bundlePath.empty() && bundlePath.back() != '\\')
-        bundlePath += '\\';
-
-      return bundlePath += jsBundleRelativePath;
+      jsBundleFilePath = GetJSBundleDirectory(jsBundleBasePath, jsBundleRelativePath) + ".bundle";
     }
   }
 
-  bool GetLastWriteTime(const std::string& fileName, uint64_t& result) noexcept
+  return jsBundleFilePath;
+}
+
+bool GetLastWriteTime(const std::string& fileName, uint64_t& result) noexcept
+{
+  std::wstring fileNameUtf16 = facebook::react::UnicodeConversion::Utf8ToUtf16(fileName);
+
+  std::unique_ptr<void, decltype(&CloseHandle)> handle { CreateFileW(
+    static_cast<LPCWSTR>(fileNameUtf16.c_str()), GENERIC_READ, FILE_SHARE_READ,
+    nullptr /* lpSecurityAttributes */, OPEN_EXISTING,
+    FILE_ATTRIBUTE_NORMAL, nullptr /* hTemplateFile */), &CloseHandle };
+
+  if (handle.get() == INVALID_HANDLE_VALUE)
   {
-    std::wstring fileNameUtf16 = facebook::react::UnicodeConversion::Utf8ToUtf16(fileName);
-
-    std::unique_ptr<void, decltype(&CloseHandle)> handle { CreateFileW(
-      static_cast<LPCWSTR>(fileNameUtf16.c_str()), GENERIC_READ, FILE_SHARE_READ,
-      nullptr /* lpSecurityAttributes */, OPEN_EXISTING,
-      FILE_ATTRIBUTE_NORMAL, nullptr /* hTemplateFile */), &CloseHandle };
-
-    if (handle.get() == INVALID_HANDLE_VALUE)
-    {
-      return false;
-    }
-
-    FILETIME lastWriteTime;
-    if (!GetFileTime(handle.get(), nullptr, nullptr, &lastWriteTime))
-    {
-      return false;
-    }
-
-    result = static_cast<uint64_t>(lastWriteTime.dwHighDateTime) << 32 | static_cast<uint64_t>(lastWriteTime.dwLowDateTime);
-    return true;
+    return false;
   }
+
+  FILETIME lastWriteTime;
+  if (!GetFileTime(handle.get(), nullptr, nullptr, &lastWriteTime))
+  {
+    return false;
+  }
+
+  result = static_cast<uint64_t>(lastWriteTime.dwHighDateTime) << 32 | static_cast<uint64_t>(lastWriteTime.dwLowDateTime);
+  return true;
+}
 #endif
+
 }
 
 namespace facebook { namespace react {
@@ -190,11 +229,7 @@ public:
 
 #endif
 
-void logMarker(const facebook::react::ReactMarker::ReactMarkerId id, const char* tag) {
-  std::cout << "Marker: " << id;
-  if (tag)
-    std::cout << " Tag: " << tag;
-  std::cout << std::endl;
+void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
 
 struct BridgeUIBatchInstanceCallback : public InstanceCallback {
@@ -248,8 +283,6 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
 
   return instance;
 }
-
-
 
 /*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeAndLoadBundle(std::string&& jsBundleBasePath,
     std::string&& jsBundleRelativePath,
@@ -329,7 +362,6 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
 }
 #endif
 #endif
-
 
 InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     std::vector<std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>&& cxxModules,
@@ -456,8 +488,15 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
   {
     try
     {
-      auto bundleUrl = DevServerHelper::get_BundleUrl(m_devSettings->debugHost, m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath, m_devSettings->platformName, "true", "false");
-      m_innerInstance->loadScriptFromString(std::make_unique<const JSBigStdString>(bundleUrl),
+      auto bundleUrl = DevServerHelper::get_BundleUrl(
+        m_devSettings->debugHost,
+        m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
+        m_devSettings->platformName,
+        /*dev*/ "true",
+        /*hot*/ "false");
+
+      m_innerInstance->loadScriptFromString(
+        std::make_unique<const JSBigStdString>(bundleUrl),
 #if !defined(OSS_RN)
         0 /*bundleVersion*/,
 #endif
@@ -476,11 +515,19 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
   }
   else if (m_devSettings->liveReloadCallback != nullptr)
   {
-    auto jsString = m_devManager->GetJavaScriptFromServer(m_devSettings->debugHost, jsBundleRelativePath, m_devSettings->platformName);
+    auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+      m_devSettings->debugHost,
+      jsBundleRelativePath,
+      m_devSettings->platformName);
+
     if (m_devManager->HasException())
-      m_devSettings->errorCallback(jsString);
+    {
+      m_devSettings->errorCallback(jsBundleString);
+    }
     else
-      m_innerInstance->loadScriptFromString(std::make_unique<const JSBigStdString>(jsString),
+    {
+      m_innerInstance->loadScriptFromString(
+        std::make_unique<const JSBigStdString>(jsBundleString),
 #if !defined(OSS_RN)
         0 /*bundleVersion*/,
 #endif
@@ -490,39 +537,13 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
         , "" /*bytecodeFileName*/ // No bytecode is used during Live Reload
 #endif
       );
+    }
   }
   else {
     try
     {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      auto fullBundleFilePath = GetFullBundlePath(m_jsBundleBasePath, jsBundleRelativePath);
-
-      // Usually, the module name: "module name" + "." + "platform name", for example "lpc.win32".
-      // If we can not find the the bundle.js file under the normal folder,
-      // we are trying to find it under the folder without the dot (e.g. "lpcwin32").
-      // VSO:1997035 remove this code after we have better name convension
-      if (PathFileExistsA((fullBundleFilePath + "\\bundle.js").c_str())) {
-          fullBundleFilePath += "\\bundle.js";
-      }
-      else {
-
-        // remove the dot only if is belongs to the bundle file name.
-        size_t lastDotPosition = fullBundleFilePath.find_last_of('.');
-        size_t bundleFilePosition = fullBundleFilePath.find_last_of('\\');
-        if (lastDotPosition != std::string::npos && (bundleFilePosition == std::string::npos || lastDotPosition > bundleFilePosition)) {
-          fullBundleFilePath.erase(lastDotPosition, 1);
-        }
-        fullBundleFilePath += "\\bundle.js";
-
-        // Back before we have base path plumbed through, we made win32 force a seperate folder for each bundle by appending bundle.js
-        // Now that we have base path, we can handle multiple SDXs with the same index name so we should switch to using the same scheme
-        // as all the other platforms (and the bundle server)
-        // TODO: We should remove all the previous logic and use the same names as the other platforms...
-        if (!PathFileExistsA(fullBundleFilePath.c_str())) {
-          fullBundleFilePath = GetFullBundlePath(m_jsBundleBasePath, jsBundleRelativePath) + ".bundle";
-        }
-
-      }
+      auto fullBundleFilePath = GetJSBundleFilePath(m_jsBundleBasePath, jsBundleRelativePath);
 
       // If fullBundleFilePath exists, load User bundle.
       // Otherwise all bundles (User and Platform) are loaded through platformBundles.
@@ -550,7 +571,7 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
           // Opt out of bytecode if we cannot get bundle timestamp.
           m_innerInstance->loadScriptFromString(std::move(bundleString),
 #if !defined(OSS_RN)
-            0,
+            /*jsBundleVersion*/ 0,
 #endif
             std::move(fullBundleFilePath),
             false /*synchronously*/
@@ -639,7 +660,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
   std::string bytecodeFileNameCopy = m_devSettings->bytecodeFileName;
   m_innerInstance->setGlobalVariable("__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(std::move(configsString)));
 
-  std::string fullBundleFilePath = GetFullBundlePath(m_jsBundleBasePath, jsBundleRelativePath);
+  std::string fullBundleFilePath = GetJSBundleDirectory(m_jsBundleBasePath, jsBundleRelativePath);
 
   try {
     m_innerInstance->loadScriptFromString(

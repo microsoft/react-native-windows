@@ -5,6 +5,8 @@
 
 #include "TextInputViewManager.h"
 
+#include "UnicodeConversion.h"
+
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
@@ -12,11 +14,13 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Text.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Input;
 }
 
 namespace react {
@@ -70,7 +74,6 @@ public:
 private:
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
-  bool m_updating = false;
 };
 enum class TextInputCommands
 {
@@ -83,7 +86,7 @@ void TextInputShadowNode::createView()
   Super::createView();
 
   auto textBox = GetView().as<winrt::TextBox>();
-  auto wkinstance = static_cast<TextInputViewManager*>(GetViewManager())->m_wkReactInstance;
+  auto wkinstance = GetViewManager()->GetReactInstance();
   auto tag = m_tag;
   textBox.TextChanged([=](auto &&, auto &&)
   {
@@ -137,6 +140,37 @@ void TextInputShadowNode::createView()
       folly::dynamic eventData = folly::dynamic::object("target", tag)("contentSize", std::move(contentSizeData));
       if (!m_updating && instance != nullptr)
         instance->DispatchEvent(tag, "topTextInputContentSizeChange", std::move(eventData));
+    }
+  });
+
+  if (textBox.ApplyTemplate()) {
+    textBox.GetTemplateChild(asHstring("ContentElement")).as<winrt::ScrollViewer>().ViewChanging([=](auto&&, winrt::ScrollViewerViewChangingEventArgs const& args) {
+      auto instance = wkinstance.lock();
+      if (!m_updating && instance != nullptr) {
+        folly::dynamic offsetData = folly::dynamic::object("x", args.FinalView().HorizontalOffset())("y", args.FinalView().VerticalOffset());
+        folly::dynamic eventData = folly::dynamic::object("target", tag)("contentOffset", std::move(offsetData));
+        instance->DispatchEvent(tag, "topTextInputOnScroll", std::move(eventData));
+      }
+    });
+  }
+
+  textBox.CharacterReceived([=](auto&&, winrt::CharacterReceivedRoutedEventArgs const& args) {
+    auto instance = wkinstance.lock();
+    std::string key;
+    wchar_t s[2] = L" ";
+    s[0] = args.Character();
+    key = facebook::react::UnicodeConversion::Utf16ToUtf8(s, 1);
+
+    if (key.compare("\r") == 0) {
+      key = "Enter";
+    }
+    else if (key.compare("\b") == 0) {
+      key = "Backspace";
+    }
+
+    if (!m_updating && instance != nullptr) {
+      folly::dynamic eventData = folly::dynamic::object("target", tag)("key", folly::dynamic(key));
+      instance->DispatchEvent(tag, "topTextInputKeyPress", std::move(eventData));
     }
   });
 }
@@ -314,6 +348,8 @@ folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants()
   directEvents["topTextInputEndEditing"] = folly::dynamic::object("registrationName", "onEndEditing");
   directEvents["topTextInputSelectionChange"] = folly::dynamic::object("registrationName", "onSelectionChange");
   directEvents["topTextInputContentSizeChange"] = folly::dynamic::object("registrationName", "onContentSizeChange");
+  directEvents["topTextInputKeyPress"] = folly::dynamic::object("registrationName", "onKeyPress");
+  directEvents["topTextInputOnScroll"] = folly::dynamic::object("registrationName", "onScroll");
 
   return directEvents;
 }

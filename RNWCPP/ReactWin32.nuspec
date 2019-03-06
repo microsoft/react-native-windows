@@ -3,9 +3,9 @@
   <metadata>
     <id>OfficeReact.Win32</id>
     <version>__BuildBuildNumber__</version>
-    <description>Contains Win32 Implementation of React-Native</description>
+    <description>Contains Windows Implementation of React-Native</description>
     <authors>Microsoft</authors>
-    <projectUrl>https://office.visualstudio.com/ISS/_git/react-native</projectUrl>
+    <projectUrl>https://office.visualstudio.com/ISS/_git/sdx-platform</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
   </metadata>
   <files>

@@ -3,9 +3,9 @@
 
 #include "pch.h"
 
-#include "ViewManagerBase.h"
+#include <Views/ViewManagerBase.h>
 
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 #include "ViewPanel.h"
 
 #include <Modules/NativeUIManager.h>

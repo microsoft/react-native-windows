@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include "ControlViewManager.h"
+#include <Views/ControlViewManager.h>
 
 #include <Utils/PropertyUtils.h>
 

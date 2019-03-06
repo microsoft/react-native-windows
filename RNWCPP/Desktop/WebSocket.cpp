@@ -300,7 +300,7 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Connect(const Protocols& protoco
   }
 
   Resolver resolver(m_context);
-  resolver.async_resolve(m_url.host, m_url.port, [this, options = std::move(options)](boostecr ec, Resolver::results_type results)
+  resolver.async_resolve(m_url.host, m_url.port, [this, options = std::move(options)](boostecr ec, typename Resolver::results_type results)
   {
     if (ec)
     {
@@ -473,9 +473,9 @@ void SecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Op
 {
   this->m_stream->next_layer().async_handshake(ssl::stream_base::client, [this, options = std::move(options)](boostecr ec)
   {
-    if (ec && m_errorHandler)
+    if (ec && this->m_errorHandler)
     {
-      m_errorHandler({ ec.message(), IWebSocket::ErrorType::Connection });
+      this->m_errorHandler({ ec.message(), IWebSocket::ErrorType::Connection });
     }
     else
     {

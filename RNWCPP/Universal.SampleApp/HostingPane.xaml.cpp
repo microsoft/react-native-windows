@@ -23,6 +23,8 @@
 #include <jschelpers/unicode.h>
 #include <cxxReact/Instance.h>
 
+#include "CustomViewManager.h"
+
 using namespace WindowsSampleApp;
 
 using namespace Microsoft::WRL;
@@ -47,6 +49,7 @@ void EnsureExportedFunctions(bool createThings)
   {
     auto queue = react::uwp::CreateWorkerMessageQueue();
     auto instance = react::uwp::CreateReactInstance(nullptr);
+    auto instance2 = react::uwp::UnSafeCreateReactInstance(nullptr);
     auto control = react::uwp::CreateReactRootView(react::uwp::XamlView(nullptr), L"componentname", nullptr);
     facebook::react::Instance* pInstance = nullptr;
     pInstance->callJSFunction("m", "f", folly::dynamic());
@@ -111,6 +114,19 @@ public:
       );
 
     return modules;
+  }
+};
+
+class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider
+{
+public:
+  virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(const std::shared_ptr<react::uwp::IReactInstance>& instance) override
+  {
+    std::vector<react::uwp::NativeViewManager> viewManagers;
+
+    viewManagers.emplace_back(std::make_unique<CustomFrameworkElementViewManager>(instance));
+
+    return viewManagers;
   }
 };
 
@@ -183,8 +199,9 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance()
 
     // Create NativeModuleProvider
     std::shared_ptr<facebook::react::NativeModuleProvider> moduleLoader = std::make_shared<SampleNativeModuleProvider>();
+    std::shared_ptr<react::uwp::ViewManagerProvider> viewManagerProvider = std::make_shared<SampleViewManagerProvider>();
 
-    m_instance = react::uwp::CreateReactInstance(moduleLoader);
+    m_instance = react::uwp::CreateReactInstance(moduleLoader, viewManagerProvider);
 
     react::uwp::ReactInstanceSettings settings;
     settings.UseWebDebugger = x_UseWebDebuggerCheckBox->IsChecked->Value;

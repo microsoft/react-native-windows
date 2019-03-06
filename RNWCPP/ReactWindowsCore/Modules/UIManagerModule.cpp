@@ -249,8 +249,6 @@ void UIManager::manageChildren(int64_t viewTag,
     auto viewAtIndex = viewsToRemove[i];
     auto& shadowNodeToRemove = m_nodeRegistry.getNode(viewAtIndex->tag);
 
-    m_nativeUIManager->RemoveView(shadowNodeToRemove);
-
     shadowNodeToManage.m_children.erase(shadowNodeToManage.m_children.begin() + viewAtIndex->index);
 		shadowNodeToManage.RemoveChildAt(viewAtIndex->index);
 	}

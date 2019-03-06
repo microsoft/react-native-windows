@@ -7,5 +7,6 @@ export interface IPopupProps extends ViewProps {
   isLightDismissEnabled?: boolean;
   horizontalOffset?: number;
   verticalOffset?: number;
-  onDismiss?: () => void;
+  target?: React.ReactNode;
+  onDismiss?: (isOpen: boolean) => void;
 }

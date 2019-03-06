@@ -7,6 +7,7 @@
 
 #include "ViewPanel.h"
 
+#include <Modules/NativeUIManager.h>
 #include <Utils/PropertyUtils.h>
 
 #include <INativeUIManager.h>
@@ -15,6 +16,7 @@
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
+#include <winrt/Windows.System.h>
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
@@ -22,6 +24,7 @@
 #endif
 
 namespace winrt {
+using namespace Windows::System;
 using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -47,6 +50,9 @@ public:
     if (IsControl())
       GetControl().UseSystemFocusVisuals(m_enableFocusRing);
   }
+
+  bool OnClick() { return m_onClick; }
+  void OnClick(bool isSet) { m_onClick = isSet; }
 
   void AddView(ShadowNode& child, int64_t index) override
   {
@@ -108,6 +114,7 @@ public:
 private:
   bool m_isControl = false;
   bool m_enableFocusRing = true;
+  bool m_onClick = false;
 };
 
 
@@ -126,6 +133,7 @@ folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants() cons
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
   directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
   directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
+  directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
 
   return directEvents;
 }
@@ -144,8 +152,8 @@ void ViewViewManager::DispatchEvent(int64_t viewTag, std::string eventName, foll
 
 XamlView ViewViewManager::CreateViewPanel(int64_t tag)
 {
-  XamlView newViewPanelXamlView((new ViewPanel())->try_as<XamlView>());
-  auto panel = newViewPanelXamlView.try_as<ViewPanel>().get();
+  XamlView newViewPanelXamlView(ViewPanel::Create().as<XamlView>());
+  auto panel = newViewPanelXamlView.as<ViewPanel>();
   panel->VerticalAlignment(winrt::VerticalAlignment::Top);
 
   // TODO: Remove once existing clients stop using TouchableNativeFeedback.uwp
@@ -155,14 +163,14 @@ XamlView ViewViewManager::CreateViewPanel(int64_t tag)
     args.Handled(true);
   });
 
-  return panel->try_as<XamlView>();
+  return panel.as<XamlView>();
 }
 
 XamlView ViewViewManager::CreateViewControl(int64_t tag)
 {
   // Create the ViewPanel which will be nested under the ContentControl
-  XamlView newViewPanelXamlView((new ViewPanel())->try_as<XamlView>());
-  auto panel = newViewPanelXamlView.try_as<ViewPanel>().get();
+  XamlView newViewPanelXamlView(ViewPanel::Create().as<XamlView>());
+  auto panel = newViewPanelXamlView.as<ViewPanel>();
   panel->VerticalAlignment(winrt::VerticalAlignment::Top);
 
   // Create the ContentControl as the outer/containing element, nest the ViewPanel, set default properties
@@ -186,7 +194,27 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag)
     DispatchEvent(tag, "topTextInputBlur", std::move(folly::dynamic::object("target", tag)));
   });
 
-  return contentControl.try_as<XamlView>();
+  contentControl.KeyDown([=](auto &&, winrt::KeyRoutedEventArgs const& e)
+  {
+    if (e.Key() == winrt::VirtualKey::Enter || e.Key() == winrt::VirtualKey::Space)
+    {
+      auto instance = m_wkReactInstance.lock();
+      if (instance != nullptr)
+      {
+        auto pNativeUiManager = static_cast<NativeUIManager*>(instance->NativeUIManager());
+        facebook::react::INativeUIManagerHost* pUIManagerHost = pNativeUiManager->getHost();
+
+        auto pViewShadowNode = static_cast<ViewShadowNode*>(pUIManagerHost->FindShadowNodeForTag(tag));
+        if (pViewShadowNode != nullptr && pViewShadowNode->OnClick())
+        {
+          DispatchEvent(tag, "topClick", std::move(folly::dynamic::object("target", tag)));
+          e.Handled(true);
+        }
+      }
+    }
+  });
+
+  return contentControl.as<XamlView>();
 }
 
 XamlView ViewViewManager::CreateViewCore(int64_t tag)
@@ -201,9 +229,11 @@ folly::dynamic ViewViewManager::GetNativeProps() const
   props.update(folly::dynamic::object
     ("accessible", "boolean")
     ("pointerEvents", "string")
+    ("onClick", "function")
     ("onMouseEnter", "function")
     ("onMouseLeave", "function")
 //  ("onMouseMove", "function")
+    ("acceptsKeyboardFocus", "boolean")
     ("enableFocusRing", "boolean")
   );
 
@@ -242,6 +272,10 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       {
         continue;
       }
+      else if (propertyName == "onClick")
+      {
+        pViewShadowNode->OnClick(!propertyValue.isNull() && propertyValue.asBool());
+      }
       else if (propertyName == "overflow")
       {
         if (propertyValue.isString())
@@ -258,7 +292,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
           pPanel->IsHitTestVisible(hitTestable);
         }
       }
-      else if (pair.first == "accessible")
+      else if (pair.first == "acceptsKeyboardFocus")
       {
         if (pair.second.isBool())
           shouldBeControl = pair.second.asBool();
@@ -302,6 +336,8 @@ void ViewViewManager::TransferProperties(XamlView oldView, XamlView newView)
   TransferProperty(oldPanel, newPanel, ViewPanel::BackgroundProperty());
   TransferProperty(oldPanel, newPanel, ViewPanel::BorderBrushProperty());
   TransferProperty(oldPanel, newPanel, ViewPanel::BorderThicknessProperty());
+  TransferProperty(oldPanel, newPanel, ViewPanel::ClipChildrenProperty());
+  TransferProperty(oldPanel, newPanel, ViewPanel::CornerRadiusProperty());
 }
 
 void ViewViewManager::ReplaceView(ViewShadowNode* pViewShadowNode, bool useControl)

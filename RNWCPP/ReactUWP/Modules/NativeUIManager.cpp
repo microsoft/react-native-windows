@@ -712,8 +712,15 @@ void NativeUIManager::AddView(facebook::react::ShadowNode& parentShadowNode, fac
   {
     YGNodeRef yogaNodeToManage = GetYogaNode(parentNode.m_tag);
     ShadowNodeBase& childNode = static_cast<ShadowNodeBase&>(childShadowNode);
-
     YGNodeRef yogaNodeToAdd = GetYogaNode(childNode.m_tag);
+
+    int64_t oldParentTag = childNode.GetParent();
+    YGNodeRef yogaOldParent = GetYogaNode(oldParentTag);
+    if (yogaOldParent != nullptr)
+    {
+      YGNodeRemoveChild(yogaOldParent, yogaNodeToAdd);
+    }
+
     YGNodeInsertChild(yogaNodeToManage, yogaNodeToAdd, static_cast<uint32_t>(index));
   }
 }

@@ -43,7 +43,7 @@ function launchMetroServer() {
   return new Promise((resolve, reject) => {
     console.log('Launching metro server...');
     serverEntries.metroServer = spawn(
-        'node', ['../node_modules/@microsoft/react-native/local-cli/cli.js', 'start', '--config', '../../../react-native-win/rn-cli.config.js'],
+        'node', ['../node_modules/react-native/local-cli/cli.js', 'start', '--config', '../../../react-native-win/rn-cli.config.js'],
         {cwd: __dirname});
 
     serverEntries.metroServer.stdout.on('data', (chunk) => {
@@ -73,7 +73,7 @@ function launchWebsocketServer() {
     serverEntries.websocketServer = spawn(
         'node',
         [
-          '../node_modules/@microsoft/react-native/IntegrationTests/websocket_integration_test_server.js'
+          '../node_modules/react-native/IntegrationTests/websocket_integration_test_server.js'
         ],
         {cwd: __dirname});
 

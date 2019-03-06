@@ -6,6 +6,8 @@
 #include "XamlView.h"
 #include <memory>
 #include <NativeModuleProvider.h>
+#include "ViewManagerProvider.h"
+#include <ReactWindowsCore/ReactWindowsAPI.h>
 
 namespace react { namespace uwp {
 
@@ -23,15 +25,17 @@ struct IReactInstanceCreator
 
 using ReactInstanceCreator = std::shared_ptr<IReactInstanceCreator>;
 
-std::shared_ptr<IReactInstance> CreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider);
-std::shared_ptr<IXamlRootView> CreateReactRootView(XamlView parentView,
+REACTWINDOWS_API_(std::shared_ptr<IReactInstance>) CreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider,
+                                                    const std::shared_ptr<ViewManagerProvider>& viewManagerProvider = nullptr);
+REACTWINDOWS_API_(std::shared_ptr<IXamlRootView>) CreateReactRootView(XamlView parentView,
                                                    const wchar_t* pJsComponentName,
                                                    const ReactInstanceCreator& instanceCreator
                                                    );
 
 // The method return the instance pointer directly, the caller own the lifetime
-IReactInstance* UnSafeCreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider);
+REACTWINDOWS_API_(IReactInstance*) UnSafeCreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider,
+                                          const std::shared_ptr<ViewManagerProvider>& viewManagerProvider = nullptr);
 
-std::shared_ptr<facebook::react::MessageQueueThread> CreateWorkerMessageQueue();
+REACTWINDOWS_API_(std::shared_ptr<facebook::react::MessageQueueThread>) CreateWorkerMessageQueue();
 
 } }
