@@ -5,11 +5,16 @@
 
 #include <IUIManager.h>
 #include <ReactUWP/IReactInstance.h>
+#include <ReactWindowsAPI.h>
 
 #include <cxxreact/CxxModule.h>
 
 namespace react { namespace uwp {
+struct ViewManagerProvider;
+}}
 
-std::shared_ptr<facebook::react::IUIManager> CreateUIManager(std::shared_ptr<IReactInstance> instance);
+namespace react { namespace uwp {
+
+REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(std::shared_ptr<IReactInstance> instance, const std::shared_ptr<ViewManagerProvider>& viewManagerProvider);
 
 }}

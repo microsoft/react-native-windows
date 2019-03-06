@@ -30,7 +30,13 @@ interface State {
 type PickerPropsWithChildren = Readonly<{ children?: React.ReactNode }> & Readonly<IPickerProps>;
 
 /**
+ * Picker is a controlled component, which expects the selectedValue prop to be updated
+ * whenever selection changes, or selection will revert to the prop selectedValue
  *
+ * when using editable=true, onValueChange can be called with a selectedValue of null &
+ * Index of -1, and text will be provided.
+ * To maintain the text in the controlled component, props should reflect
+ * that state by specifying selectedValue of null and specify the text property.
  */
 export class Picker extends React.Component<IPickerProps, State> {
   public static Item = PickerItem;
@@ -88,12 +94,12 @@ export class Picker extends React.Component<IPickerProps, State> {
 
   private _onChange = (event: IPickerChangeEvent) => {
     if (this._rctPicker) {
-      this._rctPicker.setNativeProps({selectedIndex: this.state.selectedIndex});
+      this._rctPicker.setNativeProps({selectedIndex: this.state.selectedIndex, text: this.props.text});
     }
 
     this.props.onChange && this.props.onChange(event);
     this.props.onValueChange &&
-      this.props.onValueChange(event.nativeEvent.value, event.nativeEvent.itemIndex);
+      this.props.onValueChange(event.nativeEvent.value, event.nativeEvent.itemIndex, event.nativeEvent.text);
   }
 }
 

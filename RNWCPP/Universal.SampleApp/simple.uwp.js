@@ -14,8 +14,8 @@ import {
 export default class Bootstrap extends Component {
   render() {
     return (
-      <View accessible={true} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', borderColor: 'red', borderWidth: 5, backgroundColor: 'orange' }}>
-        <Text style={{ fontSize: 20, textAlign: 'center', margin: 10 }}>Welcome to React Native! X</Text>
+      <View accessible={true} style={{ borderRadius: 30, width: 60, height: 60, margin: 10 }}>
+        <View style={{ backgroundColor: 'magenta', width: 60, height: 60 }} />
       </View>
     );
   }

@@ -12,9 +12,13 @@ namespace react { namespace uwp {
 struct ViewPanel : winrt::Windows::UI::Xaml::Controls::PanelT<ViewPanel>
 {
   using Super = winrt::Windows::UI::Xaml::Controls::PanelT<ViewPanel>;
-public:
+private:
   // Constructors
   ViewPanel();
+
+public:
+  static winrt::com_ptr<ViewPanel> Create();
+  template <typename D, typename... Args> friend auto winrt::make_self(Args&&... args);
 
   // Overrides
   virtual winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
@@ -43,6 +47,7 @@ public:
   winrt::Windows::UI::Xaml::CornerRadius CornerRadius() { return winrt::unbox_value<winrt::Windows::UI::Xaml::CornerRadius>(GetValue(CornerRadiusProperty())); }
   void CornerRadius(winrt::Windows::UI::Xaml::CornerRadius const& value);
 
+  bool ClipChildren() { return winrt::unbox_value<bool>(GetValue(ClipChildrenProperty())); }
   void ClipChildren(bool value);
 
 public:
@@ -51,6 +56,7 @@ public:
   static winrt::Windows::UI::Xaml::DependencyProperty BorderThicknessProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty CornerRadiusProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty BackgroundProperty();
+  static winrt::Windows::UI::Xaml::DependencyProperty ClipChildrenProperty();
 
   // Attached Properties
   static winrt::Windows::UI::Xaml::DependencyProperty TopProperty();
@@ -75,7 +81,6 @@ private:
 
   // Properties: Background is not managed as a DP so it won't conflict with the parent Background property.
   //std::optional<winrt::Windows::UI::Xaml::Media::Brush> m_optBackgroundBrush;
-  bool m_clipChildren { false };
   bool m_propertiesChanged { false };
 
   // Child Elements

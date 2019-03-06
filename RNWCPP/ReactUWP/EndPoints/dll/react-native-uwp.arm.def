@@ -1,13 +1,11 @@
 EXPORTS
-?CreateReactRootView@uwp@react@@YA?AV?$shared_ptr@UIXamlRootView@uwp@react@@@std@@UDependencyObject@Xaml@UI@Windows@winrt@@PB_WABV?$shared_ptr@UIReactInstanceCreator@uwp@react@@@4@@Z
-?UnSafeCreateReactInstance@uwp@react@@YAPAUIReactInstance@12@ABV?$shared_ptr@UNativeModuleProvider@react@facebook@@@std@@@Z
-?CreateReactInstance@uwp@react@@YA?AV?$shared_ptr@UIReactInstance@uwp@react@@@std@@ABV?$shared_ptr@UNativeModuleProvider@react@facebook@@@4@@Z
 ?at@dynamic@folly@@QGBAABU12@ABU12@@Z
 ?destroy@dynamic@folly@@AAAXXZ
 ??8dynamic@folly@@QBA_NABU01@@Z
 ??4dynamic@folly@@QAAAAU01@ABU01@@Z
 ??4dynamic@folly@@QAAAAU01@$$QAU01@@Z
 ?hash@dynamic@folly@@QBAIXZ
+??0TypeError@folly@@QAA@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ??0TypeError@folly@@QAA@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??1TypeError@folly@@UAA@XZ
 ??Adynamic@folly@@QGAAAAU01@ABU01@@Z

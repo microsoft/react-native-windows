@@ -20,7 +20,9 @@
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
+#include <Views/CalendarViewViewManager.h>
 #include <Views/CheckboxViewManager.h>
+#include <Views/DatePickerViewManager.h>
 #include <Views/PickerViewManager.h>
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
@@ -88,12 +90,22 @@ bool ShouldReuseReactInstancesWhenPossible()
 //  different set of view managers and native ui manager. Having all of this in one place will simply
 //  make it easier to slot in that system when ready.
 
-std::shared_ptr<facebook::react::IUIManager> CreateUIManager(std::shared_ptr<IReactInstance> instance)
+REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
+  std::shared_ptr<IReactInstance> instance, const std::shared_ptr<ViewManagerProvider>& viewManagerProvider)
 {
-  // View managers
   std::vector<std::unique_ptr<facebook::react::IViewManager>> viewManagers;
+
+  // Custom view managers
+  if (viewManagerProvider)
+  {
+    viewManagers = viewManagerProvider->GetViewManagers(instance);
+  }
+
+  // Standard view managers
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(instance));
+  viewManagers.push_back(std::make_unique<CalendarViewViewManager>(instance));
   viewManagers.push_back(std::make_unique<CheckBoxViewManager>(instance));
+  viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
   viewManagers.push_back(std::make_unique<PickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
@@ -117,8 +129,12 @@ std::shared_ptr<facebook::react::IUIManager> CreateUIManager(std::shared_ptr<IRe
   return createIUIManager(std::move(viewManagers), new NativeUIManager());
 }
 
-UwpReactInstance::UwpReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider)
+UwpReactInstance::UwpReactInstance(
+    const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider
+  , const std::shared_ptr<ViewManagerProvider>& viewManagerProvider
+  )
   : m_moduleProvider(moduleProvider)
+  , m_viewManagerProvider(viewManagerProvider)
 {
 }
 
@@ -263,7 +279,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     };
 
     // Create NativeUIManager & UIManager
-    m_uiManager = CreateUIManager(spThis);
+    m_uiManager = CreateUIManager(spThis, m_viewManagerProvider);
 
     // Acquire default modules and then populate with custom modules
     std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate));

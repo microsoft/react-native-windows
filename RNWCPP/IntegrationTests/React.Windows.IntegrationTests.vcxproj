@@ -57,7 +57,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)stubs;$(SolutionDir)ReactWindowsCore;$(IncludePath);$(ReactNativeDir)\ReactCommon;$(FollyDir)</IncludePath>
+    <IncludePath>$(SolutionDir)stubs;$(SolutionDir)ReactWindowsCore;$(SolutionDir)\include\ReactWindowsCore;$(IncludePath);$(ReactNativeDir)\ReactCommon;$(FollyDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

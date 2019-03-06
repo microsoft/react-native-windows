@@ -1001,11 +1001,13 @@ COPYFILES_PASS0 = \
 	ReactWindows\include\ReactUWP\ReactRootView.h, ReactUWP; \
 	ReactWindows\include\ReactUWP\ReactUwp.h, ReactUWP; \
 	ReactWindows\include\ReactUWP\XamlView.h, ReactUWP; \
+	ReactWindows\include\ReactUWP\ViewManagerProvider.h, ReactUWP; \
 
 
 COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
 	ReactWindows\include\ReactWindowsCore\SourceCodeModule.h, include\ReactWindowsCore; \
+	ReactWindows\include\ReactWindowsCore\ReactWindowsAPI.h, include\ReactWindowsCore; \
 
 
 COPYFILES_PASS0 = \
@@ -1016,7 +1018,6 @@ COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
 	ReactWindows\ReactWindowsCore\IWebSocket.h, ReactWindowsCore; \
 	ReactWindows\ReactWindowsCore\IHttpResource.h, ReactWindowsCore; \
-	ReactWindows\ReactWindowsCore\NativeModuleProvider.h; \
 
 COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
@@ -1051,9 +1052,16 @@ COPYFILES_PASS0 = \
 	ReactWindows\ReactWindowsCore\IUIManager.h; \
 	ReactWindows\ReactWindowsCore\Logging.h; \
 	ReactWindows\ReactWindowsCore\MemoryTracker.h; \
+	ReactWindows\ReactWindowsCore\NativeModuleProvider.h; \
 	ReactWindows\ReactWindowsCore\ShadowNode.h; \
 	ReactWindows\ReactWindowsCore\Tracing.h; \
 	ReactWindows\ReactWindowsCore\ViewManager.h; \
 	ReactWindows\include\ReactWindowsCore\II18nModule.h; \
 	ReactWindows\Desktop\JSBigStringResourceDll.h; \
 
+COPYFILES_PASS0 = \
+	$(COPYFILES_PASS0) \
+	ReactCommon\jsi\jsi.h, jsi; \
+	ReactCommon\jsi\jsi-inl.h, jsi; \
+	ReactCommon\jsi\V8Runtime.h, jsi; \
+	ReactWindows\Chakra\ChakraRuntime.h, jsi; \

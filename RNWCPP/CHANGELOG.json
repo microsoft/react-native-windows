@@ -2,6 +2,224 @@
   "name": "react-native-win",
   "entries": [
     {
+      "version": "0.5.85",
+      "tag": "react-native-win_v0.5.85",
+      "date": "Tue, 05 Mar 2019 20:54:55 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.8` to `0.3.9`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.84",
+      "tag": "react-native-win_v0.5.84",
+      "date": "Tue, 05 Mar 2019 07:11:26 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.7` to `0.3.8`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.83",
+      "tag": "react-native-win_v0.5.83",
+      "date": "Tue, 05 Mar 2019 05:02:15 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - keep instance alive longer in live reload/shutdown",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "88cb1615988f6c46c3aff45bf28ce052529facf7"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.82",
+      "tag": "react-native-win_v0.5.82",
+      "date": "Tue, 05 Mar 2019 02:31:33 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix color properties of CalendarView plus enable null values for all properties but callbacks (resetting to defaults via ClearValue)",
+            "author": "Sasha Gil <alexgil@microsoft.com>",
+            "commit": "0dee528765b661c12c6cd00657231d546bd9b686"
+          },
+          {
+            "comment": "uwp - add editable support to PickerUWP, fix DatePicker export",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "31cc1455bff826e173976ce4b1f22968578ab237"
+          },
+          {
+            "comment": "Introduce CalendarView for UWP only (no Android, no JS, no Apple updates)",
+            "author": "Sasha Gil <alexgil@microsoft.com>",
+            "commit": "c200088828a6b8318fe74cd56694c4051acdb7d9"
+          },
+          {
+            "comment": "Fix OnDateChanged event for DatePicker",
+            "author": "Ashita Khetan <askhetan@microsoft.com>",
+            "commit": "d4905a87b09738883ca766052b5385bbcf0e6c10"
+          },
+          {
+            "comment": "Popup positioning",
+            "author": "Ashita Khetan <askhetan@microsoft.com>",
+            "commit": "6a095df7fa540900f7bb873c67d12ec33f5a5bce"
+          },
+          {
+            "comment": "Fire onClick for View on SPACE or ENTER.",
+            "author": "Randy Flynn <randyfl@microsoft.com>",
+            "commit": "4f71d0f128dcd9c39908394b21d2fdf1cecc469f"
+          },
+          {
+            "comment": "JSICore (react-free) libraries",
+            "author": "Tudor Mihai <tudorm@microsoft.com>",
+            "commit": "7692fb3852df570233ec890e21861ac0e804880b"
+          },
+          {
+            "comment": "Stop writing to console in logMarker",
+            "author": "Vladimir Morozov (REDMOND) <Vladimir.Morozov@microsoft.com>",
+            "commit": "be04078deba465473c3ecbb71232544eb81ee3ed"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.6` to `0.3.7`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.80",
+      "tag": "react-native-win_v0.5.80",
+      "date": "Thu, 28 Feb 2019 04:47:08 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Turn off OnContent/OffContent for Switch view.",
+            "author": "Randy Flynn <randyfl@microsoft.com>",
+            "commit": "72e93afc48e273255e85790bcfbc480c6e2d33e5"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.79",
+      "tag": "react-native-win_v0.5.79",
+      "date": "Thu, 28 Feb 2019 03:36:47 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - fix WebSocketModuleUwp build against non-final RS5 SDK",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "230b7b62162ec82f60a25bef802a6f641163d895"
+          },
+          {
+            "comment": "uwp - fix ViewPanel leak",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "6c7a1802d6da70672f8bb00762f48abafd31d617"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.78",
+      "tag": "react-native-win_v0.5.78",
+      "date": "Wed, 27 Feb 2019 20:16:40 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Implement acceptsKeyboardFocus on View.",
+            "author": "Randy Flynn <randyfl@microsoft.com>",
+            "commit": "d64338b7437415e1e9f616938694281c1635e33a"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.77",
+      "tag": "react-native-win_v0.5.77",
+      "date": "Tue, 26 Feb 2019 20:40:42 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.4` to `0.3.5`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.76",
+      "tag": "react-native-win_v0.5.76",
+      "date": "Tue, 26 Feb 2019 08:18:38 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - avoid exceptions being thrown in WebSocketModule connect",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "44324bc6db6a9554e1b577200289949c9144a943"
+          },
+          {
+            "comment": "Add DatePicker uwp component",
+            "author": "Ashita Khetan <askhetan@microsoft.com>",
+            "commit": "821c08e4eba70327a9d26a9369f9d4453f4d6bfe"
+          },
+          {
+            "comment": "Merge with master and resolve review comments for datepicker",
+            "author": "Ashita Khetan <askhetan@microsoft.com>",
+            "commit": "821c08e4eba70327a9d26a9369f9d4453f4d6bfe"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.75",
+      "tag": "react-native-win_v0.5.75",
+      "date": "Tue, 26 Feb 2019 05:55:00 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.3` to `0.3.4`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.74",
+      "tag": "react-native-win_v0.5.74",
+      "date": "Tue, 26 Feb 2019 03:39:43 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fix move case in UIManager::manageChildren",
+            "author": "Ethan Bernstein <ethanb@exchange.microsoft.com>",
+            "commit": "596d82c8329927130ddb3c554f2e389ea396dd3b"
+          },
+          {
+            "comment": "TextInput onScroll onKeyPress",
+            "author": "Ravi Teja Koganti <rakogan@microsoft.com>",
+            "commit": "249a4a621c5623caa3c244b1dbc7c1297d3f444c"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.73",
+      "tag": "react-native-win_v0.5.73",
+      "date": "Sat, 23 Feb 2019 22:42:46 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@microsoft/react-native\" from `0.3.2` to `0.3.3`"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.72",
       "tag": "react-native-win_v0.5.72",
       "date": "Sat, 23 Feb 2019 01:53:38 GMT",

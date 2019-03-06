@@ -4,11 +4,12 @@
 #include "pch.h"
 
 #include "PickerViewManager.h"
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 
 #include <Utils/ValueUtils.h>
 #include "UnicodeConversion.h"
 
+#include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
@@ -29,18 +30,26 @@ class PickerShadowNode : public ShadowNodeBase
 {
   using Super = ShadowNodeBase;
 public:
-  PickerShadowNode() = default;
+  PickerShadowNode();
   void createView() override;
   void updateProperties(const folly::dynamic&& props) override;
 
 private:
   void RepopulateItems();
-  static void OnSelectionChanged(IReactInstance& instance, int64_t tag, folly::dynamic&& value, int32_t selectedIndex);
+  static void OnSelectionChanged(IReactInstance& instance, int64_t tag, folly::dynamic&& value, int32_t selectedIndex, folly::dynamic&& text);
 
-  bool m_updating = false;
   folly::dynamic m_items;
-  int32_t m_selectedIndex;
+  int32_t m_selectedIndex = -1;
+
+  // FUTURE: remove when we can require RS5+
+  bool m_isEditableComboboxSupported;
 };
+
+PickerShadowNode::PickerShadowNode()
+  : Super()
+{
+  m_isEditableComboboxSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
+}
 
 void PickerShadowNode::createView()
 {
@@ -56,7 +65,10 @@ void PickerShadowNode::createView()
       folly::dynamic value;
       if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
         value = m_items.at(index)["value"];
-      OnSelectionChanged(*instance, m_tag, std::move(value), index);
+      folly::dynamic text;
+      if (m_isEditableComboboxSupported && index == -1)
+        text = HstringToDynamic(combobox.Text());
+      OnSelectionChanged(*instance, m_tag, std::move(value), index, std::move(text));
     }
   });
 }
@@ -72,7 +84,27 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "enabled")
+    if (propertyName.asString() == "editable")
+    {
+      if (m_isEditableComboboxSupported)
+      {
+        if (propertyValue.isBool())
+          combobox.IsEditable(propertyValue.asBool());
+        else if (propertyValue.isNull())
+          combobox.ClearValue(winrt::ComboBox::IsEditableProperty());
+      }
+    }
+    else if (propertyName.asString() == "text")
+    {
+      if (m_isEditableComboboxSupported)
+      {
+        if (propertyValue.isString())
+          combobox.Text(asHstring(propertyValue));
+        else if (propertyValue.isNull())
+          combobox.ClearValue(winrt::ComboBox::TextProperty());
+      }
+    }
+    else if (propertyName.asString() == "enabled")
     {
       if (propertyValue.isBool())
         combobox.IsEnabled(propertyValue.asBool());
@@ -125,12 +157,13 @@ void PickerShadowNode::RepopulateItems()
     combobox.SelectedIndex(m_selectedIndex);
 }
 
-/*static*/ void PickerShadowNode::OnSelectionChanged(IReactInstance& instance, int64_t tag, folly::dynamic&& value, int32_t selectedIndex)
+/*static*/ void PickerShadowNode::OnSelectionChanged(IReactInstance& instance, int64_t tag, folly::dynamic&& value, int32_t selectedIndex, folly::dynamic&& text)
 {
   folly::dynamic eventData = folly::dynamic::object
     ("target", tag)
     ("value", std::move(value))
-    ("itemIndex", selectedIndex);
+    ("itemIndex", selectedIndex)
+    ("text", std::move(text));
   instance.DispatchEvent(tag, "topChange", std::move(eventData));
 }
 
@@ -158,9 +191,11 @@ folly::dynamic PickerViewManager::GetNativeProps() const
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object
+    ("editable", "boolean")
     ("enabled", "boolean")
     ("items", "array")
     ("selectedIndex", "number")
+    ("text", "string")
   );
 
   return props;

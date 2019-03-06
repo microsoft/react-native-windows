@@ -35,8 +35,10 @@ set(SOURCES
 	Utils/LocalBundleReader.cpp
 	Utils/ValueUtils.cpp
 	Views/ActivityIndicatorViewManager.cpp
+	Views/CalendarViewViewManager.cpp
 	Views/CheckboxViewManager.cpp
 	Views/ControlViewManager.cpp
+	Views/DatePickerViewManager.cpp
 	Views/FrameworkElementViewManager.cpp
 	Views/ImageViewManager.cpp
 	Views/PickerViewManager.cpp
@@ -59,10 +61,13 @@ set(SOURCES
 
 add_library(React.UWPStatic ${SOURCES} ${DEF_FILE})
 
-target_compile_definitions(React.UWPStatic PRIVATE UNICODE _UNICODE JSI_EXPORT)
+add_definitions(-DRN_PLATFORM=uwp)
+
+target_compile_definitions(React.UWPStatic PRIVATE UNICODE _UNICODE JSI_EXPORT REACTWINDOWS_BUILD REACTWINDOWS_STATIC)
 target_compile_options(React.UWPStatic PRIVATE /await /wd4996)
 
 target_include_directories(React.UWPStatic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/..")
+target_include_directories(React.UWPStatic PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include/ReactWindowsCore")
 target_include_directories(React.UWPStatic PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include/ReactUWP")
 
 # In theory, setting this would allow building ReactUWP and ReactWin32 at the same time (with the same generator), but I didn't find the magical genie incantation required to make that work; I suspect this never actually worked

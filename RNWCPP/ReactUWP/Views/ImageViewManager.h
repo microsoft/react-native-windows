@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <cxxreact/CxxModule.h>
-#include "FrameworkElementViewManager.h"
+#include <Views/FrameworkElementViewManager.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
 namespace winrt::Windows::UI::Xaml::Media { enum class Stretch; }

@@ -20,6 +20,8 @@ winrt::Windows::UI::Xaml::Media::Brush BrushFrom(const folly::dynamic& d);
 winrt::Windows::UI::Xaml::Media::SolidColorBrush SolidColorBrushFrom(const folly::dynamic& d);
 winrt::Windows::UI::Xaml::VerticalAlignment VerticalAlignmentFrom(const folly::dynamic& d);
 winrt::Windows::UI::Xaml::HorizontalAlignment HorizontalAlignmentFrom(const folly::dynamic& d);
+winrt::Windows::Foundation::DateTime DateTimeFrom(const folly::dynamic& d);
+folly::dynamic DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime);
 
 std::wstring asWStr(const folly::dynamic& d);
 winrt::hstring asHstring(const folly::dynamic& d);

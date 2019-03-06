@@ -163,6 +163,9 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\CalendarViewViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\CheckboxViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -192,6 +195,9 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Views\ControlViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DatePickerViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
   </ItemGroup>
@@ -358,6 +364,9 @@
     <ClInclude Include="Views\PickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="Views\CalendarViewViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Views\PopupViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -368,6 +377,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Views\ControlViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DatePickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Utils\PropertyHandlerUtils.h">

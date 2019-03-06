@@ -49,7 +49,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(YogaDir);$(SolutionDir)include;$(SolutionDir)ReactWindowsCore;$(SolutionDir)include\ReactUWP;$(SolutionDir)ReactUWP;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(YogaDir);$(SolutionDir)include;$(SolutionDir)ReactWindowsCore;$(SolutionDir)include\ReactWindowsCore;$(SolutionDir)include\ReactUWP;$(SolutionDir)ReactUWP;$(IncludePath)</IncludePath>
     <PackageCertificateKeyFile>Universal.IntegrationTests_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup>

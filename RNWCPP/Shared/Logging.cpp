@@ -28,11 +28,7 @@ static double nativePerformanceNow() {
     std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
-void logMarker(const ReactMarker::ReactMarkerId id, const char* tag) {
-  std::cout << "Marker: " << id;
-  if (tag)
-    std::cout << " Tag: " << tag;
-  std::cout << std::endl;
+void logMarker(const ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
 
 #if !defined(NOJSC)

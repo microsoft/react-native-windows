@@ -8,6 +8,7 @@
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "UnicodeConversion.h"
+#include <future>
 
 #pragma warning(push)
 #pragma warning(disable : 4146)
@@ -66,9 +67,60 @@ private:
   std::map<int64_t, winrt::MessageWebSocket::MessageReceived_revoker> m_msgReceiveds;
 };
 
-winrt::Windows::Foundation::IAsyncAction Connect(winrt::Windows::Networking::Sockets::MessageWebSocket& socket, winrt::Windows::Foundation::Uri& uri)
+// #define DEFAULT_WEBSOCKET_EXCEPTIONS
+#ifndef DEFAULT_WEBSOCKET_EXCEPTIONS
+// This assumes RS5 winrtcpp SDK.  Set the define if winrtcpp internals change and break this
+// lessthrow - based on await_adapter but doesn't throw from await_resume for APIs that fail in normal usage.
+// When we can assume Windows 10 20H1 a TryConnectAsync API should exist that doesn't throw
+template <typename Async>
+struct lessthrow_await_adapter
 {
-  co_await socket.ConnectAsync(uri);
+    Async const& async;
+
+    bool await_ready() const
+    {
+        return async.Status() == winrt::Windows::Foundation::AsyncStatus::Completed;
+    }
+
+    void await_suspend(std::experimental::coroutine_handle<> handle) const
+    {
+        // TODO: Update when RS5 final SDK is in use everywhere
+        //auto context = winrt::capture<winrt::impl::IContextCallback>(WINRT_CoGetObjectContext);
+        winrt::com_ptr<winrt::impl::IContextCallback> context;
+        winrt::check_hresult(WINRT_CoGetObjectContext(winrt::guid_of<winrt::impl::IContextCallback>(), context.put_void()));
+
+        async.Completed([handle, context = std::move(context)](auto const&, winrt::Windows::Foundation::AsyncStatus)
+        {
+            winrt::impl::com_callback_args args{};
+            args.data = handle.address();
+
+            auto callback = [](winrt::impl::com_callback_args* args) noexcept -> int32_t
+            {
+                std::experimental::coroutine_handle<>::from_address(args->data)();
+                return S_OK;
+            };
+
+            winrt::check_hresult(context->ContextCallback(callback, &args, winrt::guid_of<winrt::impl::ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
+        });
+    }
+
+    void await_resume() const
+    {
+      // Don't check for a failure result here
+      return;
+    }
+};
+#endif
+
+std::future<HRESULT> Connect(winrt::Windows::Networking::Sockets::MessageWebSocket& socket, winrt::Windows::Foundation::Uri& uri)
+{
+  auto async = socket.ConnectAsync(uri);
+#ifdef DEFAULT_WEBSOCKET_EXCEPTIONS
+  co_await async;
+#else
+  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{async};
+#endif
+  return async.ErrorCode();
 }
 
 void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic /* @Nullable final ReadableArray */ protocols, folly::dynamic /* @Nullable final ReadableArray */ options, int64_t id)
@@ -134,18 +186,30 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
   });
 
   winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(url));
+
+  HRESULT hr = S_OK;
   try
   {
-    Connect(socket, uri).get();
-
-    folly::dynamic params = folly::dynamic::object("id", id);
-    sendEvent("websocketOpen", std::move(params));
+    auto async = Connect(socket, uri);
+    winrt::hresult hr = async.get();
+    if (SUCCEEDED(hr))
+    {
+      folly::dynamic params = folly::dynamic::object("id", id);
+      sendEvent("websocketOpen", std::move(params));
+    }
   }
   catch (winrt::hresult_error const & e)
   {
+    hr = e.code();
+  }
+
+  if (!SUCCEEDED(hr))
+  {
+    winrt::hresult_error e{ hr };
     OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
     onError(id, e);
   }
+
 }
 
 void WebSocketModule::WebSocket::close(int64_t id)

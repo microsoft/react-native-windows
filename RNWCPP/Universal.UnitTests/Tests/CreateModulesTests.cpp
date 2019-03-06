@@ -76,7 +76,7 @@ TEST_CLASS(CreateModulesTest)
     auto reactInstance = react::uwp::CreateReactInstance(nullptr);
     Assert::IsFalse(reactInstance == nullptr);
 
-    auto uiManager = CreateUIManager(reactInstance);
+    auto uiManager = CreateUIManager(reactInstance, nullptr);
     Assert::IsFalse(uiManager == nullptr);
 
     auto uiManagerModule = createUIManagerModule(std::move(uiManager));

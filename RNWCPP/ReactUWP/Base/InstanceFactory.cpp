@@ -28,17 +28,19 @@ void CleanupExpiredInstances() noexcept
   }), ReactInstances().end());
 }
 
-std::shared_ptr<IReactInstance> CreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider)
+REACTWINDOWS_API_(std::shared_ptr<IReactInstance>) CreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider,
+                                                    const std::shared_ptr<ViewManagerProvider>& viewManagerProvider)
 {
-  return std::make_shared<UwpReactInstance>(moduleProvider);
+  return std::make_shared<UwpReactInstance>(moduleProvider, viewManagerProvider);
 }
 
-IReactInstance* UnSafeCreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider)
+REACTWINDOWS_API_(IReactInstance*) UnSafeCreateReactInstance(const std::shared_ptr<facebook::react::NativeModuleProvider>& moduleProvider,
+                                          const std::shared_ptr<ViewManagerProvider>& viewManagerProvider)
 {
-return new UwpReactInstance(moduleProvider);
+return new UwpReactInstance(moduleProvider, viewManagerProvider);
 }
 
-std::shared_ptr<IXamlRootView> CreateReactRootView(XamlView parentView,
+REACTWINDOWS_API_(std::shared_ptr<IXamlRootView>) CreateReactRootView(XamlView parentView,
   const wchar_t* pJsComponentName,
   const ReactInstanceCreator& instanceCreator
 )
@@ -54,7 +56,7 @@ std::shared_ptr<IXamlRootView> CreateReactRootView(XamlView parentView,
 }
 
 // Creates a background thread message queue whose tasks will run in serialized order
-std::shared_ptr<facebook::react::MessageQueueThread> CreateWorkerMessageQueue()
+REACTWINDOWS_API_(std::shared_ptr<facebook::react::MessageQueueThread>) CreateWorkerMessageQueue()
 {
   return std::make_shared<WorkerMessageQueueThread>();
 }

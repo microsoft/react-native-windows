@@ -42,7 +42,10 @@ extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
 #define INIT_UNDEFINED_EDGES { c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge }
 #define INIT_UNDEFINED_CORNERS { c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge }
 
-struct ShadowNodeBase : public facebook::react::ShadowNode
+#pragma warning(push)
+#pragma warning(disable: 4275) // base is not DLL exported
+#pragma warning(disable: 4251) // member is not DLL exported
+struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode
 {
   ShadowNodeBase(const ShadowNodeBase&) = delete;
   ShadowNodeBase& operator=(ShadowNodeBase const&) = delete;
@@ -72,6 +75,7 @@ struct ShadowNodeBase : public facebook::react::ShadowNode
 
 protected:
   XamlView m_view;
+  bool m_updating = false;
 
 public:
   double m_padding[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
@@ -83,5 +87,6 @@ public:
   bool m_onMouseLeave = false;
   bool m_onMouseMove = false;
 };
+#pragma warning(pop)
 
 }}

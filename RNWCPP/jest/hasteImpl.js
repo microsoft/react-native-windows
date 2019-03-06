@@ -6,7 +6,7 @@
 const { realpathSync } = require('fs');
 const path = require('path');
 
-const rnRoot = realpathSync(path.resolve(__dirname, '../node_modules/@microsoft/react-native'));
+const rnRoot = realpathSync(path.resolve(__dirname, '../node_modules/react-native'));
 
 function createHaste(pluginRoots, pluginNameReducers) {
   const path = require('path');

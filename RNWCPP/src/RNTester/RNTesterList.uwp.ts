@@ -33,6 +33,14 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/ButtonExample'),
   },
   {
+    key: 'CustomViewExample',
+    module: require('./CustomViewExample.uwp'),
+  },
+  {
+    key: 'DatePickerExample',
+    module: require('./DatePickerExample.uwp'),
+  },
+  {
     key: 'FlatListExample',
     module: require('react-native/RNTester/js/FlatListExample'),
   },
@@ -47,6 +55,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'PickerUWPExample',
     module: require('./PickerUWPExample'),
+  },
+  {
+    key: 'PopupExample',
+    module: require('./PopupExample.uwp'),
   },
   {
     key: 'ScrollViewSimpleExample',
@@ -153,7 +165,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },*/
 ];
 
-const Modules: {[key:string]: IRNTesterModule} = {};
+const Modules: { [key: string]: IRNTesterModule } = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;

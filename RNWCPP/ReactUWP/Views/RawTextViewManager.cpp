@@ -5,7 +5,7 @@
 
 #include "RawTextViewManager.h"
 
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 
 #include <Utils/ValueUtils.h>
 

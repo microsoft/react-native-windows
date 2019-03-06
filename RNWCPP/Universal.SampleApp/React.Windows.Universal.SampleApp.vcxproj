@@ -63,7 +63,7 @@
     <ClCompile>
       <AdditionalOptions>/await /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;4800;28204;4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(FollyDir);$(ReactNativeDir)\ReactCommon;$(SolutionDir)stubs;$(SolutionDir)include;$(SolutionDir)ReactWindowsCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(FollyDir);$(ReactNativeDir)\ReactCommon;$(SolutionDir)stubs;$(SolutionDir)include;$(SolutionDir)ReactWindowsCore;$(SolutionDir)include\ReactWindowsCore;$(SolutionDir)include\ReactUWP;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;NOJSC;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsWinRT>true</CompileAsWinRT>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -74,6 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CustomViewManager.h" />
     <ClInclude Include="HostingPane.xaml.h">
       <DependentUpon>HostingPane.xaml</DependentUpon>
     </ClInclude>
@@ -127,6 +128,7 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="CustomViewManager.cpp" />
     <ClCompile Include="HostingPane.xaml.cpp">
       <DependentUpon>HostingPane.xaml</DependentUpon>
     </ClCompile>

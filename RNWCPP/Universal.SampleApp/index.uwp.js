@@ -16,7 +16,9 @@ import {
   TouchableHighlight
 } from 'react-native';
 import {
+  CalendarView,
   CheckBox,
+  DatePicker,
   Popup,
   Picker
 } from 'react-native-win';
@@ -30,7 +32,7 @@ class TicTacButton extends Component {
 
   render() {
     return (
-      <Button onPress={this._onPress} title={this.state.text} />
+      <Button onPress={this._onPress} title={this.state.text} accessibilityLabel={this.state.text} />
     );
   }
 
@@ -63,7 +65,7 @@ class PopupButton extends Component {
         <CheckBox
           checked={this.state.isLightDismissEnabled}
           onValueChange={value => this.setState({ isLightDismissEnabled: value })} />
-        <Button onPress={this._onPress} title={this.state.buttonTitle} />
+        <Button onPress={this._onPress} title={this.state.buttonTitle} accessibilityLabel={this.state.buttonTitle}/>
         <Popup
           isOpen={this.state.isFlyoutVisible}
           isLightDismissEnabled={this.state.isLightDismissEnabled}
@@ -84,16 +86,27 @@ class PopupButton extends Component {
     );
   }
 
-  _onPress(e) {
+  openPopup() {
     this.setState({ buttonTitle: 'Close Flyout', isFlyoutVisible: true });
   }
 
-  _onPopupButtonPressed(e) {
+  closePopup() {
     this.setState({ buttonTitle: 'Open Flyout', isFlyoutVisible: false });
   }
 
+  _onPress(e) {
+    if (this.state.isFlyoutVisible)
+      this.closePopup();
+    else
+      this.openPopup();
+  }
+
+  _onPopupButtonPressed(e) {
+    this.closePopup();
+  }
+
   _onPopupDismissed(event) {
-    this.setState({ buttonTitle: 'Open Flyout', isFlyoutVisible: event.nativeEvent.isOpen });
+    this.closePopup();
   }
 }
 
@@ -103,6 +116,8 @@ export default class Bootstrap extends Component {
     switchIsOn: true,
     pickerSelectedValue: "key1",
     pickerSelectedIndex: 0,
+    datePickerSelectedValue: new Date(),
+    calendarViewSelectedDate: new Date(),
   };
 
   render() {
@@ -144,7 +159,7 @@ export default class Bootstrap extends Component {
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>accessible</Text>
-              <View accessible={true} accessibilityLabel="Empty Rectangle" style={{ backgroundColor: 'yellow', borderWidth: 2, borderColor: 'black', width: 60, height: 60, margin: 10 }} />
+              <View accessible={true} acceptsKeyboardFocus={true} accessibilityLabel="Empty Rectangle" style={{ backgroundColor: 'yellow', borderWidth: 1, borderColor: 'brown', width: 60, height: 60, margin: 10 }} />
             </View>
             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>no border</Text>
@@ -192,6 +207,12 @@ export default class Bootstrap extends Component {
               <Text>circle</Text>
               <View style={{backgroundColor: 'orange', borderRadius: 30, width: 60, height: 60, margin: 10, overflow: 'hidden'}}>
                 <View style={{backgroundColor: 'purple', width: 60, height: 60}} />
+              </View>
+            </View>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+              <Text>circle</Text>
+              <View style={{ backgroundColor: 'orange', borderRadius: 30, width: 60, height: 60, margin: 10 }} acceptsKeyboardFocus={true}>
+                <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
               </View>
             </View>
           </View>
@@ -257,21 +278,21 @@ export default class Bootstrap extends Component {
           </View>
           <View style={{ padding: 10 }}>
             <View>
-              <TouchableHighlight style={{ height: 30 }} onPress={this.focusTextInputPressed} accessible={true} underlayColor={'transparent'}>
+              <TouchableHighlight style={{ height: 30 }} onPress={this.focusTextInputPressed} underlayColor={'transparent'}>
                 <View style={[this.state.highlightPressed ? styles.selected : {}]}>
                   <Text>Click to focus textbox</Text>
                 </View>
               </TouchableHighlight>
             </View>
             <View>
-              <TouchableHighlight style={{ height: 30 }} onPress={this.blurTextInputPressed} accessible={true} underlayColor={'transparent'}>
+              <TouchableHighlight style={{ height: 30 }} onPress={this.blurTextInputPressed} underlayColor={'transparent'}>
                 <View style={[this.state.highlightPressed ? styles.selected : {}]}>
                   <Text>Click to remove focus from textbox</Text>
                 </View>
               </TouchableHighlight>
             </View>
             <View>
-              <TouchableHighlight style={{ height: 30 }} onPress={this.clearTextInputPressed} accessible={true} underlayColor={'transparent'}>
+              <TouchableHighlight style={{ height: 30 }} onPress={this.clearTextInputPressed} underlayColor={'transparent'}>
                 <View style={[this.state.highlightPressed ? styles.selected : {}]}>
                   <Text>Click to clear textbox</Text>
                 </View>
@@ -307,9 +328,27 @@ export default class Bootstrap extends Component {
             />
           </View>
           <WebView
-            style={{ width: 250, height: 500 }}
+            style={{ width: 350, height: 500 }}
             source={{ uri: 'https://login.live.com' }}
           />
+          <View style={{ padding: 10 }}>
+            <Text>Test DatePicker</Text>
+            <Text>Date selected: {this.state.datePickerSelectedValue.toString()}</Text>
+            <DatePicker
+              placeholderText='select start date'
+              dateFormat='longdate'
+              dayOfWeekFormat='{dayofweek.abbreviated(3)}'
+              style={{ width: 300 }}
+              onDateChange={this.datePickerValueChange}
+            />
+          </View>
+          <View style={{ padding: 10 }}>
+            <Text>Test CalendarView</Text>
+            <Text>Date selected: {this.state.calendarViewSelectedDate.toString()}</Text>
+            <CalendarView
+              onSelectedDateChange={this.calendarViewSelectedDateChange}
+            />
+          </View>
         </View>
       </ScrollView>
     );
@@ -382,6 +421,14 @@ export default class Bootstrap extends Component {
 
   contentSizeChangeTextInputHandler = (event) => {
     console.log("new size width: " + event.nativeEvent.contentSize.width + ", height: " + event.nativeEvent.contentSize.height);
+  }
+
+  datePickerValueChange = (date) => {
+    this.setState({ datePickerSelectedValue: date });
+  }
+
+  calendarViewSelectedDateChange = (date) => {
+    this.setState({ calendarViewSelectedDate: date });
   }
 }
 

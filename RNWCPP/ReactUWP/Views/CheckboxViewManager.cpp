@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "CheckboxViewManager.h"
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 
 #include <Utils/ValueUtils.h>
 
@@ -34,7 +34,6 @@ public:
 
 private:
   static void OnCheckedChanged(IReactInstance& instance, int64_t tag, bool newValue);
-  bool m_updating = false;
 };
 
 void CheckBoxShadowNode::createView()
@@ -42,7 +41,7 @@ void CheckBoxShadowNode::createView()
   Super::createView();
 
   auto checkbox = GetView().as<winrt::CheckBox>();
-  auto wkinstance = static_cast<CheckBoxViewManager*>(GetViewManager())->m_wkReactInstance;
+  auto wkinstance = GetViewManager()->GetReactInstance();
   checkbox.Checked([=](auto&&, auto&&)
   {
     auto instance = wkinstance.lock();

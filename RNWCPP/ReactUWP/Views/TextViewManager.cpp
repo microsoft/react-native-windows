@@ -5,7 +5,7 @@
 
 #include "TextViewManager.h"
 
-#include "ShadowNodeBase.h"
+#include <Views/ShadowNodeBase.h>
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>

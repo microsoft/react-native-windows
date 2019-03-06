@@ -7,7 +7,7 @@
 
 namespace react { namespace uwp {
 
-class FrameworkElementViewManager : public ViewManagerBase
+class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase
 {
   using Super = ViewManagerBase;
 public:

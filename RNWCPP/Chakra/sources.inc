@@ -20,3 +20,6 @@ SOURCES_WIN32 = $(SOURCES_SHARED) \
 	..\ChakraRuntime.cpp \
 
 SOURCES_WINRT = $(SOURCES_SHARED) \
+
+SOURCES_JSICORE = \
+	..\ChakraRuntime.cpp \
