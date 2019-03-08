@@ -255,7 +255,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::EnqueueWrite(const string& messa
     if (!m_writeInProgress && ReadyState::Open == m_readyState)
       post(m_context, [this]()
       {
-        PerformWrite();
+        if (!m_writeRequests.empty())
+          PerformWrite();
       });
 }
 

@@ -50,6 +50,10 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
   TransferProperty(oldView, newView, winrt::AutomationProperties::NameProperty());
   auto accessibilityView = winrt::AutomationProperties::GetAccessibilityView(oldView);
   winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
+
+  auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
+  oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
+  winrt::ToolTipService::SetToolTip(newView, tooltip);
 }
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const

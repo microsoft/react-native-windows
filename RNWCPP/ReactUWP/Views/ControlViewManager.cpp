@@ -22,6 +22,15 @@ ControlViewManager::ControlViewManager(const std::shared_ptr<IReactInstance>& re
 {
 }
 
+folly::dynamic ControlViewManager::GetNativeProps() const
+{
+  folly::dynamic props = Super::GetNativeProps();
+  props.update(folly::dynamic::object
+    ("tabIndex", "number")
+  );
+  return props;
+}
+
 void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
 {
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
@@ -48,6 +57,13 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::d
       else if (TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue))
       {
         continue;
+      }
+      else if (propertyName == "tabIndex")
+      {
+        if (propertyValue.isNumber())
+          control.TabIndex(propertyValue.asInt());
+        else if (propertyValue.isNull())
+          control.ClearValue(winrt::Control::TabIndexProperty());
       }
     }
   }

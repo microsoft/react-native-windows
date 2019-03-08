@@ -1055,7 +1055,7 @@ COPYFILES_PASS0 = \
 	ReactWindows\ReactWindowsCore\NativeModuleProvider.h; \
 	ReactWindows\ReactWindowsCore\ShadowNode.h; \
 	ReactWindows\ReactWindowsCore\Tracing.h; \
-	ReactWindows\ReactWindowsCore\ViewManager.h; \
+	ReactWindows\include\ReactWindowsCore\ViewManager.h; \
 	ReactWindows\include\ReactWindowsCore\II18nModule.h; \
 	ReactWindows\Desktop\JSBigStringResourceDll.h; \
 
