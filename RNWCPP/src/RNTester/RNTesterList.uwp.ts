@@ -131,6 +131,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/GeolocationExample'),
   },
   {
+    key: 'KeyboardExample',
+    module: require('./KeyboardExample')
+  },
+  {
     key: 'LayoutExample',
     module: require('react-native/RNTester/js/LayoutExample'),
   },

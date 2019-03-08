@@ -51,6 +51,15 @@ public:
       GetControl().UseSystemFocusVisuals(m_enableFocusRing);
   }
 
+  int32_t TabIndex() { return m_tabIndex; }
+  void TabIndex(int32_t tabIndex)
+  {
+    m_tabIndex = tabIndex;
+
+    if (IsControl())
+      GetControl().TabIndex(m_tabIndex);
+  }
+
   bool OnClick() { return m_onClick; }
   void OnClick(bool isSet) { m_onClick = isSet; }
 
@@ -91,6 +100,7 @@ public:
   {
     // The view may have been replaced, so transfer properties stored on the shadow node to the view
     EnableFocusRing(EnableFocusRing());
+    TabIndex(TabIndex());
   }
 
   ViewPanel* GetViewPanel()
@@ -115,6 +125,7 @@ private:
   bool m_isControl = false;
   bool m_enableFocusRing = true;
   bool m_onClick = false;
+  int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 };
 
 
@@ -235,6 +246,7 @@ folly::dynamic ViewViewManager::GetNativeProps() const
 //  ("onMouseMove", "function")
     ("acceptsKeyboardFocus", "boolean")
     ("enableFocusRing", "boolean")
+    ("tabIndex", "number")
   );
 
   return props;
@@ -292,17 +304,24 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
           pPanel->IsHitTestVisible(hitTestable);
         }
       }
-      else if (pair.first == "acceptsKeyboardFocus")
+      else if (propertyName == "acceptsKeyboardFocus")
       {
         if (pair.second.isBool())
           shouldBeControl = pair.second.asBool();
       }
-      else if (pair.first == "enableFocusRing")
+      else if (propertyName == "enableFocusRing")
       {
         if (propertyValue.isBool())
           pViewShadowNode->EnableFocusRing(propertyValue.asBool());
         else if (propertyValue.isNull())
           pViewShadowNode->EnableFocusRing(false);
+      }
+      else if (propertyName == "tabIndex")
+      {
+        if (propertyValue.isNumber())
+          pViewShadowNode->TabIndex(propertyValue.asInt());
+        else if (propertyValue.isNull())
+          pViewShadowNode->TabIndex(-1);
       }
     }
   }

@@ -142,6 +142,10 @@
     <ClInclude Include="..\include\ReactUWP\IReactInstance.h" />
     <ClInclude Include="..\include\ReactUWP\IXamlRootView.h" />
     <ClInclude Include="..\include\ReactUWP\ReactUwp.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\include\ReactUWP\XamlView.h" />
     <ClInclude Include="ABI\ABIModuleLoader.h" />
     <ClInclude Include="ABI\comTemplateLibrary.h" />
@@ -178,9 +182,7 @@
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CalendarViewViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
-    <ClInclude Include="Views\ControlViewManager.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
-    <ClInclude Include="Views\FrameworkElementViewManager.h" />
     <ClInclude Include="Views\ImageViewManager.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
@@ -188,7 +190,6 @@
     <ClInclude Include="Views\ReactControl.h" />
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
-    <ClInclude Include="Views\ShadowNodeBase.h" />
     <ClInclude Include="Views\SwitchViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />

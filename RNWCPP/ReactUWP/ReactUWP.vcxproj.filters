@@ -286,9 +286,6 @@
     <ClInclude Include="ABI\HStringHelper.h">
       <Filter>ABI</Filter>
     </ClInclude>
-    <ClInclude Include="Views\FrameworkElementViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ImageViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -302,9 +299,6 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\ScrollViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ShadowNodeBase.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\TextInputViewManager.h">
@@ -376,14 +370,23 @@
     <ClInclude Include="Modules\AppStateModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Views\ControlViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\DatePickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Utils\PropertyHandlerUtils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h">
+      <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

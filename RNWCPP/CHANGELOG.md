@@ -1,6 +1,57 @@
 # Change Log - react-native-win
 
-This log was last generated on Tue, 05 Mar 2019 20:54:55 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Mar 2019 09:15:31 GMT and should not be manually modified.
+
+## 0.5.93
+Fri, 08 Mar 2019 09:15:31 GMT
+
+### Patches
+
+- Update to react-native@0.57.0-microsoft.1
+
+## 0.5.92
+Fri, 08 Mar 2019 00:33:25 GMT
+
+*Version update only*
+
+## 0.5.91
+Thu, 07 Mar 2019 23:21:01 GMT
+
+*Version update only*
+
+## 0.5.90
+Thu, 07 Mar 2019 22:02:00 GMT
+
+*Version update only*
+
+## 0.5.89
+Thu, 07 Mar 2019 20:47:48 GMT
+
+### Patches
+
+- uwp - add tabIndex support
+
+## 0.5.88
+Thu, 07 Mar 2019 01:08:42 GMT
+
+### Patches
+
+- devmain build fix
+- rename start.js to cli.js, take args to enable bundle in addition to start
+
+## 0.5.87
+Wed, 06 Mar 2019 06:56:23 GMT
+
+### Patches
+
+- uwp - add support for custom ViewManagers
+
+## 0.5.86
+Wed, 06 Mar 2019 05:43:46 GMT
+
+### Patches
+
+- Rename microsoft react-native
 
 ## 0.5.85
 Tue, 05 Mar 2019 20:54:55 GMT

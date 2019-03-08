@@ -2,6 +2,127 @@
   "name": "react-native-win",
   "entries": [
     {
+      "version": "0.5.93",
+      "tag": "react-native-win_v0.5.93",
+      "date": "Fri, 08 Mar 2019 09:15:31 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update to react-native@0.57.0-microsoft.1",
+            "author": "Andrew Coates (REDMOND) <acoates@microsoft.com>",
+            "commit": "8b94d830c5cc789d58670aa597703daa29a43431"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.92",
+      "tag": "react-native-win_v0.5.92",
+      "date": "Fri, 08 Mar 2019 00:33:25 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"react-native\" from `0.0.5` to `0.0.6`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.91",
+      "tag": "react-native-win_v0.5.91",
+      "date": "Thu, 07 Mar 2019 23:21:01 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"react-native\" from `0.0.4` to `0.0.5`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.90",
+      "tag": "react-native-win_v0.5.90",
+      "date": "Thu, 07 Mar 2019 22:02:00 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"react-native\" from `0.0.3` to `0.0.4`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.89",
+      "tag": "react-native-win_v0.5.89",
+      "date": "Thu, 07 Mar 2019 20:47:48 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - add tabIndex support",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "c520d53ddba253592ae1c68fac3d8a19b80a1aa3"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"react-native\" from `0.0.2` to `0.0.3`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.88",
+      "tag": "react-native-win_v0.5.88",
+      "date": "Thu, 07 Mar 2019 01:08:42 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "devmain build fix",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "ff199ac1c5e7bc17d12b74ca34a5fd82bcf013ab"
+          },
+          {
+            "comment": "rename start.js to cli.js, take args to enable bundle in addition to start",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "6d8c3f27e505b30db368aedd8788f3b71a47e789"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.87",
+      "tag": "react-native-win_v0.5.87",
+      "date": "Wed, 06 Mar 2019 06:56:23 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - add support for custom ViewManagers",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "4a7c4684c65d5db61c89a1855c84394d8c6059b9"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.5.86",
+      "tag": "react-native-win_v0.5.86",
+      "date": "Wed, 06 Mar 2019 05:43:46 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rename microsoft react-native",
+            "author": "Andrew Coates (REDMOND) <acoates@microsoft.com>",
+            "commit": "0c0c2e0fa8762dda21b96ec3031a90450a45607f"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"react-native\" from `0.0.1` to `0.0.2`"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.85",
       "tag": "react-native-win_v0.5.85",
       "date": "Tue, 05 Mar 2019 20:54:55 GMT",
