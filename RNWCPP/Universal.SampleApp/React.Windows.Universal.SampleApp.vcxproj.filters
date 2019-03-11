@@ -64,7 +64,6 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="WindowsSampleApp_TemporaryKey.pfx" />
     <None Include="bundle.js" />
     <None Include="bundle.meta" />
     <None Include="Bundle\index.uwp.bundle">
@@ -75,6 +74,7 @@
     <None Include="packages.config" />
     <None Include="accessible.uwp.js" />
     <None Include="simple.uwp.js" />
+    <None Include="React.Windows.Universal.SampleApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
