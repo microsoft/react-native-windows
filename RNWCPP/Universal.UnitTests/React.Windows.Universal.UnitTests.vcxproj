@@ -48,7 +48,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup>
-    <PackageCertificateKeyFile>..\Universal.SampleApp\WindowsSampleApp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>React.Windows.Universal.UnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <LinkIncremental>true</LinkIncremental>
@@ -56,6 +56,7 @@
   <PropertyGroup>
     <OutDir>$(SolutionDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <PackageCertificateThumbprint>63B3B5D575C3DE72218E4A75BFE5661B129042E8</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -98,7 +99,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="packages.config" />
-    <None Include="ReactUWPUnitTests_TemporaryKey.pfx" />
+    <None Include="React.Windows.Universal.UnitTests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />

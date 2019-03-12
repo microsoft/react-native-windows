@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="59b7e31b-a8fe-4fc7-85d6-a0a2475ad32d" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>WindowsSampleApp</DisplayName>
-    <PublisherDisplayName>ReactNative</PublisherDisplayName>
+    <PublisherDisplayName>RNWTest</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

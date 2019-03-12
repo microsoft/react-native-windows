@@ -21,6 +21,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <PackageCertificateThumbprint>99075A5CB00CD18838612A4BA1A675249FE0D6A8</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <OutputPath>$(SolutionDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutputPath>

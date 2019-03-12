@@ -67,8 +67,8 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Universal.IntegrationTests_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="React.Windows.Universal.IntegrationTests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
