@@ -55,7 +55,7 @@ jobs:
       - task: CmdLine@2
         displayName: Replace RN dependency with tarball
         inputs:
-          script: node Scipts/replaceRNDependency.js
+          script: node Scripts/replaceRNDependency.js
           workingDirectory: RNWCPP
 
       - task: CmdLine@2
