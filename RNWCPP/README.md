@@ -33,8 +33,16 @@ This is a summary of setup steps needed to install and work with React Native fo
 
 
 ## Build Steps
-1. Clone the repo [https://github.com/Microsoft/react-native-windows.git]
-2. Install dependencies. This step may take a while on the first run due to dependency download.
+1. Clone the repo
+    ```cmd
+    git clone https://github.com/Microsoft/react-native-windows.git
+    cd react-native-windows
+    ```
+1. Checkout the rnwcpp-preview branch
+    ```cmd
+    git checkout rnwcpp-preview
+    ```
+1. Install dependencies. This step may take a while on the first run due to dependency download.
     ```cmd
     cd RNWCPP
     npm install
@@ -48,7 +56,7 @@ This is a summary of setup steps needed to install and work with React Native fo
     vsts-npm-auth -config .npmrc
     ```
 
-3. Build solution.
+1. Build solution.
     * Using MSBuild
     ```cmd
     MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]

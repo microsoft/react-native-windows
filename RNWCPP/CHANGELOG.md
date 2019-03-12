@@ -1,6 +1,34 @@
 # Change Log - react-native-win
 
-This log was last generated on Fri, 08 Mar 2019 09:15:31 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Mar 2019 20:22:42 GMT and should not be manually modified.
+
+## 0.6.3
+Tue, 12 Mar 2019 20:22:42 GMT
+
+### Patches
+
+- uwp - expose more helpers & cleanup for customViewmanagers support
+
+## 0.6.2
+Tue, 12 Mar 2019 02:41:20 GMT
+
+### Patches
+
+- Update react-native to 0.57.0-microsoft.2
+
+## 0.6.1
+Sat, 09 Mar 2019 21:28:30 GMT
+
+### Patches
+
+- fix nuget packaging
+
+## 0.6.0
+Sat, 09 Mar 2019 18:32:03 GMT
+
+### Minor changes
+
+- added back SourceCodeModule
 
 ## 0.5.93
 Fri, 08 Mar 2019 09:15:31 GMT

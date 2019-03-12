@@ -71,7 +71,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode
 
   // Extra layout handling
   virtual bool IsExternalLayoutDirty() const { return false; }
-  virtual void DoExtraLayoutPrep(YGNodeRef yogaNode) {}
+  virtual void DoExtraLayoutPrep(YGNodeRef /*yogaNode*/) {}
 
 protected:
   XamlView m_view;

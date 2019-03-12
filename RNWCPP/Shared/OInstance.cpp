@@ -739,13 +739,11 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 #endif
 
   // TODO - Encapsulate this in a helpers, and make sure callers add it to their list
-#ifdef TODOTHIS
-  std::string bundleUrl = m_devSettings->useWebDebugger ? DevServerHelper::get_BundleUrl(m_devSettings->debugHost, m_devSettings->debugBundlePath.empty() ? m_jsBundleRelativePath : m_devSettings->debugBundlePath, m_devSettings->platformName, "true" /*dev*/, "false" /*hot*/) : std::string();
+  std::string bundleUrl = m_devSettings->useWebDebugger ? DevServerHelper::get_BundleUrl(m_devSettings->debugHost, m_devSettings->debugBundlePath, m_devSettings->platformName, "true" /*dev*/, "false" /*hot*/) : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(m_innerInstance, facebook::react::SourceCodeModule::name, [bundleUrl]() -> std::unique_ptr<xplat::module::CxxModule>
   {
     return std::make_unique<SourceCodeModule>(bundleUrl);
   }, nativeQueue));
-#endif
 
  modules.push_back(std::make_unique<CxxNativeModule>(m_innerInstance, "ExceptionsManager", [&]() -> std::unique_ptr<xplat::module::CxxModule>
   {

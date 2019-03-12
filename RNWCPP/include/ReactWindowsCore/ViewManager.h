@@ -4,7 +4,6 @@
 #pragma once
 
 #include <cxxreact/CxxModule.h>
-#include "IUIManager.h"
 
 namespace facebook { namespace react {
 

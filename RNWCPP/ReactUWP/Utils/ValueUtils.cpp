@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include "ValueUtils.h"
+#include <Utils/ValueUtils.h>
 #include "UnicodeConversion.h"
 
 #include <folly/dynamic.h>
@@ -30,23 +30,23 @@ inline BYTE GetBFromArgb(DWORD v) { return ((BYTE)((v & 0x000000FF))); }
 
 const auto dateTimeFormatISO8601 = "%Y-%m-%dT%H:%M:%S";
 
-winrt::Color ColorFrom(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
 {
   UINT argb = static_cast<UINT>(d.getInt());
   return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
-winrt::SolidColorBrush SolidColorBrushFrom(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::SolidColorBrush) SolidColorBrushFrom(const folly::dynamic& d)
 {
   return winrt::SolidColorBrush(ColorFrom(d));
 }
 
-winrt::Brush BrushFrom(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::Brush) BrushFrom(const folly::dynamic& d)
 {
   return SolidColorBrushFrom(d);
 }
 
-winrt::HorizontalAlignment HorizontalAlignmentFrom(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::HorizontalAlignment) HorizontalAlignmentFrom(const folly::dynamic& d)
 {
   auto valueString = d.asString();
   if (valueString == "center")
@@ -63,7 +63,7 @@ winrt::HorizontalAlignment HorizontalAlignmentFrom(const folly::dynamic& d)
   return winrt::HorizontalAlignment::Stretch;
 }
 
-winrt::VerticalAlignment VerticalAlignmentFrom(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::VerticalAlignment) VerticalAlignmentFrom(const folly::dynamic& d)
 {
   auto valueString = d.asString();
   if (valueString == "bottom")
@@ -80,7 +80,7 @@ winrt::VerticalAlignment VerticalAlignmentFrom(const folly::dynamic& d)
   return winrt::VerticalAlignment::Stretch;
 }
 
-winrt::Windows::Foundation::DateTime DateTimeFrom(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::Windows::Foundation::DateTime) DateTimeFrom(const folly::dynamic& d)
 {
   winrt::Windows::Foundation::DateTime dateTime;
   std::tm tm;
@@ -93,7 +93,7 @@ winrt::Windows::Foundation::DateTime DateTimeFrom(const folly::dynamic& d)
   return dateTime;
 }
 
-folly::dynamic DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime)
+REACTWINDOWS_API_(folly::dynamic) DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime)
 {
   folly::dynamic strDateTime;
   char buff[100];
@@ -108,22 +108,22 @@ folly::dynamic DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime)
   return strDateTime;
 }
 
-std::wstring asWStr(const folly::dynamic& d)
+REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic& d)
 {
   return facebook::react::UnicodeConversion::Utf8ToUtf16(d.getString());
 }
 
-folly::dynamic HstringToDynamic(winrt::hstring hstr)
+REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr)
 {
   return folly::dynamic(facebook::react::UnicodeConversion::Utf16ToUtf8(hstr.c_str(), hstr.size()));
 }
 
-winrt::hstring asHstring(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic& d)
 {
   return winrt::hstring(asWStr(d));
 }
 
-winrt::Windows::Foundation::TimeSpan TimeSpanFromMs(double ms)
+REACTWINDOWS_API_(winrt::Windows::Foundation::TimeSpan) TimeSpanFromMs(double ms)
 {
   std::chrono::milliseconds dur((int64_t)ms);
   return winrt::Windows::Foundation::TimeSpan::duration(dur);

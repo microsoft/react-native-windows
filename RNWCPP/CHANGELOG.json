@@ -2,6 +2,62 @@
   "name": "react-native-win",
   "entries": [
     {
+      "version": "0.6.3",
+      "tag": "react-native-win_v0.6.3",
+      "date": "Tue, 12 Mar 2019 20:22:42 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "uwp - expose more helpers & cleanup for customViewmanagers support",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "b0c5d67c1ea0cf3ca0a093345e75f9aef2d4c493"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.6.2",
+      "tag": "react-native-win_v0.6.2",
+      "date": "Tue, 12 Mar 2019 02:41:20 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update react-native to 0.57.0-microsoft.2",
+            "author": "Project Collection Build Service (office) <Project Collection Build Service (office)>",
+            "commit": "1e4816dd96fa986da096b76879a4d8065df460b7"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.6.1",
+      "tag": "react-native-win_v0.6.1",
+      "date": "Sat, 09 Mar 2019 21:28:30 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fix nuget packaging",
+            "author": "Andy Himberger <andrewh@microsoft.com>",
+            "commit": "a8d52e79bc74b6974882e1bc7108fb469ca2d1ee"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.6.0",
+      "tag": "react-native-win_v0.6.0",
+      "date": "Sat, 09 Mar 2019 18:32:03 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "added back SourceCodeModule",
+            "author": "Lena Hong <Lena.Hong@microsoft.com>",
+            "commit": "6d3c5d83b76e4994e69b2d4741ace92bb81c2c15"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.93",
       "tag": "react-native-win_v0.5.93",
       "date": "Fri, 08 Mar 2019 09:15:31 GMT",

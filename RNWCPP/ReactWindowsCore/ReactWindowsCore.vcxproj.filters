@@ -68,7 +68,6 @@
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
-    <ClInclude Include="ViewManager.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
@@ -117,10 +116,12 @@
     <ClInclude Include="AbiSafe.h" />
     <ClInclude Include="JSBigAbiString.h" />
     <ClInclude Include="MemoryTracker.h" />
-    <ClInclude Include="UnicodeConversion.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\UnicodeConversion.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

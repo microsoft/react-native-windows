@@ -6,7 +6,6 @@
 #include "CalendarViewViewManager.h"
 #include <Views/ShadowNodeBase.h>
 
-#include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.UI.Text.h>
