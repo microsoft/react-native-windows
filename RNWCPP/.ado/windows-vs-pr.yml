@@ -52,24 +52,17 @@ jobs:
             Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
             Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
-      - task: npmAuthenticate@0
-        displayName: NPM Authenticate # friendly name displayed in the UI
+      - task: CmdLine@2
+        displayName: Replace RN dependency with tarball
         inputs:
-          workingFile: RNWCPP\.npmrc
+          script: node Scipts/replaceRNDependency.js
+          workingDirectory: RNWCPP
 
-      - task: Npm@1
+      - task: CmdLine@2
+        displayName: npm install
         inputs:
-          command: 'install' # Options: install, publish, custom
-          workingDir: RNWCPP # Optional
-          verbose: true # Optional
-          #customCommand: # Required when command == Custom
-          #customRegistry: 'useNpmrc' # Optional. Options: useNpmrc, useFeed
-          #customFeed: # Required when customRegistry == UseFeed
-          #customEndpoint: # Optional
-          #publishRegistry: 'useExternalRegistry' # Optional. Options: useExternalRegistry, useFeed
-          #publishFeed: # Required when publishRegistry == UseFeed
-          #publishPackageMetadata: true # Optional
-          #publishEndpoint: # Required when publishRegistry == UseExternalRegistry
+          script: npm install
+          workingDirectory: RNWCPP
 
       - task: PowerShell@2
         displayName: Cleanup any packagers left over from other builds
