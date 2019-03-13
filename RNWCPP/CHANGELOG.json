@@ -2,6 +2,20 @@
   "name": "react-native-win",
   "entries": [
     {
+      "version": "0.6.4",
+      "tag": "react-native-win_v0.6.4",
+      "date": "Wed, 13 Mar 2019 07:16:37 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update react-native to 0.57.0-microsoft.4",
+            "author": "Andrew Coates (REDMOND) <acoates@microsoft.com>",
+            "commit": "bb4c115c0eaa35eb6d965c5b69f598bdfc7d8377"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.6.3",
       "tag": "react-native-win_v0.6.3",
       "date": "Tue, 12 Mar 2019 20:22:42 GMT",
