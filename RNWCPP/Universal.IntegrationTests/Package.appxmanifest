@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="07b4bfa1-f47d-48f0-9406-4f47c77bfe13" Publisher="CN=microsoft" Version="1.0.0.0" />
+  <Identity Name="07b4bfa1-f47d-48f0-9406-4f47c77bfe13" Publisher="CN=RNWTest" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="07b4bfa1-f47d-48f0-9406-4f47c77bfe13" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Universal.IntegrationTests</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>RNWTest</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

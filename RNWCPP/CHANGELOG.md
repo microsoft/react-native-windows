@@ -1,6 +1,13 @@
 # Change Log - react-native-win
 
-This log was last generated on Tue, 12 Mar 2019 20:22:42 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Mar 2019 07:16:37 GMT and should not be manually modified.
+
+## 0.6.4
+Wed, 13 Mar 2019 07:16:37 GMT
+
+### Patches
+
+- Update react-native to 0.57.0-microsoft.4
 
 ## 0.6.3
 Tue, 12 Mar 2019 20:22:42 GMT

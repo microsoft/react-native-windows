@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="5615438c-785c-4076-91f1-664c8099d023" Publisher="CN=acoates" Version="1.0.0.0" />
+  <Identity Name="5615438c-785c-4076-91f1-664c8099d023" Publisher="CN=RNWTest" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="5615438c-785c-4076-91f1-664c8099d023" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>ReactUWPUnitTests</DisplayName>
-    <PublisherDisplayName>ReactNative</PublisherDisplayName>
+    <PublisherDisplayName>RNWTest</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

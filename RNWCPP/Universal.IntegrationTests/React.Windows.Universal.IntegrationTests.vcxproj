@@ -50,7 +50,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(SolutionDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(YogaDir);$(SolutionDir)include;$(SolutionDir)ReactWindowsCore;$(SolutionDir)include\ReactWindowsCore;$(SolutionDir)include\ReactUWP;$(SolutionDir)ReactUWP;$(IncludePath)</IncludePath>
-    <PackageCertificateKeyFile>Universal.IntegrationTests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>React.Windows.Universal.IntegrationTests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>3178F848DBCD8815543899DE47FD75569C39F355</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
