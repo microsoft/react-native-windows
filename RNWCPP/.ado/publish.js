@@ -49,7 +49,7 @@ function doPublish() {
   exec(`git commit -m "Applying package update to ${releaseVersion}`);
   exec(`git tag v${releaseVersion}`);
   exec(`git push origin HEAD:${tempPublishBranch} --follow-tags --verbose`);
-  exec(`git push origin tag v${releaseVersion}`);
+  exec(`git push origin tag rnwcpp-${releaseVersion}`);
 
   exec(`npm publish`);
 
