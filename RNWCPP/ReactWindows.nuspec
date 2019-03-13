@@ -51,7 +51,6 @@
     <file src="inc\Core\Sandbox\SandboxEndpoint.h"   target="inc"/>
     <file src="inc\Core\ShadowNode.h"                target="inc"/>
     <file src="inc\Core\Tracing.h"                   target="inc"/>
-    <file src="inc\Core\ViewManager.h"               target="inc"/>
     <file src="inc\Core\Modules\I18nModule.h"        target="inc"/>
 
     <!-- Windows Desktop artifacts -->

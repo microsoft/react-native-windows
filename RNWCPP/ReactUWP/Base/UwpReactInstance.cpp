@@ -44,7 +44,6 @@
 
 // Modules
 #include <AsyncStorageModule.h>
-#include <SourceCodeModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
@@ -207,17 +206,6 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
     "AsyncLocalStorage",
     []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
-    std::make_shared<WorkerMessageQueueThread>());
-
-  modules.emplace_back(
-    facebook::react::SourceCodeModule::name,
-    [devSettings]() {
-      std::string bundleUrl = devSettings->useWebDebugger ?
-        facebook::react::DevServerHelper::get_BundleUrl(devSettings->debugHost, devSettings->debugBundlePath.empty() ?
-          "" : devSettings->debugBundlePath, devSettings->platformName, "true" /*dev*/, "false" /*hot*/)
-        : std::string();
-      return std::make_unique<facebook::react::SourceCodeModule>(bundleUrl);
-    },
     std::make_shared<WorkerMessageQueueThread>());
 
   return modules;

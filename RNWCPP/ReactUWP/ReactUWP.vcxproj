@@ -142,6 +142,7 @@
     <ClInclude Include="..\include\ReactUWP\IReactInstance.h" />
     <ClInclude Include="..\include\ReactUWP\IXamlRootView.h" />
     <ClInclude Include="..\include\ReactUWP\ReactUwp.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
@@ -178,7 +179,6 @@
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
-    <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CalendarViewViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
@@ -194,7 +194,6 @@
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
-    <ClInclude Include="Views\ViewManagerBase.h" />
     <ClInclude Include="Views\ViewPanel.h" />
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />

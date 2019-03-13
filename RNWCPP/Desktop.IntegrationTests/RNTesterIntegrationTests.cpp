@@ -176,6 +176,10 @@ TEST_CLASS(RNTesterIntegrationTests)
     TestComponent("SyncMethodTest");
   }
 
+  //ISS:3219193 - Fix intermittent errors, then re-enable.
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocket)
+    TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocket)
   {
     TestComponent("WebSocketTest");

@@ -52,10 +52,11 @@ jobs:
             Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
             Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
-      - task: npmAuthenticate@0
-        displayName: NPM Authenticate # friendly name displayed in the UI
+      - task: CmdLine@2
+        displayName: Replace RN dependency with tarball
         inputs:
-          workingFile: RNWCPP\.npmrc
+          script: node Scripts/replaceRNDependency.js
+          workingDirectory: RNWCPP
 
       - task: CmdLine@2
         displayName: npm install
@@ -210,7 +211,7 @@ jobs:
           #runInParallel: False # Optional
           runTestsInIsolation: true # Optional
           #codeCoverageEnabled: False # Optional
-          otherConsoleOptions: '--Tests:"RNTesterIntegrationTests,WebSocketModuleIntegrationTest"' # Optional
+          otherConsoleOptions: '--Tests:"RNTesterIntegrationTests"' # Optional
           #distributionBatchType: 'basedOnTestCases' # Optional. Options: basedOnTestCases, basedOnExecutionTime, basedOnAssembly
           #batchingBasedOnAgentsOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customBatchSize
           #customBatchSizeValue: '10' # Required when distributionBatchType == BasedOnTestCases && BatchingBasedOnAgentsOption == CustomBatchSize

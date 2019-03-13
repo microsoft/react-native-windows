@@ -250,9 +250,6 @@
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\ValueUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Threading\UIMessageQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
@@ -305,9 +302,6 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\TextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewManagerBase.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\ViewViewManager.h">
@@ -387,6 +381,9 @@
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
