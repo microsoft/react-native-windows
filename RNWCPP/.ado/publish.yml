@@ -42,6 +42,7 @@ jobs:
         displayName: Do Publish
         inputs:
           script: node .ado/publish.js
+          workingDirectory: RNWCPP
 
       - task: CmdLine@1
         displayName: 'npm unauth'
