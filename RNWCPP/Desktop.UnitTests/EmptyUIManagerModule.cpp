@@ -118,23 +118,21 @@ std::map<std::string, folly::dynamic> EmptyUIManagerModule::getConstants()
   return std::move(constants);
 }
 
-//TODO: Solve linking problems in lambda implementations.
-//      (i.e.) LNK2001: unresolved external symbol mallocx, rallocx, mallctlbymib...
 auto EmptyUIManagerModule::getMethods() -> std::vector<Method>
 {
   return
   {
     Method("removeRootView", [this](dynamic args)
   {
-    //m_manager->removeRootView(jsArgAsInt(args, 0));
+    m_manager->removeRootView(jsArgAsInt(args, 0));
   }),
     Method("createView", [this](dynamic args)
   {
-    //m_manager->createView(jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), jsArgAsDynamic(args, 3));
+    m_manager->createView(jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), jsArgAsDynamic(args, 3));
   }),
     Method("setChildren", [this](dynamic args)
   {
-    //m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1));
+    m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1));
   }),
   };
 }
