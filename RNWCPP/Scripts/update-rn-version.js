@@ -7,7 +7,7 @@ const request = require('request');
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const branchNamePrefix = 'auto-update-versions';
-const finalTargetBranchName = 'master';
+const finalTargetBranchName = 'rnwcpp-preview';
 let branchName;
 let rnVersion;
 
