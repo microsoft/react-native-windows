@@ -53,6 +53,13 @@ void EnsureExportedFunctions(bool createThings)
     auto control = react::uwp::CreateReactRootView(react::uwp::XamlView(nullptr), L"componentname", nullptr);
     facebook::react::Instance* pInstance = nullptr;
     pInstance->callJSFunction("m", "f", folly::dynamic());
+
+    // verify folly exports
+    folly::dynamic dy = folly::dynamic();
+    dy.asDouble();
+    dy.asInt();
+    dy.asString();
+    dy.asBool();
   }
 }
 
