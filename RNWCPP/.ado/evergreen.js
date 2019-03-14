@@ -45,7 +45,7 @@ while (myArgs.length) {
 // Create a new VSO PR
 function createPr() {
   console.log('Creating PR...');
-  const url = 'https://api.github.com/repos/Microsoft/react-native/pulls';
+  const url = 'https://api.github.com/repos/Microsoft/react-native-windows/pulls';
   request.post(
     {
       url: url,
@@ -70,7 +70,7 @@ function createPr() {
       }
 
       if (!body.pullRequestId) {
-        throw new Error('Failed to create PR');
+        throw new Error('Failed to create PR.\nBody : ' + JSON.stringify(body));
       }
     }
   );
