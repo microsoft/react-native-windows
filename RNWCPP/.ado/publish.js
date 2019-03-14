@@ -27,12 +27,12 @@ function doPublish() {
 
   let releaseVersion = pkgJson.version;
 
-  const versionGroups = /(.*-v\.)([0-9]*)/.exec(releaseVersion);
+  const versionGroups = /(.*-vnext\.)([0-9]*)/.exec(releaseVersion);
   if (versionGroups) {
     releaseVersion = versionGroups[1] + (parseInt(versionGroups[2]) + 1);
   } else {
     if (releaseVersion.indexOf("-") === -1) {
-      releaseVersion = releaseVersion + "-v.0";
+      releaseVersion = releaseVersion + "-vnext.0";
     } else {
       console.log("Invalid version to publish");
       exit(1);
@@ -43,7 +43,7 @@ function doPublish() {
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);
 
-  const tagName = 'rnwcpp-' + releaseVersion;
+  const tagName = 'vnext-' + releaseVersion;
 
   exec(`git checkout -b ${tempPublishBranch}`);
 
@@ -53,7 +53,7 @@ function doPublish() {
   exec(`git push origin HEAD:${tempPublishBranch} --follow-tags --verbose`);
   exec(`git push origin tag ${tagName}`);
 
-  exec(`npm publish`);
+  exec(`npm publish --tag vnext`);
 
   exec(`git checkout ${publishBranchName}`);
   exec(`git pull origin ${publishBranchName}`);
