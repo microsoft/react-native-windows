@@ -43,13 +43,15 @@ function doPublish() {
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);
 
+  const tagName = 'rnwcpp-' + releaseVersion;
+
   exec(`git checkout -b ${tempPublishBranch}`);
 
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Applying package update to ${releaseVersion}`);
-  exec(`git tag v${releaseVersion}`);
+  exec(`git tag ${tagName}`);
   exec(`git push origin HEAD:${tempPublishBranch} --follow-tags --verbose`);
-  exec(`git push origin tag rnwcpp-${releaseVersion}`);
+  exec(`git push origin tag ${tagName}`);
 
   exec(`npm publish`);
 
