@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <ViewManager.h>
+#include <ReactWindowsCore/ViewManager.h>
 
 #include <IReactInstance.h>
 #include <XamlView.h>

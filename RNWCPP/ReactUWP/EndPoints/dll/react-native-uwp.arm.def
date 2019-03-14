@@ -13,6 +13,10 @@ EXPORTS
 ?str_to_bool@detail@folly@@YA?AV?$Expected@_NW4ConversionCode@folly@@@2@PAV?$Range@PBD@2@@Z
 ?size@dynamic@folly@@QBAIXZ
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABUdynamic@1@@Z
+?checkedMalloc@folly@@YAPAXI@Z
+?demangle@folly@@YA?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PBD@Z
+??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
+?__throw_bad_alloc@std@@YAXXZ
 ??0ReactRootView@uwp@react@@QAA@UDependencyObject@Xaml@UI@Windows@winrt@@@Z
 ?InitializeLogging@react@facebook@@YAX$$QAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPAUINativeTraceHandler@12@@Z
@@ -30,3 +34,14 @@ EXPORTS
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??$str_to_integral@_K@detail@folly@@YA?AV?$Expected@_KW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
+
+mallocxWeak
+rallocxWeak
+xallocxWeak
+sallocxWeak
+dallocxWeak
+sdallocxWeak
+nallocxWeak
+mallctlWeak
+mallctlnametomibWeak
+mallctlbymibWeak

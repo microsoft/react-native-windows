@@ -65,3 +65,14 @@ EXPORTS
 
 ?__throw_bad_alloc@std@@YAXXZ
 ?demangle@folly@@YA?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PEBD@Z
+
+mallocxWeak
+rallocxWeak
+xallocxWeak
+sallocxWeak
+dallocxWeak
+sdallocxWeak
+nallocxWeak
+mallctlWeak
+mallctlnametomibWeak
+mallctlbymibWeak
