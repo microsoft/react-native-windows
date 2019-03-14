@@ -113,7 +113,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   exec(`git checkout -b ${branchName}`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
   exec(`git add ${pkgJsonPath}`);
-  exec(`git commit "Update to react-native@${rnVersion}"`);
+  exec(`git commit -m "Update to react-native@${rnVersion}"`);
   exec(`git push origin ${branchName}`);
 
   if (autopr) createPr();
