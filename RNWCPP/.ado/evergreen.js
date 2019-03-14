@@ -52,7 +52,8 @@ function createPr() {
       json: true,
       headers: {
         Authorization: "Basic " + new Buffer(":" + process.env.githubToken).toString("base64"),
-        "Content-Type": 'application/json'
+        "Content-Type": 'application/json',
+        "User-Agent": "RNW-Evergreen Script"
       },
       body: {
         head: branchName,
