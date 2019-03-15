@@ -21,7 +21,7 @@ import {
   DatePicker,
   Popup,
   Picker
-} from 'react-native-win';
+} from 'react-native-windows';
 
 class TicTacButton extends Component {
   constructor(props) {

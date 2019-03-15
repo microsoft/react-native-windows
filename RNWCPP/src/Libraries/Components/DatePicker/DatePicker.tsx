@@ -1,7 +1,3 @@
-/**
- *
- * @providesModule DatePicker
- */
 'use strict';
 
 import * as React from 'react';

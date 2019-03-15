@@ -30,7 +30,7 @@ win32
 WindowsSampleCSharpApp
 NuGet.Config
 package-deps.json
-react-native-win.build.log
+react-native-windows.build.log
 ReactWin32.nuspec
 ReactWindows-CopyToStaging.bat
 ReactWindows-TestNuspec.bat

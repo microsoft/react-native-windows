@@ -1,6 +1,5 @@
 /**
  *
- * @providesModule TextInput
  * @flow
  * @format
  */

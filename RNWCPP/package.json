@@ -28,7 +28,7 @@
         "uwp"
       ],
       "providesModuleNodeModules": [
-        "react-native-win"
+        "react-native-windows"
       ]
     }
   },

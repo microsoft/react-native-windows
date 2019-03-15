@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 /**
- * @providesModule Image
  * @flow
  */
 // NOTE: this is a shrinked copy paste of ios impl.
