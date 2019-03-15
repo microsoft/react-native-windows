@@ -16,7 +16,6 @@ public:
   facebook::react::ShadowNode* createShadow() const;
   const char* GetName() const override;
   folly::dynamic GetNativeProps() const override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
