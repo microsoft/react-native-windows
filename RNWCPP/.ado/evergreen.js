@@ -30,12 +30,15 @@ function sanitizeBranchName(branch) {
 
 let myArgs = process.argv.slice(2);
 let autopr = false;
+let gitHubToken = null;
 
 while (myArgs.length) {
   switch (myArgs[0]) {
     case 'autopr':
       autopr = true;
-      myArgs = myArgs.slice(1);
+      // This args should be the result of new Buffer(":" + <githubToken>).toString("base64")
+      gitHubToken = myArgs[1];
+      myArgs = myArgs.slice(2);
       break;
     default:
       throw new Error('Invalid args');
@@ -51,7 +54,7 @@ function createPr() {
       url: url,
       json: true,
       headers: {
-        Authorization: "Basic " + new Buffer(":" + process.env.githubToken).toString("base64"),
+        Authorization: "Basic " + gitHubToken,
         "Content-Type": 'application/json',
         "User-Agent": "RNW-Evergreen Script"
       },
