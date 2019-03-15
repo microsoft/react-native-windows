@@ -28,6 +28,18 @@ inline BYTE GetRFromArgb(DWORD v) { return ((BYTE)((v & 0x00FF0000) >> 16)); }
 inline BYTE GetGFromArgb(DWORD v) { return ((BYTE)((v & 0x0000FF00) >> 8)); }
 inline BYTE GetBFromArgb(DWORD v) { return ((BYTE)((v & 0x000000FF))); }
 
+struct ColorComp
+{
+  bool operator()(const winrt::Color& lhs, const winrt::Color& rhs) const
+  {
+    return
+      (lhs.A < rhs.A || lhs.A == rhs.A &&
+       (lhs.R < rhs.R || lhs.R == rhs.R &&
+       (lhs.G < rhs.G || lhs.G == rhs.G &&
+        lhs.B < rhs.B)));
+  }
+};
+
 const auto dateTimeFormatISO8601 = "%Y-%m-%dT%H:%M:%S";
 
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
@@ -38,7 +50,22 @@ REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
 
 REACTWINDOWS_API_(winrt::SolidColorBrush) SolidColorBrushFrom(const folly::dynamic& d)
 {
-  return winrt::SolidColorBrush(ColorFrom(d));
+  static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
+
+  winrt::SolidColorBrush brush;
+  const auto color = ColorFrom(d);
+  if (solidColorBrushCache.count(color) != 0)
+  {
+    brush = solidColorBrushCache[color].get();
+    if (brush != nullptr)
+    {
+      return brush;
+    }
+  }
+
+  brush = winrt::SolidColorBrush(color);
+  solidColorBrushCache[color] = winrt::make_weak(brush);
+  return brush;
 }
 
 REACTWINDOWS_API_(winrt::Brush) BrushFrom(const folly::dynamic& d)
