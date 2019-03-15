@@ -1,6 +1,5 @@
 /**
  *
- * @providesModule TextInputState
  * @flow
  *
  * This class is responsible for coordinating the "focused"

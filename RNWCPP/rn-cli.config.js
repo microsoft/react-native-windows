@@ -29,7 +29,7 @@ if (fs.existsSync(path.resolve(__dirname, '../../scripts/metro-resources.js'))) 
 
   config.resolver.extraNodeModules['react-native'] = path.resolve(__dirname, '../react-native');
   config.resolver.extraNodeModules['react-native/Libraries/Image/AssetRegistry'] = path.resolve(__dirname, '../react-native/Libraries/Image/AssetRegistry.js');
-  config.resolver.providesModuleNodeModules = ['react-native', 'react-native-win'];
+  config.resolver.providesModuleNodeModules = ['react-native', 'react-native-windows'];
 } else {
   const rootRnPath = path.resolve(require.resolve('react-native'), '../../..');
 
@@ -38,14 +38,13 @@ if (fs.existsSync(path.resolve(__dirname, '../../scripts/metro-resources.js'))) 
     resolver: {
       extraNodeModules: {},
       platforms,
-      providesModuleNodeModules: ['@microsoft\\\\react-native', 'react-native-win'],
+      providesModuleNodeModules: ['react-native-windows'],
     },
     projectRoot: __dirname,
   };
 
   config.resolver.extraNodeModules['react-native'] = rootRnPath;
-  config.resolver.extraNodeModules['react-native'] = rootRnPath;
-  config.resolver.extraNodeModules['react-native-win'] = __dirname;
+  config.resolver.extraNodeModules['react-native-windows'] = __dirname;
   config.resolver.extraNodeModules['react-native/Libraries/Image/AssetRegistry'] = path.resolve(
     rootRnPath,
     'Libraries/Image/AssetRegistry.js'
