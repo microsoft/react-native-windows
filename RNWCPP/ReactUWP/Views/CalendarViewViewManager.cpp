@@ -32,7 +32,10 @@ public:
   void updateProperties(const folly::dynamic&& props) override;
 
 private:
-  static void OnSelectedDateChanged(IReactInstance& instance, int64_t tag, winrt::DateTime const& selectedDate);
+  void OnSelectedDateChanged(IReactInstance& instance, int64_t tag, winrt::DateTime const& selectedDate);
+
+  int64_t m_selectedTime, m_maxTime, m_minTime; // These values are expected to be in milliseconds
+  int64_t m_timeZoneOffsetInSeconds = 0;        // Timezone offset is expected to be in seconds
 };
 
 void CalendarViewShadowNode::createView()
@@ -65,106 +68,16 @@ void CalendarViewShadowNode::createView()
 void CalendarViewShadowNode::updateProperties(const folly::dynamic&& props)
 {
   m_updating = true;
-  Super::updateProperties(std::move(props));
-  m_updating = false;
-}
 
-/*static*/ void CalendarViewShadowNode::OnSelectedDateChanged(IReactInstance& instance, int64_t tag, winrt::DateTime const& selectedDate)
-{
-  auto newValue = DateTimeToDynamic(selectedDate);
-
-  if (!newValue.isNull())
-  {
-    folly::dynamic eventData = folly::dynamic::object("target", tag)("selectedDate", newValue);
-    instance.DispatchEvent(tag, "topChange", std::move(eventData));
-  }
-  else
-  {
-    assert(0);
-  }
-}
-
-CalendarViewViewManager::CalendarViewViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : Super(reactInstance)
-{
-}
-
-const char* CalendarViewViewManager::GetName() const
-{
-  return "RCTCalendarView";
-}
-
-folly::dynamic CalendarViewViewManager::GetNativeProps() const
-{
-  auto props = Super::GetNativeProps();
-
-  // For the sake of consistency, please keep expressions below in alphabetical order (on property names).
-  props.update(folly::dynamic::object
-    ("calendarIdentifier", "string")
-    ("calendarItemBackgroundColor", "number")
-    ("calendarItemBorderColor", "number")
-    ("calendarItemBorderThickness", "string")
-    ("calendarItemColor", "number")
-    ("dayItemFontFamily", "string")
-    ("dayItemFontSize", "number")
-    ("dayItemFontWeight", "number")
-    ("dayOfWeekFormat", "string")
-    ("firstDayOfWeek", "number")
-    ("firstOfMonthLabelFontFamily", "string")
-    ("firstOfMonthLabelFontSize", "number")
-    ("firstOfMonthLabelFontWeight", "number")
-    ("firstOfYearDecadeLabelFontFamily", "string")
-    ("firstOfYearDecadeLabelFontSize", "number")
-    ("firstOfYearDecadeLabelFontWeight", "number")
-    ("focusBorderColor", "number")
-    ("horizontalDayItemAlignment", "string")
-    ("horizontalFirstOfMonthLabelAlignment", "string")
-    ("hoverBorderColor", "number")
-    ("isGroupLabelVisible", "boolean")
-    ("isOutOfScopeEnabled", "boolean")
-    ("isTodayHighlighted", "boolean")
-    ("maxDate", "string")
-    ("minDate", "string")
-    ("monthYearItemFontFamily", "string")
-    ("monthYearItemFontSize", "number")
-    ("monthYearItemFontWeight", "number")
-    ("numberOfWeeksInView", "number")
-    ("outOfScopeColor", "number")
-    ("outOfScopeBackgroundColor", "number")
-    ("pressedBorderColor", "number")
-    ("pressedColor", "number")
-    ("selectedBorderColor", "number")
-    ("selectedColor", "number")
-    ("selectedDate", "string")
-    ("selectedHoverBorderColor", "number")
-    ("selectedPressedBorderColor", "number")
-    ("todayColor", "number")
-    ("todayFontWeight", "string")
-    ("verticalDayItemAlignment", "string")
-    ("verticalFirstOfMonthLabelAlignment", "string")
-  );
-
-  return props;
-}
-
-facebook::react::ShadowNode* CalendarViewViewManager::createShadow() const
-{
-  return new CalendarViewShadowNode();
-}
-
-XamlView CalendarViewViewManager::CreateViewCore(int64_t tag)
-{
-  auto calendarView = winrt::CalendarView();
-  return calendarView;
-}
-
-void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
-{
-  auto calendarView = nodeToUpdate->GetView().as<winrt::CalendarView>();
+  auto calendarView = GetView().as<winrt::CalendarView>();
   if (calendarView == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  bool updateSelectedDate = false;
+  bool updateMaxDate = false;
+  bool updateMinDate = false;
+
+  for (auto& pair : props.items())
   {
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
@@ -432,13 +345,10 @@ void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, fol
     }
     else if (propertyName == "maxDate")
     {
-      if (propertyValue.isString())
+      if (propertyValue.isInt())
       {
-        winrt::DateTime value = DateTimeFrom(propertyValue);
-        if (value != winrt::DateTime())
-          calendarView.MaxDate(value);
-        else
-          assert(false);  // we expect a valid date value
+        m_maxTime = propertyValue.asInt();
+        updateMaxDate = true;
       }
       else if (propertyValue.isNull())
       {
@@ -446,18 +356,15 @@ void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, fol
       }
       else
       {
-        assert(false);  // maxDate?: string - we don't expect anything but string
+        assert(false);  // maxDate?: number - we don't expect anything but int
       }
     }
     else if (propertyName == "minDate")
     {
-      if (propertyValue.isString())
+      if (propertyValue.isInt())
       {
-        winrt::DateTime value = DateTimeFrom(propertyValue);
-        if (value != winrt::DateTime())
-          calendarView.MinDate(value);
-        else
-          assert(false);  // we expect a valid date value
+        m_minTime = propertyValue.asInt();
+        updateMinDate = true;
       }
       else if (propertyValue.isNull())
       {
@@ -465,7 +372,7 @@ void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, fol
       }
       else
       {
-        assert(false);  // minDate?: string - we don't expect anything but string
+        assert(false);  // minDate?: number - we don't expect anything but int
       }
     }
     else if (propertyName == "monthYearItemFontFamily")
@@ -580,14 +487,10 @@ void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, fol
     }
     else if (propertyName == "selectedDate")
     {
-      if (propertyValue.isString())
+      if (propertyValue.isInt())
       {
-        winrt::DateTime value = DateTimeFrom(propertyValue);
-        if (value != winrt::DateTime())
-        {
-          calendarView.SelectedDates().Clear();
-          calendarView.SelectedDates().InsertAt(0, value);
-        }
+        m_selectedTime = propertyValue.asInt();
+        updateSelectedDate = true;
       }
       else if (propertyValue.isNull())
       {
@@ -595,7 +498,7 @@ void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, fol
       }
       else
       {
-        assert(false);  // selectedDate?: string - we don't expect anything but string
+        assert(false);  // selectedDate?: number - we don't expect anything but int
       }
     }
     else if (propertyName == "selectedHoverBorderColor")
@@ -615,6 +518,15 @@ void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, fol
         calendarView.ClearValue(winrt::CalendarView::SelectedPressedBorderBrushProperty());
       else
         assert(false);  // selectedPressedBorderColor?: string - we don't expect anything but int after processColor conversion
+    }
+    else if (propertyName.asString() == "timeZoneOffsetInSeconds")
+    {
+      if (propertyValue.isInt())
+        m_timeZoneOffsetInSeconds = propertyValue.asInt();
+      else if (propertyValue.isNull())
+        m_timeZoneOffsetInSeconds = 0;
+      else
+        assert(false); // timeZoneOffsetInSeconds?: number - we don't expect anything but int
     }
     else if (propertyName == "todayColor")
     {
@@ -662,7 +574,114 @@ void CalendarViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, fol
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  if (updateMaxDate)
+    calendarView.MaxDate(DateTimeFrom(m_maxTime, m_timeZoneOffsetInSeconds));
+
+  if (updateMinDate)
+    calendarView.MinDate(DateTimeFrom(m_minTime, m_timeZoneOffsetInSeconds));
+
+  if (updateSelectedDate)
+  {
+    winrt::DateTime value = DateTimeFrom(m_selectedTime, m_timeZoneOffsetInSeconds);
+    if (value != winrt::DateTime())
+    {
+      calendarView.SelectedDates().Clear();
+      calendarView.SelectedDates().InsertAt(0, value);
+    }
+  }
+
+  Super::updateProperties(std::move(props));
+  m_updating = false;
+}
+
+void CalendarViewShadowNode::OnSelectedDateChanged(IReactInstance& instance, int64_t tag, winrt::DateTime const& selectedDate)
+{
+  auto timeInMilliseconds = DateTimeToDynamic(selectedDate, m_timeZoneOffsetInSeconds);
+
+  if (!timeInMilliseconds.isNull())
+  {
+    folly::dynamic eventData = folly::dynamic::object("target", tag)("selectedDate", timeInMilliseconds);
+    instance.DispatchEvent(tag, "topChange", std::move(eventData));
+  }
+  else
+  {
+    assert(0);
+  }
+}
+
+CalendarViewViewManager::CalendarViewViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
+  : Super(reactInstance)
+{
+}
+
+const char* CalendarViewViewManager::GetName() const
+{
+  return "RCTCalendarView";
+}
+
+folly::dynamic CalendarViewViewManager::GetNativeProps() const
+{
+  auto props = Super::GetNativeProps();
+
+  // For the sake of consistency, please keep expressions below in alphabetical order (on property names).
+  props.update(folly::dynamic::object
+    ("calendarIdentifier", "string")
+    ("calendarItemBackgroundColor", "number")
+    ("calendarItemBorderColor", "number")
+    ("calendarItemBorderThickness", "string")
+    ("calendarItemColor", "number")
+    ("dayItemFontFamily", "string")
+    ("dayItemFontSize", "number")
+    ("dayItemFontWeight", "number")
+    ("dayOfWeekFormat", "string")
+    ("firstDayOfWeek", "number")
+    ("firstOfMonthLabelFontFamily", "string")
+    ("firstOfMonthLabelFontSize", "number")
+    ("firstOfMonthLabelFontWeight", "number")
+    ("firstOfYearDecadeLabelFontFamily", "string")
+    ("firstOfYearDecadeLabelFontSize", "number")
+    ("firstOfYearDecadeLabelFontWeight", "number")
+    ("focusBorderColor", "number")
+    ("horizontalDayItemAlignment", "string")
+    ("horizontalFirstOfMonthLabelAlignment", "string")
+    ("hoverBorderColor", "number")
+    ("isGroupLabelVisible", "boolean")
+    ("isOutOfScopeEnabled", "boolean")
+    ("isTodayHighlighted", "boolean")
+    ("maxDate", "number")
+    ("minDate", "number")
+    ("monthYearItemFontFamily", "string")
+    ("monthYearItemFontSize", "number")
+    ("monthYearItemFontWeight", "number")
+    ("numberOfWeeksInView", "number")
+    ("outOfScopeColor", "number")
+    ("outOfScopeBackgroundColor", "number")
+    ("pressedBorderColor", "number")
+    ("pressedColor", "number")
+    ("selectedBorderColor", "number")
+    ("selectedColor", "number")
+    ("selectedDate", "number")
+    ("selectedHoverBorderColor", "number")
+    ("selectedPressedBorderColor", "number")
+    ("todayColor", "number")
+    ("todayFontWeight", "string")
+    ("timeZoneOffsetInSeconds", "number")
+    ("verticalDayItemAlignment", "string")
+    ("verticalFirstOfMonthLabelAlignment", "string")
+  );
+
+  return props;
+}
+
+facebook::react::ShadowNode* CalendarViewViewManager::createShadow() const
+{
+  return new CalendarViewShadowNode();
+}
+
+XamlView CalendarViewViewManager::CreateViewCore(int64_t tag)
+{
+  auto calendarView = winrt::CalendarView();
+  return calendarView;
 }
 
 }}

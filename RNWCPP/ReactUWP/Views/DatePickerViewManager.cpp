@@ -33,11 +33,13 @@ public:
   void updateProperties(const folly::dynamic&& props) override;
 
 private:
-  static void OnDateChanged(
-    winrt::CalendarDatePicker const& picker,
+  void OnDateChanged(
     IReactInstance& instance,
     int64_t tag,
     winrt::DateTime const& newDate);
+
+  int64_t m_selectedTime, m_maxTime, m_minTime; // These values are expected to be in milliseconds
+  int64_t m_timeZoneOffsetInSeconds = 0;        // Timezone offset is expected to be in seconds
 };
 
 void DatePickerShadowNode::createView()
@@ -47,31 +49,126 @@ void DatePickerShadowNode::createView()
   auto datePicker = GetView().as<winrt::CalendarDatePicker>();
   auto wkinstance = GetViewManager()->GetReactInstance();
 
-  datePicker.DateChanged([=](winrt::CalendarDatePicker picker, winrt::CalendarDatePickerDateChangedEventArgs args)
+  datePicker.DateChanged([=](winrt::CalendarDatePicker /*picker*/, winrt::CalendarDatePickerDateChangedEventArgs args)
   {
     auto instance = wkinstance.lock();
     if (!m_updating && instance != nullptr && args.NewDate() != nullptr)
-      OnDateChanged(picker, *instance, m_tag, args.NewDate().Value());
+      OnDateChanged(*instance, m_tag, args.NewDate().Value());
   });
 }
 
 void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
 {
   m_updating = true;
+
+  auto datePicker = GetView().as<winrt::CalendarDatePicker>();
+  if (datePicker == nullptr)
+    return;
+
+  bool updateSelectedDate = false;
+  bool updateMaxDate = false;
+  bool updateMinDate = false;
+
+  for (auto& pair : props.items())
+  {
+    const folly::dynamic& propertyName = pair.first;
+    const folly::dynamic& propertyValue = pair.second;
+
+    if (propertyName.asString() == "dayOfWeekFormat")
+    {
+      if (propertyValue.isString())
+        datePicker.DayOfWeekFormat(asHstring(propertyValue));
+      else if (propertyValue.isNull())
+        datePicker.ClearValue(winrt::CalendarDatePicker::DayOfWeekFormatProperty());
+    }
+    else if (propertyName.asString() == "dateFormat")
+    {
+      if (propertyValue.isString())
+        datePicker.DateFormat(asHstring(propertyValue));
+      else if (propertyValue.isNull())
+        datePicker.ClearValue(winrt::CalendarDatePicker::DateFormatProperty());
+    }
+    else if (propertyName.asString() == "firstDayOfWeek")
+    {
+      if (propertyValue.isInt())
+        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(propertyValue.asInt()));
+      else if (propertyValue.isNull())
+        datePicker.ClearValue(winrt::CalendarDatePicker::FirstDayOfWeekProperty());
+    }
+    else if (propertyName.asString() == "maxDate")
+    {
+      if (propertyValue.isInt())
+      {
+        m_maxTime = propertyValue.asInt();
+        updateMaxDate = true;
+      }
+      else if (propertyValue.isNull())
+      {
+        datePicker.ClearValue(winrt::CalendarDatePicker::MaxDateProperty());
+      }
+    }
+    else if (propertyName.asString() == "minDate")
+    {
+      if (propertyValue.isInt())
+      {
+        m_minTime = propertyValue.asInt();
+        updateMinDate = true;
+      }
+      else if (propertyValue.isNull())
+      {
+        datePicker.ClearValue(winrt::CalendarDatePicker::MinDateProperty());
+      }
+    }
+    else if (propertyName.asString() == "placeholderText")
+    {
+      if (propertyValue.isString())
+        datePicker.PlaceholderText(asHstring(propertyValue));
+      else if (propertyValue.isNull())
+        datePicker.ClearValue(winrt::CalendarDatePicker::PlaceholderTextProperty());
+    }
+    else if (propertyName.asString() == "selectedDate")
+    {
+      if (propertyValue.isInt())
+      {
+        m_selectedTime = propertyValue.asInt();
+        updateSelectedDate = true;
+      }
+      else if (propertyValue.isNull())
+      {
+        datePicker.ClearValue(winrt::CalendarDatePicker::DateProperty());
+      }
+    }
+    else if (propertyName.asString() == "timeZoneOffsetInSeconds")
+    {
+      if (propertyValue.isInt())
+        m_timeZoneOffsetInSeconds = propertyValue.asInt();
+      else if (propertyValue.isNull())
+        m_timeZoneOffsetInSeconds = 0;
+    }
+  }
+
+  if (updateMaxDate)
+    datePicker.MaxDate(DateTimeFrom(m_maxTime, m_timeZoneOffsetInSeconds));
+
+  if (updateMinDate)
+    datePicker.MinDate(DateTimeFrom(m_minTime, m_timeZoneOffsetInSeconds));
+
+  if (updateSelectedDate)
+    datePicker.Date(DateTimeFrom(m_selectedTime, m_timeZoneOffsetInSeconds));
+
   Super::updateProperties(std::move(props));
   m_updating = false;
 }
 
-/*static*/ void DatePickerShadowNode::OnDateChanged(
-  winrt::CalendarDatePicker const& picker,
+void DatePickerShadowNode::OnDateChanged(
   IReactInstance& instance,
   int64_t tag,
   winrt::DateTime const& newDate)
 {
-  auto newValue = DateTimeToDynamic(newDate);
-  if (!newValue.isNull())
+  auto timeInMilliseconds = DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
+  if (!timeInMilliseconds.isNull())
   {
-    folly::dynamic eventData = folly::dynamic::object("target", tag)("newDate", newValue);
+    folly::dynamic eventData = folly::dynamic::object("target", tag)("newDate", timeInMilliseconds);
     instance.DispatchEvent(tag, "topChange", std::move(eventData));
   }
 }
@@ -94,10 +191,11 @@ folly::dynamic DatePickerViewManager::GetNativeProps() const
     ("dayOfWeekFormat", "string")
     ("dateFormat", "string")
     ("firstDayOfWeek", "number")
-    ("maxDate", "string")
-    ("minDate", "string")
+    ("maxDate", "number")
+    ("minDate", "number")
     ("placeholderText", "string")
-    ("selectedDate", "string")
+    ("selectedDate", "number")
+    ("timeZoneOffsetInSeconds", "number")
   );
 
   return props;
@@ -112,56 +210,6 @@ XamlView DatePickerViewManager::CreateViewCore(int64_t tag)
 {
   auto datePicker = winrt::CalendarDatePicker();
   return datePicker;
-}
-
-void DatePickerViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
-{
-  auto datePicker = nodeToUpdate->GetView().as<winrt::CalendarDatePicker>();
-  if (datePicker == nullptr)
-    return;
-
-  for (auto& pair : reactDiffMap.items())
-  {
-    const folly::dynamic& propertyName = pair.first;
-    const folly::dynamic& propertyValue = pair.second;
-
-    if (propertyName.asString() == "dayOfWeekFormat")
-    {
-      if (propertyValue.isString())
-        datePicker.DayOfWeekFormat(asHstring(propertyValue));
-    }
-    else if (propertyName.asString() == "dateFormat")
-    {
-      if (propertyValue.isString())
-        datePicker.DateFormat(asHstring(propertyValue));
-    }
-    else if (propertyName.asString() == "firstDayOfWeek")
-    {
-      if (propertyValue.isInt())
-        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(propertyValue.asInt()));
-    }
-    else if (propertyName.asString() == "maxDate")
-    {
-      if (propertyValue.isString())
-        datePicker.MaxDate(DateTimeFrom(propertyValue));
-    }
-    else if (propertyName.asString() == "minDate")
-    {
-      if (propertyValue.isString())
-        datePicker.MinDate(DateTimeFrom(propertyValue));
-    }
-    else if (propertyName.asString() == "placeholderText")
-    {
-      if (propertyValue.isString())
-        datePicker.PlaceholderText(asHstring(propertyValue));
-    }
-    else if (propertyName.asString() == "selectedDate")
-    {
-      if (propertyValue.isString())
-        datePicker.Date(DateTimeFrom(propertyValue));
-    }
-  }
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 }}

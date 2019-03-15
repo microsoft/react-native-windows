@@ -59,8 +59,8 @@ export class CalendarView extends React.Component<ICalendarViewProps, {}> {
       isGroupLabelVisible: this.props.isGroupLabelVisible,
       isOutOfScopeEnabled: this.props.isOutOfScopeEnabled,
       isTodayHighlighted: this.props.isTodayHighlighted,
-      maxDate: this.props.maxDate,
-      minDate: this.props.minDate,
+      maxDate: (this.props.maxDate ? this.props.maxDate.getTime() : undefined),  // time in milliseconds
+      minDate: (this.props.minDate ? this.props.minDate.getTime() : undefined),  // time in milliseconds
       monthYearItemFontFamily: this.props.monthYearItemFontFamily,
       monthYearItemFontSize: this.props.monthYearItemFontSize,
       monthYearItemFontWeight: this.props.monthYearItemFontWeight,
@@ -73,7 +73,7 @@ export class CalendarView extends React.Component<ICalendarViewProps, {}> {
       pressedColor: processColor(this.props.pressedColor),
       selectedBorderColor: processColor(this.props.selectedBorderColor),
       selectedColor: processColor(this.props.selectedColor),
-      selectedDate: this.props.selectedDate,
+      selectedDate: (this.props.selectedDate ? this.props.selectedDate.getTime() : undefined),  // time in milliseconds
       selectedHoverBorderColor: processColor(this.props.selectedHoverBorderColor),
       selectedPressedBorderColor: processColor(this.props.selectedPressedBorderColor),
       style: [styles.rctCalendarView, this.props.style],
@@ -83,11 +83,22 @@ export class CalendarView extends React.Component<ICalendarViewProps, {}> {
       verticalFirstOfMonthLabelAlignment: this.props.verticalFirstOfMonthLabelAlignment,
     };
 
+    // The Date object returns timezone in minutes. Convert that to seconds
+    // and multiply by -1 so that the offset can be added to GMT time to get
+    // the correct value on the native side.
+    const timeZoneOffsetInSeconds =
+      this.props.timeZoneOffsetInSeconds
+        ? this.props.timeZoneOffsetInSeconds
+        : this.props.selectedDate
+          ? (-1 * this.props.selectedDate.getTimezoneOffset() * 60)
+          : undefined;
+
     return (
       <RCTCalendarView
-        {...props}
-        onChange={this._onChange}
+        { ...props }
+        onChange={ this._onChange }
         ref={ this._setRef }
+        timeZoneOffsetInSeconds={ timeZoneOffsetInSeconds }
       />
     );
   }
@@ -97,15 +108,20 @@ export class CalendarView extends React.Component<ICalendarViewProps, {}> {
   }
 
   private _onChange = (event: ICalendarViewChangeEvent) => {
-    if (this._rctCalendarView) {
-      this._rctCalendarView.setNativeProps({ selectedDate: this.props.selectedDate });
+    if (this.props.selectedDate) {
+      const propsTimeStamp = this.props.selectedDate.getTime();
+      if (this._rctCalendarView) {
+        this._rctCalendarView.setNativeProps({ selectedDate: propsTimeStamp });
+      }
     }
 
     // Change the props after the native props are set in case the props
     // change removes the component
     this.props.onChange && this.props.onChange(event);
+
+    const nativeTimeStamp = event.nativeEvent.selectedDate;
     this.props.onSelectedDateChange &&
-      this.props.onSelectedDateChange(event.nativeEvent.selectedDate);
+      this.props.onSelectedDateChange(new Date(+nativeTimeStamp)); // Added the '+' operator to convert string to number
   }
 }
 

@@ -18,8 +18,6 @@ public:
 
   facebook::react::ShadowNode* createShadow() const;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
-
 protected:
   XamlView CreateViewCore(int64_t tag) override;
 
