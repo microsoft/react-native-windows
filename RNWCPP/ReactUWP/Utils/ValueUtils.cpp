@@ -52,18 +52,17 @@ REACTWINDOWS_API_(winrt::SolidColorBrush) SolidColorBrushFrom(const folly::dynam
 {
   static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
 
-  winrt::SolidColorBrush brush;
   const auto color = ColorFrom(d);
   if (solidColorBrushCache.count(color) != 0)
   {
-    brush = solidColorBrushCache[color].get();
+    auto brush = solidColorBrushCache[color].get();
     if (brush != nullptr)
     {
       return brush;
     }
   }
 
-  brush = winrt::SolidColorBrush(color);
+  winrt::SolidColorBrush brush(color);
   solidColorBrushCache[color] = winrt::make_weak(brush);
   return brush;
 }
