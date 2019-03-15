@@ -29,5 +29,5 @@ jobs:
       - task: CmdLine@2
         displayName: Do Update
         inputs:
-          script: node .ado/evergreen.js autopr
+          script: node .ado/evergreen.js autopr $(apiAuthHeader)
           workingDirectory: RNWCPP
