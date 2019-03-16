@@ -50,7 +50,7 @@ REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
 
 REACTWINDOWS_API_(winrt::SolidColorBrush) SolidColorBrushFrom(const folly::dynamic& d)
 {
-  static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
+  thread_local static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
 
   const auto color = ColorFrom(d);
   if (solidColorBrushCache.count(color) != 0)
