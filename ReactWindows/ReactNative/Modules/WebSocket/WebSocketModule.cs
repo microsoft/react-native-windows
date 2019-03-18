@@ -152,6 +152,21 @@ namespace ReactNative.Modules.WebSocket
                     { "id", id },
                 });
             }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+#if DEBUG
+                if (url.StartsWith("ws://localhost"))
+                {
+                    //ignore this for now. This would pollute the debugging log.
+                }
+                else
+                {
+#endif
+                    OnError(id, ex);
+#if DEBUG
+                }
+#endif
+            }
             catch (Exception ex)
             {
                 OnError(id, ex);
