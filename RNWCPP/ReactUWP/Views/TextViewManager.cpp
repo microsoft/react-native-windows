@@ -90,6 +90,29 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       else if (pair.second.isNull())
         textBlock.ClearValue(winrt::TextBlock::LineHeightProperty());
     }
+    else if (pair.first == "selectable")
+    {
+      if (pair.second.isBool())
+        textBlock.IsTextSelectionEnabled(pair.second.asBool());
+      else if (pair.second.isNull())
+        textBlock.ClearValue(winrt::TextBlock::IsTextSelectionEnabledProperty());
+    }
+    else if (pair.first == "allowFontScaling")
+    {
+      if (pair.second.isBool())
+        textBlock.IsTextScaleFactorEnabled(pair.second.asBool());
+      else
+        textBlock.ClearValue(winrt::TextBlock::IsTextScaleFactorEnabledProperty());
+    }
+    else if (pair.first == "selectionColor")
+    {
+      if (pair.second.isInt())
+      {
+        textBlock.SelectionHighlightColor(SolidColorBrushFrom(pair.second));
+      }
+      else
+        textBlock.ClearValue(winrt::TextBlock::SelectionHighlightColorProperty());
+    }
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
