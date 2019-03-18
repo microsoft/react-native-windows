@@ -15,6 +15,7 @@
 #pragma warning( pop )
 
 namespace winrt {
+using namespace Windows::Foundation;
 using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Input;
@@ -39,8 +40,6 @@ struct ColorComp
         lhs.B < rhs.B)));
   }
 };
-
-const auto dateTimeFormatISO8601 = "%Y-%m-%dT%H:%M:%S";
 
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
 {
@@ -106,30 +105,21 @@ REACTWINDOWS_API_(winrt::VerticalAlignment) VerticalAlignmentFrom(const folly::d
   return winrt::VerticalAlignment::Stretch;
 }
 
-REACTWINDOWS_API_(winrt::Windows::Foundation::DateTime) DateTimeFrom(const folly::dynamic& d)
+REACTWINDOWS_API_(winrt::DateTime) DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds)
 {
-  winrt::Windows::Foundation::DateTime dateTime;
-  std::tm tm;
-  std::stringstream dateTimeStream(d.asString());
-  dateTimeStream >> std::get_time(&tm, dateTimeFormatISO8601);
-  
-  if (!dateTimeStream.fail())
-    dateTime = winrt::clock::from_time_t(std::mktime(&tm));
+  auto timeInSeconds = (int64_t)timeInMilliSeconds / 1000;
+  time_t ttWithTimeZoneOffset = (time_t)(timeInSeconds + timeZoneOffsetInSeconds);
+  winrt::DateTime dateTime = winrt::clock::from_time_t(ttWithTimeZoneOffset);
 
   return dateTime;
 }
 
-REACTWINDOWS_API_(folly::dynamic) DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime)
+REACTWINDOWS_API_(folly::dynamic) DateTimeToDynamic(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds)
 {
-  folly::dynamic strDateTime;
-  char buff[100];
-  struct tm newtime;
-  time_t tt = winrt::clock::to_time_t(dateTime);
-  localtime_s(&newtime, &tt);
-  auto isformatted = strftime(buff, sizeof(buff), dateTimeFormatISO8601, &newtime);
-
-  if (isformatted)
-    strDateTime = folly::dynamic(std::string(buff));
+  time_t ttInSeconds = winrt::clock::to_time_t(dateTime);
+  auto timeInUtc = ttInSeconds - timeZoneOffsetInSeconds;
+  auto ttInMilliseconds = (int64_t)timeInUtc * 1000;
+  auto strDateTime = folly::dynamic(std::to_string(ttInMilliseconds));
 
   return strDateTime;
 }
@@ -149,10 +139,10 @@ REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic& d)
   return winrt::hstring(asWStr(d));
 }
 
-REACTWINDOWS_API_(winrt::Windows::Foundation::TimeSpan) TimeSpanFromMs(double ms)
+REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms)
 {
   std::chrono::milliseconds dur((int64_t)ms);
-  return winrt::Windows::Foundation::TimeSpan::duration(dur);
+  return winrt::TimeSpan::duration(dur);
 }
 
 } }

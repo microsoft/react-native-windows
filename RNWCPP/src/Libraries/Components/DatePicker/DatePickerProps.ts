@@ -8,13 +8,14 @@ export interface IDatePickerProps extends ViewProps {
   firstDayOfWeek?: DayOfWeek;
   maxDate?: Date;
   minDate?: Date;
+  timeZoneOffsetInSeconds?: number;
   onChange?: (event: IDatePickerChangeEvent) => void;
   onDateChange?: (newDate: Date) => void;
 }
 
 export interface IDatePickerChangeEvent {
   nativeEvent: {
-    newDate: Date;
+    newDate: number;
   };
 }
 

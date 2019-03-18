@@ -45,6 +45,7 @@ export interface ICalendarViewProps extends ViewProps {
   selectedDate?: Date;
   selectedHoverBorderColor?: string;
   selectedPressedBorderColor?: string;
+  timeZoneOffsetInSeconds?: number;
   todayColor?: string;
   todayFontWeight?: number;
   verticalDayItemAlignment?: 'bottom' | 'center' | 'stretch' | 'top';
@@ -53,6 +54,6 @@ export interface ICalendarViewProps extends ViewProps {
 
 export interface ICalendarViewChangeEvent {
   nativeEvent: {
-    selectedDate: Date;
+    selectedDate: number;
   };
 }
