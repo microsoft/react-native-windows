@@ -1,10 +1,11 @@
 # ReactNative for Windows 10 (C++)
 See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native. The [master branch of this repository]( https://github.com/Microsoft/react-native-windows) adds support for React Native for Windows10 implemented from scratch in C#. It reimplemented the JS<->Native bridge in C#, and shared the JS with Facebook's implementation of React Native.  The current direction of React Native involves a closer interaction between C++ and JS which is hard to achieve with a separate C# implementation.
 
-In this branch, we are working on a rewrite of React Native for Windows10 built in C++ that reuses the C++ core bridge implementation from Facebook’s React Native.  This will allow React Native for Windows10 to innovate and provide features by sharing the same core as Facebook’s React Native.
+In this branch, we are working on a rewrite of React Native for Windows10 built in C++ that reuses the C++ core bridge implementation from Facebook’s React Native.  This will allow React Native for Windows10 to innovate and provide features by sharing the same core as Facebook’s React Native. See [Status](https://github.com/Microsoft/react-native-windows#status) for more details.
 
 ### Note - ONLY CURRENTLY BUILDABLE USING INTERNAL CREDS
 We are actively working on removing all dependencies internal to Microsoft. This should be completed in the next month.
+Issues remaining : [#2170](https://github.com/Microsoft/react-native-windows/issues/2170), [#2169](https://github.com/Microsoft/react-native-windows/issues/2169), [#2154](https://github.com/Microsoft/react-native-windows/issues/2154), [#2153](https://github.com/Microsoft/react-native-windows/issues/2153) 
 
 # Getting Started
 This is a summary of setup steps needed to install and work with React Native for Windows10 (C++). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details.
@@ -66,16 +67,23 @@ This is a summary of setup steps needed to install and work with React Native fo
       1. Open `ReactWindows.sln`.
       1. Select `Project / Build Solution (Ctrl+Shift+B)`
 
+5. Install React dev-tools:
+
+    ```cmd
+   npm install -g react-devtools
+   ```
 
 ## Running the Sample Universal Windows App
 1. Run `npm run build`.
 1. Run `Scripts\launchPackager.bat`.
+3. Run dev tools and React Native debugger:
+   - Open your browser if not already running and navigate to `localhost:8081`
+   - Launch React dev tools `react-devtools`
 1. In Visual Studio, set React.Windows.Universal.SampleApp as the StartUp Project.
 1. Run project (`F5` or `Debug / Start Debugging`).
-1. Open your browser if not already running (or the next step may hang opening it)
-1. Press the "Load" button on the left side of the applicatoin window that appears.<br/>
+1. Press the "Load" button on the left side of the Windows 10 application window that appears.<br/>
 Browser should open showing a page for the React Native JS tools. Press F12 to open the tools.
-1. Try these samples:
+1. Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window:
    - Sample: JavaScript file: `Universal.SampleApp\index.uwp` App Name: `Bootstrap`
    - RNTester: JavaScript file: `lib\RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`
 
