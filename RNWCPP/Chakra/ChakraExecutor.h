@@ -46,9 +46,13 @@ private:
 
 class ChakraExecutor;
 
-class WorkerRegistration : public noncopyable
+class WorkerRegistration
 {
 public:
+  WorkerRegistration(const WorkerRegistration&) = delete;
+  WorkerRegistration& operator=(const WorkerRegistration&) = delete;
+  WorkerRegistration() = default;
+
   explicit WorkerRegistration(ChakraExecutor* executor_, ChakraObject jsObj_) :
     executor(executor_),
     jsObj(std::move(jsObj_))
