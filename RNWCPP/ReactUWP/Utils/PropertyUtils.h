@@ -434,14 +434,15 @@ template <class T>
 void SetTextTrimming(const T& element, const std::string& value)
 {
   if (value == "clip")
-    element.TextTrimming(winrt::TextTrimming::None);
-  else // 'head', 'middle', 'tail'
+    element.TextTrimming(winrt::TextTrimming::Clip);
+  else if (value == "head" || value == "middle" || value == "tail")
+  {
+    // "head" and "middle" not supported by UWP, but "tail"
+    // behavior is the most similar
     element.TextTrimming(winrt::TextTrimming::CharacterEllipsis);
-
-  // TODO: Very incomplete mapping for ellipsizeMode here.
-  //  Values head & middle not really supported by UWP?
-  //  Why doesn't react-native have none?
-  //  react-native doesn't support Character versus Word?
+  }
+  else
+    element.TextTrimming(winrt::TextTrimming::None);
 }
 
 template <class T>
