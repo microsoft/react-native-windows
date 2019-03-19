@@ -19,7 +19,7 @@
     <PackageCertificateKeyFile>ReactNative.Tests_TemporaryKey.pfx</PackageCertificateKeyFile>
     <UnitTestPlatformVersion Condition="'$(UnitTestPlatformVersion)' == ''">14.0</UnitTestPlatformVersion>
     <DependencyConfiguration>Debug</DependencyConfiguration>
-    <PackageCertificateThumbprint>F0FB82837F45EE9E0EFC3B38576F3C1523EAC45A</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>F983A63678123AECBF104DEBC8E7B2B3080F1C01</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug' or '$(Configuration)' == 'DebugBundle'">
     <DependencyConfiguration>Debug</DependencyConfiguration>
