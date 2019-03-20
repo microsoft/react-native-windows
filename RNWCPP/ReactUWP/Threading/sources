@@ -1,0 +1,10 @@
+LIBLETNAME = ReactUWP_Threading
+
+!include ..\make.inc
+
+SOURCES =  \
+	AsyncWorkQueue.cpp \
+	JSQueueThread.cpp \
+	UIMessageQueueThread.cpp \
+	WorkerMessageQueueThread.cpp \
+

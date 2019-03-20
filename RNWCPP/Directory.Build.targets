@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <PropertyGroup Label="Configuration">
+    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
+    <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
+  </PropertyGroup>
+
+  <!-- For build debugging purposes. -->
+  <Target Name="Vars">
+    <Message Text="=> Configuration           [$(Configuration)]" />
+    <Message Text="=> Platform                [$(Platform)]" />
+    <Message Text="=> PlatformTarget          [$(PlatformTarget)]" />
+    <Message Text="=> PlatformName            [$(PlatformName)]" />
+    <Message Text="=> BaseIntDir              [$(BaseIntDir)]" />
+    <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
+    <Message Text="=> IntDir                  [$(IntDir)]" />
+    <Message Text="=> OutDir                  [$(OutDir)]" />
+    <Message Text="=> UnmergedWinmdDirectory  [$(UnmergedWinmdDirectory)]" />
+    <Message Text="=> MergedWinmdDirectory    [$(MergedWinmdDirectory)]" />
+    <Message Text="=> FollyDir                [$(FollyDir)]" />
+    <Message Text="=> ReactNativeDir          [$(ReactNativeDir)]" />
+    <Message Text="=> YogaDir                 [$(YogaDir)]" />
+    <Message Text="=> ProjectHome                 [$(ProjectHome)]" />
+  </Target>
+
+</Project>
