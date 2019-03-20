@@ -169,15 +169,21 @@ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double val
 
 winrt::Size ViewPanel::MeasureOverride(winrt::Size availableSize)
 {
+  // All children are given as much size as they'd like
+  winrt::Size childConstraint(INFINITY, INFINITY);
+
   for (winrt::UIElement child : Children())
   {
-    child.Measure(winrt::Size(INFINITY, INFINITY));
+    child.Measure(childConstraint);
 
     auto width = child.DesiredSize().Width;
     auto height = child.DesiredSize().Height;
+
+    width = width;
   }
 
-  return winrt::Size(availableSize.Width == INFINITY ? 0.0f : availableSize.Width, availableSize.Height == INFINITY ? 0.0f : availableSize.Height);
+  // ViewPanels never choose their size, that is completely up to the parent - so return no size
+  return winrt::Size(0, 0);
 }
 
 winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
@@ -186,9 +192,6 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
   {
     float left = (float)ViewPanel::GetLeft(child);
     float top =  (float)ViewPanel::GetTop(child);
-
-    auto width = child.DesiredSize().Width;
-    auto height = child.DesiredSize().Height;
 
     if ((child != m_border) && (child != m_innerElement))
       child.Arrange(winrt::Rect(left, top, child.DesiredSize().Width, child.DesiredSize().Height));
