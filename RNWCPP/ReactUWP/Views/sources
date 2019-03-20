@@ -23,7 +23,10 @@ SOURCES =  \
 	TextViewManager.cpp \
 	ToucheventHandler.cpp \
 	ViewManagerBase.cpp \
+	ViewControl.cpp \
 	ViewPanel.cpp \
 	ViewViewManager.cpp \
 	VirtualTextViewManager.cpp \
 	WebViewManager.cpp \
+
+C_DEFINES = $(C_DEFINES) -DOLD_CPPWINRT=1
