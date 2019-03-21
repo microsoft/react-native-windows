@@ -1,7 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "1000.0.0",
-  "description": "React Native platform extensions for the Universal Windows Platform.",
+  "version": "0.57.0-vnext.10",
   "license": "MIT",
   "repository": {
     "type": "git",
