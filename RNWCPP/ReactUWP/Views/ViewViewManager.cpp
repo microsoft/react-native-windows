@@ -480,4 +480,20 @@ void ViewViewManager::ReplaceView(ViewShadowNode* pViewShadowNode, bool useContr
     }
 }
 
+void ViewViewManager::SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height)
+{
+  // When the View has a ContentControl the ViewPanel must also have the Width & Height set
+  // Do this first so that it is setup properly before any events are fired by the Super implementation
+  auto* pViewShadowNode = static_cast<ViewShadowNode*>(&nodeToUpdate);
+  if (pViewShadowNode->IsControl())
+  {
+    auto* pPanel = pViewShadowNode->GetViewPanel();
+    pPanel->Width(width);
+    pPanel->Height(height);
+  }
+
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+}
+
+
 } }
