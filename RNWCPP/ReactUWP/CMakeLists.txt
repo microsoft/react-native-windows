@@ -35,7 +35,6 @@ set(SOURCES
 	Utils/LocalBundleReader.cpp
 	Utils/ValueUtils.cpp
 	Views/ActivityIndicatorViewManager.cpp
-	Views/CalendarViewViewManager.cpp
 	Views/CheckboxViewManager.cpp
 	Views/ControlViewManager.cpp
 	Views/DatePickerViewManager.cpp
