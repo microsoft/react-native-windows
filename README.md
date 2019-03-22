@@ -77,7 +77,7 @@ For information on parity status with Android and iOS, including details on impl
 
 ## Opening Issues
 
-If you encounter a bug with the React Native Windows plugin, we would like to hear about it. Search the [existing issues](https://github.com/ReactWindows/react-native-windows/issues) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of Windows, React Native, React Native Windows plugin, and device family (i.e., mobile, desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
+If you encounter a bug with the React Native Windows plugin, we would like to hear about it. Search the [existing issues](https://github.com/Microsoft/react-native-windows/issues) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of Windows, React Native, React Native Windows plugin, and device family (i.e., mobile, desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
 
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed in the [Getting Help](#getting-help) section. There are limited resources available for handling issues, and by keeping the list of open issues lean we can respond in a timely manner.
 
@@ -86,7 +86,7 @@ The GitHub issues are intended for bug reports and feature requests. For help an
 - Install the [system requirements](#system-requirements)
 - Check out the React Native Windows code itself and install npm dependencies
 ```
-git clone --recursive https://github.com/ReactWindows/react-native-windows.git
+git clone --recursive https://github.com/Microsoft/react-native-windows.git
 cd react-native-windows
 npm install
 ```
@@ -94,7 +94,7 @@ npm install
 
 For more information about contributing PRs and issues, see our [Contribution Guidelines](CONTRIBUTING.md)
 
-[Good First Task](https://github.com/ReactWindows/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/ReactWindows/react-native-windows/labels/help%20wanted) are great starting points for PRs.
+[Good First Task](https://github.com/Microsoft/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/Microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
 Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to [run the unit tests in Visual Studio](CONTRIBUTING.md#running-unit-tests-in-visual-studio) and verify they are passing before submitting pull requests. For extra credit, [verify the examples in RNTester](CONTRIBUTING.md#using-rntester) continue to work properly.
 
