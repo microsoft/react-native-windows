@@ -77,9 +77,6 @@ XamlView ScrollViewManager::CreateViewCore(int64_t tag)
   winrt::ScrollViewer scrollViewer;
 
   AddHandlers(scrollViewer, tag);
-  // Enable as tabstop so clicks inside don't move focus to the first element.
-  // FUTURE: expose prop to control this
-  scrollViewer.IsTabStop(true);
 
   return scrollViewer;
 }

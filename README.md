@@ -9,6 +9,14 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 * Windows 10 Mobile
 * [Xbox One (UWP)](https://msdn.microsoft.com/en-us/windows/uwp/xbox-apps/index)
 
+## Status
+
+We are in the process of refactoring the native bridge implementation for `react-native-windows` to better align with upcoming changes related to the [React Native Fabric Architecture](https://github.com/react-native-community/discussions-and-proposals/issues/4). The effort is currently taking place in a [feature branch](https://github.com/Microsoft/react-native-windows/tree/rnwcpp-preview). We are tracking progress on this work through [Projects](https://github.com/Microsoft/react-native-windows/projects) and [Issues](https://github.com/Microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
+
+Our intent is to provide a compatibility layer that will support existing apps, view managers, and native modules written in C# with minimal breaking changes.
+
+We anticipate that there will be increased activity on the repository related to this refactoring effort, but that overall effort allocated to the existing architecture will be minimized. Please continue to report issues as you encounter them, but be sure to use the [correct template](https://github.com/Microsoft/react-native-windows/issues/new?assignees=rozele&labels=.NET&template=DOTNET.md) for issues related to the existing `react-native-windows` package (version 0.57 and earlier).
+
 ## Quick Links
 
 - [Getting Started](#getting-started)
