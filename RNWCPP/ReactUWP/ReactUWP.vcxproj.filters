@@ -163,9 +163,6 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\CalendarViewViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\CheckboxViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -353,9 +350,6 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\PickerViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\CalendarViewViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\PopupViewManager.h">

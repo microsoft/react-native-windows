@@ -180,7 +180,6 @@
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
-    <ClInclude Include="Views\CalendarViewViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
@@ -252,7 +251,6 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
-    <ClCompile Include="Views\CalendarViewViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
     <ClCompile Include="Views\DatePickerViewManager.cpp" />
