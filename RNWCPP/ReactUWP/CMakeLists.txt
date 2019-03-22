@@ -54,6 +54,7 @@ set(SOURCES
 	Views/TextViewManager.cpp
 	Views/TouchEventHandler.cpp
 	Views/ViewManagerBase.cpp
+	Views/ViewControl.cpp
 	Views/ViewPanel.cpp
 	Views/ViewViewManager.cpp
 	Views/VirtualTextViewManager.cpp

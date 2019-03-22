@@ -1,0 +1,18 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// This file was used to generate the files in the cppwinrt subfolders
+//
+// in the future this should be run through cppwinrt.exe but thats not currently
+// possible with the multiple build systems react uwp needs to support.
+
+namespace react.uwp
+{
+	[default_interface]
+	runtimeclass DynamicAutomationPeer :
+		Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
+		Windows.UI.Xaml.Automation.Provider.IInvokeProvider
+	{
+		DynamicAutomationPeer(Windows.UI.Xaml.FrameworkElement owner);
+	}
+}
