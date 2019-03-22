@@ -3,13 +3,13 @@
 
 #pragma once
 
+#include <Views/ShadowNodeBase.h>
+
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
-
-#include <Views/ShadowNodeBase.h>
 
 namespace react {
 namespace uwp {

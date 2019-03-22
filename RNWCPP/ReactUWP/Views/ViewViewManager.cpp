@@ -360,6 +360,8 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
             pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
           else if (role == "button")
             pViewShadowNode->AccessibilityRole(AccessibilityRoles::Button);
+          else
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
         }
         else if (propertyValue.isNull())
         {
