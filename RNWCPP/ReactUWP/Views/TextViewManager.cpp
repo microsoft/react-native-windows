@@ -23,9 +23,22 @@ using namespace Windows::UI::Xaml::Documents;
 
 namespace react { namespace uwp {
 
+class TextShadowNode : public ShadowNodeBase
+{
+  using Super = ShadowNodeBase;
+public:
+  TextShadowNode() = default;
+  bool ImplementsPadding() override { return true; }
+};
+
 TextViewManager::TextViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
   : Super(reactInstance)
 {
+}
+
+facebook::react::ShadowNode* TextViewManager::createShadow() const
+{
+  return new TextShadowNode();
 }
 
 const char* TextViewManager::GetName() const
