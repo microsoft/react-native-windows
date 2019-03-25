@@ -20,7 +20,6 @@
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
-#include <Views/CalendarViewViewManager.h>
 #include <Views/CheckboxViewManager.h>
 #include <Views/DatePickerViewManager.h>
 #include <Views/PickerViewManager.h>
@@ -102,7 +101,6 @@ REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
 
   // Standard view managers
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(instance));
-  viewManagers.push_back(std::make_unique<CalendarViewViewManager>(instance));
   viewManagers.push_back(std::make_unique<CheckBoxViewManager>(instance));
   viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
