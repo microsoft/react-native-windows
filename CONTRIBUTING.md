@@ -6,8 +6,8 @@ This doc is a work in progress! Check back for updates.
 Before submitting a PR to React Native Windows, make sure the unit tests pass locally in Visual Studio.
 
 #### But how?
-![Run All Tests](docs/img/RunTests.png)
-1. Open ReactNative solution file (react-native-windows\ReactWindows\ReactNative.sln)
+![Run All Tests](RNWCS/docs/img/RunTests.png)
+1. Open ReactNative solution file (react-native-windows\RNWCS\ReactWindows\ReactNative.sln)
 2. Set the Solution Configuration to "Debug" and the Solution Platforms to "x86"
 3. In the top toolbar, click "Test"
 4. Select "Run"
