@@ -13,6 +13,8 @@ class TextViewManager : public FrameworkElementViewManager
 public:
   TextViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
+  facebook::react::ShadowNode* createShadow() const override;
+
   const char* GetName() const override;
   void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
 

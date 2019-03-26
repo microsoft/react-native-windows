@@ -87,6 +87,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode
   virtual void updateProperties(const folly::dynamic&& props) override;
 
   virtual void ReplaceChild(XamlView oldChildView, XamlView newChildView);
+  virtual bool ImplementsPadding() { return false; }
 
   ViewManagerBase* GetViewManager() const { return static_cast<ViewManagerBase*>(m_viewManager); }
   XamlView GetView() const { return m_view; }
