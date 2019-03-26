@@ -31,7 +31,7 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": "16.5.0",
+    "react": "16.6.0",
     "react-native": "~0.57.0"
   },
   "devDependencies": {
@@ -49,7 +49,7 @@
     "jasmine-reporters": "^2.2.1",
     "minimist": "^1.2.0",
     "prettier": "1.13.6",
-    "react": "16.5.0",
+    "react": "16.6.0",
     "react-devtools-core": "^3.3.4",
     "react-native": "~0.57.0"
   },
@@ -64,8 +64,12 @@
   },
   "rnpm": {
     "haste": {
-      "platforms": ["windows"],
-      "providesModuleNodeModules": ["react-native-windows"]
+      "platforms": [
+        "windows"
+      ],
+      "providesModuleNodeModules": [
+        "react-native-windows"
+      ]
     },
     "plugin": "./local-cli/index.js",
     "platform": "./local-cli/platform.js"
