@@ -18,6 +18,8 @@ private:
 
 public:
   static winrt::com_ptr<ViewPanel> Create();
+
+public:
   template <typename D, typename... Args> friend auto winrt::make_self(Args&&... args);
 
   // Overrides
@@ -78,7 +80,6 @@ private:
   void UpdateClip();
 
 private:
-
   // Properties: Background is not managed as a DP so it won't conflict with the parent Background property.
   //std::optional<winrt::Windows::UI::Xaml::Media::Brush> m_optBackgroundBrush;
   bool m_propertiesChanged { false };
