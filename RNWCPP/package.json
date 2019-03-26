@@ -50,7 +50,7 @@
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
-    "typescript": "3.2.4"
+    "typescript": "3.3.3"
   },
   "peerDependencies": {
     "react": "16.5.0"
