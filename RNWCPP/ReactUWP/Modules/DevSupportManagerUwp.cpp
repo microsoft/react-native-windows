@@ -40,6 +40,8 @@ std::future<std::string> DownloadFromAsync(const std::string& url)
   winrt::Windows::Web::Http::HttpClient httpClient;
   winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(url));
 
+  co_await winrt::resume_background();
+
   winrt::Windows::Storage::Streams::IBuffer buffer = co_await httpClient.GetBufferAsync(uri);
   auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
 
