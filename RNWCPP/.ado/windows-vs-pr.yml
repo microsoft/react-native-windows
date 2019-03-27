@@ -119,6 +119,18 @@ jobs:
           #verbosityPack: 'Detailed' # Options: quiet, normal, detailed
           #arguments: # Required when command == Custom
 
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
+          workingDirectory: RNWCPP
+
+      - task: CmdLine@2
+        displayName: Remove SampleApp.uwp.bundle
+        inputs:
+          script: del SampleApp.uwp.bundle
+          workingDirectory: RNWCPP
+
       - task: MSBuild@1
         inputs:
           solution: RNWCPP/ReactWindows.sln
