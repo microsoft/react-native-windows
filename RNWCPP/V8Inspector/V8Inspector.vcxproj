@@ -107,7 +107,6 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\react-native-win\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('..\react-native-win\packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="..\react-native-win\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('..\react-native-win\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="..\react-native-win\packages\Office.Google_V8.1.3.0\build\Office.Google_V8.targets" Condition="'$(Platform)' == 'x64' AND Exists('..\react-native-win\packages\Office.Google_V8.1.3.0\build\Office.Google_V8.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -115,6 +114,5 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\react-native-win\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\react-native-win\packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('..\react-native-win\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\react-native-win\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('..\react-native-win\packages\Office.Google_V8.1.3.0\build\Office.Google_V8.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\react-native-win\packages\Office.Google_V8.1.3.0\build\Office.Google_V8.targets'))" />
   </Target>
 </Project>

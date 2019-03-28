@@ -72,7 +72,7 @@ function createPr() {
         throw new Error(err || body.errorCode);
       }
 
-      if (!body.pullRequestId) {
+      if (!body.id) {
         throw new Error('Failed to create PR.\nBody : ' + JSON.stringify(body));
       }
     }

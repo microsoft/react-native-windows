@@ -160,7 +160,6 @@
     <Import Project="..\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
     <Import Project="..\packages\Microsoft.ChakraCore.Debugger.0.0.0.29\build\native\Microsoft.ChakraCore.Debugger.targets" Condition="Exists('..\packages\Microsoft.ChakraCore.Debugger.0.0.0.29\build\native\Microsoft.ChakraCore.Debugger.targets')" />
-    <Import Project="..\packages\Office.Google_V8.1.6.0\build\Office.Google_V8.targets" Condition="'$(Platform)' != 'arm' AND Exists('..\packages\Office.Google_V8.1.6.0\build\Office.Google_V8.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -171,6 +170,5 @@
     <Error Condition="!Exists('..\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.ChakraCore.Debugger.0.0.0.29\build\native\Microsoft.ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ChakraCore.Debugger.0.0.0.29\build\native\Microsoft.ChakraCore.Debugger.targets'))" />
-    <Error Condition="'$(Platform)' != 'arm' AND !Exists('..\packages\Office.Google_V8.1.6.0')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Office.Google_V8.1.6.0'))" />
   </Target>
 </Project>
