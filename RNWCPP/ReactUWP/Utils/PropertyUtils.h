@@ -315,16 +315,9 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
   if (propertyName == "fontSize")
   {
     if (propertyValue.isNumber())
-    {
-      // Convert from pt to px (72dpi->96dpi)
-      double fontSizePx = static_cast<double>(propertyValue.getInt()) / 0.75;
-      element.FontSize(fontSizePx);
-    }
+      element.FontSize(static_cast<double>(propertyValue.getInt()));
     else if (propertyValue.isNull())
-    {
       element.ClearValue(T::FontSizeProperty());
-    }
-
   }
   else if (propertyName == "fontFamily")
   {
