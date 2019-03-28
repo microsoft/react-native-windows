@@ -12,7 +12,7 @@ SOURCES = reactcontrol.g.idl \
 # Noop rules needed to tell nmake that the unmerged.winmd files are produced by
 # midl, which also produces the .h files. Otherwise it tries to parallelize and
 # runs mdmerge before midl has created the winmds
-$(OBJ_PATH)\$O\reactcontrol.g.unmerged.winmd : $(PASS0_HEADERDIR)\reactcontrol.g.h
+$(OBJ_PATH)\$O\reactcontrol.g.unmerged.winmd : $(PROJINCDIR)\reactcontrol.g.h
 
 MDMERGE_SOURCES0 = \
 	$(OBJ_PATH)\$O\reactcontrol.g.unmerged.winmd \
@@ -28,4 +28,4 @@ $(TARGETDIR)\React.UWP.winmd : $(OBJ_PATH)\$O\mdmerge\pass0\output\react.uwp.win
 	$(OMAKECOPY) $(OBJ_PATH)\$O\mdmerge\pass0\output\react.uwp.winmd $(TARGETDIR)\react.uwp.winmd
 
 COPYFILES_PASS0 = $(COPYFILES_PASS0); \
-	$(PASS0_HEADERDIR)\reactcontrol.g.h,$(TARGETINCDIR); \
+	$(PROJINCDIR)\reactcontrol.g.h,$(TARGETINCDIR); \
