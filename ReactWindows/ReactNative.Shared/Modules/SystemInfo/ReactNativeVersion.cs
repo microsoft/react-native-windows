@@ -18,7 +18,7 @@ namespace ReactNative.Modules.SystemInfo
                 {
                     { "major", 0 },
                     { "minor", 57 },
-                    { "patch", 0 },
+                    { "patch", 1 },
                     { "prerelease", null },
                 };
             }
