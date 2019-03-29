@@ -7,7 +7,7 @@
     <RootNamespace>ReactNative</RootNamespace>
     <AssemblyName>ReactNative</AssemblyName>
     <Name>Scripts</Name>
-    <OutputPath>$(SolutionDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+    <OutputPath>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

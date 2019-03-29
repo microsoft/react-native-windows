@@ -81,6 +81,6 @@
     <Page Include="HostingPane.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="$(SolutionDir)Folly\Folly.natvis" />
+    <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
 </Project>

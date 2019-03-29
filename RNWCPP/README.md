@@ -27,6 +27,7 @@ This is a summary of setup steps needed to install and work with React Native fo
 ## Install dependencies
 * [Git](https://git-scm.com/download/win)
 * [Node.js](https://nodejs.org) (last verified with version 8.14.0)
+* [Chrome](https://www.google.com/chrome/) (*optional*, but needed for JS debugging)
 * [NuGet](https://dist.nuget.org/index.html)<br/>
   Add `NuGet.exe`'s location to `PATH`.
 * [NuGet Credential Provider](https://nuget.pkgs.visualstudio.com/_apis/public/nuget/client/CredentialProviderBundle.zip)<br/>
@@ -39,11 +40,11 @@ This is a summary of setup steps needed to install and work with React Native fo
     git clone https://github.com/Microsoft/react-native-windows.git
     cd react-native-windows
     ```
-1. Checkout the rnwcpp-preview branch
+2. Checkout the rnwcpp-preview branch
     ```cmd
     git checkout rnwcpp-preview
     ```
-1. Install dependencies. This step may take a while on the first run due to dependency download.
+3. Install dependencies. This step may take a while on the first run due to dependency download.
     ```cmd
     cd RNWCPP
     npm install
@@ -57,7 +58,7 @@ This is a summary of setup steps needed to install and work with React Native fo
     vsts-npm-auth -config .npmrc
     ```
 
-1. Build solution.
+4. Build solution.
     * Using MSBuild
     ```cmd
     MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]
@@ -65,9 +66,10 @@ This is a summary of setup steps needed to install and work with React Native fo
 
     * Using Visual Studio IDE
       1. Open `ReactWindows.sln`.
-      1. Select `Project / Build Solution (Ctrl+Shift+B)`
+      2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.
+      3. Select `Project / Build Solution (Ctrl+Shift+B)`
 
-5. Install React dev-tools:
+5. *[Optional]* Install [react-devtools](https://github.com/facebook/react-devtools/tree/master/packages/react-devtools) for enhanced JS debugging:
 
     ```cmd
    npm install -g react-devtools
@@ -75,17 +77,25 @@ This is a summary of setup steps needed to install and work with React Native fo
 
 ## Running the Sample Universal Windows App
 1. Run `npm run build`.
-1. Run `Scripts\launchPackager.bat`.
-3. Run dev tools and React Native debugger:
-   - Open your browser if not already running and navigate to `localhost:8081`
-   - Launch React dev tools `react-devtools`
-1. In Visual Studio, set React.Windows.Universal.SampleApp as the StartUp Project.
-1. Run project (`F5` or `Debug / Start Debugging`).
-1. Press the "Load" button on the left side of the Windows 10 application window that appears.<br/>
-Browser should open showing a page for the React Native JS tools. Press F12 to open the tools.
-1. Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window:
+2. Run `Scripts\launchPackager.bat`.
+3. *[Optional]* If you want to debug the JS code:
+   - Make sure Chrome is running if you're not already running it
+   - If you want to use the react-devtools that you installed earlier, run `react-devtools`
+4. In Visual Studio, set React.Windows.Universal.SampleApp as the StartUp Project.
+   - If you didn't already, make sure to set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.
+5. Run project (`F5` or `Debug / Start Debugging`).
+6. If you chose to skip step 3 above, make sure to uncheck the "Web Debugger" checkbox.
+7. Press the "Load" button on the left side of the Windows 10 application window that appears.
+
+The selected ReactNative app (defaulted to `Bootstrap`) should start in the bottom of the application window.
+
+Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window before pressing "Load":
    - Sample: JavaScript file: `Universal.SampleApp\index.uwp` App Name: `Bootstrap`
    - RNTester: JavaScript file: `lib\RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`
+
+If you did choose to debug the JS code with "Web Debugger" enabled, Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools.
+
+**Note:** If nothing happened, make sure you started the packager (and if debugging the JS code, Chrome and the react-devtools) before step 7.
 
 ## Running Unit Tests
 1. Run `Scripts\UnitTest.ps1 [-Platform <test platform> -Configuration <test configuration>]`.
@@ -95,7 +105,7 @@ Browser should open showing a page for the React Native JS tools. Press F12 to o
 1. Run `Scripts\IntegrationTests.ps1 -Run`. This runs all Desktop tests.
 ### Visual Studio
 1. Run `Scripts\IntegrationTests.ps1` to start the JS bundler and WebSocket server.
-1. In the `Test Explorer` window, select and run any desired tests.
+2. In the `Test Explorer` window, select and run any desired tests.
 
 Defaults for platform and configuration are `x64`, `Debug`.
 
