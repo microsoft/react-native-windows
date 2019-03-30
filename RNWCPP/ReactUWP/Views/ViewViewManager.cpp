@@ -162,13 +162,23 @@ const char* ViewViewManager::GetName() const
 folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants() const
 {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
-  directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
+  directEvents["topFocus"] = folly::dynamic::object("registrationName", "onFocus");
+  directEvents["topBlur"] = folly::dynamic::object("registrationName", "onBlur");
   directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
   directEvents["topAccessibilityTap"] = folly::dynamic::object("registrationName", "onAccessibilityTap");
 
   return directEvents;
 }
+
+folly::dynamic ViewViewManager::GetExportedCustomBubblingEventTypeConstants() const
+{
+  auto bubblingEvents = Super::GetExportedCustomBubblingEventTypeConstants();
+  bubblingEvents["topFocusIn"] = folly::dynamic::object("registrationName", "onFocusIn");
+  bubblingEvents["topFocusOut"] = folly::dynamic::object("registrationName", "onFocusOut");
+
+  return bubblingEvents;
+}
+
 
 facebook::react::ShadowNode* ViewViewManager::createShadow() const
 {
@@ -219,12 +229,14 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag)
 
   contentControl.GotFocus([=](auto &&, auto &&)
   {
-    DispatchEvent(tag, "topTextInputFocus", std::move(folly::dynamic::object("target", tag)));
+    DispatchEvent(tag, "topFocus", std::move(folly::dynamic::object("target", tag)));
+    DispatchEvent(tag, "topFocusIn", std::move(folly::dynamic::object("target", tag)));
   });
 
   contentControl.LostFocus([=](auto &&, auto &&)
   {
-    DispatchEvent(tag, "topTextInputBlur", std::move(folly::dynamic::object("target", tag)));
+    DispatchEvent(tag, "topBlur", std::move(folly::dynamic::object("target", tag)));
+    DispatchEvent(tag, "topFocusOut", std::move(folly::dynamic::object("target", tag)));
   });
 
   contentControl.KeyDown([=](auto &&, winrt::KeyRoutedEventArgs const& e)
@@ -360,8 +372,26 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
             pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
           else if (role == "button")
             pViewShadowNode->AccessibilityRole(AccessibilityRoles::Button);
+          else if (role == "link")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Link);
+          else if (role == "search")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Search);
+          else if (role == "image")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Image);
+          else if (role == "keyboardkey")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::KeyboardKey);
+          else if (role == "text")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Text);
+          else if (role == "adjustable")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Adjustable);
+          else if (role == "imagebutton")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::ImageButton);
+          else if (role == "header")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Header);
+          else if (role == "summary")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Summary);
           else
-            pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Unknown);
         }
         else if (propertyValue.isNull())
         {
