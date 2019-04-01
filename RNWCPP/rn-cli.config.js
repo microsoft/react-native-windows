@@ -5,6 +5,8 @@ const path = require('path');
 
 const fs = require('fs');
 
+const utils = require('./Scripts/utils');
+
 const platforms = ['ios', 'android', 'windesktop', 'uwp', 'web', 'macos'];
 
 /**
@@ -40,7 +42,7 @@ if (fs.existsSync(path.resolve(__dirname, '../../scripts/metro-resources.js'))) 
       platforms,
       providesModuleNodeModules: ['react-native-windows'],
     },
-    projectRoot: __dirname,
+    projectRoot: utils.getDirectoryNameOfFileAbove(__dirname, 'app.json') || __dirname
   };
 
   config.resolver.extraNodeModules['react-native'] = rootRnPath;
