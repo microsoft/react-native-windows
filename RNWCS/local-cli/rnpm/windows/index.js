@@ -12,6 +12,10 @@ module.exports = [{
     command: '--verbose',
     description: 'Enables logging',
     default: false,
+  }, {
+    command: '--template [template]',
+    description: 'Template to install. Possible values cppcsharp, csharp',
+    default: 'cppcsharp',
   }]
 },{
   func: require('./src/wpf'),
