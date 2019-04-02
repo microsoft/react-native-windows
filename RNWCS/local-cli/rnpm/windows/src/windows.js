@@ -53,7 +53,7 @@ module.exports = function windows(config, args, options) {
       generateWindows(process.cwd(), name, ns);
     }).catch(error => console.error(chalk.red(error.message)));
   }
-  if (template === 'cppcsharp') {
+  if (template === 'vnext') {
     const cwd = process.cwd();
     const projectPackageJson = path.join(cwd, 'package.json');
     const libDirPath = path.join(cwd, 'windows', 'lib');

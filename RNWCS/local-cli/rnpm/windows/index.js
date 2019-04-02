@@ -14,8 +14,8 @@ module.exports = [{
     default: false,
   }, {
     command: '--template [template]',
-    description: 'Template to install. Possible values cppcsharp, csharp',
-    default: 'cppcsharp',
+    description: 'Template to install. Possible values vnext, csharp',
+    default: 'csharp',
   }]
 },{
   func: require('./src/wpf'),
