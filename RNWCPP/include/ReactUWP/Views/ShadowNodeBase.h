@@ -42,7 +42,6 @@ enum AccessibilityRoles : uint8_t
 {
   None = 0,
   Button,
-  /*
   Link,
   Search,
   Image,
@@ -52,7 +51,7 @@ enum AccessibilityRoles : uint8_t
   ImageButton,
   Header,
   Summary,
-  */
+  Unknown,
   CountRoles
 };
 
