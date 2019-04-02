@@ -280,9 +280,28 @@ void NetworkingModule::NetworkingHelper::SendRequest(const std::string& method, 
         winrt::Windows::Web::Http::HttpStreamContent contentStream(stream);
         content = contentStream;
       }
-      else if (!bodyData["formdata"].empty())
+      else if (!bodyData["formData"].empty())
       {
-        assert(false); // Not yet implemented
+        auto formData = bodyData["formData"];
+        winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
+
+        for (auto& formDataPart : formData)
+        {
+          if (!formDataPart["string"].empty()) {
+            winrt::Windows::Web::Http::HttpStringContent partDataString { facebook::react::UnicodeConversion::Utf8ToUtf16(formDataPart["string"].asString()) };
+            multiPartContent.Add(partDataString, facebook::react::UnicodeConversion::Utf8ToUtf16(formDataPart["fieldName"].asString()));
+          }
+          else if (!formDataPart["uri"].empty()) {
+            auto filePath = winrt::to_hstring(formDataPart["uri"].asString());
+            winrt::Windows::Storage::StorageFile file = winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(filePath).get();
+            
+            auto stream = file.OpenReadAsync().get();
+            winrt::Windows::Web::Http::HttpStreamContent contentStream(stream);
+            multiPartContent.Add(contentStream, facebook::react::UnicodeConversion::Utf8ToUtf16(formDataPart["fieldName"].asString()));
+          }
+        }
+
+        content = multiPartContent;
       }
       else
       {
