@@ -5,6 +5,8 @@
 
 #include "FrameworkElementViewManager.h"
 
+#include <Views/ShadowNodeBase.h>
+
 namespace react { namespace uwp {
 
 class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManager

@@ -182,17 +182,29 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
 {
   for (winrt::UIElement child : Children())
   {
+    double childHeight = 0.0;
+    double childWidth = 0.0;
+
     if ((child != m_border) && (child != m_innerElement))
     {
-      child.Arrange(winrt::Rect(
-          (float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child),
-          child.DesiredSize().Width, child.DesiredSize().Height
-      ));
+      winrt::FrameworkElement fe = child.try_as<winrt::FrameworkElement>();
+      if (fe != nullptr)
+      {
+        childWidth = fe.Width();
+        childHeight = fe.Height();
+      }
+      else
+      {
+        childWidth = child.DesiredSize().Width;
+        childHeight = child.DesiredSize().Height;
+      }
     }
     else
     {
       child.Arrange(winrt::Rect(0.0f, 0.f, finalSize.Width, finalSize.Height));
     }
+
+    child.Arrange(winrt::Rect((float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), childWidth, childHeight));
   }
 
   return finalSize;

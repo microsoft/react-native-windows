@@ -71,10 +71,13 @@ public:
   void createView() override;
   void updateProperties(const folly::dynamic&& props) override;
 
+  bool ImplementsPadding() override { return true; }
+
 private:
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
 };
+
 enum class TextInputCommands
 {
   SetFocus = 1,
