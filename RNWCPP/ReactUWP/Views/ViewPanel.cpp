@@ -185,23 +185,27 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
     double childHeight = 0.0;
     double childWidth = 0.0;
 
-    if ((child != m_border) && (child != m_innerElement))
+    // A Border or inner ViewPanel should take up the same space as this panel
+    if ((child == m_border) || (child == m_innerElement))
     {
+      childWidth = finalSize.Width;
+      childHeight = finalSize.Height;
+    }
+    else
+    {
+      // We expect elements to have been arranged by yoga which means their Width & Height are set
       winrt::FrameworkElement fe = child.try_as<winrt::FrameworkElement>();
       if (fe != nullptr)
       {
         childWidth = fe.Width();
         childHeight = fe.Height();
       }
+      // But we fall back to the measured size otherwise
       else
       {
         childWidth = child.DesiredSize().Width;
         childHeight = child.DesiredSize().Height;
       }
-    }
-    else
-    {
-      child.Arrange(winrt::Rect(0.0f, 0.f, finalSize.Width, finalSize.Height));
     }
 
     child.Arrange(winrt::Rect((float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), childWidth, childHeight));
