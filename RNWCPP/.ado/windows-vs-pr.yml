@@ -197,7 +197,7 @@ jobs:
         inputs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\RNWCPP\Scripts\Tfs\Start-TestServers.ps1
-          arguments: -SourcesDirectory $(Build.SourcesDirectory)\RNWCPP\node_modules\@microsoft\react-native -Preload
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\RNWCPP\node_modules\react-native -Preload
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
