@@ -62,12 +62,9 @@ void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate
       else if (pair.second.isNull())
         progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
     }
-    else if (propertyName.asString() == "color")
+    else if (TryUpdateForeground<winrt::Control>(progressRing, propertyName, propertyValue))
     {
-      if (propertyValue.isInt())
-        progressRing.Foreground(SolidColorBrushFrom(propertyValue));
-      else if (propertyValue.isNull())
-        progressRing.ClearValue(winrt::Control::ForegroundProperty());
+        continue;
     }
   }
 
