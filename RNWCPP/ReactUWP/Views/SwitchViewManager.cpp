@@ -6,6 +6,8 @@
 #include "SwitchViewManager.h"
 #include <Views/ShadowNodeBase.h>
 
+#include <IReactInstance.h>
+
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
 namespace winrt {

@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Views/ControlViewManager.h>
+#include <Views/ShadowNodeBase.h>
 
 #include <Utils/PropertyUtils.h>
 
