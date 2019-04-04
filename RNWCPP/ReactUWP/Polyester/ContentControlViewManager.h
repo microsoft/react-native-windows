@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include <Views/FrameworkElementViewManager.h>
+#include <Views/ControlViewManager.h>
 
 namespace react { namespace uwp { namespace polyester {
 
-class ContentControlViewManager : public FrameworkElementViewManager
+class ContentControlViewManager : public ControlViewManager
 {
-  using Super = FrameworkElementViewManager;
+  using Super = ControlViewManager;
 public:
   ContentControlViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 

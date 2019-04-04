@@ -212,4 +212,9 @@ XamlView DatePickerViewManager::CreateViewCore(int64_t tag)
   return datePicker;
 }
 
+YGMeasureFunc DatePickerViewManager::GetYogaCustomMeasureFunc() const
+{
+  return DefaultYogaSelfMeasureFunc;
+}
+
 }}
