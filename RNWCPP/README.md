@@ -65,7 +65,7 @@ This is a summary of setup steps needed to install and work with React Native fo
     ```
 
     * Using Visual Studio IDE
-      1. Open `ReactWindows.sln`.
+      1. Open `ReactWindows-UWP.sln`.
       2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.
       3. Select `Project / Build Solution (Ctrl+Shift+B)`
 
