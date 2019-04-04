@@ -162,23 +162,11 @@ const char* ViewViewManager::GetName() const
 folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants() const
 {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topFocus"] = folly::dynamic::object("registrationName", "onFocus");
-  directEvents["topBlur"] = folly::dynamic::object("registrationName", "onBlur");
   directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
   directEvents["topAccessibilityTap"] = folly::dynamic::object("registrationName", "onAccessibilityTap");
 
   return directEvents;
 }
-
-folly::dynamic ViewViewManager::GetExportedCustomBubblingEventTypeConstants() const
-{
-  auto bubblingEvents = Super::GetExportedCustomBubblingEventTypeConstants();
-  bubblingEvents["topFocusIn"] = folly::dynamic::object("registrationName", "onFocusIn");
-  bubblingEvents["topFocusOut"] = folly::dynamic::object("registrationName", "onFocusOut");
-
-  return bubblingEvents;
-}
-
 
 facebook::react::ShadowNode* ViewViewManager::createShadow() const
 {
@@ -230,13 +218,11 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag)
   contentControl.GotFocus([=](auto &&, auto &&)
   {
     DispatchEvent(tag, "topFocus", std::move(folly::dynamic::object("target", tag)));
-    DispatchEvent(tag, "topFocusIn", std::move(folly::dynamic::object("target", tag)));
   });
 
   contentControl.LostFocus([=](auto &&, auto &&)
   {
     DispatchEvent(tag, "topBlur", std::move(folly::dynamic::object("target", tag)));
-    DispatchEvent(tag, "topFocusOut", std::move(folly::dynamic::object("target", tag)));
   });
 
   contentControl.KeyDown([=](auto &&, winrt::KeyRoutedEventArgs const& e)
