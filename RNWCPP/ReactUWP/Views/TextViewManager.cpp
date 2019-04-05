@@ -23,9 +23,22 @@ using namespace Windows::UI::Xaml::Documents;
 
 namespace react { namespace uwp {
 
+class TextShadowNode : public ShadowNodeBase
+{
+  using Super = ShadowNodeBase;
+public:
+  TextShadowNode() = default;
+  bool ImplementsPadding() override { return true; }
+};
+
 TextViewManager::TextViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
   : Super(reactInstance)
 {
+}
+
+facebook::react::ShadowNode* TextViewManager::createShadow() const
+{
+  return new TextShadowNode();
 }
 
 const char* TextViewManager::GetName() const
@@ -89,6 +102,29 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
         textBlock.LineHeight(static_cast<int32_t>(pair.second.asDouble()));
       else if (pair.second.isNull())
         textBlock.ClearValue(winrt::TextBlock::LineHeightProperty());
+    }
+    else if (pair.first == "selectable")
+    {
+      if (pair.second.isBool())
+        textBlock.IsTextSelectionEnabled(pair.second.asBool());
+      else if (pair.second.isNull())
+        textBlock.ClearValue(winrt::TextBlock::IsTextSelectionEnabledProperty());
+    }
+    else if (pair.first == "allowFontScaling")
+    {
+      if (pair.second.isBool())
+        textBlock.IsTextScaleFactorEnabled(pair.second.asBool());
+      else
+        textBlock.ClearValue(winrt::TextBlock::IsTextScaleFactorEnabledProperty());
+    }
+    else if (pair.first == "selectionColor")
+    {
+      if (pair.second.isInt())
+      {
+        textBlock.SelectionHighlightColor(SolidColorBrushFrom(pair.second));
+      }
+      else
+        textBlock.ClearValue(winrt::TextBlock::SelectionHighlightColorProperty());
     }
   }
 

@@ -8,6 +8,8 @@
 
 #include <Utils/ValueUtils.h>
 
+#include <IReactInstance.h>
+
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Windows.Globalization.h>
@@ -210,6 +212,11 @@ XamlView DatePickerViewManager::CreateViewCore(int64_t tag)
 {
   auto datePicker = winrt::CalendarDatePicker();
   return datePicker;
+}
+
+YGMeasureFunc DatePickerViewManager::GetYogaCustomMeasureFunc() const
+{
+  return DefaultYogaSelfMeasureFunc;
 }
 
 }}

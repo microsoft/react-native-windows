@@ -3,6 +3,11 @@
 # top-most EditorConfig file
 root = false
 
+# Xml project files
+[*.{csproj,vcxproj,pssproj,vcxproj.filters}]
+indent_size = 2
+end_of_line = crlf
+
 # Unix-style newlines with a newline ending every file
 [*]
 end_of_line = lf

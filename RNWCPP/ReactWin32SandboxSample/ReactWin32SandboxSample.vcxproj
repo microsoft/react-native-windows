@@ -40,10 +40,10 @@
     <NOJSC>true</NOJSC>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="$(SolutionDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
-  <Import Project="$(SolutionDir)PropertySheets\Warnings.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -53,7 +53,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)ReactWindowsCore;$(SolutionDir)Desktop;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(SolutionDir)stubs;$(MSBuildProjectDirectory);$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
     <TargetName>react-native-sandbox-win32</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -105,7 +105,6 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="..\packages\JavaScriptCore-Temp.1.1.2\build\native\JavaScriptCore-Temp.targets" Condition="'$(NOJSC)' != 'true' AND Exists('..\packages\JavaScriptCore-Temp.1.1.2\build\native\JavaScriptCore-Temp.targets')" />
     <Import Project="..\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets" Condition="Exists('..\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets')" />
     <Import Project="..\packages\Microsoft.ChakraCore.vc140.1.10.1\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('..\packages\Microsoft.ChakraCore.vc140.1.10.1\build\native\Microsoft.ChakraCore.vc140.targets')" />
   </ImportGroup>
@@ -115,7 +114,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="'$(NOJSC)' != 'true' AND !Exists('..\packages\JavaScriptCore-Temp.1.1.2\build\native\JavaScriptCore-Temp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JavaScriptCore-Temp.1.1.2\build\native\JavaScriptCore-Temp.targets'))" />
     <Error Condition="!Exists('..\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.ChakraCore.vc140.1.10.1\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ChakraCore.vc140.1.10.1\build\native\Microsoft.ChakraCore.vc140.targets'))" />
   </Target>

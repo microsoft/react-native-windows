@@ -297,7 +297,7 @@ static void SetYogaValueAutoHelper(const YGNodeRef yogaNode, const YGEdge edge, 
   }
 }
 
-static void StyleYogaNode(const YGNodeRef yogaNode, const folly::dynamic& props)
+static void StyleYogaNode(ShadowNodeBase& shadowNode, const YGNodeRef yogaNode, const folly::dynamic& props)
 {
   if (props.empty())
     return;
@@ -594,24 +594,32 @@ static void StyleYogaNode(const YGNodeRef yogaNode, const folly::dynamic& props)
       SetYogaValueAutoHelper(yogaNode, YGEdgeVertical, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     }
     else if (key == "padding") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeAll, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeAll, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "paddingLeft") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "paddingStart") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "paddingTop") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "paddingRight") {
       YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
@@ -619,24 +627,32 @@ static void StyleYogaNode(const YGNodeRef yogaNode, const folly::dynamic& props)
       SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
     }
     else if (key == "paddingEnd") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "paddingBottom") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "paddingHorizontal") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeHorizontal, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeHorizontal, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "paddingVertical") {
-      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+      if (!shadowNode.ImplementsPadding()) {
+        YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
 
-      SetYogaValueHelper(yogaNode, YGEdgeVertical, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeVertical, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+      }
     }
     else if (key == "borderWidth") {
       float result = NumberOrDefault(value, 0.0f /*default*/);
@@ -687,7 +703,7 @@ void NativeUIManager::CreateView(facebook::react::ShadowNode& shadowNode, folly:
     if (result.second == true)
     {
       YGNodeRef yogaNode = result.first->second.get();
-      StyleYogaNode(yogaNode, props);
+      StyleYogaNode(node, yogaNode, props);
 
       YGMeasureFunc func = pViewManager->GetYogaCustomMeasureFunc();
       if (func != nullptr)
@@ -786,7 +802,7 @@ void NativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly:
   if (pViewManager->RequiresYogaNode())
   {
     YGNodeRef yogaNode = GetYogaNode(node.m_tag);
-    StyleYogaNode(yogaNode, props);
+    StyleYogaNode(node, yogaNode, props);
   }
 }
 

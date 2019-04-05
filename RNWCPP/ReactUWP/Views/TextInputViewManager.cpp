@@ -11,6 +11,8 @@
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
+#include <IReactInstance.h>
+
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Text.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
@@ -71,10 +73,13 @@ public:
   void createView() override;
   void updateProperties(const folly::dynamic&& props) override;
 
+  bool ImplementsPadding() override { return true; }
+
 private:
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
 };
+
 enum class TextInputCommands
 {
   SetFocus = 1,

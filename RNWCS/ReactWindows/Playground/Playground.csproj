@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Playground_TemporaryKey.pfx</PackageCertificateKeyFile>
     <DependencyConfiguration>Debug</DependencyConfiguration>
-    <PackageCertificateThumbprint>50F337BA80C1751C2DE37B18FCFCA55368EC6A3C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>218F5339D3F55118F3F99818E3D252192FEA960C</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug' or '$(Configuration)' == 'DebugBundle'">
     <DependencyConfiguration>Debug</DependencyConfiguration>

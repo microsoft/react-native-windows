@@ -28,6 +28,8 @@ find_package(OpenSSL REQUIRED)
 
 target_link_libraries(ReactWindowsShared PUBLIC folly reactcommon reactwindowscore chakra Boost::boost OpenSSL::SSL OpenSSL::Crypto)
 
+#target_compile_definitions(ReactWindowsShared PUBLIC USE_V8)
+
 if(WINRT)
 	target_compile_definitions(ReactWindowsShared PRIVATE UNICODE=1 _UNICODE=1)
 	target_compile_definitions(ReactWindowsShared PUBLIC WIN32=0 WINRT=1 BOOST_ASIO_WINDOWS_APP BOOST_BEAST_USE_WIN32_FILE=0)
