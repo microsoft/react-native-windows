@@ -310,11 +310,15 @@ void UIManager::setChildren(int64_t viewTag, folly::dynamic&& childrenTags)
 void UIManager::updateView(int64_t tag, const std::string& className, folly::dynamic&& props)
 {
   m_nativeUIManager->ensureInBatch();
-  auto& shadowNode = m_nodeRegistry.getNode(tag);
-  if (!shadowNode.m_zombie)
-    shadowNode.updateProperties(std::move(props));
+	ShadowNode* pShadowNode = FindShadowNodeForTag(tag);
+	// Guard against setNative calls to removed views
+	if (pShadowNode == nullptr)
+		return;
 
-  m_nativeUIManager->UpdateView(shadowNode, props);
+  if (!pShadowNode->m_zombie)
+    pShadowNode->updateProperties(std::move(props));
+
+  m_nativeUIManager->UpdateView(*pShadowNode, props);
 }
 
 void UIManager::RemoveShadowNode(ShadowNode& nodeToRemove)

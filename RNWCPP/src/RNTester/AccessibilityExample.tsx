@@ -27,21 +27,32 @@ class AccessibilityBaseExample extends React.Component {
   }
 }
 
-class TouchableExamples extends React.Component {
+class TouchableExamples extends React.Component<{}, any> {
+  public state = {
+    pressedCount: 0,
+  };
+
   public render() {
     return (
       <View>
-        <Text>The following has accessibilityLabel, accessibilityHint, toolip:</Text>
+        <Text>The following TouchableHighlight has accessibilityLabel, accessibilityHint, accessibilityRole, toolip:</Text>
         <TouchableHighlight
           style={{width:50, height:50, backgroundColor:'blue'}}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
+          accessibilityRole="button"
+          onPress={this.press}
           {...{ tooltip: "a blue tooltip" }}
         >
           <Text>Blue</Text>
         </TouchableHighlight>
+        <Text>Pressed {this.state.pressedCount} times</Text>
       </View>
     );
+  }
+
+  private press = () => {
+    this.setState({pressedCount: this.state.pressedCount+1});
   }
 }
 

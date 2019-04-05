@@ -20,7 +20,6 @@
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
-#include <Views/CalendarViewViewManager.h>
 #include <Views/CheckboxViewManager.h>
 #include <Views/DatePickerViewManager.h>
 #include <Views/PickerViewManager.h>
@@ -102,7 +101,6 @@ REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
 
   // Standard view managers
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(instance));
-  viewManagers.push_back(std::make_unique<CalendarViewViewManager>(instance));
   viewManagers.push_back(std::make_unique<CheckBoxViewManager>(instance));
   viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
@@ -353,12 +351,14 @@ void UwpReactInstance::UnregisterErrorCallback(ErrorCallbackCookie& cookie)
 
 void UwpReactInstance::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData)
 {
-  m_instanceWrapper->DispatchEvent(viewTag, eventName, std::move(eventData));
+  if (!IsInError())
+    m_instanceWrapper->DispatchEvent(viewTag, eventName, std::move(eventData));
 }
 
 void UwpReactInstance::CallJsFunction(std::string&& moduleName, std::string&& method, folly::dynamic&& params) noexcept
 {
-  m_instanceWrapper->GetInstance()->callJSFunction(std::move(moduleName), std::move(method), std::move(params));
+  if (!IsInError())
+    m_instanceWrapper->GetInstance()->callJSFunction(std::move(moduleName), std::move(method), std::move(params));
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> UwpReactInstance::GetNewUIMessageQueue() const

@@ -5,6 +5,8 @@ INCLUDES = $(INCLUDES); \
 	$(PKGBOOST)\lib\native\include; \
 	$(PKGJAVASCRIPTCORE_TEMP)\build\native\include; \
 
+C_DEFINES = $(C_DEFINES) -D USE_V8
+
 SOURCES_SHARED = \
 	..\AsyncStorageModule.cpp \
 	..\InstanceManager.cpp \
