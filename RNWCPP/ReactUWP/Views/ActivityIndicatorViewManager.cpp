@@ -62,10 +62,6 @@ void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate
       else if (pair.second.isNull())
         progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
     }
-    else if (TryUpdateForeground<winrt::Control>(progressRing, propertyName, propertyValue))
-    {
-        continue;
-    }
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
