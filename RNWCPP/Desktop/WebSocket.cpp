@@ -255,7 +255,7 @@ void BaseWebSocket<Protocol, Socket, Resolver>::EnqueueWrite(const string& messa
   {
     m_writeRequests.emplace(std::move(message), binary);
 
-    if (!m_writeInProgress && ReadyState::Open == m_readyState && !m_writeRequests.empty())
+    if (!m_writeInProgress && ReadyState::Open == m_readyState)
       PerformWrite();
   });
 }
