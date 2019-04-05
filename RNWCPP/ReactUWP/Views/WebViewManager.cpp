@@ -9,6 +9,8 @@
 
 #include <Utils/ValueUtils.h>
 
+#include <IReactInstance.h>
+
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 

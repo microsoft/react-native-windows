@@ -3,12 +3,17 @@
 
 #pragma once
 
-#include "ViewManagerBase.h"
-
 #include <ShadowNode.h>
 #include <XamlView.h>
 
+#include <folly/dynamic.h>
+#include <yoga/yoga.h>
+
+#include <ReactWindowsCore/ReactWindowsAPI.h>
+
 namespace react { namespace uwp {
+
+class ViewManagerBase;
 
 enum ShadowEdges : uint8_t
 {
@@ -88,7 +93,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode
   virtual void ReplaceChild(XamlView oldChildView, XamlView newChildView);
   virtual bool ImplementsPadding() { return false; }
 
-  ViewManagerBase* GetViewManager() const { return static_cast<ViewManagerBase*>(m_viewManager); }
+  ViewManagerBase* GetViewManager() const;
   XamlView GetView() const { return m_view; }
   int64_t GetParent() const { return m_parent; }
 
