@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.58.0-vnext.3",
+  "version": "0.58.0-vnext.7",
   "license": "MIT",
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",
@@ -33,7 +33,7 @@
     }
   },
   "dependencies": {
-    "react-native": "0.58.6-microsoft.16",
+    "react-native": "0.58.6-microsoft.17",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
