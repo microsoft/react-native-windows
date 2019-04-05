@@ -5,13 +5,10 @@
 
 #include <ReactWindowsCore/ViewManager.h>
 
-#include <IReactInstance.h>
 #include <XamlView.h>
 
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
-
-#include <map>
 
 #include <ReactWindowsCore/ReactWindowsAPI.h>
 

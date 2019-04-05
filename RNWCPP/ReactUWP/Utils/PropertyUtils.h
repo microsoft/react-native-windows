@@ -22,6 +22,8 @@ using namespace Windows::UI::Xaml;
 
 namespace react { namespace uwp {
 
+struct ShadowNodeBase;
+
 static double DefaultOrOverride(double defaultValue, double x) {
   return x != c_UndefinedEdge ? x : defaultValue;
 };

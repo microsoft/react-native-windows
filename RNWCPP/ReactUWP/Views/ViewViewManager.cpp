@@ -12,6 +12,7 @@
 #include <Utils/PropertyUtils.h>
 
 #include <INativeUIManager.h>
+#include <IReactInstance.h>
 
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
