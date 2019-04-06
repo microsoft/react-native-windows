@@ -34,7 +34,7 @@
     }
   },
   "dependencies": {
-    "react-native": "0.58.6-microsoft.19",
+    "react-native": "0.58.6-microsoft.20",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
