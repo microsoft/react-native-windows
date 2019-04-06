@@ -16,6 +16,7 @@
     "jest",
     "native-bundle:filtered",
     "verify-ts-api",
+    "api-doc",
     "pack-nuget",
     "publish-nuget",
     "react-test",
