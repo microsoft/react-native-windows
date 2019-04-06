@@ -70,6 +70,9 @@
     <ClCompile Include="ABI\ABIModuleLoader.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
+    <ClCompile Include="ABI\Instance_rt.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
     <ClCompile Include="ABI\ReactControl_rt.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -272,6 +275,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="ABI\ABIModuleLoader.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\Instance_rt.h">
       <Filter>ABI</Filter>
     </ClInclude>
     <ClInclude Include="ABI\ReactControl_rt.h">
@@ -527,7 +533,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <MidlRT Include="ABI\idl\ReactControl.g.idl">
+    <MidlRT Include="ABI\idl\Module.idl">
+      <Filter>ABI\idl</Filter>
+    </MidlRT>
+    <MidlRT Include="ABI\idl\Instance.idl">
+      <Filter>ABI\idl</Filter>
+    </MidlRT>
+    <MidlRT Include="ABI\idl\ReactControl.idl">
       <Filter>ABI\idl</Filter>
     </MidlRT>
   </ItemGroup>
