@@ -47,6 +47,12 @@ function doPublish() {
 
   exec(`git checkout -b ${tempPublishBranch}`);
 
+  // Check we in sync before publishing anything
+  exec(`git checkout ${publishBranchName}`);
+  exec(`git pull origin ${publishBranchName}`);
+
+  exec(`git checkout ${tempPublishBranch}`);
+
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Applying package update to ${releaseVersion}`);
   exec(`git tag ${tagName}`);
