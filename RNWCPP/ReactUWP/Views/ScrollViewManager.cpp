@@ -79,6 +79,7 @@ void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynam
         {
           x = snap(x, m_snapToAlignment, m_snapToInterval, scrollViewer.ViewportWidth());
         }
+        // ChangeView parameters: x, y, zoom, animated
         scrollViewer.ChangeView(x, nullptr, nullptr, !animated/*disableAnimation*/);
       }
       else
@@ -88,6 +89,7 @@ void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynam
         {
           y = snap(y, m_snapToAlignment, m_snapToInterval, scrollViewer.ViewportHeight());
         }
+        // ChangeView parameters: x, y, zoom, animated
         scrollViewer.ChangeView(nullptr, y, nullptr, !animated/*disableAnimation*/);
       }
       break;
