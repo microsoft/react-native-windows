@@ -25,6 +25,7 @@ public:
 	// TODO: Remove if moduleRegistry exposes onBatchComplete
 	virtual void onBatchComplete() = 0;
 
+  virtual folly::dynamic getConstantsForViewManager(const std::string& viewManager) = 0;
 	virtual void populateViewManagerConstants(std::map<std::string, folly::dynamic>& constants) = 0;
 	virtual void createView(int64_t tag, std::string&& className, int64_t rootViewTag, folly::dynamic&& props) = 0;
 	virtual void removeRootView(int64_t rootViewTag) = 0;

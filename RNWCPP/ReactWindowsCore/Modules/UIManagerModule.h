@@ -23,6 +23,7 @@ public:
 	void RegisterRootView(IReactRootView* rootView, int64_t rootViewTag, int64_t width, int64_t height);
 
 	// IUIManager
+  folly::dynamic getConstantsForViewManager(const std::string& className) override;
 	void populateViewManagerConstants(std::map<std::string, folly::dynamic>& constants) override;
 	int64_t AddMeasuredRootView(IReactRootView* rootView) override;
 	void removeRootView(int64_t rootViewTag) override;
