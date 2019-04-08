@@ -17,13 +17,12 @@ public:
   folly::dynamic GetCommands() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-
+  
+  facebook::react::ShadowNode* createShadow() const override;
+  
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
-
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
-  void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
@@ -35,6 +34,8 @@ private:
     int64_t tag,
     const char* eventName,
     double x, double y, double zoom);
+
+  friend class ScrollViewShadowNode;
 };
 
 } }
