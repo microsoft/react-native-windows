@@ -72,12 +72,48 @@ function createPr() {
         throw new Error(err || body.errorCode);
       }
 
-      if (!body.id) {
+      if (!body.number) {
         throw new Error('Failed to create PR.\nBody : ' + JSON.stringify(body));
       }
+
+      const prId = body.number;
+
+      // Trigger automation
+      request.post(
+        {
+          url: `https://api.github.com/repos/Microsoft/react-native-windows/pulls/${prId}/comments`,
+          json:true,
+          headers:{
+            Authorization: "Basic " + gitHubToken,
+            "Content-Type": 'application/json',
+            "User-Agent": "RNW-Evergreen Script"
+          },
+          body: {
+            body: "/azp run"
+          }
+        }
+      , function(err, httpResponse, body) {
+        console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
+
+        // Trigger AutoMerge
+        request.post(
+          {
+            url:`https://api.github.com/repos/Microsoft/react-native-windows/issues/${prId}/labels`,
+            json:true,
+            headers:{
+              Authorization: "Basic " + gitHubToken,
+              "Content-Type": 'application/json',
+              "User-Agent": "RNW-Evergreen Script"
+            },
+            body: {
+              labels: "AutoMerge"
+            }
+          },function(err, httpResponse, body) {
+            console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
+          });
+        });
+      });
     }
-  );
-}
 
 request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/package.json', function(error, response, body) {
   console.log(`Get react-native's package.json request result: `);

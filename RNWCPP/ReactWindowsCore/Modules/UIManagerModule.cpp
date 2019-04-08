@@ -5,6 +5,7 @@ using namespace std;
 #include <iostream>
 #include <algorithm>
 #include <cxxreact/JsArgumentHelpers.h>
+#include <folly/json.h>
 
 #include "UIManagerModule.h"
 #include "ShadowNode.h"
@@ -17,26 +18,6 @@ using namespace facebook::xplat;
 
 namespace facebook {
 namespace react {
-
-// These are global events. Control (View) specific event are defined in their ViewManager
-dynamic GetBubblingEventTypeConstants()
-{
-	return dynamic::object
-		("topChange", dynamic::object
-			("phasedRegistrationNames", dynamic::object
-				("bubbled", "onChange")
-				("captured", "onChangeCapture")
-			)
-		);
-}
-
-dynamic GetDirectEventTypeConstants()
-{
-	return dynamic::object
-		("topSelectionChange", dynamic::object
-			("registrationName", "onSelectionChange")
-		);
-}
 
 UIManager::UIManager(std::vector<std::unique_ptr<IViewManager>>&& viewManagers, INativeUIManager* nativeManager)
 	: m_viewManagers(std::move(viewManagers))
@@ -56,16 +37,18 @@ UIManager::~UIManager()
 	m_nativeUIManager->destroy();
 }
 
+folly::dynamic UIManager::getConstantsForViewManager(const std::string& className)
+{
+	const IViewManager* vm = GetViewManager(className);
+  if (vm != nullptr)
+			return vm->GetConstants();
+	return nullptr;
+}
+
 void UIManager::populateViewManagerConstants(std::map<std::string, dynamic>& constants)
 {
-	auto bubblingEventTypesConstants = GetBubblingEventTypeConstants();
-	auto directEventTypesConstants = GetDirectEventTypeConstants();
 	for (auto&& vm : m_viewManagers)
-	{
-		bubblingEventTypesConstants.update(vm->GetExportedCustomBubblingEventTypeConstants());
-		directEventTypesConstants.update(vm->GetExportedCustomDirectEventTypeConstants());
 		constants.emplace(vm->GetName(), vm->GetConstants());
-	}
 }
 
 IViewManager* UIManager::GetViewManager(const std::string& className) const
@@ -450,6 +433,11 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
 	std::shared_ptr<IUIManager> manager(m_manager);
 	return
 	{
+		Method("getConstantsForViewManager", [manager](dynamic argsJson) -> dynamic
+		{
+			auto args = folly::parseJson(argsJson.asString());
+			return manager->getConstantsForViewManager(jsArgAsString(args, 0));
+		}, SyncTag),
 		Method("removeRootView", [manager](dynamic args)
 		{
 			manager->removeRootView(jsArgAsInt(args, 0));
