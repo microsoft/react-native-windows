@@ -72,14 +72,16 @@ function createPr() {
         throw new Error(err || body.errorCode);
       }
 
-      if (!body.id) {
+      if (!body.number) {
         throw new Error('Failed to create PR.\nBody : ' + JSON.stringify(body));
       }
+
+      const prId = body.number;
 
       // Trigger automation
       request.post(
         {
-          url: `https://api.github.com/repos/Microsoft/react-native-windows/pulls/${body.id}/comments`,
+          url: `https://api.github.com/repos/Microsoft/react-native-windows/pulls/${prId}/comments`,
           json:true,
           headers:{
             Authorization: "Basic " + gitHubToken,
@@ -96,7 +98,7 @@ function createPr() {
         // Trigger AutoMerge
         request.post(
           {
-            url:`https://api.github.com/repos/Microsoft/react-native-windows/issues/${body.id}/labels`,
+            url:`https://api.github.com/repos/Microsoft/react-native-windows/issues/${prId}/labels`,
             json:true,
             headers:{
               Authorization: "Basic " + gitHubToken,
