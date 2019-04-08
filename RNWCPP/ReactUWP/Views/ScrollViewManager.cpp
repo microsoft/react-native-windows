@@ -112,7 +112,6 @@ void ScrollViewShadowNode::createView()
 
   auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   ScrollViewManager* viewManager = static_cast<ScrollViewManager*>(GetViewManager());
-  //auto wkinstance = viewManager->m_wkReactInstance;
   int64_t tag = m_tag;
 
   scrollViewer.ViewChanging([this, tag](const winrt::IInspectable& sender, const winrt::ScrollViewerViewChangingEventArgs& args)
@@ -125,34 +124,6 @@ void ScrollViewShadowNode::createView()
       args.NextView().ZoomFactor());
 
   });
-
-  //scrollViewer.DirectManipulationStarted([this, tag](const winrt::IInspectable& sender, const winrt::IInspectable)
-  //{
-  //  winrt::ScrollViewer scrollViewer = sender.as<winrt::ScrollViewer>();
-  //  topScroll(
-  //    scrollViewer,
-  //    tag,
-  //    "topScrollBeginDrag",
-  //    scrollViewer.HorizontalOffset(),
-  //    scrollViewer.VerticalOffset(),
-  //    scrollViewer.ZoomFactor()
-  //  );
-  //});
-
-  //scrollViewer.DirectManipulationCompleted([this, tag](const winrt::IInspectable& sender, const winrt::IInspectable)
-  //{
-  //  winrt::ScrollViewer scrollViewer = sender.as<winrt::ScrollViewer>();
-  //  topScroll(
-  //    scrollViewer,
-  //    tag,
-  //    "topScrollEndDrag",
-  //    scrollViewer.HorizontalOffset(),
-  //    scrollViewer.VerticalOffset(),
-  //    scrollViewer.ZoomFactor()
-  //  );
-  //});
-
-
 }
  
 
@@ -228,6 +199,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& props)
         {
           m_isSnapToAlignmentSet = false;
         }
+        // TODO: need to implement the snap points themselves for this part to work.
         if (m_isSnapToAlignmentSet)
         {
           scrollViewer.HorizontalSnapPointsAlignment(m_snapToAlignment);
@@ -265,7 +237,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& props)
 }
 
 /***
-   starting with original, snap to the snapToInterval, with relation to the snapToAlignment and the viewabelSize
+   starting with original, snap to the snapToInterval, with relation to the snapToAlignment and the viewableSize
    original: The value to snap
    snapToAlignment: enum of either Near, Center, or Far, representing where in the viewableSize the value should snap to.
    snapToInterval: the output should be an even multiple of snapToInterval, offset into the viewableSize
@@ -297,6 +269,7 @@ int ScrollViewShadowNode::snap(double original, winrt::Primitives::SnapPointsAli
   }
 
   double snapDelta = fmod((original - snapAlignmentRatio * viewableSize), snapToInterval);
+  // snap to the other side if it is closer
   if (snapDelta > snapToInterval / 2.0)
   {
     snapDelta -= snapToInterval;
@@ -402,19 +375,6 @@ XamlView ScrollViewManager::CreateViewCore(int64_t tag)
 
 void ScrollViewManager::AddHandlers(winrt::ScrollViewer& scrollViewer, int64_t tag)
 {
-  //scrollViewer.ViewChanging([this, tag](const winrt::IInspectable& sender, const winrt::ScrollViewerViewChangingEventArgs& args)
-  //{
-  //  winrt::ScrollViewer scrollViewer = sender.as<winrt::ScrollViewer>();
-  //  EmitScrollEvent(
-  //    scrollViewer,
-  //    tag,
-  //    "topScroll",
-  //    args.NextView().HorizontalOffset(),
-  //    args.NextView().VerticalOffset(),
-  //    args.NextView().ZoomFactor()
-  //  );
-  //});
-
   scrollViewer.DirectManipulationStarted([this, tag](const winrt::IInspectable& sender, const winrt::IInspectable)
   {
     winrt::ScrollViewer scrollViewer = sender.as<winrt::ScrollViewer>();
