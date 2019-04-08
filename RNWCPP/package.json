@@ -38,7 +38,10 @@
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
-    "react-timer-mixin": "^0.13.2"
+    "react-timer-mixin": "^0.13.2",
+    "react-native-local-cli": "^1.0.0-alpha.5",
+    "username": "^3.0.0",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "@types/es6-collections": "^0.5.29",
