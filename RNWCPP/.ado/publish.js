@@ -18,6 +18,9 @@ function exec(command) {
 }
 
 function doPublish() {
+  const publishBranchName = process.env.publishBranchName;
+  const tempPublishBranch = `publish-${Date.now()}`;
+
   exec(`git checkout -b ${tempPublishBranch}`);
 
   // Check we in sync before publishing anything
@@ -25,10 +28,6 @@ function doPublish() {
   exec(`git pull origin ${publishBranchName}`);
 
   exec(`git checkout ${tempPublishBranch}`);
-
-  const publishBranchName = process.env.publishBranchName;
-
-  const tempPublishBranch = `publish-${Date.now()}`;
 
   const pkgJsonPath = path.resolve(__dirname, "../package.json");
   let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
