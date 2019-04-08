@@ -44,12 +44,6 @@ const ComponentExamples: Array<IRNTesterExample> = [
     key: 'FlatListExample',
     module: require('react-native/RNTester/js/FlatListExample'),
   },
-  /*
-  {
-    key: 'FlatListExample',
-    module: require('./js/FlatListExample'),
-  },
-  */
   {
     key: 'ImageExample',
     module: require('react-native/RNTester/js/ImageExample'),

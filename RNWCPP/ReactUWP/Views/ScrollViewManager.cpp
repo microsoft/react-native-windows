@@ -42,20 +42,19 @@ public:
   // snaps to the snapToInterval based on the snapToAlignment (start, center, end) within the visable area as defined by the viewableSize
   int snap(double original, winrt::Primitives::SnapPointsAlignment snapToAlignment, double snapToInterval, double viewableSize);
 
-protected:
+private:
   double m_snapToInterval;
   bool m_isSnapToAlignmentSet;
   winrt::Primitives::SnapPointsAlignment m_snapToAlignment;
 
-private:
-   void topScroll(winrt::ScrollViewer& scrollViewer, int64_t tag, const char* event, double x, double y, double zoom);
+  void topScroll(winrt::ScrollViewer& scrollViewer, int64_t tag, const char* event, double x, double y, double zoom);
 };
 
-ScrollViewShadowNode::ScrollViewShadowNode()
+ScrollViewShadowNode::ScrollViewShadowNode() :
+  m_snapToInterval(0),
+  m_isSnapToAlignmentSet(false),
+  m_snapToAlignment(winrt::Primitives::SnapPointsAlignment::Near)
 {
-  m_snapToInterval = 0;
-  m_isSnapToAlignmentSet = false;
-  m_snapToAlignment = winrt::Primitives::SnapPointsAlignment::Near;
 }
 
 void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic& commandArgs)
@@ -263,11 +262,6 @@ int ScrollViewShadowNode::snap(double original, winrt::Primitives::SnapPointsAli
     case winrt::Primitives::SnapPointsAlignment::Far:
       snapAlignmentRatio = 1.0;
       break;
-
-    default:
-      snapAlignmentRatio = 0.0;
-      break;
-
   }
 
   double snapDelta = fmod((original - snapAlignmentRatio * viewableSize), snapToInterval);
