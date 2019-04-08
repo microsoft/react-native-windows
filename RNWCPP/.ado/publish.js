@@ -18,6 +18,14 @@ function exec(command) {
 }
 
 function doPublish() {
+  exec(`git checkout -b ${tempPublishBranch}`);
+
+  // Check we in sync before publishing anything
+  exec(`git checkout ${publishBranchName}`);
+  exec(`git pull origin ${publishBranchName}`);
+
+  exec(`git checkout ${tempPublishBranch}`);
+
   const publishBranchName = process.env.publishBranchName;
 
   const tempPublishBranch = `publish-${Date.now()}`;
@@ -44,14 +52,6 @@ function doPublish() {
   console.log(`Updating package.json to version ${releaseVersion}`);
 
   const tagName = 'vnext-' + releaseVersion;
-
-  exec(`git checkout -b ${tempPublishBranch}`);
-
-  // Check we in sync before publishing anything
-  exec(`git checkout ${publishBranchName}`);
-  exec(`git pull origin ${publishBranchName}`);
-
-  exec(`git checkout ${tempPublishBranch}`);
 
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Applying package update to ${releaseVersion}`);
