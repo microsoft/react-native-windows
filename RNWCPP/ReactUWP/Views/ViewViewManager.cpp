@@ -5,12 +5,14 @@
 
 #include "ViewViewManager.h"
 
+#include "ViewControl.h"
 #include "ViewPanel.h"
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/PropertyUtils.h>
 
 #include <INativeUIManager.h>
+#include <IReactInstance.h>
 
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
@@ -48,7 +50,7 @@ public:
     m_enableFocusRing = enable;
 
     if (IsControl())
-      GetControl().UseSystemFocusVisuals(m_enableFocusRing);
+      GetControl()->UseSystemFocusVisuals(m_enableFocusRing);
   }
 
   int32_t TabIndex() { return m_tabIndex; }
@@ -57,11 +59,25 @@ public:
     m_tabIndex = tabIndex;
 
     if (IsControl())
-      GetControl().TabIndex(m_tabIndex);
+      GetControl()->TabIndex(m_tabIndex);
   }
 
   bool OnClick() { return m_onClick; }
   void OnClick(bool isSet) { m_onClick = isSet; }
+
+  AccessibilityRoles AccessibilityRole() { return m_accessibilityRole; }
+  void AccessibilityRole(AccessibilityRoles role)
+  {
+    m_accessibilityRole = role;
+    if (IsControl())
+      GetControl()->AccessibilityRole(role);
+  }
+
+  bool AccessibilityState(AccessibilityStates state) { return m_accessibilityStates[state]; }
+  void AccessibilityState(AccessibilityStates state, bool value)
+  {
+    m_accessibilityStates[state] = value;
+  }
 
   void AddView(ShadowNode& child, int64_t index) override
   {
@@ -99,6 +115,9 @@ public:
   void RefreshProperties()
   {
     // The view may have been replaced, so transfer properties stored on the shadow node to the view
+    AccessibilityRole(AccessibilityRole());
+    AccessibilityState(AccessibilityStates::Disabled, AccessibilityState(AccessibilityStates::Disabled));
+    AccessibilityState(AccessibilityStates::Selected, AccessibilityState(AccessibilityStates::Selected));
     EnableFocusRing(EnableFocusRing());
     TabIndex(TabIndex());
   }
@@ -116,9 +135,9 @@ public:
     }
   }
 
-  winrt::ContentControl GetControl()
+  winrt::impl::com_ref<react::uwp::ViewControl> GetControl()
   {
-    return IsControl() ? m_view.as<winrt::ContentControl>() : winrt::ContentControl(nullptr);
+    return IsControl() ? m_view.as<react::uwp::ViewControl>() : nullptr;
   }
 
 private:
@@ -126,6 +145,8 @@ private:
   bool m_enableFocusRing = true;
   bool m_onClick = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
+  AccessibilityRoles m_accessibilityRole = AccessibilityRoles::None;
+  bool m_accessibilityStates[AccessibilityStates::CountStates] = { false, false };
 };
 
 
@@ -142,9 +163,8 @@ const char* ViewViewManager::GetName() const
 folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants() const
 {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
-  directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
   directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
+  directEvents["topAccessibilityTap"] = folly::dynamic::object("registrationName", "onAccessibilityTap");
 
   return directEvents;
 }
@@ -185,7 +205,8 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag)
   panel->VerticalAlignment(winrt::VerticalAlignment::Top);
 
   // Create the ContentControl as the outer/containing element, nest the ViewPanel, set default properties
-  winrt::ContentControl contentControl;
+  auto contentControlPtr = ViewControl::Create();
+  auto contentControl = contentControlPtr.as<winrt::ContentControl>();
   contentControl.Content(newViewPanelXamlView);
 
   // TODO: Remove once existing clients stop using TouchableNativeFeedback.uwp
@@ -197,12 +218,12 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag)
 
   contentControl.GotFocus([=](auto &&, auto &&)
   {
-    DispatchEvent(tag, "topTextInputFocus", std::move(folly::dynamic::object("target", tag)));
+    DispatchEvent(tag, "topFocus", std::move(folly::dynamic::object("target", tag)));
   });
 
   contentControl.LostFocus([=](auto &&, auto &&)
   {
-    DispatchEvent(tag, "topTextInputBlur", std::move(folly::dynamic::object("target", tag)));
+    DispatchEvent(tag, "topBlur", std::move(folly::dynamic::object("target", tag)));
   });
 
   contentControl.KeyDown([=](auto &&, winrt::KeyRoutedEventArgs const& e)
@@ -225,6 +246,22 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag)
     }
   });
 
+  contentControlPtr->AccessibilityInvoke([=]()
+  {
+    auto instance = m_wkReactInstance.lock();
+    if (instance != nullptr)
+    {
+      auto pNativeUiManager = static_cast<NativeUIManager*>(instance->NativeUIManager());
+      facebook::react::INativeUIManagerHost* pUIManagerHost = pNativeUiManager->getHost();
+
+      auto pViewShadowNode = static_cast<ViewShadowNode*>(pUIManagerHost->FindShadowNodeForTag(tag));
+      if (pViewShadowNode != nullptr && pViewShadowNode->OnClick())
+        DispatchEvent(tag, "topClick", std::move(folly::dynamic::object("target", tag)));
+      else
+        DispatchEvent(tag, "topAccessibilityTap", std::move(folly::dynamic::object("target", tag)));
+    }
+  });
+
   return contentControl.as<XamlView>();
 }
 
@@ -239,6 +276,8 @@ folly::dynamic ViewViewManager::GetNativeProps() const
 
   props.update(folly::dynamic::object
     ("accessible", "boolean")
+    ("accessibilityRole", "string")
+    ("accessibilityStates", "array")
     ("pointerEvents", "string")
     ("onClick", "function")
     ("onMouseEnter", "function")
@@ -306,8 +345,67 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       }
       else if (propertyName == "acceptsKeyboardFocus")
       {
-        if (pair.second.isBool())
-          shouldBeControl = pair.second.asBool();
+        if (propertyValue.isBool())
+          shouldBeControl = propertyValue.asBool();
+      }
+      else if (propertyName == "accessibilityRole")
+      {
+        // FUTURE having an accessibilityRole shouldBeControl to support
+        // non-Touchable scenarios
+        if (propertyValue.isString())
+        {
+          auto role = propertyValue.asString();
+          if (role == "none")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
+          else if (role == "button")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Button);
+          else if (role == "link")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Link);
+          else if (role == "search")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Search);
+          else if (role == "image")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Image);
+          else if (role == "keyboardkey")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::KeyboardKey);
+          else if (role == "text")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Text);
+          else if (role == "adjustable")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Adjustable);
+          else if (role == "imagebutton")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::ImageButton);
+          else if (role == "header")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Header);
+          else if (role == "summary")
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Summary);
+          else
+            pViewShadowNode->AccessibilityRole(AccessibilityRoles::Unknown);
+        }
+        else if (propertyValue.isNull())
+        {
+          pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
+        }
+      }
+      else if (propertyName == "accessibilityStates")
+      {
+        // FUTURE having an accessibilityStates shouldBeControl to support
+        // non-Touchable scenarios
+        bool disabled = false;
+        bool selected = false;
+        if (propertyValue.isArray())
+        {
+          for (const auto& state : propertyValue)
+          {
+            if (!state.isString())
+              continue;
+            if (state.getString() == "disabled")
+              disabled = true;
+            else if (state.getString() == "selected")
+              selected = true;
+          }
+        }
+
+        pViewShadowNode->AccessibilityState(AccessibilityStates::Disabled, disabled);
+        pViewShadowNode->AccessibilityState(AccessibilityStates::Selected, selected);
       }
       else if (propertyName == "enableFocusRing")
       {
@@ -400,5 +498,21 @@ void ViewViewManager::ReplaceView(ViewShadowNode* pViewShadowNode, bool useContr
       static_cast<facebook::react::INativeUIManager*>(instance->NativeUIManager())->ReplaceView(*pViewShadowNode);
     }
 }
+
+void ViewViewManager::SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height)
+{
+  // When the View has a ContentControl the ViewPanel must also have the Width & Height set
+  // Do this first so that it is setup properly before any events are fired by the Super implementation
+  auto* pViewShadowNode = static_cast<ViewShadowNode*>(&nodeToUpdate);
+  if (pViewShadowNode->IsControl())
+  {
+    auto* pPanel = pViewShadowNode->GetViewPanel();
+    pPanel->Width(width);
+    pPanel->Height(height);
+  }
+
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+}
+
 
 } }

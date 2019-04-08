@@ -163,9 +163,6 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\CalendarViewViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\CheckboxViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -198,6 +195,9 @@
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\DatePickerViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ViewControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
   </ItemGroup>
@@ -352,9 +352,6 @@
     <ClInclude Include="Views\PickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\CalendarViewViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\PopupViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -384,6 +381,24 @@
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ViewControl.h">
+      <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -506,6 +521,9 @@
     </Filter>
     <Filter Include="ABI\lib">
       <UniqueIdentifier>{6ce02bc1-7b54-4e9f-a950-8d794d89de63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\cppwinrt">
+      <UniqueIdentifier>{4dbf6aed-54f8-4ebd-b99d-667a4b380d8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

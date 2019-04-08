@@ -18,7 +18,6 @@
 #endif
 
 #include "Utf8DebugExtensions.h"
-#include <jschelpers/noncopyable.h>
 
 namespace facebook {
 namespace react {
@@ -31,9 +30,12 @@ enum JSPropertyAttributes
   kJSPropertyAttributeNone
 };
 
-class ChakraString : public noncopyable
+class ChakraString
 {
 public:
+  ChakraString& operator=(const ChakraString&) = delete;
+  ChakraString() = default;
+
   explicit ChakraString(const char* utf8)
   {
     JsValueRef value = nullptr;
@@ -144,9 +146,13 @@ private:
 };
 
 
-class ChakraObject : public noncopyable
+class ChakraObject
 {
 public:
+  ChakraObject(const ChakraObject&) = delete;
+  ChakraObject& operator=(const ChakraObject&) = delete;
+  ChakraObject() = default;
+
   ChakraObject(JsValueRef obj) :
     m_obj(obj)
   {
@@ -232,9 +238,12 @@ private:
   ChakraValue callAsFunction(JsValueRef thisObj, int nArgs, const JsValueRef args[]) const;
 };
 
-class ChakraValue : public noncopyable
+class ChakraValue
 {
 public:
+  ChakraValue(const ChakraValue&) = delete;
+  ChakraValue& operator=(const ChakraValue&) = delete;
+  ChakraValue() = default;
   ChakraValue(JsValueRef value);
   ChakraValue(ChakraValue&&);
 

@@ -23,6 +23,9 @@ public:
 
   void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
 
+  // Yoga Layout
+  void SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height) override;
+
 protected:
   XamlView CreateViewCore(int64_t tag) override;
   void ReplaceView(ViewShadowNode* viewShadowNode, bool useControl);

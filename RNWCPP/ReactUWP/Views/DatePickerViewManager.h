@@ -17,6 +17,8 @@ public:
   const char* GetName() const override;
   folly::dynamic GetNativeProps() const override;
 
+  YGMeasureFunc GetYogaCustomMeasureFunc() const override;
+
 protected:
   XamlView CreateViewCore(int64_t tag) override;
 

@@ -3,13 +3,20 @@
 
 #include "pch.h"
 
+#include <ViewManager.h>
 #include <Views/ShadowNodeBase.h>
+#include <Views/ViewManagerBase.h>
 
 namespace react { namespace uwp {
 
 ShadowNodeBase::ShadowNodeBase()
   : m_view(nullptr)
 {
+}
+
+ViewManagerBase* ShadowNodeBase::GetViewManager() const
+{
+  return static_cast<ViewManagerBase*>(m_viewManager);
 }
 
 void ShadowNodeBase::updateProperties(const folly::dynamic&& props)

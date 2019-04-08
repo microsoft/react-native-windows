@@ -82,7 +82,28 @@ jobs:
           workingDirectory: RNWCPP
 
       - task: NuGetCommand@2
-        displayName: NuGet restore
+        displayName: NuGet restore - ReactWindows-UWP
+        inputs:
+          command: restore
+          restoreSolution: RNWCPP/ReactWindows-UWP.sln
+          feedsToUse: config
+          nugetConfigPath: RNWCPP/NuGet.config
+          restoreDirectory: packages/
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - ReactWindows-UWP
+        inputs:
+          solution: RNWCPP/ReactWindows-UWP.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - ReactWindows
         inputs:
           command: restore
           restoreSolution: RNWCPP/ReactWindows.sln
@@ -119,7 +140,20 @@ jobs:
           #verbosityPack: 'Detailed' # Options: quiet, normal, detailed
           #arguments: # Required when command == Custom
 
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
+          workingDirectory: RNWCPP
+
+      - task: CmdLine@2
+        displayName: Remove SampleApp.uwp.bundle
+        inputs:
+          script: del SampleApp.uwp.bundle
+          workingDirectory: RNWCPP
+
       - task: MSBuild@1
+        displayName: MSBuild - ReactWindows
         inputs:
           solution: RNWCPP/ReactWindows.sln
           #msbuildLocationMethod: 'version' # Optional. Options: version, location
@@ -185,7 +219,7 @@ jobs:
         inputs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\RNWCPP\Scripts\Tfs\Start-TestServers.ps1
-          arguments: -SourcesDirectory $(Build.SourcesDirectory)\RNWCPP\node_modules\@microsoft\react-native -Preload
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\RNWCPP\node_modules\react-native -Preload
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests

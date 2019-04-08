@@ -19,6 +19,8 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string& b
   winrt::hstring str(facebook::react::UnicodeConversion::Utf8ToUtf16(bundleUri));
   winrt::Windows::Foundation::Uri uri(str);
 
+  co_await winrt::resume_background();
+
   auto file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
   auto hdata = co_await winrt::Windows::Storage::FileIO::ReadTextAsync(file);
 

@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include <Views/FrameworkElementViewManager.h>
+#include <Views/ControlViewManager.h>
 
 namespace react { namespace uwp {
 
-class SwitchViewManager : public FrameworkElementViewManager
+class SwitchViewManager : public ControlViewManager
 {
-  using Super = FrameworkElementViewManager;
+  using Super = ControlViewManager;
 public:
   SwitchViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 

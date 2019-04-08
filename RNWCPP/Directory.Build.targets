@@ -19,9 +19,10 @@
     <Message Text="=> UnmergedWinmdDirectory  [$(UnmergedWinmdDirectory)]" />
     <Message Text="=> MergedWinmdDirectory    [$(MergedWinmdDirectory)]" />
     <Message Text="=> FollyDir                [$(FollyDir)]" />
+    <Message Text="=> ReactNativeWindowsDir   [$(ReactNativeWindowsDir)]" />
     <Message Text="=> ReactNativeDir          [$(ReactNativeDir)]" />
     <Message Text="=> YogaDir                 [$(YogaDir)]" />
-    <Message Text="=> ProjectHome                 [$(ProjectHome)]" />
+    <Message Text="=> ProjectHome             [$(ProjectHome)]" />
   </Target>
 
 </Project>

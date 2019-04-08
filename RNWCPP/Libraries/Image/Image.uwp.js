@@ -7,22 +7,16 @@
 // TODO: provide real uwp implementation
 'use strict';
 
-const EdgeInsetsPropType = require('EdgeInsetsPropType');
 const ImageResizeMode = require('ImageResizeMode');
-const ImageSourcePropType = require('ImageSourcePropType');
-const ImageStylePropTypes = require('ImageStylePropTypes');
 const NativeMethodsMixin = require('NativeMethodsMixin');
 const NativeModules = require('NativeModules');
 const React = require('React');
 const ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 const StyleSheet = require('StyleSheet');
-const StyleSheetPropType = require('StyleSheetPropType');
 
 const flattenStyle = require('flattenStyle');
 const requireNativeComponent = require('requireNativeComponent');
 const resolveAssetSource = require('resolveAssetSource');
-
-const PropTypes = require('prop-types');
 
 const ImageViewManager = NativeModules.ImageViewManager;
 
@@ -126,77 +120,6 @@ const createReactClass = require('create-react-class');
  */
 // $FlowFixMe(>=0.41.0)
 const Image = createReactClass({
-  propTypes: {
-    /**
-     * > `ImageResizeMode` is an `Enum` for different image resizing modes, set via the
-     * > `resizeMode` style property on `Image` components. The values are `contain`, `cover`,
-     * > `stretch`, `center`, `repeat`.
-     */
-    style: StyleSheetPropType(ImageStylePropTypes),
-    /**
-     * The image source (either a remote URL or a local file resource).
-     *
-     * This prop can also contain several remote URLs, specified together with
-     * their width and height and potentially with scale/other URI arguments.
-     * The native side will then choose the best `uri` to display based on the
-     * measured size of the image container. A `cache` property can be added to
-     * control how networked request interacts with the local cache.
-     */
-    source: ImageSourcePropType,
-    /**
-     * Determines how to resize the image when the frame doesn't match the raw
-     * image dimensions.
-     *
-     * - `cover`: Scale the image uniformly (maintain the image's aspect ratio)
-     * so that both dimensions (width and height) of the image will be equal
-     * to or larger than the corresponding dimension of the view (minus padding).
-     *
-     * - `contain`: Scale the image uniformly (maintain the image's aspect ratio)
-     * so that both dimensions (width and height) of the image will be equal to
-     * or less than the corresponding dimension of the view (minus padding).
-     *
-     * - `stretch`: Scale width and height independently, This may change the
-     * aspect ratio of the src.
-     *
-     * - `repeat`: Repeat the image to cover the frame of the view. The
-     * image will keep it's size and aspect ratio. (iOS only)
-     */
-    resizeMode: PropTypes.oneOf(['cover', 'contain', 'stretch', 'repeat', 'center']),
-      /**
-     * The text that's read by the screen reader when the user interacts with
-     * the image.
-     * @platform ios
-     */
-    accessibilityLabel: PropTypes.string,
-    /**
-     * A unique identifier for this element to be used in UI Automation
-     * testing scripts.
-     */
-    testID: PropTypes.string,
-    /**
-     * Invoked on mount and layout changes with
-     * `{nativeEvent: {layout: {x, y, width, height}}}`.
-     */
-    onLayout: PropTypes.func,
-    /**
-     * Invoked on load start.
-     *
-     * e.g., `onLoadStart={(e) => this.setState({loading: true})}`
-     */
-    onLoadStart: PropTypes.func,
-    /**
-     * Invoked on load error with `{nativeEvent: {error}}`.
-     */
-    onError: PropTypes.func,
-    /**
-     * Invoked when load completes successfully.
-     */
-    onLoad: PropTypes.func,
-    /**
-     * Invoked when load either succeeds or fails.
-     */
-    onLoadEnd: PropTypes.func,
-  },
 
   statics: {
     resizeMode: ImageResizeMode,

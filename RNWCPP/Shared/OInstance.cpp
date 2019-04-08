@@ -180,6 +180,7 @@ private:
   facebook::react::ChakraInstanceArgs args_;
 };
 
+#if defined(USE_V8)
 class V8JSIExecutorFactory : public JSExecutorFactory {
 public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -197,6 +198,7 @@ public:
       nullptr);
   }
 };
+#endif // USE_V8
 
 #else
 
@@ -214,7 +216,7 @@ private:
   facebook::react::ChakraInstanceArgs args_;
 };
 
-
+#if defined(USE_V8)
 class V8JSIExecutorFactory : public JSExecutorFactory {
 public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -225,6 +227,7 @@ public:
 
   V8JSIExecutorFactory() { std::abort(); }
 };
+#endif // USE_V8
 
 
 #endif
@@ -453,9 +456,11 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     case JSIMode::ChakraJSI:
       jsef = std::make_shared<ChakraJSIExecutorFactory>(std::move(instanceArgs));
       break;
+#if defined(USE_V8)
     case JSIMode::V8JSI:
       jsef = std::make_shared<V8JSIExecutorFactory>();
       break;
+#endif // USE_V8
     }
 
   }

@@ -35,8 +35,7 @@ ViewPanel::ViewPanel()
   return winrt::make_self<ViewPanel>();
 }
 
-
-winrt::DependencyProperty ViewPanel::BackgroundProperty()
+/*static*/ winrt::DependencyProperty ViewPanel::BackgroundProperty()
 {
   static winrt::DependencyProperty s_backgroundProperty =
     winrt::DependencyProperty::Register(
@@ -51,21 +50,21 @@ winrt::DependencyProperty ViewPanel::BackgroundProperty()
   return s_backgroundProperty;
 }
 
-void ViewPanel::VisualPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
+/*static*/ void ViewPanel::VisualPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
 {
   auto panel { sender.as<ViewPanel>() };
   if (panel.get() != nullptr)
     panel->m_propertiesChanged = true;
 }
 
-void ViewPanel::PositionPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
+/*static*/ void ViewPanel::PositionPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
 {
   auto element { sender.as<winrt::UIElement>() };
   if (element != nullptr)
     element.InvalidateArrange();
 }
 
-winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
+/*static*/ winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
 {
   static winrt::DependencyProperty s_borderThicknessProperty =
     winrt::DependencyProperty::Register(
@@ -80,7 +79,7 @@ winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
   return s_borderThicknessProperty;
 }
 
-winrt::DependencyProperty ViewPanel::BorderBrushProperty()
+/*static*/ winrt::DependencyProperty ViewPanel::BorderBrushProperty()
 {
   static winrt::DependencyProperty s_borderBrushProperty =
     winrt::DependencyProperty::Register(
@@ -95,7 +94,7 @@ winrt::DependencyProperty ViewPanel::BorderBrushProperty()
   return s_borderBrushProperty;
 }
 
-winrt::DependencyProperty ViewPanel::CornerRadiusProperty()
+/*static*/ winrt::DependencyProperty ViewPanel::CornerRadiusProperty()
 {
   static winrt::DependencyProperty s_cornerRadiusProperty =
     winrt::DependencyProperty::Register(
@@ -110,7 +109,7 @@ winrt::DependencyProperty ViewPanel::CornerRadiusProperty()
   return s_cornerRadiusProperty;
 }
 
-winrt::DependencyProperty ViewPanel::TopProperty()
+/*static*/ winrt::DependencyProperty ViewPanel::TopProperty()
 {
   static winrt::DependencyProperty s_topProperty =
     winrt::DependencyProperty::RegisterAttached(
@@ -125,7 +124,7 @@ winrt::DependencyProperty ViewPanel::TopProperty()
   return s_topProperty;
 }
 
-winrt::DependencyProperty ViewPanel::LeftProperty()
+/*static*/ winrt::DependencyProperty ViewPanel::LeftProperty()
 {
   static winrt::DependencyProperty s_topProperty =
     winrt::DependencyProperty::RegisterAttached(
@@ -140,7 +139,7 @@ winrt::DependencyProperty ViewPanel::LeftProperty()
   return s_topProperty;
 }
 
-winrt::DependencyProperty ViewPanel::ClipChildrenProperty()
+/*static*/ winrt::DependencyProperty ViewPanel::ClipChildrenProperty()
 {
   static winrt::DependencyProperty s_clipChildrenProperty =
     winrt::DependencyProperty::Register(
@@ -155,13 +154,13 @@ winrt::DependencyProperty ViewPanel::ClipChildrenProperty()
   return s_clipChildrenProperty;
 }
 
-void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement& element, double value)
+/*static*/ void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement& element, double value)
 {
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
 }
 
-void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double value)
+/*static*/ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double value)
 {
   element.SetValue(LeftProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
@@ -169,31 +168,47 @@ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double val
 
 winrt::Size ViewPanel::MeasureOverride(winrt::Size availableSize)
 {
+  // All children are given as much size as they'd like
+  winrt::Size childConstraint(INFINITY, INFINITY);
+
   for (winrt::UIElement child : Children())
-  {
-    child.Measure(winrt::Size(INFINITY, INFINITY));
+    child.Measure(childConstraint);
 
-    auto width = child.DesiredSize().Width;
-    auto height = child.DesiredSize().Height;
-  }
-
-  return winrt::Size(availableSize.Width == INFINITY ? 0.0f : availableSize.Width, availableSize.Height == INFINITY ? 0.0f : availableSize.Height);
+  // ViewPanels never choose their size, that is completely up to the parent - so return no size
+  return winrt::Size(0, 0);
 }
 
 winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
 {
   for (winrt::UIElement child : Children())
   {
-    float left = (float)ViewPanel::GetLeft(child);
-    float top =  (float)ViewPanel::GetTop(child);
+    double childHeight = 0.0;
+    double childWidth = 0.0;
 
-    auto width = child.DesiredSize().Width;
-    auto height = child.DesiredSize().Height;
-
-    if ((child != m_border) && (child != m_innerElement))
-      child.Arrange(winrt::Rect(left, top, child.DesiredSize().Width, child.DesiredSize().Height));
+    // A Border or inner ViewPanel should take up the same space as this panel
+    if ((child == m_border) || (child == m_innerElement))
+    {
+      childWidth = finalSize.Width;
+      childHeight = finalSize.Height;
+    }
     else
-      child.Arrange(winrt::Rect(0.0f, 0.f, finalSize.Width, finalSize.Height));
+    {
+      // We expect elements to have been arranged by yoga which means their Width & Height are set
+      winrt::FrameworkElement fe = child.try_as<winrt::FrameworkElement>();
+      if (fe != nullptr)
+      {
+        childWidth = fe.Width();
+        childHeight = fe.Height();
+      }
+      // But we fall back to the measured size otherwise
+      else
+      {
+        childWidth = child.DesiredSize().Width;
+        childHeight = child.DesiredSize().Height;
+      }
+    }
+
+    child.Arrange(winrt::Rect((float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), childWidth, childHeight));
   }
 
   return finalSize;

@@ -3,12 +3,17 @@
 
 #pragma once
 
-#include "ViewManagerBase.h"
-
 #include <ShadowNode.h>
 #include <XamlView.h>
 
+#include <folly/dynamic.h>
+#include <yoga/yoga.h>
+
+#include <ReactWindowsCore/ReactWindowsAPI.h>
+
 namespace react { namespace uwp {
+
+class ViewManagerBase;
 
 enum ShadowEdges : uint8_t
 {
@@ -38,6 +43,30 @@ enum ShadowCorners : uint8_t
   CountCorners
 };
 
+enum AccessibilityRoles : uint8_t
+{
+  None = 0,
+  Button,
+  Link,
+  Search,
+  Image,
+  KeyboardKey,
+  Text,
+  Adjustable,
+  ImageButton,
+  Header,
+  Summary,
+  Unknown,
+  CountRoles
+};
+
+enum AccessibilityStates : uint8_t
+{
+  Selected = 0,
+  Disabled,
+  CountStates
+};
+
 extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
 #define INIT_UNDEFINED_EDGES { c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge }
 #define INIT_UNDEFINED_CORNERS { c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge }
@@ -62,8 +91,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode
   virtual void updateProperties(const folly::dynamic&& props) override;
 
   virtual void ReplaceChild(XamlView oldChildView, XamlView newChildView);
+  virtual bool ImplementsPadding() { return false; }
 
-  ViewManagerBase* GetViewManager() const { return static_cast<ViewManagerBase*>(m_viewManager); }
+  ViewManagerBase* GetViewManager() const;
   XamlView GetView() const { return m_view; }
   int64_t GetParent() const { return m_parent; }
 
@@ -81,6 +111,7 @@ public:
   double m_padding[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
   double m_border[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
   double m_cornerRadius[ShadowCorners::CountCorners] = INIT_UNDEFINED_CORNERS;
+
   // Bound event types
   bool m_onLayout = false;
   bool m_onMouseEnter = false;

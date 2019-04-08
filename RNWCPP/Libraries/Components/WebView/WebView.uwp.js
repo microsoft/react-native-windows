@@ -8,22 +8,15 @@
  */
 'use strict';
 
-var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var React = require('React');
 var ReactNative = require('ReactNative');
-var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var UIManager = require('UIManager');
 var View = require('View');
-var ViewPropTypes = require('ViewPropTypes');
 
-var deprecatedPropType = require('deprecatedPropType');
 var keyMirror = require('fbjs/lib/keyMirror');
-var merge = require('merge');
 var requireNativeComponent = require('requireNativeComponent');
 var resolveAssetSource = require('resolveAssetSource');
-
-const PropTypes = require('prop-types');
 
 const createReactClass = require('create-react-class');
 
@@ -39,102 +32,6 @@ var WebViewState = keyMirror({
  * Renders a native WebView.
  */
 var WebView = createReactClass({
-
-  propTypes: {
-    ...ViewPropTypes,
-    renderError: PropTypes.func,
-    renderLoading: PropTypes.func,
-    onLoad: PropTypes.func,
-    onLoadEnd: PropTypes.func,
-    onLoadStart: PropTypes.func,
-    onError: PropTypes.func,
-    automaticallyAdjustContentInsets: PropTypes.bool,
-    contentInset: EdgeInsetsPropType,
-    onNavigationStateChange: PropTypes.func,
-    startInLoadingState: PropTypes.bool, // force WebView to show loadingView on first load
-    style: ViewPropTypes.style,
-
-    html: deprecatedPropType(
-      PropTypes.string,
-      'Use the `source` prop instead.'
-    ),
-
-    url: deprecatedPropType(
-      PropTypes.string,
-      'Use the `source` prop instead.'
-    ),
-
-    /**
-     * Loads static html or a uri (with optional headers) in the WebView.
-     */
-    source: PropTypes.oneOfType([
-      PropTypes.shape({
-        /*
-         * The URI to load in the WebView. Can be a local or remote file.
-         */
-        uri: PropTypes.string,
-        /*
-         * The HTTP Method to use. Defaults to GET if not specified.
-         * NOTE: On Android, only GET and POST are supported.
-         */
-        method: PropTypes.oneOf(['GET', 'POST']),
-        /*
-         * Additional HTTP headers to send with the request.
-         * NOTE: On Android, this can only be used with GET requests.
-         */
-        headers: PropTypes.object,
-        /*
-         * The HTTP body to send with the request. This must be a valid
-         * UTF-8 string, and will be sent exactly as specified, with no
-         * additional encoding (e.g. URL-escaping or base64) applied.
-         * NOTE: On Android, this can only be used with POST requests.
-         */
-        body: PropTypes.string,
-      }),
-      PropTypes.shape({
-        /*
-         * A static HTML page to display in the WebView.
-         */
-        html: PropTypes.string,
-        /*
-         * The base URL to be used for any relative links in the HTML.
-         */
-        baseUrl: PropTypes.string,
-      }),
-      /*
-       * Used internally by packager.
-       */
-      PropTypes.number,
-    ]),
-
-    /**
-     * Used on Android and Windows only, JS is enabled by default for WebView on iOS
-     * @platform android, windows
-     */
-    javaScriptEnabled: PropTypes.bool,
-    
-    /**
-     * Used on Windows only, controls whether Indexed DB is enabled or not
-     * @platform windows
-     */
-    indexedDbEnabled: PropTypes.bool,
-
-    /**
-     * Sets the JS to be injected when the webpage loads.
-     */
-    injectedJavaScript: PropTypes.string,
-
-    /**
-     * Used to locate this view in end-to-end tests.
-     */
-    testID: PropTypes.string,
-
-    /**
-     * Determines whether HTML5 audio & videos require the user to tap before they can
-     * start playing. The default value is `false`.
-     */
-    mediaPlaybackRequiresUserAction: PropTypes.bool,
-  },
 
   getInitialState: function() {
     return {

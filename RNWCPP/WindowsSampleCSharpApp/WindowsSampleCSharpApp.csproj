@@ -24,8 +24,8 @@
     <PackageCertificateThumbprint>99075A5CB00CD18838612A4BA1A675249FE0D6A8</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <OutputPath>$(SolutionDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
-    <IntermediateOutputPath>$(SolutionDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <OutputPath>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+    <IntermediateOutputPath>$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntermediateOutputPath>
     <NoWarn>;2008</NoWarn>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>

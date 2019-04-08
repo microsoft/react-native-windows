@@ -73,12 +73,13 @@ export class TextExample extends React.Component<{}> {
   public static description = 'Base component for rendering styled text.';
 
   public render() {
+    const lorumIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.';
+    
     return (
       <RNTesterPage title="<Text>">
         <RNTesterBlock title="Wrap">
           <Text>
-            The text should wrap if it goes on multiple lines. See, this is
-            going to the next line.
+            The text should wrap if it goes on multiple lines. See, this is going to the next line. {lorumIpsum}
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Padding">
@@ -447,18 +448,14 @@ export class TextExample extends React.Component<{}> {
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="numberOfLines attribute">
-          <Text numberOfLines={1}>
-            Maximum of one line no matter now much I write here. If I keep
-            writing it{"'"}ll just truncate after one line
-          </Text>
-          <Text numberOfLines={2} style={{marginTop: 20}}>
-            Maximum of two lines no matter now much I write here. If I keep
-            writing it{"'"}ll just truncate after two lines
-          </Text>
-          <Text style={{marginTop: 20}}>
-            No maximum lines specified no matter now much I write here. If I
-            keep writing it{"'"}ll just keep going and going
-          </Text>
+          <Text style={{marginTop: 0, fontStyle: 'italic'}}>1</Text>
+          <Text numberOfLines={1}>Maximum of one line no matter now much I write here. If I keep writing it{"'"}ll just truncate after one line. {lorumIpsum}</Text>
+
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>2</Text>
+          <Text numberOfLines={2}>Maximum of two lines no matter now much I write here. If I keep writing it{"'"}ll just truncate after two lines. {lorumIpsum}</Text>
+
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>(default) infinity</Text>
+          <Text>No maximum lines specified no matter now much I write here. If I keep writing it{"'"}ll just keep going and going. {lorumIpsum}</Text>
         </RNTesterBlock>
         <RNTesterBlock title="selectable attribute">
           <Text selectable>
@@ -489,17 +486,24 @@ export class TextExample extends React.Component<{}> {
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Ellipsize mode">
+          <Text style={{marginTop: 0, fontStyle: 'italic'}}>(default) tail</Text>
           <Text numberOfLines={1}>
-            This very long text should be truncated with dots in the end.
+            This very long text should be truncated with dots in the end. {lorumIpsum}
           </Text>
+          
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>middle</Text>
           <Text ellipsizeMode="middle" numberOfLines={1}>
-            This very long text should be truncated with dots in the middle.
+            This very long text should be truncated with dots in the middle. {lorumIpsum}
           </Text>
+          
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>head</Text>
           <Text ellipsizeMode="head" numberOfLines={1}>
-            This very long text should be truncated with dots in the beginning.
+            This very long text should be truncated with dots in the beginning. {lorumIpsum}
           </Text>
+
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>clip</Text>
           <Text ellipsizeMode="clip" numberOfLines={1}>
-            This very long text should be clipped and this will not be visible.
+            This very long text should be clipped and this will not be visible. {lorumIpsum}
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Include Font Padding">
