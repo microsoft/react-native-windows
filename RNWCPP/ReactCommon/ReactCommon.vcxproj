@@ -133,7 +133,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCWrapper.h" Condition="'$(NOJSC)' != 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSException.h" Condition="'$(NOJSC)' != 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\noncopyable.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\Unicode.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\Value.h" Condition="'$(NOJSC)' != 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\instrumentation.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" Condition="'$(NOJSC)' != 'true'" />
@@ -175,7 +174,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCJSException.cpp" Condition="'$(NOJSC)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCWrapper.cpp" Condition="'$(NOJSC)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\systemJSCWrapper.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\Unicode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\Value.cpp" Condition="'$(NOJSC)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp" Condition="'$(NOJSC)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.cpp" />
