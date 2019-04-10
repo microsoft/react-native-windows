@@ -34,7 +34,7 @@
     }
   },
   "dependencies": {
-    "react-native": "0.58.6-microsoft.21 || https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.22.tar.gz",
+    "react-native": "0.58.6-microsoft.21 || https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.21.tar.gz",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
