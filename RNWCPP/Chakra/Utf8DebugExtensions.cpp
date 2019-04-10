@@ -5,7 +5,6 @@
 
 #include "Utf8DebugExtensions.h"
 #include "UnicodeConversion.h"
-#include <jschelpers\Unicode.h>
 
 #include <cassert>
 #include <malloc.h>

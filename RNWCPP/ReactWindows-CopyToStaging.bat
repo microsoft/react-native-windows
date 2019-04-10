@@ -40,11 +40,6 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\cxxreact\NativeModule.h             %DESTROOT%\inc\cxxreact
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\cxxreact\PlatformBundleInfo.h       %DESTROOT%\inc\cxxreact
 
-%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jschelpers\JavaScriptCore.h         %DESTROOT%\inc\jschelpers
-%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jschelpers\JSCWrapper.h             %DESTROOT%\inc\jschelpers
-%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jschelpers\Unicode.h                %DESTROOT%\inc\jschelpers
-%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jschelpers\Value.h                  %DESTROOT%\inc\jschelpers
-
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\Yoga.h                    %DESTROOT%\inc\yoga
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\YGMacros.h                %DESTROOT%\inc\yoga
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\YGNodeList.h              %DESTROOT%\inc\yoga
