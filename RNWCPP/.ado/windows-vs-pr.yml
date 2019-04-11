@@ -53,12 +53,6 @@ jobs:
             Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
       - task: CmdLine@2
-        displayName: Replace RN dependency with tarball
-        inputs:
-          script: node Scripts/replaceRNDependency.js
-          workingDirectory: RNWCPP
-
-      - task: CmdLine@2
         displayName: npm install
         inputs:
           script: npm install

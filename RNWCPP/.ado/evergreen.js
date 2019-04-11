@@ -135,25 +135,26 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
 
   let existingPkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
 
-  if (existingPkgJson.dependencies['react-native'] === pkgJson.version) {
+  const rnDependency = `${pkgJson.version} || https://github.com/Microsoft/react-native/archive/v${pkgJson.version}.tar.gz`;
+
+  if (existingPkgJson.peerDependencies['react-native'] === rnDependency) {
     console.log(`Already at latest react-native version: ${pkgJson.version}.`);
     console.log('Nothing to do...exiting');
     process.exitCode = 0;
     return;
   }
 
-  rnVersion = pkgJson.version;
+  console.log(`Updating react-native to version: ${pkgJson.version}`);
+  existingPkgJson.peerDependencies['react-native'] = rnDependency;
+  existingPkgJson.devDependencies['react-native'] = pkgJson.version;
 
-  console.log(`Updating react-native to version: ${rnVersion}`);
-  existingPkgJson.dependencies['react-native'] = rnVersion;
-
-  branchName = branchNamePrefix + sanitizeBranchName(rnVersion);
+  branchName = branchNamePrefix + sanitizeBranchName(pkgJson.version);
 
   exec(`git checkout ${finalTargetBranchName}`);
   exec(`git checkout -b ${branchName}`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
   exec(`git add ${pkgJsonPath}`);
-  exec(`git commit -m "Update to react-native@${rnVersion}"`);
+  exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
   exec(`git push origin ${branchName}`);
 
   if (autopr) createPr();
