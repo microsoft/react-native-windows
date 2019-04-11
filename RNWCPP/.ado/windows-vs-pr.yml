@@ -9,7 +9,7 @@ jobs:
   - job: Playground
     displayName: Playground Solution
     pool:
-      name: Hosted VS2017
+      name: Hosted Windows 2019 with VS 2019
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
