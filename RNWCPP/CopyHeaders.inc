@@ -1057,6 +1057,7 @@ COPYFILES_PASS0 = \
 	ReactWindows\ReactWindowsCore\Tracing.h; \
 	ReactWindows\include\ReactWindowsCore\ViewManager.h; \
 	ReactWindows\include\ReactWindowsCore\II18nModule.h; \
+	ReactWindows\include\ReactWindowsCore\UnicodeConversion.h; \
 	ReactWindows\Desktop\JSBigStringResourceDll.h; \
 
 COPYFILES_PASS0 = \
