@@ -41,7 +41,6 @@ TARGETLOBS = $(TARGETLOBS) \
 	$(PROJLIBDIR)\FollyDetailMosh.lob \
 	$(PROJLIBDIR)\FollyPortabilityMosh.lob \
 	$(PROJLIBDIR)\FollyMosh.lob \
-	$(PROJLIBDIR)\JSCHelpersMosh.lob \
 	$(PROJLIBDIR)\ModuleProviderMosh.lob \
 	$(PROJLIBDIR)\ModulesMosh.lob \
 	$(PROJLIBDIR)\PrivateDataMosh.lob \
