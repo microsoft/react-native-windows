@@ -21,6 +21,8 @@ function doPublish() {
   const publishBranchName = process.env.publishBranchName;
   const tempPublishBranch = `publish-${Date.now()}`;
 
+  exec(`git checkout --force`);
+
   exec(`git checkout -b ${tempPublishBranch}`);
 
   // Check we in sync before publishing anything
