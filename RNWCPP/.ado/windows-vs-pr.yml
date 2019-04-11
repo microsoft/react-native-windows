@@ -6,6 +6,37 @@ trigger: none # will disable CI builds entirely
 pr: none # disable on PRs until stable
 
 jobs:
+  - job: Playground
+    displayName: Playground Solution
+    pool:
+      name: Hosted VS2017
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: CmdLine@2
+        displayName: npm install
+        inputs:
+          script: npm install
+          workingDirectory: RNWCPP
+
+      - task: MSBuild@1
+        displayName: MSBuild - Playground
+        inputs:
+          solution: RNWCPP/Playground/Playground.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
   - job: WindowsVSPR
     displayName: Windows Visual Studio PR
     strategy:
