@@ -69,7 +69,7 @@ module.exports = function windows(config, args, options) {
     console.log('Downloading lib...');
     return Common.downloadFile(
       libPath,
-      `https://github.com/in4margaret/react-native-windows/archive/mostap%2Frnwcppcli.zip`
+      `https://github.com/Microsoft/react-native-windows/archive/rnwcpp-preview.zip`
     ).then(function () {
       console.log('Unziping lib...');
       return Common.unzipFile(libPath, libDir);
