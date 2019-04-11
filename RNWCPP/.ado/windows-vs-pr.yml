@@ -31,9 +31,7 @@ jobs:
         inputs:
           command: restore
           restoreSolution: RNWCPP/Playground/Playground.sln
-          feedsToUse: config
-          nugetConfigPath: RNWCPP/NuGet.config
-          restoreDirectory: Playground/packages/
+          restoreDirectory: packages/
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: MSBuild@1
