@@ -5,6 +5,8 @@
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",
   "scripts": {
+    "preinstall": "node Scripts/preInstall.js",
+    "postinstall": "node Scripts/postInstall.js",
     "build": "node Scripts/just.js build",
     "clean": "node Scripts/just.js clean",
     "start": "node Scripts/cli.js start",
@@ -53,7 +55,8 @@
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
-    "typescript": "3.3.3"
+    "typescript": "3.3.3",
+    "react-native": "0.58.6-microsoft.22"
   },
   "peerDependencies": {
     "react": "16.6.3",

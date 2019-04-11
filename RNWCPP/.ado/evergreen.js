@@ -146,6 +146,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
 
   console.log(`Updating react-native to version: ${pkgJson.version}`);
   existingPkgJson.peerDependencies['react-native'] = rnDependency;
+  existingPkgJson.devDependencies['react-native'] = pkgJson.version;
 
   branchName = branchNamePrefix + sanitizeBranchName(pkgJson.version);
 
