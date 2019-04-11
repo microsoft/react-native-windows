@@ -51,13 +51,13 @@ jobs:
       - task: CmdLine@2
         displayName: yarn install
         inputs:
-          script: %APPDATA%\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
           workingDirectory: RNWCPP
 
       - task: CmdLine@2
         displayName: yarn build
         inputs:
-          script: %APPDATA%\npm\node_modules\yarn\bin\yarn.cmd build
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
           workingDirectory: RNWCPP
 
       - task: NuGetCommand@2
@@ -149,7 +149,7 @@ jobs:
       - task: CmdLine@2
         displayName: yarn install
         inputs:
-          script: %APPDATA%\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
           workingDirectory: RNWCPP
 
       - task: PowerShell@2
@@ -166,7 +166,7 @@ jobs:
       - task: CmdLine@2
         displayName: yarn build
         inputs:
-          script: %APPDATA%\npm\node_modules\yarn\bin\yarn.cmd build
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
           workingDirectory: RNWCPP
 
       - task: NuGetCommand@2
