@@ -26,6 +26,16 @@ jobs:
           script: npm install
           workingDirectory: RNWCPP
 
+      - task: NuGetCommand@2
+        displayName: NuGet restore
+        inputs:
+          command: restore
+          restoreSolution: RNWCPP/Playground/Playground.sln
+          feedsToUse: config
+          nugetConfigPath: RNWCPP/NuGet.config
+          restoreDirectory: Playground/packages/
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
       - task: MSBuild@1
         displayName: MSBuild - Playground
         inputs:
