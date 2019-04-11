@@ -135,8 +135,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
 
   let existingPkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
 
-  let rnDependency = 'version || https://github.com/Microsoft/react-native/archive/vversion.tar.gz';
-  rnDependency.replace(/version/gm, pkgJson.version);
+  const rnDependency = `${pkgJson.version} || https://github.com/Microsoft/react-native/archive/v${pkgJson.version}.tar.gz`;
 
   if (existingPkgJson.peerDependencies['react-native'] === rnDependency) {
     console.log(`Already at latest react-native version: ${pkgJson.version}.`);
