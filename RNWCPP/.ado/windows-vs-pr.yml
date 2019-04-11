@@ -9,7 +9,7 @@ jobs:
   - job: Playground
     displayName: Playground Solution
     pool:
-      vmImage: windows-2019
+      name: Hosted VS2017
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -38,7 +38,7 @@ jobs:
         displayName: MSBuild - Playground
         inputs:
           solution: RNWCPP/Playground/Playground.sln
-          msbuildVersion: 'latest' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: x64 # Optional
           configuration: Debug # Optional
