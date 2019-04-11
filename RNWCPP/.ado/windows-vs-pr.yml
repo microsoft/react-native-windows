@@ -6,8 +6,88 @@ trigger: none # will disable CI builds entirely
 pr: none # disable on PRs until stable
 
 jobs:
+  - job: UWPPR
+    displayName: UWP PR
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+    pool:
+      name: OE Standard Pool
+      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: CmdLine@2
+        displayName: npm install
+        inputs:
+          script: npm install
+          workingDirectory: RNWCPP
+
+      - task: CmdLine@2
+        displayName: npm run build
+        inputs:
+          script: npm run build
+          workingDirectory: RNWCPP
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - ReactWindows-UWP
+        inputs:
+          command: restore
+          restoreSolution: RNWCPP/ReactWindows-UWP.sln
+          feedsToUse: config
+          nugetConfigPath: RNWCPP/NuGet.config
+          restoreDirectory: packages/
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - ReactWindows-UWP
+        inputs:
+          solution: RNWCPP/ReactWindows-UWP.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
+          workingDirectory: RNWCPP
+
+      - task: CmdLine@2
+        displayName: Remove SampleApp.uwp.bundle
+        inputs:
+          script: del SampleApp.uwp.bundle
+          workingDirectory: RNWCPP
+
   - job: WindowsVSPR
-    displayName: Windows Visual Studio PR
+    displayName: Windows Visual Studio with Win32 PR
     strategy:
       matrix:
         X64Debug:
@@ -76,27 +156,6 @@ jobs:
           workingDirectory: RNWCPP
 
       - task: NuGetCommand@2
-        displayName: NuGet restore - ReactWindows-UWP
-        inputs:
-          command: restore
-          restoreSolution: RNWCPP/ReactWindows-UWP.sln
-          feedsToUse: config
-          nugetConfigPath: RNWCPP/NuGet.config
-          restoreDirectory: packages/
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: MSBuild@1
-        displayName: MSBuild - ReactWindows-UWP
-        inputs:
-          solution: RNWCPP/ReactWindows-UWP.sln
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
-
-      - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows
         inputs:
           command: restore
@@ -133,18 +192,6 @@ jobs:
           #basePath: # Optional
           #verbosityPack: 'Detailed' # Options: quiet, normal, detailed
           #arguments: # Required when command == Custom
-
-      - task: CmdLine@2
-        displayName: Create SampleApp bundle
-        inputs:
-          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
-          workingDirectory: RNWCPP
-
-      - task: CmdLine@2
-        displayName: Remove SampleApp.uwp.bundle
-        inputs:
-          script: del SampleApp.uwp.bundle
-          workingDirectory: RNWCPP
 
       - task: MSBuild@1
         displayName: MSBuild - ReactWindows
