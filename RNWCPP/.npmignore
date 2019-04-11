@@ -8,7 +8,6 @@ Desktop.Dll
 Desktop.IntegrationTests
 Desktop.UnitTests
 FollyWin32
-include
 IntegrationTests
 IntegrationTestScripts
 JSSerializer
@@ -16,9 +15,7 @@ packages
 PropertySheets
 ReactWin32SandboxSample
 Scripts
-Shared
 src
-stubs
 target
 Universal.IntegrationTests
 Universal.SampleApp
