@@ -42,15 +42,15 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: CmdLine@2
-        displayName: npm install
+        displayName: yarn install
         inputs:
-          script: npm install
+          script: yarn install --frozen-lockfile
           workingDirectory: RNWCPP
 
       - task: CmdLine@2
-        displayName: npm run build
+        displayName: yarn build
         inputs:
-          script: npm run build
+          script: yarn build
           workingDirectory: RNWCPP
 
       - task: NuGetCommand@2
@@ -133,9 +133,9 @@ jobs:
             Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
       - task: CmdLine@2
-        displayName: npm install
+        displayName: yarn install
         inputs:
-          script: npm install
+          script: yarn install --frozen-lockfile
           workingDirectory: RNWCPP
 
       - task: PowerShell@2
@@ -150,9 +150,9 @@ jobs:
             Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
       - task: CmdLine@2
-        displayName: npm run build
+        displayName: yarn build
         inputs:
-          script: npm run build
+          script: yarn build
           workingDirectory: RNWCPP
 
       - task: NuGetCommand@2

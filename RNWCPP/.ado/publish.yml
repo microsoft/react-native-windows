@@ -27,15 +27,15 @@ jobs:
           arguments: 'config set $(publishnpmfeed)/registry/:_authToken $(npmTokenOffice)'
 
       - task: CmdLine@2
-        displayName: npm install
+        displayName: yarn install
         inputs:
-          script: npm install
+          script: yarn install --frozen-lockfile
           workingDirectory: RNWCPP
 
       - task: CmdLine@2
-        displayName: npm run build
+        displayName: yarn build
         inputs:
-          script: npm run build
+          script: yarn build
           workingDirectory: RNWCPP
 
       - task: CmdLine@2
