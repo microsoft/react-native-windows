@@ -58,7 +58,14 @@ function doPublish() {
   exec(`git push origin HEAD:${tempPublishBranch} --follow-tags --verbose`);
   exec(`git push origin tag ${tagName}`);
 
+  const npmrcFileContents = `@office-iss:registry=https://office.pkgs.visualstudio.com/_packaging/Office/npm/registry/
+registry=https://office.pkgs.visualstudio.com/_packaging/Office/npm/registry/	
+always-auth=true`;
+  const npmrcFileName = path.resolve(__dirname, "../.npmrc");
+  fs.writeFileSync(npmrcFileName, npmrcFileContents);
   exec(`npm publish --tag vnext`);
+  // Revert npmrc file before submitting changes to git
+  exec(`git checkout ${npmrcFileName}`);
 
   exec(`git checkout ${publishBranchName}`);
   exec(`git pull origin ${publishBranchName}`);
