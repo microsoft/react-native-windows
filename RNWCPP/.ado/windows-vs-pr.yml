@@ -43,7 +43,6 @@ jobs:
           msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: x64 # Optional
-          restoreNugetPackages: true
           configuration: Debug # Optional
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           clean: true # Optional
