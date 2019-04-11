@@ -1,4 +1,5 @@
 .vs
+.vscode
 build
 Chakra
 ChakraCoreShim
@@ -6,7 +7,6 @@ Desktop
 Desktop.Dll
 Desktop.IntegrationTests
 Desktop.UnitTests
-Folly
 FollyWin32
 include
 IntegrationTests
@@ -14,10 +14,7 @@ IntegrationTestScripts
 JSSerializer
 packages
 PropertySheets
-ReactCommon
-ReactUWP
 ReactWin32SandboxSample
-ReactWindowsCore
 Scripts
 Shared
 src
@@ -36,4 +33,5 @@ ReactWindows-CopyToStaging.bat
 ReactWindows-TestNuspec.bat
 ReactWindows.nuspec
 ReactWindows.sln
+ReactWindows-UWP.sln
 sources.inc
