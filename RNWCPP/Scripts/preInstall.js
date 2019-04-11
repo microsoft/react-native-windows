@@ -9,7 +9,11 @@ const rootPath = execSync('git rev-parse --show-toplevel');
 if (path.normalize(rootPath.toString().trim()) === path.resolve(__dirname, '../..')) {
     const pkgJsonPath = path.resolve(__dirname, '../package.json');
     let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
-    pkgJson.rnDepVersion = pkgJson.devDependencies['react-native'];
-    pkgJson.devDependencies['react-native'] = `https://github.com/Microsoft/react-native/archive/v${pkgJson.devDependencies['react-native']}.tar.gz`;
-    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+
+    if (pkgJson.devDependencies['react-native'].indexOf('https://github.com') === -1) {
+
+        pkgJson.rnDepVersion = pkgJson.devDependencies['react-native'];
+        pkgJson.devDependencies['react-native'] = `https://github.com/Microsoft/react-native/archive/v${pkgJson.devDependencies['react-native']}.tar.gz`;
+        fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+    }
 }
