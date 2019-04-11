@@ -26,6 +26,13 @@ jobs:
           filename: npm
           arguments: 'config set $(publishnpmfeed)/registry/:_authToken $(npmTokenOffice)'
 
+      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
+      - task: CmdLine@2
+        displayName: Ensure yarn
+        inputs:
+          script: npm install -g yarn
+          workingDirectory: RNWCPP
+
       - task: CmdLine@2
         displayName: yarn install
         inputs:
