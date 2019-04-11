@@ -208,6 +208,10 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
       }
     }
 
+    // Guard against negative values
+    childWidth = std::max<double>(0.0f, childWidth);
+    childHeight = std::max<double>(0.0f, childHeight);
+
     child.Arrange(winrt::Rect((float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), childWidth, childHeight));
   }
 

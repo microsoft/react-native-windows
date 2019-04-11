@@ -103,8 +103,7 @@ TEST_CLASS(RNTesterIntegrationTests)
   // Timer tests have been disabled in RN. (See RNTesterIntegrationTests.m)
   BEGIN_TEST_METHOD_ATTRIBUTE(Timers)
     TEST_IGNORE()
-    END_TEST_METHOD_ATTRIBUTE()
-
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Timers)
   {
     TestComponent("TimersTest");

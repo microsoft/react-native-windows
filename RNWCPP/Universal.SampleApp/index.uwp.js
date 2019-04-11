@@ -13,7 +13,8 @@ import {
   WebView,
   Image,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator
 } from 'react-native';
 import {
   CheckBox,
@@ -153,6 +154,7 @@ export default class Bootstrap extends Component {
           </View>
         </ScrollView>
         <TicTacButton/>
+        <ActivityIndicator size='large' color="green"></ActivityIndicator>
         <Text style={{marginTop: 15}}>Big Border & Clipping Tests:</Text>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flexDirection: 'column', alignItems: 'center' }}>

@@ -19,8 +19,15 @@ function exec(command) {
 
 function doPublish() {
   const publishBranchName = process.env.publishBranchName;
-
   const tempPublishBranch = `publish-${Date.now()}`;
+
+  exec(`git checkout -b ${tempPublishBranch}`);
+
+  // Check we in sync before publishing anything
+  exec(`git checkout ${publishBranchName}`);
+  exec(`git pull origin ${publishBranchName}`);
+
+  exec(`git checkout ${tempPublishBranch}`);
 
   const pkgJsonPath = path.resolve(__dirname, "../package.json");
   let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
@@ -45,15 +52,21 @@ function doPublish() {
 
   const tagName = 'vnext-' + releaseVersion;
 
-  exec(`git checkout -b ${tempPublishBranch}`);
-
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Applying package update to ${releaseVersion}`);
   exec(`git tag ${tagName}`);
   exec(`git push origin HEAD:${tempPublishBranch} --follow-tags --verbose`);
   exec(`git push origin tag ${tagName}`);
 
+  // TODO - change this to publish directly to public NPM feed.
+  const npmrcFileContents = `@office-iss:registry=https://office.pkgs.visualstudio.com/_packaging/Office/npm/registry/
+registry=https://office.pkgs.visualstudio.com/_packaging/Office/npm/registry/	
+always-auth=true`;
+  const npmrcFileName = path.resolve(__dirname, "../.npmrc");
+  fs.writeFileSync(npmrcFileName, npmrcFileContents);
   exec(`npm publish --tag vnext`);
+  // delete npmrc file before submitting changes to git
+  fs.unlinkSync(npmrcFileName);
 
   exec(`git checkout ${publishBranchName}`);
   exec(`git pull origin ${publishBranchName}`);
