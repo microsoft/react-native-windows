@@ -153,12 +153,13 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   branchName = branchNamePrefix + sanitizeBranchName(pkgJson.version);
 
   exec(`npm install -g yarn`);
-  // Run yarn install to update yarn.lock
-  exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
 
   exec(`git checkout ${finalTargetBranchName}`);
   exec(`git checkout -b ${branchName}`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
+    // Run yarn install to update yarn.lock
+    exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
+
   exec(`git add ${path.resolve(__dirname, '../yarn.lock')}`);
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
