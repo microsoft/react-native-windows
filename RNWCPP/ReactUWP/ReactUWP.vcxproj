@@ -330,4 +330,8 @@
     <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets'))" />
   </Target>
+  <Target Name="AfterCppClean">
+    <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />
+    <RemoveDir Directories="$(UnmergedWinmdDirectory)" ContinueOnError="true" />
+  </Target>
 </Project>
