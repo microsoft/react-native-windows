@@ -21,15 +21,14 @@ function doPublish() {
   const publishBranchName = process.env.publishBranchName;
   const tempPublishBranch = `publish-${Date.now()}`;
 
-  exec(`git checkout --force`);
+  exec(`npm install -g yarn`);
 
-  exec(`git checkout -b ${tempPublishBranch}`);
-
-  // Check we in sync before publishing anything
+  // Ensure publishBranchName is same locally as remote
+  exec(`git fetch origin ${publishBranchName}`);
   exec(`git checkout ${publishBranchName}`);
-  exec(`git pull origin ${publishBranchName}`);
-
-  exec(`git checkout ${tempPublishBranch}`);
+  exec(`git reset --hard origin/${publishBranchName}`);
+  
+  exec(`git checkout -b ${tempPublishBranch}`);
 
   const pkgJsonPath = path.resolve(__dirname, "../package.json");
   let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
@@ -51,6 +50,10 @@ function doPublish() {
   pkgJson.version = releaseVersion;
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);
+
+  process.chdir(path.resolve(__dirname, ".."));
+  exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
+  exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd build`);
 
   const tagName = 'vnext-' + releaseVersion;
 
