@@ -132,6 +132,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
 
   const pkgJson = JSON.parse(body);
   const pkgJsonPath = path.resolve(__dirname, '../package.json');
+  rnVersion = pkgJson.version;
 
   let existingPkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
 
@@ -150,9 +151,14 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
 
   branchName = branchNamePrefix + sanitizeBranchName(pkgJson.version);
 
+  exec(`npm install -g yarn`);
+  // Run yarn install to update yarn.lock
+  exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
+
   exec(`git checkout ${finalTargetBranchName}`);
   exec(`git checkout -b ${branchName}`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
+  exec(`git add ${path.resolve(__dirname, '../yarn.lock')}`);
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
   exec(`git push origin ${branchName}`);
