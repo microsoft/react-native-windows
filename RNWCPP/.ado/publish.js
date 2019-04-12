@@ -25,7 +25,7 @@ function doPublish() {
 
   // Ensure publishBranchName is same locally as remote
   exec(`git fetch origin ${publishBranchName}`);
-  exec(`git checkout ${publishBranchName}`);
+  exec(`git checkout ${publishBranchName} --force`);
   exec(`git reset --hard origin/${publishBranchName}`);
   
   exec(`git checkout -b ${tempPublishBranch}`);

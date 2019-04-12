@@ -82,7 +82,7 @@ function createPr() {
       // Trigger automation
       request.post(
         {
-          url: `https://api.github.com/repos/Microsoft/react-native-windows/pulls/${prId}/comments`,
+          url: `https://api.github.com/repos/Microsoft/react-native-windows/issues/${prId}/comments`,
           json:true,
           headers:{
             Authorization: "Basic " + gitHubToken,
