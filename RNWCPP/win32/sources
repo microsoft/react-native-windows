@@ -1,6 +1,6 @@
 !include $(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\CopyHeaders.inc
 
-!if "$(PLATFORM)" == "arm" || "$(PLATFORM)" == "droidarm" || "$(PLATFORM)" == "droidx86"
+!if "$(PLATFORM)" == "arm" || "$(IS_DROID)" == "1"
 TARGETTYPE = NOTARGET
 !else
 # Turn on Spectre mitigation per VSO:2691018
