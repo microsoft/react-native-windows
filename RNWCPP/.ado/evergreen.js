@@ -106,7 +106,7 @@ function createPr() {
               "User-Agent": "RNW-Evergreen Script"
             },
             body: {
-              labels: "AutoMerge"
+              labels: ["AutoMerge"]
             }
           },function(err, httpResponse, body) {
             console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
