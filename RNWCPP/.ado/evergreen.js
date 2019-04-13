@@ -10,6 +10,7 @@ const branchNamePrefix = 'auto-update-versions';
 const finalTargetBranchName = 'rnwcpp-preview';
 let branchName;
 let rnVersion;
+let listOfChanges;
 
 function exec(command) {
   try {
@@ -62,7 +63,7 @@ function createPr() {
         head: branchName,
         base: finalTargetBranchName,
         title: `Update to react-native@${rnVersion}`,
-        body: 'Automatic update to latest version published from @Microsoft/react-native'
+        body: 'Automatic update to latest version published from @Microsoft/react-native, includes these changes:\n' + listOfChanges
       }
     },
     function(err, httpResponse, body) {
@@ -145,6 +146,9 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
     process.exitCode = 0;
     return;
   }
+
+  // Collect log of changes included in this sync
+  listOfChanges = exec(`git log --pretty=oneline --abbrev-commit v${existingPkgJson.devDependencies['react-native']}..v${pkgJson.version}`).toString();
 
   console.log(`Updating react-native to version: ${pkgJson.version}`);
   existingPkgJson.peerDependencies['react-native'] = rnDependency;
