@@ -75,9 +75,9 @@ class ListViewGridLayoutExample extends React.Component<RNTesterProps, State> {
         windowHeight: dims.window.height
       });
     });
-  },
+  }
 
-  render: function() {
+  render() {
     const pageSize = Math.floor(this.state.windowWidth / ITEM_TOTAL_WIDTH);
     const initialListSize = Math.ceil(this.state.windowHeight / ITEM_TOTAL_HEIGHT) * pageSize;
 

@@ -29,11 +29,9 @@ var createReactClass = require('create-react-class');
 var RNTesterBlock = require('RNTesterBlock');
 var RNTesterPage = require('RNTesterPage');
 
-var TimerMixin = require('react-timer-mixin');
-
 var MovingBar = createReactClass({
   displayName: 'MovingBar',
-  mixins: [TimerMixin],
+  _intervalID: null,
 
   getInitialState: function() {
     return {
@@ -42,12 +40,16 @@ var MovingBar = createReactClass({
   },
 
   componentDidMount: function() {
-    this.setInterval(
-      () => {
-        var progress = (this.state.progress + 0.1) % 100;
-        this.setState({progress: progress});
-      }, 10
-    );
+    this._intervalID = setInterval(() => {
+      const progress = (this.state.progress + 0.02) % 1;
+      this.setState({progress});
+    }, 50);
+  },
+
+  componentWillUnmount: function() {
+    if (this._intervalID != null) {
+      clearInterval(this._intervalID);
+    }
   },
 
   render: function() {
