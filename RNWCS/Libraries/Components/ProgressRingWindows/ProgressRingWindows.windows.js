@@ -6,13 +6,11 @@
  */
 'use strict';
 
-var PropTypes = require('prop-types');
 var React = require('React');
-var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var ViewPropTypes = require('ViewPropTypes');
 var requireNativeComponent = require('requireNativeComponent');
 
-var ColorPropType = require('ColorPropType');
+var ColorPropType = require('DeprecatedColorPropType');
 
 class ProgressRingWindows extends React.Component {
   props: {color?: $FlowFixMe};

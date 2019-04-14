@@ -8,10 +8,9 @@
 
 var PropTypes = require('prop-types');
 var React = require('React');
-var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var ViewPropTypes = require('ViewPropTypes');
 
-var ColorPropType = require('ColorPropType');
+var ColorPropType = require('DeprecatedColorPropType');
 
 var requireNativeComponent = require('requireNativeComponent');
 

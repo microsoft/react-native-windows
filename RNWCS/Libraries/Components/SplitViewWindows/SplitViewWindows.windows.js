@@ -13,7 +13,7 @@
  */
 'use strict';
 
-var ColorPropType = require('ColorPropType');
+var ColorPropType = require('DeprecatedColorPropType');
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var React = require('React');
 var PropTypes = require('prop-types');
