@@ -24,5 +24,26 @@
 #endif
 
 #ifndef LOG
-#define LOG(b) std::cerr
+
+namespace GlogStub {
+
+struct NullBuffer : public std::streambuf
+{
+  // Put character on overflow.
+  // It is called by other functions in streambuf.
+  // By doing nothing in this function and not returning error, we effectively
+  // implement a streambuf that does nothing and just 'eats' the input.
+  int overflow(int c) override { return c; }
+};
+
+inline std::ostream& GetNullLog() noexcept
+{
+  static NullBuffer nullBuffer;
+  static std::ostream nullStream(&nullBuffer);
+  return nullStream;
+}
+
+} // namespace GlogStub
+
+#define LOG(b) GlogStub::GetNullLog()
 #endif
