@@ -27,6 +27,7 @@ struct INativeUIManagerHost
 
 struct INativeUIManager
 {
+	virtual void configureNextLayoutAnimation(folly::dynamic&& config, facebook::xplat::module::CxxModule::Callback success, facebook::xplat::module::CxxModule::Callback error) = 0;
 	virtual void destroy() = 0;
 	virtual ShadowNode* createRootShadowNode(IReactRootView* rootView) = 0;
 	virtual void destroyRootShadowNode(ShadowNode*) = 0;

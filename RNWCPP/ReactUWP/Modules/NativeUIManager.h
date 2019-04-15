@@ -33,6 +33,7 @@ public:
   NativeUIManager();
 
   // INativeUIManager
+  void configureNextLayoutAnimation(folly::dynamic&& config, facebook::xplat::module::CxxModule::Callback success, facebook::xplat::module::CxxModule::Callback error) override {}
   facebook::react::ShadowNode* createRootShadowNode(facebook::react::IReactRootView* rootView) override;
   void destroy() override;
   void destroyRootShadowNode(facebook::react::ShadowNode*) override;
