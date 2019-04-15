@@ -10,7 +10,7 @@ IntegrationTests
 IntegrationTestScripts
 packages
 ReactWin32SandboxSample
-src
+src/
 target
 Universal.IntegrationTests
 Universal.SampleApp
