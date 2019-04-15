@@ -45,12 +45,6 @@ This is a summary of setup steps needed to install and work with React Native fo
     cd RNWCPP
     npm install
     ```
-    
-    If the above commannd results in this warning:
-    <pre><code>npm WARN react-native-windows@0.58.0-vnext.16 requires a peer of react-native@0.58.6-microsoft.21 || https://github.com/Microsoft/react-native/archive/<mark>v0.58.6-microsoft.22.tar.gz</mark> but none is installed. You must install peer dependencies yourself.</code></pre>
-
-    Run:
-    <pre><code>npm install https://github.com/Microsoft/react-native/archive/<mark>v0.58.6-microsoft.22.tar.gz</mark></code></pre>
 
 4. Build solution.
     * Using MSBuild
