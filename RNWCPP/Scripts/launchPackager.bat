@@ -4,5 +4,4 @@
 @echo off
 title Metro Bundler
 
-cd %~dp0
 npm run start
