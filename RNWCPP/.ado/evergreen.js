@@ -154,7 +154,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   } catch (e) {
   }
   exec(`git fetch msrn`);
-  listOfChanges = exec(`git log --pretty=oneline --abbrev-commit v${existingPkgJson.devDependencies['react-native']}..v${pkgJson.version}`).toString();
+  listOfChanges = execSync(`git log --pretty=oneline --abbrev-commit v${existingPkgJson.devDependencies['react-native']}..v${pkgJson.version}`).toString();
 
   console.log(`Updating react-native to version: ${pkgJson.version}`);
   existingPkgJson.peerDependencies['react-native'] = rnDependency;
