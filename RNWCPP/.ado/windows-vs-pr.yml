@@ -81,6 +81,27 @@ jobs:
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           clean: true # Optional
 
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground
+        inputs:
+          command: restore
+          restoreSolution: RNWCPP/Playground/Playground.sln
+          feedsToUse: config
+          nugetConfigPath: RNWCPP/NuGet.config
+          restoreDirectory: packages/
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - Playground
+        inputs:
+          solution: RNWCPP/Playground/Playground.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
