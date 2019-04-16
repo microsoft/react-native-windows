@@ -109,4 +109,39 @@ public:
   SecureWebSocket(Url&& url);
 };
 
+namespace test
+{
+
+struct IExecutor {};
+
+struct IWebSocketTransport
+{
+
+};
+
+struct IWebSocketStream
+{
+  using executor_type = IExecutor;
+};
+
+struct IResolver
+{
+  using results_type = std::vector<std::string>;
+
+  void async_resolve(std::string host, std::string port, std::function<void(const boost::system::error_code&, results_type)>);
+};
+
+class TestResolver : public IResolver
+{
+public:
+  TestResolver(const boost::asio::io_context& context);
+};
+
+class TestWebSocket : public BaseWebSocket<IWebSocketTransport, IWebSocketStream, TestResolver>
+{
+};
+
+
+} // namespace facebook::react::test
+
 } } // namespace facebook::react

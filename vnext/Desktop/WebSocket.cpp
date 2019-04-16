@@ -515,6 +515,13 @@ template class SecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 
 #pragma endregion // IWebSocket static members
 
+namespace test
+{
+
+//static TestWebSocket tws;//TODO: Remove
+
+} // namespace facebook::react::test
+
 } } // namespace facebook::react
 
 #pragma warning(pop)
