@@ -63,7 +63,7 @@ function createPr() {
         head: branchName,
         base: finalTargetBranchName,
         title: `Update to react-native@${rnVersion}`,
-        body: 'Automatic update to latest version published from @Microsoft/react-native, includes these changes:\n' + listOfChanges
+        body: `Automatic update to latest version published from @Microsoft/react-native, includes these changes:\n\`\`\`\n${listOfChanges}\n\`\`\`` 
       }
     },
     function(err, httpResponse, body) {
