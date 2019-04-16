@@ -64,6 +64,7 @@ public:
 
   // Instance methods
   void loadBundle(std::string&& jsBundleRelativePath) override;
+  void loadBundleSync(std::string&& jsBundleRelativePath) override;
   virtual const std::shared_ptr<Instance>& GetInstance() const noexcept override { return m_innerInstance; }
   void AttachMeasuredRootView(IReactRootView* rootView, folly::dynamic&& initProps) noexcept override;
   void DetachRootView(IReactRootView* rootView) noexcept override;
@@ -112,7 +113,9 @@ private:
 
   std::vector<std::unique_ptr<NativeModule>> GetDefaultNativeModules(std::shared_ptr<MessageQueueThread> nativeQueue);
   void RegisterForReloadIfNecessary() noexcept;
+  void loadBundleInternal(std::string&& jsBundleRelativePath, bool synchronously);
 
+private:
   std::shared_ptr<Instance> m_innerInstance;
 
   std::string m_jsBundleBasePath;

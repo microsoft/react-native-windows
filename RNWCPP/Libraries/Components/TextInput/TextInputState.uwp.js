@@ -30,7 +30,7 @@ function focusTextInput(textFieldID: ?number) {
   if (currentlyFocusedID !== textFieldID && textFieldID !== null) {
     UIManager.dispatchViewManagerCommand(
       textFieldID,
-      UIManager.RCTTextInput.Commands.SetFocus,
+      UIManager.getViewManagerConfig('RCTTextInput').Commands.SetFocus,
       null,
     );
   }
@@ -46,7 +46,7 @@ function blurTextInput(textFieldID: ?number) {
     currentlyFocusedID = null;
     UIManager.dispatchViewManagerCommand(
       textFieldID,
-      UIManager.RCTTextInput.Commands.Blur,
+      UIManager.getViewManagerConfig('RCTTextInput').Commands.Blur,
       null,
     );
   }

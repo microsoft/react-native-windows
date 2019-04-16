@@ -103,8 +103,7 @@ TEST_CLASS(RNTesterIntegrationTests)
   // Timer tests have been disabled in RN. (See RNTesterIntegrationTests.m)
   BEGIN_TEST_METHOD_ATTRIBUTE(Timers)
     TEST_IGNORE()
-    END_TEST_METHOD_ATTRIBUTE()
-
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Timers)
   {
     TestComponent("TimersTest");
@@ -183,7 +182,7 @@ TEST_CLASS(RNTesterIntegrationTests)
 
   //ISS:3219193 - Fix intermittent errors, then re-enable.
   BEGIN_TEST_METHOD_ATTRIBUTE(WebSocket)
-    TEST_IGNORE()
+    TEST_OWNER(L"Unstable")
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocket)
   {

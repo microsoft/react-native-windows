@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 //
 // HostingPane.xaml.cpp
@@ -20,7 +20,7 @@
 #include <codecvt>
 #include <folly/dynamic.h>
 #include <Tracing.h>
-#include <jschelpers/unicode.h>
+#include <UnicodeConversion.h>
 #include <cxxReact/Instance.h>
 
 #include "CustomViewManager.h"
@@ -43,7 +43,6 @@ void EnsureExportedFunctions(bool createThings)
 
   facebook::react::InitializeTracing(nullptr);
   react::uwp::ShouldReuseReactInstancesWhenPossible();
-  facebook::react::unicode::utf16toUTF8(reinterpret_cast<const uint16_t*>(L"foo"), 3);
 
   if (createThings)
   {
@@ -223,7 +222,7 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance()
       OutputDebugStringA("in JsExceptionCallback");
     };
     m_instance->Start(m_instance, settings);
-    m_instance->loadBundle(facebook::react::unicode::utf16toUTF8(reinterpret_cast<const uint16_t*>(m_loadedBundleFileName.c_str()), wcslen(m_loadedBundleFileName.c_str())));
+    m_instance->loadBundle(facebook::react::UnicodeConversion::Utf16ToUtf8(m_loadedBundleFileName));
   }
   return m_instance;
 }

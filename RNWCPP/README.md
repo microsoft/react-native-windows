@@ -3,10 +3,6 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 In this branch, we are working on a rewrite of React Native for Windows10 built in C++ that reuses the C++ core bridge implementation from Facebook’s React Native.  This will allow React Native for Windows10 to innovate and provide features by sharing the same core as Facebook’s React Native. See [Status](https://github.com/Microsoft/react-native-windows#status) for more details.
 
-### Note - ONLY CURRENTLY BUILDABLE USING INTERNAL CREDS
-We are actively working on removing all dependencies internal to Microsoft. This should be completed in the next month.
-Issues remaining : [#2170](https://github.com/Microsoft/react-native-windows/issues/2170), [#2169](https://github.com/Microsoft/react-native-windows/issues/2169), [#2154](https://github.com/Microsoft/react-native-windows/issues/2154), [#2153](https://github.com/Microsoft/react-native-windows/issues/2153) 
-
 # Getting Started
 This is a summary of setup steps needed to install and work with React Native for Windows10 (C++). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details.
 
@@ -48,14 +44,6 @@ This is a summary of setup steps needed to install and work with React Native fo
     ```cmd
     cd RNWCPP
     npm install
-    ```
-
-    If the above command results in an error message indicating missing authentication credentials (e.g.
-    `... npm ERR! This request requires auth credentials ...`), run
-
-    ```cmd
-    npm install -g vsts-npm-auth --registry https://registry.npmjs.com
-    vsts-npm-auth -config .npmrc
     ```
 
 4. Build solution.

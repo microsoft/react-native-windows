@@ -251,13 +251,13 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Stop()
 template<typename Protocol, typename Socket, typename Resolver>
 void BaseWebSocket<Protocol, Socket, Resolver>::EnqueueWrite(const string& message, bool binary)
 {
+  post(m_context, [this, message = std::move(message), binary]()
+  {
     m_writeRequests.emplace(std::move(message), binary);
+
     if (!m_writeInProgress && ReadyState::Open == m_readyState)
-      post(m_context, [this]()
-      {
-        if (!m_writeRequests.empty())
-          PerformWrite();
-      });
+      PerformWrite();
+  });
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
