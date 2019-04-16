@@ -9,7 +9,6 @@
 #include <vector>
 
 #include <folly/dynamic.h>
-#include <jschelpers/Unicode.h>
 
 #if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>

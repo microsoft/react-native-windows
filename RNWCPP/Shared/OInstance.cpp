@@ -486,6 +486,16 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
 
 void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
 {
+  loadBundleInternal(std::move(jsBundleRelativePath), /*synchronously:*/false);
+}
+
+void InstanceImpl::loadBundleSync(std::string&& jsBundleRelativePath)
+{
+  loadBundleInternal(std::move(jsBundleRelativePath), /*synchronously:*/true);
+}
+
+void InstanceImpl::loadBundleInternal(std::string&& jsBundleRelativePath, bool synchronously)
+{
   std::string bytecodeFileNameCopy { m_devSettings->bytecodeFileName };
 
   // load JS
@@ -506,7 +516,7 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
         0 /*bundleVersion*/,
 #endif
         bundleUrl,
-        false /*synchronously*/
+        synchronously
 #if !defined(OSS_RN)
         , std::move(bytecodeFileNameCopy)
 #endif
@@ -537,7 +547,7 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
         0 /*bundleVersion*/,
 #endif
         jsBundleRelativePath,
-        false /*synchronously*/
+        synchronously
 #if !defined(OSS_RN)
         , "" /*bytecodeFileName*/ // No bytecode is used during Live Reload
 #endif
@@ -566,7 +576,7 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
             bundleTimestamp,
 #endif
             std::move(fullBundleFilePath),
-            false /*synchronously*/
+            synchronously
 #if !defined(OSS_RN)
             , std::move(bytecodeFileNameCopy)
 #endif
@@ -579,7 +589,7 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
             /*jsBundleVersion*/ 0,
 #endif
             std::move(fullBundleFilePath),
-            false /*synchronously*/
+            synchronously
 #if !defined(OSS_RN)
             , "" /*bytecodeFileName*/
 #endif
@@ -594,7 +604,7 @@ void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
       0 /*bundleVersion*/,
 #endif
       jsBundleRelativePath,
-      false /*synchronously*/
+      synchronously
 #if !defined(OSS_RN)
       , "" /*bytecodeFileName*/
 #endif

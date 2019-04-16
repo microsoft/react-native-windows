@@ -10,9 +10,6 @@
     <Filter Include="cxxreact">
       <UniqueIdentifier>{9e2dd06f-00fd-47bc-87cd-856bf393c504}</UniqueIdentifier>
     </Filter>
-    <Filter Include="jschelpers">
-      <UniqueIdentifier>{3e0bfac7-1f30-408e-979b-17ebf8d2b120}</UniqueIdentifier>
-    </Filter>
     <Filter Include="yoga">
       <UniqueIdentifier>{3db635c1-ad38-4099-b79d-872a6ef4319f}</UniqueIdentifier>
     </Filter>
@@ -62,9 +59,6 @@
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp">
       <Filter>cxxreact</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\Unicode.cpp">
-      <Filter>jschelpers</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.cpp">
       <Filter>jsi</Filter>
@@ -184,9 +178,6 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h">
       <Filter>cxxreact</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\Unicode.h">
-      <Filter>jschelpers</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\instrumentation.h">
       <Filter>jsi</Filter>

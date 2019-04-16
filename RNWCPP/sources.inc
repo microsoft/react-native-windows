@@ -52,7 +52,6 @@ TARGETLOBS = $(TARGETLOBS) \
 	$(PROJLIBDIR)\FollyDetailWin32.lob \
 	$(PROJLIBDIR)\FollyPortabilityWin32.lob \
 	$(PROJLIBDIR)\FollyWin32.lob \
-	$(PROJLIBDIR)\JSCHelpersWin32.lob \
 	$(PROJLIBDIR)\jsiWin32.lob \
 	$(PROJLIBDIR)\jsireactWin32.lob \
 	$(PROJLIBDIR)\ModuleProviderWin32.lob \

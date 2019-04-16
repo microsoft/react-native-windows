@@ -36,6 +36,7 @@ struct InstanceWrapper
   virtual void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData) = 0;
   virtual void invokeCallback(const int64_t callbackId, folly::dynamic&& params) = 0;
   virtual void loadBundle(std::string&& jsBundleRelativePath) = 0;
+  virtual void loadBundleSync(std::string&& jsBundleRelativePath) = 0;
 };
 
 // Things that used to be exported from InstanceManager, but probably belong elsewhere

@@ -32,6 +32,7 @@ folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const
 
   props.update(folly::dynamic::object
     ("animating", "boolean")
+    ("color", "Color")
   );
 
   return props;
@@ -54,13 +55,13 @@ void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-   if (propertyName.asString() == "animating")
-   {
+    if (propertyName.asString() == "animating")
+    {
       if (propertyValue.isBool())
         progressRing.IsActive(propertyValue.asBool());
       else if (pair.second.isNull())
         progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
-   }
+    }
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);

@@ -69,7 +69,7 @@ module.exports = function windows(config, args, options) {
     console.log('Downloading lib...');
     return Common.downloadFile(
       libPath,
-      `https://github.com/in4margaret/react-native-windows/archive/mostap%2Frnwcppcli.zip`
+      `https://github.com/Microsoft/react-native-windows/archive/rnwcpp-preview.zip`
     ).then(function () {
       console.log('Unziping lib...');
       return Common.unzipFile(libPath, libDir);
@@ -92,7 +92,7 @@ module.exports = function windows(config, args, options) {
 
       // patching package.json to have only necessary dep
       const rnwcppPackageJson = JSON.parse(fs.readFileSync(RNWCPPPackageJson, { encoding: 'UTF8' }));
-      const reactNativeVersion = rnwcppPackageJson.dependencies['react-native'];
+      const reactNativeVersion = rnwcppPackageJson.devDependencies['react-native'];
       rnwcppPackageJson.dependencies = ['react-native-local-cli', 'username', 'uuid'].reduce(function (result, libName) {
         result[libName] = rnwcppPackageJson.dependencies[libName];
         return result;
@@ -106,7 +106,7 @@ module.exports = function windows(config, args, options) {
       // pathching package.json to have proper react-native windows and start function
       const prjPackageJson = JSON.parse(fs.readFileSync(projectPackageJson, { encoding: 'UTF8' }));
       prjPackageJson.scripts.start = 'node windows/lib/react-native-windows/RNWCPP/Scripts/cli.js start';
-      prjPackageJson.dependencies['react-native'] = reactNativeVersion;
+      prjPackageJson.dependencies['react-native'] = `https://github.com/Microsoft/react-native/archive/v${reactNativeVersion}.tar.gz`;
       fs.writeFileSync(projectPackageJson, JSON.stringify(prjPackageJson, null, 2));
       execSync(isYarn ? pkgmgr : `${pkgmgr} i`, { ...execOptions, cwd: cwd });
 

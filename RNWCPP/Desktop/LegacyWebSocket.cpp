@@ -228,7 +228,7 @@ void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Connect(const Protocols& p
     }
   }
 
-  m_resolver.async_resolve(m_url.host, m_url.port, [this, options = std::move(options)](boostecr ec, Resolver::results_type results)
+m_resolver.async_resolve(m_url.host, m_url.port, [this, options = std::move(options)](boostecr ec, typename Resolver::results_type results)
   {
     if (ec)
     {
