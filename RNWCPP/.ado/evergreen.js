@@ -151,8 +151,8 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   // Fetch older version so that we can get the log from there to here..
   try {
     exec(`git remote add msrn https://github.com/Microsoft/react-native.git`);
+  } catch (e) {
   }
-  catch {}
   exec(`git fetch msrn`);
   listOfChanges = exec(`git log --pretty=oneline --abbrev-commit v${existingPkgJson.devDependencies['react-native']}..v${pkgJson.version}`).toString();
 
