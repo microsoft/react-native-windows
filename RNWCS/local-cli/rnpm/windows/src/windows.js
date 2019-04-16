@@ -20,18 +20,36 @@ const REACT_NATIVE_WINDOWS_GENERATE_PATH = function () {
   );
 };
 
+/**
+ * Returns latest version of react-native-windows where version contains 'vnext'
+ * @param {'yarn'|'npm'} pkgmgr
+ * @param {boolean} isYarn
+ */
+const getLatestVnextVersion = function (pkgmgr, isYarn) {
+  const response = JSON.parse(
+    execSync(`${pkgmgr} info react-native-windows versions --silent --json`).toString()
+  );
+  const versions = isYarn ? response.data : response;
+  const version = versions.filter(function (version) {
+    return version.indexOf('vnext') !== -1;
+  }).pop();
+  return version;
+}
+
 module.exports = function windows(config, args, options) {
   const name = args[0] ? args[0] : Common.getReactNativeAppName();
   const ns = options.namespace ? options.namespace : name;
-  const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
   const template = options.template;
   const execOptions = options.verbose ? { stdio: 'inherit' } : {};
+  const cwd = process.cwd();
+  const isYarn = Common.isGlobalCliUsingYarn(cwd);
 
   if (template === 'csharp') {
+    const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
     return Common.getInstallPackage(version)
       .then(rnwPackage => {
         console.log(`Installing ${rnwPackage}...`);
-        const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
+        const pkgmgr = isYarn ? 'yarn add' : 'npm install --save';
 
         execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
         console.log(chalk.green(`${rnwPackage} successfully installed.`));
@@ -41,15 +59,14 @@ module.exports = function windows(config, args, options) {
       }).catch(error => console.error(chalk.red(error.message)));
   }
   if (template === 'vnext') {
-    const cwd = process.cwd();
+    const pkgmgr = isYarn ? 'yarn' : 'npm';
+    const version = options.windowsVersion ? options.windowsVersion : getLatestVnextVersion(pkgmgr, isYarn);
     const projectPackageJson = path.join(cwd, 'package.json');
     const reactNativeWindowsPackageJson = path.join(cwd, 'node_modules', 'react-native-windows', 'package.json');
 
     console.log('Installing deps...');
     return Common.getInstallPackage(version).then((rnwPackage) => {
       console.log(`Installing ${rnwPackage}...`);
-      const isYarn = Common.isGlobalCliUsingYarn(process.cwd());
-      const pkgmgr = isYarn ? 'yarn' : 'npm';
       const pkgmgrInstall = isYarn ? `${pkgmgr} add` : `${pkgmgr} install --save`
       execSync(`${pkgmgrInstall} ${rnwPackage}`, execOptions);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
@@ -58,7 +75,7 @@ module.exports = function windows(config, args, options) {
       let reactNativeVersion = rnwcppPackageJson.peerDependencies['react-native'];
       const depDelim = ' || ';
       const delimIndex = reactNativeVersion.indexOf(depDelim);
-      if (delimIndex !== -1){
+      if (delimIndex !== -1) {
         reactNativeVersion = reactNativeVersion.substring(delimIndex + depDelim.length);
       }
 
