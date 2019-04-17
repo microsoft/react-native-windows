@@ -26,13 +26,9 @@ const REACT_NATIVE_WINDOWS_GENERATE_PATH = function () {
  * @param {boolean} isYarn
  */
 const getLatestVnextVersion = function (pkgmgr, isYarn) {
-  const response = JSON.parse(
-    execSync(`${pkgmgr} info react-native-windows versions --silent --json`).toString()
-  );
-  const versions = isYarn ? response.data : response;
-  const version = versions.filter(function (version) {
-    return version.indexOf('vnext') !== -1;
-  }).pop();
+  let response = JSON.parse(execSync(`${pkgmgr} info react-native-windows --silent --json`));
+  response = isYarn ? response.data : response;
+  const version = response["dist-tags"].vnext;
   return version;
 }
 
