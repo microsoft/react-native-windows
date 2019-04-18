@@ -40,20 +40,6 @@ module.exports = function windows(config, args, options) {
   const cwd = process.cwd();
   const isYarn = Common.isGlobalCliUsingYarn(cwd);
 
-  if (template === 'csharp') {
-    const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
-    return Common.getInstallPackage(version)
-      .then(rnwPackage => {
-        console.log(`Installing ${rnwPackage}...`);
-        const pkgmgr = isYarn ? 'yarn add' : 'npm install --save';
-
-        execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
-        console.log(chalk.green(`${rnwPackage} successfully installed.`));
-
-        const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
-        generateWindows(process.cwd(), name, ns);
-      }).catch(error => console.error(chalk.red(error.message)));
-  }
   if (template === 'vnext') {
     const pkgmgr = isYarn ? 'yarn' : 'npm';
     const version = options.windowsVersion ? options.windowsVersion : getLatestVnextVersion(pkgmgr, isYarn);
@@ -86,6 +72,18 @@ module.exports = function windows(config, args, options) {
       generateWindows(process.cwd(), name, ns);
     });
   }
+  else {
+    const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
+    return Common.getInstallPackage(version)
+      .then(rnwPackage => {
+        console.log(`Installing ${rnwPackage}...`);
+        const pkgmgr = isYarn ? 'yarn add' : 'npm install --save';
 
-  console.error(chalk.red(`Template :${template} doesn't exist.`));
+        execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
+        console.log(chalk.green(`${rnwPackage} successfully installed.`));
+
+        const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
+        generateWindows(process.cwd(), name, ns);
+      }).catch(error => console.error(chalk.red(error.message)));
+  }
 };
