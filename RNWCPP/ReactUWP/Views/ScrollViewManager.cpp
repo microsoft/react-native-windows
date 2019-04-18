@@ -77,6 +77,8 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
 XamlView ScrollViewManager::CreateViewCore(int64_t tag)
 {
   winrt::ScrollViewer scrollViewer;
+  scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+  scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
 
   AddHandlers(scrollViewer, tag);
 
