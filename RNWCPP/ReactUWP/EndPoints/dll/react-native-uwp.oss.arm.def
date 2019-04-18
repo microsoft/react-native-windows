@@ -21,7 +21,6 @@ EXPORTS
 ?ShouldReuseReactInstancesWhenPossible@uwp@react@@YA_NXZ
 ?CreateWorkerMessageQueue@uwp@react@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?CreateMemoryTracker@react@facebook@@YA?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
-?utf16toUTF8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBGI@Z
 ?callJSFunction@Instance@react@facebook@@QAAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 

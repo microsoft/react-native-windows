@@ -1,10 +1,12 @@
 {
   "name": "react-native-windows",
-  "version": "0.58.0-vnext.15",
+  "version": "0.58.0-vnext.37",
   "license": "MIT",
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",
   "scripts": {
+    "preinstall": "node Scripts/preInstall.js",
+    "postinstall": "node Scripts/postInstall.js",
     "build": "node Scripts/just.js build",
     "clean": "node Scripts/just.js clean",
     "start": "node Scripts/cli.js start",
@@ -31,17 +33,19 @@
       "providesModuleNodeModules": [
         "react-native-windows"
       ]
-    }
+    },
+    "plugin": "./local-cli/index.js"
   },
   "dependencies": {
-    "react-native": "0.58.6-microsoft.21",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
     "react-timer-mixin": "^0.13.2",
     "react-native-local-cli": "^1.0.0-alpha.5",
     "username": "^3.0.0",
-    "uuid": "^2.0.1"
+    "shelljs": "^0.7.8",
+    "uuid": "^2.0.1",
+    "xml-parser": "^1.2.1"
   },
   "devDependencies": {
     "@types/es6-collections": "^0.5.29",
@@ -54,9 +58,11 @@
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
-    "typescript": "3.3.3"
+    "typescript": "3.3.3",
+    "react-native": "0.58.6-microsoft.27"
   },
   "peerDependencies": {
-    "react": "16.6.3"
+    "react": "16.6.3",
+    "react-native": "0.58.6-microsoft.27 || https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.27.tar.gz"
   }
 }
