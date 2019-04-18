@@ -117,14 +117,14 @@ void PopupShadowNode::updateProperties(const folly::dynamic&& props)
     else if (propertyName.asString() == "horizontalOffset")
     {
       if (propertyValue.isInt())
-        popup.HorizontalOffset(propertyValue.asInt());
+        popup.HorizontalOffset(propertyValue.asDouble());
       else if (propertyValue.isNull())
         popup.ClearValue(winrt::Popup::HorizontalOffsetProperty());
     }
     else if (propertyName.asString() == "verticalOffset")
     {
       if (propertyValue.isInt())
-        popup.VerticalOffset(propertyValue.asInt());
+        popup.VerticalOffset(propertyValue.asDouble());
       else if (propertyValue.isNull())
         popup.ClearValue(winrt::Popup::VerticalOffsetProperty());
     }
@@ -165,7 +165,7 @@ void PopupShadowNode::SetAnchorPosition(const winrt::Popup& popup)
       auto targetElement = targetView.as<winrt::FrameworkElement>();
 
       auto popupTransform = targetElement.TransformToVisual(popup);
-      winrt::Point bottomRightPoint(targetElement.Width(), targetElement.Height());
+      winrt::Point bottomRightPoint(static_cast<float>(targetElement.Width()), static_cast<float>(targetElement.Height()));
       auto point = popupTransform.TransformPoint(bottomRightPoint);
       popup.HorizontalOffset(point.X + popup.HorizontalOffset());
       popup.VerticalOffset(point.Y + popup.VerticalOffset());
@@ -176,7 +176,9 @@ void PopupShadowNode::SetAnchorPosition(const winrt::Popup& popup)
     auto appWindow = winrt::Window::Current().Content();
     auto popupToWindow = appWindow.TransformToVisual(popup);
     auto appWindowSize = GetAppWindowSize();
-    winrt::Point centerPoint((appWindowSize.Width - popup.ActualWidth())/2, (appWindowSize.Height - popup.ActualHeight())/2);
+    winrt::Point centerPoint;
+    centerPoint.X = static_cast<float>((appWindowSize.Width - popup.ActualWidth()) / 2);
+    centerPoint.Y = static_cast<float>((appWindowSize.Height - popup.ActualHeight()) / 2);
     auto point = popupToWindow.TransformPoint(centerPoint);
     popup.HorizontalOffset(point.X);
     popup.VerticalOffset(point.Y);

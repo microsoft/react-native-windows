@@ -323,7 +323,7 @@ unsigned int JsRelease(void* ref, unsigned int *count)
 	return ::JsRelease(ref, count);
 }
 
-unsigned int JsRun(void* script, unsigned __int64 sourceContext, void* sourceUrl, unsigned int parseAttributes, void** scriptResult)
+unsigned int JsRun(void* script, uintptr_t sourceContext, void* sourceUrl, unsigned int parseAttributes, void** scriptResult)
 {
 	// void* script must be the JsValueRef for the external array buffer
 	std::shared_ptr<ArrayBufferData> arrayBufferData = g_arrayBuffers[script];
@@ -357,7 +357,7 @@ unsigned int JsRun(void* script, unsigned __int64 sourceContext, void* sourceUrl
 	return ::JsRunScript(wzScript, sourceContext, wzSourceUrl, scriptResult);
 }
 
-unsigned int JsRunScript(const wchar_t *script, unsigned __int64 sourceContext, const wchar_t *sourceUrl, void** result)
+unsigned int JsRunScript(const wchar_t *script, uintptr_t sourceContext, const wchar_t *sourceUrl, void** result)
 {
 	return ::JsRunScript(script, sourceContext, sourceUrl, result);
 }
@@ -365,7 +365,7 @@ unsigned int JsRunScript(const wchar_t *script, unsigned __int64 sourceContext, 
 unsigned int JsRunSerialized(
 	/* _In_ JsValueRef */ void* /*buffer*/,
 	/* _In_ JsSerializedLoadScriptCallback */ void* /*scriptLoadCallback*/,
-	/* _In_ JsSourceContext */ unsigned __int64 /*sourceContext*/,
+	/* _In_ JsSourceContext */ uintptr_t /*sourceContext*/,
 	/* _In_ JsValueRef */ void* /*sourceUrl*/,
 	/* _Out_ JsValueRef* */ void** /*result*/)
 {

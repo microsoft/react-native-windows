@@ -51,9 +51,10 @@ JsValueRefUniquePtr jsArrayBufferFromBigString(std::unique_ptr<const JSBigString
 {
   JsValueRef arrayBuffer = nullptr;
   auto size = bigstr->size();
+  assert(size < UINT_MAX);
   JsErrorCode result = JsCreateExternalArrayBuffer(
       const_cast<char *>(bigstr->c_str()),
-      size,
+      static_cast<unsigned int>(size),
       [](void *bigstrToDestroy) {
         // Wrap bigstrToDestroy in unique_ptr to avoid calling delete explicitly
         std::unique_ptr<JSBigString> wrapper{static_cast<JSBigString *>(bigstrToDestroy)};
@@ -78,10 +79,11 @@ JsValueRefUniquePtr jsArrayBufferFromBigString(const std::shared_ptr<const JSBig
 {
   JsValueRef arrayBuffer = nullptr;
   auto size = bigstr->size();
+  assert(size < UINT_MAX);
   auto bigstrRef = std::make_unique<std::shared_ptr<const JSBigString>>(bigstr);
   JsErrorCode result = JsCreateExternalArrayBuffer(
       const_cast<char *>(bigstr->c_str()),
-      size,
+      static_cast<unsigned int>(size),
       [](void *bigstrToDestroy) {
         // Wrap bigstrToDestroy in unique_ptr to avoid calling delete explicitly
         std::unique_ptr<std::shared_ptr<const JSBigString>> wrapper{static_cast<std::shared_ptr<const JSBigString> *>(bigstrToDestroy)};

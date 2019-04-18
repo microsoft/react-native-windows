@@ -70,7 +70,7 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynami
 
   JSExceptionInfo jsExceptionInfo;
   jsExceptionInfo.exceptionMessage = facebook::xplat::jsArgAsString(args, 0);
-  jsExceptionInfo.exceptionId = facebook::xplat::jsArgAsInt(args, 2);
+  jsExceptionInfo.exceptionId = static_cast<uint32_t>(facebook::xplat::jsArgAsInt(args, 2));
   jsExceptionInfo.exceptionType = jsExceptionType;
 
   folly::dynamic stackAsFolly = facebook::xplat::jsArgAsArray(args, 1);

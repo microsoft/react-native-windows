@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace Redirects {
 
 unsigned int JsAddRef(void* ref, unsigned int *count);
@@ -41,9 +43,9 @@ unsigned int JsNumberToDouble(void* value, double *doubleValue);
 unsigned int JsNumberToInt(void* value, int *intValue);
 unsigned int JsPointerToString(const wchar_t *stringValue, size_t stringLength, void** value);
 unsigned int JsRelease(void* ref, unsigned int *count);
-unsigned int JsRun(void* script, unsigned __int64 sourceContext, void* sourceUrl, unsigned int parseAttributes, void** result);
-unsigned int JsRunScript(const wchar_t *script, unsigned __int64 sourceContext, const wchar_t *sourceUrl, void** result);
-unsigned int JsRunSerialized(void* buffer, void* scriptLoadCallback, unsigned __int64 sourceContext, void* sourceUrl, void** result);
+unsigned int JsRun(void* script, uintptr_t sourceContext, void* sourceUrl, unsigned int parseAttributes, void** result);
+unsigned int JsRunScript(const wchar_t *script, uintptr_t sourceContext, const wchar_t *sourceUrl, void** result);
+unsigned int JsRunSerialized(void* buffer, void* scriptLoadCallback, uintptr_t sourceContext, void* sourceUrl, void** result);
 unsigned int JsSerializeScript(const wchar_t *script, void* buffer, unsigned int* bufferSize);
 unsigned int JsSetContextData(void* context, void *data);
 unsigned int JsSetCurrentContext(void* context);

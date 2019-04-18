@@ -224,7 +224,7 @@ void ChakraExecutor::initOnJSVMThread()
     if (enableDebugging)
     {
       std::string runtimeName = m_instanceArgs.DebuggerRuntimeName;
-      int port = m_instanceArgs.DebuggerPort;
+      auto port = m_instanceArgs.DebuggerPort;
 
       if (runtimeName.empty())
       {
@@ -741,7 +741,7 @@ JsValueRef ChakraExecutor::nativeRequire(
       ChakraValue(arguments[1]).toString().str()));
   }
 
-  loadModule(bundleId, moduleId);
+  loadModule(static_cast<uint32_t>(bundleId), static_cast<uint32_t>(moduleId));
   return ChakraValue::makeUndefined();
 }
 
