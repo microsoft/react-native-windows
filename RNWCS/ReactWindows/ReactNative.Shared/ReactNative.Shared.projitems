@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animated\PropsAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\SpringAnimationDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\StyleAnimatedNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animated\SubtractionAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TrackingAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\TransformAnimatedNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animated\ValueAnimatedNode.cs" />
