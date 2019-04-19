@@ -57,3 +57,12 @@ jobs:
           filename: npm
           arguments: 'config set $(publishnpmfeed)/registry/:_authToken XXXXX'
 
+      - task: Npm@1
+        displayName: npm public publish (vnext)
+        inputs:
+          command: custom
+          workingDir: RNWCPP
+          verbose: false
+          customCommand: 'publish --access public --tag vnext'
+          customEndpoint: 'React-Native-Windows NPM'
+          publishEndpoint: 'React-Native-Windows NPM'
