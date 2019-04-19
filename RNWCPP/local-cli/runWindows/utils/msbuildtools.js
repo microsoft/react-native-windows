@@ -68,7 +68,7 @@ function checkMSBuildVersion(version) {
   const vsWherePath = path.join(process.env['ProgramFiles(x86)'], '/Microsoft Visual Studio/Installer/vswhere.exe');
   // Check if VS 2017 is installed and if true, go there to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
-    const vsPath = child_process.execSync(`"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath`).toString().split(EOL)[0];
+    const vsPath = child_process.execSync(`"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath -version [4.0,16.0)`).toString().split(EOL)[0];
     // look for the specified version of msbuild
     const msBuildPath = path.join(vsPath, 'MSBuild', version, 'Bin/MSBuild.exe');
     toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
