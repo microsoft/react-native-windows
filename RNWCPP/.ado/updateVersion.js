@@ -1,4 +1,4 @@
-// Used to publish react-native-win
+// Used to update the package version 
 
 const fs = require("fs");
 const path = require("path");
@@ -17,7 +17,7 @@ function exec(command) {
   }
 }
 
-function doPublish() {
+function updateVersion() {
   const publishBranchName = process.env.publishBranchName;
   const tempPublishBranch = `publish-${Date.now()}`;
 
@@ -63,16 +63,6 @@ function doPublish() {
   exec(`git push origin HEAD:${tempPublishBranch} --follow-tags --verbose`);
   exec(`git push origin tag ${tagName}`);
 
-  // TODO - change this to publish directly to public NPM feed.
-  const npmrcFileContents = `@office-iss:registry=https://office.pkgs.visualstudio.com/_packaging/Office/npm/registry/
-registry=https://office.pkgs.visualstudio.com/_packaging/Office/npm/registry/	
-always-auth=true`;
-  const npmrcFileName = path.resolve(__dirname, "../.npmrc");
-  fs.writeFileSync(npmrcFileName, npmrcFileContents);
-  exec(`npm publish --tag vnext`);
-  // delete npmrc file before submitting changes to git
-  fs.unlinkSync(npmrcFileName);
-
   exec(`git checkout ${publishBranchName}`);
   exec(`git pull origin ${publishBranchName}`);
   exec(`git merge ${tempPublishBranch} --no-edit`);
@@ -83,4 +73,4 @@ always-auth=true`;
   exec(`git push origin --delete -d ${tempPublishBranch}`);
 }
 
-doPublish();
+updateVersion();
