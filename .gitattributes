@@ -24,6 +24,7 @@
 *.props text eol=crlf
 *.filters text eol=crlf
 
+*.ps1 text eol=lf
 .editorconfig text eol=lf
 .gitattributes text eol=lf
 package.json text eol=lf
