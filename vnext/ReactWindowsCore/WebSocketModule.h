@@ -23,6 +23,8 @@ public:
   };
 
   WebSocketModule();
+  ~WebSocketModule() override;
+
   std::string getName();
   virtual std::map<std::string, folly::dynamic> getConstants();
   virtual std::vector<Method> getMethods();

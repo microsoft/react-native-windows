@@ -38,24 +38,6 @@ TEST_CLASS(WebSocketIntegrationTest)
     Assert::IsTrue(connected);
   }
 
-  TEST_METHOD(ConnectNoClose)
-  {
-    bool connected = false;
-
-    // IWebSocket scope. Ensures object is closed implicitly by destructor.
-    {
-      auto ws = IWebSocket::Make("ws://localhost:5555/");
-      ws->SetOnConnect([&connected]()
-      {
-        connected = true;
-      });
-
-      ws->Connect();
-    }
-
-    Assert::IsTrue(connected);
-  }
-
   TEST_METHOD(PingClose)
   {
     auto ws = IWebSocket::Make("ws://localhost:5555");
@@ -80,36 +62,6 @@ TEST_CLASS(WebSocketIntegrationTest)
 
     Assert::IsTrue(pinged);
     Assert::AreEqual({}, errorString);
-  }
-
-  TEST_METHOD(SendReceiveNoClose)
-  {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string& message)
-    {
-      // Ignore greeting message.
-      if (message == "hello")
-        return;
-
-      response.set_value(message);
-    });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocket::Error err)
-    {
-      errorMessage = err.Message;
-    });
-
-    ws->Connect();
-    ws->Send("suffixme");
-
-    // Block until respone is received. Fail in case of a remote endpoint failure.
-    auto future = response.get_future();
-    future.wait();
-    string result = future.get();
-
-    Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(string("suffixme_response"), result);
   }
 
   // Emulate promise/future functionality.

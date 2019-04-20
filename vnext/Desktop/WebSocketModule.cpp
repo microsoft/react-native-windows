@@ -22,6 +22,19 @@ WebSocketModule::WebSocketModule()
 {
 }
 
+WebSocketModule::~WebSocketModule()
+{
+  for (auto& pair : m_webSockets)
+  {
+    // Best-effort attempt to close open websockets.
+    if (pair.second->GetReadyState() != IWebSocket::ReadyState::Closed && pair.second->GetReadyState() != IWebSocket::ReadyState::Closing)
+      pair.second->Close(IWebSocket::CloseCode::GoingAway, {});
+  }
+
+  // Aborts any pending websocket async tasks.
+  m_webSockets.clear();
+}
+
 string WebSocketModule::getName()
 {
   return "WebSocketModule";

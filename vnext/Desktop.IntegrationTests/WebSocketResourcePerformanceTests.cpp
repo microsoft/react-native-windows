@@ -91,6 +91,12 @@ TEST_CLASS(WebSocketResourcePerformanceTest)
       {
         ws->Send("some message");
       }
+
+      // Close resources.
+      for (auto& ws : resources)
+      {
+        ws->Close(IWebSocket::CloseCode::Normal, {});
+      }
     }
 
     int64_t threadsPerResource = (threadCount.load() - startThreadCount) / resourceTotal;

@@ -36,6 +36,8 @@ WebSocketJSExecutor::WebSocketJSExecutor(const shared_ptr<ExecutorDelegate>& del
 
 WebSocketJSExecutor::~WebSocketJSExecutor()
 {
+  if (!IsDisposed())
+    destroy();
 }
 
 #pragma region JSExecutor members

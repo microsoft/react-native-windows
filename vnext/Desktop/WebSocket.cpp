@@ -44,13 +44,9 @@ BaseWebSocket<Protocol, Socket, Resolver>::BaseWebSocket(Url&& url)
 template<typename Protocol, typename Socket, typename Resolver>
 BaseWebSocket<Protocol, Socket, Resolver>::~BaseWebSocket()
 {
+  // Abort any pending async operations.
   if (!m_context.stopped())
-  {
-    if (!m_closeRequested)
-      Close(CloseCode::GoingAway, "Terminating instance");
-    else if (!m_closeInProgress)
-      PerformClose();
-  }
+    m_context.stop();
 }
 
 template<typename Protocol, typename Socket, typename Resolver>
