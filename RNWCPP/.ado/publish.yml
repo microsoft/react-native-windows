@@ -20,12 +20,6 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - task: CmdLine@1
-        displayName: 'npm auth'
-        inputs:
-          filename: npm
-          arguments: 'config set $(publishnpmfeed)/registry/:_authToken $(npmTokenOffice)'
-
       # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
       - task: CmdLine@2
         displayName: Ensure yarn
@@ -46,16 +40,10 @@ jobs:
           workingDirectory: RNWCPP
 
       - task: CmdLine@2
-        displayName: Do Publish
+        displayName: Update package version
         inputs:
-          script: node .ado/publish.js
+          script: node .ado/updateVersion.js
           workingDirectory: RNWCPP
-
-      - task: CmdLine@1
-        displayName: 'npm unauth'
-        inputs:
-          filename: npm
-          arguments: 'config set $(publishnpmfeed)/registry/:_authToken XXXXX'
 
       - task: Npm@1
         displayName: npm public publish (vnext)
