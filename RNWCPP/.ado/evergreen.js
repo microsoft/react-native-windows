@@ -63,7 +63,7 @@ function createPr() {
         head: branchName,
         base: finalTargetBranchName,
         title: `Update to react-native@${rnVersion}`,
-        body: 'Automatic update to latest version published from @Microsoft/react-native, includes these changes:\n' + listOfChanges
+        body: `Automatic update to latest version published from @Microsoft/react-native, includes these changes:\n\`\`\`\n${listOfChanges}\n\`\`\`` 
       }
     },
     function(err, httpResponse, body) {
@@ -148,7 +148,13 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   }
 
   // Collect log of changes included in this sync
-  listOfChanges = exec(`git log --pretty=oneline --abbrev-commit v${existingPkgJson.devDependencies['react-native']}..v${pkgJson.version}`).toString();
+  // Fetch older version so that we can get the log from there to here..
+  try {
+    exec(`git remote add msrn https://github.com/Microsoft/react-native.git`);
+  } catch (e) {
+  }
+  exec(`git fetch msrn`);
+  listOfChanges = execSync(`git log --pretty=oneline --abbrev-commit v${existingPkgJson.devDependencies['react-native']}..v${pkgJson.version}`).toString();
 
   console.log(`Updating react-native to version: ${pkgJson.version}`);
   existingPkgJson.peerDependencies['react-native'] = rnDependency;
