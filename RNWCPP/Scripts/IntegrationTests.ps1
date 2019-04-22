@@ -15,7 +15,7 @@ param(
 	[UInt32] $Delay = 10,
 	[switch] $List,
 	[switch] $Preload,
-	[string] $ReactNativeHome = "$($PSScriptRoot | Split-Path | Split-Path)\react-native"
+	[string] $ReactNativeHome = "$($PSScriptRoot | Split-Path)\node_modules\react-native"
 )
 
 function Cleanup() {
