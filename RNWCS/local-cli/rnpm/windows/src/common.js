@@ -10,6 +10,9 @@ const semver = require('semver');
 const Registry = require('npm-registry');
 const child_process = require('child_process');
 const validUrl = require('valid-url');
+const request = require('request');
+const fsextra = require('fs-extra');
+var extract = require('extract-zip')
 
 let npmConfReg = child_process.execSync('npm config get registry').toString().trim();
 let NPM_REGISTRY_URL = validUrl.is_uri(npmConfReg) ? npmConfReg : 'http://registry.npmjs.org';
@@ -102,9 +105,33 @@ const isGlobalCliUsingYarn = function(projectDir) {
   return fs.existsSync(path.join(projectDir, 'yarn.lock'));
 };
 
+const downloadFile = function (filename, url) {
+  return fsextra.ensureFile(filename).then(function () {
+    return new Promise(function (resolve, reject) {
+      request.get(url).pipe(fs.createWriteStream(filename)).on('close', resolve).on('error', function (err) {
+        reject(err);
+      });
+    });
+  });
+};
+
+const unzipFile = function (file, dir) {
+  return new Promise(function (resolve, reject) {
+    extract(file, { dir }, function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
 module.exports = {
   getInstallPackage,
   getReactNativeVersion,
   getReactNativeAppName,
-  isGlobalCliUsingYarn
+  isGlobalCliUsingYarn,
+  downloadFile,
+  unzipFile
 };

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CxxReactWin32">
+      <UniqueIdentifier>{13b0d9c2-9c50-4245-b23f-e120dc6442cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sandbox">
+      <UniqueIdentifier>{fe618c6a-9de2-45a3-b40c-5029177e1063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{ae049213-3bdf-4cbe-83f4-39625a414539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Executors">
+      <UniqueIdentifier>{fe8806a2-f72f-4dc3-9996-3a0ee66101ef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TimingModule.cpp" />
+    <ClCompile Include="CxxReactWin32\JSBigString.cpp">
+      <Filter>CxxReactWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="Sandbox\SandboxJSExecutor.cpp">
+      <Filter>Sandbox</Filter>
+    </ClCompile>
+    <ClCompile Include="Sandbox\SandboxBridge.cpp">
+      <Filter>Sandbox</Filter>
+    </ClCompile>
+    <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp">
+      <Filter>Sandbox</Filter>
+    </ClCompile>
+    <ClCompile Include="Sandbox\DevSupportManagerSandbox.cpp">
+      <Filter>Sandbox</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DevSupportManager.cpp" />
+    <ClCompile Include="JSBigStringResourceDll.cpp" />
+    <ClCompile Include="Modules\NetworkingModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpResource.cpp" />
+    <ClCompile Include="WebSocket.cpp" />
+    <ClCompile Include="WebSocketJSExecutor.cpp">
+      <Filter>Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketJSExecutorFactory.cpp">
+      <Filter>Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="LazyDevSupportManager.cpp" />
+    <ClCompile Include="LegacyWebSocket.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TimingModule.h" />
+    <ClInclude Include="Sandbox\SandboxJSExecutor.h">
+      <Filter>Sandbox</Filter>
+    </ClInclude>
+    <ClInclude Include="Sandbox\SandboxBridge.h">
+      <Filter>Sandbox</Filter>
+    </ClInclude>
+    <ClInclude Include="Sandbox\NamedPipeEndpoint.h">
+      <Filter>Sandbox</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="DevSupportManager.h" />
+    <ClInclude Include="UIManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="JSBigStringResourceDll.h" />
+    <ClInclude Include="Modules\NetworkingModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpResource.h" />
+    <ClInclude Include="WebSocket.h" />
+    <ClInclude Include="NativeModuleFactories.h" />
+    <ClInclude Include="LazyDevSupportManager.h" />
+    <ClInclude Include="LegacyWebSocket.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+LIBLETNAME = ReactUWP_Polyester
+
+!include ..\make.inc
+
+SOURCES =  \
+	ButtonContentViewManager.cpp \
+	ButtonViewManager.cpp \
+	ContentControlViewManager.cpp \
+	HyperlinkViewManager.cpp \
+	IconViewManager.cpp \
