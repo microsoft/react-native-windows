@@ -8,26 +8,28 @@
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.Foundation.h>
 
-namespace winrt {
+namespace winrt
+{
 using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Foundation;
-}
+} // namespace winrt
 
-namespace react { namespace uwp {
-
-const winrt::TypeName viewPanelTypeName
+namespace react
 {
-  winrt::hstring { L"ViewPanel" },
-  winrt::TypeKind::Metadata
-};
+namespace uwp
+{
+
+const winrt::TypeName viewPanelTypeName{
+    winrt::hstring{L"ViewPanel"},
+    winrt::TypeKind::Metadata};
 
 ViewPanel::ViewPanel()
 {
-  LayoutUpdated([=](auto&&, auto &&args) { UpdateClip(); });
+  LayoutUpdated([=](auto &&, auto &&args) { UpdateClip(); });
 }
 
 /*static*/ winrt::com_ptr<ViewPanel> ViewPanel::Create()
@@ -38,28 +40,27 @@ ViewPanel::ViewPanel()
 /*static*/ winrt::DependencyProperty ViewPanel::BackgroundProperty()
 {
   static winrt::DependencyProperty s_backgroundProperty =
-    winrt::DependencyProperty::Register(
-      L"Background",
-      winrt::xaml_typename<winrt::Brush>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(
-        winrt::SolidColorBrush(),
-        ViewPanel::VisualPropertyChanged)
-  );
+      winrt::DependencyProperty::Register(
+          L"Background",
+          winrt::xaml_typename<winrt::Brush>(),
+          viewPanelTypeName,
+          winrt::PropertyMetadata(
+              winrt::SolidColorBrush(),
+              ViewPanel::VisualPropertyChanged));
 
   return s_backgroundProperty;
 }
 
 /*static*/ void ViewPanel::VisualPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
 {
-  auto panel { sender.as<ViewPanel>() };
+  auto panel{sender.as<ViewPanel>()};
   if (panel.get() != nullptr)
     panel->m_propertiesChanged = true;
 }
 
 /*static*/ void ViewPanel::PositionPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
 {
-  auto element { sender.as<winrt::UIElement>() };
+  auto element{sender.as<winrt::UIElement>()};
   if (element != nullptr)
     element.InvalidateArrange();
 }
@@ -67,14 +68,13 @@ ViewPanel::ViewPanel()
 /*static*/ winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
 {
   static winrt::DependencyProperty s_borderThicknessProperty =
-    winrt::DependencyProperty::Register(
-      L"BorderThickness",
-      winrt::xaml_typename<winrt::Thickness>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(
-        winrt::box_value(winrt::Thickness()),
-        ViewPanel::VisualPropertyChanged)
-    );
+      winrt::DependencyProperty::Register(
+          L"BorderThickness",
+          winrt::xaml_typename<winrt::Thickness>(),
+          viewPanelTypeName,
+          winrt::PropertyMetadata(
+              winrt::box_value(winrt::Thickness()),
+              ViewPanel::VisualPropertyChanged));
 
   return s_borderThicknessProperty;
 }
@@ -82,14 +82,13 @@ ViewPanel::ViewPanel()
 /*static*/ winrt::DependencyProperty ViewPanel::BorderBrushProperty()
 {
   static winrt::DependencyProperty s_borderBrushProperty =
-    winrt::DependencyProperty::Register(
-      L"BorderBrush",
-      winrt::xaml_typename<winrt::Brush>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(
-        winrt::SolidColorBrush(),
-        ViewPanel::VisualPropertyChanged)
-    );
+      winrt::DependencyProperty::Register(
+          L"BorderBrush",
+          winrt::xaml_typename<winrt::Brush>(),
+          viewPanelTypeName,
+          winrt::PropertyMetadata(
+              winrt::SolidColorBrush(),
+              ViewPanel::VisualPropertyChanged));
 
   return s_borderBrushProperty;
 }
@@ -97,14 +96,13 @@ ViewPanel::ViewPanel()
 /*static*/ winrt::DependencyProperty ViewPanel::CornerRadiusProperty()
 {
   static winrt::DependencyProperty s_cornerRadiusProperty =
-    winrt::DependencyProperty::Register(
-      L"CornerRadius",
-      winrt::xaml_typename<winrt::CornerRadius>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(
-        winrt::box_value(winrt::CornerRadius()),
-        ViewPanel::VisualPropertyChanged)
-    );
+      winrt::DependencyProperty::Register(
+          L"CornerRadius",
+          winrt::xaml_typename<winrt::CornerRadius>(),
+          viewPanelTypeName,
+          winrt::PropertyMetadata(
+              winrt::box_value(winrt::CornerRadius()),
+              ViewPanel::VisualPropertyChanged));
 
   return s_cornerRadiusProperty;
 }
@@ -112,14 +110,13 @@ ViewPanel::ViewPanel()
 /*static*/ winrt::DependencyProperty ViewPanel::TopProperty()
 {
   static winrt::DependencyProperty s_topProperty =
-    winrt::DependencyProperty::RegisterAttached(
-      L"Top",
-      winrt::xaml_typename<double>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(
-        winrt::box_value((double)0),
-        ViewPanel::PositionPropertyChanged)
-    );
+      winrt::DependencyProperty::RegisterAttached(
+          L"Top",
+          winrt::xaml_typename<double>(),
+          viewPanelTypeName,
+          winrt::PropertyMetadata(
+              winrt::box_value((double)0),
+              ViewPanel::PositionPropertyChanged));
 
   return s_topProperty;
 }
@@ -127,14 +124,13 @@ ViewPanel::ViewPanel()
 /*static*/ winrt::DependencyProperty ViewPanel::LeftProperty()
 {
   static winrt::DependencyProperty s_topProperty =
-    winrt::DependencyProperty::RegisterAttached(
-      L"Left",
-      winrt::xaml_typename<double>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(
-        winrt::box_value((double)0),
-        ViewPanel::PositionPropertyChanged)
-    );
+      winrt::DependencyProperty::RegisterAttached(
+          L"Left",
+          winrt::xaml_typename<double>(),
+          viewPanelTypeName,
+          winrt::PropertyMetadata(
+              winrt::box_value((double)0),
+              ViewPanel::PositionPropertyChanged));
 
   return s_topProperty;
 }
@@ -142,25 +138,24 @@ ViewPanel::ViewPanel()
 /*static*/ winrt::DependencyProperty ViewPanel::ClipChildrenProperty()
 {
   static winrt::DependencyProperty s_clipChildrenProperty =
-    winrt::DependencyProperty::Register(
-      L"ClipChildren",
-      winrt::xaml_typename<bool>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(
-        winrt::box_value(false),
-        ViewPanel::VisualPropertyChanged)
-    );
+      winrt::DependencyProperty::Register(
+          L"ClipChildren",
+          winrt::xaml_typename<bool>(),
+          viewPanelTypeName,
+          winrt::PropertyMetadata(
+              winrt::box_value(false),
+              ViewPanel::VisualPropertyChanged));
 
   return s_clipChildrenProperty;
 }
 
-/*static*/ void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement& element, double value)
+/*static*/ void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement &element, double value)
 {
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
 }
 
-/*static*/ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double value)
+/*static*/ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement &element, double value)
 {
   element.SetValue(LeftProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
@@ -212,13 +207,13 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
     childWidth = std::max<double>(0.0f, childWidth);
     childHeight = std::max<double>(0.0f, childHeight);
 
-    child.Arrange(winrt::Rect((float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), childWidth, childHeight));
+    child.Arrange(winrt::Rect((float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), (float)childWidth, (float)childHeight));
   }
 
   return finalSize;
 }
 
-void ViewPanel::InsertAt(uint32_t const index, winrt::UIElement const& value) const
+void ViewPanel::InsertAt(uint32_t const index, winrt::UIElement const &value) const
 {
   auto innerPanel = GetInnerPanel();
   if (innerPanel != nullptr)
@@ -288,22 +283,22 @@ uint32_t ViewPanel::Size() const
   }
 }
 
-void ViewPanel::Background(winrt::Brush const& value)
+void ViewPanel::Background(winrt::Brush const &value)
 {
   SetValue(BackgroundProperty(), winrt::box_value(value));
 }
 
-void ViewPanel::BorderThickness(winrt::Thickness const& value)
+void ViewPanel::BorderThickness(winrt::Thickness const &value)
 {
   SetValue(BorderThicknessProperty(), winrt::box_value(value));
 }
 
-void ViewPanel::BorderBrush(winrt::Brush const& value)
+void ViewPanel::BorderBrush(winrt::Brush const &value)
 {
   SetValue(BorderBrushProperty(), value);
 }
 
-void ViewPanel::CornerRadius(winrt::CornerRadius const& value)
+void ViewPanel::CornerRadius(winrt::CornerRadius const &value)
 {
   SetValue(CornerRadiusProperty(), winrt::box_value(value));
 }
@@ -468,11 +463,12 @@ void ViewPanel::UpdateClip()
   }
 }
 
-ViewPanel* ViewPanel::GetInnerPanel() const
+ViewPanel *ViewPanel::GetInnerPanel() const
 {
   return (m_innerElement != nullptr)
-    ? m_innerElement.try_as<ViewPanel>().get()
-    : nullptr;
+             ? m_innerElement.try_as<ViewPanel>().get()
+             : nullptr;
 }
 
-} }
+} // namespace uwp
+} // namespace react
