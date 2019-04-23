@@ -1,7 +1,0 @@
-LIBLETNAME = ReactUWP_Executors
-
-!include ..\make.inc
-
-SOURCES =  \
-	WebSocketJSExecutorFactory.cpp \
-	WebSocketJSExecutorUwp.cpp \

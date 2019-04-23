@@ -1,8 +1,0 @@
-LIBLETNAME = ReactUWP_pch
-
-!include ..\make.inc
-
-SOURCES =  \
-	#pch.cpp \
-
-

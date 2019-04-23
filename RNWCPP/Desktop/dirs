@@ -1,4 +1,0 @@
-DIRS = \
-	cxxreactwin32 \
-	sandbox \
-	win32 \

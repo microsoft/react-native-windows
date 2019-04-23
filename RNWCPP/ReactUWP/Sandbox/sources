@@ -1,6 +1,0 @@
-LIBLETNAME = ReactUWP_Sandbox
-
-!include ..\make.inc
-
-SOURCES =  \
-	DevSupportManagerUwpSandbox.cpp \

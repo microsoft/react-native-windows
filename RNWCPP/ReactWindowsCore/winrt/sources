@@ -1,6 +1,0 @@
-LIBLET_WINRT = 1
-LIBLET_LOB = 1
-!include ..\sources.inc
-!include $(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\makewinrt.inc
-
-SOURCES = $(SOURCES_WINRT)

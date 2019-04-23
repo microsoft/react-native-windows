@@ -1,7 +1,0 @@
-LIBLETNAME = ReactUWP_Utils
-
-!include ..\make.inc
-
-SOURCES =  \
-	LocalBundleReader.cpp \
-	valueutils.cpp \
