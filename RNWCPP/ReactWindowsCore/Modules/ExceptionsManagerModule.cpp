@@ -7,10 +7,13 @@
 #include <assert.h>
 #include <cxxreact/JsArgumentHelpers.h>
 
-namespace facebook { namespace react {
+namespace facebook
+{
+namespace react
+{
 
-ExceptionsManagerModule::ExceptionsManagerModule(std::function<void(JSExceptionInfo)>&& jsExceptionCallback)
-  : m_jsExceptionCallback(std::move(jsExceptionCallback))
+ExceptionsManagerModule::ExceptionsManagerModule(std::function<void(JSExceptionInfo)> &&jsExceptionCallback)
+    : m_jsExceptionCallback(std::move(jsExceptionCallback))
 {
 }
 
@@ -27,35 +30,32 @@ std::map<std::string, folly::dynamic> ExceptionsManagerModule::getConstants()
 std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule::getMethods()
 {
   return {
-    Method("reportFatalException", [this](folly::dynamic args) noexcept
-    {
-      if (m_jsExceptionCallback)
-      {
-        m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Fatal)));
-      }
-    }),
+      Method("reportFatalException", [this](folly::dynamic args) noexcept {
+        if (m_jsExceptionCallback)
+        {
+          m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Fatal)));
+        }
+      }),
 
-    Method("reportSoftException", [this](folly::dynamic args) noexcept
-    {
-      if (m_jsExceptionCallback)
-      {
-        m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Soft)));
-      }
-    }),
+      Method("reportSoftException", [this](folly::dynamic args) noexcept {
+        if (m_jsExceptionCallback)
+        {
+          m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Soft)));
+        }
+      }),
 
-    Method("updateExceptionMessage", [](folly::dynamic /*args*/) noexcept
-    {
-      // For every JS exception, react native first calls reportFatalException or reportSoftException.
-      // Then it attempts to Symbolicate the stack trace and if it succeeds, calls this method (updateExceptionMessage),
-      // As a result every JS exception is propagated across the bridge to this native module twice.
-      // We only need to expose the exception info to the exception callback once, and in the case of Win32, stacks coming through
-      // reportFatalException and reportSoftException already have symbol information, so there is nothing we need to do here.
-    }),
+      Method("updateExceptionMessage", [](folly::dynamic /*args*/) noexcept {
+                                           // For every JS exception, react native first calls reportFatalException or reportSoftException.
+                                           // Then it attempts to Symbolicate the stack trace and if it succeeds, calls this method (updateExceptionMessage),
+                                           // As a result every JS exception is propagated across the bridge to this native module twice.
+                                           // We only need to expose the exception info to the exception callback once, and in the case of Win32, stacks coming through
+                                           // reportFatalException and reportSoftException already have symbol information, so there is nothing we need to do here.
+                                       }),
 
   };
 }
 
-JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynamic& args, JSExceptionType jsExceptionType) const noexcept
+JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynamic &args, JSExceptionType jsExceptionType) const noexcept
 {
   // Parameter args is a dynamic array containing 3 objects:
   // 1. an exception message string.
@@ -77,7 +77,7 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynami
 
   // Construct a string containing the stack frame info in the following format:
   // <method> Line:<Line Number>  Column:<ColumnNumber> <Filename>
-  for (const auto& stackFrame : stackAsFolly)
+  for (const auto &stackFrame : stackAsFolly)
   {
     // Each dynamic object is a map containing information about the stack frame:
     // method (string), filename(string), line number (int) and column number (int).
@@ -97,7 +97,7 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynami
   return jsExceptionInfo;
 }
 
-std::string ExceptionsManagerModule::RetrieveValueFromMap(const folly::dynamic& map, const std::string& key, folly::dynamic::Type type) const noexcept
+std::string ExceptionsManagerModule::RetrieveValueFromMap(const folly::dynamic &map, const std::string &key, folly::dynamic::Type type) const noexcept
 {
   assert(type == folly::dynamic::INT64 || type == folly::dynamic::STRING);
   assert(map.type() == folly::dynamic::OBJECT);
@@ -126,4 +126,5 @@ std::string ExceptionsManagerModule::RetrieveValueFromMap(const folly::dynamic& 
   return value;
 }
 
-}} // namespace facebook::react
+} // namespace react
+} // namespace facebook

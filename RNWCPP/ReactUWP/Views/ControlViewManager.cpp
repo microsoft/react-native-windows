@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Views/ControlViewManager.h>
+#include <Views/ShadowNodeBase.h>
 
 #include <Utils/PropertyUtils.h>
 
@@ -35,6 +36,8 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::d
 {
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
 
+  bool implementsPadding = nodeToUpdate->ImplementsPadding();
+
   if (control != nullptr)
   {
     for (auto& pair : reactDiffMap.items())
@@ -54,7 +57,7 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::d
       {
         continue;
       }
-      else if (TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue))
+      else if (implementsPadding && TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue))
       {
         continue;
       }

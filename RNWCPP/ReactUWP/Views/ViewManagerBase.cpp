@@ -5,12 +5,13 @@
 
 #include <Views/ViewManagerBase.h>
 
-#include <Views/ShadowNodeBase.h>
 #include "ViewPanel.h"
 
 #include <Modules/NativeUIManager.h>
 
+#include <IReactInstance.h>
 #include <IXamlRootView.h>
+#include <Views/ShadowNodeBase.h>
 #include <winrt/Windows.UI.Xaml.h>
 
 using namespace folly;

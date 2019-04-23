@@ -1,8 +1,12 @@
-/**
- *
- * @flow
- * @format
- */
+// Copyright (c) Facebook, Inc. and its affiliates.
+//
+// This source code is licensed under the MIT license found in the
+// LICENSE file in the root directory of this source tree.
+//
+// Portions copyright for react-native-windows:
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 'use strict';
 
 const EventEmitter = require('EventEmitter');
@@ -18,16 +22,80 @@ const TextInputState = require('TextInputState');
  * found when Flow v0.54 was deployed. To see the error delete this comment and
  * run Flow. */
 const TimerMixin = require('react-timer-mixin');
+import type {SyntheticEvent, ScrollEvent} from 'CoreEventTypes';
+import type {PressEvent} from 'CoreEventTypes';
 
 const requireNativeComponent = require('requireNativeComponent');
 
 var RCTTextInput = requireNativeComponent('RCTTextInput'); // TODO(windows ISS)
 
-type Event = Object;
-type Selection = {
+export type ChangeEvent = SyntheticEvent<
+  $ReadOnly<{|
+    eventCount: number,
+    target: number,
+    text: string,
+  |}>,
+>;
+
+export type TextInputEvent = SyntheticEvent<
+  $ReadOnly<{|
+    eventCount: number,
+    previousText: string,
+    range: $ReadOnly<{|
+      start: number,
+      end: number,
+    |}>,
+    target: number,
+    text: string,
+  |}>,
+>;
+
+export type ContentSizeChangeEvent = SyntheticEvent<
+  $ReadOnly<{|
+    target: number,
+    contentSize: $ReadOnly<{|
+      width: number,
+      height: number,
+    |}>,
+  |}>,
+>;
+
+type TargetEvent = SyntheticEvent<
+  $ReadOnly<{|
+    target: number,
+  |}>,
+>;
+
+export type BlurEvent = TargetEvent;
+export type FocusEvent = TargetEvent;
+
+type Selection = $ReadOnly<{|
   start: number,
-  end?: number,
-};
+  end: number,
+|}>;
+
+export type SelectionChangeEvent = SyntheticEvent<
+  $ReadOnly<{|
+    selection: Selection,
+    target: number,
+  |}>,
+>;
+
+export type KeyPressEvent = SyntheticEvent<
+  $ReadOnly<{|
+    key: string,
+    target?: ?number,
+    eventCount?: ?number,
+  |}>,
+>;
+
+export type EditingEvent = SyntheticEvent<
+  $ReadOnly<{|
+    eventCount: number,
+    text: string,
+    target: number,
+  |}>,
+>;
 
 /**
  * A foundational component for inputting text into the app via a
@@ -176,27 +244,34 @@ const TextInput = createReactClass({
   _focusSubscription: (undefined: ?Function),
   _lastNativeText: (undefined: ?string),
   _lastNativeSelection: (undefined: ?Selection),
+  _rafId: (null: ?AnimationFrameID),
 
   componentDidMount: function () {
     this._lastNativeText = this.props.value;
-    if (!this.context.focusEmitter) {
-      if (this.props.autoFocus) {
-        this.requestAnimationFrame(this.focus);
-      }
-      return;
+    const tag = ReactNative.findNodeHandle(this._inputRef);
+    if (tag != null) {
+      // tag is null only in unit tests
+      TextInputState.registerInput(tag);
     }
-    this._focusSubscription = this.context.focusEmitter.addListener(
-      'focus',
-      el => {
-        if (this === el) {
-          this.requestAnimationFrame(this.focus);
-        } else if (this.isFocused()) {
-          this.blur();
-        }
-      },
-    );
-    if (this.props.autoFocus) {
-      this.context.onFocusRequested(this);
+
+    if (this.context.focusEmitter) {
+      this._focusSubscription = this.context.focusEmitter.addListener(
+        'focus',
+        el => {
+          if (this === el) {
+            this._rafId = requestAnimationFrame(this.focus);
+          } else if (this.isFocused()) {
+            this.blur();
+          }
+        },
+      );
+      if (this.props.autoFocus) {
+        this.context.onFocusRequested(this);
+      }
+    } else {
+      if (this.props.autoFocus) {
+        this._rafId = requestAnimationFrame(this.focus);
+      }
     }
   },
 
@@ -204,6 +279,9 @@ const TextInput = createReactClass({
     this._focusSubscription && this._focusSubscription.remove();
     if (this.isFocused()) {
       this.blur();
+    }
+    if (this._rafId != null) {
+      cancelAnimationFrame(this._rafId);
     }
   },
 
@@ -250,7 +328,7 @@ const TextInput = createReactClass({
     this._inputRef = ref;
   },
 
-  _onFocus: function (event: Event) {
+  _onFocus: function (event: FocusEvent) {
     // [TODO(android ISS)
     // Set the focused TextInput field info in TextInputState.
     // Delaying this to onFocus native event ensures that -
@@ -263,16 +341,16 @@ const TextInput = createReactClass({
     }
   },
 
-  _onPress: function (event: Event) {
+  _onPress: function (event: PressEvent) {
     if (this.props.editable || this.props.editable === undefined) {
       this.focus();
     }
   },
 
-  _onChange: function (event: Event) {
+  _onChange: function (event: ChangeEvent) {
     // Make sure to fire the mostRecentEventCount first so it is already set on
     // native when the text value is set.
-    if (this._inputRef) {
+    if (this._inputRef && this._inputRef.setNativeProps) {
       this._inputRef.setNativeProps({
         mostRecentEventCount: event.nativeEvent.eventCount,
       });
@@ -292,7 +370,7 @@ const TextInput = createReactClass({
     this.forceUpdate();
   },
 
-  _onSelectionChange: function (event: Event) {
+  _onSelectionChange: function (event: SelectionChangeEvent) {
     this.props.onSelectionChange && this.props.onSelectionChange(event);
 
     if (!this._inputRef) {
@@ -333,7 +411,11 @@ const TextInput = createReactClass({
       nativeProps.selection = this.props.selection;
     }
 
-    if (Object.keys(nativeProps).length > 0 && this._inputRef) {
+    if (
+      Object.keys(nativeProps).length > 0 &&
+      this._inputRef &&
+      this._inputRef.setNativeProps
+    ) {
       this._inputRef.setNativeProps(nativeProps);
     }
   },
@@ -351,11 +433,11 @@ const TextInput = createReactClass({
     }
   },
 
-  _onTextInput: function (event: Event) {
+  _onTextInput: function (event: TextInputEvent) {
     this.props.onTextInput && this.props.onTextInput(event);
   },
 
-  _onScroll: function (event: Event) {
+  _onScroll: function (event: ScrollEvent) {
     this.props.onScroll && this.props.onScroll(event);
   },
 });

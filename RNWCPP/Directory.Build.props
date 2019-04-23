@@ -6,6 +6,8 @@
 
     <Platform Condition="'$(Platform)' == ''">x64</Platform>
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+
+    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)</ReactNativeWindowsDir>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
@@ -15,8 +17,8 @@
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
     <!-- NOTE: This assignment of `Platform` won't persist thourgh the build. -->
     <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
-    <BaseIntDir>$(SolutionDir)build\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseOutDir>$(SolutionDir)target\$(Platform)\$(Configuration)</BaseOutDir>
+    <BaseIntDir>$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseOutDir>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
 
     <!-- Windows Desktop -->
     <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
@@ -24,10 +26,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FollyDir>$(SolutionDir)\node_modules\react-native\folly</FollyDir>
-    <ReactNativeDir>$(SolutionDir)\node_modules\react-native</ReactNativeDir>
-    <YogaDir>$(SolutionDir)\node_modules\react-native\ReactCommon\yoga</YogaDir>
+    <FollyDir>$(ReactNativeWindowsDir)node_modules\react-native\folly</FollyDir>
+    <ReactNativeDir>$(ReactNativeWindowsDir)node_modules\react-native</ReactNativeDir>
+    <YogaDir>$(ReactNativeWindowsDir)node_modules\react-native\ReactCommon\yoga</YogaDir>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <ReactNativeProjectDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), app.json))</ReactNativeProjectDir>
+  </PropertyGroup>
+  <Import Project="$(ReactNativeProjectDir)\windows\react.overrides.props" Condition="$([System.IO.File]::Exists($(ReactNativeProjectDir)\windows\react.overrides.props))" />
 
 <!-- Uncomment this (and modify the path below) to build react-native-win against a public version of react-native -->
 <!--

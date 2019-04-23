@@ -19,9 +19,15 @@
     <Message Text="=> UnmergedWinmdDirectory  [$(UnmergedWinmdDirectory)]" />
     <Message Text="=> MergedWinmdDirectory    [$(MergedWinmdDirectory)]" />
     <Message Text="=> FollyDir                [$(FollyDir)]" />
+    <Message Text="=> ReactNativeWindowsDir   [$(ReactNativeWindowsDir)]" />
     <Message Text="=> ReactNativeDir          [$(ReactNativeDir)]" />
     <Message Text="=> YogaDir                 [$(YogaDir)]" />
-    <Message Text="=> ProjectHome                 [$(ProjectHome)]" />
+    <Message Text="=> ProjectHome             [$(ProjectHome)]" />
+    <Message Text="=> UserRootDir             [$(UserRootDir)]" />
+    <Message Text="=> MSBuildExtensionsPath   [$(MSBuildExtensionsPath)]" />
+    <Message Text="=> MSBuildExtensionsPath32 [$(MSBuildExtensionsPath32)]" />
+    <Message Text="=> MSBuildExtensionsPath64 [$(MSBuildExtensionsPath64)]" />
+    <Message Text="=> VCTargetsPath           [$(VCTargetsPath)]" />
   </Target>
 
 </Project>

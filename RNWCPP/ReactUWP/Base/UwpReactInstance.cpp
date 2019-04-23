@@ -351,12 +351,14 @@ void UwpReactInstance::UnregisterErrorCallback(ErrorCallbackCookie& cookie)
 
 void UwpReactInstance::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData)
 {
-  m_instanceWrapper->DispatchEvent(viewTag, eventName, std::move(eventData));
+  if (!IsInError())
+    m_instanceWrapper->DispatchEvent(viewTag, eventName, std::move(eventData));
 }
 
 void UwpReactInstance::CallJsFunction(std::string&& moduleName, std::string&& method, folly::dynamic&& params) noexcept
 {
-  m_instanceWrapper->GetInstance()->callJSFunction(std::move(moduleName), std::move(method), std::move(params));
+  if (!IsInError())
+    m_instanceWrapper->GetInstance()->callJSFunction(std::move(moduleName), std::move(method), std::move(params));
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> UwpReactInstance::GetNewUIMessageQueue() const

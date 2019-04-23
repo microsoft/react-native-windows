@@ -29,11 +29,6 @@
     <file src="inc\cxxreact\NativeToJsBridge.h"      target="inc\cxxreact" />
     <file src="inc\cxxreact\NativeModule.h"          target="inc\cxxreact" />
 
-    <file src="inc\jschelpers\JavaScriptCore.h"      target="inc\jschelpers" />
-    <file src="inc\jschelpers\JSCWrapper.h"          target="inc\jschelpers" />
-    <file src="inc\jschelpers\Unicode.h"             target="inc\jschelpers" />
-    <file src="inc\jschelpers\Value.h"               target="inc\jschelpers" />
-
     <file src="inc\yoga\Yoga\Yoga.h"                 target="inc\yoga" />
     <file src="inc\yoga\Yoga\YGMacros.h"             target="inc\yoga" />
     <file src="inc\yoga\Yoga\YGNodeList.h"           target="inc\yoga" />

@@ -214,6 +214,19 @@ void AttachContentHeaders(
     content.Headers().ContentEncoding().ParseAdd(facebook::react::UnicodeConversion::Utf8ToUtf16(contentEncoding));
 }
 
+void AttachMultipartHeaders(
+  winrt::Windows::Web::Http::IHttpContent content,
+  const folly::dynamic& headers)
+{
+  for (auto& header : headers.items())
+  {
+    auto& name = header.first.getString();
+    auto& value = header.second.getString();
+
+    content.Headers().Append(facebook::react::UnicodeConversion::Utf8ToUtf16(name), facebook::react::UnicodeConversion::Utf8ToUtf16(value));
+  }
+}
+
 void NetworkingModule::NetworkingHelper::SendRequest(const std::string& method, const std::string& url, const folly::dynamic& headers,
   folly::dynamic bodyData, const std::string& responseType, bool useIncrementalUpdates, int64_t timeout, Callback cb) noexcept
 {
@@ -277,9 +290,30 @@ void NetworkingModule::NetworkingHelper::SendRequest(const std::string& method, 
         winrt::Windows::Web::Http::HttpStreamContent contentStream(stream);
         content = contentStream;
       }
-      else if (!bodyData["formdata"].empty())
+      else if (!bodyData["formData"].empty())
       {
-        assert(false); // Not yet implemented
+        auto formData = bodyData["formData"];
+        winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
+
+        for (auto& formDataPart : formData)
+        {
+          if (!formDataPart["string"].empty()) {
+            winrt::Windows::Web::Http::HttpStringContent multipartStringValue { facebook::react::UnicodeConversion::Utf8ToUtf16(formDataPart["string"].asString()) };
+            AttachMultipartHeaders(multipartStringValue, formDataPart["headers"]);
+            multiPartContent.Add(multipartStringValue, facebook::react::UnicodeConversion::Utf8ToUtf16(formDataPart["fieldName"].asString()));
+          }
+          else if (!formDataPart["uri"].empty()) {
+            auto filePath = winrt::to_hstring(formDataPart["uri"].asString());
+            winrt::Windows::Storage::StorageFile file = winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(filePath).get();
+            
+            auto stream = file.OpenReadAsync().get();
+            winrt::Windows::Web::Http::HttpStreamContent multipartFileValue(stream);
+            AttachMultipartHeaders(multipartFileValue, formDataPart["headers"]);
+            multiPartContent.Add(multipartFileValue, facebook::react::UnicodeConversion::Utf8ToUtf16(formDataPart["fieldName"].asString()));
+          }
+        }
+
+        content = multiPartContent;
       }
       else
       {

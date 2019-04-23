@@ -7,6 +7,8 @@
 
 namespace react { namespace uwp {
 
+struct ShadowNodeBase;
+
 class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManager
 {
   using Super = FrameworkElementViewManager;

@@ -26,8 +26,12 @@ class BaseWebSocket : public IWebSocket
   boost::beast::multi_buffer m_bufferIn;
   std::thread m_contextThread;
 
-  std::atomic_size_t m_pingRequests { 0 };
+  ///
+  // Must be modified exclusively from the context thread.
+  ///
   std::queue<std::pair<std::string, bool>> m_writeRequests;
+
+  std::atomic_size_t m_pingRequests { 0 };
   CloseCode m_closeCodeRequest { CloseCode::None };
   std::string m_closeReasonRequest;
 

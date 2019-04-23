@@ -7,6 +7,10 @@
 
 namespace winrt::Windows::UI::Xaml::Media { enum class Stretch; }
 
+namespace facebook { namespace react {
+  class MessageQueueThread;
+} }
+
 namespace react { namespace uwp {
 
   class ImageViewManager : public FrameworkElementViewManager
