@@ -51,18 +51,18 @@ Before starting to contribute changes, please setup your upstream repository to 
 
 ## Making code changes and creating a pull request
 
-Create a branch from your fork and start making the code changes.  We recommend using [**SourceTree**](https://www.sourcetreeapp.com/) for working in your repo. Once you are happy with the changes, and want to merge them to the main **Microsoft/react-native-windows** project, create a pull request from your branch directly to "Microsoft/react-native-windows rnwcpp-preview".
+Create a branch from your fork and start making the code changes.  We recommend using [**SourceTree**](https://www.sourcetreeapp.com/) for working in your repo. Once you are happy with the changes, and want to merge them to the main **Microsoft/react-native-windows** project, create a pull request from your branch directly to "Microsoft/react-native-windows master".
 
 Members on the **Microsoft/react-native-windows** core team will help merge your changes.
 
-## Merging upstream rnwcpp-preview into your fork rnwcpp-preview
+## Merging upstream master into your fork master
 
 From time to time, your fork will get out of sync with the upstream remote. Use the following commands to get the master branch of your fork up up to date.
 
 ```
 > git fetch upstream
-> git checkout rnwcpp-preview
-> git pull upstream rnwcpp-preview
+> git checkout master
+> git pull upstream master
 > git push
 ```
 
@@ -72,6 +72,6 @@ Use these commands instead if you would like to update your *current* branch in 
 
 ```
 > git fetch upstream
-> git pull upstream rnwcpp-preview
+> git pull upstream master
 > git push
 ```
