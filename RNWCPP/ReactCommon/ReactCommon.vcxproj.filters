@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="stubs">
+      <UniqueIdentifier>{7f5b0b9a-6a9b-4927-b92e-b796d8722357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stubs\sys">
+      <UniqueIdentifier>{6f281c77-c556-413f-ab0e-e1da95aa47d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cxxreact">
+      <UniqueIdentifier>{9e2dd06f-00fd-47bc-87cd-856bf393c504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="yoga">
+      <UniqueIdentifier>{3db635c1-ad38-4099-b79d-872a6ef4319f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsi">
+      <UniqueIdentifier>{c8c4a850-2ee5-4211-9c65-3dd074209b47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsiexecutor">
+      <UniqueIdentifier>{eae1b827-8949-49dd-9740-501033bcd441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsiexecutor\jsireact">
+      <UniqueIdentifier>{1072517c-f7e8-419d-a43a-b037bf46e691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="privatedata">
+      <UniqueIdentifier>{20b1bda7-06e8-4ce8-8733-fc404e0afc13}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.cpp">
+      <Filter>jsi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSIDynamic.cpp">
+      <Filter>jsi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp">
+      <Filter>jsiexecutor\jsireact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp">
+      <Filter>jsiexecutor\jsireact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp">
+      <Filter>jsi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp">
+      <Filter>jsi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp">
+      <Filter>jsi</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\stubs\sys\mman.h">
+      <Filter>stubs\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\stubs\sys\time.h">
+      <Filter>stubs\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Executor.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorToken.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorTokenFactory.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers-inl.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBigString.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSModulesUnbundle.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\MessageQueueThread.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModule.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModuleProvider.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\oss-compat-util.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\instrumentation.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi-inl.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSIDynamic.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h">
+      <Filter>jsiexecutor\jsireact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h">
+      <Filter>jsiexecutor\jsireact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(YogaDir)\yoga\YGEnums.h">
+      <Filter>yoga</Filter>
+    </ClInclude>
+    <ClInclude Include="$(YogaDir)\yoga\YGMacros.h">
+      <Filter>yoga</Filter>
+    </ClInclude>
+    <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h">
+      <Filter>yoga</Filter>
+    </ClInclude>
+    <ClInclude Include="$(YogaDir)\yoga\Yoga.h">
+      <Filter>yoga</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

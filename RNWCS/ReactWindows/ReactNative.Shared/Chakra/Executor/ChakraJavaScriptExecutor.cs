@@ -381,8 +381,18 @@ namespace ReactNative.Chakra.Executor
             var moduleId = (int)arguments[1].ToDouble();
             var methodId = (int)arguments[2].ToDouble();
             var args = (JArray)ConvertJson(arguments[3]);
-            var result = _callSyncHook(moduleId, methodId, args);
-            return ConvertJson(result);
+            
+            try
+            {
+                var result = _callSyncHook(moduleId, methodId, args);
+                return ConvertJson(result);
+            }
+            catch (Exception e)
+            {
+                var error = JavaScriptValue.CreateError(JavaScriptValue.FromString(e.Message));
+                Native.JsSetException(error);
+                return JavaScriptValue.Invalid;
+            }
         }
         #endregion
 
