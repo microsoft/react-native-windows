@@ -30,9 +30,9 @@ namespace facebook {
       std::unique_ptr<FILE, std::function<void(FILE *)>> m_storageFile;
 
     private:
-      static const int IOHelperBufferSize = 1024;
+      static const size_t IOHelperBufferSize = 1024;
       char m_fileBuffer[IOHelperBufferSize + 1] = { 0 };
-      int m_fileBufferIdx = 0;
+      size_t m_fileBufferIdx = 0;
       size_t m_fileBufferSize = IOHelperBufferSize;
       bool m_fileBufferInited = false;
     };

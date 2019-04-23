@@ -86,7 +86,8 @@ public:
 
   void RemoveChildAt(int64_t indexToRemove) override
   {
-    GetViewPanel()->RemoveAt(indexToRemove);
+    if (indexToRemove == static_cast<uint32_t>(indexToRemove))
+      GetViewPanel()->RemoveAt(static_cast<uint32_t>(indexToRemove));
   }
 
   void removeAllChildren() override
@@ -417,7 +418,13 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       else if (propertyName == "tabIndex")
       {
         if (propertyValue.isNumber())
-          pViewShadowNode->TabIndex(propertyValue.asInt());
+        {
+          auto tabIndex = propertyValue.asInt();
+          if (tabIndex == static_cast<int32_t>(tabIndex))
+          {
+            pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
+          }
+        }
         else if (propertyValue.isNull())
           pViewShadowNode->TabIndex(-1);
       }

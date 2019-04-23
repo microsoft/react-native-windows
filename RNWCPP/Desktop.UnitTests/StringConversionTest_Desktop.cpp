@@ -41,7 +41,7 @@ private:
   {
     JsValueRef value;
     string str;
-    for (int i = 0; i < g_utf8TestStrings.size(); i++)
+    for (size_t i = 0; i < g_utf8TestStrings.size(); i++)
     {
       JsPointerToStringUtf8(g_utf8TestStrings[i].c_str(), g_utf8TestStrings[i].length(), &value);
       JsStringToStdStringUtf8(value, str);

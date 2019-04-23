@@ -212,7 +212,7 @@ namespace facebook { namespace react { namespace chakra {
         static void CHAKRA_CALLBACK ProcessDebuggerCommandQueueCallback(void* callbackState);
 
         constexpr static char DEBUGGER_DEFAULT_RUNTIME_NAME[] = "runtime1";
-        constexpr static int DEBUGGER_DEFAULT_PORT = 9229;
+        constexpr static uint16_t DEBUGGER_DEFAULT_PORT = 9229;
 
         Logger logger_;
 
@@ -221,7 +221,7 @@ namespace facebook { namespace react { namespace chakra {
         std::shared_ptr<MessageQueueThread> jsQueue_;
 
         std::string debugRuntimeName_;
-        int debugPort_ { 0 };
+        uint16_t debugPort_ { 0 };
         std::unique_ptr<DebugProtocolHandler> debugProtocolHandler_;
         std::unique_ptr<DebugService> debugService_;
 
@@ -237,7 +237,7 @@ namespace facebook { namespace react { namespace chakra {
         if (enableDebugging)
         {
           std::string runtimeName = args_.DebuggerRuntimeName;
-          int port = args_.DebuggerPort;
+          auto port = args_.DebuggerPort;
 
           if (runtimeName.empty())
           {
@@ -687,7 +687,7 @@ namespace facebook { namespace react { namespace chakra {
         checkException(JsNumberToInt(countRef, &count));
 
         auto result = createArray(count);
-        for (size_t i = 0; i < count; i++) {
+        for (decltype(count) i = 0; i < count; i++) {
           JsValueRef index;
           checkException(JsIntToNumber(i, &index));
           JsValueRef propertyName;
@@ -708,7 +708,7 @@ namespace facebook { namespace react { namespace chakra {
 
       jsi::Array ChakraRuntime::createArray(size_t length) {
         JsValueRef result;
-        checkException(JsCreateArray(length, &result));
+        checkException(JsCreateArray(static_cast<unsigned int>(length), &result));
         return createObject(result).getArray(*this);
       }
 
@@ -732,7 +732,7 @@ namespace facebook { namespace react { namespace chakra {
 
       jsi::Value ChakraRuntime::getValueAtIndex(const jsi::Array& arr, size_t i) {
         JsValueRef index;
-        JsIntToNumber(i, &index);
+        JsIntToNumber(static_cast<int>(i), &index);
         JsValueRef property;
         checkException(JsGetIndexedProperty(objectRef(arr), index, &property));
         return createValue(property);
@@ -743,7 +743,7 @@ namespace facebook { namespace react { namespace chakra {
         size_t i,
         const jsi::Value& value) {
         JsValueRef index;
-        JsIntToNumber(i, &index);
+        JsIntToNumber(static_cast<int>(i), &index);
 
         checkException(JsSetIndexedProperty(objectRef(arr), index, valueRef(value)));
       }
@@ -887,7 +887,7 @@ namespace facebook { namespace react { namespace chakra {
         checkException(JsCallFunction(
           objectRef(f),
           detail::ArgsConverterForCall(*this, jsThis.isUndefined() ? nullptr : objectRef(jsThis.getObject(*this)), args, count),
-          count+1,
+          static_cast<unsigned short>(count)+1,
           &result));
         return createValue(result);
       }
@@ -900,7 +900,7 @@ namespace facebook { namespace react { namespace chakra {
         checkException(JsConstructObject(
           objectRef(f),
           detail::ArgsConverterForCall(*this, nullptr, args, count),
-          count,
+          static_cast<unsigned short>(count),
           &result));
         return createValue(result);
       }
@@ -1123,9 +1123,13 @@ namespace facebook { namespace react { namespace chakra {
 
       std::wstring ChakraRuntime::JSStringToSTLWString(JsValueRef str) {
         std::wstring result;
-        size_t length;
-        JsCopyStringUtf16(str, 0, 256 /*TODO*/, nullptr, &length);
-        result.resize(length + 1);
+
+        int length{ 0 };
+        if (JsGetStringLength(str, &length) != JsNoError) {
+          return result;
+        }
+
+        result.resize(static_cast<size_t>(length + 1));
         JsCopyStringUtf16(str, 0, length, reinterpret_cast<uint16_t*>(&result[0]), nullptr);
         return result;
       }

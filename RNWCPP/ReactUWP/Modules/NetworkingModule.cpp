@@ -257,12 +257,9 @@ void NetworkingModule::NetworkingHelper::SendRequest(const std::string& method, 
         auto& name = header.first.getString();
         auto& value = header.second.getString();
 
-        std::string nameLower;
-        std::transform(cbegin(name), cend(name), back_inserter(nameLower), tolower);
-
-        if (nameLower == "content-type")
+        if (_stricmp(name.c_str(), "content-type") == 0)
           winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue::TryParse(facebook::react::UnicodeConversion::Utf8ToUtf16(value), contentType);
-        else if (nameLower == "content-encoding")
+        else if (_stricmp(name.c_str(), "content-encoding") == 0)
           contentEncoding = value;
         else
           request.Headers().Append(facebook::react::UnicodeConversion::Utf8ToUtf16(name), facebook::react::UnicodeConversion::Utf8ToUtf16(value));

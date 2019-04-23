@@ -55,9 +55,17 @@ struct json_type_traits<react::uwp::Selection>
     for (auto& item : json.items())
     {
       if (item.first == "start")
-        selection.start = item.second.asInt();
+      {
+        auto start = item.second.asInt();
+        if (start == static_cast<int>(start))
+          selection.start = static_cast<int>(start);
+      }
       else if (item.first == "end")
-        selection.end = item.second.asInt();
+      {
+        auto end = item.second.asInt();
+        if (end == static_cast<int>(end))
+          selection.end = static_cast<int>(end);
+      }
     }
     return selection;
   }

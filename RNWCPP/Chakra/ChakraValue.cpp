@@ -125,12 +125,14 @@ ChakraValue ChakraObject::callAsFunction(std::initializer_list<JsValueRef> args)
 {
   //OFFICEDEV
   //explicitly pass global object instead of nullptr for Chakra
-  return callAsFunction(ChakraObject::getGlobalObject(), args.size(), args.begin());
+  assert(args.size() < INT_MAX);
+  return callAsFunction(ChakraObject::getGlobalObject(), static_cast<int>(args.size()), args.begin());
 }
 
 ChakraValue ChakraObject::callAsFunction(const ChakraObject &thisObj, std::initializer_list<JsValueRef> args) const
 {
-  return callAsFunction((JsValueRef)thisObj, args.size(), args.begin());
+  assert(args.size() < INT_MAX);
+  return callAsFunction((JsValueRef)thisObj, static_cast<int>(args.size()), args.begin());
 }
 
 ChakraValue ChakraObject::callAsFunction(int nArgs, const JsValueRef args[]) const
@@ -150,7 +152,7 @@ ChakraValue ChakraObject::callAsFunction(JsValueRef thisObj, int nArgs, const Js
   auto argsWithThis = new JsValueRef[nArgs + 1];
 
   argsWithThis[0] = thisObj;
-  for (unsigned i = 0; i < nArgs; i++)
+  for (int i = 0; i < nArgs; i++)
     argsWithThis[i + 1] = args[i];
 
   JsValueRef value;
@@ -259,10 +261,10 @@ void ChakraObject::setProperty(const char *propName, const ChakraValue &value) c
 std::vector<ChakraString> ChakraObject::getPropertyNames() const
 {
   auto namesRef = JSObjectCopyPropertyNames(m_obj);
-  size_t count = JSPropertyNameArrayGetCount(namesRef);
+  auto count = JSPropertyNameArrayGetCount(namesRef);
   std::vector<ChakraString> names;
   names.reserve(count);
-  for (size_t i = 0; i < count; i++)
+  for (decltype(count) i = 0; i < count; i++)
   {
     names.emplace_back(ChakraString::ref(JSPropertyNameArrayGetNameAtIndex(namesRef, i)));
   }
@@ -274,8 +276,8 @@ std::unordered_map<std::string, std::string> ChakraObject::toJSONMap() const
 {
   std::unordered_map<std::string, std::string> map;
   auto namesRef = JSObjectCopyPropertyNames(m_obj);
-  size_t count = JSPropertyNameArrayGetCount(namesRef);
-  for (size_t i = 0; i < count; i++)
+  auto count = JSPropertyNameArrayGetCount(namesRef);
+  for (decltype(count) i = 0; i < count; i++)
   {
     auto key = ChakraString::ref(JSPropertyNameArrayGetNameAtIndex(namesRef, i));
     map.emplace(key.str(), getProperty(key).toJSONString());
