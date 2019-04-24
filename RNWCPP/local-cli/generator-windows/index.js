@@ -92,7 +92,7 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcPath, projDir, 'react.overrides.props'), to: path.join(windowsDir, 'react.overrides.props') },
     { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
     { from: path.join(srcPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
-    { from: path.join(srcPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'index.windows.bundle') },
+    { from: path.join(srcPath, 'app.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'app.windows.bundle') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars));
 
   copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars);
