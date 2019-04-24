@@ -89,7 +89,11 @@ namespace facebook {
 
     void KeyValueStorage::waitForStorageLoadComplete()
     {
-      if (WaitForSingleObject(m_storageFileLoaded, MaxLoadTimeWaitMS.count()) != WAIT_OBJECT_0)
+      using namespace std::chrono;
+      using namespace std::chrono_literals;
+
+      const auto dwMilliseconds = static_cast<DWORD>(duration_cast<milliseconds>(30s).count());
+      if (WaitForSingleObject(m_storageFileLoaded, dwMilliseconds) != WAIT_OBJECT_0)
         StorageFileIO::throwLastErrorMessage();
 
       if (m_storageFileLoader.valid())
@@ -204,7 +208,7 @@ namespace facebook {
       char* read = &rawString[originalLength];
       char* write = &rawString[originalLength] + cSpecialChars;
 
-      for (int i = 0; i < originalLength + 1; i++)
+      for (size_t i = 0; i < originalLength + 1; i++)
       {
         if (*read == '\\')
         {

@@ -374,7 +374,7 @@ httpsServer.listen(443);
 
     ws->Connect();
 
-    for (int i = 0; i < messages.size(); i++)
+    for (size_t i = 0; i < messages.size(); i++)
     {
       ws->SendBinary(messages[i]);
       auto future = responsePromise.get_future();

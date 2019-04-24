@@ -71,7 +71,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(BaseOutDir)\ReactUWP\React.UWP.lib;ChakraRT.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>chakra.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

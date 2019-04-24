@@ -30,7 +30,6 @@ namespace facebook {
       static const char KeyPrefix = '$';
       static const char ValuePrefix = '%';
       static const char RemovePrefix = 'R';
-      static constexpr std::chrono::milliseconds MaxLoadTimeWaitMS{ 1000 * 30 };
 
     private:
       std::map<std::string, std::string> m_kvMap;

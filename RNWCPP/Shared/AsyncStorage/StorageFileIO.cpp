@@ -82,7 +82,7 @@ namespace facebook {
     bool StorageFileIO::getLine(std::string& line)
     {
       line = "";
-      int startingIdx = m_fileBufferIdx;
+      auto startingIdx = m_fileBufferIdx;
       char c = '\0';
       do
       {

@@ -69,7 +69,7 @@ void TouchEventHandler::OnPointerPressed(const winrt::IInspectable& sender, cons
   if (!instance || instance->IsInError())
     return;
 
-  if (IndexOfPointerWithId(args.Pointer().PointerId()) != s_InvalidPointerId)
+  if (IndexOfPointerWithId(args.Pointer().PointerId()) == std::nullopt)
   {
     // A pointer with this ID already exists
     assert(false);
@@ -125,11 +125,11 @@ void TouchEventHandler::OnPointerMoved(const winrt::IInspectable& sender, const 
   if (!TagFromOriginalSource(args, &tag, &sourceElement))
     return;
 
-  size_t pointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
-  if (pointerIndex != s_InvalidPointerId)
+  auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
+  if (optPointerIndex)
   {
-    UpdateReactPointer(m_pointers[pointerIndex], args, sourceElement);
-    DispatchTouchEvent(TouchEventType::Move, pointerIndex);
+    UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
+    DispatchTouchEvent(TouchEventType::Move, *optPointerIndex);
   }
   else
   {
@@ -147,10 +147,11 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (!instance || instance->IsInError())
     return;
 
-  size_t pointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
-  if (pointerIndex == s_InvalidPointerId)
+  auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
+  if (!optPointerIndex)
     return;
 
+  const auto pointerIndex = *optPointerIndex;
   // Only if the view has a Tag can we process this
   int64_t tag;
   winrt::FrameworkElement sourceElement(nullptr);
@@ -210,7 +211,7 @@ void TouchEventHandler::UpdateReactPointer(ReactPointer& pointer, const winrt::P
   pointer.altKey = !!static_cast<uint32_t>(args.KeyModifiers() & winrt::Windows::System::VirtualKeyModifiers::Menu);
 }
 
-size_t TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId)
+std::optional<size_t> TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId)
 {
   for (size_t i = 0; i < m_pointers.size(); ++i)
   {
@@ -218,7 +219,7 @@ size_t TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId)
       return i;
   }
 
-  return s_InvalidPointerId;
+  return std::nullopt;
 }
 
 void TouchEventHandler::UpdatePointersInViews(const winrt::PointerRoutedEventArgs& args, int64_t tag, winrt::FrameworkElement sourceElement)
@@ -228,8 +229,8 @@ void TouchEventHandler::UpdatePointersInViews(const winrt::PointerRoutedEventArg
     return;
 
   int32_t pointerId = args.Pointer().PointerId();
-  size_t pointerIndex = IndexOfPointerWithId(pointerId);
-  ReactPointer pointer = (pointerIndex == s_InvalidPointerId) ? CreateReactPointer(args, tag, sourceElement) : m_pointers[pointerIndex];
+  auto optPointerIndex = IndexOfPointerWithId(pointerId);
+  ReactPointer pointer = (optPointerIndex) ? m_pointers[*optPointerIndex] : CreateReactPointer(args, tag, sourceElement);
   // m_pointers is tracking the pointers that are 'down', for moves we usually don't have any pointers
   // down and should reset the touchId back to zero
   if (m_pointers.size() == 0)
@@ -292,20 +293,20 @@ void TouchEventHandler::SendPointerMove(const winrt::PointerRoutedEventArgs& arg
   if (sourceElement == nullptr)
     return;
 
-  size_t pointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
-  ReactPointer pointer = (pointerIndex == s_InvalidPointerId) ? CreateReactPointer(args, tag, sourceElement) : m_pointers[pointerIndex];
+  auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
+  ReactPointer pointer = (optPointerIndex) ? m_pointers[*optPointerIndex] : CreateReactPointer(args, tag, sourceElement);
   if (m_pointers.size() == 0) // If we created a reactPointer, reset the touchId back to zero
     m_touchId = 0;
 
-  folly::dynamic touch = GetPointerJson(pointer, s_InvalidPointerId);
+  folly::dynamic touch = GetPointerJson(pointer, pointer.target);
   instance->DispatchEvent(tag, "topMouseEnter", GetPointerJson(pointer, tag));
 }
 
 
-folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer& pointer, size_t targetOverride)
+folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer& pointer, int64_t target)
 {
   folly::dynamic json = folly::dynamic::object()
-    ("target", targetOverride != s_InvalidPointerId ? targetOverride : pointer.target)
+    ("target", target)
     ("identifier", pointer.identifier)
     ("pageX", pointer.positionRoot.X)
     ("pageY", pointer.positionRoot.Y)
@@ -335,7 +336,7 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   auto touches = folly::dynamic::array();
   for (const auto& pointer : m_pointers)
   {
-    folly::dynamic touch = GetPointerJson(pointer, s_InvalidPointerId);
+    folly::dynamic touch = GetPointerJson(pointer, pointer.target);
     touches.push_back(touch);
   }
 

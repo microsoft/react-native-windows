@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <optional>
 #include <set>
 #include <folly/dynamic.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
@@ -85,9 +86,8 @@ private:
   const char* GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
   const char* GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
-  size_t IndexOfPointerWithId(uint32_t pointerId);
-  static const size_t s_InvalidPointerId = (size_t)-1;
-  folly::dynamic GetPointerJson(const ReactPointer& pointer, size_t targetOverride);
+  std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
+  folly::dynamic GetPointerJson(const ReactPointer& pointer, int64_t target);
   std::vector<ReactPointer> m_pointers;
   std::unordered_map<uint32_t/*pointerId*/, std::set<int64_t>/*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;

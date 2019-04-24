@@ -8,7 +8,9 @@
 #include <Windows.h>
 #include <shlwapi.h>
 #include <CppUnitTest.h>
+#include <algorithm>
 #include <functional>
+#include <iterator>
 #include <memory>
 #include <fstream>
 
@@ -23,59 +25,16 @@ using facebook::react::InitializeLogging;
 
 namespace {
 
-template <typename T>
-bool arrayEquals(T* array1, T* array2, uint64_t size)
+std::vector<char> ReadFile(const char* filename)
 {
-  for (uint64_t i = 0; i < size; ++i)
-  {
-    if (array1[i] != array2[i])
-    {
-      return false;
-    }
-  }
+  std::ifstream file(filename, std::ios::binary); // | std::ios::ate);
+  Assert::IsTrue(bool(file));
+  file.seekg(0);
 
-  return true;
+  return std::vector<char>(
+    std::istreambuf_iterator<char>(file),
+    std::istreambuf_iterator<char>());
 }
-
-struct BinaryFile
-{
-  std::unique_ptr<uint8_t[]> m_data;
-  uint64_t m_size;
-
-  BinaryFile(const char* const filename)
-    : m_data{ nullptr }
-    , m_size{ 0 }
-  {
-    std::ifstream file(filename, std::ios::binary | std::ios::ate);
-    Assert::IsTrue(bool(file));
-
-    m_size = file.tellg();
-    m_data = std::make_unique<uint8_t[]>(m_size);
-
-    file.seekg(0);
-    Assert::IsTrue(bool(file));
-
-    file.read(reinterpret_cast<char*>(m_data.get()), m_size);
-    Assert::IsTrue(bool(file));
-
-    file.close();
-  }
-
-  bool operator==(const BinaryFile& rhs) const
-  {
-    if (m_size != rhs.m_size)
-    {
-      return false;
-    }
-
-    return arrayEquals(m_data.get(), rhs.m_data.get(), m_size);
-  }
-
-  bool operator!=(const BinaryFile& rhs) const
-  {
-    return !(*this == rhs);
-  }
-};
 
 }
 
@@ -166,24 +125,26 @@ private:
     Assert::IsTrue(PathFileExistsA(testScriptBytecodeFilename));
   }
 
-  void UpdateTestHelper(std::function<void (const BinaryFile&)> outputCorruptBytecode,
-    std::function<void (const BinaryFile&, const BinaryFile&)> preUpdateCheck,
-    std::function<void (const BinaryFile&, const BinaryFile&)> postUpdateCheck)
+  template<class Fn1, class Fn2, class Fn3>
+  void UpdateTestHelper(
+    Fn1 outputCorruptBytecode,
+    Fn2 preUpdateCheck,
+    Fn3 postUpdateCheck)
   {
     GenerateBytecode();
-    BinaryFile correctBytecode(testScriptBytecodeFilename);
-    Assert::IsTrue(correctBytecode.m_size >= bytecodeIndex);
+    auto correctBytecode = ReadFile(testScriptBytecodeFilename);
+    Assert::IsTrue(correctBytecode.size() >= bytecodeIndex);
 
     DeleteBytecode();
     outputCorruptBytecode(correctBytecode);
 
-    BinaryFile corruptBytecode(testScriptBytecodeFilename);
+    auto corruptBytecode = ReadFile(testScriptBytecodeFilename);
     preUpdateCheck(corruptBytecode, correctBytecode);
 
     // This should update the bytecode file.
     ExecuteBytecodeWithFallback();
 
-    BinaryFile currentBytecode(testScriptBytecodeFilename);
+    auto currentBytecode = ReadFile(testScriptBytecodeFilename);
     postUpdateCheck(currentBytecode, correctBytecode);
   }
 
@@ -210,38 +171,36 @@ public:
   {
     UpdateTestHelper(
       /* outputCorruptBytecode */
-      []
-        (const BinaryFile& correctBytecode)
+      [](const std::vector<char>& correctBytecode)
       {
-        constexpr const uint64_t wrongBytecodeFileFormatVersion = 0;
+        const uint64_t wrongBytecodeFileFormatVersion = 0;
         std::ofstream bytecodeFile(testScriptBytecodeFilename, std::ios::binary);
         Assert::IsTrue(bool(bytecodeFile));
 
-        bytecodeFile.write((char*)&wrongBytecodeFileFormatVersion, sizeof(wrongBytecodeFileFormatVersion));
+        bytecodeFile.write(reinterpret_cast<const char*>(&wrongBytecodeFileFormatVersion), sizeof(wrongBytecodeFileFormatVersion));
 
-        bytecodeFile.write((char*)&correctBytecode.m_data[bundleVersionIndex],
-          correctBytecode.m_size - bundleVersionIndex);
+        bytecodeFile.write(&correctBytecode[bundleVersionIndex],
+          correctBytecode.size() - bundleVersionIndex);
 
         Assert::IsTrue(bool(bytecodeFile));
         bytecodeFile.close();
       },
       /* preUpdateCheck */
-      []
-        (const BinaryFile& corruptBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [](const std::vector<char>& corruptBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
-        Assert::IsTrue(corruptBytecodeFile.m_size == correctBytecodeFile.m_size);
+        Assert::IsTrue(corruptBytecodeFile.size() == correctBytecodeFile.size());
         Assert::IsTrue(corruptBytecodeFile != correctBytecodeFile);
-        Assert::IsFalse(arrayEquals(
-          &corruptBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          &correctBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          bundleVersionIndex - bytecodeFileFormatVersionIndex));
-        Assert::IsTrue(arrayEquals(
-          &corruptBytecodeFile.m_data[bundleVersionIndex],
-          &correctBytecodeFile.m_data[bundleVersionIndex],
-          corruptBytecodeFile.m_size - bundleVersionIndex));
+        Assert::IsFalse(std::equal(
+          correctBytecodeFile.begin() + bytecodeFileFormatVersionIndex,
+          correctBytecodeFile.begin() + bundleVersionIndex,
+          corruptBytecodeFile.begin() + bytecodeFileFormatVersionIndex));
+        Assert::IsTrue(std::equal(
+          correctBytecodeFile.begin() + bundleVersionIndex,
+          correctBytecodeFile.end(),
+          corruptBytecodeFile.begin() + bundleVersionIndex));
       },
       /* postUpdateCheck*/
-      [this](const BinaryFile& currentBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [this](const std::vector<char>& currentBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
         Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
         ExecuteBytecodeWithoutFallback();
@@ -253,44 +212,44 @@ public:
   {
     UpdateTestHelper(
       /* outputCorruptBytecode */
-      [](const BinaryFile& correctBytecode)
+      [](const std::vector<char>& correctBytecode)
       {
         std::ofstream bytecodeFile(testScriptBytecodeFilename, std::ios::binary);
         Assert::IsTrue(bool(bytecodeFile));
 
-        uint64_t wrongBundleVersion = 0;
+        const uint64_t wrongBundleVersion = 0;
 
-        bytecodeFile.write((char*)&correctBytecode.m_data[0], bundleVersionIndex);
+        bytecodeFile.write(&correctBytecode[0], bundleVersionIndex);
 
-        bytecodeFile.write((char*)&wrongBundleVersion,
+        bytecodeFile.write(reinterpret_cast<const char*>(&wrongBundleVersion),
           ChakraVersionInfoIndex - bundleVersionIndex);
 
-        bytecodeFile.write((char*)&correctBytecode.m_data[ChakraVersionInfoIndex],
-          correctBytecode.m_size - ChakraVersionInfoIndex);
+        bytecodeFile.write(&correctBytecode[ChakraVersionInfoIndex],
+          correctBytecode.size() - ChakraVersionInfoIndex);
 
         Assert::IsTrue(bool(bytecodeFile));
         bytecodeFile.close();
       },
       /* preUpdateCheck */
-      [](const BinaryFile& corruptBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [](const std::vector<char>& corruptBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
-        Assert::IsTrue(corruptBytecodeFile.m_size == correctBytecodeFile.m_size);
+        Assert::IsTrue(corruptBytecodeFile.size() == correctBytecodeFile.size());
         Assert::IsTrue(corruptBytecodeFile != correctBytecodeFile);
-        Assert::IsTrue(arrayEquals(
-          &corruptBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          &correctBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          bundleVersionIndex - bytecodeFileFormatVersionIndex));
-        Assert::IsFalse(arrayEquals(
-          &corruptBytecodeFile.m_data[bundleVersionIndex],
-          &correctBytecodeFile.m_data[bundleVersionIndex],
-          ChakraVersionInfoIndex - bundleVersionIndex));
-        Assert::IsTrue(arrayEquals(
-          &corruptBytecodeFile.m_data[ChakraVersionInfoIndex],
-          &correctBytecodeFile.m_data[ChakraVersionInfoIndex],
-          corruptBytecodeFile.m_size - ChakraVersionInfoIndex));
+        Assert::IsTrue(std::equal(
+          correctBytecodeFile.begin() + bytecodeFileFormatVersionIndex,
+          correctBytecodeFile.begin() + bundleVersionIndex,
+          corruptBytecodeFile.begin() + bytecodeFileFormatVersionIndex));
+        Assert::IsFalse(std::equal(
+          correctBytecodeFile.begin() + bundleVersionIndex,
+          correctBytecodeFile.begin() + ChakraVersionInfoIndex,
+          corruptBytecodeFile.begin() + bundleVersionIndex));
+        Assert::IsTrue(std::equal(
+          corruptBytecodeFile.begin() + ChakraVersionInfoIndex,
+          corruptBytecodeFile.end(),
+          correctBytecodeFile.begin() + ChakraVersionInfoIndex));
       },
       /* postUpdateCheck*/
-      [this](const BinaryFile& currentBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [this](const std::vector<char>& currentBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
         Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
         ExecuteBytecodeWithoutFallback();
@@ -302,44 +261,44 @@ public:
   {
     UpdateTestHelper(
       /* outputCorruptBytecode */
-      [](const BinaryFile& correctBytecode)
+      [](const std::vector<char>& correctBytecode)
       {
         std::ofstream bytecodeFile(testScriptBytecodeFilename, std::ios::binary);
         Assert::IsTrue(bool(bytecodeFile));
 
         uint32_t wrongChakraVersionInfo[4] = { 0, 0, 0, 0 };
 
-        bytecodeFile.write((char*)&correctBytecode.m_data[0], ChakraVersionInfoIndex);
+        bytecodeFile.write(&correctBytecode[0], ChakraVersionInfoIndex);
 
-        bytecodeFile.write((char*)&wrongChakraVersionInfo[0],
+        bytecodeFile.write(reinterpret_cast<char*>(&wrongChakraVersionInfo[0]),
           bytecodeIndex - ChakraVersionInfoIndex);
 
-        bytecodeFile.write((char*)&correctBytecode.m_data[bytecodeIndex],
-          correctBytecode.m_size - bytecodeIndex);
+        bytecodeFile.write(&correctBytecode[bytecodeIndex],
+          correctBytecode.size() - bytecodeIndex);
 
         Assert::IsTrue(bool(bytecodeFile));
         bytecodeFile.close();
       },
       /* preUpdateCheck */
-      [](const BinaryFile& corruptBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [](const std::vector<char>& corruptBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
-        Assert::IsTrue(corruptBytecodeFile.m_size == correctBytecodeFile.m_size);
+        Assert::IsTrue(corruptBytecodeFile.size() == correctBytecodeFile.size());
         Assert::IsTrue(corruptBytecodeFile != correctBytecodeFile);
-        Assert::IsTrue(arrayEquals(
-          &corruptBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          &correctBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          ChakraVersionInfoIndex - bytecodeFileFormatVersionIndex));
-        Assert::IsFalse(arrayEquals(
-          &corruptBytecodeFile.m_data[ChakraVersionInfoIndex],
-          &correctBytecodeFile.m_data[ChakraVersionInfoIndex],
-          bytecodeIndex - ChakraVersionInfoIndex));
-        Assert::IsTrue(arrayEquals(
-          &corruptBytecodeFile.m_data[bytecodeIndex],
-          &correctBytecodeFile.m_data[bytecodeIndex],
-          corruptBytecodeFile.m_size - bytecodeIndex));
+        Assert::IsTrue(std::equal(
+          correctBytecodeFile.begin() + bytecodeFileFormatVersionIndex,
+          correctBytecodeFile.begin() + ChakraVersionInfoIndex,
+          corruptBytecodeFile.begin() + bytecodeFileFormatVersionIndex));
+        Assert::IsFalse(std::equal(
+          correctBytecodeFile.begin() + ChakraVersionInfoIndex,
+          correctBytecodeFile.begin() + bytecodeIndex,
+          corruptBytecodeFile.begin() + ChakraVersionInfoIndex));
+        Assert::IsTrue(std::equal(
+          corruptBytecodeFile.begin() + bytecodeIndex,
+          corruptBytecodeFile.end(),
+          correctBytecodeFile.begin() + bytecodeIndex));
       },
       /* postUpdateCheck*/
-      [this](const BinaryFile& currentBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [this](const std::vector<char>& currentBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
         Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
         ExecuteBytecodeWithoutFallback();
@@ -351,19 +310,19 @@ public:
   {
     UpdateTestHelper(
       /* outputCorruptBytecode */
-      [](const BinaryFile& correctBytecode)
+      [](const std::vector<char>& correctBytecode)
       {
         std::ofstream bytecodeFile(testScriptBytecodeFilename);
         bytecodeFile.close();
       },
       /* preUpdateCheck */
-      [](const BinaryFile& corruptBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [](const std::vector<char>& corruptBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
-        Assert::IsTrue(corruptBytecodeFile.m_size == 0);
+        Assert::IsTrue(corruptBytecodeFile.size() == 0);
         Assert::IsTrue(corruptBytecodeFile != correctBytecodeFile);
       },
       /* postUpdateCheck*/
-      [this](const BinaryFile& currentBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [this](const std::vector<char>& currentBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
         Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
         ExecuteBytecodeWithoutFallback();
@@ -375,37 +334,37 @@ public:
   {
     UpdateTestHelper(
       /* outputCorruptBytecode */
-      [](const BinaryFile& correctBytecode)
+      [](const std::vector<char>& correctBytecode)
       {
         std::ofstream bytecodeFile(testScriptBytecodeFilename, std::ios::binary);
         Assert::IsTrue(bool(bytecodeFile));
 
-        std::vector<uint8_t> badBytecode(correctBytecode.m_size - bytecodeIndex, 0);
+        std::vector<char> badBytecode(correctBytecode.size() - bytecodeIndex, 0);
 
-        bytecodeFile.write((char*)&correctBytecode.m_data[0], bytecodeIndex);
+        bytecodeFile.write((char*)&correctBytecode[0], bytecodeIndex);
 
         bytecodeFile.write((char*)badBytecode.data(),
-          correctBytecode.m_size - bytecodeIndex);
+          correctBytecode.size() - bytecodeIndex);
 
         Assert::IsTrue(bool(bytecodeFile));
         bytecodeFile.close();
       },
       /* preUpdateCheck */
-      [](const BinaryFile& corruptBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [](const std::vector<char>& corruptBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
-        Assert::IsTrue(corruptBytecodeFile.m_size == correctBytecodeFile.m_size);
+        Assert::IsTrue(corruptBytecodeFile.size() == correctBytecodeFile.size());
         Assert::IsTrue(corruptBytecodeFile != correctBytecodeFile);
-        Assert::IsTrue(arrayEquals(
-          &corruptBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          &correctBytecodeFile.m_data[bytecodeFileFormatVersionIndex],
-          bytecodeIndex - bytecodeFileFormatVersionIndex));
-        Assert::IsFalse(arrayEquals(
-          &corruptBytecodeFile.m_data[bytecodeIndex],
-          &correctBytecodeFile.m_data[bytecodeIndex],
-          corruptBytecodeFile.m_size - bytecodeIndex));
+        Assert::IsTrue(std::equal(
+          correctBytecodeFile.begin() + bytecodeFileFormatVersionIndex,
+          correctBytecodeFile.begin() + bytecodeIndex,
+          corruptBytecodeFile.begin() + bytecodeFileFormatVersionIndex));
+        Assert::IsFalse(std::equal(
+          corruptBytecodeFile.begin() + bytecodeIndex,
+          corruptBytecodeFile.end(),
+          correctBytecodeFile.begin() + bytecodeIndex));
       },
       /* postUpdateCheck*/
-      [this](const BinaryFile& currentBytecodeFile, const BinaryFile& correctBytecodeFile)
+      [this](const std::vector<char>& currentBytecodeFile, const std::vector<char>& correctBytecodeFile)
       {
         ExecuteBytecodeWithFallback();
         // We don't do anything here because we currently do not
