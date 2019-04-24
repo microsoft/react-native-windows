@@ -210,7 +210,7 @@ void serializeBytecodeToFileCore(const std::shared_ptr<const JSBigString>& scrip
 
 std::unique_ptr<JSBigString> tryGetBytecode(const BytecodePrefix& bytecodePrefix, const std::string& bytecodeFileName)
 {
-  auto bytecodeBigStringPtr = std::make_unique<FileMappingBigString>(bytecodeFileName, sizeof(BytecodePrefix));
+  auto bytecodeBigStringPtr = std::make_unique<FileMappingBigString>(bytecodeFileName, static_cast<uint32_t>(sizeof(BytecodePrefix)));
 
   if (!bytecodeBigStringPtr->file_data() ||
     bytecodeBigStringPtr->file_size() < sizeof(bytecodePrefix) ||

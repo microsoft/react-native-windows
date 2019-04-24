@@ -67,7 +67,7 @@ folly::Optional<ChakraObject> ChakraNativeModules::createModule(const std::strin
 
   ChakraValue moduleInfo = m_genNativeModuleJS->callAsFunction({
       ChakraValue::fromDynamic(result->config),
-      ChakraValue::makeNumber(result->index)
+      ChakraValue::makeNumber(static_cast<double>(result->index))
   });
   CHECK(!moduleInfo.isNull()) << "Module returned from genNativeModule is null";
 

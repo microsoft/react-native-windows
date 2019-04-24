@@ -64,9 +64,15 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::d
       else if (propertyName == "tabIndex")
       {
         if (propertyValue.isNumber())
-          control.TabIndex(propertyValue.asInt());
+        {
+          auto tabIndex = propertyValue.asInt();
+          if (tabIndex == static_cast<int32_t>(tabIndex))
+            control.TabIndex(static_cast<int32_t>(tabIndex));
+        }
         else if (propertyValue.isNull())
+        {
           control.ClearValue(winrt::Control::TabIndexProperty());
+        }
       }
     }
   }

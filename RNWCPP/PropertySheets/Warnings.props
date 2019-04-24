@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <!--
-        C4068 - NotAValidPragmaName
-      -->
-      <!-- The following list matches the list in ..\make.inc -->
-      <AdditionalOptions>-wd4068 -wd4244 -wd4100 -wd4290 -wd4018 -wd4101 -wd4267 -wd4005 -wd4189 -wd4309 -wd4127 -wd4293 -wd4239 -wd4389 -wd4324 %(AdditionalOptions)</AdditionalOptions>
-      <!-- Office pre-disabled warnings -->
-      <!--
+  <PropertyGroup>
+    <!-- Office pre-disabled warnings -->
+    <!--
         C4146 - unary minus operator applied to unsigned type, result still unsigned
         C4201 - nonstandard extension used : nameless struct/union
         C4505 - 'function' : unreferenced local function has been removed
@@ -17,7 +11,24 @@
         C4458 - declaration of 'identifier' hides class member
         C4702 - unreachable code
       -->
-      <DisableSpecificWarnings>4146;4201;4505;4456;4458;4702;$(DisableSpecificWarnings)</DisableSpecificWarnings>
+    <OfficePreDisabledWarnings>4146;4201;4505;4456;4458;4702</OfficePreDisabledWarnings>
+    <!--
+        The following list matches the list in ..\make.inc
+          C4068 - unknown pragma
+          C4100 - unreferenced formal parameter
+          C4101 - unreferenced local variable
+          C4127 - conditional expression is constant
+          C4189 - local variable is initialized but not referenced
+          C4290 - C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+          C4309 - truncation of constant value
+          C4324 - structure was padded due to __declspec(align())
+      -->
+    <ExtraWarningsToDisable>4068;4100;4101;4127;4189;4290;4309;4324;$(DisableSpecificWarnings)</ExtraWarningsToDisable>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <DisableSpecificWarnings>$(OfficePreDisabledWarnings);$(ExtraWarningsToDisable);$(DisableSpecificWarnings)</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>

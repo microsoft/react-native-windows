@@ -60,7 +60,7 @@ struct DevSettings
   bool enableNativePerformanceNow { true };
 
   /// For direct debugging, the port number to use, or zero for the default
-  int debuggerPort{ 0 };
+  uint16_t debuggerPort{ 0 };
 
   /// For direct debugging, name of runtime instance, or empty for default.
   std::string debuggerRuntimeName;

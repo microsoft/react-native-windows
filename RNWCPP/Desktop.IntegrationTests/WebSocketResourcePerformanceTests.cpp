@@ -65,19 +65,19 @@ TEST_CLASS(WebSocketResourcePerformanceTest)
         auto ws = IWebSocket::Make("ws://localhost:5555/");
         ws->SetOnMessage([this, &threadCount](size_t size, const string& message)
         {
-          int64_t count = this->GetCurrentThreadCount();
+          auto count = this->GetCurrentThreadCount();
           if (count > threadCount.load())
             threadCount.store(count);
         });
         ws->SetOnSend([this, &threadCount](size_t)
         {
-          int64_t count = this->GetCurrentThreadCount();
+          auto count = this->GetCurrentThreadCount();
           if (count > threadCount.load())
             threadCount.store(count);
         });
         ws->SetOnClose([this, &threadCount](IWebSocket::CloseCode, const string& /*reason*/)
         {
-          int64_t count = this->GetCurrentThreadCount();
+          auto count = this->GetCurrentThreadCount();
           if (count > threadCount.load())
             threadCount.store(count);
         });
@@ -93,7 +93,7 @@ TEST_CLASS(WebSocketResourcePerformanceTest)
       }
     }
 
-    int64_t threadsPerResource = std::ceil((threadCount.load() - startThreadCount) / resourceTotal);
+    int64_t threadsPerResource = (threadCount.load() - startThreadCount) / resourceTotal;
     Assert::IsTrue(threadsPerResource <= expectedThreadsPerResource);
   }
 };

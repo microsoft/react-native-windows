@@ -95,7 +95,7 @@ static std::vector<MethodCall> sandboxHostParseMethodCalls(folly::dynamic&& json
 // Return a pair of vectors: First is array of local calls and second is array of remote calls. (Used by sandbox process)
 static std::pair<std::vector<MethodCall>, std::vector<MethodCall>> sandboxParseMethodCalls(
     folly::dynamic&& jsonData,
-    size_t maxInprocModuleCount) {
+    int64_t maxInprocModuleCount) {
   if (jsonData.isNull()) {
     return {};
   }
@@ -237,7 +237,9 @@ void SandboxJsToNativeBridge::callNativeModules(
   // terminates the whole bridge, there's not much point in continuing.
 
   // Process local (in-proc) NM calls.
-  auto callPair = sandboxParseMethodCalls(std::move(calls), m_registry->GetModuleSize());
+  auto moduleSize = static_cast<int64_t>(m_registry->GetModuleSize());
+  assert(moduleSize > 0);
+  auto callPair = sandboxParseMethodCalls(std::move(calls), static_cast<int64_t>(moduleSize));
   for (auto& call : callPair.first) {
     m_registry->callNativeMethod(call.moduleId, call.methodId, std::move(call.arguments), call.callId);
   }

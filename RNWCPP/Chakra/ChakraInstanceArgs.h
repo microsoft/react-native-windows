@@ -54,7 +54,7 @@ struct ChakraInstanceArgs
   /**
   * @brief Port number to use when debugging.
   */
-  int DebuggerPort { 9229 };
+  uint16_t DebuggerPort { 9229 };
 
   /**
   * @brief Name to associate with runtime instance when debugging.

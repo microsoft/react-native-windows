@@ -65,22 +65,6 @@ YGSize DefaultYogaSelfMeasureFunc(YGNodeRef node, float width, YGMeasureMode wid
   return desiredSize;
 }
 
-std::string NormalizeInputEventName(const std::string eventName)
-{
-  std::string result = eventName;
-  if (eventName.compare(0, 2, "on") == 0)
-  { // replace on with top
-    result = result.replace(0, 2, "top");
-  }
-  else if (eventName.compare(0, 3, "top") != 0)
-  { // doesn't start with top, insert top
-    result[0] = std::toupper(result[0]);
-    result.insert(0, "top");
-  }
-
-  return result;
-}
-
 ViewManagerBase::ViewManagerBase(const std::shared_ptr<IReactInstance>& reactInstance)
   : m_wkReactInstance(reactInstance)
 {
@@ -136,35 +120,36 @@ void ViewManagerBase::destroyShadow(facebook::react::ShadowNode* node) const
 
 dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const
 {
-  const std::string standardEvents[] = {
+  const PCSTR standardEventBaseNames[] = {
     // Generic events
-    "press",
-    "change",
-    "focus",
-    "blur",
-    "submitEditing",
-    "endEditing",
-    "keyPress",
+    "Press",
+    "Change",
+    "Focus",
+    "Blur",
+    "SubmitEditing",
+    "EndEditing",
+    "KeyPress",
 
     // Touch events
-    "touchStart",
-    "touchMove",
-    "touchCancel",
-    "touchEnd",
+    "TouchStart",
+    "TouchMove",
+    "TouchCancel",
+    "TouchEnd",
   };
 
   folly::dynamic bubblingEvents = folly::dynamic::object();
-  for (auto& e : standardEvents)
+  for (auto& standardEventBaseName : standardEventBaseNames)
   {
-    std::string eventName = NormalizeInputEventName(e);
-    std::string bubbleName = eventName;
-    bubbleName.replace(0, 3, "on");
+    using namespace std::string_literals;
+
+    std::string eventName = "top"s + standardEventBaseName;
+    std::string bubbleName = "on"s + standardEventBaseName;
 
     folly::dynamic registration = folly::dynamic::object();
-    registration["bubbled"] = bubbleName;
     registration["captured"] = bubbleName + "Capture";
+    registration["bubbled"] = std::move(bubbleName);
 
-    bubblingEvents[eventName] = folly::dynamic::object("phasedRegistrationNames", registration);
+    bubblingEvents[std::move(eventName)] = folly::dynamic::object("phasedRegistrationNames", std::move(registration));
   }
 
   return bubblingEvents;
