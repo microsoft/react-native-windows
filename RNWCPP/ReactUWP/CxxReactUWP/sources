@@ -1,0 +1,6 @@
+LIBLETNAME = ReactUWP_CxxReactUWP
+
+!include ..\make.inc
+
+SOURCES =  \
+	JSBigString.cpp \

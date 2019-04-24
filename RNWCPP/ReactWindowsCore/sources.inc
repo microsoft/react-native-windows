@@ -1,0 +1,18 @@
+LIBLETNAME = ModuleProvider
+
+!include $(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\make.inc
+
+C_DEFINES = $(C_DEFINES) -D NOJSC
+
+SOURCES_SHARED = \
+	..\CxxMessageQueue.cpp \
+	..\JSBigAbiString.cpp \
+	..\ShadowNode.cpp \
+	..\ShadowNodeRegistry.cpp \
+	..\UnicodeConversion.cpp \
+	..\Utils.cpp \
+	..\ViewManager.cpp \
+
+SOURCES_WIN32 = $(SOURCES_SHARED) \
+
+SOURCES_WINRT = $(SOURCES_SHARED) \
