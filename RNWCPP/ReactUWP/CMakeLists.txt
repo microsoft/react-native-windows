@@ -2,7 +2,10 @@ set(SOURCES
 	Pch/pch.cpp
 	ABI/ABIModuleLoader.cpp
 	ABI/HStringHelper.cpp
-	ABI/idl/ReactControl.g.idl
+	ABI/idl/Module.idl
+	ABI/idl/Instance.idl
+	ABI/idl/ReactControl.idl
+	ABI/Instance_rt.cpp
 	ABI/ReactControl_rt.cpp
 	Base/InstanceFactory.cpp
 	Base/UwpReactInstance.cpp

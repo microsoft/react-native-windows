@@ -11,7 +11,7 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 
 ## Status
 
-We are in the process of refactoring the native bridge implementation for `react-native-windows` to better align with upcoming changes related to the [React Native Fabric Architecture](https://github.com/react-native-community/discussions-and-proposals/issues/4). The effort is currently taking place in a [feature branch](https://github.com/Microsoft/react-native-windows/tree/rnwcpp-preview). We are tracking progress on this work through [Projects](https://github.com/Microsoft/react-native-windows/projects) and [Issues](https://github.com/Microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
+We are in the process of refactoring the native bridge implementation for `react-native-windows` to better align with upcoming changes related to the [React Native Fabric Architecture](https://github.com/react-native-community/discussions-and-proposals/issues/4). This effort is currently taking place in the [RNWCPP](https://github.com/Microsoft/react-native-windows/tree/master/RNWCPP) subdirectory within this GitHub repo. We are tracking progress on this work through [Projects](https://github.com/Microsoft/react-native-windows/projects) and [Issues](https://github.com/Microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
 
 Our intent is to provide a compatibility layer that will support existing apps, view managers, and native modules written in C# with minimal breaking changes.
 
@@ -87,7 +87,7 @@ The GitHub issues are intended for bug reports and feature requests. For help an
 - Check out the React Native Windows code itself and install npm dependencies
 ```
 git clone --recursive https://github.com/Microsoft/react-native-windows.git
-cd react-native-windows
+cd react-native-windows\rnwcs
 npm install
 ```
 - *Note:* If you just want to get started with developing your own app, read [Getting Started with App Development](#GettingStarted). You only need to interact with `npm` to use for your app development.

@@ -6,7 +6,7 @@
 #include <combaseapi.h>
 #include <cxxreact/CxxModule.h>
 #include <NativeModuleProvider.h>
-#include <ReactControl.g.h>
+#include <Module.h>
 #include <wrl.h>
 
 namespace ABI {
