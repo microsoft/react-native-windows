@@ -553,10 +553,7 @@ void ViewViewManager::TryUpdateView(ViewShadowNode* pViewShadowNode, ViewPanel* 
   }
 
   if (useControl)
-  {
-    // TODO NOW: auto control = pViewShadowNode->GetControl();
     pViewShadowNode->GetControl()->Content(visualRoot);
-  }
 }
 
 void ViewViewManager::SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height)
