@@ -155,10 +155,6 @@ public:
 
   winrt::impl::com_ref<react::uwp::ViewControl> GetControl()
   {
-    auto control = m_view.try_as<ViewControl>();
-    auto panel = m_view.try_as<ViewPanel>();
-    auto border = m_view.try_as<winrt::Border>();
-
     return IsControl() ? m_view.as<ViewControl>() : nullptr;
   }
 
