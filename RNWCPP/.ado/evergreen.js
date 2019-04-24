@@ -164,7 +164,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
 
   exec(`npm install -g yarn`);
 
-  exec(`git checkout ${finalTargetBranchName}`);
+  exec(`git checkout --track origin/${finalTargetBranchName}`);
   exec(`git checkout -b ${branchName}`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
     // Run yarn install to update yarn.lock
