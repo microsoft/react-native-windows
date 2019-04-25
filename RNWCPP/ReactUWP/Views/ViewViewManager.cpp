@@ -201,33 +201,10 @@ void ViewViewManager::DispatchEvent(int64_t viewTag, std::string eventName, foll
       instance->DispatchEvent(viewTag, eventName, std::move(eventData));
 }
 
-XamlView ViewViewManager::CreateViewPanel(int64_t tag)
-{
-  XamlView newViewPanelXamlView(ViewPanel::Create().as<XamlView>());
-  auto panel = newViewPanelXamlView.as<ViewPanel>();
-  panel->VerticalAlignment(winrt::VerticalAlignment::Top);
-
-  // TODO: Remove once existing clients stop using TouchableNativeFeedback.uwp
-  panel->Tapped([=](auto &&, auto &&args)
-  {
-    DispatchEvent(tag, "topPress", std::move(folly::dynamic::object("target", tag)));
-    args.Handled(true);
-  });
-
-  return panel.as<XamlView>();
-}
-
 XamlView ViewViewManager::CreateViewControl(int64_t tag)
 {
   // Create the ViewControl as the outer/containing element, nest the ViewPanel, set default properties
   auto contentControlPtr = ViewControl::Create();
-
-  // TODO: Remove once existing clients stop using TouchableNativeFeedback.uwp
-  contentControlPtr->Tapped([=](auto &&, auto &&args)
-  {
-    DispatchEvent(tag, "topPress", std::move(folly::dynamic::object("target", tag)));
-    args.Handled(true);
-  });
 
   contentControlPtr->GotFocus([=](auto &&, auto &&)
   {
@@ -280,7 +257,11 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag)
 
 XamlView ViewViewManager::CreateViewCore(int64_t tag)
 {
-  return CreateViewPanel(tag);
+  XamlView newViewPanelXamlView(ViewPanel::Create().as<XamlView>());
+  auto panel = newViewPanelXamlView.as<ViewPanel>();
+  panel->VerticalAlignment(winrt::VerticalAlignment::Top);
+
+  return panel.as<XamlView>();
 }
 
 folly::dynamic ViewViewManager::GetNativeProps() const
@@ -317,8 +298,6 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       const folly::dynamic& propertyName = pair.first;
       const folly::dynamic& propertyValue = pair.second;
 
-      // FUTURE: In the future cppwinrt will generate code where static methods on base types can
-      // be called.  For now we specify the base type explicitly
       if (TryUpdateBackgroundBrush(*pPanel, propertyName, propertyValue))
       {
         continue;
@@ -462,6 +441,7 @@ void ViewViewManager::TryUpdateView(ViewShadowNode* pViewShadowNode, ViewPanel* 
   if (!pViewShadowNode->ShouldUpdateView(useControl, hasOuterBorder))
     return;
 
+  //
   // 1. Ensure we have the new 'root' and do the child replacement
   //      This is first to ensure that we can re-parent the Border or ViewPanel we already have
   // 2. Transfer properties
@@ -469,11 +449,6 @@ void ViewViewManager::TryUpdateView(ViewShadowNode* pViewShadowNode, ViewPanel* 
   // 3. Do any sub=parenting
   //      This means Panel under Border and/or Border under Control
   //
-  // Questions
-  //
-  //  - What How do we ensure the Border is released when no longer needed?
-  //  - Can we really keep reusing the ViewPanel? Why didn't I do this before?
-
 
   int64_t tag = pViewShadowNode->m_tag;
 
