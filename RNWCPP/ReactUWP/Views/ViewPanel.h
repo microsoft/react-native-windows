@@ -31,10 +31,8 @@ public:
   void RemoveAt(uint32_t const index) const;
   void Clear() const;
 
-  winrt::Windows::UI::Xaml::UIElement GetAt(uint32_t const index) const;
-  uint32_t Size() const;
-
   void FinalizeProperties();
+  winrt::Windows::UI::Xaml::Controls::Border GetOuterBorder();
 
   // Public Properties
   winrt::Windows::UI::Xaml::Media::Brush Background() { return GetValue(BackgroundProperty()).try_as<winrt::Windows::UI::Xaml::Media::Brush>(); }
@@ -70,11 +68,6 @@ public:
   static double GetLeft(winrt::Windows::UI::Xaml::UIElement& element) { return winrt::unbox_value<double>(element.GetValue(LeftProperty())); }
 
 private:
-  // Managing the Border & Background Elements
-  void EnsureBorder();
-  void EnsureInnerPanel();
-  ViewPanel* GetInnerPanel() const;
-
   void Remove(winrt::Windows::UI::Xaml::UIElement element) const;
 
   void UpdateClip();
@@ -86,7 +79,7 @@ private:
 
   // Child Elements
   winrt::Windows::UI::Xaml::Controls::Border m_border { nullptr };
-  winrt::Windows::UI::Xaml::UIElement m_innerElement { nullptr };
+  bool m_hasOuterBorder;
 
 private:
   static void VisualPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
