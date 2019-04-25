@@ -34,7 +34,6 @@ protected:
 private:
   void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData);
 
-  XamlView CreateViewPanel(int64_t tag);
   XamlView CreateViewControl(int64_t tag);
 };
 
