@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 #pragma once
 
 namespace folly {
@@ -11,69 +8,66 @@ struct dynamic;
 
 namespace facebook { namespace react {
 
+#pragma region Animation-specific properties
+
+struct SpringAnimationProperties
+{
+	float springDamping;
+  float initialVelocity;
+};
+
+#pragma endregion
+
 class LayoutAnimation
 {
 public:
 
-  enum class AnimationType
-  {
-    Decay,
-    EaseIn,
-    EaseInEaseOut,
-    EaseOut,
-    Keyboard,
-    Linear,
-    None,
-    Spring,
-  };
+enum class AnimationType
+{
+	Decay,
+	EaseIn,
+	EaseInEaseOut,
+	EaseOut,
+	Keyboard,
+	Linear,
+	None,
+	Spring,
+};
 
-  enum class AnimatableProperty
-  {
-    None,
-    Opacity,
-    ScaleX,
-    ScaleY,
-    ScaleXY,
-  };
+enum class AnimatableProperty
+{
+	None,
+	Opacity,
+	ScaleX,
+	ScaleY,
+	ScaleXY,
+};
 
-  struct LayoutCreateAnimationProperties
-  {
-    AnimationType animationType;
-    AnimatableProperty animatedProp;
-  };
+struct LayoutAnimationProperties
+{
+  float duration = 0.0f;
+  float delay = 0.0f;
+  AnimationType animationType;
+  AnimatableProperty animatedProp;
 
-  struct LayoutUpdateAnimationProperties
+  union // Animation-specific properties
   {
-    AnimationType animationType;
+    SpringAnimationProperties springAnimationProperties;
   };
+};
 
-  struct LayoutDeleteAnimationProperties
-  {
-    AnimationType animationType;
-    AnimatableProperty animatedProp;
-  };
+struct LayoutAnimations
+{
+  LayoutAnimationProperties createAnimationProps;
+  LayoutAnimationProperties deleteAnimationProps;
+  LayoutAnimationProperties updateAnimationProps;
+};
 
-  struct LayoutAnimationProperties
-  {
-    float duration;
-    LayoutCreateAnimationProperties createAnimationProps;
-    LayoutDeleteAnimationProperties deleteAnimationProps;
-    LayoutUpdateAnimationProperties updateAnimationProps;
-  };
-
-  LayoutAnimation(folly::dynamic&& config);
-  const LayoutAnimationProperties& Properties()
-  {
-    return m_props;
-  }
-  AnimationType Type() const
-  {
-    return m_type;
-  }
+	LayoutAnimation(folly::dynamic config);
+	const LayoutAnimations& Properties() { return m_props; }
 
 private:
-  LayoutAnimationProperties m_props;
-  AnimationType m_type;
+	LayoutAnimations m_props;
 };
 
 }} // namespace facebook::react
