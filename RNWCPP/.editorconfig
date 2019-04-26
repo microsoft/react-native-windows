@@ -10,6 +10,9 @@ insert_final_newline = true
 indent_style = space
 indent_size = 2
 
+[*.{c,cpp,h,hpp}]
+end_of_line = crlf
+
 # Xml project files
 [*.{csproj,vcxproj,pssproj,vcxproj.filters,targets,props}]
 end_of_line = crlf
