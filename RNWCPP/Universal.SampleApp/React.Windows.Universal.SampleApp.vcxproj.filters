@@ -11,6 +11,9 @@
     <Filter Include="Utilities">
       <UniqueIdentifier>{3b677e86-ff39-4eac-a41d-f9970085d111}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bundle\Universal.SampleApp">
+      <UniqueIdentifier>{aaa65596-f836-44db-88c4-1c45048565e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -66,15 +69,15 @@
   <ItemGroup>
     <None Include="bundle.js" />
     <None Include="bundle.meta" />
-    <None Include="Bundle\index.uwp.bundle">
-      <Filter>Bundle</Filter>
-    </None>
     <None Include="text.uwp.js" />
     <None Include="index.uwp.js" />
     <None Include="packages.config" />
     <None Include="accessible.uwp.js" />
     <None Include="simple.uwp.js" />
     <None Include="React.Windows.Universal.SampleApp_TemporaryKey.pfx" />
+    <None Include="Bundle\Universal.SampleApp\index.uwp.bundle">
+      <Filter>Bundle\Universal.SampleApp</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
