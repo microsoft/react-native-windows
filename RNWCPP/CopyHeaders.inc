@@ -965,12 +965,21 @@ COPYFILES_PASS0 = \
 	ReactCommon\cxxreact\JsArgumentHelpers.h, cxxreact; \
 	ReactCommon\cxxreact\JsArgumentHelpers-inl.h, cxxreact; \
 	ReactCommon\cxxreact\JsBigString.h, cxxreact; \
+	ReactCommon\cxxreact\JSCExecutor.h, cxxreact; \
+	ReactCommon\cxxreact\JSCNativeModules.h, cxxreact; \
 	ReactCommon\cxxreact\JSExecutor.h, cxxreact; \
 	ReactCommon\cxxreact\MessageQueueThread.h, cxxreact; \
 	ReactCommon\cxxreact\ModuleRegistry.h, cxxreact; \
 	ReactCommon\cxxreact\NativeToJsBridge.h, cxxreact; \
 	ReactCommon\cxxreact\NativeModule.h, cxxreact; \
 	ReactCommon\cxxreact\PlatformBundleInfo.h, cxxreact; \
+
+COPYFILES_PASS0 = \
+	$(COPYFILES_PASS0) \
+	ReactCommon\jschelpers\JavaScriptCore.h, jschelpers; \
+	ReactCommon\jschelpers\JSCWrapper.h, jschelpers; \
+	ReactCommon\jschelpers\Unicode.h, jschelpers; \
+	ReactCommon\jschelpers\Value.h, jschelpers; \
 
 COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
@@ -1048,12 +1057,13 @@ COPYFILES_PASS0 = \
 	ReactWindows\ReactWindowsCore\Tracing.h; \
 	ReactWindows\include\ReactWindowsCore\ViewManager.h; \
 	ReactWindows\include\ReactWindowsCore\II18nModule.h; \
-	ReactWindows\include\ReactWindowsCore\UnicodeConversion.h; \
 	ReactWindows\Desktop\JSBigStringResourceDll.h; \
 
 COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
 	ReactCommon\jsi\jsi.h, jsi; \
 	ReactCommon\jsi\jsi-inl.h, jsi; \
-	ReactCommon\jsi\V8Runtime.h, jsi; \
-	ReactWindows\Chakra\ChakraRuntime.h, jsi; \
+	ReactCommon\jsi\ScriptStore.h, jsi; \
+	ReactCommon\jsi\RuntimeHolder.h, jsi; \
+        ReactCommon\jsi\V8Runtime.h, jsi; \
+	ReactWindows\Chakra\ChakraRuntime.h, Chakra; \
