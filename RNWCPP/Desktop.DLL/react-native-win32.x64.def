@@ -168,3 +168,4 @@ YGConfigGetUseWebDefaults
 YGConfigGetDefault
 YGConfigSetContext
 YGConfigGetContext
+YGUnitToString
