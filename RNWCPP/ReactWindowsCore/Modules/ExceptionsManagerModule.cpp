@@ -80,9 +80,9 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynami
   for (const auto &stackFrame : stackAsFolly)
   {
     // Each dynamic object is a map containing information about the stack frame:
-    // method (string), filename(string), line number (int) and column number (int).
+    // method (string), arguments (array), filename(string), line number (int) and column number (int).
     assert(stackFrame.type() == folly::dynamic::OBJECT);
-    assert(stackFrame.size() == 4);
+    assert(stackFrame.size() == 5);
 
     std::stringstream stackFrameInfo;
 
