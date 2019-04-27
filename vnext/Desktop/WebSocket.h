@@ -9,7 +9,8 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-#include <boost/beast/core/detail/type_traits.hpp>
+#include <boost/beast/core/detail/type_traits.hpp>//TODO: Remove
+#include <boost/beast/experimental/test/stream.hpp>
 
 namespace facebook {
 namespace react {
@@ -118,11 +119,8 @@ struct IExecutor {};
 
 struct IWebSocketTransport
 {
-  typedef boost::asio::ip::basic_endpoint<IWebSocketTransport> endpoint;
-
-  typedef boost::asio::basic_stream_socket<IWebSocketTransport> socket;
-
-  int dummy;
+  //typedef boost::asio::ip::basic_endpoint<IWebSocketTransport> endpoint;
+  //typedef boost::asio::basic_stream_socket<IWebSocketTransport> socket;
 };
 
 //TODO: Likely delete. Hard to mock boost::asio::basic_stream_socket
@@ -130,31 +128,11 @@ struct IWebSocketStream
 {
   using executor_type = IExecutor;
 
-  //boost::asio::async_result
-  //<
-  //  boost::asio::decay
-  //  <
-  //    //std::function<void(boost::system::error_code, std::size_t)>
-  //    std::function<void(const boost::system::error_code&, std::size_t)>
-  //  >::type,
-  //  void(boost::system::error_code, std::size_t)
-  //>
   BOOST_ASIO_INITFN_RESULT_TYPE(std::function<void(boost::system::error_code, std::size_t)>, void(boost::system::error_code, std::size_t))
   async_read_some(boost::beast::multi_buffer& buffers, std::function<void(const boost::system::error_code&, std::size_t)>&& handler);
 
-  //boost::asio::async_result
-  //<
-  //  boost::asio::decay
-  //  <
-  //    //std::function<void(boost::system::error_code, std::size_t)>
-  //    std::function<void(const boost::system::error_code&, std::size_t)>
-  //  >::type,
-  //  void(boost::system::error_code, std::size_t)
-  //>
   BOOST_ASIO_INITFN_RESULT_TYPE(std::function<void(boost::system::error_code, std::size_t)>, void(boost::system::error_code, std::size_t))
   async_write_some(boost::beast::multi_buffer& buffers, std::function<void(const boost::system::error_code&, std::size_t)>&& handler);
-
-  void* get_executor();
 };
 
 struct IResolver
@@ -191,8 +169,8 @@ namespace facebook {
 namespace react {
 namespace test {
 
-//class TestWebSocket : public BaseWebSocket<IWebSocketTransport, boost::asio::basic_stream_socket<IWebSocketTransport>, TestResolver>
-//{
-//};
+class TestWebSocket : public BaseWebSocket<IWebSocketTransport, boost::beast::test::stream, TestResolver>
+{
+};
 
 } } }
