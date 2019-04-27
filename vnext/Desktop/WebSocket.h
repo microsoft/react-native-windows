@@ -153,24 +153,33 @@ public:
 } } // namespace facebook::react
 
 namespace boost {
-namespace beast {
-namespace websocket {
+namespace asio {
 
-void async_teardown(
-  role_type role,
-  facebook::react::test::IWebSocketTransport& socket,
-  std::function<void(error_code const& error)>&& handler)
-{
-}
+// See <boost/asio/connect.hpp>(776)
+template
+<
+  typename Iterator,
+  typename IteratorConnectHandler
+>
+BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
+async_connect
+(
+  boost::beast::test::stream& s,
+  Iterator begin,
+  Iterator end,
+  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
+) {}//TODO: Move into WebSocket.cpp
 
-} } } // namespace boost::beast::websocket
+} } // namespace boost::asio
 
 namespace facebook {
 namespace react {
 namespace test {
 
-class TestWebSocket : public BaseWebSocket<IWebSocketTransport, boost::beast::test::stream, TestResolver>
+class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
 {
+public:
+  TestWebSocket(Url&& url);
 };
 
 } } }

@@ -518,7 +518,10 @@ template class SecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 namespace test
 {
 
-//static TestWebSocket tws;//TODO: Remove
+TestWebSocket::TestWebSocket(Url&& url)
+  : BaseWebSocket(std::move(url))
+{
+}
 
 } // namespace facebook::react::test
 
