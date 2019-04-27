@@ -9,6 +9,8 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
+#include <boost/beast/core/detail/type_traits.hpp>
+
 namespace facebook {
 namespace react {
 
@@ -116,12 +118,43 @@ struct IExecutor {};
 
 struct IWebSocketTransport
 {
+  typedef boost::asio::ip::basic_endpoint<IWebSocketTransport> endpoint;
 
+  typedef boost::asio::basic_stream_socket<IWebSocketTransport> socket;
+
+  int dummy;
 };
 
+//TODO: Likely delete. Hard to mock boost::asio::basic_stream_socket
 struct IWebSocketStream
 {
   using executor_type = IExecutor;
+
+  //boost::asio::async_result
+  //<
+  //  boost::asio::decay
+  //  <
+  //    //std::function<void(boost::system::error_code, std::size_t)>
+  //    std::function<void(const boost::system::error_code&, std::size_t)>
+  //  >::type,
+  //  void(boost::system::error_code, std::size_t)
+  //>
+  BOOST_ASIO_INITFN_RESULT_TYPE(std::function<void(boost::system::error_code, std::size_t)>, void(boost::system::error_code, std::size_t))
+  async_read_some(boost::beast::multi_buffer& buffers, std::function<void(const boost::system::error_code&, std::size_t)>&& handler);
+
+  //boost::asio::async_result
+  //<
+  //  boost::asio::decay
+  //  <
+  //    //std::function<void(boost::system::error_code, std::size_t)>
+  //    std::function<void(const boost::system::error_code&, std::size_t)>
+  //  >::type,
+  //  void(boost::system::error_code, std::size_t)
+  //>
+  BOOST_ASIO_INITFN_RESULT_TYPE(std::function<void(boost::system::error_code, std::size_t)>, void(boost::system::error_code, std::size_t))
+  async_write_some(boost::beast::multi_buffer& buffers, std::function<void(const boost::system::error_code&, std::size_t)>&& handler);
+
+  void* get_executor();
 };
 
 struct IResolver
@@ -137,11 +170,29 @@ public:
   TestResolver(const boost::asio::io_context& context);
 };
 
-class TestWebSocket : public BaseWebSocket<IWebSocketTransport, IWebSocketStream, TestResolver>
-{
-};
-
-
 } // namespace facebook::react::test
 
 } } // namespace facebook::react
+
+namespace boost {
+namespace beast {
+namespace websocket {
+
+void async_teardown(
+  role_type role,
+  facebook::react::test::IWebSocketTransport& socket,
+  std::function<void(error_code const& error)>&& handler)
+{
+}
+
+} } } // namespace boost::beast::websocket
+
+namespace facebook {
+namespace react {
+namespace test {
+
+//class TestWebSocket : public BaseWebSocket<IWebSocketTransport, boost::asio::basic_stream_socket<IWebSocketTransport>, TestResolver>
+//{
+//};
+
+} } }
