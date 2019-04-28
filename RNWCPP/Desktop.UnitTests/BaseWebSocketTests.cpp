@@ -7,9 +7,9 @@
 
 using namespace boost::beast;
 using namespace facebook::react;
+using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-using facebook::react::test::TestWebSocket;
 using std::make_unique;
 using std::string;
 

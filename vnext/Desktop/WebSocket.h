@@ -9,7 +9,6 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-#include <boost/beast/core/detail/type_traits.hpp>//TODO: Remove
 #include <boost/beast/experimental/test/stream.hpp>
 
 namespace facebook {
@@ -112,74 +111,16 @@ public:
   SecureWebSocket(Url&& url);
 };
 
-namespace test
-{
-
-struct IExecutor {};
-
-struct IWebSocketTransport
-{
-  //typedef boost::asio::ip::basic_endpoint<IWebSocketTransport> endpoint;
-  //typedef boost::asio::basic_stream_socket<IWebSocketTransport> socket;
-};
-
-//TODO: Likely delete. Hard to mock boost::asio::basic_stream_socket
-struct IWebSocketStream
-{
-  using executor_type = IExecutor;
-
-  BOOST_ASIO_INITFN_RESULT_TYPE(std::function<void(boost::system::error_code, std::size_t)>, void(boost::system::error_code, std::size_t))
-  async_read_some(boost::beast::multi_buffer& buffers, std::function<void(const boost::system::error_code&, std::size_t)>&& handler);
-
-  BOOST_ASIO_INITFN_RESULT_TYPE(std::function<void(boost::system::error_code, std::size_t)>, void(boost::system::error_code, std::size_t))
-  async_write_some(boost::beast::multi_buffer& buffers, std::function<void(const boost::system::error_code&, std::size_t)>&& handler);
-};
-
-struct IResolver
-{
-  using results_type = std::vector<std::string>;
-
-  void async_resolve(std::string host, std::string port, std::function<void(const boost::system::error_code&, results_type)>);
-};
-
-class TestResolver : public IResolver
-{
-public:
-  TestResolver(const boost::asio::io_context& context);
-};
-
-} // namespace facebook::react::test
-
 } } // namespace facebook::react
 
-namespace boost {
-namespace asio {
+namespace Microsoft {
+namespace React {
+namespace Test {
 
-// See <boost/asio/connect.hpp>(776)
-template
-<
-  typename Iterator,
-  typename IteratorConnectHandler
->
-BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
-async_connect
-(
-  boost::beast::test::stream& s,
-  Iterator begin,
-  Iterator end,
-  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
-) {}//TODO: Move into WebSocket.cpp
-
-} } // namespace boost::asio
-
-namespace facebook {
-namespace react {
-namespace test {
-
-class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
+class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
 {
 public:
-  TestWebSocket(Url&& url);
+  TestWebSocket(facebook::react::Url&& url);
 };
 
-} } }
+} } } // namespace Microsoft::React::Test

@@ -515,16 +515,38 @@ template class SecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 
 #pragma endregion // IWebSocket static members
 
-namespace test
-{
+} } // namespace facebook::react
 
-TestWebSocket::TestWebSocket(Url&& url)
-  : BaseWebSocket(std::move(url))
+namespace Microsoft {
+namespace React {
+namespace Test {
+
+TestWebSocket::TestWebSocket(facebook::react::Url&& url)
+  : facebook::react::BaseWebSocket<tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>(std::move(url))
 {
 }
 
-} // namespace facebook::react::test
+} } } // namespace Microsoft::React::Test
 
-} } // namespace facebook::react
+
+namespace boost {
+namespace asio {
+
+// See <boost/asio/connect.hpp>(776)
+template
+<
+  typename Iterator,
+  typename IteratorConnectHandler
+>
+BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
+async_connect
+(
+  boost::beast::test::stream& s,
+  Iterator begin,
+  Iterator end,
+  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
+) {}//TODO: Move into WebSocket.cpp
+
+} } // namespace boost::asio
 
 #pragma warning(pop)
