@@ -117,10 +117,59 @@ namespace Microsoft {
 namespace React {
 namespace Test {
 
-class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
+class MockStreamLayer : public boost::beast::test::stream
+{
+  friend
+  void
+    teardown(
+      boost::beast::websocket::role_type,
+      Microsoft::React::Test::MockStreamLayer& s,
+      boost::system::error_code& ec) {}
+
+  template<class TeardownHandler>
+  friend
+  void
+    async_teardown(
+      boost::beast::websocket::role_type role,
+      Microsoft::React::Test::MockStreamLayer& s,
+      TeardownHandler&& handler) {}
+
+public:
+  MockStreamLayer(boost::asio::io_context& context)
+    : boost::beast::test::stream{ context }
+  {
+  }
+
+  std::function<boost::system::error_code()> ConnectResult;
+
+  //TODO: Verify it doesn't conflict with base class, then delete.
+  //using lowest_layer_type = MockStreamLayer;
+
+  //lowest_layer_type&
+  //  lowest_layer()
+  //{
+  //  return *this;
+  //}
+
+  //lowest_layer_type const&
+  //  lowest_layer() const
+  //{
+  //  return *this;
+  //}
+};
+
+class TestWebSocketOld : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
+{
+public:
+  TestWebSocketOld(facebook::react::Url&& url);
+};
+
+class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, MockStreamLayer, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
 {
 public:
   TestWebSocket(facebook::react::Url&& url);
+
+  void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
 };
 
 } } } // namespace Microsoft::React::Test

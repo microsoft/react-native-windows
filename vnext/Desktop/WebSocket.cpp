@@ -521,18 +521,30 @@ namespace Microsoft {
 namespace React {
 namespace Test {
 
-TestWebSocket::TestWebSocket(facebook::react::Url&& url)
+TestWebSocketOld::TestWebSocketOld(facebook::react::Url&& url)
   : facebook::react::BaseWebSocket<tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>(std::move(url))
 {
 }
 
-} } } // namespace Microsoft::React::Test
+TestWebSocket::TestWebSocket(facebook::react::Url&& url)
+  : facebook::react::BaseWebSocket<tcp, MockStreamLayer, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>(std::move(url))
+{
+  this->m_stream = make_unique<websocket::stream<MockStreamLayer>>(this->m_context);
+  this->m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
+}
 
+void TestWebSocket::SetConnectResult(std::function<boost::system::error_code()>&& resultFunc)
+{
+  m_stream->next_layer().ConnectResult = std::move(resultFunc);
+}
+
+} } } // namespace Microsoft::React::Test
 
 namespace boost {
 namespace asio {
 
 // See <boost/asio/connect.hpp>(776)
+//TODO: Likely remove in favor of subclass MockStreamLayer.
 template
 <
   typename Iterator,
@@ -545,7 +557,29 @@ async_connect
   Iterator begin,
   Iterator end,
   BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
-) {}//TODO: Move into WebSocket.cpp
+)
+{
+  boost::system::error_code ec;
+  ec.assign(1, ec.category()); //TODO: fix. Non-error value yields RAV.
+  handler(ec, {});
+}
+
+template
+<
+  typename Iterator,
+  typename IteratorConnectHandler
+>
+BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
+async_connect
+(
+  Microsoft::React::Test::MockStreamLayer& s,
+  Iterator begin,
+  Iterator end,
+  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
+)
+{
+  handler(s.ConnectResult(), {});
+}
 
 } } // namespace boost::asio
 
