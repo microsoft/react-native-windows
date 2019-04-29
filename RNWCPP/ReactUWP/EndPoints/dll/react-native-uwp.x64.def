@@ -1,16 +1,25 @@
 EXPORTS
+?assertionFailure@detail@folly@@YAXPEBD00I0@Z
+?assume_check@detail@folly@@YAX_N@Z
+?warnAboutToCrash@ScopeGuardImplBase@detail@folly@@KAXXZ
+??0ColdClass@cold_detail@folly@@QEAA@XZ
+??0TypeError@folly@@QEAA@AEBU01@@Z
+??0TypeError@folly@@QEAA@$$QEAU01@@Z
+?asanPendingSafeInserts@detail@f14@folly@@3_KA
+?asanRehashState@detail@f14@folly@@3_KA
+?logTaggedMarker@ReactMarker@react@facebook@@3P6AXW4ReactMarkerId@123@PEBD@ZEA
+
 ?destroy@dynamic@folly@@AEAAXXZ
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
-??Adynamic@folly@@QEGAAAEAU01@AEBU01@@Z
+??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z
 ??4dynamic@folly@@QEAAAEAU01@$$QEAU01@@Z
 ?hash@dynamic@folly@@QEBA_KXZ
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??1TypeError@folly@@UEAA@XZ
-?get_ptr@dynamic@folly@@QEGBAPEBU12@AEBU12@@Z
 ?typeName@dynamic@folly@@QEBAPEBDXZ
 ??4dynamic@folly@@QEAAAEAU01@AEBU01@@Z
 ?size@dynamic@folly@@QEBA_KXZ
-?at@dynamic@folly@@QEGBAAEBU12@AEBU12@@Z
+?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
 ?print_as_pseudo_json@dynamic@folly@@AEBAXAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
@@ -62,7 +71,6 @@ EXPORTS
 ?JsPointerToStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEBD_KPEAPEAX@Z
 ?JsStringToStdStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 
-?__throw_bad_alloc@std@@YAXXZ
 ?demangle@folly@@YA?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PEBD@Z
 
 mallocxWeak

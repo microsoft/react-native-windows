@@ -106,7 +106,7 @@
     <None Include="accessible.uwp.js" />
     <None Include="bundle.js" />
     <None Include="bundle.meta" />
-    <None Include="Bundle\index.uwp.bundle">
+    <None Include="Bundle\Universal.SampleApp\index.uwp.bundle">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="index.uwp.js" />

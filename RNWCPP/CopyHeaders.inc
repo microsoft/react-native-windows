@@ -23,7 +23,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\AsciiCaseInsensitiveBenchmark.cpp, folly\test; \
 	Folly\folly\test\AsciiCaseInsensitiveTest.cpp, folly\test; \
 	Folly\folly\portability\Asm.h, folly\portability; \
-	Folly\folly\Assume.cpp, folly; \
+	Folly\folly\portability\string.cpp, folly\portability; \
 	Folly\folly\Assume.h, folly; \
 	Folly\folly\experimental\AsymmetricMemoryBarrier.cpp, folly\experimental; \
 	Folly\folly\experimental\AsymmetricMemoryBarrier.h, folly\experimental; \
@@ -128,7 +128,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\experimental\test\BitsBenchmark.cpp, folly\experimental\test; \
 	Folly\folly\test\BitsBenchmark.cpp, folly\test; \
 	Folly\folly\detail\BitsDetail.h, folly\detail; \
-	Folly\folly\portability\BitsFunctexcept.cpp, folly\portability; \
 	Folly\folly\portability\BitsFunctexcept.h, folly\portability; \
 	Folly\folly\experimental\test\BitsTest.cpp, folly\experimental\test; \
 	Folly\folly\test\BitsTest.cpp, folly\test; \
@@ -527,7 +526,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\detail\Malloc.h, folly\detail; \
 	Folly\folly\Malloc.h, folly; \
 	Folly\folly\portability\Malloc.h, folly\portability; \
-	Folly\folly\detail\MallocImpl.cpp, folly\detail; \
 	Folly\folly\futures\ManualExecutor.cpp, folly\futures; \
 	Folly\folly\futures\ManualExecutor.h, folly\futures; \
 	Folly\folly\futures\test\MapTest.cpp, folly\futures\test; \
@@ -763,7 +761,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\SpookyHashV1.cpp, folly; \
 	Folly\folly\SpookyHashV1.h, folly; \
 	Folly\folly\test\SpookyHashV1Test.cpp, folly\test; \
-	Folly\folly\SpookyHashV2.cpp, folly; \
 	Folly\folly\SpookyHashV2.h, folly; \
 	Folly\folly\test\SpookyHashV2Test.cpp, folly\test; \
 	Folly\folly\io\async\SSLContext.cpp, folly\io\async; \
@@ -798,7 +795,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\gen\String.h, folly\gen; \
 	Folly\folly\portability\String.h, folly\portability; \
 	Folly\folly\String.h, folly; \
-	Folly\folly\StringBase.cpp, folly; \
 	Folly\folly\gen\test\StringBenchmark.cpp, folly\gen\test; \
 	Folly\folly\test\StringBenchmark.cpp, folly\test; \
 	Folly\folly\gen\String-inl.h, folly\gen; \
