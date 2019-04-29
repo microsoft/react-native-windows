@@ -109,6 +109,7 @@
     <ClInclude Include="IWebSocket.h" />
     <ClInclude Include="IHttpResource.h" />
     <ClInclude Include="JSBigAbiString.h" />
+    <ClInclude Include="LayoutAnimation.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="MemoryTracker.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
@@ -129,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="CxxMessageQueue.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
+    <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
@@ -142,6 +144,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Folly\Folly.vcxproj">
+      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
+      <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

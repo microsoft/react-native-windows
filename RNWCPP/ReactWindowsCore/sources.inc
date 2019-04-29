@@ -7,6 +7,7 @@ C_DEFINES = $(C_DEFINES) -D NOJSC
 SOURCES_SHARED = \
 	..\CxxMessageQueue.cpp \
 	..\JSBigAbiString.cpp \
+	..\LayoutAnimation.cpp \
 	..\ShadowNode.cpp \
 	..\ShadowNodeRegistry.cpp \
 	..\UnicodeConversion.cpp \
