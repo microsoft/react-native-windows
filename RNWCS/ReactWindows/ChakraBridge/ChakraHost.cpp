@@ -271,14 +271,26 @@ JsValueRef CALLBACK NativeCallSyncHook(JsValueRef callee, bool isConstructCall, 
     IfFailThrow(JsStringToPointer(stringifiedArgs, &argsBuf, &bufLen), L"Could not get pointer to stringified args.");
 
     // Invoke the sync callback
-    String^ result = host->callSyncHandler((int)moduleId, (int)methodId, ref new String(argsBuf, (unsigned int)bufLen));
-
-    // Return the parsed JSON result
-    JsValueRef stringifiedResult;
-    IfFailThrow(JsPointerToString(result->Data(), result->Length(), &stringifiedResult), L"Could not convert pointer to stringified result.");
-    JsValueRef jsonResult;
-    IfFailThrow(host->JsonParse(stringifiedResult, &jsonResult), L"Could not parse stringified result");
-    return jsonResult;
+    auto result = host->callSyncHandler((int)moduleId, (int)methodId, ref new String(argsBuf, (unsigned int)bufLen));
+    if (result.ErrorCode == JsNoError)
+    {
+        // Return the parsed JSON result
+        JsValueRef stringifiedResult;
+        IfFailThrow(JsPointerToString(result.Result->Data(), result.Result->Length(), &stringifiedResult), L"Could not convert pointer to stringified result.");
+        JsValueRef jsonResult;
+        IfFailThrow(host->JsonParse(stringifiedResult, &jsonResult), L"Could not parse stringified result");
+        return jsonResult;
+    }
+    else
+    {
+        // Set an error with the exception message
+        JsValueRef stringifiedMessage;
+        IfFailThrow(JsPointerToString(result.Result->Data(), result.Result->Length(), &stringifiedMessage), L"Could not convert pointer to stringified message.");
+        JsValueRef jsonError;
+        IfFailThrow(JsCreateError(stringifiedMessage, &jsonError), L"Could not create JavaScript error.");
+        IfFailThrow(JsSetException(jsonError), L"Could not throw JavaScript error.");
+        return JS_INVALID_REFERENCE;
+    }
 }
 
 JsValueRef CALLBACK NativeFlushQueueImmediate(JsValueRef callee, bool isConstructCall, JsValueRef *arguments, unsigned short argumentCount, void *callbackState)
