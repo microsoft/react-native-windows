@@ -12,6 +12,7 @@
 #pragma warning( disable : 4068 )
 #pragma warning( disable : 4146 )
 #pragma warning( disable : 4100 )
+#pragma warning( disable : 4324 ) // structure was padded due to alignment specifier
 #pragma push_macro("CHECK")
 #pragma push_macro("Check")
 #pragma push_macro("max")
