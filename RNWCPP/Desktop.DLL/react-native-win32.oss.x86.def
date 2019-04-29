@@ -9,8 +9,6 @@ EXPORTS
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
 ??4dynamic@folly@@QAEAAU01@ABU01@@Z
 ??8dynamic@folly@@QBE_NABU01@@Z
-??Adynamic@folly@@QGAEAAU01@ABU01@@Z
-?at@dynamic@folly@@QGBEABU12@ABU12@@Z
 ?callJSFunction@Instance@react@facebook@@QAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?CreateAsyncStorageModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
 ?createI18nModule@windows@react@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
@@ -21,7 +19,6 @@ EXPORTS
 ?CreateWebSocketModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?destroy@dynamic@folly@@AAEXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UAEX_JABUdynamic@folly@@@Z
-?get_ptr@dynamic@folly@@QGBEPBU12@ABU12@@Z
 ?GetConstants@ViewManagerBase@react@facebook@@UBE?AUdynamic@folly@@XZ
 ?hash@dynamic@folly@@QBEIXZ
 ?InitializeLogging@react@facebook@@YGX$$QAV?$function@$$A6GXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
