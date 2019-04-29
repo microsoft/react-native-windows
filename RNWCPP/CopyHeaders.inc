@@ -1037,6 +1037,7 @@ COPYFILES_PASS0 = \
 	ReactWindows\ReactWindowsCore\InstanceManager.h; \
 	ReactWindows\ReactWindowsCore\IReactRootView.h; \
 	ReactWindows\ReactWindowsCore\IUIManager.h; \
+	ReactWindows\ReactWindowsCore\LayoutAnimation.h; \
 	ReactWindows\ReactWindowsCore\Logging.h; \
 	ReactWindows\ReactWindowsCore\MemoryTracker.h; \
 	ReactWindows\ReactWindowsCore\NativeModuleProvider.h; \
