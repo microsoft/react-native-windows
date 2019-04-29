@@ -69,7 +69,7 @@ void TouchEventHandler::OnPointerPressed(const winrt::IInspectable& sender, cons
   if (!instance || instance->IsInError())
     return;
 
-  if (IndexOfPointerWithId(args.Pointer().PointerId()) == std::nullopt)
+  if (IndexOfPointerWithId(args.Pointer().PointerId()) != std::nullopt)
   {
     // A pointer with this ID already exists
     assert(false);
