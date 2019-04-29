@@ -70,6 +70,8 @@ add_definitions(-DRN_PLATFORM=uwp)
 target_compile_definitions(React.UWPStatic PRIVATE UNICODE _UNICODE JSI_EXPORT REACTWINDOWS_BUILD REACTWINDOWS_STATIC)
 target_compile_options(React.UWPStatic PRIVATE /await /wd4996)
 
+target_include_directories(React.UWPStatic PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/ABI/idl")
+
 target_include_directories(React.UWPStatic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/..")
 target_include_directories(React.UWPStatic PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include/ReactWindowsCore")
 target_include_directories(React.UWPStatic PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include/ReactUWP")

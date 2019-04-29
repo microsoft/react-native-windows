@@ -8,6 +8,7 @@
 namespace react { namespace uwp {
 
 class ViewShadowNode;
+struct ViewPanel;
 
 class ViewViewManager : public FrameworkElementViewManager
 {
@@ -28,13 +29,11 @@ public:
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
-  void ReplaceView(ViewShadowNode* viewShadowNode, bool useControl);
-  void TransferProperties(XamlView oldView, XamlView newView) override;
+  void TryUpdateView(ViewShadowNode* viewShadowNode, ViewPanel* pPanel, bool useControl);
 
 private:
   void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData);
 
-  XamlView CreateViewPanel(int64_t tag);
   XamlView CreateViewControl(int64_t tag);
 };
 
