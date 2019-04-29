@@ -73,6 +73,7 @@
     <ClCompile Include="AsyncStorageTest.cpp" />
     <ClCompile Include="BytecodeUnitTests.cpp" />
     <ClCompile Include="EmptyUIManagerModule.cpp" />
+    <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />
     <ClCompile Include="StringConversionTest_Desktop.cpp" />

@@ -1,6 +1,7 @@
 EXPORTS
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??0JSBigStringResourceDll@react@facebook@@QAE@PAUHINSTANCE__@@PAUHRSRC__@@@Z
+??0LayoutAnimation@react@facebook@@QAE@Udynamic@folly@@@Z
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ??1ShadowNode@react@facebook@@UAE@XZ

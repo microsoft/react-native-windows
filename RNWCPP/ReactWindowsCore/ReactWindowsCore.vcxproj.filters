@@ -37,6 +37,7 @@
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="LayoutAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CxxMessageQueue.h" />
@@ -122,6 +123,7 @@
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
     <ClInclude Include="..\include\ReactWindowsCore\UnicodeConversion.h" />
+    <ClInclude Include="LayoutAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
