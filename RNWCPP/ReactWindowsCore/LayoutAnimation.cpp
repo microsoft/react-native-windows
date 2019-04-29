@@ -91,8 +91,8 @@ void SetAnimationSpecificProperties(folly::dynamic&& config, LayoutAnimation::La
 
   if (config[c_typeSz] == c_springSz)
   {
-    props.springAnimationProperties.initialVelocity = (config.find(c_initialVelocitySz) != config.items().end()) ? config[c_initialVelocitySz].asDouble() : c_defaultInitialVelocity;
-    props.springAnimationProperties.springDamping = (config.find(c_springDampingSz) != config.items().end()) ? config[c_springDampingSz].asDouble() : c_defaultSpringDamping;
+    props.springAnimationProperties.initialVelocity = (config.find(c_initialVelocitySz) != config.items().end()) ? static_cast<float>(config[c_initialVelocitySz].asDouble()) : c_defaultInitialVelocity;
+    props.springAnimationProperties.springDamping = (config.find(c_springDampingSz) != config.items().end()) ? static_cast<float>(config[c_springDampingSz].asDouble()) : c_defaultSpringDamping;
   }
 }
 
@@ -106,8 +106,8 @@ void SetAnimationProperties(folly::dynamic&& config, LayoutAnimation::LayoutAnim
 
   props.animationType = AnimationTypeFromConfig(config);
   props.animatedProp = AnimatablePropertyFromConfig(config);
-  props.delay = (config.find(c_delaySz) != config.items().end()) ? config[c_delaySz].asDouble() : c_defaultDelay;
-  props.duration = (config.find(c_durationSz) != config.items().end()) ? config[c_durationSz].asDouble() : defaultDuration;
+  props.delay = (config.find(c_delaySz) != config.items().end()) ? static_cast<float>(config[c_delaySz].asDouble()) : c_defaultDelay;
+  props.duration = (config.find(c_durationSz) != config.items().end()) ? static_cast<float>(config[c_durationSz].asDouble()) : defaultDuration;
 
   if (props.animationType == LayoutAnimation::AnimationType::Spring)
   {
