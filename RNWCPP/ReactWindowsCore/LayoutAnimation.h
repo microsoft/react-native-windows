@@ -24,7 +24,6 @@ public:
 
 enum class AnimationType
 {
-	Decay,
 	EaseIn,
 	EaseInEaseOut,
 	EaseOut,
