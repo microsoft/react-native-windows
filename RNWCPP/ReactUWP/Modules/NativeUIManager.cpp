@@ -429,12 +429,9 @@ static void StyleYogaNode(ShadowNodeBase& shadowNode, const YGNodeRef yogaNode, 
       YGNodeStyleSetFlexShrink(yogaNode, result);
     }
     else if (key == "flexBasis") {
-      if (value.isNumber())
-        YGNodeStyleSetFlexBasis(yogaNode, static_cast<float>(value.asDouble()));
-      else if (value == "auto" || value.isNull())
-        YGNodeStyleSetFlexBasisAuto(yogaNode);
-      else
-        assert(false);
+      YGValue result = YGValueOrDefault(value, YGValue{ YGUndefined, YGUnitPoint } /*default*/);
+
+      SetYogaUnitValueAutoHelper(yogaNode, result, YGNodeStyleSetFlexBasis, YGNodeStyleSetFlexBasisPercent, YGNodeStyleSetFlexBasisAuto);
     }
     else if (key == "position") {
       YGPositionType position = YGPositionTypeRelative;

@@ -253,6 +253,20 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           winrt::ToolTipService::SetToolTip(element, tooltip);
         }
       }
+      else if (propertyName == "zIndex")
+      {
+        if (propertyValue.isNumber())
+        {
+          auto value = static_cast<int>(propertyValue.asInt());
+          auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+
+          element.SetValue(winrt::Canvas::ZIndexProperty(), boxedValue);
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::Canvas::ZIndexProperty());
+        }
+      }
       else if (TryUpdateFlowDirection(element, propertyName, propertyValue))
       {
         continue;
