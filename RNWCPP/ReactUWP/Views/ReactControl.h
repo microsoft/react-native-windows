@@ -10,6 +10,7 @@
 #include <IReactInstance.h>
 #include "TouchEventHandler.h"
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include "ThisHelper.h"
 
 namespace winrt {
 using namespace Windows::UI;
@@ -54,6 +55,7 @@ public:
 
 private:
   void HandleInstanceError();
+  void HandleInstanceErrorOnUIThread();
 
   IXamlRootView* m_pParent;
 
@@ -72,6 +74,7 @@ private:
 
   winrt::Grid m_redBoxGrid { nullptr };
   winrt::TextBlock m_errorTextBlock { nullptr };
+  WeakThis<ReactControl> m_weakThis{ this };
 };
 
 }

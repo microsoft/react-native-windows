@@ -213,12 +213,17 @@ winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(const
 
   SetState(State::Connected);
 
-  PrepareJavaScriptRuntime();
-
-  SetState(State::Running);
+  if (PrepareJavaScriptRuntime())
+  {
+    SetState(State::Running);
+  }
+  else
+  {
+    OnHitError("Create a new JS runtime timeout and Executor instance is not connected to a WebSocket endpoint.");
+  }
 }
 
-void WebSocketJSExecutor::PrepareJavaScriptRuntime()
+bool WebSocketJSExecutor::PrepareJavaScriptRuntime()
 {
   auto timeout = std::chrono::milliseconds(250);
 
@@ -232,8 +237,11 @@ void WebSocketJSExecutor::PrepareJavaScriptRuntime()
     std::string str = folly::toJson(request);
 
     if (SendMessageAsync(requestId, std::move(str)).wait_for(timeout) == std::future_status::ready)
-      break;
+    {
+      return true;
+    }
   }
+  return false;
 }
 
 std::future<std::string> WebSocketJSExecutor::SendMessageAsync(int requestId, const std::string& message)

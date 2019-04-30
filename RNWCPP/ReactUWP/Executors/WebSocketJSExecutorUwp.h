@@ -69,7 +69,7 @@ private:
   };
 
 private:
-  void PrepareJavaScriptRuntime();
+  bool PrepareJavaScriptRuntime();
   std::string Call(const std::string& methodName, folly::dynamic& arguments);
   std::future<std::string> SendMessageAsync(int requestId, const std::string& message);
   void OnMessageReceived(const std::string& msg);
