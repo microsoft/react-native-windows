@@ -177,7 +177,17 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
   }
 
   if (updateIsOpen)
-    m_isOpen ? winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement) : m_flyout.Hide();
+  {
+    if (m_isOpen)
+    {
+      winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+    }
+    else
+    {
+      m_flyout.Hide();
+    }
+  }
+    //m_isOpen ? winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement) : m_flyout.Hide();
 
   Super::updateProperties(std::move(props));
   m_updating = false;
