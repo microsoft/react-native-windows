@@ -6,6 +6,7 @@ set(SOURCES
   Modules/UIManagerModule.cpp
   CxxMessageQueue.cpp
   JSBigAbiString.cpp
+  LayoutAnimation.cpp
   ShadowNode.cpp
   ShadowNodeRegistry.cpp
   UnicodeConversion.cpp
