@@ -8,6 +8,7 @@ EXPORTS
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
 ?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
 ??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
+?at@dynamic@folly@@QGBEABU12@V?$Range@PBD@2@@Z
 ?destroy@dynamic@folly@@AAEXXZ
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??0TypeError@folly@@QAE@ABU01@@Z
