@@ -252,6 +252,11 @@ void UIManager::manageChildren(int64_t viewTag,
 		DropView(tagToDelete);
 }
 
+void UIManager::configureNextLayoutAnimation(folly::dynamic&& config, facebook::xplat::module::CxxModule::Callback success, facebook::xplat::module::CxxModule::Callback error)
+{
+  m_nativeUIManager->configureNextLayoutAnimation(std::move(config), success, error);
+}
+
 void UIManager::createView(int64_t tag, std::string&& className, int64_t /*rootViewTag*/, folly::dynamic&& /*ReadableMap*/ props)
 {
   m_nativeUIManager->ensureInBatch();
@@ -446,6 +451,10 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
 		{
 			manager->createView(jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), std::move(jsArgAsDynamic(args, 3)));
 		}),
+		Method("configureNextLayoutAnimation", [manager](dynamic args, Callback cbSuccess, Callback cbError)
+		{
+			manager->configureNextLayoutAnimation(std::move(jsArgAsDynamic(args, 0)), cbSuccess, cbError);
+		}, AsyncTag),
 		Method("setChildren", [manager](dynamic args)
 		{
 			manager->setChildren(jsArgAsInt(args, 0), std::move(jsArgAsArray(args, 1)));

@@ -17,10 +17,7 @@ namespace test {
 
 #pragma region TestViewManager members
 
-TestViewManager::TestViewManager(const char* name)
-	: m_name { name }
-{
-}
+TestViewManager::TestViewManager(const char* name) : m_name { name } {}
 
 const char* TestViewManager::GetName() const
 {
@@ -47,9 +44,7 @@ ShadowNode* TestViewManager::createShadow() const
   return new TestShadowNode();
 }
 
-void TestViewManager::destroyShadow(ShadowNode*) const
-{
-}
+void TestViewManager::destroyShadow(ShadowNode*) const {}
 
 dynamic TestViewManager::GetConstants() const
 {
@@ -82,9 +77,9 @@ dynamic TestViewManager::GetExportedCustomDirectEventTypeConstants() const
 
 #pragma region TestNativeUIManager members
 
-void TestNativeUIManager::destroy()
-{
-}
+void TestNativeUIManager::configureNextLayoutAnimation(folly::dynamic&& config, facebook::xplat::module::CxxModule::Callback success, facebook::xplat::module::CxxModule::Callback error) {}
+
+void TestNativeUIManager::destroy() {}
 
 ShadowNode* TestNativeUIManager::createRootShadowNode(IReactRootView* rootView)
 {
@@ -96,74 +91,42 @@ void TestNativeUIManager::destroyRootShadowNode(ShadowNode* node)
   delete node;
 }
 
-void TestNativeUIManager::removeRootView(ShadowNode& rootNode)
-{
-}
+void TestNativeUIManager::removeRootView(ShadowNode& rootNode) {}
 
-void TestNativeUIManager::setHost(INativeUIManagerHost* host)
-{
-}
+void TestNativeUIManager::setHost(INativeUIManagerHost* host) {}
 
-void TestNativeUIManager::onBatchComplete()
-{
-}
+void TestNativeUIManager::onBatchComplete() {}
 
-void TestNativeUIManager::ensureInBatch()
-{
-}
+void TestNativeUIManager::ensureInBatch() {}
 
-void TestNativeUIManager::measure(facebook::react::ShadowNode& shadowNode, facebook::react::ShadowNode& shadowRoot, facebook::xplat::module::CxxModule::Callback callback)
-{
-}
+void TestNativeUIManager::measure(facebook::react::ShadowNode& shadowNode, facebook::react::ShadowNode& shadowRoot, facebook::xplat::module::CxxModule::Callback callback) {}
 
-void TestNativeUIManager::AddRootView(facebook::react::ShadowNode& shadowNode, facebook::react::IReactRootView* pReactRootView)
-{
-}
+void TestNativeUIManager::AddRootView(facebook::react::ShadowNode& shadowNode, facebook::react::IReactRootView* pReactRootView) {}
 
-void TestNativeUIManager::CreateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props)
-{
-}
+void TestNativeUIManager::CreateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
-void TestNativeUIManager::AddView(facebook::react::ShadowNode& parentShadowNode, facebook::react::ShadowNode& childShadowNode, uint64_t index)
-{
-}
+void TestNativeUIManager::AddView(facebook::react::ShadowNode& parentShadowNode, facebook::react::ShadowNode& childShadowNode, uint64_t index) {}
 
-void TestNativeUIManager::RemoveView(facebook::react::ShadowNode& shadowNode, bool removeChildren)
-{
-}
+void TestNativeUIManager::RemoveView(facebook::react::ShadowNode& shadowNode, bool removeChildren) {}
 
-void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode)
-{
-}
+void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode) {}
 
-void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props)
-{
-}
+void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
 #pragma endregion // TestNativeUIManager members
 
 #pragma region TestShadowNode members
 
-void TestShadowNode::onDropViewInstance()
-{
-}
+void TestShadowNode::onDropViewInstance() {}
 
-void TestShadowNode::removeAllChildren()
-{
-}
+void TestShadowNode::removeAllChildren() {}
 
-void TestShadowNode::AddView(ShadowNode& child, int64_t index)
-{
-}
+void TestShadowNode::AddView(ShadowNode& child, int64_t index) {}
 
-void TestShadowNode::RemoveChildAt(int64_t indexToRemove)
-{
-}
+void TestShadowNode::RemoveChildAt(int64_t indexToRemove) {}
 
-void TestShadowNode::createView()
-{
-}
+void TestShadowNode::createView() {}
 
 #pragma endregion
 
-} } }// namespace facebook::react::test
+}}} // namespace facebook::react::test

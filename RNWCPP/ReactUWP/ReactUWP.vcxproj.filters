@@ -203,6 +203,9 @@
     <ClCompile Include="Views\ViewControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\FlyoutViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -408,6 +411,9 @@
     </ClInclude>
     <ClInclude Include="ThisHelper.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\FlyoutViewManager.h">
+      <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

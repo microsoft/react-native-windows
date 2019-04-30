@@ -1,7 +1,7 @@
 EXPORTS
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
-??$str_to_integral@_J@detail@folly@@YG?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??0JSBigStringResourceDll@react@facebook@@QAE@PAUHINSTANCE__@@PAUHRSRC__@@@Z
+??0LayoutAnimation@react@facebook@@QAE@Udynamic@folly@@@Z
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ??1ShadowNode@react@facebook@@UAE@XZ
@@ -9,8 +9,6 @@ EXPORTS
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
 ??4dynamic@folly@@QAEAAU01@ABU01@@Z
 ??8dynamic@folly@@QBE_NABU01@@Z
-??Adynamic@folly@@QGAEAAU01@ABU01@@Z
-?at@dynamic@folly@@QGBEABU12@ABU12@@Z
 ?callJSFunction@Instance@react@facebook@@UAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?CreateAsyncStorageModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
 ?createI18nModule@windows@react@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
@@ -20,16 +18,12 @@ EXPORTS
 ?CreateWebSocketModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?destroy@dynamic@folly@@AAEXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UAEX_JABUdynamic@folly@@@Z
-?get_ptr@dynamic@folly@@QGBEPBU12@ABU12@@Z
 ?GetConstants@ViewManagerBase@react@facebook@@UBE?AUdynamic@folly@@XZ
 ?getPeakJsMemoryUsage@Instance@react@facebook@@QBE_JXZ
 ?hash@dynamic@folly@@QBEIXZ
 ?InitializeLogging@react@facebook@@YAX$$QAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPAUINativeTraceHandler@12@@Z
-?makeConversionError@folly@@YG?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
-?parseJson@folly@@YG?AUdynamic@1@V?$Range@PBD@1@@Z
 ?size@dynamic@folly@@QBEIXZ
-?str_to_bool@detail@folly@@YG?AV?$Expected@_NW4ConversionCode@folly@@@2@PAV?$Range@PBD@2@@Z
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABUdynamic@1@@Z
 ?typeName@dynamic@folly@@QBEPBDXZ
 ?updateProperties@ShadowNode@react@facebook@@UAEX$$QBUdynamic@folly@@@Z
@@ -162,4 +156,4 @@ YGConfigGetUseWebDefaults
 YGConfigGetDefault
 YGConfigSetContext
 YGConfigGetContext
-
+YGUnitToString

@@ -51,3 +51,33 @@ string Url::Target()
 }
 
 }} // namespace facebook::react
+
+// Folly/folly/SafeAssert.cpp brings in a bunch of file APIs that we otherwise dont need
+// And we probably want to look at some other functionality for reporting errors at
+// some point anyway.  For now, just stub them out.
+namespace folly {
+namespace detail {
+
+namespace {
+void writeStderr(const char* s, size_t len) {
+  // nyi
+  std::terminate();
+}
+void writeStderr(const char* s) {
+  // nyi
+  std::terminate();
+}
+} // namespace
+
+void assertionFailure(
+    const char* expr,
+    const char* msg,
+    const char* file,
+    unsigned int line,
+    const char* function) {
+  // nyi
+  std::terminate();
+}
+
+} // namespace detail
+} // namespace folly

@@ -1,6 +1,7 @@
 EXPORTS
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
+??0LayoutAnimation@react@facebook@@QEAA@Udynamic@folly@@@Z
 ??0JSBigStringResourceDll@react@facebook@@QEAA@PEAUHINSTANCE__@@PEAUHRSRC__@@@Z
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
@@ -9,8 +10,7 @@ EXPORTS
 ??4dynamic@folly@@QEAAAEAU01@$$QEAU01@@Z
 ??4dynamic@folly@@QEAAAEAU01@AEBU01@@Z
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
-??Adynamic@folly@@QEGAAAEAU01@AEBU01@@Z
-?at@dynamic@folly@@QEGBAAEBU12@AEBU12@@Z
+?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
 ?callJSFunction@Instance@react@facebook@@UEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
 ?CreateAsyncStorageModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PEB_W@Z
 ?createI18nModule@windows@react@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
@@ -23,7 +23,6 @@ EXPORTS
 ?CreateWebSocketModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?destroy@dynamic@folly@@AEAAXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UEAAX_JAEBUdynamic@folly@@@Z
-?get_ptr@dynamic@folly@@QEGBAPEBU12@AEBU12@@Z
 ?GetConstants@ViewManagerBase@react@facebook@@UEBA?AUdynamic@folly@@XZ
 ?getPeakJsMemoryUsage@Instance@react@facebook@@QEBA_JXZ
 ?hash@dynamic@folly@@QEBA_KXZ
@@ -168,3 +167,4 @@ YGConfigGetUseWebDefaults
 YGConfigGetDefault
 YGConfigSetContext
 YGConfigGetContext
+YGUnitToString

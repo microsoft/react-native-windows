@@ -1,16 +1,25 @@
 EXPORTS
-?destroy@dynamic@folly@@AAEXXZ
-??8dynamic@folly@@QBE_NABU01@@Z
-??Adynamic@folly@@QGAEAAU01@ABU01@@Z
-??4dynamic@folly@@QAEAAU01@ABU01@@Z
-?hash@dynamic@folly@@QBEIXZ
-??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
-??1TypeError@folly@@UAE@XZ
-?get_ptr@dynamic@folly@@QGBEPBU12@ABU12@@Z
-?typeName@dynamic@folly@@QBEPBDXZ
-??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
 ?size@dynamic@folly@@QBEIXZ
-?at@dynamic@folly@@QGBEABU12@ABU12@@Z
+?makeConversionError@folly@@YG?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
+?str_to_bool@detail@folly@@YG?AV?$Expected@_NW4ConversionCode@folly@@@2@PAV?$Range@PBD@2@@Z
+??0ColdClass@cold_detail@folly@@QAE@XZ
+??4dynamic@folly@@QAEAAU01@ABU01@@Z
+
+??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
+?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
+??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
+?at@dynamic@folly@@QGBEABU12@V?$Range@PBD@2@@Z
+?destroy@dynamic@folly@@AAEXXZ
+??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
+??0TypeError@folly@@QAE@ABU01@@Z
+??0TypeError@folly@@QAE@$$QAU01@@Z
+?logTaggedMarker@ReactMarker@react@facebook@@3P6GXW4ReactMarkerId@123@PBD@ZA
+??1TypeError@folly@@UAE@XZ
+
+??8dynamic@folly@@QBE_NABU01@@Z
+?hash@dynamic@folly@@QBEIXZ
+?typeName@dynamic@folly@@QBEPBDXZ
+?size@dynamic@folly@@QBEIXZ
 ?print_as_pseudo_json@dynamic@folly@@ABEXAAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ?makeConversionError@folly@@YG?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
@@ -40,7 +49,6 @@ EXPORTS
 ?Utf16ToUtf8@UnicodeConversion@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
 ?Utf8ToUtf16@UnicodeConversion@react@facebook@@YG?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 
-?__throw_bad_alloc@std@@YGXXZ
 ?demangle@folly@@YG?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PBD@Z
 
 mallocxWeak

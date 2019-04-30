@@ -17,7 +17,7 @@ export default class FlexboxLayoutPlayground extends Component {
 
     this._onClick = this._onClick.bind(this);
     this.state = {
-      currentAlignStyle: styles.endAlingStyle,
+      currentAlignStyle: styles.endAlignStyle,
       currentAbsoluteStyle: styles.absoluteTest1,
       currentWidthStyle: styles.widthTest1,
     };
@@ -26,11 +26,11 @@ export default class FlexboxLayoutPlayground extends Component {
   _onClick() {
     state = this.state;
 
-    if (state.currentAlignStyle === styles.endAlingStyle) {
+    if (state.currentAlignStyle === styles.endAlignStyle) {
       state.currentAlignStyle = styles.emptyStyle;
     }
     else {
-      state.currentAlignStyle = styles.endAlingStyle;
+      state.currentAlignStyle = styles.endAlignStyle;
     }
 
     if (state.currentAbsoluteStyle === styles.absoluteTest1) {
@@ -245,7 +245,30 @@ export default class FlexboxLayoutPlayground extends Component {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.todoLabel}>TODO: FlexBasis</Text>
+            <Text>FlexBasis: Auto</Text>
+            <View style={styles.containerRow}>
+              <View style={styles.boxWithFlexBasisAuto} />
+              <View style={styles.boxWithFlexBasisAuto} />
+              <View style={styles.boxWithFlexBasisAuto} />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text>FlexBasis: Point</Text>
+            <View style={styles.containerRow}>
+              <View style={styles.boxWithFlexBasisPoint} />
+              <View style={styles.boxWithFlexBasisPoint} />
+              <View style={styles.boxWithFlexBasisPoint} />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text>FlexBasis: Percent</Text>
+              <View style={styles.containerRow}>
+                <View style={styles.boxWithFlexBasisPercent} />
+                <View style={styles.boxWithFlexBasisPercent} />
+                <View style={styles.boxWithFlexBasisPercent} />
+            </View>
           </View>
 
           <View style={styles.section}>
@@ -254,6 +277,9 @@ export default class FlexboxLayoutPlayground extends Component {
               <View style={styles.absoluteBox} />
             </View>
           </View>
+
+          </View>
+          <View style={styles.mainContainer}>
 
           <View style={styles.section}>
             <Text>Align: Stretch With Right Box MaxHeight</Text>
@@ -269,9 +295,6 @@ export default class FlexboxLayoutPlayground extends Component {
               <View style={styles.boxNoMargin} />
             </View>
           </View>
-
-          </View>
-          <View style={styles.mainContainer}>
 
           <View style={styles.section}>
             <Text>Margin: End</Text>
@@ -328,7 +351,7 @@ export default class FlexboxLayoutPlayground extends Component {
 };
 
 const styles = StyleSheet.create({
-  endAlingStyle: {
+  endAlignStyle: {
     alignItems: 'flex-end',
   },
 
@@ -583,6 +606,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#333333',
     margin: 5,
     flexGrow: 2.0,
+  },
+
+  boxWithFlexBasisAuto: {
+    minWidth: 50,
+    minHeight: 50,
+    backgroundColor: '#333333',
+    margin: 5,
+    flexBasis: 'auto',
+  },
+
+  boxWithFlexBasisPoint: {
+    minWidth: 50,
+    minHeight: 50,
+    backgroundColor: '#333333',
+    margin: 5,
+    flexBasis: 60,
+  },
+
+  boxWithFlexBasisPercent: {
+    minWidth: 50,
+    minHeight: 50,
+    backgroundColor: '#333333',
+    margin: 5,
+    flexBasis: '25%',
   },
 
   wideBox: {
