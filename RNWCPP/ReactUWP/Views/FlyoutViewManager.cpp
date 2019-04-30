@@ -179,7 +179,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
   if (updateIsOpen)
     m_isOpen ? winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement) : m_flyout.Hide();
 
-  // TODO: hook up the view props to the flyout (m_flyout) instead of setting them on the dummy view.
+  // TODO: hook up view props to the flyout (m_flyout) instead of setting them on the dummy view.
   //Super::updateProperties(std::move(props));
   m_updating = false;
 }
