@@ -142,20 +142,20 @@ public:
 
   std::function<boost::system::error_code()> ConnectResult;
 
-  //TODO: Verify it doesn't conflict with base class, then delete.
-  //using lowest_layer_type = MockStreamLayer;
+  // Override test::stream layers.
+  using lowest_layer_type = MockStreamLayer;
 
-  //lowest_layer_type&
-  //  lowest_layer()
-  //{
-  //  return *this;
-  //}
+  lowest_layer_type&
+    lowest_layer()
+  {
+    return *this;
+  }
 
-  //lowest_layer_type const&
-  //  lowest_layer() const
-  //{
-  //  return *this;
-  //}
+  lowest_layer_type const&
+    lowest_layer() const
+  {
+    return *this;
+  }
 };
 
 class TestWebSocketOld : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>

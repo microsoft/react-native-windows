@@ -11,7 +11,6 @@ using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::make_unique;
-using std::make_shared;
 using std::string;
 
 TEST_CLASS(BaseWebSocketTest)
@@ -33,7 +32,7 @@ TEST_CLASS(BaseWebSocketTest)
   {
     string errorMessage;
     bool connected = false;
-    auto ws = make_shared<TestWebSocketOld>(Url("ws://localhost:80"));
+    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:80"));
     ws->SetOnError([&errorMessage](IWebSocket::Error err)
     {
       errorMessage = err.Message;
@@ -65,10 +64,7 @@ TEST_CLASS(BaseWebSocketTest)
     });
     ws->SetConnectResult([]() -> boost::system::error_code
     {
-      boost::system::error_code ec;
-      ec.assign(1, ec.category());
-
-      return ec;
+      return make_error_code(errc::state_not_recoverable);
     });
 
     ws->Connect({}, {});
@@ -78,7 +74,7 @@ TEST_CLASS(BaseWebSocketTest)
     Assert::IsFalse(connected);
   }
 
-  //TODO: Fix. Fails with "Incorrect function".
+  //TODO: Fix. Fails with "An existing connection was forcibly closed by the remote host".
   TEST_METHOD(ConnectSucceeds)
   {
     string errorMessage;
@@ -94,10 +90,7 @@ TEST_CLASS(BaseWebSocketTest)
     });
     ws->SetConnectResult([]() -> boost::system::error_code
     {
-      boost::system::error_code ec;
-      ec.assign(0, ec.category());
-
-      return ec;
+      return make_error_code(errc::success);
     });
 
     ws->Connect({}, {});
