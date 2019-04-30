@@ -41,6 +41,7 @@ set(SOURCES
 	Views/CheckboxViewManager.cpp
 	Views/ControlViewManager.cpp
 	Views/DatePickerViewManager.cpp
+	Views/FlyoutViewManager.cpp
 	Views/FrameworkElementViewManager.cpp
 	Views/ImageViewManager.cpp
 	Views/PickerViewManager.cpp
