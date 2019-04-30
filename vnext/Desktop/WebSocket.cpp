@@ -572,6 +572,23 @@ template
 BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
 async_connect
 (
+  Microsoft::React::Test::MockStream& s,
+  Iterator begin,
+  Iterator end,
+  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
+)
+{
+  handler(boost::system::errc::make_error_code(boost::system::errc::success), {});
+}
+
+template
+<
+  typename Iterator,
+  typename IteratorConnectHandler
+>
+BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
+async_connect
+(
   Microsoft::React::Test::MockStreamLayer& s,
   Iterator begin,
   Iterator end,
