@@ -2,6 +2,7 @@ set(SOURCES
 	AsyncStorageManagerTest.cpp
 	AsyncStorageTest.cpp
 	EmptyUIManagerModule.cpp
+	LayoutAnimationTests.cpp
 	UIManagerModuleTest.cpp
 	UtilsTest.cpp
 	WebSocketJSExecutorTest.cpp
