@@ -10,6 +10,7 @@ EXPORTS
 ??4dynamic@folly@@QEAAAEAU01@$$QEAU01@@Z
 ??4dynamic@folly@@QEAAAEAU01@AEBU01@@Z
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
+?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
 ?callJSFunction@Instance@react@facebook@@UEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
 ?CreateAsyncStorageModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PEB_W@Z
 ?createI18nModule@windows@react@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z

@@ -59,6 +59,11 @@ void EnsureExportedFunctions(bool createThings)
     dy.asInt();
     dy.asString();
     dy.asBool();
+    dy[0];
+    dy["test"];
+    const folly::dynamic& cdy = dy;
+    cdy[0];
+    cdy["test"];
   }
 }
 

@@ -12,6 +12,7 @@ EXPORTS
 ?destroy@dynamic@folly@@AEAAXXZ
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
 ??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z
+?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
 ??4dynamic@folly@@QEAAAEAU01@$$QEAU01@@Z
 ?hash@dynamic@folly@@QEBA_KXZ
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
