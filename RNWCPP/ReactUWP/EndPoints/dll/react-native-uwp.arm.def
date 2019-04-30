@@ -2,6 +2,7 @@ EXPORTS
 ??0ColdClass@cold_detail@folly@@QAA@XZ
 ?atImpl@dynamic@folly@@AGBAABU12@ABU12@@Z
 ??Adynamic@folly@@QGAAAAU01@V?$Range@PBD@1@@Z
+?at@dynamic@folly@@QGBAABU12@V?$Range@PBD@2@@Z
 ??0TypeError@folly@@QAA@ABU01@@Z
 ??0TypeError@folly@@QAA@$$QAU01@@Z
 ?destroy@dynamic@folly@@AAAXXZ
