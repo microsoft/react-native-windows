@@ -22,19 +22,19 @@ struct json_type_traits<winrt::FlyoutPlacementMode>
   static winrt::FlyoutPlacementMode parseJson(const folly::dynamic& json)
   {
     winrt::FlyoutPlacementMode placement;
-    if (json == "Top")
+    if (json == "top")
     {
       placement = winrt::FlyoutPlacementMode::Top;
     }
-    else if (json == "Bottom")
+    else if (json == "bottom")
     {
       placement = winrt::FlyoutPlacementMode::Bottom;
     }
-    else if (json == "Left")
+    else if (json == "left")
     {
       placement = winrt::FlyoutPlacementMode::Left;
     }
-    else if (json == "Right")
+    else if (json == "right")
     {
       placement = winrt::FlyoutPlacementMode::Right;
     }
@@ -177,19 +177,10 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
   }
 
   if (updateIsOpen)
-  {
-    if (m_isOpen)
-    {
-      winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
-    }
-    else
-    {
-      m_flyout.Hide();
-    }
-  }
-    //m_isOpen ? winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement) : m_flyout.Hide();
+    m_isOpen ? winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement) : m_flyout.Hide();
 
-  Super::updateProperties(std::move(props));
+  // TODO: hook up the view props to the flyout (m_flyout) instead of setting them on the dummy view.
+  //Super::updateProperties(std::move(props));
   m_updating = false;
 }
 

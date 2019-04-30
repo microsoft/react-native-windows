@@ -12,7 +12,7 @@ interface IFlyoutExampleState {
   buttonTitle: string;
   isLightDismissEnabled: boolean;
   popupCheckBoxState: boolean;
-  placementOptions: 'Top' | 'Bottom' | 'Left' | 'Right' | 'Full';
+  placementOptions: 'top' | 'bottom' | 'left' | 'right' | 'full';
 }
 
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
@@ -25,7 +25,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     buttonTitle: 'Open Flyout',
     isLightDismissEnabled: true,
     popupCheckBoxState: true,
-    placementOptions: 'Top',
+    placementOptions: 'top',
   };
 
   public constructor(props: any) {
@@ -41,11 +41,11 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
           <Picker
             style={ { width: 200, height: 35 } } selectedValue={ this.state.placementOptions }
             onValueChange={ value => this.setState({ placementOptions: value }) }>
-            <Picker.Item label='Top' value='Top' />
-            <Picker.Item label='Bottom' value='Bottom' />
-            <Picker.Item label='Left' value='Left' />
-            <Picker.Item label='Right' value='Right' />
-            <Picker.Item label='Full' value='Full' />
+            <Picker.Item label='top' value='top' />
+            <Picker.Item label='bottom' value='bottom' />
+            <Picker.Item label='left' value='left' />
+            <Picker.Item label='right' value='right' />
+            <Picker.Item label='full' value='full' />
           </Picker>
         </View>
         <View style={ { justifyContent: 'center', padding: 20, width: 200 } }>

@@ -6,6 +6,6 @@ export interface IFlyoutProps extends ViewProps {
   isLightDismissEnabled?: boolean;
   isOpen?: boolean;
   onDismiss?: (isOpen: boolean) => void;
-  placement?: 'Top' | 'Bottom' | 'Left' | 'Right' | 'Full';
+  placement?: 'top' | 'bottom' | 'left' | 'right' | 'full';
   target?: React.ReactNode;
 }
