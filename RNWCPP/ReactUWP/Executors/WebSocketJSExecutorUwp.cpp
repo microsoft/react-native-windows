@@ -219,7 +219,7 @@ winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(const
   }
   else
   {
-    OnHitError("Create a new JS runtime timeout and Executor instance is not connected to a WebSocket endpoint.");
+    OnHitError("Prepare JS runtime timed out, Executor instance is not connected to a WebSocket endpoint.");
   }
 }
 
