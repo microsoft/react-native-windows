@@ -59,10 +59,10 @@
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
     "typescript": "3.3.3",
-    "react-native": "0.58.6-microsoft.29"
+    "react-native": "0.58.6-microsoft.31"
   },
   "peerDependencies": {
     "react": "16.6.3",
-    "react-native": "0.58.6-microsoft.29 || https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.29.tar.gz"
+    "react-native": "0.58.6-microsoft.31 || https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.31.tar.gz"
   }
 }
