@@ -409,11 +409,11 @@
     <ClInclude Include="Views\ViewControl.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="ThisHelper.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Views\FlyoutViewManager.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="ThisWrapper.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

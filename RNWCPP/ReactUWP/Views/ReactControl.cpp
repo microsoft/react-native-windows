@@ -41,10 +41,10 @@ std::shared_ptr<IReactInstance> ReactControl::GetReactInstance() const noexcept
 
 void ReactControl::HandleInstanceError()
 {
-  auto weakThis = m_weakThis.This();
+  auto weakThis = m_thisWrapper.WeakThis();
   m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([weakThis]()
     {
-      if (auto This = StrongThis(weakThis))
+      if (auto This = FromWeakThis(weakThis))
       {
         This->HandleInstanceErrorOnUIThread();
       }
@@ -110,10 +110,10 @@ void ReactControl::AttachRoot() noexcept
   // Register callback from instance for live reload
   m_liveReloadCallbackCookie = m_reactInstance->RegisterLiveReloadCallback([this]()
   {
-    auto weakThis = m_weakThis.This();
+    auto weakThis = m_thisWrapper.WeakThis();
     m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([weakThis]()
     {
-        if (auto This = StrongThis(weakThis))
+        if (auto This = FromWeakThis(weakThis))
         {
           This->Reload(true);
         }

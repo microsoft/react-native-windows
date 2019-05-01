@@ -175,7 +175,7 @@
     <ClInclude Include="Polyester\ContentControlViewManager.h" />
     <ClInclude Include="Polyester\HyperlinkViewManager.h" />
     <ClInclude Include="Polyester\IconViewManager.h" />
-    <ClInclude Include="ThisHelper.h" />
+    <ClInclude Include="ThisWrapper.h" />
     <ClInclude Include="Threading\AsyncWorkQueue.h" />
     <ClInclude Include="Threading\AsyncWorkQueue_Priv.h" />
     <ClInclude Include="Threading\JSQueueThread.h" />
