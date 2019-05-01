@@ -187,7 +187,6 @@
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGFloatOptional.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" />
