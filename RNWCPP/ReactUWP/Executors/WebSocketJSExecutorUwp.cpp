@@ -227,7 +227,7 @@ bool WebSocketJSExecutor::PrepareJavaScriptRuntime()
 {
   auto timeout = std::chrono::milliseconds(250);
 
-  for (uint32_t retries = 3; retries > 0; --retries)
+  for (uint32_t retries = 20; retries > 0; --retries)
   {
     int requestId = ++m_requestId;
 
