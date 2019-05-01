@@ -47,7 +47,7 @@ export class Picker extends React.Component<IPickerProps, State> {
   public static getDerivedStateFromProps(props: PickerPropsWithChildren): State {
     let selectedIndex = -1;
     const items: IPickerItemData[] = [];
-    React.Children.toArray(props.children).forEach((c: React.ReactChild, index: number) => {
+    React.Children.toArray(props.children).forEach((c: React.ReactNode, index: number) => {
       const child = c as unknown as PickerItem;
       if (child.props.value === props.selectedValue) {
         selectedIndex = index;

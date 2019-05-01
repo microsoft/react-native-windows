@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 'use strict';
+
 const path = require('path');
 
 const fs = require('fs');
@@ -36,25 +37,21 @@ if (fs.existsSync(path.resolve(__dirname, '../../scripts/metro-resources.js'))) 
   const rootRnPath = path.resolve(require.resolve('react-native'), '../../..');
 
   config = {
+    extraNodeModules: {
+      'react-native': rootRnPath,
+      'react-native-windows': __dirname,
+    },
+
     getPolyfills: require('react-native/rn-get-polyfills'),
     resolver: {
-      extraNodeModules: {},
       platforms,
       providesModuleNodeModules: ['react-native-windows'],
     },
     projectRoot: utils.getDirectoryNameOfFileAbove(__dirname, 'app.json') || __dirname
   };
-
-  config.resolver.extraNodeModules['react-native'] = rootRnPath;
-  config.resolver.extraNodeModules['react-native-windows'] = __dirname;
-  config.resolver.extraNodeModules['react-native/Libraries/Image/AssetRegistry'] = path.resolve(
-    rootRnPath,
-    'Libraries/Image/AssetRegistry.js'
-  );
 }
 
-config.resolver.extraNodeModules['SnapshotViewIOS'] = path.resolve(__dirname, 'Libraries/RCTTest/SnapshotViewIOS');
+config.extraNodeModules['SnapshotViewIOS'] = path.resolve(__dirname, 'Libraries/RCTTest/SnapshotViewIOS');
 config.resolver.hasteImplModulePath = path.resolve(__dirname, 'jest/hasteImpl.js');
 
 module.exports = config;
-
