@@ -115,12 +115,12 @@
   <!-- This seem to confuse loader and make calls like JsCreateRuntime enter the same (fake) ChakraCore.dll.-->
   <!-- We just need the header files from the Chakra package, so just copy them for now -->
   <!--ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.4.1\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.4.1\build\native\Microsoft.ChakraCore.vc140.targets')" />
+    <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.4.1\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.4.1\build\native\Microsoft.ChakraCore.vc140.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets'))" />
   </Target-->
 </Project>
