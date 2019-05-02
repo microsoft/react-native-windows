@@ -445,7 +445,7 @@ Fri, 01 Feb 2019 21:37:51 GMT
 
 - Make react-native-win not depend on sdx-platform build scripts
 - uwp - Add back pressed event firing from View temporarily
-- uwp - update SDK dependency to RS5, runtime target RS3+, permissive-
+- uwp - update SDK dependency to RS5, runtime target RS2+, permissive-
 - Add popup component for uwp
 - autosync
 - V8 Inspector
