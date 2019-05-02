@@ -23,7 +23,7 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
-class ReactControl
+class ReactControl : public std::enable_shared_from_this<ReactControl>
 {
 public:
   ReactControl(IXamlRootView* parent, XamlView rootView)
@@ -54,6 +54,7 @@ public:
 
 private:
   void HandleInstanceError();
+  void HandleInstanceErrorOnUIThread();
 
   IXamlRootView* m_pParent;
 

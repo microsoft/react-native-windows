@@ -41,40 +41,49 @@ std::shared_ptr<IReactInstance> ReactControl::GetReactInstance() const noexcept
 
 void ReactControl::HandleInstanceError()
 {
-  m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([this]()
-  {
-    if (m_reactInstance->IsInError())
+  auto weakThis = weak_from_this();
+  m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([weakThis]()
     {
-      auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
-
-      // Remove existing children from root view (from the hosted app)
-      xamlRootGrid.Children().Clear();
-
-      // Create Grid & TextBlock to hold error text
-      if (m_errorTextBlock == nullptr)
+      if (auto This = weakThis.lock())
       {
-        m_errorTextBlock = winrt::TextBlock();
-        m_redBoxGrid = winrt::Grid();
-        m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::Colors::Crimson()));
-        m_redBoxGrid.Children().Append(m_errorTextBlock);
+        This->HandleInstanceErrorOnUIThread();
       }
+    });
+}
 
-      // Add red box grid to root view
-      xamlRootGrid.Children().Append(m_redBoxGrid);
+void ReactControl::HandleInstanceErrorOnUIThread()
+{
+  if (m_reactInstance->IsInError())
+  {
+    auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
 
-      // Place error message into TextBlock
-      std::wstring wstrErrorMessage(L"ERROR: Instance failed to start.\n\n");
-      wstrErrorMessage += facebook::react::UnicodeConversion::Utf8ToUtf16(m_reactInstance->LastErrorMessage()).c_str();
-      m_errorTextBlock.Text(wstrErrorMessage);
+    // Remove existing children from root view (from the hosted app)
+    xamlRootGrid.Children().Clear();
 
-      // Format TextBlock
-      m_errorTextBlock.TextAlignment(winrt::TextAlignment::Center);
-      m_errorTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-      m_errorTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
-      winrt::Thickness margin = { 10.0f, 10.0f, 10.0f, 10.0f };
-      m_errorTextBlock.Margin(margin);
+    // Create Grid & TextBlock to hold error text
+    if (m_errorTextBlock == nullptr)
+    {
+      m_errorTextBlock = winrt::TextBlock();
+      m_redBoxGrid = winrt::Grid();
+      m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::Colors::Crimson()));
+      m_redBoxGrid.Children().Append(m_errorTextBlock);
     }
-  });
+
+    // Add red box grid to root view
+    xamlRootGrid.Children().Append(m_redBoxGrid);
+
+    // Place error message into TextBlock
+    std::wstring wstrErrorMessage(L"ERROR: Instance failed to start.\n\n");
+    wstrErrorMessage += facebook::react::UnicodeConversion::Utf8ToUtf16(m_reactInstance->LastErrorMessage()).c_str();
+    m_errorTextBlock.Text(wstrErrorMessage);
+
+    // Format TextBlock
+    m_errorTextBlock.TextAlignment(winrt::TextAlignment::Center);
+    m_errorTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
+    m_errorTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
+    winrt::Thickness margin = { 10.0f, 10.0f, 10.0f, 10.0f };
+    m_errorTextBlock.Margin(margin);
+  }
 }
 
 void ReactControl::AttachRoot() noexcept
@@ -101,9 +110,13 @@ void ReactControl::AttachRoot() noexcept
   // Register callback from instance for live reload
   m_liveReloadCallbackCookie = m_reactInstance->RegisterLiveReloadCallback([this]()
   {
-    m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([this]()
+    auto weakThis = weak_from_this();
+    m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([weakThis]()
     {
-      Reload(true);
+        if (auto This = weakThis.lock())
+        {
+          This->Reload(true);
+        }
     });
   });
 

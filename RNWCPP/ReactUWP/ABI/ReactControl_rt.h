@@ -74,7 +74,7 @@ private:
   Microsoft::WRL::ComPtr<IInstance> _spInstance;
   bool m_rendering;
 
-  std::unique_ptr<::react::uwp::ReactControl> m_pInnerControl;
+  std::shared_ptr<::react::uwp::ReactControl> m_pInnerControl;
 };
 
 class ReactControlFactory : public Microsoft::WRL::AgileActivationFactory<IReactControlFactory>

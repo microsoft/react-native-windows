@@ -33,7 +33,7 @@ namespace react { namespace uwp {
 
 ReactRootView::ReactRootView(XamlView rootView)
 {
-  m_pimpl = std::make_unique<ReactControl>(this, rootView);
+  m_pimpl = std::make_shared<ReactControl>(this, rootView);
 }
 
 ReactRootView::~ReactRootView()
