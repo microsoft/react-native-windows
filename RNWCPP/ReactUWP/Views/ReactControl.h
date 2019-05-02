@@ -10,7 +10,6 @@
 #include <IReactInstance.h>
 #include "TouchEventHandler.h"
 #include <winrt/Windows.UI.Xaml.Controls.h>
-#include "ThisWrapper.h"
 
 namespace winrt {
 using namespace Windows::UI;
