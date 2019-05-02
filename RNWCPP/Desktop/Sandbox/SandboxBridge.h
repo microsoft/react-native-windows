@@ -43,6 +43,7 @@ public:
     JSExecutor& executor, unsigned int moduleId, unsigned int methodId,
     folly::dynamic&& args) override;
 
+  bool isBatchActive() override;
 private:
 
   // These methods are always invoked from an Executor.  The NativeToJsBridge
@@ -70,6 +71,8 @@ public:
       JSExecutor& executor, unsigned int moduleId, unsigned int methodId,
       folly::dynamic&& args) override;
 
+
+  bool isBatchActive() override;
 private:
 
   // These methods are always invoked from an Executor.  The NativeToJsBridge

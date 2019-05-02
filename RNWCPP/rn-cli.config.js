@@ -45,7 +45,7 @@ if (fs.existsSync(path.resolve(__dirname, '../../scripts/metro-resources.js'))) 
     getPolyfills: require('react-native/rn-get-polyfills'),
     resolver: {
       platforms,
-      providesModuleNodeModules: ['react-native-windows'],
+      providesModuleNodeModules: ['react-native', 'react-native-windows'],
     },
     projectRoot: utils.getDirectoryNameOfFileAbove(__dirname, 'app.json') || __dirname
   };

@@ -4184,9 +4184,9 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.2.tar.gz":
-  version "0.59.0-microsoft-fb59merge.2"
-  resolved "https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.2.tar.gz#9c49eb7f2e81bed7b558020927c6e0225d390d24"
+"react-native@https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.6.tar.gz":
+  version "0.59.0-microsoft-fb59merge.6"
+  resolved "https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.6.tar.gz#a0f3db5efee25485176c89a411b030e22e08274f"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
