@@ -24,7 +24,7 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
-class ReactControl
+class ReactControl : public std::enable_shared_from_this<ReactControl>
 {
 public:
   ReactControl(IXamlRootView* parent, XamlView rootView)
@@ -74,7 +74,6 @@ private:
 
   winrt::Grid m_redBoxGrid { nullptr };
   winrt::TextBlock m_errorTextBlock { nullptr };
-  ThisWrapper<ReactControl> m_thisWrapper{ this };
 };
 
 }

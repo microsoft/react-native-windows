@@ -412,9 +412,6 @@
     <ClInclude Include="Views\FlyoutViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="ThisWrapper.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
