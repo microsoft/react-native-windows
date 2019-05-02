@@ -38,7 +38,7 @@ public:
   virtual void SetTag(int64_t tag) override;
 
 private:
-  std::unique_ptr<ReactControl> m_pimpl;
+  std::shared_ptr<ReactControl> m_pimpl;
 };
 
 } }

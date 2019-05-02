@@ -130,7 +130,7 @@ void ReactControl::CreateInnerInstance()
   spThis.As(&spFrameworkElementABI);
   ::react::uwp::XamlView pXamlView = reinterpret_cast<const winrt::Windows::UI::Xaml::FrameworkElement&>(spFrameworkElementABI);
 
-  m_pInnerControl = std::make_unique<::react::uwp::ReactControl>(this, pXamlView);
+  m_pInnerControl = std::make_shared<::react::uwp::ReactControl>(this, pXamlView);
   m_pInnerControl->SetJSComponentName(std::string(m_jsComponentName));
   m_pInnerControl->SetInitialProps(folly::parseJson(m_initialProps));
   m_pInnerControl->SetInstanceCreator(static_cast<Instance*>(_spInstance.Get())->GetReactInstanceCreator());
