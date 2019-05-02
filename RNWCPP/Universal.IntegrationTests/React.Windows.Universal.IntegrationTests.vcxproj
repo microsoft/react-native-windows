@@ -8,6 +8,7 @@
     <UnitTestPlatformVersion>15.0</UnitTestPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <SkipUnionWinmd>true</SkipUnionWinmd>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
