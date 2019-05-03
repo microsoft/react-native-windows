@@ -10,7 +10,6 @@
 #include "Utils.h"
 
 #include <boost/beast/experimental/test/stream.hpp>//TODO: remove. Won't use.
-#include <xstring>
 
 namespace facebook {
 namespace react {
@@ -260,8 +259,7 @@ public:
   boost::asio::io_context::executor_type get_executor() noexcept
   {
     return m_context.get_executor();
-  };
-
+  }
 };
 
 class MockStreamLayer : public boost::beast::test::stream
@@ -285,6 +283,38 @@ public:
   MockStreamLayer(boost::asio::io_context& context)
     : boost::beast::test::stream{ context }
   {
+  }
+
+  // AsyncStream compliance
+  template<class MutableBufferSequence, class ReadHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE
+  (
+    ReadHandler, void(boost::system::error_code, std::size_t)
+  )
+  async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler)
+  {
+    BOOST_BEAST_HANDLER_INIT(ReadHandler, void(boost::system::error_code, std::size_t));
+    post(get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
+
+    return init.result.get();
+  }
+
+  template<class ConstBufferSequence, class WriteHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE
+  (
+    WriteHandler, void(boost::system::error_code, std::size_t)
+  )
+  async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler)
+  {
+    BOOST_BEAST_HANDLER_INIT(WriteHandler, void(boost::system::error_code, std::size_t));
+    post(get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
+
+    return init.result.get();
+  }
+
+  boost::asio::io_context::executor_type get_executor() noexcept
+  {
+    return boost::beast::test::stream::get_executor();
   }
 
   std::function<boost::system::error_code()> ConnectResult;

@@ -538,6 +538,11 @@ void TestWebSocket::SetConnectResult(std::function<boost::system::error_code()>&
   m_stream->next_layer().ConnectResult = std::move(resultFunc);
 }
 
+TestWebSocketNew::TestWebSocketNew(facebook::react::Url&& url)
+  : facebook::react::BaseWebSocket<tcp, MockStream, boost::asio::ip::basic_resolver<tcp>>(std::move(url))
+{
+}
+
 } } } // namespace Microsoft::React::Test
 
 namespace boost {
