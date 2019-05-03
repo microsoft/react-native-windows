@@ -167,25 +167,28 @@ void TextInputShadowNode::createView()
     });
   }
 
-  textBox.CharacterReceived([=](auto&&, winrt::CharacterReceivedRoutedEventArgs const& args) {
-    auto instance = wkinstance.lock();
-    std::string key;
-    wchar_t s[2] = L" ";
-    s[0] = args.Character();
-    key = facebook::react::UnicodeConversion::Utf16ToUtf8(s, 1);
+  if (textBox.try_as<winrt::IUIElement7>())
+  {
+    textBox.CharacterReceived([=](auto&&, winrt::CharacterReceivedRoutedEventArgs const& args) {
+      auto instance = wkinstance.lock();
+      std::string key;
+      wchar_t s[2] = L" ";
+      s[0] = args.Character();
+      key = facebook::react::UnicodeConversion::Utf16ToUtf8(s, 1);
 
-    if (key.compare("\r") == 0) {
-      key = "Enter";
-    }
-    else if (key.compare("\b") == 0) {
-      key = "Backspace";
-    }
+      if (key.compare("\r") == 0) {
+        key = "Enter";
+      }
+      else if (key.compare("\b") == 0) {
+        key = "Backspace";
+      }
 
-    if (!m_updating && instance != nullptr) {
-      folly::dynamic eventData = folly::dynamic::object("target", tag)("key", folly::dynamic(key));
-      instance->DispatchEvent(tag, "topTextInputKeyPress", std::move(eventData));
-    }
-  });
+      if (!m_updating && instance != nullptr) {
+        folly::dynamic eventData = folly::dynamic::object("target", tag)("key", folly::dynamic(key));
+        instance->DispatchEvent(tag, "topTextInputKeyPress", std::move(eventData));
+      }
+      });
+  }
 }
 void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
 {
@@ -251,10 +254,13 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (pair.first == "placeholderTextColor")
     {
-      if (pair.second.isInt())
-        textBox.PlaceholderForeground(SolidColorBrushFrom(pair.second));
-      else if (pair.second.isNull())
-        textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
+      if (textBox.try_as<winrt::ITextBlock6>())
+      {
+        if (pair.second.isInt())
+          textBox.PlaceholderForeground(SolidColorBrushFrom(pair.second));
+        else if (pair.second.isNull())
+          textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
+      }
     }
     else if (pair.first == "scrollEnabled")
     {
