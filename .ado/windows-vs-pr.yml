@@ -46,34 +46,34 @@ jobs:
         displayName: Ensure yarn
         inputs:
           script: npm install -g yarn
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn install
         inputs:
           script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn build
         inputs:
           script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
           command: restore
-          restoreSolution: RNWCPP/ReactWindows-UWP.sln
+          restoreSolution: vnext/ReactWindows-UWP.sln
           feedsToUse: config
-          nugetConfigPath: RNWCPP/NuGet.config
+          nugetConfigPath: vnext/NuGet.config
           restoreDirectory: packages/
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: MSBuild@1
         displayName: MSBuild - ReactWindows-UWP
         inputs:
-          solution: RNWCPP/ReactWindows-UWP.sln
+          solution: vnext/ReactWindows-UWP.sln
           msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
@@ -85,16 +85,16 @@ jobs:
         displayName: NuGet restore - Playground
         inputs:
           command: restore
-          restoreSolution: RNWCPP/Playground/Playground.sln
+          restoreSolution: vnext/Playground/Playground.sln
           feedsToUse: config
-          nugetConfigPath: RNWCPP/NuGet.config
+          nugetConfigPath: vnext/NuGet.config
           restoreDirectory: packages/
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: MSBuild@1
         displayName: MSBuild - Playground
         inputs:
-          solution: RNWCPP/Playground/Playground.sln
+          solution: vnext/Playground/Playground.sln
           msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
@@ -106,13 +106,13 @@ jobs:
         displayName: Create SampleApp bundle
         inputs:
           script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: Remove SampleApp.uwp.bundle
         inputs:
           script: del SampleApp.uwp.bundle
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
   - job: WindowsVSPR
     displayName: Windows Visual Studio with Win32 PR
@@ -165,13 +165,13 @@ jobs:
         displayName: Ensure yarn
         inputs:
           script: npm install -g yarn
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn install
         inputs:
           script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: PowerShell@2
         displayName: Cleanup any packagers left over from other builds
@@ -188,17 +188,17 @@ jobs:
         displayName: yarn build
         inputs:
           script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows
         inputs:
           command: restore
-          restoreSolution: RNWCPP/ReactWindows.sln
+          restoreSolution: vnext/ReactWindows.sln
           feedsToUse: config
           #vstsFeed: # Required when feedsToUse == Select
           #includeNuGetOrg: true # Required when feedsToUse == Select
-          nugetConfigPath: RNWCPP/NuGet.config
+          nugetConfigPath: vnext/NuGet.config
           #externalFeedCredentials: # Optional
           #noCache: false
           #disableParallelProcessing: false
@@ -231,7 +231,7 @@ jobs:
       - task: MSBuild@1
         displayName: MSBuild - ReactWindows
         inputs:
-          solution: RNWCPP/ReactWindows.sln
+          solution: vnext/ReactWindows.sln
           #msbuildLocationMethod: 'version' # Optional. Options: version, location
           msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
@@ -256,7 +256,7 @@ jobs:
           #testSuite: # Required when testSelector == TestPlan
           #testConfiguration: # Required when testSelector == TestPlan
           #tcmTestRun: '$(test.RunId)' # Optional
-          searchFolder: '$(Build.SourcesDirectory)\RNWCPP\target\$(BuildPlatform)\$(BuildConfiguration)'
+          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           #testFiltercriteria: # Optional
           #runOnlyImpactedTests: False # Optional
           #runAllTestsAfterXBuilds: '50' # Optional
@@ -294,8 +294,8 @@ jobs:
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           targetType: filePath # filePath | inline
-          filePath: $(Build.SourcesDirectory)\RNWCPP\Scripts\Tfs\Start-TestServers.ps1
-          arguments: -SourcesDirectory $(Build.SourcesDirectory)\RNWCPP\node_modules\react-native -Preload
+          filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
@@ -307,7 +307,7 @@ jobs:
           #testSuite: # Required when testSelector == TestPlan
           #testConfiguration: # Required when testSelector == TestPlan
           #tcmTestRun: '$(test.RunId)' # Optional
-          searchFolder: '$(Build.SourcesDirectory)\RNWCPP\target\$(BuildPlatform)\$(BuildConfiguration)'
+          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
           #runOnlyImpactedTests: False # Optional
           #runAllTestsAfterXBuilds: '50' # Optional
