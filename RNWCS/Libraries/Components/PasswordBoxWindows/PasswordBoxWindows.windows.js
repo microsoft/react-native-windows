@@ -15,7 +15,7 @@
  */
 'use strict';
 
-const ColorPropType = require('ColorPropType');
+const DeprecatedColorPropType = require('DeprecatedColorPropType');
 const DocumentSelectionState = require('DocumentSelectionState');
 const EventEmitter = require('EventEmitter');
 const NativeMethodsMixin = require('NativeMethodsMixin');
@@ -26,7 +26,6 @@ const ReactNative = require('ReactNative');
 const StyleSheet = require('StyleSheet');
 const Text = require('Text');
 const TextInputState = require('TextInputState');
-const TimerMixin = require('react-timer-mixin');
 const TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 const ViewPropTypes = require('ViewPropTypes');
 
@@ -235,11 +234,11 @@ const PasswordBoxWindows = createReactClass({
     /**
      * The text color of the placeholder string.
      */
-    placeholderTextColor: ColorPropType,
+    placeholderTextColor: DeprecatedColorPropType,
     /**
      * The highlight and cursor color of the text input.
      */
-    selectionColor: ColorPropType,
+    selectionColor: DeprecatedColorPropType,
     /**
      * An instance of `DocumentSelectionState`, this is some state that is responsible for
      * maintaining selection information for a document.
@@ -332,7 +331,7 @@ const PasswordBoxWindows = createReactClass({
    * `NativeMethodsMixin` will look for this when invoking `setNativeProps`. We
    * make `this` look like an actual native component class.
    */
-  mixins: [NativeMethodsMixin, TimerMixin],
+  mixins: [NativeMethodsMixin],
 
   /**
    * Returns `true` if the input is currently focused; `false` otherwise.
