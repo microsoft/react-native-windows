@@ -43,10 +43,9 @@ EXPORTS
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
 ?typeName@dynamic@folly@@QEBAPEBDXZ
 ?updateProperties@ShadowNode@react@facebook@@UEAAX$$QEBUdynamic@folly@@@Z
-?Utf16ToUtf8@UnicodeConversion@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?Utf8ToUtf16@UnicodeConversion@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?utf16toUTF8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEBG_K@Z
 ??1Buffer@jsi@facebook@@UEAA@XZ
-?makeChakraRuntime@chakra@react@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QEAUChakraRuntimeArgs@123@@Z
+?makeChakraRuntime@chakraruntime@jsi@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QEAUChakraJsiRuntimeArgs@123@@Z
 
 YGNodeNew
 YGNodeNewWithConfig

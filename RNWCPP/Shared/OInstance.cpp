@@ -45,14 +45,13 @@
 #include <Shlwapi.h>
 
 #include <cxxreact/JSExecutor.h>
+
 #include <jsi/jsi.h>
-#include <jsi/RuntimeHolder.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
 
-#include "../Chakra/ChakraRuntime.h"
-
-#if (defined(_MSC_VER) && !defined(WINRT))
-#include <jsi/V8Runtime.h>
+// This conditional will be removed once we move to newer version of react-native.
+#ifdef HAS_JSI
+#include <jsi/RuntimeHolder.h>
 #endif
 
 namespace {
@@ -166,6 +165,7 @@ public:
     std::shared_ptr<ExecutorDelegate> delegate,
     std::shared_ptr<MessageQueueThread> jsQueue) override {
 
+#ifdef HAS_JSI
     auto logger = [](const std::string& message, unsigned int logLevel) {};
 
     return std::make_unique<JSIExecutor>(runtimeHolder_->getRuntime(),
@@ -173,9 +173,12 @@ public:
       logger,
       JSIExecutor::defaultTimeoutInvoker,
       nullptr);
+#else
+    return nullptr;
+#endif
   }
 
-  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder)
+  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit>&& runtimeHolder) noexcept
     : runtimeHolder_(std::move(runtimeHolder)) {}
 
 private:
@@ -380,7 +383,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
   else {
 
     if (m_devSettings->jsiRuntimeHolder) {
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder);
+      jsef = std::make_shared<OJSIExecutorFactory>(std::move(m_devSettings->jsiRuntimeHolder));
     }
     else {
       ChakraInstanceArgs instanceArgs;

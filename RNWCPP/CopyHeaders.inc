@@ -1061,9 +1061,9 @@ COPYFILES_PASS0 = \
 
 COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
+	ReactWindows\Chakra\ChakraRuntime.h, Chakra; \
 	ReactCommon\jsi\jsi.h, jsi; \
 	ReactCommon\jsi\jsi-inl.h, jsi; \
-	ReactCommon\jsi\ScriptStore.h, jsi; \
 	ReactCommon\jsi\RuntimeHolder.h, jsi; \
-        ReactCommon\jsi\V8Runtime.h, jsi; \
-	ReactWindows\Chakra\ChakraRuntime.h, Chakra; \
+	ReactCommon\jsi\ScriptStore.h, jsi; \
+	ReactCommon\jsi\V8Runtime.h, jsi; \
