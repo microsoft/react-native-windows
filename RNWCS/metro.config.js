@@ -6,6 +6,7 @@ const defaultPolyfills = require("react-native/rn-get-polyfills");
 
 var config = {
   resolver: {
+    platforms: [ 'windows' ],
     hasteImplModulePath: require.resolve('./jest/hasteImpl'),
   },
 };
