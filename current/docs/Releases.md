@@ -28,11 +28,11 @@ It may also make sense to look for other NPM dependencies that can be upgraded a
 
 #### Update the package.json version
 
-Make sure you also update the `react-native-windows` version in [package.json](https://github.com/ReactWindows/react-native-windows/blob/master/RNWCS/package.json) to align with the react-native version you've upgraded to. We use the same `-rc.*` convention for release candidates. **TODO:** We should introduce a script like [bump-oss-version.js](https://github.com/facebook/react-native/blob/master/scripts/bump-oss-version.js).
+Make sure you also update the `react-native-windows` version in [package.json](https://github.com/ReactWindows/react-native-windows/blob/master/current/package.json) to align with the react-native version you've upgraded to. We use the same `-rc.*` convention for release candidates. **TODO:** We should introduce a script like [bump-oss-version.js](https://github.com/facebook/react-native/blob/master/scripts/bump-oss-version.js).
 
 #### Testing the upgrade
 
-Before moving on to the next step, you'll want to test the package upgrades on the [Playground app](https://github.com/ReactWindows/react-native-windows/tree/master/RNWCS/ReactWindows/Playground) in the ReactWindows folder. The Playground app is a very low bar for testing, as it only uses basic `react-native` components. However, it will catch the majority of breaking changes to the `react-native-windows` bridge, which typically include props that have been changes or removed for common components like `View` and `Text`, changes to the batched bridge protocol, and new core components and modules that have been added upstream, but have not been added for `react-native-windows`.
+Before moving on to the next step, you'll want to test the package upgrades on the [Playground app](https://github.com/ReactWindows/react-native-windows/tree/master/current/ReactWindows/Playground) in the ReactWindows folder. The Playground app is a very low bar for testing, as it only uses basic `react-native` components. However, it will catch the majority of breaking changes to the `react-native-windows` bridge, which typically include props that have been changes or removed for common components like `View` and `Text`, changes to the batched bridge protocol, and new core components and modules that have been added upstream, but have not been added for `react-native-windows`.
 
 If there is a bug or issue, fix it and create a specific commit for it in the stable branch you're working on. Once the branch is working and you complete the release (as described below), don't forget to rebase and merge back into the master branch to bring that fix back.
 
