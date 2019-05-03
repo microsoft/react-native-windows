@@ -31,27 +31,26 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": "16.6.0",
-    "react-native": "~0.57.0"
+    "react": "16.6.3",
+    "react-native": "~0.58.0"
   },
   "devDependencies": {
-    "babel-eslint": "9.0.0-beta.2",
+    "babel-eslint": "9.0.0",
     "eslint": "5.1.0",
     "eslint-config-fb-strict": "22.1.0",
     "eslint-config-fbjs": "2.0.1",
-    "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-flowtype": "2.43.0",
     "eslint-plugin-prettier": "2.6.0",
     "eslint-plugin-react": "7.8.2",
-    "flow-bin": "^0.78.0",
+    "flow-bin": "^0.86.0",
     "https-proxy-agent": "^2.2.1",
     "jasmine": "^2.6.0",
     "jasmine-reporters": "^2.2.1",
     "minimist": "^1.2.0",
     "prettier": "1.13.6",
-    "react": "16.6.0",
-    "react-devtools-core": "^3.3.4",
-    "react-native": "~0.57.0"
+    "react": "16.6.3",
+    "react-devtools-core": "^3.4.2",
+    "react-native": "~0.58.0"
   },
   "dependencies": {
     "chalk": "^1.1.1",

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,31 +9,29 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  *
- * @providesModule Image
  * @flow
  * @format
  */
 'use strict';
 
-const ImageStylePropTypes = require('ImageStylePropTypes');
+const DeprecatedImageStylePropTypes = require('DeprecatedImageStylePropTypes');
+const DeprecatedStyleSheetPropType = require('DeprecatedStyleSheetPropType');
+const DeprecatedViewPropTypes = require('DeprecatedViewPropTypes');
+const ImageViewNativeComponent = require('ImageViewNativeComponent');
 const NativeModules = require('NativeModules');
-const React = require('React');
-const ReactNative = require('ReactNative');
 const PropTypes = require('prop-types');
+const React = require('React');
+const ReactNative = require('ReactNative'); // eslint-disable-line no-unused-vars
 const StyleSheet = require('StyleSheet');
-const StyleSheetPropType = require('StyleSheetPropType');
 const TextAncestor = require('TextAncestor');
-const ViewPropTypes = require('ViewPropTypes');
 
 const flattenStyle = require('flattenStyle');
 const merge = require('merge');
-const requireNativeComponent = require('requireNativeComponent');
 const resolveAssetSource = require('resolveAssetSource');
 
 const {ImageLoader} = NativeModules;
 
-const RKImage = requireNativeComponent('RCTImageView');
-const RCTTextInlineImage = requireNativeComponent('RCTTextInlineImage');
+const TextInlineImageNativeComponent = require('TextInlineImageNativeComponent');
 
 import type {ImageProps as ImagePropsType} from 'ImageProps';
 
@@ -43,8 +41,8 @@ function generateRequestId() {
 }
 
 const ImageProps = {
-  ...ViewPropTypes,
-  style: StyleSheetPropType(ImageStylePropTypes),
+  ...DeprecatedViewPropTypes,
+  style: DeprecatedStyleSheetPropType(DeprecatedImageStylePropTypes),
   /**
    * See https://facebook.github.io/react-native/docs/image.html#source
    */
@@ -200,7 +198,7 @@ declare class ImageComponentType extends ReactNative.NativeComponent<
  */
 let Image = (
   props: ImagePropsType,
-  forwardedRef: ?React.Ref<'RCTTextInlineImage' | 'RKImage'>,
+  forwardedRef: ?React.Ref<'RCTTextInlineImage' | 'ImageViewNativeComponent'>,
 ) => {
   let source = resolveAssetSource(props.source);
   const defaultSource = resolveAssetSource(props.defaultSource);
@@ -268,9 +266,9 @@ let Image = (
     <TextAncestor.Consumer>
       {hasTextAncestor =>
         hasTextAncestor ? (
-          <RCTTextInlineImage {...nativeProps} />
+          <TextInlineImageNativeComponent {...nativeProps} />
         ) : (
-          <RKImage {...nativeProps} />
+          <ImageViewNativeComponent {...nativeProps} />
         )
       }
     </TextAncestor.Consumer>
@@ -281,10 +279,9 @@ let Image = (
 Image = React.forwardRef(Image);
 
 /**
- * Prefetches a remote image for later use by downloading it to the disk
- * cache
+ * Retrieve the width and height (in pixels) of an image prior to displaying it
  *
- * See https://facebook.github.io/react-native/docs/image.html#prefetch
+ * See https://facebook.github.io/react-native/docs/image.html#getsize
  */
 Image.getSize = getSize;
 
