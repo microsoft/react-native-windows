@@ -19,10 +19,6 @@
 #include "Sandbox/SandboxJSExecutor.h"
 #endif
 
-#if !defined(NOJSC)
-#include <cxxreact/JSCExecutor.h>
-#endif
-
 #include <cxxreact/ModuleRegistry.h>
 #include <cxxreact/MessageQueueThread.h>
 
@@ -48,11 +44,7 @@
 
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
-
-// This conditional will be removed once we move to newer version of react-native.
-#ifdef HAS_JSI
 #include <jsi/RuntimeHolder.h>
-#endif
 
 namespace {
 
@@ -165,7 +157,6 @@ public:
     std::shared_ptr<ExecutorDelegate> delegate,
     std::shared_ptr<MessageQueueThread> jsQueue) override {
 
-#ifdef HAS_JSI
     auto logger = [](const std::string& message, unsigned int logLevel) {};
 
     return std::make_unique<JSIExecutor>(runtimeHolder_->getRuntime(),
@@ -173,9 +164,6 @@ public:
       logger,
       JSIExecutor::defaultTimeoutInvoker,
       nullptr);
-#else
-    return nullptr;
-#endif
   }
 
   OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit>&& runtimeHolder) noexcept
@@ -383,11 +371,12 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
   }
   else {
 
-
+    // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       jsef = std::make_shared<OJSIExecutorFactory>(std::move(m_devSettings->jsiRuntimeHolder));
     }
     else {
+      // We use the older non-JSI ChakraExecutor pipeline as a fallback as of now. This will go away once we completely move to JSI flow.
       ChakraInstanceArgs instanceArgs;
 
       instanceArgs.DebuggerBreakOnNextLine = m_devSettings->debuggerBreakOnNextLine;
