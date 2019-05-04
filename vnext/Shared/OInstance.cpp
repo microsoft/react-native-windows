@@ -187,6 +187,7 @@ private:
 
 }
 
+
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
 
@@ -382,6 +383,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
   }
   else {
 
+
     if (m_devSettings->jsiRuntimeHolder) {
       jsef = std::make_shared<OJSIExecutorFactory>(std::move(m_devSettings->jsiRuntimeHolder));
     }
@@ -410,6 +412,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
 
       jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
     }
+
   }
 
   m_innerInstance->initializeBridge(std::make_unique<BridgeUIBatchInstanceCallback>(m_innerInstance, m_uimanager, m_nativeQueue),
