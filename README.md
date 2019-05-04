@@ -11,7 +11,7 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 
 ## Status
 
-We are in the process of refactoring the native bridge implementation for `react-native-windows` to better align with upcoming changes related to the [React Native Fabric Architecture](https://github.com/react-native-community/discussions-and-proposals/issues/4). This effort is currently taking place in the [RNWCPP](https://github.com/Microsoft/react-native-windows/tree/master/RNWCPP) subdirectory within this GitHub repo. We are tracking progress on this work through [Projects](https://github.com/Microsoft/react-native-windows/projects) and [Issues](https://github.com/Microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
+We are in the process of refactoring the native bridge implementation for `react-native-windows` to better align with upcoming changes related to the [React Native Fabric Architecture](https://github.com/react-native-community/discussions-and-proposals/issues/4). This effort is currently taking place in the [vnext](https://github.com/Microsoft/react-native-windows/tree/master/vnext) subdirectory within this GitHub repo. We are tracking progress on this work through [Projects](https://github.com/Microsoft/react-native-windows/projects) and [Issues](https://github.com/Microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
 
 Our intent is to provide a compatibility layer that will support existing apps, view managers, and native modules written in C# with minimal breaking changes.
 
@@ -46,7 +46,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 ## Getting Started
 
-Want to develop a React Native Windows app? Head over to our [Getting Started Guide](RNWCS/docs/GettingStarted.md).
+Want to develop a React Native Windows app? Head over to our [Getting Started Guide](current/docs/GettingStarted.md).
 
 ## Getting Help
 
@@ -59,7 +59,7 @@ Please use these community resources for getting help. We use the GitHub issues 
 
 [React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows plugin is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
-For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](RNWCS/docs/CoreParityStatus.md).
+For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md).
 
 ### Showing the Debug Menu
 
@@ -73,7 +73,7 @@ For information on parity status with Android and iOS, including details on impl
 - Third party modules may be missing Windows support, so reach out to the project owners directly.
 - Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
 - You should almost never need to modify or fork React Native Windows itself (the ReactNative and ReactNative.Shared project/sources) to create custom controls. The extension points should already exist to do just about anything!
-- Read the guides on [Native Modules for Windows](RNWCS/docs/NativeModulesWindows.md) and [Native UI Components for Windows](RNWCS/docs/NativeComponentsWindows.md) if you are interested in extending native functionality.
+- Read the guides on [Native Modules for Windows](current/docs/NativeModulesWindows.md) and [Native UI Components for Windows](current/docs/NativeComponentsWindows.md) if you are interested in extending native functionality.
 
 ## Opening Issues
 
