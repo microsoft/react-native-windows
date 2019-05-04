@@ -45,13 +45,13 @@
 #include <Shlwapi.h>
 
 #include <cxxreact/JSExecutor.h>
+
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
 
-#include "../Chakra/ChakraRuntime.h"
-
-#if (defined(_MSC_VER) && !defined(WINRT))
-#include <jsi/V8Runtime.h>
+// This conditional will be removed once we move to newer version of react-native.
+#ifdef HAS_JSI
+#include <jsi/RuntimeHolder.h>
 #endif
 
 namespace {
@@ -158,79 +158,34 @@ bool GetLastWriteTime(const std::string& fileName, uint64_t& result) noexcept
 
 namespace facebook { namespace react {
 
-#if (defined(_MSC_VER) && !defined(WINRT)  && !defined(_M_ARM))
-class ChakraJSIExecutorFactory : public JSExecutorFactory {
+namespace {
+class OJSIExecutorFactory : public JSExecutorFactory {
 public:
   std::unique_ptr<JSExecutor> createJSExecutor(
     std::shared_ptr<ExecutorDelegate> delegate,
     std::shared_ptr<MessageQueueThread> jsQueue) override {
 
+#ifdef HAS_JSI
     auto logger = [](const std::string& message, unsigned int logLevel) {};
 
-    return std::make_unique<JSIExecutor>(facebook::react::chakra::makeChakraRuntime(std::move(args_), std::move(jsQueue), logger),
+    return std::make_unique<JSIExecutor>(runtimeHolder_->getRuntime(),
       std::move(delegate),
       logger,
       JSIExecutor::defaultTimeoutInvoker,
       nullptr);
-  }
-
-  ChakraJSIExecutorFactory(facebook::react::ChakraInstanceArgs&& args)
-    : args_(std::move(args)) {}
-private:
-  facebook::react::ChakraInstanceArgs args_;
-};
-
-#if defined(USE_V8)
-class V8JSIExecutorFactory : public JSExecutorFactory {
-public:
-  std::unique_ptr<JSExecutor> createJSExecutor(
-    std::shared_ptr<ExecutorDelegate> delegate,
-    std::shared_ptr<MessageQueueThread> jsQueue) override {
-
-    auto cacheProvider = std::make_shared<facebook::v8runtime::CacheProvider>([](const std::string& sourceUrl) {return nullptr; });
-    auto logger = std::make_shared<facebook::v8runtime::Logger>([](const std::string& message, unsigned int logLevel) { });
-
-    return std::make_unique<JSIExecutor>(
-      facebook::v8runtime::makeV8Runtime(nullptr, std::move(logger), std::move(jsQueue), std::move(cacheProvider), nullptr, nullptr, nullptr, nullptr),
-      delegate,
-      *logger.get(),
-      JSIExecutor::defaultTimeoutInvoker,
-      nullptr);
-  }
-};
-#endif // USE_V8
-
 #else
-
-class ChakraJSIExecutorFactory : public JSExecutorFactory {
-public:
-  std::unique_ptr<JSExecutor> createJSExecutor(
-    std::shared_ptr<ExecutorDelegate> delegate,
-    std::shared_ptr<MessageQueueThread> jsQueue) override {
-      std::abort();
-  }
-
-  ChakraJSIExecutorFactory(facebook::react::ChakraInstanceArgs&& args)
-    : args_(std::move(args)) { std::abort(); }
-private:
-  facebook::react::ChakraInstanceArgs args_;
-};
-
-#if defined(USE_V8)
-class V8JSIExecutorFactory : public JSExecutorFactory {
-public:
-  std::unique_ptr<JSExecutor> createJSExecutor(
-    std::shared_ptr<ExecutorDelegate> delegate,
-    std::shared_ptr<MessageQueueThread> jsQueue) override {
-      std::abort();
-  }
-
-  V8JSIExecutorFactory() { std::abort(); }
-};
-#endif // USE_V8
-
-
+    return nullptr;
 #endif
+  }
+
+  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit>&& runtimeHolder) noexcept
+    : runtimeHolder_(std::move(runtimeHolder)) {}
+
+private:
+  std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+};
+
+}
 
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
@@ -426,43 +381,35 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     }
   }
   else {
-    ChakraInstanceArgs instanceArgs;
 
-    instanceArgs.DebuggerBreakOnNextLine = m_devSettings->debuggerBreakOnNextLine;
-    instanceArgs.DebuggerPort = m_devSettings->debuggerPort;
-    instanceArgs.DebuggerRuntimeName = m_devSettings->debuggerRuntimeName;
+    if (m_devSettings->jsiRuntimeHolder) {
+      jsef = std::make_shared<OJSIExecutorFactory>(std::move(m_devSettings->jsiRuntimeHolder));
+    }
+    else {
+      ChakraInstanceArgs instanceArgs;
 
-    instanceArgs.EnableDebugging = m_devSettings->useDirectDebugger;
-    instanceArgs.LoggingCallback = m_devSettings->loggingCallback;
+      instanceArgs.DebuggerBreakOnNextLine = m_devSettings->debuggerBreakOnNextLine;
+      instanceArgs.DebuggerPort = m_devSettings->debuggerPort;
+      instanceArgs.DebuggerRuntimeName = m_devSettings->debuggerRuntimeName;
 
-    instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
+      instanceArgs.EnableDebugging = m_devSettings->useDirectDebugger;
+      instanceArgs.LoggingCallback = m_devSettings->loggingCallback;
 
-    if (!m_devSettings->useJITCompilation)
-    {
+      instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
+
+      if (!m_devSettings->useJITCompilation)
+      {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration | JsRuntimeAttributeDisableExecutablePageAllocation);
+        instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration | JsRuntimeAttributeDisableExecutablePageAllocation);
 #else
-      instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration);
+        instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration);
 #endif
-    }
+      }
 
-    instanceArgs.MemoryTracker = m_devSettings->memoryTracker ? m_devSettings->memoryTracker : CreateMemoryTracker(std::shared_ptr<MessageQueueThread>{m_nativeQueue});
+      instanceArgs.MemoryTracker = m_devSettings->memoryTracker ? m_devSettings->memoryTracker : CreateMemoryTracker(std::shared_ptr<MessageQueueThread>{m_nativeQueue});
 
-    switch (m_devSettings->jsiMode) {
-    case JSIMode::None:
-      // TODO: What should we use here for the first and second param, cacheDir and jscConfig respectively
       jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
-      break;
-    case JSIMode::ChakraJSI:
-      jsef = std::make_shared<ChakraJSIExecutorFactory>(std::move(instanceArgs));
-      break;
-#if defined(USE_V8)
-    case JSIMode::V8JSI:
-      jsef = std::make_shared<V8JSIExecutorFactory>();
-      break;
-#endif // USE_V8
     }
-
   }
 
   m_innerInstance->initializeBridge(std::make_unique<BridgeUIBatchInstanceCallback>(m_innerInstance, m_uimanager, m_nativeQueue),
