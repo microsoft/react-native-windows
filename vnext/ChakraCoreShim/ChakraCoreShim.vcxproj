@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x86">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x86">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <!-- Kept for Visual Studio compatibility. -->
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{00830A8B-97E0-4320-B7B0-0078B405997B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ChakraCoreShim</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <TargetName>ChakraCore</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;CHAKRACORESHIM_EXPORTS;USE_EDGEMODE_JSRT;NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;chakrart.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <Link>
+      <ModuleDefinitionFile>$(TargetName).$(Platform).def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <ModuleDefinitionFile>$(TargetName).x86.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ChakraCoreShim.cpp" />
+    <ClCompile Include="Redirects.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ChakraHeaders\ChakraCommon.h" />
+    <ClInclude Include="ChakraHeaders\ChakraCommonWindows.h" />
+    <ClInclude Include="ChakraHeaders\ChakraCore.h" />
+    <ClInclude Include="ChakraHeaders\ChakraDebug.h" />
+    <ClInclude Include="Redirects.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChakraCore.x64.def" />
+    <None Include="ChakraCore.x86.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <!-- This seem to confuse loader and make calls like JsCreateRuntime enter the same (fake) ChakraCore.dll.-->
+  <!-- We just need the header files from the Chakra package, so just copy them for now -->
+  <!--ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets'))" />
+  </Target-->
+</Project>

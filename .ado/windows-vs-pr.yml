@@ -1,0 +1,353 @@
+# This file defines the Windows Visual Studio PR build steps used during the CI loop
+name: $(Date:yyyyMMdd).$(Rev:.r)
+
+trigger: none # will disable CI builds entirely
+
+pr: none # disable on PRs until stable
+
+jobs:
+  - job: UWPPR
+    displayName: UWP PR
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+    pool:
+      name: OE Standard Pool
+      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
+      - task: CmdLine@2
+        displayName: Ensure yarn
+        inputs:
+          script: npm install -g yarn
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
+          workingDirectory: vnext
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - ReactWindows-UWP
+        inputs:
+          command: restore
+          restoreSolution: vnext/ReactWindows-UWP.sln
+          feedsToUse: config
+          nugetConfigPath: vnext/NuGet.config
+          restoreDirectory: packages/
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - ReactWindows-UWP
+        inputs:
+          solution: vnext/ReactWindows-UWP.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground
+        inputs:
+          command: restore
+          restoreSolution: vnext/Playground/Playground.sln
+          feedsToUse: config
+          nugetConfigPath: vnext/NuGet.config
+          restoreDirectory: packages/
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - Playground
+        inputs:
+          solution: vnext/Playground/Playground.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: Remove SampleApp.uwp.bundle
+        inputs:
+          script: del SampleApp.uwp.bundle
+          workingDirectory: vnext
+
+  - job: WindowsVSPR
+    displayName: Windows Visual Studio with Win32 PR
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+    pool:
+      name: OE Standard Pool
+      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: PowerShell@2
+        displayName: Cleanup any packagers left over from other builds
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            echo "ports:{"
+            echo ${env:RNTester.PackagerPort}
+            echo "}"
+            Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+            Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+
+      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
+      - task: CmdLine@2
+        displayName: Ensure yarn
+        inputs:
+          script: npm install -g yarn
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
+          workingDirectory: vnext
+
+      - task: PowerShell@2
+        displayName: Cleanup any packagers left over from other builds
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            echo "ports:{"
+            echo ${env:RNTester.PackagerPort}
+            echo "}"
+            Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+            Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
+          workingDirectory: vnext
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - ReactWindows
+        inputs:
+          command: restore
+          restoreSolution: vnext/ReactWindows.sln
+          feedsToUse: config
+          #vstsFeed: # Required when feedsToUse == Select
+          #includeNuGetOrg: true # Required when feedsToUse == Select
+          nugetConfigPath: vnext/NuGet.config
+          #externalFeedCredentials: # Optional
+          #noCache: false
+          #disableParallelProcessing: false
+          restoreDirectory: packages/
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+          #packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg' # Required when command == Push
+          #nuGetFeedType: 'internal' # Required when command == Push# Options: internal, external
+          #publishVstsFeed: # Required when command == Push && NuGetFeedType == Internal
+          #publishPackageMetadata: true # Optional
+          #allowPackageConflicts: # Optional
+          #publishFeedCredentials: # Required when command == Push && NuGetFeedType == External
+          #verbosityPush: 'Detailed' # Options: quiet, normal, detailed
+          #packagesToPack: '**/*.csproj' # Required when command == Pack
+          #configuration: '$(BuildConfiguration)' # Optional
+          #packDestination: '$(Build.ArtifactStagingDirectory)' # Optional
+          #versioningScheme: 'off' # Options: off, byPrereleaseNumber, byEnvVar, byBuildNumber
+          #includeReferencedProjects: false # Optional
+          #versionEnvVar: # Required when versioningScheme == ByEnvVar
+          #majorVersion: '1' # Required when versioningScheme == ByPrereleaseNumber
+          #minorVersion: '0' # Required when versioningScheme == ByPrereleaseNumber
+          #patchVersion: '0' # Required when versioningScheme == ByPrereleaseNumber
+          #packTimezone: 'utc' # Required when versioningScheme == ByPrereleaseNumber# Options: utc, local
+          #includeSymbols: false # Optional
+          #toolPackage: # Optional
+          #buildProperties: # Optional
+          #basePath: # Optional
+          #verbosityPack: 'Detailed' # Options: quiet, normal, detailed
+          #arguments: # Required when command == Custom
+
+      - task: MSBuild@1
+        displayName: MSBuild - ReactWindows
+        inputs:
+          solution: vnext/ReactWindows.sln
+          #msbuildLocationMethod: 'version' # Optional. Options: version, location
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          #msbuildLocation: # Optional
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+          #maximumCpuCount: false # Optional
+          #restoreNugetPackages: false # Optional
+          #logProjectEvents: false # Optional
+          #createLogFile: false # Optional
+          #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
+
+      - task: VSTest@2
+        displayName: Run Desktop Unit Tests
+        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+        inputs:
+          testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
+          testAssemblyVer2: 'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll' # Required when testSelector == TestAssemblies
+          #testPlan: # Required when testSelector == TestPlan
+          #testSuite: # Required when testSelector == TestPlan
+          #testConfiguration: # Required when testSelector == TestPlan
+          #tcmTestRun: '$(test.RunId)' # Optional
+          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+          #testFiltercriteria: # Optional
+          #runOnlyImpactedTests: False # Optional
+          #runAllTestsAfterXBuilds: '50' # Optional
+          #uiTests: false # Optional
+          #vstestLocationMethod: 'version' # Optional. Options: version, location
+          vsTestVersion: '15.0' # Optional. Options: latest, 15.0, 14.0, toolsInstaller
+          #vstestLocation: # Optional
+          #runSettingsFile: # Optional
+          #overrideTestrunParameters: # Optional
+          #pathtoCustomTestAdapters: # Optional
+          #runInParallel: False # Optional
+          runTestsInIsolation: true # Optional
+          #codeCoverageEnabled: False # Optional
+          #otherConsoleOptions: # Optional
+          #distributionBatchType: 'basedOnTestCases' # Optional. Options: basedOnTestCases, basedOnExecutionTime, basedOnAssembly
+          #batchingBasedOnAgentsOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customBatchSize
+          #customBatchSizeValue: '10' # Required when distributionBatchType == BasedOnTestCases && BatchingBasedOnAgentsOption == CustomBatchSize
+          #batchingBasedOnExecutionTimeOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customTimeBatchSize
+          #customRunTimePerBatchValue: '60' # Required when distributionBatchType == BasedOnExecutionTime && BatchingBasedOnExecutionTimeOption == CustomTimeBatchSize
+          #dontDistribute: False # Optional
+          #testRunTitle: # Optional
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          publishRunAttachments: true # Optional
+          #diagnosticsEnabled: True # Optional
+          collectDumpOn: 'onAbortOnly' # Optional. Options: onAbortOnly, always, never
+          #rerunFailedTests: False # Optional
+          #rerunType: 'basedOnTestFailurePercentage' # Optional. Options: basedOnTestFailurePercentage, basedOnTestFailureCount
+          #rerunFailedThreshold: '30' # Optional
+          #rerunFailedTestCasesMaxLimit: '5' # Optional
+          #rerunMaxAttempts: '3' # Optional
+
+      - task: PowerShell@2
+        displayName: Set up test servers
+        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+        inputs:
+          targetType: filePath # filePath | inline
+          filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload
+
+      - task: VSTest@2
+        displayName: Run Desktop Integration Tests
+        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+        inputs:
+          testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
+          testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
+          #testPlan: # Required when testSelector == TestPlan
+          #testSuite: # Required when testSelector == TestPlan
+          #testConfiguration: # Required when testSelector == TestPlan
+          #tcmTestRun: '$(test.RunId)' # Optional
+          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+          testFiltercriteria: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
+          #runOnlyImpactedTests: False # Optional
+          #runAllTestsAfterXBuilds: '50' # Optional
+          #uiTests: false # Optional
+          #vstestLocationMethod: 'version' # Optional. Options: version, location
+          vsTestVersion: '15.0' # Optional. Options: latest, 15.0, 14.0, toolsInstaller
+          #vstestLocation: # Optional
+          #runSettingsFile: # Optional
+          #overrideTestrunParameters: # Optional
+          #pathtoCustomTestAdapters: # Optional
+          #runInParallel: False # Optional
+          runTestsInIsolation: true # Optional
+          #codeCoverageEnabled: False # Optional
+          #otherConsoleOptions: '--Tests:"RNTesterIntegrationTests"' # TODO re-add WebSocketModuleIntegrationTest  # Optional
+          #distributionBatchType: 'basedOnTestCases' # Optional. Options: basedOnTestCases, basedOnExecutionTime, basedOnAssembly
+          #batchingBasedOnAgentsOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customBatchSize
+          #customBatchSizeValue: '10' # Required when distributionBatchType == BasedOnTestCases && BatchingBasedOnAgentsOption == CustomBatchSize
+          #batchingBasedOnExecutionTimeOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customTimeBatchSize
+          #customRunTimePerBatchValue: '60' # Required when distributionBatchType == BasedOnExecutionTime && BatchingBasedOnExecutionTimeOption == CustomTimeBatchSize
+          #dontDistribute: False # Optional
+          #testRunTitle: # Optional
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          publishRunAttachments: true # Optional
+          #diagnosticsEnabled: True # Optional
+          collectDumpOn: 'onAbortOnly' # Optional. Options: onAbortOnly, always, never
+          #rerunFailedTests: False # Optional
+          #rerunType: 'basedOnTestFailurePercentage' # Optional. Options: basedOnTestFailurePercentage, basedOnTestFailureCount
+          #rerunFailedThreshold: '30' # Optional
+          #rerunFailedTestCasesMaxLimit: '5' # Optional
+          #rerunMaxAttempts: '3' # Optional
+
+      - task: PowerShell@2
+        displayName: Cleanup any packagers left over from other builds
+        condition: and(always(), ne(variables['BuildPlatform'], 'ARM'))
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            echo "ports:{"
+            echo ${env:RNTester.PackagerPort}
+            echo "}"
+            Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+            Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
