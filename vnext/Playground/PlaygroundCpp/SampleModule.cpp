@@ -1,4 +1,7 @@
-﻿#include "pch.h"
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#include "pch.h"
 #include "SampleModule.h"
 
 using namespace winrt;
@@ -8,7 +11,7 @@ namespace winrt::PlaygroundCpp::implementation
 {
 	SampleModule::SampleModule()
 	{
-		_constants.Insert(L"a", L"\"b\"");
+		m_constants.Insert(L"a", L"\"b\"");
 
 		m_delegates.Insert(
 			L"method1",
@@ -40,7 +43,7 @@ namespace winrt::PlaygroundCpp::implementation
 
 	IMapView<hstring, hstring> SampleModule::Constants()
 	{
-		return _constants.GetView();
+		return m_constants.GetView();
 	}
 
 	hstring SampleModule::Name()

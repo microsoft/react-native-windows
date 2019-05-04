@@ -1,4 +1,7 @@
-﻿#pragma once
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#pragma once
 
 using namespace winrt;
 using namespace winrt::react::uwp;
@@ -18,7 +21,7 @@ namespace winrt::PlaygroundCpp::implementation
 		hstring Name();
 
 	private:
-		IMap<hstring, hstring> _constants = winrt::single_threaded_map<hstring, hstring>();
+		IMap<hstring, hstring> m_constants = winrt::single_threaded_map<hstring, hstring>();
 		IMap<hstring, MethodDelegate> m_delegates = winrt::single_threaded_map<hstring, MethodDelegate>();
 		IMap<hstring, MethodWithCallbackDelegate> m_delegateWithCallback = winrt::single_threaded_map<hstring, MethodWithCallbackDelegate>();
 	};

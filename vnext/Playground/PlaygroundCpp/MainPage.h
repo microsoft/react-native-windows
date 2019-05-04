@@ -1,4 +1,7 @@
-﻿#pragma once
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#pragma once
 
 #include "MainPage.g.h"
 
@@ -6,9 +9,6 @@ namespace winrt::PlaygroundCpp::implementation
 {
     struct MainPage : MainPageT<MainPage>
     {
-		const winrt::hstring JSFILENAME = L"App.windows";
-		const winrt::hstring JSCOMPONENTNAME = L"Playground";
-
         MainPage();
 
 	private:

@@ -1,4 +1,8 @@
-﻿#include "pch.h"
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#include "pch.h"
+
 #include "MainPage.h"
 #include "MainPage.g.cpp"
 #include "winrt\react.uwp.h"
@@ -12,6 +16,9 @@ using namespace Windows::UI::Xaml::Media;
 
 namespace winrt::PlaygroundCpp::implementation
 {
+	static constexpr auto JSFILENAME = L"App.windows";
+	static constexpr auto JSCOMPONENTNAME = L"Playground";
+
     MainPage::MainPage()
     {
         InitializeComponent();
@@ -29,10 +36,11 @@ namespace winrt::PlaygroundCpp::implementation
 
 		// instantiate sample module for registering callbacks for live reload, JS error handling etc.
 		auto module = winrt::make<SampleModule>();
-		instance.RegisterModule(module.as<IModule>());
+		instance.RegisterModule(module);
 		instance.Start(settings);
 
-		RootElement().Instance(instance);
+		auto rootElement = RootElement();
+		rootElement.Instance(instance);
 
 		// Setup sample properties for initializing UI thread
 		hstring initialProps = L"{ " \
@@ -40,10 +48,10 @@ namespace winrt::PlaygroundCpp::implementation
 			", \"two\":\"2\"" \
 			"}";
 
-		RootElement().InitialProps(initialProps);
+		rootElement.InitialProps(initialProps);
 
-		RootElement().JsComponentName(JSCOMPONENTNAME);
+		rootElement.JsComponentName(JSCOMPONENTNAME);
 
-		RootElement().StartRender();
+		rootElement.StartRender();
 	}
 }
