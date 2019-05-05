@@ -8,11 +8,11 @@
 
 [React Native](http://facebook.github.io/react-native) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](http://facebook.github.io/react). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
 
-This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for [all devices supported by Windows 10](https://developer.microsoft.com/en-us/windows/get-started-windows-10) including PCs, tablets, 2-in-1s, Xbox, Mixed reality devices etc., 
+This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for [all devices supported by Windows 10](https://developer.microsoft.com/en-us/windows/get-started-windows-10) including PCs, tablets, 2-in-1s, Xbox, Mixed reality devices etc. 
 
 ## Status
 
-We are in the process of refactoring the native bridge implementation for `react-native-windows` to better align with upcoming changes related to the [React Native Fabric Architecture](https://github.com/react-native-community/discussions-and-proposals/issues/4). This effort is currently taking place in the [vnext](https://github.com/Microsoft/react-native-windows/tree/master/vnext) subdirectory within this GitHub repo. You can read more about this effort [here](vnext/README.md). We are tracking progress on this work through [Projects](https://github.com/Microsoft/react-native-windows/projects) and [Issues](https://github.com/Microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
+We are in the process of re-implementing react-native-windows in C++, for better performance, and to better align with the shared C++ react-native core as it evolves. This effort is currently taking place in the [vnext](https://github.com/Microsoft/react-native-windows/tree/master/vnext) subdirectory within this GitHub repo. You can read more about this effort [here](vnext/README.md). We are tracking progress on this work through [Projects](https://github.com/Microsoft/react-native-windows/projects) and [Issues](https://github.com/Microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
 
 The ["current"](https://github.com/Microsoft/react-native-windows/tree/master/current) subdirectory holds the earlier C# implementation for `react-native-windows`. 
 
