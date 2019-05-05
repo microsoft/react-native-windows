@@ -4,6 +4,7 @@
 #pragma once
 
 #include <boost/beast/websocket.hpp>
+#include <boost/beast/websocket/ssl.hpp>
 #include <thread>
 #include <queue>
 #include "IWebSocket.h"
@@ -96,8 +97,13 @@ public:
   WebSocket(Url&& url);
 };
 
-template<typename Protocol, typename Socket, typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
-class SecureWebSocket : public BaseWebSocket<Protocol, Socket, Resolver>
+class SecureWebSocket
+  : public  BaseWebSocket
+            <
+              boost::asio::ip::tcp,
+              boost::asio::ssl::stream<boost::asio::ip::tcp::socket>,
+              boost::asio::ip::basic_resolver<boost::asio::ip::tcp>
+            >
 {
   #pragma region BaseWebSocket overrides
 

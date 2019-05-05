@@ -14,7 +14,6 @@
 #include <boost/archive/iterators/transform_width.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/beast/core/buffers_to_string.hpp>
-#include <boost/beast/websocket/ssl.hpp>
 #include "UnicodeConversion.h"
 
 using namespace boost::archive::iterators;
@@ -460,17 +459,15 @@ template class WebSocket<boost::asio::ip::tcp>;
 
 #pragma region SecureWebSocket members
 
-template<typename Protocol, typename Socket, typename Resolver>
-SecureWebSocket<Protocol, Socket, Resolver>::SecureWebSocket(Url&& url)
-  : BaseWebSocket<Protocol, Socket, Resolver>(std::move(url))
+SecureWebSocket::SecureWebSocket(Url&& url)
+  : BaseWebSocket(std::move(url))
 {
   auto ssl = ssl::context(ssl::context::sslv23_client);
-  this->m_stream = make_unique<websocket::stream<Socket>>(this->m_context, ssl);
-  this->m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
+  m_stream = make_unique<websocket::stream<ssl::stream<tcp::socket>>>(m_context, ssl);
+  m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void SecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Options& options)
+void SecureWebSocket::Handshake(const IWebSocket::Options& options)
 {
   this->m_stream->next_layer().async_handshake(ssl::stream_base::client, [this, options = std::move(options)](boostecr ec)
   {
@@ -480,12 +477,10 @@ void SecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Op
     }
     else
     {
-      BaseWebSocket<Protocol, Socket, Resolver>::Handshake(std::move(options));
+      BaseWebSocket::Handshake(std::move(options));
     }
   });
 }
-
-template class SecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 
 #pragma endregion // SecureWebSocket members
 
@@ -507,7 +502,7 @@ template class SecureWebSocket<tcp, ssl::stream<tcp::socket>>;
     if (url.port.empty())
       url.port = "443";
 
-    return unique_ptr<IWebSocket>(new SecureWebSocket<tcp, ssl::stream<tcp::socket>>(std::move(url)));
+    return unique_ptr<IWebSocket>(new SecureWebSocket(std::move(url)));
   }
   else
     throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
