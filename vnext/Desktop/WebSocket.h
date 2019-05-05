@@ -138,10 +138,7 @@ class MockStream
   boost::asio::io_context& m_context;
 
 public:
-  MockStream(boost::asio::io_context& context)
-    : m_context{ context }
-  {
-  }
+  MockStream(boost::asio::io_context& context);
 
   std::function<boost::system::error_code()> ConnectResult;
 
@@ -157,75 +154,51 @@ public:
 
   using lowest_layer_type = MockStream;
 
-  lowest_layer_type&
-    lowest_layer()
-  {
-    return *this;
-  }
+  lowest_layer_type& lowest_layer();
 
-  lowest_layer_type const&
-    lowest_layer() const
-  {
-    return *this;
-  }
+  lowest_layer_type const& lowest_layer() const;
+
+  void binary(bool value);
+
+  bool got_binary() const;
+
+  bool got_text() const;
+
+  void auto_fragment(bool value);
+
+  bool auto_fragment() const;
+
+  void write_buffer_size(std::size_t amount);
+
+  std::size_t write_buffer_size() const;
 
   template<class DynamicBuffer, class ReadHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE
   (
     ReadHandler, void(boost::system::error_code, std::size_t)
   )
-  async_read(DynamicBuffer& buffer, ReadHandler&& handler)
-  {
-  }
+  async_read(DynamicBuffer& buffer, ReadHandler&& handler);
 
   template<class ConstBufferSequence, class WriteHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE
   (
     WriteHandler, void(boost::system::error_code, std::size_t)
   )
-  async_write(ConstBufferSequence const& buffers, WriteHandler&& handler)
-  {
-  }
+  async_write(ConstBufferSequence const& buffers, WriteHandler&& handler);
 
   template<class WriteHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE
   (
     WriteHandler, void(boost::system::error_code)
   )
-  async_ping(boost::beast::websocket::ping_data const& payload, WriteHandler&& handler)
-  {
-  }
+  async_ping(boost::beast::websocket::ping_data const& payload, WriteHandler&& handler);
 
   template<class CloseHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE
   (
     CloseHandler, void(boost::system::error_code)
   )
-  async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler)
-  {
-  }
-
-  void binary(bool value)
-  {
-  }
-
-  bool got_binary() const
-  {
-    return false;
-  }
-
-  bool got_text() const
-  {
-    return !got_binary();
-  }
-
-  void auto_fragment(bool value) {}
-
-  bool auto_fragment() const { return false; }
-
-  void write_buffer_size(std::size_t amount) {}
-
-  std::size_t write_buffer_size() const { return 8; }
+  async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler);
 
   // AsyncStream compliance
   template<class MutableBufferSequence, class ReadHandler>
@@ -233,23 +206,16 @@ public:
   (
     ReadHandler, void(boost::system::error_code, std::size_t)
   )
-  async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler)
-  {
-  }
+  async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler);
 
   template<class ConstBufferSequence, class WriteHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE
   (
     WriteHandler, void(boost::system::error_code, std::size_t)
   )
-  async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler)
-  {
-  }
+  async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler);
 
-  boost::asio::io_context::executor_type get_executor() noexcept
-  {
-    return m_context.get_executor();
-  }
+  boost::asio::io_context::executor_type get_executor() noexcept;
 };
 
 class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, MockStream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
@@ -257,10 +223,7 @@ class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp
 public:
   TestWebSocket(facebook::react::Url&& url);
 
-  void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc)
-  {
-    m_stream->next_layer().ConnectResult = std::move(resultFunc);
-  }
+  void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
 };
 
 } } } // namespace Microsoft::React::Test

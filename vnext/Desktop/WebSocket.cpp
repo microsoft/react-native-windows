@@ -521,12 +521,118 @@ namespace Microsoft {
 namespace React {
 namespace Test {
 
+#pragma region MockStream
+
+MockStream::MockStream(io_context& context)
+  : m_context{ context }
+{
+}
+
+io_context::executor_type MockStream::get_executor() noexcept
+{
+  return m_context.get_executor();
+}
+
+MockStream::lowest_layer_type& MockStream::lowest_layer()
+{
+  return *this;
+}
+
+MockStream::lowest_layer_type const& MockStream::lowest_layer() const
+{
+  return *this;
+}
+
+void MockStream::binary(bool value) {}
+
+bool MockStream::got_binary() const
+{
+  return false;
+}
+
+bool MockStream::got_text() const
+{
+  return !got_binary();
+}
+
+void MockStream::auto_fragment(bool value) {}
+
+bool MockStream::auto_fragment() const
+{
+  return false;
+}
+
+void MockStream::write_buffer_size(size_t amount) {}
+
+size_t MockStream::write_buffer_size() const
+{
+  return 8;
+}
+
+#pragma region boost::beast::websocket::stream NextLayer methods
+
+template<class DynamicBuffer, class ReadHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, size_t))
+MockStream::async_read(DynamicBuffer& buffer, ReadHandler&& handler)
+{
+  //TODO: Mock
+}
+
+template<class ConstBufferSequence, class WriteHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
+MockStream::async_write(ConstBufferSequence const& buffers, WriteHandler&& handler)
+{
+  //TODO: Mock
+}
+
+template<class WriteHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
+MockStream::async_ping(websocket::ping_data const& payload, WriteHandler&& handler)
+{
+  //TODO: Mock
+}
+
+template<class CloseHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
+MockStream::async_close(websocket::close_reason const& cr, CloseHandler&& handler)
+{
+  //TODO: Mock
+}
+
+// AsyncStream compliance
+template<class MutableBufferSequence, class ReadHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, size_t))
+MockStream::async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler)
+{
+  //TODO: Mock
+}
+
+template<class ConstBufferSequence, class WriteHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
+MockStream::async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler)
+{
+  //TODO: Mock
+}
+
+#pragma endregion // boost::beast::websocket::stream NextLayer methods
+
+#pragma endregion // MockStream
+
+#pragma region TestWebSocket
+
 TestWebSocket::TestWebSocket(facebook::react::Url&& url)
-  : facebook::react::BaseWebSocket<tcp, MockStream, boost::asio::ip::basic_resolver<tcp>>(std::move(url))
+  : facebook::react::BaseWebSocket<tcp, MockStream, ip::basic_resolver<tcp>>(std::move(url))
 {
   m_stream = make_unique<websocket::stream<MockStream>>(m_context);
   m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
 }
+
+void TestWebSocket::SetConnectResult(std::function<error_code()>&& resultFunc)
+{
+  m_stream->next_layer().ConnectResult = std::move(resultFunc);
+}
+
+#pragma endregion
 
 } } } // namespace Microsoft::React::Test
 
