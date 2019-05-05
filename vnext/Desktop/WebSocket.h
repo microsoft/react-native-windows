@@ -90,8 +90,13 @@ public:
   #pragma endregion
 };
 
-template<typename Protocol, typename Socket = boost::asio::basic_stream_socket<Protocol>, typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
-class WebSocket : public BaseWebSocket<Protocol, Socket, Resolver>
+class WebSocket
+  : public  BaseWebSocket
+            <
+              boost::asio::ip::tcp,
+              boost::asio::basic_stream_socket<boost::asio::ip::tcp>,
+              boost::asio::ip::basic_resolver<boost::asio::ip::tcp>
+            >
 {
 public:
   WebSocket(Url&& url);

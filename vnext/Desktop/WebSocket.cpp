@@ -444,16 +444,12 @@ IWebSocket::ReadyState BaseWebSocket<Protocol, Socket, Resolver>::GetReadyState(
 
 #pragma region WebSocket members
 
-template<typename Protocol, typename Socket, typename Resolver>
-WebSocket<Protocol, Socket, Resolver>::WebSocket(Url&& url)
-  : BaseWebSocket<Protocol, Socket, Resolver>(std::move(url))
+WebSocket::WebSocket(Url&& url)
+  : BaseWebSocket(std::move(url))
 {
-  this->m_stream = make_unique<websocket::stream<Socket>>(this->m_context);
+  this->m_stream = make_unique<websocket::stream<basic_stream_socket<tcp>>>(this->m_context);
   this->m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
 }
-
-// Define the default implementation.
-template class WebSocket<boost::asio::ip::tcp>;
 
 #pragma endregion
 
@@ -463,8 +459,8 @@ SecureWebSocket::SecureWebSocket(Url&& url)
   : BaseWebSocket(std::move(url))
 {
   auto ssl = ssl::context(ssl::context::sslv23_client);
-  m_stream = make_unique<websocket::stream<ssl::stream<tcp::socket>>>(m_context, ssl);
-  m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
+  this->m_stream = make_unique<websocket::stream<ssl::stream<tcp::socket>>>(this->m_context, ssl);
+  this->m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
 }
 
 void SecureWebSocket::Handshake(const IWebSocket::Options& options)
@@ -495,7 +491,7 @@ void SecureWebSocket::Handshake(const IWebSocket::Options& options)
     if (url.port.empty())
       url.port = "80";
 
-    return unique_ptr<IWebSocket>(new WebSocket<tcp>(std::move(url)));
+    return unique_ptr<IWebSocket>(new WebSocket(std::move(url)));
   }
   else if (url.scheme == "wss")
   {
