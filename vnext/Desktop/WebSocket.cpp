@@ -521,26 +521,11 @@ namespace Microsoft {
 namespace React {
 namespace Test {
 
-TestWebSocketOld::TestWebSocketOld(facebook::react::Url&& url)
-  : facebook::react::BaseWebSocket<tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>(std::move(url))
-{
-}
-
 TestWebSocket::TestWebSocket(facebook::react::Url&& url)
-  : facebook::react::BaseWebSocket<tcp, MockStreamLayer, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>(std::move(url))
-{
-  this->m_stream = make_unique<websocket::stream<MockStreamLayer>>(this->m_context);
-  this->m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
-}
-
-void TestWebSocket::SetConnectResult(std::function<boost::system::error_code()>&& resultFunc)
-{
-  m_stream->next_layer().ConnectResult = std::move(resultFunc);
-}
-
-TestWebSocketNew::TestWebSocketNew(facebook::react::Url&& url)
   : facebook::react::BaseWebSocket<tcp, MockStream, boost::asio::ip::basic_resolver<tcp>>(std::move(url))
 {
+  m_stream = make_unique<websocket::stream<MockStream>>(m_context);
+  m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
 }
 
 } } } // namespace Microsoft::React::Test
@@ -549,26 +534,6 @@ namespace boost {
 namespace asio {
 
 // See <boost/asio/connect.hpp>(776)
-//TODO: Likely remove in favor of subclass MockStreamLayer.
-template
-<
-  typename Iterator,
-  typename IteratorConnectHandler
->
-BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
-async_connect
-(
-  boost::beast::test::stream& s,
-  Iterator begin,
-  Iterator end,
-  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
-)
-{
-  boost::system::error_code ec;
-  ec.assign(1, ec.category()); //TODO: fix. Non-error value yields RAV.
-  handler(ec, {});
-}
-
 template
 <
   typename Iterator,
@@ -583,26 +548,59 @@ async_connect
   BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
 )
 {
-  handler(boost::system::errc::make_error_code(boost::system::errc::success), {});
-}
-
-template
-<
-  typename Iterator,
-  typename IteratorConnectHandler
->
-BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
-async_connect
-(
-  Microsoft::React::Test::MockStreamLayer& s,
-  Iterator begin,
-  Iterator end,
-  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
-)
-{
   handler(s.ConnectResult(), {});
 }
 
-} } // namespace boost::asio
+} // namespace boost::asio
+
+// HTTP low-level mock overrides.
+namespace beast {
+namespace http {
+
+///
+// msg - type http::message<0, http::basic_string_body<char, std::char_traits<char>, std::allocator<char>>, http::basic_fields<std::allocator<char>>>
+///
+template<class DynamicBuffer, bool isRequest, class Body, class Allocator, class ReadHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, std::size_t))
+async_read(Microsoft::React::Test::MockStream& stream, DynamicBuffer& buffer, message<isRequest, Body, basic_fields<Allocator>>& msg, ReadHandler&& handler)
+{
+  // Build response.
+  // TODO: Make mockable?
+  msg.result(status::switching_protocols);
+  msg.version(11);
+  msg.set(field::upgrade, "websocket");
+  msg.set(field::connection, "upgrade");
+  msg.set(field::sec_websocket_key, stream.Key); //TODO: Keep this, or accepted key (acc)?
+  msg.set(field::sec_websocket_version, "13");
+  msg.set(field::user_agent, BOOST_BEAST_VERSION_STRING);
+
+  websocket::detail::sec_ws_accept_type acc;
+  websocket::detail::make_sec_ws_accept(acc, stream.Key);
+  msg.set(field::sec_websocket_accept, acc);
+
+  BOOST_BEAST_HANDLER_INIT(ReadHandler, void(error_code, std::size_t));
+  boost::asio::post(stream.get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
+
+  return init.result.get();
+}
+
+///
+// sr - type http::serializer<1, http::empty_body, http::basic_fields<std::allocator<char>>>
+///
+template<bool isRequest, class Body, class Fields, class WriteHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, std::size_t))
+async_write(Microsoft::React::Test::MockStream& stream, serializer<isRequest, Body, Fields>& sr, WriteHandler&& handler)
+{
+  stream.Key = sr.get().at(field::sec_websocket_key);
+
+  BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code, std::size_t));
+  boost::asio::post(stream.get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
+
+  return init.result.get();
+}
+
+} } // namespace boost::beast::http
+
+} // namespace boost
 
 #pragma warning(pop)

@@ -143,6 +143,10 @@ public:
   {
   }
 
+  std::function<boost::system::error_code()> ConnectResult;
+
+  boost::beast::websocket::detail::sec_ws_key_type Key;
+
   using is_deflate_supported = std::integral_constant<bool, false>;
 
   using next_layer_type = MockStream;
@@ -150,8 +154,6 @@ public:
   using lowest_layer_type = MockStream;
 
   using executor_type = boost::asio::io_context::executor_type;
-
-  std::function<boost::system::error_code()> ConnectResult;
 
   using lowest_layer_type = MockStream;
 
@@ -165,18 +167,6 @@ public:
     lowest_layer() const
   {
     return *this;
-  }
-
-  template<class RequestDecorator, class HandshakeHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(boost::system::error_code))
-  async_handshake_ex
-  (
-    boost::string_view host,
-    boost::string_view target,
-    RequestDecorator const&,
-    HandshakeHandler&& handler
-  )
-  {
   }
 
   template<class DynamicBuffer, class ReadHandler>
@@ -262,96 +252,15 @@ public:
   }
 };
 
-class MockStreamLayer : public boost::beast::test::stream
-{
-  friend
-  void
-    teardown(
-      boost::beast::websocket::role_type,
-      Microsoft::React::Test::MockStreamLayer& s,
-      boost::system::error_code& ec) {}
-
-  template<class TeardownHandler>
-  friend
-  void
-    async_teardown(
-      boost::beast::websocket::role_type role,
-      Microsoft::React::Test::MockStreamLayer& s,
-      TeardownHandler&& handler) {}
-
-public:
-  MockStreamLayer(boost::asio::io_context& context)
-    : boost::beast::test::stream{ context }
-  {
-  }
-
-  // AsyncStream compliance
-  template<class MutableBufferSequence, class ReadHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    ReadHandler, void(boost::system::error_code, std::size_t)
-  )
-  async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler)
-  {
-    BOOST_BEAST_HANDLER_INIT(ReadHandler, void(boost::system::error_code, std::size_t));
-    post(get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
-
-    return init.result.get();
-  }
-
-  template<class ConstBufferSequence, class WriteHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    WriteHandler, void(boost::system::error_code, std::size_t)
-  )
-  async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler)
-  {
-    BOOST_BEAST_HANDLER_INIT(WriteHandler, void(boost::system::error_code, std::size_t));
-    post(get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
-
-    return init.result.get();
-  }
-
-  boost::asio::io_context::executor_type get_executor() noexcept
-  {
-    return boost::beast::test::stream::get_executor();
-  }
-
-  std::function<boost::system::error_code()> ConnectResult;
-
-  // Override test::stream layers.
-  using lowest_layer_type = MockStreamLayer;
-
-  lowest_layer_type&
-    lowest_layer()
-  {
-    return *this;
-  }
-
-  lowest_layer_type const&
-    lowest_layer() const
-  {
-    return *this;
-  }
-};
-
-class TestWebSocketOld : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, boost::beast::test::stream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
-{
-public:
-  TestWebSocketOld(facebook::react::Url&& url);
-};
-
-class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, MockStreamLayer, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
+class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, MockStream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
 {
 public:
   TestWebSocket(facebook::react::Url&& url);
 
-  void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
-};
-
-class TestWebSocketNew : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, MockStream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
-{
-  TestWebSocketNew(facebook::react::Url&& url);
+  void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc)
+  {
+    m_stream->next_layer().ConnectResult = std::move(resultFunc);
+  }
 };
 
 } } } // namespace Microsoft::React::Test

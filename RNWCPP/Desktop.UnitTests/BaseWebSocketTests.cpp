@@ -10,6 +10,7 @@ using namespace facebook::react;
 using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using boost::system::error_code;
 using std::make_unique;
 using std::string;
 
@@ -17,7 +18,7 @@ TEST_CLASS(BaseWebSocketTest)
 {
   TEST_METHOD(CreateAndSetHandlers)
   {
-    auto ws = make_unique<TestWebSocketOld>(Url("ws://validurl:0"));
+    auto ws = make_unique<TestWebSocket>(Url("ws://validurl:0"));
 
     Assert::IsFalse(nullptr == ws);
     ws->SetOnConnect([](){});
@@ -28,11 +29,11 @@ TEST_CLASS(BaseWebSocketTest)
     ws->SetOnError([](const IWebSocket::Error& error){});
   }
 
-  TEST_METHOD(ConnectSucceeds0)
+  TEST_METHOD(ConnectSucceeds)
   {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:80"));
+    auto ws = make_unique<TestWebSocket>(Url("ws://localhost:80"));
     ws->SetOnError([&errorMessage](IWebSocket::Error err)
     {
       errorMessage = err.Message;
@@ -40,6 +41,10 @@ TEST_CLASS(BaseWebSocketTest)
     ws->SetOnConnect([&connected]()
     {
       connected = true;
+    });
+    ws->SetConnectResult([]() -> error_code
+    {
+      return make_error_code(errc::success);
     });
 
     ws->Connect({}, {});
@@ -62,7 +67,7 @@ TEST_CLASS(BaseWebSocketTest)
     {
       connected = true;
     });
-    ws->SetConnectResult([]() -> boost::system::error_code
+    ws->SetConnectResult([]() -> error_code
     {
       return make_error_code(errc::state_not_recoverable);
     });
@@ -72,31 +77,5 @@ TEST_CLASS(BaseWebSocketTest)
 
     Assert::AreNotEqual({}, errorMessage);
     Assert::IsFalse(connected);
-  }
-
-  //TODO: Fix. Fails with "An existing connection was forcibly closed by the remote host".
-  TEST_METHOD(ConnectSucceeds)
-  {
-    string errorMessage;
-    bool connected = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost:80"));
-    ws->SetOnError([&errorMessage](IWebSocket::Error err)
-    {
-      errorMessage = err.Message;
-    });
-    ws->SetOnConnect([&connected]()
-    {
-      connected = true;
-    });
-    ws->SetConnectResult([]() -> boost::system::error_code
-    {
-      return make_error_code(errc::success);
-    });
-
-    ws->Connect({}, {});
-    ws->Close(IWebSocket::CloseCode::Normal, {});
-
-    Assert::AreEqual({}, errorMessage);
-    Assert::IsTrue(connected);
   }
 };
