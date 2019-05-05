@@ -30,8 +30,8 @@ using std::unique_ptr;
 
 using boostecr = boost::system::error_code const&;
 
-namespace facebook {
-namespace react {
+namespace Microsoft {
+namespace React {
 
 #pragma region BaseWebSocket members
 
@@ -63,7 +63,7 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Opti
     // Collect headers
     for (const auto& header : options)
     {
-      req.insert(UnicodeConversion::Utf16ToUtf8(header.first), header.second);
+      req.insert(facebook::react::UnicodeConversion::Utf16ToUtf8(header.first), header.second);
     }
   },
     // Handshake handler
@@ -612,7 +612,7 @@ MockStream::async_write_some(ConstBufferSequence const& buffers, WriteHandler&& 
 #pragma region TestWebSocket
 
 TestWebSocket::TestWebSocket(facebook::react::Url&& url)
-  : facebook::react::BaseWebSocket<tcp, MockStream, ip::basic_resolver<tcp>>(std::move(url))
+  : BaseWebSocket(std::move(url))
 {
   m_stream = make_unique<websocket::stream<MockStream>>(m_context);
   m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.

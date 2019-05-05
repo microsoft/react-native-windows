@@ -6,7 +6,8 @@
 
 using namespace std;
 
-namespace facebook { namespace react {
+namespace Microsoft {
+namespace React {
 
 Url::Url(const string& source)
 {
@@ -50,7 +51,7 @@ string Url::Target()
     return path.append("?").append(queryString);
 }
 
-}} // namespace facebook::react
+} } // namespace Microsoft::React
 
 // Folly/folly/SafeAssert.cpp brings in a bunch of file APIs that we otherwise dont need
 // And we probably want to look at some other functionality for reporting errors at
@@ -81,3 +82,4 @@ void assertionFailure(
 
 } // namespace detail
 } // namespace folly
+

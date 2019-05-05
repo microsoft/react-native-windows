@@ -6,7 +6,7 @@
 #include <WebSocket.h>
 
 using namespace boost::beast;
-using namespace facebook::react;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::string;

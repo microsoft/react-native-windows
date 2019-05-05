@@ -30,8 +30,8 @@ using std::string;
 
 using boostecr = boost::system::error_code const&;
 
-namespace facebook {
-namespace react {
+namespace Microsoft {
+namespace React {
 
 #pragma region LegacyBaseWebSocket members
 
@@ -61,7 +61,7 @@ void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket
     // Collect headers
     for (const auto& header : options)
     {
-      req.insert(UnicodeConversion::Utf16ToUtf8(header.first), header.second);
+      req.insert(facebook::react::UnicodeConversion::Utf16ToUtf8(header.first), header.second);
     }
   },
     // Handshake handler
@@ -469,6 +469,6 @@ template class LegacySecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 
 #pragma endregion // IWebSocket static members
 
-} } // namespace facebook::react
+} } // namespace Microsoft:React
 
 #pragma warning(pop)

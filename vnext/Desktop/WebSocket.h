@@ -10,8 +10,8 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-namespace facebook {
-namespace react {
+namespace Microsoft {
+namespace React {
 
 template<typename Protocol, typename Socket, typename Resolver>
 class BaseWebSocket : public IWebSocket
@@ -120,10 +120,6 @@ public:
   SecureWebSocket(Url&& url);
 };
 
-} } // namespace facebook::react
-
-namespace Microsoft {
-namespace React {
 namespace Test {
 
 // See <boost/beast/experimental/test/stream.hpp>
@@ -209,7 +205,7 @@ public:
   boost::asio::io_context::executor_type get_executor() noexcept;
 };
 
-class TestWebSocket : public facebook::react::BaseWebSocket<boost::asio::ip::tcp, MockStream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
+class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, MockStream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
 {
 public:
   TestWebSocket(facebook::react::Url&& url);
@@ -217,4 +213,6 @@ public:
   void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
 };
 
-} } } // namespace Microsoft::React::Test
+} // namespace Microsoft::React::Test
+
+} } // namespace Microsoft::React
