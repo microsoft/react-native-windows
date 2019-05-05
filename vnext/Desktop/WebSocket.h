@@ -9,8 +9,6 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-#include <boost/beast/experimental/test/stream.hpp>//TODO: remove. Won't use.
-
 namespace facebook {
 namespace react {
 
@@ -173,46 +171,28 @@ public:
   std::size_t write_buffer_size() const;
 
   template<class DynamicBuffer, class ReadHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    ReadHandler, void(boost::system::error_code, std::size_t)
-  )
+  BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
   async_read(DynamicBuffer& buffer, ReadHandler&& handler);
 
   template<class ConstBufferSequence, class WriteHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    WriteHandler, void(boost::system::error_code, std::size_t)
-  )
+  BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code, std::size_t))
   async_write(ConstBufferSequence const& buffers, WriteHandler&& handler);
 
   template<class WriteHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    WriteHandler, void(boost::system::error_code)
-  )
+  BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code))
   async_ping(boost::beast::websocket::ping_data const& payload, WriteHandler&& handler);
 
   template<class CloseHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    CloseHandler, void(boost::system::error_code)
-  )
+  BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(boost::system::error_code))
   async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler);
 
   // AsyncStream compliance
   template<class MutableBufferSequence, class ReadHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    ReadHandler, void(boost::system::error_code, std::size_t)
-  )
+  BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
   async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler);
 
   template<class ConstBufferSequence, class WriteHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE
-  (
-    WriteHandler, void(boost::system::error_code, std::size_t)
-  )
+  BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code, std::size_t))
   async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler);
 
   boost::asio::io_context::executor_type get_executor() noexcept;
