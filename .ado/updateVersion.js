@@ -30,7 +30,7 @@ function updateVersion() {
   
   exec(`git checkout -b ${tempPublishBranch}`);
 
-  const pkgJsonPath = path.resolve(__dirname, "../package.json");
+  const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
   let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
   let releaseVersion = pkgJson.version;
