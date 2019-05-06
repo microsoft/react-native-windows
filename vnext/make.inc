@@ -18,7 +18,6 @@ INCLUDES = $(INCLUDES); \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\include\ReactWindowsCore; \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\Desktop; \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ReactWindowsCore; \
-	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ChakraCoreShim\ChakraHeaders; \
 	$(OPENSOURCE_OPENSSL); \
 
 !LISTFILES -recursive JAVASCRIPTCORE_TEMP_HEADERS = $(PKGJAVASCRIPTCORE_TEMP) *.h
