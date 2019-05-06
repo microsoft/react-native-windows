@@ -51,7 +51,7 @@ function updateVersion() {
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);
 
-  process.chdir(path.resolve(__dirname, ".."));
+  process.chdir(path.resolve(__dirname, "../vnext"));
   exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
   exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd build`);
 
