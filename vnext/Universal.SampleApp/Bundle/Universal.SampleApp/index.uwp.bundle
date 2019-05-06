@@ -1387,11 +1387,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _reactNativeWindows = _$$_REQUIRE(_dependencyMap[10], "react-native-windows");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\Universal.SampleApp\\index.uwp.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\Universal.SampleApp\\index.uwp.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var TicTacButton = function (_Component) {
     (0, _inherits2.default)(TicTacButton, _Component);
@@ -5921,11 +5917,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectWithoutProperties = _$$_REQUIRE(_dependencyMap[2], "@babel/runtime/helpers/objectWithoutProperties");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\ActivityIndicator\\ActivityIndicator.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\ActivityIndicator\\ActivityIndicator.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Platform = _$$_REQUIRE(_dependencyMap[3], "Platform");
 
@@ -9809,11 +9801,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _extends = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/extends");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\View\\View.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\View\\View.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[1], "React");
 
@@ -43870,11 +43858,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\UnimplementedViews\\UnimplementedView.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\UnimplementedViews\\UnimplementedView.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -43932,11 +43916,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\ART\\ReactNativeART.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\ART\\ReactNativeART.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Color = _$$_REQUIRE(_dependencyMap[5], "art/core/color");
 
@@ -45531,11 +45511,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Button.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Button.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Platform = _$$_REQUIRE(_dependencyMap[6], "Platform");
 
@@ -45723,11 +45699,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectSpread = _$$_REQUIRE(_dependencyMap[7], "@babel/runtime/helpers/objectSpread");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Text\\Text.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Text\\Text.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var DeprecatedTextPropTypes = _$$_REQUIRE(_dependencyMap[8], "DeprecatedTextPropTypes");
 
@@ -46151,11 +46123,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectSpread = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/objectSpread");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Touchable\\Touchable.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Touchable\\Touchable.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var BoundingDimensions = _$$_REQUIRE(_dependencyMap[1], "BoundingDimensions");
 
@@ -46895,11 +46863,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectSpread = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/objectSpread");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Touchable\\TouchableHighlight.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Touchable\\TouchableHighlight.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var DeprecatedColorPropType = _$$_REQUIRE(_dependencyMap[1], "DeprecatedColorPropType");
 
@@ -47935,11 +47899,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Touchable\\TouchableNativeFeedback.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Touchable\\TouchableNativeFeedback.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -48019,11 +47979,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectSpread = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/objectSpread");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Touchable\\TouchableOpacity.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Touchable\\TouchableOpacity.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Animated = _$$_REQUIRE(_dependencyMap[1], "Animated");
 
@@ -52264,11 +52220,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Animated\\src\\createAnimatedComponent.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Animated\\src\\createAnimatedComponent.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var _require = _$$_REQUIRE(_dependencyMap[7], "./AnimatedEvent"),
       AnimatedEvent = _require.AnimatedEvent;
@@ -52475,11 +52427,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectSpread = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/objectSpread");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Lists\\FlatList.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Lists\\FlatList.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var deepDiffer = _$$_REQUIRE(_dependencyMap[7], "deepDiffer");
 
@@ -52792,11 +52740,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[8], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Lists\\VirtualizedList.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Lists\\VirtualizedList.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Batchinator = _$$_REQUIRE(_dependencyMap[9], "Batchinator");
 
@@ -54776,11 +54720,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\RefreshControl\\RefreshControl.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\RefreshControl\\RefreshControl.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Platform = _$$_REQUIRE(_dependencyMap[6], "Platform");
 
@@ -54885,11 +54825,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectSpread = _$$_REQUIRE(_dependencyMap[1], "@babel/runtime/helpers/objectSpread");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\ScrollView\\ScrollView.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\ScrollView\\ScrollView.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var AnimatedImplementation = _$$_REQUIRE(_dependencyMap[2], "AnimatedImplementation");
 
@@ -55787,11 +55723,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\ScrollView\\ScrollViewStickyHeader.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\ScrollView\\ScrollViewStickyHeader.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var AnimatedImplementation = _$$_REQUIRE(_dependencyMap[5], "AnimatedImplementation");
 
@@ -56403,11 +56335,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _extends = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/extends");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\Libraries\\Image\\Image.uwp.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\Libraries\\Image\\Image.uwp.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var ImageResizeMode = _$$_REQUIRE(_dependencyMap[1], "ImageResizeMode");
 
@@ -56546,11 +56474,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _objectSpread = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/objectSpread");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Lists\\SectionList.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Lists\\SectionList.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Platform = _$$_REQUIRE(_dependencyMap[7], "Platform");
 
@@ -56673,11 +56597,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[7], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Lists\\VirtualizedSectionList.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Lists\\VirtualizedSectionList.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Platform = _$$_REQUIRE(_dependencyMap[8], "Platform");
 
@@ -57417,11 +57337,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Image\\ImageBackground.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Image\\ImageBackground.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Image = _$$_REQUIRE(_dependencyMap[7], "Image");
 
@@ -57603,11 +57519,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\TextInput\\InputAccessoryView.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\TextInput\\InputAccessoryView.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var DeprecatedColorPropType = _$$_REQUIRE(_dependencyMap[5], "DeprecatedColorPropType");
 
@@ -57680,11 +57592,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Keyboard\\KeyboardAvoidingView.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Keyboard\\KeyboardAvoidingView.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Keyboard = _$$_REQUIRE(_dependencyMap[7], "Keyboard");
 
@@ -57898,11 +57806,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _extends = _$$_REQUIRE(_dependencyMap[1], "@babel/runtime/helpers/extends");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Lists\\ListView\\ListView.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Lists\\ListView\\ListView.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var InternalListViewType = _$$_REQUIRE(_dependencyMap[2], "InternalListViewType");
 
@@ -58815,11 +58719,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Modal\\Modal.js",
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Modal\\Modal.js",
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
       _container;
 
   var AppContainer = _$$_REQUIRE(_dependencyMap[6], "AppContainer");
@@ -59006,11 +58906,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\ReactNative\\AppContainer.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\ReactNative\\AppContainer.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var EmitterSubscription = _$$_REQUIRE(_dependencyMap[5], "EmitterSubscription");
 
@@ -59187,11 +59083,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\Inspector.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\Inspector.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Dimensions = _$$_REQUIRE(_dependencyMap[5], "Dimensions");
 
@@ -59520,11 +59412,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\InspectorOverlay.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\InspectorOverlay.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Dimensions = _$$_REQUIRE(_dependencyMap[5], "Dimensions");
 
@@ -59636,11 +59524,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\ElementBox.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\ElementBox.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var BorderBox = _$$_REQUIRE(_dependencyMap[6], "BorderBox");
 
@@ -59768,11 +59652,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\BorderBox.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\BorderBox.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -59939,11 +59819,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\InspectorPanel.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\InspectorPanel.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var ElementProperties = _$$_REQUIRE(_dependencyMap[5], "ElementProperties");
 
@@ -60178,11 +60054,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\ElementProperties.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\ElementProperties.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var BoxInspector = _$$_REQUIRE(_dependencyMap[5], "BoxInspector");
 
@@ -60388,11 +60260,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\BoxInspector.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\BoxInspector.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -60584,11 +60452,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\StyleInspector.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\StyleInspector.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -60734,11 +60598,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\NetworkOverlay.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\NetworkOverlay.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var FlatList = _$$_REQUIRE(_dependencyMap[5], "FlatList");
 
@@ -61681,11 +61541,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Inspector\\PerformanceOverlay.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Inspector\\PerformanceOverlay.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var PerformanceLogger = _$$_REQUIRE(_dependencyMap[5], "PerformanceLogger");
 
@@ -61786,11 +61642,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\YellowBox.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\YellowBox.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -61994,11 +61846,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxList.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxList.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Dimensions = _$$_REQUIRE(_dependencyMap[7], "Dimensions");
 
@@ -62218,11 +62066,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, exports, _dependencyMap) {
   'use strict';
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxButton.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxButton.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[0], "React");
 
@@ -62282,11 +62126,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxPressable.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxPressable.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -62400,11 +62240,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspector.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspector.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Platform = _$$_REQUIRE(_dependencyMap[5], "Platform");
 
@@ -62665,11 +62501,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _toConsumableArray = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/toConsumableArray");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\Data\\YellowBoxCategory.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\Data\\YellowBoxCategory.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[1], "React");
 
@@ -62822,11 +62654,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, exports, _dependencyMap) {
   'use strict';
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorFooter.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorFooter.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[0], "React");
 
@@ -62933,11 +62761,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, exports, _dependencyMap) {
   'use strict';
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Image = _$$_REQUIRE(_dependencyMap[0], "Image");
 
@@ -63113,11 +62937,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Animated = _$$_REQUIRE(_dependencyMap[5], "Animated");
 
@@ -63297,11 +63117,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, exports, _dependencyMap) {
   'use strict';
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorStackFrame.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxInspectorStackFrame.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[0], "React");
 
@@ -63386,11 +63202,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[4], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxListRow.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\YellowBox\\UI\\YellowBoxListRow.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[5], "React");
 
@@ -63908,11 +63720,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Picker\\Picker.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Picker\\Picker.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var PickerAndroid = _$$_REQUIRE(_dependencyMap[6], "PickerAndroid");
 
@@ -64019,11 +63827,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _extends = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/extends");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Slider\\Slider.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Slider\\Slider.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var ReactNative = _$$_REQUIRE(_dependencyMap[1], "ReactNative");
 
@@ -64122,11 +63926,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Components\\Switch\\Switch.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Components\\Switch\\Switch.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var SwitchNativeComponent = _$$_REQUIRE(_dependencyMap[7], "SwitchNativeComponent");
 
@@ -64539,11 +64339,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[6], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Experimental\\SwipeableRow\\SwipeableFlatList.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Experimental\\SwipeableRow\\SwipeableFlatList.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[7], "React");
 
@@ -64702,11 +64498,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Experimental\\SwipeableRow\\SwipeableRow.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Experimental\\SwipeableRow\\SwipeableRow.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var Animated = _$$_REQUIRE(_dependencyMap[6], "Animated");
 
@@ -65263,11 +65055,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _inherits = _$$_REQUIRE(_dependencyMap[5], "@babel/runtime/helpers/inherits");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\Experimental\\SwipeableRow\\SwipeableListView.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\Experimental\\SwipeableRow\\SwipeableListView.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var ListView = _$$_REQUIRE(_dependencyMap[6], "ListView");
 
@@ -65535,11 +65323,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _extends = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/extends");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\Libraries\\Components\\TextInput\\TextInput.uwp.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\Libraries\\Components\\TextInput\\TextInput.uwp.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var EventEmitter = _$$_REQUIRE(_dependencyMap[1], "EventEmitter");
 
@@ -65858,11 +65642,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, exports, _dependencyMap) {
   'use strict';
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\Libraries\\Components\\WebView\\WebView.uwp.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\Libraries\\Components\\WebView\\WebView.uwp.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[0], "React");
 
@@ -66378,11 +66158,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 
   var _extends = _$$_REQUIRE(_dependencyMap[0], "@babel/runtime/helpers/extends");
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\ReactNative\\renderApplication.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\ReactNative\\renderApplication.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var AppContainer = _$$_REQUIRE(_dependencyMap[1], "AppContainer");
 
@@ -66438,11 +66214,7 @@ __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, e
 __d(function (global, _$$_REQUIRE, _$$_IMPORT_DEFAULT, _$$_IMPORT_ALL, module, exports, _dependencyMap) {
   'use strict';
 
-<<<<<<< HEAD:vnext/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
   var _jsxFileName = "F:\\code\\rnw\\vnext\\node_modules\\react-native\\Libraries\\ReactNative\\ReactFabricIndicator.js";
-=======
-  var _jsxFileName = "F:\\code\\rnw\\RNWCPP\\node_modules\\react-native\\Libraries\\ReactNative\\ReactFabricIndicator.js";
->>>>>>> rollback update to bundle:RNWCPP/Universal.SampleApp/Bundle/Universal.SampleApp/index.uwp.bundle
 
   var React = _$$_REQUIRE(_dependencyMap[0], "React");
 
