@@ -25,31 +25,31 @@ jobs:
         displayName: Ensure yarn
         inputs:
           script: npm install -g yarn
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn install
         inputs:
           script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn build
         inputs:
           script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: Update package version
         inputs:
           script: node .ado/updateVersion.js
-          workingDirectory: RNWCPP
+          workingDirectory: vnext
 
       - task: Npm@1
         displayName: npm public publish (vnext)
         inputs:
           command: custom
-          workingDir: RNWCPP
+          workingDir: vnext
           verbose: false
           customCommand: 'publish --access public --tag vnext'
           customEndpoint: 'React-Native-Windows NPM'

@@ -30,4 +30,4 @@ jobs:
         displayName: Do Update
         inputs:
           script: node .ado/evergreen.js autopr $(apiAuthHeader)
-          workingDirectory: RNWCPP
+          workingDirectory: vnext

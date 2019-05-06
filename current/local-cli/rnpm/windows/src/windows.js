@@ -53,8 +53,8 @@ module.exports = function windows(config, args, options) {
       execSync(`${pkgmgrInstall} ${rnwPackage}`, execOptions);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
-      const rnwcppPackageJson = JSON.parse(fs.readFileSync(reactNativeWindowsPackageJson, { encoding: 'UTF8' }));
-      let reactNativeVersion = rnwcppPackageJson.peerDependencies['react-native'];
+      const vnextPackageJson = JSON.parse(fs.readFileSync(reactNativeWindowsPackageJson, { encoding: 'UTF8' }));
+      let reactNativeVersion = vnextPackageJson.peerDependencies['react-native'];
       const depDelim = ' || ';
       const delimIndex = reactNativeVersion.indexOf(depDelim);
       if (delimIndex !== -1) {
