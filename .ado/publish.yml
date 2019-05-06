@@ -42,7 +42,7 @@ jobs:
       - task: CmdLine@2
         displayName: Update package version
         inputs:
-          script: node .ado/updateVersion.js
+          script: node ../.ado/updateVersion.js
           workingDirectory: vnext
 
       - task: Npm@1
