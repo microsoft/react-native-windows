@@ -5,7 +5,8 @@
 
 #include <string>
 
-namespace facebook { namespace react {
+namespace Microsoft {
+namespace React {
 
 struct Url
 {
@@ -20,4 +21,12 @@ struct Url
   std::string Target();
 };
 
-}} // namespace facebook::react
+} } // namespace Microsoft::React
+
+// Deprecated. Keeping for compatibility.
+namespace facebook {
+namespace react {
+
+using Url = Microsoft::React::Url;
+
+} } // namespace facebook::react

@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include="AsyncStorageManagerTest.cpp" />
     <ClCompile Include="AsyncStorageTest.cpp" />
+    <ClCompile Include="BaseWebSocketTests.cpp" />
     <ClCompile Include="BytecodeUnitTests.cpp" />
     <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />

@@ -6,8 +6,8 @@
 #include <cxxreact/CxxModule.h>
 #include "IWebSocket.h"
 
-namespace facebook {
-namespace react {
+namespace Microsoft {
+namespace React {
 
 class WebSocketModule : public facebook::xplat::module::CxxModule
 {
@@ -34,4 +34,12 @@ private:
   std::map<int64_t, std::unique_ptr<IWebSocket>> m_webSockets;
 };
 
-} } // facebook::react
+} } // Microsoft::React
+
+// Deprecated. Keeping for compatibility.
+namespace facebook {
+namespace react {
+
+using WebSocketModule = Microsoft::React::WebSocketModule;
+
+} } // namespace facebook::react
