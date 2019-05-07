@@ -17,7 +17,7 @@ EXPORTS
 ?CreateMemoryTracker@react@facebook@@YG?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
-?CreateWebSocketModule@rReact@Microsoft@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
+?CreateWebSocketModule@React@Microsoft@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?destroy@dynamic@folly@@AAEXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UAEX_JABUdynamic@folly@@@Z
 ?GetConstants@ViewManagerBase@react@facebook@@UBE?AUdynamic@folly@@XZ
