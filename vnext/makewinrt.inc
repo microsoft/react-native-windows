@@ -23,7 +23,6 @@ INCLUDES = $(INCLUDES); \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\include; \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\include\ReactWindowsCore; \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ReactWindowsCore; \
-	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ChakraCoreShim\ChakraHeaders; \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ReactUWP; \
 	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ReactUWP\Pch; \
 	$(PKGJAVASCRIPTCORE_TEMP)\build\native\include; \

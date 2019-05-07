@@ -9,8 +9,8 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-namespace facebook {
-namespace react {
+namespace Microsoft {
+namespace React {
 
 template<typename Protocol, typename Socket, typename Resolver>
 class LegacyBaseWebSocket : public IWebSocket
@@ -89,4 +89,4 @@ public:
   LegacySecureWebSocket(Url&& url);
 };
 
-} } // namespace facebook::react
+} } // namespace Microsoft::React

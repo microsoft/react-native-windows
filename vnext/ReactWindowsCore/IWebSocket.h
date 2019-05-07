@@ -7,8 +7,8 @@
 #include <map>
 #include <vector>
 
-namespace facebook {
-namespace react {
+namespace Microsoft {
+namespace React {
 
 struct IWebSocket
 {
@@ -101,5 +101,13 @@ struct IWebSocket
   virtual void SetOnClose(std::function<void(CloseCode, const std::string&)>&& handler) = 0;
   virtual void SetOnError(std::function<void(Error&&)>&& handler) = 0;
 };
+
+} } // namespace facebook::react
+
+// Deprecated. Keeping for compatibility with dependent code.
+namespace facebook {
+namespace react {
+
+using IWebSocket = Microsoft::React::IWebSocket;
 
 } } // namespace facebook::react
