@@ -147,6 +147,8 @@ public:
 
   std::function<boost::system::error_code()> ConnectResult;
 
+  std::function<boost::system::error_code()> CloseResult;
+
   boost::beast::websocket::detail::sec_ws_key_type Key;
 
   using is_deflate_supported = std::integral_constant<bool, false>;
@@ -211,6 +213,7 @@ public:
   TestWebSocket(facebook::react::Url&& url);
 
   void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
+  void SetCloseResult(std::function<boost::system::error_code()>&& resultFunc);
 };
 
 } // namespace Microsoft::React::Test

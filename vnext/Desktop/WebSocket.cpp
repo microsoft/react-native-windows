@@ -516,6 +516,8 @@ namespace Test {
 
 MockStream::MockStream(io_context& context)
   : m_context{ context }
+  , ConnectResult{ []() -> error_code { return error_code{}; } }
+  , CloseResult{ []() -> error_code {return error_code{}; } }
 {
 }
 
@@ -587,7 +589,10 @@ template<class CloseHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
 MockStream::async_close(websocket::close_reason const& cr, CloseHandler&& handler)
 {
-  //TODO: Mock
+  BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
+  boost::asio::post(stream.get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
+
+  return init.result.get();
 }
 
 // AsyncStream compliance
@@ -621,6 +626,11 @@ TestWebSocket::TestWebSocket(facebook::react::Url&& url)
 void TestWebSocket::SetConnectResult(std::function<error_code()>&& resultFunc)
 {
   m_stream->next_layer().ConnectResult = std::move(resultFunc);
+}
+
+void TestWebSocket::SetCloseResult(std::function<error_code()>&& resultFunc)
+{
+  m_stream->next_layer().CloseResult = std::move(resultFunc);
 }
 
 #pragma endregion
