@@ -448,7 +448,7 @@ jsi::Value ChakraJsiRuntime::lockWeakObject(const jsi::WeakObject&) {
 
 jsi::Array ChakraJsiRuntime::createArray(size_t length) {
   JsValueRef result;
-  checkException(JsCreateArray(length, &result));
+  checkException(JsCreateArray(static_cast<unsigned int>(length), &result));
   return createObject(result).getArray(*this);
 }
 
@@ -471,7 +471,7 @@ size_t ChakraJsiRuntime::size(const jsi::Array& arr) {
 
 jsi::Value ChakraJsiRuntime::getValueAtIndex(const jsi::Array& arr, size_t i) {
   JsValueRef index;
-  JsIntToNumber(i, &index);
+  JsIntToNumber(static_cast<int>(i), &index);
   JsValueRef property;
   checkException(JsGetIndexedProperty(objectRef(arr), index, &property));
   return createValue(property);
@@ -482,7 +482,7 @@ void ChakraJsiRuntime::setValueAtIndexImpl(
   size_t i,
   const jsi::Value& value) {
   JsValueRef index;
-  JsIntToNumber(i, &index);
+  JsIntToNumber(static_cast<int>(i), &index);
 
   checkException(JsSetIndexedProperty(objectRef(arr), index, valueRef(value)));
 }
