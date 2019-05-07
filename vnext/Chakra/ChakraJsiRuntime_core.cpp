@@ -39,7 +39,7 @@ void ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const
 
 bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer, const jsi::Buffer& serializedScriptBuffer, const std::string& sourceURL) {
   JsValueRef bytecodeArrayBuffer = nullptr;
-  if (JsCreateExternalArrayBuffer(const_cast<uint8_t *>(serializedScriptBuffer.data()), serializedScriptBuffer.size(), nullptr, nullptr, &bytecodeArrayBuffer) == JsNoError) {
+  if (JsCreateExternalArrayBuffer(const_cast<uint8_t *>(serializedScriptBuffer.data()), static_cast<unsigned int>(serializedScriptBuffer.size()), nullptr, nullptr, &bytecodeArrayBuffer) == JsNoError) {
 
     JsValueRef sourceURLRef = nullptr;
     if (!sourceURL.empty()) {
@@ -50,7 +50,7 @@ bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer,
     JsErrorCode result = JsRunSerialized(bytecodeArrayBuffer, [](JsSourceContext sourceContext, JsValueRef *value, JsParseScriptAttributes *parseAttributes)
     {
       const jsi::Buffer* scriptSource = reinterpret_cast<const jsi::Buffer*>(sourceContext);
-      if (JsCreateExternalArrayBuffer(const_cast<uint8_t *>(scriptSource->data()), scriptSource->size(), nullptr, nullptr, value) != JsNoError)
+      if (JsCreateExternalArrayBuffer(const_cast<uint8_t *>(scriptSource->data()), static_cast<unsigned int>(scriptSource->size()), nullptr, nullptr, value) != JsNoError)
         std::terminate();
 
       *parseAttributes = JsParseScriptAttributeNone;
@@ -105,7 +105,7 @@ std::wstring ChakraJsiRuntime::JSStringToSTLWString(JsValueRef str) {
   size_t length;
   JsCopyStringUtf16(str, 0, 256 /*TODO*/, nullptr, &length);
   result.resize(length);
-  if (JsNoError != JsCopyStringUtf16(str, 0, length, reinterpret_cast<uint16_t*>(&result[0]), nullptr)) std::terminate();
+  if (JsNoError != JsCopyStringUtf16(str, 0, static_cast<int>(length), reinterpret_cast<uint16_t*>(&result[0]), nullptr)) std::terminate();
   return result;
 }
 
@@ -219,7 +219,7 @@ ChakraJsiRuntimeWithDebugger::ChakraJsiRuntimeWithDebugger(ChakraJsiRuntimeArgs&
       port = DebuggerDefaultPort;
     }
 
-    JsErrorCode result = this->enableDebugging(runtime_, runtimeName, breakOnNextLine, port, debugProtocolHandler_, debugService_);
+    JsErrorCode result = this->enableDebugging(runtime_, runtimeName, breakOnNextLine, static_cast<uint16_t>(port), debugProtocolHandler_, debugService_);
 
     if (result == JsNoError) {
       debugPort_ = port;
