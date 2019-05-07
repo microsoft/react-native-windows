@@ -4,6 +4,21 @@
   Build native Windows apps with React.
 </p>
 
+<p align="center">
+  <a href="https://github.com/Microsoft/react-native-windows/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="React Native for Windows is released under the MIT license." />
+  </a>
+  <a href="https://ci.appveyor.com/project/rozele/react-native-windows/branch/master">
+    <img src="https://ci.appveyor.com/api/projects/status/l9p3u301j6cbvqae/branch/master?svg=true" alt="Current Appveyor build status." />
+  </a>
+  <a href="https://www.npmjs.org/package/react-native-windows">
+    <img src="https://badge.fury.io/js/react-native-windows.svg" alt="Current npm package version." />
+  </a>
+  <a href="https://github.com/Microsoft/react-native-windows#contributing">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+</p>
+
 ![Hero Image with Logo](./.github/hero2.png)
 
 [React Native](http://facebook.github.io/react-native) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](http://facebook.github.io/react). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
@@ -64,14 +79,7 @@ You can also begin to prototype or try out the [vnext](https://github.com/Micros
 
 [React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
-For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current react-native-windows implementation. We are working on publishing a similar parity status for vnext shortly.
-
-### Showing the Debug Menu
-
-- On UWP, press Shift+F10 to open the debug menu.
-- On WPF, press CTRL+D or CTRL+M to open the debug menu.
-
-*Note*: Support for Debug menu in vnext is tracked by [#2276](https://github.com/Microsoft/react-native-windows/issues/2276)
+For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current `react-native-windows` implementation. We are working on publishing a similar parity status for `vnext` shortly.
 
 ## Extending React Native
 
