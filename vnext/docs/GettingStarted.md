@@ -112,7 +112,7 @@ A new Command Prompt window will open with the React packager as well as a `reac
 * Nuget restore through the command line. There is an outstanding issue [#2312](https://github.com/microsoft/react-native-windows/issues/2312) that blocks restoring Nuget dependencies using VS. 
     ```cmd
     cd Playground
-    ..\react-native-windows\vnext\Playground>nuget restore Playground.sln -PackagesDirectory Playground\packages
+    ..\react-native-windows\vnext\Playground>nuget restore Playground.sln -PackagesDirectory packages
     ```
 
 * Build solution.
