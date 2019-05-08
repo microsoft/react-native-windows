@@ -38,8 +38,12 @@ TARGETLOBS = $(TARGETLOBS) \
 	$(PROJLIBDIR)\AsyncStorageMosh.lob \
 	$(PROJLIBDIR)\ChakraMosh.lob \
 	$(PROJLIBDIR)\CxxReactMosh.lob \
+	$(PROJLIBDIR)\FollyContainerDetailMosh.lob \
 	$(PROJLIBDIR)\FollyDetailMosh.lob \
+	$(PROJLIBDIR)\FollyLangMosh.lob \
+	$(PROJLIBDIR)\FollyHashMosh.lob \
 	$(PROJLIBDIR)\FollyPortabilityMosh.lob \
+	$(PROJLIBDIR)\FollyMemoryDetailMosh.lob \
 	$(PROJLIBDIR)\FollyMosh.lob \
 	$(PROJLIBDIR)\jsireactMosh.lob \
 	$(PROJLIBDIR)\jsiMosh.lob \
