@@ -23,23 +23,23 @@ TEST_CLASS(BaseWebSocketTest)
 {
   TEST_METHOD(CreateAndSetHandlers)
   {
-    auto ws = make_unique<TestWebSocketOld>(Url("ws://validurl:0"));
+    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
 
     Assert::IsFalse(nullptr == ws);
     ws->SetOnConnect([](){});
     ws->SetOnPing([](){});
     ws->SetOnSend([](size_t length){});
     ws->SetOnMessage([](size_t length, const string& buffer){});
-    ws->SetOnClose([](IWebSocket::CloseCode, const string&){});
-    ws->SetOnError([](const IWebSocket::Error& error){});
+    ws->SetOnClose([](CloseCode, const string&){});
+    ws->SetOnError([](const Error& error){});
   }
 
   TEST_METHOD(ConnectSucceeds)
   {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:80"));
-    ws->SetOnError([&errorMessage](IWebSocket::Error err)
+    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    ws->SetOnError([&errorMessage](Error err)
     {
       errorMessage = err.Message;
     });
@@ -47,13 +47,9 @@ TEST_CLASS(BaseWebSocketTest)
     {
       connected = true;
     });
-    ws->SetConnectResult([]() -> error_code
-    {
-      return make_error_code(errc::success);
-    });
 
     ws->Connect({}, {});
-    ws->Close(IWebSocket::CloseCode::Normal, {});
+    ws->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
@@ -63,8 +59,8 @@ TEST_CLASS(BaseWebSocketTest)
   {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:80"));
-    ws->SetOnError([&errorMessage](IWebSocket::Error err)
+    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    ws->SetOnError([&errorMessage](Error err)
     {
       errorMessage = err.Message;
     });
@@ -78,7 +74,32 @@ TEST_CLASS(BaseWebSocketTest)
     });
 
     ws->Connect({}, {});
-    ws->Close(IWebSocket::CloseCode::Normal, {});
+    ws->Close(CloseCode::Normal, {});
+
+    Assert::AreNotEqual({}, errorMessage);
+    Assert::IsFalse(connected);
+  }
+
+  TEST_METHOD(HandshakeFails)
+  {
+    string errorMessage;
+    bool connected = false;
+    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    ws->SetOnError([&errorMessage](Error err)
+    {
+      errorMessage = err.Message;
+    });
+    ws->SetOnConnect([&connected]()
+    {
+      connected = true;
+    });
+    ws->SetHandshakeResult([]() -> error_code
+    {
+      return make_error_code(errc::state_not_recoverable);
+    });
+
+    ws->Connect({}, {});
+    ws->Close(CloseCode::Normal, {});
 
     Assert::AreNotEqual({}, errorMessage);
     Assert::IsFalse(connected);
@@ -89,7 +110,7 @@ TEST_CLASS(BaseWebSocketTest)
     string errorMessage;
     promise<void> connected;
     bool closed = false;
-    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:0"));
+    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
     ws->SetOnError([&errorMessage](Error err)
     {
       errorMessage = err.Message;

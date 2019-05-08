@@ -23,6 +23,7 @@ using namespace boost::beast;
 using boost::asio::ip::basic_resolver_iterator;
 using boost::asio::ip::tcp;
 
+using std::function;
 using std::make_unique;
 using std::size_t;
 using std::string;
@@ -397,37 +398,37 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Ping()
 #pragma region Handler setters
 
 template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(std::function<void()>&& handler)
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(function<void()>&& handler)
 {
   m_connectHandler = handler;
 }
 
 template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(std::function<void()>&& handler)
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(function<void()>&& handler)
 {
   m_pingHandler = handler;
 }
 
 template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(std::function<void(size_t)>&& handler)
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(function<void(size_t)>&& handler)
 {
   m_writeHandler = handler;
 }
 
 template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnMessage(std::function<void(size_t, const string&)>&& handler)
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnMessage(function<void(size_t, const string&)>&& handler)
 {
   m_readHandler = handler;
 }
 
 template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnClose(std::function<void(CloseCode, const string&)>&& handler)
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnClose(function<void(CloseCode, const string&)>&& handler)
 {
   m_closeHandler = handler;
 }
 
 template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnError(std::function<void(Error&&)>&& handler)
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnError(function<void(Error&&)>&& handler)
 {
   m_errorHandler = handler;
 }
@@ -506,136 +507,51 @@ void SecureWebSocket::Handshake(const IWebSocket::Options& options)
 
 #pragma endregion // IWebSocket static members
 
-} } // namespace facebook::react
-
-namespace Microsoft {
-namespace React {
 namespace Test {
 
-#pragma region MockStreamLayer
+#pragma region MockStream
 
-MockStreamLayer::MockStreamLayer(io_context& context)
+MockStream::MockStream(io_context& context)
   : m_context{ context }
-  , ConnectResult{ []() -> error_code { return error_code{}; } }
-  , CloseResult{ []() -> error_code {return error_code{}; } }
+  , ConnectResult{ []() { return error_code{}; } }
+  , HandshakeResult{ []() { return error_code{}; } }
+  , CloseResult{ []() { return error_code{}; } }
 {
 }
 
-io_context::executor_type MockStreamLayer::get_executor() noexcept
+io_context::executor_type MockStream::get_executor() noexcept
 {
   return m_context.get_executor();
 }
 
-MockStreamLayer::lowest_layer_type& MockStreamLayer::lowest_layer()
+MockStream::lowest_layer_type& MockStream::lowest_layer()
 {
   return *this;
 }
 
-MockStreamLayer::lowest_layer_type const& MockStreamLayer::lowest_layer() const
+MockStream::lowest_layer_type const& MockStream::lowest_layer() const
 {
   return *this;
 }
 
-void MockStreamLayer::binary(bool value) {}
+void MockStream::binary(bool value) {}
 
-bool MockStreamLayer::got_binary() const
+bool MockStream::got_binary() const
 {
   return false;
 }
 
-bool MockStreamLayer::got_text() const
+bool MockStream::got_text() const
 {
   return !got_binary();
 }
 
-void MockStreamLayer::auto_fragment(bool value) {}
+void MockStream::write_buffer_size(size_t amount) {}
 
-bool MockStreamLayer::auto_fragment() const
-{
-  return false;
-}
-
-void MockStreamLayer::write_buffer_size(size_t amount) {}
-
-size_t MockStreamLayer::write_buffer_size() const
+size_t MockStream::write_buffer_size() const
 {
   return 8;
 }
-
-#pragma region boost::beast::websocket::stream NextLayer methods
-
-template<class DynamicBuffer, class ReadHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, size_t))
-MockStreamLayer::async_read(DynamicBuffer& buffer, ReadHandler&& handler)
-{
-  //TODO: Mock
-}
-
-template<class ConstBufferSequence, class WriteHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
-MockStreamLayer::async_write(ConstBufferSequence const& buffers, WriteHandler&& handler)
-{
-  //TODO: Mock
-}
-
-template<class WriteHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
-MockStreamLayer::async_ping(websocket::ping_data const& payload, WriteHandler&& handler)
-{
-  //TODO: Mock
-}
-
-template<class CloseHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
-MockStreamLayer::async_close(websocket::close_reason const& cr, CloseHandler&& handler)
-{
-  BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
-  boost::asio::post(stream.get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
-
-  return init.result.get();
-}
-
-// AsyncStream compliance
-template<class MutableBufferSequence, class ReadHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, size_t))
-MockStreamLayer::async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler)
-{
-  //TODO: Mock
-}
-
-template<class ConstBufferSequence, class WriteHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
-MockStreamLayer::async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler)
-{
-  //TODO: Mock
-}
-
-#pragma endregion // boost::beast::websocket::stream NextLayer methods
-
-#pragma endregion // MockStreamLayer
-
-#pragma region TestWebSocketOld
-
-TestWebSocketOld::TestWebSocketOld(facebook::react::Url&& url)
-  : BaseWebSocket(std::move(url))
-{
-  m_stream = make_unique<websocket::stream<MockStreamLayer>>(m_context);
-  m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
-}
-
-void TestWebSocketOld::SetConnectResult(std::function<error_code()>&& resultFunc)
-{
-  m_stream->next_layer().ConnectResult = std::move(resultFunc);
-}
-
-void TestWebSocketOld::SetCloseResult(std::function<error_code()>&& resultFunc)
-{
-  m_stream->next_layer().CloseResult = std::move(resultFunc);
-}
-
-#pragma endregion
-
-#pragma region MockStream
 
 template<class RequestDecorator, class HandshakeHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(error_code))
@@ -645,12 +561,8 @@ MockStream::async_handshake_ex(
   RequestDecorator const& decorator,
   HandshakeHandler&& handler)
 {
-  //static_assert(is_async_stream<next_layer_type>::value,
-  //  "AsyncStream requirements not met");
-  //static_assert(detail::is_request_decorator<
-  //  RequestDecorator>::value,
-  //  "RequestDecorator requirements not met");
   BOOST_BEAST_HANDLER_INIT(HandshakeHandler, void(error_code));
+  post(get_executor(), bind_handler(std::move(init.completion_handler), HandshakeResult()));
 
   return init.result.get();
 }
@@ -681,19 +593,45 @@ BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
 MockStream::async_close(websocket::close_reason const& cr, CloseHandler&& handler)
 {
   BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
-  boost::asio::post(get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
+  post(get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
 
   return init.result.get();
 }
 
 #pragma endregion // MockStream
 
-} } } // namespace Microsoft::React::Test
+#pragma region TestWebSocket
+
+TestWebSocket::TestWebSocket(Url&& url)
+  : BaseWebSocket(std::move(url))
+{
+  m_stream = make_unique<MockStream>(m_context);
+}
+
+void TestWebSocket::SetConnectResult(function<error_code()>&& resultFunc)
+{
+  m_stream->ConnectResult = std::move(resultFunc);
+}
+
+void TestWebSocket::SetHandshakeResult(function<error_code()>&& resultFunc)
+{
+  m_stream->HandshakeResult = std::move(resultFunc);
+}
+
+void TestWebSocket::SetCloseResult(function<error_code()>&& resultFunc)
+{
+  m_stream->CloseResult = std::move(resultFunc);
+}
+
+#pragma endregion // TestWebSocket
+} // namespace Microsoft::React::Test
+
+} } // namespace Microsoft::React
 
 namespace boost {
 namespace asio {
 
-  // See <boost/asio/connect.hpp>(776)
+// See <boost/asio/connect.hpp>(776)
 template
 <
   typename Iterator,
@@ -711,74 +649,6 @@ async_connect
   handler(s.ConnectResult(), {});
 }
 
-// See <boost/asio/connect.hpp>(776)
-template
-<
-  typename Iterator,
-  typename IteratorConnectHandler
->
-BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(error_code, Iterator))
-async_connect
-(
-  Microsoft::React::Test::MockStreamLayer& s,
-  Iterator begin,
-  Iterator end,
-  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
-)
-{
-  handler(s.ConnectResult(), {});
-}
-
-} // namespace boost::asio
-
-// HTTP low-level mock overrides.
-namespace beast {
-namespace http {
-
-///
-// msg - type http::message<0, http::basic_string_body<char, std::char_traits<char>, std::allocator<char>>, http::basic_fields<std::allocator<char>>>
-///
-template<class DynamicBuffer, bool isRequest, class Body, class Allocator, class ReadHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, std::size_t))
-async_read(Microsoft::React::Test::MockStreamLayer& stream, DynamicBuffer& buffer, message<isRequest, Body, basic_fields<Allocator>>& msg, ReadHandler&& handler)
-{
-  // Build response.
-  // TODO: Make mockable?
-  msg.result(status::switching_protocols);
-  msg.version(11);
-  msg.set(field::upgrade, "websocket");
-  msg.set(field::connection, "upgrade");
-  msg.set(field::sec_websocket_key, stream.Key); //TODO: Keep this, or accepted key (acc)?
-  msg.set(field::sec_websocket_version, "13");
-  msg.set(field::user_agent, BOOST_BEAST_VERSION_STRING);
-
-  websocket::detail::sec_ws_accept_type acc;
-  websocket::detail::make_sec_ws_accept(acc, stream.Key);
-  msg.set(field::sec_websocket_accept, acc);
-
-  BOOST_BEAST_HANDLER_INIT(ReadHandler, void(error_code, std::size_t));
-  boost::asio::post(stream.get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
-
-  return init.result.get();
-}
-
-///
-// sr - type http::serializer<1, http::empty_body, http::basic_fields<std::allocator<char>>>
-///
-template<bool isRequest, class Body, class Fields, class WriteHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, std::size_t))
-async_write(Microsoft::React::Test::MockStreamLayer& stream, serializer<isRequest, Body, Fields>& sr, WriteHandler&& handler)
-{
-  stream.Key = sr.get().at(field::sec_websocket_key);
-
-  BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code, std::size_t));
-  boost::asio::post(stream.get_executor(), bind_handler(std::move(init.completion_handler), boost::system::error_code{}, 0));
-
-  return init.result.get();
-}
-
-} } // namespace boost::beast::http
-
-} // namespace boost
+} } // namespace boost::asio
 
 #pragma warning(pop)
