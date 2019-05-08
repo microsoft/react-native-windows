@@ -133,7 +133,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   }
 
   const pkgJson = JSON.parse(body);
-  const pkgJsonPath = path.resolve(__dirname, '../package.json');
+  const pkgJsonPath = path.resolve(__dirname, '../vnext/package.json');
   rnVersion = pkgJson.version;
 
   let existingPkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
@@ -167,10 +167,13 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   exec(`git checkout -b ${branchName} --track origin/${finalTargetBranchName}`);
   exec(`git pull`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
-    // Run yarn install to update yarn.lock
-    exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
+  
+  process.chdir(path.resolve(__dirname, '../vnext'));
+  
+  // Run yarn install to update yarn.lock
+  exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
 
-  exec(`git add ${path.resolve(__dirname, '../yarn.lock')}`);
+  exec(`git add ${path.resolve(__dirname, '../vnext/yarn.lock')}`);
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
   exec(`git push origin ${branchName}`);
