@@ -6,7 +6,7 @@
 #include "LocationObserverModule.h"
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.Devices.Geolocation.h>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)
@@ -132,7 +132,7 @@ void LocationObserverModule::LocationObserver::getCurrentPosition(const folly::d
     errorCallback({
       folly::dynamic::object
       ("code", 1)
-      ("message", "Error in GetGeoposition:" + facebook::react::UnicodeConversion::Utf16ToUtf8(e.message())) });
+      ("message", "Error in GetGeoposition:" + facebook::react::unicode::Utf16ToUtf8(e.message())) });
     return;
   }
 

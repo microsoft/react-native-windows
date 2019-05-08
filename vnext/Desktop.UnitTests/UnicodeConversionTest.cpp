@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "../ReactWindowsCore/UnicodeConversion.h"
+#include "../ReactWindowsCore/unicode.h"
 #include "UnicodeTestStrings.h"
 #include <CppUnitTest.h>
 #include <string>
 
-using facebook::react::UnicodeConversion::Utf8ToUtf16;
-using facebook::react::UnicodeConversion::Utf16ToUtf8;
+using facebook::react::unicode::Utf8ToUtf16;
+using facebook::react::unicode::Utf16ToUtf8;
 using Microsoft::VisualStudio::CppUnitTestFramework::Assert;
 
-TEST_CLASS(UnicodeConversionTest)
+TEST_CLASS(unicodeTest)
 {
 public:
 

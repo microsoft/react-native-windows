@@ -93,7 +93,7 @@
     <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
     <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\UnicodeConversion.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="AbiSafe.h" />
     <ClInclude Include="AsyncStorageModule.h" />
@@ -139,7 +139,7 @@
     <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
-    <ClCompile Include="UnicodeConversion.cpp" />
+    <ClCompile Include="unicode.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="ViewManager.cpp" />
   </ItemGroup>

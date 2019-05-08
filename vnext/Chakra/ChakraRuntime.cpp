@@ -15,7 +15,7 @@
 #endif // JSI_CORE
 
 #include "utilities.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <jsi/jsi.h>
 
@@ -546,7 +546,7 @@ namespace facebook { namespace react { namespace chakra {
       std::string ChakraRuntime::utf8(const jsi::PropNameID& sym) {
         const wchar_t* name;
         checkException(JsGetPropertyNameFromId(propIdRef(sym), &name));
-        return facebook::react::UnicodeConversion::Utf16ToUtf8(name, wcslen(name));
+        return facebook::react::unicode::Utf16ToUtf8(name, wcslen(name));
       }
 
       bool ChakraRuntime::compare(const jsi::PropNameID& a, const jsi::PropNameID& b) {

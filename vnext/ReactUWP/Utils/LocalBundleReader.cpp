@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "LocalBundleReader.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 #include <winrt/Windows.Storage.h>
 
 #if _MSC_VER <= 1913
@@ -16,7 +16,7 @@ namespace react { namespace uwp {
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string& bundleUri)
 {
-  winrt::hstring str(facebook::react::UnicodeConversion::Utf8ToUtf16(bundleUri));
+  winrt::hstring str(facebook::react::unicode::Utf8ToUtf16(bundleUri));
   winrt::Windows::Foundation::Uri uri(str);
 
   co_await winrt::resume_background();
@@ -24,7 +24,7 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string& b
   auto file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
   auto hdata = co_await winrt::Windows::Storage::FileIO::ReadTextAsync(file);
 
-  co_return facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring(hdata.data()));
+  co_return facebook::react::unicode::Utf16ToUtf8(std::wstring(hdata.data()));
 }
 
 std::string LocalBundleReader::LoadBundle(const std::string& bundlePath)

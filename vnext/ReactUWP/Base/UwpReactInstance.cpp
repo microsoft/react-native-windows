@@ -16,7 +16,7 @@
 #include <CxxMessageQueue.h>
 #include <NativeModuleProvider.h>
 
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
@@ -296,7 +296,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     }
     catch (winrt::hresult_error const & e)
     {
-      OnHitError(facebook::react::UnicodeConversion::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+      OnHitError(facebook::react::unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()));
       OnHitError("UwpReactInstance: Failed to create React Instance.");
     }
     catch (...)

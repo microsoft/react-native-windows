@@ -54,9 +54,9 @@ EXPORTS
 ??0ViewViewManager@uwp@react@@QEAA@AEBV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0WebViewManager@uwp@react@@QEAA@AEBV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 
-?Utf16ToUtf8@UnicodeConversion@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?Utf16ToUtf8@UnicodeConversion@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
-?Utf8ToUtf16@UnicodeConversion@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?Utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
+?Utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
+?Utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 
 ?JsPointerToStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEBD_KPEAPEAX@Z
 ?JsStringToStdStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z

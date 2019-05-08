@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "ChakraUtils.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <cstdint>
 #include <cassert>
@@ -109,12 +109,12 @@ FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint
 {
 #if (defined(WINRT))
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{CreateFile2(
-                                                               UnicodeConversion::Utf8ToUtf16(filenameUtf8).c_str(), GENERIC_READ, FILE_SHARE_READ,
+                                                               unicode::Utf8ToUtf16(filenameUtf8).c_str(), GENERIC_READ, FILE_SHARE_READ,
                                                                OPEN_EXISTING, nullptr /* pCreateExParams */),
                                                            &CloseHandle};
 #else
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{CreateFileW(
-                                                               UnicodeConversion::Utf8ToUtf16(filenameUtf8).c_str(), GENERIC_READ, FILE_SHARE_READ,
+                                                               unicode::Utf8ToUtf16(filenameUtf8).c_str(), GENERIC_READ, FILE_SHARE_READ,
                                                                nullptr /* lpSecurityAttributes */, OPEN_EXISTING,
                                                                FILE_ATTRIBUTE_NORMAL, nullptr /* hTemplateFile */),
                                                            &CloseHandle};

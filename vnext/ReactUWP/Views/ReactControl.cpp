@@ -6,7 +6,7 @@
 
 #include <ReactUWP/InstanceFactory.h>
 #include <CxxMessageQueue.h>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 #include <Utils/ValueUtils.h>
 
 #include <INativeUIManager.h>
@@ -74,7 +74,7 @@ void ReactControl::HandleInstanceErrorOnUIThread()
 
     // Place error message into TextBlock
     std::wstring wstrErrorMessage(L"ERROR: Instance failed to start.\n\n");
-    wstrErrorMessage += facebook::react::UnicodeConversion::Utf8ToUtf16(m_reactInstance->LastErrorMessage()).c_str();
+    wstrErrorMessage += facebook::react::unicode::Utf8ToUtf16(m_reactInstance->LastErrorMessage()).c_str();
     m_errorTextBlock.Text(wstrErrorMessage);
 
     // Format TextBlock

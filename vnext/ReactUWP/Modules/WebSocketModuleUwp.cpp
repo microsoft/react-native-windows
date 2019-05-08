@@ -8,7 +8,7 @@
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "utilities.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 #include <future>
 
 #pragma warning(push)
@@ -138,7 +138,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
       auto name = header.first.getString();
       auto value = header.second.getString();
 
-      socket.SetRequestHeader(facebook::react::UnicodeConversion::Utf8ToUtf16(name), facebook::react::UnicodeConversion::Utf8ToUtf16(value));
+      socket.SetRequestHeader(facebook::react::unicode::Utf8ToUtf16(name), facebook::react::unicode::Utf8ToUtf16(value));
     }
   }
 
@@ -148,7 +148,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
     for (auto& protocol : protocols)
     {
       auto protocolStr = protocol.getString();
-      supportedProtocols.Append(facebook::react::UnicodeConversion::Utf8ToUtf16(protocolStr));
+      supportedProtocols.Append(facebook::react::unicode::Utf8ToUtf16(protocolStr));
     }
   }
 
@@ -173,7 +173,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
         auto buffer = reader.ReadBuffer(len);
         winrt::hstring data = winrt::Windows::Security::Cryptography::CryptographicBuffer::EncodeToBase64String(buffer);
 
-        response = facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring_view(data));
+        response = facebook::react::unicode::Utf16ToUtf8(std::wstring_view(data));
       }
 
       folly::dynamic params = folly::dynamic::object("id", id)("data", response)("type", args.MessageType() == winrt::SocketMessageType::Utf8 ? "text" : "binary");
@@ -186,7 +186,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
     }
   });
 
-  winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::Utf8ToUtf16(url));
 
   HRESULT hr = S_OK;
   try
@@ -246,7 +246,7 @@ void WebSocketModule::WebSocket::sendBinary(const std::string& base64String, int
     auto dataWriter = m_dataWriters[id];
     socket.Control().MessageType(winrt::SocketMessageType::Binary);
 
-    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(facebook::react::UnicodeConversion::Utf8ToUtf16(base64String));
+    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(facebook::react::unicode::Utf8ToUtf16(base64String));
     dataWriter.WriteBuffer(buffer);
     dataWriter.StoreAsync();
   }

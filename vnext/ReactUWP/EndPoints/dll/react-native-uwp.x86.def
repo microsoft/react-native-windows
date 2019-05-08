@@ -45,9 +45,9 @@ EXPORTS
 ??0LocationObserverModule@uwp@react@@QAE@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z
 ??0WebSocketModule@uwp@react@@QAE@XZ
 
-?Utf16ToUtf8@UnicodeConversion@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?Utf16ToUtf8@UnicodeConversion@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
-?Utf8ToUtf16@UnicodeConversion@react@facebook@@YG?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?Utf16ToUtf8@unicode@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
+?Utf16ToUtf8@unicode@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
+?Utf8ToUtf16@unicode@react@facebook@@YG?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 
 ?demangle@folly@@YG?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PBD@Z
 

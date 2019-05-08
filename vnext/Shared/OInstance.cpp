@@ -10,7 +10,7 @@
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/Platform.h>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include "../Chakra/ChakraExecutor.h"
 #include "../Chakra/ChakraUtils.h"
@@ -84,7 +84,7 @@ std::string GetJSBundleDirectory(const std::string& jsBundleBasePath, const std:
     if (!succeeded)
       return jsBundleRelativePath;
 
-    std::string jsBundlePath = facebook::react::UnicodeConversion::Utf16ToUtf8(modulePath, wcslen(modulePath));
+    std::string jsBundlePath = facebook::react::unicode::Utf16ToUtf8(modulePath, wcslen(modulePath));
     if (!jsBundlePath.empty() && jsBundlePath.back() != '\\')
       jsBundlePath += '\\';
 
@@ -131,7 +131,7 @@ std::string GetJSBundleFilePath(const std::string& jsBundleBasePath, const std::
 
 bool GetLastWriteTime(const std::string& fileName, uint64_t& result) noexcept
 {
-  std::wstring fileNameUtf16 = facebook::react::UnicodeConversion::Utf8ToUtf16(fileName);
+  std::wstring fileNameUtf16 = facebook::react::unicode::Utf8ToUtf16(fileName);
 
   std::unique_ptr<void, decltype(&CloseHandle)> handle { CreateFileW(
     static_cast<LPCWSTR>(fileNameUtf16.c_str()), GENERIC_READ, FILE_SHARE_READ,
