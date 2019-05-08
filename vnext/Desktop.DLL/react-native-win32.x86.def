@@ -1,4 +1,10 @@
 EXPORTS
+?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
+??0TypeError@folly@@QAE@ABU01@@Z
+??0TypeError@folly@@QAE@$$QAU01@@Z
+??0ColdClass@cold_detail@folly@@QAE@XZ
+?get_ptrImpl@dynamic@folly@@AGBEPBU12@ABU12@@Z
+??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
 ??$str_to_floating@N@detail@folly@@YG?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YG?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??0JSBigStringResourceDll@react@facebook@@QAE@PAUHINSTANCE__@@PAUHRSRC__@@@Z
