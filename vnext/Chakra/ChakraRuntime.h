@@ -3,10 +3,14 @@
 
 #pragma once
 
+#include "ChakraInstanceArgs.h"
 #include <jsi/jsi.h>
 
 namespace facebook {
 namespace react {
+
+class MessageQueueThread;
+
 namespace chakra {
 
 #ifndef JSI_CORE

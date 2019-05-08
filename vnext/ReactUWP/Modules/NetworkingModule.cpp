@@ -9,6 +9,7 @@
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 
+#include "utilities.h"
 #include "UnicodeConversion.h"
 #include <future>
 
@@ -111,7 +112,7 @@ std::future<void> SendRequestAsync(
     {
       std::vector<uint8_t> data(len);
       reader.ReadBytes(data);
-      std::string responseData = std::string(reinterpret_cast<char*>(data.data()), data.size());
+      std::string responseData = std::string(facebook::react::utilities::checkedReinterpretCast<char*>(data.data()), data.size());
 
       networking->OnDataReceived(requestId, std::move(responseData));
     }

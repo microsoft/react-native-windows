@@ -7,6 +7,7 @@
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include "utilities.h"
 #include "UnicodeConversion.h"
 #include <future>
 
@@ -165,7 +166,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
         std::vector<uint8_t> data(len);
         reader.ReadBytes(data);
 
-        response = std::string(reinterpret_cast<char*>(data.data()), data.size());
+        response = std::string(facebook::react::utilities::checkedReinterpretCast<char*>(data.data()), data.size());
       }
       else
       {
@@ -226,7 +227,7 @@ void WebSocketModule::WebSocket::send(const std::string& message, int64_t id)
     auto dataWriter = m_dataWriters[id];
     socket.Control().MessageType(winrt::SocketMessageType::Utf8);
 
-    winrt::array_view<const uint8_t> arr(reinterpret_cast<const uint8_t*>(message.c_str()), reinterpret_cast<const uint8_t*>(message.c_str()) + message.length());
+    winrt::array_view<const uint8_t> arr(facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()), facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
     dataWriter.WriteBytes(arr);
     dataWriter.StoreAsync();
   }
@@ -265,7 +266,7 @@ void WebSocketModule::WebSocket::ping(int64_t id)
     socket.Control().MessageType(winrt::SocketMessageType::Utf8);
 
     std::string s("");
-    winrt::array_view<const uint8_t> arr(reinterpret_cast<const uint8_t*>(s.c_str()), reinterpret_cast<const uint8_t*>(s.c_str()) + s.length());
+    winrt::array_view<const uint8_t> arr(facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(s.c_str()), facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(s.c_str()) + s.length());
     dataWriter.WriteBytes(arr);
     dataWriter.StoreAsync();
   }

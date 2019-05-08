@@ -10,6 +10,7 @@
 #include <folly/dynamic.h>
 #include <folly/json.h>
 
+#include "utilities.h"
 #include "UnicodeConversion.h"
 
 #include <winrt/Windows.Storage.Streams.h>
@@ -44,7 +45,7 @@ WebSocketJSExecutor::WebSocketJSExecutor(std::shared_ptr<facebook::react::Execut
         std::vector<uint8_t> data(len);
         reader.ReadBytes(data);
 
-        std::string str(reinterpret_cast<char*>(data.data()), data.size());
+        std::string str(facebook::react::utilities::checkedReinterpretCast<char*>(data.data()), data.size());
         OnMessageReceived(str);
       }
       else
@@ -254,7 +255,7 @@ std::future<std::string> WebSocketJSExecutor::SendMessageAsync(int requestId, co
   {
     m_socket.Control().MessageType(winrt::Windows::Networking::Sockets::SocketMessageType::Utf8);
 
-    winrt::array_view<const uint8_t> arr(reinterpret_cast<const uint8_t*>(message.c_str()), reinterpret_cast<const uint8_t*>(message.c_str()) + message.length());
+    winrt::array_view<const uint8_t> arr(facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()), facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
     m_socketDataWriter.WriteBytes(arr);
     m_socketDataWriter.StoreAsync();
   }

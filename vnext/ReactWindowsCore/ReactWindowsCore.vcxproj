@@ -123,6 +123,7 @@
     <ClInclude Include="ShadowNodeRegistry.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tracing.h" />
+    <ClInclude Include="utilities.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
     <ClInclude Include="WebSocketModule.h" />

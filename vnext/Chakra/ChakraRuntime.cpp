@@ -6,7 +6,7 @@
 // Only Win32
 #if (defined(_MSC_VER) && !defined(WINRT))
 
-#include <ChakraCore.h>
+#include "ChakraRuntime.h"
 
 #ifndef JSI_CORE
 #include "ChakraCoreDebugger.h"
@@ -14,11 +14,15 @@
 #include "ChakraUtils.h"
 #endif // JSI_CORE
 
+#include "utilities.h"
+#include "UnicodeConversion.h"
+
 #include <jsi/jsi.h>
-#include "ChakraRuntime.h"
+
+#include <ChakraCore.h>
 
 #include <sstream>
-#include "UnicodeConversion.h"
+
 
 namespace facebook { namespace react { namespace chakra {
 
@@ -412,11 +416,11 @@ namespace facebook { namespace react { namespace chakra {
         const std::string& sourceURL) {
 
         JsValueRef sourceRef;
-        JsCreateString(reinterpret_cast<const char*>(buffer->data()), buffer->size(), &sourceRef);
+        JsCreateString(utilities::checkedReinterpretCast<const char*>(buffer->data()), buffer->size(), &sourceRef);
 
         JsValueRef sourceURLRef = nullptr;
         if (!sourceURL.empty()) {
-          JsCreateString(reinterpret_cast<const char*>(sourceURL.c_str()), sourceURL.size(), &sourceURLRef);
+          JsCreateString(utilities::checkedReinterpretCast<const char*>(sourceURL.c_str()), sourceURL.size(), &sourceURLRef);
         }
 
         JsValueRef result;
@@ -529,14 +533,14 @@ namespace facebook { namespace react { namespace chakra {
         size_t length) {
 
         JsValueRef prpoIdRef;
-        checkException(JsCreatePropertyId(reinterpret_cast<const char*>(utf8), length, &prpoIdRef));
+        checkException(JsCreatePropertyId(utilities::checkedReinterpretCast<const char*>(utf8), length, &prpoIdRef));
         auto res = createPropNameID(prpoIdRef);
         return res;
       }
 
       jsi::PropNameID ChakraRuntime::createPropNameIDFromString(const jsi::String& str) {
         std::string propNameString = JSStringToSTLString(stringRef(str));
-        return createPropNameIDFromUtf8(reinterpret_cast<const uint8_t*>(propNameString.c_str()), propNameString.length());
+        return createPropNameIDFromUtf8(utilities::checkedReinterpretCast<const uint8_t*>(propNameString.c_str()), propNameString.length());
       }
 
       std::string ChakraRuntime::utf8(const jsi::PropNameID& sym) {
@@ -555,7 +559,7 @@ namespace facebook { namespace react { namespace chakra {
         // Yes we end up double casting for semantic reasons (UTF8 contains ASCII,
         // not the other way around)
         return this->createStringFromUtf8(
-          reinterpret_cast<const uint8_t*>(str), length);
+          utilities::checkedReinterpretCast<const uint8_t*>(str), length);
       }
 
       jsi::String ChakraRuntime::createStringFromUtf8(
@@ -563,7 +567,7 @@ namespace facebook { namespace react { namespace chakra {
         size_t length) {
 
         JsValueRef stringRef;
-        checkException(JsCreateString(reinterpret_cast<const char*>(str), length, &stringRef));
+        checkException(JsCreateString(utilities::checkedReinterpretCast<const char*>(str), length, &stringRef));
         return createString(stringRef);
       }
 
@@ -987,7 +991,7 @@ namespace facebook { namespace react { namespace chakra {
         case JsString:
         {
           std::string utf8str = JSStringToSTLString(value);
-          return jsi::String::createFromUtf8(*const_cast<jsi::Runtime*>(reinterpret_cast<const jsi::Runtime*>(this)), reinterpret_cast<const uint8_t*>(utf8str.c_str()), utf8str.size());
+          return jsi::String::createFromUtf8(*const_cast<jsi::Runtime*>(reinterpret_cast<const jsi::Runtime*>(this)), utilities::checkedReinterpretCast<const uint8_t*>(utf8str.c_str()), utf8str.size());
           break;
         }
 
@@ -1130,7 +1134,7 @@ namespace facebook { namespace react { namespace chakra {
         }
 
         result.resize(static_cast<size_t>(length + 1));
-        JsCopyStringUtf16(str, 0, length, reinterpret_cast<uint16_t*>(&result[0]), nullptr);
+        JsCopyStringUtf16(str, 0, length, utilities::checkedReinterpretCast<uint16_t*>(&result[0]), nullptr);
         return result;
       }
 

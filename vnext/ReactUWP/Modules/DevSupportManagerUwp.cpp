@@ -12,6 +12,7 @@
 
 #include <Executors/WebSocketJSExecutorUwp.h>
 
+#include "utilities.h"
 #include "UnicodeConversion.h"
 
 #include <winrt/Windows.Web.Http.h>
@@ -50,7 +51,7 @@ std::future<std::string> DownloadFromAsync(const std::string& url)
   std::vector<uint8_t> data(len);
   reader.ReadBytes(data);
 
-  co_return std::string(reinterpret_cast<char*>(data.data()), data.size());
+  co_return std::string(facebook::react::utilities::checkedReinterpretCast<char*>(data.data()), data.size());
 }
 
 void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings& settings)
