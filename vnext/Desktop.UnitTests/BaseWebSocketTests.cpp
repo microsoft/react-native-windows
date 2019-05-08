@@ -105,6 +105,9 @@ TEST_CLASS(BaseWebSocketTest)
     Assert::IsFalse(connected);
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(CloseSucceeds)
+    TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(CloseSucceeds)
   {
     string errorMessage;

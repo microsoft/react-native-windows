@@ -515,6 +515,7 @@ MockStream::MockStream(io_context& context)
   : m_context{ context }
   , ConnectResult{ []() { return error_code{}; } }
   , HandshakeResult{ [](string, string) { return error_code{}; } }
+  , ReadResult{ []() { return std::make_pair<error_code, size_t>({}, 0); } }
   , CloseResult{ []() { return error_code{}; } }
 {
 }
