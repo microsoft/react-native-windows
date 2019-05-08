@@ -80,6 +80,9 @@ TEST_CLASS(BaseWebSocketTest)
     Assert::IsFalse(connected);
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(HandshakeFails)
+    TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(HandshakeFails)
   {
     string errorMessage;
