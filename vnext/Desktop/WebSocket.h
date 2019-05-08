@@ -67,7 +67,7 @@ protected:
 
   boost::asio::io_context m_context;
   std::unique_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> m_workGuard;
-  std::unique_ptr<boost::beast::websocket::stream<SocketLayer>> m_stream;
+  std::unique_ptr<Stream> m_stream;
 
   BaseWebSocket(Url&& url);
 
@@ -117,6 +117,74 @@ public:
 
 namespace Test {
 
+class MockStream
+{
+  boost::asio::io_context& m_context;
+
+public:
+  using next_layer_type = MockStream;
+  using lowest_layer_type = MockStream;
+  using executor_type = boost::asio::io_context::executor_type;
+
+  MockStream(boost::asio::io_context& context);
+
+  boost::asio::io_context::executor_type get_executor() noexcept;
+
+  lowest_layer_type& lowest_layer();
+
+  lowest_layer_type const& lowest_layer() const;
+
+  void binary(bool value);
+
+  bool got_binary() const;
+
+  bool got_text() const;
+
+  void write_buffer_size(std::size_t amount);
+
+  std::size_t write_buffer_size() const;
+
+  #pragma region boost::beast::websocket::stream mocks
+
+  template<class RequestDecorator, class HandshakeHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(boost::system::error_code))
+  async_handshake_ex(
+    boost::beast::string_view host,
+    boost::beast::string_view target,
+    RequestDecorator const& decorator,
+    HandshakeHandler&& handler);
+
+  template<class DynamicBuffer, class ReadHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
+  async_read(DynamicBuffer& buffer, ReadHandler&& handler);
+
+  template<class ConstBufferSequence, class WriteHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code, std::size_t))
+  async_write(ConstBufferSequence const& buffers, WriteHandler&& handler);
+
+  template<class WriteHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code))
+  async_ping(boost::beast::websocket::ping_data const& payload, WriteHandler&& handler);
+
+  template<class CloseHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(boost::system::error_code))
+  async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler);
+
+  #pragma endregion // boost::beast::websocket::stream mocks
+
+  std::function<boost::system::error_code()> ConnectResult;
+  std::function<boost::system::error_code()> CloseResult;
+};
+
+class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, MockStream, MockStream>
+{
+public:
+  TestWebSocket(facebook::react::Url&& url);
+
+  void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
+  void SetCloseResult(std::function<boost::system::error_code()>&& resultFunc);
+};
+
 // See <boost/beast/experimental/test/stream.hpp>
 class MockStreamLayer
 {
@@ -153,8 +221,6 @@ public:
   using lowest_layer_type = MockStreamLayer;
 
   using executor_type = boost::asio::io_context::executor_type;
-
-  using lowest_layer_type = MockStreamLayer;
 
   lowest_layer_type& lowest_layer();
 

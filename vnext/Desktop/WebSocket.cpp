@@ -635,10 +635,81 @@ void TestWebSocketOld::SetCloseResult(std::function<error_code()>&& resultFunc)
 
 #pragma endregion
 
+#pragma region MockStream
+
+template<class RequestDecorator, class HandshakeHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(error_code))
+MockStream::async_handshake_ex(
+  string_view host,
+  string_view target,
+  RequestDecorator const& decorator,
+  HandshakeHandler&& handler)
+{
+  //static_assert(is_async_stream<next_layer_type>::value,
+  //  "AsyncStream requirements not met");
+  //static_assert(detail::is_request_decorator<
+  //  RequestDecorator>::value,
+  //  "RequestDecorator requirements not met");
+  BOOST_BEAST_HANDLER_INIT(HandshakeHandler, void(error_code));
+
+  return init.result.get();
+}
+
+template<class DynamicBuffer, class ReadHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, size_t))
+MockStream::async_read(DynamicBuffer& buffer, ReadHandler&& handler)
+{
+  //TODO: Mock
+}
+
+template<class ConstBufferSequence, class WriteHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
+MockStream::async_write(ConstBufferSequence const& buffers, WriteHandler&& handler)
+{
+  //TODO: Mock
+}
+
+template<class WriteHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
+MockStream::async_ping(websocket::ping_data const& payload, WriteHandler&& handler)
+{
+  //TODO: Mock
+}
+
+template<class CloseHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
+MockStream::async_close(websocket::close_reason const& cr, CloseHandler&& handler)
+{
+  BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
+  boost::asio::post(get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
+
+  return init.result.get();
+}
+
+#pragma endregion // MockStream
+
 } } } // namespace Microsoft::React::Test
 
 namespace boost {
 namespace asio {
+
+  // See <boost/asio/connect.hpp>(776)
+template
+<
+  typename Iterator,
+  typename IteratorConnectHandler
+>
+BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(error_code, Iterator))
+async_connect
+(
+  Microsoft::React::Test::MockStream& s,
+  Iterator begin,
+  Iterator end,
+  BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
+)
+{
+  handler(s.ConnectResult(), {});
+}
 
 // See <boost/asio/connect.hpp>(776)
 template
@@ -646,7 +717,7 @@ template
   typename Iterator,
   typename IteratorConnectHandler
 >
-BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
+BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(error_code, Iterator))
 async_connect
 (
   Microsoft::React::Test::MockStreamLayer& s,
