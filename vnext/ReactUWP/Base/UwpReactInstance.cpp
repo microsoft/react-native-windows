@@ -17,7 +17,6 @@
 #include <NativeModuleProvider.h>
 
 #include "UnicodeConversion.h"
-#include "folly/json.h"
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
