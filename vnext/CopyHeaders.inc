@@ -5,28 +5,18 @@ COPYFILES_PASS0_DESTROOT = $(TARGETDIR)\include
 
 COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
-	Folly\folly\docs\.gitignore, folly\docs; \
-	Folly\folly\test\.gitignore, folly\test; \
 	Folly\folly\futures\exercises\01-Values.cpp, folly\futures\exercises; \
-	Folly\folly\m4\ac_cxx_compile_stdcxx_1y.m4, folly\m4; \
 	Folly\folly\fibers\AddTasks.h, folly\fibers; \
 	Folly\folly\fibers\AddTasks-inl.h, folly\fibers; \
 	Folly\folly\test\AHMIntStressTest.cpp, folly\test; \
-	Folly\folly\ApplyTuple.h, folly; \
-	Folly\folly\test\ApplyTupleTest.cpp, folly\test; \
-	Folly\folly\Arena.h, folly; \
-	Folly\folly\Arena-inl.h, folly; \
+	Folly\folly\lang\Align.h, folly\lang; \
 	Folly\folly\test\ArenaSmartPtrTest.cpp, folly\test; \
-	Folly\folly\test\ArenaTest.cpp, folly\test; \
-	Folly\folly\Array.h, folly; \
-	Folly\folly\test\ArrayTest.cpp, folly\test; \
 	Folly\folly\test\AsciiCaseInsensitiveBenchmark.cpp, folly\test; \
 	Folly\folly\test\AsciiCaseInsensitiveTest.cpp, folly\test; \
+	Folly\folly\functional\ApplyTuple.h, folly\functional; \
 	Folly\folly\portability\Asm.h, folly\portability; \
 	Folly\folly\portability\string.cpp, folly\portability; \
-	Folly\folly\Assume.h, folly; \
-	Folly\folly\experimental\AsymmetricMemoryBarrier.cpp, folly\experimental; \
-	Folly\folly\experimental\AsymmetricMemoryBarrier.h, folly\experimental; \
+	Folly\folly\lang\Assume.h, folly\lang; \
 	Folly\folly\experimental\io\AsyncIO.cpp, folly\experimental\io; \
 	Folly\folly\experimental\io\AsyncIO.h, folly\experimental\io; \
 	Folly\folly\experimental\io\test\AsyncIOTest.cpp, folly\experimental\io\test; \
@@ -79,24 +69,11 @@ COPYFILES_PASS0 = \
 	Folly\folly\AtomicIntrusiveLinkedList.h, folly; \
 	Folly\folly\AtomicLinkedList.h, folly; \
 	Folly\folly\test\AtomicLinkedListTest.cpp, folly\test; \
-	Folly\folly\AtomicStruct.h, folly; \
-	Folly\folly\test\AtomicStructTest.cpp, folly\test; \
 	Folly\folly\AtomicUnorderedMap.h, folly; \
 	Folly\folly\test\AtomicUnorderedMapTest.cpp, folly\test; \
 	Folly\folly\detail\AtomicUnorderedMapUtils.h, folly\detail; \
 	Folly\folly\experimental\AutoTimer.h, folly\experimental; \
 	Folly\folly\experimental\test\AutoTimerTest.cpp, folly\experimental\test; \
-	Folly\folly\m4\ax_boost_base.m4, folly\m4; \
-	Folly\folly\m4\ax_boost_chrono.m4, folly\m4; \
-	Folly\folly\m4\ax_boost_context.m4, folly\m4; \
-	Folly\folly\m4\ax_boost_filesystem.m4, folly\m4; \
-	Folly\folly\m4\ax_boost_program_options.m4, folly\m4; \
-	Folly\folly\m4\ax_boost_regex.m4, folly\m4; \
-	Folly\folly\m4\ax_boost_system.m4, folly\m4; \
-	Folly\folly\m4\ax_boost_thread.m4, folly\m4; \
-	Folly\folly\m4\ax_check_openssl.m4, folly\m4; \
-	Folly\folly\m4\ax_config_feature.m4, folly\m4; \
-	Folly\folly\m4\ax_prefix_config.m4, folly\m4; \
 	Folly\folly\futures\Barrier.cpp, folly\futures; \
 	Folly\folly\futures\Barrier.h, folly\futures; \
 	Folly\folly\futures\test\BarrierTest.cpp, folly\futures\test; \
@@ -106,12 +83,8 @@ COPYFILES_PASS0 = \
 	Folly\folly\gen\test\BaseTest.cpp, folly\gen\test; \
 	Folly\folly\fibers\BatchDispatcher.h, folly\fibers; \
 	Folly\folly\fibers\Baton.cpp, folly\fibers; \
-	Folly\folly\Baton.h, folly; \
 	Folly\folly\fibers\Baton.h, folly\fibers; \
-	Folly\folly\test\BatonBenchmark.cpp, folly\test; \
 	Folly\folly\fibers\Baton-inl.h, folly\fibers; \
-	Folly\folly\test\BatonTest.cpp, folly\test; \
-	Folly\folly\test\BatonTestHelpers.h, folly\test; \
 	Folly\folly\gen\test\Bench.h, folly\gen\test; \
 	Folly\folly\Benchmark.cpp, folly; \
 	Folly\folly\futures\test\Benchmark.cpp, folly\futures\test; \
@@ -120,17 +93,10 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\function_benchmark\benchmark_impl.cpp, folly\test\function_benchmark; \
 	Folly\folly\test\function_benchmark\benchmark_impl.h, folly\test\function_benchmark; \
 	Folly\folly\test\BenchmarkTest.cpp, folly\test; \
-	Folly\folly\detail\BitIteratorDetail.h, folly\detail; \
-	Folly\folly\test\BitIteratorTest.cpp, folly\test; \
-	Folly\folly\Bits.cpp, folly; \
 	Folly\folly\Bits.h, folly; \
 	Folly\folly\experimental\Bits.h, folly\experimental; \
-	Folly\folly\experimental\test\BitsBenchmark.cpp, folly\experimental\test; \
-	Folly\folly\test\BitsBenchmark.cpp, folly\test; \
-	Folly\folly\detail\BitsDetail.h, folly\detail; \
-	Folly\folly\portability\BitsFunctexcept.h, folly\portability; \
+	Folly\folly\lang\Bits.h, folly\lang; \
 	Folly\folly\experimental\test\BitsTest.cpp, folly\experimental\test; \
-	Folly\folly\test\BitsTest.cpp, folly\test; \
 	Folly\folly\experimental\BitVectorCoding.h, folly\experimental; \
 	Folly\folly\experimental\test\BitVectorCodingTest.cpp, folly\experimental\test; \
 	Folly\folly\io\async\test\BlockingSocket.h, folly\io\async\test; \
@@ -145,19 +111,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\portability\Builtins.h, folly\portability; \
 	Folly\folly\io\async\test\certs\ca-cert.pem, folly\io\async\test\certs; \
 	Folly\folly\CachelinePadded.h, folly; \
-	Folly\folly\detail\CachelinePaddedImpl.h, folly\detail; \
 	Folly\folly\test\CachelinePaddedTest.cpp, folly\test; \
-	Folly\folly\detail\CacheLocality.cpp, folly\detail; \
-	Folly\folly\detail\CacheLocality.h, folly\detail; \
-	Folly\folly\test\CacheLocalityBenchmark.cpp, folly\test; \
-	Folly\folly\test\CacheLocalityTest.cpp, folly\test; \
-	Folly\folly\CallOnce.h, folly; \
-	Folly\folly\test\CallOnceBenchmark.cpp, folly\test; \
-	Folly\folly\test\CallOnceTest.cpp, folly\test; \
-	Folly\folly\Checksum.cpp, folly; \
-	Folly\folly\Checksum.h, folly; \
-	Folly\folly\detail\ChecksumDetail.h, folly\detail; \
-	Folly\folly\test\ChecksumTest.cpp, folly\test; \
 	Folly\folly\Chrono.h, folly; \
 	Folly\folly\test\ChronoTest.cpp, folly\test; \
 	Folly\folly\ClockGettimeWrappers.cpp, folly; \
@@ -165,24 +119,20 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\ClockGettimeWrappersTest.cpp, folly\test; \
 	Folly\folly\experimental\test\CodingTestUtils.h, folly\experimental\test; \
 	Folly\folly\futures\test\CollectTest.cpp, folly\futures\test; \
+	Folly\folly\lang\ColdClass.h, folly\lang; \
+	Folly\folly\ConstexprMath.h, folly; \
 	Folly\folly\gen\Combine.h, folly\gen; \
 	Folly\folly\gen\Combine-inl.h, folly\gen; \
 	Folly\folly\gen\test\CombineTest.cpp, folly\gen\test; \
 	Folly\folly\test\json_test_data\commented.json, folly\test\json_test_data; \
 	Folly\folly\test\json_test_data\commented.json.exp, folly\test\json_test_data; \
-	Folly\folly\io\Compression.cpp, folly\io; \
-	Folly\folly\io\Compression.h, folly\io; \
-	Folly\folly\io\test\CompressionTest.cpp, folly\io\test; \
 	Folly\folly\ConcurrentSkipList.h, folly; \
 	Folly\folly\test\ConcurrentSkipListBenchmark.cpp, folly\test; \
 	Folly\folly\ConcurrentSkipList-inl.h, folly; \
 	Folly\folly\test\ConcurrentSkipListTest.cpp, folly\test; \
 	Folly\folly\portability\Config.h, folly\portability; \
-	Folly\folly\configure.ac, folly; \
 	Folly\folly\portability\Constexpr.h, folly\portability; \
 	Folly\folly\portability\test\ConstexprTest.cpp, folly\portability\test; \
-	Folly\folly\ContainerTraits.h, folly; \
-	Folly\folly\test\ContainerTraitsTest.cpp, folly\test; \
 	Folly\folly\futures\test\ContextTest.cpp, folly\futures\test; \
 	Folly\folly\Conv.cpp, folly; \
 	Folly\folly\Conv.h, folly; \
@@ -221,7 +171,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\DiscriminatedPtr.h, folly; \
 	Folly\folly\detail\DiscriminatedPtrDetail.h, folly\detail; \
 	Folly\folly\test\DiscriminatedPtrTest.cpp, folly\test; \
-	Folly\folly\futures\DrivableExecutor.h, folly\futures; \
 	Folly\folly\experimental\bser\Dump.cpp, folly\experimental\bser; \
 	Folly\folly\experimental\symbolizer\Dwarf.cpp, folly\experimental\symbolizer; \
 	Folly\folly\experimental\symbolizer\Dwarf.h, folly\experimental\symbolizer; \
@@ -246,13 +195,10 @@ COPYFILES_PASS0 = \
 	Folly\folly\experimental\symbolizer\ElfCache.h, folly\experimental\symbolizer; \
 	Folly\folly\experimental\symbolizer\Elf-inl.h, folly\experimental\symbolizer; \
 	Folly\folly\experimental\symbolizer\test\ElfTests.cpp, folly\experimental\symbolizer\test; \
-	Folly\folly\experimental\symbolizer\ElfUtil.cpp, folly\experimental\symbolizer; \
 	Folly\folly\experimental\EliasFanoCoding.h, folly\experimental; \
 	Folly\folly\experimental\test\EliasFanoCodingTest.cpp, folly\experimental\test; \
 	Folly\folly\test\EndianTest.cpp, folly\test; \
 	Folly\folly\futures\test\EnsureTest.cpp, folly\futures\test; \
-	Folly\folly\Enumerate.h, folly; \
-	Folly\folly\test\EnumerateTest.cpp, folly\test; \
 	Folly\folly\experimental\EnvUtil.cpp, folly\experimental; \
 	Folly\folly\experimental\EnvUtil.h, folly\experimental; \
 	Folly\folly\experimental\test\EnvUtilTest.cpp, folly\experimental\test; \
@@ -278,9 +224,8 @@ COPYFILES_PASS0 = \
 	Folly\folly\io\async\EventHandler.h, folly\io\async; \
 	Folly\folly\io\async\test\EventHandlerTest.cpp, folly\io\async\test; \
 	Folly\folly\io\async\EventUtil.h, folly\io\async; \
-	Folly\folly\EvictingCacheMap.h, folly; \
-	Folly\folly\test\EvictingCacheMapTest.cpp, folly\test; \
 	Folly\folly\Exception.h, folly; \
+	Folly\folly\lang\Exception.h, folly\lang; \
 	Folly\folly\experimental\exception_tracer\ExceptionAbi.h, folly\experimental\exception_tracer; \
 	Folly\folly\experimental\exception_tracer\ExceptionCounterLib.cpp, folly\experimental\exception_tracer; \
 	Folly\folly\experimental\exception_tracer\ExceptionCounterLib.h, folly\experimental\exception_tracer; \
@@ -290,10 +235,8 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\ExceptionTest.cpp, folly\test; \
 	Folly\folly\experimental\exception_tracer\ExceptionTracer.cpp, folly\experimental\exception_tracer; \
 	Folly\folly\experimental\exception_tracer\ExceptionTracer.h, folly\experimental\exception_tracer; \
-	Folly\folly\experimental\exception_tracer\ExceptionTracerBenchmark.cpp, folly\experimental\exception_tracer; \
 	Folly\folly\experimental\exception_tracer\ExceptionTracerLib.cpp, folly\experimental\exception_tracer; \
 	Folly\folly\experimental\exception_tracer\ExceptionTracerLib.h, folly\experimental\exception_tracer; \
-	Folly\folly\experimental\exception_tracer\ExceptionTracerTest.cpp, folly\experimental\exception_tracer; \
 	Folly\folly\ExceptionWrapper.cpp, folly; \
 	Folly\folly\ExceptionWrapper.h, folly; \
 	Folly\folly\test\ExceptionWrapperBenchmark.cpp, folly\test; \
@@ -301,11 +244,14 @@ COPYFILES_PASS0 = \
 	Folly\folly\experimental\ExecutionObserver.h, folly\experimental; \
 	Folly\folly\Executor.cpp, folly; \
 	Folly\folly\Executor.h, folly; \
-	Folly\folly\futures\test\ExecutorTest.cpp, folly\futures\test; \
 	Folly\folly\Expected.h, folly; \
 	Folly\folly\test\ExpectedTest.cpp, folly\test; \
-	Folly\folly\m4\fb_check_pkg_config.m4, folly\m4; \
-	Folly\folly\m4\fb_filter_pkg_libs.m4, folly\m4; \
+	Folly\folly\container\detail\F14Defaults.h, folly\container\detail; \
+	Folly\folly\container\detail\F14IntrinsicsAvailability.h, folly\container\detail; \
+	Folly\folly\container\detail\F14Policy.h, folly\container\detail; \
+	Folly\folly\container\detail\F14Table.h, folly\container\detail; \
+	Folly\folly\container\F14Map.h, folly\container; \
+	Folly\folly\container\F14Map-fwd.h, folly\container; \
 	Folly\folly\FBString.h, folly; \
 	Folly\folly\docs\FBString.md, folly\docs; \
 	Folly\folly\test\FBStringBenchmark.cpp, folly\test; \
@@ -316,15 +262,12 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\FBVectorBenchmark.cpp, folly\test; \
 	Folly\folly\docs\Fbvector--graphical_solutions.png, folly\docs; \
 	Folly\folly\test\FBVectorTest.cpp, folly\test; \
-	Folly\folly\test\FBVectorTestBenchmarks.cpp.h, folly\test; \
 	Folly\folly\portability\Fcntl.cpp, folly\portability; \
 	Folly\folly\portability\Fcntl.h, folly\portability; \
 	Folly\folly\fibers\Fiber.cpp, folly\fibers; \
 	Folly\folly\fibers\Fiber.h, folly\fibers; \
 	Folly\folly\fibers\Fiber-inl.h, folly\fibers; \
 	Folly\folly\fibers\FiberManager.cpp, folly\fibers; \
-	Folly\folly\fibers\FiberManager.h, folly\fibers; \
-	Folly\folly\fibers\FiberManagerFuture.h, folly\fibers; \
 	Folly\folly\fibers\FiberManager-inl.h, folly\fibers; \
 	Folly\folly\fibers\FiberManagerInternal.h, folly\fibers; \
 	Folly\folly\fibers\FiberManagerInternal-inl.h, folly\fibers; \
@@ -354,10 +297,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\FixedString.h, folly; \
 	Folly\folly\test\FixedStringTest.cpp, folly\test; \
 	Folly\folly\fibers\ForEach.h, folly\fibers; \
-	Folly\folly\Foreach.h, folly; \
-	Folly\folly\test\ForeachBenchmark.cpp, folly\test; \
 	Folly\folly\fibers\ForEach-inl.h, folly\fibers; \
-	Folly\folly\test\ForeachTest.cpp, folly\test; \
 	Folly\folly\Format.cpp, folly; \
 	Folly\folly\Format.h, folly; \
 	Folly\folly\docs\Format.md, folly\docs; \
@@ -367,8 +307,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\FormatOtherTest.cpp, folly\test; \
 	Folly\folly\test\FormatTest.cpp, folly\test; \
 	Folly\folly\FormatTraits.h, folly; \
-	Folly\folly\futures\detail\FSM.h, folly\futures\detail; \
-	Folly\folly\futures\test\FSMTest.cpp, folly\futures\test; \
 	Folly\folly\experimental\io\FsUtil.cpp, folly\experimental\io; \
 	Folly\folly\experimental\io\FsUtil.h, folly\experimental\io; \
 	Folly\folly\experimental\io\test\FsUtilTest.cpp, folly\experimental\io\test; \
@@ -377,8 +315,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\FunctionRefTest.cpp, folly\test; \
 	Folly\folly\experimental\FunctionScheduler.cpp, folly\experimental; \
 	Folly\folly\experimental\FunctionScheduler.h, folly\experimental; \
-	Folly\folly\experimental\test\FunctionSchedulerTest.cpp, folly\experimental\test; \
-	Folly\folly\test\FunctionSchedulerTest.cpp, folly\test; \
 	Folly\folly\test\FunctionTest.cpp, folly\test; \
 	Folly\folly\detail\Futex.cpp, folly\detail; \
 	Folly\folly\detail\Futex.h, folly\detail; \
@@ -387,17 +323,12 @@ COPYFILES_PASS0 = \
 	Folly\folly\futures\Future.h, folly\futures; \
 	Folly\folly\experimental\FutureDAG.h, folly\experimental; \
 	Folly\folly\experimental\test\FutureDAGTest.cpp, folly\experimental\test; \
-	Folly\folly\futures\FutureException.h, folly\futures; \
 	Folly\folly\futures\Future-inl.h, folly\futures; \
 	Folly\folly\futures\Future-pre.h, folly\futures; \
 	Folly\folly\futures\FutureSplitter.h, folly\futures; \
 	Folly\folly\futures\test\FutureSplitterTest.cpp, folly\futures\test; \
 	Folly\folly\futures\test\FutureTest.cpp, folly\futures\test; \
 	Folly\folly\fibers\scripts\gdb.py, folly\fibers\scripts; \
-	Folly\folly\build\generate_escape_tables.py, folly\build; \
-	Folly\folly\build\generate_format_tables.py, folly\build; \
-	Folly\folly\build\generate_varint_tables.py, folly\build; \
-	Folly\folly\build\GenerateFingerprintTables.cpp, folly\build; \
 	Folly\folly\fibers\GenericBaton.h, folly\fibers; \
 	Folly\folly\portability\GFlags.h, folly\portability; \
 	Folly\folly\portability\GMock.h, folly\portability; \
@@ -412,8 +343,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\fibers\GuardPageAllocator.cpp, folly\fibers; \
 	Folly\folly\fibers\GuardPageAllocator.h, folly\fibers; \
 	Folly\folly\Hash.h, folly; \
-	Folly\folly\test\HashBenchmark.cpp, folly\test; \
-	Folly\folly\test\HashTest.cpp, folly\test; \
+	Folly\folly\hash\Hash.h, folly\hash; \
 	Folly\folly\test\HasMemberFnTraitsTest.cpp, folly\test; \
 	Folly\folly\experimental\hazptr\hazptr.h, folly\experimental\hazptr; \
 	Folly\folly\experimental\hazptr\hazptr-impl.h, folly\experimental\hazptr; \
@@ -428,9 +358,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\io\async\test\HHWheelTimerTest.cpp, folly\io\async\test; \
 	Folly\folly\stats\Histogram.h, folly\stats; \
 	Folly\folly\docs\Histogram.md, folly\docs; \
-	Folly\folly\test\HistogramBenchmark.cpp, folly\test; \
 	Folly\folly\stats\Histogram-defs.h, folly\stats; \
-	Folly\folly\test\HistogramTest.cpp, folly\test; \
 	Folly\folly\experimental\io\HugePages.cpp, folly\experimental\io; \
 	Folly\folly\experimental\io\HugePages.h, folly\experimental\io; \
 	Folly\folly\experimental\io\HugePageUtil.cpp, folly\experimental\io; \
@@ -440,13 +368,11 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\IndexedMemPoolTest.cpp, folly\test; \
 	Folly\folly\init\Init.cpp, folly\init; \
 	Folly\folly\init\Init.h, folly\init; \
-	Folly\folly\futures\InlineExecutor.cpp, folly\futures; \
-	Folly\folly\futures\InlineExecutor.h, folly\futures; \
-	Folly\folly\stats\Instantiations.cpp, folly\stats; \
 	Folly\folly\experimental\Instructions.h, folly\experimental; \
 	Folly\folly\experimental\test\InstructionsTest.cpp, folly\experimental\test; \
 	Folly\folly\futures\test\InterruptTest.cpp, folly\futures\test; \
 	Folly\folly\IntrusiveList.h, folly; \
+	Folly\folly\functional\Invoke.h, folly\functional; \
 	Folly\folly\io\IOBuf.cpp, folly\io; \
 	Folly\folly\io\IOBuf.h, folly\io; \
 	Folly\folly\io\test\IOBufBenchmark.cpp, folly\io\test; \
@@ -465,11 +391,11 @@ COPYFILES_PASS0 = \
 	Folly\folly\IPAddressException.h, folly; \
 	Folly\folly\detail\IPAddressSource.h, folly\detail; \
 	Folly\folly\test\IPAddressTest.cpp, folly\test; \
-	Folly\folly\test\IPAddressTest.h, folly\test; \
 	Folly\folly\IPAddressV4.cpp, folly; \
 	Folly\folly\IPAddressV4.h, folly; \
 	Folly\folly\IPAddressV6.cpp, folly; \
 	Folly\folly\IPAddressV6.h, folly; \
+	Folly\folly\detail\Iterators.h, folly\detail; \
 	Folly\folly\experimental\JemallocNodumpAllocator.cpp, folly\experimental; \
 	Folly\folly\experimental\JemallocNodumpAllocator.h, folly\experimental; \
 	Folly\folly\experimental\test\JemallocNodumpAllocatorTest.cpp, folly\experimental\test; \
@@ -481,16 +407,15 @@ COPYFILES_PASS0 = \
 	Folly\folly\experimental\test\JSONSchemaTest.cpp, folly\experimental\test; \
 	Folly\folly\experimental\JSONSchemaTester.cpp, folly\experimental; \
 	Folly\folly\test\JsonTest.cpp, folly\test; \
+	Folly\folly\json_pointer.h, folly; \
 	Folly\folly\futures\exercises\Koan.h, folly\futures\exercises; \
 	Folly\folly\Lazy.h, folly; \
 	Folly\folly\test\LazyTest.cpp, folly\test; \
+	Folly\folly\lang\Launder.h, folly\lang; \
 	Folly\folly\libfolly.pc.in, folly; \
 	Folly\folly\portability\Libgen.cpp, folly\portability; \
 	Folly\folly\portability\Libgen.h, folly\portability; \
 	Folly\folly\portability\test\LibgenTest.cpp, folly\portability\test; \
-	Folly\folly\LifoSem.cpp, folly; \
-	Folly\folly\LifoSem.h, folly; \
-	Folly\folly\test\LifoSemTests.cpp, folly\test; \
 	Folly\folly\Likely.h, folly; \
 	Folly\folly\experimental\symbolizer\LineReader.cpp, folly\experimental\symbolizer; \
 	Folly\folly\experimental\symbolizer\LineReader.h, folly\experimental\symbolizer; \
@@ -502,9 +427,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\LockTraits.h, folly; \
 	Folly\folly\LockTraitsBoost.h, folly; \
 	Folly\folly\test\LockTraitsTest.cpp, folly\test; \
-	Folly\folly\Logging.h, folly; \
-	Folly\folly\test\LoggingBenchmark.cpp, folly\test; \
-	Folly\folly\test\LoggingTest.cpp, folly\test; \
 	Folly\folly\fibers\LoopController.h, folly\fibers; \
 	Folly\folly\MacAddress.cpp, folly; \
 	Folly\folly\MacAddress.h, folly; \
@@ -512,22 +434,10 @@ COPYFILES_PASS0 = \
 	Folly\folly\futures\exercises\main.cpp, folly\futures\exercises; \
 	Folly\folly\test\function_benchmark\main.cpp, folly\test\function_benchmark; \
 	Folly\folly\docs\Makefile, folly\docs; \
-	Folly\folly\experimental\io\test\Makefile.am, folly\experimental\io\test; \
-	Folly\folly\experimental\Makefile.am, folly\experimental; \
-	Folly\folly\experimental\symbolizer\Makefile.am, folly\experimental\symbolizer; \
-	Folly\folly\init\Makefile.am, folly\init; \
-	Folly\folly\Makefile.am, folly; \
-	Folly\folly\test\function_benchmark\Makefile.am, folly\test\function_benchmark; \
-	Folly\folly\test\Makefile.am, folly\test; \
-	Folly\folly\MallctlHelper.cpp, folly; \
-	Folly\folly\MallctlHelper.h, folly; \
-	Folly\folly\test\MallctlHelperTest.cpp, folly\test; \
 	Folly\folly\portability\Malloc.cpp, folly\portability; \
-	Folly\folly\detail\Malloc.h, folly\detail; \
-	Folly\folly\Malloc.h, folly; \
+	Folly\folly\memory\Malloc.h, folly\memory; \
 	Folly\folly\portability\Malloc.h, folly\portability; \
-	Folly\folly\futures\ManualExecutor.cpp, folly\futures; \
-	Folly\folly\futures\ManualExecutor.h, folly\futures; \
+	Folly\folly\memory\detail\MallocImpl.h, folly\memory\detail; \
 	Folly\folly\futures\test\MapTest.cpp, folly\futures\test; \
 	Folly\folly\MapUtil.h, folly; \
 	Folly\folly\test\MapUtilTest.cpp, folly\test; \
@@ -537,7 +447,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\MathTest.cpp, folly\test; \
 	Folly\folly\memcpy.S, folly; \
 	Folly\folly\test\MemcpyTest.cpp, folly\test; \
-	Folly\folly\portability\Memory.cpp, folly\portability; \
 	Folly\folly\Memory.h, folly; \
 	Folly\folly\portability\Memory.h, folly\portability; \
 	Folly\folly\experimental\hazptr\memory_resource.h, folly\experimental\hazptr; \
@@ -545,12 +454,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\detail\MemoryIdler.h, folly\detail; \
 	Folly\folly\test\MemoryIdlerBenchmark.cpp, folly\test; \
 	Folly\folly\test\MemoryIdlerTest.cpp, folly\test; \
-	Folly\folly\MemoryMapping.cpp, folly; \
-	Folly\folly\MemoryMapping.h, folly; \
-	Folly\folly\test\MemoryMappingTest.cpp, folly\test; \
 	Folly\folly\test\MemoryTest.cpp, folly\test; \
-	Folly\folly\Merge.h, folly; \
-	Folly\folly\test\MergeTest.cpp, folly\test; \
 	Folly\folly\MicroLock.cpp, folly; \
 	Folly\folly\MicroLock.h, folly; \
 	Folly\folly\MicroSpinLock.h, folly; \
@@ -584,9 +488,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\experimental\observer\Observer-inl.h, folly\experimental\observer; \
 	Folly\folly\experimental\observer\detail\ObserverManager.cpp, folly\experimental\observer\detail; \
 	Folly\folly\experimental\observer\detail\ObserverManager.h, folly\experimental\observer\detail; \
-	Folly\folly\experimental\observer\detail\Observer-pre.h, folly\experimental\observer\detail; \
 	Folly\folly\experimental\observer\test\ObserverTest.cpp, folly\experimental\observer\test; \
-	Folly\folly\futures\OpaqueCallbackShunt.h, folly\futures; \
 	Folly\folly\portability\OpenSSL.cpp, folly\portability; \
 	Folly\folly\portability\OpenSSL.h, folly\portability; \
 	Folly\folly\ssl\OpenSSLCertUtils.cpp, folly\ssl; \
@@ -595,7 +497,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\ssl\OpenSSLHash.cpp, folly\ssl; \
 	Folly\folly\ssl\OpenSSLHash.h, folly\ssl; \
 	Folly\folly\ssl\test\OpenSSLHashTest.cpp, folly\ssl\test; \
-	Folly\folly\io\async\ssl\OpenSSLPtrTypes.h, folly\io\async\ssl; \
 	Folly\folly\io\async\ssl\OpenSSLUtils.cpp, folly\io\async\ssl; \
 	Folly\folly\io\async\ssl\OpenSSLUtils.h, folly\io\async\ssl; \
 	Folly\folly\ssl\OpenSSLVersionFinder.h, folly\ssl; \
@@ -615,9 +516,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\gen\ParallelMap-inl.h, folly\gen; \
 	Folly\folly\gen\test\ParallelMapTest.cpp, folly\gen\test; \
 	Folly\folly\gen\test\ParallelTest.cpp, folly\gen\test; \
-	Folly\folly\Partial.h, folly; \
-	Folly\folly\test\PartialTest.cpp, folly\test; \
-	Folly\folly\PicoSpinLock.h, folly; \
 	Folly\folly\futures\test\PollTest.cpp, folly\futures\test; \
 	Folly\folly\Portability.h, folly; \
 	Folly\folly\test\PortabilityTest.cpp, folly\test; \
@@ -638,8 +536,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\futures\Promise-inl.h, folly\futures; \
 	Folly\folly\futures\test\PromiseTest.cpp, folly\futures\test; \
 	Folly\folly\portability\PThread.h, folly\portability; \
-	Folly\folly\futures\QueuedImmediateExecutor.cpp, folly\futures; \
-	Folly\folly\futures\QueuedImmediateExecutor.h, folly\futures; \
 	Folly\folly\Random.cpp, folly; \
 	Folly\folly\Random.h, folly; \
 	Folly\folly\test\RandomBenchmark.cpp, folly\test; \
@@ -652,13 +548,9 @@ COPYFILES_PASS0 = \
 	Folly\folly\detail\RangeSse42.cpp, folly\detail; \
 	Folly\folly\detail\RangeSse42.h, folly\detail; \
 	Folly\folly\test\RangeTest.cpp, folly\test; \
-	Folly\folly\experimental\RCURefCount.h, folly\experimental; \
-	Folly\folly\experimental\RCUUtils.cpp, folly\experimental; \
-	Folly\folly\experimental\RCUUtils.h, folly\experimental; \
 	Folly\folly\experimental\exception_tracer\README.md, folly\experimental\exception_tracer; \
 	Folly\folly\fibers\README.md, folly\fibers; \
 	Folly\folly\futures\exercises\README.md, folly\futures\exercises; \
-	Folly\folly\futures\README.md, folly\futures; \
 	Folly\folly\io\async\README.md, folly\io\async; \
 	Folly\folly\portability\README.md, folly\portability; \
 	Folly\folly\tracing\README.md, folly\tracing; \
@@ -677,11 +569,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\io\async\test\RequestContextTest.cpp, folly\io\async\test; \
 	Folly\folly\futures\test\RetryingTest.cpp, folly\futures\test; \
 	Folly\folly\RWSpinLock.h, folly; \
-	Folly\folly\test\RWSpinLockTest.cpp, folly\test; \
-	Folly\folly\SafeAssert.cpp, folly; \
-	Folly\folly\SafeAssert.h, folly; \
-	Folly\folly\test\SafeAssertTest.cpp, folly\test; \
-	Folly\folly\futures\ScheduledExecutor.h, folly\futures; \
+	Folly\folly\lang\SafeAssert.h, folly\lang; \
 	Folly\folly\io\async\test\ScopedBoundPort.cpp, folly\io\async\test; \
 	Folly\folly\io\async\test\ScopedBoundPort.h, folly\io\async\test; \
 	Folly\folly\io\async\ScopedEventBaseThread.cpp, folly\io\async; \
@@ -701,9 +589,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\futures\SharedPromise.h, folly\futures; \
 	Folly\folly\futures\SharedPromise-inl.h, folly\futures; \
 	Folly\folly\futures\test\SharedPromiseTest.cpp, folly\futures\test; \
-	Folly\folly\Shell.cpp, folly; \
-	Folly\folly\Shell.h, folly; \
-	Folly\folly\test\ShellTest.cpp, folly\test; \
 	Folly\folly\io\ShutdownSocketSet.cpp, folly\io; \
 	Folly\folly\io\ShutdownSocketSet.h, folly\io; \
 	Folly\folly\io\test\ShutdownSocketSetTest.cpp, folly\io\test; \
@@ -719,25 +604,17 @@ COPYFILES_PASS0 = \
 	Folly\folly\test\SingletonBenchmark.cpp, folly\test; \
 	Folly\folly\test\SingletonDoubleRegistration.cpp, folly\test; \
 	Folly\folly\Singleton-inl.h, folly; \
-	Folly\folly\SingletonStackTrace.cpp, folly; \
 	Folly\folly\test\SingletonTest.cpp, folly\test; \
 	Folly\folly\test\SingletonTestGlobal.cpp, folly\test; \
 	Folly\folly\test\SingletonTestStructs.cpp, folly\test; \
 	Folly\folly\test\SingletonTestStructs.h, folly\test; \
 	Folly\folly\SingletonThreadLocal.h, folly; \
 	Folly\folly\test\SingletonThreadLocalTest.cpp, folly\test; \
-	Folly\folly\SingletonVault_c.cpp, folly; \
-	Folly\folly\SingletonVault_c.h, folly; \
-	Folly\folly\test\SingletonVaultCTest.cpp, folly\test; \
-	Folly\folly\detail\Sleeper.h, folly\detail; \
 	Folly\folly\detail\SlowFingerprint.h, folly\detail; \
 	Folly\folly\small_vector.h, folly; \
 	Folly\folly\docs\small_vector.md, folly\docs; \
 	Folly\folly\test\small_vector_test.cpp, folly\test; \
-	Folly\folly\SmallLocks.h, folly; \
 	Folly\folly\docs\SmallLocks.md, folly\docs; \
-	Folly\folly\test\SmallLocksBenchmark.cpp, folly\test; \
-	Folly\folly\test\SmallLocksTest.cpp, folly\test; \
 	Folly\folly\SocketAddress.cpp, folly; \
 	Folly\folly\SocketAddress.h, folly; \
 	Folly\folly\test\SocketAddressTest.cpp, folly\test; \
@@ -752,17 +629,10 @@ COPYFILES_PASS0 = \
 	Folly\folly\portability\Sockets.h, folly\portability; \
 	Folly\folly\test\sorted_vector_test.cpp, folly\test; \
 	Folly\folly\sorted_vector_types.h, folly; \
-	Folly\folly\SparseByteSet.h, folly; \
-	Folly\folly\test\SparseByteSetBench.cpp, folly\test; \
-	Folly\folly\test\SparseByteSetTest.cpp, folly\test; \
 	Folly\folly\SpinLock.h, folly; \
-	Folly\folly\detail\SpinLockImpl.h, folly\detail; \
 	Folly\folly\test\SpinLockTest.cpp, folly\test; \
-	Folly\folly\SpookyHashV1.cpp, folly; \
-	Folly\folly\SpookyHashV1.h, folly; \
-	Folly\folly\test\SpookyHashV1Test.cpp, folly\test; \
-	Folly\folly\SpookyHashV2.h, folly; \
-	Folly\folly\test\SpookyHashV2Test.cpp, folly\test; \
+	Folly\folly\hash\SpookyHashV1.h, folly\hash; \
+	Folly\folly\hash\SpookyHashV2.h, folly\hash; \
 	Folly\folly\io\async\SSLContext.cpp, folly\io\async; \
 	Folly\folly\io\async\SSLContext.h, folly\io\async; \
 	Folly\folly\io\async\ssl\SSLErrors.cpp, folly\io\async\ssl; \
@@ -783,7 +653,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\tracing\StaticTracepoint.h, folly\tracing; \
 	Folly\folly\tracing\StaticTracepoint-ELFx86.h, folly\tracing; \
 	Folly\folly\tracing\test\StaticTracepointTest.cpp, folly\tracing\test; \
-	Folly\folly\detail\Stats.h, folly\detail; \
 	Folly\folly\portability\Stdio.cpp, folly\portability; \
 	Folly\folly\portability\Stdio.h, folly\portability; \
 	Folly\folly\portability\Stdlib.cpp, folly\portability; \
@@ -854,13 +723,9 @@ COPYFILES_PASS0 = \
 	Folly\folly\futures\test\ThenCompileTest.cpp, folly\futures\test; \
 	Folly\folly\futures\test\ThenCompileTest.h, folly\futures\test; \
 	Folly\folly\futures\test\ThenTest.cpp, folly\futures\test; \
-	Folly\folly\ThreadCachedArena.cpp, folly; \
-	Folly\folly\ThreadCachedArena.h, folly; \
-	Folly\folly\test\ThreadCachedArenaTest.cpp, folly\test; \
 	Folly\folly\ThreadCachedInt.h, folly; \
 	Folly\folly\docs\ThreadCachedInt.md, folly\docs; \
 	Folly\folly\test\ThreadCachedIntTest.cpp, folly\test; \
-	Folly\folly\ThreadId.h, folly; \
 	Folly\folly\ThreadLocal.h, folly; \
 	Folly\folly\docs\ThreadLocal.md, folly\docs; \
 	Folly\folly\test\ThreadLocalBenchmark.cpp, folly\test; \
@@ -868,15 +733,11 @@ COPYFILES_PASS0 = \
 	Folly\folly\detail\ThreadLocalDetail.h, folly\detail; \
 	Folly\folly\test\ThreadLocalTest.cpp, folly\test; \
 	Folly\folly\test\ThreadLocalTestLib.cpp, folly\test; \
-	Folly\folly\ThreadName.h, folly; \
-	Folly\folly\test\ThreadNameTest.cpp, folly\test; \
 	Folly\folly\futures\ThreadWheelTimekeeper.cpp, folly\futures; \
-	Folly\folly\futures\ThreadWheelTimekeeper.h, folly\futures; \
 	Folly\folly\portability\Time.cpp, folly\portability; \
 	Folly\folly\portability\Time.h, folly\portability; \
 	Folly\folly\fibers\TimedMutex.h, folly\fibers; \
 	Folly\folly\fibers\TimedMutex-inl.h, folly\fibers; \
-	Folly\folly\futures\Timekeeper.h, folly\futures; \
 	Folly\folly\futures\test\TimekeeperTest.cpp, folly\futures\test; \
 	Folly\folly\fibers\TimeoutController.cpp, folly\fibers; \
 	Folly\folly\fibers\TimeoutController.h, folly\fibers; \
@@ -885,11 +746,8 @@ COPYFILES_PASS0 = \
 	Folly\folly\TimeoutQueue.cpp, folly; \
 	Folly\folly\TimeoutQueue.h, folly; \
 	Folly\folly\test\TimeoutQueueTest.cpp, folly\test; \
-	Folly\folly\test\TimeseriesBenchmark.cpp, folly\test; \
 	Folly\folly\stats\TimeseriesHistogram.h, folly\stats; \
 	Folly\folly\stats\TimeseriesHistogram-defs.h, folly\stats; \
-	Folly\folly\test\TimeseriesHistogramTest.cpp, folly\test; \
-	Folly\folly\test\TimeseriesTest.cpp, folly\test; \
 	Folly\folly\futures\test\TimesTest.cpp, folly\futures\test; \
 	Folly\folly\portability\test\TimeTest.cpp, folly\portability\test; \
 	Folly\folly\io\async\test\TimeUtil.cpp, folly\io\async\test; \
@@ -904,7 +762,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\docs\Traits.md, folly\docs; \
 	Folly\folly\test\TraitsTest.cpp, folly\test; \
 	Folly\folly\Try.h, folly; \
-	Folly\folly\detail\TryDetail.h, folly\detail; \
 	Folly\folly\Try-inl.h, folly; \
 	Folly\folly\test\TryTest.cpp, folly\test; \
 	Folly\folly\experimental\TupleOps.h, folly\experimental; \
@@ -912,10 +769,7 @@ COPYFILES_PASS0 = \
 	Folly\folly\detail\TurnSequencer.h, folly\detail; \
 	Folly\folly\io\TypedIOBuf.h, folly\io; \
 	Folly\folly\futures\detail\Types.h, folly\futures\detail; \
-	Folly\folly\portability\TypeTraits.h, folly\portability; \
-	Folly\folly\detail\UncaughtExceptionCounter.h, folly\detail; \
-	Folly\folly\UncaughtExceptions.h, folly; \
-	Folly\folly\test\UncaughtExceptionsTest.cpp, folly\test; \
+	Folly\folly\lang\UncaughtExceptions.h, folly\lang; \
 	Folly\folly\io\async\test\UndelayedDestruction.h, folly\io\async\test; \
 	Folly\folly\Unicode.cpp, folly; \
 	Folly\folly\Unicode.h, folly; \
@@ -935,8 +789,6 @@ COPYFILES_PASS0 = \
 	Folly\folly\Varint.h, folly; \
 	Folly\folly\test\VarintTest.cpp, folly\test; \
 	Folly\folly\VERSION, folly; \
-	Folly\folly\Version.cpp, folly; \
-	Folly\folly\VersionCheck.h, folly; \
 	Folly\folly\futures\test\ViaTest.cpp, folly\futures\test; \
 	Folly\folly\io\async\VirtualEventBase.cpp, folly\io\async; \
 	Folly\folly\io\async\VirtualEventBase.h, folly\io\async; \
@@ -1050,10 +902,7 @@ COPYFILES_PASS0 = \
 
 COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
-	ReactWindows\Chakra\ChakraJsiRuntimeFactory.h, Chakra; \
-	ReactWindows\Chakra\ChakraJsiRuntimeArgs.h, Chakra; \
 	ReactCommon\jsi\jsi.h, jsi; \
 	ReactCommon\jsi\jsi-inl.h, jsi; \
-	ReactCommon\jsi\RuntimeHolder.h, jsi; \
-	ReactCommon\jsi\ScriptStore.h, jsi; \
 	ReactCommon\jsi\V8Runtime.h, jsi; \
+	ReactWindows\Chakra\ChakraRuntime.h, jsi; \
