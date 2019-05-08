@@ -514,7 +514,7 @@ namespace Test {
 MockStream::MockStream(io_context& context)
   : m_context{ context }
   , ConnectResult{ []() { return error_code{}; } }
-  , HandshakeResult{ []() { return error_code{}; } }
+  , HandshakeResult{ [](string, string) { return error_code{}; } }
   , CloseResult{ []() { return error_code{}; } }
 {
 }
@@ -562,7 +562,7 @@ MockStream::async_handshake_ex(
   HandshakeHandler&& handler)
 {
   BOOST_BEAST_HANDLER_INIT(HandshakeHandler, void(error_code));
-  post(get_executor(), bind_handler(std::move(init.completion_handler), HandshakeResult()));
+  post(get_executor(), bind_handler(std::move(init.completion_handler), HandshakeResult(host.to_string(), target.to_string())));
 
   return init.result.get();
 }
@@ -630,7 +630,7 @@ void TestWebSocket::SetConnectResult(function<error_code()>&& resultFunc)
   m_stream->ConnectResult = std::move(resultFunc);
 }
 
-void TestWebSocket::SetHandshakeResult(function<error_code()>&& resultFunc)
+void TestWebSocket::SetHandshakeResult(function<error_code(string, string)>&& resultFunc)
 {
   m_stream->HandshakeResult = std::move(resultFunc);
 }

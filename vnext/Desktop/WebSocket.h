@@ -174,7 +174,7 @@ public:
   #pragma endregion // boost::beast::websocket::stream mocks
 
   std::function<boost::system::error_code()> ConnectResult;
-  std::function<boost::system::error_code()> HandshakeResult;
+  std::function<boost::system::error_code(std::string, std::string)> HandshakeResult;
   std::function<std::pair<boost::system::error_code, std::size_t>()> ReadResult;
   std::function<std::pair<boost::system::error_code, std::size_t>()> WriteResult;
   std::function<boost::system::error_code()> PingResult;
@@ -193,7 +193,7 @@ public:
   TestWebSocket(facebook::react::Url&& url);
 
   void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
-  void SetHandshakeResult(std::function<boost::system::error_code()>&& resultFunc);
+  void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)>&& resultFunc);
   void SetCloseResult(std::function<boost::system::error_code()>&& resultFunc);
 };
 

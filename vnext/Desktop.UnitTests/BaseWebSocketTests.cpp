@@ -93,7 +93,7 @@ TEST_CLASS(BaseWebSocketTest)
     {
       connected = true;
     });
-    ws->SetHandshakeResult([]() -> error_code
+    ws->SetHandshakeResult([](string, string) -> error_code
     {
       return make_error_code(errc::state_not_recoverable);
     });
