@@ -13,7 +13,13 @@
 namespace Microsoft {
 namespace React {
 
-template<typename Protocol, typename Socket, typename Resolver>
+template
+<
+  typename Protocol     = boost::asio::ip::tcp,
+  typename SocketLayer  = boost::asio::basic_stream_socket<Protocol>,
+  typename Stream       = boost::beast::websocket::stream<SocketLayer>,
+  typename Resolver     = boost::asio::ip::basic_resolver<Protocol>
+>
 class BaseWebSocket : public IWebSocket
 {
   std::function<void()> m_connectHandler;
@@ -61,7 +67,7 @@ protected:
 
   boost::asio::io_context m_context;
   std::unique_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> m_workGuard;
-  std::unique_ptr<boost::beast::websocket::stream<Socket>> m_stream;
+  std::unique_ptr<boost::beast::websocket::stream<SocketLayer>> m_stream;
 
   BaseWebSocket(Url&& url);
 
@@ -91,24 +97,13 @@ public:
 };
 
 class WebSocket
-  : public  BaseWebSocket
-            <
-              boost::asio::ip::tcp,
-              boost::asio::basic_stream_socket<boost::asio::ip::tcp>,
-              boost::asio::ip::basic_resolver<boost::asio::ip::tcp>
-            >
+  : public  BaseWebSocket<>
 {
 public:
   WebSocket(Url&& url);
 };
 
-class SecureWebSocket
-  : public  BaseWebSocket
-            <
-              boost::asio::ip::tcp,
-              boost::asio::ssl::stream<boost::asio::ip::tcp::socket>,
-              boost::asio::ip::basic_resolver<boost::asio::ip::tcp>
-            >
+class SecureWebSocket : public BaseWebSocket<boost::asio::ip::tcp, boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>
 {
   #pragma region BaseWebSocket overrides
 
@@ -207,7 +202,7 @@ public:
   boost::asio::io_context::executor_type get_executor() noexcept;
 };
 
-class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, MockStream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
+class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, MockStream>
 {
 public:
   TestWebSocket(facebook::react::Url&& url);

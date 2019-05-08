@@ -35,14 +35,14 @@ namespace React {
 
 #pragma region BaseWebSocket members
 
-template<typename Protocol, typename Socket, typename Resolver>
-BaseWebSocket<Protocol, Socket, Resolver>::BaseWebSocket(Url&& url)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::BaseWebSocket(Url&& url)
   : m_url { std::move(url) }
 {
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-BaseWebSocket<Protocol, Socket, Resolver>::~BaseWebSocket()
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocket()
 {
   if (!m_context.stopped())
   {
@@ -53,8 +53,8 @@ BaseWebSocket<Protocol, Socket, Resolver>::~BaseWebSocket()
   }
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Options& options)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Handshake(const IWebSocket::Options& options)
 {
   m_stream->async_handshake_ex(m_url.host, m_url.Target(),
     // Header handler
@@ -100,8 +100,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Opti
   }); // async_handshake_ex
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformRead()
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformRead()
 {
   if (ReadyState::Closing == m_readyState || ReadyState::Closed == m_readyState)
   {
@@ -149,8 +149,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::PerformRead()
   });// async_read
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformWrite()
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformWrite()
 {
   assert(!m_writeRequests.empty());
   assert(!m_writeInProgress);
@@ -185,8 +185,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::PerformWrite()
   });
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformPing()
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformPing()
 {
   assert(m_pingRequests > 0);
   assert(!m_pingInProgress);
@@ -211,8 +211,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::PerformPing()
   });
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::PerformClose()
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformClose()
 {
   m_closeInProgress = true;
   m_readyState = ReadyState::Closing;
@@ -237,8 +237,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::PerformClose()
   Stop();
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Stop()
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Stop()
 {
   if (m_workGuard)
     m_workGuard->reset();
@@ -247,8 +247,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Stop()
     m_contextThread.join();
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::EnqueueWrite(const string& message, bool binary)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::EnqueueWrite(const string& message, bool binary)
 {
   post(m_context, [this, message = std::move(message), binary]()
   {
@@ -259,8 +259,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::EnqueueWrite(const string& messa
   });
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-websocket::close_code BaseWebSocket<Protocol, Socket, Resolver>::ToBeastCloseCode(IWebSocket::CloseCode closeCode)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+websocket::close_code BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::ToBeastCloseCode(IWebSocket::CloseCode closeCode)
 {
   static_assert(static_cast<uint16_t>(IWebSocket::CloseCode::Abnormal) == static_cast<uint16_t>(websocket::close_code::abnormal), "Exception type enums don't match");
   static_assert(static_cast<uint16_t>(IWebSocket::CloseCode::BadPayload) == static_cast<uint16_t>(websocket::close_code::bad_payload), "Exception type enums don't match");
@@ -285,8 +285,8 @@ websocket::close_code BaseWebSocket<Protocol, Socket, Resolver>::ToBeastCloseCod
 
 #pragma region IWebSocket members
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Connect(const Protocols& protocols, const Options& options)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Connect(const Protocols& protocols, const Options& options)
 {
   // "Cannot call Connect more than once");
   assert(ReadyState::Connecting == m_readyState);
@@ -332,8 +332,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Connect(const Protocols& protoco
   });
 }// void Connect
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Close(CloseCode code, const string& reason)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Close(CloseCode code, const string& reason)
 {
   if (m_closeRequested)
     return;
@@ -350,14 +350,14 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Close(CloseCode code, const stri
     Stop(); // Synchronize the context thread.
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Send(const string& message)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Send(const string& message)
 {
   EnqueueWrite(std::move(message), false);
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SendBinary(const string& base64String)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SendBinary(const string& base64String)
 {
   m_stream->binary(true);
 
@@ -381,8 +381,8 @@ void BaseWebSocket<Protocol, Socket, Resolver>::SendBinary(const string& base64S
   EnqueueWrite(std::move(message), true);
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::Ping()
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Ping()
 {
   if (ReadyState::Closed == m_readyState)
     return;
@@ -396,44 +396,44 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Ping()
 
 #pragma region Handler setters
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnConnect(std::function<void()>&& handler)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(std::function<void()>&& handler)
 {
   m_connectHandler = handler;
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnPing(std::function<void()>&& handler)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(std::function<void()>&& handler)
 {
   m_pingHandler = handler;
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnSend(std::function<void(size_t)>&& handler)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(std::function<void(size_t)>&& handler)
 {
   m_writeHandler = handler;
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnMessage(std::function<void(size_t, const string&)>&& handler)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnMessage(std::function<void(size_t, const string&)>&& handler)
 {
   m_readHandler = handler;
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnClose(std::function<void(CloseCode, const string&)>&& handler)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnClose(std::function<void(CloseCode, const string&)>&& handler)
 {
   m_closeHandler = handler;
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-void BaseWebSocket<Protocol, Socket, Resolver>::SetOnError(std::function<void(Error&&)>&& handler)
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnError(std::function<void(Error&&)>&& handler)
 {
   m_errorHandler = handler;
 }
 
-template<typename Protocol, typename Socket, typename Resolver>
-IWebSocket::ReadyState BaseWebSocket<Protocol, Socket, Resolver>::GetReadyState() const
+template<typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
+IWebSocket::ReadyState BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const
 {
   return m_readyState;
 }
