@@ -236,6 +236,8 @@ private:
 
   static JsValueRef createJSString(const char*data, size_t length);
   static JsValueRef createJSPropertyId(const char*data, size_t length);
+
+  friend class ChakraJsiRuntimeWithDebugger;
 };
 
 }}} // namespace facebook::jsi::chakraruntime
