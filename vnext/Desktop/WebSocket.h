@@ -175,6 +175,9 @@ public:
 
   std::function<boost::system::error_code()> ConnectResult;
   std::function<boost::system::error_code()> HandshakeResult;
+  std::function<std::pair<boost::system::error_code, std::size_t>()> ReadResult;
+  std::function<std::pair<boost::system::error_code, std::size_t>()> WriteResult;
+  std::function<boost::system::error_code()> PingResult;
   std::function<boost::system::error_code()> CloseResult;
 };
 
