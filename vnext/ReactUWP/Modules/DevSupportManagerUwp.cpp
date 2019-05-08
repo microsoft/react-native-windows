@@ -39,7 +39,7 @@ namespace react { namespace uwp {
 std::future<std::string> DownloadFromAsync(const std::string& url)
 {
   winrt::Windows::Web::Http::HttpClient httpClient;
-  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(url));
 
   co_await winrt::resume_background();
 
@@ -86,7 +86,7 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const f
   catch (winrt::hresult_error const & e)
   {
     m_exceptionCaught = true;
-    throw std::exception(facebook::react::unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str());
+    throw std::exception(facebook::react::unicode::utf16ToUtf8(e.message().c_str(), e.message().size()).c_str());
   }
 }
 
@@ -119,7 +119,7 @@ bool is_cancelled(const std::wstring &msg)
 std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string& url)
 {
   winrt::Windows::Web::Http::HttpClient httpClient;
-  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(url));
   httpClient.DefaultRequestHeaders().Connection().TryParseAdd(L"keep-alive");
 
   winrt::Windows::Web::Http::HttpResponseMessage responseMessage;
@@ -155,7 +155,7 @@ void DevSupportManager::StartPollingLiveReload(const std::string& debugHost, std
           continue;
 
         // Just let the live reload stop working when the connection fails, rather than bringing down the app.
-        std::string errorMessage = "Live Reload Stopped:" + facebook::react::unicode::Utf16ToUtf8(e.message().c_str(), e.message().size());
+        std::string errorMessage = "Live Reload Stopped:" + facebook::react::unicode::utf16ToUtf8(e.message().c_str(), e.message().size());
         OutputDebugStringA(errorMessage.c_str());
         m_exceptionCaught = true;
         break;
@@ -186,7 +186,7 @@ std::string DevSupportManager::GetJavaScriptFromServer(const std::string& debugH
   catch (winrt::hresult_error const & e)
   {
     m_exceptionCaught = true;
-    return "Error:" + facebook::react::unicode::Utf16ToUtf8(e.message().c_str(), e.message().size());
+    return "Error:" + facebook::react::unicode::utf16ToUtf8(e.message().c_str(), e.message().size());
   }
 }
 

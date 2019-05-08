@@ -29,9 +29,9 @@ EXPORTS
 ?callJSFunction@Instance@react@facebook@@UAAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 
-?Utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?Utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
-?Utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
+?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
+?utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z

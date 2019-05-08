@@ -546,7 +546,7 @@ namespace facebook { namespace react { namespace chakra {
       std::string ChakraRuntime::utf8(const jsi::PropNameID& sym) {
         const wchar_t* name;
         checkException(JsGetPropertyNameFromId(propIdRef(sym), &name));
-        return facebook::react::unicode::Utf16ToUtf8(name, wcslen(name));
+        return facebook::react::unicode::utf16ToUtf8(name, wcslen(name));
       }
 
       bool ChakraRuntime::compare(const jsi::PropNameID& a, const jsi::PropNameID& b) {

@@ -227,7 +227,7 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance()
       OutputDebugStringA("in JsExceptionCallback");
     };
     m_instance->Start(m_instance, settings);
-    m_instance->loadBundle(facebook::react::unicode::Utf16ToUtf8(m_loadedBundleFileName));
+    m_instance->loadBundle(facebook::react::unicode::utf16ToUtf8(m_loadedBundleFileName));
   }
   return m_instance;
 }

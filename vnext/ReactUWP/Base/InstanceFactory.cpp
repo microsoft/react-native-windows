@@ -46,7 +46,7 @@ REACTWINDOWS_API_(std::shared_ptr<IXamlRootView>) CreateReactRootView(XamlView p
 )
 {
   // Convert input strings to std::string
-  std::string jsComponentName = facebook::react::unicode::Utf16ToUtf8(pJsComponentName, wcslen(pJsComponentName));
+  std::string jsComponentName = facebook::react::unicode::utf16ToUtf8(pJsComponentName, wcslen(pJsComponentName));
 
   auto rootView = std::make_shared<react::uwp::ReactRootView>(parentView);
   rootView->SetJSComponentName(std::move(jsComponentName));

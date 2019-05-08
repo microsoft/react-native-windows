@@ -212,7 +212,7 @@ TEST_CLASS(WebSocketIntegrationTest)
     });
     ws->SetOnError([](IWebSocket::Error err)
     {
-      auto message = facebook::react::unicode::Utf8ToUtf16(err.Message);
+      auto message = facebook::react::unicode::utf8ToUtf16(err.Message);
       Assert::Fail(message.c_str());
     });
 

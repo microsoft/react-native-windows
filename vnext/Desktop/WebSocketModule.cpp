@@ -55,7 +55,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
           dynamic headersDynamic = optionsDynamic["headers"];
           for (const auto& header : headersDynamic.items())
           {
-            options.emplace(facebook::react::unicode::Utf8ToUtf16(header.first.getString()), header.second.getString());
+            options.emplace(facebook::react::unicode::utf8ToUtf16(header.first.getString()), header.second.getString());
           }
         }
 

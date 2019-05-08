@@ -19,7 +19,7 @@ namespace unicode {
 // The implementations of the following functions heavily reference the MSDN
 // article at https://msdn.microsoft.com/en-us/magazine/mt763237.aspx.
 
-std::wstring Utf8ToUtf16(const char* utf8, size_t utf8Len)
+std::wstring utf8ToUtf16(const char* utf8, size_t utf8Len)
 {
   std::wstring utf16{};
 
@@ -34,7 +34,7 @@ std::wstring Utf8ToUtf16(const char* utf8, size_t utf8Len)
   if (utf8Len > static_cast<size_t>((std::numeric_limits<int>::max)()))
   {
     throw std::overflow_error(
-      "Length of input string to Utf8ToUtf16() must fit into an int.");
+      "Length of input string to utf8ToUtf16() must fit into an int.");
   }
 
   const int utf8Length = static_cast<int>(utf8Len);
@@ -91,24 +91,24 @@ std::wstring Utf8ToUtf16(const char* utf8, size_t utf8Len)
   return utf16;
 }
 
-std::wstring Utf8ToUtf16(const char* utf8)
+std::wstring utf8ToUtf16(const char* utf8)
 {
-  return Utf8ToUtf16(utf8, strlen(utf8));
+  return utf8ToUtf16(utf8, strlen(utf8));
 }
 
-std::wstring Utf8ToUtf16(const std::string& utf8)
+std::wstring utf8ToUtf16(const std::string& utf8)
 {
-  return Utf8ToUtf16(utf8.c_str(), utf8.length());
+  return utf8ToUtf16(utf8.c_str(), utf8.length());
 }
 
 #if _HAS_CXX17
-std::wstring Utf8ToUtf16(const std::string_view& utf8)
+std::wstring utf8ToUtf16(const std::string_view& utf8)
 {
-  return Utf8ToUtf16(utf8.data(), utf8.length());
+  return utf8ToUtf16(utf8.data(), utf8.length());
 }
 #endif
 
-std::string Utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
+std::string utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
 {
   std::string utf8{};
 
@@ -123,7 +123,7 @@ std::string Utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
   if (utf16Len > static_cast<size_t>((std::numeric_limits<int>::max)()))
   {
     throw std::overflow_error(
-      "Length of input string to Utf16ToUtf8() must fit into an int.");
+      "Length of input string to utf16ToUtf8() must fit into an int.");
   }
 
   const int utf16Length = static_cast<int>(utf16Len);
@@ -184,43 +184,43 @@ std::string Utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
   return utf8;
 }
 
-std::string Utf16ToUtf8(const char16_t* utf16, size_t utf16Len)
+std::string utf16ToUtf8(const char16_t* utf16, size_t utf16Len)
 {
-  return Utf16ToUtf8(
+  return utf16ToUtf8(
     utilities::checkedReinterpretCast<const wchar_t*>(utf16), utf16Len);
 }
 
-std::string Utf16ToUtf8(const wchar_t* utf16)
+std::string utf16ToUtf8(const wchar_t* utf16)
 {
-  return Utf16ToUtf8(utf16, wcslen(utf16));
+  return utf16ToUtf8(utf16, wcslen(utf16));
 }
 
-std::string Utf16ToUtf8(const char16_t* utf16)
+std::string utf16ToUtf8(const char16_t* utf16)
 {
-  return Utf16ToUtf8(utf16, std::char_traits<char16_t>::length(utf16));
+  return utf16ToUtf8(utf16, std::char_traits<char16_t>::length(utf16));
 }
 
-std::string Utf16ToUtf8(const std::wstring& utf16)
+std::string utf16ToUtf8(const std::wstring& utf16)
 {
-  return Utf16ToUtf8(utf16.c_str(), utf16.length());
+  return utf16ToUtf8(utf16.c_str(), utf16.length());
 }
 
-std::string Utf16ToUtf8(const std::u16string& utf16)
+std::string utf16ToUtf8(const std::u16string& utf16)
 {
-  return Utf16ToUtf8(
+  return utf16ToUtf8(
     utilities::checkedReinterpretCast<const wchar_t*>(utf16.c_str()),
     utf16.length());
 }
 
 #if _HAS_CXX17
-std::string Utf16ToUtf8(const std::wstring_view& utf16)
+std::string utf16ToUtf8(const std::wstring_view& utf16)
 {
-  return Utf16ToUtf8(utf16.data(), utf16.length());
+  return utf16ToUtf8(utf16.data(), utf16.length());
 }
 
-std::string Utf16ToUtf8(const std::u16string_view& utf16)
+std::string utf16ToUtf8(const std::u16string_view& utf16)
 {
-  return Utf16ToUtf8(
+  return utf16ToUtf8(
     utilities::checkedReinterpretCast<const wchar_t*>(utf16.data()),
     utf16.length());
 }

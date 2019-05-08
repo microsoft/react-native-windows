@@ -63,7 +63,7 @@ void BaseWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSocket::Opti
     // Collect headers
     for (const auto& header : options)
     {
-      req.insert(facebook::react::unicode::Utf16ToUtf8(header.first), header.second);
+      req.insert(facebook::react::unicode::utf16ToUtf8(header.first), header.second);
     }
   },
     // Handshake handler

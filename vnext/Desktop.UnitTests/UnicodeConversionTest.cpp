@@ -6,8 +6,8 @@
 #include <CppUnitTest.h>
 #include <string>
 
-using facebook::react::unicode::Utf8ToUtf16;
-using facebook::react::unicode::Utf16ToUtf8;
+using facebook::react::unicode::utf8ToUtf16;
+using facebook::react::unicode::utf16ToUtf8;
 using Microsoft::VisualStudio::CppUnitTestFramework::Assert;
 
 TEST_CLASS(unicodeTest)
@@ -22,32 +22,32 @@ public:
     Assert::IsTrue(wcslen(SimpleTestStringBomUtf16) == 4);
   }
 
-  TEST_METHOD(Utf8ToUtf16SimpleTestNoBom)
+  TEST_METHOD(utf8ToUtf16SimpleTestNoBom)
   {
-    Assert::IsTrue(Utf8ToUtf16(SimpleTestStringNoBomUtf8, strlen(SimpleTestStringNoBomUtf8)) == SimpleTestStringNoBomUtf16);
+    Assert::IsTrue(utf8ToUtf16(SimpleTestStringNoBomUtf8, strlen(SimpleTestStringNoBomUtf8)) == SimpleTestStringNoBomUtf16);
   }
 
-  TEST_METHOD(Utf8ToUtf16SimpleTestBom)
+  TEST_METHOD(utf8ToUtf16SimpleTestBom)
   {
-    Assert::IsTrue(Utf8ToUtf16(SimpleTestStringBomUtf8, strlen(SimpleTestStringBomUtf8)) == SimpleTestStringBomUtf16);
+    Assert::IsTrue(utf8ToUtf16(SimpleTestStringBomUtf8, strlen(SimpleTestStringBomUtf8)) == SimpleTestStringBomUtf16);
   }
 
-  TEST_METHOD(Utf16ToUtf8SimpleTestNoBom)
+  TEST_METHOD(utf16ToUtf8SimpleTestNoBom)
   {
-    Assert::IsTrue(Utf16ToUtf8(SimpleTestStringNoBomUtf16, wcslen(SimpleTestStringNoBomUtf16)) == SimpleTestStringNoBomUtf8);
+    Assert::IsTrue(utf16ToUtf8(SimpleTestStringNoBomUtf16, wcslen(SimpleTestStringNoBomUtf16)) == SimpleTestStringNoBomUtf8);
   }
 
-  TEST_METHOD(Utf16ToUtf8SimpleTestBom)
+  TEST_METHOD(utf16ToUtf8SimpleTestBom)
   {
-    Assert::IsTrue(Utf16ToUtf8(SimpleTestStringBomUtf16, wcslen(SimpleTestStringBomUtf16)) == SimpleTestStringBomUtf8);
+    Assert::IsTrue(utf16ToUtf8(SimpleTestStringBomUtf16, wcslen(SimpleTestStringBomUtf16)) == SimpleTestStringBomUtf8);
   }
 
   TEST_METHOD(SymmetricConversionNoBom)
   {
     for (size_t i = 0; i < g_utf8TestStrings.size(); ++i)
     {
-      std::wstring utf16 = Utf8ToUtf16(g_utf8TestStrings[i]);
-      std::string utf8 = Utf16ToUtf8(utf16);
+      std::wstring utf16 = utf8ToUtf16(g_utf8TestStrings[i]);
+      std::string utf8 = utf16ToUtf8(utf16);
       Assert::IsTrue(utf8 == g_utf8TestStrings[i]);
     }
   }
@@ -67,10 +67,10 @@ public:
         Assert::IsTrue(utf8Original[i] == utf8Bom[i]);
       }
 
-      std::wstring utf16 = Utf8ToUtf16(utf8Original);
+      std::wstring utf16 = utf8ToUtf16(utf8Original);
       Assert::IsTrue(utf16[0] == utf16Bom);
 
-      std::string utf8 = Utf16ToUtf8(utf16);
+      std::string utf8 = utf16ToUtf8(utf16);
       Assert::IsTrue(utf8 == utf8Original);
     }
   }
