@@ -44,6 +44,8 @@ EXPORTS
 ?updateProperties@ShadowNode@react@facebook@@UEAAX$$QEBUdynamic@folly@@@Z
 ?Utf16ToUtf8@UnicodeConversion@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 ?Utf8ToUtf16@UnicodeConversion@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+??1Buffer@jsi@facebook@@UEAA@XZ
+
 
 YGNodeNew
 YGNodeNewWithConfig

@@ -15,6 +15,7 @@
     <file src="target\x64\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
 
     <file src="inc\cxxreact\*" target="inc\cxxreact"/>
+    <file src="inc\jsi\*" target="inc\jsi"/>
     <file src="inc\Yoga\*.*" target="inc\Yoga"/>
     <file src="inc\folly\**\*.*" target="inc" />
     <file src="inc\stubs\**\*.*" target="inc" />
