@@ -4,7 +4,9 @@
 #pragma once
 #include <exception>
 #include <string>
+#if _HAS_CXX17
 #include <string_view>
+#endif
 
 namespace facebook {
 namespace react {
