@@ -23,7 +23,7 @@ TEST_CLASS(BaseWebSocketTest)
 {
   TEST_METHOD(CreateAndSetHandlers)
   {
-    auto ws = make_unique<TestWebSocket>(Url("ws://validurl:0"));
+    auto ws = make_unique<TestWebSocketOld>(Url("ws://validurl:0"));
 
     Assert::IsFalse(nullptr == ws);
     ws->SetOnConnect([](){});
@@ -38,7 +38,7 @@ TEST_CLASS(BaseWebSocketTest)
   {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost:80"));
+    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:80"));
     ws->SetOnError([&errorMessage](IWebSocket::Error err)
     {
       errorMessage = err.Message;
@@ -63,7 +63,7 @@ TEST_CLASS(BaseWebSocketTest)
   {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost:80"));
+    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:80"));
     ws->SetOnError([&errorMessage](IWebSocket::Error err)
     {
       errorMessage = err.Message;
@@ -89,7 +89,7 @@ TEST_CLASS(BaseWebSocketTest)
     string errorMessage;
     promise<void> connected;
     bool closed = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost:0"));
+    auto ws = make_unique<TestWebSocketOld>(Url("ws://localhost:0"));
     ws->SetOnError([&errorMessage](Error err)
     {
       errorMessage = err.Message;

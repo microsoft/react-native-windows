@@ -118,12 +118,12 @@ public:
 namespace Test {
 
 // See <boost/beast/experimental/test/stream.hpp>
-class MockStream
+class MockStreamLayer
 {
   friend void teardown
   (
     boost::beast::websocket::role_type,
-    MockStream&,
+    MockStreamLayer&,
     boost::system::error_code&
   ) {}
 
@@ -131,14 +131,14 @@ class MockStream
   friend void async_teardown
   (
     boost::beast::websocket::role_type,
-    MockStream&,
+    MockStreamLayer&,
     TeardownHandler&&
   ) {}
 
   boost::asio::io_context& m_context;
 
 public:
-  MockStream(boost::asio::io_context& context);
+  MockStreamLayer(boost::asio::io_context& context);
 
   std::function<boost::system::error_code()> ConnectResult;
 
@@ -148,13 +148,13 @@ public:
 
   using is_deflate_supported = std::integral_constant<bool, false>;
 
-  using next_layer_type = MockStream;
+  using next_layer_type = MockStreamLayer;
 
-  using lowest_layer_type = MockStream;
+  using lowest_layer_type = MockStreamLayer;
 
   using executor_type = boost::asio::io_context::executor_type;
 
-  using lowest_layer_type = MockStream;
+  using lowest_layer_type = MockStreamLayer;
 
   lowest_layer_type& lowest_layer();
 
@@ -202,10 +202,10 @@ public:
   boost::asio::io_context::executor_type get_executor() noexcept;
 };
 
-class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, MockStream>
+class TestWebSocketOld : public BaseWebSocket<boost::asio::ip::tcp, MockStreamLayer>
 {
 public:
-  TestWebSocket(facebook::react::Url&& url);
+  TestWebSocketOld(facebook::react::Url&& url);
 
   void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
   void SetCloseResult(std::function<boost::system::error_code()>&& resultFunc);

@@ -512,52 +512,52 @@ namespace Microsoft {
 namespace React {
 namespace Test {
 
-#pragma region MockStream
+#pragma region MockStreamLayer
 
-MockStream::MockStream(io_context& context)
+MockStreamLayer::MockStreamLayer(io_context& context)
   : m_context{ context }
   , ConnectResult{ []() -> error_code { return error_code{}; } }
   , CloseResult{ []() -> error_code {return error_code{}; } }
 {
 }
 
-io_context::executor_type MockStream::get_executor() noexcept
+io_context::executor_type MockStreamLayer::get_executor() noexcept
 {
   return m_context.get_executor();
 }
 
-MockStream::lowest_layer_type& MockStream::lowest_layer()
+MockStreamLayer::lowest_layer_type& MockStreamLayer::lowest_layer()
 {
   return *this;
 }
 
-MockStream::lowest_layer_type const& MockStream::lowest_layer() const
+MockStreamLayer::lowest_layer_type const& MockStreamLayer::lowest_layer() const
 {
   return *this;
 }
 
-void MockStream::binary(bool value) {}
+void MockStreamLayer::binary(bool value) {}
 
-bool MockStream::got_binary() const
+bool MockStreamLayer::got_binary() const
 {
   return false;
 }
 
-bool MockStream::got_text() const
+bool MockStreamLayer::got_text() const
 {
   return !got_binary();
 }
 
-void MockStream::auto_fragment(bool value) {}
+void MockStreamLayer::auto_fragment(bool value) {}
 
-bool MockStream::auto_fragment() const
+bool MockStreamLayer::auto_fragment() const
 {
   return false;
 }
 
-void MockStream::write_buffer_size(size_t amount) {}
+void MockStreamLayer::write_buffer_size(size_t amount) {}
 
-size_t MockStream::write_buffer_size() const
+size_t MockStreamLayer::write_buffer_size() const
 {
   return 8;
 }
@@ -566,28 +566,28 @@ size_t MockStream::write_buffer_size() const
 
 template<class DynamicBuffer, class ReadHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, size_t))
-MockStream::async_read(DynamicBuffer& buffer, ReadHandler&& handler)
+MockStreamLayer::async_read(DynamicBuffer& buffer, ReadHandler&& handler)
 {
   //TODO: Mock
 }
 
 template<class ConstBufferSequence, class WriteHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
-MockStream::async_write(ConstBufferSequence const& buffers, WriteHandler&& handler)
+MockStreamLayer::async_write(ConstBufferSequence const& buffers, WriteHandler&& handler)
 {
   //TODO: Mock
 }
 
 template<class WriteHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
-MockStream::async_ping(websocket::ping_data const& payload, WriteHandler&& handler)
+MockStreamLayer::async_ping(websocket::ping_data const& payload, WriteHandler&& handler)
 {
   //TODO: Mock
 }
 
 template<class CloseHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
-MockStream::async_close(websocket::close_reason const& cr, CloseHandler&& handler)
+MockStreamLayer::async_close(websocket::close_reason const& cr, CloseHandler&& handler)
 {
   BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
   boost::asio::post(stream.get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
@@ -598,37 +598,37 @@ MockStream::async_close(websocket::close_reason const& cr, CloseHandler&& handle
 // AsyncStream compliance
 template<class MutableBufferSequence, class ReadHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, size_t))
-MockStream::async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler)
+MockStreamLayer::async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler)
 {
   //TODO: Mock
 }
 
 template<class ConstBufferSequence, class WriteHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
-MockStream::async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler)
+MockStreamLayer::async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler)
 {
   //TODO: Mock
 }
 
 #pragma endregion // boost::beast::websocket::stream NextLayer methods
 
-#pragma endregion // MockStream
+#pragma endregion // MockStreamLayer
 
-#pragma region TestWebSocket
+#pragma region TestWebSocketOld
 
-TestWebSocket::TestWebSocket(facebook::react::Url&& url)
+TestWebSocketOld::TestWebSocketOld(facebook::react::Url&& url)
   : BaseWebSocket(std::move(url))
 {
-  m_stream = make_unique<websocket::stream<MockStream>>(m_context);
+  m_stream = make_unique<websocket::stream<MockStreamLayer>>(m_context);
   m_stream->auto_fragment(false);//ISS:2906963 Re-enable message fragmenting.
 }
 
-void TestWebSocket::SetConnectResult(std::function<error_code()>&& resultFunc)
+void TestWebSocketOld::SetConnectResult(std::function<error_code()>&& resultFunc)
 {
   m_stream->next_layer().ConnectResult = std::move(resultFunc);
 }
 
-void TestWebSocket::SetCloseResult(std::function<error_code()>&& resultFunc)
+void TestWebSocketOld::SetCloseResult(std::function<error_code()>&& resultFunc)
 {
   m_stream->next_layer().CloseResult = std::move(resultFunc);
 }
@@ -649,7 +649,7 @@ template
 BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(boost::system::error_code, Iterator))
 async_connect
 (
-  Microsoft::React::Test::MockStream& s,
+  Microsoft::React::Test::MockStreamLayer& s,
   Iterator begin,
   Iterator end,
   BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler
@@ -669,7 +669,7 @@ namespace http {
 ///
 template<class DynamicBuffer, bool isRequest, class Body, class Allocator, class ReadHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(error_code, std::size_t))
-async_read(Microsoft::React::Test::MockStream& stream, DynamicBuffer& buffer, message<isRequest, Body, basic_fields<Allocator>>& msg, ReadHandler&& handler)
+async_read(Microsoft::React::Test::MockStreamLayer& stream, DynamicBuffer& buffer, message<isRequest, Body, basic_fields<Allocator>>& msg, ReadHandler&& handler)
 {
   // Build response.
   // TODO: Make mockable?
@@ -696,7 +696,7 @@ async_read(Microsoft::React::Test::MockStream& stream, DynamicBuffer& buffer, me
 ///
 template<bool isRequest, class Body, class Fields, class WriteHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, std::size_t))
-async_write(Microsoft::React::Test::MockStream& stream, serializer<isRequest, Body, Fields>& sr, WriteHandler&& handler)
+async_write(Microsoft::React::Test::MockStreamLayer& stream, serializer<isRequest, Body, Fields>& sr, WriteHandler&& handler)
 {
   stream.Key = sr.get().at(field::sec_websocket_key);
 
