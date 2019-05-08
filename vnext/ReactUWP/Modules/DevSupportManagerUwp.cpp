@@ -35,22 +35,35 @@ using namespace facebook::react;
 
 namespace react { namespace uwp {
 
-std::future<std::string> DownloadFromAsync(const std::string& url)
+std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& url)
 {
   winrt::Windows::Web::Http::HttpClient httpClient;
   winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(url));
 
   co_await winrt::resume_background();
 
-  winrt::Windows::Storage::Streams::IBuffer buffer = co_await httpClient.GetBufferAsync(uri);
-  auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
+  winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
+  winrt::Windows::Web::Http::HttpResponseMessage response = co_await httpClient.SendRequestAsync(request);
 
-  reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-  uint32_t len = reader.UnconsumedBufferLength();
-  std::vector<uint8_t> data(len);
-  reader.ReadBytes(data);
+  if (response.IsSuccessStatusCode())
+  {
+    winrt::Windows::Storage::Streams::IInputStream stream = co_await response.Content().ReadAsInputStreamAsync();
+    auto reader = winrt::Windows::Storage::Streams::DataReader(stream);
 
-  co_return std::string(reinterpret_cast<char*>(data.data()), data.size());
+    reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+    uint32_t len = reader.UnconsumedBufferLength();
+    std::vector<uint8_t> data(len);
+    reader.ReadBytes(data);
+
+    co_return std::make_pair(std::string(reinterpret_cast<char*>(data.data()), data.size()), true);
+  }
+  else
+  {
+    // only ReadAsString can read the error text out of Content()
+    winrt::hstring result = co_await response.Content().ReadAsStringAsync();
+    std::string errorText = facebook::react::UnicodeConversion::Utf16ToUtf8(result.c_str(), result.size());
+    co_return std::make_pair(std::move(errorText), false);
+  }
 }
 
 void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings& settings)
@@ -179,7 +192,13 @@ std::string DevSupportManager::GetJavaScriptFromServer(const std::string& debugH
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(debugHost, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/);
   try
   {
-    std::string s = DownloadFromAsync(bundleUrl).get();
+    std::string s;
+    bool success;
+    std::tie(s, success) = DownloadFromAsync(bundleUrl).get();
+
+    if (!success)
+      m_exceptionCaught = true;
+
     return s;
   }
   catch (winrt::hresult_error const & e)
