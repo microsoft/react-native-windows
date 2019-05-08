@@ -100,6 +100,30 @@ private:
   static uint64_t getRuntimeVersion() { return s_runtimeVersion; }
 
 private:
+  class HostObjectProxy {
+  public:
+    jsi::Value Get(const PropNameID& propNameId)
+    {
+      return hostObject_->get(runtime_, propNameId);
+    }
+
+    void Set(const PropNameID& propNameId, const Value& value)
+    {
+      hostObject_->set(runtime_, propNameId, value);
+    }
+
+    std::vector<PropNameID>  Enumerator()
+    {
+      return hostObject_->getPropertyNames(runtime_);
+    }
+
+    HostObjectProxy(ChakraJsiRuntime& rt, const std::shared_ptr<facebook::jsi::HostObject>& hostObject) : runtime_(rt), hostObject_(hostObject) {}
+    std::shared_ptr<facebook::jsi::HostObject> getHostObject() { return hostObject_; }
+
+  private:
+    ChakraJsiRuntime& runtime_;
+    std::shared_ptr<facebook::jsi::HostObject> hostObject_;
+  };
 
   template <class T>
   class ObjectWithExternalData : public jsi::Object {

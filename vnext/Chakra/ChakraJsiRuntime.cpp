@@ -309,31 +309,6 @@ jsi::Object ChakraJsiRuntime::createObject() {
   return createObject(static_cast<JsValueRef>(nullptr));
 }
 
-class HostObjectProxy {
-public:
-  jsi::Value Get(const PropNameID& propNameId)
-  {
-    return hostObject_->get(runtime_, propNameId);
-  }
-
-  void Set(const PropNameID& propNameId, const Value& value)
-  {
-    hostObject_->set(runtime_, propNameId, value);
-  }
-
-  std::vector<PropNameID>  Enumerator()
-  {
-    return hostObject_->getPropertyNames(runtime_);
-  }
-
-  HostObjectProxy(ChakraJsiRuntime& rt, const std::shared_ptr<facebook::jsi::HostObject>& hostObject) : runtime_(rt), hostObject_(hostObject) {}
-  std::shared_ptr<facebook::jsi::HostObject> getHostObject() { return hostObject_; }
-
-private:
-  ChakraJsiRuntime& runtime_;
-  std::shared_ptr<facebook::jsi::HostObject> hostObject_;
-};
-
 jsi::Object ChakraJsiRuntime::createObject(std::shared_ptr<jsi::HostObject> hostObject) {
   jsi::Object proxyTarget = ObjectWithExternalData<HostObjectProxy>::create(*this, new HostObjectProxy(*this, hostObject));
   return createProxy(std::move(proxyTarget), createHostObjectProxyHandler());
