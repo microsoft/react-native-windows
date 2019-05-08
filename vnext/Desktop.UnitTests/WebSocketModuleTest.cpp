@@ -20,7 +20,7 @@ TEST_CLASS(WebSocketModuleTest)
     SIZE = 5
   };
 
-  char* MethodName[static_cast<size_t>(MethodId::SIZE)]
+  const char* MethodName[static_cast<size_t>(MethodId::SIZE)]
   {
     "connect",
     "close",
