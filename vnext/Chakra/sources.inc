@@ -17,9 +17,11 @@ SOURCES_SHARED = \
 	..\Utf8DebugExtensions.cpp \
 
 SOURCES_WIN32 = $(SOURCES_SHARED) \
-	..\ChakraRuntime.cpp \
+	..\ChakraJsiRuntime.cpp \
+	..\ChakraJsiRuntime_core.cpp
 
-SOURCES_WINRT = $(SOURCES_SHARED) \
+SOURCES_WINRT = $(SOURCES_SHARED)
 
 SOURCES_JSICORE = \
-	..\ChakraRuntime.cpp \
+	..\ChakraJsiRuntime.cpp \
+	..\ChakraJsiRuntime_core.cpp

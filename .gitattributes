@@ -2,9 +2,12 @@
 # Auto detect text files and perform LF normalization
 
 *       text=auto
-*.cpp   -text
-*.h     -text
 
+# C++ files should use CRLF.
+*.c   text eol=crlf
+*.cpp text eol=crlf
+*.h   text eol=crlf
+*.hpp text eol=crlf
 
 # Force Visual Studio project files (mostly XML) to CRLF
 #   This helps avoid conflict which occurs when Xmarian/Mac contributors with AutoCRLF=input (or off)

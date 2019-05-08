@@ -1,4 +1,10 @@
 EXPORTS
+?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
+??0TypeError@folly@@QAE@ABU01@@Z
+??0TypeError@folly@@QAE@$$QAU01@@Z
+??0ColdClass@cold_detail@folly@@QAE@XZ
+?get_ptrImpl@dynamic@folly@@AGBEPBU12@ABU12@@Z
+??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
 ??$str_to_floating@N@detail@folly@@YG?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YG?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??0JSBigStringResourceDll@react@facebook@@QAE@PAUHINSTANCE__@@PAUHRSRC__@@@Z
@@ -20,7 +26,7 @@ EXPORTS
 ?CreateReactInstance@react@facebook@@YG?AV?$shared_ptr@UInstanceWrapper@react@facebook@@@std@@$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@4@0$$QAV?$vector@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@V?$allocator@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@@2@@4@V?$shared_ptr@VIUIManager@react@facebook@@@4@V?$shared_ptr@VMessageQueueThread@react@facebook@@@4@3V?$shared_ptr@UDevSettings@react@facebook@@@4@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
-?CreateWebSocketModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
+?CreateWebSocketModule@React@Microsoft@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?destroy@dynamic@folly@@AAEXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UAEX_JABUdynamic@folly@@@Z
 ?GetConstants@ViewManagerBase@react@facebook@@UBE?AUdynamic@folly@@XZ
@@ -40,10 +46,11 @@ EXPORTS
 ?Utf16ToUtf8@UnicodeConversion@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 ?Utf8ToUtf16@UnicodeConversion@react@facebook@@YG?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@IHttpResource@react@facebook@@SG?AV?$unique_ptr@UIHttpResource@react@facebook@@U?$default_delete@UIHttpResource@react@facebook@@@std@@@std@@XZ
-?Make@IWebSocket@react@facebook@@SG?AV?$unique_ptr@UIWebSocket@react@facebook@@U?$default_delete@UIWebSocket@react@facebook@@@std@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?Make@IWebSocket@React@Microsoft@@SG?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?Make@JSBigStringResourceDll@react@facebook@@SG?AV?$unique_ptr@$$CBVJSBigStringResourceDll@react@facebook@@U?$default_delete@$$CBVJSBigStringResourceDll@react@facebook@@@std@@@std@@PAUHINSTANCE__@@PAUHRSRC__@@@Z
-?MakeLegacy@IWebSocket@react@facebook@@SG?AV?$unique_ptr@UIWebSocket@react@facebook@@U?$default_delete@UIWebSocket@react@facebook@@@std@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?MakeLegacy@IWebSocket@React@Microsoft@@SG?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+??1Buffer@jsi@facebook@@UAE@XZ
 
 YGLog
 YGLogWithConfig

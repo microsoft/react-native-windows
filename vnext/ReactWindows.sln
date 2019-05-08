@@ -54,8 +54,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Universal.Uni
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FollyWin32", "FollyWin32\FollyWin32.vcxproj", "{74085F13-2DDE-45E5-A0CA-927AC9D0B953}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraCoreShim", "ChakraCoreShim\ChakraCoreShim.vcxproj", "{00830A8B-97E0-4320-B7B0-0078B405997B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertySheets", "{6F24927E-EE45-4DB2-91DA-DCC6E98B0C42}"
 	ProjectSection(SolutionItems) = preProject
 		PropertySheets\ARM.props = PropertySheets\ARM.props
@@ -127,12 +125,12 @@ Global
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|ARM = Release|ARM
+		Debug|ARM = Debug|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		Release|ARM = Release|ARM
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -237,16 +235,6 @@ Global
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953}.Release|x64.Build.0 = Release|x64
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953}.Release|x86.ActiveCfg = Release|Win32
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953}.Release|x86.Build.0 = Release|Win32
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Debug|ARM.ActiveCfg = Debug|Win32
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Debug|x64.ActiveCfg = Debug|x64
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Debug|x64.Build.0 = Debug|x64
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Debug|x86.ActiveCfg = Debug|Win32
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Debug|x86.Build.0 = Debug|Win32
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Release|ARM.ActiveCfg = Release|Win32
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Release|x64.ActiveCfg = Release|x64
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Release|x64.Build.0 = Release|x64
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Release|x86.ActiveCfg = Release|Win32
-		{00830A8B-97E0-4320-B7B0-0078B405997B}.Release|x86.Build.0 = Release|Win32
 		{95048601-C3DC-475F-ADF8-7C0C764C10D5}.Debug|ARM.ActiveCfg = Debug|Win32
 		{95048601-C3DC-475F-ADF8-7C0C764C10D5}.Debug|x64.ActiveCfg = Debug|x64
 		{95048601-C3DC-475F-ADF8-7C0C764C10D5}.Debug|x64.Build.0 = Debug|x64

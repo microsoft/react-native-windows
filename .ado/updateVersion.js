@@ -30,7 +30,7 @@ function updateVersion() {
   
   exec(`git checkout -b ${tempPublishBranch}`);
 
-  const pkgJsonPath = path.resolve(__dirname, "../package.json");
+  const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
   let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
   let releaseVersion = pkgJson.version;
@@ -51,7 +51,7 @@ function updateVersion() {
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);
 
-  process.chdir(path.resolve(__dirname, ".."));
+  process.chdir(path.resolve(__dirname, "../vnext"));
   exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
   exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd build`);
 

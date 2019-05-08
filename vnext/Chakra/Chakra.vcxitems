@@ -18,7 +18,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraNativeModules.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraPlatform.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraTracing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraValue.cpp" />
@@ -29,9 +31,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraInstanceArgs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraNativeModules.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraPlatform.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraTracing.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraValue.h" />

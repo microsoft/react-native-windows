@@ -1,6 +1,16 @@
 name: $(Date:yyyyMMdd).$(Rev:.r)
 
-trigger: none # will disable CI builds entirely
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - vnext/*
+    exclude:
+      - vnext/package.json
+      - vnext/yarn.lock
 
 pr: none
 
@@ -42,7 +52,7 @@ jobs:
       - task: CmdLine@2
         displayName: Update package version
         inputs:
-          script: node .ado/updateVersion.js
+          script: node ../.ado/updateVersion.js
           workingDirectory: vnext
 
       - task: Npm@1

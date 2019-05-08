@@ -50,6 +50,9 @@ TARGETLOBS = $(TARGETLOBS) \
 	$(PROJLIBDIR)\CxxReactWin32.lob \
 	$(PROJLIBDIR)\CxxReactWin32Win32.lob \
 	$(PROJLIBDIR)\FollyDetailWin32.lob \
+	$(PROJLIBDIR)\FollyHashWin32.lob \
+	$(PROJLIBDIR)\FollyLangWin32.lob \
+	$(PROJLIBDIR)\FollyMemoryDetailWin32.lob \
 	$(PROJLIBDIR)\FollyPortabilityWin32.lob \
 	$(PROJLIBDIR)\FollyWin32.lob \
 	$(PROJLIBDIR)\jsiWin32.lob \
