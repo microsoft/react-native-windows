@@ -29,6 +29,11 @@
     <file src="inc\cxxreact\NativeToJsBridge.h"      target="inc\cxxreact" />
     <file src="inc\cxxreact\NativeModule.h"          target="inc\cxxreact" />
 
+    <file src="inc\jsi\jsi.h"                        target="inc\jsi" />
+    <file src="inc\jsi\jsi-inl.h"                    target="inc\jsi" />
+    <file src="inc\jsi\ScripStore.h"                 target="inc\jsi" />
+    <file src="inc\jsi\RuntimeHolder.h"              target="inc\jsi" />
+
     <file src="inc\yoga\Yoga\Yoga.h"                 target="inc\yoga" />
     <file src="inc\yoga\Yoga\YGMacros.h"             target="inc\yoga" />
     <file src="inc\yoga\Yoga\YGNodeList.h"           target="inc\yoga" />
