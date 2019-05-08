@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <jsi/jsi.h>
@@ -9,8 +12,8 @@ class MessageQueueThread;
 }}
 
 namespace facebook { namespace jsi {
-class ScriptStore;
-class PreparedScriptStore;
+struct ScriptStore;
+struct PreparedScriptStore;
 }}
 
 namespace facebook {
@@ -52,11 +55,9 @@ struct ChakraJsiRuntimeArgs
 
   std::shared_ptr<facebook::react::MessageQueueThread> jsQueue;
 
-#ifdef HAS_SCRIPTSTORE
   // Script store which manages script and prepared script storage and versioning.
   std::unique_ptr<jsi::ScriptStore> scriptStore;
   std::unique_ptr<jsi::PreparedScriptStore> preparedScriptStore;
-#endif
 
   std::unique_ptr<IPromiseContinuation> promiseContinuation { nullptr };
 };

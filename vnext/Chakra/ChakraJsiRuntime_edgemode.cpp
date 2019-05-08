@@ -60,39 +60,18 @@ std::unique_ptr<const jsi::Buffer> ChakraJsiRuntime::generatePreparedScript(cons
   return nullptr;
 }
 
-
-JsValueRef ChakraJsiRuntime::CreateJSString(const char*data, size_t length) {
+JsValueRef ChakraJsiRuntime::createJSString(const char*data, size_t length) {
   const std::wstring script16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(data), length);
   JsValueRef value;
   JsPointerToString(script16.c_str(), script16.size(), &value);
   return value;
 }
 
-JsValueRef ChakraJsiRuntime::CreateJSPropertyId(const char*data, size_t length) {
+JsValueRef ChakraJsiRuntime::createJSPropertyId(const char*data, size_t length) {
   JsValueRef propIdRef;
   const std::wstring name16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(data), length);
   if (JsNoError != JsGetPropertyIdFromName(name16.c_str(), &propIdRef)) std::terminate();
   return propIdRef;
-}
-
-std::wstring ChakraJsiRuntime::JSStringToSTLWString(JsValueRef str) {
-  const wchar_t *value;
-  size_t length;
-
-  if (JsNoError != JsStringToPointer(str, &value, &length)) std::terminate();
-
-  // Note: Copying the string out of JsString
-  return std::wstring(value, length);
-}
-
-std::string ChakraJsiRuntime::JSStringToSTLString(JsValueRef str) {
-  const wchar_t *value;
-  size_t length;
-
-  JsStringToPointer(str, &value, &length);
-
-  // Note: Copying the string out of JsString
-  return facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring(value, length));
 }
 
 void ChakraJsiRuntime::setupNativePromiseContinuation() noexcept {

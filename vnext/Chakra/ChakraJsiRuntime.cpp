@@ -13,9 +13,7 @@
 #include <sstream>
 #include "UnicodeConversion.h"
 
-#ifdef HAS_SCRIPTSTORE
 #include <jsi/ScriptStore.h>
-#endif
 
 using namespace facebook::react;
 
@@ -23,11 +21,11 @@ namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
-/*static*/ std::once_flag ChakraJsiRuntime::s_runtime_version_init_flag_;
+/*static*/ std::once_flag ChakraJsiRuntime::s_runtimeVersionInitFlag;
 /*static*/ uint64_t ChakraJsiRuntime::s_runtimeVersion = 0;
 
 ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
-  : args_ { std::move(args) } {
+  : m_args { std::move(args) } {
   
   JsRuntimeAttributes runtimeAttributes = JsRuntimeAttributeNone;
 
@@ -35,7 +33,7 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
     runtimeAttributes = static_cast<JsRuntimeAttributes>(runtimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration | JsRuntimeAttributeDisableExecutablePageAllocation);
   }
 
-  if (JsCreateRuntime(runtimeAttributes, nullptr, &runtime_) != JsNoError) {
+  if (JsCreateRuntime(runtimeAttributes, nullptr, &m_runtime) != JsNoError) {
     std::terminate();
   }
 
@@ -43,33 +41,33 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
   setupNativePromiseContinuation();
 
   // Create an execution context
-  JsCreateContext(runtime_, &ctx_);
-  JsAddRef(ctx_, nullptr);
+  JsCreateContext(m_runtime, &m_ctx);
+  JsAddRef(m_ctx, nullptr);
 
   // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
-  JsSetCurrentContext(ctx_);
+  JsSetCurrentContext(m_ctx);
 
-  std::call_once(s_runtime_version_init_flag_, initRuntimeVersion);
+  std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
 }
 
 ChakraJsiRuntime::~ChakraJsiRuntime() noexcept {
   JsSetCurrentContext(JS_INVALID_REFERENCE);
-  JsRelease(ctx_, nullptr);
+  JsRelease(m_ctx, nullptr);
 
-  JsDisposeRuntime(runtime_);
+  JsDisposeRuntime(m_runtime);
 }
 
 void ChakraJsiRuntime::setupMemoryTracker() noexcept{
 
   if (runtimeArgs().memoryTracker) {
     size_t initialMemoryUsage = 0;
-    JsGetRuntimeMemoryUsage(runtime_, &initialMemoryUsage);
+    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
     runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
 
     if (runtimeArgs().runtimeMemoryLimit > 0)
-      JsSetRuntimeMemoryLimit(runtime_, runtimeArgs().runtimeMemoryLimit);
+      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
 
-    JsSetRuntimeMemoryAllocationCallback(runtime_, runtimeArgs().memoryTracker.get(),
+    JsSetRuntimeMemoryAllocationCallback(m_runtime, runtimeArgs().memoryTracker.get(),
       [](void* callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool
     {
       auto memoryTrackerPtr = static_cast<MemoryTracker*>(callbackState);
@@ -98,7 +96,6 @@ void ChakraJsiRuntime::evaluateJavaScript(
   std::unique_ptr<const jsi::Buffer> buffer,
   const std::string& sourceURL) {
 
-#ifdef HAS_SCRIPTSTORE
   // Simple evaluate if scriptStore not available as it's risky to utilize the byte codes without checking the script version.
   if (!runtimeArgs().scriptStore) {
     if (!buffer) throw JSINativeException("Script buffer is empty!");
@@ -151,8 +148,8 @@ void ChakraJsiRuntime::evaluateJavaScript(
   // We are pinning the buffers which are backing the external array buffers to the duration of this.
   // This is not good if the external array buffers have a reduced liftime compared to the runtime itself.
   // But, it's ok for the script and prepared script buffer as their lifetime is expected to be same as the JSI runtime.
-  pinnedPreparedScripts_.push_back(sharedPreparedScript);
-  pinnedScripts_.push_back(sharedScriptBuffer);
+  m_pinnedPreparedScripts.push_back(sharedPreparedScript);
+  m_pinnedScripts.push_back(sharedScriptBuffer);
 
   if (evaluateSerializedScript(*sharedScriptBuffer, *sharedPreparedScript, sourceURL)) {
     return;
@@ -160,10 +157,6 @@ void ChakraJsiRuntime::evaluateJavaScript(
 
   // If we reach here, fall back to simple evaluation.
   evaluateJavaScriptSimple(*sharedScriptBuffer, sourceURL);
-#else
-  if (!buffer) throw JSINativeException("Script buffer is empty!");
-  evaluateJavaScriptSimple(*buffer, sourceURL);
-#endif
 }
 
 jsi::Object ChakraJsiRuntime::global() {
@@ -173,10 +166,10 @@ jsi::Object ChakraJsiRuntime::global() {
 }
 
 std::string ChakraJsiRuntime::description() {
-  if (desc_.empty()) {
-    desc_ = std::string("<ChakraJsiRuntime>");
+  if (m_desc.empty()) {
+    m_desc = std::string("<ChakraJsiRuntime>");
   }
-  return desc_;
+  return m_desc;
 }
 
 bool ChakraJsiRuntime::isInspectable() {
@@ -184,7 +177,7 @@ bool ChakraJsiRuntime::isInspectable() {
 }
 
 ChakraJsiRuntime::ChakraPropertyIdValue::~ChakraPropertyIdValue() {
-  JsRelease(propId_, nullptr);
+  JsRelease(m_propId, nullptr);
 }
 
 void ChakraJsiRuntime::ChakraPropertyIdValue::invalidate() {
@@ -192,12 +185,12 @@ void ChakraJsiRuntime::ChakraPropertyIdValue::invalidate() {
 }
 
 ChakraJsiRuntime::ChakraPropertyIdValue::ChakraPropertyIdValue(JsPropertyIdRef propIdRef)
-  : propId_(propIdRef) {
+  : m_propId(propIdRef) {
   JsAddRef(propIdRef, nullptr);
 }
 
 ChakraJsiRuntime::ChakraStringValue::ChakraStringValue(JsValueRef str)
-  : str_(str) {
+  : m_str(str) {
   JsAddRef(str, nullptr);
 }
 
@@ -206,14 +199,14 @@ void ChakraJsiRuntime::ChakraStringValue::invalidate() {
 }
 
 ChakraJsiRuntime::ChakraStringValue::~ChakraStringValue() {
-  JsRelease(str_, nullptr);
+  JsRelease(m_str, nullptr);
 }
 
 ChakraJsiRuntime::ChakraObjectValue::ChakraObjectValue(
   JsValueRef obj
-) : obj_(obj)
+) : m_obj(obj)
 {
-  JsAddRef(obj_, nullptr);
+  JsAddRef(m_obj, nullptr);
 }
 
 void ChakraJsiRuntime::ChakraObjectValue::invalidate() {
@@ -221,7 +214,7 @@ void ChakraJsiRuntime::ChakraObjectValue::invalidate() {
 }
 
 ChakraJsiRuntime::ChakraObjectValue::~ChakraObjectValue() {
-  JsRelease(obj_, nullptr);
+  JsRelease(m_obj, nullptr);
 }
 
 jsi::Runtime::PointerValue* ChakraJsiRuntime::cloneString(
@@ -231,7 +224,7 @@ jsi::Runtime::PointerValue* ChakraJsiRuntime::cloneString(
     return nullptr;
   }
   const ChakraStringValue* string = static_cast<const ChakraStringValue*>(pv);
-  return makeStringValue(string->str_);
+  return makeStringValue(string->m_str);
 }
 
 jsi::Runtime::PointerValue* ChakraJsiRuntime::cloneObject(
@@ -242,7 +235,7 @@ jsi::Runtime::PointerValue* ChakraJsiRuntime::cloneObject(
   }
 
   const ChakraObjectValue* object = static_cast<const ChakraObjectValue*>(pv);
-  return makeObjectValue(object->obj_);
+  return makeObjectValue(object->m_obj);
 }
 
 jsi::Runtime::PointerValue* ChakraJsiRuntime::clonePropNameID(
@@ -253,14 +246,14 @@ jsi::Runtime::PointerValue* ChakraJsiRuntime::clonePropNameID(
   }
 
   const ChakraPropertyIdValue* propId = static_cast<const ChakraPropertyIdValue*>(pv);
-  return makePropertyIdValue(propId->propId_);
+  return makePropertyIdValue(propId->m_propId);
 }
 
 jsi::PropNameID ChakraJsiRuntime::createPropNameIDFromAscii(
   const char* str,
   size_t length) {
 
-  JsValueRef propIdRef = CreateJSPropertyId(str, length);
+  JsValueRef propIdRef = createJSPropertyId(str, length);
 
   auto res = createPropNameID(propIdRef);
   return res;
@@ -270,7 +263,8 @@ jsi::PropNameID ChakraJsiRuntime::createPropNameIDFromUtf8(
   const uint8_t* utf8,
   size_t length) {
 
-  JsValueRef prpoIdRef = CreateJSPropertyId(reinterpret_cast<const char*>(utf8), length);
+  JsValueRef prpoIdRef = createJSPropertyId(reinterpret_cast<const char*>(utf8), length);
+
   auto res = createPropNameID(prpoIdRef);
   return res;
 }
@@ -303,7 +297,7 @@ jsi::String ChakraJsiRuntime::createStringFromUtf8(
   const uint8_t* str,
   size_t length) {
 
-  JsValueRef stringRef = CreateJSString(reinterpret_cast<const char*>(str), length);
+  JsValueRef stringRef = createJSString(reinterpret_cast<const char*>(str), length);
   return createString(stringRef);
 }
 
@@ -455,7 +449,7 @@ jsi::Array ChakraJsiRuntime::createArray(size_t length) {
 size_t ChakraJsiRuntime::size(const jsi::Array& arr) {
   std::string lengthStr = "length";
 
-  JsPropertyIdRef propId = CreateJSPropertyId(lengthStr.c_str(), lengthStr.length());
+  JsPropertyIdRef propId = createJSPropertyId(lengthStr.c_str(), lengthStr.length());
 
   JsValueRef valueObject;
   checkException(JsGetProperty(objectRef(arr), propId, &valueObject));
@@ -490,19 +484,19 @@ void ChakraJsiRuntime::setValueAtIndexImpl(
 class HostFunctionProxy {
 public:
   HostFunctionProxy(jsi::HostFunctionType hostFunction, ChakraJsiRuntime& runtime)
-    : hostFunction_(hostFunction), runtime_(runtime) {}
+    : m_hostFunction(hostFunction), m_runtime(runtime) {}
 
   inline const jsi::HostFunctionType& getHostFunction() const{
-    return hostFunction_;
+    return m_hostFunction;
   }
 
   inline ChakraJsiRuntime& getRuntime() const{
-    return runtime_;
+    return m_runtime;
   }
 
 private:
-  const jsi::HostFunctionType hostFunction_;
-  ChakraJsiRuntime& runtime_;
+  const jsi::HostFunctionType m_hostFunction;
+  ChakraJsiRuntime& m_runtime;
 };
 
 JsValueRef CALLBACK ChakraJsiRuntime::HostFunctionCall(JsValueRef callee, bool isConstructCall, JsValueRef *argumentsIncThis, unsigned short argumentCountIncThis, void *callbackState)
@@ -542,13 +536,13 @@ JsValueRef CALLBACK ChakraJsiRuntime::HostFunctionCall(JsValueRef callee, bool i
   catch (const std::exception& ex) {
     std::string exwhat(ex.what());
     JsValueRef exn;
-    exn = CreateJSString(exwhat.c_str(), exwhat.size());
+    exn = createJSString(exwhat.c_str(), exwhat.size());
     JsSetException(exn);
   }
   catch (...) {
     std::string exceptionString("Exception in HostFunction: <unknown>");
     JsValueRef exn;
-    exn = CreateJSString(exceptionString.c_str(), exceptionString.size());
+    exn = createJSString(exceptionString.c_str(), exceptionString.size());
     JsSetException(exn);
   }
 
@@ -667,7 +661,7 @@ bool ChakraJsiRuntime::instanceOf(const jsi::Object& o, const jsi::Function& f) 
 jsi::Runtime::PointerValue* ChakraJsiRuntime::makeStringValue(
   JsValueRef stringRef) const {
   if (!stringRef) {
-    JsValueRef emptyJsValue = CreateJSString("", 0);
+    JsValueRef emptyJsValue = createJSString("", 0);
     stringRef = emptyJsValue;
   }
   return new ChakraStringValue(stringRef);
@@ -790,15 +784,15 @@ JsValueRef ChakraJsiRuntime::valueRef(const jsi::Value& valueIn){
 }
 
 JsValueRef ChakraJsiRuntime::stringRef(const jsi::String& str) {
-  return static_cast<const ChakraStringValue*>(getPointerValue(str))->str_;
+  return static_cast<const ChakraStringValue*>(getPointerValue(str))->m_str;
 }
 
 JsPropertyIdRef ChakraJsiRuntime::propIdRef(const jsi::PropNameID& sym) {
-  return static_cast<const ChakraPropertyIdValue*>(getPointerValue(sym))->propId_;
+  return static_cast<const ChakraPropertyIdValue*>(getPointerValue(sym))->m_propId;
 }
 
 JsValueRef ChakraJsiRuntime::objectRef(const jsi::Object& obj) {
-  return static_cast<const ChakraObjectValue*>(getPointerValue(obj))->obj_;
+  return static_cast<const ChakraObjectValue*>(getPointerValue(obj))->m_obj;
 }
 
 void ChakraJsiRuntime::checkException(JsErrorCode result)  {
@@ -858,5 +852,30 @@ void ChakraJsiRuntime::checkException(JsErrorCode result, const char* message) {
   std::string errorString = errorStream.str();
   throw jsi::JSError(*this, createStringFromAscii(errorString.c_str(), errorString.length()));
 }
+
+std::wstring ChakraJsiRuntime::JSStringToSTLWString(JsValueRef str) {
+  const wchar_t *value;
+  size_t length;
+
+  if (JsNoError != JsStringToPointer(str, &value, &length)) {
+    std::terminate();
+  }
+
+  // Note: Copying the string out of JsString, as required.
+  return std::wstring(value, length);
+}
+
+std::string ChakraJsiRuntime::JSStringToSTLString(JsValueRef str) {
+  const wchar_t *value;
+  size_t length;
+
+  if (JsNoError != JsStringToPointer(str, &value, &length)) {
+    std::terminate();
+  }
+
+  // Note: This results in multiple buffer copyings. We should look for optimization.
+  return facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring(value, length));
+}
+
 
 }}} // facebook::jsi::chakraruntime

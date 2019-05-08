@@ -43,7 +43,7 @@ bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer,
 
     JsValueRef sourceURLRef = nullptr;
     if (!sourceURL.empty()) {
-      sourceURLRef = CreateJSString(reinterpret_cast<const char*>(sourceURL.c_str()), sourceURL.size());
+      sourceURLRef = createJSString(reinterpret_cast<const char*>(sourceURL.c_str()), sourceURL.size());
     }
 
     JsValueRef value = nullptr;
@@ -55,7 +55,7 @@ bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer,
 
       *parseAttributes = JsParseScriptAttributeNone;
       return true;
-    }, reinterpret_cast<JsSourceContext>(pinnedScripts_.back().get()), sourceURLRef, &value);
+    }, reinterpret_cast<JsSourceContext>(m_pinnedScripts.back().get()), sourceURLRef, &value);
 
     if (result == JsNoError) {
       return true;
@@ -87,36 +87,18 @@ std::unique_ptr<const jsi::Buffer> ChakraJsiRuntime::generatePreparedScript(cons
   return nullptr;
 }
 
-
-JsValueRef ChakraJsiRuntime::CreateJSString(const char*data, size_t length) {
+// Note :: ChakraCore header provides an API which takes 8-bit string .. which is not available in edge mode.
+JsValueRef ChakraJsiRuntime::createJSString(const char*data, size_t length) {
   JsValueRef value;
   JsCreateString(reinterpret_cast<const char*>(data), length, &value);
   return value;
 }
 
-JsValueRef ChakraJsiRuntime::CreateJSPropertyId(const char*data, size_t length) {
+// Note :: ChakraCore header provides an API which takes 8-bit string .. which is not available in edge mode.
+JsValueRef ChakraJsiRuntime::createJSPropertyId(const char*data, size_t length) {
   JsValueRef propIdRef;
   if (JsNoError != JsCreatePropertyId(data, length, &propIdRef)) std::terminate();
   return propIdRef;
-}
-
-std::wstring ChakraJsiRuntime::JSStringToSTLWString(JsValueRef str) {
-  std::wstring result;
-  size_t length;
-  JsCopyStringUtf16(str, 0, 256 /*TODO*/, nullptr, &length);
-  result.resize(length);
-  if (JsNoError != JsCopyStringUtf16(str, 0, static_cast<int>(length), reinterpret_cast<uint16_t*>(&result[0]), nullptr)) std::terminate();
-  return result;
-}
-
-std::string ChakraJsiRuntime::JSStringToSTLString(JsValueRef str) {
-  std::string result;
-  size_t length;
-
-  JsCopyString(str, nullptr, 0, &length);
-  result.resize(length);
-  JsCopyString(str, &result[0], length, nullptr);
-  return result;
 }
 
 // ES6 Promise callback
@@ -130,7 +112,7 @@ void ChakraJsiRuntime::promiseContinuation(JsValueRef funcRef)  noexcept {
 }
 
 void ChakraJsiRuntime::setupNativePromiseContinuation() noexcept{
-  if (args_.promiseContinuation) {
+  if (m_args.promiseContinuation) {
     JsSetPromiseContinuationCallback(PromiseContinuationCallback, this);
   }
 }
@@ -219,7 +201,7 @@ ChakraJsiRuntimeWithDebugger::ChakraJsiRuntimeWithDebugger(ChakraJsiRuntimeArgs&
       port = DebuggerDefaultPort;
     }
 
-    JsErrorCode result = this->enableDebugging(runtime_, runtimeName, breakOnNextLine, static_cast<uint16_t>(port), debugProtocolHandler_, debugService_);
+    JsErrorCode result = this->enableDebugging(m_runtime, runtimeName, breakOnNextLine, static_cast<uint16_t>(port), debugProtocolHandler_, debugService_);
 
     if (result == JsNoError) {
       debugPort_ = port;
@@ -252,7 +234,7 @@ ChakraJsiRuntimeWithDebugger::~ChakraJsiRuntimeWithDebugger() {
   debugProtocolHandler_ = nullptr;
 
   // TODO: Does order matter here? Should this be after release context and before disposeruntime?
-  JsSetRuntimeMemoryAllocationCallback(runtime_, nullptr, nullptr);
+  JsSetRuntimeMemoryAllocationCallback(m_runtime, nullptr, nullptr);
 }
 
 JsErrorCode ChakraJsiRuntimeWithDebugger::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,

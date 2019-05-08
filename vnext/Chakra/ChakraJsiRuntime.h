@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #if defined(USE_EDGEMODE_JSRT)
@@ -7,13 +10,13 @@
 #endif
 
 #include "ChakraJsiRuntimeArgs.h"
+#include "UnicodeConversion.h"
 
 #include <jsi/jsi.h>
 
 #include <memory>
 #include <mutex> 
 #include <sstream>
-#include "UnicodeConversion.h"
 
 namespace facebook { 
 namespace jsi { 
@@ -62,7 +65,7 @@ public:
 
 protected:
   ChakraJsiRuntimeArgs& runtimeArgs() {
-    return args_;
+    return m_args;
   }
 
 private:
@@ -74,7 +77,7 @@ private:
 
 private:
   // Arguments shared by the specializations ..
-  ChakraJsiRuntimeArgs args_;
+  ChakraJsiRuntimeArgs m_args;
 
   // Note :: For simplicity, We are pinning the script and serialized script buffers in the JSI::Runtime instance assuming as these buffers 
   // are needed to stay alive for the lifetime of the JSI::Runtime implementation. This approach doesn't make sense
@@ -82,13 +85,13 @@ private:
   // when the JSValue gets collected.
 
   // These buffers back the external array buffers that we handover to ChakraCore.
-  std::vector<std::shared_ptr<const jsi::Buffer>> pinnedPreparedScripts_;
+  std::vector<std::shared_ptr<const jsi::Buffer>> m_pinnedPreparedScripts;
 
   // These buffers are kept to serve the source callbacks when evaluating serialized scripts.
-  std::vector<std::shared_ptr<const jsi::Buffer>> pinnedScripts_;
+  std::vector<std::shared_ptr<const jsi::Buffer>> m_pinnedScripts;
 
 private:
-  static std::once_flag s_runtime_version_init_flag_;
+  static std::once_flag s_runtimeVersionInitFlag;
 
   static uint64_t s_runtimeVersion;
   static constexpr const char* s_runtimeType = "ChakraJsiRuntime";
@@ -104,7 +107,7 @@ private:
 
     void invalidate() override;
 
-    JsPropertyIdRef propId_;
+    JsPropertyIdRef m_propId;
   protected:
     friend class ChakraJsiRuntime;
   };
@@ -116,7 +119,7 @@ private:
     void invalidate() override;
   protected:
     friend class ChakraJsiRuntime;
-    JsValueRef str_;
+    JsValueRef m_str;
   };
 
   class ChakraObjectValue final : public PointerValue {
@@ -126,7 +129,7 @@ private:
     void invalidate() override;
   protected:
     friend class ChakraJsiRuntime;
-    JsValueRef obj_;
+    JsValueRef m_obj;
   };
 
 private:
@@ -221,9 +224,9 @@ private:
   inline void checkException(JsErrorCode res);
   inline void checkException(JsErrorCode res, const char* msg);
 
-  JsRuntimeHandle runtime_;
-  JsContextRef ctx_;
-  std::string desc_;
+  JsRuntimeHandle m_runtime;
+  JsContextRef m_ctx;
+  std::string m_desc;
 
   static JsValueRef CALLBACK HostFunctionCall(JsValueRef callee, bool isConstructCall, JsValueRef *argumentsIncThis, unsigned short argumentCountIncThis, void *callbackState);
 
@@ -231,11 +234,8 @@ private:
   static std::wstring JSStringToSTLWString(JsValueRef str);
   static std::string JSStringToSTLString(JsValueRef str);
 
-  static JsValueRef CreateJSString(const char*data, size_t length);
-  static JsValueRef CreateJSPropertyId(const char*data, size_t length);
-
-  friend class ChakraJsiRuntimeWithDebugger;
-
+  static JsValueRef createJSString(const char*data, size_t length);
+  static JsValueRef createJSPropertyId(const char*data, size_t length);
 };
 
 }}} // namespace facebook::jsi::chakraruntime
