@@ -101,6 +101,23 @@ private:
 
 private:
 
+  template <class T>
+  class ObjectWithExternalData : public jsi::Object {
+  public:
+    static jsi::Object create(ChakraJsiRuntime & rt, T * externalData);
+    static ObjectWithExternalData<T> fromExisting(ChakraJsiRuntime& rt, jsi::Object&& obj);
+
+  public:
+    T* getExternalData();
+    ObjectWithExternalData(const Runtime::PointerValue* value) : Object(const_cast<Runtime::PointerValue*>(value)) {} // TODO :: const_cast
+
+    ObjectWithExternalData(ObjectWithExternalData&&) = default;
+    ObjectWithExternalData& operator=(ObjectWithExternalData&&) = default;
+  };
+
+  template <class T>
+  friend class ObjectWithExternalData;
+
   class ChakraPropertyIdValue final : public PointerValue {
     ChakraPropertyIdValue(JsPropertyIdRef str);
     ~ChakraPropertyIdValue();
@@ -134,8 +151,12 @@ private:
 
 private:
 
+  jsi::Object createProxy(jsi::Object&& target, jsi::Object&& handler) noexcept;
+  jsi::Function createProxyConstructor() noexcept;
+  jsi::Object createHostObjectProxyHandler() noexcept;
+
   std::unique_ptr<const jsi::Buffer> generatePreparedScript(const std::string& sourceURL, const jsi::Buffer& sourceBuffer) noexcept;
-  void evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL);
+  jsi::Value evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL);
   bool evaluateSerializedScript(const jsi::Buffer& scriptBuffer, const jsi::Buffer& serializedScriptBuffer, const std::string& sourceURL);
 
   PointerValue* cloneString(const Runtime::PointerValue* pv) override;
@@ -214,11 +235,18 @@ private:
   // Factory methods for creating String/Object
   jsi::String createString(JsValueRef stringRef) const;
   jsi::PropNameID createPropNameID(JsValueRef stringRef);
+
+  template<class T>
+  jsi::Object createObject(JsValueRef objectRef, T* externalData) const;
   jsi::Object createObject(JsValueRef objectRef) const;
 
   // Used by factory methods and clone methods
   jsi::Runtime::PointerValue* makeStringValue(JsValueRef str) const;
+
+  template<class T>
+  jsi::Runtime::PointerValue* makeObjectValue(JsValueRef obj, T* externaldata) const;
   jsi::Runtime::PointerValue* makeObjectValue(JsValueRef obj) const;
+
   jsi::Runtime::PointerValue* makePropertyIdValue(JsPropertyIdRef propId) const;
 
   inline void checkException(JsErrorCode res);
