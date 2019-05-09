@@ -25,7 +25,7 @@ namespace PerfCompare
             }
             else if (sender == rnwcsBtn)
             {
-
+                rootFrame.Navigate(typeof(ReactNativeCurrentPage));
             }
             else if (sender == rnwcppBtn)
             {
