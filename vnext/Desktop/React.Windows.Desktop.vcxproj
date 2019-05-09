@@ -34,6 +34,9 @@
   <PropertyGroup Label="NOJSC">
     <NOJSC>true</NOJSC>
   </PropertyGroup>
+  <PropertyGroup Label="Permissive">
+    <ENABLEPermissive>true</ENABLEPermissive>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
