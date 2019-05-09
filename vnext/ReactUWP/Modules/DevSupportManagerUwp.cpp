@@ -48,35 +48,26 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& u
   winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
   winrt::Windows::Web::Http::HttpResponseMessage response = co_await httpClient.SendRequestAsync(request);
 
-  if (response.IsSuccessStatusCode())
-  {
-    winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
-    auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
+  winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
+  auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
 
-    reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-    uint32_t len = reader.UnconsumedBufferLength();
+  reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+  uint32_t len = reader.UnconsumedBufferLength();
+  std::string result;
+  if (len || response.IsSuccessStatusCode())
+  {
     std::vector<uint8_t> data(len);
     reader.ReadBytes(data);
-
-    co_return std::make_pair(std::string(reinterpret_cast<char*>(data.data()), data.size()), true);
+    result = std::string(reinterpret_cast<char*>(data.data()), data.size());
   }
   else
   {
-    // only ReadAsString can read the error text out of Content()
-    winrt::hstring result = co_await response.Content().ReadAsStringAsync();
-    std::string errorText;
-    if (result.size())
-    {
-      errorText = facebook::react::UnicodeConversion::Utf16ToUtf8(result.c_str(), result.size());
-    }
-    else
-    {
-      std::ostringstream sstream;
-      sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
-      errorText = sstream.str();
-    }
-    co_return std::make_pair(std::move(errorText), false);
+    std::ostringstream sstream;
+    sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
+    result = sstream.str();
   }
+
+  co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
 }
 
 void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings& settings)
