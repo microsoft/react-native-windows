@@ -3,7 +3,10 @@
 
 #pragma once
 
+#include "pch.h"
+
 #include <Views/ControlViewManager.h>
+#include "Impl/ScrollViewUWPImplementation.h"
 
 namespace react { namespace uwp {
 
@@ -22,6 +25,9 @@ public:
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
 
+  void SnapToInterval(XamlView parent, float interval);
+  void SnapToOffsets(XamlView parent, const winrt::IVectorView<float>& offsets);
+
   void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
   void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
 
@@ -29,12 +35,24 @@ protected:
   XamlView CreateViewCore(int64_t tag) override;
 
 private:
-  void AddHandlers(winrt::Windows::UI::Xaml::Controls::ScrollViewer& scrollViewer, int64_t tag);
+  void AddHandlers(const winrt::ScrollViewer& scrollViewer, int64_t tag);
   void EmitScrollEvent(
-    winrt::Windows::UI::Xaml::Controls::ScrollViewer& scrollViewer,
+    const winrt::ScrollViewer& scrollViewer,
     int64_t tag,
     const char* eventName,
     double x, double y, double zoom);
+
+  bool m_isScrollingFromInertia{ false };
+  bool m_isScrolling{ false };
+
+  std::map<int64_t, float> m_zoomFactors{};
+
+  std::map<int64_t, winrt::FrameworkElement::SizeChanged_revoker> m_scrollViewerSizeChangedRevokers{};
+  std::map<int64_t, winrt::FrameworkElement::SizeChanged_revoker> m_contentSizeChangedRevokers{};
+  std::map<int64_t, winrt::ScrollViewer::ViewChanged_revoker> m_scrollViewerViewChangedRevokers{};
+  std::map<int64_t, winrt::ScrollViewer::ViewChanging_revoker> m_scrollViewerViewChangingRevokers{};
+  std::map<int64_t, winrt::ScrollViewer::DirectManipulationCompleted_revoker> m_scrollViewerDirectManipulationCompletedRevokers{};
+  std::map<int64_t, winrt::ScrollViewer::DirectManipulationStarted_revoker> m_scrollViewerDirectManipulationStartedRevokers{};
 };
 
 } }

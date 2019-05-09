@@ -219,7 +219,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
   assert(m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr && m_jsThread == nullptr && m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_uiDispatcher = Windows::UI::Core::CoreWindow::GetForCurrentThread().Dispatcher();
+  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
 
   // Objects that must be created on the UI thread
