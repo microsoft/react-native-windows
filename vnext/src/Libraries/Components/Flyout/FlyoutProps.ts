@@ -8,14 +8,14 @@ export enum Placement {
   left = 'left',
   right = 'right',
   full = 'full',
-  topLeft = 'top-left',
-  topRight = 'top-right',
-  bottomLeft = 'bottom-left',
-  bottomRight = 'bottom-right',
-  leftTop = 'left-top',
-  rightTop = 'right-top',
-  leftBottom = 'left-bottom',
-  rightBottom = 'right-bottom'
+  topLeft = 'top-edge-aligned-left',
+  topRight = 'top-edge-aligned-right',
+  bottomLeft = 'bottom-edge-aligned-left',
+  bottomRight = 'bottom-edge-aligned-right',
+  leftTop = 'left-edge-aligned-top',
+  rightTop = 'right-edge-aligned-top',
+  leftBottom = 'left-edge-aligned-bottom',
+  rightBottom = 'right-edge-aligned-bottom'
 }
 
 export interface IFlyoutProps extends ViewProps {
