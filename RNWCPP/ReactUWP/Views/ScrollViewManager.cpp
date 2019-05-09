@@ -4,21 +4,7 @@
 #include "pch.h"
 
 #include "ScrollViewManager.h"
-
-#include <Utils/PropertyUtils.h>
-#include <Utils/ValueUtils.h>
-
-#include <IReactInstance.h>
-
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-
-namespace winrt {
-using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-}
+#include "Impl/ScrollViewUWPImplementation.h"
 
 namespace react { namespace uwp {
 
@@ -59,6 +45,9 @@ folly::dynamic ScrollViewManager::GetNativeProps() const
     ("minimumZoomScale", "float")
     ("maximumZoomScale", "float")
     ("zoomScale", "float")
+    ("snapToInterval", "float")
+    ("snapToOffsets", "array")
+    ("snapToAlignment", "number")
   );
 
   return props;
@@ -67,6 +56,8 @@ folly::dynamic ScrollViewManager::GetNativeProps() const
 folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() const
 {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
+  directEvents["topScrollBeginMomentum"] = folly::dynamic::object("registrationName", "onMomentumScrollBegin");
+  directEvents["topScrollEndMomentum"] = folly::dynamic::object("registrationName", "onMomentumScrollEnd");
   directEvents["topScrollBeginDrag"] = folly::dynamic::object("registrationName", "onScrollBeginDrag");
   directEvents["topScrollEndDrag"] = folly::dynamic::object("registrationName", "onScrollEndDrag");
   directEvents["topScroll"] = folly::dynamic::object("registrationName", "onScroll");
@@ -76,59 +67,144 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
 
 XamlView ScrollViewManager::CreateViewCore(int64_t tag)
 {
-  winrt::ScrollViewer scrollViewer;
-  scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
-  scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+  auto scrollViewer = [this]()
+  {
+    auto scrollViewer = winrt::ScrollViewer{};
 
+    scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+    scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+    scrollViewer.VerticalSnapPointsAlignment(winrt::SnapPointsAlignment::Near);
+    scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
+    scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);
+
+    return scrollViewer;
+  }();
+  auto scrollViewUWPImplementation = [scrollViewer]()
+  {
+    ScrollViewUWPImplementation::ConvertScrollViewer(scrollViewer);
+    return new ScrollViewUWPImplementation(scrollViewer);
+  }();
+
+  m_zoomFactors[tag] = scrollViewer.ZoomFactor();
+  
   AddHandlers(scrollViewer, tag);
 
+  m_scrollViewerSizeChangedRevokers[tag] = scrollViewer.SizeChanged(winrt::auto_revoke,
+    [scrollViewUWPImplementation](const auto&, const auto&)
+    {
+      scrollViewUWPImplementation->UpdateScrollableSize();
+    });
+  m_scrollViewerViewChangedRevokers[tag] = scrollViewer.ViewChanged(winrt::auto_revoke,
+    [this, tag, scrollViewUWPImplementation](const auto & sender, const auto & args)
+    {
+      auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
+      auto zoomFactor = scrollViewerNotNull.ZoomFactor();
+      if (m_zoomFactors[tag] != zoomFactor)
+      {
+        m_zoomFactors[tag] = zoomFactor;
+        scrollViewUWPImplementation->UpdateScrollableSize();
+      }
+    });
+  m_contentSizeChangedRevokers[tag] = scrollViewUWPImplementation->ScrollViewerSnapPointManager()->SizeChanged(winrt::auto_revoke,
+    [scrollViewUWPImplementation](const auto&, const auto&)
+    {
+      scrollViewUWPImplementation->UpdateScrollableSize();
+    });
+    
   return scrollViewer;
 }
 
-void ScrollViewManager::AddHandlers(winrt::ScrollViewer& scrollViewer, int64_t tag)
+void ScrollViewManager::AddHandlers(const winrt::ScrollViewer& scrollViewer, int64_t tag)
 {
-  scrollViewer.ViewChanging([this, tag](const winrt::IInspectable& sender, const winrt::ScrollViewerViewChangingEventArgs& args)
-  {
-    winrt::ScrollViewer scrollViewer = sender.as<winrt::ScrollViewer>();
-    EmitScrollEvent(
-      scrollViewer,
-      tag,
-      "topScroll",
-      args.NextView().HorizontalOffset(),
-      args.NextView().VerticalOffset(),
-      args.NextView().ZoomFactor()
-    );
-  });
+  m_scrollViewerViewChangingRevokers[tag] = scrollViewer.ViewChanging(winrt::auto_revoke,
+    [this, tag](const auto& sender, const auto& args)
+    {
+      auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
 
-  scrollViewer.DirectManipulationStarted([this, tag](const winrt::IInspectable& sender, const winrt::IInspectable)
-  {
-    winrt::ScrollViewer scrollViewer = sender.as<winrt::ScrollViewer>();
-    EmitScrollEvent(
-      scrollViewer,
-      tag,
-      "topScrollBeginDrag",
-      scrollViewer.HorizontalOffset(),
-      scrollViewer.VerticalOffset(),
-      scrollViewer.ZoomFactor()
-    );
-  });
 
-  scrollViewer.DirectManipulationCompleted([this, tag](const winrt::IInspectable& sender, const winrt::IInspectable)
-  {
-    winrt::ScrollViewer scrollViewer = sender.as<winrt::ScrollViewer>();
-    EmitScrollEvent(
-      scrollViewer,
-      tag,
-      "topScrollEndDrag",
-      scrollViewer.HorizontalOffset(),
-      scrollViewer.VerticalOffset(),
-      scrollViewer.ZoomFactor()
-    );
-  });
+      //If we are transitioning to inertial scrolling.
+      if (m_isScrolling && !m_isScrollingFromInertia && args.IsInertial())
+      {
+        m_isScrollingFromInertia = true;
+
+        EmitScrollEvent(
+          scrollViewerNotNull,
+          tag,
+          "topScrollEndDrag",
+          args.NextView().HorizontalOffset(),
+          args.NextView().VerticalOffset(),
+          args.NextView().ZoomFactor()
+        );
+
+        EmitScrollEvent(
+          scrollViewerNotNull,
+          tag,
+          "topScrollBeginMomentum",
+          args.NextView().HorizontalOffset(),
+          args.NextView().VerticalOffset(),
+          args.NextView().ZoomFactor()
+        );
+      }
+
+      EmitScrollEvent(
+        scrollViewerNotNull,
+        tag,
+        "topScroll",
+        args.NextView().HorizontalOffset(),
+        args.NextView().VerticalOffset(),
+        args.NextView().ZoomFactor()
+      );
+    });
+
+  m_scrollViewerDirectManipulationStartedRevokers[tag] = scrollViewer.DirectManipulationStarted(winrt::auto_revoke,
+    [this, tag](const auto& sender, const auto&)
+    {
+      m_isScrolling = true;
+      auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      EmitScrollEvent(
+        scrollViewer,
+        tag,
+        "topScrollBeginDrag",
+        scrollViewer.HorizontalOffset(),
+        scrollViewer.VerticalOffset(),
+        scrollViewer.ZoomFactor()
+      );
+    });
+
+  m_scrollViewerDirectManipulationCompletedRevokers[tag] = scrollViewer.DirectManipulationCompleted(winrt::auto_revoke,
+    [this, tag](const auto& sender, const auto&)
+    {
+      auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      if (m_isScrollingFromInertia)
+      {
+        EmitScrollEvent(
+          scrollViewer,
+          tag,
+          "topScrollEndMomentum",
+          scrollViewer.HorizontalOffset(),
+          scrollViewer.VerticalOffset(),
+          scrollViewer.ZoomFactor()
+        );
+      }
+      else
+      {
+        EmitScrollEvent(
+          scrollViewer,
+          tag,
+          "topScrollEndDrag",
+          scrollViewer.HorizontalOffset(),
+          scrollViewer.VerticalOffset(),
+          scrollViewer.ZoomFactor()
+        );
+      }
+
+      m_isScrolling = false;
+      m_isScrollingFromInertia = false;
+    });
 }
 
 void ScrollViewManager::EmitScrollEvent(
-  winrt::ScrollViewer& scrollViewer,
+  const winrt::ScrollViewer& scrollViewer,
   int64_t tag,
   const char* eventName,
   double x, double y, double zoom)
@@ -136,6 +212,8 @@ void ScrollViewManager::EmitScrollEvent(
   auto instance = m_wkReactInstance.lock();
   if (instance == nullptr)
     return;
+
+  auto scrollViewerNotNull = scrollViewer;
 
   folly::dynamic offset = folly::dynamic::object
     ("x", x)
@@ -148,12 +226,12 @@ void ScrollViewManager::EmitScrollEvent(
     ("bottom", 0);
 
   folly::dynamic contentSize = folly::dynamic::object
-    ("width", scrollViewer.ExtentWidth())
-    ("height", scrollViewer.ExtentHeight());
+    ("width", scrollViewerNotNull.ExtentWidth())
+    ("height", scrollViewerNotNull.ExtentHeight());
 
   folly::dynamic layoutSize = folly::dynamic::object
-    ("width", scrollViewer.ActualWidth())
-    ("height", scrollViewer.ActualHeight());
+    ("width", scrollViewerNotNull.ActualWidth())
+    ("height", scrollViewerNotNull.ActualHeight());
 
   folly::dynamic eventJson = folly::dynamic::object
     ("target", tag)
@@ -170,25 +248,57 @@ void ScrollViewManager::EmitScrollEvent(
 
 void ScrollViewManager::AddView(XamlView parent, XamlView child, int64_t index)
 {
-  assert(index == 0);
-  auto scrollViewer = parent.as<winrt::ScrollViewer>();
-  if (scrollViewer != nullptr)
-    scrollViewer.Content(child);
+  if (parent && child)
+  {
+    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    {
+      ScrollViewUWPImplementation(scrollViewer).AddView(child, index);
+    }
+  }
 }
 
 void ScrollViewManager::RemoveAllChildren(XamlView parent)
 {
-  auto scrollViewer = parent.as<winrt::ScrollViewer>();
-  if (scrollViewer != nullptr)
-    scrollViewer.Content() = nullptr;
+  if (parent)
+  {
+    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    {
+      ScrollViewUWPImplementation(scrollViewer).RemoveAllChildren();
+    }
+  }
 }
 
 void ScrollViewManager::RemoveChildAt(XamlView parent, int64_t index)
 {
-  assert(index == 0);
-  auto scrollViewer = parent.as<winrt::ScrollViewer>();
-  if (scrollViewer != nullptr)
-    scrollViewer.Content() = nullptr;
+  if (parent)
+  {
+    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    {
+      ScrollViewUWPImplementation(scrollViewer).RemoveChildAt(index);
+    }
+  }
+}
+
+void ScrollViewManager::SnapToInterval(XamlView parent, float interval)
+{
+  if (parent)
+  {
+    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    {
+      ScrollViewUWPImplementation(scrollViewer).SnapToInterval(interval);
+    }
+  }
+}
+
+void ScrollViewManager::SnapToOffsets(XamlView parent, const winrt::IVectorView<float>& offsets)
+{
+  if (parent)
+  {
+    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    {
+      ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(offsets);
+    }
+  }
 }
 
 void ScrollViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
@@ -208,32 +318,91 @@ void ScrollViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dy
 
         scrollViewer.HorizontalScrollMode(horiz ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled);
         scrollViewer.VerticalScrollMode(horiz ? winrt::ScrollMode::Disabled : winrt::ScrollMode::Auto);
+        ScrollViewUWPImplementation(scrollViewer).SetHorizontal(horiz);
       }
     }
     else if (pair.first == "showsHorizontalScrollIndicator")
     {
       if (pair.second.isBool())
+      {
         scrollViewer.HorizontalScrollBarVisibility(pair.second.getBool() ? winrt::ScrollBarVisibility::Visible : winrt::ScrollBarVisibility::Hidden);
+      }
     }
     else if (pair.first == "showsVerticalScrollIndicator")
     {
       if (pair.second.isBool())
+      {
         scrollViewer.VerticalScrollBarVisibility(pair.second.getBool() ? winrt::ScrollBarVisibility::Visible : winrt::ScrollBarVisibility::Hidden);
+      }
     }
     else if (pair.first == "minimumZoomScale")
     {
       if (pair.second.isNumber())
+      {
         scrollViewer.MinZoomFactor(static_cast<float>(pair.second.asDouble()));
+      }
     }
     else if (pair.first == "maximumZoomScale")
     {
       if (pair.second.isNumber())
+      {
         scrollViewer.MaxZoomFactor(static_cast<float>(pair.second.asDouble()));
+      }
     }
     else if (pair.first == "zoomScale")
     {
       if (pair.second.isNumber())
+      {
         scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(pair.second.asDouble()));
+      }
+    }
+    else if (pair.first == "snapToInterval")
+    {
+      if (pair.second.isNumber())
+      {
+        ScrollViewUWPImplementation(scrollViewer).SnapToInterval(pair.second.asDouble());
+      }
+    }
+    else if (pair.first == "snapToOffsets")
+    {
+      if (pair.second.isArray())
+      {
+        auto vector = [offsets = pair.second]()
+        {
+          auto vector = winrt::single_threaded_vector<float>();
+          for (auto val : offsets)
+          {
+            if (val.isNumber())
+              vector.Append(val.asDouble());
+          }
+          return vector;
+        }();
+        ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(vector.GetView());
+      }
+    }
+    else if (pair.first == "snapToAlignment")
+    {
+      if (pair.second.isString())
+      {
+        auto snapPointAlignment = [snapToAlignment = pair.second.asString()]()
+        {
+          if (snapToAlignment == "end")
+          {
+            return winrt::SnapPointsAlignment::Far;
+          }
+          else if (snapToAlignment == "center")
+          {
+            return winrt::SnapPointsAlignment::Center;
+          }
+          else
+          {
+            return winrt::SnapPointsAlignment::Near;
+          }
+        }();
+
+        scrollViewer.HorizontalSnapPointsAlignment(snapPointAlignment);
+        scrollViewer.VerticalSnapPointsAlignment(snapPointAlignment);
+      }
     }
   }
 
@@ -268,6 +437,5 @@ void ScrollViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId
     }
   }
 }
-
 
 } }

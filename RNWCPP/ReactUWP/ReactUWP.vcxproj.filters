@@ -200,6 +200,12 @@
     <ClCompile Include="Views\ViewControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="SnapPointManagingContentControl.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -400,6 +406,12 @@
     <ClInclude Include="Views\ViewControl.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="SnapPointManagingContentControl.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
@@ -524,6 +536,9 @@
     </Filter>
     <Filter Include="Views\cppwinrt">
       <UniqueIdentifier>{4dbf6aed-54f8-4ebd-b99d-667a4b380d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Impl">
+      <UniqueIdentifier>{101c2d4a-d343-4771-969f-29af0c9f46b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
