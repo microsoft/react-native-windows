@@ -398,11 +398,11 @@ static std::string PrettyError(const std::string& error) noexcept
       {
         prettyError.replace(pos, 2, "\r\n", 2);
       }
-      if (prettyError[pos + 1] == 'b')
+      else if (prettyError[pos + 1] == 'b')
       {
         prettyError.replace(pos, 2, "\b", 2);
       }
-      if (prettyError[pos + 1] == 't')
+      else if (prettyError[pos + 1] == 't')
       {
         prettyError.replace(pos, 2, "\t", 2);
       }

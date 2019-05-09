@@ -54,7 +54,7 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& u
   reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
   uint32_t len = reader.UnconsumedBufferLength();
   std::string result;
-  if (len || response.IsSuccessStatusCode())
+  if (len > 0 || response.IsSuccessStatusCode())
   {
     std::vector<uint8_t> data(len);
     reader.ReadBytes(data);
