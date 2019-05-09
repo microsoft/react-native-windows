@@ -28,6 +28,8 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
+      <!-- /permissive- by default to enforce standards conformance, unless ENABLEPermissive has been set -->
+      <AdditionalOptions Condition="'$(ENABLEPermissive)' == ''">/permissive- %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>$(OfficePreDisabledWarnings);$(ExtraWarningsToDisable);$(DisableSpecificWarnings)</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
