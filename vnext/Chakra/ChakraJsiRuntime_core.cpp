@@ -24,7 +24,40 @@ namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
-void ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL) {
+bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
+  bool isProxy;
+  JsValueRef target, handler;
+  JsGetProxyProperties(objectRef(obj), &isProxy, &target, &handler);
+
+  if (isProxy) {
+    ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(const_cast<ChakraJsiRuntime&>(*this), createObject(target));
+    if (extObject.getExternalData()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(const jsi::Object& obj) {
+
+  bool isProxy;
+  JsValueRef target, handler;
+
+  JsGetProxyProperties(objectRef(obj), &isProxy, &target, &handler);
+
+  ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, createObject(target));
+  HostObjectProxy* externalData = extObject.getExternalData();
+  if (externalData) {
+    return externalData->getHostObject();
+  }
+  else {
+    return nullptr;
+  }
+}
+
+
+Value ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL) {
   JsValueRef sourceRef;
   JsCreateString(reinterpret_cast<const char*>(buffer.data()), buffer.size(), &sourceRef);
 
@@ -35,8 +68,11 @@ void ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const
 
   JsValueRef result;
   checkException(JsRun(sourceRef, 0, sourceURLRef, JsParseScriptAttributes::JsParseScriptAttributeNone, &result), sourceURL.c_str());
+
+  return createValue(result);
 }
 
+// TODO :: Return result
 bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer, const jsi::Buffer& serializedScriptBuffer, const std::string& sourceURL) {
   JsValueRef bytecodeArrayBuffer = nullptr;
   if (JsCreateExternalArrayBuffer(const_cast<uint8_t *>(serializedScriptBuffer.data()), static_cast<unsigned int>(serializedScriptBuffer.size()), nullptr, nullptr, &bytecodeArrayBuffer) == JsNoError) {
