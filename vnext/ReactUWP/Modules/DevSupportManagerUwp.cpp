@@ -15,6 +15,7 @@
 #include "UnicodeConversion.h"
 
 #include <winrt/Windows.Web.Http.h>
+#include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Storage.Streams.h>
 
@@ -37,7 +38,9 @@ namespace react { namespace uwp {
 
 std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& url)
 {
-  winrt::Windows::Web::Http::HttpClient httpClient;
+  winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
+  filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
+  winrt::Windows::Web::Http::HttpClient httpClient(filter);
   winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(url));
 
   co_await winrt::resume_background();
@@ -47,8 +50,8 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& u
 
   if (response.IsSuccessStatusCode())
   {
-    winrt::Windows::Storage::Streams::IInputStream stream = co_await response.Content().ReadAsInputStreamAsync();
-    auto reader = winrt::Windows::Storage::Streams::DataReader(stream);
+    winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
+    auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
 
     reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
     uint32_t len = reader.UnconsumedBufferLength();
@@ -61,7 +64,17 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& u
   {
     // only ReadAsString can read the error text out of Content()
     winrt::hstring result = co_await response.Content().ReadAsStringAsync();
-    std::string errorText = facebook::react::UnicodeConversion::Utf16ToUtf8(result.c_str(), result.size());
+    std::string errorText;
+    if (result.size())
+    {
+      errorText = facebook::react::UnicodeConversion::Utf16ToUtf8(result.c_str(), result.size());
+    }
+    else
+    {
+      std::ostringstream sstream;
+      sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
+      errorText = sstream.str();
+    }
     co_return std::make_pair(std::move(errorText), false);
   }
 }
