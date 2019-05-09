@@ -101,6 +101,7 @@
     <ClCompile Include="WebSocketJSExecutorIntegrationTest.cpp" />
     <ClCompile Include="WebSocketModuleIntegrationTest.cpp" />
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp" />
+    <ClCompile Include="WebSocketServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="DesktopTestInstance.h" />
     <ClInclude Include="TestMessageQueueThread.h" />
+    <ClInclude Include="WebSocketServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
