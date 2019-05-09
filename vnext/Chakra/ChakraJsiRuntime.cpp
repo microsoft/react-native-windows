@@ -310,12 +310,8 @@ jsi::Object ChakraJsiRuntime::createObject() {
 }
 
 jsi::Object ChakraJsiRuntime::createObject(std::shared_ptr<jsi::HostObject> hostObject) {
-  throw std::runtime_error("ChakraJsiRuntime::createObject from HostObject is not implemented.");
-}
-
-std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(
-  const jsi::Object& obj) {
-  throw std::runtime_error("ChakraJsiRuntime::createObject is not implemented.");
+  jsi::Object proxyTarget = ObjectWithExternalData<HostObjectProxy>::create(*this, new HostObjectProxy(*this, hostObject));
+  return createProxy(std::move(proxyTarget), createHostObjectProxyHandler());
 }
 
 jsi::Value ChakraJsiRuntime::getProperty(
@@ -402,10 +398,6 @@ bool ChakraJsiRuntime::isFunction(const jsi::Object& obj) const {
   JsValueType type;
   JsGetValueType(objectRef(obj), &type);
   return type == JsValueType::JsFunction;
-}
-
-bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
-  throw std::runtime_error("Unsupported");
 }
 
 jsi::Array ChakraJsiRuntime::getPropertyNames(const jsi::Object& obj) {
@@ -683,13 +675,58 @@ jsi::Runtime::PointerValue* ChakraJsiRuntime::makePropertyIdValue(
   return new ChakraPropertyIdValue(propIdRef);
 }
 
+
 jsi::Runtime::PointerValue* ChakraJsiRuntime::makeObjectValue(
   JsValueRef objectRef) const {
   if (!objectRef) {
     JsCreateObject(&objectRef);
   }
+
   ChakraObjectValue* chakraObjValue = new ChakraObjectValue(objectRef);
   return chakraObjValue;
+}
+
+template<class T>
+jsi::Runtime::PointerValue* ChakraJsiRuntime::makeObjectValue(
+  JsValueRef objectRef, T* externaldata) const {
+
+  if (!externaldata) {
+    return makeObjectValue(objectRef);
+  }
+
+  // Note :: We explicitly delete the external data proxy when the JS value is finalized.
+  // The proxy is expected to do the right thing in destructor, for e.g. decrease the ref count of a shared resource.
+  if (!objectRef) {
+    JsCreateExternalObject(externaldata, [](void* data) {delete data; }, &objectRef);
+  }
+  else {
+    JsSetExternalData(objectRef, externaldata); // TODO : Is there an API to listen to finalization of arbitrary objects ?
+  }
+
+  ChakraObjectValue* chakraObjValue = new ChakraObjectValue(objectRef);
+  return chakraObjValue;
+}
+
+template <class T>
+/*static */ jsi::Object ChakraJsiRuntime::ObjectWithExternalData<T>::create(ChakraJsiRuntime& rt, T* externalData) {
+  return rt.createObject(static_cast<JsValueRef>(nullptr), externalData);
+}
+
+template <class T>
+/*static */ ChakraJsiRuntime::ObjectWithExternalData<T> ChakraJsiRuntime::ObjectWithExternalData<T>::fromExisting(ChakraJsiRuntime& rt, jsi::Object&& obj) {
+  return ObjectWithExternalData<T>(rt.cloneObject(getPointerValue(obj)));
+}
+
+template <class T>
+T* ChakraJsiRuntime::ObjectWithExternalData<T>::getExternalData() {
+  T* externalData;
+  JsGetExternalData(static_cast<const ChakraObjectValue*>(getPointerValue(*this))->m_obj, reinterpret_cast<void**>(&externalData));
+  return externalData;
+}
+
+template<class T>
+jsi::Object ChakraJsiRuntime::createObject(JsValueRef objectRef, T* externalData) const {
+  return make<jsi::Object>(makeObjectValue(objectRef, externalData));
 }
 
 jsi::Object ChakraJsiRuntime::createObject(JsValueRef obj) const {
@@ -877,5 +914,97 @@ std::string ChakraJsiRuntime::JSStringToSTLString(JsValueRef str) {
   return facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring(value, length));
 }
 
+
+jsi::Function ChakraJsiRuntime::createProxyConstructor() noexcept {
+  auto buffer = std::make_unique<StringBuffer>("var ctr=function(target, handler) { return new Proxy(target, handler);};ctr;");
+  jsi::Value hostObjectProxyConstructor = evaluateJavaScriptSimple(*buffer, "proxy_constructor.js");
+
+  if (!hostObjectProxyConstructor.isObject() || !hostObjectProxyConstructor.getObject(*this).isFunction(*this))
+    std::terminate();
+
+  return hostObjectProxyConstructor.getObject(*this).getFunction(*this);
+}
+
+jsi::Object ChakraJsiRuntime::createProxy(jsi::Object&& target, jsi::Object&& handler) noexcept {
+  // Note: We are lazy initializing and cachine the constructor.
+  static jsi::Function proxyConstructor = createProxyConstructor();
+
+  jsi::Value hostObjectProxy = proxyConstructor.call(*this, target, handler);
+
+  if (!hostObjectProxy.isObject())
+    std::terminate();
+
+  return hostObjectProxy.getObject(*this);
+}
+
+jsi::Object ChakraJsiRuntime::createHostObjectProxyHandler() noexcept {
+  // TODO :: This object can be cached and reused for multiple host objects.
+
+  jsi::Object handlerObj = createObject();
+  std::string getPropName("get"), setPropName("set"), enumeratePropName("enumerate");
+
+  handlerObj.setProperty(
+    *this,
+    getPropName.c_str(),
+    createFunctionFromHostFunction(
+      createPropNameIDFromAscii(getPropName.c_str(), getPropName.size()),
+      2,
+      [this](Runtime& rt, const Value& thisVal, const Value* args, size_t count)->Value {
+    jsi::Object targetObj = args[0].getObject(*this);
+    jsi::String propStr = args[1].getString(*this);
+
+    ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, std::move(targetObj));
+    HostObjectProxy* externalData = extObject.getExternalData();
+    return externalData->Get(jsi::PropNameID::forString(*this, propStr));
+  }
+    )
+  );
+
+  handlerObj.setProperty(
+    *this,
+    setPropName.c_str(),
+    createFunctionFromHostFunction(
+      createPropNameIDFromAscii(setPropName.c_str(), setPropName.size()),
+      3,
+      [this](Runtime& rt, const Value& thisVal, const Value* args, size_t count)->Value {
+    jsi::Object targetObj = args[0].getObject(*this);
+    jsi::String propStr = args[1].getString(*this);
+    const jsi::Value& propVal = args[2];
+
+    ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, std::move(targetObj));
+    HostObjectProxy* externalData = extObject.getExternalData();
+    externalData->Set(jsi::PropNameID::forString(*this, propStr), propVal);
+    return jsi::Value::undefined();
+  }
+    )
+  );
+
+  handlerObj.setProperty(
+    *this,
+    enumeratePropName.c_str(),
+    createFunctionFromHostFunction(
+      createPropNameIDFromAscii(enumeratePropName.c_str(), enumeratePropName.size()),
+      1,
+      [this](Runtime& rt, const Value& thisVal, const Value* args, size_t count)->Value {
+    jsi::Object targetObj = args[0].getObject(*this);
+
+    ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, std::move(targetObj));
+    HostObjectProxy* externalData = extObject.getExternalData();
+    auto keys = externalData->Enumerator();
+
+    auto result = createArray(keys.size());
+
+    for (size_t i = 0; i < count; i++) {
+      std::string keyStr = keys[i].utf8(*this);
+      result.setValueAtIndex(*this, i, jsi::String::createFromUtf8(*this, keyStr));
+    }
+
+    return result;
+  }
+    )
+  );
+
+  return handlerObj;
+}
 
 }}} // facebook::jsi::chakraruntime
