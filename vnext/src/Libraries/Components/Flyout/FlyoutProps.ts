@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 import { ViewProps } from 'react-native';
 
-export enum PlacementEnum {
+export enum Placement {
   top = 'top',
   bottom = 'bottom',
   left = 'left',
@@ -22,6 +22,6 @@ export interface IFlyoutProps extends ViewProps {
   isLightDismissEnabled?: boolean;
   isOpen?: boolean;
   onDismiss?: (isOpen: boolean) => void;
-  placement?: PlacementEnum;
+  placement?: Placement;
   target?: React.ReactNode;
 }
