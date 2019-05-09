@@ -38,6 +38,38 @@ struct json_type_traits<winrt::FlyoutPlacementMode>
     {
       placement = winrt::FlyoutPlacementMode::Right;
     }
+    else if (json == "top-left")
+    {
+      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedLeft;
+    }
+    else if (json == "top-right")
+    {
+      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedRight;
+    }
+    else if (json == "bottom-left")
+    {
+      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft;
+    }
+    else if (json == "bottom-right")
+    {
+      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedRight;
+    }
+    else if (json == "left-top")
+    {
+      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedTop;
+    }
+    else if (json == "right-top")
+    {
+      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedTop;
+    }
+    else if (json == "left-bottom")
+    {
+      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom;
+    }
+    else if (json == "right-bottom")
+    {
+      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedBottom;
+    }
     else
     {
       placement = winrt::FlyoutPlacementMode::Full;
