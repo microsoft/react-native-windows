@@ -440,6 +440,19 @@ void InstanceImpl::loadBundleInternal(std::string&& jsBundleRelativePath, bool s
   // load JS
   if (m_devSettings->useWebDebugger)
   {
+    // First attempt to get download the Js locally, to catch any bundling errors before
+    // attempting to load the actual script.
+    auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+      m_devSettings->debugHost,
+      m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
+      m_devSettings->platformName);
+
+    if (m_devManager->HasException())
+    {
+      m_devSettings->errorCallback(jsBundleString);
+      return;
+    }
+
     try
     {
       auto bundleUrl = DevServerHelper::get_BundleUrl(
