@@ -421,7 +421,7 @@ static std::string PrettyError(const std::string& error) noexcept
         replWide += hexVal(prettyError[pos + 3]) << 8;
         replWide += hexVal(prettyError[pos + 4]) << 4;
         replWide += hexVal(prettyError[pos + 5]);
-        std::string repl = facebook::react::UnicodeConversion::Utf16ToUtf8(&replWide, 1);
+        std::string repl = facebook::react::unicode::utf16ToUtf8(&replWide, 1);
 
         prettyError.replace(pos, 6, repl);
       }

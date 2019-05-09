@@ -42,7 +42,7 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& u
   winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
   filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
   winrt::Windows::Web::Http::HttpClient httpClient(filter);
-  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(url));
 
   co_await winrt::resume_background();
 
