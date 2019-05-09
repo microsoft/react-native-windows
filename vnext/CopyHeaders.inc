@@ -905,4 +905,3 @@ COPYFILES_PASS0 = \
 	ReactCommon\jsi\jsi.h, jsi; \
 	ReactCommon\jsi\jsi-inl.h, jsi; \
 	ReactCommon\jsi\V8Runtime.h, jsi; \
-	ReactWindows\Chakra\ChakraRuntime.h, jsi; \
