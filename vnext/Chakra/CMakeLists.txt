@@ -3,7 +3,9 @@ set(SOURCES
 	ChakraHelpers.cpp
 	ChakraNativeModules.cpp
 	ChakraPlatform.cpp
-	ChakraRuntime.cpp
+	ChakraJsiRuntime.cpp
+	ChakraJsiRuntime_core.cpp
+	ChakraJsiRuntime_edgemode.cpp
 	ChakraTracing.cpp
 	ChakraUtils.cpp
 	ChakraValue.cpp

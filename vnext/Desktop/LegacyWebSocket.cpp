@@ -428,9 +428,9 @@ void LegacySecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSock
 {
   this->m_stream->next_layer().async_handshake(ssl::stream_base::client, [this, options = std::move(options)](boostecr ec)
   {
-    if (ec && m_errorHandler)
+    if (ec && this->m_errorHandler)
     {
-      m_errorHandler({ ec.message(), IWebSocket::ErrorType::Connection });
+      this->m_errorHandler({ ec.message(), IWebSocket::ErrorType::Connection });
     }
     else
     {

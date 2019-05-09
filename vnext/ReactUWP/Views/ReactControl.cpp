@@ -79,6 +79,7 @@ void ReactControl::HandleInstanceErrorOnUIThread()
 
     // Format TextBlock
     m_errorTextBlock.TextAlignment(winrt::TextAlignment::Center);
+    m_errorTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
     m_errorTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
     m_errorTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
     winrt::Thickness margin = { 10.0f, 10.0f, 10.0f, 10.0f };

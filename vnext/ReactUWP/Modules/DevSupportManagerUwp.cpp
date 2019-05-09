@@ -16,6 +16,7 @@
 #include "unicode.h"
 
 #include <winrt/Windows.Web.Http.h>
+#include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Storage.Streams.h>
 
@@ -36,22 +37,38 @@ using namespace facebook::react;
 
 namespace react { namespace uwp {
 
-std::future<std::string> DownloadFromAsync(const std::string& url)
+std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string& url)
 {
-  winrt::Windows::Web::Http::HttpClient httpClient;
-  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(url));
+  winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
+  filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
+  winrt::Windows::Web::Http::HttpClient httpClient(filter);
+  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::Utf8ToUtf16(url));
 
   co_await winrt::resume_background();
 
-  winrt::Windows::Storage::Streams::IBuffer buffer = co_await httpClient.GetBufferAsync(uri);
+  winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
+  winrt::Windows::Web::Http::HttpResponseMessage response = co_await httpClient.SendRequestAsync(request);
+
+  winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
   auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
 
   reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
   uint32_t len = reader.UnconsumedBufferLength();
-  std::vector<uint8_t> data(len);
-  reader.ReadBytes(data);
+  std::string result;
+  if (len > 0 || response.IsSuccessStatusCode())
+  {
+    std::vector<uint8_t> data(len);
+    reader.ReadBytes(data);
+    result = std::string(reinterpret_cast<char*>(data.data()), data.size());
+  }
+  else
+  {
+    std::ostringstream sstream;
+    sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
+    result = sstream.str();
+  }
 
-  co_return std::string(facebook::react::utilities::checkedReinterpretCast<char*>(data.data()), data.size());
+  co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
 }
 
 void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings& settings)
@@ -180,7 +197,13 @@ std::string DevSupportManager::GetJavaScriptFromServer(const std::string& debugH
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(debugHost, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/);
   try
   {
-    std::string s = DownloadFromAsync(bundleUrl).get();
+    std::string s;
+    bool success;
+    std::tie(s, success) = DownloadFromAsync(bundleUrl).get();
+
+    if (!success)
+      m_exceptionCaught = true;
+
     return s;
   }
   catch (winrt::hresult_error const & e)
