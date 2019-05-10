@@ -169,6 +169,12 @@ void PopupShadowNode::SetAnchorPosition(const winrt::Popup& popup)
       auto point = popupTransform.TransformPoint(bottomRightPoint);
       popup.HorizontalOffset(point.X + popup.HorizontalOffset());
       popup.VerticalOffset(point.Y + popup.VerticalOffset());
+
+      // Set XamlRoot on the popup to handle XamlIsland/AppWindow scenarios.
+      if (auto uiElement10 = targetElement.try_as<winrt::IUIElement10>())
+      {
+        popup.XamlRoot(uiElement10.XamlRoot());
+      }
     }
   }
   else // Center relative to app window
