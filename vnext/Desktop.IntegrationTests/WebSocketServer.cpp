@@ -137,10 +137,10 @@ void WebSocketServer::Accept()
 
 void WebSocketServer::Stop()
 {
-  m_contextThread.join();
-
   if (m_acceptor.is_open())
     m_acceptor.close();
+
+  m_contextThread.join();
 }
 
 void WebSocketServer::OnAccept(error_code ec)
