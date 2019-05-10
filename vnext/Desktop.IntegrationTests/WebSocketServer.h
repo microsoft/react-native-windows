@@ -48,8 +48,10 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>
 
 public:
   WebSocketServer(std::uint16_t port);
+  WebSocketServer(int port);
 
   void Start();
+  void Stop();
 };
 
 } } } // Microsoft::React::Test

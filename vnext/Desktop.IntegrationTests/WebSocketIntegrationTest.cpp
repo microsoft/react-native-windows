@@ -3,17 +3,19 @@
 
 #include <CppUnitTest.h>
 #include <IWebSocket.h>
+#include <WebSocketServer.h>
 #include "UnicodeConversion.h"
 
 #include <condition_variable>
 #include <future>
 #include <mutex>
 
-using namespace facebook::react;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::chrono::milliseconds;
 using std::condition_variable;
+using std::make_shared;
 using std::unique_lock;
 using std::lock_guard;
 using std::promise;
@@ -21,6 +23,16 @@ using std::string;
 
 TEST_CLASS(WebSocketIntegrationTest)
 {
+  TEST_METHOD(ConnectCloseInProcServer)
+  {
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->Start();
+
+    server->Stop();
+
+    Assert::IsTrue(true);
+  }
+
   TEST_METHOD(ConnectClose)
   {
     auto ws = IWebSocket::Make("ws://localhost:5555/");

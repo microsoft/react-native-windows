@@ -55,7 +55,7 @@ void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
     return;
 
   if (ec)
-    ;//TODO: fail
+    return;//TODO: fail instead
 
   m_stream.text(m_stream.got_text());
   m_stream.async_write(m_buffer.data(), bind_executor(m_strand, std::bind(
@@ -112,17 +112,35 @@ WebSocketServer::WebSocketServer(uint16_t port)
   }
 } // constructor(uint16_t)
 
+WebSocketServer::WebSocketServer(int port)
+  : WebSocketServer(static_cast<uint16_t>(port))
+{
+}
+
 void WebSocketServer::Start()
 {
   if (!m_acceptor.is_open())
     return;
 
   Accept();
+
+  m_contextThread = std::thread([self = shared_from_this()]()
+  {
+    self->m_context.run();
+  });
 }
 
 void WebSocketServer::Accept()
 {
   m_acceptor.async_accept(m_socket, std::bind(&WebSocketServer::OnAccept, shared_from_this(), std::placeholders::_1));
+}
+
+void WebSocketServer::Stop()
+{
+  m_contextThread.join();
+
+  if (m_acceptor.is_open())
+    m_acceptor.close();
 }
 
 void WebSocketServer::OnAccept(error_code ec)
