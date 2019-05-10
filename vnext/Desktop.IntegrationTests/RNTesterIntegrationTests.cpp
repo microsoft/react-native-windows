@@ -11,7 +11,8 @@ namespace Microsoft {
 namespace VisualStudio {
 namespace CppUnitTestFramework {
 
-static std::wstring ToString(const facebook::react::test::TestStatus& status)
+template <>
+std::wstring ToString<facebook::react::test::TestStatus>(const facebook::react::test::TestStatus& status)
 {
   return ToString(static_cast<unsigned int>(status));
 }

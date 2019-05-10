@@ -61,6 +61,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;RN_EXPORT=;NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
