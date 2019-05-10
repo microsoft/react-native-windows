@@ -163,3 +163,14 @@ You now see your new app and Chrome should have loaded `http://localhost:8081/de
 * Use VS 2017 when using the CLI. Issue [#2320](https://github.com/Microsoft/react-native-windows/issues/2320) tracks support for CLI with VS 2019.
 * If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/Microsoft/react-native-windows/issues/2311) is tracking a known issue on this.
 * If you get a red error box in your UWP app window with the error message : `ERROR: Instance failed to start. A connection with the server cannot be established`, make sure you have the packager running using `yarn start` and run the app again. 
+* If you see 'resolve module' error like below, run `yarn build` or `npm run build` may fix the problem.
+    ```
+    error: bundling failed: Error: Unable to resolve module `AccessibilityInfo` from `D:\repo\react-native-windows\vnext\node_modules\react-native\Libraries\react-native\react-native-implementation.js`: Module `AccessibilityInfo` does not exist in the Haste module map
+    This might be related to https://github.com/facebook/react-native/issues/4968
+    To resolve try the following:
+      1. Clear watchman watches: `watchman watch-del-all`.
+      2. Delete the `node_modules` folder: `rm -rf node_modules && npm install`.
+      3. Reset Metro Bundler cache: `rm -rf /tmp/metro-bundler-cache-*` or `npm start -- --reset-cache`.
+      4. Remove haste cache: `rm -rf /tmp/haste-map-react-native-packager-*`.
+
+    ```
