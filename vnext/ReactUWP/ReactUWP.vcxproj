@@ -135,7 +135,7 @@
     </PropertyGroup>
     <ItemGroup Condition="'$(ApplicationTypeRevision)' == '10.0'">
       <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.FoundationContract\3.0.0.0" />
-      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.UniversalApiContract\7.0.0.0" />
+      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.UniversalApiContract\8.0.0.0" />
     </ItemGroup>
     <Message Text="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
     <Exec Command="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />

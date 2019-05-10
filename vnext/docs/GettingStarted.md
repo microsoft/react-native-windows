@@ -14,8 +14,7 @@ This is a summary of setup steps needed to install and work with React Native fo
       * Node.js development support
     * SDKs, libraries, and frameworks per your versioning needs
       * Windows 10 SDK (10.0.15063.0)
-      * Windows 10 SDK (10.0.16299.0)
-      * Windows 10 SDK (10.0.17763.0)
+      * Windows 10 SDK (10.0.18362.0)
 
 ## Dependencies
 * Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of [Node.js](https://nodejs.org) is installed. [Chocolatey](https://chocolatey.org/) is the React Native recommended installation method. On an elevated Command Prompt, run:
