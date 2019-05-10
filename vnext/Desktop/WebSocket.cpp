@@ -557,8 +557,8 @@ size_t MockStream::write_buffer_size() const
 template<class RequestDecorator, class HandshakeHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(error_code))
 MockStream::async_handshake_ex(
-  string_view host,
-  string_view target,
+  boost::string_view host,
+  boost::string_view target,
   RequestDecorator const& decorator,
   HandshakeHandler&& handler)
 {
