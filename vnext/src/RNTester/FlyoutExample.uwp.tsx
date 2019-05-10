@@ -16,6 +16,22 @@ interface IFlyoutExampleState {
   placementOptions: Placement;
 }
 
+let placementValues: string[] = [
+  'top',
+  'bottom',
+  'left',
+  'right',
+  'full',
+  'top-edge-aligned-left',
+  'top-edge-aligned-right',
+  'bottom-edge-aligned-left',
+  'bottom-edge-aligned-right',
+  'left-edge-aligned-top',
+  'right-edge-aligned-top',
+  'left-edge-aligned-bottom',
+  'right-edge-aligned-bottom'
+]
+
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
   // tslint:disable-next-line:no-any
@@ -26,7 +42,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     buttonTitle: 'Open Flyout',
     isLightDismissEnabled: true,
     popupCheckBoxState: true,
-    placementOptions: Placement.top,
+    placementOptions: 'top',
   };
 
   public constructor(props: any) {
@@ -35,7 +51,6 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   }
 
   public render() {
-    let placementValues = (Object as any)["values"](Placement) as string[]; 
     return (
       <View>
         <View style={ { flexDirection: 'row', paddingTop: 20 } }>
