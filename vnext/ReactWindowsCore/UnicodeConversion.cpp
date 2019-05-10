@@ -8,6 +8,7 @@
 
 #include <string>
 #include <exception>
+#include <stdexcept>
 
 namespace facebook {
 namespace react {

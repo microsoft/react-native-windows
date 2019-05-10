@@ -1,4 +1,10 @@
 EXPORTS
+?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
+??0TypeError@folly@@QAE@ABU01@@Z
+??0TypeError@folly@@QAE@$$QAU01@@Z
+??0ColdClass@cold_detail@folly@@QAE@XZ
+?get_ptrImpl@dynamic@folly@@AGBEPBU12@ABU12@@Z
+??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
 ??$str_to_floating@N@detail@folly@@YG?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YG?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??0JSBigStringResourceDll@react@facebook@@QAE@PAUHINSTANCE__@@PAUHRSRC__@@@Z
@@ -44,6 +50,7 @@ EXPORTS
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?Make@JSBigStringResourceDll@react@facebook@@SG?AV?$unique_ptr@$$CBVJSBigStringResourceDll@react@facebook@@U?$default_delete@$$CBVJSBigStringResourceDll@react@facebook@@@std@@@std@@PAUHINSTANCE__@@PAUHRSRC__@@@Z
 ?MakeLegacy@IWebSocket@React@Microsoft@@SG?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+??1Buffer@jsi@facebook@@UAE@XZ
 
 YGLog
 YGLogWithConfig

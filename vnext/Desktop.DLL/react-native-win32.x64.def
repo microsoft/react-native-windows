@@ -1,4 +1,10 @@
 EXPORTS
+?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
+??0TypeError@folly@@QEAA@AEBU01@@Z
+??0TypeError@folly@@QEAA@$$QEAU01@@Z
+??0ColdClass@cold_detail@folly@@QEAA@XZ
+?get_ptrImpl@dynamic@folly@@AEGBAPEBU12@AEBU12@@Z
+??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??0LayoutAnimation@react@facebook@@QEAA@Udynamic@folly@@@Z
@@ -44,6 +50,8 @@ EXPORTS
 ?updateProperties@ShadowNode@react@facebook@@UEAAX$$QEBUdynamic@folly@@@Z
 ?Utf16ToUtf8@UnicodeConversion@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 ?Utf8ToUtf16@UnicodeConversion@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+??1Buffer@jsi@facebook@@UEAA@XZ
+
 
 YGNodeNew
 YGNodeNewWithConfig

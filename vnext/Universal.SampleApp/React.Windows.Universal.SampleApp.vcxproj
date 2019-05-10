@@ -51,6 +51,8 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
@@ -62,7 +64,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>/await /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/await /bigobj /Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;4800;28204;4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;NOJSC;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
