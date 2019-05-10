@@ -113,12 +113,16 @@
     <Compile Include="ReactNativeCurrentPage.xaml.cs">
       <DependentUpon>ReactNativeCurrentPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReactNativeVNextPage.xaml.cs">
+      <DependentUpon>ReactNativeVNextPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="app.json" />
+    <None Include="bundle.cmd" />
     <None Include="PerfCompare_TemporaryKey.pfx" />
     <Content Include="images\blueuser.png" />
     <Content Include="images\reduser.png" />
@@ -138,6 +142,9 @@
     <Content Include="ReactAssets\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Bundle\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -153,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReactNativeCurrentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReactNativeVNextPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

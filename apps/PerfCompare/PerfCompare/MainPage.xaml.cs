@@ -29,7 +29,7 @@ namespace PerfCompare
             }
             else if (sender == rnwcppBtn)
             {
-
+                rootFrame.Navigate(typeof(ReactNativeVNextPage));
             }
         }
     }
