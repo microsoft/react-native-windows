@@ -25,12 +25,20 @@ TEST_CLASS(WebSocketIntegrationTest)
 {
   TEST_METHOD(ConnectCloseInProcServer)
   {
+    bool connected = false;
     auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetOnConnection([&connected]()
+    {
+      connected = true;
+    });
     server->Start();
+    auto ws = IWebSocket::Make("ws://localhost:5556");
+    ws->Connect();
 
     server->Stop();
+    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
 
-    Assert::IsTrue(true);
+    Assert::IsTrue(connected);
   }
 
   TEST_METHOD(ConnectClose)

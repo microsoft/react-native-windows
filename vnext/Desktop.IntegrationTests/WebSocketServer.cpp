@@ -5,6 +5,8 @@
 using namespace boost::asio;
 
 using boost::system::error_code;
+using std::function;
+using std::string;
 
 namespace Microsoft {
 namespace React {
@@ -12,17 +14,10 @@ namespace Test {
 
 #pragma region WebSocketSession
 
-WebSocketSession::WebSocketSession(io_context& context)
-  : m_context{ context }
-  , m_stream{ context }
+WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
+  : m_stream{ std::move(socket) }
   , m_strand{ m_stream.get_executor() }
-{
-}
-
-WebSocketSession::WebSocketSession(io_context& context, ip::tcp::socket socket)
-  : m_context{ context }
-  , m_stream{ std::move(socket) }
-  , m_strand{ m_stream.get_executor() }
+  , m_callbacks{ callbacks }
 {
 }
 
@@ -35,6 +30,9 @@ void WebSocketSession::OnAccept(error_code ec)
 {
   if (ec)
     return;//TODO: fail
+
+  if (m_callbacks.OnConnection)
+    m_callbacks.OnConnection();
 
   Read();
 }
@@ -151,11 +149,31 @@ void WebSocketServer::OnAccept(error_code ec)
   }
   else
   {
-    std::make_shared<WebSocketSession>(m_context, std::move(m_socket))->Start();
+    std::make_shared<WebSocketSession>(std::move(m_socket), m_callbacks)->Start();
   }
 
   //TODO: Accept again.
   //Accept();
+}
+
+void WebSocketServer::SetOnConnection(function<void()>&& func)
+{
+  m_callbacks.OnConnection = std::move(func);
+}
+
+void WebSocketServer::SetOnMessage(function<void(string)>&& func)
+{
+  m_callbacks.OnMessage = std::move(func);
+}
+
+void WebSocketServer::SetMessageFactory(function<string(bool)>&& func)
+{
+  m_callbacks.MessageFactory = std::move(func);
+}
+
+void WebSocketServer::SetOnError(function<void(IWebSocket::Error&&)>&& func)
+{
+  m_callbacks.OnError = std::move(func);
 }
 
 #pragma endregion // WebSocketServer
