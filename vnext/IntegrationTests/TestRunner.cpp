@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "TestRunner.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <cxxreact/Instance.h>
 #include <DevSettings.h>
@@ -82,7 +82,7 @@ TestResult TestRunner::RunTest(string&& bundlePath, string&& appName, NativeLogg
   devSettings->liveReloadCallback = [](){}; // Enables ChakraExecutor
   devSettings->errorCallback = [&result](string message)
   {
-    result.Message = facebook::react::UnicodeConversion::Utf8ToUtf16(message);
+    result.Message = facebook::react::unicode::utf8ToUtf16(message);
     result.Status = TestStatus::Failed;
   };
   devSettings->loggingCallback = std::move(loggingCallback);
@@ -104,7 +104,7 @@ TestResult TestRunner::RunTest(string&& bundlePath, string&& appName, NativeLogg
       {
       case RCTLogLevel::Error:
       case RCTLogLevel::Fatal:
-        result.Message = facebook::react::UnicodeConversion::Utf8ToUtf16(message);
+        result.Message = facebook::react::unicode::utf8ToUtf16(message);
         result.Status = TestStatus::Failed;
         ::SetEvent(functionCalled);
         break;
