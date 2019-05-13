@@ -14,7 +14,7 @@
 #include <boost/archive/iterators/transform_width.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/beast/core/buffers_to_string.hpp>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 using namespace boost::archive::iterators;
 using namespace boost::asio;
@@ -64,7 +64,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Handshake(const IWe
     // Collect headers
     for (const auto& header : options)
     {
-      req.insert(facebook::react::UnicodeConversion::Utf16ToUtf8(header.first), header.second);
+      req.insert(facebook::react::unicode::utf16ToUtf8(header.first), header.second);
     }
   },
     // Handshake handler

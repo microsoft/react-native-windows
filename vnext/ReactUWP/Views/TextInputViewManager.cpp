@@ -5,7 +5,7 @@
 
 #include "TextInputViewManager.h"
 
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
@@ -174,7 +174,7 @@ void TextInputShadowNode::createView()
       std::string key;
       wchar_t s[2] = L" ";
       s[0] = args.Character();
-      key = facebook::react::UnicodeConversion::Utf16ToUtf8(s, 1);
+      key = facebook::react::unicode::utf16ToUtf8(s, 1);
 
       if (key.compare("\r") == 0) {
         key = "Enter";
