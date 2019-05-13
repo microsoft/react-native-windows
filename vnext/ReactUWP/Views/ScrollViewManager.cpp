@@ -248,11 +248,11 @@ void ScrollViewManager::EmitScrollEvent(
 
 void ScrollViewManager::AddView(XamlView parent, XamlView child, int64_t index)
 {
-  if (parent && child)
+  if (parent && child && index >= 0)
   {
     if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
     {
-      ScrollViewUWPImplementation(scrollViewer).AddView(child, index);
+      ScrollViewUWPImplementation(scrollViewer).AddView(child, static_cast<uint32_t>(index));
     }
   }
 }
@@ -270,11 +270,11 @@ void ScrollViewManager::RemoveAllChildren(XamlView parent)
 
 void ScrollViewManager::RemoveChildAt(XamlView parent, int64_t index)
 {
-  if (parent)
+  if (parent && index >= 0)
   {
     if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
     {
-      ScrollViewUWPImplementation(scrollViewer).RemoveChildAt(index);
+      ScrollViewUWPImplementation(scrollViewer).RemoveChildAt(static_cast<uint32_t>(index));
     }
   }
 }
@@ -360,7 +360,7 @@ void ScrollViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dy
     {
       if (pair.second.isNumber())
       {
-        ScrollViewUWPImplementation(scrollViewer).SnapToInterval(pair.second.asDouble());
+        ScrollViewUWPImplementation(scrollViewer).SnapToInterval(static_cast<float>(pair.second.asDouble()));
       }
     }
     else if (pair.first == "snapToOffsets")
@@ -373,7 +373,7 @@ void ScrollViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dy
           for (auto val : offsets)
           {
             if (val.isNumber())
-              vector.Append(val.asDouble());
+              vector.Append(static_cast<float>(val.asDouble()));
           }
           return vector;
         }();

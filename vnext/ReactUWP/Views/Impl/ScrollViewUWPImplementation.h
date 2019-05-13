@@ -30,9 +30,9 @@ public:
   ScrollViewUWPImplementation(const winrt::ScrollViewer& scrollViewer);
   static void ConvertScrollViewer(const winrt::ScrollViewer& scrollViewer);
 
-  void AddView(const XamlView& child, int64_t index);
+  void AddView(const XamlView& child, uint32_t index);
   void RemoveAllChildren();
-  void RemoveChildAt(int64_t index);
+  void RemoveChildAt(uint32_t index);
 
   void SetHorizontal(bool isHorizontal);
   void SnapToInterval(float interval);

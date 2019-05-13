@@ -108,26 +108,26 @@ void SnapPointManagingContentControl::SetWidthBounds(float startWidth, float end
 {
   auto const update = [this, startWidth, endWidth]()
   {
-    return
-      [this, endWidth]()
+    auto const endUpdated = [this, endWidth]()
+    {
+      if (m_endWidth != endWidth)
       {
-        if (m_endWidth != endWidth)
-        {
-          m_endWidth = endWidth;
-          return true;
-        }
-        return false;
-      }()
-      ||
-      [this, startWidth]()
+        m_endWidth = endWidth;
+        return true;
+      }
+      return false;
+    }();
+    auto const startUpdated = [this, startWidth]()
+    {
+      if (m_startWidth != startWidth)
       {
-        if (m_startWidth != startWidth)
-        {
-          m_startWidth = startWidth;
-          return true;
-        }
-        return false;
-      }();
+        m_startWidth = startWidth;
+        return true;
+      }
+      return false;
+    }();
+
+    return endUpdated || startUpdated;
   }();
 
   if (update && m_horizontal && m_offsets && m_offsets.Size())
@@ -140,26 +140,26 @@ void SnapPointManagingContentControl::SetHeightBounds(float startHeight, float e
 {
   auto const update = [this, startHeight, endHeight]()
   {
-    return
-      [this, endHeight]()
+    auto const endUpdated = [this, endHeight]()
+    {
+      if (m_endHeight != endHeight)
       {
-        if (m_endHeight != endHeight)
-        {
-          m_endHeight = endHeight;
-          return true;
-        }
-        return false;
-      }()
-      ||
-      [this, startHeight]()
+        m_endHeight = endHeight;
+        return true;
+      }
+      return false;
+    }();
+    auto const startUpdated = [this, startHeight]()
+    {
+      if (m_startHeight != startHeight)
       {
-        if (m_startHeight != startHeight)
-        {
-          m_startHeight = startHeight;
-          return true;
-        }
-        return false;
-      }();
+        m_startHeight = startHeight;
+        return true;
+      }
+      return false;
+    }();
+
+    return endUpdated || startUpdated;
   }();
 
   if (!m_horizontal && m_offsets && m_offsets.Size())
