@@ -369,14 +369,16 @@ void ChakraExecutor::initOnJSVMThread()
   JsSetContextData(m_context, this);
 
 #if !defined(USE_EDGEMODE_JSRT)
-  JsValueRef debuggerConsoleObject;
-  tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(&debuggerConsoleObject);
+  if (enableDebugging) {
+    JsValueRef debuggerConsoleObject;
+    tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(&debuggerConsoleObject);
 
-  JsValueRef undefinedValue = JS_INVALID_REFERENCE;
-  JsGetUndefinedValue(&undefinedValue);
+    JsValueRef undefinedValue = JS_INVALID_REFERENCE;
+    JsGetUndefinedValue(&undefinedValue);
 
-  if (enableDebugging && debuggerConsoleObject != JS_INVALID_REFERENCE && debuggerConsoleObject != undefinedValue && m_instanceArgs.DebuggerConsoleRedirection) {
-    needToRedirectConsoleToDebugger = true;
+    if (debuggerConsoleObject != JS_INVALID_REFERENCE && debuggerConsoleObject != undefinedValue && m_instanceArgs.DebuggerConsoleRedirection) {
+      needToRedirectConsoleToDebugger = true;
+    }
   }
 #endif
 
