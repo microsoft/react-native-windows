@@ -1,3 +1,4 @@
+// @ts-check
 // Used to update the package version 
 
 const fs = require("fs");
@@ -18,8 +19,14 @@ function exec(command) {
 }
 
 function updateVersion() {
-  const publishBranchName = process.env.publishBranchName;
-  const tempPublishBranch = `publish-${Date.now()}`;
+  const publishBranchName = process.env.BUILD_SOURCEBRANCH.match(/refs\/heads\/(.*)/)[1];
+  console.log(`Target branch to publish to: ${publishBranchName}`);
+
+  const tempPublishBranch = `publish-temp-${Date.now()}`;
+
+  console.log(`Using ${`(.*-microsoft)(-${publishBranchName})?\\.([0-9]*)`} to match version`);
+  const branchVersionSuffix = (publishBranchName.match(/(fb.*merge)|(fabric)/) ? `-${publishBranchName}` : '');
+
 
   exec(`npm install -g yarn`);
 
@@ -34,16 +41,17 @@ function updateVersion() {
   let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
   let releaseVersion = pkgJson.version;
-
-  const versionGroups = /(.*-vnext\.)([0-9]*)/.exec(releaseVersion);
+  
+  const versionStringRegEx = new RegExp(`(.*-vnext)(-${publishBranchName})?\\.([0-9]*)`);
+  const versionGroups = versionStringRegEx.exec(releaseVersion);
   if (versionGroups) {
-    releaseVersion = versionGroups[1] + (parseInt(versionGroups[2]) + 1);
+    releaseVersion = versionGroups[1] + branchVersionSuffix + '.' + (parseInt(versionGroups[3]) + 1);
   } else {
     if (releaseVersion.indexOf("-") === -1) {
-      releaseVersion = releaseVersion + "-vnext.0";
+      releaseVersion = releaseVersion + `-vnext${branchVersionSuffix}.0`;
     } else {
       console.log("Invalid version to publish");
-      exit(1);
+      process.exit(1);
     }
   }
 
