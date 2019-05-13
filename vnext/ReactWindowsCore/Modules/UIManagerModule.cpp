@@ -368,16 +368,6 @@ void UIManager::onBatchComplete()
   m_nativeUIManager->onBatchComplete();
 }
 
-UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
-	: m_manager(std::move(manager))
-{
-}
-
-std::string UIManagerModule::getName()
-{
-	return "UIManager";
-}
-
 int64_t UIManager::AddMeasuredRootView(IReactRootView* rootView)
 {
 	auto tag = m_nextRootTag;
@@ -422,6 +412,16 @@ ShadowNode* UIManager::FindShadowNodeForTag(int64_t tag)
 ShadowNode& UIManager::GetShadowNodeForTag(int64_t tag)
 {
   return m_nodeRegistry.getNode(tag);
+}
+
+UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
+	: m_manager(std::move(manager))
+{
+}
+
+std::string UIManagerModule::getName()
+{
+	return "UIManager";
 }
 
 std::map<std::string, folly::dynamic> UIManagerModule::getConstants()
@@ -496,14 +496,203 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
 	};
 }
 
+BatchingUIManager::BatchingUIManager(std::vector<std::unique_ptr<IViewManager>>&& viewManagers, INativeUIManager* nativeManager)
+  : UIManager(std::move(viewManagers), nativeManager)
+{
+  m_queue = std::make_unique<folly::ProducerConsumerQueue<std::function<void()>>>(1024);
+}
+
+void BatchingUIManager::onBatchComplete()
+{
+  std::function<void()> func;
+  while (m_queue->read(func)) {
+    func();
+  }
+
+  UIManager::onBatchComplete();
+}
+
+BatchingUIManagerModule::BatchingUIManagerModule(std::shared_ptr<IUIManager>&& manager)
+	: m_manager(std::move(manager))
+{
+}
+
+std::string BatchingUIManagerModule::getName()
+{
+	return "UIManager";
+}
+
+std::map<std::string, folly::dynamic> BatchingUIManagerModule::getConstants()
+{
+	std::map<std::string, folly::dynamic> constants {};
+
+	m_manager->populateViewManagerConstants(constants);
+
+	return constants;
+}
+
+void BatchingUIManager::removeRootView(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    manager->removeRootView(jsArgAsInt(args, 0));
+  });
+}
+
+void BatchingUIManager::createView(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    auto arg3 = jsArgAsDynamic(args, 3);
+    static_cast<IUIManager*>(manager.get())->createView(jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), std::move(arg3));
+  });
+}
+
+void BatchingUIManager::setChildren(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    auto arg1 = jsArgAsArray(args, 1);
+    static_cast<IUIManager*>(manager.get())->setChildren(jsArgAsInt(args, 0), std::move(arg1));
+  });
+}
+
+void BatchingUIManager::updateView(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    auto arg2 = jsArgAsDynamic(args, 2);
+    static_cast<IUIManager*>(manager.get())->updateView(jsArgAsInt(args, 0), jsArgAsString(args, 1), std::move(arg2));
+  });
+}
+
+void BatchingUIManager::removeSubviewsFromContainerWithID(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    static_cast<IUIManager*>(manager.get())->removeSubviewsFromContainerWithID(jsArgAsInt(args, 0));
+  });
+}
+
+void BatchingUIManager::manageChildren(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    auto arg1 = jsArgAsDynamic(args, 1);
+    auto arg2 = jsArgAsDynamic(args, 2);
+    auto arg3 = jsArgAsDynamic(args, 3);
+    auto arg4 = jsArgAsDynamic(args, 4);
+    auto arg5 = jsArgAsDynamic(args, 5);
+    static_cast<IUIManager*>(manager.get())->manageChildren(jsArgAsInt(args, 0), arg1, arg2, arg3, arg4, arg5);
+  });
+}
+
+void BatchingUIManager::dispatchViewManagerCommand(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    auto arg2 = jsArgAsDynamic(args, 2);
+    static_cast<IUIManager*>(manager.get())->dispatchViewManagerCommand(jsArgAsInt(args, 0), jsArgAsInt(args, 1), std::move(arg2));
+  });
+}
+
+void BatchingUIManager::replaceExistingNonRootView(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args]()
+  {
+    static_cast<IUIManager*>(manager.get())->replaceExistingNonRootView(jsArgAsInt(args, 0), jsArgAsInt(args, 1));
+  });
+}
+
+void BatchingUIManager::measure(folly::dynamic&& args, facebook::xplat::module::CxxModule::Callback cb)
+{
+  auto manager = shared_from_this();
+  m_queue->write([manager, args, cb]()
+  {
+    static_cast<IUIManager*>(manager.get())->measure(jsArgAsInt(args, 0), cb);
+  });
+}
+
+std::vector<facebook::xplat::module::CxxModule::Method> BatchingUIManagerModule::getMethods()
+{
+  auto manager = std::static_pointer_cast<BatchingUIManager>(m_manager);
+  return
+  {
+    Method("getConstantsForViewManager", [manager](dynamic argsJson) -> dynamic
+    {
+      auto args = folly::parseJson(argsJson.asString());
+      return manager->getConstantsForViewManager(jsArgAsString(args, 0));
+    }, SyncTag),
+    Method("removeRootView", [manager](dynamic args)
+    {
+      manager->removeRootView(std::move(args));
+    }),
+    Method("createView", [manager](dynamic args)
+    {
+      manager->createView(std::move(args));
+    }),
+    Method("configureNextLayoutAnimation", [manager](dynamic args, Callback cbSuccess, Callback cbError)
+    {
+      manager->configureNextLayoutAnimation(std::move(args), cbSuccess, cbError);
+    }, AsyncTag),
+    Method("setChildren", [manager](dynamic args)
+    {
+      manager->setChildren(std::move(args));
+    }),
+    Method("updateView", [manager](dynamic args)
+    {
+      manager->updateView(std::move(args));
+    }),
+    Method("removeSubviewsFromContainerWithID", [manager](dynamic args)
+    {
+      manager->removeSubviewsFromContainerWithID(std::move(args));
+    }),
+    Method("manageChildren", [manager](dynamic args)
+    {
+      manager->manageChildren(std::move(args));
+    }),
+    Method("replaceExistingNonRootView", [manager](dynamic args)
+    {
+      manager->replaceExistingNonRootView(std::move(args));
+    }),
+    Method("dispatchViewManagerCommand", [manager](dynamic args)
+    {
+      manager->dispatchViewManagerCommand(std::move(args));
+    }),
+    Method("measure", [manager](dynamic args, facebook::xplat::module::CxxModule::Callback cb)
+    {
+      manager->measure(std::move(args), cb);
+    }),
+    Method("setJSResponder", [](dynamic args)
+    {
+      // TODO: Implement?
+      //manager->setJSResponder(std::move(args));
+    }),
+    Method("clearJSResponder", []()
+    {
+      // TODO: Implement?
+      //manager->clearJSResponder();
+    }),
+  };
+}
+
 shared_ptr<IUIManager> createIUIManager(std::vector<std::unique_ptr<IViewManager>>&& viewManagers, INativeUIManager* nativeManager)
 {
-	return std::make_shared<UIManager>(std::move(viewManagers), nativeManager);
+  // TODO NOW: Ability to create batching version or not.
+	return std::make_shared<BatchingUIManager>(std::move(viewManagers), nativeManager);
 }
 
 std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager)
 {
-	return std::make_unique<UIManagerModule>(std::move(uimanager));
+	return std::make_unique<BatchingUIManagerModule>(std::move(uimanager));
 }
 
 }
