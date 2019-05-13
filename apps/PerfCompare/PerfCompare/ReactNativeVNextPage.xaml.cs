@@ -33,7 +33,7 @@ namespace PerfCompare
             });
 
             RootElement.Instance = _instance;
-            RootElement.InitialProps = "{}";
+            RootElement.InitialProps = "{ \"messageCount\": \"" + App.TotalMessages +"\" }";
             RootElement.JsComponentName = JSCOMPONENTNAME;
 
             RootElement.StartRender();
@@ -43,7 +43,7 @@ namespace PerfCompare
         {
             await Dispatcher.RunIdleAsync((args) =>
             {
-                App.PerfStats.Stop();
+                App.PerfStats.Stop(false);
                 App.ShowStats();
             });
         }

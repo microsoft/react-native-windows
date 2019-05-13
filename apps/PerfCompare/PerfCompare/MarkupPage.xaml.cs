@@ -10,8 +10,10 @@ namespace PerfCompare
 {
     public sealed partial class MarkupPage : Page
     {
-        public ObservableCollection<Message> Messages => _messages ?? (_messages = LoadMessages(1000));
+        public ObservableCollection<Message> Messages => _messages ?? (_messages = LoadMessages(App.TotalMessages));
         private ObservableCollection<Message> _messages = null;
+
+        private volatile int _messagesRenderedCount = 0;
 
         public MarkupPage()
         {
@@ -30,11 +32,23 @@ namespace PerfCompare
             return messages;
         }
 
+        private async void Message_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (++_messagesRenderedCount == App.TotalMessages)
+            {
+                await Dispatcher.RunIdleAsync((args) =>
+                {
+                    App.PerfStats.Stop(true);
+                    App.ShowStats();
+                });
+            }
+        }
+
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await Dispatcher.RunIdleAsync((args) =>
             {
-                App.PerfStats.Stop();
+                App.PerfStats.Stop(false);
                 App.ShowStats();
             });
         }

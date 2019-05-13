@@ -115,8 +115,6 @@ function LoadMessages(count) {
   return messages;
 }
 
-var messages = LoadMessages(1000);
-
 class MessageView extends Component {
   render() {
     return (
@@ -140,7 +138,7 @@ class App extends Component {
       <View style={styles.container}>
         <ScrollView>
           <FlatList
-            data={messages}
+            data={LoadMessages(this.props.messageCount)}
             renderItem={({item}) => <MessageView message={item} />}
             keyExtractor={(item, index) => index.toString()}
           />

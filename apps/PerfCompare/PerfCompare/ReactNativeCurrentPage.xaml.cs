@@ -10,6 +10,8 @@ using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
 
+using Newtonsoft.Json.Linq;
+
 namespace PerfCompare
 {
     public sealed partial class ReactNativeCurrentPage : Page
@@ -26,14 +28,14 @@ namespace PerfCompare
         {
             _host.OnResume(null);
             _host.ApplyArguments(null);
-            this.Content = _host.OnCreate();
+            this.Content = _host.OnCreate(JObject.Parse("{ \"messageCount\": \"" + App.TotalMessages + "\" }"));
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await Dispatcher.RunIdleAsync((args) =>
             {
-                App.PerfStats.Stop();
+                App.PerfStats.Stop(false);
                 App.ShowStats();
             });
         }

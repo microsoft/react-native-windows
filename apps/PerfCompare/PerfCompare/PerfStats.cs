@@ -51,15 +51,17 @@ namespace PerfCompare
             Timer = Stopwatch.StartNew();
         }
 
-        public void Stop()
+        public void Stop(bool finalStop)
         {
-            if (!Timer.IsRunning)
-            {
-                throw new Exception("Start first.");
-            }
-
             Timer.Stop();
-            EndCommitInBytes = GC.GetTotalMemory(true);
+            if (finalStop)
+            {
+                EndCommitInBytes = GC.GetTotalMemory(true);
+            }
+            else
+            {
+                Timer.Start();
+            }
         }
 
         private static string GetTimeSpanReadable(TimeSpan timeSpan)
