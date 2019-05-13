@@ -1,0 +1,73 @@
+LIBLETNAME = react.uwp
+LIBLET_DYNLINK = 1
+LIBLET_NO_PRECOMP = 1
+LINK_GENERATES_LIB=1
+LINK_IMM_BINARY=1
+
+!include $(WAREHOUSEIMPORTDIR)\libletmake\x-none\nmake\make.inc
+
+SOLUTION_DIR = $(PROJROOT)\OfficeISS\ReactWindows\ReactUWP
+
+INCLUDES = $(INCLUDES); \
+	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactWindows\ReactUWP\Pch; \
+	$(OPENSOURCE_REACTNATIVE)\OfficeISS\ReactCommon\yoga; \
+	$(OTOOLSINCROOT)\cppwinrt; \
+
+DLLDEF = react-native-uwp.$(PLATFORM).def \
+
+TARGETLIBS = $(TARGETLIBS) \
+	$(ATLSLIB) \
+	$(CRTDYNAMICIMM) \
+	$(CORELIBDIR)\Advapi32.lib \
+	$(CORELIBDIR)\chakrart.lib \
+	$(CORELIBDIR)\Kernel32.lib \
+	$(CORELIBDIR)\Shell32.lib \
+	$(CORELIBDIR)\Shlwapi.lib \
+	$(CORELIBDIR)\Ws2_32.lib \
+	$(COREUAPLIBDIR)\oleaut32.lib \
+	$(CORELIBDIR)\mincore.lib \
+	$(CORELIBDIR)\uuid.lib\
+	$(COREUAPLIBDIR)\runtimeobject.lib \
+
+TARGETLIBS_PDBS = \
+	$(TARGETLIBS_PDBS) \
+	$(ATLSPDB) \
+
+TARGETLOBS = $(TARGETLOBS) \
+	$(OPENSOURCE_BOOSTTARGETLIBDIR)\boost_date_time.lob \
+	$(PROJLIBDIR)\AsyncStorageMosh.lob \
+	$(PROJLIBDIR)\ChakraMosh.lob \
+	$(PROJLIBDIR)\CxxReactMosh.lob \
+	$(PROJLIBDIR)\FollyContainerDetailMosh.lob \
+	$(PROJLIBDIR)\FollyDetailMosh.lob \
+	$(PROJLIBDIR)\FollyLangMosh.lob \
+	$(PROJLIBDIR)\FollyHashMosh.lob \
+	$(PROJLIBDIR)\FollyPortabilityMosh.lob \
+	$(PROJLIBDIR)\FollyMemoryDetailMosh.lob \
+	$(PROJLIBDIR)\FollyMosh.lob \
+	$(PROJLIBDIR)\jsireactMosh.lob \
+	$(PROJLIBDIR)\jsiMosh.lob \
+	$(PROJLIBDIR)\ModuleProviderMosh.lob \
+	$(PROJLIBDIR)\ModulesMosh.lob \
+	$(PROJLIBDIR)\PrivateDataMosh.lob \
+	$(PROJLIBDIR)\ReactCommonPchMosh.lob \
+	$(PROJLIBDIR)\ReactWinSharedMosh.lob \
+	$(PROJLIBDIR)\YogaMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_ABIMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_BaseMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_CxxReactUWPMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_ExecutorsMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_ModulesMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_PolyesterMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_SandboxMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_ThreadingMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_UtilsMosh.lob \
+	$(PROJLIBDIR)\ReactUWP_ViewsMosh.lob \
+
+
+!undef FILE_VERSION_INFO
+!undef FILE_MANIFEST_INFO
+
+SOURCES =  \
+	dllmain.cpp \
+	jscglue.cpp \

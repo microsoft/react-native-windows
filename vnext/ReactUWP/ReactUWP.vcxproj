@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x86">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x86">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <!-- Kept for Visual Studio compatibility. -->
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</ProjectGuid>
+    <TargetName>React.UWP</TargetName>
+    <Keyword>DynamicLibrary</Keyword>
+    <RootNamespace>React.UWP</RootNamespace>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <ProjectName>ReactUWP</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UnmergedWinmdDirectory>$(IntDir)UnmergedWinMD</UnmergedWinmdDirectory>
+    <!-- MDMERGE.EXE fails if output dir has trailing slash. -->
+    <MergedWinmdDirectory>$(OutDir.TrimEnd("/\"))</MergedWinmdDirectory>
+    <IdlHeaderDirectory>$(MSBuildThisFileDirectory)GeneratedWinmdHeader</IdlHeaderDirectory>
+  </PropertyGroup>
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\MIDL\midlrt.targets" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <!-- 
+        REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
+      -->
+      <PreprocessorDefinitions>REACTWINDOWS_BUILD;RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+    </Link>
+    <Midl>
+      <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl</AdditionalIncludeDirectories>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>OSS_RN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x64.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'!='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x86.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'!='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.arm.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'=='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.arm.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <Target Name="mdmerge" AfterTargets="Midl" Inputs="@(Midl -> '%(MetadataFileName)')" Outputs="$(MergedWinmdDirectory)\$(RootNamespace).winmd">
+    <PropertyGroup>
+      <MdMergeExe>"$(WindowsSdkDir)bin\$(WindowsTargetPlatformVersion)\$(PreferredToolArchitecture)\mdmerge.exe"</MdMergeExe>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(ApplicationTypeRevision)' == '10.0'">
+      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.FoundationContract\3.0.0.0" />
+      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.UniversalApiContract\7.0.0.0" />
+    </ItemGroup>
+    <Message Text="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
+    <Exec Command="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
+  </Target>
+  <ItemGroup>
+    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
+    <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
+    <ClInclude Include="..\include\ReactUWP\IReactInstance.h" />
+    <ClInclude Include="..\include\ReactUWP\IXamlRootView.h" />
+    <ClInclude Include="..\include\ReactUWP\ReactUwp.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
+    <ClInclude Include="..\include\ReactUWP\XamlView.h" />
+    <ClInclude Include="ABI\ABIModuleLoader.h" />
+    <ClInclude Include="ABI\comTemplateLibrary.h" />
+    <ClInclude Include="ABI\HStringHelper.h" />
+    <ClInclude Include="ABI\Instance_rt.h" />
+    <ClInclude Include="ABI\ReactControl_rt.h" />
+    <ClInclude Include="Base\UwpReactInstance.h" />
+    <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
+    <ClInclude Include="Modules\AppStateModuleUwp.h" />
+    <ClInclude Include="Modules\ClipboardModule.h" />
+    <ClInclude Include="Modules\DeviceInfoModule.h" />
+    <ClInclude Include="Modules\DevSupportManagerUwp.h" />
+    <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\LinkingManagerModule.h" />
+    <ClInclude Include="Modules\LocationObserverModule.h" />
+    <ClInclude Include="Modules\NativeUIManager.h" />
+    <ClInclude Include="Modules\NetworkingModule.h" />
+    <ClInclude Include="Modules\TimingModule.h" />
+    <ClInclude Include="Modules\WebSocketModuleUwp.h" />
+    <ClInclude Include="Pch\pch.h" />
+    <ClInclude Include="Polyester\ButtonContentViewManager.h" />
+    <ClInclude Include="Polyester\ButtonViewManager.h" />
+    <ClInclude Include="Polyester\ContentControlViewManager.h" />
+    <ClInclude Include="Polyester\HyperlinkViewManager.h" />
+    <ClInclude Include="Polyester\IconViewManager.h" />
+    <ClInclude Include="Threading\AsyncWorkQueue.h" />
+    <ClInclude Include="Threading\AsyncWorkQueue_Priv.h" />
+    <ClInclude Include="Threading\JSQueueThread.h" />
+    <ClInclude Include="Threading\UIMessageQueueThread.h" />
+    <ClInclude Include="Threading\WorkerMessageQueueThread.h" />
+    <ClInclude Include="Utils\LocalBundleReader.h" />
+    <ClInclude Include="Utils\PropertyHandlerUtils.h" />
+    <ClInclude Include="Utils\PropertyUtils.h" />
+    <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
+    <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
+    <ClInclude Include="Views\DatePickerViewManager.h" />
+    <ClInclude Include="Views\FlyoutViewManager.h" />
+    <ClInclude Include="Views\ImageViewManager.h" />
+    <ClInclude Include="Views\PickerViewManager.h" />
+    <ClInclude Include="Views\PopupViewManager.h" />
+    <ClInclude Include="Views\RawTextViewManager.h" />
+    <ClInclude Include="Views\ReactControl.h" />
+    <ClInclude Include="Views\RootViewManager.h" />
+    <ClInclude Include="Views\ScrollViewManager.h" />
+    <ClInclude Include="Views\SwitchViewManager.h" />
+    <ClInclude Include="Views\TextInputViewManager.h" />
+    <ClInclude Include="Views\TextViewManager.h" />
+    <ClInclude Include="Views\TouchEventHandler.h" />
+    <ClInclude Include="Views\ViewControl.h" />
+    <ClInclude Include="Views\ViewPanel.h" />
+    <ClInclude Include="Views\ViewViewManager.h" />
+    <ClInclude Include="Views\VirtualTextViewManager.h" />
+    <ClInclude Include="Views\WebViewManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Shared\AsyncStorageModule.cpp" />
+    <ClCompile Include="..\Shared\AsyncStorage\AsyncStorageManager.cpp" />
+    <ClCompile Include="..\Shared\AsyncStorage\FollyDynamicConverter.cpp" />
+    <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp" />
+    <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp" />
+    <ClCompile Include="..\Shared\Logging.cpp" />
+    <ClCompile Include="..\Shared\MemoryTracker.cpp" />
+    <ClCompile Include="ABI\ABIModuleLoader.cpp" />
+    <ClCompile Include="ABI\HStringHelper.cpp" />
+    <ClCompile Include="ABI\Instance_rt.cpp" />
+    <ClCompile Include="ABI\ReactControl_rt.cpp" />
+    <ClCompile Include="..\Shared\InstanceManager.cpp" />
+    <ClCompile Include="..\Shared\OInstance.cpp" />
+    <ClCompile Include="Base\InstanceFactory.cpp" />
+    <ClCompile Include="Base\UwpReactInstance.cpp" />
+    <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
+    <ClCompile Include="EndPoints\dll\dllmain.cpp" />
+    <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
+    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
+    <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
+    <ClCompile Include="Modules\ClipboardModule.cpp" />
+    <ClCompile Include="Modules\DeviceInfoModule.cpp" />
+    <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
+    <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\LinkingManagerModule.cpp" />
+    <ClCompile Include="Modules\LocationObserverModule.cpp" />
+    <ClCompile Include="Modules\NativeUIManager.cpp" />
+    <ClCompile Include="Modules\NetworkingModule.cpp" />
+    <ClCompile Include="Modules\TimingModule.cpp" />
+    <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
+    <ClCompile Include="Pch\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Polyester\ButtonContentViewManager.cpp" />
+    <ClCompile Include="Polyester\ButtonViewManager.cpp" />
+    <ClCompile Include="Polyester\ContentControlViewManager.cpp" />
+    <ClCompile Include="Polyester\HyperlinkViewManager.cpp" />
+    <ClCompile Include="Polyester\IconViewManager.cpp" />
+    <ClCompile Include="Sandbox\DevSupportManagerUwpSandbox.cpp" />
+    <ClCompile Include="Threading\AsyncWorkQueue.cpp" />
+    <ClCompile Include="Threading\JSQueueThread.cpp" />
+    <ClCompile Include="Threading\UIMessageQueueThread.cpp" />
+    <ClCompile Include="Threading\WorkerMessageQueueThread.cpp" />
+    <ClCompile Include="Utils\LocalBundleReader.cpp" />
+    <ClCompile Include="Utils\ValueUtils.cpp" />
+    <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
+    <ClCompile Include="Views\CheckboxViewManager.cpp" />
+    <ClCompile Include="Views\ControlViewManager.cpp" />
+    <ClCompile Include="Views\DatePickerViewManager.cpp" />
+    <ClCompile Include="Views\FlyoutViewManager.cpp" />
+    <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
+    <ClCompile Include="Views\ImageViewManager.cpp" />
+    <ClCompile Include="Views\PickerViewManager.cpp" />
+    <ClCompile Include="Views\PopupViewManager.cpp" />
+    <ClCompile Include="Views\RawTextViewManager.cpp" />
+    <ClCompile Include="Views\ReactControl.cpp" />
+    <ClCompile Include="Views\ReactRootView.cpp" />
+    <ClCompile Include="Views\RootViewManager.cpp" />
+    <ClCompile Include="Views\ScrollViewManager.cpp" />
+    <ClCompile Include="Views\ShadowNodeBase.cpp" />
+    <ClCompile Include="Views\SwitchViewManager.cpp" />
+    <ClCompile Include="Views\TextInputViewManager.cpp" />
+    <ClCompile Include="Views\TextViewManager.cpp" />
+    <ClCompile Include="Views\TouchEventHandler.cpp" />
+    <ClCompile Include="Views\ViewControl.cpp" />
+    <ClCompile Include="Views\ViewManagerBase.cpp" />
+    <ClCompile Include="Views\ViewPanel.cpp" />
+    <ClCompile Include="Views\ViewViewManager.cpp" />
+    <ClCompile Include="Views\VirtualTextViewManager.cpp" />
+    <ClCompile Include="Views\WebViewManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\makewinrt.inc" />
+    <None Include="..\Shared\sources.inc" />
+    <None Include="..\Shared\winrt\sources" />
+    <None Include="ABI\dirs" />
+    <None Include="ABI\idl\sources" />
+    <None Include="ABI\lib\sources" />
+    <None Include="ABI\sources.inc" />
+    <None Include="Base\sources" />
+    <None Include="CxxReactUWP\sources" />
+    <None Include="dirs" />
+    <None Include="EndPoints\dirs" />
+    <None Include="EndPoints\dll\react-native-uwp.arm.def" />
+    <None Include="EndPoints\dll\react-native-uwp.x64.def" />
+    <None Include="EndPoints\dll\react-native-uwp.x86.def" />
+    <None Include="EndPoints\dll\sources" />
+    <None Include="Executors\sources" />
+    <None Include="make.inc" />
+    <None Include="Modules\sources" />
+    <None Include="packages.config" />
+    <None Include="Pch\sources" />
+    <None Include="Polyester\sources" />
+    <None Include="Sandbox\sources" />
+    <None Include="Threading\sources" />
+    <None Include="Utils\sources" />
+    <None Include="Views\sources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Folly\Folly.vcxproj">
+      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
+      <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
+      <Project>{11c084a3-a57c-4296-a679-cac17b603144}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <MidlRT Include="ABI\idl\Module.idl" />
+    <MidlRT Include="ABI\idl\Instance.idl" />
+    <MidlRT Include="ABI\idl\ReactControl.idl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
+    <Import Project="$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets'))" />
+  </Target>
+  <Target Name="AfterCppClean">
+    <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />
+    <RemoveDir Directories="$(UnmergedWinmdDirectory)" ContinueOnError="true" />
+  </Target>
+</Project>

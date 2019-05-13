@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{C38970C0-5FBF-4D69-90D8-CBAC225AE895}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraExecutor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraNativeModules.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraPlatform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraTracing.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraValue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utf8DebugExtensions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreDebugger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraExecutor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraInstanceArgs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeArgs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraNativeModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraPlatform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraTracing.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utf8DebugExtensions.h" />
+  </ItemGroup>
+</Project>

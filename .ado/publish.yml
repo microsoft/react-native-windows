@@ -1,0 +1,68 @@
+name: $(Date:yyyyMMdd).$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - fb59merge
+      - fabric
+  paths:
+    include:
+      - vnext/*
+    exclude:
+      - vnext/package.json
+      - vnext/yarn.lock
+
+pr: none
+
+jobs:
+  - job: RNWGithubPublish
+    displayName: React-Native-Windows GitHub Publish
+    pool:
+      name: OE Standard Pool
+      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
+      - task: CmdLine@2
+        displayName: Ensure yarn
+        inputs:
+          script: npm install -g yarn
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: Update package version
+        inputs:
+          script: node ../.ado/updateVersion.js
+          workingDirectory: vnext
+
+      - task: Npm@1
+        displayName: npm public publish (vnext)
+        inputs:
+          command: custom
+          workingDir: vnext
+          verbose: false
+          customCommand: 'publish --access public --tag vnext'
+          customEndpoint: 'React-Native-Windows NPM'
+          publishEndpoint: 'React-Native-Windows NPM'

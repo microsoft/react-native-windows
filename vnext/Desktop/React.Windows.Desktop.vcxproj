@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x86">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x86">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <!-- Kept for Visual Studio compatibility. -->
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
+    <ProjectName>React.Windows.Desktop</ProjectName>
+  </PropertyGroup>
+  <PropertyGroup Label="NOJSC">
+    <NOJSC>true</NOJSC>
+  </PropertyGroup>
+  <PropertyGroup Label="Permissive">
+    <ENABLEPermissive>true</ENABLEPermissive>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
+    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(ReactNativeWindowsDir);$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(IncludePath)</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!--
+        BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
+      -->
+      <PreprocessorDefinitions>BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;WIN32_LEAN_AND_MEAN;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_PLATFORM=win32;RN_EXPORT=;JSI_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>..\build\$(IntDir)\%(RelativeDir)</AssemblerListingLocation>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>OSS_RN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
+    <ClCompile Include="DevSupportManager.cpp" />
+    <ClCompile Include="LazyDevSupportManager.cpp" />
+    <ClCompile Include="LegacyWebSocket.cpp" />
+    <ClCompile Include="Modules\NetworkingModule.cpp" />
+    <ClCompile Include="JSBigStringResourceDll.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Sandbox\DevSupportManagerSandbox.cpp" />
+    <ClCompile Include="Sandbox\SandboxBridge.cpp" />
+    <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
+    <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
+    <ClCompile Include="HttpResource.cpp" />
+    <ClCompile Include="TimingModule.cpp" />
+    <ClCompile Include="WebSocket.cpp" />
+    <ClCompile Include="WebSocketJSExecutor.cpp" />
+    <ClCompile Include="WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="WebSocketModule.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DevSupportManager.h" />
+    <ClInclude Include="LazyDevSupportManager.h" />
+    <ClInclude Include="LegacyWebSocket.h" />
+    <ClInclude Include="Modules\NetworkingModule.h" />
+    <ClInclude Include="JSBigStringResourceDll.h" />
+    <ClInclude Include="NativeModuleFactories.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Sandbox\SandboxBridge.h" />
+    <ClInclude Include="Sandbox\NamedPipeEndpoint.h" />
+    <ClInclude Include="Sandbox\SandboxJSExecutor.h" />
+    <ClInclude Include="TimingModule.h" />
+    <ClInclude Include="HttpResource.h" />
+    <ClInclude Include="UIManagerModule.h" />
+    <ClInclude Include="WebSocket.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Folly\Folly.vcxproj">
+      <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
+      <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
+      <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
+      <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets" Condition="Exists('$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets')" />
+    <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets')" />
+    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
+    <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.33\build\native\Microsoft.ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.33\build\native\Microsoft.ChakraCore.Debugger.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.8\build\native\Microsoft.ChakraCore.vc140.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.33\build\native\Microsoft.ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.33\build\native\Microsoft.ChakraCore.Debugger.targets'))" />
+  </Target>
+</Project>
