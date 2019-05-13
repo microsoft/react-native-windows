@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.58.0-vnext.88",
+  "version": "0.58.0-vnext.89",
   "license": "MIT",
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",
