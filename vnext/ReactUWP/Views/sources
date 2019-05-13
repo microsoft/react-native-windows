@@ -1,0 +1,32 @@
+LIBLETNAME = ReactUWP_Views
+
+!include ..\make.inc
+
+SOURCES =  \
+	ActivityIndicatorViewManager.cpp \
+	CheckboxViewManager.cpp \
+	ControlViewManager.cpp \
+	DatePickerViewManager.cpp \
+	FlyoutViewManager.cpp \
+	FrameworkElementViewManager.cpp \
+	ImageViewManager.cpp \
+	PickerViewManager.cpp \
+	PopupViewManager.cpp \
+	RawTextViewManager.cpp \
+	ReactControl.cpp \
+	ReactRootView.cpp \
+	RootViewManager.cpp \
+	ScrollViewManager.cpp \
+	ShadowNodeBase.cpp \
+	SwitchViewManager.cpp \
+	TextInputViewManager.cpp \
+	TextViewManager.cpp \
+	ToucheventHandler.cpp \
+	ViewManagerBase.cpp \
+	ViewControl.cpp \
+	ViewPanel.cpp \
+	ViewViewManager.cpp \
+	VirtualTextViewManager.cpp \
+	WebViewManager.cpp \
+
+C_DEFINES = $(C_DEFINES) -DOLD_CPPWINRT=1

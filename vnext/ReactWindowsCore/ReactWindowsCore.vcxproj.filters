@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{d58d8a95-1e57-49ea-a4f3-c0859b7f649d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{81319f88-192e-40cf-bc1c-76a84bf37ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chakra">
+      <UniqueIdentifier>{1c2caa01-d0f4-4fb9-a956-c8e47cbee437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sandbox">
+      <UniqueIdentifier>{485cc520-3fae-4b03-896a-bfd3e288aa42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CxxMessageQueue.cpp" />
+    <ClCompile Include="Modules\UIManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\SourceCodeModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\I18nModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowNode.cpp" />
+    <ClCompile Include="ShadowNodeRegistry.cpp" />
+    <ClCompile Include="ViewManager.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Modules\AppStateModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="JSBigAbiString.cpp" />
+    <ClCompile Include="unicode.cpp" />
+    <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="LayoutAnimation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CxxMessageQueue.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\INativeUIManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\IViewManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\IUIManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\UIManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\I18nModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeModuleProvider.h" />
+    <ClInclude Include="ShadowNode.h" />
+    <ClInclude Include="ShadowNodeRegistry.h" />
+    <ClInclude Include="Logging.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="WebSocketJSExecutorFactory.h" />
+    <ClInclude Include="WebSocketModule.h" />
+    <ClInclude Include="InstanceManager.h" />
+    <ClInclude Include="IReactRootView.h" />
+    <ClInclude Include="IWebSocket.h" />
+    <ClInclude Include="OInstance.h" />
+    <ClInclude Include="IUIManager.h" />
+    <ClInclude Include="INativeUIManager.h" />
+    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="IDevSupportManager.h" />
+    <ClInclude Include="Sandbox\SandboxEndpoint.h">
+      <Filter>Sandbox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chakra\ChakraExecutor.h">
+      <Filter>Chakra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chakra\ChakraHelpers.h">
+      <Filter>Chakra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chakra\ChakraNativeModules.h">
+      <Filter>Chakra</Filter>
+    </ClInclude>
+    <ClInclude Include="ChakraPlatform.h">
+      <Filter>Chakra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chakra\ChakraUtils.h">
+      <Filter>Chakra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chakra\ChakraValue.h">
+      <Filter>Chakra</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateModules.h">
+      <Filter>Chakra</Filter>
+    </ClInclude>
+    <ClInclude Include="DevSettings.h" />
+    <ClInclude Include="Modules\AppStateModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncStorageModule.h" />
+    <ClInclude Include="Tracing.h" />
+    <ClInclude Include="IHttpResource.h" />
+    <ClInclude Include="AbiSafe.h" />
+    <ClInclude Include="JSBigAbiString.h" />
+    <ClInclude Include="MemoryTracker.h" />
+    <ClInclude Include="Modules\ExceptionsManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
+    <ClInclude Include="LayoutAnimation.h" />
+    <ClInclude Include="utilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

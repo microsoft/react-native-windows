@@ -51,15 +51,15 @@ clone_script:
 - appveyor-retry git submodule update -q --init --recursive
 
 before_build:
-- ps: $env:playgroundNet46_dir=$env:APPVEYOR_BUILD_FOLDER + "\RNWCS\ReactWindows\Playground.Net46"
-- ps: $env:bundle_dir=$env:APPVEYOR_BUILD_FOLDER + "\RNWCS\ReactWindows\Playground.Net46\ReactAssets"
-- appveyor-retry nuget restore RNWCS\ReactWindows\ReactNative.sln
+- ps: $env:playgroundNet46_dir=$env:APPVEYOR_BUILD_FOLDER + "\current\ReactWindows\Playground.Net46"
+- ps: $env:bundle_dir=$env:APPVEYOR_BUILD_FOLDER + "\current\ReactWindows\Playground.Net46\ReactAssets"
+- appveyor-retry nuget restore current\ReactWindows\ReactNative.sln
 - appveyor-retry npm i -g react-native-cli
 
 build_script:
 - ps: mkdir $env:bundle_dir
 - ps: react-native bundle --platform windows --entry-file $($env:playgroundNet46_dir + "\index.windows.js") --bundle-output $($env:bundle_dir + "\index.windows.bundle") --assets-dest $env:bundle_dir --dev false; echo "Suppressing error"
-- ps: msbuild /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "RNWCS\ReactWindows\ReactNative.sln"
+- ps: msbuild /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "current\ReactWindows\ReactNative.sln"
 
 # Start Winium in the background, give it a moment to start
 before_test:
@@ -77,7 +77,7 @@ test_script:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "RNWCS\ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
+      if($platform -ne "ARM") { nunit3-console --where "cat!=Network" "current\ReactWindows\ReactNative.Net46.Tests\bin\$platform\$config\ReactNative.Net46.Tests.dll" --result=myresults.xml }
 
       if ($platform -eq "ReleaseBundle" -Or $platform -eq "DebugBundle") { npm test }
 
@@ -97,7 +97,7 @@ after_test:
 
       if($config.value -eq "ReleaseBundle") { $config = "Release" } elseif ($config -eq "DebugBundle") { $config = "Debug" } else { $config = $config.value }
 
-      if ($platform.value -ne "ARM") { RNWCS\ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"RNWCS\ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" RNWCS\ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
+      if ($platform.value -ne "ARM") { current\ReactWindows\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"current\ReactWindows\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" "-targetargs:""--where cat!=Network" current\ReactWindows\ReactNative.Net46.Tests\bin\$env:PLATFORM\$config\ReactNative.Net46.Tests.dll"" -output:ReactWindows_coverage.xml }
 
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov

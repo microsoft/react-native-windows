@@ -1,0 +1,76 @@
+{
+  "name": "react-native-windows",
+  "version": "1000.0.0",
+  "description": "React Native platform extensions for the Universal Windows Platform.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ReactWindows/react-native-windows.git"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "engineStrict": true,
+  "main": "Libraries/react-native-windows/react-native-windows-implementation.js",
+  "scripts": {
+    "test": "jasmine",
+    "lint": "eslint .",
+    "flow-check": "flow check"
+  },
+  "files": [
+    "Libraries",
+    "ReactWindows/ReactNative",
+    "ReactWindows/ReactNative.Shared",
+    "ReactWindows/ReactNative.Net46",
+    "ReactWindows/ReactNativeWebViewBridge",
+    "ReactWindows/ChakraBridge",
+    "Yoga/csharp/Facebook.Yoga",
+    "Yoga/csharp/Yoga",
+    "Yoga/yoga",
+    "local-cli",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": "16.6.3",
+    "react-native": "~0.58.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "9.0.0",
+    "eslint": "5.1.0",
+    "eslint-config-fb-strict": "22.1.0",
+    "eslint-config-fbjs": "2.0.1",
+    "eslint-plugin-flowtype": "2.43.0",
+    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-react": "7.8.2",
+    "flow-bin": "^0.86.0",
+    "https-proxy-agent": "^2.2.1",
+    "jasmine": "^2.6.0",
+    "jasmine-reporters": "^2.2.1",
+    "minimist": "^1.2.0",
+    "prettier": "1.13.6",
+    "react": "16.6.3",
+    "react-devtools-core": "^3.4.2",
+    "react-native": "~0.58.0"
+  },
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "glob": "^7.1.1",
+    "react-native-local-cli": "^1.0.0-alpha.5",
+    "shelljs": "^0.7.8",
+    "username": "^3.0.0",
+    "uuid": "^2.0.1",
+    "xml-parser": "^1.2.1"
+  },
+  "rnpm": {
+    "haste": {
+      "platforms": [
+        "windows"
+      ],
+      "providesModuleNodeModules": [
+        "react-native-windows"
+      ]
+    },
+    "plugin": "./local-cli/index.js",
+    "platform": "./local-cli/platform.js"
+  }
+}
