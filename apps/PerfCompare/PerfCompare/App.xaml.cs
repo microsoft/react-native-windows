@@ -17,9 +17,9 @@ namespace PerfCompare
 
         public const int TotalMessages = 10;
 
-        public static void ShowStats()
+        public static void ShowStats(string title)
         {
-            ApplicationView.GetForCurrentView().Title = $"Elapsed: {PerfStats.ElapsedTimeReadable}, Commit: +{PerfStats.TotalCommitReadable}";
+            ApplicationView.GetForCurrentView().Title = $"[{title}] Elapsed: {PerfStats.ElapsedTimeReadable}, Commit: +{PerfStats.TotalCommitReadable}";
         }
 
         public App()

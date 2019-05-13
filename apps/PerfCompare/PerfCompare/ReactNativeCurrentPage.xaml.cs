@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 
 using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
+using ReactNative.UIManager;
 
 using Newtonsoft.Json.Linq;
 
@@ -26,9 +28,27 @@ namespace PerfCompare
 
         private void InitializeReactNative()
         {
+            ViewManagerTestHooks.Enabled = true;
+            ViewManagerTestHooks.ViewLoaded += View_Loaded;
+
             _host.OnResume(null);
             _host.ApplyArguments(null);
-            this.Content = _host.OnCreate(JObject.Parse("{ \"messageCount\": \"" + App.TotalMessages + "\" }"));
+
+            ReactRootView root = _host.OnCreate(JObject.Parse("{ \"messageCount\": \"" + App.TotalMessages + "\" }"));
+
+            this.Content = root;
+        }
+
+        private async void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is BorderedCanvas bc && (bc.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
+            {
+                await Dispatcher.RunIdleAsync((args) =>
+                {
+                    App.PerfStats.Stop(true);
+                    App.ShowStats("RNW Current");
+                });
+            }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -36,7 +56,7 @@ namespace PerfCompare
             await Dispatcher.RunIdleAsync((args) =>
             {
                 App.PerfStats.Stop(false);
-                App.ShowStats();
+                App.ShowStats("RNW Current");
             });
         }
     }

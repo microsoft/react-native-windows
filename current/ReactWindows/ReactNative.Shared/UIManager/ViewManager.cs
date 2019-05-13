@@ -53,5 +53,24 @@ namespace ReactNative.UIManager
             view.Width = dimensions.Width;
             view.Height = dimensions.Height;
         }
+
+        /// <summary>
+        /// Subclasses can override this method to install custom event 
+        /// emitters on the given view.
+        /// </summary>
+        /// <param name="reactContext">The React context.</param>
+        /// <param name="view">The view instance.</param>
+        /// <remarks>
+        /// Consider overriding this method if your view needs to emit events
+        /// besides basic touch events to JavaScript (e.g., scroll events).
+        /// </remarks>
+        protected override void AddEventEmitters(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            base.AddEventEmitters(reactContext, view);
+            if (ViewManagerTestHooks.Enabled)
+            {
+                view.Loaded += ViewManagerTestHooks.OnViewLoaded;
+            }
+        }
     }
 }

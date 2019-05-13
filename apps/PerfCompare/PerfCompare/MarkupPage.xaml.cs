@@ -4,6 +4,7 @@
 using System;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 
 namespace PerfCompare
@@ -12,8 +13,6 @@ namespace PerfCompare
     {
         public ObservableCollection<Message> Messages => _messages ?? (_messages = LoadMessages(App.TotalMessages));
         private ObservableCollection<Message> _messages = null;
-
-        private volatile int _messagesRenderedCount = 0;
 
         public MarkupPage()
         {
@@ -34,12 +33,12 @@ namespace PerfCompare
 
         private async void Message_Loaded(object sender, RoutedEventArgs e)
         {
-            if (++_messagesRenderedCount == App.TotalMessages)
+            if (sender is StackPanel sp && (sp.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
             {
                 await Dispatcher.RunIdleAsync((args) =>
                 {
                     App.PerfStats.Stop(true);
-                    App.ShowStats();
+                    App.ShowStats("XAML Markup");
                 });
             }
         }
@@ -49,13 +48,15 @@ namespace PerfCompare
             await Dispatcher.RunIdleAsync((args) =>
             {
                 App.PerfStats.Stop(false);
-                App.ShowStats();
+                App.ShowStats("XAML Markup");
             });
         }
     }
 
     public sealed class Message
     {
+        public string MessageID { get; private set; }
+
         public string Text { get; private set; }
 
         public string UserName { get; private set; }
@@ -72,6 +73,7 @@ namespace PerfCompare
         {
             return new Message
             {
+                MessageID = "m" + (id + 1),
                 Text = GetValue(id, TextValues),
                 UserName = GetValue(id, UserNameValues),
                 Avatar = GetValue(id, AvatarValues),

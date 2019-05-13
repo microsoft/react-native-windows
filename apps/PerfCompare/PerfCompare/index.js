@@ -85,6 +85,7 @@ var AvatarValues = [
 
 class Message {
   constructor() {
+    this.Index = -1;
     this.Text = "";
     this.UserName = "";
     this.Avatar = null;
@@ -99,6 +100,7 @@ function GetValue(index, values) {
 
 function CreateMessage(id) {
   let m = new Message();
+  m.messageId = "m" + (id + 1);
   m.Text = GetValue(id, TextValues);
   m.UserName = GetValue(id, UserNameValues);
   m.Avatar = GetValue(id, AvatarValues);
@@ -118,7 +120,7 @@ function LoadMessages(count) {
 class MessageView extends Component {
   render() {
     return (
-      <View style={styles.message}>
+      <View style={styles.message} testID={this.props.message.messageId}>
         <Image style={styles.messageAvatar} source={this.props.message.Avatar} />
         <View style={styles.messageContents}>
           <View style={styles.messageHeader}>

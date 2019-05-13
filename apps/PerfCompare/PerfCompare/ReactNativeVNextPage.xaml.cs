@@ -44,7 +44,7 @@ namespace PerfCompare
             await Dispatcher.RunIdleAsync((args) =>
             {
                 App.PerfStats.Stop(false);
-                App.ShowStats();
+                App.ShowStats("RNW VNext");
             });
         }
     }
