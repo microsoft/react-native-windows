@@ -91,6 +91,13 @@ public:
 
     return result;
   }
+
+  JsErrorCode GetConsoleObject(JsValueRef *consoleObject)
+  {
+    JsErrorCode result = JsDebugProtocolHandlerCreateConsoleObject(m_protocolHandler, consoleObject);
+
+    return result;
+  }
 };
 
 

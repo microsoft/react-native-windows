@@ -203,6 +203,75 @@ struct JsRuntimeTracker
 #endif
 };
 
+#if !defined(USE_EDGEMODE_JSRT)
+
+#define IfFailRet(v) \
+    { \
+        JsErrorCode error = (v); \
+        if (error != JsNoError) \
+        { \
+            return error; \
+        } \
+    }
+
+
+JsErrorCode ChakraExecutor::RedirectConsoleToDebugger(JsValueRef debuggerConsoleObject) {
+ 
+  JsValueRef globalObject = JS_INVALID_REFERENCE;
+  IfFailRet(JsGetGlobalObject(&globalObject));
+
+  JsPropertyIdRef consolePropertyId = JS_INVALID_REFERENCE;
+  IfFailRet(JsGetPropertyIdFromName(L"console", &consolePropertyId));
+
+  JsValueRef consoleObject = JS_INVALID_REFERENCE;
+  IfFailRet(JsGetProperty(globalObject, consolePropertyId, &consoleObject));
+
+  JsValueRef undefinedValue = JS_INVALID_REFERENCE;
+  IfFailRet(JsGetUndefinedValue(&undefinedValue));
+
+  if (consoleObject == JS_INVALID_REFERENCE || consoleObject == undefinedValue)
+  {
+    return JsErrorNotImplemented;
+  }
+
+  std::string script = "";
+
+  script = script + "function patchConsoleObject$$1(global, console, debugConsole) {\n";
+  script = script + "var obj = {};\n";
+  script = script + "for (var fn in console) {\n";
+  script = script + "if (typeof console[fn] === \"function\") {\n";
+  script = script + "(function(name) {\n";
+  script = script + "obj[name] = function(...rest) {\n";
+  script = script + "console[name](rest);\n";
+  script = script + "if (name in debugConsole && typeof debugConsole[name] === \"function\") {\n";
+  script = script + "debugConsole[name](rest);\n";
+  script = script + "}\n";
+  script = script + "}\n";
+  script = script + "})(fn);\n";
+  script = script + "}\n";
+  script = script + "}\n";
+  script = script + "global.console = obj;\n";
+  script = script + "}\n";
+  script = script + "patchConsoleObject$$1;\n";
+
+
+  JsValueRef patchFunction = JS_INVALID_REFERENCE;
+
+  JsValueRef scriptUrl = JS_INVALID_REFERENCE;
+  IfFailRet(JsCreateString("", 0, &scriptUrl));
+
+  JsValueRef scriptContentValue = JS_INVALID_REFERENCE;
+  IfFailRet(JsCreateString(script.c_str(), script.length(), &scriptContentValue));
+  IfFailRet(JsRun(scriptContentValue, JS_SOURCE_CONTEXT_NONE, scriptUrl, JsParseScriptAttributeLibraryCode, &patchFunction));
+
+  JsValueRef args[4] = { undefinedValue, globalObject, consoleObject, debuggerConsoleObject };
+  IfFailRet(JsCallFunction(patchFunction, args, _countof(args), nullptr /*no return value*/));
+
+  return JsNoError;
+}
+
+#endif
+
 static thread_local JsRuntimeTracker tls_runtimeTracker;
 
 void ChakraExecutor::initOnJSVMThread()
@@ -298,6 +367,18 @@ void ChakraExecutor::initOnJSVMThread()
 
   // Add a pointer to ourselves so we can retrieve it later in our hooks
   JsSetContextData(m_context, this);
+
+#if !defined(USE_EDGEMODE_JSRT)
+  JsValueRef debuggerConsoleObject;
+  tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(&debuggerConsoleObject);
+
+  JsValueRef undefinedValue = JS_INVALID_REFERENCE;
+  JsGetUndefinedValue(&undefinedValue);
+
+  if (debuggerConsoleObject == JS_INVALID_REFERENCE || debuggerConsoleObject == undefinedValue) {
+    isPatchingRequired = false;
+  }
+#endif
 
   installNativeHook<&ChakraExecutor::nativeFlushQueueImmediate>("nativeFlushQueueImmediate");
   installNativeHook<&ChakraExecutor::nativeCallSyncHook>("nativeCallSyncHook");
@@ -477,6 +558,18 @@ void ChakraExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> sc
   else
   {
     evaluateScriptWithBytecode(std::move(script), scriptVersion, jsSourceURL, std::move(bytecodeFileName));
+  }
+#endif
+
+#if !defined(USE_EDGEMODE_JSRT)
+  if (m_instanceArgs.DebuggerConsoleRedirection && isPatchingRequired) {
+    JsValueRef debuggerConsoleObject;
+    tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(&debuggerConsoleObject);
+      
+    JsErrorCode result = RedirectConsoleToDebugger(debuggerConsoleObject);
+    if (result == JsNoError) {
+      isPatchingRequired = false;
+    }
   }
 #endif
 

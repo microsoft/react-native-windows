@@ -66,6 +66,9 @@ struct DevSettings
   /// Debugging will start as soon as the react native instance is loaded.
   bool useWebDebugger{ false };
 
+  // Enables ChakraCore console redirection to debugger
+  bool debuggerConsoleRedirection{ false };
+
   /// Dispatcher for notifications about JS engine memory consumption.
   std::shared_ptr<MemoryTracker> memoryTracker;
 

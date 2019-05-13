@@ -158,6 +158,8 @@ private:
     std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService);
   static void CHAKRA_CALLBACK ProcessDebuggerCommandQueueCallback(void* callbackState);
   void ProcessDebuggerCommandQueue();
+  bool isPatchingRequired = true;
+  JsErrorCode RedirectConsoleToDebugger(JsValueRef debuggerConsoleObject);
 #endif
   void flush();
   void flushQueueImmediate(ChakraValue&&);
