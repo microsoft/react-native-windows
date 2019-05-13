@@ -20,6 +20,9 @@ function exec(command) {
 
 function updateVersion() {
   const publishBranchName = process.env.BUILD_SOURCEBRANCH.match(/refs\/heads\/(.*)/)[1];
+
+  // Set env variable to allow npm publish task to publish to correct tag
+  console.log(`##vso[task.setvariable variable=npmTag]${publishBranchName === 'master' ? 'vnext' : publishBranchName}`);
   console.log(`Target branch to publish to: ${publishBranchName}`);
 
   const tempPublishBranch = `publish-temp-${Date.now()}`;
