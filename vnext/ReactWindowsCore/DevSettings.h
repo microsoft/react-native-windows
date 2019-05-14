@@ -8,6 +8,7 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 #define STRING_(s) #s
 #define STRING(s) STRING_(s)
