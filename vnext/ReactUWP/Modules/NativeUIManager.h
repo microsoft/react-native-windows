@@ -53,6 +53,12 @@ public:
   // Other public functions
   void DirtyYogaNode(int64_t tag);
 
+  // For unparented node like Flyout, XamlRoot should be set to handle XamlIsland/AppWindow scenarios.
+  // Since it doesn't have parent, and all nodes in the tree should have the same XamlRoot,
+  // this function iterates all roots and try to get a valid XamlRoot.
+  // To reduce the dependency to cppwinrt in header file, ShadowNode* other XamlRoot is returned.
+  facebook::react::ShadowNode* getShadowNodeWithXamlRoot();
+
 private:
   void DoLayout();
   void UpdateExtraLayout(int64_t tag);
