@@ -173,7 +173,7 @@ public:
       /* outputCorruptBytecode */
       [](const std::vector<char>& correctBytecode)
       {
-        const uint64_t wrongBytecodeFileFormatVersion = 0;
+        constexpr uint64_t wrongBytecodeFileFormatVersion = 0;
         std::ofstream bytecodeFile(testScriptBytecodeFilename, std::ios::binary);
         Assert::IsTrue(bool(bytecodeFile));
 
@@ -217,7 +217,7 @@ public:
         std::ofstream bytecodeFile(testScriptBytecodeFilename, std::ios::binary);
         Assert::IsTrue(bool(bytecodeFile));
 
-        const uint64_t wrongBundleVersion = 0;
+        constexpr uint64_t wrongBundleVersion = 0;
 
         bytecodeFile.write(&correctBytecode[0], bundleVersionIndex);
 
@@ -266,11 +266,11 @@ public:
         std::ofstream bytecodeFile(testScriptBytecodeFilename, std::ios::binary);
         Assert::IsTrue(bool(bytecodeFile));
 
-        uint32_t wrongChakraVersionInfo[4] = { 0, 0, 0, 0 };
+        constexpr uint32_t wrongChakraVersionInfo[4] = { 0, 0, 0, 0 };
 
         bytecodeFile.write(&correctBytecode[0], ChakraVersionInfoIndex);
 
-        bytecodeFile.write(reinterpret_cast<char*>(&wrongChakraVersionInfo[0]),
+        bytecodeFile.write(reinterpret_cast<const char*>(&wrongChakraVersionInfo[0]),
           bytecodeIndex - ChakraVersionInfoIndex);
 
         bytecodeFile.write(&correctBytecode[bytecodeIndex],

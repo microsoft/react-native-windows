@@ -33,7 +33,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="JSBigAbiString.cpp" />
-    <ClCompile Include="UnicodeConversion.cpp" />
+    <ClCompile Include="unicode.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -122,8 +122,9 @@
     </ClInclude>
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\UnicodeConversion.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
     <ClInclude Include="LayoutAnimation.h" />
+    <ClInclude Include="utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

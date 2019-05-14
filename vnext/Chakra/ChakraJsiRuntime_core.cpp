@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "ChakraJsiRuntime.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <cxxreact/MessageQueueThread.h>
 
@@ -108,7 +108,7 @@ bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer,
 }
 
 std::unique_ptr<const jsi::Buffer> ChakraJsiRuntime::generatePreparedScript(const std::string& sourceURL, const jsi::Buffer& sourceBuffer) noexcept {
-  const std::wstring scriptUTF16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(sourceBuffer.data()), sourceBuffer.size());
+  const std::wstring scriptUTF16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(sourceBuffer.data()), sourceBuffer.size());
 
   unsigned int bytecodeSize = 0;
   if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError)

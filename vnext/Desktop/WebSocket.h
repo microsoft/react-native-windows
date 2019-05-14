@@ -13,7 +13,13 @@
 namespace Microsoft {
 namespace React {
 
-template<typename Protocol, typename Socket, typename Resolver>
+template
+<
+  typename Protocol     = boost::asio::ip::tcp,
+  typename SocketLayer  = boost::asio::basic_stream_socket<Protocol>,
+  typename Stream       = boost::beast::websocket::stream<SocketLayer>,
+  typename Resolver     = boost::asio::ip::basic_resolver<Protocol>
+>
 class BaseWebSocket : public IWebSocket
 {
   std::function<void()> m_connectHandler;
@@ -61,7 +67,7 @@ protected:
 
   boost::asio::io_context m_context;
   std::unique_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> m_workGuard;
-  std::unique_ptr<boost::beast::websocket::stream<Socket>> m_stream;
+  std::unique_ptr<Stream> m_stream;
 
   BaseWebSocket(Url&& url);
 
@@ -91,24 +97,13 @@ public:
 };
 
 class WebSocket
-  : public  BaseWebSocket
-            <
-              boost::asio::ip::tcp,
-              boost::asio::basic_stream_socket<boost::asio::ip::tcp>,
-              boost::asio::ip::basic_resolver<boost::asio::ip::tcp>
-            >
+  : public  BaseWebSocket<>
 {
 public:
   WebSocket(Url&& url);
 };
 
-class SecureWebSocket
-  : public  BaseWebSocket
-            <
-              boost::asio::ip::tcp,
-              boost::asio::ssl::stream<boost::asio::ip::tcp::socket>,
-              boost::asio::ip::basic_resolver<boost::asio::ip::tcp>
-            >
+class SecureWebSocket : public BaseWebSocket<boost::asio::ip::tcp, boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>
 {
   #pragma region BaseWebSocket overrides
 
@@ -125,39 +120,16 @@ namespace Test {
 // See <boost/beast/experimental/test/stream.hpp>
 class MockStream
 {
-  friend void teardown
-  (
-    boost::beast::websocket::role_type,
-    MockStream&,
-    boost::system::error_code&
-  ) {}
-
-  template<class TeardownHandler>
-  friend void async_teardown
-  (
-    boost::beast::websocket::role_type,
-    MockStream&,
-    TeardownHandler&&
-  ) {}
-
   boost::asio::io_context& m_context;
 
 public:
-  MockStream(boost::asio::io_context& context);
-
-  std::function<boost::system::error_code()> ConnectResult;
-
-  boost::beast::websocket::detail::sec_ws_key_type Key;
-
-  using is_deflate_supported = std::integral_constant<bool, false>;
-
   using next_layer_type = MockStream;
-
   using lowest_layer_type = MockStream;
-
   using executor_type = boost::asio::io_context::executor_type;
 
-  using lowest_layer_type = MockStream;
+  MockStream(boost::asio::io_context& context);
+
+  boost::asio::io_context::executor_type get_executor() noexcept;
 
   lowest_layer_type& lowest_layer();
 
@@ -169,13 +141,19 @@ public:
 
   bool got_text() const;
 
-  void auto_fragment(bool value);
-
-  bool auto_fragment() const;
-
   void write_buffer_size(std::size_t amount);
 
   std::size_t write_buffer_size() const;
+
+  #pragma region boost::beast::websocket::stream mocks
+
+  template<class RequestDecorator, class HandshakeHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(boost::system::error_code))
+  async_handshake_ex(
+    boost::beast::string_view host,
+    boost::beast::string_view target,
+    RequestDecorator const& decorator,
+    HandshakeHandler&& handler);
 
   template<class DynamicBuffer, class ReadHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
@@ -193,24 +171,30 @@ public:
   BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(boost::system::error_code))
   async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler);
 
-  // AsyncStream compliance
-  template<class MutableBufferSequence, class ReadHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
-  async_read_some(MutableBufferSequence const& buffers, ReadHandler&& handler);
+  #pragma endregion // boost::beast::websocket::stream mocks
 
-  template<class ConstBufferSequence, class WriteHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code, std::size_t))
-  async_write_some(ConstBufferSequence const& buffers, WriteHandler&& handler);
-
-  boost::asio::io_context::executor_type get_executor() noexcept;
+  std::function<boost::system::error_code()> ConnectResult;
+  std::function<boost::system::error_code(std::string, std::string)> HandshakeResult;
+  std::function<std::pair<boost::system::error_code, std::size_t>()> ReadResult;
+  std::function<std::pair<boost::system::error_code, std::size_t>()> WriteResult;
+  std::function<boost::system::error_code()> PingResult;
+  std::function<boost::system::error_code()> CloseResult;
 };
 
-class TestWebSocket : public BaseWebSocket<boost::asio::ip::tcp, MockStream, boost::asio::ip::basic_resolver<boost::asio::ip::tcp>>
+class TestWebSocket
+  : public  BaseWebSocket
+            <
+              boost::asio::ip::tcp, // TODO: Mock this and Resolver.
+              std::nullptr_t,       // Unused. MockStream works as its own next/lowest layer.
+              MockStream
+            >
 {
 public:
   TestWebSocket(facebook::react::Url&& url);
 
   void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
+  void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)>&& resultFunc);
+  void SetCloseResult(std::function<boost::system::error_code()>&& resultFunc);
 };
 
 } // namespace Microsoft::React::Test

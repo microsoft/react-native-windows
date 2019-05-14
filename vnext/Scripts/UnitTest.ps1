@@ -10,7 +10,7 @@ param (
 	$Configuration = 'Debug',
 	[string[]] $Tests,
 	[string] $Assembly = "$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll",
-	[string] $VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
+	[string] $VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
 )
 
 & $VsTest $Assembly --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]

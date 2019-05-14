@@ -10,7 +10,7 @@
 #endif
 
 #include "ChakraJsiRuntimeArgs.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <jsi/jsi.h>
 

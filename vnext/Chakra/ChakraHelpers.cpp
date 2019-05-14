@@ -6,7 +6,7 @@
 #include "ChakraHelpers.h"
 #include "ChakraValue.h"
 #include "ChakraUtils.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #ifdef WITH_FBSYSTRACE
 #include <fbsystrace.h>
@@ -171,13 +171,13 @@ void serializeBytecodeToFileCore(const std::shared_ptr<const JSBigString>& scrip
 {
   FILE* bytecodeFilePtr;
   // bytecode is a binary representation, so we need to pass in the "b" flag to fopen_s
-  if (_wfopen_s(&bytecodeFilePtr, UnicodeConversion::Utf8ToUtf16(bytecodeFileName).c_str(), L"wb"))
+  if (_wfopen_s(&bytecodeFilePtr, unicode::utf8ToUtf16(bytecodeFileName).c_str(), L"wb"))
   {
     return;
   }
   std::unique_ptr<FILE, decltype(&fclose)> bytecodeFilePtrWrapper(bytecodeFilePtr, fclose);
 
-  const std::wstring scriptUTF16 = UnicodeConversion::Utf8ToUtf16(script->c_str(), script->size());
+  const std::wstring scriptUTF16 = unicode::utf8ToUtf16(script->c_str(), script->size());
 
   unsigned int bytecodeSize = 0;
   if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) != JsNoError)
