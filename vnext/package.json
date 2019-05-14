@@ -59,10 +59,10 @@
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
     "typescript": "3.3.3",
-    "react-native": "0.59.0-microsoft-fb59merge.10"
+    "react-native": "0.59.0-microsoft-fb59merge.12"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "0.59.0-microsoft-fb59merge.10  || https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.10.tar.gz"
+    "react-native": "0.59.0-microsoft-fb59merge.12  || https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.12.tar.gz"
   }
 }
