@@ -152,7 +152,7 @@ void FlyoutShadowNode::createView()
       OnFlyoutClosed(*instance, m_tag, false);
   });
 
-  // Set XamlRoot on the popup to handle XamlIsland/AppWindow scenarios.
+  // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>())
   {
     if (auto instance = wkinstance.lock())
