@@ -150,6 +150,18 @@ void FlyoutShadowNode::createView()
     if (!m_updating && instance != nullptr)
       OnFlyoutClosed(*instance, m_tag, false);
   });
+
+  // Set XamlRoot on the popup to handle XamlIsland/AppWindow scenarios.
+  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>())
+  {
+    if (auto instance = wkinstance.lock())
+    {
+      if (auto shadowNode = static_cast<NativeUIManager*>(instance->NativeUIManager())->getShadowNodeWithXamlRoot())
+      {
+        flyoutBase6.XamlRoot(static_cast<ShadowNodeBase*>(shadowNode)->GetView().as<winrt::IUIElement10>().XamlRoot());
+      }
+    }
+  }
 }
 
 /*static*/ void FlyoutShadowNode::OnFlyoutClosed(IReactInstance& instance, int64_t tag, bool newValue)
