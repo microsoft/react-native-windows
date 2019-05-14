@@ -54,7 +54,7 @@ struct ChakraInstanceArgs
   /**
   * @brief Whether to enable ChakraCore console redirection to debugger.
   */
-  bool DebuggerConsoleRedirection{ false };
+  bool DebuggerConsoleRedirection { false };
 
   /**
   * @brief Port number to use when debugging.
