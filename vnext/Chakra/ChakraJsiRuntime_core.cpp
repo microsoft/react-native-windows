@@ -24,38 +24,17 @@ namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
-bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
-  bool isProxy;
-  JsValueRef target, handler;
-  JsGetProxyProperties(objectRef(obj), &isProxy, &target, &handler);
-
-  if (isProxy) {
-    ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(const_cast<ChakraJsiRuntime&>(*this), createObject(target));
-    if (extObject.getExternalData()) {
-      return true;
-    }
-  }
-
-  return false;
+JsWeakRef ChakraJsiRuntime::newWeakObjectRef(const jsi::Object& obj) {
+  JsWeakRef weakRef;
+  JsCreateWeakReference(objectRef(obj), &weakRef);
+  return weakRef;
 }
 
-std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(const jsi::Object& obj) {
-
-  bool isProxy;
-  JsValueRef target, handler;
-
-  JsGetProxyProperties(objectRef(obj), &isProxy, &target, &handler);
-
-  ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, createObject(target));
-  HostObjectProxy* externalData = extObject.getExternalData();
-  if (externalData) {
-    return externalData->getHostObject();
-  }
-  else {
-    return nullptr;
-  }
+JsValueRef ChakraJsiRuntime::strongObjectRef(const jsi::WeakObject& obj) {
+  JsValueRef strongRef;
+  JsGetWeakReferenceValue(objectRef(obj), &strongRef);
+  return strongRef;
 }
-
 
 Value ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL) {
   JsValueRef sourceRef;
@@ -323,7 +302,7 @@ void ChakraJsiRuntimeWithDebugger::ProcessDebuggerCommandQueue() {
 
 #endif
 
-std::unique_ptr<jsi::Runtime> makeChakraRuntime(ChakraJsiRuntimeArgs&& args) noexcept {
+std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(ChakraJsiRuntimeArgs&& args) noexcept {
 #ifdef CHAKRART_HAS_DEBUGGER
   return std::make_unique<ChakraJsiRuntimeWithDebugger>(std::move(args));
 #else
