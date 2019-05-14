@@ -58,7 +58,7 @@ void SnapPointManagingContentControl::VerticalSnapPointsChanged(winrt::event_tok
 
 winrt::IVectorView<float> SnapPointManagingContentControl::GetIrregularSnapPoints(winrt::Orientation orientation, winrt::SnapPointsAlignment alignment)
 {
-  auto retVal = winrt::single_threaded_vector<float>();
+  const auto retVal = winrt::single_threaded_vector<float>();
 
   if (m_offsets && m_offsets.Size())
   {
@@ -66,7 +66,7 @@ winrt::IVectorView<float> SnapPointManagingContentControl::GetIrregularSnapPoint
     {
       retVal.Append(m_horizontal ? m_startWidth : m_startHeight);
     }
-    for (auto offset : m_offsets)
+    for (const auto offset : m_offsets)
     {
       retVal.Append(offset);
     }
@@ -106,9 +106,9 @@ void SnapPointManagingContentControl::SetHorizontal(bool horizontal)
 
 void SnapPointManagingContentControl::SetWidthBounds(float startWidth, float endWidth)
 {
-  auto const update = [this, startWidth, endWidth]()
+  const auto update = [this, startWidth, endWidth]()
   {
-    auto const endUpdated = [this, endWidth]()
+    const auto endUpdated = [this, endWidth]()
     {
       if (m_endWidth != endWidth)
       {
@@ -117,7 +117,8 @@ void SnapPointManagingContentControl::SetWidthBounds(float startWidth, float end
       }
       return false;
     }();
-    auto const startUpdated = [this, startWidth]()
+
+    const auto startUpdated = [this, startWidth]()
     {
       if (m_startWidth != startWidth)
       {
@@ -138,9 +139,9 @@ void SnapPointManagingContentControl::SetWidthBounds(float startWidth, float end
 
 void SnapPointManagingContentControl::SetHeightBounds(float startHeight, float endHeight)
 {
-  auto const update = [this, startHeight, endHeight]()
+  const auto update = [this, startHeight, endHeight]()
   {
-    auto const endUpdated = [this, endHeight]()
+    const auto endUpdated = [this, endHeight]()
     {
       if (m_endHeight != endHeight)
       {
@@ -149,7 +150,7 @@ void SnapPointManagingContentControl::SetHeightBounds(float startHeight, float e
       }
       return false;
     }();
-    auto const startUpdated = [this, startHeight]()
+    const auto startUpdated = [this, startHeight]()
     {
       if (m_startHeight != startHeight)
       {

@@ -40,7 +40,7 @@ ScrollViewShadowNode::ScrollViewShadowNode()
 
 void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic& commandArgs)
 {
-  auto scrollViewer = GetView().as<winrt::ScrollViewer>();
+  const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   if (scrollViewer == nullptr)
     return;
 
@@ -71,8 +71,8 @@ void ScrollViewShadowNode::createView()
 {
   Super::createView();
 
-  auto const scrollViewer = GetView().as<winrt::ScrollViewer>();
-  auto scrollViewUWPImplementation = new ScrollViewUWPImplementation(scrollViewer);
+  const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
+  const auto scrollViewUWPImplementation = new ScrollViewUWPImplementation(scrollViewer);
 
   m_scrollViewerSizeChangedRevoker = scrollViewer.SizeChanged(winrt::auto_revoke,
     [scrollViewUWPImplementation](const auto&, const auto&)
@@ -83,8 +83,8 @@ void ScrollViewShadowNode::createView()
   m_scrollViewerViewChangedRevoker = scrollViewer.ViewChanged(winrt::auto_revoke,
     [this, scrollViewUWPImplementation](const auto & sender, const auto & args)
     {
-      auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
-      auto zoomFactor = scrollViewerNotNull.ZoomFactor();
+      const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
+      const auto zoomFactor = scrollViewerNotNull.ZoomFactor();
       if (m_zoomFactor != zoomFactor)
       {
         m_zoomFactor = zoomFactor;
@@ -103,18 +103,17 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
 {
   m_updating = true;
 
-  auto scrollViewer = GetView().as<winrt::ScrollViewer>();
+  const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   if (scrollViewer == nullptr)
     return;
 
-  auto control = scrollViewer.as<winrt::Control>();
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    auto const propertyName = pair.first;
-    auto const propertyValue = pair.second;
+    const auto propertyName = pair.first;
+    const auto propertyValue = pair.second;
     if (propertyName == "horizontal")
     {
-      auto [valid, horizontal] = getPropertyAndValidity(propertyValue, false);
+      const auto [valid, horizontal] = getPropertyAndValidity(propertyValue, false);
       if (valid)
       {
         scrollViewer.HorizontalScrollMode(horizontal ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled);
@@ -124,7 +123,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "showsHorizontalScrollIndicator")
     {
-      auto [valid, showsHorizontalScrollIndicator] = getPropertyAndValidity(propertyValue, true);
+      const auto [valid, showsHorizontalScrollIndicator] = getPropertyAndValidity(propertyValue, true);
       if (valid)
       {
         scrollViewer.HorizontalScrollBarVisibility(showsHorizontalScrollIndicator ? winrt::ScrollBarVisibility::Visible : winrt::ScrollBarVisibility::Hidden);
@@ -132,7 +131,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "showsVerticalScrollIndicator")
     {
-      auto [valid, showsVerticalScrollIndicator] = getPropertyAndValidity(propertyValue, true);
+      const auto [valid, showsVerticalScrollIndicator] = getPropertyAndValidity(propertyValue, true);
       if (valid)
       {
         scrollViewer.VerticalScrollBarVisibility(showsVerticalScrollIndicator ? winrt::ScrollBarVisibility::Visible : winrt::ScrollBarVisibility::Hidden);
@@ -140,7 +139,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "minimumZoomScale")
     {
-      auto [valid, minimumZoomScale] = getPropertyAndValidity(propertyValue, 1.0);
+      const auto [valid, minimumZoomScale] = getPropertyAndValidity(propertyValue, 1.0);
       if (valid)
       {
         scrollViewer.MinZoomFactor(static_cast<float>(minimumZoomScale));
@@ -148,7 +147,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "maximumZoomScale")
     {
-      auto [valid, maximumZoomScale] = getPropertyAndValidity(propertyValue, 1.0);
+      const auto [valid, maximumZoomScale] = getPropertyAndValidity(propertyValue, 1.0);
       if (valid)
       {
         scrollViewer.MaxZoomFactor(static_cast<float>(maximumZoomScale));
@@ -156,7 +155,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "zoomScale")
     {
-      auto [valid, zoomScale] = getPropertyAndValidity(propertyValue, 1.0);
+      const auto [valid, zoomScale] = getPropertyAndValidity(propertyValue, 1.0);
       if (valid)
       {
         scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(zoomScale));
@@ -164,7 +163,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "snapToInterval")
     {
-      auto [valid, snapToInterval] = getPropertyAndValidity(propertyValue, 0.0);
+      const auto [valid, snapToInterval] = getPropertyAndValidity(propertyValue, 0.0);
       if (valid)
       {
         ScrollViewUWPImplementation(scrollViewer).SnapToInterval(static_cast<float>(snapToInterval));
@@ -172,7 +171,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "snapToOffsets")
     {
-      auto [valid, snapToOffsets] = getPropertyAndValidity(propertyValue, winrt::single_threaded_vector<float>());
+      const auto [valid, snapToOffsets] = getPropertyAndValidity(propertyValue, winrt::single_threaded_vector<float>());
       if (valid)
       {
         ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(snapToOffsets.GetView());
@@ -180,7 +179,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
     }
     else if (propertyName == "snapToAlignment")
     {
-      auto [valid, snapToAlignment] = getPropertyAndValidity(propertyValue, winrt::SnapPointsAlignment::Near);
+      const auto [valid, snapToAlignment] = getPropertyAndValidity(propertyValue, winrt::SnapPointsAlignment::Near);
       if (valid)
       {
         scrollViewer.HorizontalSnapPointsAlignment(snapToAlignment);
@@ -229,8 +228,8 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
         true,
         [propertyValue]()
         {
-          auto vector = winrt::single_threaded_vector<float>();
-          for (auto val : propertyValue)
+          const auto vector = winrt::single_threaded_vector<float>();
+          for (const auto val : propertyValue)
           {
             if (val.isNumber())
               vector.Append(static_cast<float>(val.asDouble()));
@@ -336,9 +335,9 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
 
 XamlView ScrollViewManager::CreateViewCore(int64_t tag)
 {
-  auto scrollViewer = [this]()
+  const auto scrollViewer = [this]()
   {
-    auto scrollViewer = winrt::ScrollViewer{};
+    const auto scrollViewer = winrt::ScrollViewer{};
 
     scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
     scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
@@ -348,7 +347,8 @@ XamlView ScrollViewManager::CreateViewCore(int64_t tag)
 
     return scrollViewer;
   }();
-  auto scrollViewUWPImplementation = [scrollViewer]()
+
+  const auto scrollViewUWPImplementation = [scrollViewer]()
   {
     ScrollViewUWPImplementation::ConvertScrollViewer(scrollViewer);
     return new ScrollViewUWPImplementation(scrollViewer);
@@ -365,7 +365,7 @@ void ScrollViewManager::AddHandlers(const winrt::ScrollViewer& scrollViewer, int
   m_scrollViewerViewChangingRevokers[tag] = scrollViewer.ViewChanging(winrt::auto_revoke,
     [this, tag](const auto & sender, const auto & args)
     {
-      auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
+      const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
 
 
       //If we are transitioning to inertial scrolling.
@@ -406,7 +406,7 @@ void ScrollViewManager::AddHandlers(const winrt::ScrollViewer& scrollViewer, int
     [this, tag](const auto & sender, const auto&)
     {
       m_isScrolling[tag] = true;
-      auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
       EmitScrollEvent(
         scrollViewer,
         tag,
@@ -420,7 +420,7 @@ void ScrollViewManager::AddHandlers(const winrt::ScrollViewer& scrollViewer, int
   m_scrollViewerDirectManipulationCompletedRevokers[tag] = scrollViewer.DirectManipulationCompleted(winrt::auto_revoke,
     [this, tag](const auto & sender, const auto&)
     {
-      auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
       if (m_isScrollingFromInertia[tag])
       {
         EmitScrollEvent(
@@ -455,11 +455,11 @@ void ScrollViewManager::EmitScrollEvent(
   const char* eventName,
   double x, double y, double zoom)
 {
-  auto instance = m_wkReactInstance.lock();
+  const auto instance = m_wkReactInstance.lock();
   if (instance == nullptr)
     return;
 
-  auto scrollViewerNotNull = scrollViewer;
+  const auto scrollViewerNotNull = scrollViewer;
 
   folly::dynamic offset = folly::dynamic::object
     ("x", x)
@@ -496,7 +496,7 @@ void ScrollViewManager::AddView(XamlView parent, XamlView child, int64_t index)
 {
   if (parent && child && index >= 0)
   {
-    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
     {
       ScrollViewUWPImplementation(scrollViewer).AddView(child, static_cast<uint32_t>(index));
     }
@@ -507,7 +507,7 @@ void ScrollViewManager::RemoveAllChildren(XamlView parent)
 {
   if (parent)
   {
-    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
     {
       ScrollViewUWPImplementation(scrollViewer).RemoveAllChildren();
     }
@@ -518,7 +518,7 @@ void ScrollViewManager::RemoveChildAt(XamlView parent, int64_t index)
 {
   if (parent && index >= 0)
   {
-    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
     {
       ScrollViewUWPImplementation(scrollViewer).RemoveChildAt(static_cast<uint32_t>(index));
     }
@@ -529,7 +529,7 @@ void ScrollViewManager::SnapToInterval(XamlView parent, float interval)
 {
   if (parent)
   {
-    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
     {
       ScrollViewUWPImplementation(scrollViewer).SnapToInterval(interval);
     }
@@ -540,7 +540,7 @@ void ScrollViewManager::SnapToOffsets(XamlView parent, const winrt::IVectorView<
 {
   if (parent)
   {
-    if (auto scrollViewer = parent.as<winrt::ScrollViewer>())
+    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
     {
       ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(offsets);
     }

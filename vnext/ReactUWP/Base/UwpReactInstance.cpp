@@ -64,8 +64,6 @@
 
 #include <tuple>
 
-using namespace winrt;
-
 namespace {
 
   struct UwpDevSettings
