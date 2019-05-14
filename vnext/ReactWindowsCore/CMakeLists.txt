@@ -9,7 +9,7 @@ set(SOURCES
   LayoutAnimation.cpp
   ShadowNode.cpp
   ShadowNodeRegistry.cpp
-  UnicodeConversion.cpp
+  unicode.cpp
   Utils.cpp
   ViewManager.cpp)
 
