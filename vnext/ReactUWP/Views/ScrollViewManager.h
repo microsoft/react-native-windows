@@ -21,15 +21,14 @@ public:
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
+  facebook::react::ShadowNode* createShadow() const override;
+
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
 
   void SnapToInterval(XamlView parent, float interval);
   void SnapToOffsets(XamlView parent, const winrt::IVectorView<float>& offsets);
-
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
-  void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
@@ -42,17 +41,14 @@ private:
     const char* eventName,
     double x, double y, double zoom);
 
-  bool m_isScrollingFromInertia{ false };
-  bool m_isScrolling{ false };
-
-  std::map<int64_t, float> m_zoomFactors{};
-
-  std::map<int64_t, winrt::FrameworkElement::SizeChanged_revoker> m_scrollViewerSizeChangedRevokers{};
-  std::map<int64_t, winrt::FrameworkElement::SizeChanged_revoker> m_contentSizeChangedRevokers{};
-  std::map<int64_t, winrt::ScrollViewer::ViewChanged_revoker> m_scrollViewerViewChangedRevokers{};
   std::map<int64_t, winrt::ScrollViewer::ViewChanging_revoker> m_scrollViewerViewChangingRevokers{};
   std::map<int64_t, winrt::ScrollViewer::DirectManipulationCompleted_revoker> m_scrollViewerDirectManipulationCompletedRevokers{};
   std::map<int64_t, winrt::ScrollViewer::DirectManipulationStarted_revoker> m_scrollViewerDirectManipulationStartedRevokers{};
+
+  std::map<int64_t, bool> m_isScrollingFromInertia{};
+  std::map<int64_t, bool> m_isScrolling{};
+
+  friend class ScrollViewShadowNode;
 };
 
 } }
