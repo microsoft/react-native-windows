@@ -38,7 +38,6 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
   }
 
   setupMemoryTracker();
-  setupNativePromiseContinuation();
 
   // Create an execution context
   JsCreateContext(m_runtime, &m_ctx);
@@ -46,6 +45,8 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
 
   // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
   JsSetCurrentContext(m_ctx);
+
+  setupNativePromiseContinuation();
 
   std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
 }

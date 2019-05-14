@@ -5,8 +5,6 @@
 
 #include <chrono>
 #include <functional>
-#include <mutex>
-#include <unordered_map>
 
 #include <cxxreact/MessageQueueThread.h>
 
@@ -31,39 +29,32 @@ class MemoryTracker
 {
 public:
 	/**
-	 * @brief Initializes the object.
-	 *
-	 * @param Message queue thread on which event handlers are be being called on.
-	 */
-	MemoryTracker(std::shared_ptr<MessageQueueThread>&& callbackMessageQueueThread) noexcept;
-
-	/**
 	 * @brief Gets the amount of memory currently used by the JS engine.
 	 *
 	 * @returns Amount of memory currently used by the JS engine.
 	 */
-	virtual size_t GetCurrentMemoryUsage() const noexcept;
+	virtual size_t GetCurrentMemoryUsage() const noexcept = 0;
 
 	/**
 	 * @brief Gets the peak amount of memory the JS engine instance has used during its lifetime.
 	 *
 	 * @returns Peak amount of memory the used by the JS engine instance.
 	 */
-	virtual size_t GetPeakMemoryUsage() const noexcept;
+	virtual size_t GetPeakMemoryUsage() const noexcept = 0;
 
 	/**
 	 * @brief Gets the message queue thread on which event handlers are be being called on.
 	 *
 	 * @returns Message queue thread to call event handlers on.
 	 */
-	virtual std::shared_ptr<MessageQueueThread> GetCallbackMessageQueueThread() const noexcept;
+	virtual std::shared_ptr<MessageQueueThread> GetCallbackMessageQueueThread() const noexcept = 0;
 
 	/**
 	 * @brief Sets the message queue thread on which event handlers are be being called on.
 	 *
 	 * @param messageQueueThread Message queue thread to call event handlers on.
 	 */
-	virtual void SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread>&& messageQueueThread) noexcept;
+	virtual void SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread>&& messageQueueThread) noexcept = 0;
 
 	/**
 	 * @brief Adds a memory threshold callback.
@@ -76,7 +67,7 @@ public:
 	 *
 	 * @returns Identifier that can be used to remove the threshold callback.
 	 */
-	virtual CallbackRegistrationCookie AddThresholdCallback(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept;
+	virtual CallbackRegistrationCookie AddThresholdCallback(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept = 0;
 
 	/**
 	 * @brief Removes a memory threshold callback.
@@ -86,7 +77,7 @@ public:
 	 * @returns True if the callback was removed, false if no callback is registered under the
 	 * given identifier.
 	 */
-	virtual bool RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept;
+	virtual bool RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept = 0;
 
 	/**
 	 * @brief Initializes memory tracking.
@@ -95,7 +86,7 @@ public:
 	 *
 	 * @remarks This a ReactNative internal method and not meant be called by ReactNative users.
 	 */
-	void Initialize(size_t initialMemoryUsage) noexcept;
+	virtual void Initialize(size_t initialMemoryUsage) noexcept = 0;
 
 	/**
 	 * @brief Tracks an allocation by the JS engine.
@@ -104,7 +95,7 @@ public:
 	 *
 	 * @remarks This a ReactNative internal method and not meant be called by ReactNative users.
 	 */
-	void OnAllocation(size_t size) noexcept;
+	virtual void OnAllocation(size_t size) noexcept = 0;
 
 	/**
 	 * @brief Tracks a deallocation by the JS engine.
@@ -113,26 +104,7 @@ public:
 	 *
 	 * @remarks This a ReactNative internal method and not meant be called by ReactNative users.
 	 */
-	void OnDeallocation(size_t size) noexcept;
-
-private:
-	struct ThresholdCallbackRecord
-	{
-		ThresholdCallbackRecord(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept;
-
-		const size_t Threshold;
-		const std::chrono::milliseconds MinCallbackInterval;
-		const MemoryThresholdCallback Callback;
-		std::chrono::steady_clock::time_point LastNotificationTime;
-	};
-
-	bool m_isInitialized = false;
-	mutable std::recursive_mutex m_mutex;
-	size_t m_currentMemoryUsage = 0;
-	size_t m_peakMemoryUsage = 0;
-	CallbackRegistrationCookie m_nextCookie = 0;
-	std::unordered_map<CallbackRegistrationCookie, ThresholdCallbackRecord> m_thresholdCallbackRecords;
-	std::shared_ptr<MessageQueueThread> m_callbackMessageQueueThread;
+	virtual void OnDeallocation(size_t size) noexcept = 0;
 };
 
 /**

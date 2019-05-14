@@ -50,7 +50,11 @@ EXPORTS
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?Make@JSBigStringResourceDll@react@facebook@@SG?AV?$unique_ptr@$$CBVJSBigStringResourceDll@react@facebook@@U?$default_delete@$$CBVJSBigStringResourceDll@react@facebook@@@std@@@std@@PAUHINSTANCE__@@PAUHRSRC__@@@Z
 ?MakeLegacy@IWebSocket@React@Microsoft@@SG?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?asFunction@Object@jsi@facebook@@QHAE?AVFunction@23@AAVRuntime@23@@Z
+??1Value@jsi@facebook@@QAE@XZ
 ??1Buffer@jsi@facebook@@UAE@XZ
+?makeChakraJsiRuntime@chakraruntime@jsi@facebook@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraJsiRuntimeArgs@123@@Z
+
 
 YGLog
 YGLogWithConfig

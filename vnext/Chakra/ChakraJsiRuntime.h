@@ -10,16 +10,15 @@
 #endif
 
 #include "ChakraJsiRuntimeArgs.h"
-#include "unicode.h"
 
 #include <jsi/jsi.h>
 
 #include <memory>
-#include <mutex> 
+#include <mutex>
 #include <sstream>
 
-namespace facebook { 
-namespace jsi { 
+namespace facebook {
+namespace jsi {
 namespace chakraruntime {
 
 class ByteArrayBuffer : public jsi::Buffer {
@@ -70,7 +69,10 @@ protected:
 
 private:
   static void CALLBACK PromiseContinuationCallback(JsValueRef funcRef, void* callbackState) noexcept;
-  void promiseContinuation(JsValueRef value)  noexcept;
+  static void CALLBACK PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void* callbackState);
+
+  void PromiseContinuation(JsValueRef value) noexcept;
+  void PromiseRejectionTracker(JsValueRef promise, JsValueRef reason, bool handled);
 
   void setupNativePromiseContinuation() noexcept;
   void setupMemoryTracker() noexcept;
@@ -79,7 +81,7 @@ private:
   // Arguments shared by the specializations ..
   ChakraJsiRuntimeArgs m_args;
 
-  // Note :: For simplicity, We are pinning the script and serialized script buffers in the JSI::Runtime instance assuming as these buffers 
+  // Note :: For simplicity, We are pinning the script and serialized script buffers in the JSI::Runtime instance assuming as these buffers
   // are needed to stay alive for the lifetime of the JSI::Runtime implementation. This approach doesn't make sense
   // for other external buffers which may get created during the execution as that will stop the backing buffer from getting released
   // when the JSValue gets collected.

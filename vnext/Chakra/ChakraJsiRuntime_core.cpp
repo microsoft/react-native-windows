@@ -5,6 +5,7 @@
 
 #include "ChakraJsiRuntime.h"
 #include "unicode.h"
+#include "ChakraJsiRuntimeFactory.h"
 
 #include <cxxreact/MessageQueueThread.h>
 
@@ -12,15 +13,13 @@
 #if !defined(USE_EDGEMODE_JSRT)
 #include <ChakraCore.h>
 
-#if !defined(JSI_CORE)
 #define CHAKRART_HAS_DEBUGGER
-#endif
 
 #if defined(CHAKRART_HAS_DEBUGGER)
 #include "ChakraCoreDebugger.h"
 #endif
 
-namespace facebook { 
+namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
@@ -138,18 +137,71 @@ JsValueRef ChakraJsiRuntime::createJSPropertyId(const char*data, size_t length) 
 }
 
 // ES6 Promise callback
-void CALLBACK ChakraJsiRuntime::PromiseContinuationCallback(JsValueRef funcRef, void* callbackState)  noexcept {
+void CALLBACK ChakraJsiRuntime::PromiseContinuationCallback(JsValueRef funcRef, void* callbackState) noexcept {
   ChakraJsiRuntime* runtime = static_cast<ChakraJsiRuntime*>(callbackState);
-  runtime->promiseContinuation(funcRef);
+  runtime->PromiseContinuation(funcRef);
 }
 
-void ChakraJsiRuntime::promiseContinuation(JsValueRef funcRef)  noexcept {
-  runtimeArgs().promiseContinuation->registerPromise(createObject(funcRef).getFunction(*this));
+void CALLBACK ChakraJsiRuntime::PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void* callbackState) {
+  ChakraJsiRuntime* runtime = static_cast<ChakraJsiRuntime*>(callbackState);
+  runtime->PromiseRejectionTracker(promise, reason, handled);
+}
+
+void ChakraJsiRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
+  if (runtimeArgs().jsQueue) {
+    JsAddRef(funcRef, nullptr);
+    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
+      JsValueRef undefinedValue;
+      JsGetUndefinedValue(&undefinedValue);
+      checkException(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      JsRelease(funcRef, nullptr);
+    });
+  }
+}
+
+void ChakraJsiRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef reason, bool handled) {
+  if (!handled)
+  {
+    std::ostringstream errorStream;
+    errorStream << "ChakraCore uncaught promise rejection: ";
+
+    JsPropertyIdRef stackPropertyID;
+    JsErrorCode error = JsGetPropertyIdFromName(L"stack", &stackPropertyID);
+    if (error == JsNoError)
+    {
+      JsValueRef stack;
+      error = JsGetProperty(reason, stackPropertyID, &stack);
+      if (error == JsNoError)
+      {
+        JsValueRef stackStrValue;
+        error = JsConvertValueToString(stack, &stackStrValue);
+        if (error == JsNoError)
+        {
+          errorStream << JSStringToSTLString(stackStrValue);
+        }
+      }
+    }
+
+    if (error != JsNoError)
+    {
+      // weren't able to print stack, so just convert reason to a string
+      JsValueRef strValue;
+      error = JsConvertValueToString(reason, &strValue);
+      if (error == JsNoError)
+      {
+        errorStream << JSStringToSTLString(strValue);
+      }
+    }
+
+    std::string errorString = errorStream.str();
+    throw jsi::JSError(*this, createStringFromAscii(errorString.c_str(), errorString.length()));
+  }
 }
 
 void ChakraJsiRuntime::setupNativePromiseContinuation() noexcept{
-  if (m_args.promiseContinuation) {
+  if (runtimeArgs().enableNativePromiseSupport) {
     JsSetPromiseContinuationCallback(PromiseContinuationCallback, this);
+    JsSetHostPromiseRejectionTracker(PromiseRejectionTrackerCallback, this);
   }
 }
 
@@ -246,12 +298,12 @@ ChakraJsiRuntimeWithDebugger::ChakraJsiRuntimeWithDebugger(ChakraJsiRuntimeArgs&
   }
 
   if (breakOnNextLine && debugProtocolHandler_) {
-    if(runtimeArgs().loggingCallback) 
+    if(runtimeArgs().loggingCallback)
       runtimeArgs().loggingCallback("Waiting for debugger to connect...", facebook::jsi::chakraruntime::LogLevel::Info);
-    
+
     debugProtocolHandler_->WaitForDebugger();
-    
-    if (runtimeArgs().loggingCallback) 
+
+    if (runtimeArgs().loggingCallback)
       runtimeArgs().loggingCallback("Debugger connected", facebook::jsi::chakraruntime::LogLevel::Info);
   }
 }
@@ -323,7 +375,7 @@ void ChakraJsiRuntimeWithDebugger::ProcessDebuggerCommandQueue() {
 
 #endif
 
-std::unique_ptr<jsi::Runtime> makeChakraRuntime(ChakraJsiRuntimeArgs&& args) noexcept {
+std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(ChakraJsiRuntimeArgs&& args) noexcept {
 #ifdef CHAKRART_HAS_DEBUGGER
   return std::make_unique<ChakraJsiRuntimeWithDebugger>(std::move(args));
 #else
