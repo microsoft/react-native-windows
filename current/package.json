@@ -5,7 +5,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ReactWindows/react-native-windows.git"
+    "url": "git@github.com:ReactWindows/react-native-windows.git",
+    "directory": "current"
   },
   "engines": {
     "node": ">=4"
