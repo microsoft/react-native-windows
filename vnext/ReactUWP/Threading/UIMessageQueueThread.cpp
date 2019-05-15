@@ -23,6 +23,12 @@ void UIMessageQueueThread::runOnQueue(std::function<void()>&& func)
   m_uiDispatcher.RunAsync(
     winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
     [func = std::move(func)]() {
+
+      char buffer[1024];
+      static uint32_t cCalls = 0;
+      _snprintf_s(buffer, _countof(buffer), _TRUNCATE, "UIMessageQueueThread Calls: %u\r\n", ++cCalls);
+      OutputDebugStringA(buffer);
+
       func();
     });
 }
