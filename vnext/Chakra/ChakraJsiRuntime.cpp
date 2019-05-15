@@ -611,8 +611,7 @@ namespace detail {
 
 } // namespace detail
 
-bool ChakraJsiRuntime::
-Function(const jsi::Function& obj) const {
+bool ChakraJsiRuntime::isHostFunction(const jsi::Function& obj) const {
   throw std::runtime_error("ChakraJsiRuntime::isHostFunction is not implemented.");
 }
 
