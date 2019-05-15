@@ -611,7 +611,8 @@ namespace detail {
 
 } // namespace detail
 
-bool ChakraJsiRuntime::isHostFunction(const jsi::Function& obj) const {
+bool ChakraJsiRuntime::
+Function(const jsi::Function& obj) const {
   throw std::runtime_error("ChakraJsiRuntime::isHostFunction is not implemented.");
 }
 
@@ -960,7 +961,7 @@ bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
 }
 
 std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(const jsi::Object& obj) {
-  if (!isHostObject)
+  if (!isHostObject(obj))
     return nullptr;
 
   jsi::Value value = obj.getProperty(const_cast<ChakraJsiRuntime&>(*this), s_proxyGetHostObjectTargetPropName);
