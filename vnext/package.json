@@ -1,7 +1,12 @@
 {
   "name": "react-native-windows",
-  "version": "0.58.0-vnext.90",
+  "version": "0.58.0-vnext.99",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "git@github.com:microsoft/react-native-windows.git",
+    "directory": "vnext"
+  },
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -59,10 +64,10 @@
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
     "typescript": "3.3.3",
-    "react-native": "0.58.6-microsoft.44"
+    "react-native": "0.58.6-microsoft.46"
   },
   "peerDependencies": {
     "react": "16.6.3",
-    "react-native": "0.58.6-microsoft.44 || https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.44.tar.gz"
+    "react-native": "0.58.6-microsoft.46 || https://github.com/microsoft/react-native/archive/v0.58.6-microsoft.46.tar.gz"
   }
 }
