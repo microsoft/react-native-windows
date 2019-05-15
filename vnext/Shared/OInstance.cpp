@@ -387,7 +387,8 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
       instanceArgs.LoggingCallback = m_devSettings->loggingCallback;
 
       instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
-
+      instanceArgs.DebuggerConsoleRedirection = m_devSettings->debuggerConsoleRedirection;
+      
       if (!m_devSettings->useJITCompilation)
       {
 #if (defined(_MSC_VER) && !defined(WINRT))

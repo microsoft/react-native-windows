@@ -1,9 +1,9 @@
 # ReactNative for Windows (current)
 ![Hero Image with Logo](../.github/hero2.png)
 
-See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native. See [main landing page](https://github.com/Microsoft/react-native-windows) for more details on overall direction of `react-native-windows`. 
+See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native. See [main landing page](https://github.com/microsoft/react-native-windows) for more details on overall direction of `react-native-windows`. 
 
-This `current` subdirectory holds support for an existing React Native for Windows implementation built in C#. See [vnext](https://github.com/Microsoft/react-native-windows/tree/master/vnext) for details on the `vnext` rewrite of React Native for Windows built in C++.
+This `current` subdirectory holds support for an existing React Native for Windows implementation built in C#. See [vnext](https://github.com/microsoft/react-native-windows/tree/master/vnext) for details on the `vnext` rewrite of React Native for Windows built in C++.
 
 ## Status and roadmap
 
@@ -40,9 +40,9 @@ For information on parity status with Android and iOS, including details on impl
 - Read the guides on [Native Modules for Windows](docs/NativeModulesWindows.md) and [Native UI Components for Windows](docs/NativeComponentsWindows.md) if you are interested in extending native functionality.
 
 ## Opening issues
-If you encounter a bug with the `current` architecture, we would like to hear about it. Search the [existing issues](https://github.com/Microsoft/react-native-windows/issues?label%3A.NET) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of Windows, React Native, React Native Windows plugin, and device family (i.e., desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
+If you encounter a bug with the `current` architecture, we would like to hear about it. Search the [existing issues](https://github.com/microsoft/react-native-windows/issues?label%3A.NET) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of Windows, React Native, React Native Windows plugin, and device family (i.e., desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
 
-Please continue to report issues as you encounter them, but be sure to use the [correct template](https://github.com/Microsoft/react-native-windows/issues/new?assignees=rozele&labels=.NET&template=DOTNET.md) for issues related to the existing `react-native-windows` implementation.
+Please continue to report issues as you encounter them, but be sure to use the [correct template](https://github.com/microsoft/react-native-windows/issues/new?assignees=rozele&labels=.NET&template=DOTNET.md) for issues related to the existing `react-native-windows` implementation.
 
 ## Contributing
 See [Contributing guidelines](docs/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native Windows - current. 

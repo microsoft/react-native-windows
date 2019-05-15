@@ -14,6 +14,9 @@ SOURCES_SHARED = \
 	..\Utils.cpp \
 	..\ViewManager.cpp \
 
+SOURCES_UNICONV = \
+	..\unicode.cpp \
+
 SOURCES_WIN32 = $(SOURCES_SHARED) \
 
 SOURCES_WINRT = $(SOURCES_SHARED) \
