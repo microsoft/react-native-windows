@@ -13,16 +13,14 @@ namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
-// edge mode currently doesn't allow us to inspect proxies .. We need to implement these hostObject
-// related methods through some bookkeeping in our code.
-bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
-  throw std::runtime_error("ChakraJsiRuntime::isHostObject is not yet implemented.");
+JsWeakRef ChakraJsiRuntime::newWeakObjectRef(const jsi::Object& obj) {
+  return objectRef(obj);
 }
 
-std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(
-  const jsi::Object& obj) {
-  throw std::runtime_error("ChakraJsiRuntime::createObject is not implemented.");
+JsValueRef ChakraJsiRuntime::strongObjectRef(const jsi::WeakObject& obj) {
+  return objectRef(obj); // Return the original strong ref.
 }
+
 
 Value ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL) {
   const std::wstring script16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(buffer.data()), buffer.size());
@@ -96,7 +94,7 @@ void ChakraJsiRuntime::initRuntimeVersion()  noexcept {
   // NOP
 }
 
-std::unique_ptr<jsi::Runtime> makeChakraRuntime(ChakraJsiRuntimeArgs&& args)  noexcept {
+std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept {
   return std::make_unique<ChakraJsiRuntime>(std::move(args));
 }
 
