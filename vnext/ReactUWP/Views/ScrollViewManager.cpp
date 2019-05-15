@@ -25,13 +25,24 @@ public:
   void updateProperties(const folly::dynamic&& props) override;
 
 private:
+  void AddHandlers(const winrt::ScrollViewer& scrollViewer);
+  void EmitScrollEvent(
+    const winrt::ScrollViewer& scrollViewer,
+    int64_t tag,
+    const char* eventName,
+    double x, double y, double zoom);
   template <typename T> std::tuple<bool, T> getPropertyAndValidity(folly::dynamic propertyValue, T defaultValue);
 
   float m_zoomFactor{ 1.0f };
+  bool m_isScrollingFromInertia = false;
+  bool m_isScrolling = false;
 
   winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
   winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
   winrt::ScrollViewer::ViewChanged_revoker m_scrollViewerViewChangedRevoker{};
+  winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
+  winrt::ScrollViewer::DirectManipulationCompleted_revoker m_scrollViewerDirectManipulationCompletedRevoker{};
+  winrt::ScrollViewer::DirectManipulationStarted_revoker m_scrollViewerDirectManipulationStartedRevoker{};
 };
 
 ScrollViewShadowNode::ScrollViewShadowNode()
@@ -73,6 +84,8 @@ void ScrollViewShadowNode::createView()
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   const auto scrollViewUWPImplementation = new ScrollViewUWPImplementation(scrollViewer);
+
+  AddHandlers(scrollViewer);
 
   m_scrollViewerSizeChangedRevoker = scrollViewer.SizeChanged(winrt::auto_revoke,
     [scrollViewUWPImplementation](const auto&, const auto&)
@@ -192,6 +205,138 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
   m_updating = false;
 }
 
+void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer& scrollViewer)
+{
+  m_scrollViewerViewChangingRevoker = scrollViewer.ViewChanging(winrt::auto_revoke,
+    [this](const auto& sender, const auto& args)
+    {
+      const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
+
+
+      //If we are transitioning to inertial scrolling.
+      if (m_isScrolling && !m_isScrollingFromInertia && args.IsInertial())
+      {
+        m_isScrollingFromInertia = true;
+
+        EmitScrollEvent(
+          scrollViewerNotNull,
+          m_tag,
+          "topScrollEndDrag",
+          args.NextView().HorizontalOffset(),
+          args.NextView().VerticalOffset(),
+          args.NextView().ZoomFactor()
+        );
+
+        EmitScrollEvent(
+          scrollViewerNotNull,
+          m_tag,
+          "topScrollBeginMomentum",
+          args.NextView().HorizontalOffset(),
+          args.NextView().VerticalOffset(),
+          args.NextView().ZoomFactor()
+        );
+      }
+
+      EmitScrollEvent(
+        scrollViewerNotNull,
+        m_tag,
+        "topScroll",
+        args.NextView().HorizontalOffset(),
+        args.NextView().VerticalOffset(),
+        args.NextView().ZoomFactor()
+      );
+    });
+
+  m_scrollViewerDirectManipulationStartedRevoker = scrollViewer.DirectManipulationStarted(winrt::auto_revoke,
+    [this](const auto& sender, const auto&)
+    {
+      m_isScrolling = true;
+      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      EmitScrollEvent(
+        scrollViewer,
+        m_tag,
+        "topScrollBeginDrag",
+        scrollViewer.HorizontalOffset(),
+        scrollViewer.VerticalOffset(),
+        scrollViewer.ZoomFactor()
+      );
+    });
+
+  m_scrollViewerDirectManipulationCompletedRevoker = scrollViewer.DirectManipulationCompleted(winrt::auto_revoke,
+    [this](const auto& sender, const auto&)
+    {
+      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      if (m_isScrollingFromInertia)
+      {
+        EmitScrollEvent(
+          scrollViewer,
+          m_tag,
+          "topScrollEndMomentum",
+          scrollViewer.HorizontalOffset(),
+          scrollViewer.VerticalOffset(),
+          scrollViewer.ZoomFactor()
+        );
+      }
+      else
+      {
+        EmitScrollEvent(
+          scrollViewer,
+          m_tag,
+          "topScrollEndDrag",
+          scrollViewer.HorizontalOffset(),
+          scrollViewer.VerticalOffset(),
+          scrollViewer.ZoomFactor()
+        );
+      }
+
+      m_isScrolling = false;
+      m_isScrollingFromInertia = false;
+    });
+}
+
+void ScrollViewShadowNode::EmitScrollEvent(
+  const winrt::ScrollViewer& scrollViewer,
+  int64_t tag,
+  const char* eventName,
+  double x, double y, double zoom)
+{
+  const auto instance = GetViewManager()->GetReactInstance().lock();
+  if (instance == nullptr)
+    return;
+
+  const auto scrollViewerNotNull = scrollViewer;
+
+  folly::dynamic offset = folly::dynamic::object
+  ("x", x)
+    ("y", y);
+
+  folly::dynamic contentInset = folly::dynamic::object
+  ("left", 0)
+    ("top", 0)
+    ("right", 0)
+    ("bottom", 0);
+
+  folly::dynamic contentSize = folly::dynamic::object
+  ("width", scrollViewerNotNull.ExtentWidth())
+    ("height", scrollViewerNotNull.ExtentHeight());
+
+  folly::dynamic layoutSize = folly::dynamic::object
+  ("width", scrollViewerNotNull.ActualWidth())
+    ("height", scrollViewerNotNull.ActualHeight());
+
+  folly::dynamic eventJson = folly::dynamic::object
+  ("target", tag)
+    ("responderIgnoreScroll", true)
+    ("contentOffset", offset)
+    ("contentInset", contentInset)
+    ("contentSize", contentSize)
+    ("layoutMeasurement", layoutSize)
+    ("zoomScale", zoom);
+
+  folly::dynamic params = folly::dynamic::array(tag, eventName, eventJson);
+  instance->CallJsFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+}
+
 template <typename T>
 std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic propertyValue, T defaultValue)
 {
@@ -204,7 +349,7 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
   {
     if (propertyValue.isBool())
     {
-      return std::make_tuple(true, propertyValue.asBool());
+      return std::make_tuple(true, propertyValue.getBool());
     }
   }
 
@@ -212,11 +357,11 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
   {
     if (propertyValue.isDouble())
     {
-      return std::make_tuple(true, static_cast<T>(propertyValue.asDouble()));
+      return std::make_tuple(true, propertyValue.getDouble());
     }
     if (propertyValue.isInt())
     {
-      return std::make_tuple(true, static_cast<T>(propertyValue.asInt()));
+      return std::make_tuple(true, static_cast<double>(propertyValue.getInt()));
     }
   }
 
@@ -231,8 +376,10 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
           const auto vector = winrt::single_threaded_vector<float>();
           for (const auto val : propertyValue)
           {
-            if (val.isNumber())
-              vector.Append(static_cast<float>(val.asDouble()));
+            if (val.isDouble())
+              vector.Append(static_cast<float>(val.getDouble()));
+            else if (val.isInt())
+              vector.Append(static_cast<float>(val.getInt()));
           }
           return vector;
         }());
@@ -245,7 +392,7 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
     {
       return std::make_tuple(
         true,
-        static_cast<T>([snapToAlignment = propertyValue.asString()]()
+        static_cast<T>([snapToAlignment = propertyValue.getString()]()
       {
         if (snapToAlignment == "end")
         {
@@ -265,17 +412,6 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
 
   return std::make_tuple(false, defaultValue);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 ScrollViewManager::ScrollViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
   : Super(reactInstance)
@@ -353,143 +489,8 @@ XamlView ScrollViewManager::CreateViewCore(int64_t tag)
     ScrollViewUWPImplementation::ConvertScrollViewer(scrollViewer);
     return new ScrollViewUWPImplementation(scrollViewer);
   }();
-  m_isScrollingFromInertia[tag] = false;
-  m_isScrolling[tag] = false;
-  AddHandlers(scrollViewer, tag);
     
   return scrollViewer;
-}
-
-void ScrollViewManager::AddHandlers(const winrt::ScrollViewer& scrollViewer, int64_t tag)
-{
-  m_scrollViewerViewChangingRevokers[tag] = scrollViewer.ViewChanging(winrt::auto_revoke,
-    [this, tag](const auto & sender, const auto & args)
-    {
-      const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
-
-
-      //If we are transitioning to inertial scrolling.
-      if (m_isScrolling[tag] && !m_isScrollingFromInertia[tag] && args.IsInertial())
-      {
-        m_isScrollingFromInertia[tag] = true;
-
-        EmitScrollEvent(
-          scrollViewerNotNull,
-          tag,
-          "topScrollEndDrag",
-          args.NextView().HorizontalOffset(),
-          args.NextView().VerticalOffset(),
-          args.NextView().ZoomFactor()
-        );
-
-        EmitScrollEvent(
-          scrollViewerNotNull,
-          tag,
-          "topScrollBeginMomentum",
-          args.NextView().HorizontalOffset(),
-          args.NextView().VerticalOffset(),
-          args.NextView().ZoomFactor()
-        );
-      }
-
-      EmitScrollEvent(
-        scrollViewerNotNull,
-        tag,
-        "topScroll",
-        args.NextView().HorizontalOffset(),
-        args.NextView().VerticalOffset(),
-        args.NextView().ZoomFactor()
-      );
-    });
-
-  m_scrollViewerDirectManipulationStartedRevokers[tag] = scrollViewer.DirectManipulationStarted(winrt::auto_revoke,
-    [this, tag](const auto & sender, const auto&)
-    {
-      m_isScrolling[tag] = true;
-      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
-      EmitScrollEvent(
-        scrollViewer,
-        tag,
-        "topScrollBeginDrag",
-        scrollViewer.HorizontalOffset(),
-        scrollViewer.VerticalOffset(),
-        scrollViewer.ZoomFactor()
-      );
-    });
-
-  m_scrollViewerDirectManipulationCompletedRevokers[tag] = scrollViewer.DirectManipulationCompleted(winrt::auto_revoke,
-    [this, tag](const auto & sender, const auto&)
-    {
-      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
-      if (m_isScrollingFromInertia[tag])
-      {
-        EmitScrollEvent(
-          scrollViewer,
-          tag,
-          "topScrollEndMomentum",
-          scrollViewer.HorizontalOffset(),
-          scrollViewer.VerticalOffset(),
-          scrollViewer.ZoomFactor()
-        );
-      }
-      else
-      {
-        EmitScrollEvent(
-          scrollViewer,
-          tag,
-          "topScrollEndDrag",
-          scrollViewer.HorizontalOffset(),
-          scrollViewer.VerticalOffset(),
-          scrollViewer.ZoomFactor()
-        );
-      }
-
-      m_isScrolling[tag] = false;
-      m_isScrollingFromInertia[tag] = false;
-    });
-}
-
-void ScrollViewManager::EmitScrollEvent(
-  const winrt::ScrollViewer& scrollViewer,
-  int64_t tag,
-  const char* eventName,
-  double x, double y, double zoom)
-{
-  const auto instance = m_wkReactInstance.lock();
-  if (instance == nullptr)
-    return;
-
-  const auto scrollViewerNotNull = scrollViewer;
-
-  folly::dynamic offset = folly::dynamic::object
-    ("x", x)
-    ("y", y);
-
-  folly::dynamic contentInset = folly::dynamic::object
-    ("left", 0)
-    ("top", 0)
-    ("right", 0)
-    ("bottom", 0);
-
-  folly::dynamic contentSize = folly::dynamic::object
-    ("width", scrollViewerNotNull.ExtentWidth())
-    ("height", scrollViewerNotNull.ExtentHeight());
-
-  folly::dynamic layoutSize = folly::dynamic::object
-    ("width", scrollViewerNotNull.ActualWidth())
-    ("height", scrollViewerNotNull.ActualHeight());
-
-  folly::dynamic eventJson = folly::dynamic::object
-    ("target", tag)
-    ("responderIgnoreScroll", true)
-    ("contentOffset", offset)
-    ("contentInset", contentInset)
-    ("contentSize", contentSize)
-    ("layoutMeasurement", layoutSize)
-    ("zoomScale", zoom);
-
-  folly::dynamic params = folly::dynamic::array(tag, eventName, eventJson);
-  instance->CallJsFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }
 
 void ScrollViewManager::AddView(XamlView parent, XamlView child, int64_t index)

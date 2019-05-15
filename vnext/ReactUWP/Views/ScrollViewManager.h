@@ -34,20 +34,6 @@ protected:
   XamlView CreateViewCore(int64_t tag) override;
 
 private:
-  void AddHandlers(const winrt::ScrollViewer& scrollViewer, int64_t tag);
-  void EmitScrollEvent(
-    const winrt::ScrollViewer& scrollViewer,
-    int64_t tag,
-    const char* eventName,
-    double x, double y, double zoom);
-
-  std::map<int64_t, winrt::ScrollViewer::ViewChanging_revoker> m_scrollViewerViewChangingRevokers{};
-  std::map<int64_t, winrt::ScrollViewer::DirectManipulationCompleted_revoker> m_scrollViewerDirectManipulationCompletedRevokers{};
-  std::map<int64_t, winrt::ScrollViewer::DirectManipulationStarted_revoker> m_scrollViewerDirectManipulationStartedRevokers{};
-
-  std::map<int64_t, bool> m_isScrollingFromInertia{};
-  std::map<int64_t, bool> m_isScrolling{};
-
   friend class ScrollViewShadowNode;
 };
 
