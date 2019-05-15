@@ -45,6 +45,7 @@
     <file src="inc\Core\INativeUIManager.h"          target="inc"/>
     <file src="inc\Core\InstanceManager.h"           target="inc"/>
     <file src="inc\Core\IReactRootView.h"            target="inc"/>
+    <file src="inc\Core\IUIManager.h"                target="inc"/>
     <file src="inc\Core\Logging.h"                   target="inc"/>
     <file src="inc\Core\MemoryTracker.h"             target="inc"/>
     <file src="inc\Core\NativeModuleProvider.h"      target="inc"/>
