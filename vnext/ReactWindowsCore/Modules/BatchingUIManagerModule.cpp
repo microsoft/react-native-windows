@@ -22,20 +22,28 @@ BatchingUIManager::BatchingUIManager(std::vector<std::unique_ptr<IViewManager>>&
 
 void BatchingUIManager::onBatchComplete()
 {
+//#define TRACK_QUEUE
+#ifdef TRACK_QUEUE
   static uint32_t cBatches = 0;
   static uint32_t cCalls = 0;
   uint32_t theseCalls = 0;
+#endif
 
   std::function<void()> func;
   while (m_queue->read(func)) {
     func();
+
+#ifdef TRACK_QUEUE
     ++theseCalls;
+#endif
   }
 
+#ifdef TRACK_QUEUE
   cCalls += theseCalls;
   char buffer[1024];
   _snprintf_s(buffer, _countof(buffer), _TRUNCATE, "BatchingUIManager Batches: %u Calls: %u (%u new)\r\n", ++cBatches, cCalls, theseCalls);
   OutputDebugStringA(buffer);
+#endif
 
   UIManager::onBatchComplete();
 }
