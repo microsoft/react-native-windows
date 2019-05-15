@@ -52,7 +52,7 @@ Assuming you have already [enabled Developer Mode on your Xbox](https://msdn.mic
 
 If you are running the Universal Windows app on a device or Xbox, you'll need to configure the IP address of the `DevSupportManager` to match your machine's IP address.
 
-We're working on creating a settings page to manage the debug server host address, but for now you can statically configure it in [`DevServerHelper`](https://github.com/Microsoft/react-native-windows/blob/master/ReactWindows/ReactNative.Shared/DevSupport/DevServerHelper.cs#L22)
+We're working on creating a settings page to manage the debug server host address, but for now you can statically configure it in [`DevServerHelper`](https://github.com/microsoft/react-native-windows/blob/master/ReactWindows/ReactNative.Shared/DevSupport/DevServerHelper.cs#L22)
 
 ## Using offline bundle
 
