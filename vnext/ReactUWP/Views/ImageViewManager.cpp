@@ -25,7 +25,7 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.h>
 
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <condition_variable>
 #include <future>
@@ -186,8 +186,8 @@ namespace react { namespace uwp {
       if (source.method.empty())
         httpMethod = winrt::Windows::Web::Http::HttpMethod::Get();
       else
-        httpMethod = winrt::Windows::Web::Http::HttpMethod(facebook::react::UnicodeConversion::Utf8ToUtf16(source.method));
-      winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(source.uri));
+        httpMethod = winrt::Windows::Web::Http::HttpMethod(facebook::react::unicode::utf8ToUtf16(source.method));
+      winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(source.uri));
 
       winrt::Windows::Web::Http::HttpRequestMessage request(httpMethod, uri);
 
@@ -198,7 +198,7 @@ namespace react { namespace uwp {
           auto& name = header.first.getString();
           auto& value = header.second.getString();
 
-          request.Headers().Append(facebook::react::UnicodeConversion::Utf8ToUtf16(name), facebook::react::UnicodeConversion::Utf8ToUtf16(value));
+          request.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
         }
       }
 

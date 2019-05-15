@@ -11,7 +11,7 @@
 
 #include <mutex>
 #include <sstream>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <jsi/ScriptStore.h>
 
@@ -38,7 +38,6 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
   }
 
   setupMemoryTracker();
-  setupNativePromiseContinuation();
 
   // Create an execution context
   JsCreateContext(m_runtime, &m_ctx);
@@ -46,6 +45,8 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
 
   // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
   JsSetCurrentContext(m_ctx);
+
+  setupNativePromiseContinuation();
 
   std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
 }
@@ -292,7 +293,7 @@ jsi::PropNameID ChakraJsiRuntime::createPropNameIDFromString(const jsi::String& 
 std::string ChakraJsiRuntime::utf8(const jsi::PropNameID& sym) {
   const wchar_t* name;
   checkException(JsGetPropertyNameFromId(propIdRef(sym), &name));
-  return facebook::react::UnicodeConversion::Utf16ToUtf8(name, wcslen(name));
+  return facebook::react::unicode::utf16ToUtf8(name, wcslen(name));
 }
 
 bool ChakraJsiRuntime::compare(const jsi::PropNameID& a, const jsi::PropNameID& b) {
@@ -935,7 +936,7 @@ std::string ChakraJsiRuntime::JSStringToSTLString(JsValueRef str) {
   }
 
   // Note: This results in multiple buffer copyings. We should look for optimization.
-  return facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring(value, length));
+  return facebook::react::unicode::utf16ToUtf8(std::wstring(value, length));
 }
 
 

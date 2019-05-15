@@ -56,5 +56,10 @@ if (fs.existsSync(path.resolve(__dirname, '../../scripts/metro-resources.js'))) 
 config.resolver.extraNodeModules['SnapshotViewIOS'] = path.resolve(__dirname, 'Libraries/RCTTest/SnapshotViewIOS');
 config.resolver.hasteImplModulePath = path.resolve(__dirname, 'jest/hasteImpl.js');
 
+// Check that we have built our JS files before running the bundler, otherwise we'll get a harder to diagnose "Unable to resolve module" error
+if (!fs.existsSync(path.resolve(__dirname, 'lib/Libraries/Components/AccessibilityInfo/AccessibilityInfo.uwp.js'))) {
+  throw new Error(`[31m\nThis package must be built before running the bundler.  Did you mean to run "[39m[33myarn build[39m[31m" first?[39m\n`);
+}
+
 module.exports = config;
 

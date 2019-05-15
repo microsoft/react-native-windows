@@ -5,6 +5,8 @@ trigger:
   branches:
     include:
       - master
+      - fb59merge
+      - fabric
   paths:
     include:
       - vnext/*
@@ -61,6 +63,6 @@ jobs:
           command: custom
           workingDir: vnext
           verbose: false
-          customCommand: 'publish --access public --tag vnext'
+          customCommand: publish --access public --tag $(npmTag)
           customEndpoint: 'React-Native-Windows NPM'
           publishEndpoint: 'React-Native-Windows NPM'
