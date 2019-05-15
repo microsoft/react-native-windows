@@ -54,6 +54,7 @@ EXPORTS
 ??1Value@jsi@facebook@@QEAA@XZ
 ??1Buffer@jsi@facebook@@UEAA@XZ
 ?makeChakraJsiRuntime@chakraruntime@jsi@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QEAUChakraJsiRuntimeArgs@123@@Z
+?makeV8Runtime@v8runtime@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@XZ
 
 
 YGNodeNew
