@@ -368,16 +368,6 @@ void UIManager::onBatchComplete()
   m_nativeUIManager->onBatchComplete();
 }
 
-UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
-	: m_manager(std::move(manager))
-{
-}
-
-std::string UIManagerModule::getName()
-{
-	return "UIManager";
-}
-
 int64_t UIManager::AddMeasuredRootView(IReactRootView* rootView)
 {
 	auto tag = m_nextRootTag;
@@ -422,6 +412,16 @@ ShadowNode* UIManager::FindShadowNodeForTag(int64_t tag)
 ShadowNode& UIManager::GetShadowNodeForTag(int64_t tag)
 {
   return m_nodeRegistry.getNode(tag);
+}
+
+UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
+	: m_manager(std::move(manager))
+{
+}
+
+std::string UIManagerModule::getName()
+{
+	return "UIManager";
 }
 
 std::map<std::string, folly::dynamic> UIManagerModule::getConstants()
