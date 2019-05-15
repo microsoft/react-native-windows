@@ -43,7 +43,11 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\jsi.h                           %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\jsi-inl.h                       %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\ScriptStore.h                   %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\V8Runtime.h                     %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraCoreDebugger.h                 %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeArgs.h               %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeFactory.h            %DESTROOT%\inc\jsi
 
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\Yoga.h                    %DESTROOT%\inc\yoga
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\YGMacros.h                %DESTROOT%\inc\yoga
