@@ -11,10 +11,12 @@ goto :eof
 IF [%1]==[] GOTO :Usage
 
 set DESTROOT=%~1
-set SRCROOT=%~dp0..
+set SRCROOT=%~dp0
+set RNROOT=%~dp0node_modules\react-native
 
 echo Source root: %SRCROOT%
 echo Dest root: %DESTROOT%
+echo React-Native root: %RNROOT%
 
 set COPYCMD=xcopy /s /y /i
 
@@ -27,39 +29,39 @@ mkdir %DESTROOT%\inc\yoga >nul 2>&1
 mkdir %DESTROOT%\inc\ReactWin32 >nul 2>&1
 mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\cxxmodule.h                %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\Instance.h                 %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\jsargumenthelpers-inl.h    %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\jsargumenthelpers.h        %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\JSBigString.h              %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\JSCExecutor.h              %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\JSCNativeModules.h         %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\JSExecutor.h               %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\MessageQueueThread.h       %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\ModuleRegistry.h           %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\NativeToJsBridge.h         %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\NativeModule.h             %DESTROOT%\inc\cxxreact
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\cxxreact\PlatformBundleInfo.h       %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\cxxmodule.h                      %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\Instance.h                       %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\jsargumenthelpers-inl.h          %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\jsargumenthelpers.h              %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\JSBigString.h                    %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\JSCExecutor.h                    %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\JSCNativeModules.h               %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\JSExecutor.h                     %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\MessageQueueThread.h             %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\ModuleRegistry.h                 %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\NativeToJsBridge.h               %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\NativeModule.h                   %DESTROOT%\inc\cxxreact
+%COPYCMD%  %RNROOT%\ReactCommon\cxxreact\PlatformBundleInfo.h             %DESTROOT%\inc\cxxreact
 
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\jsi\jsi.h                           %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\jsi\jsi-inl.h                       %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\jsi\ScriptStore.h                   %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\jsi\V8Runtime.h                     %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraCoreDebugger.h                              %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeArgs.h                            %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeFactory.h                         %DESTROOT%\inc\jsi
+%COPYCMD%  %RNROOT%\ReactCommon\jsi\jsi.h                                 %DESTROOT%\inc\jsi
+%COPYCMD%  %RNROOT%\ReactCommon\jsi\jsi-inl.h                             %DESTROOT%\inc\jsi
+%COPYCMD%  %RNROOT%\ReactCommon\jsi\ScriptStore.h                         %DESTROOT%\inc\jsi
+%COPYCMD%  %RNROOT%\ReactCommon\jsi\V8Runtime.h                           %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraCoreDebugger.h         %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeArgs.h       %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeFactory.h    %DESTROOT%\inc\jsi
 
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\Yoga\Yoga\Yoga.h                    %DESTROOT%\inc\yoga
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\Yoga\Yoga\YGMacros.h                %DESTROOT%\inc\yoga
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\Yoga\Yoga\YGNodeList.h              %DESTROOT%\inc\yoga
-%COPYCMD%  %SRCROOT%\node_modules\react-native\ReactCommon\Yoga\Yoga\YGEnums.h                 %DESTROOT%\inc\yoga
+%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\Yoga.h                          %DESTROOT%\inc\yoga
+%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGMacros.h                      %DESTROOT%\inc\yoga
+%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGNodeList.h                    %DESTROOT%\inc\yoga
+%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGEnums.h                       %DESTROOT%\inc\yoga
 
-%COPYCMD%  %SRCROOT%\node_modules\react-native\Folly                                           %DESTROOT%\inc\Folly
-%COPYCMD%  %SRCROOT%\react-native-win\stubs                                                    %DESTROOT%\inc\stubs
-%COPYCMD%  %SRCROOT%\react-native-win\Desktop\*.h                                              %DESTROOT%\inc\ReactWin32
-%COPYCMD%  %SRCROOT%\react-native-win\ReactWindowsCore\*.h                                     %DESTROOT%\inc\ReactWindowsCore
-%COPYCMD%  %SRCROOT%\react-native-win\ReactUWP\*.h                                             %DESTROOT%\inc\ReactUWP
-%COPYCMD%  %SRCROOT%\react-native-win\include                                                  %DESTROOT%\inc\include
+%COPYCMD%  %RNROOT%\Folly                                                 %DESTROOT%\inc\Folly
+%COPYCMD%  %SRCROOT%\react-native-win\stubs                               %DESTROOT%\inc\stubs
+%COPYCMD%  %SRCROOT%\react-native-win\Desktop\*.h                         %DESTROOT%\inc\ReactWin32
+%COPYCMD%  %SRCROOT%\react-native-win\ReactWindowsCore\*.h                %DESTROOT%\inc\ReactWindowsCore
+%COPYCMD%  %SRCROOT%\react-native-win\ReactUWP\*.h                        %DESTROOT%\inc\ReactUWP
+%COPYCMD%  %SRCROOT%\react-native-win\include                             %DESTROOT%\inc\include
 
-%COPYCMD%  %SRCROOT%\react-native-win\ReactWin32.nuspec                                        %DESTROOT%
+%COPYCMD%  %SRCROOT%\react-native-win\ReactWin32.nuspec                   %DESTROOT%
 
