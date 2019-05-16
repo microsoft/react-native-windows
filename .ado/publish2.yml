@@ -183,7 +183,7 @@ jobs:
     - task: BatchScript@1
       displayName: 'Copy Nuget source files'
       inputs:
-        filename: 'vnext\ReactWindows-CopyToStaging.bat'
+        filename: 'vnext\ReactWindows-CopyToStaging2.bat'
         arguments: '$(build.artifactstagingdirectory)'
       condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
 
