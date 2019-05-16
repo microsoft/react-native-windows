@@ -413,15 +413,20 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     m_jsThread,
     m_moduleRegistry);
 
-  folly::dynamic configArray = folly::dynamic::array;
-  for (auto const& moduleName : m_moduleRegistry->moduleNames()) {
-    auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
-    if (moduleConfig) {
-      configArray.push_back(std::move(moduleConfig->config));
+  // All JSI runtimes do support host objects and hence the native modules proxy.
+  const bool isNativeModulesProxyAvailable = m_devSettings->jsiRuntimeHolder != nullptr;
+  if (isNativeModulesProxyAvailable)
+  {
+    folly::dynamic configArray = folly::dynamic::array;
+    for (auto const& moduleName : m_moduleRegistry->moduleNames()) {
+      auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
+      if (moduleConfig) {
+        configArray.push_back(std::move(moduleConfig->config));
+      }
     }
+    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
+    m_innerInstance->setGlobalVariable("__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
   }
-  folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
-  m_innerInstance->setGlobalVariable("__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
 }
 
 void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)

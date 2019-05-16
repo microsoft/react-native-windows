@@ -206,6 +206,9 @@
     <ClCompile Include="Views\FlyoutViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -411,6 +414,9 @@
     </ClInclude>
     <ClInclude Include="Views\FlyoutViewManager.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

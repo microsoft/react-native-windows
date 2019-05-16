@@ -62,6 +62,8 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#include "ChakraJSIRuntimeHolder.h"
+
 #include <tuple>
 
 using namespace winrt;
@@ -278,6 +280,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
       cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
     }
 
+    std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+    devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+
     try
     {
       // Create the react instance
@@ -285,7 +290,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
         std::string(), // bundleRootPath
         std::move(cxxModules),
         m_uiManager,
-        CreateAndStartJSQueueThread(),
+        jsQueue,
         m_defaultNativeThread,
         std::move(devSettings));
     }

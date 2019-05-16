@@ -975,9 +975,8 @@ std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(const jsi::Obje
 }
 
 jsi::Object ChakraJsiRuntime::createProxy(jsi::Object&& target, jsi::Object&& handler) noexcept {
-  // Note: We are lazy initializing and cachine the constructor.
-  static jsi::Function proxyConstructor = createProxyConstructor();
-
+  // TODO :: Avoid creating the constuctor on each call.
+  jsi::Function proxyConstructor = createProxyConstructor();
   jsi::Value hostObjectProxy = proxyConstructor.call(*this, target, handler);
 
   if (!hostObjectProxy.isObject())

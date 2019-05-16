@@ -25,7 +25,7 @@ namespace facebook {
 namespace jsi { 
 namespace chakraruntime {
 
-class ByteArrayBuffer : public jsi::Buffer {
+class ByteArrayBuffer final : public jsi::Buffer {
 public:
   size_t size() const override {
     return size_;
@@ -46,7 +46,7 @@ private:
   std::unique_ptr<uint8_t[]> byteArray_;
 };
 
-class ChakraJsiRuntime : public jsi::Runtime {
+class ChakraJsiRuntime final : public jsi::Runtime {
 public:
   ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args) noexcept;
   ~ChakraJsiRuntime() noexcept;

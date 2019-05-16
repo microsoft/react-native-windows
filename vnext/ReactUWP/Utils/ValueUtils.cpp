@@ -43,7 +43,7 @@ struct ColorComp
 
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
 {
-  UINT argb = static_cast<UINT>(d.getInt());
+  UINT argb = static_cast<UINT>(d.asInt());
   return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
