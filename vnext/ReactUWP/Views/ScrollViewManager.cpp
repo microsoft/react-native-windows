@@ -32,10 +32,14 @@ private:
     const char* eventName,
     double x, double y, double zoom);
   template <typename T> std::tuple<bool, T> getPropertyAndValidity(folly::dynamic propertyValue, T defaultValue);
+  void SetScrollMode(const winrt::ScrollViewer& scrollViewer);
 
   float m_zoomFactor{ 1.0f };
   bool m_isScrollingFromInertia = false;
   bool m_isScrolling = false;
+
+  bool m_isHorizontal = false;
+  bool m_isScrollingEnabled = true;
 
   winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
   winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
@@ -129,9 +133,18 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
       const auto [valid, horizontal] = getPropertyAndValidity(propertyValue, false);
       if (valid)
       {
-        scrollViewer.HorizontalScrollMode(horizontal ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled);
-        scrollViewer.VerticalScrollMode(horizontal ? winrt::ScrollMode::Disabled : winrt::ScrollMode::Auto);
+        m_isHorizontal = horizontal;
         ScrollViewUWPImplementation(scrollViewer).SetHorizontal(horizontal);
+        SetScrollMode(scrollViewer);
+      }
+    }
+    if (propertyName == "scrollEnabled")
+    {
+      const auto [valid, scrollEnabled] = getPropertyAndValidity(propertyValue, true);
+      if (valid)
+      {
+        m_isScrollingEnabled = scrollEnabled;
+        SetScrollMode(scrollViewer);
       }
     }
     else if (propertyName == "showsHorizontalScrollIndicator")
@@ -413,6 +426,14 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
   return std::make_tuple(false, defaultValue);
 }
 
+void ScrollViewShadowNode::SetScrollMode(const winrt::ScrollViewer& scrollViewer)
+{
+  const auto horizontalScrollingEnabled = m_isScrollingEnabled && m_isHorizontal;
+  const auto verticalScrollingEnabled = m_isScrollingEnabled && !m_isHorizontal;
+  scrollViewer.HorizontalScrollMode(horizontalScrollingEnabled ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled);
+  scrollViewer.VerticalScrollMode(verticalScrollingEnabled ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled);
+}
+
 ScrollViewManager::ScrollViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
   : Super(reactInstance)
 {
@@ -439,6 +460,7 @@ folly::dynamic ScrollViewManager::GetNativeProps() const
 
   props.update(folly::dynamic::object
     ("horizontal", "boolean")
+    ("scrollEnabled", "boolean")
     ("showsHorizontalScrollIndicator", "boolean")
     ("showsVerticalScrollIndicator", "boolean")
     ("minimumZoomScale", "float")
