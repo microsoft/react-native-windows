@@ -82,6 +82,6 @@ private:
 /* (8) */ std::string utf16ToUtf8(const std::u16string_view& utf16);
 #endif
 
-} // namespace utilities
+} // namespace unicode
 } // namespace react
 } // namespace facebook
