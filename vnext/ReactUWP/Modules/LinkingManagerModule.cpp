@@ -6,7 +6,7 @@
 #include "LinkingManagerModule.h"
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.System.h>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)
@@ -78,12 +78,12 @@ auto LinkingManagerModule::getMethods() -> std::vector<Method>
   return {
     Method("openURL", [](folly::dynamic args, Callback successCallback, Callback errorCallback)
     {
-      winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
+      winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
       openURLAsync(uri, successCallback, errorCallback);
     }),
     Method("canOpenURL", [](folly::dynamic args, Callback successCallback, Callback errorCallback)
     {
-      winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
+      winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
       canOpenURLAsync(uri, successCallback, errorCallback);
     }),
     Method("getInitialURL", [](folly::dynamic /*args*/, Callback successCallback, Callback /*errorCallback*/)

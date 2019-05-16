@@ -11,7 +11,7 @@
 
 #include <mutex>
 #include <sstream>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include <jsi/ScriptStore.h>
 
@@ -38,7 +38,6 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
   }
 
   setupMemoryTracker();
-  setupNativePromiseContinuation();
 
   // Create an execution context
   JsCreateContext(m_runtime, &m_ctx);
@@ -46,6 +45,8 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
 
   // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
   JsSetCurrentContext(m_ctx);
+
+  setupNativePromiseContinuation();
 
   std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
 }
@@ -217,6 +218,21 @@ ChakraJsiRuntime::ChakraObjectValue::~ChakraObjectValue() {
   JsRelease(m_obj, nullptr);
 }
 
+ChakraJsiRuntime::ChakraWeakRefValue::ChakraWeakRefValue(
+  JsWeakRef obj
+) : m_obj(obj)
+{
+  JsAddRef(m_obj, nullptr);
+}
+
+void ChakraJsiRuntime::ChakraWeakRefValue::invalidate() {
+  delete this;
+}
+
+ChakraJsiRuntime::ChakraWeakRefValue::~ChakraWeakRefValue() {
+  JsRelease(m_obj, nullptr);
+}
+
 jsi::Runtime::PointerValue* ChakraJsiRuntime::cloneString(
   const jsi::Runtime::PointerValue* pv) {
 
@@ -277,7 +293,7 @@ jsi::PropNameID ChakraJsiRuntime::createPropNameIDFromString(const jsi::String& 
 std::string ChakraJsiRuntime::utf8(const jsi::PropNameID& sym) {
   const wchar_t* name;
   checkException(JsGetPropertyNameFromId(propIdRef(sym), &name));
-  return facebook::react::UnicodeConversion::Utf16ToUtf8(name, wcslen(name));
+  return facebook::react::unicode::utf16ToUtf8(name, wcslen(name));
 }
 
 bool ChakraJsiRuntime::compare(const jsi::PropNameID& a, const jsi::PropNameID& b) {
@@ -424,12 +440,12 @@ jsi::Array ChakraJsiRuntime::getPropertyNames(const jsi::Object& obj) {
   return result;
 }
 
-jsi::WeakObject ChakraJsiRuntime::createWeakObject(const jsi::Object&) {
-  throw std::logic_error("Not implemented");
+jsi::WeakObject ChakraJsiRuntime::createWeakObject(const jsi::Object& obj) {
+  return make<jsi::WeakObject>(makeWeakRefValue(newWeakObjectRef(obj)));
 }
 
-jsi::Value ChakraJsiRuntime::lockWeakObject(const jsi::WeakObject&) {
-  throw std::logic_error("Not implemented");
+jsi::Value ChakraJsiRuntime::lockWeakObject(const jsi::WeakObject& weakObj) {
+  return createValue(strongObjectRef(weakObj));
 }
 
 jsi::Array ChakraJsiRuntime::createArray(size_t length) {
@@ -676,6 +692,11 @@ jsi::Runtime::PointerValue* ChakraJsiRuntime::makePropertyIdValue(
 }
 
 
+jsi::Runtime::PointerValue* ChakraJsiRuntime::makeWeakRefValue(JsWeakRef objWeakRef) const {
+  if (!objWeakRef) std::terminate();
+  return new ChakraWeakRefValue(objWeakRef);
+}
+
 jsi::Runtime::PointerValue* ChakraJsiRuntime::makeObjectValue(
   JsValueRef objectRef) const {
   if (!objectRef) {
@@ -832,6 +853,10 @@ JsValueRef ChakraJsiRuntime::objectRef(const jsi::Object& obj) {
   return static_cast<const ChakraObjectValue*>(getPointerValue(obj))->m_obj;
 }
 
+JsWeakRef ChakraJsiRuntime::objectRef(const jsi::WeakObject& obj) {
+  return static_cast<const ChakraWeakRefValue*>(getPointerValue(obj))->m_obj;
+}
+
 void ChakraJsiRuntime::checkException(JsErrorCode result)  {
   bool hasException = false;
   if (result == JsNoError && (JsHasException(&hasException), !hasException))
@@ -911,7 +936,7 @@ std::string ChakraJsiRuntime::JSStringToSTLString(JsValueRef str) {
   }
 
   // Note: This results in multiple buffer copyings. We should look for optimization.
-  return facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring(value, length));
+  return facebook::react::unicode::utf16ToUtf8(std::wstring(value, length));
 }
 
 
@@ -923,6 +948,30 @@ jsi::Function ChakraJsiRuntime::createProxyConstructor() noexcept {
     std::terminate();
 
   return hostObjectProxyConstructor.getObject(*this).getFunction(*this);
+}
+
+
+bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
+  jsi::Value val = obj.getProperty(const_cast<ChakraJsiRuntime&>(*this), s_proxyIsHostObjectPropName);
+  if (val.isBool())
+    return val.getBool();
+  else
+    return false;
+}
+
+std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(const jsi::Object& obj) {
+  if (!isHostObject(obj))
+    return nullptr;
+
+  jsi::Value value = obj.getProperty(const_cast<ChakraJsiRuntime&>(*this), s_proxyGetHostObjectTargetPropName);
+  if (!value.isObject()) std::terminate();
+  jsi::Object valueObj = value.getObject(const_cast<ChakraJsiRuntime&>(*this));
+
+  ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, std::move(valueObj));
+  HostObjectProxy* externalData = extObject.getExternalData();
+
+  if (!externalData) std::terminate();
+  return externalData->getHostObject();
 }
 
 jsi::Object ChakraJsiRuntime::createProxy(jsi::Object&& target, jsi::Object&& handler) noexcept {
@@ -952,6 +1001,14 @@ jsi::Object ChakraJsiRuntime::createHostObjectProxyHandler() noexcept {
       [this](Runtime& rt, const Value& thisVal, const Value* args, size_t count)->Value {
     jsi::Object targetObj = args[0].getObject(*this);
     jsi::String propStr = args[1].getString(*this);
+
+    if (propStr.utf8(rt) == s_proxyGetHostObjectTargetPropName) {
+      return targetObj;
+    }
+
+    if (propStr.utf8(rt) == s_proxyIsHostObjectPropName) {
+      return true;
+    }
 
     ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, std::move(targetObj));
     HostObjectProxy* externalData = extObject.getExternalData();

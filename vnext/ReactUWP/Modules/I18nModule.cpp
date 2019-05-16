@@ -6,7 +6,7 @@
 
 #include <winrt/Windows.Globalization.h>
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 namespace react { namespace uwp {
 
@@ -18,7 +18,7 @@ namespace react { namespace uwp {
   auto langs = winrt::Windows::Globalization::ApplicationLanguages::Languages();
   if (langs.Size() > 0)
   {
-    locale = facebook::react::UnicodeConversion::Utf16ToUtf8(langs.GetAt(0));
+    locale = facebook::react::unicode::utf16ToUtf8(langs.GetAt(0));
 
     auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext().GetForCurrentView().QualifierValues().Lookup(L"LayoutDirection");
     isRTL = layoutDirection != L"LTR";

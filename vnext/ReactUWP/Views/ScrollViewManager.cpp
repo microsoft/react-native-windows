@@ -37,10 +37,9 @@ private:
   float m_zoomFactor{ 1.0f };
   bool m_isScrollingFromInertia = false;
   bool m_isScrolling = false;
-
   bool m_isHorizontal = false;
   bool m_isScrollingEnabled = true;
-
+  
   winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
   winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
   winrt::ScrollViewer::ViewChanged_revoker m_scrollViewerViewChangedRevoker{};
@@ -446,6 +445,7 @@ const char* ScrollViewManager::GetName() const
 
 folly::dynamic ScrollViewManager::GetCommands() const
 {
+
   auto commands = Super::GetCommands();
   commands.update(folly::dynamic::object
     ("scrollTo", static_cast<std::underlying_type_t<ScrollViewCommands>>(ScrollViewCommands::ScrollTo))
@@ -490,7 +490,7 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
 
   return directEvents;
 }
-
+  
 XamlView ScrollViewManager::CreateViewCore(int64_t tag)
 {
   const auto scrollViewer = [this]()

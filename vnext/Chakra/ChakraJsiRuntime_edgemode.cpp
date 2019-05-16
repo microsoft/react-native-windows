@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "ChakraJsiRuntime.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
@@ -13,22 +13,20 @@ namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
-// edge mode currently doesn't allow us to inspect proxies .. We need to implement these hostObject
-// related methods through some bookkeeping in our code.
-bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
-  throw std::runtime_error("ChakraJsiRuntime::isHostObject is not yet implemented.");
+JsWeakRef ChakraJsiRuntime::newWeakObjectRef(const jsi::Object& obj) {
+  return objectRef(obj);
 }
 
-std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(
-  const jsi::Object& obj) {
-  throw std::runtime_error("ChakraJsiRuntime::createObject is not implemented.");
+JsValueRef ChakraJsiRuntime::strongObjectRef(const jsi::WeakObject& obj) {
+  return objectRef(obj); // Return the original strong ref.
 }
+
 
 Value ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL) {
-  const std::wstring script16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(buffer.data()), buffer.size());
+  const std::wstring script16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(buffer.data()), buffer.size());
   if (script16.empty()) throw jsi::JSINativeException("Script can't be empty.");
 
-  const std::wstring url16 = facebook::react::UnicodeConversion::Utf8ToUtf16(sourceURL);
+  const std::wstring url16 = facebook::react::unicode::utf8ToUtf16(sourceURL);
   if (url16.empty()) throw jsi::JSINativeException("Script URL can't be empty.");
 
   JsValueRef result;
@@ -39,8 +37,8 @@ Value ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, cons
 
 // TODO :: Return result
 bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer, const jsi::Buffer& serializedScriptBuffer, const std::string& sourceURL) {
-  std::wstring script16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(scriptBuffer.data()), scriptBuffer.size());
-  std::wstring url16 = facebook::react::UnicodeConversion::Utf8ToUtf16(sourceURL);
+  std::wstring script16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(scriptBuffer.data()), scriptBuffer.size());
+  std::wstring url16 = facebook::react::unicode::utf8ToUtf16(sourceURL);
 
   // Note:: Bytecode caching on UWP is untested yet.
   JsValueRef result;
@@ -59,7 +57,7 @@ bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer,
 }
 
 std::unique_ptr<const jsi::Buffer> ChakraJsiRuntime::generatePreparedScript(const std::string& sourceURL, const jsi::Buffer& sourceBuffer) noexcept {
-  const std::wstring scriptUTF16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(sourceBuffer.data()), sourceBuffer.size());
+  const std::wstring scriptUTF16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(sourceBuffer.data()), sourceBuffer.size());
 
   unsigned long bytecodeSize = 0;
   if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError)
@@ -75,7 +73,7 @@ std::unique_ptr<const jsi::Buffer> ChakraJsiRuntime::generatePreparedScript(cons
 }
 
 JsValueRef ChakraJsiRuntime::createJSString(const char*data, size_t length) {
-  const std::wstring script16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(data), length);
+  const std::wstring script16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(data), length);
   JsValueRef value;
   JsPointerToString(script16.c_str(), script16.size(), &value);
   return value;
@@ -83,7 +81,7 @@ JsValueRef ChakraJsiRuntime::createJSString(const char*data, size_t length) {
 
 JsValueRef ChakraJsiRuntime::createJSPropertyId(const char*data, size_t length) {
   JsValueRef propIdRef;
-  const std::wstring name16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(data), length);
+  const std::wstring name16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(data), length);
   if (JsNoError != JsGetPropertyIdFromName(name16.c_str(), &propIdRef)) std::terminate();
   return propIdRef;
 }
@@ -96,7 +94,7 @@ void ChakraJsiRuntime::initRuntimeVersion()  noexcept {
   // NOP
 }
 
-std::unique_ptr<jsi::Runtime> makeChakraRuntime(ChakraJsiRuntimeArgs&& args)  noexcept {
+std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept {
   return std::make_unique<ChakraJsiRuntime>(std::move(args));
 }
 
