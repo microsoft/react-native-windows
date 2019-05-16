@@ -3,7 +3,10 @@
 
 #pragma once
 
+#include "pch.h"
+
 #include <Views/ControlViewManager.h>
+#include "Impl/ScrollViewUWPImplementation.h"
 
 namespace react { namespace uwp {
 
@@ -18,23 +21,20 @@ public:
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
+  facebook::react::ShadowNode* createShadow() const override;
+
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
-  void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
+  void SnapToInterval(XamlView parent, float interval);
+  void SnapToOffsets(XamlView parent, const winrt::IVectorView<float>& offsets);
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
 
 private:
-  void AddHandlers(winrt::Windows::UI::Xaml::Controls::ScrollViewer& scrollViewer, int64_t tag);
-  void EmitScrollEvent(
-    winrt::Windows::UI::Xaml::Controls::ScrollViewer& scrollViewer,
-    int64_t tag,
-    const char* eventName,
-    double x, double y, double zoom);
+  friend class ScrollViewShadowNode;
 };
 
 } }
