@@ -191,49 +191,49 @@ jobs:
       displayName: 'Stage Sources'
       inputs:
         targetType: filePath
-        filePath: 'nvext\Scripts\Tfs\Layout-Headers.ps1'
+        filePath: 'vnext\Scripts\Tfs\Layout-Headers.ps1'
         arguments: '-TargetRoot $(Build.ArtifactStagingDirectory)'
       enabled: false
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: debug arm'
       inputs:
-        PathtoPublish: 'nvext\target\ARM\Debug'
+        PathtoPublish: 'vnext\target\ARM\Debug'
         ArtifactName: 'ReactWindows-debug-arm'
       condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'arm'))
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: ship arm'
       inputs:
-        PathtoPublish: 'nvext\target\ARM\Release'
+        PathtoPublish: 'vnext\target\ARM\Release'
         ArtifactName: 'ReactWindows-ship-arm'
       condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'arm'))
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifacts debug x86'
       inputs:
-        PathtoPublish: 'nvext\target\x86\Debug'
+        PathtoPublish: 'vnext\target\x86\Debug'
         ArtifactName: 'ReactWindows-debug-x86'
       condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifacts ship x86'
       inputs:
-        PathtoPublish: 'nvext\target\x86\Release'
+        PathtoPublish: 'vnext\target\x86\Release'
         ArtifactName: 'ReactWindows-ship-x86'
       condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x86'))
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifacts debug x64'
       inputs:
-        PathtoPublish: 'nvext\target\x64\debug'
+        PathtoPublish: 'vnext\target\x64\debug'
         ArtifactName: 'ReactWindows-debug-x64'
       condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifacts ship x64'
       inputs:
-        PathtoPublish: 'nvext\target\x64\Release'
+        PathtoPublish: 'vnext\target\x64\Release'
         ArtifactName: 'ReactWindows-ship-x64'
       condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x64'))
 
