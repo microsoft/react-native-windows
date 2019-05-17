@@ -46,7 +46,7 @@ private:
   std::unique_ptr<uint8_t[]> byteArray_;
 };
 
-class ChakraJsiRuntime final : public jsi::Runtime {
+class ChakraJsiRuntime : public jsi::Runtime {
 public:
   ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args) noexcept;
   ~ChakraJsiRuntime() noexcept;
