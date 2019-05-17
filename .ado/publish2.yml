@@ -277,6 +277,11 @@ jobs:
           artifactName: ReactWindows-debug-arm
           downloadPath: $(System.DefaultWorkingDirectory)
       - task: DownloadBuildArtifacts@0
+        displayName: 'Download ship arm Artifact'
+        inputs:
+          artifactName: ReactWindows-ship-arm
+          downloadPath: $(System.DefaultWorkingDirectory)
+      - task: DownloadBuildArtifacts@0
         displayName: 'Download debug x86 Artifact'
         inputs:
           artifactName: ReactWindows-debug-x86
