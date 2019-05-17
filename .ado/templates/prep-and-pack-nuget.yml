@@ -71,11 +71,17 @@ steps:
     inputs:
       SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-source'
       TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot'
-  - task: colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1
-    displayName: 'Replace branch name in nuspec'
+  - task: PowerShell@2
+    displayName: Extract version from package.json, and put it in nuspec
     inputs:
-      filePattern: '$(System.DefaultWorkingDirectory)/NugetRoot/ReactWin32.nuspec'
-      secretTokens: 'BuildBuildNumber:$(Build.BuildNumber)'
+      targetType: inline # filePath | inline
+      script: |
+        $npmVersion = $env:npmPackageVersion
+        if (!$npmVersion) {
+          $lines = Get-Content ($env:System.DefaultWorkingDirectory) + / vnext/package.json | Where {$_ -match '^\s*"version":.*'} 
+          $npmVersion = $lines.Trim().Split()[1].Trim('",');
+        }
+        (Get-Content vnext/ReactWin32.nuspec).replace('__BuildBuildNumber__', $npmVersion) | Set-Content ReactWin32.nuspec
   - task: NuGetCommand@2
     displayName: 'NuGet pack'
     inputs:
