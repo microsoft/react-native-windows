@@ -14,6 +14,7 @@
 
 namespace winrt {
   using namespace Windows::UI::Xaml::Controls::Primitives;
+  using namespace Windows::UI::Xaml::Interop;
 }
 
 template<>
@@ -100,6 +101,7 @@ public:
   
 private:
   void SetTargetFrameworkElement();
+  void AdjustDefaultFlyoutStyle();
 
   winrt::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
@@ -213,7 +215,17 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
   }
 
   if (updateIsOpen)
-    m_isOpen ? winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement) : m_flyout.Hide();
+  {
+    if (m_isOpen)
+    {
+      AdjustDefaultFlyoutStyle();
+      winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+    }
+    else
+    {
+      m_flyout.Hide();
+    }
+  }
 
   // TODO: hook up view props to the flyout (m_flyout) instead of setting them on the dummy view.
   //Super::updateProperties(std::move(props));
@@ -245,6 +257,13 @@ void FlyoutShadowNode::SetTargetFrameworkElement()
   }
 }
 
+void FlyoutShadowNode::AdjustDefaultFlyoutStyle()
+{
+  winrt::Style flyoutStyle({ L"Windows.UI.Xaml.Controls.FlyoutPresenter", winrt::TypeKind::Metadata });
+  flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxWidthProperty(), winrt::box_value(50000)));
+  flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
+  m_flyout.FlyoutPresenterStyle(flyoutStyle);
+}
 
 FlyoutViewManager::FlyoutViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
   : Super(reactInstance)
