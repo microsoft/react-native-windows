@@ -41,7 +41,7 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: npm-install-and-build.yml
+      - template: templates/npm-install-and-build.yml
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
@@ -132,7 +132,7 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: npm-install-and-build.yml
+      - template: templates/npm-install-and-build.yml
 
       - template: templates/vs-build.yml
         parameters:
