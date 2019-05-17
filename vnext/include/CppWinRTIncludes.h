@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <winrt\Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
 namespace winrt
 {
