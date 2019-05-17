@@ -44,18 +44,18 @@ XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag)
   return progressRing;
 }
 
-void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
   if (progressRing == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "animating")
+    if (propertyName == "animating")
     {
       if (propertyValue.isBool())
         progressRing.IsActive(propertyValue.asBool());
