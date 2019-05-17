@@ -205,7 +205,7 @@ static YGValue YGValueOrDefault(const folly::dynamic& value, YGValue defaultValu
 
   if (value.isString())
   {
-    std::string str = value.asString();
+    std::string str = value.getString();
     if (str == "auto")
       return YGValue{ YGUndefined, YGUnitAuto };
     if (str.length() > 0 && str.back() == '%')
@@ -842,6 +842,10 @@ void NativeUIManager::DoLayout()
     for (auto& tagToYogaNode : m_tagsToYogaNodes) {
       int64_t tag = tagToYogaNode.first;
       YGNodeRef yogaNode = tagToYogaNode.second.get();
+
+      if (!YGNodeGetHasNewLayout(yogaNode))
+        continue;
+      YGNodeSetHasNewLayout(yogaNode, false);
 
       float left = YGNodeLayoutGetLeft(yogaNode);
       float top = YGNodeLayoutGetTop(yogaNode);
