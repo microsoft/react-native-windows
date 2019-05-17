@@ -272,32 +272,32 @@ jobs:
     steps:
       - checkout: none #skip checking out the default repository resource
       - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifact'
+        displayName: 'Download debug arm Artifact'
         inputs:
           artifactName: ReactWindows-debug-arm
           downloadPath: $(System.DefaultWorkingDirectory)
       - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifact'
+        displayName: 'Download debug x86 Artifact'
         inputs:
           artifactName: ReactWindows-debug-x86
           downloadPath: $(System.DefaultWorkingDirectory)
       - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifact'
+        displayName: 'Download ship x86 Artifact'
         inputs:
           artifactName: ReactWindows-ship-x86
           downloadPath: $(System.DefaultWorkingDirectory)
       - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifact'
+        displayName: 'Download debug x64 Artifact'
         inputs:
-          artifactName: ReactWindows-debug-x64'
+          artifactName: ReactWindows-debug-x64
           downloadPath: $(System.DefaultWorkingDirectory)
       - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifact'
+        displayName: 'Download ship x64 Artifact'
         inputs:
           artifactName: ReactWindows-ship-x64
           downloadPath: $(System.DefaultWorkingDirectory)
       - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifact'
+        displayName: 'Download source Artifact'
         inputs:
           artifactName: ReactWindows-source
           downloadPath: $(System.DefaultWorkingDirectory)
@@ -348,10 +348,9 @@ jobs:
           command: pack
           packagesToPack: '$(System.DefaultWorkingDirectory)/NugetRoot/ReactWin32.nuspec'
           packDestination: '$(System.DefaultWorkingDirectory)/NugetRoot/'
-      # OldToNewPublishTODO: This should be uncommented once we move from the old publish def
-      # - task: NuGetCommand@2
-      #   displayName: 'NuGet push'
-      #   inputs:
-      #     command: push
-      #     packagesToPush: '$(System.DefaultWorkingDirectory)/NugetRoot/*.nupkg'
-      #     publishVstsFeed: '86ec7889-a365-4cd1-90df-6e18cc2ea59f'
+      - task: NuGetCommand@2
+        displayName: 'NuGet push'
+        inputs:
+          command: push
+          packagesToPush: '$(System.DefaultWorkingDirectory)/NugetRoot/*.nupkg'
+          publishVstsFeed: '86ec7889-a365-4cd1-90df-6e18cc2ea59f'
