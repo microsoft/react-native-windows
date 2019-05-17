@@ -92,7 +92,7 @@ XamlView SwitchViewManager::CreateViewCore(int64_t tag)
   return toggleSwitch;
 }
 
-void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto toggleSwitch = nodeToUpdate->GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)

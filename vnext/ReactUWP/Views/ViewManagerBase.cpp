@@ -199,7 +199,7 @@ void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView 
   assert(false);
 }
 
-void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, dynamic reactDiffMap)
+void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, const dynamic& reactDiffMap)
 {
   // Directly dirty this node since non-layout changes like the text property do not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate the ancestors which

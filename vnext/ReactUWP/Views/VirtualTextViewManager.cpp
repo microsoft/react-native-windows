@@ -36,7 +36,7 @@ XamlView VirtualTextViewManager::CreateViewCore(int64_t tag)
   return winrt::Span();
 }
 
-void VirtualTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void VirtualTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto span = nodeToUpdate->GetView().as<winrt::Span>();
   if (span == nullptr)

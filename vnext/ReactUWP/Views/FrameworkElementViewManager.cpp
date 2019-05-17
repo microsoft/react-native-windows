@@ -69,7 +69,7 @@ folly::dynamic FrameworkElementViewManager::GetNativeProps() const
 }
 
 
-void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto element(nodeToUpdate->GetView().as<winrt::FrameworkElement>());
   if (element != nullptr)

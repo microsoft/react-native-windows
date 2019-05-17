@@ -40,7 +40,7 @@ XamlView RawTextViewManager::CreateViewCore(int64_t tag)
   return run;
 }
 
-void RawTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void RawTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto run = nodeToUpdate->GetView().as<winrt::Run>();
   if (run == nullptr)

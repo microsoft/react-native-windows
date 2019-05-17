@@ -44,7 +44,7 @@ XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag)
   return progressRing;
 }
 
-void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
   if (progressRing == nullptr)

@@ -69,7 +69,7 @@ folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants()
   return directEvents;
 }
 
-void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto button = nodeToUpdate->GetView().as<winrt::HyperlinkButton>();
   if (button == nullptr)

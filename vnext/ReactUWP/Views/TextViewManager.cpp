@@ -53,7 +53,7 @@ XamlView TextViewManager::CreateViewCore(int64_t tag)
   return textBlock;
 }
 
-void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto textBlock = nodeToUpdate->GetView().as<winrt::TextBlock>();
   if (textBlock == nullptr)

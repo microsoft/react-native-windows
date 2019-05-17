@@ -57,7 +57,7 @@ XamlView IconViewManager::CreateViewCore(int64_t tag)
   return glyphs;
 }
 
-void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto glyphs = nodeToUpdate->GetView().as<winrt::Glyphs>();
   if (glyphs == nullptr)

@@ -70,7 +70,7 @@ XamlView ButtonViewManager::CreateViewCore(int64_t tag)
   return button;
 }
 
-void ButtonViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void ButtonViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto button = nodeToUpdate->GetView().as<winrt::Button>();
   if (button == nullptr)

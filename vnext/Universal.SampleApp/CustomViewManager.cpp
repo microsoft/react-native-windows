@@ -107,7 +107,7 @@ react::uwp::XamlView CustomFrameworkElementViewManager::CreateViewCore(int64_t t
   return checkbox;
 }
 
-void CustomFrameworkElementViewManager::UpdateProperties(react::uwp::ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void CustomFrameworkElementViewManager::UpdateProperties(react::uwp::ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto checkbox = nodeToUpdate->GetView().as<winrt::CheckBox>();
   if (checkbox == nullptr)

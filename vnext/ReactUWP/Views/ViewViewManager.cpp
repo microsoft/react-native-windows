@@ -285,7 +285,7 @@ folly::dynamic ViewViewManager::GetNativeProps() const
   return props;
 }
 
-void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto* pViewShadowNode = static_cast<ViewShadowNode*>(nodeToUpdate);
   bool shouldBeControl = pViewShadowNode->IsControl();

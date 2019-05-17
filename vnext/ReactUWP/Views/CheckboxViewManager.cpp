@@ -114,7 +114,7 @@ XamlView CheckBoxViewManager::CreateViewCore(int64_t tag)
   return checkbox;
 }
 
-void CheckBoxViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void CheckBoxViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto checkbox = nodeToUpdate->GetView().as<winrt::CheckBox>();
   if (checkbox == nullptr)
