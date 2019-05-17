@@ -47,9 +47,9 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %RNROOT%\ReactCommon\jsi\jsi-inl.h                             %DESTROOT%\inc\jsi
 %COPYCMD%  %RNROOT%\ReactCommon\jsi\ScriptStore.h                         %DESTROOT%\inc\jsi
 %COPYCMD%  %RNROOT%\ReactCommon\jsi\V8Runtime.h                           %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraCoreDebugger.h         %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeArgs.h       %DESTROOT%\inc\jsi
-%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeFactory.h    %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\Chakra\ChakraCoreDebugger.h                          %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeArgs.h                        %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeFactory.h                     %DESTROOT%\inc\jsi
 
 %COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\Yoga.h                          %DESTROOT%\inc\yoga
 %COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGMacros.h                      %DESTROOT%\inc\yoga
@@ -57,11 +57,11 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGEnums.h                       %DESTROOT%\inc\yoga
 
 %COPYCMD%  %RNROOT%\Folly                                                 %DESTROOT%\inc\Folly
-%COPYCMD%  %SRCROOT%\react-native-win\stubs                               %DESTROOT%\inc\stubs
-%COPYCMD%  %SRCROOT%\react-native-win\Desktop\*.h                         %DESTROOT%\inc\ReactWin32
-%COPYCMD%  %SRCROOT%\react-native-win\ReactWindowsCore\*.h                %DESTROOT%\inc\ReactWindowsCore
-%COPYCMD%  %SRCROOT%\react-native-win\ReactUWP\*.h                        %DESTROOT%\inc\ReactUWP
-%COPYCMD%  %SRCROOT%\react-native-win\include                             %DESTROOT%\inc\include
+%COPYCMD%  %SRCROOT%\stubs                                                %DESTROOT%\inc\stubs
+%COPYCMD%  %SRCROOT%\Desktop\*.h                                          %DESTROOT%\inc\ReactWin32
+%COPYCMD%  %SRCROOT%\ReactWindowsCore\*.h                                 %DESTROOT%\inc\ReactWindowsCore
+%COPYCMD%  %SRCROOT%\ReactUWP\*.h                                         %DESTROOT%\inc\ReactUWP
+%COPYCMD%  %SRCROOT%\include                                              %DESTROOT%\inc\include
 
-%COPYCMD%  %SRCROOT%\react-native-win\ReactWin32.nuspec                   %DESTROOT%
+%COPYCMD%  %SRCROOT%\ReactWin32.nuspec                                    %DESTROOT%
 
