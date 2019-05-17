@@ -224,7 +224,7 @@ void AttachMultipartHeaders(
     auto& name = header.first.getString();
     auto& value = header.second.getString();
 
-    content.Headers().TryAppendWithoutValidation(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
+    content.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
   }
 }
 
@@ -262,8 +262,10 @@ void NetworkingModule::NetworkingHelper::SendRequest(const std::string& method, 
           winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue::TryParse(facebook::react::unicode::utf8ToUtf16(value), contentType);
         else if (_stricmp(name.c_str(), "content-encoding") == 0)
           contentEncoding = value;
-        else
+        else if (_stricmp(name.c_str(), "authorization") == 0)
           request.Headers().TryAppendWithoutValidation(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
+        else
+          request.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
       }
     }
 
