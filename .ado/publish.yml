@@ -1,18 +1,18 @@
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
-  trigger:
-    batch: true
-    branches:
-      include:
-        - master
-        - fb59merge
-        - fabric
-    paths:
-      include:
-        - vnext/*
-      exclude:
-        - vnext/package.json
-        - vnext/yarn.lock
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - fb59merge
+      - fabric
+  paths:
+    include:
+      - vnext/*
+    exclude:
+      - vnext/package.json
+      - vnext/yarn.lock
 
 pr: none
 
