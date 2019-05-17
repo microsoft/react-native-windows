@@ -55,7 +55,7 @@ void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "animating")
+    if (propertyName == "animating")
     {
       if (propertyValue.isBool())
         progressRing.IsActive(propertyValue.asBool());

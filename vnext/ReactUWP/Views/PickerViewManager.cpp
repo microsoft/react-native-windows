@@ -86,7 +86,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "editable")
+    if (propertyName == "editable")
     {
       if (m_isEditableComboboxSupported)
       {
@@ -96,7 +96,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
           combobox.ClearValue(winrt::ComboBox::IsEditableProperty());
       }
     }
-    else if (propertyName.asString() == "text")
+    else if (propertyName == "text")
     {
       if (m_isEditableComboboxSupported)
       {
@@ -106,12 +106,12 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
           combobox.ClearValue(winrt::ComboBox::TextProperty());
       }
     }
-    else if (propertyName.asString() == "enabled")
+    else if (propertyName == "enabled")
     {
       if (propertyValue.isBool())
         combobox.IsEnabled(propertyValue.asBool());
     }
-    else if (propertyName.asString() == "selectedIndex")
+    else if (propertyName == "selectedIndex")
     {
       if (propertyValue.isNumber())
       {
@@ -123,7 +123,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
         updateSelectedIndex = true;
       }
     }
-    else if (propertyName.asString() == "items")
+    else if (propertyName == "items")
     {
       if (propertyValue.isArray())
       {

@@ -323,7 +323,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       {
         if (propertyValue.isString())
         {
-          bool clipChildren = propertyValue.asString() == "hidden";
+          bool clipChildren = propertyValue.getString() == "hidden";
           pPanel->ClipChildren(clipChildren);
         }
       }
@@ -331,14 +331,14 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       {
         if (propertyValue.isString())
         {
-          bool hitTestable = propertyValue.asString() != "none";
+          bool hitTestable = propertyValue.getString() != "none";
           pPanel->IsHitTestVisible(hitTestable);
         }
       }
       else if (propertyName == "acceptsKeyboardFocus")
       {
         if (propertyValue.isBool())
-          shouldBeControl = propertyValue.asBool();
+          shouldBeControl = propertyValue.getBool();
       }
       else if (propertyName == "accessibilityRole")
       {
@@ -346,7 +346,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
         // non-Touchable scenarios
         if (propertyValue.isString())
         {
-          auto role = propertyValue.asString();
+          const std::string& role = propertyValue.getString();
           if (role == "none")
             pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
           else if (role == "button")
@@ -402,7 +402,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       else if (propertyName == "enableFocusRing")
       {
         if (propertyValue.isBool())
-          pViewShadowNode->EnableFocusRing(propertyValue.asBool());
+          pViewShadowNode->EnableFocusRing(propertyValue.getBool());
         else if (propertyValue.isNull())
           pViewShadowNode->EnableFocusRing(false);
       }

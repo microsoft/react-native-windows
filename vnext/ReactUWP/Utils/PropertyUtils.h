@@ -332,7 +332,7 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
   {
     if (propertyValue.isString())
     {
-      const std::string value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       winrt::Windows::UI::Text::FontWeight fontWeight;
       if (value == "normal")
         fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
@@ -371,7 +371,7 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
   {
     if (propertyValue.isString())
     {
-      element.FontStyle((propertyValue.asString() == "italic")
+      element.FontStyle((propertyValue.getString() == "italic")
         ? winrt::Windows::UI::Text::FontStyle::Italic
         : winrt::Windows::UI::Text::FontStyle::Normal);
     }
@@ -411,7 +411,7 @@ bool TryUpdateTextAlignment(const T& element, const folly::dynamic& propertyName
   {
     if (propertyValue.isString())
     {
-      auto value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       SetTextAlignment(element, value);
     }
     else if (propertyValue.isNull())
@@ -447,7 +447,7 @@ bool TryUpdateTextTrimming(const T& element, const folly::dynamic& propertyName,
   {
     if (propertyValue.isString())
     {
-      auto value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       SetTextTrimming(element, value);
     }
     else if (propertyValue.isNull())
@@ -475,7 +475,7 @@ bool TryUpdateTextDecorationLine(const T& element, const folly::dynamic& propert
     {
       using winrt::Windows::UI::Text::TextDecorations;
 
-      const std::string value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       TextDecorations decorations = TextDecorations::None;
       if (value == "none")
         decorations = TextDecorations::None;
@@ -517,7 +517,7 @@ bool TryUpdateFlowDirection(const T& element, const folly::dynamic& propertyName
   {
     if (propertyValue.isString())
     {
-      auto value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       SetFlowDirection(element, value);
     }
     else if (propertyValue.isNull())
@@ -558,7 +558,7 @@ bool TryUpdateOrientation(const T& element, const folly::dynamic& propertyName, 
     }
     else if (propertyValue.isString())
     {
-      auto valueString = propertyValue.asString();
+      const std::string& valueString = propertyValue.getString();
       if (valueString == "horizontal")
         element.Orientation(Orientation::Horizontal);
       else if (valueString == "vertical")

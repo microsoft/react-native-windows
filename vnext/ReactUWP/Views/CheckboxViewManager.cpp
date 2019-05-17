@@ -125,14 +125,14 @@ void CheckBoxViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-   if (propertyName.asString() == "disabled")
+   if (propertyName == "disabled")
    {
      if (propertyValue.isBool())
        checkbox.IsEnabled(!propertyValue.asBool());
      else if (pair.second.isNull())
        checkbox.ClearValue(winrt::Control::IsEnabledProperty());
    }
-   else if (propertyName.asString() == "checked")
+   else if (propertyName == "checked")
    {
      if (propertyValue.isBool())
        checkbox.IsChecked(propertyValue.asBool());

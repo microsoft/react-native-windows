@@ -103,14 +103,14 @@ void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dy
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-   if (propertyName.asString() == "disabled")
+   if (propertyName == "disabled")
    {
       if (propertyValue.isBool())
         toggleSwitch.IsEnabled(!propertyValue.asBool());
       else if (pair.second.isNull())
         toggleSwitch.ClearValue(winrt::Control::IsEnabledProperty());
    }
-   else if (propertyName.asString() == "value")
+   else if (propertyName == "value")
    {
      if (propertyValue.isBool())
        toggleSwitch.IsOn(propertyValue.asBool());

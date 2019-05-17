@@ -98,10 +98,10 @@ dynamic ViewManagerBase::GetConstants() const
 
   const auto bubblingEventTypesConstants = GetExportedCustomBubblingEventTypeConstants();
   if (!bubblingEventTypesConstants.empty())
-    constants["bubblingEventTypes"] = bubblingEventTypesConstants;
+    constants["bubblingEventTypes"] = std::move(bubblingEventTypesConstants);
   const auto directEventTypesConstants = GetExportedCustomDirectEventTypeConstants();
   if (!directEventTypesConstants.empty())
-    constants["directEventTypes"] = directEventTypesConstants;
+    constants["directEventTypes"] = std::move(directEventTypesConstants);
 
   return constants;
 }

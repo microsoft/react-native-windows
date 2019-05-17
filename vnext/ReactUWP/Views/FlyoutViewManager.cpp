@@ -174,14 +174,14 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "isLightDismissEnabled")
+    if (propertyName == "isLightDismissEnabled")
     {
       if (propertyValue.isBool())
         m_isLightDismissEnabled = propertyValue.asBool();
       else if (propertyValue.isNull())
         m_isLightDismissEnabled = true;
     }
-    else if (propertyName.asString() == "isOpen")
+    else if (propertyName == "isOpen")
     {
       if (propertyValue.isBool())
       {
@@ -189,12 +189,12 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
         updateIsOpen = true;
       }
     }
-    else if (propertyName.asString() == "placement")
+    else if (propertyName == "placement")
     {
       auto placement = json_type_traits<winrt::FlyoutPlacementMode>::parseJson(propertyValue);
       m_flyout.Placement(placement);
     }
-    else if (propertyName.asString() == "target")
+    else if (propertyName == "target")
     {
       if (propertyValue.isInt())
       {

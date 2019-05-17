@@ -93,35 +93,35 @@ void PopupShadowNode::updateProperties(const folly::dynamic&& props)
     const folly::dynamic& propertyName = pair.first;
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "target")
+    if (propertyName == "target")
     {
       if (propertyValue.isInt())
         m_targetTag = propertyValue.asInt();
       else
         m_targetTag = -1;
     }
-    else if (propertyName.asString() == "isOpen")
+    else if (propertyName == "isOpen")
     {
       if (propertyValue.isBool())
-        popup.IsOpen(propertyValue.asBool());
+        popup.IsOpen(propertyValue.getBool());
       else if (propertyValue.isNull())
         popup.ClearValue(winrt::Popup::IsOpenProperty());
     }
-    else if (propertyName.asString() == "isLightDismissEnabled")
+    else if (propertyName == "isLightDismissEnabled")
     {
       if (propertyValue.isBool())
-        popup.IsLightDismissEnabled(propertyValue.asBool());
+        popup.IsLightDismissEnabled(propertyValue.getBool());
       else if (propertyValue.isNull())
         popup.ClearValue(winrt::Popup::IsLightDismissEnabledProperty());
     }
-    else if (propertyName.asString() == "horizontalOffset")
+    else if (propertyName == "horizontalOffset")
     {
       if (propertyValue.isInt())
         popup.HorizontalOffset(propertyValue.asDouble());
       else if (propertyValue.isNull())
         popup.ClearValue(winrt::Popup::HorizontalOffsetProperty());
     }
-    else if (propertyName.asString() == "verticalOffset")
+    else if (propertyName == "verticalOffset")
     {
       if (propertyValue.isInt())
         popup.VerticalOffset(propertyValue.asDouble());
