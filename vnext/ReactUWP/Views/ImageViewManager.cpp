@@ -140,15 +140,18 @@ namespace react { namespace uwp {
     if (image == nullptr)
       return;
 
-    for (auto& pair : reactDiffMap.items())
+    for (const auto& pair : reactDiffMap.items())
     {
-      if (pair.first == "source")
+      const std::string& propertyName = pair.first.getString();
+      const folly::dynamic& propertyValue = pair.second;
+
+      if (propertyName == "source")
       {
-        setSource(image, pair.second);
+        setSource(image, propertyValue);
       }
-      else if (pair.first == "resizeMode")
+      else if (propertyName == "resizeMode")
       {
-        auto stretch = json_type_traits<winrt::Windows::UI::Xaml::Media::Stretch>::parseJson(pair.second);
+        auto stretch = json_type_traits<winrt::Windows::UI::Xaml::Media::Stretch>::parseJson(propertyValue);
         image.Stretch(stretch);
       }
 

@@ -63,9 +63,9 @@ void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
   if (glyphs == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
     if (propertyName == "color")

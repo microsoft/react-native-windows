@@ -209,9 +209,9 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, const dynam
   if (instance != nullptr)
     static_cast<NativeUIManager*>(instance->NativeUIManager())->DirtyYogaNode(tag);
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
     if (propertyName == "onLayout")

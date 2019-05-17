@@ -98,9 +98,9 @@ void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const fol
   if (toggleSwitch == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
    if (propertyName == "disabled")

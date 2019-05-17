@@ -74,9 +74,9 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
   auto element(nodeToUpdate->GetView().as<winrt::FrameworkElement>());
   if (element != nullptr)
   {
-    for (auto& pair : reactDiffMap.items())
+    for (const auto& pair : reactDiffMap.items())
     {
-      const folly::dynamic& propertyName = pair.first;
+      const std::string& propertyName = pair.first.getString();
       const folly::dynamic& propertyValue = pair.second;
 
       if (propertyName == "opacity")

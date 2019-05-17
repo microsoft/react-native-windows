@@ -40,9 +40,9 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const fo
 
   if (control != nullptr)
   {
-    for (auto& pair : reactDiffMap.items())
+    for (const auto& pair : reactDiffMap.items())
     {
-      const folly::dynamic& propertyName = pair.first;
+      const std::string& propertyName = pair.first.getString();
       const folly::dynamic& propertyValue = pair.second;
 
       if (TryUpdateBackgroundBrush(control, propertyName, propertyValue))

@@ -73,7 +73,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
 
   for (auto& pair : props.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
     if (propertyName == "dayOfWeekFormat")

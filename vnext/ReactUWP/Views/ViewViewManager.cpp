@@ -293,9 +293,9 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
   auto pPanel = pViewShadowNode->GetViewPanel();
   if (pPanel != nullptr)
   {
-    for (auto& pair : reactDiffMap.items())
+    for (const auto& pair : reactDiffMap.items())
     {
-      const folly::dynamic& propertyName = pair.first;
+      const std::string& propertyName = pair.first.getString();
       const folly::dynamic& propertyValue = pair.second;
 
       if (TryUpdateBackgroundBrush(*pPanel, propertyName, propertyValue))

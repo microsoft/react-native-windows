@@ -75,17 +75,17 @@ void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const 
   if (button == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
-   if (propertyName.asString() == "disabled")
+   if (propertyName == "disabled")
    {
       if (propertyValue.isBool())
         button.IsEnabled(!propertyValue.asBool());
    }
-   else if (propertyName.asString() == "tooltip")
+   else if (propertyName == "tooltip")
    {
      if (propertyValue.isString())
      {
@@ -94,7 +94,7 @@ void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const 
        winrt::ToolTipService::SetToolTip(button, tooltip);
      }
    }
-   else if (propertyName.asString() == "url")
+   else if (propertyName == "url")
    {
      winrt::Uri myUri(asHstring(propertyValue));
      button.NavigateUri(myUri);

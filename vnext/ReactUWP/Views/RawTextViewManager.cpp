@@ -46,11 +46,14 @@ void RawTextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const fo
   if (run == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    if (pair.first == "text")
+    const std::string& propertyName = pair.first.getString();
+    const folly::dynamic& propertyValue = pair.second;
+
+    if (propertyName == "text")
     {
-      run.Text(asHstring(pair.second));
+      run.Text(asHstring(propertyValue));
     }
   }
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);

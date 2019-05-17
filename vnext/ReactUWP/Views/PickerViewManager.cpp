@@ -83,7 +83,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
   auto combobox = GetView().as<winrt::ComboBox>();
   for (auto& pair : props.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
     if (propertyName == "editable")

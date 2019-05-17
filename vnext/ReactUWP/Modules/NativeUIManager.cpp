@@ -303,7 +303,7 @@ static void StyleYogaNode(ShadowNodeBase& shadowNode, const YGNodeRef yogaNode, 
     return;
 
   for (const auto& pair : props.items()) {
-    const auto& key = pair.first;
+    const std::string& key = pair.first.getString();
     const auto& value = pair.second;
 
     if (key == "flexDirection") {
