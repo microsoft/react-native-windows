@@ -22,7 +22,7 @@ namespace react {
 template<>
 struct json_type_traits<react::uwp::WebSource>
 {
-  static react::uwp::WebSource parseJson(folly::dynamic& json)
+  static react::uwp::WebSource parseJson(const folly::dynamic& json)
   {
     react::uwp::WebSource source;
     for (auto& item : json.items())
@@ -49,7 +49,7 @@ namespace react { namespace uwp {
     WebViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
     const char* GetName() const override;
-    void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
+    void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
 
     folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
     folly::dynamic GetNativeProps() const override;
